@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TabHeaderWrapper, List } from "./style";
+import { TabHeaderWrapper, List, TabContentWrapper } from "./style";
 
 interface TabProps {
   data: any;
@@ -65,7 +65,9 @@ export const TabContent = ({
   visible: boolean;
 }) => {
   return (
-    <div style={{ display: `${visible} ? "block" :"none"` }}>{children}</div>
+    <TabContentWrapper style={{ display: `${visible} ? "block" :"none"` }}>
+      {children}
+    </TabContentWrapper>
   );
 };
 

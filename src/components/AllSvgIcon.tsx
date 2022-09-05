@@ -97,3 +97,80 @@ export const Home = ({
     </svg>
   );
 };
+
+export const Plus = ({
+  color = "currentColor",
+  width = "24px",
+  height = "24px",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="red"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="feather feather-plus-circle"
+    >
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="16"></line>
+      <line x1="8" y1="12" x2="16" y2="12"></line>
+    </svg>
+  );
+};
+
+export const Close = ({
+  color = "currentColor",
+  width = "24px",
+  height = "24px",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="red"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="feather feather-x-circle"
+    >
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="15" y1="9" x2="9" y2="15"></line>
+      <line x1="9" y1="9" x2="15" y2="15"></line>
+    </svg>
+  );
+};
+
+export const ArrowDown = ({
+  color = "#2c3e50",
+  width = "24px",
+  height = "24px",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-arrow-down-circle"
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke={color}
+      fill="red"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <circle cx="12" cy="12" r="9" />
+      <line x1="8" y1="12" x2="12" y2="16" />
+      <line x1="12" y1="8" x2="12" y2="16" />
+      <line x1="16" y1="12" x2="12" y2="16" />
+    </svg>
+  );
+};

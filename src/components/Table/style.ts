@@ -4,7 +4,7 @@ const Table = styled.table`
   border-collapse: separate;
   border-spacing: 0;
   color: #333;
-  width: 700px;
+  width: calc((100%-420px) / 2);
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 12px;
@@ -37,6 +37,9 @@ const Table = styled.table`
         border-bottom: 1px solid #d6d2ce;
         border-right: 1px solid #d6d2ce;
       }
+    }
+    tr.active {
+      background: #ffffe1;
     }
   }
 `;

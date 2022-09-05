@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import AppTable from "./style";
+
 interface ITable {
   tableHeader: any;
   tableData: any;
@@ -7,6 +8,8 @@ interface ITable {
 }
 
 function Table({ tableHeader, tableData, onClick }: ITable) {
+  const [clickedRowIndex, setClickedRowIndex] = useState(0);
+  console.log("clickedRowIndex", clickedRowIndex);
   return (
     <AppTable>
       <thead>
@@ -18,10 +21,16 @@ function Table({ tableHeader, tableData, onClick }: ITable) {
       </thead>
       <tbody>
         {tableData?.map((data: any, i: number) => (
-          <tr key={i}>
+          <tr key={i} className={i === clickedRowIndex ? "active" : ""}>
             {Object.entries(data)?.map(([key, value], idx: number) =>
-              idx === 1 ? (
-                <td key={idx} onClick={(e) => onClick(data)}>
+              idx === 2 ? (
+                <td
+                  key={idx}
+                  onClick={() => {
+                    setClickedRowIndex(i);
+                    onClick(data);
+                  }}
+                >
                   {data[key]}
                 </td>
               ) : (
