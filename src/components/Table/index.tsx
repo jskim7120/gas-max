@@ -1,57 +1,35 @@
 import React from "react";
 import AppTable from "./style";
 interface ITable {
-  onClick: () => void;
+  tableHeader: any;
+  tableData: any;
+  onClick: (arg: any) => any;
 }
 
-function Table({ onClick }: ITable) {
+function Table({ tableHeader, tableData, onClick }: ITable) {
   return (
     <AppTable>
       <thead>
         <tr>
-          <th>1</th>
-          <th>2</th>
-          <th>3</th>
-          <th>4</th>
-          <th>5</th>
+          {tableHeader?.map((header: string, idx: number) => (
+            <th key={idx}>{header}</th>
+          ))}
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>00</td>
-          <td onClick={onClick}>01</td>
-          <td>csd</td>
-          <td>vdfvfd</td>
-          <td>vdf</td>
-        </tr>
-        <tr>
-          <td>00</td>
-          <td onClick={onClick}>01</td>
-          <td>csd</td>
-          <td>vdfvfd</td>
-          <td>vdf</td>
-        </tr>
-        <tr>
-          <td>00</td>
-          <td onClick={onClick}>01</td>
-          <td>csd</td>
-          <td>vdfvfd</td>
-          <td>vdf</td>
-        </tr>
-        <tr>
-          <td>00</td>
-          <td onClick={onClick}>01</td>
-          <td>csd</td>
-          <td>vdfvfd</td>
-          <td>vdf</td>
-        </tr>
-        <tr>
-          <td>00</td>
-          <td onClick={onClick}>01</td>
-          <td>csd</td>
-          <td>vdfvfd</td>
-          <td>vdf</td>
-        </tr>
+        {tableData?.map((data: any, i: number) => (
+          <tr key={i}>
+            {Object.entries(data)?.map(([key, value], idx: number) =>
+              idx === 1 ? (
+                <td key={idx} onClick={(e) => onClick(data)}>
+                  {data[key]}
+                </td>
+              ) : (
+                <td key={idx}>{data[key]}</td>
+              )
+            )}
+          </tr>
+        ))}
       </tbody>
     </AppTable>
   );

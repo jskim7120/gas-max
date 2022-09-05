@@ -2,6 +2,7 @@ import React from "react";
 import { Wrapper } from "./style";
 
 function InfoDetail({ data }: { data: any }) {
+  console.log("datafdvdffdvfd:", data.areaCode);
   return (
     <Wrapper>
       <form>
@@ -21,7 +22,7 @@ function InfoDetail({ data }: { data: any }) {
               type="text"
               id="lname"
               name="lname"
-              defaultValue={data.age}
+              defaultValue={data.areaCode}
             />
           </label>
         </div>

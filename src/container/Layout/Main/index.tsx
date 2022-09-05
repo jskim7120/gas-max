@@ -7,24 +7,25 @@ import InfoDetail from "components/InfoDetail";
 import { useGetCustomerListQuery } from "features/customer/customers-api-slice";
 import { Main } from "./style";
 
+let tableHeader: any[];
+let tableData: any;
+
 function Index() {
   const tabData = [{ title: "사원등록" }, { title: "거래처정보" }];
+  const { data, isFetching } = useGetCustomerListQuery();
+  const [selectedCustomer, setSelectedCustomer] = useState(
+    data ? Object.entries(data)[0] : []
+  );
 
-  const { data = [], isFetching } = useGetCustomerListQuery();
-  console.log("data:", data);
-  useEffect(() => {}, []);
+  if (data) {
+    tableHeader = Object.keys(Object.values(data)[0]);
+    tableData = Object.values(data);
+    console.log(tableData);
+  }
 
-  const [infoData, setInfoData] = useState({
-    name: "Bat",
-    age: "21",
-    color: "red",
-    date: "2020-02-05",
-    country: "mongolia",
-    job: "cdscd",
-  });
-
-  const changeCustomerInfo = () => {
-    console.log("dsvsv");
+  const changeCustomerInfo = (data: any) => {
+    console.log("onClick:", data);
+    setSelectedCustomer(data);
   };
   return (
     <Main>
@@ -49,8 +50,12 @@ function Index() {
       />
       <TabContent visible={true}>
         <div style={{ display: "flex" }}>
-          <Table onClick={changeCustomerInfo} />
-          <InfoDetail data={infoData} />
+          <Table
+            tableHeader={tableHeader}
+            tableData={tableData}
+            onClick={changeCustomerInfo}
+          />
+          <InfoDetail data={selectedCustomer} />
         </div>
       </TabContent>
     </Main>

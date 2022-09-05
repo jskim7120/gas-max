@@ -27,10 +27,10 @@ interface Customer {
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.0.108:9999/",
+    baseUrl: "http://115.95.25.245:9999/",
   }),
   endpoints: (builder) => ({
-    getCustomerList: builder.query<any, void>({
+    getCustomerList: builder.query<any[], void>({
       query: () => `employee/list`,
     }),
   }),
