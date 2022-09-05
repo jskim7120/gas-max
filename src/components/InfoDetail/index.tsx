@@ -2,18 +2,18 @@ import React from "react";
 import { Wrapper } from "./style";
 
 function InfoDetail({ data }: { data: any }) {
-  console.log("datafdvdffdvfd:", data.areaCode);
+  console.log("datafdvdffdvfd:", data);
   return (
     <Wrapper>
       <form>
         <div className="form-group">
           <label>
-            Name:
+            영업소코드:
             <input
               type="text"
               id="lname"
               name="lname"
-              defaultValue={data.name}
+              defaultValue={data.areaCode}
             />
           </label>
           <label>
@@ -22,7 +22,7 @@ function InfoDetail({ data }: { data: any }) {
               type="text"
               id="lname"
               name="lname"
-              defaultValue={data.areaCode}
+              defaultValue={data.swCode}
             />
           </label>
         </div>

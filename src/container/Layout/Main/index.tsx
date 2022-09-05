@@ -20,7 +20,7 @@ function Index() {
   if (data) {
     tableHeader = Object.keys(Object.values(data)[0]);
     tableData = Object.values(data);
-    console.log(tableData);
+    //console.log(tableData);
   }
 
   const changeCustomerInfo = (data: any) => {
