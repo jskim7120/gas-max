@@ -1,4 +1,36 @@
 import styled from "styled-components";
 
-export const TabHeader = styled.div``;
-export const TabContent = styled.div``;
+export const TabHeaderWrapper = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  border-bottom: 1px solid #5c5c5c;
+`;
+
+export const List = styled.li<{ isActive: boolean }>`
+  cursor: pointer;
+  display: inline-block;
+  outline: none;
+  width: 130px;
+  text-align: center;
+  font-size: 16px;
+
+  position: relative;
+  &::after {
+    content: "x";
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    font-size: 25px;
+  }
+
+  &.plain-tab {
+    padding: 10px;
+    background: ${(props) => (props.isActive ? "#f0f0f0" : "transparent")};
+    color: ${(props) => (props.isActive ? "#333" : "#797d84")};
+    border: ${(props) =>
+      props.isActive ? "1px solid #5c5c5c" : "1px solid #ddd"};
+    border-bottom: none;
+  }
+`;

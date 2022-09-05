@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Calendar, Power, Settings, Home } from "components/AllSvgIcon";
-import Logo from "image/GasMax.png";
 import UserImg from "image/user.png";
-import Tab from "components/Tab";
+import Tab, { TabContent } from "components/Tab";
+import Table from "components/Table";
+import InfoDetail from "components/InfoDetail";
 
 const Main = styled.div`
   width: 100%;
@@ -11,7 +12,21 @@ const Main = styled.div`
   margin-left: 5px;
 `;
 
-function index() {
+const tabData = [{ title: "사원등록" }, { title: "거래처정보" }];
+
+function Index() {
+  const [infoData, setInfoData] = useState({
+    name: "Bat",
+    age: "21",
+    color: "red",
+    date: "2020-02-05",
+    country: "mongolia",
+    job: "cdscd",
+  });
+
+  const changeCustomerInfo = () => {
+    console.log("dsvsv");
+  };
   return (
     <Main>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -28,9 +43,19 @@ function index() {
           <img src={UserImg} width="40px" />
         </span>
       </div>
-      <Tab />
+      <Tab
+        data={tabData}
+        defaultIndex={0}
+        handleClick={() => console.log("sdcds")}
+      />
+      <TabContent visible={true}>
+        <div style={{ display: "flex" }}>
+          <Table onClick={changeCustomerInfo} />
+          <InfoDetail data={infoData} />
+        </div>
+      </TabContent>
     </Main>
   );
 }
 
-export default index;
+export default Index;

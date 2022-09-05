@@ -1,13 +1,72 @@
-import React from "react";
-import { TabHeader, TabContent } from "./style";
+import React, { useState, useEffect } from "react";
+import { TabHeaderWrapper, List } from "./style";
 
-function Tab() {
-  return (
-    <>
-      <TabHeader>TabHeader</TabHeader>
-      <TabContent>TabContent</TabContent>
-    </>
-  );
+interface TabProps {
+  data: any;
+  defaultIndex: number;
+  handleClick: (index: number) => void;
+  className?: string;
+  style?: any;
 }
 
-export default Tab;
+interface ITabHeader {
+  title: string;
+  isActive: boolean;
+  className: string;
+  onClick: () => void;
+}
+
+interface Object {
+  title: string;
+}
+
+const TabHeader = ({ title, isActive, onClick, className }: ITabHeader) => {
+  return (
+    <List isActive={isActive} onClick={onClick} className={className}>
+      {title}
+    </List>
+  );
+};
+
+const Tab = (props: TabProps): JSX.Element => {
+  const [tabActive, setTabActive] = useState(
+    props.defaultIndex ? props.defaultIndex : 0
+  );
+
+  useEffect(() => {
+    setTabActive(props.defaultIndex);
+  }, [props.defaultIndex]);
+
+  return (
+    <TabHeaderWrapper
+      className={props.className ? props.className : "plain-tab"}
+    >
+      {props.data?.map((obj: Object, index: number) => (
+        <TabHeader
+          key={index}
+          title={obj.title}
+          isActive={tabActive === index}
+          className={props.className ? props.className : "plain-tab"}
+          onClick={() => {
+            setTabActive(index);
+            props.handleClick(index);
+          }}
+        />
+      ))}
+    </TabHeaderWrapper>
+  );
+};
+
+export const TabContent = ({
+  children,
+  visible,
+}: {
+  children: any;
+  visible: boolean;
+}) => {
+  return (
+    <div style={{ display: `${visible} ? "block" :"none"` }}>{children}</div>
+  );
+};
+
+export default React.memo(Tab);

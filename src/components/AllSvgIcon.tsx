@@ -11,9 +11,9 @@ export const Calendar = ({
       viewBox="0 0 24 24"
       fill="none"
       stroke={color}
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="feather feather-calendar"
     >
       <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -37,9 +37,9 @@ export const Power = ({
       viewBox="0 0 24 24"
       fill="none"
       stroke={color}
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="feather feather-power"
     >
       <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
@@ -61,9 +61,9 @@ export const Settings = ({
       viewBox="0 0 24 24"
       fill="none"
       stroke={color}
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="feather feather-settings"
     >
       <circle cx="12" cy="12" r="3"></circle>
@@ -84,11 +84,11 @@ export const Home = ({
       width={width}
       height={height}
       viewBox="0 0 24 24"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       stroke={color}
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <polyline points="5 12 3 12 12 3 21 12 19 12" />
