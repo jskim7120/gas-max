@@ -1,20 +1,19 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
 import { Calendar, Power, Settings, Home } from "components/AllSvgIcon";
 import UserImg from "image/user.png";
 import Tab, { TabContent } from "components/Tab";
 import Table from "components/Table";
 import InfoDetail from "components/InfoDetail";
-
-const Main = styled.div`
-  width: 100%;
-  border: 1px solid black;
-  margin-left: 5px;
-`;
-
-const tabData = [{ title: "사원등록" }, { title: "거래처정보" }];
+import { useGetCustomerListQuery } from "features/customer/customers-api-slice";
+import { Main } from "./style";
 
 function Index() {
+  const tabData = [{ title: "사원등록" }, { title: "거래처정보" }];
+
+  const { data = [], isFetching } = useGetCustomerListQuery();
+  console.log("data:", data);
+  useEffect(() => {}, []);
+
   const [infoData, setInfoData] = useState({
     name: "Bat",
     age: "21",
