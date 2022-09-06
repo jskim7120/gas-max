@@ -1,56 +1,57 @@
 import React from "react";
 import { Wrapper } from "./style";
+import { Row, Col } from "react-grid-system";
 
 function InfoDetail({ data }: { data: any }) {
   console.log("datafdvdffdvfd:", data);
   return (
     <Wrapper>
       <form>
-        <div className="form-group">
-          <label>
-            사원코드:
-            <input
-              type="text"
-              id=""
-              name="swCode"
-              defaultValue={data.areaCode}
-            />
-          </label>
-          <label>
-            사원구분:{" "}
-            <input
-              type="text"
-              id=""
-              name="swGubun"
-              defaultValue={data.swCode}
-            />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            사원명:
-            <input type="text" id="" name="swName" defaultValue={data.swName} />
-          </label>
-          <label>
-            주민번호:
+        <Row>
+          <Col>
+            <div className="form-group">
+              <label>사원코드</label>
+              <input type="text" id="swCode" defaultValue={data.areaCode} />
+            </div>
+          </Col>
+          <Col>
+            <div className="form-group">
+              <label>사원구분</label>
+              <input type="text" id="swGubun" defaultValue={data.swCode} />
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div className="form-group">
+              <label>사원명</label>
+              <input type="text" id="swName" defaultValue={data.swName} />
+            </div>
+          </Col>
+          <Col>
+            <label>주민번호</label>
             <input
               type="text"
               id=""
               name="swJuminno"
               defaultValue={data.swJuminno}
             />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            전화번호:
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <label>전화번호</label>
             <input type="text" id="" name="swTel" defaultValue={data.swTel} />
-          </label>
-          <label>
-            핸드폰:
+          </Col>
+          <Col>
+            <label>핸드폰</label>
             <input type="text" id="" name="swHp" defaultValue={data.swHp} />
-          </label>
-        </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col></Col>
+        </Row>
+
         <div className="form-group">
           <label>
             주소1: 주소2:

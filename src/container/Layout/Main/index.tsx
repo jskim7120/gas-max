@@ -63,24 +63,31 @@ function Index() {
 
   return (
     <Main>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <div
-          style={{
-            width: "50px",
-            height: "25px",
-            border: "3px solid gray",
-            borderRadius: "15px",
-          }}
-        ></div>
-        <span>등록 현황 거래처 재고 회계 수금 A/S 기타 공통관리 양식</span>
-        <span>
-          <img src={UserImg} width="40px" />
-        </span>
+      <div>
+        <div>
+          <div>
+            <div></div>
+          </div>
+          <ul>
+            <li>등록</li>
+            <li>현황</li>
+            <li>거래처</li>
+            <li>재고</li>
+            <li>회계</li>
+            <li>수금</li>
+            <li>A/S</li>
+            <li>기타</li>
+            <li>공통관리</li>
+            <li>양식</li>
+          </ul>
+          <div>
+            <span>
+              <img src={UserImg} width="40px" />
+            </span>
+            <Power />
+            <Settings />
+          </div>
+        </div>
       </div>
       <Tab
         data={tabData}
