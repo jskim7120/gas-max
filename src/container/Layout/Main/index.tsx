@@ -15,22 +15,22 @@ export let tableHeader: any[] = [
   "사원구분",
   "주민번호",
   "전화번호",
-  "핸드폰",
-  "주소1",
-  "주소2",
-  "우편번호",
-  "담당차량코드",
-  "#REF!",
-  "입사일자",
-  "급여방식",
-  "급여액",
-  "급여일",
-  "면허종류",
-  "면허번호",
-  "적성검사 시작일",
-  "적성검사 마감일",
-  "비고",
-  "",
+  // "핸드폰",
+  // "주소1",
+  // "주소2",
+  // "우편번호",
+  // "담당차량코드",
+  // "#REF!",
+  // "입사일자",
+  // "급여방식",
+  // "급여액",
+  // "급여일",
+  // "면허종류",
+  // "면허번호",
+  // "적성검사 시작일",
+  // "적성검사 마감일",
+  // "비고",
+  // "",
 ];
 let tableData: any;
 
@@ -99,33 +99,31 @@ function Index() {
               Icon={<Plus color="white" />}
               style={{ marginRight: "5px" }}
             />
-            errwtgttgr
+            등록(F2)
             <IconCreator
               Icon={<ArrowDown color="white" />}
               style={{ marginLeft: "10px", marginRight: "5px" }}
             />
-            sdeerfer
+            수정(F3)
             <IconCreator
               Icon={<Close color="white" />}
               style={{ marginLeft: "10px", marginRight: "5px" }}
             />
-            wfefre
+            삭제(F4)
           </span>
         </div>
-        <Wrapper>
-          {isFetching ? (
-            <p>...loading</p>
-          ) : (
-            <>
-              <Table
-                tableHeader={tableHeader}
-                tableData={tableData}
-                onClick={changeCustomerInfo}
-              />
-              <InfoDetail data={selectedCustomer} />
-            </>
-          )}
-        </Wrapper>
+        {isFetching ? (
+          <p>...loading</p>
+        ) : (
+          <Wrapper>
+            <Table
+              tableHeader={tableHeader}
+              tableData={tableData}
+              onClick={changeCustomerInfo}
+            />
+            <InfoDetail data={selectedCustomer} />
+          </Wrapper>
+        )}
       </TabContent>
     </Main>
   );

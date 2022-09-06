@@ -6,6 +6,7 @@ export const Main = styled.div`
   & > div:first-child {
     border: 3px solid #cccccc;
     padding: 0px 9px 0px 15px;
+
     div: first-child {
       position: relative;
       display: flex;
@@ -49,4 +50,8 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+
+  @media screen and (max-width: 1615px) {
+    flex-direction: column;
+  }
 `;

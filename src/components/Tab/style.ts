@@ -37,4 +37,7 @@ export const List = styled.li<{ isActive: boolean }>`
 
 export const TabContentWrapper = styled.div`
   width: calc(100%-420px);
+  border: 2px solid blue;
+  height: 88vh;
+  margin-top: 3px;
 `;

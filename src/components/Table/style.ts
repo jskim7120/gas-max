@@ -4,12 +4,12 @@ const Table = styled.table`
   border-collapse: separate;
   border-spacing: 0;
   color: #333;
-  width: 771px;
+  width: 100%;
   font-size: 14px;
   font-weight: 500;
-  margin-bottom: 12px;
   border-left: 1px solid #d6d2ce;
-  border-bottom: 1px solid #000;
+  // border-bottom: 1px solid #000;
+  flex: 1;
 
   display: block;
   overflow-x: auto;
@@ -33,7 +33,7 @@ const Table = styled.table`
     tr {
       td {
         text-align: center;
-        padding: 7px 10px;
+        padding: 7px 20px;
         border-bottom: 1px solid #d6d2ce;
         border-right: 1px solid #d6d2ce;
       }

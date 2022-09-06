@@ -8,12 +8,17 @@ function InfoDetail({ data }: { data: any }) {
   const [date0, setDate0] = useState() as any;
   const [date1, setDate1] = useState() as any;
   const [date2, setDate2] = useState() as any;
+  const [select1, setSelect1] = useState() as any;
+  const [select2, setSelect2] = useState() as any;
 
   useEffect(() => {
     if (data) {
-      data?.swIndate && setDate0(new Date(formatDate(data.swIndate)));
-      data?.swJdate1 && setDate1(new Date(formatDate(data.swJdate1)));
-      data?.swJdate2 && setDate2(new Date(formatDate(data.swJdate2)));
+      data.swIndate && setDate0(new Date(formatDate(data.swIndate)));
+      data.swJdate1 && setDate1(new Date(formatDate(data.swJdate1)));
+      data.swJdate2 && setDate2(new Date(formatDate(data.swJdate2)));
+      console.log("data.swCode", data.swCode === "01");
+      setSelect1(data.swCode);
+      setSelect2(data.swPaytype);
     }
   }, [data]);
 
@@ -31,10 +36,16 @@ function InfoDetail({ data }: { data: any }) {
             <div className="form-group">
               <label>사원구분</label>
               {/* <input type="text" id="swGubun" defaultValue={data.swCode} /> */}
-              <select name="swCode" id="swCode">
-                <option value="0">0.배달사원</option>
-                <option value="1">1.수송기사</option>
-                <option value="2">2.기타</option>
+
+              <select
+                name="swCode"
+                onChange={(e) => setSelect1(e.target.value)}
+                id="swCode"
+                value={select1}
+              >
+                <option value="00">0.배달사원</option>
+                <option value="01">1.수송기사</option>
+                <option value="02">2.기타</option>
               </select>
             </div>
           </Col>
@@ -82,11 +93,12 @@ function InfoDetail({ data }: { data: any }) {
           </Col>
         </Row>
         <div className="divider"></div>
+        {/* -------------------------------------------------------------------------- */}
         <Row>
           <Col>
-            <div className="form-group">
-              <label>입사일자 dvfgf</label>
-              {/* <input type="text" id="swIndate" defaultValue={data.swIndate} /> */}
+            <div className="form-group" style={{ position: "relative" }}>
+              <label style={{ marginRight: "30px" }}>입사일자</label>
+
               <DatePicker
                 selected={date0}
                 onChange={(date: Date) => setDate1(date)}
@@ -96,11 +108,14 @@ function InfoDetail({ data }: { data: any }) {
           <Col>
             <div className="form-group">
               <label>급여방식</label>
-              {/* <input type="text" id="swPaytype" defaultValue={data.swPaytype} /> */}
-              <select name="cars" id="cars">
-                <option value="volvo">0.월급제</option>
-                <option value="saab">1.수당제</option>
-                <option value="mercedes">2.월급+수당</option>
+              <select
+                id="swPaytype"
+                onChange={(e) => setSelect1(e.target.value)}
+                value={select2}
+              >
+                <option value="0">0.월급제</option>
+                <option value="1">1.수당제</option>
+                <option value="2">2.월급+수당</option>
               </select>
             </div>
           </Col>
@@ -150,7 +165,7 @@ function InfoDetail({ data }: { data: any }) {
         <Row>
           <Col>
             <div className="form-group">
-              <label>적성검사</label>
+              <label style={{ marginRight: "30px" }}>적성검사</label>
               {/* <input type="text" id="swJdate1" defaultValue={data.swJdate1} /> */}
               <DatePicker
                 selected={date1}
@@ -160,7 +175,7 @@ function InfoDetail({ data }: { data: any }) {
           </Col>
           <Col>
             <div className="form-group">
-              <label>~</label>
+              <label style={{ marginRight: "30px" }}>~</label>
               {/* <input type="text" id="swJdate2" defaultValue={data.swJdate2} /> */}
               <DatePicker
                 selected={date2}
@@ -178,6 +193,7 @@ function InfoDetail({ data }: { data: any }) {
           </Col>
         </Row>
         <div className="divider"></div>
+        {/* -------------------------------------------------------------------------- */}
         <Row>
           <Col>
             <div className="form-group">

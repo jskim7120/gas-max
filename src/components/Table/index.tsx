@@ -21,21 +21,17 @@ function Table({ tableHeader, tableData, onClick }: ITable) {
       </thead>
       <tbody>
         {tableData?.map((data: any, i: number) => (
-          <tr key={i} className={i === clickedRowIndex ? "active" : ""}>
-            {Object.entries(data)?.map(([key, value], idx: number) =>
-              idx === 2 ? (
-                <td
-                  key={idx}
-                  onClick={() => {
-                    setClickedRowIndex(i);
-                    onClick(data);
-                  }}
-                >
-                  {data[key]}
-                </td>
-              ) : (
-                <td key={idx}>{data[key]}</td>
-              )
+          <tr
+            key={i}
+            className={i === clickedRowIndex ? "active" : ""}
+            onClick={() => {
+              setClickedRowIndex(i);
+              onClick(data);
+            }}
+          >
+            {Object.entries(data)?.map(
+              ([key, value], idx: number) =>
+                idx < 6 && <td key={idx}>{data[key]}</td>
             )}
           </tr>
         ))}

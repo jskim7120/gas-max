@@ -35,7 +35,7 @@ export const Top = styled.div`
 export const Middle = styled.div`
   border: 3px solid #2eb82e;
   width: auto;
-  height: 585px;
+  flex: 1;
   margin-top: 15px;
   padding: 15px;
   div:first-child {

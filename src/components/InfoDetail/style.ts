@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  width: 49%;
+  width: auto;
   border: 1px solid black;
+  background: #f0f0f0;
 
   form {
     background: #f0f0f0;
-    padding: 20px 15px;
+    padding: 20px 30px;
   }
 
   input,
@@ -18,13 +19,15 @@ export const Wrapper = styled.div`
   }
 
   label {
+    width: 100px;
   }
 
   .form-group {
     padding: 5px 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
+    // margin: 0 50px 0 0;
   }
   .divider {
     width: 100%;
