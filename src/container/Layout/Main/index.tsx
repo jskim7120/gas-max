@@ -1,13 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  Calendar,
-  Power,
-  Settings,
-  Home,
-  Plus,
-  Close,
-  ArrowDown,
-} from "components/AllSvgIcon";
+import React, { useState, useEffect } from "react";
+import { Power, Settings, Plus, Close, ArrowDown } from "components/AllSvgIcon";
 import UserImg from "image/user.png";
 import Tab, { TabContent } from "components/Tab";
 import Table from "components/Table";
@@ -45,17 +37,15 @@ let tableData: any;
 function Index() {
   const tabData = [{ title: "사원등록" }, { title: "거래처정보" }];
   const { data, isFetching } = useGetCustomerListQuery();
-  const [selectedCustomer, setSelectedCustomer] = useState(
-    data ? Object.entries(data)[0] : []
-  );
+  const [selectedCustomer, setSelectedCustomer] = useState({});
 
-  if (data) {
-    //tableHeader = Object.keys(Object.values(data)[0]);
-
-    console.log("tableHeader:", tableHeader);
-    tableData = Object.values(data);
-    console.log(tableData);
-  }
+  useEffect(() => {
+    if (data) {
+      tableData = Object.values(data);
+      console.log(tableData);
+      setSelectedCustomer(tableData[0]);
+    }
+  }, [data]);
 
   const changeCustomerInfo = (data: any) => {
     setSelectedCustomer(data);
@@ -123,12 +113,18 @@ function Index() {
           </span>
         </div>
         <Wrapper>
-          <Table
-            tableHeader={tableHeader}
-            tableData={tableData}
-            onClick={changeCustomerInfo}
-          />
-          <InfoDetail data={selectedCustomer} />
+          {isFetching ? (
+            <p>...loading</p>
+          ) : (
+            <>
+              <Table
+                tableHeader={tableHeader}
+                tableData={tableData}
+                onClick={changeCustomerInfo}
+              />
+              <InfoDetail data={selectedCustomer} />
+            </>
+          )}
         </Wrapper>
       </TabContent>
     </Main>

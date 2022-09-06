@@ -14,6 +14,13 @@ export const LeftSide = styled.div`
   position: relative;
 `;
 
+export const Navigation = styled.div`
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
 export const Top = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,7 +38,9 @@ export const Middle = styled.div`
   height: 585px;
   margin-top: 15px;
   padding: 15px;
-
+  div:first-child {
+    display: flex;
+  }
   svg {
     margin-right: 3px;
   }

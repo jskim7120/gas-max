@@ -9,11 +9,12 @@ export const Wrapper = styled.div`
     padding: 20px 15px;
   }
 
-  input {
+  input,
+  select {
     background: #e3e3e3;
     border: 1px solid #6e6e6e;
-    padding: 3px;
-    margin-left: 10px;
+    padding: 6px;
+    outline: none;
   }
 
   label {
@@ -24,5 +25,11 @@ export const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: gray;
+    margin: 7px 0;
   }
 `;
