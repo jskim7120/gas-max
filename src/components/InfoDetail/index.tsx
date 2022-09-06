@@ -17,7 +17,7 @@ function InfoDetail({ data }: { data: any }) {
       data.swJdate1 && setDate1(new Date(formatDate(data.swJdate1)));
       data.swJdate2 && setDate2(new Date(formatDate(data.swJdate2)));
       console.log("data.swCode", data.swCode === "01");
-      setSelect1(data.swCode);
+      setSelect1(data.swGubun);
       setSelect2(data.swPaytype);
     }
   }, [data]);
@@ -29,23 +29,22 @@ function InfoDetail({ data }: { data: any }) {
           <Col>
             <div className="form-group">
               <label>사원코드</label>
-              <input type="text" id="swCode" defaultValue={data.areaCode} />
+              <input type="text" id="swCode" defaultValue={data.swCode} />
             </div>
           </Col>
           <Col>
             <div className="form-group">
               <label>사원구분</label>
-              {/* <input type="text" id="swGubun" defaultValue={data.swCode} /> */}
 
               <select
                 name="swCode"
                 onChange={(e) => setSelect1(e.target.value)}
-                id="swCode"
+                id="swGubun"
                 value={select1}
               >
-                <option value="00">0.배달사원</option>
-                <option value="01">1.수송기사</option>
-                <option value="02">2.기타</option>
+                <option value="0">0.배달사원</option>
+                <option value="1">1.수송기사</option>
+                <option value="2">2.기타</option>
               </select>
             </div>
           </Col>
