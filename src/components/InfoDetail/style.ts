@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  width: auto;
+  width: 49%;
   border: 1px solid black;
 
   .form-group {

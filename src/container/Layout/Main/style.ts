@@ -5,3 +5,9 @@ export const Main = styled.div`
   border: 1px solid black;
   margin-left: 5px;
 `;
+
+export const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;

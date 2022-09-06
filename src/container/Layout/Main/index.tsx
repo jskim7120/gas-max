@@ -13,7 +13,7 @@ import Tab, { TabContent } from "components/Tab";
 import Table from "components/Table";
 import InfoDetail from "components/InfoDetail";
 import { useGetCustomerListQuery } from "features/customer/customers-api-slice";
-import { Main } from "./style";
+import { Main, Wrapper } from "./style";
 import IconCreator from "./IconCreator";
 
 export let tableHeader: any[] = [
@@ -63,7 +63,12 @@ function Index() {
 
   return (
     <Main>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
         <div
           style={{
             width: "50px",
@@ -110,14 +115,14 @@ function Index() {
             wfefre
           </span>
         </div>
-        <div style={{ display: "flex" }}>
+        <Wrapper>
           <Table
             tableHeader={tableHeader}
             tableData={tableData}
             onClick={changeCustomerInfo}
           />
           <InfoDetail data={selectedCustomer} />
-        </div>
+        </Wrapper>
       </TabContent>
     </Main>
   );
