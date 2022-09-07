@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Power, Settings, Plus, Close, ArrowDown } from "components/AllSvgIcon";
+import {
+  Power,
+  Settings,
+  CloseCircle,
+  PlusCircle,
+  ArrowDownCircle,
+  ForbidCircle,
+} from "components/AllSvgIcon";
 import UserImg from "image/user.png";
 import Tab, { TabContent } from "components/Tab";
 import Table from "components/Table";
 import InfoDetail from "components/InfoDetail";
 import { useGetCustomerListQuery } from "features/customer/customers-api-slice";
 import { Main, Wrapper } from "./style";
-import IconCreator from "./IconCreator";
+import IconButton from "components/Button";
 
 export let tableHeader: any[] = [
   "영업소코드",
@@ -15,22 +22,6 @@ export let tableHeader: any[] = [
   "전화번호",
   "핸드폰",
   "급여일",
-  // "주민번호",
-  // "사원구분",
-  // "주소1",
-  // "주소2",
-  // "우편번호",
-  // "담당차량코드",
-  // "#REF!",
-  // "입사일자",
-  // "급여방식",
-  // "급여액",
-  // "면허종류",
-  // "면허번호",
-  // "적성검사 시작일",
-  // "적성검사 마감일",
-  // "비고",
-  // "",
 ];
 let tableData: any;
 
@@ -95,21 +86,26 @@ function Index() {
         >
           <span>총수량 :16</span>
           <span style={{ display: "flex" }}>
-            <IconCreator
-              Icon={<Plus color="white" />}
-              style={{ marginRight: "5px" }}
+            <IconButton
+              icon={<PlusCircle color="orangered" />}
+              onClick={() => console.log("bla")}
+              title="Add"
             />
-            등록(F2)
-            <IconCreator
-              Icon={<ArrowDown color="white" />}
-              style={{ marginLeft: "10px", marginRight: "5px" }}
+            <IconButton
+              icon={<CloseCircle color="red" />}
+              onClick={() => console.log("bla")}
+              title="Delete"
             />
-            수정(F3)
-            <IconCreator
-              Icon={<Close color="white" />}
-              style={{ marginLeft: "10px", marginRight: "5px" }}
+            <IconButton
+              icon={<ArrowDownCircle color="aqua" />}
+              onClick={() => console.log("bla")}
+              title="Save"
             />
-            삭제(F4)
+            <IconButton
+              icon={<ForbidCircle color="red" />}
+              onClick={() => console.log("bla")}
+              title="Cancel"
+            />
           </span>
         </div>
         {isFetching ? (

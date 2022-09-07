@@ -98,7 +98,7 @@ export const Home = ({
   );
 };
 
-export const Plus = ({
+export const PlusCircle = ({
   color = "currentColor",
   width = "24px",
   height = "24px",
@@ -109,7 +109,7 @@ export const Plus = ({
       width={width}
       height={height}
       viewBox="0 0 24 24"
-      fill="red"
+      fill="none"
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
@@ -123,7 +123,7 @@ export const Plus = ({
   );
 };
 
-export const Close = ({
+export const CloseCircle = ({
   color = "currentColor",
   width = "24px",
   height = "24px",
@@ -134,7 +134,7 @@ export const Close = ({
       width={width}
       height={height}
       viewBox="0 0 24 24"
-      fill="red"
+      fill="none"
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
@@ -148,29 +148,52 @@ export const Close = ({
   );
 };
 
-export const ArrowDown = ({
-  color = "#2c3e50",
+export const ArrowDownCircle = ({
+  color = "currentColor",
   width = "24px",
   height = "24px",
 }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="icon icon-tabler icon-tabler-arrow-down-circle"
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="feather feather-arrow-down-circle"
+    >
+      <circle cx="12" cy="12" r="10"></circle>
+      <polyline points="8 12 12 16 16 12"></polyline>
+      <line x1="12" y1="8" x2="12" y2="16"></line>
+    </svg>
+  );
+};
+
+export const ForbidCircle = ({
+  color = "currentColor",
+  width = "24px",
+  height = "24px",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-forbid"
       width={width}
       height={height}
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke={color}
-      fill="red"
+      fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <circle cx="12" cy="12" r="9" />
-      <line x1="8" y1="12" x2="12" y2="16" />
-      <line x1="12" y1="8" x2="12" y2="16" />
-      <line x1="16" y1="12" x2="12" y2="16" />
+      <line x1="9" y1="9" x2="15" y2="15" />
     </svg>
   );
 };
