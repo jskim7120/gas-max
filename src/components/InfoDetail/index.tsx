@@ -5,20 +5,19 @@ import { Row, Col } from "react-grid-system";
 import formatDate from "./dateFormat";
 
 function InfoDetail({ data }: { data: any }) {
-  const [date0, setDate0] = useState() as any;
-  const [date1, setDate1] = useState() as any;
-  const [date2, setDate2] = useState() as any;
-  const [select1, setSelect1] = useState() as any;
-  const [select2, setSelect2] = useState() as any;
+  const [swIndate, setSwIndate] = useState() as any;
+  const [swJdate1, setSwJdate1] = useState() as any;
+  const [swJdate2, setSwJdate2] = useState() as any;
+  const [swGubun, setSwGubun] = useState() as any;
+  const [swPaytype, setSwPaytype] = useState() as any;
 
   useEffect(() => {
     if (data) {
-      data.swIndate && setDate0(new Date(formatDate(data.swIndate)));
-      data.swJdate1 && setDate1(new Date(formatDate(data.swJdate1)));
-      data.swJdate2 && setDate2(new Date(formatDate(data.swJdate2)));
-      console.log("data.swCode", data.swCode === "01");
-      setSelect1(data.swGubun);
-      setSelect2(data.swPaytype);
+      data.swIndate && setSwIndate(new Date(formatDate(data.swIndate)));
+      data.swJdate1 && setSwJdate1(new Date(formatDate(data.swJdate1)));
+      data.swJdate2 && setSwJdate2(new Date(formatDate(data.swJdate2)));
+      setSwGubun(data.swGubun);
+      setSwPaytype(data.swPaytype);
     }
   }, [data]);
 
@@ -37,10 +36,10 @@ function InfoDetail({ data }: { data: any }) {
               <label>사원구분</label>
 
               <select
-                name="swCode"
-                onChange={(e) => setSelect1(e.target.value)}
+                name="swGubun"
+                onChange={(e) => setSwGubun(e.target.value)}
                 id="swGubun"
-                value={select1}
+                value={swGubun}
               >
                 <option value="0">0.배달사원</option>
                 <option value="1">1.수송기사</option>
@@ -97,10 +96,9 @@ function InfoDetail({ data }: { data: any }) {
           <Col>
             <div className="form-group" style={{ position: "relative" }}>
               <label style={{ marginRight: "30px" }}>입사일자</label>
-
               <DatePicker
-                selected={date0}
-                onChange={(date: Date) => setDate1(date)}
+                selected={swIndate}
+                onChange={(date: Date) => setSwIndate(date)}
               />
             </div>
           </Col>
@@ -109,8 +107,8 @@ function InfoDetail({ data }: { data: any }) {
               <label>급여방식</label>
               <select
                 id="swPaytype"
-                onChange={(e) => setSelect1(e.target.value)}
-                value={select2}
+                onChange={(e) => setSwPaytype(e.target.value)}
+                value={swPaytype}
               >
                 <option value="0">0.월급제</option>
                 <option value="1">1.수당제</option>
@@ -165,20 +163,18 @@ function InfoDetail({ data }: { data: any }) {
           <Col>
             <div className="form-group">
               <label style={{ marginRight: "30px" }}>적성검사</label>
-              {/* <input type="text" id="swJdate1" defaultValue={data.swJdate1} /> */}
               <DatePicker
-                selected={date1}
-                onChange={(date: Date) => setDate1(date)}
+                selected={swJdate1}
+                onChange={(date: Date) => setSwJdate1(date)}
               />
             </div>
           </Col>
           <Col>
             <div className="form-group">
               <label style={{ marginRight: "30px" }}>~</label>
-              {/* <input type="text" id="swJdate2" defaultValue={data.swJdate2} /> */}
               <DatePicker
-                selected={date2}
-                onChange={(date: Date) => setDate2(date)}
+                selected={swJdate2}
+                onChange={(date: Date) => setSwJdate2(date)}
               />
             </div>
           </Col>
