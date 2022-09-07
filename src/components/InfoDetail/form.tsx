@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-grid-system";
 import DatePicker from "react-datepicker";
-import formatDate from "./dateFormat";
+import formatDate from "../../helpers/dateFormat";
 
 function CustomerForm({ data }: { data: any }) {
   const [swIndate, setSwIndate] = useState() as any;
@@ -50,7 +50,7 @@ function CustomerForm({ data }: { data: any }) {
         <Col>
           <div className="form-group">
             <label>사원명</label>
-            <input type="text" id="swName" defaultValue={data.swName} />
+            <input type="text" id="swName" defaultValue={data?.swName} />
           </div>
         </Col>
         <Col>
