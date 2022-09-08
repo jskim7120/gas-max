@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import MainSide from "./Main";
 import { Container, LeftSide, Top, Middle, Bottom, Navigation } from "./style";
 import { Power, Settings, Calendar } from "components/AllSvgIcon";
@@ -37,7 +38,8 @@ export default function AppLayout() {
           </Bottom>
         </Navigation>
       </LeftSide>
-      <MainSide />
+      <Outlet />
+      {/* <MainSide /> */}
     </Container>
   );
 }

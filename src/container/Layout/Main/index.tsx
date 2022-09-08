@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "app/store";
+
 import {
   Power,
   Settings,
@@ -10,12 +12,19 @@ import {
 import UserImg from "image/user.png";
 import Tab, { TabContent } from "components/Tab";
 import Table from "components/Table";
+import Menu from "components/Menu";
 import InfoDetail from "components/InfoDetail";
-import { useGetCustomerListQuery } from "features/customer/customers-api-slice";
 import { Main, Wrapper } from "./style";
 import IconButton from "components/Button";
 
-export let tableHeader: any[] = [
+import {
+  updateEmployee,
+  addEmployee,
+  deleteEmployee,
+} from "features/employee/employeeSlice";
+
+const tabData = [{ title: "사원등록" }, { title: "거래처정보" }];
+let tableHeader: any[] = [
   "영업소코드",
   "사원코드",
   "사원명",
@@ -24,23 +33,126 @@ export let tableHeader: any[] = [
   "급여일",
 ];
 let tableData: any;
+let menuData: any;
 
-function Index() {
-  const tabData = [{ title: "사원등록" }, { title: "거래처정보" }];
-  const { data, isFetching } = useGetCustomerListQuery();
+function MainContainer() {
+  const dispatch = useDispatch();
   const [selectedCustomer, setSelectedCustomer] = useState({});
+  tableData = useSelector((state) => state.employees.employees);
+  menuData = useSelector((state) => state.menu.menu);
 
-  useEffect(() => {
-    if (data) {
-      tableData = Object.values(data);
-      console.log(tableData);
-      setSelectedCustomer(tableData[0]);
-    }
-  }, [data]);
+  // console.log("tableData:", tableData[0]);
+  // console.log("menuData:", menuData);
 
   const changeCustomerInfo = (data: any) => {
     setSelectedCustomer(data);
   };
+
+  const AddEmployee = async () => {
+    // const employee: any = {
+    //   areaCode: "00", //
+    //   swAddr1: "bla bal",
+    //   swAddr2: "",
+    //   swBigo: "",
+    //   swCaCode: null,
+    //   swCaName: null,
+    //   swCode: "16", //unique
+    //   swDriverNo: "",
+    //   swDriverType: "",
+    //   swGubun: "0",
+    //   swHp: "",
+    //   swIndate: "20210901",
+    //   swJdate1: "",
+    //   swJdate2: "",
+    //   swJuminno: "",
+    //   swName: "Otgoo2",
+    //   swPaydate: "",
+    //   swPaykum: 0,
+    //   swPaytype: "2",
+    //   swTel: "",
+    //   swWorkOut: "N",
+    //   swZipcode: "",
+    // };
+    // await dispatch(addEmployee(employee));
+    setSelectedCustomer({});
+  };
+
+  const DeleteEmployee = async () => {
+    const employee: any = {
+      areaCode: "00", //
+      swAddr1: "bla bal",
+      swAddr2: "",
+      swBigo: "",
+      swCaCode: null,
+      swCaName: null,
+      swCode: "16", //unique
+      swDriverNo: "",
+      swDriverType: "",
+      swGubun: "0",
+      swHp: "",
+      swIndate: "20210901",
+      swJdate1: "",
+      swJdate2: "",
+      swJuminno: "",
+      swName: "Otgoo",
+      swPaydate: "",
+      swPaykum: 0,
+      swPaytype: "2",
+      swTel: "",
+      swWorkOut: "N",
+      swZipcode: "",
+    };
+
+    await dispatch(deleteEmployee(employee));
+  };
+
+  const UpdateEmployee = async () => {
+    dispatch(addEmployee({}));
+
+    const employee: any = {
+      areaCode: "00", //
+      swAddr1: "bla bal",
+      swAddr2: "",
+      swBigo: "",
+      swCaCode: null,
+      swCaName: null,
+      swCode: "16", //unique
+      swDriverNo: "",
+      swDriverType: "",
+      swGubun: "0",
+      swHp: "",
+      swIndate: "20210901",
+      swJdate1: "",
+      swJdate2: "",
+      swJuminno: "",
+      swName: "Otgoo zasav",
+      swPaydate: "",
+      swPaykum: 0,
+      swPaytype: "2",
+      swTel: "",
+      swWorkOut: "N",
+      swZipcode: "",
+    };
+
+    await dispatch(updateEmployee(employee));
+  };
+
+  // const menuData = useSelector(selectMenu);
+  // console.log("menuData:", menuData);
+
+  // useEffect(() => {
+  //   if (data) {
+  //     tableData = Object.values(data);
+  //     // console.log(tableData);
+  //     setSelectedCustomer(tableData[0]);
+  //   }
+  // }, [data]);
+
+  // useEffect(() => {
+  //   if (menuData) {
+  //     console.log(Object.values(menuData));
+  //   }
+  // }, [menuData]);
 
   return (
     <Main>
@@ -49,18 +161,9 @@ function Index() {
           <div>
             <div></div>
           </div>
-          <ul>
-            <li>등록</li>
-            <li>현황</li>
-            <li>거래처</li>
-            <li>재고</li>
-            <li>회계</li>
-            <li>수금</li>
-            <li>A/S</li>
-            <li>기타</li>
-            <li>공통관리</li>
-            <li>양식</li>
-          </ul>
+
+          <Menu data={menuData} />
+
           <div>
             <span>
               <img src={UserImg} width="40px" />
@@ -88,17 +191,17 @@ function Index() {
           <span style={{ display: "flex" }}>
             <IconButton
               icon={<PlusCircle color="orangered" />}
-              onClick={() => console.log("bla")}
+              onClick={() => AddEmployee()}
               title="Add"
             />
             <IconButton
               icon={<CloseCircle color="red" />}
-              onClick={() => console.log("bla")}
+              onClick={() => DeleteEmployee()}
               title="Delete"
             />
             <IconButton
               icon={<ArrowDownCircle color="aqua" />}
-              onClick={() => console.log("bla")}
+              onClick={() => UpdateEmployee()}
               title="Save"
             />
             <IconButton
@@ -108,9 +211,7 @@ function Index() {
             />
           </span>
         </div>
-        {isFetching ? (
-          <p>...loading</p>
-        ) : (
+        {tableData ? (
           <Wrapper>
             <Table
               tableHeader={tableHeader}
@@ -119,10 +220,12 @@ function Index() {
             />
             <InfoDetail data={selectedCustomer} />
           </Wrapper>
+        ) : (
+          <p>...loading</p>
         )}
       </TabContent>
     </Main>
   );
 }
 
-export default Index;
+export default MainContainer;

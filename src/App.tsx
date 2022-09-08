@@ -1,11 +1,17 @@
 import React from "react";
+import { Route, Routes } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
-
-import AppLayout from "container/Layout/AppLayout";
+import Main from "container/Layout/Main";
+import Layout from "container/Layout/AppLayout";
 function App() {
   return (
     <>
-      <AppLayout />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Main />} />
+          {/* <Route path="about" element={<About />} /> */}
+        </Route>
+      </Routes>
     </>
   );
 }

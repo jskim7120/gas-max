@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import formatDate from "../../helpers/dateFormat";
 
 function CustomerForm({ data }: { data: any }) {
+  const [employee, setEmployee] = useState({});
   const [swIndate, setSwIndate] = useState() as any;
   const [swJdate1, setSwJdate1] = useState() as any;
   const [swJdate2, setSwJdate2] = useState() as any;
@@ -17,8 +18,30 @@ function CustomerForm({ data }: { data: any }) {
       data.swJdate2 && setSwJdate2(new Date(formatDate(data.swJdate2)));
       setSwGubun(data.swGubun);
       setSwPaytype(data.swPaytype);
+
+      setEmployee(data);
     }
   }, [data]);
+
+  const onChange = (e: any) => {
+    let value;
+    if (e.target.value === "swIndate") {
+      // value = new Date(formatDate(data.swIndate);
+    }
+    if (e.target.value === "swJdate1") {
+    }
+    if (e.target.value === "swJdate2") {
+    }
+    if (e.target.value === "swGubun") {
+    }
+    if (e.target.value === "swPaytype") {
+    }
+
+    setEmployee((employee) => ({
+      ...employee,
+      [e.target.id]: e.target.value,
+    }));
+  };
 
   return (
     <form>
@@ -26,7 +49,12 @@ function CustomerForm({ data }: { data: any }) {
         <Col>
           <div className="form-group">
             <label>사원코드</label>
-            <input type="text" id="swCode" defaultValue={data?.swCode} />
+            <input
+              type="text"
+              id="swCode"
+              defaultValue={data?.swCode}
+              onChange={onChange}
+            />
           </div>
         </Col>
         <Col>
@@ -35,7 +63,7 @@ function CustomerForm({ data }: { data: any }) {
 
             <select
               name="swGubun"
-              onChange={(e) => setSwGubun(e.target.value)}
+              onChange={onChange}
               id="swGubun"
               value={swGubun}
             >
@@ -50,13 +78,23 @@ function CustomerForm({ data }: { data: any }) {
         <Col>
           <div className="form-group">
             <label>사원명</label>
-            <input type="text" id="swName" defaultValue={data?.swName} />
+            <input
+              type="text"
+              id="swName"
+              defaultValue={data?.swName}
+              onChange={onChange}
+            />
           </div>
         </Col>
         <Col>
           <div className="form-group">
             <label>주민번호</label>
-            <input type="text" id="swJuminno" defaultValue={data.swJuminno} />
+            <input
+              type="text"
+              id="swJuminno"
+              defaultValue={data.swJuminno}
+              onChange={onChange}
+            />
           </div>
         </Col>
       </Row>
@@ -64,13 +102,23 @@ function CustomerForm({ data }: { data: any }) {
         <Col>
           <div className="form-group">
             <label>전화번호</label>
-            <input type="text" id="swTel" defaultValue={data.swTel} />
+            <input
+              type="text"
+              id="swTel"
+              defaultValue={data.swTel}
+              onChange={onChange}
+            />
           </div>
         </Col>
         <Col>
           <div className="form-group">
             <label>핸드폰</label>
-            <input type="text" id="swHp" defaultValue={data.swHp} />
+            <input
+              type="text"
+              id="swHp"
+              defaultValue={data.swHp}
+              onChange={onChange}
+            />
           </div>
         </Col>
       </Row>
@@ -78,13 +126,23 @@ function CustomerForm({ data }: { data: any }) {
         <Col>
           <div className="form-group">
             <label>주소</label>
-            <input type="text" id="swAddr1" defaultValue={data.swAddr1} />
+            <input
+              type="text"
+              id="swAddr1"
+              defaultValue={data.swAddr1}
+              onChange={onChange}
+            />
           </div>
         </Col>
         <Col>
           <div className="form-group">
             <label></label>
-            <input type="text" id="swAddr2" defaultValue={data.swAddr2} />
+            <input
+              type="text"
+              id="swAddr2"
+              defaultValue={data.swAddr2}
+              onChange={onChange}
+            />
           </div>
         </Col>
       </Row>
@@ -119,7 +177,12 @@ function CustomerForm({ data }: { data: any }) {
         <Col>
           <div className="form-group">
             <label>급여액</label>
-            <input type="text" id="swPaykum" defaultValue={data.swPaykum} />
+            <input
+              type="text"
+              id="swPaykum"
+              defaultValue={data.swPaykum}
+              onChange={onChange}
+            />
           </div>
         </Col>
         <Col>
@@ -130,6 +193,7 @@ function CustomerForm({ data }: { data: any }) {
               id="swPaytdate"
               defaultValue={data.swPaytdate}
               // Limit
+              onChange={onChange}
             />
             일
           </div>
@@ -143,13 +207,19 @@ function CustomerForm({ data }: { data: any }) {
               type="text"
               id="swDriverType"
               defaultValue={data.swDriverType}
+              onChange={onChange}
             />
           </div>
         </Col>
         <Col>
           <div className="form-group">
             <label>면허번호</label>
-            <input type="text" id="swDriverNo" defaultValue={data.swDriverNo} />
+            <input
+              type="text"
+              id="swDriverNo"
+              defaultValue={data.swDriverNo}
+              onChange={onChange}
+            />
           </div>
         </Col>
       </Row>
@@ -177,7 +247,12 @@ function CustomerForm({ data }: { data: any }) {
         <Col>
           <div className="form-group">
             <label>비고</label>
-            <input type="text" id="swBigo" defaultValue={data.swBigo} />
+            <input
+              type="text"
+              id="swBigo"
+              defaultValue={data.swBigo}
+              onChange={onChange}
+            />
           </div>
         </Col>
       </Row>
@@ -187,7 +262,12 @@ function CustomerForm({ data }: { data: any }) {
         <Col>
           <div className="form-group">
             <label>가불합계</label>
-            <input type="text" id="blabla" defaultValue={0} />
+            <input
+              type="text"
+              id="blabla"
+              defaultValue={0}
+              onChange={onChange}
+            />
           </div>
         </Col>
       </Row>
