@@ -25,19 +25,28 @@ export const List = styled.li<{ isActive: boolean }>`
     font-size: 25px;
   }
 
-  &.plain-tab {
-    padding: 10px;
-    background: ${(props) => (props.isActive ? "#f0f0f0" : "transparent")};
-    color: ${(props) => (props.isActive ? "#333" : "#797d84")};
-    border: ${(props) =>
-      props.isActive ? "1px solid #5c5c5c" : "1px solid #ddd"};
-    border-bottom: none;
-  }
+  padding: 10px;
+  background: ${(props) => (props.isActive ? "#f0f0f0" : "transparent")};
+  color: ${(props) => (props.isActive ? "#333" : "#797d84")};
+  border: ${(props) =>
+    props.isActive ? "1px solid #5c5c5c" : "1px solid #ddd"};
+  border-bottom: none;
 `;
 
 export const TabContentWrapper = styled.div`
   width: calc(100%-420px);
   border: 2px solid blue;
-  height: 88vh;
+  min-height: 89%;
+  height: auto;
   margin-top: 3px;
+`;
+
+export const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  @media screen and (max-width: 1615px) {
+    flex-direction: column;
+  }
 `;

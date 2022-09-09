@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-grid-system";
-import { Wrapper } from "./style";
 import DatePicker from "react-datepicker";
 import formatDate from "../../helpers/dateFormat";
+import { Wrapper } from "./style";
 
 function InfoDetail({
   data,
@@ -56,8 +56,9 @@ function InfoDetail({
                 <label>사원코드</label>
                 <input
                   type="text"
+                  id="swCode"
                   name="swCode"
-                  value={data?.swCode}
+                  value={data.swCode}
                   onChange={onChange}
                 />
               </div>
@@ -65,11 +66,11 @@ function InfoDetail({
             <Col>
               <div className="form-group">
                 <label>사원구분</label>
-
                 <select
+                  id="swGubun"
                   name="swGubun"
                   onChange={onChange}
-                  value={data?.swGubun}
+                  value={data.swGubun}
                 >
                   <option value="0">0.배달사원</option>
                   <option value="1">1.수송기사</option>
@@ -84,8 +85,9 @@ function InfoDetail({
                 <label>사원명</label>
                 <input
                   type="text"
+                  id="swName"
                   name="swName"
-                  value={data?.swName}
+                  value={data.swName}
                   onChange={onChange}
                 />
               </div>
@@ -95,6 +97,7 @@ function InfoDetail({
                 <label>주민번호</label>
                 <input
                   type="text"
+                  id="swJuminno"
                   name="swJuminno"
                   value={data.swJuminno}
                   onChange={onChange}
@@ -108,6 +111,7 @@ function InfoDetail({
                 <label>전화번호</label>
                 <input
                   type="text"
+                  id="swTel"
                   name="swTel"
                   value={data.swTel}
                   onChange={onChange}
@@ -119,6 +123,7 @@ function InfoDetail({
                 <label>핸드폰</label>
                 <input
                   type="text"
+                  id="swHp"
                   name="swHp"
                   value={data.swHp}
                   onChange={onChange}
@@ -132,6 +137,7 @@ function InfoDetail({
                 <label>주소</label>
                 <input
                   type="text"
+                  id="swAddr1"
                   name="swAddr1"
                   value={data.swAddr1}
                   onChange={onChange}
@@ -143,6 +149,7 @@ function InfoDetail({
                 <label></label>
                 <input
                   type="text"
+                  id="swAddr2"
                   name="swAddr2"
                   value={data.swAddr2}
                   onChange={onChange}
@@ -168,6 +175,7 @@ function InfoDetail({
               <div className="form-group">
                 <label>급여방식</label>
                 <select
+                  id="swPaytype"
                   name="swPaytype"
                   onChange={onChange}
                   value={data.swPaytype}
@@ -185,9 +193,11 @@ function InfoDetail({
                 <label>급여액</label>
                 <input
                   type="text"
+                  id="swPaykum"
                   name="swPaykum"
                   value={data.swPaykum}
                   onChange={onChange}
+                  // Limit
                 />
               </div>
             </Col>
@@ -196,10 +206,11 @@ function InfoDetail({
                 <label>급여일</label>
                 <input
                   type="text"
+                  id="swPaydate"
                   name="swPaydate"
                   value={data.swPaydate}
-                  // Limit
                   onChange={onChange}
+                  // Limit
                 />
                 일
               </div>
@@ -211,6 +222,7 @@ function InfoDetail({
                 <label>면허종류</label>
                 <input
                   type="text"
+                  id="swDriverType"
                   name="swDriverType"
                   value={data.swDriverType}
                   onChange={onChange}
@@ -222,6 +234,7 @@ function InfoDetail({
                 <label>면허번호</label>
                 <input
                   type="text"
+                  id="swDriverNo"
                   name="swDriverNo"
                   value={data.swDriverNo}
                   onChange={onChange}
@@ -257,6 +270,7 @@ function InfoDetail({
                 <label>비고</label>
                 <input
                   type="text"
+                  id="swBigo"
                   name="swBigo"
                   value={data.swBigo}
                   onChange={onChange}
@@ -273,6 +287,7 @@ function InfoDetail({
                 <label>가불합계</label>
                 <input
                   type="text"
+                  id="blabla"
                   name="blabla"
                   value={0}
                   onChange={() => console.log("")}

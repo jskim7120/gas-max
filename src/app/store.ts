@@ -6,11 +6,13 @@ import logger from "redux-logger";
 import { configureStore } from "@reduxjs/toolkit";
 import employeeReducer from "features/employee/employeeSlice";
 import menuReducer from "features/menu/menuSlice";
+import favoriteReducer from "features/favorite/favoriteSlice";
 
 export const store = configureStore({
   reducer: {
     employees: employeeReducer,
     menu: menuReducer,
+    favMenu: favoriteReducer,
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

@@ -7,9 +7,11 @@ import { store } from "app/store";
 import "./index.css";
 import { getEmployees } from "features/employee/employeeSlice";
 import { getMenu } from "features/menu/menuSlice";
+import { getFavMenu } from "features/favorite/favoriteSlice";
 
 store.dispatch(getEmployees());
 store.dispatch(getMenu());
+store.dispatch(getFavMenu());
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

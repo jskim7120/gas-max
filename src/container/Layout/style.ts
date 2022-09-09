@@ -31,7 +31,6 @@ export const Top = styled.div`
     margin-bottom: 2px;
   }
 `;
-
 export const Middle = styled.div`
   border: 3px solid #2eb82e;
   width: auto;
@@ -44,13 +43,20 @@ export const Middle = styled.div`
   svg {
     margin-right: 3px;
   }
-  p {
-    margin: 0;
-    font-size: 18px;
-  }
   div:nth-child(2) {
-    margin-left: 27px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 9px;
     margin-top: 6px;
+    .fav_menu_item {
+      display: flex;
+      flex-direction: row;
+      margin: 0;
+      div {
+        font-size: 15px;
+        margin: 0 4px 8px 0;
+      }
+    }
   }
 `;
 export const Bottom = styled.div`

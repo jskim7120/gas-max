@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { TabHeaderWrapper, List, TabContentWrapper } from "./style";
 
 interface TabProps {
-  data: any;
+  header: any[];
   defaultIndex: number;
+  content: any[];
   handleClick: (index: number) => void;
   className?: string;
   style?: any;
@@ -12,17 +13,12 @@ interface TabProps {
 interface ITabHeader {
   title: string;
   isActive: boolean;
-  className: string;
   onClick: () => void;
 }
 
-interface Object {
-  title: string;
-}
-
-const TabHeader = ({ title, isActive, onClick, className }: ITabHeader) => {
+const TabHeader = ({ title, isActive, onClick }: ITabHeader) => {
   return (
-    <List isActive={isActive} onClick={onClick} className={className}>
+    <List isActive={isActive} onClick={onClick}>
       {title}
     </List>
   );
@@ -38,36 +34,29 @@ const Tab = (props: TabProps): JSX.Element => {
   }, [props.defaultIndex]);
 
   return (
-    <TabHeaderWrapper
-      className={props.className ? props.className : "plain-tab"}
-    >
-      {props.data?.map((obj: Object, index: number) => (
-        <TabHeader
+    <>
+      <TabHeaderWrapper>
+        {props.header?.map((title: string, index: number) => (
+          <TabHeader
+            key={index}
+            title={title}
+            isActive={tabActive === index}
+            onClick={() => {
+              setTabActive(index);
+              // props.handleClick(index);
+            }}
+          />
+        ))}
+      </TabHeaderWrapper>
+      {props.content?.map((component: any, index: number) => (
+        <TabContentWrapper
           key={index}
-          title={obj.title}
-          isActive={tabActive === index}
-          className={props.className ? props.className : "plain-tab"}
-          onClick={() => {
-            setTabActive(index);
-            props.handleClick(index);
-          }}
-        />
+          style={{ display: index === tabActive ? "block" : "none" }}
+        >
+          {component}
+        </TabContentWrapper>
       ))}
-    </TabHeaderWrapper>
-  );
-};
-
-export const TabContent = ({
-  children,
-  visible,
-}: {
-  children: any;
-  visible: boolean;
-}) => {
-  return (
-    <TabContentWrapper style={{ display: `${visible} ? "block" :"none"` }}>
-      {children}
-    </TabContentWrapper>
+    </>
   );
 };
 
