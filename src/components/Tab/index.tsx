@@ -8,18 +8,23 @@ interface TabProps {
   handleClick: (index: number) => void;
   className?: string;
   style?: any;
+  closeTab: (arg: any) => void;
 }
 
 interface ITabHeader {
-  title: string;
+  header: any;
   isActive: boolean;
   onClick: () => void;
+  closeTab: (arg: any) => void;
 }
 
-const TabHeader = ({ title, isActive, onClick }: ITabHeader) => {
+const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
   return (
     <List isActive={isActive} onClick={onClick}>
-      {title}
+      {header.menuName}
+      <span data-menuId={header.menuId} onClick={closeTab}>
+        X
+      </span>
     </List>
   );
 };
@@ -36,15 +41,16 @@ const Tab = (props: TabProps): JSX.Element => {
   return (
     <>
       <TabHeaderWrapper>
-        {props.header?.map((title: string, index: number) => (
+        {props.header?.map((header: any, index: number) => (
           <TabHeader
             key={index}
-            title={title}
+            header={header}
             isActive={tabActive === index}
             onClick={() => {
               setTabActive(index);
               // props.handleClick(index);
             }}
+            closeTab={props.closeTab}
           />
         ))}
       </TabHeaderWrapper>

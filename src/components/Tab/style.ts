@@ -14,15 +14,14 @@ export const List = styled.li<{ isActive: boolean }>`
   outline: none;
   width: 130px;
   text-align: center;
-  font-size: 16px;
-
+  font-size: 12px;
   position: relative;
-  &::after {
-    content: "x";
+
+  span {
     position: absolute;
-    top: 0px;
-    right: 10px;
-    font-size: 25px;
+    top: 5px;
+    right: 8px;
+    font-size: 16px;
   }
 
   padding: 10px;
