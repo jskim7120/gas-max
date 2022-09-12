@@ -9,7 +9,7 @@ interface ITable {
 
 function Table({ tableHeader, tableData, onClick }: ITable) {
   const [clickedRowIndex, setClickedRowIndex] = useState(0);
-  console.log("tableData:", tableData);
+  // console.log("tableData:", tableData);
   return (
     <AppTable>
       <thead>

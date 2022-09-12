@@ -7,12 +7,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import employeeReducer from "features/employee/employeeSlice";
 import menuReducer from "features/menu/menuSlice";
 import favoriteReducer from "features/favorite/favoriteSlice";
+import tabReducer from "features/tab/tabSlice";
 
 export const store = configureStore({
   reducer: {
     employees: employeeReducer,
     menu: menuReducer,
     favMenu: favoriteReducer,
+    tab: tabReducer,
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

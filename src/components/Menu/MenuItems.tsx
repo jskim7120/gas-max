@@ -1,12 +1,14 @@
 import { FC, useState, useEffect, useRef } from "react";
-
+import { useDispatch } from "app/store";
+import { addTab } from "features/tab/tabSlice";
 import Dropdown from "./Dropdown";
-
 interface IMenuItems {
   items: any;
   depthLevel: any;
 }
+
 const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
+  const dispatch = useDispatch();
   const [dropdown, setDropdown] = useState(false);
 
   let ref = useRef() as React.MutableRefObject<HTMLLIElement>;
@@ -48,6 +50,16 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
     window.innerWidth > 960 && setDropdown(false);
   };
 
+  const handleClick = () => {
+    dispatch(
+      addTab({
+        menuId: items.menuId,
+        menuName: items.menuName,
+        depthFullName: items.depthFullName,
+      })
+    );
+  };
+
   return (
     <li
       className="menu-items"
@@ -77,7 +89,10 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
           />{" "}
         </>
       ) : (
-        <a href="/#"> {items.menuName} </a>
+        <a href="/#" onClick={handleClick}>
+          {" "}
+          {items.menuName}{" "}
+        </a>
       )}{" "}
     </li>
   );

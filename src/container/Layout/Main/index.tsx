@@ -3,16 +3,23 @@ import { useSelector } from "app/store";
 import Navbar from "components/Menu/Navbar";
 import { Main } from "./style";
 import Tab from "components/Tab";
-import Tab1 from "components/Tab/Tab1";
 import { Power, Settings } from "components/AllSvgIcon";
 import UserImg from "image/user.png";
+import { getContent } from "components/Tab/tabContent";
 
-let tabData = ["사원등록", "거래처정보"];
-let menuData: any;
-let tabs = [<Tab1 />, <div>2-r div shuu</div>];
+let menuData: Array<any>;
 
 function MainContainer() {
+  let tabHeader: Array<string> = [];
+  let tabContent: Array<any> = [];
+
   menuData = useSelector((state) => state.menu.menu);
+  const tabState = useSelector((state) => state.tab.tabs);
+
+  if (tabState.length > 0) {
+    tabHeader = [...tabState.map((tab) => tab.menuName)];
+    tabState.map((tab) => tabContent.push(getContent(tab.menuId)));
+  }
 
   return (
     <Main>
@@ -31,13 +38,14 @@ function MainContainer() {
           </div>
         </div>
       </div>
-
-      <Tab
-        header={tabData}
-        defaultIndex={0}
-        handleClick={(e) => console.log("tab clicked", e)}
-        content={tabs}
-      />
+      {tabState.length > 0 && (
+        <Tab
+          header={tabHeader}
+          defaultIndex={0}
+          handleClick={(e) => console.log("tab clicked", e)}
+          content={tabContent}
+        />
+      )}
     </Main>
   );
 }
