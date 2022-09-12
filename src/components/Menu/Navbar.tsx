@@ -15,6 +15,7 @@ const Navbar = (props: INabar) => {
   return (
     <nav>
       <ul className="menus">
+        {" "}
         {list.map((menu: any, index: number) => {
           const depthLevel = 0;
           return <MenuItems items={menu} key={index} depthLevel={depthLevel} />;
