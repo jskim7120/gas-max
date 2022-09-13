@@ -6,6 +6,8 @@ export const TabHeaderWrapper = styled.ul`
   padding: 0;
   width: 100%;
   border-bottom: 1px solid #5c5c5c;
+  height: 35px;
+  margin-top: 4px;
 `;
 
 export const List = styled.li<{ isActive: boolean }>`
@@ -15,16 +17,21 @@ export const List = styled.li<{ isActive: boolean }>`
   width: 130px;
   text-align: center;
   font-size: 12px;
+  padding: 7px 15px 7px 10px;
   position: relative;
+  height: 100%;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   span {
     position: absolute;
-    top: 5px;
-    right: 8px;
+    top: 4px;
+    right: 5px;
     font-size: 16px;
   }
 
-  padding: 10px;
   background: ${(props) => (props.isActive ? "#f0f0f0" : "transparent")};
   color: ${(props) => (props.isActive ? "#333" : "#797d84")};
   border: ${(props) =>
