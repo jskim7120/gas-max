@@ -1,7 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import MainSide from "./Main";
-import { useDispatch, useSelector } from "app/store";
+import { useSelector } from "app/store";
 import { Container, LeftSide, Top, Middle, Bottom, Navigation } from "./style";
 import { Power, Settings, Calendar } from "components/AllSvgIcon";
 import Logo from "image/GasMax.png";
@@ -46,7 +45,6 @@ export default function AppLayout() {
         </Navigation>
       </LeftSide>
       <Outlet />
-      {/* <MainSide /> */}
     </Container>
   );
 }

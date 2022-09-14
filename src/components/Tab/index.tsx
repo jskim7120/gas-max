@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { BaseSyntheticEvent } from "react";
+import { useSelector, useDispatch } from "app/store";
 import { TabHeaderWrapper, List, TabContentWrapper } from "./style";
-
+import { getContent } from "components/Tab/tabContent";
+import { setActiveTab, removeTab } from "features/tab/tabSlice";
 interface TabProps {
-  header: any[];
-  defaultIndex: number;
-  content: any[];
-  handleClick: (index: number) => void;
   className?: string;
   style?: any;
-  closeTab: (arg: any) => void;
 }
 
 interface ITabHeader {
@@ -20,48 +17,63 @@ interface ITabHeader {
 
 const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
   return (
-    <List isActive={isActive} onClick={onClick}>
+    <List
+      isActive={isActive}
+      onClick={(e: BaseSyntheticEvent) => {
+        e.preventDefault();
+        onClick();
+      }}
+    >
       {header.menuName}
-      <span data-menuId={header.menuId} onClick={closeTab}>
+      <span
+        data-menuid={header.menuId}
+        onClick={(e: BaseSyntheticEvent) => {
+          e.stopPropagation();
+          closeTab(e);
+        }}
+      >
         X
       </span>
     </List>
   );
 };
 
-const Tab = (props: TabProps): JSX.Element => {
-  const [tabActive, setTabActive] = useState(
-    props.defaultIndex ? props.defaultIndex : 0
-  );
+let content: React.ReactNode;
+let tabHeader: Array<any>;
 
-  useEffect(() => {
-    setTabActive(props.defaultIndex);
-  }, [props.defaultIndex]);
+const Tab = (props: TabProps): JSX.Element => {
+  console.log("Tab dotroos:");
+  const dispatch = useDispatch();
+  tabHeader = useSelector((state) => state.tab.tabs);
+  const activeTabId = useSelector((state) => state.tab.activeTabId);
+
+  content = getContent(activeTabId);
+  // console.log("content:", content);
+
+  const CloseTab = (e: any) => {
+    const menuId = e.target.getAttribute("data-menuid");
+    dispatch(removeTab({ menuId: menuId }));
+  };
+
+  const ClickOnTab = (menuId: string) => {
+    dispatch(setActiveTab({ activeTabId: menuId }));
+  };
 
   return (
     <>
       <TabHeaderWrapper>
-        {props.header?.map((header: any, index: number) => (
+        {tabHeader?.map((header: any, index: number) => (
           <TabHeader
             key={index}
             header={header}
-            isActive={tabActive === index}
-            onClick={() => {
-              setTabActive(index);
-              // props.handleClick(index);
-            }}
-            closeTab={props.closeTab}
+            isActive={activeTabId === header.menuId}
+            onClick={() => ClickOnTab(header.menuId)}
+            closeTab={CloseTab}
           />
         ))}
       </TabHeaderWrapper>
-      {props.content?.map((component: any, index: number) => (
-        <TabContentWrapper
-          key={index}
-          style={{ display: index === tabActive ? "block" : "none" }}
-        >
-          {component}
-        </TabContentWrapper>
-      ))}
+
+      <TabContentWrapper>{content}</TabContentWrapper>
     </>
   );
 };

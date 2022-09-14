@@ -1,3 +1,4 @@
+import React from "react";
 import { getNestedChildren } from "helpers/nestedSort";
 import MenuItems from "./MenuItems";
 

@@ -4,6 +4,32 @@ import DatePicker from "react-datepicker";
 import formatDate from "../../helpers/dateFormat";
 import { Wrapper } from "./style";
 
+// let data1 = {
+//   areaCode: "04",
+//   opt: 0,
+//   swAddr1: "",
+//   swAddr2: "",
+//   swBigo: "",
+//   swCaCode: null,
+//   swCaName: null,
+//   swCode: "02",
+//   swDriverNo: "",
+//   swDriverType: "",
+//   swGubun: "0",
+//   swHp: "",
+//   swIndate: "",
+//   swJdate1: "",
+//   swJdate2: "",
+//   swJuminno: "",
+//   swName: "",
+//   swPaydate: "",
+//   swPaykum: 0,
+//   swPaytype: "2",
+//   swTel: "",
+//   swWorkOut: "N",
+//   swZipcode: "",
+// };
+
 function InfoDetail({
   data,
   setSelectedCustomer,

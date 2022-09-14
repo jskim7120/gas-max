@@ -24,7 +24,7 @@ const initialState: initialStateType = {
 
 const tabSlice = createSlice({
   name: "menu",
-  initialState: initialState,
+  initialState,
   reducers: {
     addTab: (state, action) => {
       const limit = 5;
@@ -57,12 +57,16 @@ const tabSlice = createSlice({
         state.tabs = state.tabs.filter(
           (tab) => tab.menuId !== action.payload.menuId
         );
+        const firstMenuId = state.tabs[0].menuId;
+        state.activeTabId = firstMenuId;
       }
-      state.activeTabId = state.tabs[0].menuId;
+    },
+    setActiveTab: (state, action) => {
+      state.activeTabId = action.payload.activeTabId;
     },
   },
 });
 
-export const { addTab, removeTab } = tabSlice.actions;
+export const { addTab, removeTab, setActiveTab } = tabSlice.actions;
 
 export default tabSlice.reducer;
