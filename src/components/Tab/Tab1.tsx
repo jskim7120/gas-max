@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { baseURL } from "api";
 import { useDispatch, useSelector } from "app/store";
 import Modal from "react-modal";
 import { openModal, closeModal } from "features/modal/modalSlice";
@@ -12,6 +13,7 @@ import {
   getEmployees,
 } from "features/employee/employeeSlice";
 import {
+  ExcelIcon,
   CloseCircle,
   PlusCircle,
   ArrowDownCircle,
@@ -73,11 +75,6 @@ function TabContent1() {
   const dispatch = useDispatch();
   const modalIsOpen = useSelector((state) => state.modal.modalIsOpen);
 
-  // function afterOpenModal() {
-  // references are now sync'd and can be accessed.
-  // subtitle.style.color = '#f00';
-  // }
-
   function closeModalFunc() {
     dispatch(closeModal({}));
   }
@@ -138,8 +135,16 @@ function TabContent1() {
           padding: "5px 10px",
         }}
       >
-        <span>총수량 :16</span>
+        <span>총수량 :{tableData.length}</span>
         <span style={{ display: "flex" }}>
+          <a
+            href={`${baseURL}employee/excel`}
+            style={{
+              margin: "1px 15px 0 0",
+            }}
+          >
+            <ExcelIcon width="28px" height="28px" />
+          </a>
           <IconButton
             icon={<PlusCircle color="orangered" />}
             onClick={() => AddEmployee()}
@@ -182,7 +187,6 @@ function TabContent1() {
       {modalIsOpen && (
         <Modal
           isOpen={true}
-          // onAfterOpen={afterOpenModal}
           onRequestClose={closeModalFunc}
           style={customStyles}
           contentLabel="Example Modal"
