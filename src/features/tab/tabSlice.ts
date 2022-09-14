@@ -14,12 +14,12 @@ export interface initialStateType {
 const initialState: initialStateType = {
   tabs: [
     {
-      menuId: "M00SD1100",
-      menuName: "판매등록",
-      depthFullName: "등록 > 판매등록",
+      menuId: "M18CO9503",
+      menuName: "사원코드 관리",
+      depthFullName: "공통관리 > 운영/코드정보 > 사원코드 관리",
     },
   ],
-  activeTabId: "M00SD1100",
+  activeTabId: "M18CO9503",
 };
 
 const tabSlice = createSlice({

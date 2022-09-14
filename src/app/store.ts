@@ -2,7 +2,7 @@ import {
   useDispatch as useDispatchBase,
   useSelector as useSelectorBase,
 } from "react-redux";
-import logger from "redux-logger";
+// import logger from "redux-logger";
 import { configureStore } from "@reduxjs/toolkit";
 import employeeReducer from "features/employee/employeeSlice";
 import menuReducer from "features/menu/menuSlice";

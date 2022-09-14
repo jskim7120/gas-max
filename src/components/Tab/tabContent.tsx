@@ -7,7 +7,7 @@ export const getContent = (id: string) => {
     // case "M00":
     //   return <div></div>
     case "M00SD1100":
-      return <TabContent1 />;
+      return <div>M00SD1100</div>;
     case "M00SD1400":
       return <TabContent2 />;
     case "M00SD1600":
@@ -233,7 +233,7 @@ export const getContent = (id: string) => {
     case "M18CO9502":
       return <div></div>;
     case "M18CO9503":
-      return <div></div>;
+      return <TabContent1 />;
     case "M18CO9504":
       return <div></div>;
     case "M18CO9505":
