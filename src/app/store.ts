@@ -8,6 +8,7 @@ import employeeReducer from "features/employee/employeeSlice";
 import menuReducer from "features/menu/menuSlice";
 import favoriteReducer from "features/favorite/favoriteSlice";
 import tabReducer from "features/tab/tabSlice";
+import modalReducer from "features/modal/modalSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     menu: menuReducer,
     favMenu: favoriteReducer,
     tab: tabReducer,
+    modalState: modalReducer,
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

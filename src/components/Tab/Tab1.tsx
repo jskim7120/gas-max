@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "app/store";
+import Modal from "react-modal";
+import { openModal, closeModal } from "features/modal/modalSlice";
 import Table from "components/Table";
 import InfoDetail from "components/InfoDetail";
 import IconButton from "components/Button";
@@ -27,6 +29,19 @@ let tableHeader: any[] = [
 ];
 let tableData: any;
 let user: any;
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    width: "315px",
+    height: "175px",
+  },
+};
 
 const dummySelectedUser = {
   areaCode: "",
@@ -56,6 +71,20 @@ const dummySelectedUser = {
 
 function TabContent1() {
   const dispatch = useDispatch();
+  const modalIsOpen = useSelector((state) => state.modalState.modalIsOpen);
+
+  //
+  let subtitle: any;
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // subtitle.style.color = '#f00';
+  }
+
+  function closeModalFunc() {
+    dispatch(closeModal({}));
+  }
+
   tableData = useSelector((state) => state.employees.employees);
 
   const [isCreate, setIsCreate] = useState(false);
@@ -85,6 +114,7 @@ function TabContent1() {
     await dispatch(deleteEmployee(selectedCustomer));
     await dispatch(getEmployees());
     setIsCreate(false);
+    closeModalFunc();
   };
 
   const UpdateEmployee = async () => {
@@ -120,7 +150,8 @@ function TabContent1() {
           />
           <IconButton
             icon={<CloseCircle color="red" />}
-            onClick={() => DeleteEmployee()}
+            // onClick={() => DeleteEmployee()}
+            onClick={() => dispatch(openModal({}))}
             title="삭제"
           />
           <IconButton
@@ -149,6 +180,28 @@ function TabContent1() {
         </Wrapper>
       ) : (
         <p>...loading</p>
+      )}
+
+      {modalIsOpen && (
+        <Modal
+          isOpen={true}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModalFunc}
+          style={customStyles}
+          contentLabel="Example Modal"
+          portalClassName="modal"
+          ariaHideApp={false}
+        >
+          <div className="modal_title">정말 삭제하시겠습니까?</div>
+          <div className="btn_cnt">
+            <button onClick={DeleteEmployee} className="modal_btn">
+              삭제
+            </button>
+            <button onClick={closeModalFunc} className="modal_btn">
+              취소
+            </button>
+          </div>
+        </Modal>
       )}
     </div>
   );

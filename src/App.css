@@ -1,2 +1,18 @@
-.App {
+.modal_btn {
+  width: 128px;
+  height: 32px;
+  display: inline-block;
+  border-radius: 5px;
+}
+.modal_title {
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 10px;
+}
+.btn_cnt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
 }
