@@ -9,7 +9,8 @@ interface ITable {
 
 function Table({ tableHeader, tableData, onClick }: ITable) {
   const [clickedRowIndex, setClickedRowIndex] = useState(0);
-  // console.log("tableData:", tableData);
+  const data = JSON.parse(JSON.stringify(tableData));
+
   return (
     <AppTable>
       <thead>
@@ -20,19 +21,25 @@ function Table({ tableHeader, tableData, onClick }: ITable) {
         </tr>
       </thead>
       <tbody>
-        {tableData?.map((data: any, i: number) => (
+        {data?.map((item: any, i: number) => (
           <tr
             key={i}
             className={i === clickedRowIndex ? "active" : ""}
             onClick={() => {
               setClickedRowIndex(i);
-              onClick(data);
+              onClick(item);
             }}
           >
-            {Object.entries(data)?.map(
+            {/* {Object.entries(data)?.map(
               ([key, value], idx: number) =>
                 idx < 6 && <td key={idx}>{data[key]}</td>
-            )}
+            )} */}
+            <td>{item.areaCode}</td>
+            <td>{item.swCode}</td>
+            <td>{item.swName}</td>
+            <td>{item.swTel}</td>
+            <td>{item.swHp}</td>
+            <td>{item.swPaydate}</td>
           </tr>
         ))}
       </tbody>
