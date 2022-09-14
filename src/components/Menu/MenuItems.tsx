@@ -1,6 +1,7 @@
 import { FC, useState, useEffect, useRef } from "react";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import { addTab } from "features/tab/tabSlice";
+import useCookies from "app/cookies/cookiesHook";
 import Dropdown from "./Dropdown";
 interface IMenuItems {
   items: any;
@@ -8,6 +9,8 @@ interface IMenuItems {
 }
 
 const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
+  const { set, get, remove } = useCookies();
+
   const dispatch = useDispatch();
   const [dropdown, setDropdown] = useState(false);
 
@@ -58,6 +61,10 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
         depthFullName: items.depthFullName,
       })
     );
+    //set("menus", items.menuId, "1d");
+    //useSelector()
+
+    sessionStorage.setItem("menus", items.menuId);
   };
 
   return (

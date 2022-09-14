@@ -71,15 +71,12 @@ const dummySelectedUser = {
 
 function TabContent1() {
   const dispatch = useDispatch();
-  const modalIsOpen = useSelector((state) => state.modalState.modalIsOpen);
+  const modalIsOpen = useSelector((state) => state.modal.modalIsOpen);
 
-  //
-  let subtitle: any;
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // subtitle.style.color = '#f00';
-  }
+  // function afterOpenModal() {
+  // references are now sync'd and can be accessed.
+  // subtitle.style.color = '#f00';
+  // }
 
   function closeModalFunc() {
     dispatch(closeModal({}));
@@ -185,7 +182,7 @@ function TabContent1() {
       {modalIsOpen && (
         <Modal
           isOpen={true}
-          onAfterOpen={afterOpenModal}
+          // onAfterOpen={afterOpenModal}
           onRequestClose={closeModalFunc}
           style={customStyles}
           contentLabel="Example Modal"
