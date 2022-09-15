@@ -3,22 +3,26 @@ import { ValueType } from "realgrid";
 export const fields = [
   {
     fieldName: "areaCode",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "opt",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "swAddr1",
     dataType: ValueType.NUMBER,
   },
   {
-    fieldName: "swAddr2",
+    fieldName: "swCode",
+    dataType: ValueType.NUMBER,
+  },
+  {
+    fieldName: "swName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "swBigo",
+    fieldName: "swTel",
+    dataType: ValueType.NUMBER,
+  },
+  {
+    fieldName: "swHp",
+    dataType: ValueType.NUMBER,
+  },
+  {
+    fieldName: "swPaydate",
     dataType: ValueType.TEXT,
   },
 ];
@@ -28,12 +32,12 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "50",
     styles: {
       textAlignment: "center",
     },
     header: {
-      text: "areaCode",
+      text: "영업소코드",
       showTooltip: true,
       tooltip: '<span style="color: red;">이름</span>',
     },
@@ -43,52 +47,65 @@ export const columns = [
     },
   },
   {
-    name: "opt",
-    fieldName: "opt",
+    name: "swCode",
+    fieldName: "swCode",
     type: "data",
-    width: "150",
+    width: "50",
     styles: {
       textAlignment: "center",
     },
     header: {
-      text: "opt",
+      text: "사원코드",
       showTooltip: false,
     },
   },
   {
-    name: "swAddr1",
-    fieldName: "swAddr1",
+    name: "swName",
+    fieldName: "swName",
     type: "data",
-    width: "220",
+    width: "80",
     styles: {
       textAlignment: "center",
     },
-    header: "swAddr1",
+    header: "사원명",
   },
   {
-    name: "swAddr2",
-    fieldName: "swAddr2",
+    name: "swTel",
+    fieldName: "swTel",
     type: "data",
     width: "130",
     styles: {
       textAlignment: "center",
     },
     header: {
-      text: "swAddr2",
+      text: "전화번호",
       showTooltip: false,
     },
     numberFormat: "0",
   },
   {
-    name: "swBigo",
-    fieldName: "swBigo",
+    name: "swHp",
+    fieldName: "swHp",
     type: "data",
-    width: "300",
+    width: "130",
     styles: {
       textAlignment: "center",
     },
     header: {
-      text: "swBigo",
+      text: "핸드폰",
+      showTooltip: false,
+    },
+  },
+  {
+    name: "swPaydate",
+    fieldName: "swPaydate",
+    type: "data",
+    width: "50",
+    styles: {
+      textAlignment: "center",
+    },
+    header: {
+      text: "급여일",
       showTooltip: false,
     },
   },

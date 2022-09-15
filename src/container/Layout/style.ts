@@ -43,19 +43,18 @@ export const Middle = styled.div`
   svg {
     margin-right: 3px;
   }
-  div:nth-child(2) {
-    display: flex;
-    flex-direction: column;
-    margin-left: 9px;
-    margin-top: 6px;
-    .fav_menu_item {
-      display: flex;
-      flex-direction: row;
-      margin: 0;
-      div {
-        font-size: 15px;
-        margin: 0 4px 8px 0;
+
+  .fav_menu_item {
+    margin-top: 5px;
+    a {
+      font-size: 14px;
+      text-decoration: none;
+      color: black;
+      font-weight: 400;
+      &:hover {
+        background-color: #f2f2f2;
       }
+      padding: 5px 0px;
     }
   }
 `;

@@ -1,15 +1,12 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { useSelector } from "app/store";
+import FavMenu from "components/favMenu/favMenu";
 import { Container, LeftSide, Top, Middle, Bottom, Navigation } from "./style";
 import { Power, Settings, Calendar } from "components/AllSvgIcon";
 import Logo from "image/GasMax.png";
 import UserImg from "image/user.png";
 
-let favMenuData: any;
-
 export default function AppLayout() {
-  favMenuData = useSelector((state) => state.favMenu.favMenu);
   return (
     <Container>
       <LeftSide>
@@ -25,14 +22,7 @@ export default function AppLayout() {
               <Calendar />
               <p>즐겨찾기</p>
             </div>
-            <div>
-              {favMenuData?.map((data: any, i: number) => (
-                <div className="fav_menu_item" key={i}>
-                  <div>-</div>
-                  <div>{data.menuName}</div>
-                </div>
-              ))}
-            </div>
+            <FavMenu />
           </Middle>
 
           <Bottom>

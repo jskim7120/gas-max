@@ -43,9 +43,8 @@ let tabHeader: Array<any>;
 let activeTabId: any;
 
 const Tab = (props: TabProps): JSX.Element => {
-  // console.log("Tab dotroos:");
+  console.log("Tab dotroos:");
   const dispatch = useDispatch();
-
   let tabState = useSelector((state) => state.tab);
 
   useEffect(() => {
@@ -59,7 +58,6 @@ const Tab = (props: TabProps): JSX.Element => {
 
   tabHeader = tabState.tabs;
   activeTabId = tabState.activeTabId;
-
   content = getContent(activeTabId);
 
   const closeTab = (e: any) => {
