@@ -2,7 +2,7 @@ import React from "react";
 import TabContent1 from "./Tab1";
 import TabContent2 from "./Tab2";
 
-export const getContent = (id: string) => {
+export const getContent = (id: any) => {
   switch (id) {
     // case "M00":
     //   return <div></div>

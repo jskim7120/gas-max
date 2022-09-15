@@ -1,8 +1,8 @@
-import React, { BaseSyntheticEvent } from "react";
+import React, { useEffect, BaseSyntheticEvent } from "react";
 import { useSelector, useDispatch } from "app/store";
 import { TabHeaderWrapper, List, TabContentWrapper } from "./style";
 import { getContent } from "components/Tab/tabContent";
-import { setActiveTab, removeTab } from "features/tab/tabSlice";
+import { setTabs, setActiveTab, removeTab } from "features/tab/tabSlice";
 interface TabProps {
   className?: string;
   style?: any;
@@ -40,22 +40,34 @@ const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
 
 let content: React.ReactNode;
 let tabHeader: Array<any>;
+let activeTabId: any;
 
 const Tab = (props: TabProps): JSX.Element => {
-  console.log("Tab dotroos:");
+  // console.log("Tab dotroos:");
   const dispatch = useDispatch();
-  tabHeader = useSelector((state) => state.tab.tabs);
-  const activeTabId = useSelector((state) => state.tab.activeTabId);
+
+  let tabState = useSelector((state) => state.tab);
+
+  useEffect(() => {
+    if (tabState.tabs.length <= 1 && sessionStorage.getItem("active-tab")) {
+      console.log("tabState length is less than or equal to 1");
+      const storageTab = JSON.parse(`${sessionStorage.getItem("tabs")}`);
+      const activeTab = sessionStorage.getItem("active-tab");
+      dispatch(setTabs({ tabs: storageTab, activeTabId: activeTab }));
+    }
+  }, []);
+
+  tabHeader = tabState.tabs;
+  activeTabId = tabState.activeTabId;
 
   content = getContent(activeTabId);
-  // console.log("content:", content);
 
-  const CloseTab = (e: any) => {
+  const closeTab = (e: any) => {
     const menuId = e.target.getAttribute("data-menuid");
     dispatch(removeTab({ menuId: menuId }));
   };
 
-  const ClickOnTab = (menuId: string) => {
+  const changeTab = (menuId: string) => {
     dispatch(setActiveTab({ activeTabId: menuId }));
   };
 
@@ -67,8 +79,8 @@ const Tab = (props: TabProps): JSX.Element => {
             key={index}
             header={header}
             isActive={activeTabId === header.menuId}
-            onClick={() => ClickOnTab(header.menuId)}
-            closeTab={CloseTab}
+            onClick={() => changeTab(header.menuId)}
+            closeTab={closeTab}
           />
         ))}
       </TabHeaderWrapper>

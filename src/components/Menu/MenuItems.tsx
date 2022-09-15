@@ -1,7 +1,6 @@
 import { FC, useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "app/store";
+import { useDispatch } from "app/store";
 import { addTab } from "features/tab/tabSlice";
-import useCookies from "app/cookies/cookiesHook";
 import Dropdown from "./Dropdown";
 interface IMenuItems {
   items: any;
@@ -9,8 +8,6 @@ interface IMenuItems {
 }
 
 const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
-  const { set, get, remove } = useCookies();
-
   const dispatch = useDispatch();
   const [dropdown, setDropdown] = useState(false);
 
@@ -53,7 +50,7 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
     window.innerWidth > 960 && setDropdown(false);
   };
 
-  const handleClick = () => {
+  const clickOnMenu = () => {
     dispatch(
       addTab({
         menuId: items.menuId,
@@ -61,10 +58,6 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
         depthFullName: items.depthFullName,
       })
     );
-    //set("menus", items.menuId, "1d");
-    //useSelector()
-
-    sessionStorage.setItem("menus", items.menuId);
   };
 
   return (
@@ -96,10 +89,7 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
           />{" "}
         </>
       ) : (
-        <a href="/#" onClick={handleClick}>
-          {" "}
-          {items.menuName}{" "}
-        </a>
+        <a onClick={clickOnMenu}> {items.menuName} </a>
       )}{" "}
     </li>
   );
