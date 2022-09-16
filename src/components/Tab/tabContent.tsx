@@ -7,7 +7,11 @@ export const getContent = (id: any) => {
     // case "M00":
     //   return <div></div>
     case "M00SD1100":
-      return <div>M00SD1100</div>;
+      return (
+        <div>
+          <TabContent1 />
+        </div>
+      );
     case "M00SD1400":
       return <TabContent2 />;
     case "M00SD1600":
