@@ -41,10 +41,7 @@ export const columns = [
       showTooltip: true,
       tooltip: '<span style="color: red;">이름</span>',
     },
-    renderer: {
-      type: "text",
-      showTooltip: true,
-    },
+    numberFormat: "0",
   },
   {
     name: "swCode",
@@ -58,6 +55,7 @@ export const columns = [
       text: "사원코드",
       showTooltip: false,
     },
+    numberFormat: "0",
   },
   {
     name: "swName",
@@ -95,6 +93,7 @@ export const columns = [
       text: "핸드폰",
       showTooltip: false,
     },
+    numberFormat: "0",
   },
   {
     name: "swPaydate",
