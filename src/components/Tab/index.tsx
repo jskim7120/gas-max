@@ -48,8 +48,8 @@ const Tab = (props: TabProps): JSX.Element => {
   let tabState = useSelector((state) => state.tab);
 
   useEffect(() => {
-    if (tabState.tabs.length <= 1 && sessionStorage.getItem("active-tab")) {
-      console.log("tabState length is less than or equal to 1");
+    if (tabState.tabs.length <= 2 && sessionStorage.getItem("active-tab")) {
+      console.log("tabState length is less than or equal to 2");
       const storageTab = JSON.parse(`${sessionStorage.getItem("tabs")}`);
       const activeTab = sessionStorage.getItem("active-tab");
       dispatch(setTabs({ tabs: storageTab, activeTabId: activeTab }));

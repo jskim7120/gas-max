@@ -84,12 +84,48 @@ function TabContent3() {
   return (
     <div>
       {tableData ? (
-        <Wrapper>
-          <div
-            style={{ height: "500px", width: "100%" }}
-            ref={realgridElement}
-          ></div>
-        </Wrapper>
+        <>
+          <Wrapper>
+            <div
+              style={{ height: "500px", width: "100%" }}
+              ref={realgridElement}
+            ></div>
+          </Wrapper>
+
+          <button
+            onClick={async () => {
+              const value = {
+                areaCode: "64",
+                opt: 0,
+                swAddr1: "sxs",
+                swAddr2: "xfvf",
+                swBigo: "0",
+                swCaCode: null,
+                swCaName: null,
+                swCode: "63",
+                swDriverNo: "",
+                swDriverType: "",
+                swGubun: "",
+                swHp: "",
+                swIndate: "",
+                swJdate1: "",
+                swJdate2: "",
+                swJuminno: "",
+                swName: "toast",
+                swPaydate: "",
+                swPaykum: 0,
+                swPaytype: "",
+                swTel: "",
+                swWorkOut: "N",
+                swZipcode: "",
+              };
+              dp.insertRow(4, value);
+              await dispatch(addEmployee(value));
+            }}
+          >
+            Add
+          </button>
+        </>
       ) : (
         <p>...loading</p>
       )}
