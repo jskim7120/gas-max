@@ -85,9 +85,6 @@ function TabContent1() {
   const [selectedCustomer, setSelectedCustomer] = useState({});
   let selectedCustomerCopy = { ...tableData[0] };
 
-  // console.log("tableData:", tableData[0]);
-  // console.log("menuData:", menuData);
-
   useEffect(() => {
     setSelectedCustomer({ ...tableData[0] });
     selectedCustomerCopy = { ...tableData[0] };

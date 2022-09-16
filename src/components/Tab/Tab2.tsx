@@ -3,23 +3,23 @@ import { useDispatch, useSelector } from "app/store";
 import { GridView, LocalDataProvider } from "realgrid";
 import { columns, fields } from "./employee-data";
 import InfoDetail from "components/InfoDetail";
-// import { baseURL } from "api";
-// import IconButton from "components/Button";
-
-// import {
-//   updateEmployee,
-//   addEmployee,
-//   deleteEmployee,
-//   getEmployees,
-// } from "features/employee/employeeSlice";
-// import { openModal, closeModal } from "features/modal/modalSlice";
-// import {
-//   ExcelIcon,
-//   CloseCircle,
-//   PlusCircle,
-//   ArrowDownCircle,
-//   ForbidCircle,
-// } from "components/AllSvgIcon";
+import { baseURL } from "api";
+import IconButton from "components/Button";
+import Modal from "react-modal";
+import {
+  updateEmployee,
+  addEmployee,
+  deleteEmployee,
+  getEmployees,
+} from "features/employee/employeeSlice";
+import { openModal, closeModal } from "features/modal/modalSlice";
+import {
+  ExcelIcon,
+  CloseCircle,
+  PlusCircle,
+  ArrowDownCircle,
+  ForbidCircle,
+} from "components/AllSvgIcon";
 import { Wrapper } from "./style";
 
 const customStyles = {
@@ -35,7 +35,7 @@ const customStyles = {
   },
 };
 
-const dummySelectedUser = {
+const emptyUser = {
   areaCode: "",
   opt: 0,
   swAddr1: "",
@@ -62,80 +62,81 @@ const dummySelectedUser = {
 };
 
 let tableData: any;
-let user: any;
+let container: HTMLDivElement;
+let dp: any;
+let gv: any;
+let selectedCustomerCopy: any;
 
 function Tab2() {
   const dispatch = useDispatch();
   tableData = useSelector((state) => state.employees.employees);
+  console.log("tableData:", tableData);
+  const realgridElement = useRef<HTMLDivElement>(null);
 
   const [isCreate, setIsCreate] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState({});
-  let selectedCustomerCopy = { ...tableData[0] };
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
-  // const [dataProvider, setDataProvider] = useState(null);
-  // const [gridView, setGridView] = useState(null);
-  const realgridElement = useRef<HTMLDivElement>(null);
+  const modalIsOpen = useSelector((state) => state.modal.modalIsOpen);
 
   useEffect(() => {
-    const container: HTMLDivElement = realgridElement.current as HTMLDivElement;
-    const dp = new LocalDataProvider(true);
-    const gv = new GridView(container);
-
+    container = realgridElement.current as HTMLDivElement;
+    dp = new LocalDataProvider(true);
+    gv = new GridView(container);
     gv.setDataSource(dp);
     dp.setFields(fields);
     gv.setColumns(columns);
     dp.setRows(tableData);
 
-    // setDataProvider(dp);
-    // setGridView(gv);
+    gv.onSelectionChanged = function () {
+      const itemIndex: any = gv.getCurrent().itemIndex;
+      //const realGridData = gv.getValues(itemIndex);
+      selectedCustomerCopy = tableData[itemIndex];
+      setSelectedCustomer(tableData[itemIndex]);
+      setSelectedIndex(itemIndex);
+    };
 
     return () => {
       dp.clearRows();
       gv.destroy();
       dp.destroy();
     };
-  }, []);
+  }, [tableData]);
 
-  // const closeModalFunc = () => {
-  //   dispatch(closeModal({}));
-  // };
+  const closeModalFunc = () => {
+    dispatch(closeModal({}));
+  };
 
-  // const changeCustomerInfo = (data: any) => {
-  //   user = data;
-  //   setSelectedCustomer(data);
-  //   selectedCustomerCopy = { data };
-  // };
+  const add = () => {
+    setSelectedCustomer(emptyUser);
+    setIsCreate(true);
+  };
 
-  // const AddEmployee = async () => {
-  //   setSelectedCustomer(dummySelectedUser);
-  //   setIsCreate(true);
-  // };
+  const remove = async () => {
+    await dispatch(deleteEmployee(selectedCustomer));
+    await dispatch(getEmployees());
+    setIsCreate(false);
+    closeModalFunc();
+  };
 
-  // const DeleteEmployee = async () => {
-  //   await dispatch(deleteEmployee(selectedCustomer));
-  //   await dispatch(getEmployees());
-  //   setIsCreate(false);
-  //   closeModalFunc();
-  // };
+  const update = async () => {
+    if (isCreate) {
+      await dispatch(addEmployee({ ...selectedCustomer, areaCode: "20" }));
+      setIsCreate(false);
+    } else {
+      await dispatch(updateEmployee(selectedCustomer));
+    }
+    await dispatch(getEmployees());
+  };
 
-  // const UpdateEmployee = () => {
-  //   if (isCreate) {
-  //     dispatch(addEmployee({ ...selectedCustomer, areaCode: "20" }));
-  //     setIsCreate(false);
-  //   } else {
-  //     dispatch(updateEmployee(selectedCustomer));
-  //   }
-  //   dispatch(getEmployees());
-  // };
-
-  // const Cancel = () => {
-  //   setSelectedCustomer(selectedCustomerCopy);
-  //   setIsCreate(false);
-  // };
+  const cancel = () => {
+    setSelectedCustomer(selectedCustomerCopy);
+    setIsCreate(false);
+  };
 
   return (
     <div>
-      {/* <div
+      <div
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -155,27 +156,26 @@ function Tab2() {
           </a>
           <IconButton
             icon={<PlusCircle color="orangered" />}
-            onClick={() => AddEmployee()}
+            onClick={() => add()}
             title="등록"
           />
           <IconButton
             icon={<CloseCircle color="red" />}
-            // onClick={() => DeleteEmployee()}
             onClick={() => dispatch(openModal({}))}
             title="삭제"
           />
           <IconButton
             icon={<ArrowDownCircle color="aqua" />}
-            onClick={() => UpdateEmployee()}
+            onClick={() => update()}
             title="저장"
           />
           <IconButton
             icon={<ForbidCircle color="red" />}
-            onClick={() => Cancel()}
+            onClick={() => cancel()}
             title="취소"
           />
         </span>
-      </div> */}
+      </div>
       {tableData ? (
         <Wrapper>
           <div
@@ -189,6 +189,27 @@ function Tab2() {
         </Wrapper>
       ) : (
         <p>...loading</p>
+      )}
+
+      {modalIsOpen && (
+        <Modal
+          isOpen={true}
+          onRequestClose={closeModalFunc}
+          style={customStyles}
+          contentLabel="Example Modal"
+          portalClassName="modal"
+          ariaHideApp={false}
+        >
+          <div className="modal_title">정말 삭제하시겠습니까?</div>
+          <div className="btn_cnt">
+            <button onClick={remove} className="modal_btn">
+              삭제
+            </button>
+            <button onClick={closeModalFunc} className="modal_btn">
+              취소
+            </button>
+          </div>
+        </Modal>
       )}
     </div>
   );

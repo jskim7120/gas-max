@@ -8,7 +8,7 @@ let favMenuData: Array<any>;
 function FavMenu() {
   const dispatch = useDispatch();
   favMenuData = useSelector((state) => state.favMenu.favMenu);
-  console.log("favMenu data===>", favMenuData);
+  // console.log("favMenu data===>", favMenuData);
 
   const handleClick = (data: any) => {
     dispatch(
