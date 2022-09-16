@@ -1,21 +1,18 @@
 import React from "react";
 import TabContent1 from "./Tab1";
 import TabContent2 from "./Tab2";
+import TabContent3 from "./Tab3";
 
 export const getContent = (id: any) => {
   switch (id) {
     // case "M00":
     //   return <div></div>
     case "M00SD1100":
-      return (
-        <div>
-          <TabContent1 />
-        </div>
-      );
+      return <TabContent1 />;
     case "M00SD1400":
       return <TabContent2 />;
     case "M00SD1600":
-      return <div>M00SD1600</div>;
+      return <TabContent3 />;
     // case "M11":
     //   return < />;
     case "M11AR21":

@@ -18,8 +18,13 @@ const initialState: initialStateType = {
       menuName: "사원코드 관리",
       depthFullName: "공통관리 > 운영/코드정보 > 사원코드 관리",
     },
+    {
+      menuId: "M00SD1400",
+      menuName: "검침등록",
+      depthFullName: "등록 > 검침등록",
+    },
   ],
-  activeTabId: "M18CO9503",
+  activeTabId: "M00SD1400",
 };
 
 const tabSlice = createSlice({

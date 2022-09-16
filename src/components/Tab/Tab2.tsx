@@ -88,6 +88,18 @@ function Tab2() {
     gv.setColumns(columns);
     dp.setRows(tableData);
 
+    // gv.setDisplayOptions({
+    //   selection: {
+    //     background: "red",
+    //   },
+    // });
+
+    gv.setSelection({
+      startItem: selectedIndex,
+      endItem: selectedIndex,
+      style: "rows",
+    });
+
     gv.onSelectionChanged = function () {
       const itemIndex: any = gv.getCurrent().itemIndex;
       //const realGridData = gv.getValues(itemIndex);
