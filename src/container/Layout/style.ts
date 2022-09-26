@@ -23,6 +23,7 @@ export const Icons = styled.div`
 
 export const Wrapper = styled.div`
   padding: 10px;
+  display: flex;
 `;
 
 export const LeftSide = styled.div`
