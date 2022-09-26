@@ -13,6 +13,7 @@ import {
   Middle,
   Bottom,
   Navigation,
+  Wrapper,
 } from "./style";
 import { Power, Settings, Info, User, Calendar } from "components/AllSvgIcon";
 import LogoImg from "image/Logo.png";
@@ -36,33 +37,34 @@ export default function AppLayout() {
           <User />
         </Icons>
       </TopSide>
+      <Wrapper>
+        <LeftSide>
+          <Navigation>
+            <Top>
+              {/* <img src={Logo} width="200px" /> */}
+              {/* <img src={UserImg} width="auto" /> */}
+              <p>사용자1[영업소]</p>
+              <p>최근접속시간 2022-09-01 14:01:25</p>
+            </Top>
+            <Middle>
+              <div>
+                <Calendar />
+                <p>즐겨찾기</p>
+              </div>
+              <FavMenu />
+            </Middle>
 
-      <LeftSide>
-        <Navigation>
-          <Top>
-            {/* <img src={Logo} width="200px" /> */}
-            {/* <img src={UserImg} width="auto" /> */}
-            <p>사용자1[영업소]</p>
-            <p>최근접속시간 2022-09-01 14:01:25</p>
-          </Top>
-          <Middle>
-            <div>
-              <Calendar />
-              <p>즐겨찾기</p>
-            </div>
-            <FavMenu />
-          </Middle>
-
-          <Bottom>
-            <span>
-              <Power />
-              <Settings color="gray" />
-            </span>
-            <div className="time">15:50</div>
-          </Bottom>
-        </Navigation>
-      </LeftSide>
-      <Outlet />
+            <Bottom>
+              <span>
+                <Power />
+                <Settings color="gray" />
+              </span>
+              <div className="time">15:50</div>
+            </Bottom>
+          </Navigation>
+        </LeftSide>
+        <Outlet />
+      </Wrapper>
     </Container>
   );
 }

@@ -21,6 +21,10 @@ export const Icons = styled.div`
   }
 `;
 
+export const Wrapper = styled.div`
+  padding: 10px;
+`;
+
 export const LeftSide = styled.div`
   width: 400px;
   border: 3px solid #004080;
