@@ -17,9 +17,8 @@ export const List = styled.li<{ isActive: boolean }>`
   width: 130px;
   text-align: center;
   font-size: 12px;
-  padding: 7px 15px 7px 10px;
+  padding: 8px 15px 9px 10px;
   position: relative;
-  height: 100%;
 
   white-space: nowrap;
   overflow: hidden;
