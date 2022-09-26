@@ -2,14 +2,22 @@ import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "app/store";
 import { GridView, LocalDataProvider } from "realgrid";
 import { columns, fields } from "./employee-data-full";
+import IconButton from "components/Button";
 import { baseURL } from "api";
+import {
+  ExcelIcon,
+  CloseCircle,
+  PlusCircle,
+  ArrowDownCircle,
+  ForbidCircle,
+} from "components/AllSvgIcon";
 import {
   updateEmployee,
   addEmployee,
   deleteEmployee,
   getEmployees,
 } from "features/employee/employeeSlice";
-import { Wrapper } from "./style";
+import { Wrapper } from "../style";
 
 let tableData: any;
 let container: HTMLDivElement;
@@ -59,27 +67,36 @@ function TabContent3() {
     };
   }, [tableData]);
 
-  //   const add = () => {
-  //     setSelectedCustomer(emptyUser);
-  //     setIsCreate(true);
-  //   };
-
-  //   const remove = async () => {
-  //     await dispatch(deleteEmployee(selectedCustomer));
-  //     await dispatch(getEmployees());
-  //     setIsCreate(false);
-  //     closeModalFunc();
-  //   };
-
-  //   const update = async () => {
-  //     if (isCreate) {
-  //       await dispatch(addEmployee({ ...selectedCustomer, areaCode: "20" }));
-  //       setIsCreate(false);
-  //     } else {
-  //       await dispatch(updateEmployee(selectedCustomer));
-  //     }
-  //     await dispatch(getEmployees());
-  //   };
+  const add = () => {
+    const value = {
+      areaCode: "",
+      opt: 0,
+      swAddr1: "",
+      swAddr2: "",
+      swBigo: "0",
+      swCaCode: null,
+      swCaName: null,
+      swCode: "",
+      swDriverNo: "",
+      swDriverType: "",
+      swGubun: "",
+      swHp: "",
+      swIndate: "",
+      swJdate1: "",
+      swJdate2: "",
+      swJuminno: "",
+      swName: "",
+      swPaydate: "",
+      swPaykum: 0,
+      swPaytype: "",
+      swTel: "",
+      swWorkOut: "N",
+      swZipcode: "",
+    };
+    //dp.insertRow(4, value);
+    // gv.beginAppendRow();
+    gv.beginInsertRow(0);
+  };
 
   return (
     <div>
@@ -91,40 +108,19 @@ function TabContent3() {
               ref={realgridElement}
             ></div>
           </Wrapper>
+          <span>
+            <IconButton
+              icon={<PlusCircle color="orangered" />}
+              onClick={() => add()}
+              title="Add"
+            />
 
-          <button
-            onClick={async () => {
-              const value = {
-                areaCode: "64",
-                opt: 0,
-                swAddr1: "sxs",
-                swAddr2: "xfvf",
-                swBigo: "0",
-                swCaCode: null,
-                swCaName: null,
-                swCode: "63",
-                swDriverNo: "",
-                swDriverType: "",
-                swGubun: "",
-                swHp: "",
-                swIndate: "",
-                swJdate1: "",
-                swJdate2: "",
-                swJuminno: "",
-                swName: "toast",
-                swPaydate: "",
-                swPaykum: 0,
-                swPaytype: "",
-                swTel: "",
-                swWorkOut: "N",
-                swZipcode: "",
-              };
-              dp.insertRow(4, value);
-              await dispatch(addEmployee(value));
-            }}
-          >
-            Add
-          </button>
+            <IconButton
+              icon={<PlusCircle color="aqua" />}
+              onClick={() => add()}
+              title="Update"
+            />
+          </span>
         </>
       ) : (
         <p>...loading</p>

@@ -1,8 +1,8 @@
 import React, { useEffect, BaseSyntheticEvent } from "react";
 import { useSelector, useDispatch } from "app/store";
-import { TabHeaderWrapper, List, TabContentWrapper } from "./style";
-import { getContent } from "components/Tab/tabContent";
 import { setTabs, setActiveTab, removeTab } from "features/tab/tabSlice";
+import { getContent } from "./tabContent";
+import { TabHeaderWrapper, List, TabContentWrapper } from "./style";
 interface TabProps {
   className?: string;
   style?: any;
@@ -32,7 +32,7 @@ const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
           closeTab(e);
         }}
       >
-        X
+        &#10005;
       </span>
     </List>
   );
@@ -82,7 +82,6 @@ const Tab = (props: TabProps): JSX.Element => {
           />
         ))}
       </TabHeaderWrapper>
-
       <TabContentWrapper>{content}</TabContentWrapper>
     </>
   );
