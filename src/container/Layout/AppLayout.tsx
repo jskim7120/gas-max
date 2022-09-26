@@ -16,7 +16,7 @@ import {
   Wrapper,
 } from "./style";
 import { Power, Settings, Info, User, Calendar } from "components/AllSvgIcon";
-import LogoImg from "image/Logo.png";
+import LogoImg from "assets/image/Logo.png";
 
 import Navbar from "components/Menu/Navbar";
 
