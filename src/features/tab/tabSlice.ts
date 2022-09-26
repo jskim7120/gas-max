@@ -32,14 +32,14 @@ const tabSlice = createSlice({
   initialState,
   reducers: {
     addTab: (state, action) => {
-      const limit = 5;
+      const limit = 10;
       const hasMenuId = state.tabs.some(
         (tab) => tab.menuId === action.payload.menuId
       );
 
       if (!hasMenuId) {
         const length = state.tabs.length;
-        if (length > limit) {
+        if (length >= limit) {
           state.tabs = state.tabs.filter(
             (tab: TabProps, idx: number) => idx !== 0
           );
