@@ -7,10 +7,19 @@ export const TopSide = styled.div`
   height: 70px;
   background-color: rgba(101, 84, 255, 0.19);
   border: 1px solid #707070;
+  padding: 0 20px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const Logo = styled.div``;
+
+export const Icons = styled.div`
+  svg {
+    margin-right: 10px;
+  }
+`;
 
 export const LeftSide = styled.div`
   width: 400px;

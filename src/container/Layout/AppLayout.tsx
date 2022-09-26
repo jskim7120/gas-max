@@ -9,11 +9,12 @@ import {
   LeftSide,
   Top,
   Logo,
+  Icons,
   Middle,
   Bottom,
   Navigation,
 } from "./style";
-import { Power, Settings, Calendar } from "components/AllSvgIcon";
+import { Power, Settings, Info, User, Calendar } from "components/AllSvgIcon";
 import LogoImg from "image/Logo.png";
 
 import Navbar from "components/Menu/Navbar";
@@ -28,9 +29,14 @@ export default function AppLayout() {
         <Logo>
           <img src={LogoImg} />
         </Logo>
-
         <Navbar data={menuData} />
+        <Icons>
+          <Settings />
+          <Info />
+          <User />
+        </Icons>
       </TopSide>
+
       <LeftSide>
         <Navigation>
           <Top>

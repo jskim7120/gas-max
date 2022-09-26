@@ -172,6 +172,125 @@ export const X = ({
   );
 };
 
+export const Settings = ({
+  color = "#000",
+  width = "24px",
+  height = "24px",
+}) => {
+  return (
+    <svg
+      id="Icon_settings"
+      data-name="Icon/settings"
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+    >
+      <path id="Path_40" data-name="Path 40" d="M0,0H24V24H0Z" fill="none" />
+      <path
+        id="Path_41"
+        data-name="Path 41"
+        d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z"
+        fill="none"
+        stroke="#000"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+      <circle
+        id="Ellipse_2"
+        data-name="Ellipse 2"
+        cx="3"
+        cy="3"
+        r="3"
+        transform="translate(9 9)"
+        fill="none"
+        stroke="#000"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+    </svg>
+  );
+};
+export const Info = ({ color = "#000", width = "24px", height = "24px" }) => {
+  return (
+    <svg
+      id="Icon_info"
+      data-name="Icon/info"
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+    >
+      <path id="Path_46" data-name="Path 46" d="M0,0H24V24H0Z" fill="none" />
+      <circle
+        id="Ellipse_3"
+        data-name="Ellipse 3"
+        cx="9"
+        cy="9"
+        r="9"
+        transform="translate(3 3)"
+        fill="none"
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+      <line
+        id="Line_10"
+        data-name="Line 10"
+        x2="0.01"
+        transform="translate(12 8)"
+        fill="none"
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+      <path
+        id="Path_47"
+        data-name="Path 47"
+        d="M11,12h1v4h1"
+        fill="none"
+        stroke={color}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+    </svg>
+  );
+};
+
+export const User = ({ color = "#000", width = "24px", height = "24px" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+    >
+      <g id="Icon_user" data-name="Icon/user" transform="translate(-27.024 7)">
+        <rect
+          id="Container"
+          width={width}
+          height={height}
+          transform="translate(27.024 -7)"
+          fill="none"
+        />
+        <path
+          id="Path_2753"
+          data-name="Path 2753"
+          d="M53.681,9.775A8,8,0,0,0,50.56,7.768a4.454,4.454,0,0,0,.762-6.076A4.05,4.05,0,0,0,45.489.9a4.454,4.454,0,0,0-.762,6.076,4.251,4.251,0,0,0,.764.8,8.256,8.256,0,0,0-5.466,7.9v2.666A1.636,1.636,0,0,0,41.624,20h12.8a1.636,1.636,0,0,0,1.6-1.666V15.667A8.469,8.469,0,0,0,53.681,9.775ZM44.5,4.335a3.523,3.523,0,1,1,7.04,0,3.688,3.688,0,0,1-1.9,3.254,3.3,3.3,0,0,1-.373.173l-.055.02q-.16.059-.323.1l-.084.021q-.157.037-.317.059l-.075.011a3.447,3.447,0,0,1-.788,0l-.074-.011q-.16-.022-.32-.059l-.083-.02a3.288,3.288,0,0,1-.324-.1l-.055-.019a3.377,3.377,0,0,1-.374-.174A3.673,3.673,0,0,1,44.5,4.335Zm10.88,14a.981.981,0,0,1-.96,1h-12.8a.981.981,0,0,1-.96-1V15.667a7.59,7.59,0,0,1,5.195-7.326.92.92,0,0,1,.28-.043.974.974,0,0,1,.368.073l.026.009c.044.018.089.031.132.047.1.033.192.067.288.093.062.017.125.032.188.046.084.019.168.033.252.047.064.01.128.021.195.028.113.012.226.018.34.021.032,0,.064.006.1.006s.064-.005.1-.006c.113,0,.224-.009.337-.021.066-.007.131-.018.2-.028.084-.013.167-.028.25-.047.064-.014.126-.029.188-.046.1-.027.2-.06.293-.095.042-.015.084-.028.125-.044l.03-.011a.947.947,0,0,1,.644-.031,7.636,7.636,0,0,1,5.2,7.327Z"
+          transform="translate(-8.5 -5.5)"
+          stroke={color}
+          stroke-width="1"
+        />
+      </g>
+    </svg>
+  );
+};
+
 export const Calendar = ({
   color = "currentColor",
   width = "24px",
@@ -218,30 +337,6 @@ export const Power = ({
     >
       <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
       <line x1="12" y1="2" x2="12" y2="12"></line>
-    </svg>
-  );
-};
-
-export const Settings = ({
-  color = "currentColor",
-  width = "24px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="feather feather-settings"
-    >
-      <circle cx="12" cy="12" r="3"></circle>
-      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
     </svg>
   );
 };
