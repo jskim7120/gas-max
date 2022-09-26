@@ -13,6 +13,8 @@ import {
 import { ErrorText, FormWrapper, FormGroup, Wrapper } from "./style";
 import { IFormProps } from "./type";
 import { schema } from "./validation";
+import { Tick, Plus, Trash, X } from "components/AllSvgIcon";
+import Button from "components/Button/Button";
 
 export default function Form({
   selectedCustomer,
@@ -98,6 +100,15 @@ export default function Form({
           cancel
         </button>
       </div>
+      <div style={{ background: "black" }}>
+        <Plus />
+        <Trash />
+        <Tick />
+        <X />
+      </div>
+
+      <Button onClick={() => console.log("scsd")} icon={<Plus />} text="등록" />
+
       <FormWrapper>
         <Wrapper>
           <FormGroup>

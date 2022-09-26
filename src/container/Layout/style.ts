@@ -1,11 +1,16 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.div``;
+
+export const TopSide = styled.div`
+  width: 100%;
+  height: 70px;
+  background-color: rgba(101, 84, 255, 0.19);
+  border: 1px solid #707070;
   display: flex;
-  height: 100vh;
-  width: calc(100%-400px);
-  padding: 10px;
 `;
+
+export const Logo = styled.div``;
 
 export const LeftSide = styled.div`
   width: 400px;

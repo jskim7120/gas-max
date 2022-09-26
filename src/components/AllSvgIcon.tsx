@@ -1,3 +1,177 @@
+export const Plus = ({ color = "#fff", width = "24px", height = "24px" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <g id="Icon_Plus" data-name="Icon/Plus" transform="translate(1 1)">
+        <rect
+          id="Container"
+          width="24"
+          height="24"
+          transform="translate(-1 -1)"
+          fill="none"
+        />
+        <path
+          id="Path_2814"
+          data-name="Path 2814"
+          d="M11,0A11,11,0,1,0,22,11,11,11,0,0,0,11,0Zm0,21.267A10.267,10.267,0,1,1,21.267,11,10.267,10.267,0,0,1,11,21.267Z"
+          fill="#fff"
+          stroke="#fff"
+          stroke-width="0.8"
+        />
+        <path
+          id="Path_2815"
+          data-name="Path 2815"
+          d="M107.952,101.805h-5.464V96.341a.341.341,0,1,0-.683,0v5.464H96.341a.341.341,0,1,0,0,.683h5.464v5.464a.341.341,0,0,0,.683,0v-5.464h5.464a.341.341,0,0,0,0-.683Z"
+          transform="translate(-91.146 -91.146)"
+          fill="#fff"
+          stroke="#fff"
+          stroke-width="0.8"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
+  return (
+    <svg
+      id="Icon_trash"
+      data-name="Icon/trash"
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+    >
+      <path id="Path_50" data-name="Path 50" d="M0,0H24V24H0Z" fill="none" />
+      <line
+        id="Line_15"
+        data-name="Line 15"
+        x2="16"
+        transform="translate(4 7)"
+        fill="none"
+        stroke="#fff"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+      <line
+        id="Line_16"
+        data-name="Line 16"
+        y2="6"
+        transform="translate(10 11)"
+        fill="none"
+        stroke="#fff"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+      <line
+        id="Line_17"
+        data-name="Line 17"
+        y2="6"
+        transform="translate(14 11)"
+        fill="none"
+        stroke="#fff"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+      <path
+        id="Path_51"
+        data-name="Path 51"
+        d="M5,7,6,19a2,2,0,0,0,2,2h8a2,2,0,0,0,2-2L19,7"
+        fill="none"
+        stroke="#fff"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+      <path
+        id="Path_52"
+        data-name="Path 52"
+        d="M9,7V4a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1V7"
+        fill="none"
+        stroke="#fff"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+    </svg>
+  );
+};
+
+export const Tick = ({
+  color = "#fff",
+  width = "11.24px",
+  height = "12.176px",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="11.69"
+      height="9.501"
+      viewBox="0 0 11.69 9.501"
+    >
+      <path
+        id="Path_31"
+        data-name="Path 31"
+        d="M-1191.5,965.684l3.193,3.677,5.676-6.563"
+        transform="translate(1192.915 -961.388)"
+        fill="none"
+        stroke="#fff"
+        stroke-linecap="square"
+        stroke-width="2"
+      />
+    </svg>
+  );
+};
+export const X = ({
+  color = "#fff",
+  width = "11.69px",
+  height = "9.501px",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="11.242"
+      height="12.177"
+      viewBox="0 0 11.242 12.177"
+    >
+      <g
+        id="Group_1214"
+        data-name="Group 1214"
+        transform="translate(-719.234 -604.091)"
+      >
+        <line
+          id="Line_43"
+          data-name="Line 43"
+          x1="7.71"
+          y2="8.436"
+          transform="translate(721 605.857)"
+          fill="none"
+          stroke="#fff"
+          stroke-linecap="round"
+          stroke-width="2.5"
+        />
+        <path
+          id="Path_45"
+          data-name="Path 45"
+          d="M0,0,7.71,8.647"
+          transform="translate(728.71 614.503) rotate(180)"
+          fill="none"
+          stroke="#fff"
+          stroke-linecap="round"
+          stroke-width="2.5"
+        />
+      </g>
+    </svg>
+  );
+};
+
 export const Calendar = ({
   color = "currentColor",
   width = "24px",
