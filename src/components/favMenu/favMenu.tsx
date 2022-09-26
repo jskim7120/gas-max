@@ -21,6 +21,7 @@ function FavMenu() {
   };
 
   return (
+    // favMenu
     <FavMenuList>
       {favMenuData?.map((data: any, i: number) => (
         <div className="fav_menu_item" key={i}>
