@@ -3,11 +3,11 @@ import { getNestedChildren } from "helpers/nestedSort";
 import MenuItems from "./MenuItems";
 import { Nav } from "./style";
 
-interface INabar {
+interface INavbar {
   data?: any;
 }
 
-const Navbar = (props: INabar) => {
+const Navbar = (props: INavbar) => {
   let list: any;
   if (props.data) {
     const clone = JSON.parse(JSON.stringify(props.data));
