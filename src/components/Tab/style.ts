@@ -31,11 +31,12 @@ export const List = styled.li<{ isActive: boolean }>`
   outline: none;
   width: 130px;
   height: 100%;
-  text-align: center;
   font-size: 12px;
-  padding: 8px 32px 8px 8px;
+  padding: 3px 32px 0 9px;
   margin-right: 3px;
   position: relative;
+  font-family: "NotoSansKRRegular";
+  font-size: 18px;
 
   white-space: nowrap;
   overflow: hidden;

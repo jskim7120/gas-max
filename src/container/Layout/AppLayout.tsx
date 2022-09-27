@@ -2,7 +2,6 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "app/store";
 import FavMenu from "components/favMenu/favMenu";
-
 import {
   Container,
   TopSide,
@@ -16,9 +15,8 @@ import {
   Wrapper,
 } from "./style";
 import { Power, Settings, Info, User, Calendar } from "components/AllSvgIcon";
-import LogoImg from "assets/image/Logo.png";
-
 import Navbar from "components/Menu/Navbar";
+import LogoImg from "assets/image/Logo.png";
 
 let menuData: Array<any>;
 

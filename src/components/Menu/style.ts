@@ -5,36 +5,37 @@ export const Nav = styled.nav`
     display: flex;
     list-style: none;
 
-    .menu-items {
+    li.menu-items {
       position: relative;
-      font-size: 14px;
-    }
+      font-family: "NotoSansKRRegular";
+      font-size: 18px;
 
-    .menu-items a {
-      display: block;
-      font-size: inherit;
-      color: inherit;
-      text-decoration: none;
-    }
+      a {
+        display: block;
+        font-size: inherit;
+        color: inherit;
+        text-decoration: none;
+      }
 
-    .menu-items button {
-      color: inherit;
-      font-size: inherit;
-      border: none;
-      background-color: transparent;
-      cursor: pointer;
-      width: 100%;
-    }
+      button {
+        color: inherit;
+        font-size: inherit;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        width: 100%;
+      }
 
-    .menu-items a,
-    .menu-items button {
-      text-align: left;
-      padding: 0.7rem 1rem;
-    }
+      a,
+      button {
+        text-align: left;
+        padding: 0.7rem 1rem;
+      }
 
-    .menu-items a:hover,
-    .menu-items button:hover {
-      background-color: #f2f2f2;
+      a:hover,
+      button:hover {
+        background-color: #f2f2f2;
+      }
     }
 
     .arrow::after {
