@@ -1,14 +1,29 @@
 import React from "react";
 import { useSelector, useDispatch } from "app/store";
 import { addTab } from "features/tab/tabSlice";
-import FavMenuList from "./style";
+import {
+  FavMenuList,
+  FavMenuItem,
+  RecentMenuList,
+  RecentMenuItem,
+  RecentItemContainer,
+} from "./style";
+import {
+  Settings,
+  Info,
+  User,
+  Favorite,
+  IconFile,
+  Attach,
+  DeliveryTruck,
+} from "components/AllSvgIcon";
 
 let favMenuData: Array<any>;
 
 function FavMenu() {
   const dispatch = useDispatch();
   favMenuData = useSelector((state) => state.favMenu.favMenu);
-  // console.log("favMenu data===>", favMenuData);
+  console.log("fav====>", favMenuData);
 
   const handleClick = (data: any) => {
     dispatch(
@@ -21,13 +36,33 @@ function FavMenu() {
   };
 
   return (
-    // favMenu
     <FavMenuList>
       {favMenuData?.map((data: any, i: number) => (
-        <div className="fav_menu_item" key={i}>
-          <a onClick={() => handleClick(data)}>{data.menuName}</a>
-        </div>
+        <FavMenuItem key={i}>
+          <a onClick={() => handleClick(data)}>
+            <IconFile />
+            {data.menuName}
+          </a>
+        </FavMenuItem>
       ))}
+      <RecentMenuList>
+        <Attach />
+        <span>최근메뉴</span>
+      </RecentMenuList>
+      <RecentMenuItem>
+        <RecentItemContainer>
+          <IconFile />
+          <span>안전관리실시대장</span>
+        </RecentItemContainer>
+        <RecentItemContainer>
+          <DeliveryTruck />
+          <span>판매등록</span>
+        </RecentItemContainer>
+        <RecentItemContainer>
+          <IconFile />
+          <span>현금출납</span>
+        </RecentItemContainer>
+      </RecentMenuItem>
     </FavMenuList>
   );
 }

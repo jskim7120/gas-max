@@ -495,3 +495,176 @@ export const ExcelIcon = ({
     </svg>
   );
 };
+
+export const Favorite = ({
+  color = "#4CAF50",
+  width = "24px",
+  height = "24px",
+}) => {
+  return (
+    <svg
+      id="Icon_heart"
+      data-name="Icon/heart"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path id="Path_201" data-name="Path 201" d="M0,0H24V24H0Z" fill="none" />
+      <path
+        id="Path_202"
+        data-name="Path 202"
+        d="M19.5,13.572,12,21,4.5,13.572m0,0A5,5,0,1,1,12,7.006a5,5,0,1,1,7.5,6.572"
+        fill="none"
+        stroke="#fff"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+    </svg>
+  );
+};
+export const IconFile = ({
+  color = "#4CAF50",
+  width = "24px",
+  height = "24px",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <g id="Icon_File" data-name="Icon/File" transform="translate(-61 1)">
+        <rect
+          id="Container"
+          width="24"
+          height="24"
+          transform="translate(61 -1)"
+          fill="none"
+        />
+        <path
+          id="Path_2795"
+          data-name="Path 2795"
+          d="M79.942,0H66.058A1.962,1.962,0,0,0,64,1.844V20.156A1.962,1.962,0,0,0,66.058,22H79.942A1.962,1.962,0,0,0,82,20.156V1.844A1.962,1.962,0,0,0,79.942,0Zm1.24,20.156a1.182,1.182,0,0,1-1.24,1.111H66.058a1.182,1.182,0,0,1-1.24-1.111V1.844A1.182,1.182,0,0,1,66.058.733H79.942a1.182,1.182,0,0,1,1.24,1.111Z"
+          stroke="#000"
+          stroke-width="0.8"
+        />
+        <path
+          id="Path_2796"
+          data-name="Path 2796"
+          d="M146.1,232h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
+          transform="translate(-68.253 -221.404)"
+          stroke="#000"
+          stroke-width="0.8"
+        />
+        <path
+          id="Path_2797"
+          data-name="Path 2797"
+          d="M146.1,328h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
+          transform="translate(-68.253 -313.02)"
+          stroke="#000"
+          stroke-width="0.8"
+        />
+        <path
+          id="Path_2798"
+          data-name="Path 2798"
+          d="M146.1,136h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
+          transform="translate(-68.253 -129.789)"
+          stroke="#000"
+          stroke-width="0.8"
+        />
+      </g>
+    </svg>
+  );
+};
+export const Attach = ({
+  color = "#4CAF50",
+  width = "24px",
+  height = "24px",
+}) => {
+  return (
+    <svg
+      id="Attach"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path
+        id="Icon_metro-attachment"
+        data-name="Icon metro-attachment"
+        d="M12.572,6.545,11.485,5.458,6.049,10.893A2.306,2.306,0,0,0,9.31,14.154l6.523-6.522A3.843,3.843,0,0,0,10.4,2.2L3.549,9.045l-.015.014a5.36,5.36,0,0,0,7.581,7.58l.014-.015h0L15.8,11.951l-1.088-1.087-4.675,4.674-.014.014a3.823,3.823,0,1,1-5.407-5.405l.015-.014h0l6.85-6.848a2.306,2.306,0,0,1,3.262,3.261L8.223,13.067A.769.769,0,1,1,7.136,11.98l5.436-5.436Z"
+        transform="translate(2.735 2.359)"
+        fill="#fff"
+      />
+      <path id="Path_165" data-name="Path 165" d="M0,0H24V24H0Z" fill="none" />
+    </svg>
+  );
+};
+export const DeliveryTruck = ({
+  color = "#4CAF50",
+  width = "24px",
+  height = "24px",
+}) => {
+  return (
+    <svg
+      id="Icon_delivery-truck"
+      data-name="Icon/delivery-truck"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path id="Path_53" data-name="Path 53" d="M0,0H24V24H0Z" fill="none" />
+      <circle
+        id="Ellipse_4"
+        data-name="Ellipse 4"
+        cx="2"
+        cy="2"
+        r="2"
+        transform="translate(5 15)"
+        fill="none"
+        stroke="#000"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+      <circle
+        id="Ellipse_5"
+        data-name="Ellipse 5"
+        cx="2"
+        cy="2"
+        r="2"
+        transform="translate(15 15)"
+        fill="none"
+        stroke="#000"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+      <path
+        id="Path_54"
+        data-name="Path 54"
+        d="M5,17H3V13M2,5H13V17M9,17h6m4,0h2V11H13m0-5h5l3,5"
+        fill="none"
+        stroke="#000"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+      <line
+        id="Line_18"
+        data-name="Line 18"
+        x2="4"
+        transform="translate(3 9)"
+        fill="none"
+        stroke="#000"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+    </svg>
+  );
+};
