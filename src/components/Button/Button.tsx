@@ -17,7 +17,8 @@ const ButtonComponent = styled.button<{
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-family: "NotoSans";
+      font-family: "NotoSansKRRegular";
+      font-size: 14px;
       text-decoration: none;
       border-radius: 2px;
       transition: all 0.3s ease;

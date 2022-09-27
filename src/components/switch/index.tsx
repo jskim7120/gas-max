@@ -5,9 +5,9 @@ import styled, { css } from "styled-components";
 const CheckedText = styled.span`
   position: absolute;
   margin-left: 11px;
-  margin-top: 1px;
+  margin-top: 2px;
   font-family: NotoSansKRRegular;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
@@ -18,9 +18,9 @@ const CheckedText = styled.span`
 const UncheckedText = styled.span`
   position: absolute;
   margin-left: 2px;
-  margin-top: 1px;
+  margin-top: 2px;
   font-family: NotoSansKRRegular;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;

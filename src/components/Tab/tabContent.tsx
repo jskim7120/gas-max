@@ -3,16 +3,16 @@ import TabContent1 from "../contents/tab1/Tab1";
 import TabContent2 from "../contents/tab2/Tab2";
 import TabContent3 from "../contents/tab3/Tab3";
 
-export const getContent = (id: any) => {
+export const getContent = (id: any, name: string) => {
   switch (id) {
     // case "M00":
     //   return <div></div>
     case "M00SD1100":
-      return <TabContent1 />;
+      return <TabContent1 name={name} />;
     case "M00SD1400":
-      return <TabContent2 />;
+      return <TabContent2 name={name} />;
     case "M00SD1600":
-      return <TabContent3 />;
+      return <TabContent3 name={name} />;
     // case "M11":
     //   return < />;
     case "M11AR21":
@@ -234,7 +234,7 @@ export const getContent = (id: any) => {
     case "M18CO9502":
       return <div></div>;
     case "M18CO9503":
-      return <TabContent1 />;
+      return <TabContent1 name={name} />;
     case "M18CO9504":
       return <div></div>;
     case "M18CO9505":

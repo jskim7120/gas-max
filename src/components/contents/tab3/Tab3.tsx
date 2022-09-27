@@ -24,7 +24,7 @@ let container: HTMLDivElement;
 let dp: any;
 let gv: any;
 
-function TabContent3() {
+function TabContent3({ name }: { name?: string }) {
   const dispatch = useDispatch();
   tableData = useSelector((state) => state.employees.employees);
   console.log(tableData);

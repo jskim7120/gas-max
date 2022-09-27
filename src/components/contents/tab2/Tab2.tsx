@@ -67,7 +67,7 @@ let dp: any;
 let gv: any;
 let selectedCustomerCopy: any;
 
-function Tab2() {
+function Tab2({ name }: { name?: string }) {
   const dispatch = useDispatch();
   tableData = useSelector((state) => state.employees.employees);
   console.log("tableData:", tableData);
