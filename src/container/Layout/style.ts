@@ -30,76 +30,31 @@ export const Icons = styled.div`
 export const Wrapper = styled.div`
   padding: 10px;
   display: flex;
+  grid-gap: 6px;
 `;
 
 export const LeftSide = styled.div`
-  width: 400px;
-  border: 3px solid #004080;
-  padding: 15px;
+  width: 105px;
+  border: 1px solid #707070;
+  border-radius: 5px;
+  padding: 0;
   position: relative;
 `;
 
 export const Navigation = styled.div`
   display: flex;
-  height: 100%;
   flex-direction: column;
-  justify-content: space-between;
 `;
-
-export const Top = styled.div`
+export const FavTitle = styled.div`
   display: flex;
-  flex-direction: column;
+  background: rgba(112, 112, 112, 0.7);
   align-items: center;
-
+  justify-content: space-between;
+  padding: 4px 9px 7px 7px;
   p {
-    margin-top: 0;
-    margin-bottom: 2px;
-  }
-`;
-export const Middle = styled.div`
-  border: 3px solid #2eb82e;
-  width: auto;
-  flex: 1;
-  margin-top: 15px;
-  padding: 15px;
-  div:first-child {
-    display: flex;
-  }
-  svg {
-    margin-right: 3px;
-  }
-
-  .fav_menu_item {
-    margin-top: 5px;
-    a {
-      font-size: 14px;
-      text-decoration: none;
-      color: black;
-      font-weight: 400;
-      &:hover {
-        background-color: #f2f2f2;
-      }
-      padding: 5px 0px;
-    }
-  }
-`;
-export const Bottom = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 25px;
-
-  span {
-    svg {
-      margin: 1px 10px 0;
-    }
-  }
-
-  .time {
-    background: #e96220;
-    border-radius: 10px;
-    height: 24px;
-    padding: 0 7px;
+    font-size: 14px;
+    font-weight: 400;
     color: #fff;
+    line-height: 28px;
   }
 `;
