@@ -1,8 +1,15 @@
 import React, { useEffect, BaseSyntheticEvent } from "react";
 import { useSelector, useDispatch } from "app/store";
 import { setTabs, setActiveTab, removeTab } from "features/tab/tabSlice";
+import Switch from "components/switch";
 import { getContent } from "./tabContent";
-import { TabHeaderWrapper, List, TabContentWrapper } from "./style";
+import {
+  TabContainer,
+  TabHeaderWrapper,
+  List,
+  TabContentWrapper,
+} from "./style";
+import { CloseCircle } from "components/AllSvgIcon";
 interface TabProps {
   className?: string;
   style?: any;
@@ -12,7 +19,7 @@ interface ITabHeader {
   header: any;
   isActive: boolean;
   onClick: () => void;
-  closeTab: (arg: any) => void;
+  closeTab: (arg: string) => void;
 }
 
 const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
@@ -26,13 +33,12 @@ const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
     >
       {header.menuName}
       <span
-        data-menuid={header.menuId}
         onClick={(e: BaseSyntheticEvent) => {
           e.stopPropagation();
-          closeTab(e);
+          closeTab(header.menuId);
         }}
       >
-        &#10005;
+        <CloseCircle />
       </span>
     </List>
   );
@@ -43,13 +49,11 @@ let tabHeader: Array<any>;
 let activeTabId: any;
 
 const Tab = (props: TabProps): JSX.Element => {
-  // console.log("Tab dotroos:");
   const dispatch = useDispatch();
   let tabState = useSelector((state) => state.tab);
 
   useEffect(() => {
     if (tabState.tabs.length <= 2 && sessionStorage.getItem("active-tab")) {
-      // console.log("tabState length is less than or equal to 2");
       const storageTab = JSON.parse(`${sessionStorage.getItem("tabs")}`);
       const activeTab = sessionStorage.getItem("active-tab");
       dispatch(setTabs({ tabs: storageTab, activeTabId: activeTab }));
@@ -60,8 +64,7 @@ const Tab = (props: TabProps): JSX.Element => {
   activeTabId = tabState.activeTabId;
   content = getContent(activeTabId);
 
-  const closeTab = (e: any) => {
-    const menuId = e.target.getAttribute("data-menuid");
+  const closeTab = (menuId: string) => {
     dispatch(removeTab({ menuId: menuId }));
   };
 
@@ -70,20 +73,23 @@ const Tab = (props: TabProps): JSX.Element => {
   };
 
   return (
-    <>
+    <TabContainer>
       <TabHeaderWrapper>
-        {tabHeader?.map((header: any, index: number) => (
-          <TabHeader
-            key={index}
-            header={header}
-            isActive={activeTabId === header.menuId}
-            onClick={() => changeTab(header.menuId)}
-            closeTab={closeTab}
-          />
-        ))}
+        <Switch />
+        <ul style={{ marginLeft: "15px" }}>
+          {tabHeader?.map((header: any, index: number) => (
+            <TabHeader
+              key={index}
+              header={header}
+              isActive={activeTabId === header.menuId}
+              onClick={() => changeTab(header.menuId)}
+              closeTab={closeTab}
+            />
+          ))}
+        </ul>
       </TabHeaderWrapper>
       <TabContentWrapper>{content}</TabContentWrapper>
-    </>
+    </TabContainer>
   );
 };
 

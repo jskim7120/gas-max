@@ -20,7 +20,7 @@ export const Plus = ({ color = "#fff", width = "24px", height = "24px" }) => {
           d="M11,0A11,11,0,1,0,22,11,11,11,0,0,0,11,0Zm0,21.267A10.267,10.267,0,1,1,21.267,11,10.267,10.267,0,0,1,11,21.267Z"
           fill="#fff"
           stroke="#fff"
-          stroke-width="0.8"
+          strokeWidth="0.8"
         />
         <path
           id="Path_2815"
@@ -29,7 +29,7 @@ export const Plus = ({ color = "#fff", width = "24px", height = "24px" }) => {
           transform="translate(-91.146 -91.146)"
           fill="#fff"
           stroke="#fff"
-          stroke-width="0.8"
+          strokeWidth="0.8"
         />
       </g>
     </svg>
@@ -54,9 +54,9 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
         transform="translate(4 7)"
         fill="none"
         stroke="#fff"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <line
         id="Line_16"
@@ -65,9 +65,9 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
         transform="translate(10 11)"
         fill="none"
         stroke="#fff"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <line
         id="Line_17"
@@ -76,9 +76,9 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
         transform="translate(14 11)"
         fill="none"
         stroke="#fff"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <path
         id="Path_51"
@@ -86,9 +86,9 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
         d="M5,7,6,19a2,2,0,0,0,2,2h8a2,2,0,0,0,2-2L19,7"
         fill="none"
         stroke="#fff"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <path
         id="Path_52"
@@ -96,9 +96,9 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
         d="M9,7V4a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1V7"
         fill="none"
         stroke="#fff"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
     </svg>
   );
@@ -123,8 +123,8 @@ export const Tick = ({
         transform="translate(1192.915 -961.388)"
         fill="none"
         stroke="#fff"
-        stroke-linecap="square"
-        stroke-width="2"
+        strokeLinecap="square"
+        strokeWidth="2"
       />
     </svg>
   );
@@ -154,8 +154,8 @@ export const X = ({
           transform="translate(721 605.857)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-width="2.5"
+          strokeLinecap="round"
+          strokeWidth="2.5"
         />
         <path
           id="Path_45"
@@ -164,8 +164,8 @@ export const X = ({
           transform="translate(728.71 614.503) rotate(180)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-width="2.5"
+          strokeLinecap="round"
+          strokeWidth="2.5"
         />
       </g>
     </svg>
@@ -193,9 +193,9 @@ export const Settings = ({
         d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z"
         fill="none"
         stroke="#000"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <circle
         id="Ellipse_2"
@@ -206,9 +206,9 @@ export const Settings = ({
         transform="translate(9 9)"
         fill="none"
         stroke="#000"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
     </svg>
   );
@@ -233,9 +233,9 @@ export const Info = ({ color = "#000", width = "24px", height = "24px" }) => {
         transform="translate(3 3)"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <line
         id="Line_10"
@@ -244,9 +244,9 @@ export const Info = ({ color = "#000", width = "24px", height = "24px" }) => {
         transform="translate(12 8)"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <path
         id="Path_47"
@@ -254,9 +254,9 @@ export const Info = ({ color = "#000", width = "24px", height = "24px" }) => {
         d="M11,12h1v4h1"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
     </svg>
   );
@@ -284,7 +284,47 @@ export const User = ({ color = "#000", width = "24px", height = "24px" }) => {
           d="M53.681,9.775A8,8,0,0,0,50.56,7.768a4.454,4.454,0,0,0,.762-6.076A4.05,4.05,0,0,0,45.489.9a4.454,4.454,0,0,0-.762,6.076,4.251,4.251,0,0,0,.764.8,8.256,8.256,0,0,0-5.466,7.9v2.666A1.636,1.636,0,0,0,41.624,20h12.8a1.636,1.636,0,0,0,1.6-1.666V15.667A8.469,8.469,0,0,0,53.681,9.775ZM44.5,4.335a3.523,3.523,0,1,1,7.04,0,3.688,3.688,0,0,1-1.9,3.254,3.3,3.3,0,0,1-.373.173l-.055.02q-.16.059-.323.1l-.084.021q-.157.037-.317.059l-.075.011a3.447,3.447,0,0,1-.788,0l-.074-.011q-.16-.022-.32-.059l-.083-.02a3.288,3.288,0,0,1-.324-.1l-.055-.019a3.377,3.377,0,0,1-.374-.174A3.673,3.673,0,0,1,44.5,4.335Zm10.88,14a.981.981,0,0,1-.96,1h-12.8a.981.981,0,0,1-.96-1V15.667a7.59,7.59,0,0,1,5.195-7.326.92.92,0,0,1,.28-.043.974.974,0,0,1,.368.073l.026.009c.044.018.089.031.132.047.1.033.192.067.288.093.062.017.125.032.188.046.084.019.168.033.252.047.064.01.128.021.195.028.113.012.226.018.34.021.032,0,.064.006.1.006s.064-.005.1-.006c.113,0,.224-.009.337-.021.066-.007.131-.018.2-.028.084-.013.167-.028.25-.047.064-.014.126-.029.188-.046.1-.027.2-.06.293-.095.042-.015.084-.028.125-.044l.03-.011a.947.947,0,0,1,.644-.031,7.636,7.636,0,0,1,5.2,7.327Z"
           transform="translate(-8.5 -5.5)"
           stroke={color}
-          stroke-width="1"
+          strokeWidth="1"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const CloseCircle = ({
+  color = "#000",
+  width = "24px",
+  height = "24px",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <g id="Icon_Close" data-name="Icon/Close" transform="translate(1 1)">
+        <rect
+          id="Container"
+          width="24"
+          height="24"
+          transform="translate(-1 -1)"
+          fill="none"
+        />
+        <path
+          id="Path_2814"
+          data-name="Path 2814"
+          d="M11,0A11,11,0,1,0,22,11,11,11,0,0,0,11,0Zm0,21.267A10.267,10.267,0,1,1,21.267,11,10.267,10.267,0,0,1,11,21.267Z"
+          stroke="#000"
+          strokeWidth="0.8"
+        />
+        <path
+          id="Path_2815"
+          data-name="Path 2815"
+          d="M107.952,101.805h-5.464V96.341a.341.341,0,1,0-.683,0v5.464H96.341a.341.341,0,1,0,0,.683h5.464v5.464a.341.341,0,0,0,.683,0v-5.464h5.464a.341.341,0,0,0,0-.683Z"
+          transform="translate(11 -133.457) rotate(45)"
+          stroke="#000"
+          strokeWidth="0.8"
         />
       </g>
     </svg>
@@ -388,31 +428,6 @@ export const PlusCircle = ({
       <circle cx="12" cy="12" r="10"></circle>
       <line x1="12" y1="8" x2="12" y2="16"></line>
       <line x1="8" y1="12" x2="16" y2="12"></line>
-    </svg>
-  );
-};
-
-export const CloseCircle = ({
-  color = "currentColor",
-  width = "24px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="feather feather-x-circle"
-    >
-      <circle cx="12" cy="12" r="10"></circle>
-      <line x1="15" y1="9" x2="9" y2="15"></line>
-      <line x1="9" y1="9" x2="15" y2="15"></line>
     </svg>
   );
 };

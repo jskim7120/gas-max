@@ -2,10 +2,11 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import "realgrid/dist/realgrid-style.css";
+import "style/font.css";
+import "style/App.css";
 import Main from "container/Layout/Main";
 import Layout from "container/Layout/AppLayout";
 
-import "./App.css";
 function App() {
   return (
     <>

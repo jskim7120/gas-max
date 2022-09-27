@@ -1,13 +1,28 @@
 import styled from "styled-components";
 
-export const TabHeaderWrapper = styled.ul`
-  list-style: none;
-  margin: 0;
-  padding: 0;
+export const TabContainer = styled.div`
   width: 100%;
-  border-bottom: 1px solid #5c5c5c;
-  height: 35px;
-  margin-top: 4px;
+`;
+
+export const TabHeaderWrapper = styled.div`
+  width: 100%;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  border: 1px solid #707070;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: -1px 1px 3px 0px rgba(104, 103, 103, 0.35);
+  -webkit-box-shadow: -1px 1px 3px 0px rgba(104, 103, 103, 0.35);
+  -moz-box-shadow: -1px 1px 3px 0px rgba(104, 103, 103, 0.35);
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 35px;
+  }
 `;
 
 export const List = styled.li<{ isActive: boolean }>`
@@ -15,10 +30,13 @@ export const List = styled.li<{ isActive: boolean }>`
   display: inline-block;
   outline: none;
   width: 130px;
-  text-align: center;
+  height: 100%;
   font-size: 12px;
-  padding: 8px 15px 9px 10px;
+  padding: 3px 32px 0 9px;
+  margin-right: 3px;
   position: relative;
+  font-family: "NotoSansKRRegular";
+  font-size: 18px;
 
   white-space: nowrap;
   overflow: hidden;
@@ -26,26 +44,19 @@ export const List = styled.li<{ isActive: boolean }>`
 
   span {
     position: absolute;
-    top: 4px;
+    top: 5px;
     right: 5px;
-    font-size: 16px;
-    width: 22px;
+    width: 24px;
+    display: inlene-block;
   }
 
-  background: ${(props) => (props.isActive ? "#f0f0f0" : "transparent")};
-  color: ${(props) => (props.isActive ? "#333" : "#797d84")};
-  border: ${(props) =>
-    props.isActive ? "1px solid #5c5c5c" : "1px solid #ddd"};
-  border-bottom: none;
-  span {
-    color: ${(props) => (props.isActive ? "#333" : "#797d84")};
-  }
+  background: ${(props) => (props.isActive ? "#0098FF" : "#707070")};
+  color: ${(props) => (props.isActive ? "#EEF604" : "#FFF")};
 `;
 
 export const TabContentWrapper = styled.div`
-  width: calc(100%-420px);
-  border: 2px solid blue;
+  width: 100%;
+
   min-height: 89%;
   height: auto;
-  margin-top: 3px;
 `;
