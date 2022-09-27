@@ -13,7 +13,13 @@ export const TopSide = styled.div`
   align-items: center;
 `;
 
-export const Logo = styled.div``;
+export const TopLeftWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    height: 70px;
+  }
+`;
 
 export const Icons = styled.div`
   svg {

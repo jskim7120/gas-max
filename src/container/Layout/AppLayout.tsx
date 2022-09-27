@@ -5,9 +5,9 @@ import FavMenu from "components/favMenu/favMenu";
 import {
   Container,
   TopSide,
+  TopLeftWrapper,
   LeftSide,
   Top,
-  Logo,
   Icons,
   Middle,
   Bottom,
@@ -25,10 +25,10 @@ export default function AppLayout() {
   return (
     <Container>
       <TopSide>
-        <Logo>
+        <TopLeftWrapper>
           <img src={LogoImg} />
-        </Logo>
-        <Navbar data={menuData} />
+          <Navbar data={menuData} />
+        </TopLeftWrapper>
         <Icons>
           <Settings />
           <Info />
