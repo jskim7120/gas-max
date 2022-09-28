@@ -49,7 +49,6 @@ export default function Form({
 
   const resetForm = (type: string) => {
     if (JSON.stringify(selectedCustomer) !== "{}") {
-      console.log("type:", type);
       let newData: any = {};
 
       if (type === "clear") {

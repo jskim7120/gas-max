@@ -27,4 +27,9 @@ export const DetailHeader = styled.div`
     fontfamily: "NotoSansKRRegular";
     fontsize: 18px;
   }
+
+  div.buttons {
+    display: flex;
+    alignitems: center;
+  }
 `;

@@ -40,6 +40,7 @@ function EN100({ name }: { name: string }) {
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().itemIndex;
+      console.log("itemIndex:", itemIndex);
       setSelected(tableData[itemIndex]);
     };
 
@@ -69,12 +70,7 @@ function EN100({ name }: { name: string }) {
       <DetailWrapper>
         <DetailHeader>
           <p>{name}</p>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
+          <div className="buttons">
             <Button
               text="등록"
               icon={<Plus />}

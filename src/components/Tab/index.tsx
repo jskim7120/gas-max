@@ -52,7 +52,6 @@ let activeTabName: string;
 const Tab = (props: TabProps): JSX.Element => {
   const dispatch = useDispatch();
   let tabState = useSelector((state) => state.tab);
-  console.log("tabstate", tabState);
 
   useEffect(() => {
     if (tabState.tabs.length <= 2 && sessionStorage.getItem("active-tab")) {
