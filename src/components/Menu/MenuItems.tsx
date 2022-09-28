@@ -51,6 +51,9 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
   };
 
   const clickOnMenu = () => {
+    console.log("AAAAAAAAAAA");
+    console.log(items.menuId);
+    console.log("AAAAAAAAAAA");
     dispatch(
       addTab({
         menuId: items.menuId,
