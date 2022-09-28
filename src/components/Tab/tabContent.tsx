@@ -7,293 +7,371 @@ export const getContent = (id: any, name: string) => {
   switch (id) {
     // case "M00":
     //   return <div></div>
-    case "M00SD1100":
+    case "CM1100":
       return <TabContent1 name={name} />;
-    case "M00SD1400":
+    case "CM1200":
       return <TabContent2 name={name} />;
-    case "M00SD1600":
+    case "CM1300":
       return <TabContent3 name={name} />;
     // case "M11":
     //   return < />;
-    case "M11AR21":
-      return <div>M11AR21</div>;
-    case "M11AR2101":
-      return <div>M11AR2101</div>;
-    case "M11AR2102":
-      return <div>M11AR2102</div>;
-    case "M11AR2103":
-      return <div>M11AR2103</div>;
-    case "M11AR2104":
-      return <div>M11AR2104</div>;
-    case "M11AR2105":
-      return <div>M11AR2105</div>;
-    case "M11AR2106":
-      return <div>M11AR2106</div>;
-    case "M11AR2107":
-      return <div>M11AR2107</div>;
-    case "M11AR2108":
-      return <div>M11AR2108</div>;
-    case "M11AR2109":
-      return <div>M11AR2109</div>;
-    case "M11GR26":
-      return <div>M11GR26</div>;
-    case "M11GR2601":
-      return <div>M11GR2601</div>;
-    case "M11GR2602":
-      return <div>M11GR2602</div>;
-    case "M11GR2603":
-      return <div>M11GR2603</div>;
-    case "M11GR2604":
-      return <div>M11GR2604</div>;
-    case "M11GR2605":
-      return <div>M11GR2605</div>;
-    case "M11GR2606":
-      return <div>M11GR2606</div>;
-    case "M11GR2607":
-      return <div>M11GR2607</div>;
-    case "M11GR2608":
-      return <div>M11GR2608</div>;
-    case "M11GR2609":
-      return <div>M11GR2609</div>;
-    case "M11RV24":
-      return <div>M11RV24</div>;
-    case "M11RV2401":
-      return <div>M11RV2401</div>;
-    case "M11RV2402":
-      return <div>M11RV2402</div>;
-    case "M11RV2403":
+    case "CM1301":
+      return <div>CM1301</div>;
+    case "CM1400":
+      return <div>CM1400</div>;
+    case "CM9000":
+      return <div>CM9000</div>;
+    case "CM9001":
+      return <div>CM9001</div>;
+    case "CM9002":
+      return <div>CM9002</div>;
+    case "CM9003":
+      return <div>CM9003</div>;
+    case "CM9004":
+      return <div>CM9004</div>;
+    case "CM9005":
+      return <div>CM9005</div>;
+    case "CM9006":
+      return <div>CM9006</div>;
+    case "CM9007":
+      return <div>CM9007</div>;
+    case "CM9008":
+      return <div>CM9008</div>;
+    case "CM9009":
+      return <div>CM9009</div>;
+    case "CM9010":
+      return <div>CM9010</div>;
+    case "CM9011":
+      return <div>CM9011</div>;
+    case "AR1100":
+      return <div>AR1100</div>;
+    case "AR1101":
+      return <div>AR1101</div>;
+    case "AR9001":
+      return <div>AR9001</div>;
+    case "AR9002":
+      return <div>AR9002</div>;
+    case "AR9003":
+      return <div>AR9003</div>;
+    case "AR90031":
+      return <div>AR90031</div>;
+    case "AR9004":
+      return <div>AR9004</div>;
+    case "AR9005":
+      return <div>AR9005</div>;
+    case "AR9006":
+      return <div>AR9006</div>;
+    case "AR9007":
       return <div>M11RV2403</div>;
-    case "M11RV2404":
-      return <div>M11RV2404</div>;
-    case "M11RV2405":
-      return <div>M11RV2405</div>;
-    case "M11RV2406":
-      return <div>M11RV2406</div>;
-    case "M11RV2407":
-      return <div>M11RV2407</div>;
-    case "M11RV2408":
-      return <div>M11RV2408</div>;
-    case "M11RV2409":
-      return <div>M11RV2409</div>;
-    case "M11RV2410":
-      return <div>M11RV2410</div>;
-    case "M12":
-      return <div>M12</div>;
-    case "M12CM3001":
-      return <div>M12CM3001</div>;
-    case "M12CM3002":
-      return <div>M12CM3002</div>;
-    case "M12CM3003":
-      return <div>M12CM3003</div>;
-    case "M12CM3004":
-      return <div>M12CM3004</div>;
-    case "M12CM3005":
-      return <div>M12CM3005</div>;
-    case "M12CM3006":
-      return <div>M12CM3006</div>;
-    case "M12CM3007":
-      return <div>M12CM3007</div>;
-    case "M12CM3008":
-      return <div>M12CM3008</div>;
-    case "M12CM3009":
-      return <div>M12CM3009</div>;
-    case "M12CM3010":
-      return <div>M12CM3010</div>;
-    case "M12CM3011":
-      return <div>M12CM3011</div>;
-    case "M12CM3012":
-      return <div>M12CM3012</div>;
-    case "M12CM3013":
-      return <div>M12CM3013</div>;
-    case "M13":
-      return <div>M13</div>;
-    case "M13MM4001":
-      return <div>M13MM4001</div>;
-    case "M13MM4002":
-      return <div>M13MM4002</div>;
-    case "M13MM4003":
-      return <div>M13MM4003</div>;
-    case "M13MM4004":
-      return <div>M13MM4004</div>;
-    case "M13MM4005":
-      return <div>M13MM4005</div>;
-    case "M13MM4006":
-      return <div>M13MM4006</div>;
-    case "M13MM4007":
-      return <div>M13MM4007</div>;
-    case "M14":
-      return <div>M14</div>;
-    case "M14CC5001":
-      return <div>M14CC5001</div>;
-    case "M14CC5002":
-      return <div>M14CC5002</div>;
-    case "M14CC5003":
-      return <div>M14CC5003</div>;
-    case "M14CC5004":
-      return <div>M14CC5004</div>;
-    case "M14CC5005":
-      return <div>M14CC5005</div>;
-    case "M14CC5006":
-      return <div>M14CC5006</div>;
-    case "M14CC5007":
-      return <div>M14CC5007</div>;
-    case "M14CC5008":
-      return <div>M14CC5008</div>;
-    case "M14CC5009":
-      return <div>M14CC5009</div>;
-    case "M15":
-      return <div>M15</div>;
-    case "M15PT6001":
-      return <div>M15PT6001</div>;
-    case "M15PT6002":
-      return <div>M15PT6002</div>;
-    case "M15PT6003":
-      return <div>M15PT6003</div>;
-    case "M15PT6004":
-      return <div>M15PT6004</div>;
-    case "M15PT6005":
-      return <div>M15PT6005</div>;
-    case "M15PT6006":
-      return <div>M15PT6006</div>;
-    case "M15PT6007":
-      return <div>M15PT6007</div>;
-    case "M15PT6008":
-      return <div>M15PT6008</div>;
-    case "M15PT6009":
-      return <div>M15PT6009</div>;
-    case "M15PT6010":
-      return <div>M15PT6010</div>;
-    case "M16":
-      return <div>M16</div>;
-    case "M16AS7001":
-      return <div>M16AS7001</div>;
-    case "M16AS7002":
-      return <div>M16AS7002</div>;
-    case "M16AS7003":
-      return <div>M16AS7003</div>;
-    case "M17":
-      return <div>M17</div>;
-    case "M17ET8001":
+    case "AR9008":
+      return <div>AR9008</div>;
+    case "AR9009":
+      return <div>AR9009</div>;
+    case "AR90091":
+      return <div>AR90091</div>;
+    case "AR9010":
+      return <div>AR9010</div>;
+    case "AR9011":
+      return <div>AR9011</div>;
+    case "AR90111":
       return <div></div>;
-    case "M17ET8002":
+    case "AR9012":
       return <div></div>;
-    case "M17ET8003":
+    case "RV1100":
       return <div></div>;
-    case "M17ET8004":
+    case "RV1200":
       return <div></div>;
-    case "M17ET8005":
+    case "RV1300":
       return <div></div>;
-    case "M17ET8006":
+    case "RV1400":
       return <div></div>;
-    case "M17ET8007":
+    case "RV1500":
       return <div></div>;
-    case "M17ET8008":
+    case "RV1501":
       return <div></div>;
-    case "M17ET8009":
+    case "RV9001":
       return <div></div>;
-    case "M17ET8010":
+    case "RV9002":
       return <div></div>;
-    case "M17ET8011":
+    case "RV9003":
       return <div></div>;
-    case "M17ET8012":
+    case "RV9004":
       return <div></div>;
-    case "M17ET8013":
+    case "RV90041":
       return <div></div>;
-    case "M17ET8014":
+    case "RV9005":
       return <div></div>;
-    case "M18":
+    case "RV9006":
       return <div></div>;
-    case "M18CO91":
+    case "RV9007":
       return <div></div>;
-    case "M18CO9101":
+    case "RV9008":
       return <div></div>;
-    case "M18CO9102":
+    case "RV9009":
       return <div></div>;
-    case "M18CO9103":
+    case "RV9010":
       return <div></div>;
-    case "M18CO9104":
+    case "RV9011":
       return <div></div>;
-    case "M18CO9105":
+    case "RV9012":
       return <div></div>;
-    case "M18CO9106":
+    case "RV9013":
       return <div></div>;
-    case "M18CO93":
+    case "RV9014":
       return <div></div>;
-    case "M18CO9301":
+    case "GR1100":
       return <div></div>;
-    case "M18CO9302":
+    case "GR1101":
       return <div></div>;
-    case "M18CO9303":
+    case "GR1200":
       return <div></div>;
-    case "M18CO9304":
+    case "GR1300":
       return <div></div>;
-    case "M18CO95":
+    case "GR1400":
       return <div></div>;
-    case "M18CO9501":
+    case "GR1401":
       return <div></div>;
-    case "M18CO9502":
+    case "GR1500":
       return <div></div>;
-    case "M18CO9503":
+    case "GR1600":
+      return <div></div>;
+    case "GR1601":
+      return <div></div>;
+    case "GR9001":
+      return <div></div>;
+    case "GR90011":
+      return <div></div>;
+    case "GR9002":
+      return <div></div>;
+    case "GR9003":
+      return <div></div>;
+    case "GR9004":
+      return <div></div>;
+    case "GR9005":
+      return <div></div>;
+    case "GR90051":
+      return <div></div>;
+    case "GR9006":
+      return <div></div>;
+    case "GR9007":
+      return <div></div>;
+    case "GR9008":
+      return <div></div>;
+    case "GR90081":
+      return <div></div>;
+    case "GR9009":
+      return <div></div>;
+    case "GR9010":
+      return <div></div>;
+    case "MM1100":
+      return <div></div>;
+    case "MM1200":
+      return <div></div>;
+    case "MM1300":
+      return <div></div>;
+    case "MM1400":
+      return <div></div>;
+    case "MM1401":
+      return <div></div>;
+    case "MM1500":
+      return <div></div>;
+    case "MM1600":
+      return <div></div>;
+    case "MM1601":
+      return <div></div>;
+    case "MM9001":
+      return <div></div>;
+    case "MM9002":
+      return <div></div>;
+    case "MM9003":
+      return <div></div>;
+    case "MM9004":
+      return <div></div>;
+    case "MM9005":
+      return <div></div>;
+    case "CC1100":
+      return <div></div>;
+    case "CC1200":
+      return <div></div>;
+    case "CC1300":
+      return <div></div>;
+    case "CC1301":
+      return <div></div>;
+    case "CC1400":
+      return <div></div>;
+    case "CC1500":
+      return <div></div>;
+    case "CC1501":
+      return <div></div>;
+    case "CC1600":
+      return <div></div>;
+    case "CC1700":
+      return <div></div>;
+    case "CC1701":
+      return <div></div>;
+    case "CC9001":
+      return <div></div>;
+    case "CC9002":
+      return <div></div>;
+    case "CC9003":
+      return <div></div>;
+    case "CC9004":
+      return <div></div>;
+    case "CC90041":
+      return <div></div>;
+    case "CC9005":
+      return <div></div>;
+    case "CC9006":
+      return <div></div>;
+    case "CC90061":
+      return <div></div>;
+    case "CC9007":
+      return <div></div>;
+    case "CC9008":
       return <TabContent1 name={name} />;
-    case "M18CO9504":
+    case "CC9009":
       return <div></div>;
-    case "M18CO9505":
+    case "CC9010":
       return <div></div>;
-    case "M18CO9506":
+    case "CC9011":
       return <div></div>;
-    case "M18CO97":
+    case "PT1100":
       return <div></div>;
-    case "M18CO9701":
+    case "PT1200":
       return <div></div>;
-    case "M18CO9702":
+    case "PT1300":
       return <div></div>;
-    case "M18CO9703":
+    case "PT1301":
       return <div></div>;
-    case "M18CO9704":
+    case "PT9001":
       return <div></div>;
-    case "M18CO9705":
+    case "PT9002":
       return <div></div>;
-    case "M18CO9706":
+    case "PT9003":
       return <div></div>;
-    case "M19":
+    case "PT9004":
       return <div></div>;
-    case "M19FM1001":
+    case "PT9005":
       return <div></div>;
-    case "M19FM1002":
+    case "PT9006":
       return <div></div>;
-    case "M19FM1003":
+    case "PT9007":
       return <div></div>;
-    case "M19FM1004":
+    case "PT9008":
       return <div></div>;
-    case "M19FM1005":
+    case "PT9009":
       return <div></div>;
-    case "M19FM1006":
+    case "TB1100":
       return <div></div>;
-    case "M19FM1007":
+    case "TB1200":
       return <div></div>;
-    case "M19FM1008":
+    case "TB1201":
       return <div></div>;
-    case "M19FM1009":
+    case "TB1300":
       return <div></div>;
-    case "M19FM1010":
+    case "TB1400":
       return <div></div>;
-    case "M19FM1011":
+    case "TB1500":
       return <div></div>;
-    case "M19FM1012":
+    case "TB1600":
       return <div></div>;
-    case "M19FM1013":
+    case "TB1601":
       return <div></div>;
-    case "M19FM1014":
+    case "TB9001":
       return <div></div>;
-    case "M19FM1015":
+    case "FM9001":
       return <div></div>;
-    case "M19FM1019":
+    case "FM90011":
       return <div></div>;
-    case "M19FM1020":
+    case "FM9002":
       return <div></div>;
-    case "M19FM1021":
+    case "FM9003":
       return <div></div>;
-    case "M19FM1022":
+    case "FM9004":
+      return <div></div>;
+    case "FM90041":
+      return <div></div>;
+    case "FM9005":
+      return <div></div>;
+    case "FM9006":
+      return <div></div>;
+    case "FM9007":
+      return <div></div>;
+    case "FM9008":
+      return <div></div>;
+    case "FM9009":
+      return <div></div>;
+    case "FM9010":
+      return <div></div>;
+    case "FM9011":
+      return <div></div>;
+    case "FM9012":
+      return <div></div>;
+    case "FM9013":
+      return <div></div>;
+    case "FM9014":
+      return <div></div>;
+    case "FM9015":
+      return <div></div>;
+    case "FM90151":
+      return <div></div>;
+    case "FM9016":
+      return <div></div>;
+    case "FM9017":
+      return <div></div>;
+    case "FM9018":
+      return <div></div>;
+    case "FM90181":
+      return <div></div>;
+    case "FM9019":
+      return <div></div>;
+    case "EN1100":
+      return <div></div>;
+    case "EN1200":
+      return <div></div>;
+    case "EN1300":
+      return <div></div>;
+    case "EN1400":
+      return <div></div>;
+    case "EN1500":
+      return <div></div>;
+    case "EN1501":
+      return <div></div>;
+    case "EN1600":
+      return <div></div>;
+    case "EN1700":
+      return <div></div>;
+    case "EN1701":
+      return <div></div>;
+    case "EN1800":
+      return <div></div>;
+    case "EN1900":
+      return <div></div>;
+    case "EN2000":
+      return <div></div>;
+    case "EN2001":
+      return <div></div>;
+    case "EN2100":
+      return <div></div>;
+    case "EN2200":
+      return <div></div>;
+    case "SY1100":
+      return <div></div>;
+    case "SY1200":
+      return <div></div>;
+    case "SY1300":
+      return <div></div>;
+    case "SY1301":
+      return <div></div>;
+    case "SY1400":
+      return <div></div>;
+    case "SY1500":
+      return <div></div>;
+    case "SY1600":
+      return <div></div>;
+    case "SY1601":
+      return <div></div>;
+    case "SY1700":
       return <div></div>;
   }
 };
