@@ -60,13 +60,13 @@ export const Nav = styled.nav`
 
     .dropdown {
       position: absolute;
-      right: 0;
-      left: auto;
+      left: 0;
+      right: auto;
       box-shadow: 0 10px 15px 3px rgba(46, 41, 51, 0.08),
         0 4px 6px 2px rgba(71, 63, 79, 0.16);
       font-size: 0.875rem;
       z-index: 9999;
-      min-width: 12rem;
+      min-width: 14rem;
       padding: 0.5rem 0;
       list-style: none;
       background-color: #fff;

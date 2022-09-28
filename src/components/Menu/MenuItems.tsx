@@ -76,11 +76,6 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
             onClick={() => setDropdown((prev) => !prev)}
           >
             {items.menuName}{" "}
-            {depthLevel > 0 ? (
-              <span className="arrow-side"></span>
-            ) : (
-              <span className="arrow" />
-            )}{" "}
           </button>{" "}
           <Dropdown
             depthLevel={depthLevel}

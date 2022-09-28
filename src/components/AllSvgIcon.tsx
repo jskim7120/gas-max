@@ -532,9 +532,9 @@ export const Favorite = ({
         d="M19.5,13.572,12,21,4.5,13.572m0,0A5,5,0,1,1,12,7.006a5,5,0,1,1,7.5,6.572"
         fill="none"
         stroke="#fff"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
     </svg>
   );
@@ -564,7 +564,7 @@ export const IconFile = ({
           data-name="Path 2795"
           d="M79.942,0H66.058A1.962,1.962,0,0,0,64,1.844V20.156A1.962,1.962,0,0,0,66.058,22H79.942A1.962,1.962,0,0,0,82,20.156V1.844A1.962,1.962,0,0,0,79.942,0Zm1.24,20.156a1.182,1.182,0,0,1-1.24,1.111H66.058a1.182,1.182,0,0,1-1.24-1.111V1.844A1.182,1.182,0,0,1,66.058.733H79.942a1.182,1.182,0,0,1,1.24,1.111Z"
           stroke="#000"
-          stroke-width="0.8"
+          strokeWidth="0.8"
         />
         <path
           id="Path_2796"
@@ -572,7 +572,7 @@ export const IconFile = ({
           d="M146.1,232h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
           transform="translate(-68.253 -221.404)"
           stroke="#000"
-          stroke-width="0.8"
+          strokeWidth="0.8"
         />
         <path
           id="Path_2797"
@@ -580,7 +580,7 @@ export const IconFile = ({
           d="M146.1,328h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
           transform="translate(-68.253 -313.02)"
           stroke="#000"
-          stroke-width="0.8"
+          strokeWidth="0.8"
         />
         <path
           id="Path_2798"
@@ -588,7 +588,7 @@ export const IconFile = ({
           d="M146.1,136h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
           transform="translate(-68.253 -129.789)"
           stroke="#000"
-          stroke-width="0.8"
+          strokeWidth="0.8"
         />
       </g>
     </svg>
@@ -642,9 +642,9 @@ export const DeliveryTruck = ({
         transform="translate(5 15)"
         fill="none"
         stroke="#000"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <circle
         id="Ellipse_5"
@@ -655,9 +655,9 @@ export const DeliveryTruck = ({
         transform="translate(15 15)"
         fill="none"
         stroke="#000"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <path
         id="Path_54"
@@ -665,9 +665,9 @@ export const DeliveryTruck = ({
         d="M5,17H3V13M2,5H13V17M9,17h6m4,0h2V11H13m0-5h5l3,5"
         fill="none"
         stroke="#000"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <line
         id="Line_18"
@@ -676,9 +676,9 @@ export const DeliveryTruck = ({
         transform="translate(3 9)"
         fill="none"
         stroke="#000"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
     </svg>
   );
