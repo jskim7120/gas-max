@@ -1,7 +1,7 @@
 import React from "react";
-import TabContent1 from "../contents/tab1/Tab1";
-import TabContent2 from "../contents/tab2/Tab2";
-import TabContent3 from "../contents/tab3/Tab3";
+import TabContent1 from "container/contents/tab1/Tab1";
+import TabContent2 from "container/contents/tab2/Tab2";
+import TabContent3 from "container/contents/tab3/Tab3";
 
 export const getContent = (id: any, name: string) => {
   switch (id) {

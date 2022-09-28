@@ -386,7 +386,7 @@ export const CloseCircle = ({
           data-name="Path 2814"
           d="M11,0A11,11,0,1,0,22,11,11,11,0,0,0,11,0Zm0,21.267A10.267,10.267,0,1,1,21.267,11,10.267,10.267,0,0,1,11,21.267Z"
           stroke="#000"
-          stroke-width="0.8"
+          strokeWidth="0.8"
         />
         <path
           id="Path_2815"
@@ -394,7 +394,7 @@ export const CloseCircle = ({
           d="M107.952,101.805h-5.464V96.341a.341.341,0,1,0-.683,0v5.464H96.341a.341.341,0,1,0,0,.683h5.464v5.464a.341.341,0,0,0,.683,0v-5.464h5.464a.341.341,0,0,0,0-.683Z"
           transform="translate(11 -133.457) rotate(45)"
           stroke="#000"
-          stroke-width="0.8"
+          strokeWidth="0.8"
         />
       </g>
     </svg>
