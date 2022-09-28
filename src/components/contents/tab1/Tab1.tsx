@@ -4,7 +4,15 @@ import Table from "components/Table";
 import Form from "./form";
 import { Wrapper } from "../style";
 import Button from "components/Button/Button";
-import { Plus, Trash, Tick, X } from "components/AllSvgIcon";
+import {
+  Plus,
+  Trash,
+  Tick,
+  X,
+  Heart,
+  Chat,
+  CloseCircle,
+} from "components/AllSvgIcon";
 
 let tableHeader: any[] = [
   "영업소코드",
@@ -17,7 +25,6 @@ let tableHeader: any[] = [
 let tableData: any;
 
 function TabContent1({ name }: { name: string }) {
-  console.log("activeTabName:", name);
   tableData = useSelector((state) => state.employees.employees);
   const [selectedCustomer, setSelectedCustomer] = useState({
     areaCode: "",
@@ -53,6 +60,8 @@ function TabContent1({ name }: { name: string }) {
     console.log("getFormValues daragdav", e);
   };
 
+  if (!tableData) return <p>...loading</p>;
+
   return (
     <div>
       <div
@@ -63,59 +72,75 @@ function TabContent1({ name }: { name: string }) {
           padding: "5px 10px",
         }}
       ></div>
-      {tableData ? (
-        <>
-          <Wrapper>
-            <div
+
+      <>
+        <Wrapper>
+          <div
+            style={{
+              backgroundColor: "#0098FF",
+              width: "100%",
+              height: "41px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "0 15px",
+            }}
+          >
+            <p
               style={{
-                backgroundColor: "#0098FF",
-                width: "100%",
-                height: "41px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "0 15px",
+                color: "#EEF604",
+                fontSize: "18px",
+                fontFamily: "NotoSansKRRegular",
               }}
             >
-              <p
-                style={{
-                  color: "#EEF604",
-                  fontSize: "18px",
-                  fontFamily: "NotoSansKRRegular",
-                }}
-              >
-                {name}
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <div>
-                  <Button text="등록" icon={<Plus />} />
-                  <Button text="삭제" icon={<Trash />} />
-                  <Button text="저장" icon={<Tick />} />
-                  <Button text="취소" icon={<X />} />
-                </div>
-                <div>icons</div>
+              {name}
+            </p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                text="등록"
+                icon={<Plus />}
+                style={{ marginRight: "5px" }}
+              />
+              <Button
+                text="삭제"
+                icon={<Trash />}
+                style={{ marginRight: "5px" }}
+              />
+              <Button
+                text="저장"
+                icon={<Tick />}
+                style={{ marginRight: "5px" }}
+              />
+              <Button
+                text="취소"
+                icon={<X />}
+                style={{ marginRight: "15px" }}
+              />
+
+              <div>
+                <Heart />
+                <Chat />
+                <CloseCircle />
               </div>
             </div>
-            <Table
-              tableHeader={tableHeader}
-              tableData={tableData}
-              onClick={changeCustomerInfo}
-            />
+          </div>
+          <Table
+            tableHeader={tableHeader}
+            tableData={tableData}
+            onClick={changeCustomerInfo}
+          />
 
-            <Form
-              selectedCustomer={selectedCustomer}
-              getFormValues={getFormValues}
-            />
-          </Wrapper>
-        </>
-      ) : (
-        <p>...loading</p>
-      )}
+          <Form
+            selectedCustomer={selectedCustomer}
+            getFormValues={getFormValues}
+          />
+        </Wrapper>
+      </>
     </div>
   );
 }

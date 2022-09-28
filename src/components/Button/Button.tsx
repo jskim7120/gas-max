@@ -2,6 +2,25 @@ import React, { forwardRef, useState } from "react";
 import styled, { css } from "styled-components";
 import { ButtonColor, ButtonSize, ButtonTextColor } from "../ComponentsType";
 
+const BtnColor = (color?: ButtonColor) => {
+  switch (color) {
+    case ButtonColor.BLUE:
+      return {
+        bg: "#5284ce",
+        border: "#FFF",
+        hover: "#5284CE",
+        disabled: "gray",
+      };
+    case ButtonColor.AUZRE:
+      return {
+        bg: "#00B4D8",
+        border: "#FFF",
+        hover: "00B4D8",
+        disabled: "gray",
+      };
+  }
+};
+
 const ButtonComponent = styled.button<{
   size?: ButtonSize;
   textColor?: ButtonTextColor;
@@ -9,6 +28,7 @@ const ButtonComponent = styled.button<{
   disabled?: boolean;
   isHover?: boolean;
   fullWidth?: boolean;
+  color?: ButtonColor;
 }>`
   ${(props) => {
     return css`
@@ -23,16 +43,17 @@ const ButtonComponent = styled.button<{
       border-radius: 2px;
       transition: all 0.3s ease;
       box-sizing: border-box;
-      background-color: #5284ce;
-      border: 1px solid #fff;
-      border-radius: 99px;
+      background-color: ${BtnColor(props.color)?.bg};
+      border: 1px solid ${BtnColor(props.color)?.border};
+      border-radius: 999px;
       color: #fff;
+      padding: 0 13px;
       &:hover,
       &:focus {
-        background-color: #fff;
+        background-color: #5284ce;
       }
       &:disabled {
-        background-color: #fff;
+        background-color: #5284ce;
         cursor: default;
       }
       width: ${props.fullWidth ? "100%" : "auto"};
@@ -44,8 +65,7 @@ export interface IButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text?: string;
   size?: ButtonSize;
-  //color?: ButtonColor;
-  color?: string;
+  color?: ButtonColor;
   textColor?: ButtonTextColor;
   icon?: React.ReactNode;
   isHover?: boolean;
@@ -72,6 +92,7 @@ function Button(
       onMouseEnter={hoverHandler}
       onMouseLeave={leaveHandler}
       isHover={hover}
+      color={props.color ? props.color : ButtonColor.BLUE}
       fullWidth={props.fullWidth}
       disabled={props.disabled && props.disabled}
       ref={ref}
@@ -83,11 +104,10 @@ function Button(
       {props.icon && (
         <span
           style={{
-            width: "34px",
-            height: "34px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            marginRight: "7px",
           }}
         >
           {props.icon}

@@ -291,6 +291,76 @@ export const User = ({ color = "#000", width = "24px", height = "24px" }) => {
   );
 };
 
+export const Heart = ({ color = "#000", width = "24px", height = "24px" }) => {
+  return (
+    <svg
+      id="Icon_heart"
+      data-name="Icon/heart"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path id="Path_201" data-name="Path 201" d="M0,0H24V24H0Z" fill="none" />
+      <path
+        id="Path_202"
+        data-name="Path 202"
+        d="M19.5,13.572,12,21,4.5,13.572m0,0A5,5,0,1,1,12,7.006a5,5,0,1,1,7.5,6.572"
+        fill="none"
+        stroke="#000"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+};
+
+export const Chat = ({ color = "#000", width = "25px", height = "24px" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="25"
+      height="24"
+      viewBox="0 0 25 24"
+    >
+      <g id="Icon_Chat" data-name="Icon/Chat" transform="translate(0.5 3)">
+        <rect
+          id="Container"
+          width="24"
+          height="24"
+          transform="translate(0 -3)"
+          fill="none"
+        />
+        <path
+          id="Path_2762"
+          data-name="Path 2762"
+          d="M16.393,64.1H7.6a7.775,7.775,0,0,0,0,15.545h3.9l4.714,2.414a.392.392,0,0,0,.179.041.4.4,0,0,0,.4-.409V79.639a7.779,7.779,0,0,0-.4-15.535Zm0,14.727a.4.4,0,0,0-.4.409v1.793l-4.219-2.161a.392.392,0,0,0-.179-.041h-4a6.956,6.956,0,0,1,0-13.909h8.8a6.956,6.956,0,0,1,0,13.909Z"
+          transform="translate(0 -64.104)"
+          stroke="#000"
+          strokeWidth="1"
+        />
+        <path
+          id="Path_2763"
+          data-name="Path 2763"
+          d="M146.1,264.1H136.4a.4.4,0,1,0,0,.808H146.1a.4.4,0,1,0,0-.808Z"
+          transform="translate(-129.255 -253.871)"
+          stroke="#000"
+          strokeWidth="1"
+        />
+        <path
+          id="Path_2764"
+          data-name="Path 2764"
+          d="M146.1,168.1H136.4a.4.4,0,0,0,0,.808H146.1a.4.4,0,0,0,0-.808Z"
+          transform="translate(-129.255 -162.783)"
+          stroke="#000"
+          strokeWidth="1"
+        />
+      </g>
+    </svg>
+  );
+};
+
 export const CloseCircle = ({
   color = "#000",
   width = "24px",
@@ -316,7 +386,7 @@ export const CloseCircle = ({
           data-name="Path 2814"
           d="M11,0A11,11,0,1,0,22,11,11,11,0,0,0,11,0Zm0,21.267A10.267,10.267,0,1,1,21.267,11,10.267,10.267,0,0,1,11,21.267Z"
           stroke="#000"
-          strokeWidth="0.8"
+          stroke-width="0.8"
         />
         <path
           id="Path_2815"
@@ -324,7 +394,7 @@ export const CloseCircle = ({
           d="M107.952,101.805h-5.464V96.341a.341.341,0,1,0-.683,0v5.464H96.341a.341.341,0,1,0,0,.683h5.464v5.464a.341.341,0,0,0,.683,0v-5.464h5.464a.341.341,0,0,0,0-.683Z"
           transform="translate(11 -133.457) rotate(45)"
           stroke="#000"
-          strokeWidth="0.8"
+          stroke-width="0.8"
         />
       </g>
     </svg>
