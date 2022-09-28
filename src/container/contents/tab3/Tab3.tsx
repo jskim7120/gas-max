@@ -4,19 +4,8 @@ import { GridView, LocalDataProvider } from "realgrid";
 import { columns, fields } from "./employee-data-full";
 import IconButton from "components/Button";
 import { baseURL } from "api";
-import {
-  ExcelIcon,
-  CloseCircle,
-  PlusCircle,
-  ArrowDownCircle,
-  ForbidCircle,
-} from "components/AllSvgIcon";
-import {
-  updateEmployee,
-  addEmployee,
-  deleteEmployee,
-  getEmployees,
-} from "features/employee/employeeSlice";
+import { PlusCircle, ArrowDownCircle } from "components/AllSvgIcon";
+import { updateEmployee, getEmployees } from "features/employee/employeeSlice";
 import { Wrapper } from "../style";
 
 let tableData: any;
@@ -27,7 +16,6 @@ let gv: any;
 function TabContent3({ name }: { name?: string }) {
   const dispatch = useDispatch();
   tableData = useSelector((state) => state.employees.employees);
-  console.log(tableData);
   const realgridElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
