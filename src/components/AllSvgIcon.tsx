@@ -291,6 +291,76 @@ export const User = ({ color = "#000", width = "24px", height = "24px" }) => {
   );
 };
 
+export const Heart = ({ color = "#000", width = "24px", height = "24px" }) => {
+  return (
+    <svg
+      id="Icon_heart"
+      data-name="Icon/heart"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path id="Path_201" data-name="Path 201" d="M0,0H24V24H0Z" fill="none" />
+      <path
+        id="Path_202"
+        data-name="Path 202"
+        d="M19.5,13.572,12,21,4.5,13.572m0,0A5,5,0,1,1,12,7.006a5,5,0,1,1,7.5,6.572"
+        fill="none"
+        stroke="#000"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+};
+
+export const Chat = ({ color = "#000", width = "25px", height = "24px" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="25"
+      height="24"
+      viewBox="0 0 25 24"
+    >
+      <g id="Icon_Chat" data-name="Icon/Chat" transform="translate(0.5 3)">
+        <rect
+          id="Container"
+          width="24"
+          height="24"
+          transform="translate(0 -3)"
+          fill="none"
+        />
+        <path
+          id="Path_2762"
+          data-name="Path 2762"
+          d="M16.393,64.1H7.6a7.775,7.775,0,0,0,0,15.545h3.9l4.714,2.414a.392.392,0,0,0,.179.041.4.4,0,0,0,.4-.409V79.639a7.779,7.779,0,0,0-.4-15.535Zm0,14.727a.4.4,0,0,0-.4.409v1.793l-4.219-2.161a.392.392,0,0,0-.179-.041h-4a6.956,6.956,0,0,1,0-13.909h8.8a6.956,6.956,0,0,1,0,13.909Z"
+          transform="translate(0 -64.104)"
+          stroke="#000"
+          strokeWidth="1"
+        />
+        <path
+          id="Path_2763"
+          data-name="Path 2763"
+          d="M146.1,264.1H136.4a.4.4,0,1,0,0,.808H146.1a.4.4,0,1,0,0-.808Z"
+          transform="translate(-129.255 -253.871)"
+          stroke="#000"
+          strokeWidth="1"
+        />
+        <path
+          id="Path_2764"
+          data-name="Path 2764"
+          d="M146.1,168.1H136.4a.4.4,0,0,0,0,.808H146.1a.4.4,0,0,0,0-.808Z"
+          transform="translate(-129.255 -162.783)"
+          stroke="#000"
+          strokeWidth="1"
+        />
+      </g>
+    </svg>
+  );
+};
+
 export const CloseCircle = ({
   color = "#000",
   width = "24px",
@@ -316,7 +386,7 @@ export const CloseCircle = ({
           data-name="Path 2814"
           d="M11,0A11,11,0,1,0,22,11,11,11,0,0,0,11,0Zm0,21.267A10.267,10.267,0,1,1,21.267,11,10.267,10.267,0,0,1,11,21.267Z"
           stroke="#000"
-          strokeWidth="0.8"
+          stroke-width="0.8"
         />
         <path
           id="Path_2815"
@@ -324,7 +394,7 @@ export const CloseCircle = ({
           d="M107.952,101.805h-5.464V96.341a.341.341,0,1,0-.683,0v5.464H96.341a.341.341,0,1,0,0,.683h5.464v5.464a.341.341,0,0,0,.683,0v-5.464h5.464a.341.341,0,0,0,0-.683Z"
           transform="translate(11 -133.457) rotate(45)"
           stroke="#000"
-          strokeWidth="0.8"
+          stroke-width="0.8"
         />
       </g>
     </svg>
@@ -532,9 +602,9 @@ export const Favorite = ({
         d="M19.5,13.572,12,21,4.5,13.572m0,0A5,5,0,1,1,12,7.006a5,5,0,1,1,7.5,6.572"
         fill="none"
         stroke="#fff"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
     </svg>
   );
@@ -564,7 +634,7 @@ export const IconFile = ({
           data-name="Path 2795"
           d="M79.942,0H66.058A1.962,1.962,0,0,0,64,1.844V20.156A1.962,1.962,0,0,0,66.058,22H79.942A1.962,1.962,0,0,0,82,20.156V1.844A1.962,1.962,0,0,0,79.942,0Zm1.24,20.156a1.182,1.182,0,0,1-1.24,1.111H66.058a1.182,1.182,0,0,1-1.24-1.111V1.844A1.182,1.182,0,0,1,66.058.733H79.942a1.182,1.182,0,0,1,1.24,1.111Z"
           stroke="#000"
-          stroke-width="0.8"
+          strokeWidth="0.8"
         />
         <path
           id="Path_2796"
@@ -572,7 +642,7 @@ export const IconFile = ({
           d="M146.1,232h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
           transform="translate(-68.253 -221.404)"
           stroke="#000"
-          stroke-width="0.8"
+          strokeWidth="0.8"
         />
         <path
           id="Path_2797"
@@ -580,7 +650,7 @@ export const IconFile = ({
           d="M146.1,328h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
           transform="translate(-68.253 -313.02)"
           stroke="#000"
-          stroke-width="0.8"
+          strokeWidth="0.8"
         />
         <path
           id="Path_2798"
@@ -588,7 +658,7 @@ export const IconFile = ({
           d="M146.1,136h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
           transform="translate(-68.253 -129.789)"
           stroke="#000"
-          stroke-width="0.8"
+          strokeWidth="0.8"
         />
       </g>
     </svg>
@@ -642,9 +712,9 @@ export const DeliveryTruck = ({
         transform="translate(5 15)"
         fill="none"
         stroke="#000"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <circle
         id="Ellipse_5"
@@ -655,9 +725,9 @@ export const DeliveryTruck = ({
         transform="translate(15 15)"
         fill="none"
         stroke="#000"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <path
         id="Path_54"
@@ -665,9 +735,9 @@ export const DeliveryTruck = ({
         d="M5,17H3V13M2,5H13V17M9,17h6m4,0h2V11H13m0-5h5l3,5"
         fill="none"
         stroke="#000"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <line
         id="Line_18"
@@ -676,9 +746,9 @@ export const DeliveryTruck = ({
         transform="translate(3 9)"
         fill="none"
         stroke="#000"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
     </svg>
   );
