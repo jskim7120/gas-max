@@ -26,15 +26,14 @@ export const List = styled.li<{ isActive: boolean }>`
   cursor: pointer;
   display: inline-block;
   outline: none;
-  width: 130px;
+  width: 95px;
   height: 100%;
   font-size: 12px;
-  padding: 3px 32px 0 9px;
+  font-weight: 400;
+  padding: 5px 5px;
   margin-right: 1px;
   position: relative;
   font-family: "NotoSansKRRegular";
-  font-size: 18px;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -48,8 +47,8 @@ export const List = styled.li<{ isActive: boolean }>`
 
   span {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 6.5px;
+    right: -9px;
     width: 24px;
     display: inlene-block;
   }
@@ -59,7 +58,8 @@ export const List = styled.li<{ isActive: boolean }>`
       ? `linear-gradient(#FFFFFF, #FB0000)`
       : `linear-gradient(#F1F1F1, #C7C7C7)`};
 
-  color: ${(props) => (props.isActive ? "#EEF604" : "#FFF")};
+  // color: ${(props) => (props.isActive ? "#0057AA" : "#FFF")};
+  color: #0057aa;
 `;
 
 export const TabContentWrapper = styled.div`

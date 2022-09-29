@@ -451,39 +451,48 @@ export const Chat = ({ color = "#000", width = "25px", height = "24px" }) => {
 
 export const CloseCircle = ({
   color = "#000",
-  width = "24px",
-  height = "24px",
+  width = "11px",
+  height = "11px",
 }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
+      width="11"
+      height="11"
+      viewBox="0 0 11 11"
     >
-      <g id="Icon_Close" data-name="Icon/Close" transform="translate(1 1)">
-        <rect
-          id="Container"
-          width="24"
-          height="24"
-          transform="translate(-1 -1)"
-          fill="none"
-        />
+      <g id="CloseCircle" transform="translate(-180 -57)">
         <path
-          id="Path_2814"
-          data-name="Path 2814"
-          d="M11,0A11,11,0,1,0,22,11,11,11,0,0,0,11,0Zm0,21.267A10.267,10.267,0,1,1,21.267,11,10.267,10.267,0,0,1,11,21.267Z"
-          stroke="#000"
-          strokeWidth="0.8"
+          id="Path_74"
+          data-name="Path 74"
+          d="M5.5,0A5.5,5.5,0,1,1,0,5.5,5.5,5.5,0,0,1,5.5,0Z"
+          transform="translate(180 57)"
+          fill="#707070"
         />
-        <path
-          id="Path_2815"
-          data-name="Path 2815"
-          d="M107.952,101.805h-5.464V96.341a.341.341,0,1,0-.683,0v5.464H96.341a.341.341,0,1,0,0,.683h5.464v5.464a.341.341,0,0,0,.683,0v-5.464h5.464a.341.341,0,0,0,0-.683Z"
-          transform="translate(11 -133.457) rotate(45)"
-          stroke="#000"
-          strokeWidth="0.8"
-        />
+        <g
+          id="Group_113"
+          data-name="Group 113"
+          transform="translate(0.302 0.314)"
+        >
+          <path
+            id="Path_69"
+            data-name="Path 69"
+            d="M2435.5,173.5l5,5"
+            transform="translate(-2252.802 -113.814)"
+            fill="none"
+            stroke="#fff"
+            strokeWidth="1"
+          />
+          <path
+            id="Path_70"
+            data-name="Path 70"
+            d="M0,0,5,5"
+            transform="translate(187.698 59.686) rotate(90)"
+            fill="none"
+            stroke="#fff"
+            strokeWidth="1"
+          />
+        </g>
       </g>
     </svg>
   );
