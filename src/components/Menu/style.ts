@@ -4,12 +4,14 @@ export const Nav = styled.nav`
   ul {
     display: flex;
     list-style: none;
+    border-right: 1px solid #fff;
 
     li.menu-items {
       position: relative;
-      font-family: "NotoSansKRRegular";
-      font-size: 18px;
-
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #fff;
       a {
         display: block;
         font-size: inherit;
@@ -20,7 +22,10 @@ export const Nav = styled.nav`
       button {
         color: inherit;
         font-size: inherit;
-        border: none;
+        border: 1px solid #fff;
+        border-top: none;
+        border-bottom: none;
+        border-right: none;
         background-color: transparent;
         cursor: pointer;
         width: 100%;
@@ -29,7 +34,7 @@ export const Nav = styled.nav`
       a,
       button {
         text-align: left;
-        padding: 0.7rem 1rem;
+        padding: 0px 19px;
       }
 
       a:hover,

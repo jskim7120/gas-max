@@ -2,17 +2,18 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "app/store";
 import FavMenu from "components/favMenu/favMenu";
+import SwitchNav from "components/SwitchNav/switchNav";
 import {
   Container,
   TopSide,
   TopLeftWrapper,
-  LeftSide,
+  // LeftSide,
   Icons,
-  Navigation,
-  Wrapper,
-  FavTitle,
+  // Navigation,
+  // Wrapper,
+  // FavTitle,
 } from "./style";
-import { Settings, Info, User, Favorite } from "components/AllSvgIcon";
+import { Settings, User, Favorite } from "components/AllSvgIcon";
 import Navbar from "components/Menu/Navbar";
 import LogoImg from "assets/image/Logo.png";
 
@@ -29,22 +30,22 @@ export default function AppLayout() {
         </TopLeftWrapper>
         <Icons>
           <Settings />
-          <Info />
           <User />
         </Icons>
       </TopSide>
-      <Wrapper>
-        <LeftSide>
-          <Navigation>
-            <FavTitle>
-              <Favorite />
-              <p>바로가기</p>
-            </FavTitle>
-            <FavMenu />
-          </Navigation>
-        </LeftSide>
-        <Outlet />
-      </Wrapper>
+      <SwitchNav />
+      {/* <Wrapper> */}
+      {/* <LeftSide>
+        <Navigation>
+          <FavTitle>
+            <Favorite />
+            <p>바로가기</p>
+          </FavTitle>
+          <FavMenu />
+        </Navigation>
+        </LeftSide> */}
+      <Outlet />
+      {/* </Wrapper> */}
     </Container>
   );
 }

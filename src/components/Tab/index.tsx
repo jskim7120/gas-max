@@ -1,7 +1,7 @@
 import React, { useEffect, BaseSyntheticEvent } from "react";
 import { useSelector, useDispatch } from "app/store";
 import { setTabs, setActiveTab, removeTab } from "features/tab/tabSlice";
-import Switch from "components/switch";
+// import Switch from "components/switch";
 import { getContent } from "./tabContent";
 import {
   TabContainer,
@@ -78,7 +78,7 @@ const Tab = (props: TabProps): JSX.Element => {
   return (
     <TabContainer>
       <TabHeaderWrapper>
-        <Switch />
+        {/* <Switch /> */}
         <ul style={{ marginLeft: "15px" }}>
           {tabHeader?.map((header: any, index: number) => (
             <TabHeader
