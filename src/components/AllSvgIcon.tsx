@@ -753,3 +753,90 @@ export const DeliveryTruck = ({
     </svg>
   );
 };
+
+export const MagnifyingGlass = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="13.501"
+      height="13"
+      viewBox="0 0 13.501 13"
+    >
+      <g
+        id="Icon_search"
+        data-name="Icon/search"
+        transform="translate(1.501 1)"
+      >
+        <rect
+          id="Container"
+          width="13"
+          height="13"
+          transform="translate(-1 -1)"
+          fill="none"
+        />
+        <path
+          id="Path_2751"
+          data-name="Path 2751"
+          d="M8.9,8.664l-2.44-2.44a3.718,3.718,0,1,0-.238.238L8.664,8.9A.168.168,0,0,0,8.9,8.664ZM3.728,7.1A3.37,3.37,0,1,1,7.1,3.728,3.374,3.374,0,0,1,3.728,7.1Z"
+          transform="translate(-1 2)"
+          stroke="#fff"
+          strokeWidth="1"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const Checked = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="25"
+      height="26"
+      viewBox="0 0 25 26"
+    >
+      <g
+        id="Group_1187"
+        data-name="Group 1187"
+        transform="translate(-375 -384)"
+      >
+        <g
+          id="Icon_chevron-down"
+          data-name="Icon/chevron-down"
+          transform="translate(375 389)"
+        >
+          <path
+            id="Icon_material-keyboard-arrow-down"
+            data-name="Icon material-keyboard-arrow-down"
+            d="M6.688,7.628l2.97,2.461,3.563-3.555,1.095,1.095L9.658,12.286,5.767,8.54Z"
+            transform="translate(1.409 -0.908)"
+          />
+          <path
+            id="Path_217"
+            data-name="Path 217"
+            d="M0,0H18V21H0Z"
+            fill="none"
+          />
+        </g>
+        <path
+          id="Path_105"
+          data-name="Path 105"
+          d="M0,0H24V24H0Z"
+          transform="translate(376 384)"
+          fill="none"
+        />
+        <path
+          id="Path_106"
+          data-name="Path 106"
+          d="M17,7H6A2,2,0,0,0,4,9v9a2,2,0,0,0,2,2h9a2,2,0,0,0,2-2V7"
+          transform="translate(376 384)"
+          fill="none"
+          stroke="#000"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+        />
+      </g>
+    </svg>
+  );
+};

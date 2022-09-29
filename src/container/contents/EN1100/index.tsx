@@ -14,12 +14,14 @@ let gv: any;
 
 function EN100({ name }: { name: string }) {
   const dispatch = useDispatch();
+  const formRef = useRef<any>(null);
   const [selected, setSelected] = useState();
+  const [clickedButton, setClickedButton] = useState("");
   // tableData = useSelector((state) => state.employees.employees);
   tableData = [
-    { areaCode: "test1", areaName: "1-r test" },
-    { areaCode: "test2", areaName: "2-r test" },
-    { areaCode: "test3", areaName: "3-r test" },
+    { areaCode: "00", areaName: "123456789123456789" },
+    { areaCode: "01", areaName: "777777777777777777" },
+    { areaCode: "02", areaName: "222222222222222222" },
   ];
   const realgridElement = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -42,6 +44,7 @@ function EN100({ name }: { name: string }) {
       const itemIndex: any = gv.getCurrent().itemIndex;
       console.log("itemIndex:", itemIndex);
       setSelected(tableData[itemIndex]);
+      setClickedButton("");
     };
 
     dp.onRowUpdated = async (provider: any, row: any) => {
@@ -65,38 +68,54 @@ function EN100({ name }: { name: string }) {
   if (!tableData) return <p>...loading</p>;
 
   return (
-    <Wrapper>
-      <TableWrapper ref={realgridElement}></TableWrapper>
-      <DetailWrapper>
-        <DetailHeader>
-          <p>{name}</p>
-          <div className="buttons">
-            <Button
-              text="등록"
-              icon={<Plus />}
-              style={{ marginRight: "5px" }}
-            />
-            <Button
-              text="삭제"
-              icon={<Trash />}
-              style={{ marginRight: "5px" }}
-            />
-            <Button
-              text="저장"
-              icon={<Tick />}
-              style={{ marginRight: "5px" }}
-            />
-            <Button text="취소" icon={<X />} style={{ marginRight: "15px" }} />
-
-            <div>
-              <Chat />
-              <CloseCircle />
-            </div>
+    <>
+      <DetailHeader>
+        <p>{name}</p>
+        <div className="buttons">
+          <Button
+            text="등록"
+            icon={<Plus />}
+            style={{ marginRight: "5px" }}
+            onClick={() => {
+              setClickedButton("clear");
+              console.log("formRef:", formRef.current);
+            }}
+          />
+          <Button
+            text="삭제"
+            icon={<Trash />}
+            style={{ marginRight: "5px" }}
+            onClick={() => console.log("delete daragdav")}
+          />
+          <Button
+            text="저장"
+            icon={<Tick />}
+            style={{ marginRight: "5px" }}
+            onClick={() => setClickedButton("update")}
+          />
+          <Button
+            text="취소"
+            icon={<X />}
+            style={{ marginRight: "15px" }}
+            onClick={() => setClickedButton("reset")}
+          />
+          <div>
+            <Chat />
+            <CloseCircle />
           </div>
-        </DetailHeader>
-        <Form selectedCustomer={selected} getFormValues={getFormValues} />
-      </DetailWrapper>
-    </Wrapper>
+        </div>
+      </DetailHeader>
+      <Wrapper>
+        <TableWrapper ref={realgridElement}></TableWrapper>
+        <DetailWrapper>
+          <Form
+            selected={selected}
+            getFormValues={getFormValues}
+            ref={formRef}
+          />
+        </DetailWrapper>
+      </Wrapper>
+    </>
   );
 }
 

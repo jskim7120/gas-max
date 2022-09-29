@@ -16,3 +16,9 @@ export enum ButtonTextColor {
   BLACK = "black",
   DARK = "dark",
 }
+
+export enum InputSize {
+  sm = "sm",
+  lg = "lg",
+  md = "md",
+}

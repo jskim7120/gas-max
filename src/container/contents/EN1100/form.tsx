@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+  useState,
+} from "react";
 import DatePicker from "react-datepicker";
 import { useForm, Path, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,31 +15,43 @@ import {
   getEmployees,
 } from "features/employee/employeeSlice";
 import {
+  Input,
+  Select,
+  Field,
   ErrorText,
-  FormWrapper,
   FormGroup,
+  FormInline,
+  FormBlock,
   Wrapper,
+  Divider,
 } from "components/form/style";
+import CheckBox from "components/CheckBox";
+import { InputSize } from "components/ComponentsType";
 import { IFormProps } from "./type";
+import { MagnifyingGlass } from "components/AllSvgIcon";
 // import { schema } from "./validation";
-import { Tick, Plus, Trash, X } from "components/AllSvgIcon";
-import Button from "components/Button/Button";
+import PlainTab from "components/plainTab";
+import { TabContentWrapper } from "components/plainTab/style";
+import getTabContent from "../getTabContent";
 
-export default function Form({
-  selectedCustomer,
-  getFormValues,
-}: {
-  selectedCustomer: any;
+interface IForm {
+  selected: any;
   getFormValues: (arg: Object) => void;
-}) {
+}
+
+function Form(
+  { selected, getFormValues }: IForm,
+  ref?: React.ForwardedRef<any>
+) {
   const dispatch = useDispatch();
   const [isClickedAdd, setIsClikedAdd] = useState(false);
+  const [tabId, setTabId] = useState(0);
 
   useEffect(() => {
-    if (JSON.stringify(selectedCustomer) !== "{}") {
-      reset(selectedCustomer);
+    if (JSON.stringify(selected) !== "{}") {
+      reset(selected);
     }
-  }, [selectedCustomer]);
+  }, [selected]);
 
   const {
     register,
@@ -47,23 +64,25 @@ export default function Form({
     // resolver: yupResolver(schema),
   });
 
+  /* 
   const resetForm = (type: string) => {
-    if (JSON.stringify(selectedCustomer) !== "{}") {
+    if (JSON.stringify(selected) !== "{}") {
       let newData: any = {};
 
       if (type === "clear") {
-        for (const [key, value] of Object.entries(selectedCustomer)) {
+        for (const [key, value] of Object.entries(selected)) {
           newData[key] = null;
         }
         setIsClikedAdd(true);
       } else if (type === "reset") {
-        for (const [key, value] of Object.entries(selectedCustomer)) {
+        for (const [key, value] of Object.entries(selected)) {
           newData[key] = value;
         }
       }
       reset(newData);
     }
   };
+  */
 
   const update = (data: IFormProps) => {
     getFormValues({ ...getValues(), action: "update" });
@@ -74,248 +93,339 @@ export default function Form({
     }
   };
 
-  const remove = async () => {
-    setIsClikedAdd(false);
-    console.log("delete");
-    console.log(getValues());
+  // if (selected && JSON.stringify(selected) === "{}")
+  if (!selected) return <p>Loading...</p>;
 
-    await dispatch(deleteEmployee(getValues()));
-    await dispatch(getEmployees());
-  };
-
-  return JSON.stringify(selectedCustomer) !== "{}" ? (
-    <form onSubmit={handleSubmit(update)}>
-      <div>
-        {/* <button
-          type="button"
-          style={{ marginRight: "2px" }}
-          onClick={() => resetForm("clear")}
-        >
-          add
-        </button>
-        <button type="submit" style={{ marginRight: "2px" }}>
-          update
-        </button>
-        <button type="button" style={{ marginRight: "2px" }} onClick={remove}>
-          delete
-        </button>
-        <button type="button" onClick={() => resetForm("reset")}>
-          cancel
-        </button> */}
-      </div>
-      {/* <div style={{ background: "black" }}>
-        <Plus />
-        <Trash />
-        <Tick />
-        <X />
-      </div> */}
-
-      {/* <Button onClick={() => console.log("scsd")} icon={<Plus />} text="등록" /> */}
-
-      <FormWrapper>
-        <Wrapper>
+  return (
+    <form onSubmit={handleSubmit(update)} style={{ padding: "10px 15px" }}>
+      <Wrapper grid>
+        <Field>
           <FormGroup>
-            <label>opt:</label>
-            <input {...register("opt")} type="number" />
+            <label>코드:</label>
+            <Input
+              {...register("areaCode")}
+              type="number"
+              inputSize={InputSize.sm}
+            />
           </FormGroup>
           <div>
-            <ErrorText>{errors["opt"]?.message}</ErrorText>
+            <ErrorText>{errors["areaCode"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+        <Field>
           <FormGroup>
-            <label>swAddr1:</label>
-            <input {...register("swAddr1")} type="text" />
+            <label>영업소명:</label>
+            <Input
+              {...register("areaName")}
+              type="number"
+              inputSize={InputSize.md}
+            />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swAddr1"]?.message}</ErrorText>
+            <ErrorText>{errors["areaName"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+      </Wrapper>
+      <Divider />
+      <Wrapper grid>
+        <Field>
           <FormGroup>
-            <label>swAddr2:</label>
-            <input {...register("swAddr2")} type="text" />
+            <label>사업자번호:</label>
+            <Input {...register("jnSsno")} type="text" />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swAddr2"]?.message}</ErrorText>
+            <ErrorText>{errors["jnSsno"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+        <Field>
           <FormGroup>
-            <label>swBigo:</label>
-            <input {...register("swBigo")} type="text" />
+            <label>상호:</label>
+            <Input
+              {...register("jnSangho")}
+              type="text"
+              inputSize={InputSize.md}
+            />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swBigo"]?.message}</ErrorText>
+            <ErrorText>{errors["jnSangho"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+        <Field>
           <FormGroup>
-            <label>swCaCode:</label>
-            <input {...register("swCaCode")} type="text" />
+            <label>대표:</label>
+            <Input {...register("jnSajang")} type="text" />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swCaCode"]?.message}</ErrorText>
+            <ErrorText>{errors["jnSajang"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+      </Wrapper>
+      <Wrapper style={{ alignItems: "center" }}>
+        <Field>
           <FormGroup>
-            <label>swCaName:</label>
-            <input {...register("swCaName")} type="text" />
+            <label> 주소:</label>
+            <Input {...register("jnZipcode")} type="text" />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swCaName"]?.message}</ErrorText>
+            <ErrorText>{errors["jnZipcode"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+        <Field>
+          <button
+            style={{
+              width: "25px",
+              height: "25px",
+              background: "#666666",
+              padding: "2px 0 0 4px",
+              borderRadius: "5px",
+              border: "1px solid #707070",
+            }}
+          >
+            <MagnifyingGlass />
+          </button>
+        </Field>
+        <Field>
+          <Input
+            {...register("jnAddr1")}
+            type="text"
+            inputSize={InputSize.md}
+          />
+          <div>
+            <ErrorText>{errors["jnAddr1"]?.message}</ErrorText>
+          </div>
+        </Field>
+      </Wrapper>
+      <Wrapper>
+        <FormGroup>
+          <label></label>
+          <Input
+            {...register("jnAddr2")}
+            type="text"
+            inputSize={InputSize.lg}
+          />
+        </FormGroup>
+        <div>
+          <ErrorText>{errors["jnAddr2"]?.message}</ErrorText>
+        </div>
+      </Wrapper>
+      <Wrapper grid col={2}>
+        <Field>
           <FormGroup>
-            <label>swCode:</label>
-            <input {...register("swCode")} type="number" />
+            <label>업태:</label>
+            <Input
+              {...register("jnUptae")}
+              type="text"
+              inputSize={InputSize.md}
+            />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swCode"]?.message}</ErrorText>
+            <ErrorText>{errors["jnUptae"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+        <Field>
           <FormGroup>
-            <label>swDriverNo:</label>
-            <input {...register("swDriverNo")} type="text" />
+            <label>종목:</label>
+            <Input
+              {...register("jnJongmok")}
+              type="text"
+              inputSize={InputSize.md}
+            />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swDriverNo"]?.message}</ErrorText>
+            <ErrorText>{errors["jnJongmok"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+      </Wrapper>
+      <Wrapper grid>
+        <Field>
           <FormGroup>
-            <label>swDriverType:</label>
-            <input {...register("swDriverType")} type="text" />
+            <label>대표전화:</label>
+            <Input {...register("jnTel1")} type="text" />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swDriverType"]?.message}</ErrorText>
+            <ErrorText>{errors["jnTel1"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+        <Field>
           <FormGroup>
-            <label>swGubun:</label>
-            <input {...register("swGubun")} type="text" />
+            <label>대표전화2:</label>
+            <Input {...register("jnTel2")} type="text" />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swGubun"]?.message}</ErrorText>
+            <ErrorText>{errors["jnTel2"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+        <Field>
           <FormGroup>
-            <label>swHp:</label>
-            <input {...register("swHp")} type="text" />
+            <label>팩스:</label>
+            <Input {...register("jnFax")} type="text" />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swHp"]?.message}</ErrorText>
+            <ErrorText>{errors["jnFax"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+      </Wrapper>
+      <Divider />
+      <Wrapper grid>
+        <Field>
           <FormGroup>
-            <label>swIndate:</label>
-            <input {...register("swIndate")} type="text" />
+            <label>안전관리 총괄자:</label>
+            <Input {...register("jnAnName1")} type="text" />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swIndate"]?.message}</ErrorText>
+            <ErrorText>{errors["jnAnName1"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+        <Field>
           <FormGroup>
-            <label>swJdate1:</label>
-            <input {...register("swJdate1")} type="text" />
+            <label>전화:</label>
+            <Input {...register("jnAnTel1")} type="text" />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swJdate1"]?.message}</ErrorText>
+            <ErrorText>{errors["jnAnTel1"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+      </Wrapper>
+      <Wrapper>
+        <Field>
           <FormGroup>
-            <label>swJdate2:</label>
-            <input {...register("swJdate2")} type="text" />
+            <label>안전관리 책임자:</label>
+            <Input {...register("jnAnName2")} type="text" />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swJdate2"]?.message}</ErrorText>
+            <ErrorText>{errors["jnAnName2"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+        <Field>
           <FormGroup>
-            <label>swJuminno:</label>
-            <input {...register("swJuminno")} type="text" />
+            <label>전화:</label>
+            <Input {...register("jnAnTel2")} type="text" />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swJuminno"]?.message}</ErrorText>
+            <ErrorText>{errors["jnAnTel2"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+      </Wrapper>
+      <Divider />
+      <Wrapper grid col={4}>
+        <Field>
           <FormGroup>
-            <label>swName:</label>
-            <input {...register("swName")} type="text" />
+            <label>세금계산서 양식:</label>
+            <Select {...register("jnSekum")}>
+              <option value="A4 백지">A4 백지</option>
+            </Select>
           </FormGroup>
           <div>
-            <ErrorText>{errors["swName"]?.message}</ErrorText>
+            <ErrorText>{errors["jnSekum"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+        <Field>
           <FormGroup>
-            <label>swPaydate:</label>
-            <input {...register("swPaydate")} type="text" />
+            <label>공급사업자 인쇄안함</label>
+            <Input
+              {...register("jnSegongYn")}
+              type="checkbox"
+              checked={true}
+              style={{ width: "20px" }}
+            />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swPaydate"]?.message}</ErrorText>
+            <ErrorText>{errors["jnSegongYn"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+        <Field>
           <FormGroup>
-            <label>swPaykum:</label>
-            <input {...register("swPaykum")} type="number" />
+            <label>Vat 별도 단가계산</label>
+            <Input
+              {...register("jnVatSumyn")}
+              type="checkbox"
+              checked={true}
+              style={{ width: "20px" }}
+            />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swPaykum"]?.message}</ErrorText>
+            <ErrorText>{errors["jnVatSumyn"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+        <Field>
           <FormGroup>
-            <label>swPaytype:</label>
-            <input {...register("swPaytype")} type="text" />
+            <label>수량 단가 인쇄 유무</label>
+            <Input
+              {...register("jnSekumEa")}
+              type="checkbox"
+              checked={true}
+              style={{ width: "20px" }}
+            />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swPaytype"]?.message}</ErrorText>
+            <ErrorText>{errors["jnSekumEa"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+      </Wrapper>
+      <Wrapper grid>
+        <Field>
           <FormGroup>
-            <label>swTel:</label>
-            <input {...register("swTel")} type="number" />
+            <label>거래명세표 양식:</label>
+            <Select {...register("jnJangbu")}>
+              <option value="0  인쇄용지">0 인쇄용지</option>
+            </Select>
           </FormGroup>
           <div>
-            <ErrorText>{errors["swTel"]?.message}</ErrorText>
+            <ErrorText>{errors["jnJangbu"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+      </Wrapper>
+      <Wrapper grid>
+        <Field>
           <FormGroup>
-            <label>swWorkOut:</label>
-            <input {...register("swWorkOut")} type="text" />
+            <label>탱크잔량/원격검침 발신기 업체번호</label>
+            <Input
+              {...register("jnCmngno")}
+              type="checkbox"
+              checked={true}
+              style={{ width: "20px" }}
+            />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swWorkOut"]?.message}</ErrorText>
+            <ErrorText>{errors["jnCmngno"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-        <Wrapper>
+        </Field>
+        <Field>
           <FormGroup>
-            <label>swZipcode:</label>
-            <input {...register("swZipcode")} type="text" />
+            <label>Nice 계좌자동이체 사용</label>
+            <Input
+              {...register("innopayBankYn")}
+              type="checkbox"
+              checked={false}
+              style={{ width: "20px" }}
+            />
           </FormGroup>
           <div>
-            <ErrorText>{errors["swZipcode"]?.message}</ErrorText>
+            <ErrorText>{errors["innopayBankYn"]?.message}</ErrorText>
           </div>
-        </Wrapper>
-      </FormWrapper>
+        </Field>
+        <Field>
+          <FormGroup>
+            <label>Innopay 카드자동이체 사용</label>
+            <Input
+              {...register("niceBankYn")}
+              type="checkbox"
+              checked={true}
+              style={{ width: "20px" }}
+            />
+          </FormGroup>
+          <div>
+            <ErrorText>{errors["niceBankYn"]?.message}</ErrorText>
+          </div>
+        </Field>
+      </Wrapper>
+      <PlainTab
+        tabHeader={["지로 양식", "고객안내문", "입금계좌  안내", "결재란"]}
+        onClick={(id) => setTabId(id)}
+      />
+      <TabContentWrapper>{getTabContent(tabId)}</TabContentWrapper>
     </form>
-  ) : (
-    <div className="text-center p-3">
-      <span className="spinner-border spinner-border-lg align-center"></span>
-    </div>
   );
 }
+
+export default forwardRef(Form);
