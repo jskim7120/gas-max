@@ -539,32 +539,6 @@ export const Power = ({
   );
 };
 
-export const Home = ({
-  color = "currentColor",
-  width = "24px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="icon icon-tabler icon-tabler-home"
-      width={width}
-      height={height}
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke={color}
-      fill="none"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <polyline points="5 12 3 12 12 3 21 12 19 12" />
-      <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-      <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-    </svg>
-  );
-};
-
 export const PlusCircle = ({
   color = "currentColor",
   width = "24px",
@@ -958,6 +932,42 @@ export const SwitchIcon = ({
             />
           </g>
         </g>
+      </g>
+    </svg>
+  );
+};
+
+export const Home = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="22.218"
+      height="22.218"
+      viewBox="0 0 22.218 22.218"
+    >
+      <g id="HomeIcon" transform="translate(-60.992 -49.992)">
+        <g
+          id="Group_28"
+          data-name="Group 28"
+          transform="translate(61.992 50.992)"
+        >
+          <path
+            id="Path_79"
+            data-name="Path 79"
+            d="M2144.778,1284.718a10.109,10.109,0,1,1-10.108-10.109A10.108,10.108,0,0,1,2144.778,1284.718Z"
+            transform="translate(-2124.56 -1274.609)"
+            fill="none"
+            stroke="#fff"
+            stroke-width="2"
+          />
+        </g>
+        <path
+          id="Path_82"
+          data-name="Path 82"
+          d="M2681.965,1461.324v-3.129h-1.77v1.777l-2.583-1.972-6.83,5.214,1.074,1.407.736-.562v6.461h10.041v-6.461l.736.562,1.073-1.407Zm-2.634,8.258h-3.438v-4.705h3.438Z"
+          transform="translate(-2605.492 -1403.669)"
+          fill="#fff"
+        />
       </g>
     </svg>
   );

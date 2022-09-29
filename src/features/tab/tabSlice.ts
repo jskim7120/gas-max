@@ -14,6 +14,11 @@ export interface initialStateType {
 const initialState: initialStateType = {
   tabs: [
     {
+      menuId: "HOME",
+      menuName: "HOME",
+      depthFullName: "HOME",
+    },
+    {
       menuId: "M18CO9503",
       menuName: "사원코드 관리",
       depthFullName: "공통관리 > 운영/코드정보 > 사원코드 관리",

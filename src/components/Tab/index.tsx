@@ -9,7 +9,7 @@ import {
   List,
   TabContentWrapper,
 } from "./style";
-import { CloseCircle } from "components/AllSvgIcon";
+import { CloseCircle, Home } from "components/AllSvgIcon";
 interface TabProps {
   className?: string;
   style?: any;
@@ -23,6 +23,15 @@ interface ITabHeader {
 }
 
 const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
+  console.log("header:", header);
+
+  if (header.menuId === "HOME")
+    return (
+      <List className="home" isActive={isActive} onClick={() => onClick()}>
+        <Home />
+      </List>
+    );
+
   return (
     <List
       isActive={isActive}
@@ -78,7 +87,6 @@ const Tab = (props: TabProps): JSX.Element => {
   return (
     <TabContainer>
       <TabHeaderWrapper>
-        {/* <Switch /> */}
         <ul style={{ marginLeft: "15px" }}>
           {tabHeader?.map((header: any, index: number) => (
             <TabHeader

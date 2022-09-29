@@ -6,22 +6,19 @@ export const TabContainer = styled.div`
 
 export const TabHeaderWrapper = styled.div`
   width: 100%;
-  height: 47px;
+  height: 31px;
   display: flex;
   align-items: center;
-  padding: 0 5px;
-  border: 1px solid #707070;
-  border-radius: 5px;
+
   background-color: #fff;
-  box-shadow: -1px 1px 3px 0px rgba(104, 103, 103, 0.35);
-  -webkit-box-shadow: -1px 1px 3px 0px rgba(104, 103, 103, 0.35);
-  -moz-box-shadow: -1px 1px 3px 0px rgba(104, 103, 103, 0.35);
 
   ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    height: 35px;
+    height: 31px;
+    width: 100%;
+    border-bottom: 1px solid red;
   }
 `;
 
@@ -33,7 +30,7 @@ export const List = styled.li<{ isActive: boolean }>`
   height: 100%;
   font-size: 12px;
   padding: 3px 32px 0 9px;
-  margin-right: 3px;
+  margin-right: 1px;
   position: relative;
   font-family: "NotoSansKRRegular";
   font-size: 18px;
@@ -41,6 +38,13 @@ export const List = styled.li<{ isActive: boolean }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  &.home {
+    background: linear-gradient(rgba(140, 184, 8, 0.2), #8cb808);
+    text-align: center;
+    padding: 5px 0 0 0;
+    width: 71px;
+  }
 
   span {
     position: absolute;
@@ -50,7 +54,11 @@ export const List = styled.li<{ isActive: boolean }>`
     display: inlene-block;
   }
 
-  background: ${(props) => (props.isActive ? "#0098FF" : "#707070")};
+  background: ${(props) =>
+    props.isActive
+      ? `linear-gradient(#FFFFFF, #FB0000)`
+      : `linear-gradient(#F1F1F1, #C7C7C7)`};
+
   color: ${(props) => (props.isActive ? "#EEF604" : "#FFF")};
 `;
 
