@@ -998,8 +998,8 @@ export const SidebarOpen = () => {
           x2="0.5"
           gradientUnits="objectBoundingBox"
         >
-          <stop offset="0" stop-color="#a1a1a1" />
-          <stop offset="1" stop-color="#e8e8e8" />
+          <stop offset="0" stopColor="#a1a1a1" />
+          <stop offset="1" stopColor="#e8e8e8" />
         </linearGradient>
       </defs>
       <g id="Group_112" data-name="Group 112" transform="translate(0 -46)">
@@ -1032,9 +1032,9 @@ export const SidebarOpen = () => {
             transform="translate(-525.188 -148.854)"
             fill="none"
             stroke="#fff"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
           />
           <line
             id="Line_1"
@@ -1043,9 +1043,9 @@ export const SidebarOpen = () => {
             transform="translate(0 10.14)"
             fill="none"
             stroke="#fff"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
           />
           <path
             id="Path_61"
@@ -1054,9 +1054,9 @@ export const SidebarOpen = () => {
             transform="translate(-483.452 -189.148)"
             fill="none"
             stroke="#fff"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
           />
         </g>
       </g>
@@ -1080,8 +1080,8 @@ export const SidebarClose = () => {
           x2="0.5"
           gradientUnits="objectBoundingBox"
         >
-          <stop offset="0" stop-color="#a1a1a1" />
-          <stop offset="1" stop-color="#e8e8e8" />
+          <stop offset="0" stopColor="#a1a1a1" />
+          <stop offset="1" stopColor="#e8e8e8" />
         </linearGradient>
       </defs>
       <g id="Group_129" data-name="Group 129" transform="translate(-82 -79)">
@@ -1115,9 +1115,9 @@ export const SidebarClose = () => {
               transform="translate(3.141 9.1)"
               fill="none"
               stroke="#fff"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
             />
             <path
               id="Path_62"
@@ -1126,9 +1126,9 @@ export const SidebarClose = () => {
               transform="translate(-116.787 -189.636)"
               fill="none"
               stroke="#fff"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
             />
             <line
               id="Line_3"
@@ -1137,9 +1137,9 @@ export const SidebarClose = () => {
               transform="translate(0)"
               fill="none"
               stroke="#fff"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
             />
           </g>
         </g>
@@ -1170,8 +1170,8 @@ export const Sidebar1 = () => {
             transform="translate(40.422 92.606)"
             fill="none"
             stroke="#0057aa"
-            stroke-miterlimit="10"
-            stroke-width="1"
+            strokeMiterlimit="10"
+            strokeWidth="1"
           />
           <path
             id="Path_208"
@@ -1201,9 +1201,9 @@ export const Sidebar1 = () => {
             transform="translate(40 86.92)"
             fill="none"
             stroke="#0057aa"
-            stroke-linecap="round"
-            stroke-miterlimit="10"
-            stroke-width="1"
+            strokeLinecap="round"
+            strokeMiterlimit="10"
+            strokeWidth="1"
           />
           <line
             id="Line_26"
@@ -1212,9 +1212,9 @@ export const Sidebar1 = () => {
             transform="translate(40 110.403)"
             fill="none"
             stroke="#0057aa"
-            stroke-linecap="round"
-            stroke-miterlimit="10"
-            stroke-width="1"
+            strokeLinecap="round"
+            strokeMiterlimit="10"
+            strokeWidth="1"
           />
           <line
             id="Line_27"
@@ -1223,9 +1223,9 @@ export const Sidebar1 = () => {
             transform="translate(50.403 100)"
             fill="none"
             stroke="#0057aa"
-            stroke-linecap="round"
-            stroke-miterlimit="10"
-            stroke-width="1"
+            strokeLinecap="round"
+            strokeMiterlimit="10"
+            strokeWidth="1"
           />
           <line
             id="Line_28"
@@ -1234,9 +1234,9 @@ export const Sidebar1 = () => {
             transform="translate(26.92 100)"
             fill="none"
             stroke="#0057aa"
-            stroke-linecap="round"
-            stroke-miterlimit="10"
-            stroke-width="1"
+            strokeLinecap="round"
+            strokeMiterlimit="10"
+            strokeWidth="1"
           />
           <rect
             id="Rectangle_152"
@@ -1294,9 +1294,9 @@ export const Sidebar2 = () => {
               transform="translate(-95.799 -326.921)"
               fill="none"
               stroke="#8cb808"
-              stroke-linecap="round"
-              stroke-miterlimit="10"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
             />
             <path
               id="Path_260"
@@ -1305,9 +1305,9 @@ export const Sidebar2 = () => {
               transform="translate(-95.799 -326.921)"
               fill="none"
               stroke="#8cb808"
-              stroke-linecap="round"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <path
               id="Path_261"
@@ -1316,9 +1316,9 @@ export const Sidebar2 = () => {
               transform="translate(-95.799 -326.921)"
               fill="none"
               stroke="#8cb808"
-              stroke-linecap="round"
-              stroke-miterlimit="10"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
             />
             <path
               id="Path_263"
@@ -1327,7 +1327,7 @@ export const Sidebar2 = () => {
               transform="translate(-2029 -3491.748)"
               fill="none"
               stroke="#8cb808"
-              stroke-width="2"
+              strokeWidth="2"
             />
             <path
               id="Path_258"
@@ -1336,9 +1336,9 @@ export const Sidebar2 = () => {
               transform="translate(-95.799 -326.921)"
               fill="none"
               stroke="#0057aa"
-              stroke-linecap="round"
-              stroke-miterlimit="10"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
             />
             <circle
               id="Ellipse_24"
@@ -1349,8 +1349,8 @@ export const Sidebar2 = () => {
               transform="translate(31.481 157.642)"
               fill="none"
               stroke="#0057aa"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <line
               id="Line_100"
@@ -1359,8 +1359,8 @@ export const Sidebar2 = () => {
               transform="translate(31.826 145.951)"
               fill="none"
               stroke="#0057aa"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <line
               id="Line_101"
@@ -1369,8 +1369,8 @@ export const Sidebar2 = () => {
               transform="translate(35.609 145.951)"
               fill="none"
               stroke="#0057aa"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <line
               id="Line_102"
@@ -1379,8 +1379,8 @@ export const Sidebar2 = () => {
               transform="translate(31.826 148.651)"
               fill="none"
               stroke="#0057aa"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <line
               id="Line_103"
@@ -1389,8 +1389,8 @@ export const Sidebar2 = () => {
               transform="translate(31.826 151.442)"
               fill="none"
               stroke="#0057aa"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <line
               id="Line_104"
@@ -1399,8 +1399,8 @@ export const Sidebar2 = () => {
               transform="translate(31.826 154.233)"
               fill="none"
               stroke="#0057aa"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
           </g>
         </g>
@@ -1434,8 +1434,8 @@ export const Sidebar3 = () => {
               d="M224.561,530.139h0a5.592,5.592,0,0,1-5.575,5.576H207.144"
               fill="none"
               stroke="#8cb808"
-              stroke-miterlimit="10"
-              stroke-width="1.225"
+              strokeMiterlimit="10"
+              strokeWidth="1.225"
             />
             <line
               id="Line_107"
@@ -1444,8 +1444,8 @@ export const Sidebar3 = () => {
               transform="translate(207.136 524.563)"
               fill="none"
               stroke="#8cb808"
-              stroke-miterlimit="10"
-              stroke-width="1.225"
+              strokeMiterlimit="10"
+              strokeWidth="1.225"
             />
             <circle
               id="Ellipse_28"
@@ -1456,8 +1456,8 @@ export const Sidebar3 = () => {
               transform="translate(215.017 536.773)"
               fill="none"
               stroke="#8cb808"
-              stroke-miterlimit="10"
-              stroke-width="1.225"
+              strokeMiterlimit="10"
+              strokeWidth="1.225"
             />
             <line
               id="Line_108"
@@ -1466,8 +1466,8 @@ export const Sidebar3 = () => {
               transform="translate(215.017 527)"
               fill="none"
               stroke="#8cb808"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <line
               id="Line_109"
@@ -1476,8 +1476,8 @@ export const Sidebar3 = () => {
               transform="translate(218.8 530.139)"
               fill="none"
               stroke="#8cb808"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <line
               id="Line_110"
@@ -1486,8 +1486,8 @@ export const Sidebar3 = () => {
               transform="translate(215.017 530.139)"
               fill="none"
               stroke="#8cb808"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <line
               id="Line_111"
@@ -1496,8 +1496,8 @@ export const Sidebar3 = () => {
               transform="translate(215.017 533.278)"
               fill="none"
               stroke="#8cb808"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
           </g>
           <path
@@ -1506,8 +1506,8 @@ export const Sidebar3 = () => {
             d="M213.613,516.784h8.477a9.744,9.744,0,0,1,9.4,7.273"
             fill="none"
             stroke="#8cb808"
-            stroke-miterlimit="10"
-            stroke-width="1"
+            strokeMiterlimit="10"
+            strokeWidth="1"
           />
           <line
             id="Line_112"
@@ -1516,8 +1516,8 @@ export const Sidebar3 = () => {
             transform="translate(215.183 516.784)"
             fill="none"
             stroke="#8cb808"
-            stroke-miterlimit="10"
-            stroke-width="1"
+            strokeMiterlimit="10"
+            strokeWidth="1"
           />
           <line
             id="Line_113"
@@ -1526,8 +1526,8 @@ export const Sidebar3 = () => {
             transform="translate(221.766 516.784)"
             fill="none"
             stroke="#8cb808"
-            stroke-miterlimit="10"
-            stroke-width="1"
+            strokeMiterlimit="10"
+            strokeWidth="1"
           />
           <line
             id="Line_114"
@@ -1536,8 +1536,8 @@ export const Sidebar3 = () => {
             transform="translate(215.183 521.026)"
             fill="none"
             stroke="#8cb808"
-            stroke-miterlimit="10"
-            stroke-width="1"
+            strokeMiterlimit="10"
+            strokeWidth="1"
           />
           <line
             id="Line_115"
@@ -1546,8 +1546,8 @@ export const Sidebar3 = () => {
             transform="translate(215.183 526.49)"
             fill="none"
             stroke="#8cb808"
-            stroke-miterlimit="10"
-            stroke-width="1"
+            strokeMiterlimit="10"
+            strokeWidth="1"
           />
           <circle
             id="Ellipse_27"
@@ -1558,8 +1558,8 @@ export const Sidebar3 = () => {
             transform="translate(212.89 510.789)"
             fill="none"
             stroke="#0057aa"
-            stroke-miterlimit="10"
-            stroke-width="2"
+            strokeMiterlimit="10"
+            strokeWidth="2"
           />
           <path
             id="Path_270"
@@ -1593,9 +1593,9 @@ export const Sidebar4 = () => {
           transform="translate(53.396 204.335)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-miterlimit="10"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeMiterlimit="10"
+          strokeWidth="1"
         />
         <line
           id="Line_87"
@@ -1604,9 +1604,9 @@ export const Sidebar4 = () => {
           transform="translate(53.396 207.493)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-miterlimit="10"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeMiterlimit="10"
+          strokeWidth="1"
         />
         <line
           id="Line_88"
@@ -1615,9 +1615,9 @@ export const Sidebar4 = () => {
           transform="translate(53.396 210.651)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-miterlimit="10"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeMiterlimit="10"
+          strokeWidth="1"
         />
         <rect
           id="Rectangle_179"
@@ -1666,8 +1666,8 @@ export const Sidebar4 = () => {
           transform="translate(-191.669 -221.44)"
           fill="none"
           stroke="#8cb808"
-          stroke-miterlimit="10"
-          stroke-width="2"
+          strokeMiterlimit="10"
+          strokeWidth="2"
         />
         <path
           id="Path_237"
@@ -1676,9 +1676,9 @@ export const Sidebar4 = () => {
           transform="translate(-191.669 -221.44)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
         <rect
           id="Rectangle_184"
@@ -1713,9 +1713,9 @@ export const Sidebar5 = () => {
           transform="translate(35.195 321.125)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
         <line
           id="Line_60"
@@ -1724,9 +1724,9 @@ export const Sidebar5 = () => {
           transform="translate(37.573 324.162)"
           fill="none"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <line
           id="Line_61"
@@ -1735,9 +1735,9 @@ export const Sidebar5 = () => {
           transform="translate(31.071 331.103)"
           fill="none"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <line
           id="Line_62"
@@ -1746,9 +1746,9 @@ export const Sidebar5 = () => {
           transform="translate(31.071 343.394)"
           fill="none"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <line
           id="Line_65"
@@ -1757,9 +1757,9 @@ export const Sidebar5 = () => {
           transform="translate(39.175 324.162)"
           fill="none"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <path
           id="Path_249"
@@ -1775,9 +1775,9 @@ export const Sidebar5 = () => {
           transform="translate(33.264 335.356)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="0.998"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="0.998"
         />
         <line
           id="Line_90"
@@ -1786,9 +1786,9 @@ export const Sidebar5 = () => {
           transform="translate(33.264 338.944)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="0.998"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="0.998"
         />
         <rect
           id="Rectangle_168"
@@ -1799,9 +1799,9 @@ export const Sidebar5 = () => {
           transform="translate(31.071 327.198)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
         <line
           id="Line_63"
@@ -1810,9 +1810,9 @@ export const Sidebar5 = () => {
           transform="translate(35.089 321.125)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
         <line
           id="Line_64"
@@ -1821,9 +1821,9 @@ export const Sidebar5 = () => {
           transform="translate(43.154 321.125)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
       </g>
     </svg>
@@ -1859,9 +1859,9 @@ export const Sidebar6 = () => {
             transform="translate(-284.494 -45.314)"
             fill="none"
             stroke="#0057aa"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
           />
           <rect
             id="Rectangle_187"
@@ -1921,9 +1921,9 @@ export const Sidebar7 = () => {
           transform="translate(-363.12 69.146)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
         <path
           id="Path_246"
@@ -1932,9 +1932,9 @@ export const Sidebar7 = () => {
           transform="translate(-363.12 69.146)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
         <path
           id="Path_247"
@@ -1943,9 +1943,9 @@ export const Sidebar7 = () => {
           transform="translate(-363.12 69.146)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
         <path
           id="Path_248"
@@ -1954,9 +1954,9 @@ export const Sidebar7 = () => {
           transform="translate(-363.12 69.146)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
         <g
           id="Group_435"
@@ -1977,9 +1977,9 @@ export const Sidebar7 = () => {
             transform="translate(36.695 381.2)"
             fill="none"
             stroke="#0057aa"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="0.998"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="0.998"
           />
           <line
             id="Line_90"
@@ -1988,9 +1988,9 @@ export const Sidebar7 = () => {
             transform="translate(36.695 384.788)"
             fill="none"
             stroke="#0057aa"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="0.998"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="0.998"
           />
         </g>
         <line
@@ -2000,9 +2000,9 @@ export const Sidebar7 = () => {
           transform="translate(46.486 507.759)"
           fill="#fff"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <path
           id="Path_250"
@@ -2011,9 +2011,9 @@ export const Sidebar7 = () => {
           transform="translate(-363.12 69.146)"
           fill="none"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <line
           id="Line_92"
@@ -2022,9 +2022,9 @@ export const Sidebar7 = () => {
           transform="translate(25.474 507.759)"
           fill="#fff"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <path
           id="Path_251"
@@ -2033,9 +2033,9 @@ export const Sidebar7 = () => {
           transform="translate(-363.12 69.146)"
           fill="none"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <line
           id="Line_93"
@@ -2044,9 +2044,9 @@ export const Sidebar7 = () => {
           transform="translate(38.705 515.943)"
           fill="#fff"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <path
           id="Path_252"
@@ -2055,9 +2055,9 @@ export const Sidebar7 = () => {
           transform="translate(-363.12 69.146)"
           fill="none"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <line
           id="Line_94"
@@ -2066,9 +2066,9 @@ export const Sidebar7 = () => {
           transform="translate(38.705 494.125)"
           fill="#fff"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <path
           id="Path_253"
@@ -2077,9 +2077,9 @@ export const Sidebar7 = () => {
           transform="translate(-363.12 69.146)"
           fill="none"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
       </g>
     </svg>
@@ -2107,8 +2107,8 @@ export const Sidebar8 = () => {
           transform="translate(39.666 560.426)"
           fill="none"
           stroke="#0057aa"
-          stroke-miterlimit="10"
-          stroke-width="1"
+          strokeMiterlimit="10"
+          strokeWidth="1"
         />
         <path
           id="Path_257"
@@ -2140,9 +2140,9 @@ export const Sidebar8 = () => {
           transform="translate(39.244 554.74)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-miterlimit="10"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeMiterlimit="10"
+          strokeWidth="1"
         />
         <line
           id="Line_95"
@@ -2151,9 +2151,9 @@ export const Sidebar8 = () => {
           transform="translate(39.244 578.222)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-miterlimit="10"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeMiterlimit="10"
+          strokeWidth="1"
         />
         <line
           id="Line_97"
@@ -2162,9 +2162,9 @@ export const Sidebar8 = () => {
           transform="translate(49.647 567.82)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-miterlimit="10"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeMiterlimit="10"
+          strokeWidth="1"
         />
         <line
           id="Line_98"
@@ -2173,9 +2173,9 @@ export const Sidebar8 = () => {
           transform="translate(26.164 567.82)"
           fill="none"
           stroke="#0057aa"
-          stroke-linecap="round"
-          stroke-miterlimit="10"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeMiterlimit="10"
+          strokeWidth="1"
         />
         <rect
           id="Rectangle_194"
@@ -2191,8 +2191,8 @@ export const Sidebar8 = () => {
           transform="translate(25.071 553.647)"
           fill="none"
           stroke="#0057aa"
-          stroke-miterlimit="10"
-          stroke-width="2"
+          strokeMiterlimit="10"
+          strokeWidth="2"
         >
           <circle cx="14.173" cy="14.173" r="14.173" stroke="none" />
           <circle cx="14.173" cy="14.173" r="13.173" fill="none" />
@@ -2230,9 +2230,9 @@ export const Sidebar8 = () => {
               transform="translate(0 1.909)"
               fill="none"
               stroke="#fff"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="0.998"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="0.998"
             />
             <line
               id="Line_90"
@@ -2241,9 +2241,9 @@ export const Sidebar8 = () => {
               transform="translate(0 4.684)"
               fill="none"
               stroke="#fff"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="0.998"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="0.998"
             />
           </g>
         </g>
@@ -2278,9 +2278,9 @@ export const Sidebar9 = () => {
               transform="translate(-95.799 -326.921)"
               fill="none"
               stroke="#8cb808"
-              stroke-linecap="round"
-              stroke-miterlimit="10"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
             />
             <path
               id="Path_260"
@@ -2289,9 +2289,9 @@ export const Sidebar9 = () => {
               transform="translate(-95.799 -326.921)"
               fill="none"
               stroke="#8cb808"
-              stroke-linecap="round"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <path
               id="Path_261"
@@ -2300,9 +2300,9 @@ export const Sidebar9 = () => {
               transform="translate(-95.799 -326.921)"
               fill="none"
               stroke="#8cb808"
-              stroke-linecap="round"
-              stroke-miterlimit="10"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
             />
             <path
               id="Path_263"
@@ -2311,7 +2311,7 @@ export const Sidebar9 = () => {
               transform="translate(-2029 -3491.748)"
               fill="none"
               stroke="#8cb808"
-              stroke-width="2"
+              strokeWidth="2"
             />
             <path
               id="Path_258"
@@ -2320,9 +2320,9 @@ export const Sidebar9 = () => {
               transform="translate(-95.799 -326.921)"
               fill="none"
               stroke="#0057aa"
-              stroke-linecap="round"
-              stroke-miterlimit="10"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
             />
             <circle
               id="Ellipse_24"
@@ -2333,8 +2333,8 @@ export const Sidebar9 = () => {
               transform="translate(31.481 157.642)"
               fill="none"
               stroke="#0057aa"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <line
               id="Line_100"
@@ -2343,8 +2343,8 @@ export const Sidebar9 = () => {
               transform="translate(31.826 145.951)"
               fill="none"
               stroke="#0057aa"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <line
               id="Line_101"
@@ -2353,8 +2353,8 @@ export const Sidebar9 = () => {
               transform="translate(35.609 145.951)"
               fill="none"
               stroke="#0057aa"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <line
               id="Line_102"
@@ -2363,8 +2363,8 @@ export const Sidebar9 = () => {
               transform="translate(31.826 148.651)"
               fill="none"
               stroke="#0057aa"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <line
               id="Line_103"
@@ -2373,8 +2373,8 @@ export const Sidebar9 = () => {
               transform="translate(31.826 151.442)"
               fill="none"
               stroke="#0057aa"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
             <line
               id="Line_104"
@@ -2383,8 +2383,8 @@ export const Sidebar9 = () => {
               transform="translate(31.826 154.233)"
               fill="none"
               stroke="#0057aa"
-              stroke-miterlimit="10"
-              stroke-width="1"
+              strokeMiterlimit="10"
+              strokeWidth="1"
             />
           </g>
         </g>
@@ -2421,9 +2421,9 @@ export const Sidebar9 = () => {
               transform="translate(0 1.909)"
               fill="none"
               stroke="#fff"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="0.998"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="0.998"
             />
             <line
               id="Line_90"
@@ -2432,9 +2432,9 @@ export const Sidebar9 = () => {
               transform="translate(0 4.684)"
               fill="none"
               stroke="#fff"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="0.998"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="0.998"
             />
           </g>
         </g>
@@ -2463,9 +2463,9 @@ export const Sidebar10 = () => {
           transform="translate(-514.318 247.744)"
           fill="none"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
         <line
           id="Line_74"
@@ -2474,9 +2474,9 @@ export const Sidebar10 = () => {
           transform="translate(33.379 690.241)"
           fill="none"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <line
           id="Line_75"
@@ -2485,9 +2485,9 @@ export const Sidebar10 = () => {
           transform="translate(33.379 693.337)"
           fill="none"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <line
           id="Line_76"
@@ -2496,9 +2496,9 @@ export const Sidebar10 = () => {
           transform="translate(33.379 696.434)"
           fill="none"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <line
           id="Line_77"
@@ -2507,9 +2507,9 @@ export const Sidebar10 = () => {
           transform="translate(37.748 690.241)"
           fill="none"
           stroke="#8cb808"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <g id="Group_465" data-name="Group 465">
           <rect
@@ -2520,9 +2520,9 @@ export const Sidebar10 = () => {
             transform="translate(26.071 673.126)"
             fill="none"
             stroke="#0057aa"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
           />
           <line
             id="Line_70"
@@ -2531,9 +2531,9 @@ export const Sidebar10 = () => {
             transform="translate(26.071 678.166)"
             fill="none"
             stroke="#0057aa"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1"
           />
           <line
             id="Line_71"
@@ -2542,9 +2542,9 @@ export const Sidebar10 = () => {
             transform="translate(26.071 681.262)"
             fill="none"
             stroke="#0057aa"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1"
           />
           <line
             id="Line_72"
@@ -2553,9 +2553,9 @@ export const Sidebar10 = () => {
             transform="translate(26.071 684.358)"
             fill="none"
             stroke="#0057aa"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1"
           />
           <line
             id="Line_73"
@@ -2564,9 +2564,9 @@ export const Sidebar10 = () => {
             transform="translate(30.439 678.166)"
             fill="none"
             stroke="#0057aa"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1"
           />
         </g>
       </g>
