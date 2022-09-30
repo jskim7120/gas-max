@@ -17,7 +17,7 @@ export const TopSide = styled.div`
 export const TopLeftWrapper = styled.div`
   display: flex;
   align-items: center;
-  grid-gap: 21px;
+  grid-gap: 17px;
   img {
     height: 19px;
   }
