@@ -1,6 +1,11 @@
 import React, { useEffect, BaseSyntheticEvent } from "react";
 import { useSelector, useDispatch } from "app/store";
-import { setTabs, setActiveTab, removeTab } from "features/tab/tabSlice";
+import {
+  setTabs,
+  setActiveTab,
+  removeTab,
+  removeAllTabs,
+} from "features/tab/tabSlice";
 // import Switch from "components/switch";
 import { getContent } from "./tabContent";
 import {
@@ -98,8 +103,15 @@ const Tab = (props: TabProps): JSX.Element => {
           ))}
         </ul>
         <div style={{ display: "flex", marginRight: "25px" }}>
-          <a>
-            <Close />
+          <a
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginLeft: "8px",
+            }}
+          >
+            <Info />
           </a>
           <a
             style={{
@@ -112,6 +124,7 @@ const Tab = (props: TabProps): JSX.Element => {
             <Refresh />
           </a>
           <a
+            onClick={() => dispatch(removeAllTabs())}
             style={{
               display: "flex",
               justifyContent: "center",
@@ -119,7 +132,7 @@ const Tab = (props: TabProps): JSX.Element => {
               marginLeft: "8px",
             }}
           >
-            <Info />
+            <Close />
           </a>
         </div>
         <div

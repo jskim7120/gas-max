@@ -2557,9 +2557,9 @@ export const Close = () => {
           transform="translate(1873.292 56.638)"
           fill="none"
           stroke="#494949"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
         <line
           id="Line_10"
@@ -2569,9 +2569,9 @@ export const Close = () => {
           transform="translate(1873.292 56.638)"
           fill="none"
           stroke="#494949"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
       </g>
     </svg>
@@ -2608,9 +2608,9 @@ export const Refresh = () => {
           transform="translate(1199.031 -317.108)"
           fill="none"
           stroke="#494949"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <path
           id="Polygon_2"

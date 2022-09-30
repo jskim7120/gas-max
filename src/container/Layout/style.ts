@@ -34,6 +34,8 @@ export const Icons = styled.div`
 
 export const Wrapper = styled.div`
   display: flex;
+  width: 100%;
+  height: 100%;
 `;
 
 export const LeftSide = styled.div`
