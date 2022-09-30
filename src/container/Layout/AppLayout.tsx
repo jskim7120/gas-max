@@ -25,14 +25,7 @@ export default function AppLayout() {
       </TopSide>
 
       <Outlet />
-      <div
-        style={{
-          width: "100%",
-          height: "80px",
-          borderTop: "2px solid #707070",
-          background: "#D9E8F6",
-        }}
-      ></div>
+      <Footer />
     </Container>
   );
 }
