@@ -9,7 +9,7 @@ import {
   List,
   TabContentWrapper,
 } from "./style";
-import { CloseCircle, Home } from "components/AllSvgIcon";
+import { CloseCircle, Home, Info, Refresh, Close } from "components/AllSvgIcon";
 interface TabProps {
   className?: string;
   style?: any;
@@ -97,7 +97,31 @@ const Tab = (props: TabProps): JSX.Element => {
             />
           ))}
         </ul>
-        <div>iocns</div>
+        <div style={{ display: "flex", marginRight: "25px" }}>
+          <a>
+            <Close />
+          </a>
+          <a
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginLeft: "8px",
+            }}
+          >
+            <Refresh />
+          </a>
+          <a
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginLeft: "8px",
+            }}
+          >
+            <Info />
+          </a>
+        </div>
         <div
           style={{
             position: "absolute",

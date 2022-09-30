@@ -10,7 +10,6 @@ import {
 } from "./style";
 import {
   Settings,
-  Info,
   User,
   Favorite,
   IconFile,

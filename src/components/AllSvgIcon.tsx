@@ -247,54 +247,6 @@ export const Settings = ({
     </svg>
   );
 };
-export const Info = ({ color = "#000", width = "24px", height = "24px" }) => {
-  return (
-    <svg
-      id="Icon_info"
-      data-name="Icon/info"
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 24 24"
-    >
-      <path id="Path_46" data-name="Path 46" d="M0,0H24V24H0Z" fill="none" />
-      <circle
-        id="Ellipse_3"
-        data-name="Ellipse 3"
-        cx="9"
-        cy="9"
-        r="9"
-        transform="translate(3 3)"
-        fill="none"
-        stroke={color}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-      <line
-        id="Line_10"
-        data-name="Line 10"
-        x2="0.01"
-        transform="translate(12 8)"
-        fill="none"
-        stroke={color}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-      <path
-        id="Path_47"
-        data-name="Path 47"
-        d="M11,12h1v4h1"
-        fill="none"
-        stroke={color}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-    </svg>
-  );
-};
 
 export const User = ({ color = "#000", width = "25px", height = "25px" }) => {
   return (
@@ -2567,6 +2519,145 @@ export const Sidebar10 = () => {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="1"
+          />
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export const Close = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="25"
+      height="25"
+      viewBox="0 0 25 25"
+    >
+      <g
+        id="Group_119"
+        data-name="Group 119"
+        transform="translate(-1865.643 -49.164)"
+      >
+        <ellipse
+          id="Ellipse_4"
+          data-name="Ellipse 4"
+          cx="12.5"
+          cy="12.5"
+          rx="12.5"
+          ry="12.5"
+          transform="translate(1865.643 49.164)"
+          fill="#e4e4e4"
+        />
+        <line
+          id="Line_9"
+          data-name="Line 9"
+          x1="9.877"
+          y2="9.877"
+          transform="translate(1873.292 56.638)"
+          fill="none"
+          stroke="#494949"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+        <line
+          id="Line_10"
+          data-name="Line 10"
+          x1="9.877"
+          y1="9.877"
+          transform="translate(1873.292 56.638)"
+          fill="none"
+          stroke="#494949"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const Refresh = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="25"
+      height="25"
+      viewBox="0 0 25 25"
+    >
+      <g
+        id="Group_120"
+        data-name="Group 120"
+        transform="translate(-1819.279 -49.164)"
+      >
+        <ellipse
+          id="Ellipse_3"
+          data-name="Ellipse 3"
+          cx="12.5"
+          cy="12.5"
+          rx="12.5"
+          ry="12.5"
+          transform="translate(1819.279 49.164)"
+          fill="#e4e4e4"
+        />
+        <path
+          id="Path_91"
+          data-name="Path 91"
+          d="M638.721,380.727a6.285,6.285,0,1,0-2.791,3.465"
+          transform="translate(1199.031 -317.108)"
+          fill="none"
+          stroke="#494949"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <path
+          id="Polygon_2"
+          data-name="Polygon 2"
+          d="M3.006,0,6.012,4.81H0Z"
+          transform="translate(1839.905 66.493) rotate(-174)"
+          fill="#494949"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const Info = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="25"
+      height="25"
+      viewBox="0 0 25 25"
+    >
+      <g
+        id="Group_121"
+        data-name="Group 121"
+        transform="translate(-1772.179 -49.164)"
+      >
+        <ellipse
+          id="Ellipse_5"
+          data-name="Ellipse 5"
+          cx="12.5"
+          cy="12.5"
+          rx="12.5"
+          ry="12.5"
+          transform="translate(1772.179 49.164)"
+          fill="#e4e4e4"
+        />
+        <g
+          id="Group_38"
+          data-name="Group 38"
+          transform="translate(1780.141 53.341)"
+        >
+          <path
+            id="Path_92"
+            data-name="Path 92"
+            d="M147.747,332.069a4.8,4.8,0,0,1,1.94.386,4.614,4.614,0,0,1,1.488,1.008,3.714,3.714,0,0,1,.857,1.46,3.262,3.262,0,0,1,.066,1.686,3.584,3.584,0,0,1-.782,1.658q-.556.621-1.121,1.168a7.007,7.007,0,0,0-1,1.159,2.854,2.854,0,0,0-.433,1.648v1.7H146.5v-1.469a4.1,4.1,0,0,1,.443-2.063,6.418,6.418,0,0,1,1.008-1.328q.565-.565,1.1-1.111a2.828,2.828,0,0,0,.725-1.432,3.127,3.127,0,0,0,.028-1,2.235,2.235,0,0,0-.33-.923,1.959,1.959,0,0,0-.706-.688,2.166,2.166,0,0,0-1.121-.273,2.586,2.586,0,0,0-1.177.235,1.967,1.967,0,0,0-.744.65,2.516,2.516,0,0,0-.367.932,4.389,4.389,0,0,0-.066,1.121h-2.185a4.615,4.615,0,0,1,.188-1.658,3.73,3.73,0,0,1,.829-1.45,4.269,4.269,0,0,1,1.46-1.017A5.311,5.311,0,0,1,147.747,332.069Zm1.205,16.576h-2.637v-2.637h2.637Z"
+            transform="translate(-143.103 -332.069)"
+            fill="#494949"
           />
         </g>
       </g>

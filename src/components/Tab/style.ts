@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const TabContainer = styled.div`
   width: 100%;
-  border: 1px solid red;
 `;
 
 export const TabHeaderWrapper = styled.div`
