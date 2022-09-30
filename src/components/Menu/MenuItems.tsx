@@ -86,9 +86,7 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
           />{" "}
         </>
       ) : items.menuName === "-" ? (
-        <a onClick={clickOnMenu}>
-          <Group />
-        </a>
+        <Group />
       ) : (
         <a onClick={clickOnMenu}> {items.menuName} </a>
       )}{" "}
