@@ -1,11 +1,10 @@
 import styled from "styled-components";
 
 export const Nav = styled.nav`
+  position: relative;
   ul {
     display: flex;
     list-style: none;
-    border-right: 1px solid #fff;
-
     li.menu-items {
       position: relative;
       font-family: "Segoe UI", Arial, sans-serif;
@@ -22,19 +21,16 @@ export const Nav = styled.nav`
       button {
         color: inherit;
         font-size: inherit;
-        border: 1px solid #fff;
-        border-top: none;
-        border-bottom: none;
-        border-right: none;
+        border: none;
         background-color: transparent;
-        cursor: pointer;
         width: 100%;
       }
 
       a,
       button {
         text-align: left;
-        padding: 0px 10px;
+        padding: 0px 12px;
+        height: 43px;
       }
 
       a:hover,
@@ -42,49 +38,31 @@ export const Nav = styled.nav`
         // background-color: #f2f2f2;
       }
       li {
-        color: #000;
+        color: #0057aa;
         font-size: 12px;
       }
     }
 
-    .arrow::after {
-      content: "";
-      display: inline-block;
-      margin-left: 0.28em;
-      vertical-align: 0.09em;
-      border-top: 0.42em solid;
-      border-right: 0.32em solid transparent;
-      border-left: 0.32em solid transparent;
-    }
-
-    .arrow-side::after {
-      content: "";
-      display: inline-block;
-      margin-left: 0.28em;
-      vertical-align: 0.09em;
-      border-left: 0.42em solid;
-      border-top: 0.32em solid transparent;
-      border-bottom: 0.32em solid transparent;
-    }
-
     .dropdown {
       position: absolute;
-      top: 31px;
       left: 0;
       right: auto;
       z-index: 9999;
-      width: 170px;
       padding: 3px 0 40px;
       list-style: none;
       background-color: #fff;
       display: none;
       li {
         padding: 2px 1px 1px 8px;
-        .group::after {
-          content: "";
+        width: max-content;
+        min-width: 100%;
+        a {
+          height: auto;
+          cursor: pointer;
+          padding-left: 3px;
         }
       }
-      border: 1px solid #0057aa;
+      border: 3px solid #c8c8c8;
     }
 
     .dropdown.show {
@@ -100,5 +78,21 @@ export const Nav = styled.nav`
 `;
 
 export const Group = styled.div`
-  border-top: 1px solid #000;
+  border-top: 3px dotted #c8c8c8;
+  width: 98%;
+`;
+
+export const MenuLine = styled.div`
+  border-left: 1px solid #fff;
+  height: 10px;
+  position: absolute;
+  top: 17px;
+`;
+
+export const EndLine = styled.div`
+  border-right: 1px solid #fff;
+  height: 10px;
+  position: absolute;
+  top: 17px;
+  right: 0;
 `;

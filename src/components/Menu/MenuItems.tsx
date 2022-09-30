@@ -2,7 +2,7 @@ import { FC, useState, useEffect, useRef } from "react";
 import { useDispatch } from "app/store";
 import { addTab } from "features/tab/tabSlice";
 import Dropdown from "./Dropdown";
-import { Group } from "./style";
+import { Group, MenuLine } from "./style";
 interface IMenuItems {
   items: any;
   depthLevel: any;
@@ -70,6 +70,7 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
     >
       {items.children ? (
         <>
+          <MenuLine />
           <button
             type="button"
             aria-haspopup="menu"
