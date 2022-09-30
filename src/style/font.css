@@ -22,3 +22,8 @@
   font-family: "NotoSansKRMedium";
   src: url(../assets/font/NotoSansKR-Medium.otf);
 }
+
+@font-face {
+  font-family: "SegoeUI";
+  src: url(../assets//font/Segoe\ UI.ttf);
+}

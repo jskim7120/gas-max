@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Main } from "./style";
 import Tab from "components/Tab";
+import { useSelector, useDispatch } from "app/store";
 import styled from "styled-components";
+import { toggleSidebar } from "features/sidebar/sidebarSlice";
 import {
   SidebarOpen,
   SidebarClose,
@@ -23,30 +25,31 @@ const Sidebar = styled.div<{ isOpen?: boolean }>`
   min-width: 82px;
   background: #f8e5ba;
   border-right: 1px solid #707070;
-  position: ${(props) => props.isOpen && "absolute"};
+  position: ${(props) => !props.isOpen && "absolute"};
   left: 0;
-  left: ${(props) => props.isOpen && "-82px"};
-  //transition: left 0.4s ease-in-out;
+  left: ${(props) => !props.isOpen && "-82px"};
 `;
 
-const List = styled.li`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 25px;
-  p,
-  svg {
-    display: block;
-  }
+const UnOrderedList = styled.ul`
   &:first-child {
     margin-top: 20px;
+  }
+
+  a {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+    font-family: "SegoeUI";
+    font-size: 12px;
   }
 `;
 
 function MainContainer() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  console.log("isOpen:", isOpen);
+  //const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { isOpen } = useSelector((state) => state.sidebar);
 
   return (
     // <Main>
@@ -57,66 +60,86 @@ function MainContainer() {
       >
         <div
           style={{
-            background: "orange",
+            background: `linear-gradient(rgba(230, 164, 9, 0.2),rgba(230, 164, 9, 1))`,
             height: "34px",
             minHeight: "34px",
             color: "#0057AA",
             fontFamily: "",
             fontSize: "12px",
             textAlign: "center",
-            padding: "5px 0 0 0",
+            padding: "6px 0 0 0",
           }}
         >
           바로가기
         </div>
         <nav>
-          <ul>
-            <List>
-              <Sidebar1 />
-              <p style={{ fontSize: "12px" }}>중량판매</p>
-            </List>
-            <List>
-              <Sidebar2 />
-              <p style={{ fontSize: "12px" }}>중량판매</p>
-            </List>
-            <List>
-              <Sidebar3 />
-              <p style={{ fontSize: "12px" }}>중량판매</p>
-            </List>
-            <List>
-              <Sidebar4 />
-              <p style={{ fontSize: "12px" }}>중량판매</p>
-            </List>
-            <List>
-              <Sidebar5 />
-              <p style={{ fontSize: "12px" }}>중량판매</p>
-            </List>
-            <List>
-              <Sidebar6 />
-              <p style={{ fontSize: "12px" }}>중량판매</p>
-            </List>
-            <List>
-              <Sidebar7 />
-              <p style={{ fontSize: "12px" }}>중량판매</p>
-            </List>
-            <List>
-              <Sidebar8 />
-              <p style={{ fontSize: "12px" }}>중량판매</p>
-            </List>
-            <List>
-              <Sidebar9 />
-              <p style={{ fontSize: "12px" }}>중량판매</p>
-            </List>
-            <List>
-              <Sidebar10 />
-              <p style={{ fontSize: "12px" }}>중량판매</p>
-            </List>
-          </ul>
+          <UnOrderedList>
+            <li>
+              <a>
+                <Sidebar1 />
+                <p style={{ fontSize: "12px" }}>중량판매</p>
+              </a>
+            </li>
+            <li>
+              <a>
+                <Sidebar2 />
+                <p style={{ fontSize: "12px" }}>중량판매</p>
+              </a>
+            </li>
+            <li>
+              <a>
+                <Sidebar3 />
+                <p style={{ fontSize: "12px" }}>중량판매</p>
+              </a>
+            </li>
+            <li>
+              <a>
+                <Sidebar4 />
+                <p style={{ fontSize: "12px" }}>중량판매</p>
+              </a>
+            </li>
+            <li>
+              <a>
+                <Sidebar5 />
+                <p style={{ fontSize: "12px" }}>중량판매</p>
+              </a>
+            </li>
+            <li>
+              <a>
+                <Sidebar6 />
+                <p style={{ fontSize: "12px" }}>중량판매</p>
+              </a>
+            </li>
+            <li>
+              <a>
+                <Sidebar7 />
+                <p style={{ fontSize: "12px" }}>중량판매</p>
+              </a>
+            </li>
+            <li>
+              <a>
+                <Sidebar8 />
+                <p style={{ fontSize: "12px" }}>중량판매</p>
+              </a>
+            </li>
+            <li>
+              <a>
+                <Sidebar9 />
+                <p style={{ fontSize: "12px" }}>중량판매</p>
+              </a>
+            </li>
+            <li>
+              <a>
+                <Sidebar10 />
+                <p style={{ fontSize: "12px" }}>중량판매</p>
+              </a>
+            </li>
+          </UnOrderedList>
         </nav>
       </Sidebar>
       <div
-        style={{ height: "32px", width: "32px" }}
-        onClick={() => setIsOpen((isOpen) => !isOpen)}
+        style={{ height: "34px", width: "34px" }}
+        onClick={() => dispatch(toggleSidebar())}
       >
         {isOpen ? <SidebarOpen /> : <SidebarClose />}
       </div>
