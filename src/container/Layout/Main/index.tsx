@@ -20,7 +20,7 @@ import {
 } from "components/AllSvgIcon";
 
 const Sidebar = styled.div<{ isOpen?: boolean }>`
-  height: 100vh;
+  height: 100%;
   width: 82px;
   min-width: 82px;
   background: #f8e5ba;
@@ -51,7 +51,7 @@ function MainContainer() {
   const { isOpen } = useSelector((state) => state.sidebar);
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", width: "100%", height: "auto" }}>
       <Sidebar
         isOpen={isOpen}
         style={{ display: "flex", flexDirection: "column" }}

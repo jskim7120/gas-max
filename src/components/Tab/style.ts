@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const TabContainer = styled.div`
   width: 100%;
+  border: 1px solid red;
 `;
 
 export const TabHeaderWrapper = styled.div`
@@ -9,6 +10,7 @@ export const TabHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   background-color: #fff;
+  justify-content: space-between;
 
   ul {
     list-style: none;

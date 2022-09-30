@@ -97,6 +97,7 @@ const Tab = (props: TabProps): JSX.Element => {
             />
           ))}
         </ul>
+        <div>iocns</div>
         <div
           style={{
             position: "absolute",
@@ -109,7 +110,7 @@ const Tab = (props: TabProps): JSX.Element => {
         ></div>
       </TabHeaderWrapper>
 
-      <TabContentWrapper>{content}</TabContentWrapper>
+      <TabContentWrapper className="tab-content">{content}</TabContentWrapper>
     </TabContainer>
   );
 };
