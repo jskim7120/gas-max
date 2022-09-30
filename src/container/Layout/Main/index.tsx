@@ -47,12 +47,10 @@ const UnOrderedList = styled.ul`
 `;
 
 function MainContainer() {
-  //const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const { isOpen } = useSelector((state) => state.sidebar);
 
   return (
-    // <Main>
     <div style={{ display: "flex" }}>
       <Sidebar
         isOpen={isOpen}
@@ -138,7 +136,7 @@ function MainContainer() {
         </nav>
       </Sidebar>
       <div
-        style={{ height: "34px", width: "34px" }}
+        style={{ height: "31px", width: "31px" }}
         onClick={() => dispatch(toggleSidebar())}
       >
         {isOpen ? <SidebarOpen /> : <SidebarClose />}
@@ -146,7 +144,6 @@ function MainContainer() {
 
       <Tab />
     </div>
-    // </Main>
   );
 }
 

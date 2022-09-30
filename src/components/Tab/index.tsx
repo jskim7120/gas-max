@@ -59,7 +59,7 @@ let activeTabName: string;
 const Tab = (props: TabProps): JSX.Element => {
   const dispatch = useDispatch();
   let tabState = useSelector((state) => state.tab);
-  let sidebarState = useSelector((state) => state.sidebar);
+  const { isOpen } = useSelector((state) => state.sidebar);
 
   useEffect(() => {
     if (tabState.tabs.length <= 2 && sessionStorage.getItem("active-tab")) {
@@ -82,7 +82,7 @@ const Tab = (props: TabProps): JSX.Element => {
   const changeTab = (menuId: string) => {
     dispatch(setActiveTab({ activeTabId: menuId }));
   };
-  console.log("activeTabId:", activeTabId);
+
   return (
     <TabContainer>
       <TabHeaderWrapper>
@@ -100,12 +100,11 @@ const Tab = (props: TabProps): JSX.Element => {
         <div
           style={{
             position: "absolute",
-            top: "75px",
-            left: "82px",
-            right: "0",
-            width: `100%`,
+            top: "74px",
+            left: isOpen ? "82px" : "0px",
+            right: "0px",
             height: "3px",
-            background: activeTabId === "HOME" ? "green" : "red",
+            background: activeTabId === "HOME" ? "#8CB808" : "#FC6767",
           }}
         ></div>
       </TabHeaderWrapper>
