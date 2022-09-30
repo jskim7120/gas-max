@@ -27,6 +27,8 @@ export const TopLeftWrapper = styled.div`
 `;
 
 export const Icons = styled.div`
+  display: flex;
+
   svg {
     margin-right: 10px;
   }

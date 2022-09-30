@@ -7,6 +7,7 @@ import {
   removeAllTabs,
 } from "features/tab/tabSlice";
 // import Switch from "components/switch";
+import Dropdown from "components/dropdown";
 import { getContent } from "./tabContent";
 import {
   TabContainer,
@@ -103,7 +104,7 @@ const Tab = (props: TabProps): JSX.Element => {
           ))}
         </ul>
         <div style={{ display: "flex", marginRight: "25px" }}>
-          <a
+          {/* <a
             style={{
               display: "flex",
               justifyContent: "center",
@@ -112,7 +113,18 @@ const Tab = (props: TabProps): JSX.Element => {
             }}
           >
             <Info />
-          </a>
+          </a> */}
+          <Dropdown
+            icon={<Info />}
+            content={
+              <div
+                style={{
+                  width: "490px",
+                  height: "550px",
+                }}
+              ></div>
+            }
+          />
           <a
             style={{
               display: "flex",
