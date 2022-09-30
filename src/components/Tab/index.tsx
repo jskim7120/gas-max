@@ -59,7 +59,7 @@ let activeTabName: string;
 const Tab = (props: TabProps): JSX.Element => {
   const dispatch = useDispatch();
   let tabState = useSelector((state) => state.tab);
-  let sidebarState = useSelector((state) => state.sidebar);
+  const { isOpen } = useSelector((state) => state.sidebar);
 
   useEffect(() => {
     if (tabState.tabs.length <= 2 && sessionStorage.getItem("active-tab")) {
@@ -101,7 +101,7 @@ const Tab = (props: TabProps): JSX.Element => {
           style={{
             position: "absolute",
             top: "75px",
-            left: "82px",
+            left: isOpen ? "82px" : "0px",
             right: "0",
             width: `100%`,
             height: "3px",
