@@ -75,6 +75,16 @@ const tabSlice = createSlice({
       sessionStorage.setItem("active-tab", state.activeTabId);
       sessionStorage.setItem("tabs", JSON.stringify(state.tabs));
     },
+    removeAllTabs: (state) => {
+      state.tabs = [
+        {
+          menuId: "HOME",
+          menuName: "HOME",
+          depthFullName: "HOME",
+        },
+      ];
+      state.activeTabId = "HOME";
+    },
     setActiveTab: (state, action) => {
       state.activeTabId = action.payload.activeTabId;
       sessionStorage.setItem("active-tab", state.activeTabId);
@@ -87,6 +97,7 @@ const tabSlice = createSlice({
   },
 });
 
-export const { addTab, removeTab, setActiveTab, setTabs } = tabSlice.actions;
+export const { addTab, removeTab, removeAllTabs, setActiveTab, setTabs } =
+  tabSlice.actions;
 
 export default tabSlice.reducer;
