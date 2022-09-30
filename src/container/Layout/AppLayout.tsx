@@ -7,6 +7,7 @@ import Navbar from "components/Menu/Navbar";
 import Dropdown from "components/dropdown";
 import LogoImg from "assets/image/Logo.png";
 import JoaImg from "assets/image/JOA.png";
+import Footer from "./Footer";
 
 let menuData: Array<any>;
 
@@ -46,14 +47,7 @@ export default function AppLayout() {
       </TopSide>
 
       <Outlet />
-      <div
-        style={{
-          width: "100%",
-          height: "80px",
-          borderTop: "2px solid #707070",
-          background: "#D9E8F6",
-        }}
-      ></div>
+      <Footer />
     </Container>
   );
 }
