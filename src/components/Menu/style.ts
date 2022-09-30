@@ -79,7 +79,8 @@ export const Nav = styled.nav`
 
 export const Group = styled.div`
   border-top: 3px dotted #c8c8c8;
-  width: 98%;
+  width: 87%;
+  margin: 6px 0 2px 5px;
 `;
 
 export const MenuLine = styled.div`
