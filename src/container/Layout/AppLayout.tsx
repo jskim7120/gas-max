@@ -16,6 +16,7 @@ import {
 import { Settings, User, Favorite } from "components/AllSvgIcon";
 import Navbar from "components/Menu/Navbar";
 import LogoImg from "assets/image/Logo.png";
+import Footer from "./Footer";
 
 let menuData: Array<any>;
 
@@ -48,6 +49,7 @@ export default function AppLayout() {
         <Outlet />
       </Wrapper>
       {/* </Wrapper> */}
+      <Footer />
     </Container>
   );
 }
