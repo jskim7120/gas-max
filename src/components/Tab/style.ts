@@ -14,9 +14,8 @@ export const TabHeaderWrapper = styled.div`
     list-style: none;
     margin: 0;
     padding: 0;
-    height: 34px;
+    height: 31px;
     width: 100%;
-    //border-bottom: 3px solid red;
   }
 `;
 
@@ -56,13 +55,11 @@ export const List = styled.li<{ isActive: boolean }>`
       ? `linear-gradient(#FFFFFF, #FB0000)`
       : `linear-gradient(#F1F1F1, #C7C7C7)`};
 
-  // color: ${(props) => (props.isActive ? "#0057AA" : "#FFF")};
   color: #0057aa;
 `;
 
 export const TabContentWrapper = styled.div`
   width: 100%;
-
   min-height: 89%;
   height: auto;
 `;

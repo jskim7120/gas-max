@@ -82,7 +82,7 @@ const Tab = (props: TabProps): JSX.Element => {
   const changeTab = (menuId: string) => {
     dispatch(setActiveTab({ activeTabId: menuId }));
   };
-  console.log("activeTabId:", activeTabId);
+
   return (
     <TabContainer>
       <TabHeaderWrapper>
@@ -100,12 +100,11 @@ const Tab = (props: TabProps): JSX.Element => {
         <div
           style={{
             position: "absolute",
-            top: "75px",
+            top: "74px",
             left: isOpen ? "82px" : "0px",
-            right: "0",
-            width: `100%`,
+            right: "0px",
             height: "3px",
-            background: activeTabId === "HOME" ? "green" : "red",
+            background: activeTabId === "HOME" ? "#8CB808" : "#FC6767",
           }}
         ></div>
       </TabHeaderWrapper>
