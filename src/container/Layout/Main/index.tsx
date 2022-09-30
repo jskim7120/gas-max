@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-//import { Main } from "./style";
-import Tab from "components/Tab";
-import { useSelector, useDispatch } from "app/store";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "app/store";
 import { toggleSidebar } from "features/sidebar/sidebarSlice";
+import { Main, Sidebar, UnOrderedList } from "./style";
+import Tab from "components/Tab";
+
 import {
   SidebarOpen,
   SidebarClose,
@@ -18,55 +19,6 @@ import {
   Sidebar9,
   Sidebar10,
 } from "components/AllSvgIcon";
-
-const Sidebar = styled.div<{ isOpen?: boolean }>`
-  height: 100%;
-  width: 82px;
-  min-width: 82px;
-  background: #f8e5ba;
-  border-right: 1px solid #707070;
-  position: ${(props) => !props.isOpen && "absolute"};
-  left: 0;
-  left: ${(props) => !props.isOpen && "-82px"};
-
-  .header {
-    display: inline-block;
-    background: linear-gradient(rgba(230, 164, 9, 0.2), rgba(230, 164, 9, 1));
-    width: 100%;
-    height: 34px;
-    min-height: 34px;
-    color: #0057aa;
-    font-family: "SegoeUI";
-    font-size: 12px;
-    font-weight: 700;
-    text-align: center;
-    padding: 7px 0 0 0;
-  }
-`;
-
-const UnOrderedList = styled.ul`
-  list-style: none;
-
-  &:first-child {
-    margin-top: 20px;
-  }
-
-  a {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 25px;
-    font-family: "SegoeUI";
-    font-size: 12px;
-  }
-`;
-
-const Main = styled.div`
-  display: flex;
-  width: 100%;
-  height: calc(100vh - 43px);
-`;
 
 function MainContainer() {
   const dispatch = useDispatch();
@@ -145,7 +97,7 @@ function MainContainer() {
         style={{ height: "31px", width: "31px" }}
         onClick={() => dispatch(toggleSidebar())}
       >
-        {isOpen ? <SidebarOpen /> : <SidebarClose />}
+        {isOpen ? <SidebarClose /> : <SidebarOpen />}
       </div>
 
       <Tab />
