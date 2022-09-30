@@ -34,12 +34,16 @@ export const Nav = styled.nav`
       a,
       button {
         text-align: left;
-        padding: 0px 19px;
+        padding: 0px 10px;
       }
 
       a:hover,
       button:hover {
-        background-color: #f2f2f2;
+        // background-color: #f2f2f2;
+      }
+      li {
+        color: #000;
+        font-size: 12px;
       }
     }
 
@@ -65,18 +69,22 @@ export const Nav = styled.nav`
 
     .dropdown {
       position: absolute;
+      top: 31px;
       left: 0;
       right: auto;
-      box-shadow: 0 10px 15px 3px rgba(46, 41, 51, 0.08),
-        0 4px 6px 2px rgba(71, 63, 79, 0.16);
-      font-size: 0.875rem;
       z-index: 9999;
-      min-width: 14rem;
-      padding: 0.5rem 0;
+      width: 170px;
+      padding: 3px 0 40px;
       list-style: none;
       background-color: #fff;
-      border-radius: 0.5rem;
       display: none;
+      li {
+        padding: 2px 1px 1px 8px;
+        .group::after {
+          content: "";
+        }
+      }
+      border: 1px solid #0057aa;
     }
 
     .dropdown.show {
@@ -89,4 +97,8 @@ export const Nav = styled.nav`
       top: -7px;
     }
   }
+`;
+
+export const Group = styled.div`
+  border-top: 1px solid #000;
 `;
