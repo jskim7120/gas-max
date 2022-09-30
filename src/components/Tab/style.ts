@@ -6,19 +6,17 @@ export const TabContainer = styled.div`
 
 export const TabHeaderWrapper = styled.div`
   width: 100%;
-  height: 31px;
   display: flex;
   align-items: center;
-
   background-color: #fff;
 
   ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    height: 31px;
+    height: 34px;
     width: 100%;
-    border-bottom: 1px solid red;
+    //border-bottom: 3px solid red;
   }
 `;
 

@@ -23,8 +23,6 @@ interface ITabHeader {
 }
 
 const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
-  console.log("header:", header);
-
   if (header.menuId === "HOME")
     return (
       <List className="home" isActive={isActive} onClick={() => onClick()}>
@@ -61,6 +59,7 @@ let activeTabName: string;
 const Tab = (props: TabProps): JSX.Element => {
   const dispatch = useDispatch();
   let tabState = useSelector((state) => state.tab);
+  let sidebarState = useSelector((state) => state.sidebar);
 
   useEffect(() => {
     if (tabState.tabs.length <= 2 && sessionStorage.getItem("active-tab")) {
@@ -83,7 +82,7 @@ const Tab = (props: TabProps): JSX.Element => {
   const changeTab = (menuId: string) => {
     dispatch(setActiveTab({ activeTabId: menuId }));
   };
-
+  console.log("activeTabId:", activeTabId);
   return (
     <TabContainer>
       <TabHeaderWrapper>
@@ -98,7 +97,19 @@ const Tab = (props: TabProps): JSX.Element => {
             />
           ))}
         </ul>
+        <div
+          style={{
+            position: "absolute",
+            top: "75px",
+            left: "82px",
+            right: "0",
+            width: `100%`,
+            height: "3px",
+            background: activeTabId === "HOME" ? "green" : "red",
+          }}
+        ></div>
       </TabHeaderWrapper>
+
       <TabContentWrapper>{content}</TabContentWrapper>
     </TabContainer>
   );
