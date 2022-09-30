@@ -182,7 +182,7 @@ export const Settings = ({
       xmlns="http://www.w3.org/2000/svg"
       width="25"
       height="25"
-      viewBox="0 0 25 25"
+      viewBox="0 0 27 27"
     >
       <defs>
         <linearGradient
@@ -302,7 +302,7 @@ export const User = ({ color = "#000", width = "25px", height = "25px" }) => {
       xmlns="http://www.w3.org/2000/svg"
       width="25"
       height="25"
-      viewBox="0 0 25 25"
+      viewBox="0 0 27 27"
     >
       <defs>
         <linearGradient
@@ -967,7 +967,7 @@ export const Home = () => {
             transform="translate(-2124.56 -1274.609)"
             fill="none"
             stroke="#fff"
-            stroke-width="2"
+            strokeWidth="2"
           />
         </g>
         <path
