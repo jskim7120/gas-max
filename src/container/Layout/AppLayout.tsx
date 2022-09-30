@@ -2,7 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "app/store";
 import FavMenu from "components/favMenu/favMenu";
-import SwitchNav from "components/SwitchNav/switchNav";
+import SlidingPane from "components/slidingPane";
 import {
   Container,
   TopSide,
@@ -10,7 +10,7 @@ import {
   // LeftSide,
   Icons,
   // Navigation,
-  // Wrapper,
+  Wrapper,
   // FavTitle,
 } from "./style";
 import { Settings, User, Favorite } from "components/AllSvgIcon";
@@ -33,7 +33,7 @@ export default function AppLayout() {
           <User />
         </Icons>
       </TopSide>
-      <SwitchNav />
+
       {/* <Wrapper> */}
       {/* <LeftSide>
         <Navigation>
@@ -44,7 +44,9 @@ export default function AppLayout() {
           <FavMenu />
         </Navigation>
         </LeftSide> */}
-      <Outlet />
+      <Wrapper>
+        <Outlet />
+      </Wrapper>
       {/* </Wrapper> */}
     </Container>
   );

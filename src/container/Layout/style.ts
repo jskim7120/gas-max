@@ -30,9 +30,7 @@ export const Icons = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  padding: 6px 10px 5px;
   display: flex;
-  grid-gap: 6px;
 `;
 
 export const LeftSide = styled.div`

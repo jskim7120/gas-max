@@ -981,3 +981,1595 @@ export const Home = () => {
     </svg>
   );
 };
+
+export const SidebarOpen = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="31"
+      height="31"
+      viewBox="0 0 31 31"
+    >
+      <defs>
+        <linearGradient
+          id="linear-gradient"
+          x1="0.5"
+          y1="0.771"
+          x2="0.5"
+          gradientUnits="objectBoundingBox"
+        >
+          <stop offset="0" stop-color="#a1a1a1" />
+          <stop offset="1" stop-color="#e8e8e8" />
+        </linearGradient>
+      </defs>
+      <g id="Group_112" data-name="Group 112" transform="translate(0 -46)">
+        <rect
+          id="Rectangle_9"
+          data-name="Rectangle 9"
+          width="31"
+          height="31"
+          transform="translate(0 46)"
+          fill="#707070"
+        />
+        <rect
+          id="Rectangle_26"
+          data-name="Rectangle 26"
+          width="27"
+          height="27"
+          rx="3"
+          transform="translate(2 48)"
+          fill="url(#linear-gradient)"
+        />
+        <g
+          id="Group_13"
+          data-name="Group 13"
+          transform="translate(5.698 50.881)"
+        >
+          <path
+            id="Path_60"
+            data-name="Path 60"
+            d="M535.122,169.134h5.739a2.188,2.188,0,0,0,2.188-2.188V151.042a2.188,2.188,0,0,0-2.188-2.188h-5.739"
+            transform="translate(-525.188 -148.854)"
+            fill="none"
+            stroke="#fff"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+          />
+          <line
+            id="Line_1"
+            data-name="Line 1"
+            x2="9.934"
+            transform="translate(0 10.14)"
+            fill="none"
+            stroke="#fff"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+          />
+          <path
+            id="Path_61"
+            data-name="Path 61"
+            d="M488.463,193.9l5.387,5.387-5.387,5.387"
+            transform="translate(-483.452 -189.148)"
+            fill="none"
+            stroke="#fff"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+          />
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export const SidebarClose = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="31"
+      height="31"
+      viewBox="0 0 31 31"
+    >
+      <defs>
+        <linearGradient
+          id="linear-gradient"
+          x1="0.5"
+          y1="0.771"
+          x2="0.5"
+          gradientUnits="objectBoundingBox"
+        >
+          <stop offset="0" stop-color="#a1a1a1" />
+          <stop offset="1" stop-color="#e8e8e8" />
+        </linearGradient>
+      </defs>
+      <g id="Group_129" data-name="Group 129" transform="translate(-82 -79)">
+        <g id="Group_123" data-name="Group 123" transform="translate(-118 -75)">
+          <rect
+            id="Rectangle_9"
+            data-name="Rectangle 9"
+            width="31"
+            height="31"
+            transform="translate(200 154)"
+            fill="#707070"
+          />
+          <rect
+            id="Rectangle_26"
+            data-name="Rectangle 26"
+            width="27"
+            height="27"
+            rx="3"
+            transform="translate(202 156)"
+            fill="url(#linear-gradient)"
+          />
+          <g
+            id="Group_12"
+            data-name="Group 12"
+            transform="translate(211.308 159.828)"
+          >
+            <line
+              id="Line_2"
+              data-name="Line 2"
+              x1="8.915"
+              transform="translate(3.141 9.1)"
+              fill="none"
+              stroke="#fff"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+            <path
+              id="Path_62"
+              data-name="Path 62"
+              d="M124.346,203.57l-4.834-4.834,4.834-4.834"
+              transform="translate(-116.787 -189.636)"
+              fill="none"
+              stroke="#fff"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+            <line
+              id="Line_3"
+              data-name="Line 3"
+              y2="18.2"
+              transform="translate(0)"
+              fill="none"
+              stroke="#fff"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export const Sidebar1 = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="28.346"
+      height="28.346"
+      viewBox="0 0 28.346 28.346"
+    >
+      <g
+        id="Group_470"
+        data-name="Group 470"
+        transform="translate(-25.827 -89.277)"
+      >
+        <g id="Group_448" data-name="Group 448" transform="translate(0 3.451)">
+          <line
+            id="Line_24"
+            data-name="Line 24"
+            y1="7.297"
+            x2="6.624"
+            transform="translate(40.422 92.606)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-miterlimit="10"
+            stroke-width="1"
+          />
+          <path
+            id="Path_208"
+            data-name="Path 208"
+            d="M83.252,442.922h1.157V446.4h.029l2.791-3.477h1.285l-2.272,2.84,2.65,4.5H87.607l-2.073-3.6-1.125,1.385v2.212H83.252Z"
+            transform="translate(-48.692 -342.422)"
+            fill="#0057aa"
+          />
+          <path
+            id="Path_209"
+            data-name="Path 209"
+            d="M89.36,451.282a1.449,1.449,0,0,1,.8-1.2v-.05a1.006,1.006,0,0,1-.5-.906,1.338,1.338,0,0,1,.617-1.017v-.04a1.858,1.858,0,0,1-.727-1.465,1.974,1.974,0,0,1,2.122-1.962,2.31,2.31,0,0,1,.8.139h1.943v.858H93.365a1.473,1.473,0,0,1,.359,1.005,1.873,1.873,0,0,1-2.053,1.884,1.9,1.9,0,0,1-.767-.17.714.714,0,0,0-.3.578c0,.33.22.539.917.539h1.006c1.3,0,1.973.4,1.973,1.334,0,1.057-1.116,1.914-2.869,1.914C90.316,452.727,89.36,452.238,89.36,451.282Zm4.036-.289c0-.459-.359-.6-1.027-.6h-.827a3.467,3.467,0,0,1-.737-.081.988.988,0,0,0-.469.8c0,.538.559.858,1.465.858C92.758,451.97,93.4,451.5,93.4,450.993Zm-.688-4.385a1.043,1.043,0,1,0-2.073,0,1.046,1.046,0,1,0,2.073,0Z"
+            transform="translate(-48.692 -342.422)"
+            fill="#0057aa"
+          />
+          <path
+            id="Path_274"
+            data-name="Path 274"
+            d="M2.14,0A2.14,2.14,0,1,1,0,2.14,2.14,2.14,0,0,1,2.14,0Z"
+            transform="translate(37.86 97.86)"
+            fill="#8cb808"
+          />
+          <line
+            id="Line_25"
+            data-name="Line 25"
+            y2="2.678"
+            transform="translate(40 86.92)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-linecap="round"
+            stroke-miterlimit="10"
+            stroke-width="1"
+          />
+          <line
+            id="Line_26"
+            data-name="Line 26"
+            y2="2.678"
+            transform="translate(40 110.403)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-linecap="round"
+            stroke-miterlimit="10"
+            stroke-width="1"
+          />
+          <line
+            id="Line_27"
+            data-name="Line 27"
+            x1="2.678"
+            transform="translate(50.403 100)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-linecap="round"
+            stroke-miterlimit="10"
+            stroke-width="1"
+          />
+          <line
+            id="Line_28"
+            data-name="Line 28"
+            x1="2.678"
+            transform="translate(26.92 100)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-linecap="round"
+            stroke-miterlimit="10"
+            stroke-width="1"
+          />
+          <rect
+            id="Rectangle_152"
+            data-name="Rectangle 152"
+            width="28.346"
+            height="28.346"
+            transform="translate(25.827 85.827)"
+            fill="none"
+          />
+          <g
+            id="Path_273"
+            data-name="Path 273"
+            transform="translate(25.827 85.827)"
+            fill="none"
+          >
+            <path
+              d="M14.173,0A14.173,14.173,0,1,1,0,14.173,14.173,14.173,0,0,1,14.173,0Z"
+              stroke="none"
+            />
+            <path
+              d="M 14.17322826385498 1.999998092651367 C 10.92163848876953 1.999998092651367 7.864677429199219 3.266239166259766 5.565458297729492 5.565458297729492 C 3.266239166259766 7.864677429199219 1.999998092651367 10.92163848876953 1.999998092651367 14.17322826385498 C 1.999998092651367 17.42481803894043 3.266239166259766 20.48177719116211 5.565458297729492 22.78099822998047 C 7.864677429199219 25.08021926879883 10.92163848876953 26.34645843505859 14.17322826385498 26.34645843505859 C 17.42481803894043 26.34645843505859 20.48177719116211 25.08021926879883 22.78099822998047 22.78099822998047 C 25.08021926879883 20.48177719116211 26.34645843505859 17.42481803894043 26.34645843505859 14.17322826385498 C 26.34645843505859 10.92163848876953 25.08021926879883 7.864677429199219 22.78099822998047 5.565458297729492 C 20.48177719116211 3.266239166259766 17.42481803894043 1.999998092651367 14.17322826385498 1.999998092651367 M 14.17322826385498 -1.9073486328125e-06 C 22.00088882446289 -1.9073486328125e-06 28.34645843505859 6.34556770324707 28.34645843505859 14.17322826385498 C 28.34645843505859 22.00088882446289 22.00088882446289 28.34645843505859 14.17322826385498 28.34645843505859 C 6.34556770324707 28.34645843505859 -1.9073486328125e-06 22.00088882446289 -1.9073486328125e-06 14.17322826385498 C -1.9073486328125e-06 6.34556770324707 6.34556770324707 -1.9073486328125e-06 14.17322826385498 -1.9073486328125e-06 Z"
+              stroke="none"
+              fill="#0057aa"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export const Sidebar2 = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="29.731"
+      height="29.24"
+      viewBox="0 0 29.731 29.24"
+    >
+      <g
+        id="Group_471"
+        data-name="Group 471"
+        transform="translate(-24.009 -144.113)"
+      >
+        <g id="Group_466" data-name="Group 466" transform="translate(0 -2.013)">
+          <g
+            id="Group_450"
+            data-name="Group 450"
+            transform="translate(0 12.749)"
+          >
+            <path
+              id="Path_259"
+              data-name="Path 259"
+              d="M129.771,472.518a11.818,11.818,0,0,1,18.367-5.7"
+              transform="translate(-95.799 -326.921)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="2"
+            />
+            <path
+              id="Path_260"
+              data-name="Path 260"
+              d="M133.449,471.21a8.469,8.469,0,0,1,5.369-3.979"
+              transform="translate(-95.799 -326.921)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <path
+              id="Path_261"
+              data-name="Path 261"
+              d="M148.134,485.635a11.764,11.764,0,0,1-7.142,2.4,11.951,11.951,0,0,1-8.367-3.474"
+              transform="translate(-95.799 -326.921)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="2"
+            />
+            <path
+              id="Path_263"
+              data-name="Path 263"
+              d="M2070.371,3629.236v-3.112h7.139v3.112"
+              transform="translate(-2029 -3491.748)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-width="2"
+            />
+            <path
+              id="Path_258"
+              data-name="Path 258"
+              d="M120.809,472.873h10.785a5.592,5.592,0,0,1,5.576,5.575h0a5.592,5.592,0,0,1-5.576,5.576H121.032"
+              transform="translate(-95.799 -326.921)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="2"
+            />
+            <circle
+              id="Ellipse_24"
+              data-name="Ellipse 24"
+              cx="2.237"
+              cy="2.237"
+              r="2.237"
+              transform="translate(31.481 157.642)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <line
+              id="Line_100"
+              data-name="Line 100"
+              y2="11.151"
+              transform="translate(31.826 145.951)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <line
+              id="Line_101"
+              data-name="Line 101"
+              y2="11.151"
+              transform="translate(35.609 145.951)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <line
+              id="Line_102"
+              data-name="Line 102"
+              x2="3.782"
+              transform="translate(31.826 148.651)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <line
+              id="Line_103"
+              data-name="Line 103"
+              x2="3.782"
+              transform="translate(31.826 151.442)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <line
+              id="Line_104"
+              data-name="Line 104"
+              x2="3.782"
+              transform="translate(31.826 154.233)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export const Sidebar3 = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="28.249"
+      height="30.449"
+      viewBox="0 0 28.249 30.449"
+    >
+      <g
+        id="Group_460"
+        data-name="Group 460"
+        transform="translate(-27.071 -201.016)"
+      >
+        <g
+          id="Group_458"
+          data-name="Group 458"
+          transform="translate(-180.065 -308.773)"
+        >
+          <g id="Group_457" data-name="Group 457">
+            <path
+              id="Path_271"
+              data-name="Path 271"
+              d="M224.561,530.139h0a5.592,5.592,0,0,1-5.575,5.576H207.144"
+              fill="none"
+              stroke="#8cb808"
+              stroke-miterlimit="10"
+              stroke-width="1.225"
+            />
+            <line
+              id="Line_107"
+              data-name="Line 107"
+              x2="6.095"
+              transform="translate(207.136 524.563)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-miterlimit="10"
+              stroke-width="1.225"
+            />
+            <circle
+              id="Ellipse_28"
+              data-name="Ellipse 28"
+              cx="1.426"
+              cy="1.426"
+              r="1.426"
+              transform="translate(215.017 536.773)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-miterlimit="10"
+              stroke-width="1.225"
+            />
+            <line
+              id="Line_108"
+              data-name="Line 108"
+              y2="8.715"
+              transform="translate(215.017 527)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <line
+              id="Line_109"
+              data-name="Line 109"
+              y2="5.576"
+              transform="translate(218.8 530.139)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <line
+              id="Line_110"
+              data-name="Line 110"
+              x2="3.782"
+              transform="translate(215.017 530.139)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <line
+              id="Line_111"
+              data-name="Line 111"
+              x2="3.782"
+              transform="translate(215.017 533.278)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+          </g>
+          <path
+            id="Path_272"
+            data-name="Path 272"
+            d="M213.613,516.784h8.477a9.744,9.744,0,0,1,9.4,7.273"
+            fill="none"
+            stroke="#8cb808"
+            stroke-miterlimit="10"
+            stroke-width="1"
+          />
+          <line
+            id="Line_112"
+            data-name="Line 112"
+            y2="9.705"
+            transform="translate(215.183 516.784)"
+            fill="none"
+            stroke="#8cb808"
+            stroke-miterlimit="10"
+            stroke-width="1"
+          />
+          <line
+            id="Line_113"
+            data-name="Line 113"
+            y2="13.325"
+            transform="translate(221.766 516.784)"
+            fill="none"
+            stroke="#8cb808"
+            stroke-miterlimit="10"
+            stroke-width="1"
+          />
+          <line
+            id="Line_114"
+            data-name="Line 114"
+            x2="6.584"
+            transform="translate(215.183 521.026)"
+            fill="none"
+            stroke="#8cb808"
+            stroke-miterlimit="10"
+            stroke-width="1"
+          />
+          <line
+            id="Line_115"
+            data-name="Line 115"
+            x2="6.584"
+            transform="translate(215.183 526.49)"
+            fill="none"
+            stroke="#8cb808"
+            stroke-miterlimit="10"
+            stroke-width="1"
+          />
+          <circle
+            id="Ellipse_27"
+            data-name="Ellipse 27"
+            cx="9.66"
+            cy="9.66"
+            r="9.66"
+            transform="translate(212.89 510.789)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-miterlimit="10"
+            stroke-width="2"
+          />
+          <path
+            id="Path_270"
+            data-name="Path 270"
+            d="M229.929,526.362l5.456,5.776v4.343l-7.327-7.93Z"
+            fill="#0057aa"
+          />
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export const Sidebar4 = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="29.77"
+      height="28.717"
+      viewBox="0 0 29.77 28.717"
+    >
+      <g
+        id="Group_445"
+        data-name="Group 445"
+        transform="translate(-30.187 -203.629)"
+      >
+        <line
+          id="Line_86"
+          data-name="Line 86"
+          x2="5.288"
+          transform="translate(53.396 204.335)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="1"
+        />
+        <line
+          id="Line_87"
+          data-name="Line 87"
+          x2="5.288"
+          transform="translate(53.396 207.493)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="1"
+        />
+        <line
+          id="Line_88"
+          data-name="Line 88"
+          x2="5.288"
+          transform="translate(53.396 210.651)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="1"
+        />
+        <rect
+          id="Rectangle_179"
+          data-name="Rectangle 179"
+          width="3"
+          height="3"
+          transform="translate(35.691 208.651)"
+          fill="#8cb808"
+        />
+        <rect
+          id="Rectangle_180"
+          data-name="Rectangle 180"
+          width="3"
+          height="3"
+          transform="translate(42.36 208.651)"
+          fill="#8cb808"
+        />
+        <rect
+          id="Rectangle_181"
+          data-name="Rectangle 181"
+          width="3"
+          height="3"
+          transform="translate(35.691 214.146)"
+          fill="#8cb808"
+        />
+        <rect
+          id="Rectangle_182"
+          data-name="Rectangle 182"
+          width="3"
+          height="3"
+          transform="translate(42.36 214.146)"
+          fill="#8cb808"
+        />
+        <rect
+          id="Rectangle_183"
+          data-name="Rectangle 183"
+          width="3"
+          height="3"
+          transform="translate(35.691 219.642)"
+          fill="#8cb808"
+        />
+        <path
+          id="Path_238"
+          data-name="Path 238"
+          d="M233.8,452.786H222.856V426.069h18.935v13.064"
+          transform="translate(-191.669 -221.44)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-miterlimit="10"
+          stroke-width="2"
+        />
+        <path
+          id="Path_237"
+          data-name="Path 237"
+          d="M250.626,445.116l-9.391-6.3-9.391,6.3H233.8v7.67h14.872v-7.67Z"
+          transform="translate(-191.669 -221.44)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+        <rect
+          id="Rectangle_184"
+          data-name="Rectangle 184"
+          width="4.38"
+          height="4.39"
+          transform="translate(47.377 226.956)"
+          fill="#0057aa"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const Sidebar5 = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18.207"
+      height="28.327"
+      viewBox="0 0 18.207 28.327"
+    >
+      <g
+        id="Group_472"
+        data-name="Group 472"
+        transform="translate(-30.071 -320.125)"
+      >
+        <line
+          id="Line_59"
+          data-name="Line 59"
+          x2="7.958"
+          transform="translate(35.195 321.125)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+        <line
+          id="Line_60"
+          data-name="Line 60"
+          x2="3.204"
+          transform="translate(37.573 324.162)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <line
+          id="Line_61"
+          data-name="Line 61"
+          x2="16.207"
+          transform="translate(31.071 331.103)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <line
+          id="Line_62"
+          data-name="Line 62"
+          x2="16.207"
+          transform="translate(31.071 343.394)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <line
+          id="Line_65"
+          data-name="Line 65"
+          y2="3.036"
+          transform="translate(39.175 324.162)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <path
+          id="Path_249"
+          data-name="Path 249"
+          d="M403.953,440.2h.084q.344-1.47.7-2.9t.72-2.92h1.585l-2.19,8.874h-1.7l-1.46-5.714-1.408,5.714h-1.7l-2.263-8.874h1.6l1.471,5.819h.083l.344-1.419q.271-1.1.538-2.194t.537-2.206h1.594Z"
+          transform="translate(-362.65 -101.489)"
+          fill="#0057aa"
+        />
+        <line
+          id="Line_89"
+          data-name="Line 89"
+          x2="11.821"
+          transform="translate(33.264 335.356)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="0.998"
+        />
+        <line
+          id="Line_90"
+          data-name="Line 90"
+          x2="11.821"
+          transform="translate(33.264 338.944)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="0.998"
+        />
+        <rect
+          id="Rectangle_168"
+          data-name="Rectangle 168"
+          width="16.207"
+          height="20.254"
+          rx="2.991"
+          transform="translate(31.071 327.198)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+        <line
+          id="Line_63"
+          data-name="Line 63"
+          y2="6.073"
+          transform="translate(35.089 321.125)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+        <line
+          id="Line_64"
+          data-name="Line 64"
+          y2="6.073"
+          transform="translate(43.154 321.125)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const Sidebar6 = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="28.78"
+      height="28.624"
+      viewBox="0 0 28.78 28.624"
+    >
+      <g
+        id="Group_473"
+        data-name="Group 473"
+        transform="translate(-24.839 -378.987)"
+      >
+        <g id="Group_461" data-name="Group 461">
+          <rect
+            id="Rectangle_186"
+            data-name="Rectangle 186"
+            width="28.346"
+            height="28.346"
+            transform="translate(25.071 379.125)"
+            fill="none"
+          />
+          <path
+            id="Path_239"
+            data-name="Path 239"
+            d="M323.723,425.3l-13.39,6.127v20.5h4.248V436.086H332.9v15.839h4.215v-20.5Z"
+            transform="translate(-284.494 -45.314)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+          />
+          <rect
+            id="Rectangle_187"
+            data-name="Rectangle 187"
+            width="4.793"
+            height="4.793"
+            transform="translate(33.154 394.63)"
+            fill="#8cb808"
+          />
+          <rect
+            id="Rectangle_188"
+            data-name="Rectangle 188"
+            width="4.793"
+            height="4.793"
+            transform="translate(33.154 402.02)"
+            fill="#8cb808"
+          />
+          <rect
+            id="Rectangle_189"
+            data-name="Rectangle 189"
+            width="4.793"
+            height="4.793"
+            transform="translate(40.542 394.63)"
+            fill="#8cb808"
+          />
+          <rect
+            id="Rectangle_190"
+            data-name="Rectangle 190"
+            width="4.793"
+            height="4.793"
+            transform="translate(40.542 402.02)"
+            fill="#8cb808"
+          />
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export const Sidebar7 = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="28.445"
+      height="28.441"
+      viewBox="0 0 28.445 28.441"
+    >
+      <g
+        id="Group_463"
+        data-name="Group 463"
+        transform="translate(-24.442 -493.587)"
+      >
+        <path
+          id="Path_245"
+          data-name="Path 245"
+          d="M405.466,425.693a13.508,13.508,0,0,1,9.284,9.278"
+          transform="translate(-363.12 69.146)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+        <path
+          id="Path_246"
+          data-name="Path 246"
+          d="M388.791,435.071a13.5,13.5,0,0,1,9.392-9.4"
+          transform="translate(-363.12 69.146)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+        <path
+          id="Path_247"
+          data-name="Path 247"
+          d="M398.183,451.651a13.507,13.507,0,0,1-9.391-9.4"
+          transform="translate(-363.12 69.146)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+        <path
+          id="Path_248"
+          data-name="Path 248"
+          d="M414.776,442.254a13.5,13.5,0,0,1-9.31,9.374"
+          transform="translate(-363.12 69.146)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+        <g
+          id="Group_435"
+          data-name="Group 435"
+          transform="translate(-3.901 124.792)"
+        >
+          <path
+            id="Path_249"
+            data-name="Path 249"
+            d="M403.953,440.2h.084q.344-1.47.7-2.9t.72-2.92h1.585l-2.19,8.874h-1.7l-1.46-5.714-1.408,5.714h-1.7l-2.263-8.874h1.6l1.471,5.819h.083l.344-1.419q.271-1.1.538-2.194t.537-2.206h1.594Z"
+            transform="translate(-359.219 -55.645)"
+            fill="#0057aa"
+          />
+          <line
+            id="Line_89"
+            data-name="Line 89"
+            x2="11.821"
+            transform="translate(36.695 381.2)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="0.998"
+          />
+          <line
+            id="Line_90"
+            data-name="Line 90"
+            x2="11.821"
+            transform="translate(36.695 384.788)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="0.998"
+          />
+        </g>
+        <line
+          id="Line_91"
+          data-name="Line 91"
+          x1="5.45"
+          transform="translate(46.486 507.759)"
+          fill="#fff"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <path
+          id="Path_250"
+          data-name="Path 250"
+          d="M413.208,436.363l2.25,2.25-2.25,2.25"
+          transform="translate(-363.12 69.146)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <line
+          id="Line_92"
+          data-name="Line 92"
+          x2="5.45"
+          transform="translate(25.474 507.759)"
+          fill="#fff"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <path
+          id="Path_251"
+          data-name="Path 251"
+          d="M390.441,440.863l-2.25-2.25,2.25-2.25"
+          transform="translate(-363.12 69.146)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <line
+          id="Line_93"
+          data-name="Line 93"
+          y2="5.45"
+          transform="translate(38.705 515.943)"
+          fill="#fff"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <path
+          id="Path_252"
+          data-name="Path 252"
+          d="M399.575,448.644l2.25-2.25,2.25,2.25"
+          transform="translate(-363.12 69.146)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <line
+          id="Line_94"
+          data-name="Line 94"
+          y1="5.45"
+          transform="translate(38.705 494.125)"
+          fill="#fff"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <path
+          id="Path_253"
+          data-name="Path 253"
+          d="M404.074,428.582l-2.25,2.25-2.25-2.25"
+          transform="translate(-363.12 69.146)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const Sidebar8 = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="29.421"
+      height="29.865"
+      viewBox="0 0 29.421 29.865"
+    >
+      <g
+        id="Group_476"
+        data-name="Group 476"
+        transform="translate(-25.071 -552.129)"
+      >
+        <line
+          id="Line_96"
+          data-name="Line 96"
+          y1="7.297"
+          x2="6.624"
+          transform="translate(39.666 560.426)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-miterlimit="10"
+          stroke-width="1"
+        />
+        <path
+          id="Path_257"
+          data-name="Path 257"
+          d="M83.252,442.922h1.157V446.4h.029l2.791-3.477h1.285l-2.272,2.84,2.65,4.5H87.607l-2.073-3.6-1.125,1.385v2.212H83.252Z"
+          transform="translate(-49.448 125.397)"
+          fill="#0057aa"
+        />
+        <path
+          id="Path_256"
+          data-name="Path 256"
+          d="M89.36,451.282a1.449,1.449,0,0,1,.8-1.2v-.05a1.006,1.006,0,0,1-.5-.906,1.338,1.338,0,0,1,.617-1.017v-.04a1.858,1.858,0,0,1-.727-1.465,1.974,1.974,0,0,1,2.122-1.962,2.31,2.31,0,0,1,.8.139h1.943v.858H93.365a1.473,1.473,0,0,1,.359,1.005,1.873,1.873,0,0,1-2.053,1.884,1.9,1.9,0,0,1-.767-.17.714.714,0,0,0-.3.578c0,.33.22.539.917.539h1.006c1.3,0,1.973.4,1.973,1.334,0,1.057-1.116,1.914-2.869,1.914C90.316,452.727,89.36,452.238,89.36,451.282Zm4.036-.289c0-.459-.359-.6-1.027-.6h-.827a3.467,3.467,0,0,1-.737-.081.988.988,0,0,0-.469.8c0,.538.559.858,1.465.858C92.758,451.97,93.4,451.5,93.4,450.993Zm-.688-4.385a1.043,1.043,0,1,0-2.073,0,1.046,1.046,0,1,0,2.073,0Z"
+          transform="translate(-49.448 125.397)"
+          fill="#0057aa"
+        />
+        <circle
+          id="Ellipse_22"
+          data-name="Ellipse 22"
+          cx="2.14"
+          cy="2.14"
+          r="2.14"
+          transform="translate(37.104 565.68)"
+          fill="#8cb808"
+        />
+        <line
+          id="Line_99"
+          data-name="Line 99"
+          y2="2.678"
+          transform="translate(39.244 554.74)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="1"
+        />
+        <line
+          id="Line_95"
+          data-name="Line 95"
+          y2="2.678"
+          transform="translate(39.244 578.222)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="1"
+        />
+        <line
+          id="Line_97"
+          data-name="Line 97"
+          x1="2.678"
+          transform="translate(49.647 567.82)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="1"
+        />
+        <line
+          id="Line_98"
+          data-name="Line 98"
+          x1="2.678"
+          transform="translate(26.164 567.82)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="1"
+        />
+        <rect
+          id="Rectangle_194"
+          data-name="Rectangle 194"
+          width="28.346"
+          height="28.346"
+          transform="translate(25.071 553.647)"
+          fill="none"
+        />
+        <g
+          id="Ellipse_21"
+          data-name="Ellipse 21"
+          transform="translate(25.071 553.647)"
+          fill="none"
+          stroke="#0057aa"
+          stroke-miterlimit="10"
+          stroke-width="2"
+        >
+          <circle cx="14.173" cy="14.173" r="14.173" stroke="none" />
+          <circle cx="14.173" cy="14.173" r="13.173" fill="none" />
+        </g>
+        <g
+          id="Group_468"
+          data-name="Group 468"
+          transform="translate(-1.5 142.129)"
+        >
+          <circle
+            id="Ellipse_23"
+            data-name="Ellipse 23"
+            cx="6.996"
+            cy="6.996"
+            r="6.996"
+            transform="translate(42 410)"
+            fill="#0057aa"
+          />
+          <g
+            id="Group_437"
+            data-name="Group 437"
+            transform="translate(44.424 413.564)"
+          >
+            <path
+              id="Path_249"
+              data-name="Path 249"
+              d="M402.224,438.878h.065q.266-1.137.54-2.243t.557-2.259h1.226l-1.694,6.864H401.6l-1.129-4.42-1.089,4.42H398.07l-1.75-6.864h1.234l1.138,4.5h.064l.266-1.1q.21-.854.416-1.7t.415-1.706h1.233Z"
+              transform="translate(-396.006 -434.377)"
+              fill="#fff"
+            />
+            <line
+              id="Line_89"
+              data-name="Line 89"
+              x2="9.144"
+              transform="translate(0 1.909)"
+              fill="none"
+              stroke="#fff"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.998"
+            />
+            <line
+              id="Line_90"
+              data-name="Line 90"
+              x2="9.144"
+              transform="translate(0 4.684)"
+              fill="none"
+              stroke="#fff"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.998"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export const Sidebar9 = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="30.265"
+      height="29.24"
+      viewBox="0 0 30.265 29.24"
+    >
+      <g
+        id="Group_477"
+        data-name="Group 477"
+        transform="translate(-24.009 -613.125)"
+      >
+        <g id="Group_464" data-name="Group 464" transform="translate(0 467)">
+          <g
+            id="Group_450"
+            data-name="Group 450"
+            transform="translate(0 12.749)"
+          >
+            <path
+              id="Path_259"
+              data-name="Path 259"
+              d="M129.771,472.518a11.818,11.818,0,0,1,18.367-5.7"
+              transform="translate(-95.799 -326.921)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="2"
+            />
+            <path
+              id="Path_260"
+              data-name="Path 260"
+              d="M133.449,471.21a8.469,8.469,0,0,1,5.369-3.979"
+              transform="translate(-95.799 -326.921)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <path
+              id="Path_261"
+              data-name="Path 261"
+              d="M148.134,485.635a11.764,11.764,0,0,1-7.142,2.4,11.951,11.951,0,0,1-8.367-3.474"
+              transform="translate(-95.799 -326.921)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="2"
+            />
+            <path
+              id="Path_263"
+              data-name="Path 263"
+              d="M2070.371,3629.236v-3.112h7.139v3.112"
+              transform="translate(-2029 -3491.748)"
+              fill="none"
+              stroke="#8cb808"
+              stroke-width="2"
+            />
+            <path
+              id="Path_258"
+              data-name="Path 258"
+              d="M120.809,472.873h10.785a5.592,5.592,0,0,1,5.576,5.575h0a5.592,5.592,0,0,1-5.576,5.576H121.032"
+              transform="translate(-95.799 -326.921)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="2"
+            />
+            <circle
+              id="Ellipse_24"
+              data-name="Ellipse 24"
+              cx="2.237"
+              cy="2.237"
+              r="2.237"
+              transform="translate(31.481 157.642)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <line
+              id="Line_100"
+              data-name="Line 100"
+              y2="11.151"
+              transform="translate(31.826 145.951)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <line
+              id="Line_101"
+              data-name="Line 101"
+              y2="11.151"
+              transform="translate(35.609 145.951)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <line
+              id="Line_102"
+              data-name="Line 102"
+              x2="3.782"
+              transform="translate(31.826 148.651)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <line
+              id="Line_103"
+              data-name="Line 103"
+              x2="3.782"
+              transform="translate(31.826 151.442)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+            <line
+              id="Line_104"
+              data-name="Line 104"
+              x2="3.782"
+              transform="translate(31.826 154.233)"
+              fill="none"
+              stroke="#0057aa"
+              stroke-miterlimit="10"
+              stroke-width="1"
+            />
+          </g>
+        </g>
+        <g
+          id="Group_469"
+          data-name="Group 469"
+          transform="translate(-1.718 212.368)"
+        >
+          <circle
+            id="Ellipse_23"
+            data-name="Ellipse 23"
+            cx="6.996"
+            cy="6.996"
+            r="6.996"
+            transform="translate(42 410)"
+            fill="#0057aa"
+          />
+          <g
+            id="Group_437"
+            data-name="Group 437"
+            transform="translate(44.424 413.564)"
+          >
+            <path
+              id="Path_249"
+              data-name="Path 249"
+              d="M402.224,438.878h.065q.266-1.137.54-2.243t.557-2.259h1.226l-1.694,6.864H401.6l-1.129-4.42-1.089,4.42H398.07l-1.75-6.864h1.234l1.138,4.5h.064l.266-1.1q.21-.854.416-1.7t.415-1.706h1.233Z"
+              transform="translate(-396.006 -434.377)"
+              fill="#fff"
+            />
+            <line
+              id="Line_89"
+              data-name="Line 89"
+              x2="9.144"
+              transform="translate(0 1.909)"
+              fill="none"
+              stroke="#fff"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.998"
+            />
+            <line
+              id="Line_90"
+              data-name="Line 90"
+              x2="9.144"
+              transform="translate(0 4.684)"
+              fill="none"
+              stroke="#fff"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.998"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export const Sidebar10 = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="28.402"
+      height="28.462"
+      viewBox="0 0 28.402 28.462"
+    >
+      <g
+        id="Group_478"
+        data-name="Group 478"
+        transform="translate(-25.071 -672.126)"
+      >
+        <path
+          id="Path_231"
+          data-name="Path 231"
+          d="M559.483,437.457h7.308v14.387H547.7V440.029"
+          transform="translate(-514.318 247.744)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+        <line
+          id="Line_74"
+          data-name="Line 74"
+          x2="19.094"
+          transform="translate(33.379 690.241)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <line
+          id="Line_75"
+          data-name="Line 75"
+          x2="19.094"
+          transform="translate(33.379 693.337)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <line
+          id="Line_76"
+          data-name="Line 76"
+          x2="19.094"
+          transform="translate(33.379 696.434)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <line
+          id="Line_77"
+          data-name="Line 77"
+          y2="9.347"
+          transform="translate(37.748 690.241)"
+          fill="none"
+          stroke="#8cb808"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <g id="Group_465" data-name="Group 465">
+          <rect
+            id="Rectangle_170"
+            data-name="Rectangle 170"
+            width="19.094"
+            height="14.387"
+            transform="translate(26.071 673.126)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+          />
+          <line
+            id="Line_70"
+            data-name="Line 70"
+            x2="19.094"
+            transform="translate(26.071 678.166)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1"
+          />
+          <line
+            id="Line_71"
+            data-name="Line 71"
+            x2="19.094"
+            transform="translate(26.071 681.262)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1"
+          />
+          <line
+            id="Line_72"
+            data-name="Line 72"
+            x2="19.094"
+            transform="translate(26.071 684.358)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1"
+          />
+          <line
+            id="Line_73"
+            data-name="Line 73"
+            y2="9.347"
+            transform="translate(30.439 678.166)"
+            fill="none"
+            stroke="#0057aa"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1"
+          />
+        </g>
+      </g>
+    </svg>
+  );
+};
