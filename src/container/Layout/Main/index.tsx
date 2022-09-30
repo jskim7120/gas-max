@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Main } from "./style";
+//import { Main } from "./style";
 import Tab from "components/Tab";
 import { useSelector, useDispatch } from "app/store";
 import styled from "styled-components";
@@ -28,9 +28,25 @@ const Sidebar = styled.div<{ isOpen?: boolean }>`
   position: ${(props) => !props.isOpen && "absolute"};
   left: 0;
   left: ${(props) => !props.isOpen && "-82px"};
+
+  .header {
+    display: inline-block;
+    background: linear-gradient(rgba(230, 164, 9, 0.2), rgba(230, 164, 9, 1));
+    width: 100%;
+    height: 34px;
+    min-height: 34px;
+    color: #0057aa;
+    font-family: "SegoeUI";
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    padding: 7px 0 0 0;
+  }
 `;
 
 const UnOrderedList = styled.ul`
+  list-style: none;
+
   &:first-child {
     margin-top: 20px;
   }
@@ -46,30 +62,20 @@ const UnOrderedList = styled.ul`
   }
 `;
 
+const Main = styled.div`
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 43px);
+`;
+
 function MainContainer() {
   const dispatch = useDispatch();
   const { isOpen } = useSelector((state) => state.sidebar);
 
   return (
-    <div style={{ display: "flex", width: "100%", height: "auto" }}>
-      <Sidebar
-        isOpen={isOpen}
-        style={{ display: "flex", flexDirection: "column" }}
-      >
-        <div
-          style={{
-            background: `linear-gradient(rgba(230, 164, 9, 0.2),rgba(230, 164, 9, 1))`,
-            height: "34px",
-            minHeight: "34px",
-            color: "#0057AA",
-            fontFamily: "",
-            fontSize: "12px",
-            textAlign: "center",
-            padding: "6px 0 0 0",
-          }}
-        >
-          바로가기
-        </div>
+    <Main>
+      <Sidebar isOpen={isOpen}>
+        <span className="header">바로가기</span>
         <nav>
           <UnOrderedList>
             <li>
@@ -143,7 +149,7 @@ function MainContainer() {
       </div>
 
       <Tab />
-    </div>
+    </Main>
   );
 }
 

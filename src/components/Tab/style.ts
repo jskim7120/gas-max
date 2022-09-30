@@ -26,12 +26,14 @@ export const List = styled.li<{ isActive: boolean }>`
   outline: none;
   width: 95px;
   height: 100%;
-  font-size: 12px;
-  font-weight: 400;
-  padding: 5px 5px;
+  padding: 6px 15px 6px 6px;
   margin-right: 1px;
+
   position: relative;
   font-family: "NotoSansKRRegular";
+  font-size: 12px;
+  font-weight: 400;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -48,7 +50,7 @@ export const List = styled.li<{ isActive: boolean }>`
     top: 6.5px;
     right: -9px;
     width: 24px;
-    display: inlene-block;
+    display: inline-block;
   }
 
   background: ${(props) =>

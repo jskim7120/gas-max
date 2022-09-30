@@ -27,3 +27,18 @@
   font-family: "SegoeUI";
   src: url(../assets//font/Segoe\ UI.ttf);
 }
+
+@font-face {
+  font-family: "SegoeUIBold";
+  src: url(../assets//font/Segoe\ UI\ Bold.ttf);
+}
+
+@font-face {
+  font-family: "SegoeUIItalic";
+  src: url(../assets//font/Segoe\ UI\ Italic.ttf);
+}
+
+@font-face {
+  font-family: "SegoeUIBoldItalic";
+  src: url(../assets//font/Segoe\ UI\ Bold\ Italic.ttf);
+}
