@@ -87,7 +87,7 @@ const Tab = (props: TabProps): JSX.Element => {
   return (
     <TabContainer>
       <TabHeaderWrapper>
-        <ul style={{ marginLeft: "15px" }}>
+        <ul>
           {tabHeader?.map((header: any, index: number) => (
             <TabHeader
               key={index}
