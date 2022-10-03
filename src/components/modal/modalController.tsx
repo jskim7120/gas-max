@@ -22,11 +22,12 @@ const PopupBack = styled.div`
   height: 100%;
   background-color: #000000;
   opacity: 0.4;
+  border: 1px solid red;
 `;
 
 const PopupContiner = styled.div`
   display: flex;
-  flex: 1 1 auto;
+  //flex: 1 1 auto;
   flex-direction: column;
   align-items: center;
   z-index: 1;
@@ -42,7 +43,7 @@ const CustomerSearch = styled.div`
     width: 100%;
     height: 75px;
     background: #eeeaea;
-    border-bottom: #707070;
+    border-bottom: 1px solid #707070;
   }
 `;
 
@@ -55,11 +56,30 @@ function Popup() {
       <PopupArea>
         <PopupBack onClick={() => dispatch(closeModal())} />
         <PopupContiner>
-          <Suspense fallback={<div>Spinner</div>}>
+          <Suspense fallback={<div>...loading</div>}>
             {type === "customerSearch" && (
               <CustomerSearch style={{ background: "#fff" }}>
                 <div className="header">
-                  <label></label>
+                  <label>거래처코드</label>
+                  <input type="text" />
+
+                  <label>전화번호</label>
+                  <input type="text" />
+
+                  <label>거래처명/성명</label>
+                  <input type="text" />
+
+                  <label>사업자번호</label>
+                  <input type="text" />
+
+                  <label>사용자명</label>
+                  <input type="text" />
+
+                  <label>주소/비고</label>
+                  <input type="text" />
+
+                  <button>조회</button>
+                  <button>닫기</button>
                 </div>
               </CustomerSearch>
             )}
