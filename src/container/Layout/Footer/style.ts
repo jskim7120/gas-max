@@ -6,6 +6,8 @@ export const FooterContainer = styled.div`
   border-top: 2px solid #707070;
   background: #d9e8f6;
   display: flex;
+  // justify-content: space-between;
+  // align-items: center;
   .bussiness_partner_cnt {
     width: 82px;
     border-right: 1px solid #092f53;

@@ -2,6 +2,7 @@ import React from "react";
 import { FooterContainer } from "./style";
 import PartnerImg from "assets/image/company_partners.png";
 import { SearchIcon } from "components/AllSvgIcon";
+import Hamburger from "assets/image/footer-humburger.png";
 
 function Footer() {
   return (
@@ -17,6 +18,9 @@ function Footer() {
             <SearchIcon />
           </button>
         </form>
+      </div>
+      <div>
+        <img src={Hamburger} />
       </div>
     </FooterContainer>
   );
