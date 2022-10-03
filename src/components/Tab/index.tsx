@@ -31,7 +31,7 @@ const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
   if (header.menuId === "HOME")
     return (
       <List className="home" isActive={isActive} onClick={() => onClick()}>
-        <Home />
+        <Home color={isActive ? "#fff" : "#707070"} />
       </List>
     );
 

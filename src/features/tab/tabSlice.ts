@@ -44,20 +44,19 @@ const tabSlice = createSlice({
 
       if (!hasMenuId) {
         const length = state.tabs.length;
-        if (length >= limit) {
-          state.tabs = state.tabs.filter(
-            (tab: TabProps, idx: number) => idx !== 0
-          );
+        if (length < limit) {
+          // state.tabs = state.tabs.filter(
+          //   (tab: TabProps, idx: number) => idx !== 0
+          // );
+          state.tabs = [
+            ...state.tabs,
+            {
+              menuId: action.payload.menuId,
+              menuName: action.payload.menuName,
+              depthFullName: action.payload.depthFullName,
+            },
+          ];
         }
-
-        state.tabs = [
-          ...state.tabs,
-          {
-            menuId: action.payload.menuId,
-            menuName: action.payload.menuName,
-            depthFullName: action.payload.depthFullName,
-          },
-        ];
       }
 
       state.activeTabId = action.payload.menuId;
