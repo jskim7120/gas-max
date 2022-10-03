@@ -10,7 +10,7 @@ export const TopSide = styled.div`
   height: 43px;
   background-color: rgba(101, 84, 255, 0.19);
   border: 1px solid #707070;
-  padding: 0 25px 0 14px;
+  padding: 0 24px 0 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,8 +29,8 @@ export const TopLeftWrapper = styled.div`
 export const Icons = styled.div`
   display: flex;
 
-  svg {
-    //margin-right: 8px;
+  span:not(:last-child) {
+    margin-right: 8px;
   }
 `;
 
