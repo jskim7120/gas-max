@@ -1,20 +1,17 @@
 import React, { Suspense } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "app/store";
-import { openModal, closeModal } from "features/modal/modalSlice";
+import { closeModal } from "features/modal/modalSlice";
 import CustomerModal from "./customModals/customerModal";
+import MenuModal from "./customModals/menuModal";
+import InfoModal from "./customModals/infoModal";
+import AccountModal from "./customModals/accountModal";
 
 const PopupArea = styled.section`
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 9999;
-  border: 1px solid red;
 `;
 
 const PopupBack = styled.div`
@@ -22,16 +19,41 @@ const PopupBack = styled.div`
   width: 100%;
   height: 100%;
   background-color: #000000;
-  opacity: 0.4;
-  border: 1px solid red;
+  opacity: 0.2;
 `;
 
-const PopupContiner = styled.div`
-  display: flex;
-  //flex: 1 1 auto;
-  flex-direction: column;
-  align-items: center;
+const PopupContiner = styled.div<{ type: string }>`
   z-index: 1;
+  position: fixed;
+
+  ${(props) =>
+    props.type === "customerModal" &&
+    `
+      top: 50%;
+      left: 50%;  
+      transform: translate(-50%, -50%);    
+    `}
+
+  ${(props) =>
+    props.type === "menuModal" &&
+    `
+      bottom: 80px;
+      right: 0;
+      `}
+
+  ${(props) =>
+    props.type === "infoModal" &&
+    `
+      top: 77px;
+      right: 0;
+    `}
+
+  ${(props) =>
+    props.type === "accountModal" &&
+    `
+      top: 77px;
+      right: 0;
+    `}
 `;
 
 function Popup() {
@@ -42,9 +64,12 @@ function Popup() {
     return (
       <PopupArea>
         <PopupBack onClick={() => dispatch(closeModal())} />
-        <PopupContiner>
+        <PopupContiner type={type}>
           <Suspense fallback={<div>...loading</div>}>
-            {type === "customerSearch" && <CustomerModal />}
+            {type === "customerModal" && <CustomerModal />}
+            {type === "menuModal" && <MenuModal />}
+            {type === "accountModal" && <AccountModal />}
+            {type === "infoModal" && <InfoModal />}
           </Suspense>
         </PopupContiner>
       </PopupArea>
