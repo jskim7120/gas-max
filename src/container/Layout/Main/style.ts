@@ -39,6 +39,12 @@ export const UnOrderedList = styled.ul`
     margin-bottom: 25px;
     font-family: "SegoeUI";
     font-size: 12px;
+    p {
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 12px;
+      margin-top: 5px;
+      font-weight: 400;
+    }
   }
 `;
 

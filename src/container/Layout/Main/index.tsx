@@ -33,61 +33,61 @@ function MainContainer() {
             <li>
               <a>
                 <Sidebar1 />
-                <p style={{ fontSize: "12px" }}>중량판매</p>
+                <p>중량판매</p>
               </a>
             </li>
             <li>
               <a>
                 <Sidebar2 />
-                <p style={{ fontSize: "12px" }}>중량판매</p>
+                <p>체적공급</p>
               </a>
             </li>
             <li>
               <a>
                 <Sidebar3 />
-                <p style={{ fontSize: "12px" }}>중량판매</p>
+                <p>체적검침</p>
               </a>
             </li>
             <li>
               <a>
                 <Sidebar4 />
-                <p style={{ fontSize: "12px" }}>중량판매</p>
+                <p>거래처</p>
               </a>
             </li>
             <li>
               <a>
                 <Sidebar5 />
-                <p style={{ fontSize: "12px" }}>중량판매</p>
+                <p>가스매입</p>
               </a>
             </li>
             <li>
               <a>
                 <Sidebar6 />
-                <p style={{ fontSize: "12px" }}>중량판매</p>
+                <p>재고관리</p>
               </a>
             </li>
             <li>
               <a>
                 <Sidebar7 />
-                <p style={{ fontSize: "12px" }}>중량판매</p>
+                <p>현금출납</p>
               </a>
             </li>
             <li>
               <a>
                 <Sidebar8 />
-                <p style={{ fontSize: "12px" }}>중량판매</p>
+                <p>중량수급</p>
               </a>
             </li>
             <li>
               <a>
                 <Sidebar9 />
-                <p style={{ fontSize: "12px" }}>중량판매</p>
+                <p>체적수급</p>
               </a>
             </li>
             <li>
               <a>
                 <Sidebar10 />
-                <p style={{ fontSize: "12px" }}>중량판매</p>
+                <p>세금계산서</p>
               </a>
             </li>
           </UnOrderedList>
