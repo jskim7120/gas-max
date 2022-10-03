@@ -898,7 +898,7 @@ export const SwitchIcon = ({
   );
 };
 
-export const Home = () => {
+export const Home = ({ color = "#fff", width = "24px", height = "24px" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -918,7 +918,7 @@ export const Home = () => {
             d="M2144.778,1284.718a10.109,10.109,0,1,1-10.108-10.109A10.108,10.108,0,0,1,2144.778,1284.718Z"
             transform="translate(-2124.56 -1274.609)"
             fill="none"
-            stroke="#fff"
+            stroke={color}
             strokeWidth="2"
           />
         </g>
@@ -927,7 +927,7 @@ export const Home = () => {
           data-name="Path 82"
           d="M2681.965,1461.324v-3.129h-1.77v1.777l-2.583-1.972-6.83,5.214,1.074,1.407.736-.562v6.461h10.041v-6.461l.736.562,1.073-1.407Zm-2.634,8.258h-3.438v-4.705h3.438Z"
           transform="translate(-2605.492 -1403.669)"
-          fill="#fff"
+          fill={color}
         />
       </g>
     </svg>

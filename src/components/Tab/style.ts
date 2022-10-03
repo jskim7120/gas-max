@@ -39,7 +39,10 @@ export const List = styled.li<{ isActive: boolean }>`
   text-overflow: ellipsis;
 
   &.home {
-    background: linear-gradient(rgba(140, 184, 8, 0.2), #8cb808);
+    background: ${(props) =>
+      props.isActive
+        ? `linear-gradient(rgba(140, 184, 8, 0.2), #8cb808)`
+        : `linear-gradient(#F1F1F1, #C7C7C7)`};
     text-align: center;
     padding: 5px 0 0 0;
     width: 71px;
