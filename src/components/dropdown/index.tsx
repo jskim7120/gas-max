@@ -6,29 +6,15 @@ interface IDropDown {
   label?: string;
   content?: JSX.Element;
   position?: "top" | "bottom";
-  top?: string;
-  right?: string;
 }
-function Dropdown({
-  icon,
-  position = "top",
-  label,
-  content,
-  top,
-  right,
-}: IDropDown) {
+function Dropdown({ icon, position = "top", label, content }: IDropDown) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <DropDownWrapper>
       {icon && <a onClick={() => setIsOpen((isOpen) => !isOpen)}>{icon}</a>}
       {label && <a onClick={() => setIsOpen((isOpen) => !isOpen)}>{label}</a>}
-      <DropDownContent
-        isOpen={isOpen}
-        position={position}
-        top={top}
-        right={right}
-      >
+      <DropDownContent isOpen={isOpen} position={position}>
         {content}
       </DropDownContent>
     </DropDownWrapper>

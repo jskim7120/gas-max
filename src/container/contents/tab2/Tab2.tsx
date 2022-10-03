@@ -116,7 +116,7 @@ function Tab2({ name }: { name?: string }) {
   }, [tableData]);
 
   const closeModalFunc = () => {
-    dispatch(closeModal({}));
+    dispatch(closeModal());
   };
 
   const add = () => {
@@ -173,7 +173,8 @@ function Tab2({ name }: { name?: string }) {
           />
           <IconButton
             icon={<CloseCircle color="red" />}
-            onClick={() => dispatch(openModal({}))}
+            // onClick={() => dispatch(openModal())}
+            onClick={() => console.log("first")}
             title="삭제"
           />
           <IconButton

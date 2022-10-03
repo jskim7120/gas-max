@@ -2683,7 +2683,7 @@ export const SearchIcon = ({
         data-name="Ellipse 15"
         fill="none"
         stroke="#fff"
-        stroke-width="2"
+        strokeWidth="2"
       >
         <circle cx="4.978" cy="4.978" r="4.978" stroke="none" />
         <circle cx="4.978" cy="4.978" r="3.978" fill="none" />
@@ -2694,7 +2694,7 @@ export const SearchIcon = ({
         transform="translate(6.58 9.047) rotate(-40)"
         fill="#fff"
         stroke="#fff"
-        stroke-width="1"
+        strokeWidth="1"
       >
         <rect width="2.844" height="7.111" stroke="none" />
         <rect x="0.5" y="0.5" width="1.844" height="6.111" fill="none" />

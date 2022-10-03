@@ -7,6 +7,7 @@ import { store } from "app/store";
 import { getEmployees } from "features/employee/employeeSlice";
 import { getMenu } from "features/menu/menuSlice";
 import { getFavMenu } from "features/favorite/favoriteSlice";
+import Modal from "components/modal/modalController";
 
 store.dispatch(getEmployees());
 store.dispatch(getMenu());
@@ -20,6 +21,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
+        <Modal />
         <App />
       </Provider>
     </BrowserRouter>
