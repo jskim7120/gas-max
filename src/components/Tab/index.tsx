@@ -6,8 +6,7 @@ import {
   removeTab,
   removeAllTabs,
 } from "features/tab/tabSlice";
-// import Switch from "components/switch";
-import Dropdown from "components/dropdown";
+import { openModal } from "features/modal/modalSlice";
 import { getContent } from "./tabContent";
 import {
   TabContainer,
@@ -104,17 +103,11 @@ const Tab = (props: TabProps): JSX.Element => {
           ))}
         </ul>
         <div style={{ display: "flex", marginRight: "25px" }}>
-          {/* <a
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              marginLeft: "8px",
-            }}
-          >
+          <span onClick={() => dispatch(openModal({ type: "infoModal" }))}>
             <Info />
-          </a> */}
-          <Dropdown
+          </span>
+
+          {/* <Dropdown
             icon={<Info />}
             content={
               <div
@@ -124,7 +117,7 @@ const Tab = (props: TabProps): JSX.Element => {
                 }}
               ></div>
             }
-          />
+          /> */}
           <a
             style={{
               display: "flex",
