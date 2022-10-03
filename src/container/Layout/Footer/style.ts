@@ -41,6 +41,14 @@ export const FooterContainer = styled.div`
     background: #fff;
     align-items: center;
     padding-right: 6px;
+    button {
+      width: 22px;
+      height: 21px;
+      border: none;
+      border-radius: 50%;
+      background: #ff0000;
+      padding: 3px;
+    }
   }
 
   input[type="search"] {
