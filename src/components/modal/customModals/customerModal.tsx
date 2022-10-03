@@ -24,7 +24,7 @@ const CustomerSearch = styled.div`
       align-items: end;
       flex-direction: column;
       grid-gap: 4px;
-      margin-left: 22px;
+      margin-left: 18px;
       .section_item {
         display: flex;
         grid-gap: 4px;
