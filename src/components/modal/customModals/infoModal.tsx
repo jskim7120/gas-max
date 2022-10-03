@@ -8,7 +8,7 @@ const ModalWrapper = styled.div`
 `;
 
 function InfoModal() {
-  return <ModalWrapper>menuModal</ModalWrapper>;
+  return <ModalWrapper>Info</ModalWrapper>;
 }
 
 export default InfoModal;

@@ -44,14 +44,14 @@ const PopupContiner = styled.div<{ type: string }>`
   ${(props) =>
     props.type === "infoModal" &&
     `
-      top: 44px;
+      top: 77px;
       right: 0;
     `}
 
   ${(props) =>
     props.type === "accountModal" &&
     `
-      top: 44px;
+      top: 77px;
       right: 0;
     `}
 `;

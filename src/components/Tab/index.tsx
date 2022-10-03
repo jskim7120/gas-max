@@ -102,23 +102,23 @@ const Tab = (props: TabProps): JSX.Element => {
             />
           ))}
         </ul>
-        <div style={{ display: "flex", marginRight: "25px" }}>
-          <span onClick={() => dispatch(openModal({ type: "infoModal" }))}>
+        <div
+          style={{
+            display: "flex",
+            marginRight: "25px",
+          }}
+        >
+          <span
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={() => dispatch(openModal({ type: "infoModal" }))}
+          >
             <Info />
           </span>
-
-          {/* <Dropdown
-            icon={<Info />}
-            content={
-              <div
-                style={{
-                  width: "490px",
-                  height: "550px",
-                }}
-              ></div>
-            }
-          /> */}
-          <a
+          <span
             style={{
               display: "flex",
               justifyContent: "center",
@@ -127,8 +127,8 @@ const Tab = (props: TabProps): JSX.Element => {
             }}
           >
             <Refresh />
-          </a>
-          <a
+          </span>
+          <span
             onClick={() => dispatch(removeAllTabs())}
             style={{
               display: "flex",
@@ -138,7 +138,7 @@ const Tab = (props: TabProps): JSX.Element => {
             }}
           >
             <Close />
-          </a>
+          </span>
         </div>
         <div
           style={{
