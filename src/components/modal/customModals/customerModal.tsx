@@ -64,8 +64,20 @@ const CustomerSearch = styled.div`
         height: 13px;
       }
     }
-    button:nth-child(2) {
-      width: 5px;
+    .section_1 {
+      input {
+        width: 154px;
+      }
+    }
+    .section_2 {
+      input {
+        width: 228px;
+      }
+    }
+    .section_3 {
+      input {
+        width: 125px;
+      }
     }
   }
 `;
@@ -74,7 +86,7 @@ function CustomerModal() {
   return (
     <CustomerSearch style={{ background: "#fff" }}>
       <div className="header">
-        <div className="section">
+        <div className="section section_1">
           <div className="section_item">
             <label>거래처코드</label>
             <input type="text" />
@@ -84,7 +96,7 @@ function CustomerModal() {
             <input type="text" />
           </div>
         </div>
-        <div className="section">
+        <div className="section section_2">
           <div className="section_item">
             <label>거래처명/성명</label>
             <input type="text" />
@@ -94,7 +106,7 @@ function CustomerModal() {
             <input type="text" />
           </div>
         </div>
-        <div className="section">
+        <div className="section section_3">
           <div className="section_item">
             <label>사용자명</label>
             <input type="text" />
