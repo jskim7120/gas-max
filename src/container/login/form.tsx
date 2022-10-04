@@ -15,6 +15,7 @@ import {
   Divider,
 } from "components/form/style";
 import { InputSize } from "components/ComponentsType";
+import Button from "components/Button/Button";
 
 function Login() {
   const {
@@ -32,35 +33,34 @@ function Login() {
 
   return (
     <form onSubmit={handleSubmit(submit)}>
-      <Wrapper>
-        <Field>
-          <FormGroup>
-            <Input
-              {...register("username")}
-              type="text"
-              inputSize={InputSize.md}
-              placeholder="username"
-            />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["username"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
-          <FormGroup>
-            <label>코드:</label>
-            <Input
-              {...register("password")}
-              type="text"
-              inputSize={InputSize.md}
-              placeholder="password"
-            />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["password"]?.message}</ErrorText>
-          </div>
-        </Field>
-      </Wrapper>
+      <Field>
+        <Input
+          {...register("username")}
+          type="text"
+          placeholder="username"
+          style={{ height: "40px", width: "100%" }}
+        />
+        <div>
+          <ErrorText>{errors["username"]?.message}</ErrorText>
+        </div>
+      </Field>
+      <Field>
+        <Input
+          {...register("password")}
+          type="text"
+          placeholder="password"
+          style={{ height: "40px", width: "100%" }}
+        />
+
+        <div>
+          <ErrorText>{errors["password"]?.message}</ErrorText>
+        </div>
+      </Field>
+      <Field>
+        <input type="checkbox" style={{ marginRight: "5px" }} />
+        <label className="login">로그인 정보 저장</label>
+      </Field>
+      <Button />
     </form>
   );
 }

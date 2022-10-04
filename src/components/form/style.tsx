@@ -48,7 +48,14 @@ export const FormGroup = styled.div`
   }
 `;
 
-export const Field = styled.div``;
+export const Field = styled.div`
+  margin-bottom: 7px;
+
+  label.login {
+    color: #707070;
+    font-size: 12px;
+  }
+`;
 
 export const FormInline = styled.div`
   display: inline-block;

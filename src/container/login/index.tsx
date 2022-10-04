@@ -1,12 +1,9 @@
 import React from "react";
 import Form from "./form";
-import JOALogin from "assets/image/JOALogin.png";
 
 function Login() {
   return (
-    <div>
-      <img src={JOALogin} />
-      login
+    <div style={{ width: "100%", padding: "0 25px", textAlign: "center" }}>
       <Form />
     </div>
   );
