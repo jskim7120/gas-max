@@ -1,6 +1,6 @@
 export enum ButtonColor {
-  BLUE = "blue",
-  AUZRE = "azure",
+  PRIMARY = "primary",
+  SECONDARY = "secondary",
 }
 
 export enum ButtonSize {
@@ -21,4 +21,9 @@ export enum InputSize {
   sm = "sm",
   lg = "lg",
   md = "md",
+}
+
+export enum ButtonType {
+  LOGIN = "login",
+  FORM = "form",
 }

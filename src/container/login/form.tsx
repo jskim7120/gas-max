@@ -14,8 +14,13 @@ import {
   Wrapper,
   Divider,
 } from "components/form/style";
-import { InputSize } from "components/componentsType";
+import { ButtonType, InputSize } from "components/componentsType";
 import Button from "components/button/button";
+import {
+  ButtonColor,
+  ButtonSize,
+  ButtonTextColor,
+} from "components/componentsType";
 
 function Login() {
   const {
@@ -56,11 +61,31 @@ function Login() {
           <ErrorText>{errors["password"]?.message}</ErrorText>
         </div>
       </Field>
-      <Field>
-        <input type="checkbox" style={{ marginRight: "5px" }} />
-        <label className="login">로그인 정보 저장</label>
-      </Field>
-      <Button />
+
+      <div style={{ padding: "0 50px" }}>
+        <Field style={{ border: "1px solid red" }}>
+          <input type="checkbox" style={{ marginRight: "5px" }} />
+          <label className="login">로그인 정보 저장</label>
+        </Field>
+        <Button
+          text="로그인"
+          kind={ButtonType.LOGIN}
+          color={ButtonColor.PRIMARY}
+          fullWidth
+        />
+
+        <span>
+          <b>(주)조아테크</b> 회원이 아니신가요?
+        </span>
+        <span>최상의 서비스와 혜택을 누려보세요.</span>
+
+        <Button
+          text="로그인"
+          kind={ButtonType.LOGIN}
+          color={ButtonColor.SECONDARY}
+          fullWidth
+        />
+      </div>
     </form>
   );
 }
