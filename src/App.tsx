@@ -6,6 +6,7 @@ import "style/font.css";
 import "style/App.css";
 import Main from "container/Layout/Main";
 import Layout from "container/Layout/AppLayout";
+import Login from "container/login";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
-          {/* <Route path="about" element={<About />} /> */}
+          <Route path="login" element={<Login />} />
         </Route>
       </Routes>
     </>
