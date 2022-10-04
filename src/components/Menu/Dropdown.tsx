@@ -1,5 +1,5 @@
 import { FC } from "react";
-import MenuItems from "./MenuItems";
+import MenuItems from "./menuItems";
 interface IDropdown {
   submenus: any;
   dropdown: any;

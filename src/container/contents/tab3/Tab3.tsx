@@ -2,9 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "app/store";
 import { GridView, LocalDataProvider } from "realgrid";
 import { columns, fields } from "./employee-data-full";
-import IconButton from "components/Button";
+import IconButton from "components/button";
 import { baseURL } from "api";
-import { PlusCircle, ArrowDownCircle } from "components/AllSvgIcon";
+import { PlusCircle, ArrowDownCircle } from "components/allSvgIcon";
 import { updateEmployee, getEmployees } from "features/employee/employeeSlice";
 import { Wrapper } from "../style";
 

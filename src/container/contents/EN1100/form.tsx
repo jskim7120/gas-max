@@ -25,10 +25,10 @@ import {
   Wrapper,
   Divider,
 } from "components/form/style";
-import CheckBox from "components/CheckBox";
-import { InputSize } from "components/ComponentsType";
+import CheckBox from "components/checkBox";
+import { InputSize } from "components/componentsType";
 import { IFormProps } from "./type";
-import { MagnifyingGlass } from "components/AllSvgIcon";
+import { MagnifyingGlass } from "components/allSvgIcon";
 // import { schema } from "./validation";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";

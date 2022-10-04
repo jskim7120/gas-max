@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { InputSize } from "components/ComponentsType";
+import { InputSize } from "components/componentsType";
 
 export const getInputSize = (size?: InputSize) => {
   switch (size) {

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "app/store";
 import { toggleSidebar } from "features/sidebar/sidebarSlice";
 import { Main, Sidebar, UnOrderedList } from "./style";
-import Tab from "components/Tab";
+import Tab from "components/tab";
 
 import {
   SidebarOpen,
@@ -18,7 +18,7 @@ import {
   Sidebar8,
   Sidebar9,
   Sidebar10,
-} from "components/AllSvgIcon";
+} from "components/allSvgIcon";
 
 function MainContainer() {
   const dispatch = useDispatch();

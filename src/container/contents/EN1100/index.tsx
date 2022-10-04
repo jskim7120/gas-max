@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "app/store";
 import { GridView, LocalDataProvider } from "realgrid";
-import Button from "components/Button/Button";
-import { Plus, Trash, Tick, X, Chat, CloseCircle } from "components/AllSvgIcon";
+import Button from "components/button/button";
+import { Plus, Trash, Tick, X, Chat, CloseCircle } from "components/allSvgIcon";
 import { columns, fields } from "./data";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "./style";

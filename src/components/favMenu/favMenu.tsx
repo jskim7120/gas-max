@@ -15,7 +15,7 @@ import {
   IconFile,
   Attach,
   DeliveryTruck,
-} from "components/AllSvgIcon";
+} from "components/allSvgIcon";
 
 let favMenuData: Array<any>;
 

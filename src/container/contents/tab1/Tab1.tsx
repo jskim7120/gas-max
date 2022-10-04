@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "app/store";
-import Table from "components/Table";
+import Table from "components/table";
 import Form from "./form";
 import { Wrapper } from "../style";
-import Button from "components/Button/Button";
+import Button from "components/button/button";
 import {
   Plus,
   Trash,
@@ -12,7 +12,7 @@ import {
   Heart,
   Chat,
   CloseCircle,
-} from "components/AllSvgIcon";
+} from "components/allSvgIcon";
 
 let tableHeader: any[] = [
   "영업소코드",

@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch } from "app/store";
+import { closeModal } from "features/modal/modalSlice";
 import ModalSearchIcon from "assets/image/ModalSearchIcon.png";
 import ModalCloseBtn from "assets/image/ModalCloseBtn.png";
 
@@ -53,6 +55,7 @@ const CustomerSearch = styled.div`
       align-items: center;
       justify-content: center;
       grid-gap: 5px;
+      cursor: pointer;
       span {
         font-size: 16px;
         font-weight: 400;
@@ -83,6 +86,7 @@ const CustomerSearch = styled.div`
 `;
 
 function CustomerModal() {
+  const dispatch = useDispatch();
   return (
     <CustomerSearch style={{ background: "#fff" }}>
       <div className="header">
@@ -122,7 +126,10 @@ function CustomerModal() {
           <div className="line"></div>
           <span>조회</span>
         </button>
-        <button style={{ marginLeft: "3px" }}>
+        <button
+          style={{ marginLeft: "3px" }}
+          onClick={() => dispatch(closeModal())}
+        >
           <img src={ModalCloseBtn} style={{ marginTop: "-3px" }} />
           <div className="line"></div>
           <span>닫기</span>

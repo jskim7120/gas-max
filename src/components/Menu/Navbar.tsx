@@ -1,6 +1,6 @@
 import React from "react";
 import { getNestedChildren } from "helpers/nestedSort";
-import MenuItems from "./MenuItems";
+import MenuItems from "./menuItems";
 import { Nav, EndLine } from "./style";
 
 interface INavbar {

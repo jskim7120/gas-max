@@ -1,5 +1,5 @@
 import React from "react";
-import Table from "components/Table";
+import Table from "components/table";
 import {
   Input,
   Select,
@@ -11,7 +11,7 @@ import {
   Wrapper,
   Divider,
 } from "components/form/style";
-import { InputSize } from "components/ComponentsType";
+import { InputSize } from "components/componentsType";
 
 function getTabContent(id: number) {
   const data1 = [

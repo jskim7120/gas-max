@@ -1,7 +1,7 @@
 import { FC, useState, useEffect, useRef } from "react";
 import { useDispatch } from "app/store";
 import { addTab } from "features/tab/tabSlice";
-import Dropdown from "./Dropdown";
+import Dropdown from "./dropdown";
 import { Group, MenuLine } from "./style";
 interface IMenuItems {
   items: any;

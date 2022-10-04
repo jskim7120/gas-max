@@ -2,9 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "app/store";
 import { GridView, LocalDataProvider } from "realgrid";
 import { columns, fields } from "./employee-data";
-import InfoDetail from "components/InfoDetail";
+import InfoDetail from "components/infoDetail";
 import { baseURL } from "api";
-import IconButton from "components/Button";
+import IconButton from "components/button";
 import Modal from "react-modal";
 import {
   updateEmployee,
@@ -19,7 +19,7 @@ import {
   PlusCircle,
   ArrowDownCircle,
   ForbidCircle,
-} from "components/AllSvgIcon";
+} from "components/allSvgIcon";
 import { Wrapper } from "../style";
 
 const customStyles = {

@@ -2,10 +2,10 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "app/store";
 import { Container, TopSide, TopLeftWrapper, Icons } from "./style";
-import { Settings, User } from "components/AllSvgIcon";
-import Navbar from "components/Menu/Navbar";
+import { Settings, User } from "components/allSvgIcon";
+import Navbar from "components/menu/navbar";
 import LogoImg from "assets/image/Logo.png";
-import Footer from "./Footer";
+import Footer from "./footer";
 import { openModal } from "features/modal/modalSlice";
 
 let menuData: Array<any>;

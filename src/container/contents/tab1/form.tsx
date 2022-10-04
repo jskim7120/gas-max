@@ -13,8 +13,8 @@ import {
 import { ErrorText, FormWrapper, FormGroup, Wrapper } from "./style";
 import { IFormProps } from "./type";
 import { schema } from "./validation";
-import { Tick, Plus, Trash, X } from "components/AllSvgIcon";
-import Button from "components/Button/Button";
+import { Tick, Plus, Trash, X } from "components/allSvgIcon";
+import Button from "components/button/button";
 
 export default function Form({
   selectedCustomer,

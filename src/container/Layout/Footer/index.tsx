@@ -11,7 +11,7 @@ import {
   SearchResultData,
 } from "./style";
 import PartnerImg from "assets/image/company_partners.png";
-import { SearchIcon } from "components/AllSvgIcon";
+import { SearchIcon } from "components/allSvgIcon";
 import Hamburger from "assets/image/footer-humburger.png";
 import { useDispatch } from "app/store";
 import { openModal } from "features/modal/modalSlice";

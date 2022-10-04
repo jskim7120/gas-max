@@ -1,6 +1,6 @@
 import React, { forwardRef, useState } from "react";
 import styled, { css } from "styled-components";
-import { ButtonColor, ButtonSize, ButtonTextColor } from "../ComponentsType";
+import { ButtonColor, ButtonSize, ButtonTextColor } from "../componentsType";
 
 const BtnColor = (color?: ButtonColor) => {
   switch (color) {
