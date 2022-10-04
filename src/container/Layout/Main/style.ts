@@ -36,13 +36,13 @@ export const UnOrderedList = styled.ul`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     font-family: "SegoeUI";
     font-size: 12px;
     p {
       font-family: "Segoe UI", Arial, sans-serif;
       font-size: 12px;
-      margin-top: 5px;
+      margin-top: 2px;
       font-weight: 400;
     }
   }
