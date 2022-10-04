@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { User } from "components/AllSvgIcon";
+import { User } from "components/allSvgIcon";
 
 const ModalWrapper = styled.div`
   width: 320px;

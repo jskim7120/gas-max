@@ -53,6 +53,7 @@ export const FooterContainer = styled.div`
       border-radius: 50%;
       background: #ff0000;
       padding: 3px;
+      cursor: pointer;
     }
   }
 

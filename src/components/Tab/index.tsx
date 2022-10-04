@@ -14,7 +14,7 @@ import {
   List,
   TabContentWrapper,
 } from "./style";
-import { CloseCircle, Home, Info, Refresh, Close } from "components/AllSvgIcon";
+import { CloseCircle, Home, Info, Refresh, Close } from "components/allSvgIcon";
 interface TabProps {
   className?: string;
   style?: any;
@@ -76,7 +76,7 @@ const Tab = (props: TabProps): JSX.Element => {
 
   tabHeader = tabState.tabs;
   activeTabId = tabState.activeTabId;
-  activeTabName = tabHeader.find((tab) => tab.menuId === activeTabId).menuName;
+  activeTabName = tabHeader.find((tab) => tab.menuId === activeTabId)?.menuName;
 
   content = getContent(activeTabId, activeTabName);
 

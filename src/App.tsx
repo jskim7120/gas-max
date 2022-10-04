@@ -4,10 +4,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import "realgrid/dist/realgrid-style.css";
 import "style/font.css";
 import "style/App.css";
+
 import Main from "container/Layout/Main";
-import Layout from "container/Layout/AppLayout";
 import AuthenticationLayout from "container/Layout/AuthenticationLayout";
 import Login from "container/login";
+import Layout from "container/Layout/appLayout";
 
 function App() {
   return (
