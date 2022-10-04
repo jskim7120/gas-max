@@ -14,8 +14,8 @@ import {
   Wrapper,
   Divider,
 } from "components/form/style";
-import { InputSize } from "components/ComponentsType";
-import Button from "components/Button/Button";
+import { InputSize } from "components/componentsType";
+import Button from "components/button/button";
 
 function Login() {
   const {

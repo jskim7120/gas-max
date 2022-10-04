@@ -5,10 +5,10 @@ import "realgrid/dist/realgrid-style.css";
 import "style/font.css";
 import "style/App.css";
 
-import Main from "container/Layout/Main";
-import AuthenticationLayout from "container/Layout/AuthenticationLayout";
+import Main from "container/mainLayout/main";
+import AuthenticationLayout from "container/mainLayout/authenticationLayout";
 import Login from "container/login";
-import Layout from "container/Layout/appLayout";
+import Layout from "container/mainLayout/appLayout";
 
 function App() {
   return (
