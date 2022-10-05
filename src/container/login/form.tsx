@@ -42,7 +42,7 @@ function Login() {
         <Input
           {...register("username")}
           type="text"
-          placeholder="username"
+          placeholder="아이디"
           style={{ height: "40px", width: "100%" }}
         />
         <div>
@@ -53,7 +53,7 @@ function Login() {
         <Input
           {...register("password")}
           type="text"
-          placeholder="password"
+          placeholder="비밀번호"
           style={{ height: "40px", width: "100%" }}
         />
 
@@ -63,16 +63,20 @@ function Login() {
       </Field>
 
       <div style={{ padding: "10px 50px" }}>
-        <Field style={{ display: "flex", marginBottom: "20px" }}>
-          <input type="checkbox" style={{ marginRight: "5px" }} />
+        <Field style={{ display: "flex", marginBottom: "19px" }}>
+          <input
+            type="checkbox"
+            style={{ width: "20px", height: "21px", marginRight: "5px" }}
+          />
           <label className="login">로그인 정보 저장</label>
         </Field>
-        <Field style={{ marginBottom: "80px" }}>
+        <Field style={{ marginBottom: "75px" }}>
           <Button
             text="로그인"
             kind={ButtonType.LOGIN}
             color={ButtonColor.PRIMARY}
             fullWidth
+            style={{ alignItems: "baseline", lineHeight: "33px" }}
           />
         </Field>
         <span style={{ fontSize: "14px", color: "#707070" }}>
@@ -88,7 +92,11 @@ function Login() {
           kind={ButtonType.LOGIN}
           color={ButtonColor.SECONDARY}
           fullWidth
-          style={{ marginTop: "15px" }}
+          style={{
+            marginTop: "15px",
+            alignItems: "baseline",
+            lineHeight: "33px",
+          }}
         />
       </div>
     </form>
