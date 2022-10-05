@@ -30,20 +30,16 @@ import CheckBox from "components/checkbox2";
 import { InputSize } from "components/componentsType";
 import { IFormProps } from "./type";
 import { MagnifyingGlass } from "components/allSvgIcon";
-// import { schema } from "./validation";
+import { schema } from "./validation";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "../getTabContent";
 
 interface IForm {
   selected: any;
-  getFormValues: (arg: Object) => void;
 }
 
-function Form(
-  { selected, getFormValues }: IForm,
-  ref?: React.ForwardedRef<any>
-) {
+const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
   const dispatch = useDispatch();
   const [isClickedAdd, setIsClikedAdd] = useState(false);
   const [tabId, setTabId] = useState(0);
@@ -62,12 +58,12 @@ function Form(
     control,
     getValues,
   } = useForm<IFormProps>({
-    // resolver: yupResolver(schema),
+    resolver: yupResolver(schema),
   });
 
-  /* 
   const resetForm = (type: string) => {
     if (JSON.stringify(selected) !== "{}") {
+      console.log("type:", type);
       let newData: any = {};
 
       if (type === "clear") {
@@ -83,10 +79,18 @@ function Form(
       reset(newData);
     }
   };
-  */
+
+  useImperativeHandle(ref, () => ({
+    reset,
+    submitForm() {
+      handleSubmit(update)();
+    },
+    resetForm,
+  }));
 
   const update = (data: IFormProps) => {
-    getFormValues({ ...getValues(), action: "update" });
+    console.log("udpate duudagdav");
+
     if (isClickedAdd) {
       //createCustomer
     } else {
@@ -99,6 +103,9 @@ function Form(
 
   return (
     <form onSubmit={handleSubmit(update)} style={{ padding: "10px 15px" }}>
+      {/* <button type="button" onClick={handleSubmit(update)}>
+        Click
+      </button> */}
       <Wrapper grid>
         <Field className="field">
           <FormGroup>
@@ -135,7 +142,7 @@ function Form(
       <Wrapper grid>
         <Field>
           <FormGroup>
-            <Label>사업자번호</Label>
+            <Label>사업자번호-------</Label>
             <Input {...register("jnSsno")} type="text" />
           </FormGroup>
           <div>
@@ -415,6 +422,6 @@ function Form(
       </div>
     </form>
   );
-}
+};
 
 export default forwardRef(Form);
