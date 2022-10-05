@@ -14,6 +14,7 @@ import {
   TabHeaderWrapper,
   List,
   TabContentWrapper,
+  TabBorderLine,
 } from "./style";
 import {
   SidebarOpen,
@@ -36,6 +37,7 @@ interface ITabHeader {
   onClick: () => void;
   closeTab: (arg: string) => void;
 }
+interface TabBorder {}
 
 const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
   if (header.menuId === "HOME")
@@ -156,16 +158,7 @@ const Tab = (props: TabProps): JSX.Element => {
             <Close />
           </span>
         </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "74px",
-            left: isOpen ? "82px" : "0px",
-            right: "0px",
-            height: "3px",
-            background: activeTabId === "HOME" ? "#8CB808" : "#FC6767",
-          }}
-        ></div>
+        <TabBorderLine isHome={activeTabId === "HOME"} isOpen={isOpen} />
       </TabHeaderWrapper>
 
       <TabContentWrapper className="tab-content">{content}</TabContentWrapper>
