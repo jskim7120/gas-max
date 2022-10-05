@@ -69,3 +69,15 @@ export const TabContentWrapper = styled.div`
   min-height: 89%;
   height: auto;
 `;
+
+export const TabBorderLine = styled.div<{
+  isHome: boolean;
+  isOpen: boolean;
+}>`
+  position: absolute;
+  top: 74px;
+  left: ${(props) => (props.isOpen ? `82px` : `0`)};
+  right: 0px;
+  height: 3px;
+  background: ${(props) => (props.isHome ? `#8CB808;` : `#FC6767;`)};
+`;
