@@ -141,7 +141,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
       <Wrapper grid>
         <Field>
           <FormGroup>
-            <Label>사업자번호-------</Label>
+            <Label>사업자번호</Label>
             <InputForm {...register("jnSsno")} type="text" />
           </FormGroup>
           <div>
