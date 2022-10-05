@@ -24,8 +24,9 @@ import {
   FormBlock,
   Wrapper,
   Divider,
+  Label,
 } from "components/form/style";
-import CheckBox from "components/checkBox";
+import CheckBox from "components/checkbox2";
 import { InputSize } from "components/componentsType";
 import { IFormProps } from "./type";
 import { MagnifyingGlass } from "components/allSvgIcon";
@@ -99,9 +100,11 @@ function Form(
   return (
     <form onSubmit={handleSubmit(update)} style={{ padding: "10px 15px" }}>
       <Wrapper grid>
-        <Field>
+        <Field className="field">
           <FormGroup>
-            <label>코드:</label>
+            <Label>
+              <b>코드</b>
+            </Label>
             <Input
               {...register("areaCode")}
               type="number"
@@ -114,7 +117,9 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <label>영업소명:</label>
+            <Label>
+              <b>영업소명</b>
+            </Label>
             <Input
               {...register("areaName")}
               type="number"
@@ -130,7 +135,7 @@ function Form(
       <Wrapper grid>
         <Field>
           <FormGroup>
-            <label>사업자번호:</label>
+            <Label>사업자번호</Label>
             <Input {...register("jnSsno")} type="text" />
           </FormGroup>
           <div>
@@ -139,7 +144,7 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <label>상호:</label>
+            <Label>상호</Label>
             <Input
               {...register("jnSangho")}
               type="text"
@@ -152,7 +157,7 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <label>대표:</label>
+            <Label>대표</Label>
             <Input {...register("jnSajang")} type="text" />
           </FormGroup>
           <div>
@@ -163,7 +168,7 @@ function Form(
       <Wrapper style={{ alignItems: "center" }}>
         <Field>
           <FormGroup>
-            <label> 주소:</label>
+            <Label>주소</Label>
             <Input {...register("jnZipcode")} type="text" />
           </FormGroup>
           <div>
@@ -196,22 +201,25 @@ function Form(
         </Field>
       </Wrapper>
       <Wrapper>
-        <FormGroup>
-          <label></label>
-          <Input
-            {...register("jnAddr2")}
-            type="text"
-            inputSize={InputSize.lg}
-          />
-        </FormGroup>
-        <div>
-          <ErrorText>{errors["jnAddr2"]?.message}</ErrorText>
-        </div>
+        <Field>
+          <FormGroup>
+            <Label></Label>
+            <Input
+              {...register("jnAddr2")}
+              type="text"
+              inputSize={InputSize.lg}
+            />
+          </FormGroup>
+
+          <div>
+            <ErrorText>{errors["jnAddr2"]?.message}</ErrorText>
+          </div>
+        </Field>
       </Wrapper>
       <Wrapper grid col={2}>
         <Field>
           <FormGroup>
-            <label>업태:</label>
+            <Label>업태</Label>
             <Input
               {...register("jnUptae")}
               type="text"
@@ -224,7 +232,7 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <label>종목:</label>
+            <Label>종목</Label>
             <Input
               {...register("jnJongmok")}
               type="text"
@@ -239,7 +247,7 @@ function Form(
       <Wrapper grid>
         <Field>
           <FormGroup>
-            <label>대표전화:</label>
+            <Label>대표전화</Label>
             <Input {...register("jnTel1")} type="text" />
           </FormGroup>
           <div>
@@ -248,7 +256,7 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <label>대표전화2:</label>
+            <Label>대표전화2</Label>
             <Input {...register("jnTel2")} type="text" />
           </FormGroup>
           <div>
@@ -257,7 +265,7 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <label>팩스:</label>
+            <Label>팩스</Label>
             <Input {...register("jnFax")} type="text" />
           </FormGroup>
           <div>
@@ -269,7 +277,7 @@ function Form(
       <Wrapper grid>
         <Field>
           <FormGroup>
-            <label>안전관리 총괄자:</label>
+            <Label>안전관리 총괄자</Label>
             <Input {...register("jnAnName1")} type="text" />
           </FormGroup>
           <div>
@@ -278,7 +286,7 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <label>전화:</label>
+            <Label>전화</Label>
             <Input {...register("jnAnTel1")} type="text" />
           </FormGroup>
           <div>
@@ -289,7 +297,7 @@ function Form(
       <Wrapper>
         <Field>
           <FormGroup>
-            <label>안전관리 책임자:</label>
+            <Label>안전관리 책임자</Label>
             <Input {...register("jnAnName2")} type="text" />
           </FormGroup>
           <div>
@@ -298,7 +306,7 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <label>전화:</label>
+            <Label>전화</Label>
             <Input {...register("jnAnTel2")} type="text" />
           </FormGroup>
           <div>
@@ -310,7 +318,7 @@ function Form(
       <Wrapper grid col={4}>
         <Field>
           <FormGroup>
-            <label>세금계산서 양식:</label>
+            <Label>세금계산서 양식</Label>
             <Select {...register("jnSekum")}>
               <option value="A4 백지">A4 백지</option>
             </Select>
@@ -321,13 +329,14 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <label>공급사업자 인쇄안함</label>
-            <Input
+            <Label>공급사업자 인쇄안함</Label>
+            {/* <Input
               {...register("jnSegongYn")}
               type="checkbox"
               checked={true}
               style={{ width: "20px" }}
-            />
+            /> */}
+            <CheckBox {...register("jnSegongYn")} name="공급사업자 인쇄안함" />
           </FormGroup>
           <div>
             <ErrorText>{errors["jnSegongYn"]?.message}</ErrorText>
@@ -335,7 +344,7 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <label>Vat 별도 단가계산</label>
+            <Label>Vat 별도 단가계산</Label>
             <Input
               {...register("jnVatSumyn")}
               type="checkbox"
@@ -349,7 +358,7 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <label>수량 단가 인쇄 유무</label>
+            <Label>수량 단가 인쇄 유무</Label>
             <Input
               {...register("jnSekumEa")}
               type="checkbox"
@@ -365,7 +374,7 @@ function Form(
       <Wrapper grid>
         <Field>
           <FormGroup>
-            <label>거래명세표 양식:</label>
+            <Label>거래명세표 양식</Label>
             <Select {...register("jnJangbu")}>
               <option value="0  인쇄용지">0 인쇄용지</option>
             </Select>
@@ -378,7 +387,7 @@ function Form(
       <Wrapper grid>
         <Field>
           <FormGroup>
-            <label>탱크잔량/원격검침 발신기 업체번호</label>
+            <Label>탱크잔량/원격검침 발신기 업체번호</Label>
             <Input
               {...register("jnCmngno")}
               type="checkbox"
@@ -392,7 +401,7 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <label>Nice 계좌자동이체 사용</label>
+            <Label>Nice 계좌자동이체 사용</Label>
             <Input
               {...register("innopayBankYn")}
               type="checkbox"
@@ -406,7 +415,7 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <label>Innopay 카드자동이체 사용</label>
+            <Label>Innopay 카드자동이체 사용</Label>
             <Input
               {...register("niceBankYn")}
               type="checkbox"

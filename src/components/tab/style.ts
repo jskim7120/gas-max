@@ -68,4 +68,5 @@ export const TabContentWrapper = styled.div`
   width: 100%;
   min-height: 89%;
   height: auto;
+  margin-top: 3px;
 `;

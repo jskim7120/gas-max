@@ -7,10 +7,10 @@ const CheckBoxWrapper = styled.div`
     left: -1px;
     top: -1px;
     display: block;
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     border: 1px solid #000;
-    border-radius: 3px;
+    border-radius: 4px;
     border-top-right-radius: 0;
 
     content: "";
@@ -20,8 +20,8 @@ const CheckBoxWrapper = styled.div`
   input[type="checkbox"]:after {
     position: relative;
     display: block;
-    left: 1px;
-    top: -15px;
+    left: 2px;
+    top: -18px;
     width: 12px;
     height: 12px;
     content: "";

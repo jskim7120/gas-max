@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const DetailHeader = styled.div`
-  margin-top: 4px;
   background-color: #ececec;
   height: 30px;
   display: flex;
@@ -24,7 +23,7 @@ export const DetailHeader = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   gap: 0px;
-  margin-top: 2px;
+  //margin-top: 2px;
 `;
 
 export const TableWrapper = styled.div`

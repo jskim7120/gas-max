@@ -8,7 +8,9 @@ const Table = styled.table`
   font-size: 14px;
   font-weight: 500;
   border-left: 1px solid #d6d2ce;
-  // border-bottom: 1px solid #000;
+
+  font-family: "NotoSansKRRegular";
+  font-size: 12px;
   flex: 1;
 
   display: block;

@@ -37,24 +37,25 @@ export const Select = styled.select`
 
 export const FormGroup = styled.div`
   display: flex;
-  justifycontent: center;
-  alignitems: center;
-  padding: 5px 0;
-
-  label {
-    min-width: 100px;
-    text-align: right;
-    padding-right: 20px;
-  }
+  align-items: center;
+  //justify-content: center;
 `;
 
 export const Field = styled.div`
-  margin-bottom: 7px;
+  margin-bottom: 5px;
 
   label.login {
     color: #707070;
     font-size: 12px;
   }
+`;
+
+export const Label = styled.label`
+  font-family: "NotoSansKRRegular";
+  font-size: 12px;
+  min-width: 100px;
+  text-align: right;
+  padding-right: 10px;
 `;
 
 export const FormInline = styled.div`
@@ -64,10 +65,11 @@ export const FormInline = styled.div`
 export const FormBlock = styled.div`
   display: block;
 `;
+
 export const Divider = styled.div`
   height: 1px;
-  background: #707070;
-  margin: 7px 0;
+  background: rgba(104, 103, 103, 0.21);
+  margin: 0px 0 5px 0;
 `;
 
 export const Wrapper = styled.div<{

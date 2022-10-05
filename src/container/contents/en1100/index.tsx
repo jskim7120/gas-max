@@ -101,10 +101,10 @@ function EN100({ name }: { name: string }) {
             style={{ marginRight: "15px" }}
             onClick={() => setClickedButton("reset")}
           />
-          <div>
+          {/* <div>
             <Chat />
             <CloseCircle />
-          </div>
+          </div> */}
         </div>
       </DetailHeader>
       <Wrapper>
