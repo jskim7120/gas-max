@@ -60,10 +60,16 @@ function Popup() {
   const dispatch = useDispatch();
   const { modalIsOpen, type } = useSelector((state) => state.modal);
 
+  const modalClose = () => {
+    if (type !== "customerModal") {
+      dispatch(closeModal());
+    }
+  };
+
   if (modalIsOpen)
     return (
       <PopupArea>
-        <PopupBack onClick={() => dispatch(closeModal())} />
+        <PopupBack onClick={modalClose} />
         <PopupContiner type={type}>
           <Suspense fallback={<div>...loading</div>}>
             {type === "customerModal" && <CustomerModal />}
