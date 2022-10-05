@@ -15,7 +15,7 @@ import {
   getEmployees,
 } from "features/employee/employeeSlice";
 import {
-  Input,
+  InputForm,
   Select,
   Field,
   ErrorText,
@@ -81,6 +81,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
   };
 
   useImperativeHandle(ref, () => ({
+    getValues,
     reset,
     submitForm() {
       handleSubmit(update)();
@@ -103,16 +104,14 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
 
   return (
     <form onSubmit={handleSubmit(update)} style={{ padding: "10px 15px" }}>
-      {/* <button type="button" onClick={handleSubmit(update)}>
-        Click
-      </button> */}
+      {/* <button type="button" onClick={handleSubmit(update)}>Click</button> */}
       <Wrapper grid>
         <Field className="field">
           <FormGroup>
             <Label>
               <b>코드</b>
             </Label>
-            <Input
+            <InputForm
               {...register("areaCode")}
               type="number"
               inputSize={InputSize.sm}
@@ -127,7 +126,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
             <Label>
               <b>영업소명</b>
             </Label>
-            <Input
+            <InputForm
               {...register("areaName")}
               type="number"
               inputSize={InputSize.md}
@@ -143,7 +142,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label>사업자번호-------</Label>
-            <Input {...register("jnSsno")} type="text" />
+            <InputForm {...register("jnSsno")} type="text" />
           </FormGroup>
           <div>
             <ErrorText>{errors["jnSsno"]?.message}</ErrorText>
@@ -152,7 +151,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label>상호</Label>
-            <Input
+            <InputForm
               {...register("jnSangho")}
               type="text"
               inputSize={InputSize.md}
@@ -165,7 +164,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label>대표</Label>
-            <Input {...register("jnSajang")} type="text" />
+            <InputForm {...register("jnSajang")} type="text" />
           </FormGroup>
           <div>
             <ErrorText>{errors["jnSajang"]?.message}</ErrorText>
@@ -176,7 +175,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label>주소</Label>
-            <Input {...register("jnZipcode")} type="text" />
+            <InputForm {...register("jnZipcode")} type="text" />
           </FormGroup>
           <div>
             <ErrorText>{errors["jnZipcode"]?.message}</ErrorText>
@@ -192,12 +191,13 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
               borderRadius: "5px",
               border: "1px solid #707070",
             }}
+            type="button"
           >
             <MagnifyingGlass />
           </button>
         </Field>
         <Field>
-          <Input
+          <InputForm
             {...register("jnAddr1")}
             type="text"
             inputSize={InputSize.md}
@@ -211,7 +211,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label></Label>
-            <Input
+            <InputForm
               {...register("jnAddr2")}
               type="text"
               inputSize={InputSize.lg}
@@ -227,7 +227,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label>업태</Label>
-            <Input
+            <InputForm
               {...register("jnUptae")}
               type="text"
               inputSize={InputSize.md}
@@ -241,7 +241,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label>종목</Label>
-            <Input
+            <InputForm
               {...register("jnJongmok")}
               type="text"
               inputSize={InputSize.md}
@@ -256,7 +256,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label>대표전화</Label>
-            <Input {...register("jnTel1")} type="text" />
+            <InputForm {...register("jnTel1")} type="text" />
           </FormGroup>
           <div>
             <ErrorText>{errors["jnTel1"]?.message}</ErrorText>
@@ -265,7 +265,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label>대표전화2</Label>
-            <Input {...register("jnTel2")} type="text" />
+            <InputForm {...register("jnTel2")} type="text" />
           </FormGroup>
           <div>
             <ErrorText>{errors["jnTel2"]?.message}</ErrorText>
@@ -274,7 +274,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label>팩스</Label>
-            <Input {...register("jnFax")} type="text" />
+            <InputForm {...register("jnFax")} type="text" />
           </FormGroup>
           <div>
             <ErrorText>{errors["jnFax"]?.message}</ErrorText>
@@ -286,7 +286,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label>안전관리 총괄자</Label>
-            <Input {...register("jnAnName1")} type="text" />
+            <InputForm {...register("jnAnName1")} type="text" />
           </FormGroup>
           <div>
             <ErrorText>{errors["jnAnName1"]?.message}</ErrorText>
@@ -295,7 +295,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label>전화</Label>
-            <Input {...register("jnAnTel1")} type="text" />
+            <InputForm {...register("jnAnTel1")} type="text" />
           </FormGroup>
           <div>
             <ErrorText>{errors["jnAnTel1"]?.message}</ErrorText>
@@ -306,7 +306,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label>안전관리 책임자</Label>
-            <Input {...register("jnAnName2")} type="text" />
+            <InputForm {...register("jnAnName2")} type="text" />
           </FormGroup>
           <div>
             <ErrorText>{errors["jnAnName2"]?.message}</ErrorText>
@@ -315,7 +315,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Field>
           <FormGroup>
             <Label>전화</Label>
-            <Input {...register("jnAnTel2")} type="text" />
+            <InputForm {...register("jnAnTel2")} type="text" />
           </FormGroup>
           <div>
             <ErrorText>{errors["jnAnTel2"]?.message}</ErrorText>
