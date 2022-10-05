@@ -37,7 +37,6 @@ interface ITabHeader {
   onClick: () => void;
   closeTab: (arg: string) => void;
 }
-interface TabBorder {}
 
 const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
   if (header.menuId === "HOME")

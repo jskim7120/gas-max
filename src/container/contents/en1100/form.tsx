@@ -216,7 +216,7 @@ function Form(
           </div>
         </Field>
       </Wrapper>
-      <Wrapper grid col={2}>
+      <Wrapper grid>
         <Field>
           <FormGroup>
             <Label>업태</Label>
@@ -230,6 +230,7 @@ function Form(
             <ErrorText>{errors["jnUptae"]?.message}</ErrorText>
           </div>
         </Field>
+        <Field></Field>
         <Field>
           <FormGroup>
             <Label>종목</Label>
@@ -294,7 +295,7 @@ function Form(
           </div>
         </Field>
       </Wrapper>
-      <Wrapper>
+      <Wrapper grid>
         <Field>
           <FormGroup>
             <Label>안전관리 책임자</Label>
@@ -315,7 +316,7 @@ function Form(
         </Field>
       </Wrapper>
       <Divider />
-      <Wrapper grid col={4}>
+      <Wrapper grid col={2} style={{ gridTemplateColumns: " 2fr 4fr" }}>
         <Field>
           <FormGroup>
             <Label>세금계산서 양식</Label>
@@ -327,51 +328,37 @@ function Form(
             <ErrorText>{errors["jnSekum"]?.message}</ErrorText>
           </div>
         </Field>
-        <Field>
-          <FormGroup>
-            <Label>공급사업자 인쇄안함</Label>
-            {/* <Input
-              {...register("jnSegongYn")}
-              type="checkbox"
-              checked={true}
-              style={{ width: "20px" }}
-            /> */}
-            <CheckBox {...register("jnSegongYn")} name="공급사업자 인쇄안함" />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnSegongYn"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
-          <FormGroup>
-            <Label>Vat 별도 단가계산</Label>
-            <Input
-              {...register("jnVatSumyn")}
-              type="checkbox"
-              checked={true}
-              style={{ width: "20px" }}
-            />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnVatSumyn"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
-          <FormGroup>
-            <Label>수량 단가 인쇄 유무</Label>
-            <Input
-              {...register("jnSekumEa")}
-              type="checkbox"
-              checked={true}
-              style={{ width: "20px" }}
-            />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnSekumEa"]?.message}</ErrorText>
-          </div>
-        </Field>
+        <Wrapper grid col={3}>
+          <Field>
+            <FormGroup>
+              <CheckBox
+                {...register("jnSegongYn")}
+                name="공급사업자 인쇄안함"
+              />
+            </FormGroup>
+            <div>
+              <ErrorText>{errors["jnSegongYn"]?.message}</ErrorText>
+            </div>
+          </Field>
+          <Field>
+            <FormGroup>
+              <CheckBox {...register("jnVatSumyn")} name="Vat 별도 단가계산" />
+            </FormGroup>
+            <div>
+              <ErrorText>{errors["jnVatSumyn"]?.message}</ErrorText>
+            </div>
+          </Field>
+          <Field>
+            <FormGroup>
+              <CheckBox {...register("jnSekumEa")} name="수량 단가 인쇄 유무" />
+            </FormGroup>
+            <div>
+              <ErrorText>{errors["jnSekumEa"]?.message}</ErrorText>
+            </div>
+          </Field>
+        </Wrapper>
       </Wrapper>
-      <Wrapper grid>
+      <Wrapper>
         <Field>
           <FormGroup>
             <Label>거래명세표 양식</Label>
@@ -384,15 +371,12 @@ function Form(
           </div>
         </Field>
       </Wrapper>
-      <Wrapper grid>
+      <Wrapper grid col={3}>
         <Field>
           <FormGroup>
-            <Label>탱크잔량/원격검침 발신기 업체번호</Label>
-            <Input
+            <CheckBox
               {...register("jnCmngno")}
-              type="checkbox"
-              checked={true}
-              style={{ width: "20px" }}
+              name="탱크잔량/원격검침 발신기 업체번호"
             />
           </FormGroup>
           <div>
@@ -401,12 +385,9 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <Label>Nice 계좌자동이체 사용</Label>
-            <Input
+            <CheckBox
               {...register("innopayBankYn")}
-              type="checkbox"
-              checked={false}
-              style={{ width: "20px" }}
+              name="Nice 계좌자동이체 사용"
             />
           </FormGroup>
           <div>
@@ -415,12 +396,9 @@ function Form(
         </Field>
         <Field>
           <FormGroup>
-            <Label>Innopay 카드자동이체 사용</Label>
-            <Input
+            <CheckBox
               {...register("niceBankYn")}
-              type="checkbox"
-              checked={true}
-              style={{ width: "20px" }}
+              name="Innopay 카드자동이체 사용"
             />
           </FormGroup>
           <div>
@@ -428,11 +406,13 @@ function Form(
           </div>
         </Field>
       </Wrapper>
-      <PlainTab
-        tabHeader={["지로 양식", "고객안내문", "입금계좌  안내", "결재란"]}
-        onClick={(id) => setTabId(id)}
-      />
-      <TabContentWrapper>{getTabContent(tabId)}</TabContentWrapper>
+      <div style={{ marginTop: "30px" }}>
+        <PlainTab
+          tabHeader={["지로 양식", "고객안내문", "입금계좌  안내", "결재란"]}
+          onClick={(id) => setTabId(id)}
+        />
+        <TabContentWrapper>{getTabContent(tabId)}</TabContentWrapper>
+      </div>
     </form>
   );
 }
