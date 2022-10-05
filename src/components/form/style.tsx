@@ -8,7 +8,9 @@ export const getInputSize = (size?: InputSize) => {
     case InputSize.md:
       return `250px`;
     case InputSize.lg:
-      return `572px`;
+      return `425px`;
+    case InputSize.xl:
+      return `500px`;
   }
 };
 
@@ -53,6 +55,7 @@ export const Select = styled.select`
   height: 25px;
   border-radius: 4px;
   border: 1px solid #bbb;
+  outline: none;
 `;
 
 export const FormGroup = styled.div`

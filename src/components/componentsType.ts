@@ -21,6 +21,7 @@ export enum InputSize {
   sm = "sm",
   lg = "lg",
   md = "md",
+  xl = "xl",
 }
 
 export enum ButtonType {

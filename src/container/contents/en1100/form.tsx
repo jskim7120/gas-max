@@ -381,9 +381,11 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
       <Wrapper grid col={3}>
         <Field>
           <FormGroup>
-            <CheckBox
+            <Label>탱크잔량/원격검침 발신기 업체번호</Label>
+            <InputForm
               {...register("jnCmngno")}
-              name="탱크잔량/원격검침 발신기 업체번호"
+              type="text"
+              inputSize={InputSize.sm}
             />
           </FormGroup>
           <div>
