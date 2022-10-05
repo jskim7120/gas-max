@@ -16,9 +16,9 @@ export const Plus = ({ color = "#fff", width = "24px", height = "24px" }) => {
           ry="5.531"
           fill="none"
           stroke="#707070"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <line
           id="Line_7"
@@ -27,9 +27,9 @@ export const Plus = ({ color = "#fff", width = "24px", height = "24px" }) => {
           transform="translate(5.531 2.771)"
           fill="none"
           stroke="#707070"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <line
           id="Line_8"
@@ -38,9 +38,9 @@ export const Plus = ({ color = "#fff", width = "24px", height = "24px" }) => {
           transform="translate(2.836 5.466)"
           fill="none"
           stroke="#707070"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
       </g>
     </svg>
@@ -63,8 +63,8 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
           transform="translate(-868.585 -373.591)"
           fill="none"
           stroke="#707070"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <rect
           id="Rectangle_28"
@@ -74,8 +74,8 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
           transform="translate(0 5.066) rotate(-34.419)"
           fill="none"
           stroke="#707070"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <rect
           id="Rectangle_29"
@@ -85,8 +85,8 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
           transform="translate(1.872 1.521) rotate(-34.419)"
           fill="none"
           stroke="#707070"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <line
           id="Line_4"
@@ -95,8 +95,8 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
           transform="translate(2.469 11.697)"
           fill="none"
           stroke="#707070"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <g
           id="Group_36"
@@ -110,8 +110,8 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
             transform="translate(0)"
             fill="none"
             stroke="#707070"
-            stroke-linejoin="round"
-            stroke-width="1"
+            strokeLinejoin="round"
+            strokeWidth="1"
           />
           <line
             id="Line_6"
@@ -120,8 +120,8 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
             transform="translate(3.91)"
             fill="none"
             stroke="#707070"
-            stroke-linejoin="round"
-            stroke-width="1"
+            strokeLinejoin="round"
+            strokeWidth="1"
           />
         </g>
       </g>
@@ -153,10 +153,10 @@ export const Tick = ({
           transform="translate(1504.627 -328.643)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-miterlimit="10"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeMiterlimit="10"
+          strokeWidth="1"
         />
         <path
           id="Polygon_3"
@@ -189,9 +189,9 @@ export const X = ({
           transform="matrix(-0.545, 0.839, -0.839, -0.545, 15.403, 6.382)"
           fill="none"
           stroke="#707070"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
         <path
           id="Polygon_3"
