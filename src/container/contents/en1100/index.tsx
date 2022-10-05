@@ -17,7 +17,7 @@ function EN100({ name }: { name: string }) {
   const dispatch = useDispatch();
   const formRef = useRef<any>(null);
   const [selected, setSelected] = useState();
-  const [clickedButton, setClickedButton] = useState("");
+  // const [clickedButton, setClickedButton] = useState("");
   // tableData = useSelector((state) => state.employees.employees);
   tableData = [
     { areaCode: "00", areaName: "123456789123456789" },
@@ -45,7 +45,7 @@ function EN100({ name }: { name: string }) {
       const itemIndex: any = gv.getCurrent().itemIndex;
       console.log("itemIndex:", itemIndex);
       setSelected(tableData[itemIndex]);
-      setClickedButton("");
+      // setClickedButton("");
     };
 
     dp.onRowUpdated = async (provider: any, row: any) => {
@@ -78,8 +78,8 @@ function EN100({ name }: { name: string }) {
             icon={<Plus />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              setClickedButton("clear");
-              console.log("formRef:", formRef.current);
+              //setClickedButton("clear");
+              formRef.current.resetForm("clear");
             }}
           />
           <Button
@@ -92,14 +92,19 @@ function EN100({ name }: { name: string }) {
             text="저장"
             icon={<Tick />}
             style={{ marginRight: "5px" }}
-            onClick={() => setClickedButton("update")}
+            onClick={() => {
+              // setClickedButton("update");
+              formRef.current.submitForm();
+            }}
             color={ButtonColor.SECONDARY}
           />
           <Button
             text="취소"
             icon={<X />}
             style={{ marginRight: "15px" }}
-            onClick={() => setClickedButton("reset")}
+            onClick={() => {
+              formRef.current.resetForm("reset");
+            }}
           />
           {/* <div>
             <Chat />
@@ -110,11 +115,7 @@ function EN100({ name }: { name: string }) {
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form
-            selected={selected}
-            getFormValues={getFormValues}
-            ref={formRef}
-          />
+          <Form selected={selected} ref={formRef} />
         </DetailWrapper>
       </Wrapper>
     </>
