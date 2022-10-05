@@ -74,7 +74,7 @@ const ButtonComponent = styled.button<{
       border: 1px solid ${BtnAttribute(props.kind, props.color).border};
       border-radius: ${BtnAttribute(props.kind, props.color).borderRad};
       color: ${BtnAttribute(props.kind, props.color).color};
-      padding: 0 13px;
+      padding: 0 5px;
       &:hover,
       &:focus {
         //background-color: #5284ce;
@@ -112,7 +112,7 @@ function Button(
   const leaveHandler = () => {
     setHover(false);
   };
-
+  const color = props.color ? props.color : ButtonColor.PRIMARY;
   return (
     <ButtonComponent
       size={props.size}
@@ -143,8 +143,8 @@ function Button(
             style={{
               height: "15px",
               width: "1px",
-              background:
-                props.color === ButtonColor.SECONDARY ? "pink" : "white",
+              background: color === ButtonColor.SECONDARY ? "#fff" : "#707070",
+              marginLeft: "5px",
             }}
           ></div>
         </span>
