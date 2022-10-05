@@ -7,6 +7,7 @@ import {
   removeAllTabs,
 } from "features/tab/tabSlice";
 import { openModal } from "features/modal/modalSlice";
+import { toggleSidebar } from "features/sidebar/sidebarSlice";
 import { getContent } from "./tabContent";
 import {
   TabContainer,
@@ -14,7 +15,16 @@ import {
   List,
   TabContentWrapper,
 } from "./style";
-import { CloseCircle, Home, Info, Refresh, Close } from "components/allSvgIcon";
+import {
+  SidebarOpen,
+  SidebarClose,
+  CloseCircle,
+  Home,
+  Info,
+  Refresh,
+  Close,
+} from "components/allSvgIcon";
+
 interface TabProps {
   className?: string;
   style?: any;
@@ -30,7 +40,7 @@ interface ITabHeader {
 const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
   if (header.menuId === "HOME")
     return (
-      <List className="home" isActive={isActive} onClick={() => onClick()}>
+      <List className="home" isActive={isActive} onClick={onClick}>
         <Home color={isActive ? "#fff" : "#707070"} />
       </List>
     );
@@ -91,6 +101,12 @@ const Tab = (props: TabProps): JSX.Element => {
   return (
     <TabContainer>
       <TabHeaderWrapper>
+        <div
+          style={{ height: "31px", width: "31px" }}
+          onClick={() => dispatch(toggleSidebar())}
+        >
+          {isOpen ? <SidebarClose /> : <SidebarOpen />}
+        </div>
         <ul>
           {tabHeader?.map((header: any, index: number) => (
             <TabHeader
