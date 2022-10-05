@@ -27,6 +27,8 @@ export const Input = styled.input<{
 
 export const ErrorText = styled.p`
   color: red;
+  font-size: 12px;
+  text-align: end;
 `;
 
 export const Select = styled.select`
@@ -42,7 +44,7 @@ export const FormGroup = styled.div`
 `;
 
 export const Field = styled.div`
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 
   label.login {
     color: #707070;

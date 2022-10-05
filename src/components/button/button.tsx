@@ -65,7 +65,7 @@ const ButtonComponent = styled.button<{
       align-items: center;
       justify-content: center;
       font-family: "NotoSansKRRegular";
-      font-size: ${BtnAttribute(props.kind, props.color).fontSize}
+      font-size: ${BtnAttribute(props.kind, props.color).fontSize};
       text-decoration: none;
       border-radius: 2px;
       transition: all 0.3s ease;

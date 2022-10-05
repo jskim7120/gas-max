@@ -3,7 +3,7 @@ import Form from "./form";
 
 function Login() {
   return (
-    <div style={{ width: "100%", padding: "0 25px", textAlign: "center" }}>
+    <div style={{ width: "100%", padding: "0 23px", textAlign: "center" }}>
       <Form />
     </div>
   );

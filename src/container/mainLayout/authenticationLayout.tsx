@@ -16,7 +16,6 @@ const Outer = styled.div`
 const Container = styled.div`
   box-sizing: content-box;
   width: 361px;
-  height: 760px;
   padding: 0;
   border: 1px solid #707070;
   position: relative;
@@ -47,10 +46,7 @@ const Container = styled.div`
 
   .footer {
     width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    margin-top: 20px;
 
     .contact {
       width: 100%;
