@@ -2,34 +2,45 @@ export const Plus = ({ color = "#fff", width = "24px", height = "24px" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
+      width="12.062"
+      height="12.062"
+      viewBox="0 0 12.062 12.062"
     >
-      <g id="Icon_Plus" data-name="Icon/Plus" transform="translate(1 1)">
-        <rect
-          id="Container"
-          width="24"
-          height="24"
-          transform="translate(-1 -1)"
+      <g id="Plus" transform="translate(0.5 0.5)">
+        <ellipse
+          id="Ellipse_2"
+          data-name="Ellipse 2"
+          cx="5.531"
+          cy="5.531"
+          rx="5.531"
+          ry="5.531"
           fill="none"
+          stroke="#707070"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
         />
-        <path
-          id="Path_2814"
-          data-name="Path 2814"
-          d="M11,0A11,11,0,1,0,22,11,11,11,0,0,0,11,0Zm0,21.267A10.267,10.267,0,1,1,21.267,11,10.267,10.267,0,0,1,11,21.267Z"
-          fill="#fff"
-          stroke="#fff"
-          strokeWidth="0.8"
+        <line
+          id="Line_7"
+          data-name="Line 7"
+          y2="5.389"
+          transform="translate(5.531 2.771)"
+          fill="none"
+          stroke="#707070"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
         />
-        <path
-          id="Path_2815"
-          data-name="Path 2815"
-          d="M107.952,101.805h-5.464V96.341a.341.341,0,1,0-.683,0v5.464H96.341a.341.341,0,1,0,0,.683h5.464v5.464a.341.341,0,0,0,.683,0v-5.464h5.464a.341.341,0,0,0,0-.683Z"
-          transform="translate(-91.146 -91.146)"
-          fill="#fff"
-          stroke="#fff"
-          strokeWidth="0.8"
+        <line
+          id="Line_8"
+          data-name="Line 8"
+          x1="5.389"
+          transform="translate(2.836 5.466)"
+          fill="none"
+          stroke="#707070"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
         />
       </g>
     </svg>
@@ -39,67 +50,81 @@ export const Plus = ({ color = "#fff", width = "24px", height = "24px" }) => {
 export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
   return (
     <svg
-      id="Icon_trash"
-      data-name="Icon/trash"
       xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 24 24"
+      width="12.626"
+      height="14.594"
+      viewBox="0 0 12.626 14.594"
     >
-      <path id="Path_50" data-name="Path 50" d="M0,0H24V24H0Z" fill="none" />
-      <line
-        id="Line_15"
-        data-name="Line 15"
-        x2="16"
-        transform="translate(4 7)"
-        fill="none"
-        stroke="#fff"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-      <line
-        id="Line_16"
-        data-name="Line 16"
-        y2="6"
-        transform="translate(10 11)"
-        fill="none"
-        stroke="#fff"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-      <line
-        id="Line_17"
-        data-name="Line 17"
-        y2="6"
-        transform="translate(14 11)"
-        fill="none"
-        stroke="#fff"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-      <path
-        id="Path_51"
-        data-name="Path 51"
-        d="M5,7,6,19a2,2,0,0,0,2,2h8a2,2,0,0,0,2-2L19,7"
-        fill="none"
-        stroke="#fff"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-      <path
-        id="Path_52"
-        data-name="Path 52"
-        d="M9,7V4a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1V7"
-        fill="none"
-        stroke="#fff"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
+      <g id="Group_37" data-name="Group 37" transform="translate(0.695 0.695)">
+        <path
+          id="Path_90"
+          data-name="Path 90"
+          d="M872.424,378.571h7.592v8.419h-8.962V379.5"
+          transform="translate(-868.585 -373.591)"
+          fill="none"
+          stroke="#707070"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <rect
+          id="Rectangle_28"
+          data-name="Rectangle 28"
+          width="8.962"
+          height="2.099"
+          transform="translate(0 5.066) rotate(-34.419)"
+          fill="none"
+          stroke="#707070"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <rect
+          id="Rectangle_29"
+          data-name="Rectangle 29"
+          width="1.866"
+          height="1.866"
+          transform="translate(1.872 1.521) rotate(-34.419)"
+          fill="none"
+          stroke="#707070"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <line
+          id="Line_4"
+          data-name="Line 4"
+          x2="8.962"
+          transform="translate(2.469 11.697)"
+          fill="none"
+          stroke="#707070"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <g
+          id="Group_36"
+          data-name="Group 36"
+          transform="translate(4.995 4.979)"
+        >
+          <line
+            id="Line_5"
+            data-name="Line 5"
+            y2="6.367"
+            transform="translate(0)"
+            fill="none"
+            stroke="#707070"
+            stroke-linejoin="round"
+            stroke-width="1"
+          />
+          <line
+            id="Line_6"
+            data-name="Line 6"
+            y2="6.367"
+            transform="translate(3.91)"
+            fill="none"
+            stroke="#707070"
+            stroke-linejoin="round"
+            stroke-width="1"
+          />
+        </g>
+      </g>
     </svg>
   );
 };
@@ -112,20 +137,35 @@ export const Tick = ({
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="11.69"
-      height="9.501"
-      viewBox="0 0 11.69 9.501"
+      width="12.387"
+      height="12.387"
+      viewBox="0 0 12.387 12.387"
     >
-      <path
-        id="Path_31"
-        data-name="Path 31"
-        d="M-1191.5,965.684l3.193,3.677,5.676-6.563"
-        transform="translate(1192.915 -961.388)"
-        fill="none"
-        stroke="#fff"
-        strokeLinecap="square"
-        strokeWidth="2"
-      />
+      <g
+        id="Group_421"
+        data-name="Group 421"
+        transform="translate(-1779.5 -85.715)"
+      >
+        <path
+          id="Path_205"
+          data-name="Path 205"
+          d="M277.365,416.226a5.693,5.693,0,1,0,3.7-1.368v5.051"
+          transform="translate(1504.627 -328.643)"
+          fill="none"
+          stroke="#fff"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-miterlimit="10"
+          stroke-width="1"
+        />
+        <path
+          id="Polygon_3"
+          data-name="Polygon 3"
+          d="M2,0l2,3.207H0Z"
+          transform="translate(1787.698 93.604) rotate(-180)"
+          fill="#fff"
+        />
+      </g>
     </svg>
   );
 };
@@ -137,35 +177,28 @@ export const X = ({
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="11.242"
-      height="12.177"
-      viewBox="0 0 11.242 12.177"
+      width="16.828"
+      height="16.831"
+      viewBox="0 0 16.828 16.831"
     >
-      <g
-        id="Group_1214"
-        data-name="Group 1214"
-        transform="translate(-719.234 -604.091)"
-      >
-        <line
-          id="Line_43"
-          data-name="Line 43"
-          x1="7.71"
-          y2="8.436"
-          transform="translate(721 605.857)"
+      <g id="Group_130" data-name="Group 130" transform="translate(0.711 0.4)">
+        <path
+          id="Path_101"
+          data-name="Path 101"
+          d="M.277,7.3a5.567,5.567,0,1,1,2.472,3.068"
+          transform="matrix(-0.545, 0.839, -0.839, -0.545, 15.403, 6.382)"
           fill="none"
-          stroke="#fff"
-          strokeLinecap="round"
-          strokeWidth="2.5"
+          stroke="#707070"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
         />
         <path
-          id="Path_45"
-          data-name="Path 45"
-          d="M0,0,7.71,8.647"
-          transform="translate(728.71 614.503) rotate(180)"
-          fill="none"
-          stroke="#fff"
-          strokeLinecap="round"
-          strokeWidth="2.5"
+          id="Polygon_3"
+          data-name="Polygon 3"
+          d="M2,0l2,3.207H0Z"
+          transform="matrix(0.454, -0.891, 0.891, 0.454, 6.721, 3.572)"
+          fill="#707070"
         />
       </g>
     </svg>
