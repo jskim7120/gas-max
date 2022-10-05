@@ -67,6 +67,7 @@ export const Field = styled.div`
   label.login {
     color: #707070;
     font-size: 12px;
+    line-height: 21px;
   }
 `;
 
