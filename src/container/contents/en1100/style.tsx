@@ -2,17 +2,17 @@ import styled from "styled-components";
 
 export const DetailHeader = styled.div`
   margin-top: 4px;
-  background-color: #0098ff;
-  height: 41px;
+  background-color: #ececec;
+  height: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 15px;
 
   p {
-    color: #eef604;
-    font-family: "NotoSansKRRegular";
-    font-size: 18px;
+    color: #0057aa;
+    font-family: "SegoeUI";
+    font-size: 12px;
   }
 
   div.buttons {

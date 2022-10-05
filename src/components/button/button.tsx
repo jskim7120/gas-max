@@ -21,8 +21,10 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
 
     if (color === ButtonColor.PRIMARY) {
       attributes.bg = "#ECECEC";
+      attributes.color = "#0057AA";
     } else if (color === ButtonColor.SECONDARY) {
       attributes.bg = "linear-gradient(#FFB300, #E67F09)";
+      attributes.color = "#FFF";
     }
   } else if (kind === ButtonType.LOGIN) {
     attributes = {
@@ -35,9 +37,11 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
     if (color === ButtonColor.PRIMARY) {
       attributes.bg = "#0098FF";
       attributes.border = "#0098FF";
+      attributes.color = "#fff";
     } else if (color === ButtonColor.SECONDARY) {
       attributes.bg = "#9A9A9A";
       attributes.border = "#9A9A9A";
+      attributes.color = "#fff";
     }
   }
   return attributes;
@@ -69,7 +73,7 @@ const ButtonComponent = styled.button<{
       background: ${BtnAttribute(props.kind, props.color).bg};
       border: 1px solid ${BtnAttribute(props.kind, props.color).border};
       border-radius: ${BtnAttribute(props.kind, props.color).borderRad};
-      color: #fff;
+      color: ${BtnAttribute(props.kind, props.color).color};
       padding: 0 13px;
       &:hover,
       &:focus {
@@ -135,6 +139,14 @@ function Button(
           }}
         >
           {props.icon}
+          <div
+            style={{
+              height: "15px",
+              width: "1px",
+              background:
+                props.color === ButtonColor.SECONDARY ? "pink" : "white",
+            }}
+          ></div>
         </span>
       )}
       {props.text}

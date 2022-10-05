@@ -6,6 +6,7 @@ import { Plus, Trash, Tick, X, Chat, CloseCircle } from "components/allSvgIcon";
 import { columns, fields } from "./data";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "./style";
+import { ButtonType, ButtonColor } from "components/componentsType";
 
 let tableData: any;
 let container: HTMLDivElement;
@@ -92,6 +93,7 @@ function EN100({ name }: { name: string }) {
             icon={<Tick />}
             style={{ marginRight: "5px" }}
             onClick={() => setClickedButton("update")}
+            color={ButtonColor.SECONDARY}
           />
           <Button
             text="취소"
