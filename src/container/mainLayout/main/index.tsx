@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "app/store";
-import { toggleSidebar } from "features/sidebar/sidebarSlice";
+
 import { Main, Sidebar, UnOrderedList } from "./style";
 import Tab from "components/tab";
 
 import {
-  SidebarOpen,
-  SidebarClose,
+  // SidebarOpen,
+  // SidebarClose,
   Sidebar1,
   Sidebar2,
   Sidebar3,
@@ -93,12 +93,6 @@ function MainContainer() {
           </UnOrderedList>
         </nav>
       </Sidebar>
-      <div
-        style={{ height: "31px", width: "31px" }}
-        onClick={() => dispatch(toggleSidebar())}
-      >
-        {isOpen ? <SidebarClose /> : <SidebarOpen />}
-      </div>
 
       <Tab />
     </Main>
