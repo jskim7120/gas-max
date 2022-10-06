@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import API from "api";
 import { useDispatch, useSelector } from "app/store";
 import { GridView, LocalDataProvider } from "realgrid";
 import Button from "components/button/button";
@@ -17,8 +18,13 @@ function EN100({ name }: { name: string }) {
   const dispatch = useDispatch();
   const formRef = useRef<any>(null);
   const [selected, setSelected] = useState();
+  const [jnotry, setJnotry] = useState([]);
   // const [clickedButton, setClickedButton] = useState("");
   // tableData = useSelector((state) => state.employees.employees);
+
+  useEffect(() => {
+    getJNotry();
+  }, []);
   tableData = [
     {
       areaCode: "00",
@@ -42,6 +48,13 @@ function EN100({ name }: { name: string }) {
       jnSajang: "cccccccccc",
     },
   ];
+  const getJNotry = async () => {
+    const { data } = await API.get("jnotry/list");
+    console.log("JNORTY:", data);
+    if (data) {
+      setJnotry(data);
+    }
+  };
   const realgridElement = useRef<HTMLDivElement>(null);
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
@@ -54,14 +67,16 @@ function EN100({ name }: { name: string }) {
     gv.setDataSource(dp);
     dp.setFields(fields);
     gv.setColumns(columns);
-    dp.setRows(tableData);
+    dp.setRows(jnotry);
 
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
-      stateBar: { visible: true },
-      edit: { insertable: true, appendable: true },
+      stateBar: { visible: false },
+      // edit: { insertable: true, appendable: true },
     });
+
+    gv.sortingOptions.enabled = true;
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().itemIndex;
@@ -81,7 +96,7 @@ function EN100({ name }: { name: string }) {
       gv.destroy();
       dp.destroy();
     };
-  }, [tableData]);
+  }, [jnotry]);
 
   if (!tableData) return <p>...loading</p>;
 
@@ -132,7 +147,7 @@ function EN100({ name }: { name: string }) {
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form selected={selected ? selected : tableData[0]} ref={formRef} />
+          <Form selected={selected ? selected : jnotry[0]} ref={formRef} />
         </DetailWrapper>
       </Wrapper>
     </>
