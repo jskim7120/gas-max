@@ -2735,3 +2735,43 @@ export const SearchIcon = ({
     </svg>
   );
 };
+
+export const MenuModalBtn = ({
+  color = "#fff",
+  width = "5px",
+  height = "5px",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="5.707"
+      height="5.707"
+      viewBox="0 0 5.707 5.707"
+    >
+      <g
+        id="Group_113"
+        data-name="Group 113"
+        transform="translate(0.354 0.354)"
+      >
+        <path
+          id="Path_69"
+          data-name="Path 69"
+          d="M2435.5,173.5l5,5"
+          transform="translate(-2435.5 -173.5)"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="1"
+        />
+        <path
+          id="Path_70"
+          data-name="Path 70"
+          d="M0,0,5,5"
+          transform="translate(5) rotate(90)"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="1"
+        />
+      </g>
+    </svg>
+  );
+};
