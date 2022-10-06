@@ -13,7 +13,7 @@ import {
 import { ErrorText, FormWrapper, FormGroup, Wrapper } from "./style";
 import { IFormProps } from "./type";
 import { schema } from "./validation";
-import { Tick, Plus, Trash, X } from "components/allSvgIcon";
+import { Update, Plus, Trash, Reset } from "components/allSvgIcon";
 import Button from "components/button/button";
 
 export default function Form({
@@ -103,8 +103,8 @@ export default function Form({
       <div style={{ background: "black" }}>
         <Plus />
         <Trash />
-        <Tick />
-        <X />
+        <Update />
+        <Reset />
       </div>
 
       <Button onClick={() => console.log("scsd")} icon={<Plus />} text="등록" />

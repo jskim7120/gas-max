@@ -7,8 +7,8 @@ import Button from "components/button/button";
 import {
   Plus,
   Trash,
-  Tick,
-  X,
+  Update,
+  Reset,
   Heart,
   Chat,
   CloseCircle,
@@ -113,12 +113,12 @@ function TabContent1({ name }: { name: string }) {
               />
               <Button
                 text="저장"
-                icon={<Tick />}
+                icon={<Update />}
                 style={{ marginRight: "5px" }}
               />
               <Button
                 text="취소"
-                icon={<X />}
+                icon={<Reset />}
                 style={{ marginRight: "15px" }}
               />
 

@@ -129,7 +129,7 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
   );
 };
 
-export const Tick = ({
+export const Update = ({
   color = "#fff",
   width = "11.24px",
   height = "12.176px",
@@ -169,7 +169,7 @@ export const Tick = ({
     </svg>
   );
 };
-export const X = ({
+export const Reset = ({
   color = "#fff",
   width = "11.69px",
   height = "9.501px",
