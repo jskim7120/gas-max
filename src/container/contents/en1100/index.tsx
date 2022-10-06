@@ -1,48 +1,29 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "app/store";
+import { useState, useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
+import API from "api";
 import Button from "components/button/button";
-import { Plus, Trash, Tick, X, Chat, CloseCircle } from "components/allSvgIcon";
+import { ButtonType, ButtonColor } from "components/componentsType";
+import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { columns, fields } from "./data";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "./style";
-import { ButtonType, ButtonColor } from "components/componentsType";
 
-let tableData: any;
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
 
 function EN100({ name }: { name: string }) {
-  const dispatch = useDispatch();
-  const formRef = useRef<any>(null);
-  const [selected, setSelected] = useState();
-  // const [clickedButton, setClickedButton] = useState("");
-  // tableData = useSelector((state) => state.employees.employees);
-  tableData = [
-    {
-      areaCode: "00",
-      areaName: "123456789123456789",
-      jnSsno: "oooooo",
-      jnSangho: "55555",
-      jnSajang: "bbbbbbbb",
-    },
-    {
-      areaCode: "01",
-      areaName: "777777777777777777",
-      jnSsno: "dddddd",
-      jnSangho: "444444",
-      jnSajang: "aaaaaaaaa",
-    },
-    {
-      areaCode: "02",
-      areaName: "222222222222222222",
-      jnSsno: "ssssss",
-      jnSangho: "1111111",
-      jnSajang: "cccccccccc",
-    },
-  ];
   const realgridElement = useRef<HTMLDivElement>(null);
+  const formRef = useRef<any>(null);
+
+  const [selected, setSelected] = useState();
+  const [jnotry, setJnotry] = useState([]);
+  const [addClicked, setAddClicked] = useState(false);
+
+  useEffect(() => {
+    fetchJNotry();
+  }, []);
+
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
     dp = new LocalDataProvider(true);
@@ -54,26 +35,20 @@ function EN100({ name }: { name: string }) {
     gv.setDataSource(dp);
     dp.setFields(fields);
     gv.setColumns(columns);
-    dp.setRows(tableData);
+    dp.setRows(jnotry);
 
+    gv.setFooter({ visible: false });
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
-      stateBar: { visible: true },
-      edit: { insertable: true, appendable: true },
+      stateBar: { visible: false },
+      // edit: { insertable: true, appendable: true },
     });
+    gv.sortingOptions.enabled = true;
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().itemIndex;
-      setSelected(tableData[itemIndex]);
-      // setClickedButton("");
-    };
-
-    dp.onRowUpdated = async (provider: any, row: any) => {
-      const item = gv.getEditingItem();
-      // console.log("item:", item.values);
-      // await dispatch(updateEmployee(item.values));
-      // await dispatch(getEmployees());
+      setSelected(jnotry[itemIndex]);
     };
 
     return () => {
@@ -81,9 +56,21 @@ function EN100({ name }: { name: string }) {
       gv.destroy();
       dp.destroy();
     };
-  }, [tableData]);
+  }, [jnotry]);
 
-  if (!tableData) return <p>...loading</p>;
+  const fetchJNotry = async () => {
+    try {
+      const { data } = await API.get("jnotry/list");
+      if (data) {
+        console.log("JNORTY:", data);
+        setJnotry(data);
+      }
+    } catch (err) {
+      console.log("JNOTRY DATA fetch error =======>", err);
+    }
+  };
+
+  if (!jnotry) return <p>...Loading</p>;
 
   return (
     <>
@@ -95,7 +82,7 @@ function EN100({ name }: { name: string }) {
             icon={<Plus />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              //setClickedButton("clear");
+              setAddClicked(true);
               formRef.current.resetForm("clear");
             }}
           />
@@ -103,36 +90,34 @@ function EN100({ name }: { name: string }) {
             text="삭제"
             icon={<Trash />}
             style={{ marginRight: "5px" }}
-            onClick={() => console.log("delete daragdav")}
+            onClick={() => {
+              setAddClicked(false);
+            }}
           />
           <Button
             text="저장"
-            icon={<Tick />}
+            icon={<Update />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              // setClickedButton("update");
+              setAddClicked(false);
               formRef.current.submitForm();
-              console.log(formRef.current.getValues());
             }}
             color={ButtonColor.SECONDARY}
           />
           <Button
             text="취소"
-            icon={<X />}
+            icon={<Reset />}
             onClick={() => {
+              setAddClicked(false);
               formRef.current.resetForm("reset");
             }}
           />
-          {/* <div>
-            <Chat />
-            <CloseCircle />
-          </div> */}
         </div>
       </DetailHeader>
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form selected={selected ? selected : tableData[0]} ref={formRef} />
+          <Form selected={selected ? selected : jnotry[0]} ref={formRef} />
         </DetailWrapper>
       </Wrapper>
     </>

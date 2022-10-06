@@ -26,10 +26,10 @@ export const Wrapper = styled.div`
 `;
 
 export const TableWrapper = styled.div`
-  width: 20%;
-  height: 500px;
+  width: 50%;
+  height: auto;
 `;
 
 export const DetailWrapper = styled.div`
-  width: 80%;
+  width: 50%;
 `;
