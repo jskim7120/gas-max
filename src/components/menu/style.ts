@@ -48,7 +48,7 @@ export const Nav = styled.nav`
       left: 0;
       right: auto;
       z-index: 9999;
-      padding: 3px 0 40px;
+      padding: 3px 0 8px;
       list-style: none;
       background-color: #fff;
       display: none;
