@@ -8,7 +8,9 @@ export const getInputSize = (size?: InputSize) => {
     case InputSize.md:
       return `250px`;
     case InputSize.lg:
-      return `572px`;
+      return `425px`;
+    case InputSize.xl:
+      return `500px`;
   }
 };
 
@@ -25,6 +27,24 @@ export const Input = styled.input<{
     props.inputSize ? getInputSize(props.inputSize) : "150px"};
 `;
 
+export const InputForm = styled.input<{
+  inputSize?: InputSize;
+}>`
+  height: 25px;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  // border: none;
+  outline: none;
+  display: inline-block;
+  padding: 0 6px;
+  width: ${(props) =>
+    props.inputSize ? getInputSize(props.inputSize) : "150px"};
+  &:hover,
+  &:focus {
+    border: 1px solid #bbb;
+  }
+`;
+
 export const ErrorText = styled.p`
   color: red;
   font-size: 12px;
@@ -35,6 +55,7 @@ export const Select = styled.select`
   height: 25px;
   border-radius: 4px;
   border: 1px solid #bbb;
+  outline: none;
 `;
 
 export const FormGroup = styled.div`

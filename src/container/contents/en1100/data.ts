@@ -16,7 +16,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "50",
+    width: "100",
     styles: {
       textAlignment: "center",
     },
@@ -28,7 +28,7 @@ export const columns = [
     name: "areaName",
     fieldName: "areaName",
     type: "data",
-    width: "50",
+    width: "150",
     styles: {
       textAlignment: "center",
     },

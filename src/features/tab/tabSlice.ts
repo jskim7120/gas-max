@@ -19,7 +19,7 @@ const initialState: initialStateType = {
       depthFullName: "HOME",
     },
   ],
-  activeTabId: "M00SD1400",
+  activeTabId: "HOME",
 };
 
 const tabSlice = createSlice({

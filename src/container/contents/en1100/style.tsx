@@ -6,7 +6,7 @@ export const DetailHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 15px;
+  padding: 0 26px 0 15px;
 
   p {
     color: #0057aa;
@@ -23,14 +23,13 @@ export const DetailHeader = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   gap: 0px;
-  //margin-top: 2px;
 `;
 
 export const TableWrapper = styled.div`
-  width: 15%;
+  width: 20%;
   height: 500px;
 `;
 
 export const DetailWrapper = styled.div`
-  width: 85%;
+  width: 80%;
 `;
