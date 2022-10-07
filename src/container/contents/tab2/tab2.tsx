@@ -156,7 +156,7 @@ function Tab2({ name }: { name?: string }) {
           padding: "5px 10px",
         }}
       >
-        <span>총수량 :{tableData.length}</span>
+        <span>총수량 :{tableData && tableData.length}</span>
         <span style={{ display: "flex" }}>
           <a
             href={`${baseURL}employee/excel`}

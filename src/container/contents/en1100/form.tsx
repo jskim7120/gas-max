@@ -271,14 +271,6 @@ const Form = React.forwardRef(
                 <ErrorText>{errors["jnSegongYn"]?.message}</ErrorText>
               </div>
             </Field>
-            {/* <Controller
-              name="jnSegongYn"
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <CheckBox defaultChecked={true} {...field} />
-              )}
-            /> */}
             <Field>
               <FormGroup>
                 <CheckBox
