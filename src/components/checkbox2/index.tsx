@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Checked from "assets/image/checked.png";
 
@@ -59,8 +59,20 @@ const CheckBoxWrapper = styled.div<{ rtl: boolean }>`
   }
 `;
 
-function CheckBox2({ name, rtl = false }: { name?: string; rtl?: boolean }) {
+function CheckBox2({
+  name,
+  rtl = false,
+  defaultChecked,
+}: {
+  name?: string;
+  rtl?: boolean;
+  defaultChecked: boolean;
+}) {
   const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    setChecked(defaultChecked);
+  }, [defaultChecked]);
 
   const handleChange = () => {
     setChecked(!checked);

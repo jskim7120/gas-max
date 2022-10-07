@@ -5,14 +5,10 @@ const Table = styled.table`
   border-spacing: 0;
   color: #333;
   width: 100%;
-  font-size: 14px;
-  font-weight: 500;
   border-left: 1px solid #d6d2ce;
-
   font-family: "NotoSansKRRegular";
   font-size: 12px;
   flex: 1;
-
   display: block;
   overflow-x: auto;
   white-space: nowrap;
@@ -27,7 +23,7 @@ const Table = styled.table`
         border-bottom: 1px solid #000;
         border-right: 1px solid #d6d2ce;
         font-weight: 500;
-        padding: 7px 10px;
+        padding: 6px 10px;
       }
     }
   }
@@ -35,9 +31,10 @@ const Table = styled.table`
     tr {
       td {
         text-align: center;
-        padding: 7px 20px;
+        padding: 0px 20px;
         border-bottom: 1px solid #d6d2ce;
         border-right: 1px solid #d6d2ce;
+        font-size: 12px;
       }
     }
     tr.active {
