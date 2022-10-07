@@ -25,6 +25,7 @@ import {
   FormBlock,
   Wrapper,
   Divider,
+  DividerGray,
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox2";
@@ -45,8 +46,6 @@ const Form = React.forwardRef(
     const dispatch = useDispatch();
     const [isClickedAdd, setIsClikedAdd] = useState(false);
     const [tabId, setTabId] = useState(0);
-
-    // console.log("Form triggered:", selected);
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
@@ -105,14 +104,13 @@ const Form = React.forwardRef(
     if (!selected) return <p>Loading...</p>;
 
     return (
-      <form onSubmit={handleSubmit(update)} style={{ padding: "10px 15px" }}>
+      <form onSubmit={handleSubmit(update)} style={{ padding: "0px 10px" }}>
         <Wrapper grid>
           <InputTest
             label="코드"
             name="areaCode"
             register={register}
             errors={errors}
-            type="number"
           />
           <InputTest
             label="영업소명"
@@ -142,6 +140,7 @@ const Form = React.forwardRef(
             errors={errors}
           />
         </Wrapper>
+        <DividerGray />
         <Wrapper style={{ alignItems: "center" }}>
           <InputTest
             label="주소"
@@ -169,6 +168,7 @@ const Form = React.forwardRef(
             fullWidth
           />
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <InputTest
             label=""
@@ -178,6 +178,7 @@ const Form = React.forwardRef(
             fullWidth
           />
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <InputTest
             label="업태"
@@ -194,6 +195,7 @@ const Form = React.forwardRef(
             fullWidth
           />
         </Wrapper>
+        <DividerGray />
         <Wrapper grid>
           <InputTest
             label="대표전화"
@@ -230,6 +232,7 @@ const Form = React.forwardRef(
             errors={errors}
           />
         </Wrapper>
+        <DividerGray />
         <Wrapper grid>
           <InputTest
             label="안전관리 책임자"
@@ -297,6 +300,7 @@ const Form = React.forwardRef(
             </Field>
           </Wrapper>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field>
             <FormGroup>
@@ -312,6 +316,7 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
+        <DividerGray />
         <Wrapper grid col={3}>
           <InputTest
             label="탱크잔량/원격검침 발신기 업체번호"
@@ -345,6 +350,7 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
+        <DividerGray />
         <div style={{ marginTop: "30px" }}>
           <PlainTab
             tabHeader={["지로 양식", "고객안내문", "입금계좌  안내", "결재란"]}

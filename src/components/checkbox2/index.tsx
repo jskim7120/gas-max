@@ -10,6 +10,7 @@ const CheckBoxWrapper = styled.div<{ rtl: boolean }>`
     gap: ${(props) => (props.rtl ? "8px" : "5px")};
     font-family: "NotoSansKRRegular";
     font-size: 12px;
+    font-weight: 600;
   }
 
   input[type="checkbox"]:before {

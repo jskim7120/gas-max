@@ -29,7 +29,7 @@ function EN1100({ name }: { name: string }) {
     dp = new LocalDataProvider(true);
     gv = new GridView(container);
     gv.setHeader({
-      height: 30,
+      height: 35,
     });
 
     gv.setDataSource(dp);

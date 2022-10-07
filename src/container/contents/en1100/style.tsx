@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
 
 export const TableWrapper = styled.div`
   width: 50%;
-  height: auto;
+  height: 80vh;
 `;
 
 export const DetailWrapper = styled.div`
