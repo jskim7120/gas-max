@@ -45,7 +45,7 @@ export const columns = [
       textAlignment: "center",
     },
     header: {
-      text: "코드",
+      text: "영업소코드",
     },
   },
   {
@@ -57,7 +57,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "영업소명",
+      text: "영업소명칭",
     },
   },
   {
@@ -70,7 +70,7 @@ export const columns = [
     },
     numberFormat: "0",
     header: {
-      text: "jnSsno",
+      text: "사업자번호",
     },
   },
   {
@@ -82,7 +82,7 @@ export const columns = [
       textAlignment: "center",
     },
     header: {
-      text: "jnSangho",
+      text: "상호",
     },
   },
   {
@@ -95,7 +95,7 @@ export const columns = [
       lineAlignment: "far",
     },
     header: {
-      text: "jnSajang",
+      text: "대표",
     },
   },
   {
@@ -107,7 +107,7 @@ export const columns = [
       textAlignment: "far",
     },
     header: {
-      text: "jnZipcode",
+      text: "우편번호",
     },
   },
   {
@@ -119,7 +119,7 @@ export const columns = [
       textAlignment: "far",
     },
     header: {
-      text: "jnAddr1",
+      text: "관할주소",
     },
   },
   {
@@ -131,7 +131,7 @@ export const columns = [
       textAlignment: "far",
     },
     header: {
-      text: "jnAddr2",
+      text: "상세주소",
     },
   },
 ];
