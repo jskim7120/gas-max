@@ -16,6 +16,7 @@ import {
 } from "features/employee/employeeSlice";
 import {
   InputForm,
+  InputTest,
   Select,
   Field,
   ErrorText,
@@ -39,149 +40,115 @@ interface IForm {
   selected: any;
 }
 
-const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
-  const dispatch = useDispatch();
-  const [isClickedAdd, setIsClikedAdd] = useState(false);
-  const [tabId, setTabId] = useState(0);
+const Form = React.forwardRef(
+  ({ selected }: IForm, ref: React.ForwardedRef<HTMLFormElement>) => {
+    const dispatch = useDispatch();
+    const [isClickedAdd, setIsClikedAdd] = useState(false);
+    const [tabId, setTabId] = useState(0);
 
-  useEffect(() => {
-    if (JSON.stringify(selected) !== "{}") {
-      reset(selected);
-    }
-  }, [selected]);
+    // console.log("Form triggered:", selected);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    control,
-    getValues,
-  } = useForm<IFormProps>({
-    resolver: yupResolver(schema),
-  });
-
-  const resetForm = (type: string) => {
-    if (JSON.stringify(selected) !== "{}") {
-      console.log("type:", type);
-      let newData: any = {};
-
-      if (type === "clear") {
-        for (const [key, value] of Object.entries(selected)) {
-          newData[key] = null;
-        }
-        setIsClikedAdd(true);
-      } else if (type === "reset") {
-        for (const [key, value] of Object.entries(selected)) {
-          newData[key] = value;
-        }
+    useEffect(() => {
+      if (JSON.stringify(selected) !== "{}") {
+        reset(selected);
       }
-      reset(newData);
-    }
-  };
+    }, [selected]);
 
-  useImperativeHandle(ref, () => ({
-    getValues,
-    reset,
-    submitForm() {
-      handleSubmit(update)();
-    },
-    resetForm,
-  }));
+    const {
+      register,
+      handleSubmit,
+      reset,
+      formState: { errors },
+      control,
+      getValues,
+    } = useForm<IFormProps>({
+      resolver: yupResolver(schema),
+    });
 
-  const update = (data: IFormProps) => {
-    console.log("udpate duudagdav");
+    const resetForm = (type: string) => {
+      if (JSON.stringify(selected) !== "{}") {
+        console.log("type:", type);
+        let newData: any = {};
 
-    if (isClickedAdd) {
-      //createCustomer
-    } else {
-      //updateCustomer
-    }
-  };
+        if (type === "clear") {
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = null;
+          }
+          setIsClikedAdd(true);
+        } else if (type === "reset") {
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = value;
+          }
+        }
+        reset(newData);
+      }
+    };
 
-  // if (selected && JSON.stringify(selected) === "{}")
-  if (!selected) return <p>Loading...</p>;
+    useImperativeHandle<HTMLFormElement, any>(ref, () => ({
+      submitForm() {
+        handleSubmit(update)();
+      },
+      resetForm,
+    }));
 
-  return (
-    <form onSubmit={handleSubmit(update)} style={{ padding: "10px 15px" }}>
-      {/* <button type="button" onClick={handleSubmit(update)}>Click</button> */}
-      <Wrapper grid>
-        <Field className="field">
-          <FormGroup>
-            <Label>
-              <b>코드</b>
-            </Label>
-            <InputForm
-              {...register("areaCode")}
-              type="number"
-              inputSize={InputSize.sm}
-            />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["areaCode"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
-          <FormGroup>
-            <Label>
-              <b>영업소명</b>
-            </Label>
-            <InputForm
-              {...register("areaName")}
-              type="number"
-              inputSize={InputSize.md}
-            />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["areaName"]?.message}</ErrorText>
-          </div>
-        </Field>
-      </Wrapper>
-      <Divider />
-      <Wrapper grid>
-        <Field>
-          <FormGroup>
-            <Label>사업자번호</Label>
-            <InputForm {...register("jnSsno")} type="text" />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnSsno"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
-          <FormGroup>
-            <Label>상호</Label>
-            <InputForm
-              {...register("jnSangho")}
-              type="text"
-              inputSize={InputSize.md}
-            />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnSangho"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
-          <FormGroup>
-            <Label>대표</Label>
-            <InputForm {...register("jnSajang")} type="text" />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnSajang"]?.message}</ErrorText>
-          </div>
-        </Field>
-      </Wrapper>
-      <Wrapper style={{ alignItems: "center" }}>
-        <Field>
-          <FormGroup>
-            <Label>주소</Label>
-            <InputForm {...register("jnZipcode")} type="text" />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnZipcode"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
+    const update = (data: IFormProps) => {
+      console.log("udpate duudagdav");
+
+      if (isClickedAdd) {
+        //createCustomer
+      } else {
+        //updateCustomer
+      }
+    };
+
+    // if (selected && JSON.stringify(selected) === "{}")
+    if (!selected) return <p>Loading...</p>;
+
+    return (
+      <form onSubmit={handleSubmit(update)} style={{ padding: "10px 15px" }}>
+        <Wrapper grid>
+          <InputTest
+            label="코드"
+            name="areaCode"
+            register={register}
+            errors={errors}
+            type="number"
+          />
+          <InputTest
+            label="영업소명"
+            name="areaName"
+            register={register}
+            errors={errors}
+          />
+        </Wrapper>
+        <Divider />
+        <Wrapper grid>
+          <InputTest
+            label="사업자번호"
+            name="jnSsno"
+            register={register}
+            errors={errors}
+          />
+          <InputTest
+            label="상호"
+            name="jnSangho"
+            register={register}
+            errors={errors}
+          />
+          <InputTest
+            label="대표"
+            name="jnSajang"
+            register={register}
+            errors={errors}
+          />
+        </Wrapper>
+        <Wrapper style={{ alignItems: "center" }}>
+          <InputTest
+            label="주소"
+            name="jnZipcode"
+            register={register}
+            errors={errors}
+          />
           <button
             style={{
               width: "25px",
@@ -195,235 +162,209 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
           >
             <MagnifyingGlass />
           </button>
-        </Field>
-        <Field>
-          <InputForm
-            {...register("jnAddr1")}
-            type="text"
-            inputSize={InputSize.md}
+          <InputTest
+            name="jnAddr1"
+            register={register}
+            errors={errors}
+            fullWidth
           />
-          <div>
-            <ErrorText>{errors["jnAddr1"]?.message}</ErrorText>
-          </div>
-        </Field>
-      </Wrapper>
-      <Wrapper>
-        <Field>
-          <FormGroup>
-            <Label></Label>
-            <InputForm
-              {...register("jnAddr2")}
-              type="text"
-              inputSize={InputSize.lg}
-            />
-          </FormGroup>
+        </Wrapper>
+        <Wrapper>
+          <InputTest
+            label=""
+            name="jnAddr2"
+            register={register}
+            errors={errors}
+            fullWidth
+          />
+        </Wrapper>
+        <Wrapper>
+          <InputTest
+            label="업태"
+            name="jnUptae"
+            register={register}
+            errors={errors}
+            fullWidth
+          />
+          <InputTest
+            label="종목"
+            name="jnJongmok"
+            register={register}
+            errors={errors}
+            fullWidth
+          />
+        </Wrapper>
+        <Wrapper grid>
+          <InputTest
+            label="대표전화"
+            name="jnTel1"
+            register={register}
+            errors={errors}
+          />
+          <InputTest
+            label="대표전화2"
+            name="jnTel2"
+            register={register}
+            errors={errors}
+          />
 
-          <div>
-            <ErrorText>{errors["jnAddr2"]?.message}</ErrorText>
-          </div>
-        </Field>
-      </Wrapper>
-      <Wrapper grid>
-        <Field>
-          <FormGroup>
-            <Label>업태</Label>
-            <InputForm
-              {...register("jnUptae")}
-              type="text"
-              inputSize={InputSize.md}
-            />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnUptae"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field></Field>
-        <Field>
-          <FormGroup>
-            <Label>종목</Label>
-            <InputForm
-              {...register("jnJongmok")}
-              type="text"
-              inputSize={InputSize.md}
-            />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnJongmok"]?.message}</ErrorText>
-          </div>
-        </Field>
-      </Wrapper>
-      <Wrapper grid>
-        <Field>
-          <FormGroup>
-            <Label>대표전화</Label>
-            <InputForm {...register("jnTel1")} type="text" />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnTel1"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
-          <FormGroup>
-            <Label>대표전화2</Label>
-            <InputForm {...register("jnTel2")} type="text" />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnTel2"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
-          <FormGroup>
-            <Label>팩스</Label>
-            <InputForm {...register("jnFax")} type="text" />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnFax"]?.message}</ErrorText>
-          </div>
-        </Field>
-      </Wrapper>
-      <Divider />
-      <Wrapper grid>
-        <Field>
-          <FormGroup>
-            <Label>안전관리 총괄자</Label>
-            <InputForm {...register("jnAnName1")} type="text" />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnAnName1"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
-          <FormGroup>
-            <Label>전화</Label>
-            <InputForm {...register("jnAnTel1")} type="text" />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnAnTel1"]?.message}</ErrorText>
-          </div>
-        </Field>
-      </Wrapper>
-      <Wrapper grid>
-        <Field>
-          <FormGroup>
-            <Label>안전관리 책임자</Label>
-            <InputForm {...register("jnAnName2")} type="text" />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnAnName2"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
-          <FormGroup>
-            <Label>전화</Label>
-            <InputForm {...register("jnAnTel2")} type="text" />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnAnTel2"]?.message}</ErrorText>
-          </div>
-        </Field>
-      </Wrapper>
-      <Divider />
-      <Wrapper grid col={2} style={{ gridTemplateColumns: " 2fr 4fr" }}>
-        <Field>
-          <FormGroup>
-            <Label>세금계산서 양식</Label>
-            <Select {...register("jnSekum")}>
-              <option value="A4 백지">A4 백지</option>
-            </Select>
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnSekum"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Wrapper grid col={3}>
+          <InputTest
+            label="팩스"
+            name="jnFax"
+            register={register}
+            errors={errors}
+          />
+        </Wrapper>
+        <Divider />
+        <Wrapper grid>
+          <InputTest
+            label="안전관리 총괄자"
+            name="jnAnName1"
+            register={register}
+            errors={errors}
+          />
+          <InputTest
+            label="전화"
+            name="jnAnTel1"
+            register={register}
+            errors={errors}
+          />
+        </Wrapper>
+        <Wrapper grid>
+          <InputTest
+            label="안전관리 책임자"
+            name="jnAnName2"
+            register={register}
+            errors={errors}
+          />
+          <InputTest
+            label="전화"
+            name="jnAnTel2"
+            register={register}
+            errors={errors}
+          />
+        </Wrapper>
+        <Divider />
+        <Wrapper grid col={2} style={{ gridTemplateColumns: " 2fr 4fr" }}>
           <Field>
             <FormGroup>
-              <CheckBox
-                {...register("jnSegongYn")}
-                name="공급사업자 인쇄안함"
-              />
+              <Label>세금계산서 양식</Label>
+              <Select {...register("jnSekum")}>
+                <option value="A4 백지">A4 백지</option>
+                <option value="0">0</option>
+              </Select>
             </FormGroup>
             <div>
-              <ErrorText>{errors["jnSegongYn"]?.message}</ErrorText>
+              <ErrorText>{errors["jnSekum"]?.message}</ErrorText>
             </div>
           </Field>
+          <Wrapper grid col={3}>
+            <Field>
+              <FormGroup>
+                <CheckBox
+                  {...register("jnSegongYn")}
+                  name="공급사업자 인쇄안함"
+                  defaultChecked={selected.jnSegongYn === "Y"}
+                />
+              </FormGroup>
+              <div>
+                <ErrorText>{errors["jnSegongYn"]?.message}</ErrorText>
+              </div>
+            </Field>
+            {/* <Controller
+              name="jnSegongYn"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <CheckBox defaultChecked={true} {...field} />
+              )}
+            /> */}
+            <Field>
+              <FormGroup>
+                <CheckBox
+                  {...register("jnVatSumyn")}
+                  name="Vat 별도 단가계산"
+                  defaultChecked={selected.jnVatSumyn === "Y"}
+                />
+              </FormGroup>
+              <div>
+                <ErrorText>{errors["jnVatSumyn"]?.message}</ErrorText>
+              </div>
+            </Field>
+            <Field>
+              <FormGroup>
+                <CheckBox
+                  {...register("jnSekumEa")}
+                  name="수량 단가 인쇄 유무"
+                  defaultChecked={selected.jnSekumEa === "Y"}
+                />
+              </FormGroup>
+              <div>
+                <ErrorText>{errors["jnSekumEa"]?.message}</ErrorText>
+              </div>
+            </Field>
+          </Wrapper>
+        </Wrapper>
+        <Wrapper>
           <Field>
             <FormGroup>
-              <CheckBox {...register("jnVatSumyn")} name="Vat 별도 단가계산" />
+              <Label>거래명세표 양식</Label>
+              <Select {...register("jnJangbu")}>
+                <option value="1">1 인쇄용지</option>
+                <option value="2">2 인쇄용지</option>
+                <option value="0">0 인쇄용지</option>
+              </Select>
             </FormGroup>
             <div>
-              <ErrorText>{errors["jnVatSumyn"]?.message}</ErrorText>
-            </div>
-          </Field>
-          <Field>
-            <FormGroup>
-              <CheckBox {...register("jnSekumEa")} name="수량 단가 인쇄 유무" />
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jnSekumEa"]?.message}</ErrorText>
+              <ErrorText>{errors["jnJangbu"]?.message}</ErrorText>
             </div>
           </Field>
         </Wrapper>
-      </Wrapper>
-      <Wrapper>
-        <Field>
-          <FormGroup>
-            <Label>거래명세표 양식</Label>
-            <Select {...register("jnJangbu")}>
-              <option value="0  인쇄용지">0 인쇄용지</option>
-            </Select>
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnJangbu"]?.message}</ErrorText>
-          </div>
-        </Field>
-      </Wrapper>
-      <Wrapper grid col={3}>
-        <Field>
-          <FormGroup>
-            <Label>탱크잔량/원격검침 발신기 업체번호</Label>
-            <InputForm
-              {...register("jnCmngno")}
-              type="text"
-              inputSize={InputSize.sm}
-            />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jnCmngno"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
-          <FormGroup>
-            <CheckBox
-              {...register("innopayBankYn")}
-              name="Nice 계좌자동이체 사용"
-            />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["innopayBankYn"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
-          <FormGroup>
-            <CheckBox
-              {...register("niceBankYn")}
-              name="Innopay 카드자동이체 사용"
-            />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["niceBankYn"]?.message}</ErrorText>
-          </div>
-        </Field>
-      </Wrapper>
-      <div style={{ marginTop: "30px" }}>
-        <PlainTab
-          tabHeader={["지로 양식", "고객안내문", "입금계좌  안내", "결재란"]}
-          onClick={(id) => setTabId(id)}
-        />
-        <TabContentWrapper>{getTabContent(tabId)}</TabContentWrapper>
-      </div>
-    </form>
-  );
-};
+        <Wrapper grid col={3}>
+          <InputTest
+            label="탱크잔량/원격검침 발신기 업체번호"
+            labelLong
+            name="jnCmngno"
+            register={register}
+            errors={errors}
+          />
+          <Field>
+            <FormGroup>
+              <CheckBox
+                {...register("innopayBankYn")}
+                name="Nice 계좌자동이체 사용"
+                defaultChecked={selected.innopayBankYn === "Y"}
+              />
+            </FormGroup>
+            <div>
+              <ErrorText>{errors["innopayBankYn"]?.message}</ErrorText>
+            </div>
+          </Field>
+          <Field>
+            <FormGroup>
+              <CheckBox
+                {...register("niceBankYn")}
+                name="Innopay 카드자동이체 사용"
+                defaultChecked={selected.niceBankYn === "Y"}
+              />
+            </FormGroup>
+            <div>
+              <ErrorText>{errors["niceBankYn"]?.message}</ErrorText>
+            </div>
+          </Field>
+        </Wrapper>
+        <div style={{ marginTop: "30px" }}>
+          <PlainTab
+            tabHeader={["지로 양식", "고객안내문", "입금계좌  안내", "결재란"]}
+            onClick={(id) => setTabId(id)}
+          />
+          <TabContentWrapper>
+            {getTabContent(tabId, register, errors)}
+          </TabContentWrapper>
+        </div>
+      </form>
+    );
+  }
+);
 
-export default forwardRef(Form);
+export default Form;

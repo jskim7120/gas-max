@@ -2,6 +2,7 @@ import React from "react";
 import Table from "components/table";
 import {
   Input,
+  InputTest,
   Select,
   Field,
   ErrorText,
@@ -13,152 +14,70 @@ import {
 } from "components/form/style";
 import { InputSize } from "components/componentsType";
 
-function getTabContent(id: number) {
+function getTabContent(id: number, register: any, errors: any) {
+  // console.log("register:", { ...register("jnJiroSNo") });
   const data1 = [
     {
-      name: "양식 1",
-      age: (
+      1: "양식 1",
+      2: <InputTest name="jnJiroSNo" register={register} errors={errors} />,
+      3: <InputTest name="jnJiroNo" register={register} errors={errors} />,
+      4: <InputTest name="jnJiroBigo" register={register} errors={errors} />,
+      5: (
         <Field>
-          <Input type="text" name="jnJiroSNo" defaultValue="jnJiroSNo" />
+          <Select style={{ width: "150px" }} {...register("jnJiro")}>
+            <option value="0">0</option>
+            <option value="1">1</option>
+          </Select>
           <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      bla: (
-        <Field>
-          <Input type="text" name="jnJiroNo" defaultValue="jnJiroNo" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      bla2: (
-        <Field>
-          <Input type="text" name="jnJiroBigo" defaultValue="jnJiroBigo" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      bla3: (
-        <Field>
-          <select style={{ width: "150px" }}>
-            <option value="">jnJiro</option>
-          </select>
-          <div>
-            <ErrorText>{}</ErrorText>
+            <ErrorText>{errors && errors["jnJiro"]?.message}</ErrorText>
           </div>
         </Field>
       ),
     },
     {
-      name: "양식 2",
-      age: (
+      1: "양식 2",
+      2: <InputTest name="jnJiroSNo02" register={register} errors={errors} />,
+      3: <InputTest name="jnJiroNo02" register={register} errors={errors} />,
+      4: <InputTest name="jnJiroBigo02" register={register} errors={errors} />,
+      5: (
         <Field>
-          <Input type="text" name="jnJiroSNo02" defaultValue="jnJiroSNo02" />
+          <Select style={{ width: "150px" }} {...register("jnJiro2")}>
+            <option value="0">0</option>
+          </Select>
           <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      bla: (
-        <Field>
-          <Input type="text" name="jnJiroNo02" defaultValue="jnJiroNo02" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      bla2: (
-        <Field>
-          <Input type="text" name="jnJiroBigo02" defaultValue="jnJiroBigo02" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      bla3: (
-        <Field>
-          <select style={{ width: "150px" }}>
-            <option value="">jnJiro2</option>
-          </select>
-          <div>
-            <ErrorText>{}</ErrorText>
+            <ErrorText>{errors && errors["jnJiro2"]?.message}</ErrorText>
           </div>
         </Field>
       ),
     },
     {
-      name: "양식 3",
-      age: (
+      1: "양식 3",
+      2: <InputTest name="jnJiroSNo03" register={register} errors={errors} />,
+      3: <InputTest name="jnJiroNo03" register={register} errors={errors} />,
+      4: <InputTest name="jnJiroBigo03" register={register} errors={errors} />,
+      5: (
         <Field>
-          <Input type="text" name="jnJiroSNo03" defaultValue="jnJiroSNo03" />
+          <Select style={{ width: "150px" }} {...register("jnJiro3")}>
+            <option value="0">0</option>
+          </Select>
           <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      bla: (
-        <Field>
-          <Input type="text" name="jnJiroNo03" defaultValue="jnJiroNo03" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      bla2: (
-        <Field>
-          <Input type="text" name="jnJiroBigo03" defaultValue="jnJiroBigo03" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      bla3: (
-        <Field>
-          <select style={{ width: "150px" }}>
-            <option value="">jnJiro3</option>
-          </select>
-          <div>
-            <ErrorText>{}</ErrorText>
+            <ErrorText>{errors && errors["jnJiro3"]?.message}</ErrorText>
           </div>
         </Field>
       ),
     },
     {
-      name: "양식 4",
-      age: (
+      1: "양식 4",
+      2: <InputTest name="jnJiroSNo04" register={register} errors={errors} />,
+      3: <InputTest name="jnJiroNo04" register={register} errors={errors} />,
+      4: <InputTest name="jnJiroBigo04" register={register} errors={errors} />,
+      5: (
         <Field>
-          <Input type="text" name="jnJiroSNo04" defaultValue="jnJiroSNo04" />
+          <Select style={{ width: "150px" }} {...register("jnJiro4")}>
+            <option value="0">0</option>
+          </Select>
           <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      bla: (
-        <Field>
-          <Input type="text" name="jnJiroNo04" defaultValue="jnJiroNo04" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      bla2: (
-        <Field>
-          <Input type="text" name="jnJiroBigo04" defaultValue="jnJiroBigo04" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      bla3: (
-        <Field>
-          <select style={{ width: "150px" }}>
-            <option value="">jnJiro4</option>
-          </select>
-          <div>
-            <ErrorText>{}</ErrorText>
+            <ErrorText>{errors && errors["jnJiro4"]?.message}</ErrorText>
           </div>
         </Field>
       ),
@@ -167,121 +86,38 @@ function getTabContent(id: number) {
 
   const data3 = [
     {
-      jnBank1: (
-        <Field>
-          <Input type="text" name="jnBank1" defaultValue="jnBank1" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
+      jnBank1: <InputTest name="jnBank1" register={register} errors={errors} />,
       jnBankNo1: (
-        <Field>
-          <Input type="text" name="jnBankNo1" defaultValue="jnBankNo1" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
+        <InputTest name="jnBankNo1" register={register} errors={errors} />
       ),
     },
     {
-      jnBank2: (
-        <Field>
-          <Input type="text" name="jnBank2" defaultValue="jnBank2" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
+      jnBank2: <InputTest name="jnBank2" register={register} errors={errors} />,
       jnBankNo2: (
-        <Field>
-          <Input type="text" name="jnBankNo2" defaultValue="jnBankNo2" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
+        <InputTest name="jnBankNo2" register={register} errors={errors} />
       ),
     },
     {
-      jnBank3: (
-        <Field>
-          <Input type="text" name="jnBank3" defaultValue="jnBank3" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
+      jnBank3: <InputTest name="jnBank3" register={register} errors={errors} />,
       jnBankNo3: (
-        <Field>
-          <Input type="text" name="jnBankNo3" defaultValue="jnBankNo3" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
+        <InputTest name="jnBankNo3" register={register} errors={errors} />
       ),
     },
     {
-      jnBank4: (
-        <Field>
-          <Input type="text" name="jnBank4" defaultValue="jnBank4" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
+      jnBank4: <InputTest name="jnBank4" register={register} errors={errors} />,
       jnBankNo4: (
-        <Field>
-          <Input type="text" name="jnBankNo4" defaultValue="jnBankNo4" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
+        <InputTest name="jnBankNo4" register={register} errors={errors} />
       ),
     },
   ];
 
   const data4 = [
     {
-      jnMark1: (
-        <Field>
-          <Input type="text" name="jnMark1" defaultValue="jnMark1" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      jnMark2: (
-        <Field>
-          <Input type="text" name="jnMark2" defaultValue="jnMark2" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      jnMark3: (
-        <Field>
-          <Input type="text" name="jnMark3" defaultValue="jnMark3" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      jnMark4: (
-        <Field>
-          <Input type="text" name="jnMark4" defaultValue="jnMark4" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
-      jnMark5: (
-        <Field>
-          <Input type="text" name="jnMark5" defaultValue="jnMark5" />
-          <div>
-            <ErrorText>{}</ErrorText>
-          </div>
-        </Field>
-      ),
+      jnMark1: <InputTest name="jnMark1" register={register} errors={errors} />,
+      jnMark2: <InputTest name="jnMark2" register={register} errors={errors} />,
+      jnMark3: <InputTest name="jnMark3" register={register} errors={errors} />,
+      jnMark4: <InputTest name="jnMark4" register={register} errors={errors} />,
+      jnMark5: <InputTest name="jnMark5" register={register} errors={errors} />,
     },
   ];
 
@@ -303,72 +139,42 @@ function getTabContent(id: number) {
     case 1:
       return (
         <div>
-          <Field>
-            <Input
-              type="text"
-              name="edJnOrderO1"
-              defaultValue="edJnOrderO1"
-              inputSize={InputSize.lg}
-            />
-            <div>
-              <ErrorText>{}</ErrorText>
-            </div>
-          </Field>
-          <Field>
-            <Input
-              type="text"
-              name="edJnOrderO2"
-              defaultValue="edJnOrderO2"
-              inputSize={InputSize.lg}
-            />
-            <div>
-              <ErrorText>{}</ErrorText>
-            </div>
-          </Field>
-          <Field>
-            <Input
-              type="text"
-              name="edJnOrderO3"
-              defaultValue="edJnOrderO3"
-              inputSize={InputSize.lg}
-            />
-            <div>
-              <ErrorText>{}</ErrorText>
-            </div>
-          </Field>
-          <Field>
-            <Input
-              type="text"
-              name="edJnOrderO4"
-              defaultValue="edJnOrderO4"
-              inputSize={InputSize.lg}
-            />
-            <div>
-              <ErrorText>{}</ErrorText>
-            </div>
-          </Field>
-          <Field>
-            <Input
-              type="text"
-              name="edJnOrderO5"
-              defaultValue="edJnOrderO5"
-              inputSize={InputSize.lg}
-            />
-            <div>
-              <ErrorText>{}</ErrorText>
-            </div>
-          </Field>
-          <Field>
-            <Input
-              type="text"
-              name="edJnOrderO6"
-              defaultValue="edJnOrderO6"
-              inputSize={InputSize.lg}
-            />
-            <div>
-              <ErrorText>{}</ErrorText>
-            </div>
-          </Field>
+          <InputTest
+            name="edJnOrderO1"
+            register={register}
+            errors={errors}
+            fullWidth
+          />
+          <InputTest
+            name="edJnOrderO2"
+            register={register}
+            errors={errors}
+            fullWidth
+          />
+          <InputTest
+            name="edJnOrderO3"
+            register={register}
+            errors={errors}
+            fullWidth
+          />
+          <InputTest
+            name="edJnOrderO4"
+            register={register}
+            errors={errors}
+            fullWidth
+          />
+          <InputTest
+            name="edJnOrderO5"
+            register={register}
+            errors={errors}
+            fullWidth
+          />
+          <InputTest
+            name="edJnOrderO6"
+            register={register}
+            errors={errors}
+            fullWidth
+          />
         </div>
       );
     case 2:

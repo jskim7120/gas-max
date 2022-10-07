@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
 import { InputSize } from "components/componentsType";
+import { Path, UseFormRegister, FieldError } from "react-hook-form";
+import { IFormProps } from "container/contents/en1100/type";
 
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
@@ -27,18 +29,73 @@ export const Input = styled.input<{
     props.inputSize ? getInputSize(props.inputSize) : "150px"};
 `;
 
+interface IInputProps {
+  type?: string;
+  label?: string;
+  labelLong?: boolean;
+  // name: Path<IFormProps>;
+  // register: UseFormRegister<IFormProps>;
+  // errors?: FieldError | any;
+  name: any;
+  register: any;
+  errors?: any;
+  inputSize?: InputSize;
+  fullWidth?: boolean;
+  grow?: boolean;
+}
+
+export const InputTest = ({
+  type,
+  label,
+  labelLong,
+  name,
+  register,
+  errors,
+  inputSize,
+  fullWidth,
+}: IInputProps) => {
+  return (
+    <InputWrapper fullWidth={fullWidth}>
+      <FormGroup>
+        {label !== undefined && <Label labelLong={labelLong}>{label}</Label>}
+        <InputForm
+          type={type ? type : "text"}
+          inputSize={inputSize && inputSize}
+          fullWidth={fullWidth && fullWidth}
+          {...register(name)}
+        />
+      </FormGroup>
+      <p
+        style={{
+          color: "red",
+          fontSize: "12px",
+          textAlign: "end",
+          marginRight: "7px",
+        }}
+      >
+        {errors && errors[name]?.message}
+      </p>
+    </InputWrapper>
+  );
+};
+
+const InputWrapper = styled.div<{ fullWidth?: boolean }>`
+  // margin-bottom: 8px;
+  flex: ${(props) => props.fullWidth && "1"};
+`;
+
 export const InputForm = styled.input<{
   inputSize?: InputSize;
+  fullWidth?: boolean;
 }>`
   height: 25px;
   border-radius: 4px;
-  border: 1px solid #bbb;
-  // border: none;
+  border: none;
   outline: none;
   display: inline-block;
+
+  flex: ${(props) => props.fullWidth && "1"};
   padding: 0 6px;
-  width: ${(props) =>
-    props.inputSize ? getInputSize(props.inputSize) : "150px"};
   &:hover,
   &:focus {
     border: 1px solid #bbb;
@@ -49,23 +106,31 @@ export const ErrorText = styled.p`
   color: red;
   font-size: 12px;
   text-align: end;
+  margin-right: 5px;
 `;
 
 export const Select = styled.select`
   height: 25px;
   border-radius: 4px;
-  border: 1px solid #bbb;
+
+  border: none;
   outline: none;
+  &:hover,
+  &:focus {
+    border: 1px solid #bbb;
+  }
 `;
 
 export const FormGroup = styled.div`
   display: flex;
-  align-items: center;
-  //justify-content: center;
-`;
+  align-items: stretch;
+  gap: 4px;
+  // border: 1px solid gray;
 
-export const Field = styled.div`
-  margin-bottom: 8px;
+  input,
+  select {
+    margin: 5px;
+  }
 
   label.login {
     color: #707070;
@@ -74,13 +139,16 @@ export const Field = styled.div`
   }
 `;
 
-export const Label = styled.label`
+export const Label = styled.label<{ labelLong?: boolean }>`
   font-family: "NotoSansKRRegular";
   font-size: 12px;
-  min-width: 100px;
+  min-width: ${(props) => (props.labelLong ? "200px" : "100px")};
   text-align: right;
-  padding-right: 10px;
+  padding: 7px 10px;
+  background: #f9f9f9;
 `;
+
+export const Field = styled.div``;
 
 export const FormInline = styled.div`
   display: inline-block;
@@ -92,8 +160,8 @@ export const FormBlock = styled.div`
 
 export const Divider = styled.div`
   height: 1px;
-  background: rgba(104, 103, 103, 0.21);
-  margin: 0px 0 5px 0;
+  background: #000;
+  margin: 5px 0;
 `;
 
 export const Wrapper = styled.div<{

@@ -12,12 +12,12 @@ let container: HTMLDivElement;
 let dp: any;
 let gv: any;
 
-function EN100({ name }: { name: string }) {
+function EN1100({ name }: { name: string }) {
   const realgridElement = useRef<HTMLDivElement>(null);
-  const formRef = useRef<any>(null);
+  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
 
-  const [selected, setSelected] = useState();
   const [jnotry, setJnotry] = useState([]);
+  const [selected, setSelected] = useState<any>();
   const [addClicked, setAddClicked] = useState(false);
 
   useEffect(() => {
@@ -64,6 +64,7 @@ function EN100({ name }: { name: string }) {
       if (data) {
         console.log("JNORTY:", data);
         setJnotry(data);
+        setSelected(data[0]);
       }
     } catch (err) {
       console.log("JNOTRY DATA fetch error =======>", err);
@@ -117,11 +118,11 @@ function EN100({ name }: { name: string }) {
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form selected={selected ? selected : jnotry[0]} ref={formRef} />
+          <Form selected={selected} ref={formRef} />
         </DetailWrapper>
       </Wrapper>
     </>
   );
 }
 
-export default EN100;
+export default EN1100;

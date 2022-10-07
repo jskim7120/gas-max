@@ -23,7 +23,7 @@ export const schema = yup.object({
   //   .typeError("too bh yostoi")
   //   .nullable(true)
   //   .transform((_, val) => (val === val ? Number(val) : null)),
-  areaCode: yup.number().required("zaaval bh"),
+  areaCode: yup.number().typeError("zaaval bh"),
   areaName: yup.string().required("zaaval bh"),
   jnSsno: yup.string().required("zaaval bh talbar"),
 });
