@@ -13,7 +13,13 @@ let container: HTMLDivElement;
 let dp: any;
 let gv: any;
 
-function TabContent3({ name }: { name?: string }) {
+function TabContent3({
+  name,
+  depthFullName,
+}: {
+  name?: string;
+  depthFullName: string;
+}) {
   const dispatch = useDispatch();
   tableData = useSelector((state) => state.employees.employees);
   const realgridElement = useRef<HTMLDivElement>(null);

@@ -70,7 +70,6 @@ const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
 let content: React.ReactNode;
 let tabHeader: Array<any>;
 let activeTabId: any;
-let activeTabName: string;
 
 const Tab = (props: TabProps): JSX.Element => {
   const dispatch = useDispatch();
@@ -87,9 +86,11 @@ const Tab = (props: TabProps): JSX.Element => {
 
   tabHeader = tabState.tabs;
   activeTabId = tabState.activeTabId;
-  activeTabName = tabHeader.find((tab) => tab.menuId === activeTabId)?.menuName;
+  const { menuName, depthFullName } = tabHeader.find(
+    (tab) => tab.menuId === activeTabId
+  );
 
-  content = getContent(activeTabId, activeTabName);
+  content = getContent(activeTabId, menuName, depthFullName);
 
   const closeTab = (menuId: string) => {
     dispatch(removeTab({ menuId: menuId }));

@@ -67,7 +67,13 @@ let dp: any;
 let gv: any;
 let selectedCustomerCopy: any;
 
-function Tab2({ name }: { name?: string }) {
+function Tab2({
+  name,
+  depthFullName,
+}: {
+  name?: string;
+  depthFullName: string;
+}) {
   const dispatch = useDispatch();
   tableData = useSelector((state) => state.employees.employees);
   console.log("tableData:", tableData);
