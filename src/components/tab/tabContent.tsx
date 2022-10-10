@@ -1,6 +1,5 @@
 import React from "react";
 import TabContent1 from "container/contents/tab1/tab1";
-import TabContent2 from "container/contents/tab2/tab2";
 import TabContent3 from "container/contents/tab3/tab3";
 import EN1100 from "container/contents/en1100";
 
@@ -13,7 +12,7 @@ export const getContent = (
     case "CM1100":
       return <TabContent1 name={menuName} depthFullName={depthFullName} />;
     case "CM1200":
-      return <TabContent2 name={menuName} depthFullName={depthFullName} />;
+      return <TabContent3 name={menuName} depthFullName={depthFullName} />;
     case "CM1300":
       return <TabContent3 name={menuName} depthFullName={depthFullName} />;
     case "CM1301":

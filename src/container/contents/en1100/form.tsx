@@ -4,7 +4,6 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import DatePicker from "react-datepicker";
 import { useForm, Path, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "app/store";
@@ -58,7 +57,6 @@ const Form = React.forwardRef(
           jnVatSumyn: selected?.jnVatSumyn === "Y",
         });
       }
-      console.log(register("innopayBankYn"));
     }, [selected]);
 
     const {
