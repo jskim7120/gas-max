@@ -1,91 +1,74 @@
 import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import Checked from "assets/image/checked.png";
 
-const CheckSvg = (): string => {
-  return `"<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>"`;
-};
+const CheckBoxWrapper = styled.div<{ rtl: boolean }>`
+  label {
+    display: flex;
+    align-items: center;
+    flex-direction: ${(props) => (props.rtl ? "row" : "row-reverse")};
+    gap: ${(props) => (props.rtl ? "8px" : "5px")};
+    font-family: "NotoSansKRRegular";
+    font-size: 12px;
+    font-weight: 600;
+  }
 
-const CheckdSvg = (): string => {
-  return `"<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-right-down"><polyline points="10 15 15 20 20 15"></polyline><path d="M4 4h7a4 4 0 0 1 4 4v12"></path></svg>"`;
-};
+  input[type="checkbox"]:before {
+    position: relative;
+    left: -1px;
+    top: -1px;
+    display: block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #000;
+    border-radius: 4px;
+    border-top-right-radius: 0;
 
-const InputCheckBoxItem = styled.label`
-  display: block;
-  margin-right: 10px;
-  padding: 3px 0;
-  line-height: 1;
-  border: 1px solid red;
+    content: "";
+    background: #fff;
+  }
 
-  i {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin-right: 5px;
-    margin-top: -2px;
-    background-size: 16px;
-    background-position: center center;
+  input[type="checkbox"]:after {
+    position: relative;
+    display: block;
+    left: 2px;
+    top: -16px;
+    width: 12px;
+    height: 12px;
+    content: "";
     background-repeat: no-repeat;
-    border: 1px solid ${(props) => `background-image: url(${CheckSvg()})`};
-    vertical-align: middle;
+    background-position: center;
   }
 
-  &:hover {
-    input + i {
-      ${(props) => `background-image: url(${CheckSvg()})`};
-    }
-    input:checked + i {
-      ${(props) => `background-image: url(${CheckdSvg()})`};
-    }
+  input[type="checkbox"]:checked:after {
+    background-image: url(${Checked});
   }
-  input {
-    display: none;
-    &:checked + i {
-      ${(props) => `background-image: url(${CheckdSvg()})`};
-    }
-    &:disabled + i {
-      ${(props) => `background-image: url(${CheckSvg()})`};
-    }
-    &:checked:disabled + i {
-      ${(props) => `background-image: url(${CheckdSvg()})`};
-    }
+
+  // input[type="checkbox"]:disabled:after {
+  //   -webkit-filter: opacity(0.4);
+  // }
+
+  // input[type="checkbox"]:not(:disabled):checked:hover:after {
+  //   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAQAAABuW59YAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAB2SURBVHjaAGkAlv8A3QDyAP0A/QD+Dam3W+kCAAD8APYAAgTVZaZCGwwA5wr0AvcA+Dh+7UX/x24AqK3Wg/8nt6w4/5q71wAAVP9g/7rTXf9n/+9N+AAAtpJa/zf/S//DhP8H/wAA4gzWj2P4lsf0JP0A/wADAHB0Ngka6UmKAAAAAElFTkSuQmCC");
+  // }
+
+  // input[type="checkbox"]:not(:disabled):hover:after {
+  // }
+
+  input[type="checkbox"]:not(:disabled):hover:before {
+    border-color: #707070;
   }
 `;
 
-interface ICheckBoxProps {
-  name: string;
-  id?: string;
-  text?: string;
-  value?: boolean;
-  change?: (value: boolean, id?: string) => void;
-  disabled?: boolean;
-}
-
-function CheckBox(props: ICheckBoxProps): JSX.Element {
-  const [value, setValue] = useState<boolean>(props.value ? true : false);
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked } = e.target;
-    setValue(checked);
-    if (props.change) {
-      props.change(checked, props.id);
-    }
-  };
-  useEffect(() => {
-    setValue(props.value ? true : false);
-  }, [props.value]);
+function CheckBox(props: { title?: string; rtl?: boolean; register: any }) {
   return (
-    <InputCheckBoxItem>
-      <input
-        type="checkbox"
-        name={props.name}
-        id={props.id}
-        checked={value}
-        onChange={onChange}
-        disabled={props.disabled}
-      />
-      <i />
-      {props.text ? props.text : ""}
-    </InputCheckBoxItem>
+    <CheckBoxWrapper rtl={props.rtl ? props.rtl : false}>
+      <label>
+        <input type="checkbox" {...props.register} />
+        {props.title && props.title}
+      </label>
+    </CheckBoxWrapper>
   );
 }
 
-export default React.memo(CheckBox);
+export default CheckBox;

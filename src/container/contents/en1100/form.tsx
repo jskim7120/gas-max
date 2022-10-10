@@ -28,7 +28,7 @@ import {
   DividerGray,
   Label,
 } from "components/form/style";
-import CheckBox from "components/checkbox2";
+import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
 import { IFormProps } from "./type";
 import { MagnifyingGlass } from "components/allSvgIcon";
@@ -49,8 +49,16 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
-        reset(selected);
+        reset({
+          ...selected,
+          innopayBankYn: selected?.innopayBankYn === "Y",
+          niceBankYn: selected?.niceBankYn === "Y",
+          jnSekumEa: selected?.jnSekumEa === "Y",
+          jnSegongYn: selected?.jnSegongYn === "Y",
+          jnVatSumyn: selected?.jnVatSumyn === "Y",
+        });
       }
+      console.log(register("innopayBankYn"));
     }, [selected]);
 
     const {
@@ -74,12 +82,21 @@ const Form = React.forwardRef(
             newData[key] = null;
           }
           setIsClikedAdd(true);
+          reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
           }
+
+          reset({
+            ...newData,
+            innopayBankYn: selected?.innopayBankYn === "Y",
+            niceBankYn: selected?.niceBankYn === "Y",
+            jnSekumEa: selected?.jnSekumEa === "Y",
+            jnSegongYn: selected?.jnSegongYn === "Y",
+            jnVatSumyn: selected?.jnVatSumyn === "Y",
+          });
         }
-        reset(newData);
       }
     };
 
@@ -265,9 +282,8 @@ const Form = React.forwardRef(
             <Field>
               <FormGroup>
                 <CheckBox
-                  {...register("jnSegongYn")}
-                  name="공급사업자 인쇄안함"
-                  defaultChecked={selected.jnSegongYn === "Y"}
+                  register={{ ...register("jnSegongYn") }}
+                  title="공급사업자 인쇄안함"
                 />
               </FormGroup>
               <div>
@@ -277,9 +293,8 @@ const Form = React.forwardRef(
             <Field>
               <FormGroup>
                 <CheckBox
-                  {...register("jnVatSumyn")}
-                  name="Vat 별도 단가계산"
-                  defaultChecked={selected.jnVatSumyn === "Y"}
+                  register={{ ...register("jnVatSumyn") }}
+                  title="Vat 별도 단가계산"
                 />
               </FormGroup>
               <div>
@@ -289,9 +304,8 @@ const Form = React.forwardRef(
             <Field>
               <FormGroup>
                 <CheckBox
-                  {...register("jnSekumEa")}
-                  name="수량 단가 인쇄 유무"
-                  defaultChecked={selected.jnSekumEa === "Y"}
+                  register={{ ...register("jnSekumEa") }}
+                  title="수량 단가 인쇄 유무"
                 />
               </FormGroup>
               <div>
@@ -328,25 +342,23 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <CheckBox
-                {...register("innopayBankYn")}
-                name="Nice 계좌자동이체 사용"
-                defaultChecked={selected.innopayBankYn === "Y"}
+                register={{ ...register("niceBankYn") }}
+                title="Nice 계좌자동이체 사용"
               />
             </FormGroup>
             <div>
-              <ErrorText>{errors["innopayBankYn"]?.message}</ErrorText>
+              <ErrorText>{errors["niceBankYn"]?.message}</ErrorText>
             </div>
           </Field>
           <Field>
             <FormGroup>
               <CheckBox
-                {...register("niceBankYn")}
-                name="Innopay 카드자동이체 사용"
-                defaultChecked={selected.niceBankYn === "Y"}
+                register={{ ...register("innopayBankYn") }}
+                title="Innopay 카드자동이체 사용"
               />
             </FormGroup>
             <div>
-              <ErrorText>{errors["niceBankYn"]?.message}</ErrorText>
+              <ErrorText>{errors["innopayBankYn"]?.message}</ErrorText>
             </div>
           </Field>
         </Wrapper>
