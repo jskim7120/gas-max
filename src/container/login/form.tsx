@@ -38,7 +38,7 @@ function Login() {
 
   return (
     <form onSubmit={handleSubmit(submit)}>
-      <Field>
+      <Field style={{ marginBottom: "8px" }}>
         <Input
           {...register("username")}
           type="text"

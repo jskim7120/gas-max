@@ -24,7 +24,13 @@ let tableHeader: any[] = [
 ];
 let tableData: any;
 
-function TabContent1({ name }: { name: string }) {
+function TabContent1({
+  name,
+  depthFullName,
+}: {
+  name: string;
+  depthFullName: string;
+}) {
   tableData = useSelector((state) => state.employees.employees);
   const [selectedCustomer, setSelectedCustomer] = useState({
     areaCode: "",

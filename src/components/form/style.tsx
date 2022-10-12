@@ -80,7 +80,6 @@ export const InputTest = ({
 };
 
 const InputWrapper = styled.div<{ fullWidth?: boolean }>`
-  // margin-bottom: 8px;
   flex: ${(props) => props.fullWidth && "1"};
 `;
 
@@ -98,7 +97,7 @@ export const InputForm = styled.input<{
   padding: 0 6px;
   &:hover,
   &:focus {
-    border: 1px solid #bbb;
+    border: 1px solid #e6e5e5;
   }
 `;
 
@@ -112,12 +111,11 @@ export const ErrorText = styled.p`
 export const Select = styled.select`
   height: 25px;
   border-radius: 4px;
-
   border: none;
   outline: none;
   &:hover,
   &:focus {
-    border: 1px solid #bbb;
+    border: 1px solid #e6e5e5;
   }
 `;
 
@@ -125,11 +123,10 @@ export const FormGroup = styled.div`
   display: flex;
   align-items: stretch;
   gap: 4px;
-  // border: 1px solid gray;
 
   input,
   select {
-    margin: 5px;
+    margin: 5px 4px 5px 5px;
   }
 
   label.login {
@@ -142,6 +139,7 @@ export const FormGroup = styled.div`
 export const Label = styled.label<{ labelLong?: boolean }>`
   font-family: "NotoSansKRRegular";
   font-size: 12px;
+  font-weight: 600;
   min-width: ${(props) => (props.labelLong ? "200px" : "100px")};
   text-align: right;
   padding: 7px 10px;
@@ -161,7 +159,11 @@ export const FormBlock = styled.div`
 export const Divider = styled.div`
   height: 1px;
   background: #000;
-  margin: 5px 0;
+`;
+export const DividerGray = styled.div`
+  height: 1px;
+  width: 100%;
+  background: #e6e5e5;
 `;
 
 export const Wrapper = styled.div<{
@@ -184,4 +186,5 @@ export const Wrapper = styled.div<{
   gap: ${(props) => (props.gap ? props.gap : "0px")};
   padding: ${(props) => (props.padding ? props.padding : "0")};
   background: ${(props) => (props.bg ? props.bg : "transparent")};
+  align-items: ${(props) => props.grid && "center"};
 `;

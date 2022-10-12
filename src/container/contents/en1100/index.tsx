@@ -12,7 +12,13 @@ let container: HTMLDivElement;
 let dp: any;
 let gv: any;
 
-function EN1100({ name }: { name: string }) {
+function EN1100({
+  name,
+  depthFullName,
+}: {
+  name: string;
+  depthFullName: string;
+}) {
   const realgridElement = useRef<HTMLDivElement>(null);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
 
@@ -28,15 +34,15 @@ function EN1100({ name }: { name: string }) {
     container = realgridElement.current as HTMLDivElement;
     dp = new LocalDataProvider(true);
     gv = new GridView(container);
-    gv.setHeader({
-      height: 30,
-    });
 
     gv.setDataSource(dp);
     dp.setFields(fields);
     gv.setColumns(columns);
     dp.setRows(jnotry);
 
+    gv.setHeader({
+      height: 35,
+    });
     gv.setFooter({ visible: false });
     gv.setOptions({
       indicator: { visible: true },
@@ -45,6 +51,8 @@ function EN1100({ name }: { name: string }) {
       // edit: { insertable: true, appendable: true },
     });
     gv.sortingOptions.enabled = true;
+    gv.displayOptions._selectionStyle = "singleRow";
+    //console.log("GV: ", gv);
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().itemIndex;
@@ -76,7 +84,7 @@ function EN1100({ name }: { name: string }) {
   return (
     <>
       <DetailHeader>
-        <p>{name}</p>
+        <p>{depthFullName}</p>
         <div className="buttons">
           <Button
             text="등록"
