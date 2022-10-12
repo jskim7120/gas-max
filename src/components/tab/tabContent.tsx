@@ -3,6 +3,7 @@ import TabContent1 from "container/contents/tab1/tab1";
 import TabContent2 from "container/contents/tab2/tab2";
 import TabContent3 from "container/contents/tab3/tab3";
 import EN1100 from "container/contents/en1100";
+import EN1500 from "container/contents/en1500";
 
 export const getContent = (id: any, name: string) => {
   switch (id) {
@@ -331,7 +332,7 @@ export const getContent = (id: any, name: string) => {
     case "EN1400":
       return <div></div>;
     case "EN1500":
-      return <div></div>;
+      return <EN1500 name={name} />;
     case "EN1501":
       return <div></div>;
     case "EN1600":
