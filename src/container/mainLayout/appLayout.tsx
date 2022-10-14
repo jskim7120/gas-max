@@ -1,5 +1,4 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "app/store";
 import { Container, TopSide, TopLeftWrapper, Icons } from "./style";
 import { Settings, User } from "components/allSvgIcon";
@@ -10,7 +9,7 @@ import { openModal } from "features/modal/modalSlice";
 
 let menuData: Array<any>;
 
-export default function AppLayout() {
+export default function AppLayout({ children }: { children: any }) {
   const dispatch = useDispatch();
   menuData = useSelector((state) => state.menu.menu);
   return (
@@ -30,7 +29,8 @@ export default function AppLayout() {
         </Icons>
       </TopSide>
 
-      <Outlet />
+      {children}
+
       <Footer />
     </Container>
   );

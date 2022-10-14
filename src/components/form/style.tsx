@@ -98,6 +98,7 @@ export const InputForm = styled.input<{
   &:hover,
   &:focus {
     border: 1px solid #e6e5e5;
+    background: #fdf0e8;
   }
 `;
 

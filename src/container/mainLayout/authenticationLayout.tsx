@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Outlet } from "react-router-dom";
 import Logo from "assets/image/JOALogin.png";
 import Circle from "assets/image/Circle.png";
 
@@ -85,7 +84,7 @@ const Container = styled.div`
   }
 `;
 
-function AuthenticationLayout() {
+function AuthenticationLayout({ children }: { children: JSX.Element }) {
   return (
     <Outer>
       <Container>
@@ -97,7 +96,7 @@ function AuthenticationLayout() {
           <img src={Logo} />
         </div>
 
-        <Outlet />
+        {children}
 
         <div className="footer">
           <div className="contact">

@@ -9,6 +9,7 @@ export const fields = [
     fieldName: "areaName",
     dataType: ValueType.TEXT,
   },
+  /*
   {
     fieldName: "jnSsno",
     dataType: ValueType.NUMBER,
@@ -33,6 +34,7 @@ export const fields = [
     fieldName: "jnAddr2",
     dataType: ValueType.TEXT,
   },
+   */
 ];
 
 export const columns = [
@@ -60,6 +62,7 @@ export const columns = [
       text: "영업소명칭",
     },
   },
+  /*
   {
     name: "jnSsno",
     fieldName: "jnSsno",
@@ -134,4 +137,5 @@ export const columns = [
       text: "상세주소",
     },
   },
+   */
 ];

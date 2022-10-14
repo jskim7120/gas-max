@@ -1,6 +1,8 @@
-import React from "react";
-import { useForm, Path, Controller } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch, useSelector } from "app/store";
 import { LoginSchema } from "./validation";
 import { ILoginFormProps } from "./type";
 import {
@@ -21,20 +23,27 @@ import {
   ButtonSize,
   ButtonTextColor,
 } from "components/componentsType";
+import { login } from "features/auth/authSlice";
 
 function Login() {
+  const [checked, setChecked] = useState(false);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-    control,
     getValues,
   } = useForm<ILoginFormProps>({
     resolver: yupResolver(LoginSchema),
   });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const submit = (data: ILoginFormProps) => {};
+  const submit = (data: ILoginFormProps) => {
+    dispatch(
+      login({ username: data.username, password: data.password })
+    ).finally(() => navigate("/"));
+  };
 
   return (
     <form onSubmit={handleSubmit(submit)}>
@@ -67,6 +76,8 @@ function Login() {
           <input
             type="checkbox"
             style={{ width: "20px", height: "21px", marginRight: "5px" }}
+            checked={checked}
+            onChange={() => setChecked(!checked)}
           />
           <label className="login">로그인 정보 저장</label>
         </Field>
