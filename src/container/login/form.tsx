@@ -61,7 +61,7 @@ function Login() {
       <Field>
         <Input
           {...register("password")}
-          type="text"
+          type="password"
           placeholder="비밀번호"
           style={{ height: "40px", width: "100%" }}
         />

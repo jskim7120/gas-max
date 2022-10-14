@@ -96,6 +96,7 @@ export interface IButtonProps
   kind?: ButtonType;
   textColor?: ButtonTextColor;
   icon?: React.ReactNode;
+  loader?: React.ReactNode;
   isHover?: boolean;
   disabled?: boolean;
   fullWidth?: boolean;
@@ -149,6 +150,7 @@ function Button(
           ></div>
         </span>
       )}
+      {props.loader && props.loader}
       {props.text}
     </ButtonComponent>
   );
