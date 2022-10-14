@@ -52,12 +52,26 @@ function EN1100({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
-    //console.log("GV: ", gv);
 
-    gv.onSelectionChanged = () => {
-      const itemIndex: any = gv.getCurrent().itemIndex;
-      setSelected(jnotry[itemIndex]);
-    };
+    // console.log("GV: ", gv);
+
+    if (jnotry.length > 0) {
+      gv.setSelection({
+        style: "rows",
+        startRow: 0,
+        endRow: 0,
+      });
+
+      // gv.setDisplayOptions({
+      //   rowFocusVisible:true,
+      //   rowFocusBackground:"#340000ff"
+      // });
+
+      gv.onSelectionChanged = () => {
+        const itemIndex: any = gv.getCurrent().itemIndex;
+        setSelected(jnotry[itemIndex]);
+      };
+    }
 
     return () => {
       dp.clearRows();

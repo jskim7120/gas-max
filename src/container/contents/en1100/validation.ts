@@ -23,7 +23,10 @@ export const schema = yup.object({
   //   .typeError("too bh yostoi")
   //   .nullable(true)
   //   .transform((_, val) => (val === val ? Number(val) : null)),
-  areaCode: yup.number().typeError("zaaval bh"),
-  areaName: yup.string().required("zaaval bh"),
-  jnSsno: yup.string().required("zaaval bh talbar"),
+  areaCode: yup
+    .number()
+    .max(99, "must be 2 digit")
+    .typeError("This field must be number"),
+  areaName: yup.string().required("This field is required"),
+  jnSsno: yup.string().required("This field is required"),
 });

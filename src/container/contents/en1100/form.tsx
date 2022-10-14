@@ -35,6 +35,7 @@ import { schema } from "./validation";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "../getTabContent";
+import Loader from "components/loader";
 
 interface IForm {
   selected: any;
@@ -115,8 +116,7 @@ const Form = React.forwardRef(
       }
     };
 
-    // if (selected && JSON.stringify(selected) === "{}")
-    if (!selected) return <p>Loading...</p>;
+    if (!selected) return <Loader text="...loading" />;
 
     return (
       <form onSubmit={handleSubmit(update)} style={{ padding: "0px 10px" }}>

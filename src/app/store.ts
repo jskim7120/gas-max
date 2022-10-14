@@ -9,8 +9,8 @@ import menuReducer from "features/menu/menuSlice";
 import favoriteReducer from "features/favorite/favoriteSlice";
 import tabReducer from "features/tab/tabSlice";
 import modalReducer from "features/modal/modalSlice";
-import cookiesReducer from "features/cookies/cookiesSlice";
 import sidebarReducer from "features/sidebar/sidebarSlice";
+import authReducer from "features/auth/authSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,8 +19,8 @@ export const store = configureStore({
     favMenu: favoriteReducer,
     tab: tabReducer,
     modal: modalReducer,
-    cookies: cookiesReducer,
     sidebar: sidebarReducer,
+    auth: authReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
 });
