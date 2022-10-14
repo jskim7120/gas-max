@@ -12,6 +12,8 @@ import modalReducer from "features/modal/modalSlice";
 import sidebarReducer from "features/sidebar/sidebarSlice";
 import authReducer from "features/auth/authSlice";
 
+import { authApi } from "./api/authApi";
+
 export const store = configureStore({
   reducer: {
     employees: employeeReducer,
@@ -21,8 +23,10 @@ export const store = configureStore({
     modal: modalReducer,
     sidebar: sidebarReducer,
     auth: authReducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(authApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;
