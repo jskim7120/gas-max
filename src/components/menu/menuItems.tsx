@@ -54,9 +54,9 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
   const clickOnMenu = () => {
     dispatch(
       addTab({
-        menuId: items.menuId,
-        menuName: items.menuName,
-        depthFullName: items.depthFullName,
+        menuId: items.menuid,
+        menuName: items.menuname,
+        depthFullName: items.depthFullname,
       })
     );
   };
@@ -77,7 +77,7 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
             aria-expanded={dropdown ? "true" : "false"}
             onClick={() => setDropdown((prev) => !prev)}
           >
-            {items.menuName}{" "}
+            {items.menuname}{" "}
           </button>{" "}
           <Dropdown
             depthLevel={depthLevel}
@@ -85,10 +85,10 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
             dropdown={dropdown}
           />{" "}
         </>
-      ) : items.menuName === "-" ? (
+      ) : items.menuname === "-" ? (
         <Group />
       ) : (
-        <a onClick={clickOnMenu}> {items.menuName} </a>
+        <a onClick={clickOnMenu}> {items.menuname} </a>
       )}{" "}
     </li>
   );
