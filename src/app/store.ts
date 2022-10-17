@@ -9,14 +9,11 @@ import tabReducer from "features/tab/tabSlice";
 import modalReducer from "features/modal/modalSlice";
 import sidebarReducer from "features/sidebar/sidebarSlice";
 import authReducer from "features/auth/authSlice";
-//import favoriteReducer from "features/favorite/favoriteSlice";
-//import employeeReducer from "features/employee/employeeSlice";
 
 import { authApi } from "./api/authApi";
 
 export const store = configureStore({
   reducer: {
-    //employees: employeeReducer,
     menu: menuReducer,
     tab: tabReducer,
     modal: modalReducer,

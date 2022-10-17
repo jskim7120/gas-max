@@ -30,7 +30,7 @@ import {
 import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
 import { IFormProps } from "./type";
-import { MagnifyingGlass } from "components/allSvgIcon";
+import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
@@ -46,6 +46,7 @@ const Form = React.forwardRef(
     const dispatch = useDispatch();
     const [isClickedAdd, setIsClikedAdd] = useState(false);
     const [tabId, setTabId] = useState(0);
+    const [addr, setAddress] = useState<string>("");
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
@@ -163,25 +164,17 @@ const Form = React.forwardRef(
             name="jnZipcode"
             register={register}
             errors={errors}
+            value={addr ? addr?.split("/")[1] : ""}
           />
-          <button
-            style={{
-              width: "25px",
-              height: "25px",
-              background: "#666666",
-              padding: "2px 0 0 4px",
-              borderRadius: "5px",
-              border: "1px solid #707070",
-            }}
-            type="button"
-          >
-            <MagnifyingGlass />
-          </button>
+
+          <DaumAddress setAddress={setAddress} />
+
           <InputTest
             name="jnAddr1"
             register={register}
             errors={errors}
             fullWidth
+            value={addr ? addr?.split("/")[0] : ""}
           />
         </Wrapper>
         <DividerGray />

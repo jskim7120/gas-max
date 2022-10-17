@@ -42,6 +42,7 @@ interface IInputProps {
   inputSize?: InputSize;
   fullWidth?: boolean;
   grow?: boolean;
+  value?: string;
 }
 
 export const InputTest = ({
@@ -53,6 +54,7 @@ export const InputTest = ({
   errors,
   inputSize,
   fullWidth,
+  value,
 }: IInputProps) => {
   return (
     <InputWrapper fullWidth={fullWidth}>
@@ -63,6 +65,7 @@ export const InputTest = ({
           inputSize={inputSize && inputSize}
           fullWidth={fullWidth && fullWidth}
           {...register(name)}
+          value={value}
         />
       </FormGroup>
       <p
