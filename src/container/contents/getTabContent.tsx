@@ -1,17 +1,6 @@
 import React from "react";
 import Table from "components/table";
-import {
-  Input,
-  InputTest,
-  Select,
-  Field,
-  ErrorText,
-  FormGroup,
-  FormInline,
-  FormBlock,
-  Wrapper,
-  Divider,
-} from "components/form/style";
+import { Input, Select, Field, ErrorText } from "components/form/style";
 import { InputSize } from "components/componentsType";
 
 function getTabContent(id: number, register: any, errors: any) {
@@ -19,9 +8,24 @@ function getTabContent(id: number, register: any, errors: any) {
   const data1 = [
     {
       1: "양식 1",
-      2: <InputTest name="jnJiroSNo" register={register} errors={errors} />,
-      3: <InputTest name="jnJiroNo" register={register} errors={errors} />,
-      4: <InputTest name="jnJiroBigo" register={register} errors={errors} />,
+      2: (
+        <Input
+          register={register("jnJiroSNo")}
+          errors={errors["jnJiroSNo"]?.message}
+        />
+      ),
+      3: (
+        <Input
+          register={register("jnJiroNo")}
+          errors={errors["jnJiroNo"]?.message}
+        />
+      ),
+      4: (
+        <Input
+          register={register("jnJiroBigo")}
+          errors={errors["jnJiroBigo"]?.message}
+        />
+      ),
       5: (
         <Field>
           <Select style={{ width: "150px" }} {...register("jnJiro")}>
@@ -36,9 +40,24 @@ function getTabContent(id: number, register: any, errors: any) {
     },
     {
       1: "양식 2",
-      2: <InputTest name="jnJiroSNo02" register={register} errors={errors} />,
-      3: <InputTest name="jnJiroNo02" register={register} errors={errors} />,
-      4: <InputTest name="jnJiroBigo02" register={register} errors={errors} />,
+      2: (
+        <Input
+          register={register("jnJiroSNo02")}
+          errors={errors["jnJiroSNo02"]?.message}
+        />
+      ),
+      3: (
+        <Input
+          register={register("jnJiroNo02")}
+          errors={errors["jnJiroNo02"]?.message}
+        />
+      ),
+      4: (
+        <Input
+          register={register("jnJiroBigo02")}
+          errors={errors["jnJiroBigo02"]?.message}
+        />
+      ),
       5: (
         <Field>
           <Select style={{ width: "150px" }} {...register("jnJiro2")}>
@@ -52,9 +71,24 @@ function getTabContent(id: number, register: any, errors: any) {
     },
     {
       1: "양식 3",
-      2: <InputTest name="jnJiroSNo03" register={register} errors={errors} />,
-      3: <InputTest name="jnJiroNo03" register={register} errors={errors} />,
-      4: <InputTest name="jnJiroBigo03" register={register} errors={errors} />,
+      2: (
+        <Input
+          register={register("jnJiroSNo03")}
+          errors={errors["jnJiroSNo03"]?.message}
+        />
+      ),
+      3: (
+        <Input
+          register={register("jnJiroNo03")}
+          errors={errors["jnJiroNo03"]?.message}
+        />
+      ),
+      4: (
+        <Input
+          register={register("jnJiroBigo03")}
+          errors={errors["jnJiroBigo03"]?.message}
+        />
+      ),
       5: (
         <Field>
           <Select style={{ width: "150px" }} {...register("jnJiro3")}>
@@ -68,9 +102,24 @@ function getTabContent(id: number, register: any, errors: any) {
     },
     {
       1: "양식 4",
-      2: <InputTest name="jnJiroSNo04" register={register} errors={errors} />,
-      3: <InputTest name="jnJiroNo04" register={register} errors={errors} />,
-      4: <InputTest name="jnJiroBigo04" register={register} errors={errors} />,
+      2: (
+        <Input
+          register={register("jnJiroSNo04")}
+          errors={errors["jnJiroSNo04"]?.message}
+        />
+      ),
+      3: (
+        <Input
+          register={register("jnJiroNo04")}
+          errors={errors["jnJiroNo04"]?.message}
+        />
+      ),
+      4: (
+        <Input
+          register={register("jnJiroBigo04")}
+          errors={errors["jnJiroBigo04"]?.message}
+        />
+      ),
       5: (
         <Field>
           <Select style={{ width: "150px" }} {...register("jnJiro4")}>
@@ -86,27 +135,59 @@ function getTabContent(id: number, register: any, errors: any) {
 
   const data3 = [
     {
-      jnBank1: <InputTest name="jnBank1" register={register} errors={errors} />,
+      jnBank1: (
+        <Input
+          register={register("jnBank1")}
+          errors={errors["jnBank1"]?.message}
+        />
+      ),
       jnBankNo1: (
-        <InputTest name="jnBankNo1" register={register} errors={errors} />
+        <Input
+          register={register("jnBankNo1")}
+          errors={errors["jnBankNo1"]?.message}
+        />
       ),
     },
     {
-      jnBank2: <InputTest name="jnBank2" register={register} errors={errors} />,
+      jnBank2: (
+        <Input
+          register={register("jnBank2")}
+          errors={errors["jnBank2"]?.message}
+        />
+      ),
       jnBankNo2: (
-        <InputTest name="jnBankNo2" register={register} errors={errors} />
+        <Input
+          register={register("jnBankNo2")}
+          errors={errors["jnBankNo2"]?.message}
+        />
       ),
     },
     {
-      jnBank3: <InputTest name="jnBank3" register={register} errors={errors} />,
+      jnBank3: (
+        <Input
+          register={register("jnBank3")}
+          errors={errors["jnBank3"]?.message}
+        />
+      ),
       jnBankNo3: (
-        <InputTest name="jnBankNo3" register={register} errors={errors} />
+        <Input
+          register={register("jnBankNo3")}
+          errors={errors["jnBankNo3"]?.message}
+        />
       ),
     },
     {
-      jnBank4: <InputTest name="jnBank4" register={register} errors={errors} />,
+      jnBank4: (
+        <Input
+          register={register("jnBank4")}
+          errors={errors["jnBank4"]?.message}
+        />
+      ),
       jnBankNo4: (
-        <InputTest name="jnBankNo4" register={register} errors={errors} />
+        <Input
+          register={register("jnBankNo4")}
+          errors={errors["jnBankNo4"]?.message}
+        />
       ),
     },
   ];
@@ -114,42 +195,37 @@ function getTabContent(id: number, register: any, errors: any) {
   const data4 = [
     {
       jnMark1: (
-        <InputTest
-          name="jnMark1"
-          register={register}
-          errors={errors}
+        <Input
+          register={register("jnMark1")}
+          errors={errors["jnMark1"]?.message}
           inputSize={InputSize.sm}
         />
       ),
       jnMark2: (
-        <InputTest
-          name="jnMark2"
-          register={register}
-          errors={errors}
+        <Input
+          register={register("jnMark2")}
+          errors={errors["jnMark2"]?.message}
           inputSize={InputSize.sm}
         />
       ),
       jnMark3: (
-        <InputTest
-          name="jnMark3"
-          register={register}
-          errors={errors}
+        <Input
+          register={register("jnMark3")}
+          errors={errors["jnMark3"]?.message}
           inputSize={InputSize.sm}
         />
       ),
       jnMark4: (
-        <InputTest
-          name="jnMark4"
-          register={register}
-          errors={errors}
+        <Input
+          register={register("jnMark4")}
+          errors={errors["jnMark4"]?.message}
           inputSize={InputSize.sm}
         />
       ),
       jnMark5: (
-        <InputTest
-          name="jnMark5"
-          register={register}
-          errors={errors}
+        <Input
+          register={register("jnMark5")}
+          errors={errors["jnMark5"]?.message}
           inputSize={InputSize.sm}
         />
       ),
@@ -174,40 +250,34 @@ function getTabContent(id: number, register: any, errors: any) {
     case 1:
       return (
         <div>
-          <InputTest
-            name="edJnOrderO1"
-            register={register}
-            errors={errors}
+          <Input
+            register={register("edJnOrderO1")}
+            errors={errors["edJnOrderO1"]?.message}
             fullWidth
           />
-          <InputTest
-            name="edJnOrderO2"
-            register={register}
-            errors={errors}
+          <Input
+            register={register("edJnOrderO2")}
+            errors={errors["edJnOrderO2"]?.message}
             fullWidth
           />
-          <InputTest
-            name="edJnOrderO3"
-            register={register}
-            errors={errors}
+          <Input
+            register={register("edJnOrderO3")}
+            errors={errors["edJnOrderO3"]?.message}
             fullWidth
           />
-          <InputTest
-            name="edJnOrderO4"
-            register={register}
-            errors={errors}
+          <Input
+            register={register("edJnOrderO4")}
+            errors={errors["edJnOrderO4"]?.message}
             fullWidth
           />
-          <InputTest
-            name="edJnOrderO5"
-            register={register}
-            errors={errors}
+          <Input
+            register={register("edJnOrderO5")}
+            errors={errors["edJnOrderO5"]?.message}
             fullWidth
           />
-          <InputTest
-            name="edJnOrderO6"
-            register={register}
-            errors={errors}
+          <Input
+            register={register("edJnOrderO6")}
+            errors={errors["edJnOrderO6"]?.message}
             fullWidth
           />
         </div>

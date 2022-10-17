@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { useForm, Path, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "app/store";
 // import {
@@ -14,14 +14,11 @@ import { useDispatch } from "app/store";
 //   getEmployees,
 // } from "features/employee/employeeSlice";
 import {
-  InputForm,
-  InputTest,
+  Input,
   Select,
   Field,
   ErrorText,
   FormGroup,
-  FormInline,
-  FormBlock,
   Wrapper,
   Divider,
   DividerGray,
@@ -123,137 +120,118 @@ const Form = React.forwardRef(
     return (
       <form onSubmit={handleSubmit(update)} style={{ padding: "0px 10px" }}>
         <Wrapper grid>
-          <InputTest
+          <Input
             label="코드"
-            name="areaCode"
-            register={register}
-            errors={errors}
+            register={register("areaCode")}
+            errors={errors["areaCode"]?.message}
           />
-          <InputTest
+          <Input
             label="영업소명"
-            name="areaName"
-            register={register}
-            errors={errors}
+            register={register("areaName")}
+            errors={errors["areaName"]?.message}
           />
         </Wrapper>
         <Divider />
         <Wrapper grid>
-          <InputTest
+          <Input
             label="사업자번호"
-            name="jnSsno"
-            register={register}
-            errors={errors}
+            register={register("jnSsno")}
+            errors={errors["jnSsno"]?.message}
           />
-          <InputTest
+          <Input
             label="상호"
-            name="jnSangho"
-            register={register}
-            errors={errors}
+            register={register("jnSangho")}
+            errors={errors["jnSangho"]?.message}
           />
-          <InputTest
+          <Input
             label="대표"
-            name="jnSajang"
-            register={register}
-            errors={errors}
+            register={register("jnSajang")}
+            errors={errors["jnSajang"]?.message}
           />
         </Wrapper>
         <DividerGray />
         <Wrapper style={{ alignItems: "center" }}>
-          <InputTest
+          <Input
             label="주소"
-            name="jnZipcode"
-            register={register}
-            errors={errors}
             value={addr ? addr?.split("/")[1] : ""}
+            register={register("jnZipcode")}
+            errors={errors["jnZipcode"]?.message}
           />
-
           <DaumAddress setAddress={setAddress} />
-
-          <InputTest
-            name="jnAddr1"
-            register={register}
-            errors={errors}
-            fullWidth
+          <Input
             value={addr ? addr?.split("/")[0] : ""}
+            register={register("jnAddr1")}
+            errors={errors["jnAddr1"]?.message}
+            fullWidth
           />
         </Wrapper>
         <DividerGray />
         <Wrapper>
-          <InputTest
+          <Input
             label=""
-            name="jnAddr2"
-            register={register}
-            errors={errors}
+            register={register("jnAddr2")}
+            errors={errors["jnAddr2"]?.message}
             fullWidth
           />
         </Wrapper>
         <DividerGray />
         <Wrapper>
-          <InputTest
+          <Input
             label="업태"
-            name="jnUptae"
-            register={register}
-            errors={errors}
+            register={register("jnUptae")}
+            errors={errors["jnUptae"]?.message}
             fullWidth
           />
-          <InputTest
+          <Input
             label="종목"
-            name="jnJongmok"
-            register={register}
-            errors={errors}
+            register={register("jnJongmok")}
+            errors={errors["jnJongmok"]?.message}
             fullWidth
           />
         </Wrapper>
         <DividerGray />
         <Wrapper grid>
-          <InputTest
+          <Input
             label="대표전화"
-            name="jnTel1"
-            register={register}
-            errors={errors}
+            register={register("jnTel1")}
+            errors={errors["jnTel1"]?.message}
           />
-          <InputTest
+          <Input
             label="대표전화2"
-            name="jnTel2"
-            register={register}
-            errors={errors}
+            register={register("jnTel2")}
+            errors={errors["jnTel2"]?.message}
           />
 
-          <InputTest
+          <Input
             label="팩스"
-            name="jnFax"
-            register={register}
-            errors={errors}
+            register={register("jnFax")}
+            errors={errors["jnFax"]?.message}
           />
         </Wrapper>
         <Divider />
         <Wrapper grid>
-          <InputTest
+          <Input
             label="안전관리 총괄자"
-            name="jnAnName1"
-            register={register}
-            errors={errors}
+            register={register("jnAnName1")}
+            errors={errors["jnAnName1"]?.message}
           />
-          <InputTest
+          <Input
             label="전화"
-            name="jnAnTel1"
-            register={register}
-            errors={errors}
+            register={register("jnAnTel1")}
+            errors={errors["jnAnTel1"]?.message}
           />
         </Wrapper>
         <DividerGray />
         <Wrapper grid>
-          <InputTest
+          <Input
             label="안전관리 책임자"
-            name="jnAnName2"
-            register={register}
-            errors={errors}
+            register={register("jnAnName2")}
+            errors={errors["jnAnName2"]?.message}
           />
-          <InputTest
+          <Input
             label="전화"
-            name="jnAnTel2"
-            register={register}
-            errors={errors}
+            register={register("jnAnTel2")}
+            errors={errors["jnAnTel2"]?.message}
           />
         </Wrapper>
         <Divider />
@@ -323,13 +301,13 @@ const Form = React.forwardRef(
           </Field>
         </Wrapper>
         <DividerGray />
+
         <Wrapper grid col={3}>
-          <InputTest
+          <Input
             label="탱크잔량/원격검침 발신기 업체번호"
             labelLong
-            name="jnCmngno"
-            register={register}
-            errors={errors}
+            register={register("jnCmngno")}
+            errors={errors["jnCmngno"]?.message}
           />
           <Field>
             <FormGroup>

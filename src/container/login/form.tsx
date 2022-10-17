@@ -5,18 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "app/store";
 import { LoginSchema } from "./validation";
 import { ILoginFormProps } from "./type";
-import {
-  Input,
-  Select,
-  Field,
-  ErrorText,
-  FormGroup,
-  FormInline,
-  FormBlock,
-  Wrapper,
-  Divider,
-} from "components/form/style";
-import { ButtonType, InputSize } from "components/componentsType";
+import { Input, Select, Field } from "components/form/style";
+import { ButtonType } from "components/componentsType";
 import Button from "components/button/button";
 import {
   ButtonColor,
@@ -49,26 +39,22 @@ function Login() {
     <form onSubmit={handleSubmit(submit)}>
       <Field style={{ marginBottom: "8px" }}>
         <Input
-          {...register("username")}
-          type="text"
+          register={register("username")}
+          errors={errors["username"]?.message}
           placeholder="아이디"
           style={{ height: "40px", width: "100%" }}
+          className="login"
         />
-        <div>
-          <ErrorText>{errors["username"]?.message}</ErrorText>
-        </div>
       </Field>
       <Field>
         <Input
-          {...register("password")}
+          register={register("password")}
+          errors={errors["password"]?.message}
           type="password"
           placeholder="비밀번호"
           style={{ height: "40px", width: "100%" }}
+          className="login"
         />
-
-        <div>
-          <ErrorText>{errors["password"]?.message}</ErrorText>
-        </div>
       </Field>
 
       <div style={{ padding: "10px 50px" }}>
