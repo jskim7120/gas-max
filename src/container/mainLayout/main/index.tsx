@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { useSelector, useDispatch } from "app/store";
-
 import { Main, Sidebar, UnOrderedList } from "./style";
 import Tab from "components/tab";
 

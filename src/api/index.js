@@ -1,7 +1,6 @@
 import axios from "axios";
-import { Navigate } from "react-router-dom";
 
-export const baseURL = "http://115.95.25.245:9998/";
+export const baseURL = "http://115.95.25.245:9998";
 const API = axios.create({
   baseURL: baseURL,
 });
@@ -18,11 +17,6 @@ API.interceptors.response.use(
   },
   function (err) {
     const { status, data, config } = err.response;
-
-    if (status === 0) {
-      //window.location.assign("/network-error");
-      // <Navigate to="/network-error" />;
-    }
 
     return Promise.reject(data);
   }

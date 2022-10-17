@@ -12,7 +12,7 @@ const initialState: initialStateType = {
 };
 
 export const getMenu = createAsyncThunk("menu/getMenu", async () => {
-  const response = await API.get("menu/list");
+  const response = await API.get("/app/SY1100/list");
   return response.data as any;
 });
 

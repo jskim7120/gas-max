@@ -11,7 +11,7 @@ const Navbar = (props: INavbar) => {
   let list: any;
   if (props.data) {
     const clone = JSON.parse(JSON.stringify(props.data));
-    list = getNestedChildren(clone, "", "menuId", "parentMenuId");
+    list = getNestedChildren(clone, "", "menuid", "parentmenuid");
   }
 
   return (

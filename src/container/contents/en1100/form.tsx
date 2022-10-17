@@ -116,7 +116,7 @@ const Form = React.forwardRef(
       }
     };
 
-    if (!selected) return <Loader text="...loading" />;
+    if (!selected) return <Loader />;
 
     return (
       <form onSubmit={handleSubmit(update)} style={{ padding: "0px 10px" }}>
