@@ -4,7 +4,6 @@ import { Input, Select, Field, ErrorText } from "components/form/style";
 import { InputSize } from "components/componentsType";
 
 function getTabContent(id: number, register: any, errors: any) {
-  // console.log("register:", { ...register("jnJiroSNo") });
   const data1 = [
     {
       1: "양식 1",

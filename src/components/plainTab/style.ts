@@ -6,7 +6,6 @@ export const TabHeaderWrapper = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
-  
 }
 `;
 

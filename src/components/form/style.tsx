@@ -83,13 +83,15 @@ export const InputForm = styled.input<{
   height: 25px;
   width: ${(props) =>
     props.inputSize ? getInputSize(props.inputSize) : "150px"};
+  flex: ${(props) => props.fullWidth && "1"};
   border-radius: 4px;
   border: none;
   outline: none;
   display: inline-block;
-
-  flex: ${(props) => props.fullWidth && "1"};
   padding: 0 6px;
+  font-family: "NotoSansKRRegular";
+  font-size: 12px;
+
   &:hover,
   &:focus {
     border: 1px solid #e6e5e5;
@@ -97,9 +99,8 @@ export const InputForm = styled.input<{
   }
 
   &.login {
-    border-radius: 4px;
     border: 1px solid #bbb;
-    padding: 0 6px;
+    font-size: 14px;
     &:hover,
     &:focus {
       background: #fff;
@@ -181,6 +182,9 @@ export const Select = styled.select`
   border-radius: 4px;
   border: none;
   outline: none;
+  font-family: "NotoSansKRRegular";
+  font-size: 12px;
+
   &:hover,
   &:focus {
     border: 1px solid #e6e5e5;

@@ -15,7 +15,6 @@ function App() {
   const token = localStorage.getItem("token");
 
   if (token) {
-    console.log("token bn", token);
     API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     store.dispatch(getMenu());
   }
