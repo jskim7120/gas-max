@@ -82,7 +82,7 @@ function EN1100({
 
   const fetchJNotry = async () => {
     try {
-      const { data } = await API.get("jnotry/list");
+      const { data } = await API.get("/app/EN1100/list");
       if (data) {
         console.log("JNORTY:", data);
         setJnotry(data);
@@ -93,7 +93,7 @@ function EN1100({
     }
   };
 
-  if (!jnotry) return <p>...Loading</p>;
+  //if (!jnotry) return <p>...Loading</p>;
 
   return (
     <>
