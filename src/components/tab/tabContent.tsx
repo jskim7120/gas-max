@@ -1,6 +1,4 @@
 import React from "react";
-import TabContent1 from "container/contents/tab1/tab1";
-import TabContent3 from "container/contents/tab3/tab3";
 import EN1100 from "container/contents/en1100";
 
 export const getContent = (
@@ -10,11 +8,11 @@ export const getContent = (
 ) => {
   switch (id) {
     case "CM1100":
-      return <TabContent1 name={menuName} depthFullName={depthFullName} />;
+      return <div>CM1100</div>;
     case "CM1200":
-      return <TabContent3 name={menuName} depthFullName={depthFullName} />;
+      return <div>CM1200</div>;
     case "CM1300":
-      return <TabContent3 name={menuName} depthFullName={depthFullName} />;
+      return <div>CM1300</div>;
     case "CM1301":
       return <div>CM1301</div>;
     case "CM1400":
@@ -228,150 +226,10 @@ export const getContent = (
     case "CC9007":
       return <div></div>;
     case "CC9008":
-      return <TabContent1 name={menuName} depthFullName={depthFullName} />;
+      return <div>CC9008</div>;
     case "CC9009":
-      return <div></div>;
-    case "CC9010":
-      return <div></div>;
-    case "CC9011":
-      return <div></div>;
-    case "PT1100":
-      return <div></div>;
-    case "PT1200":
-      return <div></div>;
-    case "PT1300":
-      return <div></div>;
-    case "PT1301":
-      return <div></div>;
-    case "PT9001":
-      return <div></div>;
-    case "PT9002":
-      return <div></div>;
-    case "PT9003":
-      return <div></div>;
-    case "PT9004":
-      return <div></div>;
-    case "PT9005":
-      return <div></div>;
-    case "PT9006":
-      return <div></div>;
-    case "PT9007":
-      return <div></div>;
-    case "PT9008":
-      return <div></div>;
-    case "PT9009":
-      return <div></div>;
-    case "TB1100":
-      return <div></div>;
-    case "TB1200":
-      return <div></div>;
-    case "TB1201":
-      return <div></div>;
-    case "TB1300":
-      return <div></div>;
-    case "TB1400":
-      return <div></div>;
-    case "TB1500":
-      return <div></div>;
-    case "TB1600":
-      return <div></div>;
-    case "TB1601":
-      return <div></div>;
-    case "TB9001":
-      return <div></div>;
-    case "FM9001":
-      return <div></div>;
-    case "FM90011":
-      return <div></div>;
-    case "FM9002":
-      return <div></div>;
-    case "FM9003":
-      return <div></div>;
-    case "FM9004":
-      return <div></div>;
-    case "FM90041":
-      return <div></div>;
-    case "FM9005":
-      return <div></div>;
-    case "FM9006":
-      return <div></div>;
-    case "FM9007":
-      return <div></div>;
-    case "FM9008":
-      return <div></div>;
-    case "FM9009":
-      return <div></div>;
-    case "FM9010":
-      return <div></div>;
-    case "FM9011":
-      return <div></div>;
-    case "FM9012":
-      return <div></div>;
-    case "FM9013":
-      return <div></div>;
-    case "FM9014":
-      return <div></div>;
-    case "FM9015":
-      return <div></div>;
-    case "FM90151":
-      return <div></div>;
-    case "FM9016":
-      return <div></div>;
-    case "FM9017":
-      return <div></div>;
-    case "FM9018":
-      return <div></div>;
-    case "FM90181":
-      return <div></div>;
-    case "FM9019":
       return <div></div>;
     case "EN1100":
       return <EN1100 name={menuName} depthFullName={depthFullName} />;
-    case "EN1200":
-      return <div></div>;
-    case "EN1300":
-      return <div></div>;
-    case "EN1400":
-      return <div></div>;
-    case "EN1500":
-      return <div></div>;
-    case "EN1501":
-      return <div></div>;
-    case "EN1600":
-      return <div></div>;
-    case "EN1700":
-      return <div></div>;
-    case "EN1701":
-      return <div></div>;
-    case "EN1800":
-      return <div></div>;
-    case "EN1900":
-      return <div></div>;
-    case "EN2000":
-      return <div></div>;
-    case "EN2001":
-      return <div></div>;
-    case "EN2100":
-      return <div></div>;
-    case "EN2200":
-      return <div></div>;
-    case "SY1100":
-      return <div></div>;
-    case "SY1200":
-      return <div></div>;
-    case "SY1300":
-      return <div></div>;
-    case "SY1301":
-      return <div></div>;
-    case "SY1400":
-      return <div></div>;
-    case "SY1500":
-      return <div></div>;
-    case "SY1600":
-      return <div></div>;
-    case "SY1601":
-      return <div></div>;
-    case "SY1700":
-      return <div></div>;
   }
 };
