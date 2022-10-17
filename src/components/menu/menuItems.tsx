@@ -77,19 +77,19 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
             aria-expanded={dropdown ? "true" : "false"}
             onClick={() => setDropdown((prev) => !prev)}
           >
-            {items.menuname}{" "}
-          </button>{" "}
+            {items.menuname}
+          </button>
           <Dropdown
             depthLevel={depthLevel}
             submenus={items.children}
             dropdown={dropdown}
-          />{" "}
+          />
         </>
       ) : items.menuname === "-" ? (
         <Group />
       ) : (
         <a onClick={clickOnMenu}> {items.menuname} </a>
-      )}{" "}
+      )}
     </li>
   );
 };
