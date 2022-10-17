@@ -18,7 +18,6 @@ export const store = configureStore({
   reducer: {
     employees: employeeReducer,
     menu: menuReducer,
-    favMenu: favoriteReducer,
     tab: tabReducer,
     modal: modalReducer,
     sidebar: sidebarReducer,

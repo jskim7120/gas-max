@@ -31,53 +31,53 @@ function EN1100({
   }, []);
 
   useEffect(() => {
-    container = realgridElement.current as HTMLDivElement;
-    dp = new LocalDataProvider(true);
-    gv = new GridView(container);
-
-    gv.setDataSource(dp);
-    dp.setFields(fields);
-    gv.setColumns(columns);
-    dp.setRows(jnotry);
-
-    gv.setHeader({
-      height: 35,
-    });
-    gv.setFooter({ visible: false });
-    gv.setOptions({
-      indicator: { visible: true },
-      checkBar: { visible: false },
-      stateBar: { visible: false },
-      // edit: { insertable: true, appendable: true },
-    });
-    gv.sortingOptions.enabled = true;
-    gv.displayOptions._selectionStyle = "singleRow";
-
-    // console.log("GV: ", gv);
-
     if (jnotry.length > 0) {
-      gv.setSelection({
-        style: "rows",
-        startRow: 0,
-        endRow: 0,
+      container = realgridElement.current as HTMLDivElement;
+      dp = new LocalDataProvider(true);
+      gv = new GridView(container);
+
+      gv.setDataSource(dp);
+      dp.setFields(fields);
+      gv.setColumns(columns);
+      dp.setRows(jnotry);
+
+      gv.setHeader({
+        height: 35,
       });
+      gv.setFooter({ visible: false });
+      gv.setOptions({
+        indicator: { visible: true },
+        checkBar: { visible: false },
+        stateBar: { visible: false },
+        // edit: { insertable: true, appendable: true },
+      });
+      gv.sortingOptions.enabled = true;
+      gv.displayOptions._selectionStyle = "singleRow";
 
-      // gv.setDisplayOptions({
-      //   rowFocusVisible:true,
-      //   rowFocusBackground:"#340000ff"
-      // });
+      if (jnotry.length > 0) {
+        gv.setSelection({
+          style: "rows",
+          startRow: 0,
+          endRow: 0,
+        });
 
-      gv.onSelectionChanged = () => {
-        const itemIndex: any = gv.getCurrent().itemIndex;
-        setSelected(jnotry[itemIndex]);
+        // gv.setDisplayOptions({
+        //   rowFocusVisible:true,
+        //   rowFocusBackground:"#340000ff"
+        // });
+
+        gv.onSelectionChanged = () => {
+          const itemIndex: any = gv.getCurrent().itemIndex;
+          setSelected(jnotry[itemIndex]);
+        };
+      }
+
+      return () => {
+        dp.clearRows();
+        gv.destroy();
+        dp.destroy();
       };
     }
-
-    return () => {
-      dp.clearRows();
-      gv.destroy();
-      dp.destroy();
-    };
   }, [jnotry]);
 
   const fetchJNotry = async () => {

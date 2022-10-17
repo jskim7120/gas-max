@@ -21,7 +21,7 @@ let favMenuData: Array<any>;
 
 function FavMenu() {
   const dispatch = useDispatch();
-  favMenuData = useSelector((state) => state.favMenu.favMenu);
+  //favMenuData = useSelector((state) => state.favMenu.favMenu);
 
   const handleClick = (data: any) => {
     dispatch(
