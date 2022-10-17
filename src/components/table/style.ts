@@ -23,7 +23,7 @@ const Table = styled.table`
         border-bottom: 1px solid #000;
         border-right: 1px solid #d6d2ce;
         font-weight: 500;
-        padding: 6px 10px;
+        padding: 5px 5px;
       }
     }
   }
@@ -31,7 +31,7 @@ const Table = styled.table`
     tr {
       td {
         text-align: center;
-        padding: 0px 20px;
+        padding: 0px 5px;
         border-bottom: 1px solid #d6d2ce;
         border-right: 1px solid #d6d2ce;
         font-size: 12px;

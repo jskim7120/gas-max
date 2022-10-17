@@ -4,19 +4,19 @@ import {
 } from "react-redux";
 // import logger from "redux-logger";
 import { configureStore } from "@reduxjs/toolkit";
-import employeeReducer from "features/employee/employeeSlice";
 import menuReducer from "features/menu/menuSlice";
 import tabReducer from "features/tab/tabSlice";
 import modalReducer from "features/modal/modalSlice";
 import sidebarReducer from "features/sidebar/sidebarSlice";
 import authReducer from "features/auth/authSlice";
 //import favoriteReducer from "features/favorite/favoriteSlice";
+//import employeeReducer from "features/employee/employeeSlice";
 
 import { authApi } from "./api/authApi";
 
 export const store = configureStore({
   reducer: {
-    employees: employeeReducer,
+    //employees: employeeReducer,
     menu: menuReducer,
     tab: tabReducer,
     modal: modalReducer,

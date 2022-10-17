@@ -113,11 +113,46 @@ function getTabContent(id: number, register: any, errors: any) {
 
   const data4 = [
     {
-      jnMark1: <InputTest name="jnMark1" register={register} errors={errors} />,
-      jnMark2: <InputTest name="jnMark2" register={register} errors={errors} />,
-      jnMark3: <InputTest name="jnMark3" register={register} errors={errors} />,
-      jnMark4: <InputTest name="jnMark4" register={register} errors={errors} />,
-      jnMark5: <InputTest name="jnMark5" register={register} errors={errors} />,
+      jnMark1: (
+        <InputTest
+          name="jnMark1"
+          register={register}
+          errors={errors}
+          inputSize={InputSize.sm}
+        />
+      ),
+      jnMark2: (
+        <InputTest
+          name="jnMark2"
+          register={register}
+          errors={errors}
+          inputSize={InputSize.sm}
+        />
+      ),
+      jnMark3: (
+        <InputTest
+          name="jnMark3"
+          register={register}
+          errors={errors}
+          inputSize={InputSize.sm}
+        />
+      ),
+      jnMark4: (
+        <InputTest
+          name="jnMark4"
+          register={register}
+          errors={errors}
+          inputSize={InputSize.sm}
+        />
+      ),
+      jnMark5: (
+        <InputTest
+          name="jnMark5"
+          register={register}
+          errors={errors}
+          inputSize={InputSize.sm}
+        />
+      ),
     },
   ];
 

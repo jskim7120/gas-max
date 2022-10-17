@@ -6,7 +6,7 @@ import { IFormProps } from "container/contents/en1100/type";
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
     case InputSize.sm:
-      return `60px`;
+      return `100px`;
     case InputSize.md:
       return `250px`;
     case InputSize.lg:
@@ -88,6 +88,8 @@ export const InputForm = styled.input<{
   fullWidth?: boolean;
 }>`
   height: 25px;
+  width: ${(props) =>
+    props.inputSize ? getInputSize(props.inputSize) : "150px"};
   border-radius: 4px;
   border: none;
   outline: none;
@@ -98,7 +100,8 @@ export const InputForm = styled.input<{
   &:hover,
   &:focus {
     border: 1px solid #e6e5e5;
-    background: #fdf0e8;
+    //background: #fdf0e8;
+    background: #fffacd;
   }
 `;
 

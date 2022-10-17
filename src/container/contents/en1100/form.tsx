@@ -7,12 +7,12 @@ import React, {
 import { useForm, Path, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "app/store";
-import {
-  addEmployee,
-  updateEmployee,
-  deleteEmployee,
-  getEmployees,
-} from "features/employee/employeeSlice";
+// import {
+//   addEmployee,
+//   updateEmployee,
+//   deleteEmployee,
+//   getEmployees,
+// } from "features/employee/employeeSlice";
 import {
   InputForm,
   InputTest,
