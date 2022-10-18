@@ -31,7 +31,7 @@ import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
-import getTabContent from "../getTabContent";
+import getTabContent from "./getTabContent";
 import Loader from "components/loader";
 
 interface IForm {

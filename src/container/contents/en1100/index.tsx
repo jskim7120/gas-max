@@ -67,7 +67,7 @@ function EN1100({
         // });
 
         gv.onSelectionChanged = () => {
-          const itemIndex: any = gv.getCurrent().itemIndex;
+          const itemIndex: any = gv.getCurrent().dataRow;
           setSelected(jnotry[itemIndex]);
         };
       }
