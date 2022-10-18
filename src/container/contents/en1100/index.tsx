@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import API from "api";
+import API from "app/axios";
 import Button from "components/button/button";
 import { ButtonType, ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";

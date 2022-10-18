@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "app/store";
-import { addTab } from "features/tab/tabSlice";
+import { addTab } from "app/state/tab/tabSlice";
 import {
   FavMenuList,
   FavMenuItem,

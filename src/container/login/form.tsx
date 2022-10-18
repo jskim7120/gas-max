@@ -13,7 +13,9 @@ import {
   ButtonSize,
   ButtonTextColor,
 } from "components/componentsType";
-import { login } from "features/auth/authSlice";
+import { useLoginMutation } from "app/api/auth";
+import { setToken } from "app/state/auth/authSlice";
+import Loader from "components/loader";
 
 function Login() {
   const [checked, setChecked] = useState(false);
@@ -29,10 +31,20 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [login, { data, isLoading, isError, isSuccess }] = useLoginMutation();
+
+  if (isSuccess && data !== undefined) {
+    console.log("data====>", data);
+    dispatch(setToken({ token: data.accessToken }));
+    localStorage.setItem("token", data.accessToken);
+    navigate("/");
+  }
+
   const submit = (data: ILoginFormProps) => {
-    dispatch(
-      login({ username: data.username, password: data.password })
-    ).finally(() => navigate("/"));
+    //   dispatch(
+    //     login({ username: data.username, password: data.password })
+    //   ).finally(() => navigate("/"));
+    login({ username: data.username, password: data.password });
   };
 
   return (
@@ -73,7 +85,16 @@ function Login() {
             kind={ButtonType.LOGIN}
             color={ButtonColor.PRIMARY}
             fullWidth
-            style={{ alignItems: "baseline", lineHeight: "33px" }}
+            style={{ alignItems: "center", lineHeight: "33px" }}
+            loader={
+              isLoading && (
+                <Loader
+                  color="white"
+                  size={25}
+                  style={{ marginRight: "5px" }}
+                />
+              )
+            }
           />
         </Field>
         <span style={{ fontSize: "14px", color: "#707070" }}>

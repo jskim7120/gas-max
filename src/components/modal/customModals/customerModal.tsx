@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "app/store";
-import { closeModal } from "features/modal/modalSlice";
+import { closeModal } from "app/state/modal/modalSlice";
 import ModalSearchIcon from "assets/image/ModalSearchIcon.png";
 import ModalCloseBtn from "assets/image/ModalCloseBtn.png";
 

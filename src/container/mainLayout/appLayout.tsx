@@ -5,7 +5,7 @@ import { Settings, User } from "components/allSvgIcon";
 import Navbar from "components/menu/navbar";
 import LogoImg from "assets/image/Logo.png";
 import Footer from "./footer";
-import { openModal } from "features/modal/modalSlice";
+import { openModal } from "app/state/modal/modalSlice";
 
 let menuData: Array<any>;
 

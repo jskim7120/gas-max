@@ -82,7 +82,7 @@ export const InputForm = styled.input<{
 }>`
   height: 25px;
   width: ${(props) =>
-    props.inputSize ? getInputSize(props.inputSize) : "150px"};
+    props.inputSize ? getInputSize(props.inputSize) : "100%"};
   flex: ${(props) => props.fullWidth && "1"};
   border-radius: 4px;
   border: none;
@@ -122,7 +122,7 @@ export const FormGroup = styled.div`
 
   input,
   select {
-    margin: 5px 4px 5px 5px;
+    margin: 5px 5px 5px 5px;
   }
 
   label.login {

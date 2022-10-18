@@ -33,6 +33,7 @@ import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
 import Loader from "components/loader";
+import { useGetCommonGubunQuery } from "app/api/commonGubun";
 
 interface IForm {
   selected: any;
@@ -45,8 +46,18 @@ const Form = React.forwardRef(
     const [tabId, setTabId] = useState(0);
     const [addr, setAddress] = useState<string>("");
 
+    const { data: jnSekum, isError: isJnSekumError } =
+      useGetCommonGubunQuery("12");
+
+    const { data: jnJangbu, isError: isJnJangbuError } =
+      useGetCommonGubunQuery("10");
+
+    const { data: jnJiro, isError: isJnJiroError } =
+      useGetCommonGubunQuery("17");
+
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
+        console.log("selected:", selected);
         reset({
           ...selected,
           innopayBankYn: selected?.innopayBankYn === "Y",
@@ -124,6 +135,7 @@ const Form = React.forwardRef(
             label="코드"
             register={register("areaCode")}
             errors={errors["areaCode"]?.message}
+            fullWidth
           />
           <Input
             label="영업소명"
@@ -239,10 +251,17 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>세금계산서 양식</Label>
-              <Select {...register("jnSekum")}>
-                <option value="A4 백지">A4 백지</option>
-                <option value="0">0</option>
-              </Select>
+              {isJnSekumError ? (
+                "error occured"
+              ) : (
+                <Select {...register("jnSekum")}>
+                  {jnSekum?.map((obj, idx) => (
+                    <option key={idx} value={obj.code1}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              )}
             </FormGroup>
             <div>
               <ErrorText>{errors["jnSekum"]?.message}</ErrorText>
@@ -289,11 +308,17 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>거래명세표 양식</Label>
-              <Select {...register("jnJangbu")}>
-                <option value="1">1 인쇄용지</option>
-                <option value="2">2 인쇄용지</option>
-                <option value="0">0 인쇄용지</option>
-              </Select>
+              {isJnJangbuError ? (
+                "error occured"
+              ) : (
+                <Select {...register("jnJangbu")}>
+                  {jnJangbu?.map((obj, idx) => (
+                    <option key={idx} value={obj.code1}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              )}
             </FormGroup>
             <div>
               <ErrorText>{errors["jnJangbu"]?.message}</ErrorText>
@@ -339,7 +364,7 @@ const Form = React.forwardRef(
             onClick={(id) => setTabId(id)}
           />
           <TabContentWrapper>
-            {getTabContent(tabId, register, errors)}
+            {getTabContent(tabId, register, errors, jnJiro, isJnJiroError)}
           </TabContentWrapper>
         </div>
       </form>

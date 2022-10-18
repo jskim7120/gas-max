@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "app/store";
-import { closeModal } from "features/modal/modalSlice";
+import { closeModal } from "app/state/modal/modalSlice";
 import CustomerModal from "./customModals/customerModal";
 import MenuModal from "./customModals/menuModal";
 import InfoModal from "./customModals/infoModal";

@@ -5,9 +5,9 @@ import {
   setActiveTab,
   removeTab,
   removeAllTabs,
-} from "features/tab/tabSlice";
-import { openModal } from "features/modal/modalSlice";
-import { toggleSidebar } from "features/sidebar/sidebarSlice";
+} from "app/state/tab/tabSlice";
+import { openModal } from "app/state/modal/modalSlice";
+import { toggleSidebar } from "app/state/sidebar/sidebarSlice";
 import { getContent } from "./tabContent";
 import {
   TabContainer,
