@@ -1,6 +1,6 @@
 import React from "react";
 import EN1100 from "container/contents/en1100";
-// import EN1500 from "container/contents/en1500";
+import EN1500 from "container/contents/en1500";
 
 export const getContent = (
   id: any,
@@ -232,5 +232,7 @@ export const getContent = (
       return <div></div>;
     case "EN1100":
       return <EN1100 name={menuName} depthFullName={depthFullName} />;
+    case "EN1500":
+      return <EN1500 name={menuName} depthFullName={depthFullName} />;
   }
 };
