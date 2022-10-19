@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import API from "api";
+import API from "app/axios";
 import Button from "components/button/button";
 import { ButtonType, ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
@@ -67,7 +67,7 @@ function EN1100({
         // });
 
         gv.onSelectionChanged = () => {
-          const itemIndex: any = gv.getCurrent().itemIndex;
+          const itemIndex: any = gv.getCurrent().dataRow;
           setSelected(jnotry[itemIndex]);
         };
       }

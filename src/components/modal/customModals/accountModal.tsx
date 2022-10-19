@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import JoaImg from "assets/image/JOA.png";
 import { useDispatch } from "app/store";
-import { logout } from "features/auth/authSlice";
+import { logout } from "app/state/auth/authSlice";
 
 const ModalWrapper = styled.div`
   width: 165px;

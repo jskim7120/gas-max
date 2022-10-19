@@ -14,7 +14,7 @@ import PartnerImg from "assets/image/company_partners.png";
 import { SearchIcon } from "components/allSvgIcon";
 import Hamburger from "assets/image/footer-humburger.png";
 import { useDispatch } from "app/store";
-import { openModal } from "features/modal/modalSlice";
+import { openModal } from "app/state/modal/modalSlice";
 import TLogo from "assets/image/TLogo.png";
 import GLogo from "assets/image/GLogo.png";
 import BarCodeLogo from "assets/image/BarCodeLogo.png";

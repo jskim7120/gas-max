@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import API from "api/index";
+import API from "app/axios";
 
 export interface initialStateType {
   loading: boolean;

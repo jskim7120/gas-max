@@ -1,23 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRoutes } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import "realgrid/dist/realgrid-style.css";
 import "style/font.css";
 import "style/App.css";
+import "style/realgrid.css";
 import Main from "container/mainLayout/main";
 import Login from "container/login";
 import ProtectedRoute from "routers/ProtectedRoute";
-import API from "api";
-import { getMenu } from "features/menu/menuSlice";
+import API from "app/axios";
+import { getMenu } from "app/state/menu/menuSlice";
+import { setToken } from "app/state/auth/authSlice";
 import { store } from "app/store";
 
 function App() {
   const token = localStorage.getItem("token");
 
   if (token) {
-    console.log("token bn", token);
+    console.log("token=====>", token);
     API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     store.dispatch(getMenu());
+    store.dispatch(setToken({ token: token }));
   }
 
   const routes = [
