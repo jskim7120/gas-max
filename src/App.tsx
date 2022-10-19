@@ -5,6 +5,7 @@ import "realgrid/dist/realgrid-style.css";
 import "style/font.css";
 import "style/App.css";
 import "style/realgrid.css";
+import "react-toastify/dist/ReactToastify.css";
 import Main from "container/mainLayout/main";
 import Login from "container/login";
 import ProtectedRoute from "routers/ProtectedRoute";

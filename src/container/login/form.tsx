@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,6 +18,10 @@ import { useLoginMutation } from "app/api/auth";
 import { setToken } from "app/state/auth/authSlice";
 import Loader from "components/loader";
 
+interface RequestError {
+  data: any;
+  status: number;
+}
 function Login() {
   const [checked, setChecked] = useState(false);
   const {
@@ -31,10 +36,16 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [login, { data, isLoading, isError, isSuccess }] = useLoginMutation();
+  const [login, { data, isLoading, isError, isSuccess, error }] =
+    useLoginMutation();
+
+  useEffect(() => {
+    if (isError) {
+      toast.warn((error as RequestError).data?.message);
+    }
+  }, [isError]);
 
   if (isSuccess && data !== undefined) {
-    console.log("data====>", data);
     dispatch(setToken({ token: data.accessToken }));
     localStorage.setItem("token", data.accessToken);
     navigate("/");
@@ -117,6 +128,7 @@ function Login() {
           }}
         />
       </div>
+      <ToastContainer />
     </form>
   );
 }

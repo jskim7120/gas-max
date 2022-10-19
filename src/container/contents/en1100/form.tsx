@@ -57,7 +57,6 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
-        console.log("selected:", selected);
         reset({
           ...selected,
           innopayBankYn: selected?.innopayBankYn === "Y",
