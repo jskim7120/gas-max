@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { InputSize } from "components/componentsType";
+import { array } from "yup";
 // import {
 //   Path,
 //   UseFormRegister,
@@ -37,6 +38,8 @@ interface IInputProps {
   placeholder?: string;
   style?: any;
   className?: string;
+  optionSlt?: any;
+  defaultValue?: string;
 }
 
 export const Input = ({
@@ -66,6 +69,43 @@ export const Input = ({
           style={style}
           className={className}
         />
+      </FormGroup>
+      <ErrorText>{errors && errors}</ErrorText>
+    </InputWrapper>
+  );
+};
+export const SelectCom = ({
+  type,
+  label,
+  labelLong,
+  register,
+  errors,
+  inputSize,
+  fullWidth,
+  value,
+  placeholder,
+  style,
+  className,
+  optionSlt,
+  defaultValue,
+}: IInputProps) => {
+  console.log("defaultValue====>", defaultValue);
+  // console.log("register====>", register);
+  console.log("options====>", typeof optionSlt);
+  console.log("options====>", optionSlt?.length);
+  return (
+    <InputWrapper fullWidth={fullWidth}>
+      <FormGroup>
+        {label !== undefined && <Label labelLong={labelLong}>{label}</Label>}
+        <Select value="2">
+          {Object.keys(optionSlt).map((key, index) => {
+            return (
+              <option key={index}>
+                {key}. {optionSlt[key]}
+              </option>
+            );
+          })}
+        </Select>
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>
     </InputWrapper>
