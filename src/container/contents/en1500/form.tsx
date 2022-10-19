@@ -27,7 +27,7 @@ import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
-import getTabContent from "../getTabContent";
+import getTabContent from "../en1100/getTabContent";
 import Loader from "components/loader";
 import { VolReading, Container, RubeUnit, BasicItems } from "../en1500/style";
 
@@ -45,9 +45,8 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
     "전월미납 연체적용 (등록일 기준)",
     "전월미납 연체적용 (납부마감일 기준)",
     "미 수 금 연체적용 (납부마감일 기준)",
-    "qweqweeqwerewqrweqrqw",
+    "qweqweqweqwewqeqweqweqw",
   ];
-  console.log("qweqweqw", typeof options);
 
   useEffect(() => {
     if (JSON.stringify(selected) !== "{}") {
@@ -163,8 +162,6 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
       ),
     },
   ];
-
-  console.log("AAAAAAAAAAA", register("jnPerMeth"));
 
   return (
     <form onSubmit={handleSubmit(update)} style={{ padding: "10px 15px" }}>

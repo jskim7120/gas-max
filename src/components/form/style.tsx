@@ -97,7 +97,7 @@ export const SelectCom = ({
     <InputWrapper fullWidth={fullWidth}>
       <FormGroup>
         {label !== undefined && <Label labelLong={labelLong}>{label}</Label>}
-        <Select defaultValue={defaultValue}>
+        <Select value="2">
           {Object.keys(optionSlt).map((key, index) => {
             return (
               <option key={index}>
