@@ -23,7 +23,7 @@ const initialState: initialStateType = {
 };
 
 const tabSlice = createSlice({
-  name: "menu",
+  name: "tabs",
   initialState,
   reducers: {
     addTab: (state, action) => {
@@ -35,9 +35,6 @@ const tabSlice = createSlice({
       if (!hasMenuId) {
         const length = state.tabs.length;
         if (length < limit) {
-          // state.tabs = state.tabs.filter(
-          //   (tab: TabProps, idx: number) => idx !== 0
-          // );
           state.tabs = [
             ...state.tabs,
             {
@@ -46,12 +43,14 @@ const tabSlice = createSlice({
               depthFullName: action.payload.depthFullName,
             },
           ];
+          sessionStorage.setItem("tabs", JSON.stringify(state.tabs));
+          state.activeTabId = action.payload.menuId;
+          sessionStorage.setItem("active-tab", state.activeTabId);
         }
+      } else {
+        state.activeTabId = action.payload.menuId;
+        sessionStorage.setItem("active-tab", state.activeTabId);
       }
-
-      state.activeTabId = action.payload.menuId;
-      sessionStorage.setItem("active-tab", state.activeTabId);
-      sessionStorage.setItem("tabs", JSON.stringify(state.tabs));
     },
     removeTab: (state, action) => {
       if (state.tabs.length > 1) {
