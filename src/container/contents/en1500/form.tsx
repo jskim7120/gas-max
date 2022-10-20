@@ -21,32 +21,32 @@ import {
   SelectCom,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
-import { InputSize } from "components/componentsType";
 import { IFormProps } from "./type";
-import DaumAddress from "components/daum";
 import { schema } from "./validation";
-import PlainTab from "components/plainTab";
-import { TabContentWrapper } from "components/plainTab/style";
-import getTabContent from "../en1100/getTabContent";
-import Loader from "components/loader";
 import { VolReading, Container, RubeUnit, BasicItems } from "../en1500/style";
+import { useGetCommonGubunQuery } from "app/api/commonGubun";
 
 interface IForm {
   selected: any;
 }
 const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
-  console.log("selected", selected);
+  console.log("selected===>", selected);
   const dispatch = useDispatch();
   const [isClickedAdd, setIsClikedAdd] = useState(false);
   const [tabId, setTabId] = useState(0);
-  const options = [
-    "적용 안함",
-    "미 수 금 연체적용 (등록일 기준)",
-    "전월미납 연체적용 (등록일 기준)",
-    "전월미납 연체적용 (납부마감일 기준)",
-    "미 수 금 연체적용 (납부마감일 기준)",
-    "qweqweqweqwewqeqweqweqw",
-  ];
+
+  const { data: jnPerMeth, isError: isJnPerMethError } =
+    useGetCommonGubunQuery("11");
+  const { data: jnChekum, isError: isJnChekumError } =
+    useGetCommonGubunQuery("12");
+
+  const { data: jnJiroPrint, isError: isJnJiroPrintError } =
+    useGetCommonGubunQuery("13");
+
+  const { data: jnR, isError: isJnR } = useGetCommonGubunQuery("14");
+
+  const { data: jnSukumtype, isError: isJnSukumtypeError } =
+    useGetCommonGubunQuery("15");
 
   useEffect(() => {
     if (JSON.stringify(selected) !== "{}") {
@@ -67,7 +67,6 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
 
   const resetForm = (type: string) => {
     if (JSON.stringify(selected) !== "{}") {
-      console.log("type:", type);
       let newData: any = {};
 
       if (type === "clear") {
@@ -94,8 +93,6 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
   }));
 
   const update = (data: IFormProps) => {
-    console.log("udpate duudagdav");
-
     if (isClickedAdd) {
       //createCustomer
     } else {
@@ -192,29 +189,15 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Wrapper className="volWrapper">
           <Field>
             <FormGroup>
-              {/* <Label>연체료 적용방법</Label> */}
-              {/* <Select {...register("jnPerMeth")}>
-                <option value="0">1. 인쇄용지</option>
-                <option value="1">2. 미 수 금 연체적용 (등록일 기준)</option>
-                <option value="2">3. 전월미납 연체적용 (등록일 기준)</option>
-                <option value="3">
-                  4. 전월미납 연체적용 (납부마감일 기준)
-                </option>
-                <option value="4">
-                  5. 미 수 금 연체적용 (납부마감일 기준)
-                </option>
-              </Select> */}
               <SelectCom
                 label="연체료 적용방법"
-                optionSlt={options}
-                register={register("jnPerMeth")}
+                selectOption={jnPerMeth}
                 errors={errors["jnPerMeth"]?.message}
+                register={register("jnPerMeth")}
                 defaultValue={selected.jnPerMeth}
+                fullWidth
               />
             </FormGroup>
-            <div>
-              <ErrorText>{errors["jnPerMeth"]?.message}</ErrorText>
-            </div>
           </Field>
           <p>검침 등록시 미납금액에 대하여 연체료를 부과</p>
         </Wrapper>
@@ -233,12 +216,14 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Wrapper className="volWrapper">
           <Field>
             <FormGroup>
-              <Label>체적사용료 계산</Label>
-              <Select {...register("jnChekum")}>
-                <option value="0">1. 사용 안함</option>
-                <option value="1">2. 원단위 절사</option>
-                <option value="2">3. 원단위 반올림</option>
-              </Select>
+              <SelectCom
+                label="체적사용료 계산"
+                selectOption={jnChekum}
+                errors={errors["jnChekum"]?.message}
+                register={register("jnChekum")}
+                defaultValue={selected.jnChekum}
+                fullWidth
+              />
             </FormGroup>
             <div>
               <ErrorText>{errors["jnChekum"]?.message}</ErrorText>
@@ -249,20 +234,15 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
         <Wrapper className="volWrapper">
           <Field>
             <FormGroup>
-              <Label>지로출력 조건</Label>
-              <Select {...register("jnJiroPrint")}>
-                <option value="0">0원 이상</option>
-                <option value="300">300원 이상</option>
-                <option value="500">500원 이상</option>
-                <option value="1,000">1,000원 이상</option>
-                <option value="2,000">2,000원 이상</option>
-                <option value="검침전체자료">검침전체자료</option>
-                <option value="5,000">5,000원 이상</option>
-              </Select>
+              <SelectCom
+                label="지로출력 조건"
+                selectOption={jnJiroPrint}
+                errors={errors["jnJiroPrint"]?.message}
+                register={register("jnJiroPrint")}
+                defaultValue={selected.jnJiroPrint}
+                fullWidth
+              />
             </FormGroup>
-            <div>
-              <ErrorText>{errors["jnJiroPrint"]?.message}</ErrorText>
-            </div>
           </Field>
           <p>지로 청구서 출력시 범위 지정</p>
         </Wrapper>
@@ -273,7 +253,7 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
           <Table
             tableHeader={["조정기압력", "루베(㎥ ) 단가"]}
             tableData={data1500}
-            onClick={(item) => console.log("form1500", item)}
+            onClick={(item) => {}}
           />
         </RubeUnit>
         <BasicItems>
@@ -281,16 +261,14 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
           <Wrapper className="volWrapper">
             <Field>
               <FormGroup>
-                <Label>조정기압력</Label>
-                <Select {...register("jnR")}>
-                  <option value="280">280</option>
-                  <option value="600">600</option>
-                  <option value="1000">1000</option>
-                  <option value="1500">1500</option>
-                  <option value="2000">2000</option>
-                  <option value="2500">2500</option>
-                  <option value="7000">7000</option>
-                </Select>
+                <SelectCom
+                  label="세금계산서 양식"
+                  selectOption={jnR}
+                  errors={errors["jnR"]?.message}
+                  register={register("jnR")}
+                  defaultValue={selected.jnR}
+                  fullWidth
+                />
               </FormGroup>
               <div>
                 <ErrorText>{errors["jnR"]?.message}</ErrorText>
@@ -322,14 +300,15 @@ const Form = ({ selected }: IForm, ref: React.ForwardedRef<any>) => {
           <Wrapper className="volWrapper">
             <Field>
               <FormGroup>
-                <Label>조정기압력</Label>
-                <Select {...register("jnSukumtype")}>
-                  <option value="지로">지로</option>
-                </Select>
+                <SelectCom
+                  label="세금계산서 양식"
+                  selectOption={jnSukumtype}
+                  errors={errors["jnSukumtype"]?.message}
+                  register={register("jnSukumtype")}
+                  defaultValue={selected.jnSukumtype}
+                  fullWidth
+                />
               </FormGroup>
-              <div>
-                <ErrorText>{errors["jnSukumtype"]?.message}</ErrorText>
-              </div>
             </Field>
           </Wrapper>
           <Wrapper className="volWrapper">

@@ -8,8 +8,8 @@ export const FooterContainer = styled.div`
 
   width: 100%;
   height: 80px;
-  border-top: 2px solid #707070;
-  background: #d9e8f6;
+  border-top: 5px solid #707070;
+  background: #ececec;
   display: flex;
   justify-content: space-between;
   align-items: center;

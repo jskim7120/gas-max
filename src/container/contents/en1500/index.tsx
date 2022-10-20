@@ -66,9 +66,8 @@ function EN1500({
 
   const fetchJNotry = async () => {
     try {
-      const { data } = await API.get("/app/EN1500/00");
+      const { data } = await API.get("/app/EN1500/list");
       if (data) {
-        console.log("JNORTY works1500:", data);
         setJnotry(data);
       }
     } catch (err) {

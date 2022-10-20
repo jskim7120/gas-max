@@ -20,8 +20,8 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
     };
 
     if (color === ButtonColor.PRIMARY) {
-      attributes.bg = "#ECECEC";
-      attributes.color = "#0057AA";
+      attributes.bg = "#17A2B8";
+      attributes.color = "#FFF";
     } else if (color === ButtonColor.SECONDARY) {
       attributes.bg = "linear-gradient(#FFB300, #E67F09)";
       attributes.color = "#FFF";
@@ -84,6 +84,7 @@ const ButtonComponent = styled.button<{
         cursor: default;
       }
       width: ${props.fullWidth ? "100%" : "auto"};
+      line-height: 12px;
     `;
   }}
 `;
@@ -142,9 +143,10 @@ function Button(
           {props.icon}
           <div
             style={{
-              height: "15px",
+              height: "13px",
               width: "1px",
-              background: color === ButtonColor.SECONDARY ? "#fff" : "#707070",
+              // background: color === ButtonColor.SECONDARY ? "#fff" : "#707070",
+              background: "#fff",
               marginLeft: "5px",
             }}
           ></div>

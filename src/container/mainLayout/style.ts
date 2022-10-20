@@ -8,13 +8,12 @@ export const Container = styled.div`
 export const TopSide = styled.div`
   width: 100%;
   height: 43px;
-  background-color: rgba(101, 84, 255, 0.19);
   border: 1px solid #707070;
-  padding: 0 24px 0 14px;
+  padding: 0 6px 0 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-image: linear-gradient(to right, #0057aa 35%, #8cb808);
+  background: #0a0a0a;
 `;
 
 export const TopLeftWrapper = styled.div`

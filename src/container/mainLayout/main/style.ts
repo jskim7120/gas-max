@@ -3,24 +3,29 @@ import styled from "styled-components";
 export const Sidebar = styled.div<{ isOpen?: boolean }>`
   width: 82px;
   min-width: 82px;
-  background: #f8e5ba;
-  border-right: 2px solid #707070;
+  background: #e6f3ff;
   position: ${(props) => !props.isOpen && "absolute"};
   left: 0;
   left: ${(props) => !props.isOpen && "-82px"};
+  .header_cnt {
+    background: #626161;
+    padding-top: 10px;
+  }
 
   .header {
-    display: inline-block;
-    background: linear-gradient(rgba(230, 164, 9, 0.2), rgba(230, 164, 9, 1));
     width: 100%;
-    height: 34px;
-    min-height: 34px;
-    color: #0057aa;
+    height: 32px;
+    min-height: 32px;
+    color: #ffffff;
     font-family: "SegoeUI";
     font-size: 12px;
     font-weight: 700;
     text-align: center;
     padding: 7px 0 0 0;
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    gap: 2px;
   }
 `;
 

@@ -38,8 +38,8 @@ interface IInputProps {
   placeholder?: string;
   style?: any;
   className?: string;
-  optionSlt?: any;
-  defaultValue?: string;
+  selectOption?: any;
+  defaultValue?: any;
 }
 
 export const Input = ({
@@ -75,40 +75,26 @@ export const Input = ({
   );
 };
 export const SelectCom = ({
-  type,
   label,
   labelLong,
-  register,
   errors,
-  inputSize,
-  fullWidth,
-  value,
-  placeholder,
-  style,
-  className,
-  optionSlt,
+  selectOption,
   defaultValue,
 }: IInputProps) => {
-  console.log("defaultValue====>", defaultValue);
-  // console.log("register====>", register);
-  console.log("options====>", typeof optionSlt);
-  console.log("options====>", optionSlt?.length);
   return (
-    <InputWrapper fullWidth={fullWidth}>
+    <div>
       <FormGroup>
         {label !== undefined && <Label labelLong={labelLong}>{label}</Label>}
-        <Select value="2">
-          {Object.keys(optionSlt).map((key, index) => {
-            return (
-              <option key={index}>
-                {key}. {optionSlt[key]}
-              </option>
-            );
-          })}
+        <Select value={defaultValue} onChange={() => {}}>
+          {selectOption?.map((obj: any, idx: any) => (
+            <option key={idx} value={obj.code1}>
+              {obj.codeName}
+            </option>
+          ))}
         </Select>
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>
-    </InputWrapper>
+    </div>
   );
 };
 

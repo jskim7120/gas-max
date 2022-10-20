@@ -6,6 +6,7 @@ import Tab from "components/tab";
 import {
   // SidebarOpen,
   // SidebarClose,
+  ShortcutIcon,
   Sidebar1,
   Sidebar2,
   Sidebar3,
@@ -25,7 +26,14 @@ function MainContainer() {
   return (
     <Main>
       <Sidebar isOpen={isOpen}>
-        <span className="header">바로가기</span>
+        <div className="header_cnt">
+          <div className="header">
+            <span>
+              <ShortcutIcon />
+            </span>
+            <span>바로가기</span>
+          </div>
+        </div>
         <nav>
           <UnOrderedList>
             <li>

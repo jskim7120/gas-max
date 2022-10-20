@@ -103,10 +103,7 @@ const Tab = (props: TabProps): JSX.Element => {
   return (
     <TabContainer>
       <TabHeaderWrapper>
-        <div
-          style={{ height: "31px", width: "31px" }}
-          onClick={() => dispatch(toggleSidebar())}
-        >
+        <div className="sideBar" onClick={() => dispatch(toggleSidebar())}>
           {isOpen ? <SidebarClose /> : <SidebarOpen />}
         </div>
         <ul>
@@ -123,7 +120,8 @@ const Tab = (props: TabProps): JSX.Element => {
         <div
           style={{
             display: "flex",
-            marginRight: "25px",
+            marginRight: "6px",
+            marginBottom: "4px",
           }}
         >
           <span

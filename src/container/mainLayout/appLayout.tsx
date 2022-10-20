@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "app/store";
 import { Container, TopSide, TopLeftWrapper, Icons } from "./style";
-import { Settings, User } from "components/allSvgIcon";
+import { HeaderBtn, Settings, User } from "components/allSvgIcon";
 import Navbar from "components/menu/navbar";
 import LogoImg from "assets/image/Logo.png";
 import Footer from "./footer";
@@ -20,6 +20,9 @@ export default function AppLayout({ children }: { children: any }) {
           <Navbar data={menuData} />
         </TopLeftWrapper>
         <Icons>
+          <span>
+            <HeaderBtn />
+          </span>
           <span>
             <Settings />
           </span>

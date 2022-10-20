@@ -6,7 +6,7 @@ export const Plus = ({ color = "#fff", width = "24px", height = "24px" }) => {
       height="12.062"
       viewBox="0 0 12.062 12.062"
     >
-      <g id="Plus" transform="translate(0.5 0.5)">
+      <g id="Group_132" data-name="Group 132" transform="translate(0.5 0.5)">
         <ellipse
           id="Ellipse_2"
           data-name="Ellipse 2"
@@ -14,8 +14,8 @@ export const Plus = ({ color = "#fff", width = "24px", height = "24px" }) => {
           cy="5.531"
           rx="5.531"
           ry="5.531"
-          fill="none"
-          stroke="#707070"
+          fill="#17a2b8"
+          stroke="#f9f4f4"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1"
@@ -26,7 +26,7 @@ export const Plus = ({ color = "#fff", width = "24px", height = "24px" }) => {
           y2="5.389"
           transform="translate(5.531 2.771)"
           fill="none"
-          stroke="#707070"
+          stroke="#f9f4f4"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1"
@@ -37,7 +37,7 @@ export const Plus = ({ color = "#fff", width = "24px", height = "24px" }) => {
           x1="5.389"
           transform="translate(2.836 5.466)"
           fill="none"
-          stroke="#707070"
+          stroke="#f9f4f4"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1"
@@ -61,8 +61,8 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
           data-name="Path 90"
           d="M872.424,378.571h7.592v8.419h-8.962V379.5"
           transform="translate(-868.585 -373.591)"
-          fill="none"
-          stroke="#707070"
+          fill="#17a2b8"
+          stroke="#fcf9f9"
           strokeLinejoin="round"
           strokeWidth="1"
         />
@@ -72,8 +72,8 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
           width="8.962"
           height="2.099"
           transform="translate(0 5.066) rotate(-34.419)"
-          fill="none"
-          stroke="#707070"
+          fill="#17a2b8"
+          stroke="#fcf9f9"
           strokeLinejoin="round"
           strokeWidth="1"
         />
@@ -83,8 +83,8 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
           width="1.866"
           height="1.866"
           transform="translate(1.872 1.521) rotate(-34.419)"
-          fill="none"
-          stroke="#707070"
+          fill="#17a2b8"
+          stroke="#fcf9f9"
           strokeLinejoin="round"
           strokeWidth="1"
         />
@@ -94,7 +94,7 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
           x2="8.962"
           transform="translate(2.469 11.697)"
           fill="none"
-          stroke="#707070"
+          stroke="#fcf9f9"
           strokeLinejoin="round"
           strokeWidth="1"
         />
@@ -109,7 +109,7 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
             y2="6.367"
             transform="translate(0)"
             fill="none"
-            stroke="#707070"
+            stroke="#fcf9f9"
             strokeLinejoin="round"
             strokeWidth="1"
           />
@@ -119,7 +119,7 @@ export const Trash = ({ color = "#fff", width = "24px", height = "24px" }) => {
             y2="6.367"
             transform="translate(3.91)"
             fill="none"
-            stroke="#707070"
+            stroke="#fcf9f9"
             strokeLinejoin="round"
             strokeWidth="1"
           />
@@ -177,16 +177,68 @@ export const Reset = ({
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16.828"
-      height="16.831"
-      viewBox="0 0 16.828 16.831"
+      width="16.829"
+      height="16.838"
+      viewBox="0 0 16.829 16.838"
     >
-      <g id="Group_130" data-name="Group 130" transform="translate(0.711 0.4)">
+      <g
+        id="Group_1322"
+        data-name="Group 1322"
+        transform="translate(-1861.588 -95.233)"
+      >
+        <g
+          id="Group_130"
+          data-name="Group 130"
+          transform="translate(1862.299 95.64)"
+        >
+          <path
+            id="Path_101"
+            data-name="Path 101"
+            d="M.277,7.3a5.567,5.567,0,1,1,2.472,3.068"
+            transform="matrix(-0.545, 0.839, -0.839, -0.545, 15.403, 6.382)"
+            fill="none"
+            stroke="#707070"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1"
+          />
+          <path
+            id="Polygon_3"
+            data-name="Polygon 3"
+            d="M2,0l2,3.207H0Z"
+            transform="matrix(0.454, -0.891, 0.891, 0.454, 6.721, 3.572)"
+            fill="#707070"
+          />
+        </g>
+        <g
+          id="Group_1266"
+          data-name="Group 1266"
+          transform="translate(1862.299 95.64)"
+        >
+          <path
+            id="Path_101-2"
+            data-name="Path 101"
+            d="M.277,7.3a5.567,5.567,0,1,1,2.472,3.068"
+            transform="matrix(-0.545, 0.839, -0.839, -0.545, 15.403, 6.382)"
+            fill="none"
+            stroke="#707070"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1"
+          />
+          <path
+            id="Polygon_3-2"
+            data-name="Polygon 3"
+            d="M2,0l2,3.207H0Z"
+            transform="matrix(0.454, -0.891, 0.891, 0.454, 6.721, 3.572)"
+            fill="#707070"
+          />
+        </g>
         <path
-          id="Path_101"
-          data-name="Path 101"
+          id="Path_3023"
+          data-name="Path 3023"
           d="M.277,7.3a5.567,5.567,0,1,1,2.472,3.068"
-          transform="matrix(-0.545, 0.839, -0.839, -0.545, 15.403, 6.382)"
+          transform="matrix(-0.545, 0.839, -0.839, -0.545, 1877.701, 102.022)"
           fill="none"
           stroke="#707070"
           strokeLinecap="round"
@@ -194,12 +246,229 @@ export const Reset = ({
           strokeWidth="1"
         />
         <path
-          id="Polygon_3"
-          data-name="Polygon 3"
-          d="M2,0l2,3.207H0Z"
-          transform="matrix(0.454, -0.891, 0.891, 0.454, 6.721, 3.572)"
-          fill="#707070"
+          id="Path_3024"
+          data-name="Path 3024"
+          d="M.277,7.3a5.567,5.567,0,1,1,2.472,3.068"
+          transform="matrix(-0.545, 0.839, -0.839, -0.545, 1877.701, 102.022)"
+          fill="none"
+          stroke="#707070"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
         />
+        <path
+          id="Path_3026"
+          data-name="Path 3026"
+          d="M.277,7.3a5.567,5.567,0,1,1,2.472,3.068"
+          transform="matrix(-0.545, 0.839, -0.839, -0.545, 1877.701, 102.022)"
+          fill="none"
+          stroke="#707070"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+        <path
+          id="Path_3028"
+          data-name="Path 3028"
+          d="M.277,7.3a5.567,5.567,0,1,1,2.472,3.068"
+          transform="matrix(-0.545, 0.839, -0.839, -0.545, 1877.701, 102.022)"
+          fill="none"
+          stroke="#707070"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+        <g id="Group_1321" data-name="Group 1321">
+          <g
+            id="Group_1268"
+            data-name="Group 1268"
+            transform="translate(1862.299 95.64)"
+          >
+            <path
+              id="Path_101-3"
+              data-name="Path 101"
+              d="M.277,7.3a5.567,5.567,0,1,1,2.472,3.068"
+              transform="matrix(-0.545, 0.839, -0.839, -0.545, 15.403, 6.382)"
+              fill="none"
+              stroke="#fcf9f9"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1"
+            />
+            <path
+              id="Polygon_3-3"
+              data-name="Polygon 3"
+              d="M2,0l2,3.207H0Z"
+              transform="matrix(0.454, -0.891, 0.891, 0.454, 6.721, 3.572)"
+              fill="#f8f2f2"
+            />
+          </g>
+          <path
+            id="Path_3029"
+            data-name="Path 3029"
+            d="M.277,7.3a5.553,5.553,0,0,1,.49-4.55A5.646,5.646,0,0,1,2.889.709a5.933,5.933,0,0,1,3.1-.693,5.231,5.231,0,0,1,2.4.752,11.339,11.339,0,0,1,1.979,1.976,15.223,15.223,0,0,1,.485,2.878,5.037,5.037,0,0,1-.483,2.765,5.823,5.823,0,0,1-2.127,2.065,5.184,5.184,0,0,1-2.63.7,5.444,5.444,0,0,1-2.862-.785"
+            transform="matrix(-0.545, 0.839, -0.839, -0.545, 1877.701, 102.022)"
+            fill="none"
+            stroke="#fbf5f5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1"
+          />
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export const HeaderBtn = ({
+  color = "#000",
+  width = "25px",
+  height = "25px",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="25"
+      height="25"
+      viewBox="0 0 26.947 26.947"
+    >
+      <defs>
+        <linearGradient
+          id="linear-gradient"
+          x1="0.5"
+          y1="1"
+          x2="0.5"
+          gradientUnits="objectBoundingBox"
+        >
+          <stop offset="0" stopColor="#fff" />
+          <stop offset="1" stopColor="#aeaeae" />
+        </linearGradient>
+        <linearGradient
+          id="linear-gradient-2"
+          x1="0.5"
+          x2="0.5"
+          y2="1"
+          gradientUnits="objectBoundingBox"
+        >
+          <stop offset="0" stopColor="#fff" />
+          <stop offset="0.244" stopColor="#f8f8f8" />
+          <stop offset="0.597" stopColor="#e5e5e5" />
+          <stop offset="1" stopColor="#c7c7c7" />
+        </linearGradient>
+      </defs>
+      <g
+        id="Group_1276"
+        data-name="Group 1276"
+        transform="translate(-1822.733 -8.534)"
+      >
+        <g id="Group_1275" data-name="Group 1275">
+          <g
+            id="Path_3030"
+            data-name="Path 3030"
+            transform="translate(609.173 -577.075)"
+            fill="url(#linear-gradient)"
+          >
+            <path
+              d="M 1227.035034179688 612.0562744140625 C 1223.569580078125 612.0562744140625 1220.311279296875 610.706787109375 1217.860595703125 608.2564697265625 C 1215.409912109375 605.8060302734375 1214.060180664062 602.5480346679688 1214.060180664062 599.082763671875 C 1214.060180664062 595.6172485351562 1215.409912109375 592.3591918945312 1217.860595703125 589.9088134765625 C 1220.311279296875 587.45849609375 1223.569458007812 586.1090698242188 1227.035034179688 586.1090698242188 C 1230.500610351562 586.1090698242188 1233.758422851562 587.45849609375 1236.208374023438 589.9088134765625 C 1238.658325195312 592.3590698242188 1240.007568359375 595.6171264648438 1240.007568359375 599.082763671875 C 1240.007568359375 602.5482177734375 1238.658325195312 605.80615234375 1236.208374023438 608.2564086914062 C 1233.75830078125 610.706787109375 1230.50048828125 612.0562744140625 1227.035034179688 612.0562744140625 Z"
+              stroke="none"
+            />
+            <path
+              d="M 1227.035034179688 611.5562744140625 C 1233.924438476562 611.5562744140625 1239.507568359375 605.9716796875 1239.507568359375 599.082763671875 C 1239.507568359375 592.1932983398438 1233.924438476562 586.6090698242188 1227.035034179688 586.6090698242188 C 1220.145874023438 586.6090698242188 1214.560180664062 592.1932983398438 1214.560180664062 599.082763671875 C 1214.560180664062 605.9716796875 1220.145874023438 611.5562744140625 1227.035034179688 611.5562744140625 M 1227.035034179688 612.5562744140625 C 1223.43603515625 612.5562744140625 1220.05224609375 611.15478515625 1217.507080078125 608.6099853515625 C 1214.9619140625 606.0651245117188 1213.560180664062 602.681640625 1213.560180664062 599.082763671875 C 1213.560180664062 595.4837036132812 1214.9619140625 592.1000366210938 1217.507080078125 589.5552368164062 C 1220.05224609375 587.010498046875 1223.435913085938 585.6090698242188 1227.035034179688 585.6090698242188 C 1230.634155273438 585.6090698242188 1234.017578125 587.0105590820312 1236.56201171875 589.5552978515625 C 1239.106323242188 592.0999755859375 1240.507568359375 595.4835815429688 1240.507568359375 599.082763671875 C 1240.507568359375 602.6817626953125 1239.106323242188 606.0652465820312 1236.56201171875 608.6099243164062 C 1234.017456054688 611.15478515625 1230.634033203125 612.5562744140625 1227.035034179688 612.5562744140625 Z"
+              stroke="none"
+              fill="#707070"
+            />
+          </g>
+          <path
+            id="Path_3031"
+            data-name="Path 3031"
+            d="M1247.176,608.432a10.793,10.793,0,1,1-10.793-10.792A10.794,10.794,0,0,1,1247.176,608.432Z"
+            transform="translate(599.824 -586.425)"
+            fill="url(#linear-gradient-2)"
+          />
+        </g>
+        <g id="Group_1274" data-name="Group 1274" transform="translate(0.329)">
+          <path
+            id="Path_3032"
+            data-name="Path 3032"
+            d="M123.366,234.007l-5.462-3.153V232.6h-5.272v-1.747l-5.462,3.153,5.462,3.153v-1.747H117.9v1.747Z"
+            transform="translate(1720.609 -211.732)"
+            fill="#3c88d1"
+          />
+          <path
+            id="Path_3033"
+            data-name="Path 3033"
+            d="M120.726,228.331a7.223,7.223,0,0,0-5.121-2.12h0a7.221,7.221,0,0,0-5.122,2.121"
+            transform="translate(1720.25 -211.229)"
+            fill="none"
+            stroke="#3c88d1"
+            strokeLinecap="round"
+            strokeMiterlimit="10"
+            strokeWidth="1"
+          />
+          <g
+            id="Group_1269"
+            data-name="Group 1269"
+            transform="translate(1839.071 15.601)"
+          >
+            <path
+              id="Path_3034"
+              data-name="Path 3034"
+              d="M122.874,226.905l.391,3.738-3.432-1.53Z"
+              transform="translate(-119.833 -226.905)"
+              fill="#3c88d1"
+            />
+          </g>
+          <g
+            id="Group_1270"
+            data-name="Group 1270"
+            transform="translate(1829.206 15.601)"
+          >
+            <path
+              id="Path_3035"
+              data-name="Path 3035"
+              d="M109.161,226.905l-.391,3.738,3.432-1.53Z"
+              transform="translate(-108.77 -226.905)"
+              fill="#3c88d1"
+            />
+          </g>
+          <path
+            id="Path_3036"
+            data-name="Path 3036"
+            d="M110.555,240.172a7.24,7.24,0,0,0,10.115,0"
+            transform="translate(1720.243 -212.742)"
+            fill="none"
+            stroke="#3c88d1"
+            strokeLinecap="round"
+            strokeMiterlimit="10"
+            strokeWidth="1"
+          />
+          <g
+            id="Group_1272"
+            data-name="Group 1272"
+            transform="translate(1829.244 25.212)"
+          >
+            <path
+              id="Path_3037"
+              data-name="Path 3037"
+              d="M109.251,241.416l-.438-3.732,3.451,1.487Z"
+              transform="translate(-108.813 -237.684)"
+              fill="#3c88d1"
+            />
+          </g>
+          <g
+            id="Group_1273"
+            data-name="Group 1273"
+            transform="translate(1839.014 25.212)"
+          >
+            <path
+              id="Path_3038"
+              data-name="Path 3038"
+              d="M122.783,241.416l.438-3.732-3.451,1.487Z"
+              transform="translate(-119.769 -237.684)"
+              fill="#3c88d1"
+            />
+          </g>
+        </g>
       </g>
     </svg>
   );
@@ -971,80 +1240,21 @@ export const SidebarOpen = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="31"
-      height="31"
-      viewBox="0 0 31 31"
+      width="5.637"
+      height="10.813"
+      viewBox="0 0 5.637 10.813"
     >
-      <defs>
-        <linearGradient
-          id="linear-gradient"
-          x1="0.5"
-          y1="0.771"
-          x2="0.5"
-          gradientUnits="objectBoundingBox"
-        >
-          <stop offset="0" stopColor="#a1a1a1" />
-          <stop offset="1" stopColor="#e8e8e8" />
-        </linearGradient>
-      </defs>
-      <g id="Group_112" data-name="Group 112" transform="translate(0 -46)">
-        <rect
-          id="Rectangle_9"
-          data-name="Rectangle 9"
-          width="31"
-          height="31"
-          transform="translate(0 46)"
-          fill="#707070"
-        />
-        <rect
-          id="Rectangle_26"
-          data-name="Rectangle 26"
-          width="27"
-          height="27"
-          rx="3"
-          transform="translate(2 48)"
-          fill="url(#linear-gradient)"
-        />
-        <g
-          id="Group_13"
-          data-name="Group 13"
-          transform="translate(5.698 50.881)"
-        >
-          <path
-            id="Path_60"
-            data-name="Path 60"
-            d="M535.122,169.134h5.739a2.188,2.188,0,0,0,2.188-2.188V151.042a2.188,2.188,0,0,0-2.188-2.188h-5.739"
-            transform="translate(-525.188 -148.854)"
-            fill="none"
-            stroke="#fff"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-          />
-          <line
-            id="Line_1"
-            data-name="Line 1"
-            x2="9.934"
-            transform="translate(0 10.14)"
-            fill="none"
-            stroke="#fff"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-          />
-          <path
-            id="Path_61"
-            data-name="Path 61"
-            d="M488.463,193.9l5.387,5.387-5.387,5.387"
-            transform="translate(-483.452 -189.148)"
-            fill="none"
-            stroke="#fff"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-          />
-        </g>
-      </g>
+      <path
+        id="Path_622"
+        data-name="Path 622"
+        d="M122.743,201.9l-3.231-4,3.231-4"
+        transform="translate(124.15 203.308) rotate(180)"
+        fill="none"
+        stroke="#fff"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
     </svg>
   );
 };
@@ -1053,82 +1263,21 @@ export const SidebarClose = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="31"
-      height="31"
-      viewBox="0 0 31 31"
+      width="5.637"
+      height="10.813"
+      viewBox="0 0 5.637 10.813"
     >
-      <defs>
-        <linearGradient
-          id="linear-gradient"
-          x1="0.5"
-          y1="0.771"
-          x2="0.5"
-          gradientUnits="objectBoundingBox"
-        >
-          <stop offset="0" stopColor="#a1a1a1" />
-          <stop offset="1" stopColor="#e8e8e8" />
-        </linearGradient>
-      </defs>
-      <g id="Group_129" data-name="Group 129" transform="translate(-82 -79)">
-        <g id="Group_123" data-name="Group 123" transform="translate(-118 -75)">
-          <rect
-            id="Rectangle_9"
-            data-name="Rectangle 9"
-            width="31"
-            height="31"
-            transform="translate(200 154)"
-            fill="#707070"
-          />
-          <rect
-            id="Rectangle_26"
-            data-name="Rectangle 26"
-            width="27"
-            height="27"
-            rx="3"
-            transform="translate(202 156)"
-            fill="url(#linear-gradient)"
-          />
-          <g
-            id="Group_12"
-            data-name="Group 12"
-            transform="translate(211.308 159.828)"
-          >
-            <line
-              id="Line_2"
-              data-name="Line 2"
-              x1="8.915"
-              transform="translate(3.141 9.1)"
-              fill="none"
-              stroke="#fff"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            />
-            <path
-              id="Path_62"
-              data-name="Path 62"
-              d="M124.346,203.57l-4.834-4.834,4.834-4.834"
-              transform="translate(-116.787 -189.636)"
-              fill="none"
-              stroke="#fff"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            />
-            <line
-              id="Line_3"
-              data-name="Line 3"
-              y2="18.2"
-              transform="translate(0)"
-              fill="none"
-              stroke="#fff"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            />
-          </g>
-        </g>
-      </g>
+      <path
+        id="Path_62"
+        data-name="Path 62"
+        d="M122.743,201.9l-3.231-4,3.231-4"
+        transform="translate(-118.512 -192.495)"
+        fill="none"
+        stroke="#fff"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
     </svg>
   );
 };
@@ -2770,6 +2919,60 @@ export const MenuModalBtn = ({
           fill="none"
           stroke="#fff"
           strokeWidth="1"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const ShortcutIcon = ({
+  color = "#000",
+  width = "16px",
+  height = "11px",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16.405"
+      height="11.466"
+      viewBox="0 0 16.405 11.466"
+    >
+      <g
+        id="Group_456"
+        data-name="Group 456"
+        transform="translate(-457.35 -728.472)"
+      >
+        <line
+          id="Line_105"
+          data-name="Line 105"
+          x1="9.489"
+          transform="translate(463.052 734.205)"
+          fill="#fff"
+          stroke="#f86606"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
+        <path
+          id="Path_264"
+          data-name="Path 264"
+          d="M468.783,731.3l2.593,2.593-2.593,2.593"
+          transform="translate(1.629 0.316)"
+          fill="none"
+          stroke="#f86606"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
+        <path
+          id="Path_265"
+          data-name="Path 265"
+          d="M468.066,736.322v1.187a1.679,1.679,0,0,1-1.679,1.679h-6.609a1.679,1.679,0,0,1-1.678-1.679V730.9a1.678,1.678,0,0,1,1.678-1.678h6.609a1.679,1.679,0,0,1,1.679,1.678v1.188"
+          transform="translate(0)"
+          fill="none"
+          stroke="#f86606"
+          strokeMiterlimit="10"
+          strokeWidth="1.5"
         />
       </g>
     </svg>
