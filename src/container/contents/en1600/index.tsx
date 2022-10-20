@@ -1,18 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import API from "app/axios";
+import { columns, fields } from "./data";
 import Button from "components/button/button";
 import { ButtonType, ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
-import { columns, fields } from "./data";
-import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
+import API from "app/axios";
+import Form from "./form";
 
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
 
-function EN1100({
+function EN1600({
   name,
   depthFullName,
 }: {
@@ -27,7 +27,7 @@ function EN1100({
   const [addClicked, setAddClicked] = useState(false);
 
   useEffect(() => {
-    fetchJNotry();
+    fetchSawon();
   }, []);
 
   useEffect(() => {
@@ -61,11 +61,6 @@ function EN1100({
           endRow: 0,
         });
 
-        // gv.setDisplayOptions({
-        //   rowFocusVisible:true,
-        //   rowFocusBackground:"#340000ff"
-        // });
-
         gv.onSelectionChanged = () => {
           const itemIndex: any = gv.getCurrent().dataRow;
           setSelected(jnotry[itemIndex]);
@@ -80,20 +75,18 @@ function EN1100({
     }
   }, [jnotry]);
 
-  const fetchJNotry = async () => {
+  const fetchSawon = async () => {
     try {
-      const { data } = await API.get("/app/EN1100/list");
+      const { data } = await API.get("/app/EN1600/list");
       if (data) {
-        console.log("JNORTY:", data);
+        console.log("SAWON:", data);
         setJnotry(data);
         setSelected(data[0]);
       }
     } catch (err) {
-      console.log("JNOTRY DATA fetch error =======>", err);
+      console.log("SAWON DATA fetch error =======>", err);
     }
   };
-
-  //if (!jnotry) return <p>...Loading</p>;
 
   return (
     <>
@@ -147,4 +140,4 @@ function EN1100({
   );
 }
 
-export default EN1100;
+export default EN1600;

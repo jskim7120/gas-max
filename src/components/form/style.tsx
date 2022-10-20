@@ -28,8 +28,9 @@ interface IInputProps {
   // errors?: FieldError | any;
   type?: string;
   label?: string;
+  name?: string;
   labelLong?: boolean;
-  register: any;
+  register?: any;
   errors?: any;
   inputSize?: InputSize;
   fullWidth?: boolean;
@@ -40,11 +41,14 @@ interface IInputProps {
   className?: string;
   selectOption?: any;
   defaultValue?: any;
+  optionSlt?: any;
+  onChange?: (arg: any) => void;
 }
 
 export const Input = ({
   type,
   label,
+  name,
   labelLong,
   register,
   errors,
@@ -54,6 +58,7 @@ export const Input = ({
   placeholder,
   style,
   className,
+  onChange,
 }: IInputProps) => {
   return (
     <InputWrapper fullWidth={fullWidth}>
@@ -68,6 +73,7 @@ export const Input = ({
           placeholder={placeholder}
           style={style}
           className={className}
+          onChange={onChange}
         />
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>
