@@ -6,7 +6,7 @@ import { ButtonType, ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { columns, fields } from "./data";
 import Form from "./form";
-import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "./style";
+import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 
 let container: HTMLDivElement;
 let dp: any;
