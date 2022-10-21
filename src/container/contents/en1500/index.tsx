@@ -43,7 +43,7 @@ function EN1500({
     gv.setColumns(columns);
     dp.setRows(jnotry);
 
-    gv.setFooter({ visible: false });
+    gv.setFooter({ visible: true });
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },

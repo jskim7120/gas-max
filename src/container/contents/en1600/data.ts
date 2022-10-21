@@ -96,6 +96,9 @@ export const columns = [
     header: {
       text: "급여일",
     },
+    footer: {
+      text: "Count",
+    },
   },
   {
     name: "swWorkOut",
@@ -107,6 +110,17 @@ export const columns = [
     },
     header: {
       text: "퇴사",
+    },
+    footer: {
+      valueCallback: function (
+        grid: any,
+        column: any,
+        footerIndex: any,
+        columnFooter: any,
+        value: any
+      ) {
+        return grid.getSummary("swWorkOut", "count");
+      },
     },
   },
 ];
