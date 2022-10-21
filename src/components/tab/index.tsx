@@ -117,28 +117,12 @@ const Tab = (props: TabProps): JSX.Element => {
             />
           ))}
         </ul>
-        <div
-          style={{
-            display: "flex",
-            marginRight: "6px",
-            marginBottom: "4px",
-          }}
-        >
-          <span
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onClick={() => dispatch(openModal({ type: "infoModal" }))}
-          >
+        <div className="subIconCnt">
+          <span onClick={() => dispatch(openModal({ type: "infoModal" }))}>
             <Info />
           </span>
           <span
             style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
               marginLeft: "8px",
             }}
           >
@@ -147,9 +131,6 @@ const Tab = (props: TabProps): JSX.Element => {
           <span
             onClick={() => dispatch(removeAllTabs())}
             style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
               marginLeft: "8px",
             }}
           >

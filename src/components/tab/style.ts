@@ -30,6 +30,19 @@ export const TabHeaderWrapper = styled.div`
     height: 31px;
     width: 100%;
   }
+  .subIconCnt {
+    display: flex;
+    margin-right: 6px;
+    margin-bottom: 4px;
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      ellipse:hover {
+        fill: #f6f6f6;
+      }
+    }
+  }
 `;
 
 export const List = styled.li<{ isActive: boolean }>`

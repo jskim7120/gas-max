@@ -2729,7 +2729,7 @@ export const Close = () => {
           rx="12.5"
           ry="12.5"
           transform="translate(1865.643 49.164)"
-          fill="#e4e4e4"
+          fill="#AEAEAE"
         />
         <line
           id="Line_9"
@@ -2738,7 +2738,7 @@ export const Close = () => {
           y2="9.877"
           transform="translate(1873.292 56.638)"
           fill="none"
-          stroke="#494949"
+          stroke="#0A0A0A"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="2"
@@ -2750,7 +2750,7 @@ export const Close = () => {
           y1="9.877"
           transform="translate(1873.292 56.638)"
           fill="none"
-          stroke="#494949"
+          stroke="#0A0A0A"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="2"
@@ -2781,7 +2781,7 @@ export const Refresh = () => {
           rx="12.5"
           ry="12.5"
           transform="translate(1819.279 49.164)"
-          fill="#e4e4e4"
+          fill="#AEAEAE"
         />
         <path
           id="Path_91"
@@ -2789,7 +2789,7 @@ export const Refresh = () => {
           d="M638.721,380.727a6.285,6.285,0,1,0-2.791,3.465"
           transform="translate(1199.031 -317.108)"
           fill="none"
-          stroke="#494949"
+          stroke="#0A0A0A"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1"
@@ -2799,7 +2799,7 @@ export const Refresh = () => {
           data-name="Polygon 2"
           d="M3.006,0,6.012,4.81H0Z"
           transform="translate(1839.905 66.493) rotate(-174)"
-          fill="#494949"
+          fill="#0A0A0A"
         />
       </g>
     </svg>
@@ -2827,7 +2827,7 @@ export const Info = () => {
           rx="12.5"
           ry="12.5"
           transform="translate(1772.179 49.164)"
-          fill="#e4e4e4"
+          fill="#AEAEAE"
         />
         <g
           id="Group_38"
@@ -2839,7 +2839,7 @@ export const Info = () => {
             data-name="Path 92"
             d="M147.747,332.069a4.8,4.8,0,0,1,1.94.386,4.614,4.614,0,0,1,1.488,1.008,3.714,3.714,0,0,1,.857,1.46,3.262,3.262,0,0,1,.066,1.686,3.584,3.584,0,0,1-.782,1.658q-.556.621-1.121,1.168a7.007,7.007,0,0,0-1,1.159,2.854,2.854,0,0,0-.433,1.648v1.7H146.5v-1.469a4.1,4.1,0,0,1,.443-2.063,6.418,6.418,0,0,1,1.008-1.328q.565-.565,1.1-1.111a2.828,2.828,0,0,0,.725-1.432,3.127,3.127,0,0,0,.028-1,2.235,2.235,0,0,0-.33-.923,1.959,1.959,0,0,0-.706-.688,2.166,2.166,0,0,0-1.121-.273,2.586,2.586,0,0,0-1.177.235,1.967,1.967,0,0,0-.744.65,2.516,2.516,0,0,0-.367.932,4.389,4.389,0,0,0-.066,1.121h-2.185a4.615,4.615,0,0,1,.188-1.658,3.73,3.73,0,0,1,.829-1.45,4.269,4.269,0,0,1,1.46-1.017A5.311,5.311,0,0,1,147.747,332.069Zm1.205,16.576h-2.637v-2.637h2.637Z"
             transform="translate(-143.103 -332.069)"
-            fill="#494949"
+            fill="#0A0A0A"
           />
         </g>
       </g>

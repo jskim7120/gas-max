@@ -22,9 +22,12 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
     if (color === ButtonColor.PRIMARY) {
       attributes.bg = "#17A2B8";
       attributes.color = "#FFF";
+      attributes.bgHover = "#1EC5DF";
     } else if (color === ButtonColor.SECONDARY) {
       attributes.bg = "linear-gradient(#FFB300, #E67F09)";
       attributes.color = "#FFF";
+      attributes.bgHover =
+        "linear-gradient(#F5D998 5%, #F4D38E 10%, #F3CD85 15%, #F2C77B 20%, #F1C171 25%, #F0BC69 30%, #E67F09 100%)";
     }
   } else if (kind === ButtonType.LOGIN) {
     attributes = {
@@ -75,7 +78,10 @@ const ButtonComponent = styled.button<{
       border-radius: ${BtnAttribute(props.kind, props.color).borderRad};
       color: ${BtnAttribute(props.kind, props.color).color};
       padding: 0 5px;
-      &:hover,
+      &:hover {
+        // background: #1ec5df;
+        background: ${BtnAttribute(props.kind, props.color).bgHover};
+      }
       &:focus {
         //background-color: #5284ce;
       }

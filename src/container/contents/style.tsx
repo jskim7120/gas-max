@@ -17,9 +17,6 @@ export const DetailHeader = styled.div`
   div.buttons {
     display: flex;
     alignitems: center;
-    button: hover {
-      background: #1ec5df;
-    }
   }
 `;
 
