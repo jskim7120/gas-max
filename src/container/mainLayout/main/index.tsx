@@ -17,6 +17,7 @@ import {
   Sidebar8,
   Sidebar9,
   Sidebar10,
+  Sidebar11,
 } from "components/allSvgIcon";
 
 function MainContainer() {
@@ -75,24 +76,30 @@ function MainContainer() {
             <li>
               <a>
                 <Sidebar7 />
-                <p>현금출납</p>
+                <p>A/S관리</p>
               </a>
             </li>
             <li>
               <a>
                 <Sidebar8 />
-                <p>중량수급</p>
+                <p>현금출납</p>
               </a>
             </li>
             <li>
               <a>
                 <Sidebar9 />
-                <p>체적수급</p>
+                <p>중량수급</p>
               </a>
             </li>
             <li>
               <a>
                 <Sidebar10 />
+                <p>체적수급</p>
+              </a>
+            </li>
+            <li>
+              <a>
+                <Sidebar11 />
                 <p>세금계산서</p>
               </a>
             </li>

@@ -33,7 +33,7 @@ export const UnOrderedList = styled.ul`
   list-style: none;
 
   &:first-child {
-    margin-top: 20px;
+    margin-top: 11px;
   }
 
   a {
