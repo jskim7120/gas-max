@@ -13,6 +13,6 @@ export const getContent = (
     case "EN1500":
       return <EN1500 name={menuName} depthFullName={depthFullName} />;
     case "EN1600":
-      return <EN1600 name={menuName} depthFullName={depthFullName} />;
+      return <EN1600 depthFullName={depthFullName} />;
   }
 };

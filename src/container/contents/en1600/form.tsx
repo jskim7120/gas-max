@@ -16,6 +16,7 @@ import {
   Field,
   ErrorText,
   FormGroup,
+  Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
@@ -23,45 +24,41 @@ import { IFormProps } from "./type";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import Loader from "components/loader";
-import { useGetCommonGubunQuery } from "app/api/commonGubun";
 import { SearchIcon } from "components/allSvgIcon";
-import DatePicker from "react-datepicker";
 import { formatDateToString } from "helpers/dateFormat";
 import CustomDate from "./date";
+import API from "app/axios";
+import { useGetCommonGubunQuery } from "app/api/commonGubun";
+import { useGetAreaCodeQuery } from "app/api/areaCode";
 
 interface IForm {
   selected: any;
+  fetchSawon: any;
 }
+const base = "/app/EN1600/";
 
 const Form = React.forwardRef(
-  ({ selected }: IForm, ref: React.ForwardedRef<HTMLFormElement>) => {
+  (
+    { selected, fetchSawon }: IForm,
+    ref: React.ForwardedRef<HTMLFormElement>
+  ) => {
     const dispatch = useDispatch();
-    const [isClickedAdd, setIsClikedAdd] = useState(false);
-    const [tabId, setTabId] = useState(0);
+
+    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [addr, setAddress] = useState<string>("");
     const [image, setImage] = useState<{
       file: any;
       name: string;
     }>();
-
-    const { data: jnSekum, isError: isJnSekumError } =
-      useGetCommonGubunQuery("12");
-
-    const { data: jnJangbu, isError: isJnJangbuError } =
-      useGetCommonGubunQuery("10");
-
-    const { data: jnJiro, isError: isJnJiroError } =
-      useGetCommonGubunQuery("17");
+    const { data: swGubun } = useGetCommonGubunQuery("1");
+    const { data: swPaytype } = useGetCommonGubunQuery("2");
+    const { data: areaCode } = useGetAreaCodeQuery();
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
         reset({
           ...selected,
-          innopayBankYn: selected?.innopayBankYn === "Y",
-          niceBankYn: selected?.niceBankYn === "Y",
-          jnSekumEa: selected?.jnSekumEa === "Y",
-          jnSegongYn: selected?.jnSegongYn === "Y",
-          jnVatSumyn: selected?.jnVatSumyn === "Y",
+          swWorkOut: selected?.swWorkOut === "Y",
         });
       }
     }, [selected]);
@@ -86,7 +83,7 @@ const Form = React.forwardRef(
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = null;
           }
-          setIsClikedAdd(true);
+
           reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
@@ -95,30 +92,50 @@ const Form = React.forwardRef(
 
           reset({
             ...newData,
-            innopayBankYn: selected?.innopayBankYn === "Y",
-            niceBankYn: selected?.niceBankYn === "Y",
-            jnSekumEa: selected?.jnSekumEa === "Y",
-            jnSegongYn: selected?.jnSegongYn === "Y",
-            jnVatSumyn: selected?.jnVatSumyn === "Y",
+            swWorkOut: selected?.swWorkOut === "Y",
           });
         }
       }
     };
+    const crud = async (type: string | null) => {
+      if (type === "delete") {
+        console.log("delete");
+        const path = `${base}delete`;
+        const formValues = getValues();
+        try {
+          const response = await API.post(path, formValues);
+          console.log("response:", response.status);
+          if (response.status === 200) {
+            await fetchSawon();
+          }
+        } catch (err) {
+          console.log("delete err:", err);
+        }
+      }
+      if (type === null) {
+        handleSubmit(update)();
+      }
+    };
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
-      submitForm() {
-        handleSubmit(update)();
-      },
+      crud,
       resetForm,
+      setIsAddBtnClicked,
     }));
 
-    const update = (data: IFormProps) => {
-      console.log("udpate duudagdav:", data);
+    const update = async (data: IFormProps) => {
+      //form aldaagui uyd ajillana
+      const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
+      const formValues = getValues();
 
-      if (isClickedAdd) {
-        //createCustomer
-      } else {
-        //updateCustomer
+      try {
+        const response = await API.post(path, formValues);
+        console.log("response:", response.status);
+        if (response.status === 200) {
+          await fetchSawon();
+        }
+      } catch (err) {
+        console.log("crud err:", err);
       }
     };
 
@@ -127,10 +144,10 @@ const Form = React.forwardRef(
 
     const onFileUpload = () => {
       const formData = new FormData();
-
       //formData.append("myFile");
       //axios.post("api/uploadfile", formData);
     };
+
     const handleDateChange = (date: Date) => {
       const stringDate = formatDateToString(date);
       console.log("stringDate========>", stringDate);
@@ -141,17 +158,29 @@ const Form = React.forwardRef(
 
     return (
       <form onSubmit={handleSubmit(update)} style={{ padding: "0px 10px" }}>
+        {/* <p>{isAddBtnClicked ? "true" : "false"}</p> */}
         <Wrapper>
           <Input
             label="코드"
             register={register("swCode")}
             errors={errors["swCode"]?.message}
           />
-          <Input
-            label="영업소"
-            register={register("areaCode")}
-            errors={errors["areaCode"]?.message}
-          />
+
+          <Field>
+            <FormGroup>
+              <Label>영업소</Label>
+              <Select {...register("areaCode")}>
+                {areaCode?.map((obj, idx) => (
+                  <option key={idx} value={obj.areaCode}>
+                    {obj.areaName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+            <div>
+              <ErrorText>{errors["areaCode"]?.message}</ErrorText>
+            </div>
+          </Field>
         </Wrapper>
         <Divider />
         <Wrapper>
@@ -168,11 +197,21 @@ const Form = React.forwardRef(
         </Wrapper>
         <DividerGray />
         <Wrapper>
-          <Input
-            label="업무구분"
-            register={register("swGubun")}
-            errors={errors["swGubun"]?.message}
-          />
+          <Field>
+            <FormGroup>
+              <Label>업무구분</Label>
+              <Select {...register("swGubun")}>
+                {swGubun?.map((obj, idx) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+            <div>
+              <ErrorText>{errors["swGubun"]?.message}</ErrorText>
+            </div>
+          </Field>
           <Input
             label="주민번호"
             register={register("swJuminno")}
@@ -287,7 +326,7 @@ const Form = React.forwardRef(
               </button>
             </Wrapper>
             <DividerGray />
-            <Wrapper grid>
+            <Wrapper>
               <CustomDate
                 label="입사일"
                 name="swIndate"
@@ -295,11 +334,21 @@ const Form = React.forwardRef(
                 reset={reset}
                 errors={errors["swIndate"]?.message}
               />
-              <Input
-                label="급여방식"
-                register={register("swPaytype")}
-                errors={errors["swPaytype"]?.message}
-              />
+              <Field style={{ width: "100%" }}>
+                <FormGroup>
+                  <Label>급여방식</Label>
+                  <Select {...register("swPaytype")}>
+                    {swPaytype?.map((obj, idx) => (
+                      <option key={idx} value={obj.code1}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
+                <div>
+                  <ErrorText>{errors["swPaytype"]?.message}</ErrorText>
+                </div>
+              </Field>
             </Wrapper>
             <DividerGray />
             <Wrapper grid>
@@ -370,14 +419,11 @@ const Form = React.forwardRef(
           />
         </Wrapper>
         <Divider />
-        <Wrapper grid>
+        <Wrapper grid col={2}>
           <Field>
             <FormGroup>
-              <div style={{ width: "50px" }}></div>
-              <CheckBox
-                register={{ ...register("swWorkOut") }}
-                title="퇴사여부"
-              />
+              <Label>퇴사여부</Label>
+              <CheckBox register={{ ...register("swWorkOut") }} />
               <p style={{ marginLeft: "25px" }}>(체크시 퇴사사원)</p>
             </FormGroup>
             <div>

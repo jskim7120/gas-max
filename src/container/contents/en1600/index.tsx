@@ -12,19 +12,11 @@ let container: HTMLDivElement;
 let dp: any;
 let gv: any;
 
-function EN1600({
-  name,
-  depthFullName,
-}: {
-  name: string;
-  depthFullName: string;
-}) {
+function EN1600({ depthFullName }: { depthFullName: string }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-
   const [jnotry, setJnotry] = useState([]);
   const [selected, setSelected] = useState<any>();
-  const [addClicked, setAddClicked] = useState(false);
 
   useEffect(() => {
     fetchSawon();
@@ -40,7 +32,6 @@ function EN1600({
       dp.setFields(fields);
       gv.setColumns(columns);
       dp.setRows(jnotry);
-
       gv.setHeader({
         height: 35,
       });
@@ -49,7 +40,6 @@ function EN1600({
         indicator: { visible: true },
         checkBar: { visible: false },
         stateBar: { visible: false },
-        // edit: { insertable: true, appendable: true },
       });
       gv.sortingOptions.enabled = true;
       gv.displayOptions._selectionStyle = "singleRow";
@@ -98,7 +88,7 @@ function EN1600({
             icon={<Plus />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              setAddClicked(true);
+              formRef.current.setIsAddBtnClicked(true);
               formRef.current.resetForm("clear");
             }}
           />
@@ -107,7 +97,8 @@ function EN1600({
             icon={<Trash />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              setAddClicked(false);
+              formRef.current.setIsAddBtnClicked(false);
+              formRef.current.crud("delete");
             }}
           />
           <Button
@@ -115,8 +106,8 @@ function EN1600({
             icon={<Update />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              setAddClicked(false);
-              formRef.current.submitForm();
+              formRef.current.setIsAddBtnClicked(false);
+              formRef.current.crud(null);
             }}
             color={ButtonColor.SECONDARY}
           />
@@ -124,7 +115,7 @@ function EN1600({
             text="취소"
             icon={<Reset />}
             onClick={() => {
-              setAddClicked(false);
+              formRef.current.setIsAddBtnClicked(false);
               formRef.current.resetForm("reset");
             }}
           />
@@ -133,7 +124,7 @@ function EN1600({
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form selected={selected} ref={formRef} />
+          <Form selected={selected} ref={formRef} fetchSawon={fetchSawon} />
         </DetailWrapper>
       </Wrapper>
     </>

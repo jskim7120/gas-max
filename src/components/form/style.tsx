@@ -171,7 +171,7 @@ export const Label = styled.label<{ labelLong?: boolean }>`
   min-width: ${(props) => (props.labelLong ? "200px" : "100px")};
   text-align: right;
   padding: 7px 10px;
-  background: #f9f9f9;
+  background: #f5fcff;
 `;
 
 export const Field = styled.div``;
