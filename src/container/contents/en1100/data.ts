@@ -49,6 +49,9 @@ export const columns = [
     header: {
       text: "영업소코드",
     },
+    footer: {
+      text: "Count",
+    },
   },
   {
     name: "areaName",
@@ -60,6 +63,17 @@ export const columns = [
     },
     header: {
       text: "영업소명칭",
+    },
+    footer: {
+      valueCallback: function (
+        grid: any,
+        column: any,
+        footerIndex: any,
+        columnFooter: any,
+        value: any
+      ) {
+        return grid.getSummary("areaName", "count");
+      },
     },
   },
   /*

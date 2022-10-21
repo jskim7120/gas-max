@@ -44,7 +44,7 @@ function EN1600({
       gv.setHeader({
         height: 35,
       });
-      gv.setFooter({ visible: false });
+      gv.setFooter({ visible: true });
       gv.setOptions({
         indicator: { visible: true },
         checkBar: { visible: false },

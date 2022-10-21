@@ -289,7 +289,7 @@ const Form = React.forwardRef(
             <DividerGray />
             <Wrapper grid>
               <CustomDate
-                label="입사일----"
+                label="입사일"
                 name="swIndate"
                 register={register("swIndate")}
                 reset={reset}
@@ -304,7 +304,7 @@ const Form = React.forwardRef(
             <DividerGray />
             <Wrapper grid>
               <Input
-                label="급여액-----"
+                label="급여액"
                 register={register("swPaykum")}
                 errors={errors["swPaykum"]?.message}
               />
