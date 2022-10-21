@@ -8,11 +8,11 @@ const ModalWrapper = styled.div`
   cursor: pointer;
   position: relative;
   width: 301px;
-  background: #ececec;
+  background: #323232;
   display: flex;
   flex-direction: column;
-  padding: 2px;
-  padding-top: 29px;
+  padding: 6px;
+  gap: 4px;
 
   .closeBtn {
     position: absolute;
@@ -28,19 +28,16 @@ const ModalWrapper = styled.div`
     border: none;
     cursor: pointer;
   }
-  div:nth-child(2) {
-    height: 57px;
+  div:nth-child(1) {
+    height: 48px;
   }
-
   .section {
     position: relative;
-    border-radius: 11px;
-    background: #50becf;
-    border-radius: 11px;
-    margin-bottom: 4px;
-    padding: 10px 5px;
-    width: 50px;
-    height: 162px;
+    border-radius: 10px 0 0 10px;
+    background: #00b5ad;
+    padding: 3px 5px;
+    width: 39px;
+    height: 178px;
 
     p {
       writing-mode: vertical-lr;
@@ -61,12 +58,12 @@ const ModalWrapper = styled.div`
       top: 0;
       right: 0;
       bottom: 0;
-      left: 34px;
+      left: 44px;
       height: 100%;
-      border-radius: 16px;
+      border-radius: 0 10px 10px 0;
       border: 1px solid #707070;
       padding: 10px 5px;
-      width: 263px;
+      width: 245px;
     }
   }
 `;
@@ -75,9 +72,6 @@ function MenuModal() {
   const dispatch = useDispatch();
   return (
     <ModalWrapper>
-      <button className="closeBtn" onClick={() => dispatch(closeModal())}>
-        <MenuModalBtn />
-      </button>
       <div className="section">
         <p>정보</p>
         <span>.....</span>
