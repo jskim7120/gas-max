@@ -60,7 +60,12 @@ const CheckBoxWrapper = styled.div<{ rtl: boolean }>`
   }
 `;
 
-function CheckBox(props: { title?: string; rtl?: boolean; register: any }) {
+function CheckBox(props: {
+  title?: string;
+  rtl?: boolean;
+  register: any;
+  onChange?: any;
+}) {
   return (
     <CheckBoxWrapper rtl={props.rtl ? props.rtl : false}>
       <label>

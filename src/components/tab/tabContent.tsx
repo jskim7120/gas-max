@@ -9,7 +9,7 @@ export const getContent = (
 ) => {
   switch (id) {
     case "EN1100":
-      return <EN1100 name={menuName} depthFullName={depthFullName} />;
+      return <EN1100 depthFullName={depthFullName} />;
     case "EN1500":
       return <EN1500 name={menuName} depthFullName={depthFullName} />;
     case "EN1600":

@@ -68,11 +68,16 @@ const Form = React.forwardRef(
       handleSubmit,
       reset,
       formState: { errors },
-      control,
       getValues,
     } = useForm<IFormProps>({
       resolver: yupResolver(schema),
     });
+
+    useImperativeHandle<HTMLFormElement, any>(ref, () => ({
+      crud,
+      resetForm,
+      setIsAddBtnClicked,
+    }));
 
     const resetForm = (type: string) => {
       if (JSON.stringify(selected) !== "{}") {
@@ -99,7 +104,7 @@ const Form = React.forwardRef(
     };
     const crud = async (type: string | null) => {
       if (type === "delete") {
-        console.log("delete");
+        //console.log("delete");
         const path = `${base}delete`;
         const formValues = getValues();
         try {
@@ -113,17 +118,11 @@ const Form = React.forwardRef(
         }
       }
       if (type === null) {
-        handleSubmit(update)();
+        handleSubmit(submit)();
       }
     };
 
-    useImperativeHandle<HTMLFormElement, any>(ref, () => ({
-      crud,
-      resetForm,
-      setIsAddBtnClicked,
-    }));
-
-    const update = async (data: IFormProps) => {
+    const submit = async (data: IFormProps) => {
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
@@ -132,6 +131,7 @@ const Form = React.forwardRef(
         const response = await API.post(path, formValues);
         console.log("response:", response.status);
         if (response.status === 200) {
+          setIsAddBtnClicked(false);
           await fetchSawon();
         }
       } catch (err) {
@@ -139,7 +139,6 @@ const Form = React.forwardRef(
       }
     };
 
-    //if (!selected) return <Loader size={25} />;
     if (!selected) return <p>..loading</p>;
 
     const onFileUpload = () => {
@@ -157,7 +156,7 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form onSubmit={handleSubmit(update)} style={{ padding: "0px 10px" }}>
+      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
         {/* <p>{isAddBtnClicked ? "true" : "false"}</p> */}
         <Wrapper>
           <Input

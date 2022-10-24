@@ -1,18 +1,8 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useEffect,
-  useState,
-} from "react";
+import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "app/store";
-// import {
-//   addEmployee,
-//   updateEmployee,
-//   deleteEmployee,
-//   getEmployees,
-// } from "features/employee/employeeSlice";
+import { ToastContainer, toast } from "react-toastify";
 import {
   Input,
   Select,
@@ -25,24 +15,30 @@ import {
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
-import { InputSize } from "components/componentsType";
 import { IFormProps } from "./type";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
-import Loader from "components/loader";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
+import API from "app/axios";
 
 interface IForm {
   selected: any;
+
+  fetchJNotry: any;
 }
+const base = "/app/EN1100/";
 
 const Form = React.forwardRef(
-  ({ selected }: IForm, ref: React.ForwardedRef<HTMLFormElement>) => {
+  (
+    { selected, fetchJNotry }: IForm,
+    ref: React.ForwardedRef<HTMLFormElement>
+  ) => {
     const dispatch = useDispatch();
-    const [isClickedAdd, setIsClikedAdd] = useState(false);
+
+    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [tabId, setTabId] = useState(0);
     const [addr, setAddress] = useState<string>("");
 
@@ -54,6 +50,16 @@ const Form = React.forwardRef(
 
     const { data: jnJiro, isError: isJnJiroError } =
       useGetCommonGubunQuery("17");
+
+    const {
+      register,
+      handleSubmit,
+      reset,
+      formState: { errors },
+      getValues,
+    } = useForm<IFormProps>({
+      resolver: yupResolver(schema),
+    });
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
@@ -68,16 +74,20 @@ const Form = React.forwardRef(
       }
     }, [selected]);
 
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-      control,
-      getValues,
-    } = useForm<IFormProps>({
-      resolver: yupResolver(schema),
-    });
+    useEffect(() => {
+      if (addr.length > 0) {
+        reset({
+          jnZipcode: addr ? addr?.split("/")[1] : "",
+          jnAddr1: addr ? addr?.split("/")[0] : "",
+        });
+      }
+    }, [addr]);
+
+    useImperativeHandle<HTMLFormElement, any>(ref, () => ({
+      crud,
+      resetForm,
+      setIsAddBtnClicked,
+    }));
 
     const resetForm = (type: string) => {
       if (JSON.stringify(selected) !== "{}") {
@@ -88,7 +98,6 @@ const Form = React.forwardRef(
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = null;
           }
-          setIsClikedAdd(true);
           reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
@@ -106,29 +115,65 @@ const Form = React.forwardRef(
         }
       }
     };
+    const crud = async (type: string | null) => {
+      if (type === "delete") {
+        const path = `${base}delete`;
+        const formValues = getValues();
 
-    useImperativeHandle<HTMLFormElement, any>(ref, () => ({
-      submitForm() {
-        handleSubmit(update)();
-      },
-      resetForm,
-    }));
-
-    const update = (data: IFormProps) => {
-      console.log("udpate duudagdav");
-
-      if (isClickedAdd) {
-        //createCustomer
-      } else {
-        //updateCustomer
+        try {
+          const response = await API.post(path, formValues);
+          if (response.status === 200) {
+            toast.success("Deleted");
+            await fetchJNotry();
+          }
+        } catch (err) {
+          toast.error("Couldn't delete");
+        }
+      }
+      if (type === null) {
+        handleSubmit(submit)();
       }
     };
 
-    //if (!selected) return <Loader size={25} />;
+    const submit = async (data: IFormProps) => {
+      //form aldaagui uyd ajillana
+      const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
+      const formValues = getValues();
+
+      if (formValues.jnSegongYn) {
+        formValues.jnSegongYn = "Y";
+      }
+      if (formValues.jnVatSumyn) {
+        formValues.jnVatSumyn = "Y";
+      }
+      if (formValues.jnSekumEa) {
+        formValues.jnSekumEa = "Y";
+      }
+      if (formValues.niceBankYn) {
+        formValues.niceBankYn = "Y";
+      }
+      if (formValues.innopayBankYn) {
+        formValues.innopayBankYn = "Y";
+      }
+
+      try {
+        const response = await API.post(path, formValues);
+        console.log("response:", response.status);
+        if (response.status === 200) {
+          setIsAddBtnClicked(false);
+          await fetchJNotry();
+          toast.success("Action successful");
+        }
+      } catch (err: any) {
+        toast.error(err?.message);
+      }
+    };
+
     if (!selected) return <p>..loading</p>;
 
     return (
-      <form onSubmit={handleSubmit(update)} style={{ padding: "0px 10px" }}>
+      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
+        <p>{isAddBtnClicked ? "true" : "false"}</p>
         <Wrapper grid>
           <Input
             label="코드"
@@ -164,13 +209,11 @@ const Form = React.forwardRef(
         <Wrapper style={{ alignItems: "center" }}>
           <Input
             label="주소"
-            value={addr ? addr?.split("/")[1] : ""}
             register={register("jnZipcode")}
             errors={errors["jnZipcode"]?.message}
           />
           <DaumAddress setAddress={setAddress} />
           <Input
-            value={addr ? addr?.split("/")[0] : ""}
             register={register("jnAddr1")}
             errors={errors["jnAddr1"]?.message}
             fullWidth
@@ -325,7 +368,6 @@ const Form = React.forwardRef(
           </Field>
         </Wrapper>
         <DividerGray />
-
         <Wrapper grid col={3}>
           <Input
             label="탱크잔량/원격검침 발신기 업체번호"
@@ -366,6 +408,7 @@ const Form = React.forwardRef(
             {getTabContent(tabId, register, errors, jnJiro, isJnJiroError)}
           </TabContentWrapper>
         </div>
+        <ToastContainer />
       </form>
     );
   }

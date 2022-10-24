@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { InputSize } from "components/componentsType";
-import { array } from "yup";
+
 // import {
 //   Path,
 //   UseFormRegister,
@@ -218,5 +218,6 @@ export const Select = styled.select`
   &:hover,
   &:focus {
     border: 1px solid #e6e5e5;
+    background: #fffacd;
   }
 `;

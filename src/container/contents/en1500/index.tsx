@@ -43,12 +43,11 @@ function EN1500({
     gv.setColumns(columns);
     dp.setRows(jnotry);
 
-    gv.setFooter({ visible: true });
+    gv.setFooter({ visible: false });
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
       stateBar: { visible: false },
-      // edit: { insertable: true, appendable: true },
     });
     gv.sortingOptions.enabled = true;
 

@@ -6,7 +6,7 @@ export interface IFormProps {
   jnSsno: string;
   jnSangho: string;
   jnSajang: string;
-  jnZipcode: number;
+  jnZipcode: string;
   jnAddr1: string;
   jnAddr2: string;
   jnUptae: string;

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { columns, fields } from "./data";
 import Button from "components/button/button";
-import { ButtonType, ButtonColor } from "components/componentsType";
+import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import API from "app/axios";
@@ -15,7 +15,7 @@ let gv: any;
 function EN1600({ depthFullName }: { depthFullName: string }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-  const [jnotry, setJnotry] = useState([]);
+  const [sawon, setSawon] = useState([]);
   const [selected, setSelected] = useState<any>();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function EN1600({ depthFullName }: { depthFullName: string }) {
   }, []);
 
   useEffect(() => {
-    if (jnotry.length > 0) {
+    if (sawon.length > 0) {
       container = realgridElement.current as HTMLDivElement;
       dp = new LocalDataProvider(true);
       gv = new GridView(container);
@@ -31,11 +31,11 @@ function EN1600({ depthFullName }: { depthFullName: string }) {
       gv.setDataSource(dp);
       dp.setFields(fields);
       gv.setColumns(columns);
-      dp.setRows(jnotry);
+      dp.setRows(sawon);
       gv.setHeader({
         height: 35,
       });
-      gv.setFooter({ visible: true });
+      gv.setFooter({ visible: false });
       gv.setOptions({
         indicator: { visible: true },
         checkBar: { visible: false },
@@ -44,7 +44,7 @@ function EN1600({ depthFullName }: { depthFullName: string }) {
       gv.sortingOptions.enabled = true;
       gv.displayOptions._selectionStyle = "singleRow";
 
-      if (jnotry.length > 0) {
+      if (sawon.length > 0) {
         gv.setSelection({
           style: "rows",
           startRow: 0,
@@ -53,7 +53,7 @@ function EN1600({ depthFullName }: { depthFullName: string }) {
 
         gv.onSelectionChanged = () => {
           const itemIndex: any = gv.getCurrent().dataRow;
-          setSelected(jnotry[itemIndex]);
+          setSelected(sawon[itemIndex]);
         };
       }
 
@@ -63,14 +63,14 @@ function EN1600({ depthFullName }: { depthFullName: string }) {
         dp.destroy();
       };
     }
-  }, [jnotry]);
+  }, [sawon]);
 
   const fetchSawon = async () => {
     try {
       const { data } = await API.get("/app/EN1600/list");
       if (data) {
-        console.log("SAWON:", data);
-        setJnotry(data);
+        //console.log("SAWON:", data);
+        setSawon(data);
         setSelected(data[0]);
       }
     } catch (err) {
@@ -105,11 +105,10 @@ function EN1600({ depthFullName }: { depthFullName: string }) {
             text="저장"
             icon={<Update />}
             style={{ marginRight: "5px" }}
+            color={ButtonColor.SECONDARY}
             onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
               formRef.current.crud(null);
             }}
-            color={ButtonColor.SECONDARY}
           />
           <Button
             text="취소"
