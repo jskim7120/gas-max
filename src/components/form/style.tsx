@@ -42,7 +42,6 @@ interface IInputProps {
   selectOption?: any;
   defaultValue?: any;
   optionSlt?: any;
-  onChange?: (arg: any) => void;
 }
 
 export const Input = ({
@@ -58,7 +57,6 @@ export const Input = ({
   placeholder,
   style,
   className,
-  onChange,
 }: IInputProps) => {
   return (
     <InputWrapper fullWidth={fullWidth}>
@@ -69,11 +67,10 @@ export const Input = ({
           inputSize={inputSize && inputSize}
           fullWidth={fullWidth && fullWidth}
           {...register}
-          value={value}
+          value={value && value}
           placeholder={placeholder}
           style={style}
           className={className}
-          onChange={onChange}
         />
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>
@@ -168,7 +165,8 @@ export const Label = styled.label<{ labelLong?: boolean }>`
   font-family: "NotoSansKRRegular";
   font-size: 12px;
   font-weight: 600;
-  min-width: ${(props) => (props.labelLong ? "200px" : "100px")};
+  min-width: ${(props) => (props.labelLong ? "200px" : "105px")};
+
   text-align: right;
   padding: 7px 10px;
   background: #f5fcff;

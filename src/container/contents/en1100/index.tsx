@@ -122,8 +122,8 @@ function EN1100({
             icon={<Update />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              setAddClicked(false);
               formRef.current.submitForm();
+              setAddClicked(false);
             }}
             color={ButtonColor.SECONDARY}
           />
