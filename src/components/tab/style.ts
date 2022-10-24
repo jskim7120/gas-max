@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const TabContainer = styled.div`
   width: 100%;
-  border-left: 5px solid #626161;
+  border-left: 5px solid #707070;
+  height: 100%;
 `;
 
 export const TabHeaderWrapper = styled.div`
@@ -93,9 +94,10 @@ export const List = styled.li<{ isActive: boolean }>`
 
 export const TabContentWrapper = styled.div`
   width: 100%;
-  min-height: 89%;
-  height: auto;
+  // min-height: 89%;
+  // height: auto;
   margin-top: 3px;
+  height: calc(100% - 63px);
 `;
 
 export const TabBorderLine = styled.div<{

@@ -23,20 +23,23 @@ export const DetailHeader = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   gap: 0px;
+  height: calc(100% - 32px);
 `;
 
 export const TableWrapper = styled.div`
   width: 50%;
   height: auto;
-  border: 5px solid #626161;
-  border-right: 3px solid #626161;
+  border: 5px solid #707070;
+  border-right: 3px solid #707070;
   border-left: none;
+  border-bottom: 3px solid #707070;
 `;
 
 export const DetailWrapper = styled.div`
   width: 50%;
-  border: 5px solid #626161;
+  border: 5px solid #707070;
   border-left: none;
+  border-bottom: 4px solid #707070;
 `;
 
 export const VolReading = styled.div`
