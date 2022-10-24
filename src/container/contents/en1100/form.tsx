@@ -173,7 +173,6 @@ const Form = React.forwardRef(
 
     return (
       <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
-        <p>{isAddBtnClicked ? "true" : "false"}</p>
         <Wrapper grid>
           <Input
             label="코드"
