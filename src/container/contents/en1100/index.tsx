@@ -13,19 +13,12 @@ let container: HTMLDivElement;
 let dp: any;
 let gv: any;
 
-function EN1100({
-  name,
-  depthFullName,
-}: {
-  name: string;
-  depthFullName: string;
-}) {
+function EN1100({ depthFullName }: { depthFullName: string }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
 
   const [jnotry, setJnotry] = useState([]);
-  const [selected, setSelected] = useState<any>();
-  const [addClicked, setAddClicked] = useState(false);
+  const [selected, setSelected] = useState({});
 
   useEffect(() => {
     fetchJNotry();
@@ -45,12 +38,11 @@ function EN1100({
       gv.setHeader({
         height: 35,
       });
-      gv.setFooter({ visible: true });
+      gv.setFooter({ visible: false });
       gv.setOptions({
         indicator: { visible: true },
         checkBar: { visible: false },
         stateBar: { visible: false },
-        // edit: { insertable: true, appendable: true },
       });
       gv.sortingOptions.enabled = true;
       gv.displayOptions._selectionStyle = "singleRow";
@@ -61,11 +53,6 @@ function EN1100({
           startRow: 0,
           endRow: 0,
         });
-
-        // gv.setDisplayOptions({
-        //   rowFocusVisible:true,
-        //   rowFocusBackground:"#340000ff"
-        // });
 
         gv.onSelectionChanged = () => {
           const itemIndex: any = gv.getCurrent().dataRow;
@@ -85,7 +72,6 @@ function EN1100({
     try {
       const { data } = await API.get("/app/EN1100/list");
       if (data) {
-        console.log("JNORTY:", data);
         setJnotry(data);
         setSelected(data[0]);
       }
@@ -93,8 +79,6 @@ function EN1100({
       console.log("JNOTRY DATA fetch error =======>", err);
     }
   };
-
-  //if (!jnotry) return <p>...Loading</p>;
 
   return (
     <>
@@ -106,7 +90,7 @@ function EN1100({
             icon={<Plus />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              setAddClicked(true);
+              formRef.current.setIsAddBtnClicked(true);
               formRef.current.resetForm("clear");
             }}
           />
@@ -115,24 +99,24 @@ function EN1100({
             icon={<Trash />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              setAddClicked(false);
+              formRef.current.setIsAddBtnClicked(false);
+              formRef.current.crud("delete");
             }}
           />
           <Button
             text="저장"
             icon={<Update />}
             style={{ marginRight: "5px" }}
-            onClick={() => {
-              setAddClicked(false);
-              formRef.current.submitForm();
-            }}
             color={ButtonColor.SECONDARY}
+            onClick={() => {
+              formRef.current.crud(null);
+            }}
           />
           <Button
             text="취소"
             icon={<Reset />}
             onClick={() => {
-              setAddClicked(false);
+              formRef.current.setIsAddBtnClicked(false);
               formRef.current.resetForm("reset");
             }}
           />
@@ -141,7 +125,7 @@ function EN1100({
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form selected={selected} ref={formRef} />
+          <Form selected={selected} ref={formRef} fetchJNotry={fetchJNotry} />
         </DetailWrapper>
       </Wrapper>
       <DataGridFooter dataLength={jnotry.length > 0 ? jnotry.length : 0} />

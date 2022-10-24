@@ -27,15 +27,6 @@ export const fields = [
   },
 ];
 
-// 영업소코드 areaCode
-//사원명칭 SW_NAME
-//전화번호  SW_TEL
-//핸드폰 SW_HP
-//부서명 SW_DEPARTMENT
-// bhgu talbar
-//급여일 SW_PAYDATE
-//퇴사 SW_Work_OUT
-
 export const columns = [
   {
     name: "areaCode",
@@ -96,9 +87,6 @@ export const columns = [
     header: {
       text: "급여일",
     },
-    footer: {
-      text: "Count",
-    },
   },
   {
     name: "swWorkOut",
@@ -110,17 +98,6 @@ export const columns = [
     },
     header: {
       text: "퇴사",
-    },
-    footer: {
-      valueCallback: function (
-        grid: any,
-        column: any,
-        footerIndex: any,
-        columnFooter: any,
-        value: any
-      ) {
-        return grid.getSummary("swWorkOut", "count");
-      },
     },
   },
 ];
