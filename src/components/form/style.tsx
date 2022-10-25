@@ -170,6 +170,7 @@ export const Label = styled.label<{ labelLong?: boolean }>`
   text-align: right;
   padding: 7px 10px;
   background: #f5fcff;
+  white-space: nowrap;
 `;
 
 export const Field = styled.div``;

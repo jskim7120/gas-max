@@ -20,7 +20,7 @@ import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import { SearchIcon } from "components/allSvgIcon";
 import { formatDateToString } from "helpers/dateFormat";
-import CustomDate from "./date";
+import CustomDate from "components/customDatePicker";
 import API from "app/axios";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
 import { useGetAreaCodeQuery } from "app/api/areaCode";
@@ -57,7 +57,6 @@ const Form = React.forwardRef(
           swWorkOut: selected?.swWorkOut === "Y",
         });
       }
-      console.log("selected==============>", selected);
     }, [selected]);
 
     useEffect(() => {
@@ -178,7 +177,6 @@ const Form = React.forwardRef(
             register={register("swCode")}
             errors={errors["swCode"]?.message}
           />
-
           <Field>
             <FormGroup>
               <Label>영업소</Label>
