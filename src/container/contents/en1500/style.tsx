@@ -140,12 +140,10 @@ export const BasicItems = styled.div`
     color: #1b8c8e;
     font-size: 12px;
     line-height: 24px;
-    position: absolute;
-    right: 40px;
-    min-width: 244px;
     display: flex;
     align-items: center;
     margin-top: 54px;
+    justify-content: center;
     span {
       margin-left: 6px;
     }
