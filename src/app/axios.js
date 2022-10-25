@@ -17,8 +17,10 @@ API.interceptors.response.use(
     return res;
   },
   function (err) {
-    const { status, data, config } = err.response;
-
-    return Promise.reject(data);
+    if (err.response.status === 401) {
+      localStorage.removeItem("token");
+      window.location.assign("/login");
+    }
+    return err;
   }
 );
