@@ -1,8 +1,8 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "app/store";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch } from "app/store";
 import {
   Input,
   Select,
@@ -130,6 +130,7 @@ const Form = React.forwardRef(
           toast.error("Couldn't delete");
         }
       }
+
       if (type === null) {
         handleSubmit(submit)();
       }
@@ -140,29 +141,18 @@ const Form = React.forwardRef(
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
 
-      if (formValues.jnSegongYn) {
-        formValues.jnSegongYn = "Y";
-      }
-      if (formValues.jnVatSumyn) {
-        formValues.jnVatSumyn = "Y";
-      }
-      if (formValues.jnSekumEa) {
-        formValues.jnSekumEa = "Y";
-      }
-      if (formValues.niceBankYn) {
-        formValues.niceBankYn = "Y";
-      }
-      if (formValues.innopayBankYn) {
-        formValues.innopayBankYn = "Y";
-      }
+      formValues.jnSegongYn = formValues.jnSegongYn ? "Y" : "N";
+      formValues.jnVatSumyn = formValues.jnVatSumyn ? "Y" : "N";
+      formValues.jnSekumEa = formValues.jnSekumEa ? "Y" : "N";
+      formValues.niceBankYn = formValues.niceBankYn ? "Y" : "N";
+      formValues.innopayBankYn = formValues.innopayBankYn ? "Y" : "N";
 
       try {
         const response = await API.post(path, formValues);
-        console.log("response:", response.status);
         if (response.status === 200) {
+          toast.success("Action successful");
           setIsAddBtnClicked(false);
           await fetchJNotry();
-          toast.success("Action successful");
         }
       } catch (err: any) {
         toast.error(err?.message);

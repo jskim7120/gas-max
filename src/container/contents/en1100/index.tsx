@@ -3,11 +3,13 @@ import { GridView, LocalDataProvider } from "realgrid";
 import API from "app/axios";
 import Button from "components/button/button";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
-import { ButtonType, ButtonColor } from "components/componentsType";
+import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { columns, fields } from "./data";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
+import { setRowIndex } from "app/state/gridSelectedRowSlice";
+import { useDispatch, useSelector } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -16,12 +18,21 @@ let gv: any;
 function EN1100({ depthFullName }: { depthFullName: string }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const dispatch = useDispatch();
+
+  const gridSelectedRowIndex = useSelector(
+    (state) => state.gridSelectedRow.selectedRowIndex
+  );
 
   const [jnotry, setJnotry] = useState([]);
   const [selected, setSelected] = useState({});
 
   useEffect(() => {
     fetchJNotry();
+    const storageIndex = sessionStorage.getItem("selectedRowIndex");
+    if (Number(storageIndex) > 0) {
+      dispatch(setRowIndex({ selectedRowIndex: storageIndex }));
+    }
   }, []);
 
   useEffect(() => {
@@ -50,13 +61,14 @@ function EN1100({ depthFullName }: { depthFullName: string }) {
       if (jnotry.length > 0) {
         gv.setSelection({
           style: "rows",
-          startRow: 0,
-          endRow: 0,
+          startRow: gridSelectedRowIndex,
+          endRow: gridSelectedRowIndex,
         });
 
         gv.onSelectionChanged = () => {
           const itemIndex: any = gv.getCurrent().dataRow;
           setSelected(jnotry[itemIndex]);
+          dispatch(setRowIndex({ selectedRowIndex: itemIndex }));
         };
       }
 
@@ -73,7 +85,7 @@ function EN1100({ depthFullName }: { depthFullName: string }) {
       const { data } = await API.get("/app/EN1100/list");
       if (data) {
         setJnotry(data);
-        setSelected(data[0]);
+        setSelected(data[gridSelectedRowIndex]);
       }
     } catch (err) {
       console.log("JNOTRY DATA fetch error =======>", err);

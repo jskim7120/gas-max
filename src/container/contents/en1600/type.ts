@@ -32,4 +32,8 @@ export interface IFormProps {
   swStampFile: string;
   swOutDate: string;
   swGabul: string;
+
+  //tsaash yavahgui talbar
+
+  emailType: string;
 }
