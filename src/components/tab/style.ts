@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const TabContainer = styled.div`
   width: 100%;
-  border-left: 5px solid #707070;
   height: 100%;
 `;
 
@@ -12,7 +11,7 @@ export const TabHeaderWrapper = styled.div`
   align-items: end;
   background-color: #626161;
   justify-content: space-between;
-  height: 40px;
+  height: 45px;
   .sideBar {
     display: flex;
     align-items: center;
@@ -105,7 +104,7 @@ export const TabBorderLine = styled.div<{
   isOpen: boolean;
 }>`
   position: absolute;
-  top: 83px;
+  top: 88px;
   left: ${(props) => (props.isOpen ? `82px` : `0`)};
   right: 0px;
   height: 4.5px;

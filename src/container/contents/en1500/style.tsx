@@ -7,6 +7,7 @@ export const DetailHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 6px 0 15px;
+  border-left: 5px solid #707070;
 
   p {
     color: #0a0a0a;
@@ -23,7 +24,7 @@ export const DetailHeader = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   gap: 0px;
-  height: calc(100% - 32px);
+  height: calc(100% - 37px);
 `;
 
 export const TableWrapper = styled.div`
@@ -31,15 +32,14 @@ export const TableWrapper = styled.div`
   height: auto;
   border: 5px solid #707070;
   border-right: 3px solid #707070;
-  border-left: none;
   border-bottom: 3px solid #707070;
 `;
 
 export const DetailWrapper = styled.div`
   width: 50%;
   border: 5px solid #707070;
-  border-left: none;
   border-bottom: 4px solid #707070;
+  border-left: none;
 `;
 
 export const VolReading = styled.div`
@@ -68,9 +68,16 @@ export const VolReading = styled.div`
     position: absolute;
     right: 40px;
     min-width: 244px;
+    display: flex;
+    align-items: center;
+    span {
+      margin-left: 6px;
+    }
   }
   .volWrapper {
     position: relative;
+    width: 96%;
+    align-items: center;
   }
 `;
 export const Container = styled.div`
@@ -101,6 +108,18 @@ export const RubeUnit = styled.div`
     width: 240px;
     margin: 0 auto;
   }
+  .rubeDesc {
+    color: #1b8c8e;
+    font-size: 12px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    margin-top: 9px;
+    margin-left: 47px;
+    span {
+      margin-left: 6px;
+    }
+  }
 `;
 export const BasicItems = styled.div`
   width: 320px;
@@ -116,5 +135,19 @@ export const BasicItems = styled.div`
   }
   input {
     width: 77px;
+  }
+  .basicDesc {
+    color: #1b8c8e;
+    font-size: 12px;
+    line-height: 24px;
+    position: absolute;
+    right: 40px;
+    min-width: 244px;
+    display: flex;
+    align-items: center;
+    margin-top: 54px;
+    span {
+      margin-left: 6px;
+    }
   }
 `;

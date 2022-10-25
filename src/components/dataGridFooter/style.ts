@@ -5,6 +5,7 @@ export const Container = styled.div`
   height: 20px;
   display: flex;
   flex-direction: row;
+  border-left: 7px solid #707070;
   .totalCnt {
     width: 77px;
     border-right: 3px solid #707070;

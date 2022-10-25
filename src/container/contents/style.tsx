@@ -7,6 +7,7 @@ export const DetailHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 6px 0 15px;
+  border-left: 5px solid #707070;
 
   p {
     color: #0a0a0a;
@@ -23,15 +24,13 @@ export const DetailHeader = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   gap: 0px;
-  height: calc(100% - 32px);
+  height: calc(100% - 37px);
 `;
 
 export const TableWrapper = styled.div`
   width: 50%;
-  // height: 80vh;
   border: 5px solid #707070;
   border-right: 3px solid #707070;
-  border-left: none;
   border-bottom: 3px solid #707070;
 `;
 

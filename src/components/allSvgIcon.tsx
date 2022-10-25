@@ -4384,3 +4384,59 @@ export const CollRegistr = ({
     </svg>
   );
 };
+
+export const IconInfo = ({
+  color = "#000",
+  width = "18px",
+  height = "18px",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="19.5"
+      height="19.5"
+      viewBox="0 0 19.5 19.5"
+    >
+      <g
+        id="Icon_info"
+        data-name="Icon/info"
+        transform="translate(-2.25 -2.25)"
+      >
+        <circle
+          id="Ellipse_3"
+          data-name="Ellipse 3"
+          cx="9"
+          cy="9"
+          r="9"
+          transform="translate(3 3)"
+          fill="none"
+          stroke="#1b8c8e"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
+        <line
+          id="Line_10"
+          data-name="Line 10"
+          x2="0.01"
+          transform="translate(12 8)"
+          fill="none"
+          stroke="#1b8c8e"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
+        <path
+          id="Path_47"
+          data-name="Path 47"
+          d="M11,12h1v4h1"
+          fill="none"
+          stroke="#1b8c8e"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+        />
+      </g>
+    </svg>
+  );
+};

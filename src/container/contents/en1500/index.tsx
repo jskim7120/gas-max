@@ -21,7 +21,7 @@ function EN1500({
   depthFullName: string;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
-  const formRef = useRef<any>(null);
+  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
 
   const [selected, setSelected] = useState();
   const [jnotry, setJnotry] = useState([]);
@@ -86,8 +86,7 @@ function EN1500({
             icon={<Update />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              setAddClicked(false);
-              formRef.current.submitForm();
+              formRef.current.update();
             }}
             color={ButtonColor.SECONDARY}
           />
@@ -95,7 +94,7 @@ function EN1500({
             text="취소"
             icon={<Reset />}
             onClick={() => {
-              setAddClicked(false);
+              formRef.current.setIsAddBtnClicked(false);
               formRef.current.resetForm("reset");
             }}
           />
@@ -104,7 +103,11 @@ function EN1500({
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form selected={selected ? selected : jnotry[0]} ref={formRef} />
+          <Form
+            selected={selected ? selected : jnotry[0]}
+            ref={formRef}
+            fetchJNotry={fetchJNotry}
+          />
         </DetailWrapper>
       </Wrapper>
       <DataGridFooter dataLength={jnotry.length > 0 ? jnotry.length : 0} />
