@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import API from "app/axios";
 import Button from "components/button/button";
+import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import { ButtonType, ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { columns, fields } from "./data";
@@ -106,6 +107,7 @@ function EN1500({
           <Form selected={selected ? selected : jnotry[0]} ref={formRef} />
         </DetailWrapper>
       </Wrapper>
+      <DataGridFooter dataLength={jnotry.length > 0 ? jnotry.length : 0} />
     </>
   );
 }

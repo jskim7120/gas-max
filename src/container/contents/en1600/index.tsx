@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { columns, fields } from "./data";
 import Button from "components/button/button";
+import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
@@ -126,6 +127,7 @@ function EN1600({ depthFullName }: { depthFullName: string }) {
           <Form selected={selected} ref={formRef} fetchSawon={fetchSawon} />
         </DetailWrapper>
       </Wrapper>
+      <DataGridFooter dataLength={sawon.length > 0 ? sawon.length : 0} />
     </>
   );
 }

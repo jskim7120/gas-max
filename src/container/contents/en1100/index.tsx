@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import API from "app/axios";
 import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
+import DataGridFooter from "components/dataGridFooter/dataGridFooter";
+import { ButtonType, ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { columns, fields } from "./data";
 import Form from "./form";
@@ -127,6 +128,7 @@ function EN1100({ depthFullName }: { depthFullName: string }) {
           <Form selected={selected} ref={formRef} fetchJNotry={fetchJNotry} />
         </DetailWrapper>
       </Wrapper>
+      <DataGridFooter dataLength={jnotry.length > 0 ? jnotry.length : 0} />
     </>
   );
 }
