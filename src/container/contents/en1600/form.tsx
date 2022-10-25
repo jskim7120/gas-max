@@ -1,11 +1,7 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useEffect,
-  useState,
-} from "react";
+import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "app/store";
 import {
   Input,
@@ -19,14 +15,12 @@ import {
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
-import { InputSize } from "components/componentsType";
 import { IFormProps } from "./type";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
-import Loader from "components/loader";
 import { SearchIcon } from "components/allSvgIcon";
 import { formatDateToString } from "helpers/dateFormat";
-import CustomDate from "./date";
+import CustomDate from "components/customDatePicker";
 import API from "app/axios";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
 import { useGetAreaCodeQuery } from "app/api/areaCode";
@@ -52,6 +46,8 @@ const Form = React.forwardRef(
     }>();
     const { data: swGubun } = useGetCommonGubunQuery("1");
     const { data: swPaytype } = useGetCommonGubunQuery("2");
+    const { data: emailType } = useGetCommonGubunQuery("5");
+
     const { data: areaCode } = useGetAreaCodeQuery();
 
     useEffect(() => {
@@ -62,6 +58,15 @@ const Form = React.forwardRef(
         });
       }
     }, [selected]);
+
+    useEffect(() => {
+      if (addr.length > 0) {
+        reset({
+          swZipcode: addr ? addr?.split("/")[1] : "",
+          swAddr1: addr ? addr?.split("/")[0] : "",
+        });
+      }
+    }, [addr]);
 
     const {
       register,
@@ -88,7 +93,6 @@ const Form = React.forwardRef(
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = null;
           }
-
           reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
@@ -104,19 +108,20 @@ const Form = React.forwardRef(
     };
     const crud = async (type: string | null) => {
       if (type === "delete") {
-        //console.log("delete");
         const path = `${base}delete`;
         const formValues = getValues();
+
         try {
           const response = await API.post(path, formValues);
-          console.log("response:", response.status);
           if (response.status === 200) {
+            toast.success("Deleted");
             await fetchSawon();
           }
         } catch (err) {
-          console.log("delete err:", err);
+          toast.error("Couldn't delete");
         }
       }
+
       if (type === null) {
         handleSubmit(submit)();
       }
@@ -127,15 +132,23 @@ const Form = React.forwardRef(
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
 
+      formValues.swWorkOut = formValues.swWorkOut ? "Y" : "N";
+      formValues.cuSeEmail =
+        formValues.cuSeEmail &&
+        `${formValues.cuSeEmail}@${formValues.emailType}`;
+
       try {
-        const response = await API.post(path, formValues);
-        console.log("response:", response.status);
+        const response: any = await API.post(path, formValues);
+
         if (response.status === 200) {
+          toast.success("Action successfull");
           setIsAddBtnClicked(false);
           await fetchSawon();
+        } else {
+          toast.error(response?.message);
         }
-      } catch (err) {
-        console.log("crud err:", err);
+      } catch (err: any) {
+        toast.error(err?.message);
       }
     };
 
@@ -149,7 +162,7 @@ const Form = React.forwardRef(
 
     const handleDateChange = (date: Date) => {
       const stringDate = formatDateToString(date);
-      console.log("stringDate========>", stringDate);
+
       reset({
         swIndate: stringDate,
       });
@@ -164,7 +177,6 @@ const Form = React.forwardRef(
             register={register("swCode")}
             errors={errors["swCode"]?.message}
           />
-
           <Field>
             <FormGroup>
               <Label>영업소</Label>
@@ -231,28 +243,30 @@ const Form = React.forwardRef(
           />
         </Wrapper>
         <DividerGray />
-        <Wrapper>
+        <Wrapper style={{ alignItems: "center" }}>
           <Input
             label="이메일"
             register={register("cuSeEmail")}
             errors={errors["cuSeEmail"]?.message}
           />
           @
-          <Select>
-            <option value="naver.com">naver.com</option>
+          <Select {...register("emailType")}>
+            {emailType?.map((obj, idx) => (
+              <option key={idx} value={obj.codeName}>
+                {obj.codeName}
+              </option>
+            ))}
           </Select>
         </Wrapper>
         <DividerGray />
         <Wrapper style={{ alignItems: "center" }}>
           <Input
             label="주소"
-            value={addr ? addr?.split("/")[1] : ""}
             register={register("swZipcode")}
             errors={errors["swZipcode"]?.message}
           />
           <DaumAddress setAddress={setAddress} />
           <Input
-            value={addr ? addr?.split("/")[0] : ""}
             register={register("swAddr1")}
             errors={errors["swAddr1"]?.message}
             fullWidth
@@ -423,7 +437,15 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>퇴사여부</Label>
               <CheckBox register={{ ...register("swWorkOut") }} />
-              <p style={{ marginLeft: "25px" }}>(체크시 퇴사사원)</p>
+              <p
+                style={{
+                  marginLeft: "25px",
+                  fontSize: "12px",
+                  paddingTop: "4px",
+                }}
+              >
+                (체크시 퇴사사원)
+              </p>
             </FormGroup>
             <div>
               <ErrorText>{errors["swWorkOut"]?.message}</ErrorText>
@@ -445,6 +467,7 @@ const Form = React.forwardRef(
             errors={errors["swGabul"]?.message}
           />
         </Wrapper>
+        <ToastContainer />
       </form>
     );
   }

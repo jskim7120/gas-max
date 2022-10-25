@@ -8,6 +8,8 @@ import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import API from "app/axios";
 import Form from "./form";
+import { setRowIndex } from "app/state/gridSelectedRowSlice";
+import { useDispatch, useSelector } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -16,11 +18,20 @@ let gv: any;
 function EN1600({ depthFullName }: { depthFullName: string }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const dispatch = useDispatch();
+
+  const gridSelectedRowIndex = useSelector(
+    (state) => state.gridSelectedRow.selectedRowIndex
+  );
   const [sawon, setSawon] = useState([]);
   const [selected, setSelected] = useState<any>();
 
   useEffect(() => {
     fetchSawon();
+    const storageIndex = sessionStorage.getItem("selectedRowIndex");
+    if (Number(storageIndex) > 0) {
+      dispatch(setRowIndex({ selectedRowIndex: storageIndex }));
+    }
   }, []);
 
   useEffect(() => {
@@ -48,13 +59,14 @@ function EN1600({ depthFullName }: { depthFullName: string }) {
       if (sawon.length > 0) {
         gv.setSelection({
           style: "rows",
-          startRow: 0,
-          endRow: 0,
+          startRow: gridSelectedRowIndex,
+          endRow: gridSelectedRowIndex,
         });
 
         gv.onSelectionChanged = () => {
           const itemIndex: any = gv.getCurrent().dataRow;
           setSelected(sawon[itemIndex]);
+          dispatch(setRowIndex({ selectedRowIndex: itemIndex }));
         };
       }
 
@@ -70,9 +82,8 @@ function EN1600({ depthFullName }: { depthFullName: string }) {
     try {
       const { data } = await API.get("/app/EN1600/list");
       if (data) {
-        //console.log("SAWON:", data);
         setSawon(data);
-        setSelected(data[0]);
+        setSelected(data[gridSelectedRowIndex]);
       }
     } catch (err) {
       console.log("SAWON DATA fetch error =======>", err);

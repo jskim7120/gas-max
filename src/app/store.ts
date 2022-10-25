@@ -6,6 +6,7 @@ import {
 import { configureStore } from "@reduxjs/toolkit";
 import menuReducer from "app/state/menu/menuSlice";
 import tabReducer from "app/state/tab/tabSlice";
+import gridSelectedRowReducer from "app/state/gridSelectedRowSlice";
 import modalReducer from "app/state/modal/modalSlice";
 import sidebarReducer from "app/state/sidebar/sidebarSlice";
 import authReducer from "app/state/auth/authSlice";
@@ -17,6 +18,7 @@ export const store = configureStore({
   reducer: {
     menu: menuReducer,
     tab: tabReducer,
+    gridSelectedRow: gridSelectedRowReducer,
     modal: modalReducer,
     sidebar: sidebarReducer,
     auth: authReducer,

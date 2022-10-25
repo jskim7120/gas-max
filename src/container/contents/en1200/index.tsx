@@ -15,7 +15,7 @@ let container: HTMLDivElement;
 let dp: any;
 let gv: any;
 
-function EN1100({ depthFullName }: { depthFullName: string }) {
+function EN1200({ depthFullName }: { depthFullName: string }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
@@ -24,11 +24,11 @@ function EN1100({ depthFullName }: { depthFullName: string }) {
     (state) => state.gridSelectedRow.selectedRowIndex
   );
 
-  const [jnotry, setJnotry] = useState([]);
+  const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
 
   useEffect(() => {
-    fetchJNotry();
+    fetchData();
     const storageIndex = sessionStorage.getItem("selectedRowIndex");
     if (Number(storageIndex) > 0) {
       dispatch(setRowIndex({ selectedRowIndex: storageIndex }));
@@ -36,7 +36,7 @@ function EN1100({ depthFullName }: { depthFullName: string }) {
   }, []);
 
   useEffect(() => {
-    if (jnotry.length > 0) {
+    if (data.length > 0) {
       container = realgridElement.current as HTMLDivElement;
       dp = new LocalDataProvider(true);
       gv = new GridView(container);
@@ -44,7 +44,7 @@ function EN1100({ depthFullName }: { depthFullName: string }) {
       gv.setDataSource(dp);
       dp.setFields(fields);
       gv.setColumns(columns);
-      dp.setRows(jnotry);
+      dp.setRows(data);
 
       gv.setHeader({
         height: 35,
@@ -58,7 +58,7 @@ function EN1100({ depthFullName }: { depthFullName: string }) {
       gv.sortingOptions.enabled = true;
       gv.displayOptions._selectionStyle = "singleRow";
 
-      if (jnotry.length > 0) {
+      if (data.length > 0) {
         gv.setSelection({
           style: "rows",
           startRow: gridSelectedRowIndex,
@@ -67,7 +67,7 @@ function EN1100({ depthFullName }: { depthFullName: string }) {
 
         gv.onSelectionChanged = () => {
           const itemIndex: any = gv.getCurrent().dataRow;
-          setSelected(jnotry[itemIndex]);
+          setSelected(data[itemIndex]);
           dispatch(setRowIndex({ selectedRowIndex: itemIndex }));
         };
       }
@@ -78,17 +78,17 @@ function EN1100({ depthFullName }: { depthFullName: string }) {
         dp.destroy();
       };
     }
-  }, [jnotry]);
+  }, [data]);
 
-  const fetchJNotry = async () => {
+  const fetchData = async () => {
     try {
-      const { data } = await API.get("/app/EN1100/list");
+      const { data } = await API.get("/app/EN1200/list");
       if (data) {
-        setJnotry(data);
+        setData(data);
         setSelected(data[gridSelectedRowIndex]);
       }
-    } catch (err) {
-      console.log("JNOTRY DATA fetch error =======>", err);
+    } catch (error) {
+      console.log("Couldn't fetch JNOSAUP data.", error);
     }
   };
 
@@ -137,12 +137,12 @@ function EN1100({ depthFullName }: { depthFullName: string }) {
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form selected={selected} ref={formRef} fetchJNotry={fetchJNotry} />
+          <Form selected={selected} ref={formRef} fetchData={fetchData} />
         </DetailWrapper>
       </Wrapper>
-      <DataGridFooter dataLength={jnotry.length > 0 ? jnotry.length : 0} />
+      <DataGridFooter dataLength={data.length > 0 ? data.length : 0} />
     </>
   );
 }
 
-export default EN1100;
+export default EN1200;
