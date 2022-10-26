@@ -20,7 +20,7 @@ import {
   Input,
 } from "components/form/style";
 import { IconInfo } from "components/allSvgIcon";
-import { IFormProps } from "./type";
+import { IJNOTRY2 } from "./model";
 import { schema } from "./validation";
 import { VolReading, Container, RubeUnit, BasicItems } from "../en1500/style";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
@@ -63,7 +63,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
     reset,
     formState: { errors },
     getValues,
-  } = useForm<IFormProps>({
+  } = useForm<IJNOTRY2>({
     resolver: yupResolver(schema),
   });
 
@@ -80,7 +80,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
     }
   };
 
-  const submit = async (data: IFormProps) => {
+  const submit = async (data: IJNOTRY2) => {
     const formValues = getValues();
     //form aldaagui uyd ajillana
 
