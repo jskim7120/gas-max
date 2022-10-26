@@ -20,7 +20,7 @@ import {
   Input,
 } from "components/form/style";
 import { IconInfo } from "components/allSvgIcon";
-import { IFormProps } from "./type";
+import { JNOTRY } from "./model";
 import { schema } from "./validation";
 import { VolReading, Container, RubeUnit, BasicItems } from "../en1500/style";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
@@ -68,7 +68,7 @@ const Form = (
     formState: { errors },
     control,
     getValues,
-  } = useForm<IFormProps>({
+  } = useForm<JNOTRY>({
     resolver: yupResolver(schema),
   });
 
@@ -90,7 +90,7 @@ const Form = (
     }
   };
 
-  const submit = async (data: IFormProps) => {
+  const submit = async (data: JNOTRY) => {
     const formValues = getValues();
     //form aldaagui uyd ajillana
     console.log("work submit", formValues);
@@ -174,6 +174,15 @@ const Form = (
         <Input
           register={register("jnCost2500")}
           errors={errors["jnCost2500"]?.message}
+        />
+      ),
+    },
+    {
+      title: "7000 mmH2O",
+      jnCost7000: (
+        <Input
+          register={register("jnCost7000")}
+          errors={errors["jnCost7000"]?.message}
         />
       ),
     },
@@ -313,7 +322,7 @@ const Form = (
           <Wrapper className="volWrapper">
             <Field>
               <FormGroup>
-                <Label>세금계산서 양식</Label>
+                <Label>조정기압력</Label>
                 {isJnR ? (
                   "error occured"
                 ) : (
@@ -356,7 +365,7 @@ const Form = (
           <Wrapper className="volWrapper">
             <Field>
               <FormGroup>
-                <Label>세금계산서 양식</Label>
+                <Label>수금방법</Label>
                 {isJnSukumtypeError ? (
                   "error occured"
                 ) : (
@@ -378,7 +387,7 @@ const Form = (
             <Field className="field">
               <FormGroup>
                 <Input
-                  label="수금방법"
+                  label="연체율"
                   register={register("jnPer")}
                   errors={errors["jnPer"]?.message}
                 />
