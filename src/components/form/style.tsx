@@ -146,7 +146,6 @@ export const ErrorText = styled.p`
 
 export const FormGroup = styled.div`
   display: flex;
-  align-items: stretch;
   gap: 4px;
 
   input,
@@ -166,7 +165,7 @@ export const Label = styled.label<{ labelLong?: boolean }>`
   font-size: 12px;
   font-weight: 600;
   min-width: ${(props) => (props.labelLong ? "200px" : "105px")};
-
+  height: 35px;
   text-align: right;
   padding: 7px 10px;
   background: #f5fcff;
@@ -220,5 +219,8 @@ export const Select = styled.select`
   &:focus {
     border: 1px solid #e6e5e5;
     background: #fffacd;
+  }
+  option {
+    background: #fff;
   }
 `;
