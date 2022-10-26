@@ -24,11 +24,11 @@ function EN1500({
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
 
   const [selected, setSelected] = useState();
-  const [jnotry, setJnotry] = useState([]);
+  const [data, setData] = useState([]);
   const [addClicked, setAddClicked] = useState(false);
 
   useEffect(() => {
-    fetchJNotry();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function EN1500({
     gv.setDataSource(dp);
     dp.setFields(fields);
     gv.setColumns(columns);
-    dp.setRows(jnotry);
+    dp.setRows(data);
 
     gv.setFooter({ visible: false });
     gv.setOptions({
@@ -54,7 +54,7 @@ function EN1500({
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
-      setSelected(jnotry[itemIndex]);
+      setSelected(data[itemIndex]);
     };
 
     return () => {
@@ -62,20 +62,20 @@ function EN1500({
       gv.destroy();
       dp.destroy();
     };
-  }, [jnotry]);
+  }, [data]);
 
-  const fetchJNotry = async () => {
+  const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN1500/list");
       if (data) {
-        setJnotry(data);
+        setData(data);
       }
     } catch (err) {
       console.log("JNOTRY DATA fetch error =======>", err);
     }
   };
 
-  if (!jnotry) return <p>...Loading</p>;
+  if (!data) return <p>...Loading</p>;
   return (
     <>
       <DetailHeader>
@@ -104,13 +104,13 @@ function EN1500({
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
           <Form
-            selected={selected ? selected : jnotry[0]}
+            selected={selected ? selected : data[0]}
             ref={formRef}
-            fetchJNotry={fetchJNotry}
+            fetchData={fetchData}
           />
         </DetailWrapper>
       </Wrapper>
-      <DataGridFooter dataLength={jnotry.length > 0 ? jnotry.length : 0} />
+      <DataGridFooter dataLength={data.length > 0 ? data.length : 0} />
     </>
   );
 }

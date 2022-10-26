@@ -61,15 +61,7 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
-        reset({
-          ...selected,
-          saupEdiEmail: selected?.saupEdiEmail
-            ? selected.saupEdiEmail.split("@")[0]
-            : "",
-          emailType: selected?.saupEdiEmail
-            ? selected.saupEdiEmail.split("@")[1]
-            : "",
-        });
+        resetForm("reset");
       }
     }, [selected]);
 
@@ -106,6 +98,12 @@ const Form = React.forwardRef(
             saupStampQu: selected?.saupStampQu === "Y",
             saupStampEs: selected?.saupStampEs === "Y",
             saupStampSe: selected?.saupStampSe === "Y",
+            saupEdiEmail: selected?.saupEdiEmail
+              ? selected.saupEdiEmail.split("@")[0]
+              : "",
+            emailType: selected?.saupEdiEmail
+              ? selected.saupEdiEmail.split("@")[1]
+              : "",
           });
         }
       }
