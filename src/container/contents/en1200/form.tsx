@@ -63,15 +63,14 @@ const Form = React.forwardRef(
       if (JSON.stringify(selected) !== "{}") {
         reset({
           ...selected,
-          saupEdiEmail: selected.saupEdiEmail
+          saupEdiEmail: selected?.saupEdiEmail
             ? selected.saupEdiEmail.split("@")[0]
             : "",
-          emailType: selected.saupEdiEmail
+          emailType: selected?.saupEdiEmail
             ? selected.saupEdiEmail.split("@")[1]
             : "",
         });
       }
-      console.log("selected=======", selected);
     }, [selected]);
 
     useEffect(() => {
