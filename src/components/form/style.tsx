@@ -114,7 +114,7 @@ export const InputForm = styled.input<{
     props.inputSize ? getInputSize(props.inputSize) : "100%"};
   flex: ${(props) => props.fullWidth && "1"};
   border-radius: 4px;
-  border: none;
+  border: 1px solid transparent;
   outline: none;
   display: inline-block;
   padding: 0 6px;
@@ -211,7 +211,7 @@ export const Wrapper = styled.div<{
 export const Select = styled.select`
   height: 25px;
   border-radius: 4px;
-  border: none;
+  border: 1px solid transparent;
   outline: none;
   font-family: "NotoSansKRRegular";
   font-size: 12px;
