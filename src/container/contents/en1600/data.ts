@@ -33,6 +33,7 @@ export const columns = [
     fieldName: "areaCode",
     type: "data",
     width: "80",
+
     styles: {
       textAlignment: "center",
     },

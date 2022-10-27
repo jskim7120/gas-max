@@ -27,13 +27,13 @@ import API from "app/axios";
 interface IForm {
   selected: any;
 
-  fetchJNotry: any;
+  fetchData: any;
 }
 const base = "/app/EN1100/";
 
 const Form = React.forwardRef(
   (
-    { selected, fetchJNotry }: IForm,
+    { selected, fetchData }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
@@ -83,7 +83,7 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = (type: string) => {
-      if (JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         console.log("type:", type);
         let newData: any = {};
 
@@ -117,7 +117,7 @@ const Form = React.forwardRef(
           const response = await API.post(path, formValues);
           if (response.status === 200) {
             toast.success("Deleted");
-            await fetchJNotry();
+            await fetchData();
           }
         } catch (err) {
           toast.error("Couldn't delete");
@@ -145,7 +145,7 @@ const Form = React.forwardRef(
         if (response.status === 200) {
           toast.success("Action successful");
           setIsAddBtnClicked(false);
-          await fetchJNotry();
+          await fetchData();
         }
       } catch (err: any) {
         toast.error(err?.message);

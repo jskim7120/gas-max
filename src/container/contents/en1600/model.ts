@@ -1,6 +1,6 @@
 import { Path } from "react-hook-form";
 
-export interface IFormProps {
+export interface IJNOSAUP {
   areaCode: string;
   opt: number;
   swAddr1: string;
@@ -31,7 +31,7 @@ export interface IFormProps {
   swDepartment: string;
   swStampFile: string;
   swOutDate: string;
-  swGabul: string;
+  sgKumack: number;
 
   //tsaash yavahgui talbar
 

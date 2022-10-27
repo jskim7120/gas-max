@@ -1,27 +1,46 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface ISelectedIndex {
+  tabId: string;
+  rowIndex: string;
+}
+
 export interface initialStateType {
-  selectedRowIndex: number;
+  rows: Array<ISelectedIndex>;
 }
 
 const initialState: initialStateType = {
-  selectedRowIndex: 0,
+  rows: [],
 };
 
 const gridSelectedRowSlice = createSlice({
-  name: "selectedRow",
+  name: "gridRows",
   initialState,
   reducers: {
     setRowIndex: (state, action) => {
-      state.selectedRowIndex = action.payload.selectedRowIndex;
-      sessionStorage.setItem(
-        "selectedRowIndex",
-        action.payload.selectedRowIndex
-      );
+      state.rows = [
+        ...state.rows.filter((row) => row.tabId !== action.payload.tabId),
+        {
+          tabId: action.payload.tabId,
+          rowIndex: action.payload.rowIndex,
+        },
+      ];
+      sessionStorage.setItem("gridRows", JSON.stringify(state.rows));
+    },
+    removeRowIndex: (state, action) => {
+      state.rows = [
+        ...state.rows.filter((row) => row.tabId !== action.payload.tabId),
+      ];
+      sessionStorage.setItem("gridRows", JSON.stringify(state.rows));
+    },
+    removeAllRowIndexes: (state) => {
+      state.rows = [];
+      sessionStorage.removeItem("gridRows");
     },
   },
 });
 
-export const { setRowIndex } = gridSelectedRowSlice.actions;
+export const { setRowIndex, removeRowIndex, removeAllRowIndexes } =
+  gridSelectedRowSlice.actions;
 
 export default gridSelectedRowSlice.reducer;

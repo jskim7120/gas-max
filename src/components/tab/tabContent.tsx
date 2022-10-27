@@ -10,12 +10,12 @@ export const getContent = (
 ) => {
   switch (id) {
     case "EN1100":
-      return <EN1100 depthFullName={depthFullName} />;
+      return <EN1100 depthFullName={depthFullName} menuId={id} />;
     case "EN1200":
-      return <EN1200 depthFullName={depthFullName} />;
+      return <EN1200 depthFullName={depthFullName} menuId={id} />;
     case "EN1500":
-      return <EN1500 name={menuName} depthFullName={depthFullName} />;
+      return <EN1500 depthFullName={depthFullName} menuId={id} />;
     case "EN1600":
-      return <EN1600 depthFullName={depthFullName} />;
+      return <EN1600 depthFullName={depthFullName} menuId={id} />;
   }
 };

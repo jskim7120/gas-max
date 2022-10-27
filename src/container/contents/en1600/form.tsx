@@ -15,7 +15,7 @@ import {
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
-import { IFormProps } from "./type";
+import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import { SearchIcon } from "components/allSvgIcon";
@@ -27,13 +27,13 @@ import { useGetAreaCodeQuery } from "app/api/areaCode";
 
 interface IForm {
   selected: any;
-  fetchSawon: any;
+  fetchData: any;
 }
 const base = "/app/EN1600/";
 
 const Form = React.forwardRef(
   (
-    { selected, fetchSawon }: IForm,
+    { selected, fetchData }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
@@ -51,17 +51,8 @@ const Form = React.forwardRef(
     const { data: areaCode } = useGetAreaCodeQuery();
 
     useEffect(() => {
-      if (JSON.stringify(selected) !== "{}") {
-        reset({
-          ...selected,
-          swWorkOut: selected?.swWorkOut === "Y",
-          cuSeEmail: selected?.cuSeEmail
-            ? selected.cuSeEmail.split("@")[0]
-            : "",
-          emailType: selected?.cuSeEmail
-            ? selected.cuSeEmail.split("@")[1]
-            : "",
-        });
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+        resetForm("reset");
       }
     }, [selected]);
 
@@ -80,7 +71,7 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
-    } = useForm<IFormProps>({
+    } = useForm<IJNOSAUP>({
       resolver: yupResolver(schema),
     });
 
@@ -91,7 +82,7 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = (type: string) => {
-      if (JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         console.log("type:", type);
         let newData: any = {};
 
@@ -108,6 +99,12 @@ const Form = React.forwardRef(
           reset({
             ...newData,
             swWorkOut: selected?.swWorkOut === "Y",
+            cuSeEmail: selected?.cuSeEmail
+              ? selected.cuSeEmail.split("@")[0]
+              : "",
+            emailType: selected?.cuSeEmail
+              ? selected.cuSeEmail.split("@")[1]
+              : "",
           });
         }
       }
@@ -121,7 +118,7 @@ const Form = React.forwardRef(
           const response = await API.post(path, formValues);
           if (response.status === 200) {
             toast.success("Deleted");
-            await fetchSawon();
+            await fetchData();
           }
         } catch (err) {
           toast.error("Couldn't delete");
@@ -133,7 +130,7 @@ const Form = React.forwardRef(
       }
     };
 
-    const submit = async (data: IFormProps) => {
+    const submit = async (data: IJNOSAUP) => {
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
@@ -149,7 +146,7 @@ const Form = React.forwardRef(
         if (response.status === 200) {
           toast.success("Action successfull");
           setIsAddBtnClicked(false);
-          await fetchSawon();
+          await fetchData();
         } else {
           toast.error(response?.message);
         }
@@ -440,7 +437,7 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper grid col={2}>
           <Field>
-            <FormGroup>
+            <FormGroup style={{ alignItems: "center" }}>
               <Label>퇴사여부</Label>
               <CheckBox register={{ ...register("swWorkOut") }} />
               <p
@@ -469,8 +466,8 @@ const Form = React.forwardRef(
         <Wrapper>
           <Input
             label="가불금액"
-            register={register("swGabul")}
-            errors={errors["swGabul"]?.message}
+            register={register("sgKumack")}
+            errors={errors["sgKumack"]?.message}
           />
         </Wrapper>
         <ToastContainer />

@@ -3,65 +3,86 @@ import { GridView, LocalDataProvider } from "realgrid";
 import API from "app/axios";
 import Button from "components/button/button";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
-import { ButtonType, ButtonColor } from "components/componentsType";
-import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
+import { ButtonColor } from "components/componentsType";
+import { Update, Reset } from "components/allSvgIcon";
 import { columns, fields } from "./data";
 import Form from "./form";
+import { setRowIndex } from "app/state/gridSelectedRowSlice";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "./style";
+import { useDispatch } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
+let selectedRowIndex: number = 0;
 
 function EN1500({
-  name,
   depthFullName,
+  menuId,
 }: {
-  name: string;
   depthFullName: string;
+  menuId: string;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const dispatch = useDispatch();
 
-  const [selected, setSelected] = useState();
   const [data, setData] = useState([]);
-  const [addClicked, setAddClicked] = useState(false);
+  const [selected, setSelected] = useState();
+
+  useEffect(() => {
+    const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
+    if (storagegridRows) {
+      const row = storagegridRows.find((row: any) => row.tabId === menuId);
+      selectedRowIndex = row && row.rowIndex;
+    }
+  }, []);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   useEffect(() => {
-    container = realgridElement.current as HTMLDivElement;
-    dp = new LocalDataProvider(true);
-    gv = new GridView(container);
-    gv.setHeader({
-      height: 30,
-    });
+    if (data.length > 0) {
+      container = realgridElement.current as HTMLDivElement;
+      dp = new LocalDataProvider(true);
+      gv = new GridView(container);
 
-    gv.setDataSource(dp);
-    dp.setFields(fields);
-    gv.setColumns(columns);
-    dp.setRows(data);
+      gv.setDataSource(dp);
+      dp.setFields(fields);
+      gv.setColumns(columns);
+      dp.setRows(data);
+      gv.setHeader({
+        height: 30,
+      });
+      gv.setFooter({ visible: false });
+      gv.setOptions({
+        indicator: { visible: true },
+        checkBar: { visible: false },
+        stateBar: { visible: false },
+      });
+      gv.sortingOptions.enabled = true;
+      gv.displayOptions._selectionStyle = "singleRow";
+      gv.displayOptions._selectionDisplay = "row";
 
-    gv.setFooter({ visible: false });
-    gv.setOptions({
-      indicator: { visible: true },
-      checkBar: { visible: false },
-      stateBar: { visible: false },
-    });
-    gv.sortingOptions.enabled = true;
+      if (data.length > 0) {
+        gv.setCurrent({
+          dataRow: selectedRowIndex,
+        });
 
-    gv.onSelectionChanged = () => {
-      const itemIndex: any = gv.getCurrent().dataRow;
-      setSelected(data[itemIndex]);
-    };
+        gv.onSelectionChanged = () => {
+          const itemIndex: any = gv.getCurrent().dataRow;
+          setSelected(data[itemIndex]);
+          dispatch(setRowIndex({ tabId: menuId, rowIndex: itemIndex }));
+        };
+      }
 
-    return () => {
-      dp.clearRows();
-      gv.destroy();
-      dp.destroy();
-    };
+      return () => {
+        dp.clearRows();
+        gv.destroy();
+        dp.destroy();
+      };
+    }
   }, [data]);
 
   const fetchData = async () => {
@@ -69,6 +90,7 @@ function EN1500({
       const { data } = await API.get("/app/EN1500/list");
       if (data) {
         setData(data);
+        setSelected(data[selectedRowIndex]);
       }
     } catch (err) {
       console.log("JNOTRY DATA fetch error =======>", err);

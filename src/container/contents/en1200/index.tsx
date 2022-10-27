@@ -9,30 +9,37 @@ import { columns, fields } from "./data";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import { setRowIndex } from "app/state/gridSelectedRowSlice";
-import { useDispatch, useSelector } from "app/store";
+import { useDispatch } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
+let selectedRowIndex: number = 0;
 
-function EN1200({ depthFullName }: { depthFullName: string }) {
+function EN1200({
+  depthFullName,
+  menuId,
+}: {
+  depthFullName: string;
+  menuId: string;
+}) {
   const realgridElement = useRef<HTMLDivElement>(null);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
-
-  const gridSelectedRowIndex = useSelector(
-    (state) => state.gridSelectedRow.selectedRowIndex
-  );
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
 
   useEffect(() => {
-    fetchData();
-    const storageIndex = sessionStorage.getItem("selectedRowIndex");
-    if (Number(storageIndex) > 0) {
-      dispatch(setRowIndex({ selectedRowIndex: storageIndex }));
+    const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
+    if (storagegridRows) {
+      const row = storagegridRows.find((row: any) => row.tabId === menuId);
+      selectedRowIndex = row && row.rowIndex;
     }
+  }, []);
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -45,7 +52,6 @@ function EN1200({ depthFullName }: { depthFullName: string }) {
       dp.setFields(fields);
       gv.setColumns(columns);
       dp.setRows(data);
-
       gv.setHeader({
         height: 35,
       });
@@ -59,16 +65,14 @@ function EN1200({ depthFullName }: { depthFullName: string }) {
       gv.displayOptions._selectionStyle = "singleRow";
 
       if (data.length > 0) {
-        gv.setSelection({
-          style: "rows",
-          startRow: gridSelectedRowIndex,
-          endRow: gridSelectedRowIndex,
+        gv.setCurrent({
+          dataRow: selectedRowIndex,
         });
 
         gv.onSelectionChanged = () => {
           const itemIndex: any = gv.getCurrent().dataRow;
           setSelected(data[itemIndex]);
-          dispatch(setRowIndex({ selectedRowIndex: itemIndex }));
+          dispatch(setRowIndex({ tabId: menuId, rowIndex: itemIndex }));
         };
       }
 
@@ -85,12 +89,14 @@ function EN1200({ depthFullName }: { depthFullName: string }) {
       const { data } = await API.get("/app/EN1200/list");
       if (data) {
         setData(data);
-        setSelected(data[gridSelectedRowIndex]);
+        setSelected(data[selectedRowIndex]);
       }
     } catch (error) {
       console.log("Couldn't fetch JNOSAUP data.", error);
     }
   };
+
+  if (!data) return <p>...Loading</p>;
 
   return (
     <>
