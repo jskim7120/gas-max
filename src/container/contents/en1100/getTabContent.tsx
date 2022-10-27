@@ -169,6 +169,53 @@ function getTabContent(
     },
   ];
 
+  const data2 = [
+    {
+      edJnOrderO1: (
+        <Input
+          register={register("jnMark1")}
+          errors={errors["jnMark1"]?.message}
+          inputSize={InputSize.sm}
+        />
+      ),
+      edJnOrderO2: (
+        <Input
+          register={register("jnMark2")}
+          errors={errors["jnMark2"]?.message}
+          inputSize={InputSize.sm}
+        />
+      ),
+      edJnOrderO3: (
+        <Input
+          register={register("jnMark2")}
+          errors={errors["jnMark2"]?.message}
+          inputSize={InputSize.sm}
+        />
+      ),
+      edJnOrderO4: (
+        <Input
+          register={register("jnMark2")}
+          errors={errors["jnMark2"]?.message}
+          inputSize={InputSize.sm}
+        />
+      ),
+      edJnOrderO5: (
+        <Input
+          register={register("jnMark2")}
+          errors={errors["jnMark2"]?.message}
+          inputSize={InputSize.sm}
+        />
+      ),
+      edJnOrderO6: (
+        <Input
+          register={register("jnMark2")}
+          errors={errors["jnMark2"]?.message}
+          inputSize={InputSize.sm}
+        />
+      ),
+    },
+  ];
+
   const data3 = [
     {
       jnBank1: (
@@ -285,38 +332,43 @@ function getTabContent(
       );
     case 1:
       return (
-        <div>
-          <Input
-            register={register("edJnOrderO1")}
-            errors={errors["edJnOrderO1"]?.message}
-            fullWidth
-          />
-          <Input
-            register={register("edJnOrderO2")}
-            errors={errors["edJnOrderO2"]?.message}
-            fullWidth
-          />
-          <Input
-            register={register("edJnOrderO3")}
-            errors={errors["edJnOrderO3"]?.message}
-            fullWidth
-          />
-          <Input
-            register={register("edJnOrderO4")}
-            errors={errors["edJnOrderO4"]?.message}
-            fullWidth
-          />
-          <Input
-            register={register("edJnOrderO5")}
-            errors={errors["edJnOrderO5"]?.message}
-            fullWidth
-          />
-          <Input
-            register={register("edJnOrderO6")}
-            errors={errors["edJnOrderO6"]?.message}
-            fullWidth
-          />
-        </div>
+        <Table
+          tableHeader={["내용"]}
+          tableData={data4}
+          onClick={(item) => console.log("table", item)}
+        />
+        // <div>
+        //   <Input
+        //     register={register("edJnOrderO1")}
+        //     errors={errors["edJnOrderO1"]?.message}
+        //     fullWidth
+        //   />
+        //   <Input
+        //     register={register("edJnOrderO2")}
+        //     errors={errors["edJnOrderO2"]?.message}
+        //     fullWidth
+        //   />
+        //   <Input
+        //     register={register("edJnOrderO3")}
+        //     errors={errors["edJnOrderO3"]?.message}
+        //     fullWidth
+        //   />
+        //   <Input
+        //     register={register("edJnOrderO4")}
+        //     errors={errors["edJnOrderO4"]?.message}
+        //     fullWidth
+        //   />
+        //   <Input
+        //     register={register("edJnOrderO5")}
+        //     errors={errors["edJnOrderO5"]?.message}
+        //     fullWidth
+        //   />
+        //   <Input
+        //     register={register("edJnOrderO6")}
+        //     errors={errors["edJnOrderO6"]?.message}
+        //     fullWidth
+        //   />
+        // </div>
       );
     case 2:
       return (
