@@ -8,8 +8,8 @@ import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import API from "app/axios";
 import Form from "./form";
-import { setRowIndex } from "app/state/gridSelectedRowSlice";
-import { useDispatch, useSelector } from "app/store";
+import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
+import { useDispatch } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -33,6 +33,7 @@ function EN1900({
   useEffect(() => {
     const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
     if (storagegridRows) {
+      dispatch(resetFromStorage({ rows: storagegridRows }));
       const row = storagegridRows.find((row: any) => row.tabId === menuId);
       selectedRowIndex = row && row.rowIndex;
     }
