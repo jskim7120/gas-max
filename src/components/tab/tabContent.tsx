@@ -21,10 +21,10 @@ export const getContent = (
     case "EN1600":
       return <EN1600 depthFullName={depthFullName} menuId={id} />;
     case "EN1800":
-      return <EN1800 depthFullName={depthFullName} />;
+      return <EN1800 depthFullName={depthFullName} menuId={id} />;
     case "EN1900":
-      return <EN1900 depthFullName={depthFullName} />;
+      return <EN1900 depthFullName={depthFullName} menuId={id} />;
     case "EN2000":
-      return <EN2000 depthFullName={depthFullName} />;
+      return <EN2000 depthFullName={depthFullName} menuId={id} />;
   }
 };
