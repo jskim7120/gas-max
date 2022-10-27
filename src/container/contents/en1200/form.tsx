@@ -60,7 +60,7 @@ const Form = React.forwardRef(
     } = useForm<IJNOSAUP>({ resolver: yupResolver(schema) });
 
     useEffect(() => {
-      if (JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         resetForm("reset");
       }
     }, [selected]);
@@ -81,7 +81,7 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = (type: string) => {
-      if (JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         console.log("type:", type);
         let newData: any = {};
         if (type === "clear") {

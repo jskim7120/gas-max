@@ -9,33 +9,41 @@ import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import API from "app/axios";
 import Form from "./form";
 import { setRowIndex } from "app/state/gridSelectedRowSlice";
-import { useDispatch, useSelector } from "app/store";
+import { useDispatch } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
+let selectedRowIndex: number = 0;
 
-function EN1600({ depthFullName }: { depthFullName: string }) {
+function EN1600({
+  depthFullName,
+  menuId,
+}: {
+  depthFullName: string;
+  menuId: string;
+}) {
   const realgridElement = useRef<HTMLDivElement>(null);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
 
-  const gridSelectedRowIndex = useSelector(
-    (state) => state.gridSelectedRow.selectedRowIndex
-  );
-  const [sawon, setSawon] = useState([]);
-  const [selected, setSelected] = useState<any>();
+  const [data, setData] = useState([]);
+  const [selected, setSelected] = useState({});
 
   useEffect(() => {
-    fetchSawon();
-    const storageIndex = sessionStorage.getItem("selectedRowIndex");
-    if (Number(storageIndex) > 0) {
-      dispatch(setRowIndex({ selectedRowIndex: storageIndex }));
+    const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
+    if (storagegridRows) {
+      const row = storagegridRows.find((row: any) => row.tabId === menuId);
+      selectedRowIndex = row && row.rowIndex;
     }
   }, []);
 
   useEffect(() => {
-    if (sawon.length > 0) {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (data.length > 0) {
       container = realgridElement.current as HTMLDivElement;
       dp = new LocalDataProvider(true);
       gv = new GridView(container);
@@ -43,7 +51,7 @@ function EN1600({ depthFullName }: { depthFullName: string }) {
       gv.setDataSource(dp);
       dp.setFields(fields);
       gv.setColumns(columns);
-      dp.setRows(sawon);
+      dp.setRows(data);
       gv.setHeader({
         height: 35,
       });
@@ -55,18 +63,17 @@ function EN1600({ depthFullName }: { depthFullName: string }) {
       });
       gv.sortingOptions.enabled = true;
       gv.displayOptions._selectionStyle = "singleRow";
+      gv.displayOptions._selectionDisplay = "row";
 
-      if (sawon.length > 0) {
-        gv.setSelection({
-          style: "rows",
-          startRow: gridSelectedRowIndex,
-          endRow: gridSelectedRowIndex,
+      if (data.length > 0) {
+        gv.setCurrent({
+          dataRow: selectedRowIndex,
         });
 
         gv.onSelectionChanged = () => {
           const itemIndex: any = gv.getCurrent().dataRow;
-          setSelected(sawon[itemIndex]);
-          dispatch(setRowIndex({ selectedRowIndex: itemIndex }));
+          setSelected(data[itemIndex]);
+          dispatch(setRowIndex({ tabId: menuId, rowIndex: itemIndex }));
         };
       }
 
@@ -76,20 +83,21 @@ function EN1600({ depthFullName }: { depthFullName: string }) {
         dp.destroy();
       };
     }
-  }, [sawon]);
+  }, [data]);
 
-  const fetchSawon = async () => {
+  const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN1600/list");
       if (data) {
-        setSawon(data);
-        setSelected(data[gridSelectedRowIndex]);
+        setData(data);
+        setSelected(data[selectedRowIndex]);
       }
     } catch (err) {
       console.log("SAWON DATA fetch error =======>", err);
     }
   };
 
+  if (!data) return <p>...Loading</p>;
   return (
     <>
       <DetailHeader>
@@ -135,10 +143,10 @@ function EN1600({ depthFullName }: { depthFullName: string }) {
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form selected={selected} ref={formRef} fetchSawon={fetchSawon} />
+          <Form selected={selected} ref={formRef} fetchData={fetchData} />
         </DetailWrapper>
       </Wrapper>
-      <DataGridFooter dataLength={sawon.length > 0 ? sawon.length : 0} />
+      <DataGridFooter dataLength={data.length > 0 ? data.length : 0} />
     </>
   );
 }

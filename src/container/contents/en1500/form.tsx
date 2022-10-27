@@ -52,7 +52,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
     useGetCommonGubunQuery("15");
 
   useEffect(() => {
-    if (JSON.stringify(selected) !== "{}") {
+    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
       reset(selected);
     }
   }, [selected]);
@@ -68,7 +68,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
   });
 
   const resetForm = (type: string) => {
-    if (JSON.stringify(selected) !== "{}") {
+    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
       let newData: any = {};
 
       if (type === "reset") {

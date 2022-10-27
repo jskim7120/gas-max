@@ -6,6 +6,10 @@ import {
   removeTab,
   removeAllTabs,
 } from "app/state/tab/tabSlice";
+import {
+  removeRowIndex,
+  removeAllRowIndexes,
+} from "app/state/gridSelectedRowSlice";
 import { openModal } from "app/state/modal/modalSlice";
 import { toggleSidebar } from "app/state/sidebar/sidebarSlice";
 import { getContent } from "./tabContent";
@@ -94,6 +98,7 @@ const Tab = (props: TabProps): JSX.Element => {
 
   const closeTab = (menuId: string) => {
     dispatch(removeTab({ menuId: menuId }));
+    dispatch(removeRowIndex({ tabId: menuId }));
   };
 
   const changeTab = (menuId: string) => {
@@ -129,7 +134,9 @@ const Tab = (props: TabProps): JSX.Element => {
             <Refresh />
           </span>
           <span
-            onClick={() => dispatch(removeAllTabs())}
+            onClick={() => {
+              dispatch(removeAllTabs());
+            }}
             style={{
               marginLeft: "8px",
             }}
