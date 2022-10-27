@@ -56,7 +56,7 @@ export const VolReading = styled.div`
     font-weight: 400;
     line-height: 28px;
     padding-left: 14px;
-    margin-bottom: 13px;
+    margin-bottom: 6px;
   }
   select {
     min-width: 259px;
@@ -76,8 +76,9 @@ export const VolReading = styled.div`
   }
   .volWrapper {
     position: relative;
-    width: 96%;
+    width: 99%;
     align-items: center;
+    padding-left: 17px;
   }
 `;
 export const Container = styled.div`
@@ -115,7 +116,7 @@ export const RubeUnit = styled.div`
     display: flex;
     align-items: center;
     margin-top: 9px;
-    margin-left: 47px;
+    justify-content: center;
     span {
       margin-left: 6px;
     }
@@ -127,6 +128,9 @@ export const BasicItems = styled.div`
   border-radius: 8px;
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
+  .volWrapper {
+    margin-left: 20px;
+  }
   select {
     width: 77px;
   }

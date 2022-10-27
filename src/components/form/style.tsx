@@ -158,6 +158,10 @@ export const FormGroup = styled.div`
     font-size: 12px;
     line-height: 21px;
   }
+  span {
+    font-size: 12px;
+    line-height: 35px;
+  }
 `;
 
 export const Label = styled.label<{ labelLong?: boolean }>`

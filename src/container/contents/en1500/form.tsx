@@ -321,6 +321,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
                     ))}
                   </Select>
                 )}
+                <span>mmH2O</span>
               </FormGroup>
               <div>
                 <ErrorText>{errors["jnR"]?.message}</ErrorText>
@@ -335,6 +336,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
                   register={register("jnAnkum")}
                   errors={errors["jnAnkum"]?.message}
                 />
+                <span>원</span>
               </FormGroup>
             </Field>
           </Wrapper>
@@ -346,6 +348,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
                   register={register("jnGumdate")}
                   errors={errors["jnGumdate"]?.message}
                 />
+                <span>일</span>
               </FormGroup>
             </Field>
           </Wrapper>
@@ -378,6 +381,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
                   register={register("jnPer")}
                   errors={errors["jnPer"]?.message}
                 />
+                <span>%</span>
               </FormGroup>
             </Field>
           </Wrapper>
