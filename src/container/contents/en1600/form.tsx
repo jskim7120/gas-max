@@ -24,6 +24,7 @@ import {
   formatDate,
   formatDateByRemoveDash,
 } from "helpers/dateFormat";
+import { convertBase64 } from "helpers/convertBase64";
 import CustomDate from "components/customDatePicker";
 import API from "app/axios";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
@@ -48,6 +49,7 @@ const Form = React.forwardRef(
       file: any;
       name: string;
     }>();
+    const [image64, setImage64] = useState(null);
     const { data: swGubun } = useGetCommonGubunQuery("1");
     const { data: swPaytype } = useGetCommonGubunQuery("2");
     const { data: emailType } = useGetCommonGubunQuery("5");
@@ -115,6 +117,10 @@ const Form = React.forwardRef(
             swJdate2: selected.swJdate2 ? formatDate(selected.swJdate2) : "",
             swOutDate: selected.swOutDate ? formatDate(selected.swOutDate) : "",
           });
+
+          selected.swStampFile
+            ? setImage64(selected.swStampFile)
+            : setImage64(null);
         }
       }
     };
@@ -161,6 +167,8 @@ const Form = React.forwardRef(
       formValues.swOutDate = formValues.swOutDate
         ? formatDateByRemoveDash(formValues.swOutDate)
         : "";
+
+      formValues.swStampFile = image64 && image64;
 
       try {
         const response: any = await API.post(path, formValues);
@@ -351,8 +359,7 @@ const Form = React.forwardRef(
                     bottom: 0,
                     opacity: 0,
                   }}
-                  onChange={(event) => {
-                    console.log("changed", event?.target?.files);
+                  onChange={async (event) => {
                     setImage({
                       name: event?.target?.files
                         ? event?.target?.files[0].name
@@ -362,6 +369,15 @@ const Form = React.forwardRef(
                         ? URL.createObjectURL(event?.target?.files[0])
                         : "",
                     });
+                    try {
+                      const response =
+                        event?.target?.files &&
+                        (await convertBase64(event.target.files[0]));
+
+                      setImage64(response);
+                    } catch (err: any) {
+                      console.log("image convert 64 error occured.", err);
+                    }
                   }}
                 />
               </button>
@@ -412,9 +428,9 @@ const Form = React.forwardRef(
               border: "1px solid #707070",
             }}
           >
-            {image?.file && (
+            {image64 && (
               <img
-                src={image?.file}
+                src={image64}
                 style={{ width: "100px", height: "100px", objectFit: "cover" }}
               />
             )}

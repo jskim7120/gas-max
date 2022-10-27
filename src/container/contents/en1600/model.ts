@@ -29,7 +29,7 @@ export interface IJNOSAUP {
   cuSeEmail: string;
   eyeSwCode: string;
   swDepartment: string;
-  swStampFile: string;
+  swStampFile: string | null;
   swOutDate: string;
   sgKumack: number;
 
