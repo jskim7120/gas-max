@@ -224,3 +224,12 @@ export const Select = styled.select`
     background: #fff;
   }
 `;
+
+export const InfoDesc = styled.div`
+  display: flex;
+  margin-left: 20px;
+  span {
+    font-size: 12px;
+    color: #1b8c8e;
+  }
+`;

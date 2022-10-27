@@ -164,6 +164,15 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
         />
       ),
     },
+    {
+      title: "7000 mmH2O",
+      jnCost7000: (
+        <Input
+          register={register("jnCost7000")}
+          errors={errors["jnCost7000"]?.message}
+        />
+      ),
+    },
   ];
 
   return (
@@ -300,7 +309,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           <Wrapper className="volWrapper">
             <Field>
               <FormGroup>
-                <Label>세금계산서 양식</Label>
+                <Label>조정기압력</Label>
                 {isJnR ? (
                   "error occured"
                 ) : (
@@ -343,7 +352,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           <Wrapper className="volWrapper">
             <Field>
               <FormGroup>
-                <Label>세금계산서 양식</Label>
+                <Label>수금방법</Label>
                 {isJnSukumtypeError ? (
                   "error occured"
                 ) : (
@@ -365,7 +374,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
             <Field className="field">
               <FormGroup>
                 <Input
-                  label="수금방법"
+                  label="연체율"
                   register={register("jnPer")}
                   errors={errors["jnPer"]?.message}
                 />
