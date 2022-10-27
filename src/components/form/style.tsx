@@ -237,3 +237,21 @@ export const InfoDesc = styled.div`
     color: #1b8c8e;
   }
 `;
+
+export const PaymentLineCnt = styled.div`
+  display: flex;
+  border: 1px solid #bbbbbb;
+  width: 632px;
+  .title {
+    writing-mode: vertical-rl;
+    text-align: center;
+    font-size: 14px;
+    width: 22px;
+    height: 78px;
+    letter-spacing: 11px;
+    background: rgba(104, 103, 103, 0.35);
+  }
+  table tbody tr td {
+    height: 45px;
+  }
+`;

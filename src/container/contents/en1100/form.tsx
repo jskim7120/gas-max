@@ -383,7 +383,12 @@ const Form = React.forwardRef(
         <DividerGray />
         <div style={{ marginTop: "30px" }}>
           <PlainTab
-            tabHeader={["지로 양식", "고객안내문", "입금계좌  안내", "결재란"]}
+            tabHeader={[
+              "지로 양식",
+              "고객안내문",
+              "입금계좌  안내",
+              "결재 라인",
+            ]}
             onClick={(id) => setTabId(id)}
           />
           <TabContentWrapper>

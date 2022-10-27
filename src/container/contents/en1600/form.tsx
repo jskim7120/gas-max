@@ -19,7 +19,11 @@ import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import { SearchIcon } from "components/allSvgIcon";
-import { formatDateToString } from "helpers/dateFormat";
+import {
+  formatDateToString,
+  formatDate,
+  formatDateByRemoveDash,
+} from "helpers/dateFormat";
 import CustomDate from "components/customDatePicker";
 import API from "app/axios";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
@@ -105,6 +109,10 @@ const Form = React.forwardRef(
             emailType: selected?.cuSeEmail
               ? selected.cuSeEmail.split("@")[1]
               : "",
+            swIndate: selected.swIndate ? formatDate(selected.swIndate) : "",
+            swJdate1: selected.swJdate1 ? formatDate(selected.swJdate1) : "",
+            swJdate2: selected.swJdate2 ? formatDate(selected.swJdate2) : "",
+            swOutDate: selected.swOutDate ? formatDate(selected.swOutDate) : "",
           });
         }
       }
@@ -140,6 +148,19 @@ const Form = React.forwardRef(
         formValues.cuSeEmail &&
         `${formValues.cuSeEmail}@${formValues.emailType}`;
 
+      formValues.swIndate = formValues.swIndate
+        ? formatDateByRemoveDash(formValues.swIndate)
+        : "";
+      formValues.swJdate1 = formValues.swJdate1
+        ? formatDateByRemoveDash(formValues.swJdate1)
+        : "";
+      formValues.swJdate2 = formValues.swJdate2
+        ? formatDateByRemoveDash(formValues.swJdate2)
+        : "";
+      formValues.swOutDate = formValues.swOutDate
+        ? formatDateByRemoveDash(formValues.swOutDate)
+        : "";
+
       try {
         const response: any = await API.post(path, formValues);
 
@@ -168,6 +189,9 @@ const Form = React.forwardRef(
 
       reset({
         swIndate: stringDate,
+        swJdate1: stringDate,
+        swJdate2: stringDate,
+        swOutDate: stringDate,
       });
     };
 
@@ -411,7 +435,7 @@ const Form = React.forwardRef(
         <DividerGray />
         <Wrapper>
           <CustomDate
-            label="입사일"
+            label="적성검사"
             name="swJdate1"
             register={register("swJdate1")}
             reset={reset}
@@ -470,6 +494,7 @@ const Form = React.forwardRef(
             errors={errors["sgKumack"]?.message}
           />
         </Wrapper>
+        <DividerGray />
         <ToastContainer />
       </form>
     );

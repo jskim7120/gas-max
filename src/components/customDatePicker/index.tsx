@@ -79,6 +79,7 @@ function CustomDate({
         onChange={handleDateChange}
         showMonthDropdown
         showYearDropdown
+        // dateFormat="MM/dd/yyyy h:mm aa"
         customInput={
           <CustomInput register={register} errors={errors} label={label} />
         }

@@ -1,6 +1,12 @@
 import React from "react";
 import Table from "components/table";
-import { Input, Select, Field, ErrorText } from "components/form/style";
+import {
+  Input,
+  Select,
+  Field,
+  ErrorText,
+  PaymentLineCnt,
+} from "components/form/style";
 import { InputSize } from "components/componentsType";
 
 function getTabContent(
@@ -171,46 +177,51 @@ function getTabContent(
 
   const data2 = [
     {
-      edJnOrderO1: (
+      JnOrderO1: (
         <Input
-          register={register("jnMark1")}
-          errors={errors["jnMark1"]?.message}
-          inputSize={InputSize.sm}
+          register={register("JnOrderO1")}
+          errors={errors["JnOrderO1"]?.message}
+          inputSize={InputSize.md}
         />
       ),
-      edJnOrderO2: (
+    },
+    {
+      JnOrderO2: (
         <Input
-          register={register("jnMark2")}
-          errors={errors["jnMark2"]?.message}
-          inputSize={InputSize.sm}
+          register={register("JnOrderO2")}
+          errors={errors["JnOrderO2"]?.message}
         />
       ),
-      edJnOrderO3: (
+    },
+    {
+      JnOrderO3: (
         <Input
-          register={register("jnMark2")}
-          errors={errors["jnMark2"]?.message}
-          inputSize={InputSize.sm}
+          register={register("JnOrderO3")}
+          errors={errors["JnOrderO3"]?.message}
         />
       ),
-      edJnOrderO4: (
+    },
+    {
+      JnOrderO4: (
         <Input
-          register={register("jnMark2")}
-          errors={errors["jnMark2"]?.message}
-          inputSize={InputSize.sm}
+          register={register("JnOrderO4")}
+          errors={errors["JnOrderO4"]?.message}
         />
       ),
-      edJnOrderO5: (
+    },
+    {
+      JnOrderO5: (
         <Input
-          register={register("jnMark2")}
-          errors={errors["jnMark2"]?.message}
-          inputSize={InputSize.sm}
+          register={register("JnOrderO5")}
+          errors={errors["JnOrderO5"]?.message}
         />
       ),
-      edJnOrderO6: (
+    },
+    {
+      JnOrderO6: (
         <Input
-          register={register("jnMark2")}
-          errors={errors["jnMark2"]?.message}
-          inputSize={InputSize.sm}
+          register={register("JnOrderO6")}
+          errors={errors["JnOrderO6"]?.message}
         />
       ),
     },
@@ -334,41 +345,9 @@ function getTabContent(
       return (
         <Table
           tableHeader={["내용"]}
-          tableData={data4}
+          tableData={data2}
           onClick={(item) => console.log("table", item)}
         />
-        // <div>
-        //   <Input
-        //     register={register("edJnOrderO1")}
-        //     errors={errors["edJnOrderO1"]?.message}
-        //     fullWidth
-        //   />
-        //   <Input
-        //     register={register("edJnOrderO2")}
-        //     errors={errors["edJnOrderO2"]?.message}
-        //     fullWidth
-        //   />
-        //   <Input
-        //     register={register("edJnOrderO3")}
-        //     errors={errors["edJnOrderO3"]?.message}
-        //     fullWidth
-        //   />
-        //   <Input
-        //     register={register("edJnOrderO4")}
-        //     errors={errors["edJnOrderO4"]?.message}
-        //     fullWidth
-        //   />
-        //   <Input
-        //     register={register("edJnOrderO5")}
-        //     errors={errors["edJnOrderO5"]?.message}
-        //     fullWidth
-        //   />
-        //   <Input
-        //     register={register("edJnOrderO6")}
-        //     errors={errors["edJnOrderO6"]?.message}
-        //     fullWidth
-        //   />
-        // </div>
       );
     case 2:
       return (
@@ -380,11 +359,14 @@ function getTabContent(
       );
     case 3:
       return (
-        <Table
-          tableHeader={["담 당", "과 장", "부 장", "전 무", "대 표"]}
-          tableData={data4}
-          onClick={(item) => console.log("table", item)}
-        />
+        <PaymentLineCnt>
+          <div className="title">결재</div>
+          <Table
+            tableHeader={["결재1", "결재2", "결재3", "결재4", "결재5"]}
+            tableData={data4}
+            onClick={(item) => console.log("table", item)}
+          />
+        </PaymentLineCnt>
       );
   }
   return null;
