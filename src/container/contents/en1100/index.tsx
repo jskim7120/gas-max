@@ -9,7 +9,7 @@ import { columns, fields } from "./data";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -30,9 +30,10 @@ function EN1100({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState();
 
+  //const gridSelectedRowState = useSelector((state) => state.gridSelectedRow);
+
   useEffect(() => {
     const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
-    console.log("refresh");
     if (storagegridRows) {
       dispatch(resetFromStorage({ rows: storagegridRows }));
       const row = storagegridRows.find((row: any) => row.tabId === menuId);
@@ -62,17 +63,21 @@ function EN1100({
       gv.setFooter({ visible: false });
       gv.setOptions({
         indicator: { visible: true },
-        checkBar: { visible: false },
+        checkBar: { visible: true },
         stateBar: { visible: false },
       });
       gv.sortingOptions.enabled = true;
       gv.displayOptions._selectionStyle = "singleRow";
-      gv.displayOptions._selectionDisplay = "row";
 
       if (data.length > 0) {
         gv.setCurrent({
           dataRow: selectedRowIndex,
         });
+        // gv.setSelection({ style: "rows", startRow: 0, endRow: 0 });
+
+        // gv.onItemChecked = () => {
+        //   var items = gv.getCheckedItems();
+        // };
 
         gv.onSelectionChanged = () => {
           const itemIndex: any = gv.getCurrent().dataRow;
@@ -146,7 +151,12 @@ function EN1100({
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form selected={selected} ref={formRef} fetchData={fetchData} />
+          <Form
+            selected={selected}
+            ref={formRef}
+            fetchData={fetchData}
+            menuId={menuId}
+          />
         </DetailWrapper>
       </Wrapper>
       <DataGridFooter dataLength={data.length > 0 ? data.length : 0} />

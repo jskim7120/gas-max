@@ -57,7 +57,7 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
-    } = useForm<IJNOSAUP>({ resolver: yupResolver(schema) });
+    } = useForm<IJNOSAUP>({ mode: "onChange", resolver: yupResolver(schema) });
 
     useEffect(() => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {

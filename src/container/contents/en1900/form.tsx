@@ -52,6 +52,7 @@ const Form = React.forwardRef(
       formState: { errors },
       getValues,
     } = useForm<IFormProps>({
+      mode: "onChange",
       resolver: yupResolver(schema),
     });
 

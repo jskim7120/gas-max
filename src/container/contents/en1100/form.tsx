@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "app/store";
@@ -23,17 +23,18 @@ import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
 import API from "app/axios";
+import { setRowIndex } from "app/state/gridSelectedRowSlice";
 
 interface IForm {
   selected: any;
-
   fetchData: any;
+  menuId: string;
 }
 const base = "/app/EN1100/";
 
 const Form = React.forwardRef(
   (
-    { selected, fetchData }: IForm,
+    { selected, fetchData, menuId }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
@@ -57,7 +58,9 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
+      control,
     } = useForm<IJNOTRY>({
+      mode: "onChange",
       resolver: yupResolver(schema),
     });
 
@@ -114,10 +117,14 @@ const Form = React.forwardRef(
         const formValues = getValues();
 
         try {
-          const response = await API.post(path, formValues);
+          const response: any = await API.post(path, formValues);
+
           if (response.status === 200) {
             toast.success("Deleted");
+            dispatch(setRowIndex({ tabId: menuId, rowIndex: 0 }));
             await fetchData();
+          } else {
+            toast.error(response?.response?.message);
           }
         } catch (err) {
           toast.error("Couldn't delete");
@@ -141,11 +148,14 @@ const Form = React.forwardRef(
       formValues.innopayBankYn = formValues.innopayBankYn ? "Y" : "N";
 
       try {
-        const response = await API.post(path, formValues);
+        const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           toast.success("Action successful");
+          dispatch(setRowIndex({ tabId: menuId, rowIndex: 0 }));
           setIsAddBtnClicked(false);
           await fetchData();
+        } else {
+          toast.error(response?.response?.data?.message);
         }
       } catch (err: any) {
         toast.error(err?.message);
