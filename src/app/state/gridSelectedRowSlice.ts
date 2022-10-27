@@ -31,16 +31,25 @@ const gridSelectedRowSlice = createSlice({
       state.rows = [
         ...state.rows.filter((row) => row.tabId !== action.payload.tabId),
       ];
-      sessionStorage.setItem("gridRows", JSON.stringify(state.rows));
+      state.rows.length > 0
+        ? sessionStorage.setItem("gridRows", JSON.stringify(state.rows))
+        : sessionStorage.removeItem("gridRows");
     },
     removeAllRowIndexes: (state) => {
       state.rows = [];
       sessionStorage.removeItem("gridRows");
     },
+    resetFromStorage: (state, action) => {
+      state.rows = action.payload.rows;
+    },
   },
 });
 
-export const { setRowIndex, removeRowIndex, removeAllRowIndexes } =
-  gridSelectedRowSlice.actions;
+export const {
+  setRowIndex,
+  removeRowIndex,
+  removeAllRowIndexes,
+  resetFromStorage,
+} = gridSelectedRowSlice.actions;
 
 export default gridSelectedRowSlice.reducer;

@@ -136,6 +136,7 @@ const Tab = (props: TabProps): JSX.Element => {
           <span
             onClick={() => {
               dispatch(removeAllTabs());
+              dispatch(removeAllRowIndexes());
             }}
             style={{
               marginLeft: "8px",

@@ -8,7 +8,7 @@ import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { columns, fields } from "./data";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
-import { setRowIndex } from "app/state/gridSelectedRowSlice";
+import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
 import { useDispatch } from "app/store";
 
 let container: HTMLDivElement;
@@ -32,9 +32,13 @@ function EN1100({
 
   useEffect(() => {
     const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
+    console.log("refresh");
     if (storagegridRows) {
+      dispatch(resetFromStorage({ rows: storagegridRows }));
       const row = storagegridRows.find((row: any) => row.tabId === menuId);
       selectedRowIndex = row && row.rowIndex;
+    } else {
+      selectedRowIndex = 0;
     }
   }, []);
 
