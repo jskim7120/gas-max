@@ -5,6 +5,7 @@ import {
   setActiveTab,
   removeTab,
   removeAllTabs,
+  refreshTabs,
 } from "app/state/tab/tabSlice";
 import {
   removeRowIndex,
@@ -124,6 +125,9 @@ const Tab = (props: TabProps): JSX.Element => {
             <Info />
           </span>
           <span
+            onClick={() => {
+              dispatch(refreshTabs());
+            }}
             style={{
               marginLeft: "8px",
             }}

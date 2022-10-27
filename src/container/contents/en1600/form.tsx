@@ -409,6 +409,7 @@ const Form = React.forwardRef(
             style={{
               width: "100px",
               height: "100px",
+              border: "1px solid #707070",
             }}
           >
             {image?.file && (
@@ -434,7 +435,7 @@ const Form = React.forwardRef(
           />
         </Wrapper>
         <DividerGray />
-        <Wrapper>
+        <Wrapper style={{ width: "610px" }}>
           <CustomDate
             label="적성검사"
             name="swJdate1"

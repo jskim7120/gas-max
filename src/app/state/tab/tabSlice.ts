@@ -82,10 +82,19 @@ const tabSlice = createSlice({
       state.tabs = action.payload.tabs;
       state.activeTabId = action.payload.activeTabId;
     },
+    refreshTabs: (state) => {
+      window.location.reload();
+    },
   },
 });
 
-export const { addTab, removeTab, removeAllTabs, setActiveTab, setTabs } =
-  tabSlice.actions;
+export const {
+  addTab,
+  removeTab,
+  removeAllTabs,
+  setActiveTab,
+  setTabs,
+  refreshTabs,
+} = tabSlice.actions;
 
 export default tabSlice.reducer;
