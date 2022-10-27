@@ -1,6 +1,6 @@
 import { Path } from "react-hook-form";
 
-export interface JNOTRY {
+export interface IJNOTRY2 {
   areaCode: number;
   areaName: number;
   jnSsno: string;
@@ -88,14 +88,4 @@ export interface JNOTRY {
   jnMark3: string;
   jnMark4: string;
   jnMark5: string;
-}
-
-export interface IElementProps {
-  type: string;
-  label: string;
-  name: Path<JNOTRY>;
-  value: string;
-  inputType?: string;
-  options?: Array<string>;
-  date?: Date;
 }

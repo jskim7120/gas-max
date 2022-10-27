@@ -15,7 +15,7 @@ import {
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
-import { IFormProps } from "./type";
+import { IJNOTRY } from "./model";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import PlainTab from "components/plainTab";
@@ -57,20 +57,13 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
-    } = useForm<IFormProps>({
+    } = useForm<IJNOTRY>({
       resolver: yupResolver(schema),
     });
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
-        reset({
-          ...selected,
-          innopayBankYn: selected?.innopayBankYn === "Y",
-          niceBankYn: selected?.niceBankYn === "Y",
-          jnSekumEa: selected?.jnSekumEa === "Y",
-          jnSegongYn: selected?.jnSegongYn === "Y",
-          jnVatSumyn: selected?.jnVatSumyn === "Y",
-        });
+        resetForm("reset");
       }
     }, [selected]);
 
@@ -136,7 +129,7 @@ const Form = React.forwardRef(
       }
     };
 
-    const submit = async (data: IFormProps) => {
+    const submit = async (data: IJNOTRY) => {
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
@@ -255,26 +248,26 @@ const Form = React.forwardRef(
         <Wrapper grid>
           <Input
             label="안전관리 총괄자"
-            register={register("jnAnName1")}
-            errors={errors["jnAnName1"]?.message}
+            register={register("jnAnname1")}
+            errors={errors["jnAnname1"]?.message}
           />
           <Input
             label="전화"
-            register={register("jnAnTel1")}
-            errors={errors["jnAnTel1"]?.message}
+            register={register("jnAntel1")}
+            errors={errors["jnAntel1"]?.message}
           />
         </Wrapper>
         <DividerGray />
         <Wrapper grid>
           <Input
             label="안전관리 책임자"
-            register={register("jnAnName2")}
-            errors={errors["jnAnName2"]?.message}
+            register={register("jnAnname2")}
+            errors={errors["jnAnname2"]?.message}
           />
           <Input
             label="전화"
-            register={register("jnAnTel2")}
-            errors={errors["jnAnTel2"]?.message}
+            register={register("jnAntel2")}
+            errors={errors["jnAntel2"]?.message}
           />
         </Wrapper>
         <Divider />
@@ -361,8 +354,8 @@ const Form = React.forwardRef(
           <Input
             label="탱크잔량/원격검침 발신기 업체번호"
             labelLong
-            register={register("jnCmngno")}
-            errors={errors["jnCmngno"]?.message}
+            register={register("jnCMngNo")}
+            errors={errors["jnCMngNo"]?.message}
           />
           <Field>
             <FormGroup>

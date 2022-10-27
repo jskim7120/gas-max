@@ -1,6 +1,6 @@
 import { Path } from "react-hook-form";
 
-export interface IFormProps {
+export interface IJNOTRY {
   areaCode: number;
   areaName: number;
   jnSsno: string;
@@ -14,16 +14,16 @@ export interface IFormProps {
   jnTel1: number;
   jnTel2: number;
   jnFax: number;
-  jnAnName1: string;
-  jnAnName2: string;
-  jnAnTel1: number;
-  jnAnTel2: number;
+  jnAnname1: string;
+  jnAnname2: string;
+  jnAntel1: number;
+  jnAntel2: number;
   jnSekum: string;
   jnSegongYn: string;
   jnVatSumyn: string;
   jnSekumEa: string;
   jnJangbu: string;
-  jnCmngno: number;
+  jnCMngNo: number;
   innopayBankYn: string;
   niceBankYn: string;
 
@@ -32,10 +32,10 @@ export interface IFormProps {
   jnJiroSNo03: string;
   jnJiroSNo04: string;
 
-  jnJiroNo: string;
-  jnJiroNo02: string;
-  jnJiroNo03: string;
-  jnJiroNo04: string;
+  jnJirono: string;
+  jnJirono02: string;
+  jnJirono03: string;
+  jnJirono04: string;
 
   jnJiroBigo: string;
   jnJiroBigo02: string;
@@ -69,14 +69,4 @@ export interface IFormProps {
   jnMark3: string;
   jnMark4: string;
   jnMark5: string;
-}
-
-export interface IElementProps {
-  type: string;
-  label: string;
-  name: Path<IFormProps>;
-  value: string;
-  inputType?: string;
-  options?: Array<string>;
-  date?: Date;
 }

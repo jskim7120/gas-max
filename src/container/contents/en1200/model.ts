@@ -31,6 +31,6 @@ export interface IJNOSAUP {
   saupZipcode: string;
 
   //
-  //cuSeEmail: string;
+
   emailType: string;
 }

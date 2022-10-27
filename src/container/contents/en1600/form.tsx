@@ -55,6 +55,12 @@ const Form = React.forwardRef(
         reset({
           ...selected,
           swWorkOut: selected?.swWorkOut === "Y",
+          cuSeEmail: selected?.cuSeEmail
+            ? selected.cuSeEmail.split("@")[0]
+            : "",
+          emailType: selected?.cuSeEmail
+            ? selected.cuSeEmail.split("@")[1]
+            : "",
         });
       }
     }, [selected]);

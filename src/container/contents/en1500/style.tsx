@@ -92,7 +92,7 @@ export const Container = styled.div`
     font-weight: 400;
     line-height: 28px;
     padding-left: 14px;
-    margin-bottom: 13px;
+    margin-bottom: 11px;
   }
 `;
 export const RubeUnit = styled.div`
@@ -142,7 +142,7 @@ export const BasicItems = styled.div`
     line-height: 24px;
     display: flex;
     align-items: center;
-    margin-top: 54px;
+    margin-top: 78px;
     justify-content: center;
     span {
       margin-left: 6px;

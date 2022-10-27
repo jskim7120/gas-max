@@ -20,7 +20,7 @@ import {
   Input,
 } from "components/form/style";
 import { IconInfo } from "components/allSvgIcon";
-import { JNOTRY } from "./model";
+import { IJNOTRY2 } from "./model";
 import { schema } from "./validation";
 import { VolReading, Container, RubeUnit, BasicItems } from "../en1500/style";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
@@ -28,15 +28,11 @@ import API from "app/axios";
 
 interface IForm {
   selected: any;
-
-  fetchJNotry: any;
+  fetchData: any;
 }
 const base = "/app/EN1500/";
 
-const Form = (
-  { selected, fetchJNotry }: IForm,
-  ref: React.ForwardedRef<any>
-) => {
+const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
   const dispatch = useDispatch();
   const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
   const [isClickedAdd, setIsClikedAdd] = useState(false);
@@ -66,9 +62,8 @@ const Form = (
     handleSubmit,
     reset,
     formState: { errors },
-    control,
     getValues,
-  } = useForm<JNOTRY>({
+  } = useForm<IJNOTRY2>({
     resolver: yupResolver(schema),
   });
 
@@ -76,12 +71,7 @@ const Form = (
     if (JSON.stringify(selected) !== "{}") {
       let newData: any = {};
 
-      if (type === "clear") {
-        for (const [key, value] of Object.entries(selected)) {
-          newData[key] = null;
-        }
-        setIsClikedAdd(true);
-      } else if (type === "reset") {
+      if (type === "reset") {
         for (const [key, value] of Object.entries(selected)) {
           newData[key] = value;
         }
@@ -90,20 +80,17 @@ const Form = (
     }
   };
 
-  const submit = async (data: JNOTRY) => {
+  const submit = async (data: IJNOTRY2) => {
     const formValues = getValues();
     //form aldaagui uyd ajillana
-    console.log("work submit", formValues);
+
     const path = `${base}update`;
 
     try {
       const response = await API.post(path, formValues);
-      console.log("response:", response.status);
-      console.log("path:", path);
-      console.log("formValues:", data);
       if (response.status === 200) {
         setIsAddBtnClicked(false);
-        await fetchJNotry();
+        await fetchData();
         toast.success("Action successful");
       }
     } catch (err: any) {
@@ -189,7 +176,7 @@ const Form = (
   ];
 
   return (
-    <form onSubmit={handleSubmit(submit)} style={{ padding: "10px 15px" }}>
+    <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
       <Wrapper grid>
         <Field className="field">
           <FormGroup>

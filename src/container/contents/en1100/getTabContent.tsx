@@ -21,8 +21,8 @@ function getTabContent(
       ),
       3: (
         <Input
-          register={register("jnJiroNo")}
-          errors={errors["jnJiroNo"]?.message}
+          register={register("jnJirono")}
+          errors={errors["jnJirono"]?.message}
         />
       ),
       4: (
@@ -60,8 +60,8 @@ function getTabContent(
       ),
       3: (
         <Input
-          register={register("jnJiroNo02")}
-          errors={errors["jnJiroNo02"]?.message}
+          register={register("jnJirono02")}
+          errors={errors["jnJirono02"]?.message}
         />
       ),
       4: (
@@ -75,7 +75,7 @@ function getTabContent(
           {isJnJiroError ? (
             "error occured"
           ) : (
-            <Select style={{ width: "150px" }} {...register("jnJiro02")}>
+            <Select style={{ width: "150px" }} {...register("jnJiro2")}>
               {jnJiro?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -99,8 +99,8 @@ function getTabContent(
       ),
       3: (
         <Input
-          register={register("jnJiroNo03")}
-          errors={errors["jnJiroNo03"]?.message}
+          register={register("jnJirono03")}
+          errors={errors["jnJirono03"]?.message}
         />
       ),
       4: (
@@ -138,8 +138,8 @@ function getTabContent(
       ),
       3: (
         <Input
-          register={register("jnJiroNo04")}
-          errors={errors["jnJiroNo04"]?.message}
+          register={register("jnJirono04")}
+          errors={errors["jnJirono04"]?.message}
         />
       ),
       4: (
@@ -179,7 +179,7 @@ function getTabContent(
       ),
       jnBankNo1: (
         <Input
-          register={register("jnBankNo1")}
+          register={register("jnBankno1")}
           errors={errors["jnBankNo1"]?.message}
         />
       ),
@@ -193,7 +193,7 @@ function getTabContent(
       ),
       jnBankNo2: (
         <Input
-          register={register("jnBankNo2")}
+          register={register("jnBankno2")}
           errors={errors["jnBankNo2"]?.message}
         />
       ),
@@ -207,7 +207,7 @@ function getTabContent(
       ),
       jnBankNo3: (
         <Input
-          register={register("jnBankNo3")}
+          register={register("jnBankno3")}
           errors={errors["jnBankNo3"]?.message}
         />
       ),
@@ -221,7 +221,7 @@ function getTabContent(
       ),
       jnBankNo4: (
         <Input
-          register={register("jnBankNo4")}
+          register={register("jnBankno4")}
           errors={errors["jnBankNo4"]?.message}
         />
       ),
