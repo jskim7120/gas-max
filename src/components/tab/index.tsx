@@ -71,7 +71,7 @@ const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
   );
 };
 
-let content: React.ReactNode;
+// let content: React.ReactNode;
 let tabHeader: Array<any>;
 let activeTabId: any;
 
@@ -90,11 +90,8 @@ const Tab = (props: TabProps): JSX.Element => {
 
   tabHeader = tabState.tabs;
   activeTabId = tabState.activeTabId;
-  const { menuName, depthFullName } = tabHeader.find(
-    (tab) => tab.menuId === activeTabId
-  );
-
-  content = getContent(activeTabId, menuName, depthFullName);
+  // const { depthFullName } = tabHeader.find((tab) => tab.menuId === activeTabId);
+  // content = getContent(activeTabId, depthFullName);
 
   const closeTab = (menuId: string) => {
     dispatch(removeTab({ menuId: menuId }));
@@ -148,7 +145,17 @@ const Tab = (props: TabProps): JSX.Element => {
         <TabBorderLine isHome={activeTabId === "HOME"} isOpen={isOpen} />
       </TabHeaderWrapper>
 
-      <TabContentWrapper className="tab-content">{content}</TabContentWrapper>
+      {tabHeader?.map((tab: any) => (
+        <TabContentWrapper
+          className="tab-content"
+          style={{
+            display: tab.menuId === activeTabId ? "block" : "none",
+            visibility: tab.menuId === activeTabId ? "visible" : "hidden",
+          }}
+        >
+          {getContent(tab.menuId, tab.depthFullName)}
+        </TabContentWrapper>
+      ))}
     </TabContainer>
   );
 };
