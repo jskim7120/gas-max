@@ -76,6 +76,7 @@ const Form = React.forwardRef(
       formState: { errors },
       getValues,
     } = useForm<IJNOSAUP>({
+      mode: "onChange",
       resolver: yupResolver(schema),
     });
 

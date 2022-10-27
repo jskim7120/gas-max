@@ -64,6 +64,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
     formState: { errors },
     getValues,
   } = useForm<IJNOTRY2>({
+    mode: "onChange",
     resolver: yupResolver(schema),
   });
 
