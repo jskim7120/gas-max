@@ -29,6 +29,7 @@ import CustomDate from "components/customDatePicker";
 import API from "app/axios";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
 import { useGetAreaCodeQuery } from "app/api/areaCode";
+import CircleLogo from "assets/image/circleLogo.png";
 
 interface IForm {
   selected: any;
@@ -215,7 +216,7 @@ const Form = React.forwardRef(
           />
           <Field>
             <FormGroup>
-              <Label>부서명</Label>
+              <Label>영업소</Label>
               <Select {...register("areaCode")}>
                 {areaCode?.map((obj, idx) => (
                   <option key={idx} value={obj.areaCode}>
@@ -237,7 +238,7 @@ const Form = React.forwardRef(
             errors={errors["swName"]?.message}
           />
           <Input
-            label="상호"
+            label="부서명"
             register={register("swDepartment")}
             errors={errors["swDepartment"]?.message}
           />
@@ -447,7 +448,7 @@ const Form = React.forwardRef(
             {image64 && (
               <img
                 src={image64}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                style={{ width: "100%", height: "100%", objectFit: "contain" }}
               />
             )}
           </div>
