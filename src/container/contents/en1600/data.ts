@@ -18,6 +18,14 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
+    fieldName: "swDepartment",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "swGubun",
+    dataType: ValueType.TEXT,
+  },
+  {
     fieldName: "swPaydate",
     dataType: ValueType.TEXT,
   },
@@ -75,6 +83,30 @@ export const columns = [
     },
     header: {
       text: "핸드폰",
+    },
+  },
+  {
+    name: "swDepartment",
+    fieldName: "swDepartment",
+    type: "data",
+    width: "120",
+    styles: {
+      textAlignment: "near",
+    },
+    header: {
+      text: "부서명",
+    },
+  },
+  {
+    name: "swGubun",
+    fieldName: "swGubun",
+    type: "data",
+    width: "120",
+    styles: {
+      textAlignment: "near",
+    },
+    header: {
+      text: "업무구분",
     },
   },
   {

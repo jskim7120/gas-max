@@ -4440,3 +4440,61 @@ export const IconInfo = ({
     </svg>
   );
 };
+export const IconHome = ({
+  color = "#000",
+  width = "21px",
+  height = "21px",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20.8"
+      height="20.858"
+      viewBox="0 0 20.8 20.858"
+    >
+      <g
+        id="Icon_Home"
+        data-name="Icon/Home"
+        transform="translate(-9.856 0.457)"
+      >
+        <path
+          id="Path_2790"
+          data-name="Path 2790"
+          d="M30.042,8.782,20.743.19a.72.72,0,0,0-.974,0l-9.3,8.592a.657.657,0,0,0-.214.483.687.687,0,0,0,.7.671h1.236V19.33a.687.687,0,0,0,.7.671H17.8a.687.687,0,0,0,.7-.671V13.962h3.506V19.33a.687.687,0,0,0,.7.671h4.908a.687.687,0,0,0,.7-.671V9.936h1.236a.717.717,0,0,0,.5-.2A.651.651,0,0,0,30.042,8.782Zm-1.723.482a.687.687,0,0,0-.7.671V19.33H22.71V13.962a.687.687,0,0,0-.7-.671H18.5a.687.687,0,0,0-.7.671V19.33H12.894V9.936a.687.687,0,0,0-.7-.671H10.957l9.3-8.592,9.3,8.592H28.319Z"
+          fill="#fff"
+          stroke="#fff"
+          strokeWidth="0.8"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const IconReceipt = ({
+  color = "#000",
+  width = "21px",
+  height = "21px",
+}) => {
+  return (
+    <svg
+      id="Icon_receipt"
+      data-name="Icon/receipt"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path id="Path_55" data-name="Path 55" d="M0,0H24V24H0Z" fill="none" />
+      <path
+        id="Path_56"
+        data-name="Path 56"
+        d="M5,21V5A2,2,0,0,1,7,3H17a2,2,0,0,1,2,2V21l-3-2-2,2-2-2-2,2L8,19,5,21M9,7h6M9,11h6m-2,4h2"
+        fill="none"
+        stroke="#fff"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+};

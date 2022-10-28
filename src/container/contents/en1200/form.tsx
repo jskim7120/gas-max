@@ -18,7 +18,7 @@ import CheckBox from "components/checkbox";
 import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
-import { SearchIcon } from "components/allSvgIcon";
+import { SearchIcon, IconHome, IconReceipt } from "components/allSvgIcon";
 import { formatDateToString } from "helpers/dateFormat";
 import CustomDate from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
@@ -511,6 +511,8 @@ const Form = React.forwardRef(
                 padding: "20px",
                 display: "flex",
                 alignItems: "start",
+                lineHeight: "21px",
+                position: "relative",
               }}
             >
               <img src={IconInfo} /> &nbsp;
@@ -521,6 +523,54 @@ const Form = React.forwardRef(
                 온라인상에서 발급 가능. <br />
                 2. 사업자범용 또는 Joabill 특정 인증서 사용가능
               </p>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "5px",
+                  marginLeft: "50px",
+                  marginTop: "5px",
+                  position: "absolute",
+                  right: "34px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    width: "154px",
+                    height: "34px",
+                    background: "#5284CE",
+                    borderRadius: "999px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    border: "1px solid #fff",
+                    gap: "6px",
+                  }}
+                >
+                  <IconHome />
+                  <span style={{ fontSize: "14px", color: "#fff" }}>
+                    조아빌 회원가입
+                  </span>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    width: "154px",
+                    height: "34px",
+                    background: "#5284CE",
+                    borderRadius: "999px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    border: "1px solid #fff",
+                    gap: "16px",
+                  }}
+                >
+                  <IconReceipt />
+                  <span style={{ fontSize: "14px", color: "#fff" }}>
+                    인증서 신청
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

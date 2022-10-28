@@ -269,7 +269,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
         <Wrapper className="volWrapper">
           <Field>
             <FormGroup>
-              <Label>세금계산서 양식</Label>
+              <Label>지로출력 조건</Label>
               {isJnJiroPrintError ? (
                 "error occured"
               ) : (

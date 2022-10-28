@@ -18,7 +18,7 @@ import CheckBox from "components/checkbox";
 import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
-import { SearchIcon } from "components/allSvgIcon";
+import { SearchIcon, IconInfo } from "components/allSvgIcon";
 import {
   formatDateToString,
   formatDate,
@@ -215,7 +215,7 @@ const Form = React.forwardRef(
           />
           <Field>
             <FormGroup>
-              <Label>영업소</Label>
+              <Label>부서명</Label>
               <Select {...register("areaCode")}>
                 {areaCode?.map((obj, idx) => (
                   <option key={idx} value={obj.areaCode}>
@@ -324,6 +324,21 @@ const Form = React.forwardRef(
             register={register("eyeSwCode")}
             errors={errors["eyeSwCode"]?.message}
           />
+          <p
+            style={{
+              display: "flex",
+              right: "32px",
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: "12px",
+              gap: "6px",
+            }}
+          >
+            <IconInfo />
+            <span style={{ color: "#1B8C8E", fontSize: "12px" }}>
+              검침 등록시 미납금액에 대하여 연체료를 부과
+            </span>
+          </p>
         </Wrapper>
         <Divider />
         <Wrapper>
@@ -426,12 +441,13 @@ const Form = React.forwardRef(
               width: "100px",
               height: "100px",
               border: "1px solid #707070",
+              padding: "11px 5px",
             }}
           >
             {image64 && (
               <img
                 src={image64}
-                style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
             )}
           </div>
@@ -503,6 +519,22 @@ const Form = React.forwardRef(
             reset={reset}
             errors={errors["swOutDate"]?.message}
           />
+          <p
+            style={{
+              display: "flex",
+              right: "32px",
+              alignItems: "center",
+              marginLeft: "113px",
+              marginBottom: "18px",
+              gap: "6px",
+              marginTop: "6px",
+            }}
+          >
+            <IconInfo />
+            <span style={{ color: "#1B8C8E", fontSize: "12px" }}>
+              검침 등록시 미납금액에 대하여 연체료를 부과
+            </span>
+          </p>
         </Wrapper>
         <DividerGray />
         <Wrapper>
