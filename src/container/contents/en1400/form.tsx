@@ -17,8 +17,7 @@ import {
 import { IBUPUM } from "./model";
 import { schema } from "./validation";
 import { InputSize } from "components/componentsType";
-import { convertBase64 } from "helpers/convertBase64";
-import { useGetAreaCodeQuery } from "app/api/areaCode";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
 
 interface IForm {
@@ -35,7 +34,11 @@ const Form = React.forwardRef(
     const dispatch = useDispatch();
 
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-    const { data: areaCode } = useGetAreaCodeQuery();
+
+    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
+      groupId: "EN",
+      functionName: "EN1400",
+    });
 
     const {
       register,
@@ -116,7 +119,6 @@ const Form = React.forwardRef(
       }
     };
 
-    if (!selected) return <p>..loading</p>;
     return (
       <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
         {/* <p>{isAddBtnClicked ? "true" : "false"}</p> */}
@@ -126,7 +128,7 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>영업소</Label>
               <Select {...register("areaCode")}>
-                {areaCode?.map((obj, idx) => (
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
                     {obj.codeName}
                   </option>

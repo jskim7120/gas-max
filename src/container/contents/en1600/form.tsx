@@ -186,8 +186,6 @@ const Form = React.forwardRef(
       }
     };
 
-    if (!selected) return <p>..loading</p>;
-
     const onFileUpload = () => {
       const formData = new FormData();
       //formData.append("myFile");
