@@ -48,6 +48,7 @@ const Form = React.forwardRef(
     const [image64, setImage64] = useState<any>(null);
 
     const { data: areaCode } = useGetAreaCodeQuery();
+
     const { data: emailType } = useGetCommonGubunQuery("5");
 
     const {
@@ -198,8 +199,8 @@ const Form = React.forwardRef(
                   <Label>영업소</Label>
                   <Select {...register("areaCode")}>
                     {areaCode?.map((obj, idx) => (
-                      <option key={idx} value={obj.areaCode}>
-                        {obj.areaName}
+                      <option key={idx} value={obj.code1}>
+                        {obj.codeName}
                       </option>
                     ))}
                   </Select>

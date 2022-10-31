@@ -6,26 +6,26 @@ import { useDispatch } from "app/store";
 import {
   Input,
   Select,
-  Wrapper,
-  Divider,
-  DividerGray,
   Field,
   ErrorText,
   FormGroup,
+  Wrapper,
+  Divider,
+  DividerGray,
   Label,
-  InfoDesc,
 } from "components/form/style";
-import { IconInfo } from "components/allSvgIcon";
-import CheckBox from "components/checkbox";
-import { IFormProps } from "./type";
+import { IBUPUM } from "./model";
 import { schema } from "./validation";
+import { InputSize } from "components/componentsType";
+import { convertBase64 } from "helpers/convertBase64";
+import { useGetAreaCodeQuery } from "app/api/areaCode";
 import API from "app/axios";
 
 interface IForm {
   selected: any;
   fetchData: any;
 }
-const base = "/app/EN2000/";
+const base = "/app/EN1400/";
 
 const Form = React.forwardRef(
   (
@@ -35,15 +35,7 @@ const Form = React.forwardRef(
     const dispatch = useDispatch();
 
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-
-    useEffect(() => {
-      if (JSON.stringify(selected) !== "{}") {
-        reset({
-          ...selected,
-          swWorkOut: selected?.swWorkOut === "Y",
-        });
-      }
-    }, [selected]);
+    const { data: areaCode } = useGetAreaCodeQuery();
 
     const {
       register,
@@ -51,10 +43,13 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
-    } = useForm<IFormProps>({
-      mode: "onChange",
-      resolver: yupResolver(schema),
-    });
+    } = useForm<IBUPUM>({ mode: "onChange", resolver: yupResolver(schema) });
+
+    useEffect(() => {
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+        resetForm("reset");
+      }
+    }, [selected]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
@@ -63,10 +58,9 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = (type: string) => {
-      if (JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         console.log("type:", type);
         let newData: any = {};
-
         if (type === "clear") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = null;
@@ -76,10 +70,8 @@ const Form = React.forwardRef(
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
           }
-
           reset({
             ...newData,
-            swWorkOut: selected?.swWorkOut === "Y",
           });
         }
       }
@@ -105,20 +97,19 @@ const Form = React.forwardRef(
       }
     };
 
-    const submit = async (data: IFormProps) => {
+    const submit = async (data: IBUPUM) => {
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
 
       try {
         const response: any = await API.post(path, formValues);
-
         if (response.status === 200) {
-          toast.success("Action successfull");
+          toast.success("Action successful");
           setIsAddBtnClicked(false);
           await fetchData();
         } else {
-          toast.error(response?.message);
+          toast.error(response.response.data?.message);
         }
       } catch (err: any) {
         toast.error(err?.message);
@@ -126,47 +117,91 @@ const Form = React.forwardRef(
     };
 
     if (!selected) return <p>..loading</p>;
-
     return (
       <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
         {/* <p>{isAddBtnClicked ? "true" : "false"}</p> */}
+
+        <Wrapper>
+          <Field>
+            <FormGroup>
+              <Label>영업소</Label>
+              <Select {...register("areaCode")}>
+                {areaCode?.map((obj, idx) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+            <div>
+              <ErrorText>{errors["areaCode"]?.message}</ErrorText>
+            </div>
+          </Field>
+        </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Input
             label="코드"
-            register={register("ccCode")}
-            errors={errors["ccCode"]?.message}
+            register={register("bpCode")}
+            errors={errors["bpCode"]?.message}
+            inputSize={InputSize.md}
           />
         </Wrapper>
         <Divider />
         <Wrapper>
           <Input
-            label="정비명"
-            register={register("ccName")}
-            errors={errors["ccName"]?.message}
+            label="부품명"
+            register={register("bpName")}
+            errors={errors["bpName"]?.message}
+            inputSize={InputSize.md}
           />
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Input
-            label="비고"
-            register={register("ccBigo")}
-            errors={errors["ccBigo"]?.message}
-            fullWidth
+            label="규격"
+            register={register("bpType")}
+            errors={errors["bpType"]?.message}
+            inputSize={InputSize.md}
           />
         </Wrapper>
+        <DividerGray />
         <Wrapper>
-          <FormGroup>
-            <Label>유류비계정 유무</Label>
-            <CheckBox title="" rtl register={{ ...register("ccOilYn") }} />
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["ccOilYn"]?.message}</ErrorText>
-          </div>
+          <Field>
+            <FormGroup>
+              <Label>영업소</Label>
+              <Select {...register("bpDanwi")}>
+                {/* {bpDanwi?.map((obj, idx) => (
+                  <option key={idx} value={obj.areaCode}>
+                    {obj.areaName}
+                  </option>
+                ))} */}
+              </Select>
+            </FormGroup>
+            <div>
+              <ErrorText>{errors["bpDanwi"]?.message}</ErrorText>
+            </div>
+          </Field>
         </Wrapper>
-        <InfoDesc>
-          <IconInfo />
-          <span>유류비는 주유현황과 연동됩니다.</span>
-        </InfoDesc>
-        <ToastContainer />
+        <Divider />
+        <Wrapper>
+          <Input
+            label="매입단가"
+            register={register("bpIndanga")}
+            errors={errors["bpIndanga"]?.message}
+            inputSize={InputSize.md}
+          />
+        </Wrapper>
+        <DividerGray />
+        <Wrapper>
+          <Input
+            label="판매단가"
+            register={register("bpOutdanga")}
+            errors={errors["bpOutdanga"]?.message}
+            inputSize={InputSize.md}
+          />
+        </Wrapper>
+        <DividerGray />
       </form>
     );
   }

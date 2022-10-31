@@ -233,8 +233,8 @@ const Form = React.forwardRef(
               <Label>영업소</Label>
               <Select {...register("areaCode")}>
                 {areaCode?.map((obj, idx) => (
-                  <option key={idx} value={obj.areaCode}>
-                    {obj.areaName}
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
                   </option>
                 ))}
               </Select>
