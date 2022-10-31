@@ -16,18 +16,19 @@ import {
 } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { ICAR } from "./model";
-import DaumAddress from "components/daum";
 import { schema } from "./validation";
-import { SearchIcon, IconHome, IconReceipt } from "components/allSvgIcon";
 import { formatDateToString } from "helpers/dateFormat";
 import CustomDate from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
-import { convertBase64 } from "helpers/convertBase64";
-import { useGetCommonGubunQuery } from "app/api/commonGubun";
-import { useGetAreaCodeQuery } from "app/api/areaCode";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
-import IconInfo from "assets/image/Icon-info.png";
-import { ImageWrapper } from "../style";
+import { InfoText } from "components/text";
+
+import {
+  Item,
+  RadioButton,
+  RadioButtonLabel,
+} from "components/radioButton/style";
 
 interface IForm {
   selected: any;
@@ -35,20 +36,42 @@ interface IForm {
 }
 const base = "/app/EN1700/";
 
+const radioOptions = [
+  {
+    label: "전체",
+    id: "first",
+  },
+  {
+    label: "21세",
+    id: "second",
+  },
+  {
+    label: "26세",
+    id: "third",
+  },
+  {
+    label: "30세",
+    id: "fourth",
+  },
+  {
+    label: "35세",
+    id: "fifth",
+  },
+];
+
 const Form = React.forwardRef(
   (
     { selected, fetchData }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
-
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-    const [addr, setAddress] = useState<string>("");
-    const [image, setImage] = useState<{ name: string }>();
-    const [image64, setImage64] = useState<any>(null);
 
-    const { data: areaCode } = useGetAreaCodeQuery();
-    console.log("areaCode================>", areaCode);
+    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
+      groupId: "EN",
+      functionName: "EN1700",
+    });
+
     const {
       register,
       handleSubmit,
@@ -62,15 +85,6 @@ const Form = React.forwardRef(
         resetForm("reset");
       }
     }, [selected]);
-
-    useEffect(() => {
-      // if (addr.length > 0) {
-      //   reset({
-      //     saupZipcode: addr ? addr?.split("/")[1] : "",
-      //     saupAddr1: addr ? addr?.split("/")[0] : "",
-      //   });
-      // }
-    }, [addr]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
@@ -93,19 +107,9 @@ const Form = React.forwardRef(
           }
           reset({
             ...newData,
-            saupStampQu: selected?.saupStampQu === "Y",
-            saupStampEs: selected?.saupStampEs === "Y",
-            saupStampSe: selected?.saupStampSe === "Y",
-            saupEdiEmail: selected?.saupEdiEmail
-              ? selected.saupEdiEmail.split("@")[0]
-              : "",
-            emailType: selected?.saupEdiEmail
-              ? selected.saupEdiEmail.split("@")[1]
-              : "",
+            caBkYn: selected?.caBkYn === "Y",
+            caRentYn: selected?.caRentYn === "Y",
           });
-          selected.saupStamp
-            ? setImage64(selected.saupStamp)
-            : setImage64(null);
         }
       }
     };
@@ -135,14 +139,8 @@ const Form = React.forwardRef(
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
 
-      // formValues.saupStampQu = formValues.saupStampQu ? "Y" : "N";
-      // formValues.saupStampEs = formValues.saupStampEs ? "Y" : "N";
-
-      // formValues.saupEdiEmail =
-      //   formValues.saupEdiEmail &&
-      //   `${formValues.saupEdiEmail}@${formValues.emailType}`;
-
-      // formValues.saupStamp = image64 && image64;
+      formValues.caBkYn = formValues.caBkYn ? "Y" : "N";
+      formValues.caRentYn = formValues.caRentYn ? "Y" : "N";
 
       try {
         const response: any = await API.post(path, formValues);
@@ -171,7 +169,7 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>영업소</Label>
               <Select {...register("areaCode")}>
-                {areaCode?.map((obj, idx) => (
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
                     {obj.codeName}
                   </option>
@@ -195,11 +193,11 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>담당사원</Label>
               <Select {...register("caSwCode")}>
-                {/* {caSwCode?.map((obj, idx) => (
-                  <option key={idx} value={obj.code1}>
+                {dataCommonDic?.caSwCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
-                ))} */}
+                ))}
               </Select>
             </FormGroup>
             <div>
@@ -222,11 +220,11 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>재고사용유무</Label>
               <Select {...register("caJaegoyn")}>
-                {/* {caJaegoyn?.map((obj, idx) => (
-                  <option key={idx} value={obj.code1}>
+                {dataCommonDic?.caJaegoyn?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
-                ))} */}
+                ))}
               </Select>
             </FormGroup>
             <div>
@@ -250,7 +248,7 @@ const Form = React.forwardRef(
               <ErrorText>{errors["eyeCarCode"]?.message}</ErrorText>
             </div>
           </Field>
-          info nogoon
+          <InfoText text="탱크잔량 원격검침 시스템의 매핑할 차량코드를 지정." />
         </Wrapper>
         <Wrapper grid col={2}>
           <CustomDate
@@ -449,7 +447,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <DividerGray />
         <Wrapper>
-          <Field>
+          {/* <Field>
             <FormGroup style={{ alignItems: "center" }}>
               <Label>연령특약</Label>
               <CheckBox register={{ ...register("caBage") }} />
@@ -457,6 +455,29 @@ const Form = React.forwardRef(
             <div>
               <ErrorText>{errors["caBage"]?.message}</ErrorText>
             </div>
+          </Field> */}
+
+          <Field>
+            <FormGroup>
+              <Label>연령특약</Label>
+              {radioOptions.map((option, index) => (
+                <Item key={index}>
+                  <RadioButton
+                    type="radio"
+                    value={option.label}
+                    {...register(`caBage`, {
+                      required: "required",
+                    })}
+                    name="applyType"
+                    id={option.id}
+                    onChange={() => console.log(option.label)}
+                  />
+                  <RadioButtonLabel htmlFor={`${option.label}`}>
+                    {option.label}
+                  </RadioButtonLabel>
+                </Item>
+              ))}
+            </FormGroup>
           </Field>
         </Wrapper>
         <DividerGray />
