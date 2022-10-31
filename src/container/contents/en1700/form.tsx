@@ -250,7 +250,7 @@ const Form = React.forwardRef(
           </Field>
           <InfoText text="탱크잔량 원격검침 시스템의 매핑할 차량코드를 지정." />
         </Wrapper>
-        <Wrapper grid col={2}>
+        <Wrapper>
           <CustomDate
             label="안전검사일"
             name="caSafeDate"
@@ -258,12 +258,14 @@ const Form = React.forwardRef(
             reset={reset}
             errors={errors["caSafeDate"]?.message}
           />
-          <Input
-            label="충전기한"
-            register={register("caChargeDate")}
-            errors={errors["caChargeDate"]?.message}
-            inputSize={InputSize.sm}
-          />
+          <Field style={{ width: "100%" }}>
+            <Input
+              label="충전기한"
+              register={register("caChargeDate")}
+              errors={errors["caChargeDate"]?.message}
+              inputSize={InputSize.sm}
+            />
+          </Field>
         </Wrapper>
         <Divider />
         <Wrapper grid col={2}>
@@ -355,27 +357,26 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper grid col={2}>
           <Input
-            label="차량가액--baihgui"
+            label="차량가액--"
             register={register("caAmt")}
             errors={errors["caAmt"]?.message}
             inputSize={InputSize.sm}
             fullWidth
           />
-          <Field>
+          <Field style={{ display: "flex", alignItems: "center" }}>
             <Input
-              label="감가 기간--bhgui"
+              label="감가 기간--"
               register={register("caDiscountM")}
               errors={errors["caDiscountM"]?.message}
               inputSize={InputSize.sm}
-              fullWidth
             />
-            월
+            <p style={{ fontSize: "12px" }}>월</p>
           </Field>
         </Wrapper>
         <DividerGray />
         <Wrapper grid col={2}>
           <Input
-            label="월리스료--baihgui"
+            label="월리스료--"
             register={register("caMAmt")}
             errors={errors["caAmt"]?.message}
             inputSize={InputSize.sm}
@@ -383,7 +384,7 @@ const Form = React.forwardRef(
           />
           <Field>
             <Input
-              label="월감가상각비--bhgui"
+              label="월감가상각비--"
               register={register("caDiscountAmt")}
               errors={errors["caDiscountAmt"]?.message}
               inputSize={InputSize.sm}
@@ -481,7 +482,7 @@ const Form = React.forwardRef(
           </Field>
         </Wrapper>
         <DividerGray />
-        <Wrapper grid col={2}>
+        <Wrapper>
           <CustomDate
             label="보험기간"
             name="caBsdate"

@@ -164,7 +164,7 @@ export const FormGroup = styled.div`
   }
 `;
 
-export const Label = styled.label<{ labelLong?: boolean }>`
+export const Label = styled.label<{ labelLong?: boolean; style?: any }>`
   font-family: "NotoSansKRRegular";
   font-size: 12px;
   font-weight: 600;
