@@ -152,6 +152,7 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Input
             label="코드"
@@ -167,6 +168,7 @@ const Form = React.forwardRef(
             errors={errors["jpName"]?.message}
           />
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Input
             label="규격"
@@ -174,6 +176,7 @@ const Form = React.forwardRef(
             errors={errors["jpSpec"]?.message}
           />
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field>
             <FormGroup>
@@ -195,6 +198,7 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field style={{ display: "flex" }}>
             <Input
@@ -221,6 +225,7 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field>
             <FormGroup>
@@ -242,6 +247,7 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field>
             <FormGroup>
@@ -259,6 +265,7 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field>
             <FormGroup>
@@ -280,6 +287,7 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field>
             <FormGroup>
@@ -307,6 +315,7 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field>
             <Input
@@ -316,6 +325,7 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field>
             <Input
@@ -325,6 +335,7 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field>
             <Input
@@ -334,6 +345,7 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field>
             <Input
@@ -362,6 +374,7 @@ const Form = React.forwardRef(
             <ErrorText>{errors["jpJaegoYn"]?.message}</ErrorText>
           </div>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field>
             <Input
@@ -371,6 +384,7 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
+        <DividerGray />
         <ToastContainer />
       </form>
     );

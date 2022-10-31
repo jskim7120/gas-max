@@ -507,6 +507,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.sm}
           />
         </Wrapper>
+        <DividerGray />
       </form>
     );
   }

@@ -158,6 +158,7 @@ const Form = React.forwardRef(
             errors={errors["jyName"]?.message}
           />
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Input
             label="비고"
