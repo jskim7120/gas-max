@@ -3,7 +3,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "app/store";
-import CheckBox from "components/checkbox";
+import {
+  Item,
+  RadioButton,
+  RadioButtonLabel,
+} from "components/radioButton/style";
 import {
   Input,
   Select,
@@ -15,17 +19,27 @@ import {
   FormGroup,
   Label,
 } from "components/form/style";
-import { useGetCommonGubunQuery } from "app/api/commonGubun";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { IFormProps } from "./type";
 import { schema } from "./validation";
 import API from "app/axios";
-import { useGetAreaCodeQuery } from "app/api/areaCode";
 
 interface IForm {
   selected: any;
   fetchData: any;
 }
 const base = "/app/EN1800/";
+
+const radioOptions = [
+  {
+    label: "사용(Y)",
+    id: "yes",
+  },
+  {
+    label: "안함(N)",
+    id: "no",
+  },
+];
 
 const Form = React.forwardRef(
   (
@@ -36,12 +50,10 @@ const Form = React.forwardRef(
 
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
-    const { data: areaCode } = useGetAreaCodeQuery();
-    const { data: jpGubun, isError: isJpGubun } = useGetCommonGubunQuery("3");
-    const { data: jpKgDanwi, isError: isJpKgDanwi } =
-      useGetCommonGubunQuery("6");
-    const { data: jpUnit, isError: isJpUnit } = useGetCommonGubunQuery("7");
-    const { data: jpKind, isError: isJpKind } = useGetCommonGubunQuery("8");
+    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
+      groupId: "EN",
+      functionName: "EN1300",
+    });
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
@@ -140,9 +152,10 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>영업소</Label>
               <Select {...register("areaCode")}>
-                {areaCode?.map((obj, idx) => (
-                  <option key={idx} value={obj.areaCode}>
-                    {obj.areaCode}본사
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.code}
+                    {obj.codeName}
                   </option>
                 ))}
               </Select>
@@ -181,17 +194,13 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>가스구분</Label>
-              {isJpGubun ? (
-                "error occured"
-              ) : (
-                <Select {...register("jpGubun")}>
-                  {jpGubun?.map((obj, idx) => (
-                    <option key={idx} value={obj.code1}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              )}
+              <Select {...register("jpGubun")}>
+                {dataCommonDic?.jpGubun?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
             </FormGroup>
             <div>
               <ErrorText>{errors["jpGubun"]?.message}</ErrorText>
@@ -208,17 +217,13 @@ const Form = React.forwardRef(
               style={{ width: "50px", textAlign: "end" }}
             />
             <FormGroup>
-              {isJpKgDanwi ? (
-                "error occured"
-              ) : (
-                <Select {...register("jpKgDanwi")}>
-                  {jpKgDanwi?.map((obj, idx) => (
-                    <option key={idx} value={obj.code1}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              )}
+              <Select {...register("jpKgDanwi")}>
+                {dataCommonDic?.jpKgDanwi?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
             </FormGroup>
             <div>
               <ErrorText>{errors["jpKgDanwi"]?.message}</ErrorText>
@@ -230,17 +235,14 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>단위</Label>
-              {isJpUnit ? (
-                "error occured"
-              ) : (
-                <Select {...register("jpUnit")}>
-                  {jpUnit?.map((obj, idx) => (
-                    <option key={idx} value={obj.code1}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              )}
+
+              <Select {...register("jpUnit")}>
+                {dataCommonDic?.jpUnit?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
             </FormGroup>
             <div>
               <ErrorText>{errors["jpUnit"]?.message}</ErrorText>
@@ -253,9 +255,9 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>가스분류</Label>
               <Select {...register("jpGasType")}>
-                {areaCode?.map((obj, idx) => (
-                  <option key={idx} value={obj.jpUnit}>
-                    {obj.jpUnit}
+                {dataCommonDic?.jpGasType?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
                   </option>
                 ))}
               </Select>
@@ -270,17 +272,14 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>품목구분</Label>
-              {isJpKind ? (
-                "error occured"
-              ) : (
-                <Select {...register("jpKind")}>
-                  {jpKind?.map((obj, idx) => (
-                    <option key={idx} value={obj.code1}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              )}
+
+              <Select {...register("jpKind")}>
+                {dataCommonDic?.jpKind?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
             </FormGroup>
             <div>
               <ErrorText>{errors["jpKind"]?.message}</ErrorText>
@@ -293,9 +292,9 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>용도구분</Label>
               <Select {...register("jpGasuse")}>
-                {areaCode?.map((obj, idx) => (
-                  <option key={idx} value={obj.jpUnit}>
-                    {obj.jpUnit}
+                {dataCommonDic?.jpGasuse?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
                   </option>
                 ))}
               </Select>
@@ -358,17 +357,24 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper>
           <FormGroup style={{ alignItems: "center" }}>
-            <Label>재고사용 유무</Label>
-            <CheckBox
-              title="사용(Y)"
-              rtl
-              register={{ ...register("jpJaegoYn") }}
-            />
-            <CheckBox
-              title="안함(N)"
-              rtl
-              register={{ ...register("jpJaegoYn") }}
-            />
+            <Label>연령특약</Label>
+            {radioOptions.map((option, index) => (
+              <Item key={index}>
+                <RadioButton
+                  type="radio"
+                  value={option.label}
+                  {...register(`jpJaegoYn`, {
+                    required: "required",
+                  })}
+                  name="applyType"
+                  id={option.id}
+                  onChange={() => console.log(option.label)}
+                />
+                <RadioButtonLabel htmlFor={`${option.label}`}>
+                  {option.label}
+                </RadioButtonLabel>
+              </Item>
+            ))}
           </FormGroup>
           <div>
             <ErrorText>{errors["jpJaegoYn"]?.message}</ErrorText>
