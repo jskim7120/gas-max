@@ -128,8 +128,6 @@ const Form = React.forwardRef(
       }
     };
 
-    if (!selected) return <p>..loading</p>;
-
     return (
       <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
         {/* <p>{isAddBtnClicked ? "true" : "false"}</p> */}

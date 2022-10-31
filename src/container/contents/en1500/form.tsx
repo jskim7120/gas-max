@@ -108,8 +108,6 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
     setIsAddBtnClicked,
   }));
 
-  if (!selected) return <p>Loading...</p>;
-
   const data1500 = [
     {
       title: "280 mmH2O",
