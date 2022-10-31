@@ -13,6 +13,7 @@ import authReducer from "app/state/auth/authSlice";
 import { commonGubunApi } from "app/api/commonGubun";
 import { areaCodeApi } from "app/api/areaCode";
 import { authApi } from "app/api/auth";
+import { commonDictionaryApi } from "app/api/commonDictionary";
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +26,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [commonGubunApi.reducerPath]: commonGubunApi.reducer,
     [areaCodeApi.reducerPath]: areaCodeApi.reducer,
+    [commonDictionaryApi.reducerPath]: commonDictionaryApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
