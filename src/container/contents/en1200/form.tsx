@@ -22,11 +22,12 @@ import { SearchIcon, IconHome, IconReceipt } from "components/allSvgIcon";
 import { formatDateToString } from "helpers/dateFormat";
 import CustomDate from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
-
+import { convertBase64 } from "helpers/convertBase64";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
 import { useGetAreaCodeQuery } from "app/api/areaCode";
 import API from "app/axios";
 import IconInfo from "assets/image/Icon-info.png";
+import { ImageWrapper } from "../style";
 
 interface IForm {
   selected: any;
@@ -43,12 +44,11 @@ const Form = React.forwardRef(
 
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [addr, setAddress] = useState<string>("");
-    const [image, setImage] = useState<{
-      file: any;
-      name: string;
-    }>();
+    const [image, setImage] = useState<{ name: string }>();
+    const [image64, setImage64] = useState<any>(null);
 
     const { data: areaCode } = useGetAreaCodeQuery();
+
     const { data: emailType } = useGetCommonGubunQuery("5");
 
     const {
@@ -105,6 +105,9 @@ const Form = React.forwardRef(
               ? selected.saupEdiEmail.split("@")[1]
               : "",
           });
+          selected.saupStamp
+            ? setImage64(selected.saupStamp)
+            : setImage64(null);
         }
       }
     };
@@ -141,6 +144,8 @@ const Form = React.forwardRef(
         formValues.saupEdiEmail &&
         `${formValues.saupEdiEmail}@${formValues.emailType}`;
 
+      formValues.saupStamp = image64 && image64;
+
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
@@ -152,6 +157,20 @@ const Form = React.forwardRef(
         }
       } catch (err: any) {
         toast.error(err?.message);
+      }
+    };
+
+    const handleChangeImage = async (event: any) => {
+      setImage({
+        name: event?.target?.files ? event?.target?.files[0].name : "",
+      });
+      try {
+        const response =
+          event?.target?.files && (await convertBase64(event.target.files[0]));
+
+        setImage64(response);
+      } catch (err: any) {
+        console.log("image convert 64 error occured.", err);
       }
     };
 
@@ -180,8 +199,8 @@ const Form = React.forwardRef(
                   <Label>영업소</Label>
                   <Select {...register("areaCode")}>
                     {areaCode?.map((obj, idx) => (
-                      <option key={idx} value={obj.areaCode}>
-                        {obj.areaName}
+                      <option key={idx} value={obj.code1}>
+                        {obj.codeName}
                       </option>
                     ))}
                   </Select>
@@ -294,18 +313,7 @@ const Form = React.forwardRef(
                         bottom: 0,
                         opacity: 0,
                       }}
-                      onChange={(event) => {
-                        console.log("changed", event?.target?.files);
-                        setImage({
-                          name: event?.target?.files
-                            ? event?.target?.files[0].name
-                            : "",
-
-                          file: event?.target?.files
-                            ? URL.createObjectURL(event?.target?.files[0])
-                            : "",
-                        });
-                      }}
+                      onChange={handleChangeImage}
                     />
                   </button>
                 </Wrapper>
@@ -368,23 +376,7 @@ const Form = React.forwardRef(
                   </Field>
                 </Wrapper>
               </div>
-              <div
-                style={{
-                  width: "100px",
-                  height: "100px",
-                }}
-              >
-                {image?.file && (
-                  <img
-                    src={image?.file}
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      objectFit: "cover",
-                    }}
-                  />
-                )}
-              </div>
+              <ImageWrapper>{image64 && <img src={image64} />}</ImageWrapper>
             </Wrapper>
             <DividerGray />
             <Wrapper>
@@ -459,7 +451,7 @@ const Form = React.forwardRef(
                 }}
               >
                 <SearchIcon />
-                &nbsp; 찾기
+                &nbsp; 찾기efrer
                 <input
                   type="file"
                   style={{
@@ -469,18 +461,6 @@ const Form = React.forwardRef(
                     right: 0,
                     bottom: 0,
                     opacity: 0,
-                  }}
-                  onChange={(event) => {
-                    console.log("changed", event?.target?.files);
-                    setImage({
-                      name: event?.target?.files
-                        ? event?.target?.files[0].name
-                        : "",
-
-                      file: event?.target?.files
-                        ? URL.createObjectURL(event?.target?.files[0])
-                        : "",
-                    });
                   }}
                 />
               </button>

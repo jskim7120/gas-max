@@ -1,7 +1,7 @@
 import { Path } from "react-hook-form";
 
 export interface IJNOTRY2 {
-  areaCode: number;
+  areaCode: string;
   areaName: number;
   jnSsno: string;
   jnSangho: string;

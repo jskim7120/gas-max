@@ -1,7 +1,9 @@
 import EN1100 from "container/contents/en1100";
 import EN1300 from "container/contents/en1300";
+import EN1400 from "container/contents/en1400";
 import EN1500 from "container/contents/en1500";
 import EN1600 from "container/contents/en1600";
+import EN1700 from "container/contents/en1700";
 import EN1200 from "container/contents/en1200";
 import EN1800 from "container/contents/en1800";
 import EN1900 from "container/contents/en1900";
@@ -17,10 +19,14 @@ export const getContent = (id: any, depthFullName: string) => {
       return <EN1200 depthFullName={depthFullName} menuId={id} />;
     case "EN1300":
       return <EN1300 depthFullName={depthFullName} menuId={id} />;
+    case "EN1400":
+      return <EN1400 depthFullName={depthFullName} menuId={id} />;
     case "EN1500":
       return <EN1500 depthFullName={depthFullName} menuId={id} />;
     case "EN1600":
       return <EN1600 depthFullName={depthFullName} menuId={id} />;
+    case "EN1700":
+      return <EN1700 depthFullName={depthFullName} menuId={id} />;
     case "EN1800":
       return <EN1800 depthFullName={depthFullName} menuId={id} />;
     case "EN1900":

@@ -30,6 +30,7 @@ import API from "app/axios";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
 import { useGetAreaCodeQuery } from "app/api/areaCode";
 import CircleLogo from "assets/image/circleLogo.png";
+import { ImageWrapper } from "../style";
 
 interface IForm {
   selected: any;
@@ -47,10 +48,9 @@ const Form = React.forwardRef(
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [addr, setAddress] = useState<string>("");
     const [image, setImage] = useState<{
-      file: any;
       name: string;
     }>();
-    const [image64, setImage64] = useState(null);
+    const [image64, setImage64] = useState<any>(null);
     const { data: swGubun } = useGetCommonGubunQuery("1");
     const { data: swPaytype } = useGetCommonGubunQuery("2");
     const { data: emailType } = useGetCommonGubunQuery("5");
@@ -205,6 +205,20 @@ const Form = React.forwardRef(
       });
     };
 
+    const handleChangeImage = async (event: any) => {
+      setImage({
+        name: event?.target?.files ? event?.target?.files[0].name : "",
+      });
+      try {
+        const response =
+          event?.target?.files && (await convertBase64(event.target.files[0]));
+
+        setImage64(response);
+      } catch (err: any) {
+        console.log("image convert 64 error occured.", err);
+      }
+    };
+
     return (
       <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
         {/* <p>{isAddBtnClicked ? "true" : "false"}</p> */}
@@ -219,8 +233,8 @@ const Form = React.forwardRef(
               <Label>영업소</Label>
               <Select {...register("areaCode")}>
                 {areaCode?.map((obj, idx) => (
-                  <option key={idx} value={obj.areaCode}>
-                    {obj.areaName}
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
                   </option>
                 ))}
               </Select>
@@ -375,26 +389,7 @@ const Form = React.forwardRef(
                     bottom: 0,
                     opacity: 0,
                   }}
-                  onChange={async (event) => {
-                    setImage({
-                      name: event?.target?.files
-                        ? event?.target?.files[0].name
-                        : "",
-
-                      file: event?.target?.files
-                        ? URL.createObjectURL(event?.target?.files[0])
-                        : "",
-                    });
-                    try {
-                      const response =
-                        event?.target?.files &&
-                        (await convertBase64(event.target.files[0]));
-
-                      setImage64(response);
-                    } catch (err: any) {
-                      console.log("image convert 64 error occured.", err);
-                    }
-                  }}
+                  onChange={handleChangeImage}
                 />
               </button>
             </Wrapper>
@@ -437,21 +432,7 @@ const Form = React.forwardRef(
               />
             </Wrapper>
           </div>
-          <div
-            style={{
-              width: "100px",
-              height: "100px",
-              border: "1px solid #707070",
-              padding: "11px 5px",
-            }}
-          >
-            {image64 && (
-              <img
-                src={image64}
-                style={{ width: "100%", height: "100%", objectFit: "contain" }}
-              />
-            )}
-          </div>
+          <ImageWrapper>{image64 && <img src={image64} />}</ImageWrapper>
         </Wrapper>
 
         <DividerGray />
@@ -520,23 +501,24 @@ const Form = React.forwardRef(
             reset={reset}
             errors={errors["swOutDate"]?.message}
           />
-          <p
-            style={{
-              display: "flex",
-              right: "32px",
-              alignItems: "center",
-              marginLeft: "113px",
-              marginBottom: "18px",
-              gap: "6px",
-              marginTop: "6px",
-            }}
-          >
-            <IconInfo />
-            <span style={{ color: "#1B8C8E", fontSize: "12px" }}>
-              검침 등록시 미납금액에 대하여 연체료를 부과
-            </span>
-          </p>
         </Wrapper>
+        <DividerGray />
+        <p
+          style={{
+            display: "flex",
+            right: "32px",
+            alignItems: "center",
+            marginLeft: "113px",
+            marginBottom: "18px",
+            gap: "6px",
+            marginTop: "6px",
+          }}
+        >
+          <IconInfo />
+          <span style={{ color: "#1B8C8E", fontSize: "12px" }}>
+            검침 등록시 미납금액에 대하여 연체료를 부과
+          </span>
+        </p>
         <DividerGray />
         <Wrapper>
           <Input

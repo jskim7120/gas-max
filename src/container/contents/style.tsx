@@ -40,3 +40,22 @@ export const DetailWrapper = styled.div`
   border-left: none;
   border-bottom: 4px solid #707070;
 `;
+
+export const ImageWrapper = styled.div`
+  width: 100px;
+  height: 100px;
+  border: 1px solid #707070;
+  padding: 11px 5px;
+  margin-top: 3px;
+  margin-left: 5px;
+
+  &:hover {
+    border-color: blue;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+`;
