@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useDispatch } from "app/store";
 import {
   Item,
@@ -28,16 +28,16 @@ interface IForm {
   selected: any;
   fetchData: any;
 }
-const base = "/app/EN1800/";
+const base = "/app/EN1300/";
 
 const radioOptions = [
   {
     label: "사용(Y)",
-    id: "yes",
+    id: "Y",
   },
   {
     label: "안함(N)",
-    id: "no",
+    id: "N",
   },
 ];
 
@@ -128,6 +128,7 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
+      console.log("JSON DATA===>", formValues);
 
       try {
         const response: any = await API.post(path, formValues);
@@ -153,8 +154,7 @@ const Form = React.forwardRef(
               <Label>영업소</Label>
               <Select {...register("areaCode")}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.code}
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
@@ -196,7 +196,7 @@ const Form = React.forwardRef(
               <Label>가스구분</Label>
               <Select {...register("jpGubun")}>
                 {dataCommonDic?.jpGubun?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
@@ -219,7 +219,7 @@ const Form = React.forwardRef(
             <FormGroup>
               <Select {...register("jpKgDanwi")}>
                 {dataCommonDic?.jpKgDanwi?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
@@ -238,7 +238,7 @@ const Form = React.forwardRef(
 
               <Select {...register("jpUnit")}>
                 {dataCommonDic?.jpUnit?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
@@ -256,7 +256,7 @@ const Form = React.forwardRef(
               <Label>가스분류</Label>
               <Select {...register("jpGasType")}>
                 {dataCommonDic?.jpGasType?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
@@ -275,7 +275,7 @@ const Form = React.forwardRef(
 
               <Select {...register("jpKind")}>
                 {dataCommonDic?.jpKind?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
@@ -293,7 +293,7 @@ const Form = React.forwardRef(
               <Label>용도구분</Label>
               <Select {...register("jpGasuse")}>
                 {dataCommonDic?.jpGasuse?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
@@ -301,6 +301,23 @@ const Form = React.forwardRef(
             </FormGroup>
             <div>
               <ErrorText>{errors["jpGasuse"]?.message}</ErrorText>
+            </div>
+          </Field>
+        </Wrapper>
+        <Wrapper>
+          <Field>
+            <FormGroup>
+              <Label>Vat구분</Label>
+              <Select {...register("jpVatKind")}>
+                {dataCommonDic?.jpVatKind?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+            <div>
+              <ErrorText>{errors["jpVatKind"]?.message}</ErrorText>
             </div>
           </Field>
         </Wrapper>
@@ -391,7 +408,6 @@ const Form = React.forwardRef(
           </Field>
         </Wrapper>
         <DividerGray />
-        <ToastContainer />
       </form>
     );
   }

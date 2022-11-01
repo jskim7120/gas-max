@@ -24,4 +24,5 @@ export interface IFormProps {
   jpSpec: string;
   jpUnit: string;
   jpUnitName: string;
+  jpVatKind: string;
 }
