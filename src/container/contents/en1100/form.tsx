@@ -174,6 +174,7 @@ const Form = React.forwardRef(
             register={register("areaCode")}
             errors={errors["areaCode"]?.message}
             fullWidth
+            maxLength="2"
           />
           <Input
             label="영업소명"

@@ -42,6 +42,7 @@ interface IInputProps {
   selectOption?: any;
   defaultValue?: any;
   optionSlt?: any;
+  maxLength?: string;
 }
 
 export const Input = ({
@@ -57,6 +58,7 @@ export const Input = ({
   placeholder,
   style,
   className,
+  maxLength,
 }: IInputProps) => {
   return (
     <InputWrapper fullWidth={fullWidth}>
@@ -71,6 +73,7 @@ export const Input = ({
           placeholder={placeholder}
           style={style}
           className={className}
+          maxLength={maxLength && maxLength}
         />
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>

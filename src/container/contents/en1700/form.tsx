@@ -201,6 +201,7 @@ const Form = React.forwardRef(
             register={register("caCode")}
             errors={errors["caCode"]?.message}
             inputSize={InputSize.sm}
+            maxLength="2"
           />
           <Field>
             <FormGroup>

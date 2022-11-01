@@ -187,6 +187,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
               label="코드"
               register={register("areaCode")}
               errors={errors["areaCode"]?.message}
+              maxLength="2"
             />
           </FormGroup>
         </Field>

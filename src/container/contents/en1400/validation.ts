@@ -9,5 +9,6 @@ export const schema = yup.object({
     .matches(/[0-9]+/gi, "숫자만 입력")
     .length(3, "3자리 숫자만  입력"),
   bpIndanga: yup.number().typeError("숫자만 입력").nullable(true),
+  // .transform((_, val) => (val === Number(val) ? null : val)),
   bpOutdanga: yup.number().typeError("숫자만 입력").nullable(true),
 });

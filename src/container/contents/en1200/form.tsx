@@ -197,6 +197,7 @@ const Form = React.forwardRef(
                 register={register("saupSno")}
                 errors={errors["saupSno"]?.message}
                 inputSize={InputSize.sm}
+                maxLength="2"
               />
               <Field>
                 <FormGroup>
