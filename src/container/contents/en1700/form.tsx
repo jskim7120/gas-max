@@ -190,7 +190,11 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
+      <form
+        className="form_control"
+        onSubmit={handleSubmit(submit)}
+        style={{ padding: "0px 10px" }}
+      >
         <Wrapper grid col={2}>
           <Input
             label="코드"

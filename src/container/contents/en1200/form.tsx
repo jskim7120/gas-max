@@ -19,12 +19,12 @@ import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import { SearchIcon, IconHome, IconReceipt } from "components/allSvgIcon";
-import { formatDateToString } from "helpers/dateFormat";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
 import CustomDate from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { convertBase64 } from "helpers/convertBase64";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
-import { useGetAreaCodeQuery } from "app/api/areaCode";
 import API from "app/axios";
 import IconInfo from "assets/image/Icon-info.png";
 import { ImageWrapper } from "../style";
@@ -47,9 +47,11 @@ const Form = React.forwardRef(
     const [image, setImage] = useState<{ name: string }>();
     const [image64, setImage64] = useState<any>(null);
 
-    const { data: areaCode } = useGetAreaCodeQuery();
-
-    const { data: emailType } = useGetCommonGubunQuery("5");
+    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
+      groupId: "EN",
+      functionName: "EN1200",
+    });
+    const { data: dataEmailType } = useGetCommonGubunQuery("5");
 
     const {
       register,
@@ -93,20 +95,16 @@ const Form = React.forwardRef(
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
           }
+
           reset({
             ...newData,
             saupStampQu: selected?.saupStampQu === "Y",
             saupStampEs: selected?.saupStampEs === "Y",
             saupStampSe: selected?.saupStampSe === "Y",
-            saupEdiEmail: selected?.saupEdiEmail
-              ? selected.saupEdiEmail.split("@")[0]
-              : "",
-            emailType: selected?.saupEdiEmail
-              ? selected.saupEdiEmail.split("@")[1]
-              : "",
+            saupDate: selected.saupDate ? formatDate(selected.saupDate) : "",
           });
-          selected.saupStamp
-            ? setImage64(selected.saupStamp)
+          selected.saupStampImg
+            ? setImage64(selected.saupStampImg)
             : setImage64(null);
         }
       }
@@ -140,11 +138,14 @@ const Form = React.forwardRef(
       formValues.saupStampQu = formValues.saupStampQu ? "Y" : "N";
       formValues.saupStampEs = formValues.saupStampEs ? "Y" : "N";
       formValues.saupStampSe = formValues.saupStampSe ? "Y" : "N";
-      formValues.saupEdiEmail =
-        formValues.saupEdiEmail &&
-        `${formValues.saupEdiEmail}@${formValues.emailType}`;
 
-      formValues.saupStamp = image64 && image64;
+      formValues.saupDate = formValues.saupDate
+        ? formatDateByRemoveDash(formValues.saupDate)
+        : "";
+      formValues.saupEdiEmail =
+        formValues.saupEdiEmail && formValues.saupEdiEmail.trim();
+
+      formValues.saupStampImg = image64 && image64;
 
       try {
         const response: any = await API.post(path, formValues);
@@ -175,7 +176,11 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
+      <form
+        className="form_control"
+        onSubmit={handleSubmit(submit)}
+        style={{ padding: "0px 10px" }}
+      >
         {/* <p>{isAddBtnClicked ? "true" : "false"}</p> */}
         <div
           style={{
@@ -197,8 +202,8 @@ const Form = React.forwardRef(
                 <FormGroup>
                   <Label>영업소</Label>
                   <Select {...register("areaCode")}>
-                    {areaCode?.map((obj, idx) => (
-                      <option key={idx} value={obj.code1}>
+                    {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                      <option key={idx} value={obj.code}>
                         {obj.codeName}
                       </option>
                     ))}
@@ -283,8 +288,8 @@ const Form = React.forwardRef(
                 <Wrapper style={{ alignItems: "center" }}>
                   <Input
                     label="서명화일"
-                    register={register("saupStamp")}
-                    errors={errors["saupStamp"]?.message}
+                    register={register("saupStampImg")}
+                    errors={errors["saupStampImg"]?.message}
                     value={image?.name}
                     fullWidth
                   />
@@ -421,9 +426,9 @@ const Form = React.forwardRef(
                 errors={errors["saupEdiEmail"]?.message}
               />
               @
-              <Select {...register("emailType")}>
-                {emailType?.map((obj, idx) => (
-                  <option key={idx} value={obj.codeName}>
+              <Select {...register("saupEdiId")}>
+                {dataEmailType?.map((obj, idx) => (
+                  <option key={idx} value={obj.code1}>
                     {obj.codeName}
                   </option>
                 ))}

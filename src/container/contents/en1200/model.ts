@@ -1,5 +1,3 @@
-import { Path } from "react-hook-form";
-
 export interface IJNOSAUP {
   areaCode: number;
   areaName: string;
@@ -29,8 +27,4 @@ export interface IJNOSAUP {
   saupStampSe: string;
   saupUptae: string;
   saupZipcode: string;
-
-  //
-
-  emailType: string;
 }

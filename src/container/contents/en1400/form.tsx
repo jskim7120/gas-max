@@ -120,7 +120,11 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
+      <form
+        className="form_control"
+        onSubmit={handleSubmit(submit)}
+        style={{ padding: "0px 10px" }}
+      >
         {/* <p>{isAddBtnClicked ? "true" : "false"}</p> */}
 
         <Wrapper>
@@ -171,7 +175,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <Field>
             <FormGroup>
-              <Label>영업소</Label>
+              <Label>단위</Label>
               <Select {...register("bpDanwi")}>
                 {/* {bpDanwi?.map((obj, idx) => (
                   <option key={idx} value={obj.areaCode}>
