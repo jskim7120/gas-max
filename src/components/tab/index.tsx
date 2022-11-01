@@ -1,4 +1,5 @@
 import React, { useEffect, BaseSyntheticEvent } from "react";
+import { ToastContainer } from "react-toastify";
 import { useSelector, useDispatch } from "app/store";
 import {
   setTabs,
@@ -161,6 +162,7 @@ const Tab = (props: TabProps): JSX.Element => {
           {getContent(tab.menuId, tab.depthFullName)}
         </TabContentWrapper>
       ))}
+      <ToastContainer />
     </TabContainer>
   );
 };

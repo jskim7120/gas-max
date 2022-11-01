@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useDispatch } from "app/store";
 import {
   Input,
@@ -168,7 +168,6 @@ const Form = React.forwardRef(
           />
         </Wrapper>
         <DividerGray />
-        <ToastContainer />
       </form>
     );
   }
