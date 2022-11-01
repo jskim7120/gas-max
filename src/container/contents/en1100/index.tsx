@@ -97,7 +97,6 @@ function EN1100({
   const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN1100/list");
-      console.log("data====>", data);
       if (data) {
         setData(data);
         setSelected(data[selectedRowIndex]);

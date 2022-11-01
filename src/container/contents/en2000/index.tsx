@@ -88,7 +88,7 @@ function EN2000({
   const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN2000/list");
-      console.log("data===>", data);
+
       if (data) {
         setData(data);
         setSelected(data[selectedRowIndex]);
