@@ -24,7 +24,6 @@ import { convertBase64 } from "helpers/convertBase64";
 import CustomDate from "components/customDatePicker";
 import API from "app/axios";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
-
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { ImageWrapper } from "../style";
 
@@ -51,7 +50,6 @@ const Form = React.forwardRef(
     const { data: swPaytype } = useGetCommonGubunQuery("2");
     const { data: dataEmailType } = useGetCommonGubunQuery("5");
 
-    // const { data: areaCode } = useGetAreaCodeQuery();
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1600",
@@ -106,13 +104,9 @@ const Form = React.forwardRef(
 
           reset({
             ...newData,
-            swWorkOut: selected?.swWorkOut === "Y",
-            cuSeEmail: selected?.cuSeEmail
-              ? selected.cuSeEmail.split("@")[0]
-              : "",
-            emailType: selected?.cuSeEmail
-              ? selected.cuSeEmail.split("@")[1]
-              : "",
+            swWorkOut: selected.swWorkOut === "Y",
+            cuSeEmail: selected.cuSeEmail ? selected.cuSeEmail.trim() : "",
+            mailKind: selected.mailKind ? selected.mailKind.trim() : "",
             swIndate: selected.swIndate ? formatDate(selected.swIndate) : "",
             swJdate1: selected.swJdate1 ? formatDate(selected.swJdate1) : "",
             swJdate2: selected.swJdate2 ? formatDate(selected.swJdate2) : "",
@@ -154,7 +148,7 @@ const Form = React.forwardRef(
       formValues.swWorkOut = formValues.swWorkOut ? "Y" : "N";
       formValues.cuSeEmail =
         formValues.cuSeEmail &&
-        `${formValues.cuSeEmail}@${formValues.emailType}`;
+        `${formValues.cuSeEmail.trim()}@${formValues.mailKind}`;
 
       formValues.swIndate = formValues.swIndate
         ? formatDateByRemoveDash(formValues.swIndate)
@@ -216,11 +210,6 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>영업소</Label>
               <Select {...register("areaCode")}>
-                {/* {areaCode?.map((obj, idx) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.codeName}
-                  </option>
-                ))} */}
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -290,7 +279,7 @@ const Form = React.forwardRef(
             errors={errors["cuSeEmail"]?.message}
           />
           @
-          <Select {...register("emailType")}>
+          <Select {...register("mailKind")}>
             {dataEmailType?.map((obj, idx) => (
               <option key={idx} value={obj.codeName}>
                 {obj.codeName}

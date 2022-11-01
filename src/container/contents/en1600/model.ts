@@ -29,7 +29,4 @@ export interface IJNOSAUP {
   swStampFile: string | null;
   swOutDate: string;
   sgKumack: number;
-
-  // tsaash yavahgui talbar
-  emailType: string;
 }
