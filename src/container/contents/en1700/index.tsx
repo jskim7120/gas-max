@@ -5,6 +5,7 @@ import Button from "components/button/button";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
+import { formatDateToString } from "helpers/dateFormat";
 import { columns, fields } from "./data";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
@@ -90,7 +91,7 @@ function EN1700({
   const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN1700/list");
-      console.log("#17000-------------", data);
+
       if (data) {
         setData(data);
         setSelected(data[selectedRowIndex]);

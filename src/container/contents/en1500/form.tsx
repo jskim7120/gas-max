@@ -8,7 +8,7 @@ import Table from "components/table";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "app/store";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import {
   Select,
   Field,
@@ -390,7 +390,6 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           </p>
         </BasicItems>
       </Container>
-      <ToastContainer />
     </form>
   );
 };

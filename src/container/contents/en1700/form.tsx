@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useDispatch } from "app/store";
 import {
   Input,
@@ -17,7 +17,7 @@ import {
 import CheckBox from "components/checkbox";
 import { ICAR } from "./model";
 import { schema } from "./validation";
-import { formatDateToString } from "helpers/dateFormat";
+import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
 import CustomDate from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -109,6 +109,17 @@ const Form = React.forwardRef(
             ...newData,
             caBkYn: selected?.caBkYn === "Y",
             caRentYn: selected?.caRentYn === "Y",
+            caSafeDate: selected?.caSafeDate
+              ? formatDate(selected.caSafeDate)
+              : "",
+            caInDate: selected.caInDate ? formatDate(selected.caInDate) : "",
+            caRentDate: selected.caRentDate
+              ? formatDate(selected.caRentDate)
+              : "",
+            caJdate1: selected.caJdate1 ? formatDate(selected.caJdate1) : "",
+            caJdate2: selected.caJdate2 ? formatDate(selected.caJdate2) : "",
+            caBsdate: selected.caBsdate ? formatDate(selected.caBsdate) : "",
+            caBldate: selected.caBldate ? formatDate(selected.caBldate) : "",
           });
         }
       }
@@ -141,6 +152,28 @@ const Form = React.forwardRef(
 
       formValues.caBkYn = formValues.caBkYn ? "Y" : "N";
       formValues.caRentYn = formValues.caRentYn ? "Y" : "N";
+
+      formValues.caSafeDate = formValues.caSafeDate
+        ? formatDateByRemoveDash(formValues.caSafeDate)
+        : "";
+      formValues.caInDate = formValues.caInDate
+        ? formatDateByRemoveDash(formValues.caInDate)
+        : "";
+      formValues.caRentDate = formValues.caRentDate
+        ? formatDateByRemoveDash(formValues.caRentDate)
+        : "";
+      formValues.caJdate1 = formValues.caJdate1
+        ? formatDateByRemoveDash(formValues.caJdate1)
+        : "";
+      formValues.caJdate2 = formValues.caJdate2
+        ? formatDateByRemoveDash(formValues.caJdate2)
+        : "";
+      formValues.caBsdate = formValues.caBsdate
+        ? formatDateByRemoveDash(formValues.caBsdate)
+        : "";
+      formValues.caBldate = formValues.caBldate
+        ? formatDateByRemoveDash(formValues.caBldate)
+        : "";
 
       try {
         const response: any = await API.post(path, formValues);
@@ -507,6 +540,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.sm}
           />
         </Wrapper>
+        <DividerGray />
       </form>
     );
   }

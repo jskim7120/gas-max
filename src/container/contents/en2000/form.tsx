@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useDispatch } from "app/store";
 import {
   Input,
@@ -15,11 +15,11 @@ import {
   Label,
   InfoDesc,
 } from "components/form/style";
-import { IconInfo } from "components/allSvgIcon";
 import CheckBox from "components/checkbox";
 import { IFormProps } from "./type";
 import { schema } from "./validation";
 import API from "app/axios";
+import { InfoText } from "components/text";
 
 interface IForm {
   selected: any;
@@ -143,6 +143,7 @@ const Form = React.forwardRef(
             errors={errors["ccName"]?.message}
           />
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Input
             label="비고"
@@ -151,6 +152,7 @@ const Form = React.forwardRef(
             fullWidth
           />
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <FormGroup>
             <Label>유류비계정 유무</Label>
@@ -160,11 +162,10 @@ const Form = React.forwardRef(
             <ErrorText>{errors["ccOilYn"]?.message}</ErrorText>
           </div>
         </Wrapper>
+        <DividerGray />
         <InfoDesc>
-          <IconInfo />
-          <span>유류비는 주유현황과 연동됩니다.</span>
+          <InfoText text="유류비는 주유현황과 연동됩니다." />
         </InfoDesc>
-        <ToastContainer />
       </form>
     );
   }
