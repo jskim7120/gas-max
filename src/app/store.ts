@@ -2,7 +2,6 @@ import {
   useDispatch as useDispatchBase,
   useSelector as useSelectorBase,
 } from "react-redux";
-// import logger from "redux-logger";
 import { configureStore } from "@reduxjs/toolkit";
 import menuReducer from "app/state/menu/menuSlice";
 import tabReducer from "app/state/tab/tabSlice";
@@ -11,7 +10,6 @@ import modalReducer from "app/state/modal/modalSlice";
 import sidebarReducer from "app/state/sidebar/sidebarSlice";
 import authReducer from "app/state/auth/authSlice";
 import { commonGubunApi } from "app/api/commonGubun";
-import { areaCodeApi } from "app/api/areaCode";
 import { authApi } from "app/api/auth";
 import { commonDictionaryApi } from "app/api/commonDictionary";
 
@@ -25,14 +23,13 @@ export const store = configureStore({
     auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
     [commonGubunApi.reducerPath]: commonGubunApi.reducer,
-    [areaCodeApi.reducerPath]: areaCodeApi.reducer,
     [commonDictionaryApi.reducerPath]: commonDictionaryApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(authApi.middleware)
       .concat(commonGubunApi.middleware)
-      .concat(areaCodeApi.middleware),
+      .concat(commonDictionaryApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

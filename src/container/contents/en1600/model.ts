@@ -1,5 +1,3 @@
-import { Path } from "react-hook-form";
-
 export interface IJNOSAUP {
   areaCode: string;
   opt: number;
@@ -24,16 +22,11 @@ export interface IJNOSAUP {
   swTel: string;
   swWorkOut: string;
   swZipcode: string;
-
-  //
   cuSeEmail: string;
+  mailKind: string;
   eyeSwCode: string;
   swDepartment: string;
   swStampFile: string | null;
   swOutDate: string;
   sgKumack: number;
-
-  //tsaash yavahgui talbar
-
-  emailType: string;
 }

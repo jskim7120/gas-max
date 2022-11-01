@@ -175,7 +175,11 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
   ];
 
   return (
-    <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
+    <form
+      className="form_control"
+      onSubmit={handleSubmit(submit)}
+      style={{ padding: "0px 10px" }}
+    >
       <Wrapper grid>
         <Field className="field">
           <FormGroup>

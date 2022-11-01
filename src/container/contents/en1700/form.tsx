@@ -190,7 +190,11 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
+      <form
+        className="form_control"
+        onSubmit={handleSubmit(submit)}
+        style={{ padding: "0px 10px" }}
+      >
         <Wrapper grid col={2}>
           <Input
             label="코드"
@@ -266,21 +270,11 @@ const Form = React.forwardRef(
           </Field>
         </Wrapper>
         <Wrapper>
-          <Field>
-            <FormGroup>
-              <Label>매핑코드</Label>
-              <Select {...register("eyeCarCode")}>
-                {/* {eyeCarCode?.map((obj, idx) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.codeName}
-                  </option>
-                ))} */}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["eyeCarCode"]?.message}</ErrorText>
-            </div>
-          </Field>
+          <Input
+            label="매핑코드"
+            register={register("eyeCarCode")}
+            errors={errors["eyeCarCode"]?.message}
+          />
           <InfoText text="탱크잔량 원격검침 시스템의 매핑할 차량코드를 지정." />
         </Wrapper>
         <Wrapper>
@@ -302,21 +296,12 @@ const Form = React.forwardRef(
         </Wrapper>
         <Divider />
         <Wrapper grid col={2}>
-          <Field>
-            <FormGroup>
-              <Label>차량종류</Label>
-              <Select {...register("caType")}>
-                {/* {caType?.map((obj, idx) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.codeName}
-                  </option>
-                ))} */}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["caType"]?.message}</ErrorText>
-            </div>
-          </Field>
+          <Input
+            label="차량종류"
+            register={register("caType")}
+            errors={errors["caType"]?.message}
+            inputSize={InputSize.sm}
+          />
           <Input
             label="연식"
             register={register("caYear")}

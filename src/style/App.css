@@ -26,3 +26,8 @@ body {
   align-items: center;
   margin-top: 28px;
 }
+
+.form_control {
+  height: 75vh;
+  overflow-y: auto;
+}

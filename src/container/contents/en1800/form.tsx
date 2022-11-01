@@ -17,7 +17,7 @@ import {
 import { IFormProps } from "./type";
 import { schema } from "./validation";
 import API from "app/axios";
-import { useGetAreaCodeQuery } from "app/api/areaCode";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 
 interface IForm {
   selected: any;
@@ -34,7 +34,10 @@ const Form = React.forwardRef(
 
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
-    const { data: areaCode } = useGetAreaCodeQuery();
+    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
+      groupId: "EN",
+      functionName: "EN1800",
+    });
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
@@ -126,7 +129,11 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
+      <form
+        className="form_control"
+        onSubmit={handleSubmit(submit)}
+        style={{ padding: "0px 10px" }}
+      >
         {/* <p>{isAddBtnClicked ? "true" : "false"}</p> */}
         <Wrapper>
           <Input
@@ -138,9 +145,9 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>영업소</Label>
               <Select {...register("areaCode")}>
-                {areaCode?.map((obj, idx) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.codeName}본사
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
                   </option>
                 ))}
               </Select>

@@ -92,7 +92,6 @@ function EN1400({
       const res = await API.get("/app/EN1400/list");
       if (res.status === 200) {
         const { data } = res;
-        console.log("--------data1400:,", data);
         if (data) {
           setData(data);
           setSelected(data[selectedRowIndex]);

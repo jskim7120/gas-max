@@ -91,7 +91,6 @@ function EN1600({
   const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN1600/list");
-      console.log("sawon====>", data);
       if (data) {
         setData(data);
         setSelected(data[selectedRowIndex]);
