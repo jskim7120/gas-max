@@ -47,7 +47,7 @@ function EN1700({
   }, []);
 
   useEffect(() => {
-    if (data.length > 0) {
+    if (data?.length > 0) {
       container = realgridElement.current as HTMLDivElement;
       dp = new LocalDataProvider(true);
       gv = new GridView(container);
@@ -68,17 +68,15 @@ function EN1700({
       gv.sortingOptions.enabled = true;
       gv.displayOptions._selectionStyle = "singleRow";
 
-      if (data.length > 0) {
-        gv.setCurrent({
-          dataRow: selectedRowIndex,
-        });
+      gv.setCurrent({
+        dataRow: selectedRowIndex,
+      });
 
-        gv.onSelectionChanged = () => {
-          const itemIndex: any = gv.getCurrent().dataRow;
-          setSelected(data[itemIndex]);
-          dispatch(setRowIndex({ tabId: menuId, rowIndex: itemIndex }));
-        };
-      }
+      gv.onSelectionChanged = () => {
+        const itemIndex: any = gv.getCurrent().dataRow;
+        setSelected(data[itemIndex]);
+        dispatch(setRowIndex({ tabId: menuId, rowIndex: itemIndex }));
+      };
 
       return () => {
         dp.clearRows();
@@ -93,6 +91,8 @@ function EN1700({
       const { data } = await API.get("/app/EN1700/list");
 
       if (data) {
+        console.log("------------------------", data);
+
         setData(data);
         setSelected(data[selectedRowIndex]);
       }
@@ -151,7 +151,7 @@ function EN1700({
           <Form selected={selected} ref={formRef} fetchData={fetchData} />
         </DetailWrapper>
       </Wrapper>
-      <DataGridFooter dataLength={data.length > 0 ? data.length : 0} />
+      <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>
   );
 }

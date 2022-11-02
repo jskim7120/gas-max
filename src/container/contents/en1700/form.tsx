@@ -39,23 +39,23 @@ const base = "/app/EN1700/";
 const radioOptions = [
   {
     label: "전체",
-    id: "first",
+    id: "0",
   },
   {
     label: "21세",
-    id: "second",
+    id: "1",
   },
   {
     label: "26세",
-    id: "third",
+    id: "2",
   },
   {
     label: "30세",
-    id: "fourth",
+    id: "3",
   },
   {
     label: "35세",
-    id: "fifth",
+    id: "4",
   },
 ];
 
@@ -467,16 +467,6 @@ const Form = React.forwardRef(
         </Wrapper>
         <DividerGray />
         <Wrapper>
-          {/* <Field>
-            <FormGroup style={{ alignItems: "center" }}>
-              <Label>연령특약</Label>
-              <CheckBox register={{ ...register("caBage") }} />
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["caBage"]?.message}</ErrorText>
-            </div>
-          </Field> */}
-
           <Field>
             <FormGroup>
               <Label>연령특약</Label>
@@ -484,13 +474,12 @@ const Form = React.forwardRef(
                 <Item key={index}>
                   <RadioButton
                     type="radio"
-                    value={option.label}
+                    value={option.id}
                     {...register(`caBage`, {
                       required: "required",
                     })}
-                    name="applyType"
                     id={option.id}
-                    onChange={() => console.log(option.label)}
+                    // onChange={() => console.log(option.label)}
                   />
                   <RadioButtonLabel htmlFor={`${option.label}`}>
                     {option.label}

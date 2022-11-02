@@ -20,7 +20,7 @@ import {
   Label,
 } from "components/form/style";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { IFormProps } from "./type";
+import { IFormProps } from "./model";
 import { schema } from "./validation";
 import API from "app/axios";
 
@@ -33,11 +33,11 @@ const base = "/app/EN1300/";
 const radioOptions = [
   {
     label: "사용(Y)",
-    id: "Y",
+    id: "0",
   },
   {
     label: "안함(N)",
-    id: "N",
+    id: "1",
   },
 ];
 
@@ -379,13 +379,12 @@ const Form = React.forwardRef(
               <Item key={index}>
                 <RadioButton
                   type="radio"
-                  value={option.label}
+                  value={option.id}
                   {...register(`jpJaegoYn`, {
                     required: "required",
                   })}
-                  name="applyType"
                   id={option.id}
-                  onChange={() => console.log(option.label)}
+                  // onChange={() => console.log(option.label)}
                 />
                 <RadioButtonLabel htmlFor={`${option.label}`}>
                   {option.label}
