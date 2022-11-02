@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { InputSize } from "components/componentsType";
+import { InputSize, FieldKind } from "components/componentsType";
 
 // import {
 //   Path,
@@ -19,6 +19,15 @@ export const getInputSize = (size?: InputSize) => {
       return `425px`;
     case InputSize.xl:
       return `500px`;
+  }
+};
+
+export const getInputKind = (kind?: FieldKind) => {
+  switch (kind) {
+    case FieldKind.BORDER:
+      return {
+        border: "1px solid #e6e5e5",
+      };
   }
 };
 
@@ -43,6 +52,7 @@ interface IInputProps {
   defaultValue?: any;
   optionSlt?: any;
   maxLength?: string;
+  kind?: FieldKind;
 }
 
 export const Input = ({
@@ -59,6 +69,7 @@ export const Input = ({
   style,
   className,
   maxLength,
+  kind,
 }: IInputProps) => {
   return (
     <InputWrapper fullWidth={fullWidth}>
@@ -74,6 +85,7 @@ export const Input = ({
           style={style}
           className={className}
           maxLength={maxLength && maxLength}
+          kind={kind && kind}
         />
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>
@@ -111,13 +123,13 @@ const InputWrapper = styled.div<{ fullWidth?: boolean }>`
 export const InputForm = styled.input<{
   inputSize?: InputSize;
   fullWidth?: boolean;
+  kind?: FieldKind;
 }>`
   height: 25px;
   width: ${(props) =>
     props.inputSize ? getInputSize(props.inputSize) : "100%"};
   flex: ${(props) => props.fullWidth && "1"};
   border-radius: 4px;
-  border: 1px solid transparent;
   outline: none;
   display: inline-block;
   padding: 0 6px;
@@ -138,6 +150,9 @@ export const InputForm = styled.input<{
       background: #fff;
     }
   }
+
+  border: ${(props) =>
+    props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
 `;
 
 export const ErrorText = styled.p`
@@ -214,10 +229,10 @@ export const Wrapper = styled.div<{
   align-items: ${(props) => props.grid && "center"};
 `;
 
-export const Select = styled.select`
+export const Select = styled.select<{ kind?: FieldKind }>`
   height: 25px;
   border-radius: 4px;
-  border: 1px solid transparent;
+
   outline: none;
   font-family: "NotoSansKRRegular";
   font-size: 12px;
@@ -230,6 +245,9 @@ export const Select = styled.select`
   option {
     background: #fff;
   }
+
+  border: ${(props) =>
+    props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
 `;
 
 export const InfoDesc = styled.div`

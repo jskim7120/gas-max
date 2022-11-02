@@ -28,3 +28,7 @@ export enum ButtonType {
   LOGIN = "login",
   FORM = "form",
 }
+
+export enum FieldKind {
+  BORDER = "border",
+}
