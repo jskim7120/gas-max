@@ -104,6 +104,7 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
+      console.log("body", formValues);
 
       try {
         const response: any = await API.post(path, formValues);
@@ -151,6 +152,7 @@ const Form = React.forwardRef(
             register={register("bpCode")}
             errors={errors["bpCode"]?.message}
             inputSize={InputSize.md}
+            maxLength="3"
           />
         </Wrapper>
         <Divider />

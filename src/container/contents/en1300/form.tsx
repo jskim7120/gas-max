@@ -304,6 +304,7 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
+        <Divider />
         <Wrapper>
           <Field>
             <FormGroup>
@@ -321,7 +322,6 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
-        <Divider />
         <Wrapper>
           <Field>
             <Input
@@ -374,7 +374,7 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper>
           <FormGroup style={{ alignItems: "center" }}>
-            <Label>연령특약</Label>
+            <Label>재고사용 유무</Label>
             {radioOptions.map((option, index) => (
               <Item key={index}>
                 <RadioButton

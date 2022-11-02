@@ -137,6 +137,7 @@ const Form = React.forwardRef(
             label="코드"
             register={register("ccCode")}
             errors={errors["ccCode"]?.message}
+            maxLength={"2"}
           />
         </Wrapper>
         <Divider />

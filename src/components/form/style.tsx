@@ -63,7 +63,15 @@ export const Input = ({
   return (
     <InputWrapper fullWidth={fullWidth}>
       <FormGroup>
-        {label !== undefined && <Label labelLong={labelLong}>{label}</Label>}
+        {/* {label !== undefined && <Label labelLong={labelLong}>{label}</Label>} */}
+        {label !== undefined &&
+          (label === "~" ? (
+            <Label style={{ minWidth: "auto" }} labelLong={labelLong}>
+              {label}
+            </Label>
+          ) : (
+            <Label labelLong={labelLong}>{label}</Label>
+          ))}
         <InputForm
           type={type ? type : "text"}
           inputSize={inputSize && inputSize}

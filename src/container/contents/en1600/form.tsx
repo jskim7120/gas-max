@@ -330,7 +330,7 @@ const Form = React.forwardRef(
           >
             <IconInfo />
             <span style={{ color: "#1B8C8E", fontSize: "12px" }}>
-              검침 등록시 미납금액에 대하여 연체료를 부과
+              탱크잔량 원격검침 시스템의 매핑할 사원코드를 지정
             </span>
           </p>
         </Wrapper>
@@ -495,7 +495,7 @@ const Form = React.forwardRef(
         >
           <IconInfo />
           <span style={{ color: "#1B8C8E", fontSize: "12px" }}>
-            검침 등록시 미납금액에 대하여 연체료를 부과
+            퇴사사원은 판매등록 사원에서 제외 됩니다.
           </span>
         </p>
         <DividerGray />
