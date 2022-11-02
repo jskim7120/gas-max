@@ -193,7 +193,7 @@ const Form = React.forwardRef(
           <div>
             <Wrapper grid col={2}>
               <Input
-                label="일련번호"
+                label="코드"
                 register={register("saupSno")}
                 errors={errors["saupSno"]?.message}
                 inputSize={InputSize.sm}
@@ -288,7 +288,7 @@ const Form = React.forwardRef(
               <div>
                 <Wrapper style={{ alignItems: "center" }}>
                   <Input
-                    label="서명화일"
+                    label="도장이미지"
                     register={register("saupStampImg")}
                     errors={errors["saupStampImg"]?.message}
                     value={image?.name}
@@ -456,7 +456,7 @@ const Form = React.forwardRef(
                 }}
               >
                 <SearchIcon />
-                &nbsp; 찾기efrer
+                &nbsp; 찾기
                 <input
                   type="file"
                   style={{
