@@ -168,9 +168,11 @@ const Form = React.forwardRef(
         <DividerGray />
         <Wrapper>
           <Input
+            style={{ textAlign: "end" }}
             label="코드"
             register={register("jpCode")}
             errors={errors["jpCode"]?.message}
+            maxLength={"2"}
           />
         </Wrapper>
         <Divider />
@@ -214,10 +216,10 @@ const Form = React.forwardRef(
               label="용량"
               register={register("jpKg")}
               errors={errors["jpKg"]?.message}
-              style={{ width: "50px", textAlign: "end" }}
+              style={{ width: "70px", textAlign: "end" }}
             />
             <FormGroup>
-              <Select {...register("jpKgDanwi")}>
+              <Select {...register("jpKgDanwi")} style={{ minWidth: "100px" }}>
                 {dataCommonDic?.jpKgDanwi?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -325,6 +327,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <Field>
             <Input
+              style={{ textAlign: "end" }}
               label="가스판매단가"
               register={register("jpOutdanga")}
               errors={errors["jpOutdanga"]?.message}
@@ -335,6 +338,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <Field>
             <Input
+              style={{ textAlign: "end" }}
               label="용기판매단가"
               register={register("jpOuttong")}
               errors={errors["jpOuttong"]?.message}
@@ -345,6 +349,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <Field>
             <Input
+              style={{ textAlign: "end" }}
               label="가스매입원가"
               register={register("jpIndanga")}
               errors={errors["jpIndanga"]?.message}
@@ -355,6 +360,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <Field>
             <Input
+              style={{ textAlign: "end" }}
               label="용기구입단가"
               register={register("jpIntong")}
               errors={errors["jpIntong"]?.message}
@@ -365,6 +371,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <Field>
             <Input
+              style={{ textAlign: "end" }}
               label="사원배달수수료"
               register={register("jpBaedal")}
               errors={errors["jpBaedal"]?.message}
@@ -400,6 +407,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <Field>
             <Input
+              style={{ textAlign: "end" }}
               label="순번(조회순서)"
               register={register("jpSort")}
               errors={errors["jpSort"]?.message}
