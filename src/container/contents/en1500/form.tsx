@@ -92,7 +92,9 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
       if (response.status === 200) {
         setIsAddBtnClicked(false);
         await fetchData();
-        toast.success("Action successful");
+        toast.success("Action successful", {
+          autoClose: 500,
+        });
       }
     } catch (err: any) {
       toast.error(err?.message);

@@ -132,7 +132,9 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(path, formValues);
           if (response.status === 200) {
-            toast.success("Deleted");
+            toast.success("Deleted", {
+              autoClose: 500,
+            });
             await fetchData();
           }
         } catch (err) {
@@ -178,7 +180,9 @@ const Form = React.forwardRef(
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
-          toast.success("Action successful");
+          toast.success("Action successful", {
+            autoClose: 500,
+          });
           setIsAddBtnClicked(false);
           await fetchData();
         } else {
