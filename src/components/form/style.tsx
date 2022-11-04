@@ -71,7 +71,6 @@ export const Input = ({
   className,
   maxLength,
   kind,
-  textAlign,
 }: IInputProps) => {
   return (
     <InputWrapper fullWidth={fullWidth}>
@@ -88,7 +87,6 @@ export const Input = ({
           className={className}
           maxLength={maxLength && maxLength}
           kind={kind && kind}
-          textAlign={textAlign && textAlign}
         />
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>
@@ -127,13 +125,11 @@ export const InputForm = styled.input<{
   inputSize?: InputSize;
   fullWidth?: boolean;
   kind?: FieldKind;
-  textAlign?: string;
 }>`
   height: 25px;
   width: ${(props) =>
     props.inputSize ? getInputSize(props.inputSize) : "100%"};
   flex: ${(props) => props.fullWidth && "1"};
-  text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
   border-radius: 4px;
   outline: none;
   display: inline-block;
