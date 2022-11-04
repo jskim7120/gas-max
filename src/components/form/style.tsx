@@ -166,6 +166,7 @@ export const ErrorText = styled.p`
 export const FormGroup = styled.div`
   display: flex;
   gap: 4px;
+  align-items: center;
 
   input,
   select {
@@ -201,6 +202,7 @@ export const Field = styled.div<{ flex?: boolean }>`
   p {
     font-family: "NotoSansKRRegular";
     font-size: 12px;
+    text-align: center;
   }
 `;
 

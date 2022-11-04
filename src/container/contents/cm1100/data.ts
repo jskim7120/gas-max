@@ -65,139 +65,139 @@ export const columns = [
       textAlignment: "center",
     },
     header: {
-      text: "영업소코드",
+      text: "영업소",
     },
   },
   {
     name: "cuTypeName",
     fieldName: "cuTypeName",
     type: "data",
-    width: "100",
+    width: "120",
     styles: {
       textAlignment: "near",
     },
     header: {
-      text: "영업소명칭",
+      text: "구분",
     },
   },
   {
     name: "cuCode",
     fieldName: "cuCode",
     type: "data",
-    width: "100",
+    width: "120",
     styles: {
       textAlignment: "near",
     },
     header: {
-      text: "영업소명칭",
+      text: "코드",
     },
   },
   {
     name: "cuViewName",
     fieldName: "cuViewName",
     type: "data",
-    width: "100",
+    width: "200",
     styles: {
       textAlignment: "near",
     },
     header: {
-      text: "영업소명칭",
+      text: "거래처명",
     },
   },
   {
     name: "cuAddrn2",
     fieldName: "cuAddrn2",
     type: "data",
-    width: "100",
+    width: "250",
     styles: {
       textAlignment: "near",
     },
     header: {
-      text: "영업소명칭",
+      text: "주소",
     },
   },
   {
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "100",
+    width: "120",
     styles: {
       textAlignment: "near",
     },
     header: {
-      text: "영업소명칭",
+      text: "전화",
     },
   },
   {
     name: "cuTongkum",
     fieldName: "cuTongkum",
     type: "data",
-    width: "100",
+    width: "120",
     styles: {
       textAlignment: "near",
     },
     header: {
-      text: "영업소명칭",
+      text: "용기보증금",
     },
   },
   {
     name: "cuJmisu",
     fieldName: "cuJmisu",
     type: "data",
-    width: "100",
+    width: "120",
     styles: {
       textAlignment: "near",
     },
     header: {
-      text: "영업소명칭",
+      text: "중량미수",
     },
   },
   {
     name: "cuCmisu",
     fieldName: "cuCmisu",
     type: "data",
-    width: "100",
+    width: "120",
     styles: {
       textAlignment: "near",
     },
     header: {
-      text: "영업소명칭",
+      text: "체적미수",
     },
   },
   {
     name: "cuGongdate10",
     fieldName: "cuGongdate10",
     type: "data",
-    width: "100",
+    width: "120",
     styles: {
       textAlignment: "near",
     },
     header: {
-      text: "영업소명칭",
+      text: "공급계약일",
     },
   },
   {
     name: "cuHdate10",
     fieldName: "cuHdate10",
     type: "data",
-    width: "100",
+    width: "120",
     styles: {
       textAlignment: "near",
     },
     header: {
-      text: "영업소명칭",
+      text: "최종점검일",
     },
   },
   {
     name: "cuCutypeName",
     fieldName: "cuCutypeName",
     type: "data",
-    width: "100",
+    width: "120",
     styles: {
       textAlignment: "near",
     },
     header: {
-      text: "영업소명칭",
+      text: "소비형태",
     },
   },
   {
@@ -209,7 +209,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "영업소명칭",
+      text: "상태",
     },
   },
 ];

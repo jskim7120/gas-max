@@ -29,8 +29,10 @@ import Grid from "./grid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./validation";
 import { columns, fields } from "./data";
+import { openModal, closeModal, addData } from "app/state/modal/modalSlice";
+import { useSelector, useDispatch } from "app/store";
 
-const initialData = [
+const initialData: any = [
   {
     areaCode: "",
     cuAddrn2: "",
@@ -41,12 +43,12 @@ const initialData = [
     cuGongdate10: "",
     cuHdate10: "",
     cuHdateColor: "",
-    cuJmisu: 0,
+    cuJmisu: null,
     cuStae: "",
     cuStaeColor: "",
     cuStaeName: "",
     cuTel: "",
-    cuTongkum: 0,
+    cuTongkum: null,
     cuType: "",
     cuTypeColor: "",
     cuTypeName: "",
@@ -61,8 +63,9 @@ function CM1100Page({
   depthFullName: string;
   menuId: string;
 }) {
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState({});
+  const dispatch = useDispatch();
+  const [data, setData] = useState<any>([]);
+  const [selected, setSelected] = useState<any>({});
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
     functionName: "CM1100",
@@ -103,12 +106,23 @@ function CM1100Page({
     try {
       const { data } = await API.get("/app/CM1100/search", { params: params });
       if (data) {
-        console.log("data:", data);
         setData(data);
       }
     } catch (err) {
-      console.log("JNOTRY DATA fetch error =======>", err);
+      console.log("CM1100 data search fetch error =======>", err);
     }
+  };
+
+  const handleOpenPopup = async (index: number) => {
+    try {
+      await setSelected(data[index]);
+      const { data: dataCM1105 } = await API.get("/app/CM1105/search", {
+        params: { cuCode: data[index].cuCode, areaCode: data[index].areaCode },
+      });
+
+      dispatch(addData({ data: dataCM1105 }));
+      dispatch(openModal({ type: "cm1100Modal" }));
+    } catch (err: any) {}
   };
 
   return (
@@ -365,6 +379,7 @@ function CM1100Page({
         columns={columns}
         fields={fields}
         setSelected={setSelected}
+        openPopup={handleOpenPopup}
       />
     </>
   );
