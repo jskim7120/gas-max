@@ -1,6 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { columns, fields } from "./data";
+import {
+  openModal,
+  closeModal,
+  deleteAction,
+} from "app/state/modal/modalSlice";
 import Button from "components/button/button";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import { ButtonColor } from "components/componentsType";
@@ -29,6 +34,7 @@ function EN2000({
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>();
+  const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
     const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
@@ -85,6 +91,12 @@ function EN2000({
     }
   }, [data]);
 
+  useEffect(() => {
+    if (isDelete) {
+      deleteRowGrid();
+    }
+  }, [isDelete]);
+
   const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN2000/list");
@@ -97,6 +109,15 @@ function EN2000({
       console.log("DATA fetch error =======>", err);
     }
   };
+
+  function deleteRowGrid() {
+    try {
+      formRef.current.setIsAddBtnClicked(false);
+      formRef.current.crud("delete");
+      dispatch(deleteAction({ isDelete: false }));
+      dispatch(closeModal());
+    } catch (error) {}
+  }
 
   return (
     <>
@@ -116,10 +137,7 @@ function EN2000({
             text="삭제"
             icon={<Trash />}
             style={{ marginRight: "5px" }}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
-              formRef.current.crud("delete");
-            }}
+            onClick={() => dispatch(openModal({ type: "delModal" }))}
           />
           <Button
             text="저장"

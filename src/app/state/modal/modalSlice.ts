@@ -4,12 +4,14 @@ export interface initialStateType {
   modalIsOpen: boolean;
   menu: any;
   type: string;
+  isDelete: boolean;
 }
 
 const initialState: initialStateType = {
   modalIsOpen: false,
   menu: [],
   type: "",
+  isDelete: false,
 };
 
 const modalSlice = createSlice({
@@ -26,9 +28,13 @@ const modalSlice = createSlice({
       state.modalIsOpen = false;
       state.type = "";
     },
+
+    deleteAction: (state, action) => {
+      state.isDelete = action.payload.isDelete;
+    },
   },
 });
 
-export const { openModal, closeModal } = modalSlice.actions;
+export const { openModal, closeModal, deleteAction } = modalSlice.actions;
 
 export default modalSlice.reducer;

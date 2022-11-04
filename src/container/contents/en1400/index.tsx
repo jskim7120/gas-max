@@ -6,10 +6,15 @@ import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { columns, fields } from "./data";
+import {
+  openModal,
+  closeModal,
+  deleteAction,
+} from "app/state/modal/modalSlice";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -29,6 +34,7 @@ function EN1400({
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
+  const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
     const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
@@ -87,6 +93,12 @@ function EN1400({
     }
   }, [data]);
 
+  useEffect(() => {
+    if (isDelete) {
+      deleteRowGrid();
+    }
+  }, [isDelete]);
+
   const fetchData = async () => {
     try {
       const res = await API.get("/app/EN1400/list");
@@ -106,6 +118,15 @@ function EN1400({
 
   if (!data) return <p>...Loading</p>;
 
+  function deleteRowGrid() {
+    try {
+      formRef.current.setIsAddBtnClicked(false);
+      formRef.current.crud("delete");
+      dispatch(deleteAction({ isDelete: false }));
+      dispatch(closeModal());
+    } catch (error) {}
+  }
+
   return (
     <>
       <DetailHeader>
@@ -124,10 +145,7 @@ function EN1400({
             text="삭제"
             icon={<Trash />}
             style={{ marginRight: "5px" }}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
-              formRef.current.crud("delete");
-            }}
+            onClick={() => dispatch(openModal({ type: "delModal" }))}
           />
           <Button
             text="저장"

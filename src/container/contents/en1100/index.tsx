@@ -3,6 +3,11 @@ import { GridView, LocalDataProvider } from "realgrid";
 import API from "app/axios";
 import Button from "components/button/button";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
+import {
+  openModal,
+  closeModal,
+  deleteAction,
+} from "app/state/modal/modalSlice";
 import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { columns, fields } from "./data";
@@ -29,6 +34,8 @@ function EN1100({
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState();
+
+  const { isDelete } = useSelector((state) => state.modal);
 
   //const gridSelectedRowState = useSelector((state) => state.gridSelectedRow);
 
@@ -94,6 +101,12 @@ function EN1100({
     }
   }, [data]);
 
+  useEffect(() => {
+    if (isDelete) {
+      deleteRowGrid();
+    }
+  }, [isDelete]);
+
   const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN1100/list");
@@ -105,6 +118,16 @@ function EN1100({
       console.log("JNOTRY DATA fetch error =======>", err);
     }
   };
+
+  function deleteRowGrid() {
+    try {
+      formRef.current.setIsAddBtnClicked(false);
+      formRef.current.crud("delete");
+      dispatch(deleteAction({ isDelete: false }));
+      dispatch(closeModal());
+    } catch (error) {}
+  }
+
   if (!data) return <p>...Loading</p>;
   return (
     <>
@@ -124,10 +147,7 @@ function EN1100({
             text="삭제"
             icon={<Trash />}
             style={{ marginRight: "5px" }}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
-              formRef.current.crud("delete");
-            }}
+            onClick={() => dispatch(openModal({ type: "delModal" }))}
           />
           <Button
             text="저장"

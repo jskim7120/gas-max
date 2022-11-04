@@ -1,6 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { columns, fields } from "./data";
+import {
+  openModal,
+  closeModal,
+  deleteAction,
+} from "app/state/modal/modalSlice";
 import Button from "components/button/button";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import { ButtonColor } from "components/componentsType";
@@ -9,7 +14,7 @@ import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import API from "app/axios";
 import Form from "./form";
 import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -29,6 +34,7 @@ function EN1600({
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
+  const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
     const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
@@ -88,6 +94,12 @@ function EN1600({
     }
   }, [data]);
 
+  useEffect(() => {
+    if (isDelete) {
+      deleteRowGrid();
+    }
+  }, [isDelete]);
+
   const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN1600/list");
@@ -99,6 +111,15 @@ function EN1600({
       console.log("SAWON DATA fetch error =======>", err);
     }
   };
+
+  function deleteRowGrid() {
+    try {
+      formRef.current.setIsAddBtnClicked(false);
+      formRef.current.crud("delete");
+      dispatch(deleteAction({ isDelete: false }));
+      dispatch(closeModal());
+    } catch (error) {}
+  }
 
   if (!data) return <p>...Loading</p>;
   return (
@@ -119,10 +140,7 @@ function EN1600({
             text="삭제"
             icon={<Trash />}
             style={{ marginRight: "5px" }}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
-              formRef.current.crud("delete");
-            }}
+            onClick={() => dispatch(openModal({ type: "delModal" }))}
           />
           <Button
             text="저장"

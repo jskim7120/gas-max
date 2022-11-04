@@ -7,10 +7,15 @@ import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { formatDateToString } from "helpers/dateFormat";
 import { columns, fields } from "./data";
+import {
+  openModal,
+  closeModal,
+  deleteAction,
+} from "app/state/modal/modalSlice";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -30,6 +35,7 @@ function EN1700({
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
+  const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
     const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
@@ -86,6 +92,12 @@ function EN1700({
     }
   }, [data]);
 
+  useEffect(() => {
+    if (isDelete) {
+      deleteRowGrid();
+    }
+  }, [isDelete]);
+
   const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN1700/list");
@@ -100,6 +112,15 @@ function EN1700({
       console.log("Couldn't fetch CAR data.", error);
     }
   };
+
+  function deleteRowGrid() {
+    try {
+      formRef.current.setIsAddBtnClicked(false);
+      formRef.current.crud("delete");
+      dispatch(deleteAction({ isDelete: false }));
+      dispatch(closeModal());
+    } catch (error) {}
+  }
 
   if (!data) return <p>...Loading</p>;
 
@@ -121,10 +142,7 @@ function EN1700({
             text="삭제"
             icon={<Trash />}
             style={{ marginRight: "5px" }}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
-              formRef.current.crud("delete");
-            }}
+            onClick={() => dispatch(openModal({ type: "delModal" }))}
           />
           <Button
             text="저장"

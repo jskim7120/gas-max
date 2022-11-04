@@ -66,7 +66,7 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = (type: string) => {
-      if (JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         console.log("type:", type);
         let newData: any = {};
 
@@ -140,6 +140,7 @@ const Form = React.forwardRef(
             label="코드"
             register={register("jyCode")}
             errors={errors["jyCode"]?.message}
+            textAlign="right"
           />
           <Field>
             <FormGroup>
