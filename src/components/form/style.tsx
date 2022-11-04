@@ -133,7 +133,7 @@ export const InputForm = styled.input<{
   width: ${(props) =>
     props.inputSize ? getInputSize(props.inputSize) : "100%"};
   flex: ${(props) => props.fullWidth && "1"};
-  text-align: ${(props) => (props.textAlign ? props.textAlign : "center")};
+  text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
   border-radius: 4px;
   outline: none;
   display: inline-block;
