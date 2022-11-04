@@ -153,7 +153,7 @@ export const InputForm = styled.input<{
   }
 
   border: ${(props) =>
-    props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
+    props.kind ? getInputKind(props.kind)?.border : "1px solid gray"};
 `;
 
 export const ErrorText = styled.p`

@@ -29,7 +29,7 @@ import Grid from "./grid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./validation";
 import { columns, fields } from "./data";
-import { openModal, closeModal, addData } from "app/state/modal/modalSlice";
+import { openModal, closeModal, addCM1105 } from "app/state/modal/modalSlice";
 import { useSelector, useDispatch } from "app/store";
 
 const initialData: any = [
@@ -115,12 +115,14 @@ function CM1100Page({
 
   const handleOpenPopup = async (index: number) => {
     try {
-      await setSelected(data[index]);
-      const { data: dataCM1105 } = await API.get("/app/CM1105/search", {
-        params: { cuCode: data[index].cuCode, areaCode: data[index].areaCode },
-      });
+      setSelected(data[index]);
 
-      dispatch(addData({ data: dataCM1105 }));
+      dispatch(
+        addCM1105({
+          cuCode: data[index].cuCode,
+          areaCode: data[index].areaCode,
+        })
+      );
       dispatch(openModal({ type: "cm1100Modal" }));
     } catch (err: any) {}
   };

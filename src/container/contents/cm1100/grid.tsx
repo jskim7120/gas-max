@@ -40,17 +40,21 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
-
+    gv.setEditOptions({ editable: false });
     // gv.setCurrent({
     //   dataRow: selectedRowIndex,
     // });
 
-    gv.onSelectionChanged = () => {
-      const itemIndex: any = gv.getCurrent().dataRow;
-      //   setSelected(data[itemIndex]);
+    // gv.onSelectionChanged = () => {
+    //   const itemIndex: any = gv.getCurrent().dataRow;
+    //   //   setSelected(data[itemIndex]);
+    //   openPopup && openPopup(itemIndex);
+    // };
+
+    gv.onCellDblClicked = function (grid: any, e: any) {
+      const itemIndex: any = e.dataRow;
       openPopup && openPopup(itemIndex);
     };
-
     return () => {
       dp.clearRows();
       gv.destroy();

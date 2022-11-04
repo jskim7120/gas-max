@@ -22,11 +22,11 @@ import {
 
 const radioOptions = [
   {
-    label: "전체",
+    label: "벌크공급",
     id: "0",
   },
   {
-    label: "21세",
+    label: "용기공급",
     id: "1",
   },
 ];
@@ -468,8 +468,14 @@ function getTabContent(
     </div>
   );
   const data2 = (
-    <div>
-      <Wrapper grid col={4}>
+    <Field
+      style={{
+        border: "1px solid #e6e5e5",
+        borderTop: "1px solid #000",
+        borderBottom: "1px solid #000",
+      }}
+    >
+      {/*  <Wrapper grid col={4}>
         <Field flex style={{ alignItems: "center" }}>
           <p>법정검사</p>
           <FormGroup>
@@ -513,19 +519,18 @@ function getTabContent(
           reset={reset}
           errors={errors["cuSisuldate"]?.message}
         />
-      </Wrapper>
-      <Field flex>
-        <div>탱크</div>
-        <div>
-          <Wrapper></Wrapper>
-        </div>
-      </Field>
-    </div>
+      </Wrapper>  */}
+    </Field>
   );
 
   const data3 = (
-    <Field>
-      <Divider />
+    <Field
+      style={{
+        border: "1px solid #e6e5e5",
+        borderTop: "1px solid #000",
+        borderBottom: "1px solid #000",
+      }}
+    >
       <Wrapper grid col={4}>
         <Input
           label="계약번호"
@@ -544,10 +549,10 @@ function getTabContent(
         />
         <CustomDate
           label="최종점검일"
-          name="cu"
-          register={register("cu")}
+          name="cuHdate"
+          register={register("cuHdate")}
           reset={reset}
-          errors={errors["cu"]?.message}
+          errors={errors["cuHdate"]?.message}
         />
       </Wrapper>
       <DividerGray />
@@ -610,7 +615,7 @@ function getTabContent(
         <Field>
           <FormGroup>
             <Label>시설소유자</Label>
-            <Select {...register("cuUsertong")}>
+            <Select {...register("cuUsersisul")}>
               {dataCommonDic?.cuUsersisul?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -619,14 +624,122 @@ function getTabContent(
             </Select>
           </FormGroup>
           <div>
-            <ErrorText>{errors["cuUsertong"]?.message}</ErrorText>
+            <ErrorText>{errors["cuUsersisul"]?.message}</ErrorText>
+          </div>
+        </Field>
+        <Field>
+          <FormGroup>
+            <Label>보일러 사용</Label>
+            <Select {...register("cuBoilerYn")}>
+              {dataCommonDic?.cuBoilerYn?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <div>
+            <ErrorText>{errors["cuBoilerYn"]?.message}</ErrorText>
+          </div>
+        </Field>
+        <Field>
+          <FormGroup>
+            <Label>온수기 사용</Label>
+            <Select {...register("cuWaterYn")}>
+              {dataCommonDic?.cuWaterYn?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <div>
+            <ErrorText>{errors["cuWaterYn"]?.message}</ErrorText>
           </div>
         </Field>
       </Wrapper>
       <DividerGray />
-      <Wrapper grid col={4}></Wrapper>
+      <Wrapper grid col={4}>
+        <Field>
+          <FormGroup>
+            <Label>배관시설</Label>
+            <Select {...register("cuPipelineYn")}>
+              {dataCommonDic?.cuPipelineYn?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <div>
+            <ErrorText>{errors["cuPipelineYn"]?.message}</ErrorText>
+          </div>
+        </Field>
+        <Field>
+          <FormGroup>
+            <Label>차단 장치</Label>
+            <Select {...register("cuBlockYn")}>
+              {dataCommonDic?.cuBlockYn?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <div>
+            <ErrorText>{errors["cuBlockYn"]?.message}</ErrorText>
+          </div>
+        </Field>
+        <Field>
+          <FormGroup>
+            <Label>시설적합유무</Label>
+            <Select {...register("cuSisulyn")}>
+              {dataCommonDic?.cuSisulyn?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <div>
+            <ErrorText>{errors["cuSisulyn"]?.message}</ErrorText>
+          </div>
+        </Field>
+        <Field>
+          <FormGroup>
+            <Label>검사 대상</Label>
+            <Select {...register("cuGumsa")}>
+              {dataCommonDic?.cuGumsa?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <div>
+            <ErrorText>{errors["cuGumsa"]?.message}</ErrorText>
+          </div>
+        </Field>
+      </Wrapper>
       <DividerGray />
-      <Wrapper grid col={4}></Wrapper>
+      <Wrapper grid col={4}>
+        <CustomDate
+          label="체적시설 개선일"
+          name="cuSisuldate"
+          register={register("cuSisuldate")}
+          reset={reset}
+          errors={errors["cuSisuldate"]?.message}
+        />
+        <CustomDate
+          label="퓨즈콕 개선일"
+          name="cuPdate"
+          register={register("cuPdate")}
+          reset={reset}
+          errors={errors["cuPdate"]?.message}
+        />
+        <Label style={{ width: "105px" }}></Label>
+        <Label style={{ width: "105px" }}></Label>
+      </Wrapper>
       <Divider />
     </Field>
   );
@@ -643,7 +756,13 @@ function getTabContent(
         }}
       >
         <Field
-          style={{ width: "55px", background: "#E8ECF1", padding: "15px 10px" }}
+          style={{
+            width: "55px",
+            background: "#E8ECF1",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
           <p>
             자동
@@ -651,15 +770,140 @@ function getTabContent(
             이체
           </p>
         </Field>
-        <div>
+        <Field>
           <Wrapper grid>
-            <Field>
-              <FormGroup>
-                <Label>CMS구분</Label>
-              </FormGroup>
-            </Field>
+            <Input
+              label="CMS구분"
+              register={register("cmsGubun")}
+              errors={errors["cmsGubun"]?.message}
+            />
+            <Input
+              label="예금주"
+              register={register("depositor")}
+              errors={errors["depositor"]?.message}
+            />
+            <Input
+              label="관리코드"
+              register={register("managerNo")}
+              errors={errors["managerNo"]?.message}
+            />
           </Wrapper>
-        </div>
+          <DividerGray />
+          <Wrapper grid>
+            <Input
+              label="은행/카드"
+              register={register("bankName")}
+              errors={errors["bankName"]?.message}
+            />
+            <Input
+              label="계좌/카드번호"
+              register={register("acctno")}
+              errors={errors["acctno"]?.message}
+            />
+            <Input
+              label="전화번호"
+              register={register("tel")}
+              errors={errors["tel"]?.message}
+            />
+          </Wrapper>
+          <DividerGray />
+          <Wrapper grid>
+            <Input
+              label="승인일자"
+              register={register("appdt")}
+              errors={errors["appdt"]?.message}
+            />
+            <Input
+              label="약정일"
+              register={register("monthday")}
+              errors={errors["monthday"]?.message}
+            />
+            <Input
+              label="납부자상태"
+              register={register("stateName")}
+              errors={errors["stateName"]?.message}
+            />
+          </Wrapper>
+          <DividerGray />
+          <Wrapper grid>
+            <Input
+              label="비고"
+              register={register("bigo")}
+              errors={errors["bigo"]?.message}
+            />
+            <div></div>
+            <Input
+              label="등록일시"
+              register={register("regDate")}
+              errors={errors["regDate"]?.message}
+            />
+          </Wrapper>
+        </Field>
+      </Field>
+      <Field
+        flex
+        style={{
+          marginTop: "20px",
+          border: "1px solid #e6e5e5",
+          borderTop: "1px solid #000",
+          borderBottom: "1px solid #000",
+          width: "fit-content",
+        }}
+      >
+        <Field
+          style={{
+            width: "55px",
+            background: "#E8ECF1",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <p>
+            가상
+            <br />
+            계좌
+          </p>
+        </Field>
+        <Field>
+          <Wrapper grid>
+            <Input
+              label="은행명"
+              register={register("bankName")}
+              errors={errors["bankName"]?.message}
+              fullWidth
+            />
+            <Input
+              label="예금주"
+              register={register("depositor")}
+              errors={errors["depositor"]?.message}
+              fullWidth
+            />
+            <Input
+              label="관리코드"
+              register={register("managerCode")}
+              errors={errors["managerCode"]?.message}
+              fullWidth
+            />
+          </Wrapper>
+          <DividerGray />
+          <Wrapper grid>
+            <Input
+              label="계좌번호"
+              register={register("acctno")}
+              errors={errors["acctno"]?.message}
+              fullWidth
+            />
+            <Label style={{ width: "105px" }}></Label>
+
+            <Input
+              label="등록일시"
+              register={register("regDate")}
+              errors={errors["regDate"]?.message}
+              fullWidth
+            />
+          </Wrapper>
+        </Field>
       </Field>
     </Field>
   );
@@ -675,7 +919,13 @@ function getTabContent(
         }}
       >
         <Field
-          style={{ width: "55px", background: "#E8ECF1", padding: "15px 10px" }}
+          style={{
+            width: "55px",
+            background: "#E8ECF1",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
           <p>
             모바일
@@ -683,7 +933,7 @@ function getTabContent(
             청구서
           </p>
         </Field>
-        <div>
+        <Field>
           <Wrapper grid>
             <Field>
               <FormGroup>
@@ -715,7 +965,7 @@ function getTabContent(
               fullWidth
             />
           </Wrapper>
-        </div>
+        </Field>
       </Field>
 
       <Field
@@ -732,7 +982,9 @@ function getTabContent(
           style={{
             width: "55px",
             background: "#E8ECF1",
-            padding: "15px 10px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <p>

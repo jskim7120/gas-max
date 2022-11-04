@@ -4,14 +4,14 @@ export interface initialStateType {
   modalIsOpen: boolean;
   menu: any;
   type: string;
-  data: any;
+  cm1105: any;
 }
 
 const initialState: initialStateType = {
   modalIsOpen: false,
   menu: [],
   type: "",
-  data: {},
+  cm1105: {},
 };
 
 const modalSlice = createSlice({
@@ -28,12 +28,13 @@ const modalSlice = createSlice({
       state.modalIsOpen = false;
       state.type = "";
     },
-    addData: (state, action) => {
-      state.data = action.payload.data;
+    addCM1105: (state, action) => {
+      state.cm1105.cuCode = action.payload.cuCode;
+      state.cm1105.areaCode = action.payload.areaCode;
     },
   },
 });
 
-export const { openModal, closeModal, addData } = modalSlice.actions;
+export const { openModal, closeModal, addCM1105 } = modalSlice.actions;
 
 export default modalSlice.reducer;

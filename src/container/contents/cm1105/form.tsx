@@ -6,6 +6,7 @@ import DaumAddress from "components/daum";
 import { useSelector, useDispatch } from "app/store";
 import { ICM1105SEARCH } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import API from "app/axios";
 
 import {
   Input,
@@ -26,15 +27,17 @@ import getTabContent from "./getTabContent";
 import { Close } from "components/allSvgIcon";
 
 function Form() {
-  const { data } = useSelector((state) => state.modal);
+  const [data, setData] = useState<any>(null);
   const [addr, setAddress] = useState<string>("");
   const [addr2, setAddress2] = useState<string>("");
   const [tabId, setTabId] = useState(0);
+
+  const cm1105 = useSelector((state) => state.modal.cm1105);
+
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
     functionName: "CM1105",
   });
-
   console.log("dataCommonDic:====>", dataCommonDic);
 
   const {
@@ -46,22 +49,27 @@ function Form() {
   } = useForm<ICM1105SEARCH>();
 
   useEffect(() => {
-    const record = data?.customerInfo[0];
-    let newData: any = {};
-    for (const [key, value] of Object.entries(record)) {
-      newData[key] = value;
+    fetchData();
+  }, [cm1105]);
+
+  useEffect(() => {
+    if (data) {
+      // console.log("data:", data);
+      const record = data?.customerInfo[0];
+      let newData: any = {};
+      for (const [key, value] of Object.entries(record)) {
+        newData[key] = value;
+      }
+
+      reset({
+        ...newData,
+        cuSekumyn: record.cuSekumyn === "Y",
+        cuJangbuYn: record.cuJangbuYn === "Y",
+        cuSvKumack: record.cuSvKumack === "Y",
+        cuSeSmsYn: record.cuSeSmsYn === "Y",
+        cuSeListYn: record.cuSeListYn === "Y",
+      });
     }
-
-    reset({
-      ...newData,
-      cuSekumyn: record.cuSekumyn === "Y",
-      cuJangbuYn: record.cuJangbuYn === "Y",
-      cuSvKumack: record.cuSvKumack === "Y",
-      cuSeSmsYn: record.cuSeSmsYn === "Y",
-      cuSeListYn: record.cuSeListYn === "Y",
-    });
-
-    console.log(record);
   }, [data]);
 
   useEffect(() => {
@@ -72,6 +80,18 @@ function Form() {
       });
     }
   }, [addr]);
+
+  const fetchData = async () => {
+    try {
+      const { data } = await API.get("/app/CM1105/search", {
+        params: { cuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
+      });
+
+      setData(data);
+    } catch (error) {
+      console.log("aldaa");
+    }
+  };
 
   const submit = async (data: ICM1105SEARCH) => {};
   return (
