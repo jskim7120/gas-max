@@ -23,12 +23,14 @@ function getTabContent(
         <Input
           register={register("jnJiroSNo")}
           errors={errors["jnJiroSNo"]?.message}
+          textAlign="right"
         />
       ),
       3: (
         <Input
           register={register("jnJirono")}
           errors={errors["jnJirono"]?.message}
+          textAlign="right"
         />
       ),
       4: (
@@ -42,7 +44,7 @@ function getTabContent(
           {isJnJiroError ? (
             "error occured"
           ) : (
-            <Select style={{ width: "150px" }} {...register("jnJiro")}>
+            <Select style={{ width: "195px" }} {...register("jnJiro")}>
               {jnJiro?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -62,12 +64,14 @@ function getTabContent(
         <Input
           register={register("jnJiroSNo02")}
           errors={errors["jnJiroSNo02"]?.message}
+          textAlign="right"
         />
       ),
       3: (
         <Input
           register={register("jnJirono02")}
           errors={errors["jnJirono02"]?.message}
+          textAlign="right"
         />
       ),
       4: (
@@ -81,7 +85,7 @@ function getTabContent(
           {isJnJiroError ? (
             "error occured"
           ) : (
-            <Select style={{ width: "150px" }} {...register("jnJiro2")}>
+            <Select style={{ width: "195px" }} {...register("jnJiro2")}>
               {jnJiro?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -101,12 +105,14 @@ function getTabContent(
         <Input
           register={register("jnJiroSNo03")}
           errors={errors["jnJiroSNo03"]?.message}
+          textAlign="right"
         />
       ),
       3: (
         <Input
           register={register("jnJirono03")}
           errors={errors["jnJirono03"]?.message}
+          textAlign="right"
         />
       ),
       4: (
@@ -120,7 +126,7 @@ function getTabContent(
           {isJnJiroError ? (
             "error occured"
           ) : (
-            <Select style={{ width: "150px" }} {...register("jnJiro3")}>
+            <Select style={{ width: "195px" }} {...register("jnJiro3")}>
               {jnJiro?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -140,12 +146,14 @@ function getTabContent(
         <Input
           register={register("jnJiroSNo04")}
           errors={errors["jnJiroSNo04"]?.message}
+          textAlign="right"
         />
       ),
       3: (
         <Input
           register={register("jnJirono04")}
           errors={errors["jnJirono04"]?.message}
+          textAlign="right"
         />
       ),
       4: (
@@ -159,7 +167,7 @@ function getTabContent(
           {isJnJiroError ? (
             "error occured"
           ) : (
-            <Select style={{ width: "150px" }} {...register("jnJiro4")}>
+            <Select style={{ width: "195px" }} {...register("jnJiro4")}>
               {jnJiro?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}

@@ -6,7 +6,7 @@ export const schema = yup.object({
   jpCode: yup
     .string()
     .matches(/[0-9]+/gi, "숫자만 입력")
-    .length(2, "2자리 숫자만  입력"),
+    .length(4, "4자리 숫자만  입력"),
   jpKg: yup
     .number()
     .typeError("숫자만 입력")

@@ -198,6 +198,7 @@ const Form = React.forwardRef(
                 errors={errors["saupSno"]?.message}
                 inputSize={InputSize.sm}
                 maxLength="2"
+                textAlign="right"
               />
               <Field>
                 <FormGroup>
@@ -222,6 +223,7 @@ const Form = React.forwardRef(
                 register={register("saupSsno")}
                 errors={errors["saupSsno"]?.message}
                 inputSize={InputSize.md}
+                textAlign="right"
               />
               <Input
                 label="종사업자번호"
@@ -251,6 +253,7 @@ const Form = React.forwardRef(
                 label="주소"
                 register={register("saupZipcode")}
                 errors={errors["saupZipcode"]?.message}
+                textAlign="right"
               />
               <DaumAddress setAddress={setAddress} />
               <Input
@@ -398,6 +401,7 @@ const Form = React.forwardRef(
                 label="아이디"
                 register={register("saupEdiId")}
                 errors={errors["saupEdiId"]?.message}
+                textAlign="right"
               />
               <Input
                 label="비밀번호"
@@ -417,6 +421,7 @@ const Form = React.forwardRef(
                 label="전화번호"
                 register={register("saupEdiSmsNo")}
                 errors={errors["saupEdiSmsNo"]?.message}
+                textAlign="right"
               />
             </Wrapper>
             <DividerGray />

@@ -23,6 +23,7 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { IFormProps } from "./model";
 import { schema } from "./validation";
 import API from "app/axios";
+import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
@@ -172,7 +173,8 @@ const Form = React.forwardRef(
             label="코드"
             register={register("jpCode")}
             errors={errors["jpCode"]?.message}
-            maxLength={"2"}
+            maxLength={"4"}
+            inputSize={InputSize.en1300}
           />
         </Wrapper>
         <Divider />
@@ -181,6 +183,7 @@ const Form = React.forwardRef(
             label="품명"
             register={register("jpName")}
             errors={errors["jpName"]?.message}
+            inputSize={InputSize.en1300}
           />
         </Wrapper>
         <DividerGray />
@@ -189,6 +192,7 @@ const Form = React.forwardRef(
             label="규격"
             register={register("jpSpec")}
             errors={errors["jpSpec"]?.message}
+            inputSize={InputSize.en1300}
           />
         </Wrapper>
         <DividerGray />
@@ -216,10 +220,11 @@ const Form = React.forwardRef(
               label="용량"
               register={register("jpKg")}
               errors={errors["jpKg"]?.message}
-              style={{ width: "70px", textAlign: "end" }}
+              style={{ width: "56px" }}
+              textAlign="right"
             />
             <FormGroup>
-              <Select {...register("jpKgDanwi")} style={{ minWidth: "100px" }}>
+              <Select {...register("jpKgDanwi")} style={{ minWidth: "64px" }}>
                 {dataCommonDic?.jpKgDanwi?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -331,6 +336,8 @@ const Form = React.forwardRef(
               label="가스판매단가"
               register={register("jpOutdanga")}
               errors={errors["jpOutdanga"]?.message}
+              inputSize={InputSize.en1300}
+              textAlign="right"
             />
           </Field>
         </Wrapper>
@@ -342,6 +349,8 @@ const Form = React.forwardRef(
               label="용기판매단가"
               register={register("jpOuttong")}
               errors={errors["jpOuttong"]?.message}
+              inputSize={InputSize.en1300}
+              textAlign="right"
             />
           </Field>
         </Wrapper>
@@ -353,6 +362,8 @@ const Form = React.forwardRef(
               label="가스매입원가"
               register={register("jpIndanga")}
               errors={errors["jpIndanga"]?.message}
+              inputSize={InputSize.en1300}
+              textAlign="right"
             />
           </Field>
         </Wrapper>
@@ -364,6 +375,8 @@ const Form = React.forwardRef(
               label="용기구입단가"
               register={register("jpIntong")}
               errors={errors["jpIntong"]?.message}
+              inputSize={InputSize.en1300}
+              textAlign="right"
             />
           </Field>
         </Wrapper>
@@ -375,6 +388,8 @@ const Form = React.forwardRef(
               label="사원배달수수료"
               register={register("jpBaedal")}
               errors={errors["jpBaedal"]?.message}
+              inputSize={InputSize.en1300}
+              textAlign="right"
             />
           </Field>
         </Wrapper>
@@ -411,6 +426,8 @@ const Form = React.forwardRef(
               label="순번(조회순서)"
               register={register("jpSort")}
               errors={errors["jpSort"]?.message}
+              inputSize={InputSize.en1300}
+              textAlign="right"
             />
           </Field>
         </Wrapper>

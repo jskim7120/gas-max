@@ -202,6 +202,7 @@ const Form = React.forwardRef(
             errors={errors["caCode"]?.message}
             inputSize={InputSize.sm}
             maxLength="2"
+            textAlign="right"
           />
           <Field>
             <FormGroup>
@@ -275,6 +276,7 @@ const Form = React.forwardRef(
             label="매핑코드"
             register={register("eyeCarCode")}
             errors={errors["eyeCarCode"]?.message}
+            textAlign="right"
           />
           <InfoText text="탱크잔량 원격검침 시스템의 매핑할 차량코드를 지정." />
         </Wrapper>
@@ -292,6 +294,7 @@ const Form = React.forwardRef(
               register={register("caChargeDate")}
               errors={errors["caChargeDate"]?.message}
               inputSize={InputSize.sm}
+              textAlign="right"
             />
           </Field>
         </Wrapper>
@@ -308,6 +311,7 @@ const Form = React.forwardRef(
             register={register("caYear")}
             errors={errors["caYear"]?.message}
             inputSize={InputSize.sm}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
@@ -381,6 +385,7 @@ const Form = React.forwardRef(
             errors={errors["caAmt"]?.message}
             inputSize={InputSize.sm}
             fullWidth
+            textAlign="right"
           />
           <Field style={{ display: "flex", alignItems: "center" }}>
             <Input
@@ -388,6 +393,7 @@ const Form = React.forwardRef(
               register={register("caDiscountM")}
               errors={errors["caDiscountM"]?.message}
               inputSize={InputSize.sm}
+              textAlign="right"
             />
             <p style={{ fontSize: "12px" }}>월</p>
           </Field>
@@ -400,6 +406,7 @@ const Form = React.forwardRef(
             errors={errors["caAmt"]?.message}
             inputSize={InputSize.sm}
             fullWidth
+            textAlign="right"
           />
           <Field>
             <Input
@@ -408,6 +415,7 @@ const Form = React.forwardRef(
               errors={errors["caDiscountAmt"]?.message}
               inputSize={InputSize.sm}
               fullWidth
+              textAlign="right"
             />
           </Field>
         </Wrapper>
@@ -442,12 +450,14 @@ const Form = React.forwardRef(
             register={register("caBtel")}
             errors={errors["caBtel"]?.message}
             inputSize={InputSize.sm}
+            textAlign="right"
           />
           <Input
             label="핸드폰"
             register={register("caBhp")}
             errors={errors["caBhp"]?.message}
             inputSize={InputSize.sm}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
@@ -463,6 +473,7 @@ const Form = React.forwardRef(
             register={register("caBno")}
             errors={errors["caBno"]?.message}
             inputSize={InputSize.sm}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
@@ -513,6 +524,7 @@ const Form = React.forwardRef(
             register={register("caInsuranceAmt")}
             errors={errors["caInsuranceAmt"]?.message}
             inputSize={InputSize.sm}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />

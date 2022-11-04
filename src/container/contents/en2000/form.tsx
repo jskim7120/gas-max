@@ -138,6 +138,7 @@ const Form = React.forwardRef(
             register={register("ccCode")}
             errors={errors["ccCode"]?.message}
             maxLength={"2"}
+            textAlign="right"
           />
         </Wrapper>
         <Divider />

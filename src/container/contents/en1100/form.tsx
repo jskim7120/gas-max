@@ -175,6 +175,7 @@ const Form = React.forwardRef(
             errors={errors["areaCode"]?.message}
             fullWidth
             maxLength="2"
+            textAlign="right"
           />
           <Input
             label="영업소명"
@@ -188,6 +189,7 @@ const Form = React.forwardRef(
             label="사업자번호"
             register={register("jnSsno")}
             errors={errors["jnSsno"]?.message}
+            textAlign="right"
           />
           <Input
             label="상호"
@@ -206,6 +208,7 @@ const Form = React.forwardRef(
             label="주소"
             register={register("jnZipcode")}
             errors={errors["jnZipcode"]?.message}
+            textAlign="right"
           />
           <DaumAddress setAddress={setAddress} />
           <Input
@@ -244,17 +247,20 @@ const Form = React.forwardRef(
             label="대표전화"
             register={register("jnTel1")}
             errors={errors["jnTel1"]?.message}
+            textAlign="right"
           />
           <Input
             label="대표전화2"
             register={register("jnTel2")}
             errors={errors["jnTel2"]?.message}
+            textAlign="right"
           />
 
           <Input
             label="팩스"
             register={register("jnFax")}
             errors={errors["jnFax"]?.message}
+            textAlign="right"
           />
         </Wrapper>
         <Divider />
@@ -268,6 +274,7 @@ const Form = React.forwardRef(
             label="전화"
             register={register("jnAntel1")}
             errors={errors["jnAntel1"]?.message}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
@@ -281,6 +288,7 @@ const Form = React.forwardRef(
             label="전화"
             register={register("jnAntel2")}
             errors={errors["jnAntel2"]?.message}
+            textAlign="right"
           />
         </Wrapper>
         <Divider />
@@ -369,6 +377,7 @@ const Form = React.forwardRef(
             labelLong
             register={register("jnCMngNo")}
             errors={errors["jnCMngNo"]?.message}
+            textAlign="right"
           />
           <Field>
             <FormGroup>

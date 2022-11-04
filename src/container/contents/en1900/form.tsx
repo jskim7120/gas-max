@@ -140,6 +140,7 @@ const Form = React.forwardRef(
             label="코드"
             register={register("gubunCode")}
             errors={errors["gubunCode"]?.message}
+            textAlign="right"
           />
           <Field>
             <FormGroup>

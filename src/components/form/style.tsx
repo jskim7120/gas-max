@@ -13,6 +13,8 @@ export const getInputSize = (size?: InputSize) => {
   switch (size) {
     case InputSize.sm:
       return `100px`;
+    case InputSize.en1300:
+      return `130px`;
     case InputSize.md:
       return `250px`;
     case InputSize.lg:
@@ -43,6 +45,7 @@ interface IInputProps {
   defaultValue?: any;
   optionSlt?: any;
   maxLength?: string;
+  textAlign?: string;
 }
 
 export const Input = ({
@@ -59,6 +62,7 @@ export const Input = ({
   style,
   className,
   maxLength,
+  textAlign,
 }: IInputProps) => {
   return (
     <InputWrapper fullWidth={fullWidth}>
@@ -82,6 +86,7 @@ export const Input = ({
           style={style}
           className={className}
           maxLength={maxLength && maxLength}
+          textAlign={textAlign && textAlign}
         />
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>
@@ -119,11 +124,13 @@ const InputWrapper = styled.div<{ fullWidth?: boolean }>`
 export const InputForm = styled.input<{
   inputSize?: InputSize;
   fullWidth?: boolean;
+  textAlign?: string;
 }>`
   height: 25px;
   width: ${(props) =>
     props.inputSize ? getInputSize(props.inputSize) : "100%"};
   flex: ${(props) => props.fullWidth && "1"};
+  text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
   border-radius: 4px;
   border: 1px solid transparent;
   outline: none;
@@ -229,6 +236,7 @@ export const Select = styled.select`
   outline: none;
   font-family: "NotoSansKRRegular";
   font-size: 12px;
+  min-width: 130px;
 
   &:hover,
   &:focus {

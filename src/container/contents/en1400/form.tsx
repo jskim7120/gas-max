@@ -189,6 +189,7 @@ const Form = React.forwardRef(
             register={register("bpIndanga")}
             errors={errors["bpIndanga"]?.message}
             inputSize={InputSize.md}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
@@ -198,6 +199,7 @@ const Form = React.forwardRef(
             register={register("bpOutdanga")}
             errors={errors["bpOutdanga"]?.message}
             inputSize={InputSize.md}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
