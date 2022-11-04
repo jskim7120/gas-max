@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
-import Modal from "react-modal";
 import { useDispatch } from "app/store";
 import {
   openModal,
