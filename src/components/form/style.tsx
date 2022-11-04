@@ -53,6 +53,7 @@ interface IInputProps {
   optionSlt?: any;
   maxLength?: string;
   kind?: FieldKind;
+  textAlign?: string;
 }
 
 export const Input = ({
@@ -70,6 +71,7 @@ export const Input = ({
   className,
   maxLength,
   kind,
+  textAlign,
 }: IInputProps) => {
   return (
     <InputWrapper fullWidth={fullWidth}>
@@ -86,6 +88,7 @@ export const Input = ({
           className={className}
           maxLength={maxLength && maxLength}
           kind={kind && kind}
+          textAlign={textAlign && textAlign}
         />
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>
@@ -124,11 +127,13 @@ export const InputForm = styled.input<{
   inputSize?: InputSize;
   fullWidth?: boolean;
   kind?: FieldKind;
+  textAlign?: string;
 }>`
   height: 25px;
   width: ${(props) =>
     props.inputSize ? getInputSize(props.inputSize) : "100%"};
   flex: ${(props) => props.fullWidth && "1"};
+  text-align: ${(props) => (props.textAlign ? props.textAlign : "center")};
   border-radius: 4px;
   outline: none;
   display: inline-block;
@@ -194,7 +199,14 @@ export const Label = styled.label<{ labelLong?: boolean; style?: any }>`
   white-space: nowrap;
 `;
 
-export const Field = styled.div``;
+export const Field = styled.div<{ flex?: boolean }>`
+  display: ${(props) => props.flex && "flex"};
+
+  p {
+    font-family: "NotoSansKRRegular";
+    font-size: 12px;
+  }
+`;
 
 export const Divider = styled.div`
   height: 1px;
