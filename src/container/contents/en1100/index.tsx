@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "app/store";
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
-let selectedRowIndex: number = 0;
+let selectedRowIndex: number;
 
 function EN1100({
   depthFullName,
@@ -37,17 +37,18 @@ function EN1100({
 
   const { isDelete } = useSelector((state) => state.modal);
 
-  //const gridSelectedRowState = useSelector((state) => state.gridSelectedRow);
+  const gridSelectedRowState = useSelector((state) => state.gridSelectedRow);
 
   useEffect(() => {
-    const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
-    if (storagegridRows) {
-      dispatch(resetFromStorage({ rows: storagegridRows }));
-      const row = storagegridRows.find((row: any) => row.tabId === menuId);
-      selectedRowIndex = row && row.rowIndex;
-    } else {
-      selectedRowIndex = 0;
-    }
+    console.log("ddssdffdsf");
+    // const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
+    // if (storagegridRows) {
+    //   dispatch(resetFromStorage({ rows: storagegridRows }));
+    //   const row = storagegridRows.find((row: any) => row.tabId === menuId);
+    //   selectedRowIndex = row && row.rowIndex;
+    // } else {
+    //   selectedRowIndex = 0;
+    // }
   }, []);
 
   useEffect(() => {
@@ -70,28 +71,27 @@ function EN1100({
       gv.setFooter({ visible: false });
       gv.setOptions({
         indicator: { visible: true },
-        checkBar: { visible: true },
+        checkBar: { visible: false },
         stateBar: { visible: false },
       });
       gv.sortingOptions.enabled = true;
       gv.displayOptions._selectionStyle = "singleRow";
 
-      if (data.length > 0) {
-        gv.setCurrent({
-          dataRow: selectedRowIndex,
-        });
-        // gv.setSelection({ style: "rows", startRow: 0, endRow: 0 });
+      gv.setCurrent({
+        dataRow: selectedRowIndex,
+      });
+      // gv.setSelection({ style: "rows", startRow: 0, endRow: 0 });
 
-        // gv.onItemChecked = () => {
-        //   var items = gv.getCheckedItems();
-        // };
+      // gv.onItemChecked = () => {
+      //   var items = gv.getCheckedItems();
+      // };
 
-        gv.onSelectionChanged = () => {
-          const itemIndex: any = gv.getCurrent().dataRow;
-          setSelected(data[itemIndex]);
-          dispatch(setRowIndex({ tabId: menuId, rowIndex: itemIndex }));
-        };
-      }
+      gv.onSelectionChanged = () => {
+        const itemIndex: any = gv.getCurrent().dataRow;
+        setSelected(data[itemIndex]);
+        dispatch(setRowIndex({ tabId: menuId, rowIndex: itemIndex }));
+        selectedRowIndex = itemIndex;
+      };
 
       return () => {
         dp.clearRows();
@@ -176,6 +176,8 @@ function EN1100({
             ref={formRef}
             fetchData={fetchData}
             menuId={menuId}
+            setData={setData}
+            selectedRowIndex={selectedRowIndex}
           />
         </DetailWrapper>
       </Wrapper>

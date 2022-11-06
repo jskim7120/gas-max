@@ -29,12 +29,14 @@ interface IForm {
   selected: any;
   fetchData: any;
   menuId: string;
+  setData: any;
+  selectedRowIndex: number;
 }
 const base = "/app/EN1100/";
 
 const Form = React.forwardRef(
   (
-    { selected, fetchData, menuId }: IForm,
+    { selected, fetchData, menuId, setData, selectedRowIndex }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
@@ -152,12 +154,21 @@ const Form = React.forwardRef(
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
+          if (isAddBtnClicked) {
+            setData((prev: any) => [formValues, ...prev]);
+            dispatch(setRowIndex({ tabId: menuId, rowIndex: 0 }));
+          } else {
+            setData((prev: any) => {
+              prev[selectedRowIndex] = formValues;
+              return [...prev];
+            });
+          }
           toast.success("Action successful", {
-            autoClose: 500,
+            autoClose: 1000,
           });
-          dispatch(setRowIndex({ tabId: menuId, rowIndex: 0 }));
+
           setIsAddBtnClicked(false);
-          await fetchData();
+          // await fetchData();
         } else {
           toast.error(response?.response?.data?.message);
         }
