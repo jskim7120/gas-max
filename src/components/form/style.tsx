@@ -204,6 +204,20 @@ export const Field = styled.div<{ flex?: boolean }>`
     font-size: 12px;
     text-align: center;
   }
+
+  .gray-title {
+    width: 55px;
+    background: #e8ecf1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.outer-border {
+    border: 1px solid #e8ecf1;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
 `;
 
 export const Divider = styled.div`

@@ -30,6 +30,16 @@ const radioOptions = [
     id: "1",
   },
 ];
+const radioOptions2 = [
+  {
+    label: "일반용기",
+    id: "0",
+  },
+  {
+    label: "싸이폰용기",
+    id: "1",
+  },
+];
 
 function getTabContent(
   id: number,
@@ -245,13 +255,14 @@ function getTabContent(
   );
   const data1 = (
     <div>
-      <div style={{ display: "flex" }}>
-        <div style={{ width: "50px", height: "100%", border: "1px solid red" }}>
-          체적 <br />
-          단가
-        </div>
-        <div>
-          <DividerGray />
+      <Field flex className="outer-border ">
+        <Field className="gray-title">
+          <p>
+            체적 <br />
+            단가
+          </p>
+        </Field>
+        <Field>
           <Wrapper grid col={4}>
             <Field>
               <FormGroup>
@@ -331,16 +342,24 @@ function getTabContent(
               <p>원</p>
             </Field>
           </Wrapper>
-          <DividerGray />
-        </div>
-      </div>
-      <div style={{ display: "flex", marginTop: "20px" }}>
-        <div style={{ width: "50px", height: "100%", border: "1px solid red" }}>
-          계량기
-          <br /> 정보
-        </div>
-        <div>
-          <DividerGray />
+        </Field>
+      </Field>
+
+      <Field
+        flex
+        className="outer-border"
+        style={{
+          marginTop: "20px",
+        }}
+      >
+        <Field className="gray-title">
+          <p>
+            계량기
+            <br />
+            정보
+          </p>
+        </Field>
+        <Field>
           <Wrapper grid col={5}>
             <Field>
               <FormGroup>
@@ -463,24 +482,90 @@ function getTabContent(
             </Field>
             <input name="search" />
           </Wrapper>
-        </div>
-      </div>
+        </Field>
+      </Field>
     </div>
   );
   const data2 = (
-    <Field
-      style={{
-        border: "1px solid #e6e5e5",
-        borderTop: "1px solid #000",
-        borderBottom: "1px solid #000",
-      }}
-    >
-      {/*  <Wrapper grid col={4}>
-        <Field flex style={{ alignItems: "center" }}>
+    <Field className="gray-title">
+      <Field flex>
+        <Field className="gray-title">
           <p>법정검사</p>
+        </Field>
+        <Wrapper grid col={4}>
           <FormGroup>
             <Label>시설구분</Label>
             {radioOptions.map((option, index) => (
+              <Item key={index}>
+                <RadioButton
+                  type="radio"
+                  value={option.id}
+                  {...register(`cuTankYn`, {
+                    required: "required",
+                  })}
+                  id={option.id}
+                  // onChange={() => console.log(option.label)}
+                />
+                <RadioButtonLabel htmlFor={`${option.label}`}>
+                  {option.label}
+                </RadioButtonLabel>
+              </Item>
+            ))}
+          </FormGroup>
+          <CustomDate
+            label="완성검사일"
+            name="cuFinishDate"
+            register={register("cuFinishDate")}
+            reset={reset}
+            errors={errors["cuFinishDate"]?.message}
+          />
+          <CustomDate
+            label="정기검사일"
+            name="cuCircuitDate"
+            register={register("cuCircuitDate")}
+            reset={reset}
+            errors={errors["cuCircuitDate"]?.message}
+          />
+          <CustomDate
+            label="검사 예정일"
+            name="cuScheduleDate"
+            register={register("cuScheduleDate")}
+            reset={reset}
+            errors={errors["cuScheduleDate"]?.message}
+          />
+        </Wrapper>
+      </Field>
+      <Field flex>
+        <Field className="gray-title">
+          <p>탱크</p>
+        </Field>
+        <Field style={{ width: "100%" }}>
+          <Wrapper grid col={11}>
+            <Label>제조사</Label>
+            <Label>용량(kg)</Label>
+            <Label>제조번호</Label>
+            <Label>제작년월</Label>
+            <Label>대여처</Label>
+            <Label>최초검사</Label>
+            <Label>외관검사</Label>
+            <Label>개방검사</Label>
+            <Label>게이지</Label>
+            <Label>발신기코드</Label>
+            <Label>잔량고객코드</Label>
+          </Wrapper>
+          <Wrapper grid col={11}></Wrapper>
+          <Wrapper grid col={11}></Wrapper>
+        </Field>
+      </Field>
+
+      <Field flex>
+        <Field className="gray-title">
+          <p>용기</p>
+        </Field>
+        <Wrapper grid col={2}>
+          <FormGroup>
+            <Label>용기구분</Label>
+            {/* {radioOptions2.map((option, index) => (
               <Item key={index}>
                 <RadioButton
                   type="radio"
@@ -495,42 +580,15 @@ function getTabContent(
                   {option.label}
                 </RadioButtonLabel>
               </Item>
-            ))}
+            ))} */}
           </FormGroup>
-        </Field>
-        <CustomDate
-          label="완성검사일"
-          name="cuFinishDate"
-          register={register("cuFinishDate")}
-          reset={reset}
-          errors={errors["cuFinishDate"]?.message}
-        />
-        <CustomDate
-          label="정기검사일"
-          name="cuCircuitDate"
-          register={register("cuCircuitDate")}
-          reset={reset}
-          errors={errors["cuCircuitDate"]?.message}
-        />
-        <CustomDate
-          label="검사 예정일"
-          name="cuSisuldate"
-          register={register("cuSisuldate")}
-          reset={reset}
-          errors={errors["cuSisuldate"]?.message}
-        />
-      </Wrapper>  */}
+        </Wrapper>
+      </Field>
     </Field>
   );
 
   const data3 = (
-    <Field
-      style={{
-        border: "1px solid #e6e5e5",
-        borderTop: "1px solid #000",
-        borderBottom: "1px solid #000",
-      }}
-    >
+    <Field className="outer-border">
       <Wrapper grid col={4}>
         <Input
           label="계약번호"
@@ -748,22 +806,12 @@ function getTabContent(
     <Field>
       <Field
         flex
+        className="outer-border"
         style={{
-          border: "1px solid #e6e5e5",
-          borderTop: "1px solid #000",
-          borderBottom: "1px solid #000",
           width: "fit-content",
         }}
       >
-        <Field
-          style={{
-            width: "55px",
-            background: "#E8ECF1",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <Field className="gray-title">
           <p>
             자동
             <br />
@@ -842,23 +890,13 @@ function getTabContent(
       </Field>
       <Field
         flex
+        className="outer-border"
         style={{
           marginTop: "20px",
-          border: "1px solid #e6e5e5",
-          borderTop: "1px solid #000",
-          borderBottom: "1px solid #000",
           width: "fit-content",
         }}
       >
-        <Field
-          style={{
-            width: "55px",
-            background: "#E8ECF1",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <Field className="gray-title">
           <p>
             가상
             <br />
@@ -911,22 +949,12 @@ function getTabContent(
     <Field>
       <Field
         flex
+        className="outer-border"
         style={{
-          border: "1px solid #e6e5e5",
-          borderTop: "1px solid #000",
-          borderBottom: "1px solid #000",
           width: "fit-content",
         }}
       >
-        <Field
-          style={{
-            width: "55px",
-            background: "#E8ECF1",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <Field className="gray-title">
           <p>
             모바일
             <br />
@@ -970,23 +998,13 @@ function getTabContent(
 
       <Field
         flex
+        className="outer-border"
         style={{
           marginTop: "20px",
-          border: "1px solid #e6e5e5",
-          borderTop: "1px solid #000",
-          borderBottom: "1px solid #000",
           width: "fit-content",
         }}
       >
-        <Field
-          style={{
-            width: "55px",
-            background: "#E8ECF1",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <Field className="gray-title">
           <p>
             현금
             <br />
