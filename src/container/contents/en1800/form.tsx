@@ -14,7 +14,7 @@ import {
   FormGroup,
   Label,
 } from "components/form/style";
-import { IFormProps } from "./type";
+import { ICUSTJY } from "./model";
 import { schema } from "./validation";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -54,7 +54,7 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
-    } = useForm<IFormProps>({
+    } = useForm<ICUSTJY>({
       mode: "onChange",
       resolver: yupResolver(schema),
     });
@@ -110,7 +110,7 @@ const Form = React.forwardRef(
       }
     };
 
-    const submit = async (data: IFormProps) => {
+    const submit = async (data: ICUSTJY) => {
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();

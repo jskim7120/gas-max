@@ -1,5 +1,3 @@
-import { Path } from "react-hook-form";
-
 export interface IJNOTRY2 {
   areaCode: string;
   areaName: number;

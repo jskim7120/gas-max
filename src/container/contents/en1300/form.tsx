@@ -20,7 +20,7 @@ import {
   Label,
 } from "components/form/style";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { IFormProps } from "./model";
+import { ISANGPUM } from "./model";
 import { schema } from "./validation";
 import API from "app/axios";
 import { InputSize } from "components/componentsType";
@@ -71,7 +71,7 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
-    } = useForm<IFormProps>({
+    } = useForm<ISANGPUM>({
       mode: "onChange",
       resolver: yupResolver(schema),
     });
@@ -127,7 +127,7 @@ const Form = React.forwardRef(
       }
     };
 
-    const submit = async (data: IFormProps) => {
+    const submit = async (data: ISANGPUM) => {
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();

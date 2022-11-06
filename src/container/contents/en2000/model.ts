@@ -1,6 +1,4 @@
-import { Path } from "react-hook-form";
-
-export interface IFormProps {
+export interface ICARJBC {
   ccCode: string;
   ccName: string;
   ccBigo: string;

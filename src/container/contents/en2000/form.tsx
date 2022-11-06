@@ -16,7 +16,7 @@ import {
   InfoDesc,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
-import { IFormProps } from "./type";
+import { ICARJBC } from "./model";
 import { schema } from "./validation";
 import API from "app/axios";
 import { InfoText } from "components/text";
@@ -51,7 +51,7 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
-    } = useForm<IFormProps>({
+    } = useForm<ICARJBC>({
       mode: "onChange",
       resolver: yupResolver(schema),
     });
@@ -107,7 +107,7 @@ const Form = React.forwardRef(
       }
     };
 
-    const submit = async (data: IFormProps) => {
+    const submit = async (data: ICARJBC) => {
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
