@@ -4,7 +4,7 @@ import { columns, fields } from "./data";
 import {
   openModal,
   closeModal,
-  deleteAction,
+  // deleteAction,
 } from "app/state/modal/modalSlice";
 import Button from "components/button/button";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
@@ -103,8 +103,8 @@ function EN1600({
     try {
       formRef.current.setIsAddBtnClicked(false);
       formRef.current.crud("delete");
-      dispatch(deleteAction({ isDelete: false }));
-      dispatch(closeModal());
+      // dispatch(deleteAction({ isDelete: false }));
+      // dispatch(closeModal());
     } catch (error) {}
   }
 

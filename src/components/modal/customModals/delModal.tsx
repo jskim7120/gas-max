@@ -4,7 +4,8 @@ import { useDispatch } from "app/store";
 import {
   openModal,
   closeModal,
-  deleteAction,
+  setIsDelete,
+  addDeleteMenuId,
 } from "app/state/modal/modalSlice";
 
 const Container = styled.div`
@@ -74,8 +75,8 @@ function DelModal() {
       <div className="btn_cnt">
         <button
           onClick={() => {
-            dispatch(deleteAction({ isDelete: true }));
-            // dispatch(closeModal());
+            dispatch(setIsDelete({ isDelete: true }));
+            dispatch(closeModal());
           }}
           className="modal_btn del"
         >
@@ -83,7 +84,8 @@ function DelModal() {
         </button>
         <button
           onClick={() => {
-            dispatch(deleteAction({ isDelete: false }));
+            dispatch(setIsDelete({ isDelete: false }));
+            dispatch(addDeleteMenuId({ menuId: "" }));
             dispatch(closeModal());
           }}
           className="modal_btn close"

@@ -9,7 +9,7 @@ import { columns, fields } from "./data";
 import {
   openModal,
   closeModal,
-  deleteAction,
+  // deleteAction,
 } from "app/state/modal/modalSlice";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
@@ -111,8 +111,8 @@ function EN1400({
     try {
       formRef.current.setIsAddBtnClicked(false);
       formRef.current.crud("delete");
-      dispatch(deleteAction({ isDelete: false }));
-      dispatch(closeModal());
+      // dispatch(deleteAction({ isDelete: false }));
+      // dispatch(closeModal());
     } catch (error) {}
   }
 

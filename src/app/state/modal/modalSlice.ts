@@ -4,14 +4,20 @@ export interface initialStateType {
   modalIsOpen: boolean;
   menu: any;
   type: string;
-  isDelete: boolean;
+  isDelete: {
+    menuId: string;
+    isDelete: boolean;
+  };
 }
 
 const initialState: initialStateType = {
   modalIsOpen: false,
   menu: [],
   type: "",
-  isDelete: false,
+  isDelete: {
+    menuId: "",
+    isDelete: false,
+  },
 };
 
 const modalSlice = createSlice({
@@ -29,12 +35,16 @@ const modalSlice = createSlice({
       state.type = "";
     },
 
-    deleteAction: (state, action) => {
-      state.isDelete = action.payload.isDelete;
+    addDeleteMenuId: (state, action) => {
+      state.isDelete.menuId = action.payload.menuId;
+    },
+    setIsDelete: (state, action) => {
+      state.isDelete.isDelete = action.payload.isDelete;
     },
   },
 });
 
-export const { openModal, closeModal, deleteAction } = modalSlice.actions;
+export const { openModal, closeModal, addDeleteMenuId, setIsDelete } =
+  modalSlice.actions;
 
 export default modalSlice.reducer;

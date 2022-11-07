@@ -6,11 +6,7 @@ import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { columns, fields } from "./data";
-import {
-  openModal,
-  closeModal,
-  deleteAction,
-} from "app/state/modal/modalSlice";
+import { openModal, closeModal, setIsDelete } from "app/state/modal/modalSlice";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
@@ -104,8 +100,8 @@ function EN1200({
     try {
       formRef.current.setIsAddBtnClicked(false);
       formRef.current.crud("delete");
-      dispatch(deleteAction({ isDelete: false }));
-      dispatch(closeModal());
+      // dispatch(deleteAction({ isDelete: false }));
+      // dispatch(closeModal());
     } catch (error) {}
   }
 

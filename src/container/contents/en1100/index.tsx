@@ -6,7 +6,8 @@ import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import {
   openModal,
   closeModal,
-  deleteAction,
+  addDeleteMenuId,
+  setIsDelete,
 } from "app/state/modal/modalSlice";
 import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
@@ -81,10 +82,11 @@ function EN1100({
   }, [data]);
 
   useEffect(() => {
-    if (isDelete) {
+    console.log(isDelete);
+    if (isDelete.menuId === menuId && isDelete.isDelete) {
       deleteRowGrid();
     }
-  }, [isDelete]);
+  }, [isDelete.isDelete]);
 
   const fetchData = async () => {
     try {
@@ -103,7 +105,8 @@ function EN1100({
     try {
       formRef.current.setIsAddBtnClicked(false);
       formRef.current.crud("delete");
-      dispatch(deleteAction({ isDelete: false }));
+      dispatch(addDeleteMenuId({ menuId: "" }));
+      dispatch(setIsDelete({ isDelete: false }));
       dispatch(closeModal());
     } catch (error) {}
   }
@@ -127,7 +130,10 @@ function EN1100({
             text="삭제"
             icon={<Trash />}
             style={{ marginRight: "5px" }}
-            onClick={() => dispatch(openModal({ type: "delModal" }))}
+            onClick={() => {
+              dispatch(openModal({ type: "delModal" }));
+              dispatch(addDeleteMenuId({ menuId: menuId }));
+            }}
           />
           <Button
             text="저장"
