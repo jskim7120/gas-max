@@ -4,7 +4,10 @@ export interface initialStateType {
   modalIsOpen: boolean;
   menu: any;
   type: string;
-  cm1105: any;
+  cm1105: {
+    cuCode: string;
+    areaCode: string;
+  };
   isDelete: {
     menuId: string;
     isDelete: boolean;
@@ -15,7 +18,10 @@ const initialState: initialStateType = {
   modalIsOpen: false,
   menu: [],
   type: "",
-  cm1105: {},
+  cm1105: {
+    cuCode: "",
+    areaCode: "",
+  },
   isDelete: {
     menuId: "",
     isDelete: false,

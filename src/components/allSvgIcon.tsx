@@ -4498,3 +4498,42 @@ export const IconReceipt = ({
     </svg>
   );
 };
+
+export const WhiteClose = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="17.658"
+      height="16.231"
+      viewBox="0 0 17.658 16.231"
+    >
+      <g
+        id="Group_1249"
+        data-name="Group 1249"
+        transform="translate(-389.735 -16.735)"
+      >
+        <line
+          id="Line_43"
+          data-name="Line 43"
+          x1="14.128"
+          y2="12.491"
+          transform="translate(391.5 18.5)"
+          fill="none"
+          stroke="#fff"
+          stroke-linecap="round"
+          stroke-width="2.5"
+        />
+        <path
+          id="Path_45"
+          data-name="Path 45"
+          d="M0,0,14.128,12.7"
+          transform="translate(405.628 31.201) rotate(180)"
+          fill="none"
+          stroke="#fff"
+          stroke-linecap="round"
+          stroke-width="2.5"
+        />
+      </g>
+    </svg>
+  );
+};

@@ -29,7 +29,7 @@ const PopupContiner = styled.div<{ type: string }>`
   position: fixed;
 
   ${(props) =>
-    (props.type === "customerModal" || props.type === "cm1100Modal") &&
+    (props.type === "customerModal" || props.type === "cm1105Modal") &&
     `
       top: 50%;
       left: 50%;  
@@ -78,7 +78,7 @@ function Popup() {
             {type === "menuModal" && <MenuModal />}
             {type === "accountModal" && <AccountModal />}
             {type === "infoModal" && <InfoModal />}
-            {type === "cm1100Modal" && <CM1105Modal />}
+            {type === "cm1105Modal" && <CM1105Modal />}
             {type === "delModal" && <DelModal />}
           </Suspense>
         </PopupContiner>

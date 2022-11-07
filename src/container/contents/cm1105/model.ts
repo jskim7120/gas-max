@@ -148,6 +148,7 @@ export interface ICM1105SEARCH {
   cms: ICMS;
   //virtualAccount
   virtualAccount: IVIRTUALACCOUNT;
+  cuTank: ICUTANK;
 }
 
 interface ICMS {
@@ -172,4 +173,20 @@ interface IVIRTUALACCOUNT {
   managerCode: string;
   queryType: string;
   regDate: string;
+}
+
+interface ICUTANK {
+  queryType: string;
+  tankCuCd: string;
+  tankFirstDate: string;
+  tankInsideDate: string;
+  tankMakeCo: string;
+  tankMakeDate: string;
+  tankMakeSno: string;
+  tankMax: number;
+  tankOutsideDate: string;
+  tankRcv: string;
+  tankSno: string;
+  tankTransmCd: string;
+  tankVol: number;
 }

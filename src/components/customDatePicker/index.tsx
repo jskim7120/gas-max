@@ -19,8 +19,10 @@ const CustomInput = React.forwardRef(
     return (
       <div
         style={{
-          position: "relative",
-          width: "300px",
+          width: "fit-content",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-start",
         }}
         onClick={props.onClick}
         ref={ref}
@@ -28,21 +30,19 @@ const CustomInput = React.forwardRef(
         <Input
           register={props.register}
           errors={props.errors}
-          label={props.label}
-          style={{ border: "1px solid #e6e5e5", width: "100%" }}
+          label={props.label && props.label}
+          style={{ border: "1px solid #e6e5e5" }}
         />
         <div
           style={{
-            position: "absolute",
             width: "30px",
             height: "25px",
-            right: "5px",
-            top: "5px",
             padding: "0px 0 0 9px",
             background: "#fff",
             border: "1px solid #e6e5e5",
             borderTopRightRadius: "4px",
             borderBottomRightRadius: "4px",
+            margin: "0 5px 0 -8px",
           }}
         >
           <img src={CalendarIcon} />
@@ -62,7 +62,7 @@ function CustomDate({
   register?: any;
   reset?: any;
   errors: any;
-  label: string;
+  label?: string;
   name: string;
 }) {
   const handleDateChange = (date: Date) => {
@@ -81,7 +81,11 @@ function CustomDate({
         showYearDropdown
         // dateFormat="MM/dd/yyyy h:mm aa"
         customInput={
-          <CustomInput register={register} errors={errors} label={label} />
+          <CustomInput
+            register={register}
+            errors={errors}
+            label={label && label}
+          />
         }
       />
     </>
