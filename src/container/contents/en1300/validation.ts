@@ -10,7 +10,6 @@ export const schema = yup.object({
   jpKg: yup
     .number()
     .typeError("숫자만 입력")
-    .max(10)
     .required()
     .transform((_, val) => {
       return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
@@ -19,7 +18,6 @@ export const schema = yup.object({
   jpIndanga: yup
     .number()
     .typeError("숫자만 입력")
-    .max(10)
     .required()
     .transform((_, val) => {
       return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
@@ -28,7 +26,6 @@ export const schema = yup.object({
   jpOutdanga: yup
     .number()
     .typeError("숫자만 입력")
-    .max(10)
     .required()
     .transform((_, val) => {
       return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
@@ -37,7 +34,6 @@ export const schema = yup.object({
   jpIntong: yup
     .number()
     .typeError("숫자만 입력")
-    .max(10)
     .required()
     .transform((_, val) => {
       return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
@@ -46,7 +42,6 @@ export const schema = yup.object({
   jpOuttong: yup
     .number()
     .typeError("숫자만 입력")
-    .max(10)
     .required()
     .transform((_, val) => {
       return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
@@ -55,7 +50,6 @@ export const schema = yup.object({
   jpBaedal: yup
     .number()
     .typeError("숫자만 입력")
-    .max(10)
     .required()
     .transform((_, val) => {
       return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
@@ -64,7 +58,6 @@ export const schema = yup.object({
   jpSort: yup
     .number()
     .typeError("숫자만 입력")
-    .max(10)
     .required()
     .transform((_, val) => {
       return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
@@ -73,7 +66,6 @@ export const schema = yup.object({
   jpKghigh: yup
     .number()
     .typeError("숫자만 입력")
-    .max(10)
     .required()
     .transform((_, val) => {
       return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
