@@ -55,6 +55,7 @@ function EN1500({
       });
       gv.sortingOptions.enabled = true;
       gv.displayOptions._selectionStyle = "singleRow";
+      gv.setEditOptions({ editable: false });
       gv.displayOptions._selectionDisplay = "row";
 
       gv.setCurrent({
