@@ -5,6 +5,7 @@ import { closeModal } from "app/state/modal/modalSlice";
 import CustomerModal from "./customModals/customerModal";
 import MenuModal from "./customModals/menuModal";
 import InfoModal from "./customModals/infoModal";
+import CM1105Modal from "./customModals/cm1105Modal";
 import AccountModal from "./customModals/accountModal";
 import DelModal from "./customModals/delModal";
 
@@ -28,7 +29,7 @@ const PopupContiner = styled.div<{ type: string }>`
   position: fixed;
 
   ${(props) =>
-    props.type === "customerModal" &&
+    (props.type === "customerModal" || props.type === "cm1100Modal") &&
     `
       top: 50%;
       left: 50%;  
@@ -77,6 +78,7 @@ function Popup() {
             {type === "menuModal" && <MenuModal />}
             {type === "accountModal" && <AccountModal />}
             {type === "infoModal" && <InfoModal />}
+            {type === "cm1100Modal" && <CM1105Modal />}
             {type === "delModal" && <DelModal />}
           </Suspense>
         </PopupContiner>

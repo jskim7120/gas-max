@@ -35,8 +35,10 @@ export const List = styled.li<{ isActive: boolean }>`
 
 export const TabContentWrapper = styled.div`
   width: 100%;
-  height: 240px;
-  padding: 10px;
+  min-height: 240px;
+  height: auto;
+  padding: 20px 15px;
+
   border: 1px solid #707070;
   border-radius: 0 0 8px 8px;
 

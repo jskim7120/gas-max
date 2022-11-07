@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { InputSize } from "components/componentsType";
+import { InputSize, FieldKind } from "components/componentsType";
 
 // import {
 //   Path,
@@ -24,6 +24,15 @@ export const getInputSize = (size?: InputSize) => {
   }
 };
 
+export const getInputKind = (kind?: FieldKind) => {
+  switch (kind) {
+    case FieldKind.BORDER:
+      return {
+        border: "1px solid #e6e5e5",
+      };
+  }
+};
+
 interface IInputProps {
   // name: Path<IFormProps>;
   // register: UseFormRegister<IFormProps>;
@@ -45,6 +54,7 @@ interface IInputProps {
   defaultValue?: any;
   optionSlt?: any;
   maxLength?: string;
+  kind?: FieldKind;
   textAlign?: string;
 }
 
@@ -62,7 +72,9 @@ export const Input = ({
   style,
   className,
   maxLength,
+  kind,
   textAlign,
+
 }: IInputProps) => {
   return (
     <InputWrapper fullWidth={fullWidth}>
@@ -86,6 +98,7 @@ export const Input = ({
           style={style}
           className={className}
           maxLength={maxLength && maxLength}
+          kind={kind && kind}
           textAlign={textAlign && textAlign}
         />
       </FormGroup>
@@ -124,6 +137,7 @@ const InputWrapper = styled.div<{ fullWidth?: boolean }>`
 export const InputForm = styled.input<{
   inputSize?: InputSize;
   fullWidth?: boolean;
+  kind?: FieldKind;
   textAlign?: string;
 }>`
   height: 25px;
@@ -132,7 +146,6 @@ export const InputForm = styled.input<{
   flex: ${(props) => props.fullWidth && "1"};
   text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
   border-radius: 4px;
-  border: 1px solid transparent;
   outline: none;
   display: inline-block;
   padding: 0 6px;
@@ -153,6 +166,9 @@ export const InputForm = styled.input<{
       background: #fff;
     }
   }
+
+  border: ${(props) =>
+    props.kind ? getInputKind(props.kind)?.border : "1px solid gray"};
 `;
 
 export const ErrorText = styled.p`
@@ -165,6 +181,7 @@ export const ErrorText = styled.p`
 export const FormGroup = styled.div`
   display: flex;
   gap: 4px;
+  align-items: center;
 
   input,
   select {
@@ -194,7 +211,29 @@ export const Label = styled.label<{ labelLong?: boolean; style?: any }>`
   white-space: nowrap;
 `;
 
-export const Field = styled.div``;
+export const Field = styled.div<{ flex?: boolean }>`
+  display: ${(props) => props.flex && "flex"};
+
+  p {
+    font-family: "NotoSansKRRegular";
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .gray-title {
+    width: 55px;
+    background: #e8ecf1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.outer-border {
+    border: 1px solid #e8ecf1;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
+`;
 
 export const Divider = styled.div`
   height: 1px;
@@ -229,10 +268,10 @@ export const Wrapper = styled.div<{
   align-items: ${(props) => props.grid && "center"};
 `;
 
-export const Select = styled.select`
+export const Select = styled.select<{ kind?: FieldKind }>`
   height: 25px;
   border-radius: 4px;
-  border: 1px solid transparent;
+
   outline: none;
   font-family: "NotoSansKRRegular";
   font-size: 12px;
@@ -246,6 +285,9 @@ export const Select = styled.select`
   option {
     background: #fff;
   }
+
+  border: ${(props) =>
+    props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
 `;
 
 export const InfoDesc = styled.div`
