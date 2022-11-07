@@ -8,6 +8,7 @@ import EN1200 from "container/contents/en1200";
 import EN1800 from "container/contents/en1800";
 import EN1900 from "container/contents/en1900";
 import EN2000 from "container/contents/en2000";
+import CM1100 from "container/contents/cm1100";
 
 export const getContent = (id: any, depthFullName: string) => {
   switch (id) {
@@ -33,5 +34,7 @@ export const getContent = (id: any, depthFullName: string) => {
       return <EN1900 depthFullName={depthFullName} menuId={id} />;
     case "EN2000":
       return <EN2000 depthFullName={depthFullName} menuId={id} />;
+    case "CM1100":
+      return <CM1100 depthFullName={depthFullName} menuId={id} />;
   }
 };
