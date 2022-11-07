@@ -361,13 +361,13 @@ function CM1100Page({
           </div>
           <div className="button-wrapper">
             <Button
-              text="삭제"
+              text="검색"
               icon={<MagnifyingGlass />}
               style={{ marginRight: "5px", background: "red" }}
               type="submit"
             />
             <Button
-              text="삭제"
+              text="엑셀"
               icon={<ExcelIcon />}
               style={{ marginRight: "5px", background: "gray" }}
               type="button"
