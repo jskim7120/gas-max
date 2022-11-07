@@ -150,18 +150,19 @@ function CM1100Page({
           </div>
           <div className="buttons">
             <Button
-              text="등록"
+              text="수정"
               icon={<Plus />}
               style={{ marginRight: "5px" }}
               type="button"
             />
+
             <Button
-              text="삭제"
-              icon={<Trash />}
+              text="취소"
+              icon={<Reset />}
               style={{ marginRight: "5px" }}
               type="button"
             />
-            <Button text="취소" icon={<Reset />} type="button" />
+            <Button text="삭제" icon={<Trash />} type="button" />
           </div>
         </DetailHeader>
         <SearchWrapper>
