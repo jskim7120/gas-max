@@ -30,12 +30,25 @@ import { ImageWrapper } from "../style";
 interface IForm {
   selected: any;
   fetchData: any;
+  menuId: string;
+  setData: any;
+  selectedRowIndex: number;
+  setSelected: any;
+  setSelectedRowIndex: any;
 }
 const base = "/app/EN1600/";
 
 const Form = React.forwardRef(
   (
-    { selected, fetchData }: IForm,
+    {
+      selected,
+      fetchData,
+      menuId,
+      setData,
+      selectedRowIndex,
+      setSelected,
+      setSelectedRowIndex,
+    }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
@@ -127,7 +140,9 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(path, formValues);
           if (response.status === 200) {
-            toast.success("Deleted");
+            toast.success("Deleted", {
+              autoClose: 500,
+            });
             await fetchData();
           }
         } catch (err) {
@@ -169,9 +184,20 @@ const Form = React.forwardRef(
         const response: any = await API.post(path, formValues);
 
         if (response.status === 200) {
-          toast.success("Action successfull");
+          if (isAddBtnClicked) {
+            setData((prev: any) => [formValues, ...prev]);
+            setSelectedRowIndex(0);
+          } else {
+            setData((prev: any) => {
+              prev[selectedRowIndex] = formValues;
+              return [...prev];
+            });
+          }
+          setSelected(formValues);
+          toast.success("Action successfull", {
+            autoClose: 500,
+          });
           setIsAddBtnClicked(false);
-          await fetchData();
         } else {
           toast.error(response?.message);
         }
@@ -206,6 +232,7 @@ const Form = React.forwardRef(
             register={register("swCode")}
             errors={errors["swCode"]?.message}
             maxLength="2"
+            textAlign="right"
           />
           <Field>
             <FormGroup>
@@ -234,11 +261,12 @@ const Form = React.forwardRef(
             label="부서명"
             register={register("swDepartment")}
             errors={errors["swDepartment"]?.message}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
         <Wrapper>
-          <Field>
+          <Field style={{ marginRight: "52px" }}>
             <FormGroup>
               <Label>업무구분</Label>
               <Select {...register("swGubun")}>
@@ -270,6 +298,7 @@ const Form = React.forwardRef(
             label="핸드폰"
             register={register("swHp")}
             errors={errors["swHp"]?.message}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
@@ -294,6 +323,7 @@ const Form = React.forwardRef(
             label="주소"
             register={register("swZipcode")}
             errors={errors["swZipcode"]?.message}
+            textAlign="right"
           />
           <DaumAddress setAddress={setAddress} />
           <Input
@@ -330,7 +360,7 @@ const Form = React.forwardRef(
           >
             <IconInfo />
             <span style={{ color: "#1B8C8E", fontSize: "12px" }}>
-              검침 등록시 미납금액에 대하여 연체료를 부과
+              탱크잔량 원격검침 시스템의 매핑할 사원코드를 지정
             </span>
           </p>
         </Wrapper>
@@ -373,7 +403,7 @@ const Form = React.forwardRef(
               </button>
             </Wrapper>
             <DividerGray />
-            <Wrapper>
+            <Wrapper style={{ width: "fit-content" }}>
               <CustomDate
                 label="입사일"
                 name="swIndate"
@@ -403,11 +433,13 @@ const Form = React.forwardRef(
                 label="급여액"
                 register={register("swPaykum")}
                 errors={errors["swPaykum"]?.message}
+                textAlign="right"
               />
               <Input
                 label="급여일"
                 register={register("swPaydate")}
                 errors={errors["swPaydate"]?.message}
+                textAlign="right"
               />
             </Wrapper>
           </div>
@@ -495,7 +527,7 @@ const Form = React.forwardRef(
         >
           <IconInfo />
           <span style={{ color: "#1B8C8E", fontSize: "12px" }}>
-            검침 등록시 미납금액에 대하여 연체료를 부과
+            퇴사사원은 판매등록 사원에서 제외 됩니다.
           </span>
         </p>
         <DividerGray />

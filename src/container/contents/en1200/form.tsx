@@ -2,7 +2,6 @@ import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { useDispatch } from "app/store";
 import {
   Input,
   Select,
@@ -32,16 +31,27 @@ import { ImageWrapper } from "../style";
 interface IForm {
   selected: any;
   fetchData: any;
+  menuId: string;
+  setData: any;
+  selectedRowIndex: number;
+  setSelected: any;
+  setSelectedRowIndex: any;
 }
 const base = "/app/EN1200/";
 
 const Form = React.forwardRef(
   (
-    { selected, fetchData }: IForm,
+    {
+      selected,
+      fetchData,
+      menuId,
+      setData,
+      selectedRowIndex,
+      setSelected,
+      setSelectedRowIndex,
+    }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const dispatch = useDispatch();
-
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [addr, setAddress] = useState<string>("");
     const [image, setImage] = useState<{ name: string }>();
@@ -117,7 +127,10 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(path, formValues);
           if (response.status === 200) {
-            toast.success("Deleted");
+            toast.success("Deleted", {
+              autoClose: 500,
+            });
+
             await fetchData();
           }
         } catch (err) {
@@ -150,9 +163,20 @@ const Form = React.forwardRef(
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
-          toast.success("Action successful");
+          if (isAddBtnClicked) {
+            setData((prev: any) => [formValues, ...prev]);
+            setSelectedRowIndex(0);
+          } else {
+            setData((prev: any) => {
+              prev[selectedRowIndex] = formValues;
+              return [...prev];
+            });
+          }
+          setSelected(formValues);
+          toast.success("Action successful", {
+            autoClose: 500,
+          });
           setIsAddBtnClicked(false);
-          await fetchData();
         } else {
           toast.error(response.response.data?.message);
         }
@@ -193,11 +217,12 @@ const Form = React.forwardRef(
           <div>
             <Wrapper grid col={2}>
               <Input
-                label="일련번호"
+                label="코드"
                 register={register("saupSno")}
                 errors={errors["saupSno"]?.message}
                 inputSize={InputSize.sm}
                 maxLength="2"
+                textAlign="right"
               />
               <Field>
                 <FormGroup>
@@ -222,6 +247,7 @@ const Form = React.forwardRef(
                 register={register("saupSsno")}
                 errors={errors["saupSsno"]?.message}
                 inputSize={InputSize.md}
+                textAlign="right"
               />
               <Input
                 label="종사업자번호"
@@ -251,6 +277,7 @@ const Form = React.forwardRef(
                 label="주소"
                 register={register("saupZipcode")}
                 errors={errors["saupZipcode"]?.message}
+                textAlign="right"
               />
               <DaumAddress setAddress={setAddress} />
               <Input
@@ -288,7 +315,7 @@ const Form = React.forwardRef(
               <div>
                 <Wrapper style={{ alignItems: "center" }}>
                   <Input
-                    label="서명화일"
+                    label="도장이미지"
                     register={register("saupStampImg")}
                     errors={errors["saupStampImg"]?.message}
                     value={image?.name}
@@ -398,6 +425,7 @@ const Form = React.forwardRef(
                 label="아이디"
                 register={register("saupEdiId")}
                 errors={errors["saupEdiId"]?.message}
+                textAlign="right"
               />
               <Input
                 label="비밀번호"
@@ -417,6 +445,7 @@ const Form = React.forwardRef(
                 label="전화번호"
                 register={register("saupEdiSmsNo")}
                 errors={errors["saupEdiSmsNo"]?.message}
+                textAlign="right"
               />
             </Wrapper>
             <DividerGray />
@@ -456,7 +485,7 @@ const Form = React.forwardRef(
                 }}
               >
                 <SearchIcon />
-                &nbsp; 찾기efrer
+                &nbsp; 찾기
                 <input
                   type="file"
                   style={{

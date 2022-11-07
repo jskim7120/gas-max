@@ -7,15 +7,20 @@ import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { formatDateToString } from "helpers/dateFormat";
 import { columns, fields } from "./data";
+import {
+  openModal,
+  closeModal,
+  addDeleteMenuId,
+  setIsDelete,
+} from "app/state/modal/modalSlice";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
-let selectedRowIndex: number = 0;
 
 function EN1700({
   depthFullName,
@@ -30,17 +35,9 @@ function EN1700({
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
+  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
-  useEffect(() => {
-    const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
-    if (storagegridRows) {
-      dispatch(resetFromStorage({ rows: storagegridRows }));
-      const row = storagegridRows.find((row: any) => row.tabId === menuId);
-      selectedRowIndex = row && row.rowIndex;
-    } else {
-      selectedRowIndex = 0;
-    }
-  }, []);
+  const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
     fetchData();
@@ -75,7 +72,7 @@ function EN1700({
       gv.onSelectionChanged = () => {
         const itemIndex: any = gv.getCurrent().dataRow;
         setSelected(data[itemIndex]);
-        dispatch(setRowIndex({ tabId: menuId, rowIndex: itemIndex }));
+        setSelectedRowIndex(itemIndex);
       };
 
       return () => {
@@ -86,20 +83,34 @@ function EN1700({
     }
   }, [data]);
 
+  useEffect(() => {
+    if (isDelete.menuId === menuId && isDelete.isDelete) {
+      deleteRowGrid();
+    }
+  }, [isDelete.isDelete]);
+
   const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN1700/list");
-
       if (data) {
-        console.log("------------------------", data);
-
         setData(data);
-        setSelected(data[selectedRowIndex]);
+        setSelected(data[0]);
+        setSelectedRowIndex(0);
       }
     } catch (error) {
       console.log("Couldn't fetch CAR data.", error);
     }
   };
+
+  function deleteRowGrid() {
+    try {
+      formRef.current.setIsAddBtnClicked(false);
+      formRef.current.crud("delete");
+      dispatch(addDeleteMenuId({ menuId: "" }));
+      dispatch(setIsDelete({ isDelete: false }));
+      dispatch(closeModal());
+    } catch (error) {}
+  }
 
   if (!data) return <p>...Loading</p>;
 
@@ -122,8 +133,8 @@ function EN1700({
             icon={<Trash />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
-              formRef.current.crud("delete");
+              dispatch(openModal({ type: "delModal" }));
+              dispatch(addDeleteMenuId({ menuId: menuId }));
             }}
           />
           <Button
@@ -148,7 +159,16 @@ function EN1700({
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form selected={selected} ref={formRef} fetchData={fetchData} />
+          <Form
+            selected={selected}
+            ref={formRef}
+            fetchData={fetchData}
+            menuId={menuId}
+            setData={setData}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            setSelected={setSelected}
+          />
         </DetailWrapper>
       </Wrapper>
       <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />

@@ -29,12 +29,28 @@ import API from "app/axios";
 interface IForm {
   selected: any;
   fetchData: any;
+  menuId: string;
+  setData: any;
+  selectedRowIndex: number;
+  setSelected: any;
+  setSelectedRowIndex: any;
 }
 const base = "/app/EN1500/";
 
-const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
+const Form = (
+  {
+    selected,
+    fetchData,
+    menuId,
+    setData,
+    selectedRowIndex,
+    setSelected,
+    setSelectedRowIndex,
+  }: IForm,
+  ref: React.ForwardedRef<any>
+) => {
   const dispatch = useDispatch();
-  const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
+  // const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
   const [isClickedAdd, setIsClikedAdd] = useState(false);
   const [tabId, setTabId] = useState(0);
 
@@ -90,9 +106,20 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
     try {
       const response = await API.post(path, formValues);
       if (response.status === 200) {
-        setIsAddBtnClicked(false);
-        await fetchData();
-        toast.success("Action successful");
+        // if (isAddBtnClicked) {
+        //   setData((prev: any) => [formValues, ...prev]);
+        //   setSelectedRowIndex(0);
+        // } else {
+        setData((prev: any) => {
+          prev[selectedRowIndex] = formValues;
+          return [...prev];
+        });
+        // }
+        setSelected(formValues);
+        // setIsAddBtnClicked(false);
+        toast.success("Action successful", {
+          autoClose: 500,
+        });
       }
     } catch (err: any) {
       toast.error(err?.message);
@@ -105,7 +132,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
     },
 
     resetForm,
-    setIsAddBtnClicked,
+    // setIsAddBtnClicked,
   }));
 
   const data1500 = [
@@ -115,6 +142,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
         <Input
           register={register("jnCost280")}
           errors={errors["jnCost280"]?.message}
+          textAlign="right"
         />
       ),
     },
@@ -124,6 +152,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
         <Input
           register={register("jnCost600")}
           errors={errors["jnCost600"]?.message}
+          textAlign="right"
         />
       ),
     },
@@ -133,6 +162,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
         <Input
           register={register("jnCost1000")}
           errors={errors["jnCost1000"]?.message}
+          textAlign="right"
         />
       ),
     },
@@ -142,6 +172,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
         <Input
           register={register("jnCost1500")}
           errors={errors["jnCost1500"]?.message}
+          textAlign="right"
         />
       ),
     },
@@ -151,6 +182,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
         <Input
           register={register("jnCost2000")}
           errors={errors["jnCost2000"]?.message}
+          textAlign="right"
         />
       ),
     },
@@ -160,6 +192,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
         <Input
           register={register("jnCost2500")}
           errors={errors["jnCost2500"]?.message}
+          textAlign="right"
         />
       ),
     },
@@ -169,6 +202,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
         <Input
           register={register("jnCost7000")}
           errors={errors["jnCost7000"]?.message}
+          textAlign="right"
         />
       ),
     },
@@ -236,6 +270,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
                 label="표준기화율"
                 register={register("jnKgdanga")}
                 errors={errors["jnKgdanga"]?.message}
+                textAlign="right"
               />
             </FormGroup>
           </Field>
@@ -317,7 +352,10 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
                 {isJnR ? (
                   "error occured"
                 ) : (
-                  <Select {...register("jnR")}>
+                  <Select
+                    {...register("jnR")}
+                    style={{ minWidth: "104px", textAlign: "end" }}
+                  >
                     {jnR?.map((obj, idx) => (
                       <option key={idx} value={obj.code1}>
                         {obj.codeName}
@@ -339,6 +377,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
                   label="안전관리비"
                   register={register("jnAnkum")}
                   errors={errors["jnAnkum"]?.message}
+                  textAlign="right"
                 />
                 <span>원</span>
               </FormGroup>
@@ -351,6 +390,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
                   label="정기검침일"
                   register={register("jnGumdate")}
                   errors={errors["jnGumdate"]?.message}
+                  textAlign="right"
                 />
                 <span>일</span>
               </FormGroup>
@@ -363,7 +403,10 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
                 {isJnSukumtypeError ? (
                   "error occured"
                 ) : (
-                  <Select {...register("jnSukumtype")}>
+                  <Select
+                    {...register("jnSukumtype")}
+                    style={{ minWidth: "104px" }}
+                  >
                     {jnSukumtype?.map((obj, idx) => (
                       <option key={idx} value={obj.code1}>
                         {obj.codeName}
@@ -384,6 +427,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
                   label="연체율"
                   register={register("jnPer")}
                   errors={errors["jnPer"]?.message}
+                  textAlign="right"
                 />
                 <span>%</span>
               </FormGroup>

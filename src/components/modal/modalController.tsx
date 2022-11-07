@@ -7,6 +7,7 @@ import MenuModal from "./customModals/menuModal";
 import InfoModal from "./customModals/infoModal";
 import CM1105Modal from "./customModals/cm1105Modal";
 import AccountModal from "./customModals/accountModal";
+import DelModal from "./customModals/delModal";
 
 const PopupArea = styled.section`
   position: fixed;
@@ -62,7 +63,7 @@ function Popup() {
   const { modalIsOpen, type } = useSelector((state) => state.modal);
 
   const modalClose = () => {
-    if (type !== "customerModal") {
+    if (type !== "customerModal" && type !== "delModal") {
       dispatch(closeModal());
     }
   };
@@ -78,6 +79,7 @@ function Popup() {
             {type === "accountModal" && <AccountModal />}
             {type === "infoModal" && <InfoModal />}
             {type === "cm1100Modal" && <CM1105Modal />}
+            {type === "delModal" && <DelModal />}
           </Suspense>
         </PopupContiner>
       </PopupArea>

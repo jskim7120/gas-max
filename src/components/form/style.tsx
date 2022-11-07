@@ -13,6 +13,8 @@ export const getInputSize = (size?: InputSize) => {
   switch (size) {
     case InputSize.sm:
       return `100px`;
+    case InputSize.en1300:
+      return `130px`;
     case InputSize.md:
       return `250px`;
     case InputSize.lg:
@@ -71,11 +73,21 @@ export const Input = ({
   className,
   maxLength,
   kind,
+  textAlign,
+
 }: IInputProps) => {
   return (
     <InputWrapper fullWidth={fullWidth}>
       <FormGroup>
-        {label !== undefined && <Label labelLong={labelLong}>{label}</Label>}
+        {/* {label !== undefined && <Label labelLong={labelLong}>{label}</Label>} */}
+        {label !== undefined &&
+          (label === "~" ? (
+            <Label style={{ minWidth: "auto" }} labelLong={labelLong}>
+              {label}
+            </Label>
+          ) : (
+            <Label labelLong={labelLong}>{label}</Label>
+          ))}
         <InputForm
           type={type ? type : "text"}
           inputSize={inputSize && inputSize}
@@ -87,6 +99,7 @@ export const Input = ({
           className={className}
           maxLength={maxLength && maxLength}
           kind={kind && kind}
+          textAlign={textAlign && textAlign}
         />
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>
@@ -125,11 +138,13 @@ export const InputForm = styled.input<{
   inputSize?: InputSize;
   fullWidth?: boolean;
   kind?: FieldKind;
+  textAlign?: string;
 }>`
   height: 25px;
   width: ${(props) =>
     props.inputSize ? getInputSize(props.inputSize) : "100%"};
   flex: ${(props) => props.fullWidth && "1"};
+  text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
   border-radius: 4px;
   outline: none;
   display: inline-block;
@@ -260,6 +275,7 @@ export const Select = styled.select<{ kind?: FieldKind }>`
   outline: none;
   font-family: "NotoSansKRRegular";
   font-size: 12px;
+  min-width: 130px;
 
   &:hover,
   &:focus {

@@ -1,4 +1,4 @@
-export interface IFormProps {
+export interface ISANGPUM {
   areaCode: string;
   areaName: string;
   jpBaedal: number;

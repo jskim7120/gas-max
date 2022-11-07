@@ -3,18 +3,22 @@ import { GridView, LocalDataProvider } from "realgrid";
 import API from "app/axios";
 import Button from "components/button/button";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
+import {
+  openModal,
+  closeModal,
+  addDeleteMenuId,
+  setIsDelete,
+} from "app/state/modal/modalSlice";
 import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { columns, fields } from "./data";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
-import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
 import { useDispatch, useSelector } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
-let selectedRowIndex: number = 0;
 
 function EN1100({
   depthFullName,
@@ -29,19 +33,9 @@ function EN1100({
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState();
+  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
-  //const gridSelectedRowState = useSelector((state) => state.gridSelectedRow);
-
-  useEffect(() => {
-    const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
-    if (storagegridRows) {
-      dispatch(resetFromStorage({ rows: storagegridRows }));
-      const row = storagegridRows.find((row: any) => row.tabId === menuId);
-      selectedRowIndex = row && row.rowIndex;
-    } else {
-      selectedRowIndex = 0;
-    }
-  }, []);
+  const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
     fetchData();
@@ -63,28 +57,21 @@ function EN1100({
       gv.setFooter({ visible: false });
       gv.setOptions({
         indicator: { visible: true },
-        checkBar: { visible: true },
+        checkBar: { visible: false },
         stateBar: { visible: false },
       });
       gv.sortingOptions.enabled = true;
       gv.displayOptions._selectionStyle = "singleRow";
 
-      if (data.length > 0) {
-        gv.setCurrent({
-          dataRow: selectedRowIndex,
-        });
-        // gv.setSelection({ style: "rows", startRow: 0, endRow: 0 });
+      gv.setCurrent({
+        dataRow: selectedRowIndex,
+      });
 
-        // gv.onItemChecked = () => {
-        //   var items = gv.getCheckedItems();
-        // };
-
-        gv.onSelectionChanged = () => {
-          const itemIndex: any = gv.getCurrent().dataRow;
-          setSelected(data[itemIndex]);
-          dispatch(setRowIndex({ tabId: menuId, rowIndex: itemIndex }));
-        };
-      }
+      gv.onSelectionChanged = () => {
+        const itemIndex: any = gv.getCurrent().dataRow;
+        setSelected(data[itemIndex]);
+        setSelectedRowIndex(itemIndex);
+      };
 
       return () => {
         dp.clearRows();
@@ -94,17 +81,35 @@ function EN1100({
     }
   }, [data]);
 
+  useEffect(() => {
+    if (isDelete.menuId === menuId && isDelete.isDelete) {
+      deleteRowGrid();
+    }
+  }, [isDelete.isDelete]);
+
   const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN1100/list");
       if (data) {
         setData(data);
-        setSelected(data[selectedRowIndex]);
+        setSelected(data[0]);
+        setSelectedRowIndex(0);
       }
     } catch (err) {
       console.log("JNOTRY DATA fetch error =======>", err);
     }
   };
+
+  function deleteRowGrid() {
+    try {
+      formRef.current.setIsAddBtnClicked(false);
+      formRef.current.crud("delete");
+      dispatch(addDeleteMenuId({ menuId: "" }));
+      dispatch(setIsDelete({ isDelete: false }));
+      dispatch(closeModal());
+    } catch (error) {}
+  }
+
   if (!data) return <p>...Loading</p>;
   return (
     <>
@@ -125,8 +130,8 @@ function EN1100({
             icon={<Trash />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
-              formRef.current.crud("delete");
+              dispatch(openModal({ type: "delModal" }));
+              dispatch(addDeleteMenuId({ menuId: menuId }));
             }}
           />
           <Button
@@ -156,6 +161,10 @@ function EN1100({
             ref={formRef}
             fetchData={fetchData}
             menuId={menuId}
+            setData={setData}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            setSelected={setSelected}
           />
         </DetailWrapper>
       </Wrapper>

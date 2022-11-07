@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "app/store";
+
 import {
   Input,
   Select,
@@ -23,22 +24,31 @@ import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
 import API from "app/axios";
-import { setRowIndex } from "app/state/gridSelectedRowSlice";
 
 interface IForm {
   selected: any;
   fetchData: any;
   menuId: string;
+  setData: any;
+  selectedRowIndex: number;
+  setSelected: any;
+  setSelectedRowIndex: any;
 }
 const base = "/app/EN1100/";
 
 const Form = React.forwardRef(
   (
-    { selected, fetchData, menuId }: IForm,
+    {
+      selected,
+      fetchData,
+      menuId,
+      setData,
+      selectedRowIndex,
+      setSelected,
+      setSelectedRowIndex,
+    }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const dispatch = useDispatch();
-
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [tabId, setTabId] = useState(0);
     const [addr, setAddress] = useState<string>("");
@@ -120,8 +130,9 @@ const Form = React.forwardRef(
           const response: any = await API.post(path, formValues);
 
           if (response.status === 200) {
-            toast.success("Deleted");
-            dispatch(setRowIndex({ tabId: menuId, rowIndex: 0 }));
+            toast.success("Deleted", {
+              autoClose: 500,
+            });
             await fetchData();
           } else {
             toast.error(response?.response?.message);
@@ -150,10 +161,20 @@ const Form = React.forwardRef(
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
-          toast.success("Action successful");
-          dispatch(setRowIndex({ tabId: menuId, rowIndex: 0 }));
+          if (isAddBtnClicked) {
+            setData((prev: any) => [formValues, ...prev]);
+            setSelectedRowIndex(0);
+          } else {
+            setData((prev: any) => {
+              prev[selectedRowIndex] = formValues;
+              return [...prev];
+            });
+          }
+          setSelected(formValues);
+          toast.success("Action successful", {
+            autoClose: 500,
+          });
           setIsAddBtnClicked(false);
-          await fetchData();
         } else {
           toast.error(response?.response?.data?.message);
         }
@@ -175,6 +196,7 @@ const Form = React.forwardRef(
             errors={errors["areaCode"]?.message}
             fullWidth
             maxLength="2"
+            textAlign="right"
           />
           <Input
             label="영업소명"
@@ -188,6 +210,7 @@ const Form = React.forwardRef(
             label="사업자번호"
             register={register("jnSsno")}
             errors={errors["jnSsno"]?.message}
+            textAlign="right"
           />
           <Input
             label="상호"
@@ -206,6 +229,7 @@ const Form = React.forwardRef(
             label="주소"
             register={register("jnZipcode")}
             errors={errors["jnZipcode"]?.message}
+            textAlign="right"
           />
           <DaumAddress setAddress={setAddress} />
           <Input
@@ -244,17 +268,20 @@ const Form = React.forwardRef(
             label="대표전화"
             register={register("jnTel1")}
             errors={errors["jnTel1"]?.message}
+            textAlign="right"
           />
           <Input
             label="대표전화2"
             register={register("jnTel2")}
             errors={errors["jnTel2"]?.message}
+            textAlign="right"
           />
 
           <Input
             label="팩스"
             register={register("jnFax")}
             errors={errors["jnFax"]?.message}
+            textAlign="right"
           />
         </Wrapper>
         <Divider />
@@ -268,6 +295,7 @@ const Form = React.forwardRef(
             label="전화"
             register={register("jnAntel1")}
             errors={errors["jnAntel1"]?.message}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
@@ -281,6 +309,7 @@ const Form = React.forwardRef(
             label="전화"
             register={register("jnAntel2")}
             errors={errors["jnAntel2"]?.message}
+            textAlign="right"
           />
         </Wrapper>
         <Divider />
@@ -369,6 +398,7 @@ const Form = React.forwardRef(
             labelLong
             register={register("jnCMngNo")}
             errors={errors["jnCMngNo"]?.message}
+            textAlign="right"
           />
           <Field>
             <FormGroup>

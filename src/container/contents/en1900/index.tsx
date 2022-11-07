@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { columns, fields } from "./data";
+import {
+  openModal,
+  closeModal,
+  addDeleteMenuId,
+  setIsDelete,
+} from "app/state/modal/modalSlice";
 import Button from "components/button/button";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import { ButtonColor } from "components/componentsType";
@@ -9,12 +15,11 @@ import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import API from "app/axios";
 import Form from "./form";
 import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
-let selectedRowIndex: number = 0;
 
 function EN1900({
   depthFullName,
@@ -29,15 +34,8 @@ function EN1900({
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>();
-
-  useEffect(() => {
-    const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
-    if (storagegridRows) {
-      dispatch(resetFromStorage({ rows: storagegridRows }));
-      const row = storagegridRows.find((row: any) => row.tabId === menuId);
-      selectedRowIndex = row && row.rowIndex;
-    }
-  }, []);
+  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
     fetchData();
@@ -65,17 +63,15 @@ function EN1900({
       gv.sortingOptions.enabled = true;
       gv.displayOptions._selectionStyle = "singleRow";
 
-      if (data.length > 0) {
-        gv.setCurrent({
-          dataRow: selectedRowIndex,
-        });
+      gv.setCurrent({
+        dataRow: selectedRowIndex,
+      });
 
-        gv.onSelectionChanged = () => {
-          const itemIndex: any = gv.getCurrent().dataRow;
-          setSelected(data[itemIndex]);
-          dispatch(setRowIndex({ selectedRowIndex: itemIndex }));
-        };
-      }
+      gv.onSelectionChanged = () => {
+        const itemIndex: any = gv.getCurrent().dataRow;
+        setSelected(data[itemIndex]);
+        setSelectedRowIndex(itemIndex);
+      };
 
       return () => {
         dp.clearRows();
@@ -85,17 +81,34 @@ function EN1900({
     }
   }, [data]);
 
+  useEffect(() => {
+    if (isDelete.menuId === menuId && isDelete.isDelete) {
+      deleteRowGrid();
+    }
+  }, [isDelete.isDelete]);
+
   const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN1900/list");
       if (data) {
         setData(data);
-        setSelected(data[selectedRowIndex]);
+        setSelected(data[0]);
+        setSelectedRowIndex(0);
       }
     } catch (err) {
       console.log("DATA fetch error =======>", err);
     }
   };
+
+  function deleteRowGrid() {
+    try {
+      formRef.current.setIsAddBtnClicked(false);
+      formRef.current.crud("delete");
+      dispatch(addDeleteMenuId({ menuId: "" }));
+      dispatch(setIsDelete({ isDelete: false }));
+      dispatch(closeModal());
+    } catch (error) {}
+  }
 
   return (
     <>
@@ -116,8 +129,8 @@ function EN1900({
             icon={<Trash />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
-              formRef.current.crud("delete");
+              dispatch(openModal({ type: "delModal" }));
+              dispatch(addDeleteMenuId({ menuId: menuId }));
             }}
           />
           <Button
@@ -142,7 +155,16 @@ function EN1900({
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form selected={selected} ref={formRef} fetchData={fetchData} />
+          <Form
+            selected={selected}
+            ref={formRef}
+            fetchData={fetchData}
+            menuId={menuId}
+            setData={setData}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            setSelected={setSelected}
+          />
         </DetailWrapper>
       </Wrapper>
       <DataGridFooter dataLength={data.length > 0 ? data.length : 0} />

@@ -19,6 +19,7 @@ export enum ButtonTextColor {
 
 export enum InputSize {
   sm = "sm",
+  en1300 = "en1300",
   lg = "lg",
   md = "md",
   xl = "xl",

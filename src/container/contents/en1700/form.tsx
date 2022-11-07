@@ -33,6 +33,11 @@ import {
 interface IForm {
   selected: any;
   fetchData: any;
+  menuId: string;
+  setData: any;
+  selectedRowIndex: number;
+  setSelected: any;
+  setSelectedRowIndex: any;
 }
 const base = "/app/EN1700/";
 
@@ -61,10 +66,17 @@ const radioOptions = [
 
 const Form = React.forwardRef(
   (
-    { selected, fetchData }: IForm,
+    {
+      selected,
+      fetchData,
+      menuId,
+      setData,
+      selectedRowIndex,
+      setSelected,
+      setSelectedRowIndex,
+    }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const dispatch = useDispatch();
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -132,7 +144,9 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(path, formValues);
           if (response.status === 200) {
-            toast.success("Deleted");
+            toast.success("Deleted", {
+              autoClose: 500,
+            });
             await fetchData();
           }
         } catch (err) {
@@ -178,9 +192,20 @@ const Form = React.forwardRef(
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
-          toast.success("Action successful");
+          if (isAddBtnClicked) {
+            setData((prev: any) => [formValues, ...prev]);
+            setSelectedRowIndex(0);
+          } else {
+            setData((prev: any) => {
+              prev[selectedRowIndex] = formValues;
+              return [...prev];
+            });
+          }
+          setSelected(formValues);
+          toast.success("Action successful", {
+            autoClose: 500,
+          });
           setIsAddBtnClicked(false);
-          await fetchData();
         } else {
           toast.error(response.response.data?.message);
         }
@@ -202,6 +227,7 @@ const Form = React.forwardRef(
             errors={errors["caCode"]?.message}
             inputSize={InputSize.sm}
             maxLength="2"
+            textAlign="right"
           />
           <Field>
             <FormGroup>
@@ -275,6 +301,7 @@ const Form = React.forwardRef(
             label="매핑코드"
             register={register("eyeCarCode")}
             errors={errors["eyeCarCode"]?.message}
+            textAlign="right"
           />
           <InfoText text="탱크잔량 원격검침 시스템의 매핑할 차량코드를 지정." />
         </Wrapper>
@@ -292,6 +319,7 @@ const Form = React.forwardRef(
               register={register("caChargeDate")}
               errors={errors["caChargeDate"]?.message}
               inputSize={InputSize.sm}
+              textAlign="right"
             />
           </Field>
         </Wrapper>
@@ -308,6 +336,7 @@ const Form = React.forwardRef(
             register={register("caYear")}
             errors={errors["caYear"]?.message}
             inputSize={InputSize.sm}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
@@ -381,6 +410,7 @@ const Form = React.forwardRef(
             errors={errors["caAmt"]?.message}
             inputSize={InputSize.sm}
             fullWidth
+            textAlign="right"
           />
           <Field style={{ display: "flex", alignItems: "center" }}>
             <Input
@@ -388,6 +418,7 @@ const Form = React.forwardRef(
               register={register("caDiscountM")}
               errors={errors["caDiscountM"]?.message}
               inputSize={InputSize.sm}
+              textAlign="right"
             />
             <p style={{ fontSize: "12px" }}>월</p>
           </Field>
@@ -400,6 +431,7 @@ const Form = React.forwardRef(
             errors={errors["caAmt"]?.message}
             inputSize={InputSize.sm}
             fullWidth
+            textAlign="right"
           />
           <Field>
             <Input
@@ -408,6 +440,7 @@ const Form = React.forwardRef(
               errors={errors["caDiscountAmt"]?.message}
               inputSize={InputSize.sm}
               fullWidth
+              textAlign="right"
             />
           </Field>
         </Wrapper>
@@ -442,12 +475,14 @@ const Form = React.forwardRef(
             register={register("caBtel")}
             errors={errors["caBtel"]?.message}
             inputSize={InputSize.sm}
+            textAlign="right"
           />
           <Input
             label="핸드폰"
             register={register("caBhp")}
             errors={errors["caBhp"]?.message}
             inputSize={InputSize.sm}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
@@ -463,6 +498,7 @@ const Form = React.forwardRef(
             register={register("caBno")}
             errors={errors["caBno"]?.message}
             inputSize={InputSize.sm}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
@@ -513,6 +549,7 @@ const Form = React.forwardRef(
             register={register("caInsuranceAmt")}
             errors={errors["caInsuranceAmt"]?.message}
             inputSize={InputSize.sm}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />

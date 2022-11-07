@@ -2,7 +2,6 @@ import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { useDispatch } from "app/store";
 import {
   Input,
   Select,
@@ -23,16 +22,27 @@ import API from "app/axios";
 interface IForm {
   selected: any;
   fetchData: any;
+  menuId: string;
+  setData: any;
+  selectedRowIndex: number;
+  setSelected: any;
+  setSelectedRowIndex: any;
 }
 const base = "/app/EN1400/";
 
 const Form = React.forwardRef(
   (
-    { selected, fetchData }: IForm,
+    {
+      selected,
+      fetchData,
+      menuId,
+      setData,
+      selectedRowIndex,
+      setSelected,
+      setSelectedRowIndex,
+    }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const dispatch = useDispatch();
-
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -87,7 +97,9 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(path, formValues);
           if (response.status === 200) {
-            toast.success("Deleted");
+            toast.success("Deleted", {
+              autoClose: 500,
+            });
             await fetchData();
           }
         } catch (err) {
@@ -108,9 +120,20 @@ const Form = React.forwardRef(
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
-          toast.success("Action successful");
+          if (isAddBtnClicked) {
+            setData((prev: any) => [formValues, ...prev]);
+            setSelectedRowIndex(0);
+          } else {
+            setData((prev: any) => {
+              prev[selectedRowIndex] = formValues;
+              return [...prev];
+            });
+          }
+          setSelected(formValues);
+          toast.success("Action successful", {
+            autoClose: 500,
+          });
           setIsAddBtnClicked(false);
-          await fetchData();
         } else {
           toast.error(response.response.data?.message);
         }
@@ -151,6 +174,7 @@ const Form = React.forwardRef(
             register={register("bpCode")}
             errors={errors["bpCode"]?.message}
             inputSize={InputSize.md}
+            maxLength="3"
           />
         </Wrapper>
         <Divider />
@@ -187,6 +211,7 @@ const Form = React.forwardRef(
             register={register("bpIndanga")}
             errors={errors["bpIndanga"]?.message}
             inputSize={InputSize.md}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
@@ -196,6 +221,7 @@ const Form = React.forwardRef(
             register={register("bpOutdanga")}
             errors={errors["bpOutdanga"]?.message}
             inputSize={InputSize.md}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />

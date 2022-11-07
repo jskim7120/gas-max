@@ -2,7 +2,6 @@ import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { useDispatch } from "app/store";
 import {
   Item,
   RadioButton,
@@ -20,13 +19,19 @@ import {
   Label,
 } from "components/form/style";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { IFormProps } from "./model";
+import { ISANGPUM } from "./model";
 import { schema } from "./validation";
 import API from "app/axios";
+import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
   fetchData: any;
+  menuId: string;
+  setData: any;
+  selectedRowIndex: number;
+  setSelected: any;
+  setSelectedRowIndex: any;
 }
 const base = "/app/EN1300/";
 
@@ -43,11 +48,17 @@ const radioOptions = [
 
 const Form = React.forwardRef(
   (
-    { selected, fetchData }: IForm,
+    {
+      selected,
+      fetchData,
+      menuId,
+      setData,
+      selectedRowIndex,
+      setSelected,
+      setSelectedRowIndex,
+    }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const dispatch = useDispatch();
-
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -70,7 +81,7 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
-    } = useForm<IFormProps>({
+    } = useForm<ISANGPUM>({
       mode: "onChange",
       resolver: yupResolver(schema),
     });
@@ -82,7 +93,7 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = (type: string) => {
-      if (JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         console.log("type:", type);
         let newData: any = {};
 
@@ -111,7 +122,9 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(path, formValues);
           if (response.status === 200) {
-            toast.success("Deleted");
+            toast.success("Deleted", {
+              autoClose: 500,
+            });
             await fetchData();
           }
         } catch (err) {
@@ -124,19 +137,29 @@ const Form = React.forwardRef(
       }
     };
 
-    const submit = async (data: IFormProps) => {
+    const submit = async (data: ISANGPUM) => {
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
-      console.log("JSON DATA===>", formValues);
 
       try {
         const response: any = await API.post(path, formValues);
 
         if (response.status === 200) {
-          toast.success("Action successfull");
+          if (isAddBtnClicked) {
+            setData((prev: any) => [formValues, ...prev]);
+            setSelectedRowIndex(0);
+          } else {
+            setData((prev: any) => {
+              prev[selectedRowIndex] = formValues;
+              return [...prev];
+            });
+          }
+          setSelected(formValues);
+          toast.success("Action successfull", {
+            autoClose: 500,
+          });
           setIsAddBtnClicked(false);
-          await fetchData();
         } else {
           toast.error(response?.message);
         }
@@ -168,9 +191,12 @@ const Form = React.forwardRef(
         <DividerGray />
         <Wrapper>
           <Input
+            style={{ textAlign: "end" }}
             label="코드"
             register={register("jpCode")}
             errors={errors["jpCode"]?.message}
+            maxLength={"4"}
+            inputSize={InputSize.en1300}
           />
         </Wrapper>
         <Divider />
@@ -179,6 +205,7 @@ const Form = React.forwardRef(
             label="품명"
             register={register("jpName")}
             errors={errors["jpName"]?.message}
+            inputSize={InputSize.en1300}
           />
         </Wrapper>
         <DividerGray />
@@ -187,6 +214,7 @@ const Form = React.forwardRef(
             label="규격"
             register={register("jpSpec")}
             errors={errors["jpSpec"]?.message}
+            inputSize={InputSize.en1300}
           />
         </Wrapper>
         <DividerGray />
@@ -214,10 +242,11 @@ const Form = React.forwardRef(
               label="용량"
               register={register("jpKg")}
               errors={errors["jpKg"]?.message}
-              style={{ width: "50px", textAlign: "end" }}
+              style={{ width: "56px" }}
+              textAlign="right"
             />
             <FormGroup>
-              <Select {...register("jpKgDanwi")}>
+              <Select {...register("jpKgDanwi")} style={{ minWidth: "64px" }}>
                 {dataCommonDic?.jpKgDanwi?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -304,6 +333,7 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
+        <Divider />
         <Wrapper>
           <Field>
             <FormGroup>
@@ -321,13 +351,15 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
-        <Divider />
         <Wrapper>
           <Field>
             <Input
+              style={{ textAlign: "end" }}
               label="가스판매단가"
               register={register("jpOutdanga")}
               errors={errors["jpOutdanga"]?.message}
+              inputSize={InputSize.en1300}
+              textAlign="right"
             />
           </Field>
         </Wrapper>
@@ -335,9 +367,12 @@ const Form = React.forwardRef(
         <Wrapper>
           <Field>
             <Input
+              style={{ textAlign: "end" }}
               label="용기판매단가"
               register={register("jpOuttong")}
               errors={errors["jpOuttong"]?.message}
+              inputSize={InputSize.en1300}
+              textAlign="right"
             />
           </Field>
         </Wrapper>
@@ -345,9 +380,12 @@ const Form = React.forwardRef(
         <Wrapper>
           <Field>
             <Input
+              style={{ textAlign: "end" }}
               label="가스매입원가"
               register={register("jpIndanga")}
               errors={errors["jpIndanga"]?.message}
+              inputSize={InputSize.en1300}
+              textAlign="right"
             />
           </Field>
         </Wrapper>
@@ -355,9 +393,12 @@ const Form = React.forwardRef(
         <Wrapper>
           <Field>
             <Input
+              style={{ textAlign: "end" }}
               label="용기구입단가"
               register={register("jpIntong")}
               errors={errors["jpIntong"]?.message}
+              inputSize={InputSize.en1300}
+              textAlign="right"
             />
           </Field>
         </Wrapper>
@@ -365,16 +406,19 @@ const Form = React.forwardRef(
         <Wrapper>
           <Field>
             <Input
+              style={{ textAlign: "end" }}
               label="사원배달수수료"
               register={register("jpBaedal")}
               errors={errors["jpBaedal"]?.message}
+              inputSize={InputSize.en1300}
+              textAlign="right"
             />
           </Field>
         </Wrapper>
         <Divider />
         <Wrapper>
           <FormGroup style={{ alignItems: "center" }}>
-            <Label>연령특약</Label>
+            <Label>재고사용 유무</Label>
             {radioOptions.map((option, index) => (
               <Item key={index}>
                 <RadioButton
@@ -400,9 +444,12 @@ const Form = React.forwardRef(
         <Wrapper>
           <Field>
             <Input
+              style={{ textAlign: "end" }}
               label="순번(조회순서)"
               register={register("jpSort")}
               errors={errors["jpSort"]?.message}
+              inputSize={InputSize.en1300}
+              textAlign="right"
             />
           </Field>
         </Wrapper>

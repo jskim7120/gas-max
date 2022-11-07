@@ -1,6 +1,4 @@
-import { Path } from "react-hook-form";
-
-export interface IFormProps {
+export interface ICUSTJY {
   areaCode: string;
   jyCode: string;
   jyName: string;

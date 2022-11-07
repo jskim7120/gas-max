@@ -16,7 +16,7 @@ import {
   InfoDesc,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
-import { IFormProps } from "./type";
+import { ICARJBC } from "./model";
 import { schema } from "./validation";
 import API from "app/axios";
 import { InfoText } from "components/text";
@@ -24,16 +24,27 @@ import { InfoText } from "components/text";
 interface IForm {
   selected: any;
   fetchData: any;
+  menuId: string;
+  setData: any;
+  selectedRowIndex: number;
+  setSelected: any;
+  setSelectedRowIndex: any;
 }
 const base = "/app/EN2000/";
 
 const Form = React.forwardRef(
   (
-    { selected, fetchData }: IForm,
+    {
+      selected,
+      fetchData,
+      menuId,
+      setData,
+      selectedRowIndex,
+      setSelected,
+      setSelectedRowIndex,
+    }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const dispatch = useDispatch();
-
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
     useEffect(() => {
@@ -51,7 +62,7 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
-    } = useForm<IFormProps>({
+    } = useForm<ICARJBC>({
       mode: "onChange",
       resolver: yupResolver(schema),
     });
@@ -63,7 +74,7 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = (type: string) => {
-      if (JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         console.log("type:", type);
         let newData: any = {};
 
@@ -92,7 +103,9 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(path, formValues);
           if (response.status === 200) {
-            toast.success("Deleted");
+            toast.success("Deleted", {
+              autoClose: 500,
+            });
             await fetchData();
           }
         } catch (err) {
@@ -105,7 +118,7 @@ const Form = React.forwardRef(
       }
     };
 
-    const submit = async (data: IFormProps) => {
+    const submit = async (data: ICARJBC) => {
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
@@ -114,9 +127,20 @@ const Form = React.forwardRef(
         const response: any = await API.post(path, formValues);
 
         if (response.status === 200) {
-          toast.success("Action successfull");
+          if (isAddBtnClicked) {
+            setData((prev: any) => [formValues, ...prev]);
+            setSelectedRowIndex(0);
+          } else {
+            setData((prev: any) => {
+              prev[selectedRowIndex] = formValues;
+              return [...prev];
+            });
+          }
+          setSelected(formValues);
+          toast.success("Action successfull", {
+            autoClose: 500,
+          });
           setIsAddBtnClicked(false);
-          await fetchData();
         } else {
           toast.error(response?.message);
         }
@@ -137,6 +161,8 @@ const Form = React.forwardRef(
             label="코드"
             register={register("ccCode")}
             errors={errors["ccCode"]?.message}
+            maxLength={"2"}
+            textAlign="right"
           />
         </Wrapper>
         <Divider />

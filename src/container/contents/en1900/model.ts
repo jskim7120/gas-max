@@ -1,6 +1,4 @@
-import { Path } from "react-hook-form";
-
-export interface IFormProps {
+export interface ICUSTGUBUN {
   areaCode: string;
   areaName: string;
   gubunBigo: string;
