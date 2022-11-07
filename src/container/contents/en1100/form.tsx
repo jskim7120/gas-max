@@ -2,7 +2,6 @@ import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { useDispatch } from "app/store";
 import {
   Input,
   Select,
@@ -23,7 +22,6 @@ import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
 import API from "app/axios";
-import { setRowIndex } from "app/state/gridSelectedRowSlice";
 
 interface IForm {
   selected: any;
@@ -31,16 +29,24 @@ interface IForm {
   menuId: string;
   setData: any;
   selectedRowIndex: number;
+  setSelected: any;
+  setSelectedRowIndex: any;
 }
 const base = "/app/EN1100/";
 
 const Form = React.forwardRef(
   (
-    { selected, fetchData, menuId, setData, selectedRowIndex }: IForm,
+    {
+      selected,
+      fetchData,
+      menuId,
+      setData,
+      selectedRowIndex,
+      setSelected,
+      setSelectedRowIndex,
+    }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const dispatch = useDispatch();
-
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [tabId, setTabId] = useState(0);
     const [addr, setAddress] = useState<string>("");
@@ -125,7 +131,6 @@ const Form = React.forwardRef(
             toast.success("Deleted", {
               autoClose: 500,
             });
-            dispatch(setRowIndex({ tabId: menuId, rowIndex: 0 }));
             await fetchData();
           } else {
             toast.error(response?.response?.message);
@@ -156,19 +161,18 @@ const Form = React.forwardRef(
         if (response.status === 200) {
           if (isAddBtnClicked) {
             setData((prev: any) => [formValues, ...prev]);
-            dispatch(setRowIndex({ tabId: menuId, rowIndex: 0 }));
+            setSelectedRowIndex(0);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
               return [...prev];
             });
           }
+          setSelected(formValues);
           toast.success("Action successful", {
-            autoClose: 1000,
+            autoClose: 500,
           });
-
           setIsAddBtnClicked(false);
-          // await fetchData();
         } else {
           toast.error(response?.response?.data?.message);
         }

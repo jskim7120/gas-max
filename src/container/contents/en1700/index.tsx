@@ -20,7 +20,6 @@ import { useDispatch, useSelector } from "app/store";
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
-let selectedRowIndex: number = 0;
 
 function EN1700({
   depthFullName,
@@ -35,18 +34,9 @@ function EN1700({
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
-  const { isDelete } = useSelector((state) => state.modal);
+  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
-  useEffect(() => {
-    const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
-    if (storagegridRows) {
-      dispatch(resetFromStorage({ rows: storagegridRows }));
-      const row = storagegridRows.find((row: any) => row.tabId === menuId);
-      selectedRowIndex = row && row.rowIndex;
-    } else {
-      selectedRowIndex = 0;
-    }
-  }, []);
+  const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
     fetchData();
@@ -81,7 +71,7 @@ function EN1700({
       gv.onSelectionChanged = () => {
         const itemIndex: any = gv.getCurrent().dataRow;
         setSelected(data[itemIndex]);
-        dispatch(setRowIndex({ tabId: menuId, rowIndex: itemIndex }));
+        setSelectedRowIndex(itemIndex);
       };
 
       return () => {
@@ -101,12 +91,10 @@ function EN1700({
   const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN1700/list");
-
       if (data) {
-        console.log("------------------------", data);
-
         setData(data);
-        setSelected(data[selectedRowIndex]);
+        setSelected(data[0]);
+        setSelectedRowIndex(0);
       }
     } catch (error) {
       console.log("Couldn't fetch CAR data.", error);
@@ -166,7 +154,16 @@ function EN1700({
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form selected={selected} ref={formRef} fetchData={fetchData} />
+          <Form
+            selected={selected}
+            ref={formRef}
+            fetchData={fetchData}
+            menuId={menuId}
+            setData={setData}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            setSelected={setSelected}
+          />
         </DetailWrapper>
       </Wrapper>
       <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />

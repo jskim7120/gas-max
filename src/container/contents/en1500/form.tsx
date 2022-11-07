@@ -29,12 +29,28 @@ import API from "app/axios";
 interface IForm {
   selected: any;
   fetchData: any;
+  menuId: string;
+  setData: any;
+  selectedRowIndex: number;
+  setSelected: any;
+  setSelectedRowIndex: any;
 }
 const base = "/app/EN1500/";
 
-const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
+const Form = (
+  {
+    selected,
+    fetchData,
+    menuId,
+    setData,
+    selectedRowIndex,
+    setSelected,
+    setSelectedRowIndex,
+  }: IForm,
+  ref: React.ForwardedRef<any>
+) => {
   const dispatch = useDispatch();
-  const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
+  // const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
   const [isClickedAdd, setIsClikedAdd] = useState(false);
   const [tabId, setTabId] = useState(0);
 
@@ -90,8 +106,17 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
     try {
       const response = await API.post(path, formValues);
       if (response.status === 200) {
-        setIsAddBtnClicked(false);
-        await fetchData();
+        // if (isAddBtnClicked) {
+        //   setData((prev: any) => [formValues, ...prev]);
+        //   setSelectedRowIndex(0);
+        // } else {
+        setData((prev: any) => {
+          prev[selectedRowIndex] = formValues;
+          return [...prev];
+        });
+        // }
+        setSelected(formValues);
+        // setIsAddBtnClicked(false);
         toast.success("Action successful", {
           autoClose: 500,
         });
@@ -107,7 +132,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
     },
 
     resetForm,
-    setIsAddBtnClicked,
+    // setIsAddBtnClicked,
   }));
 
   const data1500 = [

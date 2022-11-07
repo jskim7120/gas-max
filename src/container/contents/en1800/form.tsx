@@ -22,12 +22,25 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 interface IForm {
   selected: any;
   fetchData: any;
+  menuId: string;
+  setData: any;
+  selectedRowIndex: number;
+  setSelected: any;
+  setSelectedRowIndex: any;
 }
 const base = "/app/EN1800/";
 
 const Form = React.forwardRef(
   (
-    { selected, fetchData }: IForm,
+    {
+      selected,
+      fetchData,
+      menuId,
+      setData,
+      selectedRowIndex,
+      setSelected,
+      setSelectedRowIndex,
+    }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
@@ -119,11 +132,20 @@ const Form = React.forwardRef(
         const response: any = await API.post(path, formValues);
 
         if (response.status === 200) {
+          if (isAddBtnClicked) {
+            setData((prev: any) => [formValues, ...prev]);
+            setSelectedRowIndex(0);
+          } else {
+            setData((prev: any) => {
+              prev[selectedRowIndex] = formValues;
+              return [...prev];
+            });
+          }
+          setSelected(formValues);
           toast.success("Action successfull", {
             autoClose: 500,
           });
           setIsAddBtnClicked(false);
-          await fetchData();
         } else {
           toast.error(response?.message);
         }

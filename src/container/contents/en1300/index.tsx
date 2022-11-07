@@ -13,13 +13,12 @@ import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import API from "app/axios";
 import Form from "./form";
-import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
+
 import { useDispatch, useSelector } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
-let selectedRowIndex: number = 0;
 
 function EN1300({
   depthFullName,
@@ -34,17 +33,9 @@ function EN1300({
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>();
+  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
   const { isDelete } = useSelector((state) => state.modal);
-
-  useEffect(() => {
-    const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
-    if (storagegridRows) {
-      dispatch(resetFromStorage({ rows: storagegridRows }));
-      const row = storagegridRows.find((row: any) => row.tabId === menuId);
-      selectedRowIndex = row && row.rowIndex;
-    }
-  }, []);
 
   useEffect(() => {
     fetchData();
@@ -72,17 +63,15 @@ function EN1300({
       gv.sortingOptions.enabled = true;
       gv.displayOptions._selectionStyle = "singleRow";
 
-      if (data.length > 0) {
-        gv.setCurrent({
-          dataRow: selectedRowIndex,
-        });
+      gv.setCurrent({
+        dataRow: selectedRowIndex,
+      });
 
-        gv.onSelectionChanged = () => {
-          const itemIndex: any = gv.getCurrent().dataRow;
-          setSelected(data[itemIndex]);
-          dispatch(setRowIndex({ tabId: menuId, rowIndex: itemIndex }));
-        };
-      }
+      gv.onSelectionChanged = () => {
+        const itemIndex: any = gv.getCurrent().dataRow;
+        setSelected(data[itemIndex]);
+        setSelectedRowIndex(itemIndex);
+      };
 
       return () => {
         dp.clearRows();
@@ -101,10 +90,10 @@ function EN1300({
   const fetchData = async () => {
     try {
       const { data } = await API.get("/app/EN1300/list");
-      console.log("data1300===>", data);
       if (data) {
         setData(data);
-        setSelected(data[selectedRowIndex]);
+        setSelected(data[0]);
+        setSelectedRowIndex(0);
       }
     } catch (err) {
       console.log("DATA fetch error =======>", err);
@@ -162,7 +151,16 @@ function EN1300({
       <Wrapper>
         <TableWrapper ref={realgridElement}></TableWrapper>
         <DetailWrapper>
-          <Form selected={selected} ref={formRef} fetchData={fetchData} />
+          <Form
+            selected={selected}
+            ref={formRef}
+            fetchData={fetchData}
+            menuId={menuId}
+            setData={setData}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            setSelected={setSelected}
+          />
         </DetailWrapper>
       </Wrapper>
       <DataGridFooter dataLength={data.length > 0 ? data.length : 0} />

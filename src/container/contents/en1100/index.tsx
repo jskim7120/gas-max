@@ -13,13 +13,11 @@ import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { columns, fields } from "./data";
 import Form from "./form";
 import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
-import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
 import { useDispatch, useSelector } from "app/store";
 
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
-let selectedRowIndex: number;
 
 function EN1100({
   depthFullName,
@@ -34,22 +32,9 @@ function EN1100({
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState();
+  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
   const { isDelete } = useSelector((state) => state.modal);
-
-  const gridSelectedRowState = useSelector((state) => state.gridSelectedRow);
-
-  useEffect(() => {
-    console.log("ddssdffdsf");
-    // const storagegridRows = JSON.parse(`${sessionStorage.getItem("gridRows")}`);
-    // if (storagegridRows) {
-    //   dispatch(resetFromStorage({ rows: storagegridRows }));
-    //   const row = storagegridRows.find((row: any) => row.tabId === menuId);
-    //   selectedRowIndex = row && row.rowIndex;
-    // } else {
-    //   selectedRowIndex = 0;
-    // }
-  }, []);
 
   useEffect(() => {
     fetchData();
@@ -80,17 +65,11 @@ function EN1100({
       gv.setCurrent({
         dataRow: selectedRowIndex,
       });
-      // gv.setSelection({ style: "rows", startRow: 0, endRow: 0 });
-
-      // gv.onItemChecked = () => {
-      //   var items = gv.getCheckedItems();
-      // };
 
       gv.onSelectionChanged = () => {
         const itemIndex: any = gv.getCurrent().dataRow;
         setSelected(data[itemIndex]);
-        dispatch(setRowIndex({ tabId: menuId, rowIndex: itemIndex }));
-        selectedRowIndex = itemIndex;
+        setSelectedRowIndex(itemIndex);
       };
 
       return () => {
@@ -112,7 +91,8 @@ function EN1100({
       const { data } = await API.get("/app/EN1100/list");
       if (data) {
         setData(data);
-        setSelected(data[selectedRowIndex]);
+        setSelected(data[0]);
+        setSelectedRowIndex(0);
       }
     } catch (err) {
       console.log("JNOTRY DATA fetch error =======>", err);
@@ -178,6 +158,8 @@ function EN1100({
             menuId={menuId}
             setData={setData}
             selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            setSelected={setSelected}
           />
         </DetailWrapper>
       </Wrapper>
