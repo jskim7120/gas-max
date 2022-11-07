@@ -74,7 +74,6 @@ export const Input = ({
   maxLength,
   kind,
   textAlign,
-
 }: IInputProps) => {
   return (
     <InputWrapper fullWidth={fullWidth}>
@@ -168,7 +167,7 @@ export const InputForm = styled.input<{
   }
 
   border: ${(props) =>
-    props.kind ? getInputKind(props.kind)?.border : "1px solid gray"};
+    props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
 `;
 
 export const ErrorText = styled.p`
