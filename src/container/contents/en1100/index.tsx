@@ -82,7 +82,6 @@ function EN1100({
   }, [data]);
 
   useEffect(() => {
-    console.log(isDelete);
     if (isDelete.menuId === menuId && isDelete.isDelete) {
       deleteRowGrid();
     }

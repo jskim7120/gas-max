@@ -4,7 +4,8 @@ import { columns, fields } from "./data";
 import {
   openModal,
   closeModal,
-  // deleteAction,
+  addDeleteMenuId,
+  setIsDelete,
 } from "app/state/modal/modalSlice";
 import Button from "components/button/button";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
@@ -81,10 +82,10 @@ function EN1600({
   }, [data]);
 
   useEffect(() => {
-    if (isDelete) {
+    if (isDelete.menuId === menuId && isDelete.isDelete) {
       deleteRowGrid();
     }
-  }, [isDelete]);
+  }, [isDelete.isDelete]);
 
   const fetchData = async () => {
     try {
@@ -103,8 +104,9 @@ function EN1600({
     try {
       formRef.current.setIsAddBtnClicked(false);
       formRef.current.crud("delete");
-      // dispatch(deleteAction({ isDelete: false }));
-      // dispatch(closeModal());
+      dispatch(addDeleteMenuId({ menuId: "" }));
+      dispatch(setIsDelete({ isDelete: false }));
+      dispatch(closeModal());
     } catch (error) {}
   }
 
@@ -127,7 +129,10 @@ function EN1600({
             text="삭제"
             icon={<Trash />}
             style={{ marginRight: "5px" }}
-            onClick={() => dispatch(openModal({ type: "delModal" }))}
+            onClick={() => {
+              dispatch(openModal({ type: "delModal" }));
+              dispatch(addDeleteMenuId({ menuId: menuId }));
+            }}
           />
           <Button
             text="저장"
