@@ -150,14 +150,14 @@ function CM1100Page({
           </div>
           <div className="buttons">
             <Button
-              text="수정"
+              text="등록"
               icon={<Plus />}
               style={{ marginRight: "5px" }}
               type="button"
             />
 
             <Button
-              text="취소"
+              text="수정"
               icon={<Reset />}
               style={{ marginRight: "5px" }}
               type="button"
