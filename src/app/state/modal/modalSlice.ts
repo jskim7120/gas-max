@@ -9,7 +9,6 @@ export interface initialStateType {
     menuId: string;
     isDelete: boolean;
   };
-
 }
 
 const initialState: initialStateType = {
@@ -41,8 +40,7 @@ const modalSlice = createSlice({
     addCM1105: (state, action) => {
       state.cm1105.cuCode = action.payload.cuCode;
       state.cm1105.areaCode = action.payload.areaCode;
-    }
-
+    },
     addDeleteMenuId: (state, action) => {
       state.isDelete.menuId = action.payload.menuId;
     },
@@ -52,9 +50,12 @@ const modalSlice = createSlice({
   },
 });
 
-
-export const { openModal, closeModal,addCM1105, addDeleteMenuId, setIsDelete } =
-  modalSlice.actions;
-
+export const {
+  openModal,
+  closeModal,
+  addCM1105,
+  addDeleteMenuId,
+  setIsDelete,
+} = modalSlice.actions;
 
 export default modalSlice.reducer;
