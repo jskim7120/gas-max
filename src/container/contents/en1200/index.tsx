@@ -63,6 +63,7 @@ function EN1200({
       });
       gv.sortingOptions.enabled = true;
       gv.displayOptions._selectionStyle = "singleRow";
+      gv.setEditOptions({ editable: false });
 
       gv.setCurrent({
         dataRow: selectedRowIndex,
