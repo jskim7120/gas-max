@@ -4520,8 +4520,8 @@ export const WhiteClose = () => {
           transform="translate(391.5 18.5)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-width="2.5"
+          strokeLinecap="round"
+          strokeWidth="2.5"
         />
         <path
           id="Path_45"
@@ -4530,8 +4530,8 @@ export const WhiteClose = () => {
           transform="translate(405.628 31.201) rotate(180)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-width="2.5"
+          strokeLinecap="round"
+          strokeWidth="2.5"
         />
       </g>
     </svg>

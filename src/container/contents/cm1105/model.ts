@@ -3,7 +3,7 @@ export interface ICM1105SEARCH {
   areaName: string;
   cuAddr1: string;
   cuAddr2: string;
-  cuAnkum: string;
+  cuAnkum: number;
   cuBarcode: string;
   cuBigo1: string;
   cuBigo2: string;
@@ -26,6 +26,9 @@ export interface ICM1105SEARCH {
   cuCustgubunName: string;
   cuCutype: string;
   cuCutypeName: string;
+  cuCylinderName: string;
+  cuCylinderQty: string;
+  cuCylinderType: string;
   cuDepartment: string;
   cuDepartment2: string;
   cuExtendDate: string;
@@ -46,7 +49,7 @@ export interface ICM1105SEARCH {
   cuHp: string;
   cuJangbuYn: string;
   cuJdc: number;
-  cuJdcName: string;
+  cuJdcName: number;
   cuJmisu: number;
   cuJongmok: string;
   cuJuminno: string;
@@ -124,6 +127,8 @@ export interface ICM1105SEARCH {
   cuTel23: string;
   cuTel24: string;
   cuTongkum: number;
+  cuTransmCd: string;
+  cuTransmCuCd: string;
   cuType: string;
   cuTypeName: string;
   cuUptae: string;
@@ -144,49 +149,72 @@ export interface ICM1105SEARCH {
   swName: string;
   tCustCode: string;
 
-  //cms
   cms: ICMS;
-  //virtualAccount
   virtualAccount: IVIRTUALACCOUNT;
   cuTank: ICUTANK;
 }
 
 interface ICMS {
-  acctno: string;
+  CMSacctno: string; //davhtsaj bn
   appdt: string;
-  bankName: string;
+  CMSbankName: string; //davhtsaj bn
   bigo: string;
   cmsGubun: string;
-  depositor: string;
+  CMSdepositor: string; //davhtsaj bn
   managerNo: string;
   monthday: string;
   queryType: string;
-  regDate: string;
+  CMSregDate: string; //davhtsaj bn
   stateName: string;
   tel: string;
 }
 interface IVIRTUALACCOUNT {
-  acctno: string;
+  VIRacctno: string; //davhtsaj bn
   bankCd: string;
-  bankName: string;
-  depositor: string;
+  VIRbankName: string; //davhtsaj bn
+  VIRdepositor: string; //davhtsaj bn
   managerCode: string;
   queryType: string;
-  regDate: string;
+  VIRregDate: string; //davhtsaj bn
 }
 
 interface ICUTANK {
+  gasifyCheckDate1: string;
+  gasifyCheckDate2: string;
+  gasifyCo1: string;
+  gasifyCo2: string;
+  gasifyMakeDate1: string;
+  gasifyMakeDate2: string;
+  gasifyPower1: string;
+  gasifyPower2: string;
+  gasifySno1: string;
+  gasifySno2: string;
+  gasifyVol1: string;
+  gasifyVol2: string;
   queryType: string;
-  tankCuCd: string;
-  tankFirstDate: string;
-  tankInsideDate: string;
-  tankMakeCo: string;
-  tankMakeDate: string;
-  tankMakeSno: string;
-  tankMax: number;
-  tankOutsideDate: string;
-  tankRcv: string;
-  tankSno: string;
-  tankTransmCd: string;
-  tankVol: number;
+  seq: number;
+  tankCuCd1: string;
+  tankCuCd2: string;
+  tankFirstDate1: string;
+  tankFirstDate2: string;
+  tankInsideDate1: string;
+  tankInsideDate2: string;
+  tankMakeCo1: string;
+  tankMakeCo2: string;
+  tankMakeDate1: string;
+  tankMakeDate2: string;
+  tankMakeSno1: string;
+  tankMakeSno2: string;
+  tankMax1: string;
+  tankMax2: string;
+  tankOutsideDate1: string;
+  tankOutsideDate2: string;
+  tankRcv1: string;
+  tankRcv2: string;
+  tankSno1: string;
+  tankSno2: string;
+  tankTransmCd1: string;
+  tankTransmCd2: string;
+  tankVol1: string;
+  tankVol2: string;
 }

@@ -229,11 +229,9 @@ export const Field = styled.div<{ flex?: boolean }>`
   }
 
   &.outer-border {
-    border: 1px solid #e8ecf1;
-    // border-left: 1px solid #e8ecf1;
-    // border-top: 1px solid #000;
-    // border-bottom: 1px solid #000;
+    border: 1px solid #ccc;
   }
+
   &.rectangle {
     border: 1px solid rgba(187, 187, 187, 0.38);
     border-radius: 4px;
@@ -259,6 +257,12 @@ export const DividerGray = styled.div`
   height: 1px;
   width: 100%;
   background: #e6e5e5;
+`;
+
+export const DividerDark = styled.div`
+  height: 1px;
+  width: 100%;
+  background: #ccc;
 `;
 
 export const Wrapper = styled.div<{

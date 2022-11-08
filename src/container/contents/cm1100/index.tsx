@@ -132,7 +132,7 @@ function CM1100Page({
       <form onSubmit={handleSubmit(submit)}>
         <DetailHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <p style={{ marginRight: "10px" }}>{depthFullName}</p>
+            <p style={{ marginRight: "20px" }}>{depthFullName}</p>
             <p>
               <b>영업소</b>
             </p>
@@ -370,7 +370,11 @@ function CM1100Page({
             <Button
               text="엑셀"
               icon={<ExcelIcon />}
-              style={{ marginRight: "5px", background: "gray" }}
+              style={{
+                marginRight: "5px",
+                background: "#ECECEC",
+                color: "#000",
+              }}
               type="button"
             />
           </div>

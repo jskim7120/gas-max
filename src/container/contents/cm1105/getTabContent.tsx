@@ -9,6 +9,7 @@ import {
   FormGroup,
   Label,
   Divider,
+  DividerDark,
 } from "components/form/style";
 import DaumAddress from "components/daum";
 import { InputSize } from "components/componentsType";
@@ -540,9 +541,7 @@ function getTabContent(
                 <RadioButton
                   type="radio"
                   value={option.id}
-                  {...register(`cuTankYn`, {
-                    required: "required",
-                  })}
+                  {...register(`cuTankYn`)}
                   id={option.id}
                   // onChange={() => console.log(option.label)}
                 />
@@ -581,6 +580,7 @@ function getTabContent(
           </Field>
         </Wrapper>
       </Field>
+      <DividerDark />
       <Field flex>
         <Field className="gray-title">
           <p>탱크</p>
@@ -599,10 +599,11 @@ function getTabContent(
             <Label>발신기코드</Label>
             <Label>잔량고객코드</Label>
           </Wrapper>
+          <DividerGray />
           <Wrapper grid col={11}>
             <Input
-              register={register("tankMakeCo")}
-              errors={errors["tankMakeCo"]?.message}
+              register={register("tankMakeCo1")}
+              errors={errors["tankMakeCo1"]?.message}
             />
             <Select {...register("tankVol1")}>
               {dataCommonDic?.tankVol1?.map((obj: any, idx: number) => (
@@ -612,120 +613,129 @@ function getTabContent(
               ))}
             </Select>
             <Input
-              register={register("tankMakeSno")}
-              errors={errors["tankMakeSno"]?.message}
+              register={register("tankMakeSno1")}
+              errors={errors["tankMakeSno1"]?.message}
             />
             <Input
-              register={register("tankMakeDate")}
-              errors={errors["tankMakeDate"]?.message}
+              register={register("tankMakeDate1")}
+              errors={errors["tankMakeDate1"]?.message}
             />
             <Input
-              register={register("tankRcv")}
-              errors={errors["tankRcv"]?.message}
+              register={register("tankRcv1")}
+              errors={errors["tankRcv1"]?.message}
             />
             <Field style={{ width: "100%" }}>
               <CustomDate
-                name="tankFirstDate"
-                register={register("tankFirstDate")}
+                name="tankFirstDate1"
+                register={register("tankFirstDate1")}
                 reset={reset}
-                errors={errors["tankFirstDate"]?.message}
+                errors={errors["tankFirstDate1"]?.message}
               />
             </Field>
             <Field style={{ width: "100%" }}>
               <CustomDate
-                name="tankOutsideDate"
-                register={register("tankOutsideDate")}
+                name="tankOutsideDate1"
+                register={register("tankOutsideDate1")}
                 reset={reset}
-                errors={errors["tankOutsideDate"]?.message}
+                errors={errors["tankOutsideDate1"]?.message}
               />
             </Field>
             <Field style={{ width: "100%" }}>
               <CustomDate
-                name="tankInsideDate"
-                register={register("tankInsideDate")}
+                name="tankInsideDate1"
+                register={register("tankInsideDate1")}
                 reset={reset}
-                errors={errors["tankInsideDate"]?.message}
+                errors={errors["tankInsideDate1"]?.message}
               />
             </Field>
             <Input
-              register={register("tankMax")}
-              errors={errors["tankMax"]?.message}
+              register={register("tankMax1")}
+              errors={errors["tankMax1"]?.message}
             />
             <Input
-              register={register("tankTransmCd")}
-              errors={errors["tankTransmCd"]?.message}
+              register={register("tankTransmCd1")}
+              errors={errors["tankTransmCd1"]?.message}
             />
-            <Input
-              register={register("tankCuCd")}
-              errors={errors["tankCuCd"]?.message}
-            />
+            <Field flex style={{ alignItems: "center" }}>
+              <Input
+                register={register("tankCuCd1")}
+                errors={errors["tankCuCd1"]?.message}
+              />
+              <SearchBtn type="button" onClick={() => alert("dsdsds")}>
+                <MagnifyingGlass />
+              </SearchBtn>
+            </Field>
           </Wrapper>
-
-          {/* dahin davtagdav ustgaarai wrapper-iig */}
+          <DividerGray />
           <Wrapper grid col={11}>
             <Input
-              register={register("tankMakeCo")}
-              errors={errors["tankMakeCo"]?.message}
+              register={register("tankMakeCo2")}
+              errors={errors["tankMakeCo2"]?.message}
             />
-            <Select {...register("tankVol1")}>
-              {dataCommonDic?.tankVol1?.map((obj: any, idx: number) => (
+            <Select {...register("tankVol2")}>
+              {dataCommonDic?.tankVol2?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
                 </option>
               ))}
             </Select>
             <Input
-              register={register("tankMakeSno")}
-              errors={errors["tankMakeSno"]?.message}
+              register={register("tankMakeSno2")}
+              errors={errors["tankMakeSno2"]?.message}
             />
             <Input
-              register={register("tankMakeDate")}
-              errors={errors["tankMakeDate"]?.message}
+              register={register("tankMakeDate2")}
+              errors={errors["tankMakeDate2"]?.message}
             />
             <Input
-              register={register("tankRcv")}
-              errors={errors["tankRcv"]?.message}
+              register={register("tankRcv2")}
+              errors={errors["tankRcv2"]?.message}
             />
             <Field style={{ width: "100%" }}>
               <CustomDate
-                name="tankFirstDate"
-                register={register("tankFirstDate")}
+                name="tankFirstDate2"
+                register={register("tankFirstDate2")}
                 reset={reset}
-                errors={errors["tankFirstDate"]?.message}
+                errors={errors["tankFirstDate2"]?.message}
               />
             </Field>
             <Field style={{ width: "100%" }}>
               <CustomDate
-                name="tankOutsideDate"
-                register={register("tankOutsideDate")}
+                name="tankOutsideDate2"
+                register={register("tankOutsideDate2")}
                 reset={reset}
-                errors={errors["tankOutsideDate"]?.message}
+                errors={errors["tankOutsideDate2"]?.message}
               />
             </Field>
             <Field style={{ width: "100%" }}>
               <CustomDate
-                name="tankInsideDate"
-                register={register("tankInsideDate")}
+                name="tankInsideDate2"
+                register={register("tankInsideDate2")}
                 reset={reset}
-                errors={errors["tankInsideDate"]?.message}
+                errors={errors["tankInsideDate2"]?.message}
               />
             </Field>
             <Input
-              register={register("tankMax")}
-              errors={errors["tankMax"]?.message}
+              register={register("tankMax2")}
+              errors={errors["tankMax2"]?.message}
             />
             <Input
-              register={register("tankTransmCd")}
-              errors={errors["tankTransmCd"]?.message}
+              register={register("tankTransmCd2")}
+              errors={errors["tankTransmCd2"]?.message}
             />
-            <Input
-              register={register("tankCuCd")}
-              errors={errors["tankCuCd"]?.message}
-            />
+            <Field flex style={{ alignItems: "center" }}>
+              <Input
+                register={register("tankCuCd2")}
+                errors={errors["tankCuCd2"]?.message}
+              />
+              <SearchBtn type="button" onClick={() => alert("dsdsds")}>
+                <MagnifyingGlass />
+              </SearchBtn>
+            </Field>
           </Wrapper>
         </Field>
       </Field>
-
+      <DividerDark />
       <Field flex>
         <Field className="gray-title">
           <p>용기</p>
@@ -733,14 +743,12 @@ function getTabContent(
         <Wrapper grid col={2}>
           <FormGroup>
             <Label>용기구분</Label>
-            {/* {radioOptions2.map((option, index) => (
+            {radioOptions2.map((option, index) => (
               <Item key={index}>
                 <RadioButton
                   type="radio"
                   value={option.id}
-                  {...register(`caBage`, {
-                    required: "required",
-                  })}
+                  {...register(`cuCylinderType`)}
                   id={option.id}
                   // onChange={() => console.log(option.label)}
                 />
@@ -748,9 +756,93 @@ function getTabContent(
                   {option.label}
                 </RadioButtonLabel>
               </Item>
-            ))} */}
+            ))}
           </FormGroup>
+          <Field flex style={{ alignItems: "center" }}>
+            <Input
+              label="용기수량"
+              register={register("cuCylinderName")}
+              errors={errors["cuCylinderName"]?.message}
+            />
+            <p>×</p>
+            <Input
+              register={register("cuCylinderQty")}
+              errors={errors["cuCylinderQty"]?.message}
+              inputSize={InputSize.sm}
+            />
+            <p>개</p>
+          </Field>
         </Wrapper>
+      </Field>
+      <DividerDark />
+      <Field flex>
+        <Field className="gray-title">
+          <p>기화기</p>
+        </Field>
+        <Field style={{ width: "100%" }}>
+          <Wrapper grid col={8}>
+            <Label>제조사</Label>
+            <Label>용량(k)</Label>
+            <Label>제조번호</Label>
+            <Label>제작년월</Label>
+            <Label>전원</Label>
+            <Label>장치검사</Label>
+          </Wrapper>
+          <DividerGray />
+          <Wrapper grid col={8}>
+            <Input
+              register={register("gasifyCo1")}
+              errors={errors["gasifyCo1"]?.message}
+            />
+            <Input
+              register={register("gasifyVol1")}
+              errors={errors["gasifyVol1"]?.message}
+            />
+            <Input
+              register={register("gasifySno1")}
+              errors={errors["gasifySno1"]?.message}
+            />
+            <Input
+              register={register("gasifyMakeDate1")}
+              errors={errors["gasifyMakeDate1"]?.message}
+            />
+            <Input
+              register={register("gasifyPower1")}
+              errors={errors["gasifyPower1"]?.message}
+            />
+            <Input
+              register={register("gasifyCheckDate1")}
+              errors={errors["gasifyCheckDate1"]?.message}
+            />
+          </Wrapper>
+          <DividerGray />
+          <Wrapper grid col={8}>
+            <Input
+              register={register("gasifyCo2")}
+              errors={errors["gasifyCo2"]?.message}
+            />
+            <Input
+              register={register("gasifyVol2")}
+              errors={errors["gasifyVol2"]?.message}
+            />
+            <Input
+              register={register("gasifySno2")}
+              errors={errors["gasifySno2"]?.message}
+            />
+            <Input
+              register={register("gasifyMakeDate2")}
+              errors={errors["gasifyMakeDate2"]?.message}
+            />
+            <Input
+              register={register("gasifyPower2")}
+              errors={errors["gasifyPower2"]?.message}
+            />
+            <Input
+              register={register("gasifyCheckDate2")}
+              errors={errors["gasifyCheckDate2"]?.message}
+            />
+          </Wrapper>
+        </Field>
       </Field>
     </Field>
   );
@@ -976,7 +1068,6 @@ function getTabContent(
         <Label style={{ width: "105px" }}></Label>
         <Label style={{ width: "105px" }}></Label>
       </Wrapper>
-      <Divider />
     </Field>
   );
 
@@ -1005,8 +1096,8 @@ function getTabContent(
             />
             <Input
               label="예금주"
-              register={register("depositor")}
-              errors={errors["depositor"]?.message}
+              register={register("CMSdepositor")}
+              errors={errors["CMSdepositor"]?.message}
             />
             <Input
               label="관리코드"
@@ -1018,13 +1109,13 @@ function getTabContent(
           <Wrapper grid>
             <Input
               label="은행/카드"
-              register={register("bankName")}
-              errors={errors["bankName"]?.message}
+              register={register("CMSbankName")}
+              errors={errors["CMSbankName"]?.message}
             />
             <Input
               label="계좌/카드번호"
-              register={register("acctno")}
-              errors={errors["acctno"]?.message}
+              register={register("CMSacctno")}
+              errors={errors["CMSacctno"]?.message}
             />
             <Input
               label="전화번호"
@@ -1060,8 +1151,8 @@ function getTabContent(
             <div></div>
             <Input
               label="등록일시"
-              register={register("regDate")}
-              errors={errors["regDate"]?.message}
+              register={register("CMSregDate")}
+              errors={errors["CMSregDate"]?.message}
             />
           </Wrapper>
         </Field>
@@ -1085,14 +1176,14 @@ function getTabContent(
           <Wrapper grid>
             <Input
               label="은행명"
-              register={register("bankName")}
-              errors={errors["bankName"]?.message}
+              register={register("VIRbankName")}
+              errors={errors["VIRbankName"]?.message}
               fullWidth
             />
             <Input
               label="예금주"
-              register={register("depositor")}
-              errors={errors["depositor"]?.message}
+              register={register("VIRdepositor")}
+              errors={errors["VIRdepositor"]?.message}
               fullWidth
             />
             <Input
@@ -1106,16 +1197,16 @@ function getTabContent(
           <Wrapper grid>
             <Input
               label="계좌번호"
-              register={register("acctno")}
-              errors={errors["acctno"]?.message}
+              register={register("VIRacctno")}
+              errors={errors["VIRacctno"]?.message}
               fullWidth
             />
             <Label style={{ width: "105px" }}></Label>
 
             <Input
               label="등록일시"
-              register={register("regDate")}
-              errors={errors["regDate"]?.message}
+              register={register("VIRregDate")}
+              errors={errors["VIRregDate"]?.message}
               fullWidth
             />
           </Wrapper>
