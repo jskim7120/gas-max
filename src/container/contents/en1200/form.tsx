@@ -248,6 +248,7 @@ const Form = React.forwardRef(
                 errors={errors["saupSsno"]?.message}
                 inputSize={InputSize.md}
                 textAlign="right"
+                formatNumber
               />
               <Input
                 label="종사업자번호"

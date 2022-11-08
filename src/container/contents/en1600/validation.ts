@@ -12,7 +12,7 @@ export const schema = yup.object({
     .required()
     .typeError("이 필드는 필수 항목입니다")
     .min(1)
-    .max(10),
+    .max(12),
   areaCode: yup.string(),
   // swPaykum: yup
   //   .number()

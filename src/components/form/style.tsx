@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { InputSize, FieldKind } from "components/componentsType";
 
@@ -56,6 +57,7 @@ interface IInputProps {
   maxLength?: string;
   kind?: FieldKind;
   textAlign?: string;
+  formatNumber?: boolean;
 }
 
 export const Input = ({
@@ -74,7 +76,29 @@ export const Input = ({
   maxLength,
   kind,
   textAlign,
+  formatNumber,
 }: IInputProps) => {
+  const [inputValue, setInputValue] = useState("");
+
+  // format input value
+  const handleInput = (e: any) => {
+    const formattedPhoneNumber = formatPhoneNumber(e.target.value);
+    setInputValue(formattedPhoneNumber);
+  };
+
+  function formatPhoneNumber(value: any) {
+    if (!value) return value;
+    const phoneNumber = value.replace(/[^\d]/g, "");
+    const phoneNumberLength = phoneNumber.length;
+    if (phoneNumberLength < 4) return phoneNumber;
+    if (phoneNumberLength < 6) {
+      return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3)}`;
+    }
+    return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(
+      3,
+      5
+    )}-${phoneNumber.slice(5, 10)}`;
+  }
   return (
     <InputWrapper fullWidth={fullWidth}>
       <FormGroup>
@@ -92,13 +116,14 @@ export const Input = ({
           inputSize={inputSize && inputSize}
           fullWidth={fullWidth && fullWidth}
           {...register}
-          value={value && value}
+          value={formatNumber ? inputValue : value && value}
           placeholder={placeholder}
           style={style}
           className={className}
           maxLength={maxLength && maxLength}
           kind={kind && kind}
           textAlign={textAlign && textAlign}
+          onChange={formatNumber ? (e) => handleInput(e) : null}
         />
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>
