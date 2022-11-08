@@ -232,7 +232,6 @@ const Form = React.forwardRef(
             register={register("swCode")}
             errors={errors["swCode"]?.message}
             maxLength="2"
-            textAlign="right"
           />
           <Field>
             <FormGroup>
@@ -261,7 +260,6 @@ const Form = React.forwardRef(
             label="부서명"
             register={register("swDepartment")}
             errors={errors["swDepartment"]?.message}
-            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
@@ -298,7 +296,6 @@ const Form = React.forwardRef(
             label="핸드폰"
             register={register("swHp")}
             errors={errors["swHp"]?.message}
-            textAlign="right"
           />
         </Wrapper>
         <DividerGray />
@@ -323,7 +320,6 @@ const Form = React.forwardRef(
             label="주소"
             register={register("swZipcode")}
             errors={errors["swZipcode"]?.message}
-            textAlign="right"
           />
           <DaumAddress setAddress={setAddress} />
           <Input
@@ -439,7 +435,6 @@ const Form = React.forwardRef(
                 label="급여일"
                 register={register("swPaydate")}
                 errors={errors["swPaydate"]?.message}
-                textAlign="right"
               />
             </Wrapper>
           </div>
@@ -536,6 +531,7 @@ const Form = React.forwardRef(
             label="가불금액"
             register={register("sgKumack")}
             errors={errors["sgKumack"]?.message}
+            textAlign="right"
           />
         </Wrapper>
         <DividerGray />

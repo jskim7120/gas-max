@@ -191,7 +191,6 @@ const Form = React.forwardRef(
         <DividerGray />
         <Wrapper>
           <Input
-            style={{ textAlign: "end" }}
             label="코드"
             register={register("jpCode")}
             errors={errors["jpCode"]?.message}

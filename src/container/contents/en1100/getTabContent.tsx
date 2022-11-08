@@ -23,14 +23,14 @@ function getTabContent(
         <Input
           register={register("jnJiroSNo")}
           errors={errors["jnJiroSNo"]?.message}
-          textAlign="right"
+          textAlign="center"
         />
       ),
       3: (
         <Input
           register={register("jnJirono")}
           errors={errors["jnJirono"]?.message}
-          textAlign="right"
+          textAlign="center"
         />
       ),
       4: (
@@ -64,14 +64,14 @@ function getTabContent(
         <Input
           register={register("jnJiroSNo02")}
           errors={errors["jnJiroSNo02"]?.message}
-          textAlign="right"
+          textAlign="center"
         />
       ),
       3: (
         <Input
           register={register("jnJirono02")}
           errors={errors["jnJirono02"]?.message}
-          textAlign="right"
+          textAlign="center"
         />
       ),
       4: (
@@ -105,14 +105,14 @@ function getTabContent(
         <Input
           register={register("jnJiroSNo03")}
           errors={errors["jnJiroSNo03"]?.message}
-          textAlign="right"
+          textAlign="center"
         />
       ),
       3: (
         <Input
           register={register("jnJirono03")}
           errors={errors["jnJirono03"]?.message}
-          textAlign="right"
+          textAlign="center"
         />
       ),
       4: (
@@ -301,6 +301,7 @@ function getTabContent(
           register={register("jnMark1")}
           errors={errors["jnMark1"]?.message}
           inputSize={InputSize.sm}
+          textAlign="center"
         />
       ),
       jnMark2: (
@@ -308,6 +309,7 @@ function getTabContent(
           register={register("jnMark2")}
           errors={errors["jnMark2"]?.message}
           inputSize={InputSize.sm}
+          textAlign="center"
         />
       ),
       jnMark3: (
@@ -315,6 +317,7 @@ function getTabContent(
           register={register("jnMark3")}
           errors={errors["jnMark3"]?.message}
           inputSize={InputSize.sm}
+          textAlign="center"
         />
       ),
       jnMark4: (
@@ -322,6 +325,7 @@ function getTabContent(
           register={register("jnMark4")}
           errors={errors["jnMark4"]?.message}
           inputSize={InputSize.sm}
+          textAlign="center"
         />
       ),
       jnMark5: (
@@ -329,6 +333,7 @@ function getTabContent(
           register={register("jnMark5")}
           errors={errors["jnMark5"]?.message}
           inputSize={InputSize.sm}
+          textAlign="center"
         />
       ),
     },

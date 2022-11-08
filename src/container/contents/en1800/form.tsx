@@ -166,7 +166,6 @@ const Form = React.forwardRef(
             label="코드"
             register={register("jyCode")}
             errors={errors["jyCode"]?.message}
-            textAlign="right"
           />
           <Field>
             <FormGroup>
