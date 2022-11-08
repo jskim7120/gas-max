@@ -527,12 +527,15 @@ const Form = React.forwardRef(
         </p>
         <DividerGray />
         <Wrapper>
-          <Input
-            label="가불금액"
-            register={register("sgKumack")}
-            errors={errors["sgKumack"]?.message}
-            textAlign="right"
-          />
+          <Field flex>
+            <Input
+              label="가불금액"
+              register={register("sgKumack")}
+              errors={errors["sgKumack"]?.message}
+              textAlign="right"
+            />
+            <p>원</p>
+          </Field>
         </Wrapper>
         <DividerGray />
       </form>
