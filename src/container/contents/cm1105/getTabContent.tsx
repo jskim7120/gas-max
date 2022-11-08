@@ -14,6 +14,8 @@ import DaumAddress from "components/daum";
 import { InputSize } from "components/componentsType";
 import CheckBox from "components/checkbox";
 import CustomDate from "components/customDatePicker";
+import { MagnifyingGlass } from "components/allSvgIcon";
+import { SearchBtn } from "components/daum";
 import {
   Item,
   RadioButton,
@@ -50,8 +52,7 @@ function getTabContent(
   reset: any
 ) {
   const data0 = (
-    <div>
-      <DividerGray />
+    <Field className="outer-border">
       <Wrapper grid col={4}>
         <Field>
           <FormGroup>
@@ -105,7 +106,6 @@ function getTabContent(
         />
       </Wrapper>
       <DividerGray />
-
       <Wrapper style={{ alignItems: "center" }}>
         <Input
           label="주소"
@@ -250,8 +250,7 @@ function getTabContent(
           errors={errors["cuSekumDate"]?.message}
         />
       </Wrapper>
-      <DividerGray />
-    </div>
+    </Field>
   );
   const data1 = (
     <div>
@@ -263,7 +262,7 @@ function getTabContent(
           </p>
         </Field>
         <Field>
-          <Wrapper grid col={4}>
+          <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Field>
               <FormGroup>
                 <Label>조정기압력</Label>
@@ -283,22 +282,26 @@ function getTabContent(
             <Field>
               <FormGroup>
                 <Label>루베단가</Label>
-                <Select {...register("cuRh2o")}>
-                  {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
+                <Select {...register("cuRdangaType")}>
+                  {dataCommonDic?.cuRdangaType?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
                   ))}
                 </Select>
-                <p>mmH20</p>
               </FormGroup>
               <div>
-                <ErrorText>{errors["cuRh20"]?.message}</ErrorText>
+                <ErrorText>{errors["cuRdangaType"]?.message}</ErrorText>
               </div>
             </Field>
+            <Input
+              register={register("cuRdanga")}
+              errors={errors["cuRdanga"]?.message}
+              inputSize={InputSize.md}
+            />
           </Wrapper>
           <DividerGray />
-          <Wrapper>
+          <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Input
               label="연체율"
               register={register("cuPer")}
@@ -313,10 +316,11 @@ function getTabContent(
               label="순번"
               register={register("cuCno")}
               errors={errors["cuCno"]?.message}
+              inputSize={InputSize.md}
             />
           </Wrapper>
           <DividerGray />
-          <Wrapper>
+          <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Field flex>
               <Input
                 label="관리비"
@@ -342,6 +346,20 @@ function getTabContent(
               <p>원</p>
             </Field>
           </Wrapper>
+          <DividerGray />
+          <Wrapper grid fields={"1fr 1fr 2fr"}>
+            <Input
+              label="검침주기"
+              register={register("cuGumTurm")}
+              errors={errors["cuGumTurm"]?.message}
+            />
+            <Input
+              label="검침일"
+              register={register("cuGumdate")}
+              errors={errors["cuGumdate"]?.message}
+            />
+            <Label style={{ width: "105px" }}></Label>
+          </Wrapper>
         </Field>
       </Field>
 
@@ -360,7 +378,8 @@ function getTabContent(
           </p>
         </Field>
         <Field>
-          <Wrapper grid col={5}>
+          {/* <Field style={{ width: "100%" }}> */}
+          <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Field>
               <FormGroup>
                 <Label>계량기 제조사</Label>
@@ -379,6 +398,37 @@ function getTabContent(
             <Field>
               <FormGroup>
                 <Label>계량기유형</Label>
+                <Select {...register("cuMeterFeture")}>
+                  {dataCommonDic?.cuMeterFeture?.map(
+                    (obj: any, idx: number) => (
+                      <option key={idx} value={obj.code}>
+                        {obj.codeName}
+                      </option>
+                    )
+                  )}
+                </Select>
+              </FormGroup>
+              <div>
+                <ErrorText>{errors["cuMeterFeture"]?.message}</ErrorText>
+              </div>
+            </Field>
+            <Field flex style={{ alignItems: "center" }}>
+              <Field>
+                <FormGroup>
+                  <Label>계량기정보</Label>
+                  <Select {...register("cuMeterLr")}>
+                    {dataCommonDic?.cuMeterLr?.map((obj: any, idx: number) => (
+                      <option key={idx} value={obj.code}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
+                <div>
+                  <ErrorText>{errors["cuMeterLr"]?.message}</ErrorText>
+                </div>
+              </Field>
+              <Field>
                 <Select {...register("cuMeterType")}>
                   {dataCommonDic?.cuMeterType?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -386,108 +436,98 @@ function getTabContent(
                     </option>
                   ))}
                 </Select>
-              </FormGroup>
-              <div>
-                <ErrorText>{errors["cuMeterType"]?.message}</ErrorText>
-              </div>
+                <div>
+                  <ErrorText>{errors["cuMeterType"]?.message}</ErrorText>
+                </div>
+              </Field>
+              <Input
+                register={register("cuMeterM3")}
+                errors={errors["cuMeterM3"]?.message}
+              />
             </Field>
-            <Field>
-              <FormGroup>
-                <Label>계량기정보</Label>
-                <Select {...register("cuMeterLr")}>
-                  {dataCommonDic?.cuMeterLr?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-              <div>
-                <ErrorText>{errors["cuMeterLr"]?.message}</ErrorText>
-              </div>
-            </Field>
-            <Field>
-              <Select {...register("cuMeterType")}>
-                {dataCommonDic?.cuMeterType?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-              <div>
-                <ErrorText>{errors["cuMeterType"]?.message}</ErrorText>
-              </div>
-            </Field>
-            <Input
-              register={register("cuMeterM3")}
-              errors={errors["cuMeterM3"]?.message}
-            />
           </Wrapper>
-          <Wrapper grid col={5}>
+          <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Input
               label="계량기번호"
               register={register("cuMeterNo")}
               errors={errors["cuMeterNo"]?.message}
             />
-            <CustomDate
-              label="유효기간"
-              name="cuMeterTurm"
-              register={register("cuMeterTurm")}
-              reset={reset}
-              errors={errors["cuMeterTurm"]?.message}
-            />
-            <Field>
-              <FormGroup style={{ alignItems: "center" }}>
-                <Label>설치장소</Label>
-                <Select {...register("cuMeterPlace")}>
-                  {dataCommonDic?.cuMeterPlace?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-                <p>바코드번호</p>
-              </FormGroup>
-              <div>
-                <ErrorText>{errors["cuMeterPlace"]?.message}</ErrorText>
-              </div>
+            <Field style={{ width: "100%" }}>
+              <CustomDate
+                label="유효기간"
+                name="cuMeterTurm"
+                register={register("cuMeterTurm")}
+                reset={reset}
+                errors={errors["cuMeterTurm"]?.message}
+              />
             </Field>
-            <Input
-              register={register("cuBarcode")}
-              errors={errors["cuBarcode"]?.message}
-            />
+            <Field flex style={{ alignItems: "center" }}>
+              <Field>
+                <FormGroup style={{ alignItems: "center" }}>
+                  <Label>설치장소</Label>
+                  <Select {...register("cuMeterPlace")}>
+                    {dataCommonDic?.cuMeterPlace?.map(
+                      (obj: any, idx: number) => (
+                        <option key={idx} value={obj.code}>
+                          {obj.codeName}
+                        </option>
+                      )
+                    )}
+                  </Select>
+                  <p>바코드번호</p>
+                </FormGroup>
+                <div>
+                  <ErrorText>{errors["cuMeterPlace"]?.message}</ErrorText>
+                </div>
+              </Field>
+              <Input
+                register={register("cuBarcode")}
+                errors={errors["cuBarcode"]?.message}
+              />
+            </Field>
           </Wrapper>
-          <Wrapper grid col={5}>
-            <CustomDate
-              label="교체일자"
-              name="cuMeterDt"
-              register={register("cuMeterDt")}
-              reset={reset}
-              errors={errors["cuMeterDt"]?.message}
-            />
-            <CustomDate
-              label="교체예정일"
-              name="cuMdate"
-              register={register("cuMdate")}
-              reset={reset}
-              errors={errors["cuMdate"]?.message}
-            />
-            <Field flex>
+          <Wrapper grid fields={"1fr 1fr 2fr"}>
+            <Field style={{ width: "100%" }}>
+              <CustomDate
+                label="교체일자"
+                name="cuMeterDt"
+                register={register("cuMeterDt")}
+                reset={reset}
+                errors={errors["cuMeterDt"]?.message}
+              />
+            </Field>
+            <Field style={{ width: "100%" }}>
+              <CustomDate
+                label="교체예정일"
+                name="cuMdate"
+                register={register("cuMdate")}
+                reset={reset}
+                errors={errors["cuMdate"]?.message}
+              />
+            </Field>
+            <Field flex style={{ alignItems: "center" }}>
               <Input
                 label="발신기코드"
                 register={register("cuMTransmCd")}
                 errors={errors["cuMTransmCd"]?.message}
               />
               <p>원격검침 고객코드</p>
+              <Input
+                register={register("blabla")}
+                errors={errors["blabla"]?.message}
+                inputSize={InputSize.sm}
+              />
+              <SearchBtn type="button" onClick={() => alert("dsdsds")}>
+                <MagnifyingGlass />
+              </SearchBtn>
             </Field>
-            <input name="search" />
           </Wrapper>
         </Field>
       </Field>
     </div>
   );
   const data2 = (
-    <Field className="gray-title">
+    <Field className="outer-border">
       <Field flex>
         <Field className="gray-title">
           <p>법정검사</p>
@@ -512,27 +552,33 @@ function getTabContent(
               </Item>
             ))}
           </FormGroup>
-          <CustomDate
-            label="완성검사일"
-            name="cuFinishDate"
-            register={register("cuFinishDate")}
-            reset={reset}
-            errors={errors["cuFinishDate"]?.message}
-          />
-          <CustomDate
-            label="정기검사일"
-            name="cuCircuitDate"
-            register={register("cuCircuitDate")}
-            reset={reset}
-            errors={errors["cuCircuitDate"]?.message}
-          />
-          <CustomDate
-            label="검사 예정일"
-            name="cuScheduleDate"
-            register={register("cuScheduleDate")}
-            reset={reset}
-            errors={errors["cuScheduleDate"]?.message}
-          />
+          <Field style={{ width: "100%" }}>
+            <CustomDate
+              label="완성검사일"
+              name="cuFinishDate"
+              register={register("cuFinishDate")}
+              reset={reset}
+              errors={errors["cuFinishDate"]?.message}
+            />
+          </Field>
+          <Field style={{ width: "100%" }}>
+            <CustomDate
+              label="정기검사일"
+              name="cuCircuitDate"
+              register={register("cuCircuitDate")}
+              reset={reset}
+              errors={errors["cuCircuitDate"]?.message}
+            />
+          </Field>
+          <Field style={{ width: "100%" }}>
+            <CustomDate
+              label="검사 예정일"
+              name="cuScheduleDate"
+              register={register("cuScheduleDate")}
+              reset={reset}
+              errors={errors["cuScheduleDate"]?.message}
+            />
+          </Field>
         </Wrapper>
       </Field>
       <Field flex>
@@ -553,8 +599,130 @@ function getTabContent(
             <Label>발신기코드</Label>
             <Label>잔량고객코드</Label>
           </Wrapper>
-          <Wrapper grid col={11}></Wrapper>
-          <Wrapper grid col={11}></Wrapper>
+          <Wrapper grid col={11}>
+            <Input
+              register={register("tankMakeCo")}
+              errors={errors["tankMakeCo"]?.message}
+            />
+            <Select {...register("tankVol1")}>
+              {dataCommonDic?.tankVol1?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code1}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+            <Input
+              register={register("tankMakeSno")}
+              errors={errors["tankMakeSno"]?.message}
+            />
+            <Input
+              register={register("tankMakeDate")}
+              errors={errors["tankMakeDate"]?.message}
+            />
+            <Input
+              register={register("tankRcv")}
+              errors={errors["tankRcv"]?.message}
+            />
+            <Field style={{ width: "100%" }}>
+              <CustomDate
+                name="tankFirstDate"
+                register={register("tankFirstDate")}
+                reset={reset}
+                errors={errors["tankFirstDate"]?.message}
+              />
+            </Field>
+            <Field style={{ width: "100%" }}>
+              <CustomDate
+                name="tankOutsideDate"
+                register={register("tankOutsideDate")}
+                reset={reset}
+                errors={errors["tankOutsideDate"]?.message}
+              />
+            </Field>
+            <Field style={{ width: "100%" }}>
+              <CustomDate
+                name="tankInsideDate"
+                register={register("tankInsideDate")}
+                reset={reset}
+                errors={errors["tankInsideDate"]?.message}
+              />
+            </Field>
+            <Input
+              register={register("tankMax")}
+              errors={errors["tankMax"]?.message}
+            />
+            <Input
+              register={register("tankTransmCd")}
+              errors={errors["tankTransmCd"]?.message}
+            />
+            <Input
+              register={register("tankCuCd")}
+              errors={errors["tankCuCd"]?.message}
+            />
+          </Wrapper>
+
+          {/* dahin davtagdav ustgaarai wrapper-iig */}
+          <Wrapper grid col={11}>
+            <Input
+              register={register("tankMakeCo")}
+              errors={errors["tankMakeCo"]?.message}
+            />
+            <Select {...register("tankVol1")}>
+              {dataCommonDic?.tankVol1?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code1}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+            <Input
+              register={register("tankMakeSno")}
+              errors={errors["tankMakeSno"]?.message}
+            />
+            <Input
+              register={register("tankMakeDate")}
+              errors={errors["tankMakeDate"]?.message}
+            />
+            <Input
+              register={register("tankRcv")}
+              errors={errors["tankRcv"]?.message}
+            />
+            <Field style={{ width: "100%" }}>
+              <CustomDate
+                name="tankFirstDate"
+                register={register("tankFirstDate")}
+                reset={reset}
+                errors={errors["tankFirstDate"]?.message}
+              />
+            </Field>
+            <Field style={{ width: "100%" }}>
+              <CustomDate
+                name="tankOutsideDate"
+                register={register("tankOutsideDate")}
+                reset={reset}
+                errors={errors["tankOutsideDate"]?.message}
+              />
+            </Field>
+            <Field style={{ width: "100%" }}>
+              <CustomDate
+                name="tankInsideDate"
+                register={register("tankInsideDate")}
+                reset={reset}
+                errors={errors["tankInsideDate"]?.message}
+              />
+            </Field>
+            <Input
+              register={register("tankMax")}
+              errors={errors["tankMax"]?.message}
+            />
+            <Input
+              register={register("tankTransmCd")}
+              errors={errors["tankTransmCd"]?.message}
+            />
+            <Input
+              register={register("tankCuCd")}
+              errors={errors["tankCuCd"]?.message}
+            />
+          </Wrapper>
         </Field>
       </Field>
 
@@ -615,20 +783,24 @@ function getTabContent(
       </Wrapper>
       <DividerGray />
       <Wrapper grid col={4}>
-        <CustomDate
-          label="공급계약일"
-          name="cuGongdate"
-          register={register("cuGongdate")}
-          reset={reset}
-          errors={errors["cuGongdate"]?.message}
-        />
-        <CustomDate
-          label="계약만료일"
-          name="cuGongdateT"
-          register={register("cuGongdateT")}
-          reset={reset}
-          errors={errors["cuGongdateT"]?.message}
-        />
+        <Field style={{ width: "100%" }}>
+          <CustomDate
+            label="공급계약일"
+            name="cuGongdate"
+            register={register("cuGongdate")}
+            reset={reset}
+            errors={errors["cuGongdate"]?.message}
+          />
+        </Field>
+        <Field style={{ width: "100%" }}>
+          <CustomDate
+            label="계약만료일"
+            name="cuGongdateT"
+            register={register("cuGongdateT")}
+            reset={reset}
+            errors={errors["cuGongdateT"]?.message}
+          />
+        </Field>
         <Field>
           <FormGroup>
             <Label>계약갱신</Label>
@@ -644,13 +816,15 @@ function getTabContent(
             <ErrorText>{errors["cuExtendType"]?.message}</ErrorText>
           </div>
         </Field>
-        <CustomDate
-          label="계약갱신일"
-          name="cuExtendDate"
-          register={register("cuExtendDate")}
-          reset={reset}
-          errors={errors["cuExtendDate"]?.message}
-        />
+        <Field style={{ width: "100%" }}>
+          <CustomDate
+            label="계약갱신일"
+            name="cuExtendDate"
+            register={register("cuExtendDate")}
+            reset={reset}
+            errors={errors["cuExtendDate"]?.message}
+          />
+        </Field>
       </Wrapper>
       <DividerGray />
       <Wrapper grid col={4}>
@@ -781,20 +955,24 @@ function getTabContent(
       </Wrapper>
       <DividerGray />
       <Wrapper grid col={4}>
-        <CustomDate
-          label="체적시설 개선일"
-          name="cuSisuldate"
-          register={register("cuSisuldate")}
-          reset={reset}
-          errors={errors["cuSisuldate"]?.message}
-        />
-        <CustomDate
-          label="퓨즈콕 개선일"
-          name="cuPdate"
-          register={register("cuPdate")}
-          reset={reset}
-          errors={errors["cuPdate"]?.message}
-        />
+        <Field style={{ width: "100%" }}>
+          <CustomDate
+            label="체적시설 개선일"
+            name="cuSisuldate"
+            register={register("cuSisuldate")}
+            reset={reset}
+            errors={errors["cuSisuldate"]?.message}
+          />
+        </Field>
+        <Field style={{ width: "100%" }}>
+          <CustomDate
+            label="퓨즈콕 개선일"
+            name="cuPdate"
+            register={register("cuPdate")}
+            reset={reset}
+            errors={errors["cuPdate"]?.message}
+          />
+        </Field>
         <Label style={{ width: "105px" }}></Label>
         <Label style={{ width: "105px" }}></Label>
       </Wrapper>

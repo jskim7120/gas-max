@@ -123,7 +123,7 @@ function CM1100Page({
           areaCode: data[index].areaCode,
         })
       );
-      dispatch(openModal({ type: "cm1100Modal" }));
+      dispatch(openModal({ type: "cm1105Modal" }));
     } catch (err: any) {}
   };
 

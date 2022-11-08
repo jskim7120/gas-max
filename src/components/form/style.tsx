@@ -241,7 +241,8 @@ export const Field = styled.div<{ flex?: boolean }>`
   p {
     font-family: "NotoSansKRRegular";
     font-size: 12px;
-    text-align: center;
+    display: flex;
+    align-items: center;
   }
 
   .gray-title {
@@ -254,8 +255,24 @@ export const Field = styled.div<{ flex?: boolean }>`
 
   &.outer-border {
     border: 1px solid #e8ecf1;
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
+    // border-left: 1px solid #e8ecf1;
+    // border-top: 1px solid #000;
+    // border-bottom: 1px solid #000;
+  }
+  &.rectangle {
+    border: 1px solid rgba(187, 187, 187, 0.38);
+    border-radius: 4px;
+    background: rgba(104, 103, 103, 0.09);
+    padding: 5px;
+
+    label {
+      font-family: "NotoSansKRRegular";
+      font-size: 10px;
+      background: #a7a7a7;
+      border-radius: 2px;
+      padding: 1px 2px;
+      color: #fff;
+    }
   }
 `;
 
@@ -276,6 +293,7 @@ export const Wrapper = styled.div<{
   grid?: boolean;
   col?: number;
   bg?: string;
+  fields?: string;
 }>`
   width: 100%;
   display: ${(props) => (props.grid ? "grid" : "flex")};
@@ -285,7 +303,9 @@ export const Wrapper = styled.div<{
   flex-direction: ${(props) =>
     !props.grid && props.column ? "column" : "row"};
   grid-template-columns: ${(props) =>
-    props.grid && `repeat(${props.col ? props.col : "3"}, 1fr)`};
+    props.grid && `repeat(${props.col ? props.col : "3"},1fr)`};
+  grid-template-columns: ${(props) =>
+    props.grid && props.fields && `${props.fields}`};
   gap: ${(props) => (props.gap ? props.gap : "0px")};
   padding: ${(props) => (props.padding ? props.padding : "0")};
   background: ${(props) => (props.bg ? props.bg : "transparent")};

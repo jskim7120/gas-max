@@ -3,7 +3,7 @@ import { useDaumPostcodePopup } from "react-daum-postcode";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import styled from "styled-components";
 
-const SearchBtn = styled.button`
+export const SearchBtn = styled.button`
   width: 25px;
   height: 25px;
   background: #666666;

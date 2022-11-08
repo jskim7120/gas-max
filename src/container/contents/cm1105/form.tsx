@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
+import { Plus, Trash, Update, Reset, WhiteClose } from "components/allSvgIcon";
 import DaumAddress from "components/daum";
 import { useSelector, useDispatch } from "app/store";
 import { ICM1105SEARCH } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { closeModal, addCM1105 } from "app/state/modal/modalSlice";
 import API from "app/axios";
 
 import {
@@ -31,6 +32,7 @@ function Form() {
   const [addr, setAddress] = useState<string>("");
   const [addr2, setAddress2] = useState<string>("");
   const [tabId, setTabId] = useState(0);
+  const dispatch = useDispatch();
 
   const cm1105 = useSelector((state) => state.modal.cm1105);
 
@@ -50,12 +52,13 @@ function Form() {
 
   useEffect(() => {
     fetchData();
-  }, [cm1105]);
+  }, [cm1105.areaCode, cm1105.cuCode]);
 
   useEffect(() => {
     if (data) {
-      // console.log("data:", data);
+      console.log("data:", data);
       const record = data?.customerInfo[0];
+
       let newData: any = {};
       for (const [key, value] of Object.entries(record)) {
         newData[key] = value;
@@ -107,10 +110,8 @@ function Form() {
           padding: "0 15px",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <p style={{ display: "inline-block", color: "#fff" }}>
-            {data?.customerInfo[0].cuGumsaName}
-          </p>
+        <Field flex style={{ alignItems: "center" }}>
+          <p style={{ color: "#fff", fontSize: "14px" }}>거래처 정보</p>
           <Field>
             <FormGroup>
               <Label style={{ background: "transparent" }}>영업소</Label>
@@ -126,7 +127,7 @@ function Form() {
               <ErrorText>{errors["areaCode"]?.message}</ErrorText>
             </div>
           </Field>
-        </div>
+        </Field>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Button text="등록" icon={<Plus />} style={{ marginRight: "5px" }} />
           <Button
@@ -136,7 +137,15 @@ function Form() {
             color={ButtonColor.SECONDARY}
           />
           <Button text="취소" style={{ marginRight: "5px" }} icon={<Reset />} />
-          <Close />
+          <span
+            style={{ marginLeft: "10px", marginTop: "1px" }}
+            onClick={() => {
+              dispatch(addCM1105({ cuCode: "", areaCode: "" }));
+              dispatch(closeModal());
+            }}
+          >
+            <WhiteClose />
+          </span>
         </div>
       </div>
       <div style={{ padding: "12px" }}>
@@ -242,7 +251,7 @@ function Form() {
             fullWidth
           />
         </Wrapper>
-        <DividerGray />
+        <Divider />
         <Wrapper>
           <Input
             label="메모"
@@ -250,16 +259,15 @@ function Form() {
             errors={errors["cuMemo"]?.message}
           />
         </Wrapper>
-        <Divider />
+        <DividerGray />
         <Field
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
             marginRight: "20px",
           }}
         >
-          <Field>
+          <Field style={{ width: "80%" }}>
             <Wrapper grid>
               <Field>
                 <FormGroup>
@@ -425,12 +433,8 @@ function Form() {
             </Wrapper>
           </Field>
           <Field
-            style={{
-              border: "1px solid rgba(187,187,187,0.38)",
-              borderRadius: "4px",
-              background: "rgba(104,103,103,0.09)",
-              padding: "5px",
-            }}
+            className="rectangle"
+            style={{ width: "20%", marginLeft: "5px" }}
           >
             <FormGroup>
               <label>용기보증금</label>
