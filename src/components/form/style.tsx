@@ -18,10 +18,14 @@ export const getInputSize = (size?: InputSize) => {
       return `130px`;
     case InputSize.md:
       return `250px`;
+    case InputSize.md290:
+      return `290px`;
     case InputSize.lg:
       return `425px`;
     case InputSize.xl:
       return `500px`;
+    case InputSize.xxl:
+      return `600px`;
   }
 };
 

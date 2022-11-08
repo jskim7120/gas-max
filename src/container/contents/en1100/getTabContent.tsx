@@ -189,7 +189,7 @@ function getTabContent(
         <Input
           register={register("JnOrderO1")}
           errors={errors["JnOrderO1"]?.message}
-          inputSize={InputSize.md}
+          inputSize={InputSize.xxl}
         />
       ),
     },
@@ -198,6 +198,7 @@ function getTabContent(
         <Input
           register={register("JnOrderO2")}
           errors={errors["JnOrderO2"]?.message}
+          inputSize={InputSize.xxl}
         />
       ),
     },
@@ -206,6 +207,7 @@ function getTabContent(
         <Input
           register={register("JnOrderO3")}
           errors={errors["JnOrderO3"]?.message}
+          inputSize={InputSize.xxl}
         />
       ),
     },
@@ -214,6 +216,7 @@ function getTabContent(
         <Input
           register={register("JnOrderO4")}
           errors={errors["JnOrderO4"]?.message}
+          inputSize={InputSize.xxl}
         />
       ),
     },
@@ -222,6 +225,7 @@ function getTabContent(
         <Input
           register={register("JnOrderO5")}
           errors={errors["JnOrderO5"]?.message}
+          inputSize={InputSize.xxl}
         />
       ),
     },
@@ -230,6 +234,7 @@ function getTabContent(
         <Input
           register={register("JnOrderO6")}
           errors={errors["JnOrderO6"]?.message}
+          inputSize={InputSize.xxl}
         />
       ),
     },
@@ -241,12 +246,14 @@ function getTabContent(
         <Input
           register={register("jnBank1")}
           errors={errors["jnBank1"]?.message}
+          inputSize={InputSize.md290}
         />
       ),
       jnBankNo1: (
         <Input
           register={register("jnBankno1")}
           errors={errors["jnBankNo1"]?.message}
+          inputSize={InputSize.md290}
         />
       ),
     },
@@ -255,12 +262,14 @@ function getTabContent(
         <Input
           register={register("jnBank2")}
           errors={errors["jnBank2"]?.message}
+          inputSize={InputSize.md290}
         />
       ),
       jnBankNo2: (
         <Input
           register={register("jnBankno2")}
           errors={errors["jnBankNo2"]?.message}
+          inputSize={InputSize.md290}
         />
       ),
     },
@@ -269,12 +278,14 @@ function getTabContent(
         <Input
           register={register("jnBank3")}
           errors={errors["jnBank3"]?.message}
+          inputSize={InputSize.md290}
         />
       ),
       jnBankNo3: (
         <Input
           register={register("jnBankno3")}
           errors={errors["jnBankNo3"]?.message}
+          inputSize={InputSize.md290}
         />
       ),
     },
@@ -283,12 +294,14 @@ function getTabContent(
         <Input
           register={register("jnBank4")}
           errors={errors["jnBank4"]?.message}
+          inputSize={InputSize.md290}
         />
       ),
       jnBankNo4: (
         <Input
           register={register("jnBankno4")}
           errors={errors["jnBankNo4"]?.message}
+          inputSize={InputSize.md290}
         />
       ),
     },

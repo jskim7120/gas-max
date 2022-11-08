@@ -351,7 +351,7 @@ const Form = React.forwardRef(
           </Field>
         </Wrapper>
         <Wrapper>
-          <Field>
+          <Field flex>
             <Input
               style={{ textAlign: "end" }}
               label="가스판매단가"
@@ -360,11 +360,12 @@ const Form = React.forwardRef(
               inputSize={InputSize.en1300}
               textAlign="right"
             />
+            <p>원</p>
           </Field>
         </Wrapper>
         <DividerGray />
         <Wrapper>
-          <Field>
+          <Field flex>
             <Input
               style={{ textAlign: "end" }}
               label="용기판매단가"
@@ -373,11 +374,12 @@ const Form = React.forwardRef(
               inputSize={InputSize.en1300}
               textAlign="right"
             />
+            <p>원</p>
           </Field>
         </Wrapper>
         <DividerGray />
         <Wrapper>
-          <Field>
+          <Field flex>
             <Input
               style={{ textAlign: "end" }}
               label="가스매입원가"
@@ -386,11 +388,12 @@ const Form = React.forwardRef(
               inputSize={InputSize.en1300}
               textAlign="right"
             />
+            <p>원</p>
           </Field>
         </Wrapper>
         <DividerGray />
         <Wrapper>
-          <Field>
+          <Field flex>
             <Input
               style={{ textAlign: "end" }}
               label="용기구입단가"
@@ -399,11 +402,12 @@ const Form = React.forwardRef(
               inputSize={InputSize.en1300}
               textAlign="right"
             />
+            <p>원</p>
           </Field>
         </Wrapper>
         <DividerGray />
         <Wrapper>
-          <Field>
+          <Field flex>
             <Input
               style={{ textAlign: "end" }}
               label="사원배달수수료"
@@ -412,6 +416,7 @@ const Form = React.forwardRef(
               inputSize={InputSize.en1300}
               textAlign="right"
             />
+            <p>원</p>
           </Field>
         </Wrapper>
         <Divider />

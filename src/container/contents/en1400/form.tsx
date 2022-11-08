@@ -206,23 +206,29 @@ const Form = React.forwardRef(
         </Wrapper>
         <Divider />
         <Wrapper>
-          <Input
-            label="매입단가"
-            register={register("bpIndanga")}
-            errors={errors["bpIndanga"]?.message}
-            inputSize={InputSize.md}
-            textAlign="right"
-          />
+          <Field flex>
+            <Input
+              label="매입단가"
+              register={register("bpIndanga")}
+              errors={errors["bpIndanga"]?.message}
+              inputSize={InputSize.md}
+              textAlign="right"
+            />
+            <p>원</p>
+          </Field>
         </Wrapper>
         <DividerGray />
         <Wrapper>
-          <Input
-            label="판매단가"
-            register={register("bpOutdanga")}
-            errors={errors["bpOutdanga"]?.message}
-            inputSize={InputSize.md}
-            textAlign="right"
-          />
+          <Field flex>
+            <Input
+              label="판매단가"
+              register={register("bpOutdanga")}
+              errors={errors["bpOutdanga"]?.message}
+              inputSize={InputSize.md}
+              textAlign="right"
+            />
+            <p>원</p>
+          </Field>
         </Wrapper>
         <DividerGray />
       </form>
