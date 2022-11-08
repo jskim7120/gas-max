@@ -58,6 +58,7 @@ interface IInputProps {
   kind?: FieldKind;
   textAlign?: string;
   formatNumber?: boolean;
+  labelStyle?: any;
 }
 
 export const Input = ({
@@ -77,6 +78,7 @@ export const Input = ({
   kind,
   textAlign,
   formatNumber,
+  labelStyle,
 }: IInputProps) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -109,7 +111,9 @@ export const Input = ({
               {label}
             </Label>
           ) : (
-            <Label labelLong={labelLong}>{label}</Label>
+            <Label labelLong={labelLong} style={labelStyle && labelStyle}>
+              {label}
+            </Label>
           ))}
         <InputForm
           type={type ? type : "text"}

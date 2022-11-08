@@ -20,6 +20,7 @@ import {
   FormGroup,
   Wrapper,
   Label,
+  DividerGray,
 } from "components/form/style";
 import { InputSize, FieldKind } from "components/componentsType";
 import { DetailHeader } from "../style";
@@ -166,7 +167,7 @@ function CM1100Page({
           </div>
         </DetailHeader>
         <SearchWrapper>
-          <div>
+          <div style={{ width: "90%" }}>
             <Wrapper grid col={5}>
               <Input
                 label="거래처명"
@@ -191,8 +192,12 @@ function CM1100Page({
                 register={register("cuGongname")}
                 errors={errors["cuGongname"]?.message}
                 kind={FieldKind.BORDER}
+                labelStyle={{
+                  minWidth: "137px",
+                }}
               />
             </Wrapper>
+            <DividerGray />
             <Wrapper grid col={5}>
               <Field>
                 <FormGroup>
@@ -253,7 +258,13 @@ function CM1100Page({
               </Field>
               <Field>
                 <FormGroup>
-                  <Label>관리자</Label>
+                  <Label
+                    style={{
+                      minWidth: "137px",
+                    }}
+                  >
+                    관리자
+                  </Label>
                   <Select
                     {...register("cuCustgubun")}
                     kind={FieldKind.BORDER}
@@ -292,6 +303,7 @@ function CM1100Page({
                 </div>
               </Field>
             </Wrapper>
+
             <Wrapper grid col={5}>
               <Field>
                 <FormGroup>
@@ -357,6 +369,9 @@ function CM1100Page({
                 register={register("cuMisu")}
                 errors={errors["cuMisu"]?.message}
                 kind={FieldKind.BORDER}
+                labelStyle={{
+                  minWidth: "137px",
+                }}
               />
             </Wrapper>
           </div>
