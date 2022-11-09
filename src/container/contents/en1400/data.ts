@@ -38,11 +38,8 @@ export const columns = [
     fieldName: "areaCode",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "업소코드",
+      text: "영업소",
     },
   },
   {
@@ -50,9 +47,6 @@ export const columns = [
     fieldName: "bpCode",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "부품코드",
     },
@@ -62,9 +56,7 @@ export const columns = [
     fieldName: "bpName",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-left-column",
     header: {
       text: "부품명",
     },
@@ -74,9 +66,6 @@ export const columns = [
     fieldName: "bpType",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "규격",
     },
@@ -86,9 +75,6 @@ export const columns = [
     fieldName: "bpDanwi",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "단위",
     },
@@ -98,9 +84,7 @@ export const columns = [
     fieldName: "bpIndanga",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-right-column",
     header: {
       text: "매입단가",
     },
@@ -110,9 +94,7 @@ export const columns = [
     fieldName: "bpOutdanga",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-right-column",
     header: {
       text: "판매단가",
     },

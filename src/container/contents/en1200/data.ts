@@ -25,11 +25,8 @@ export const columns = [
     fieldName: "areaCode",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "업소",
+      text: "영업소",
     },
   },
   {
@@ -37,9 +34,7 @@ export const columns = [
     fieldName: "saupSsno",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-left-column",
     header: {
       text: "사업번호",
     },
@@ -49,9 +44,7 @@ export const columns = [
     fieldName: "saupSangho",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-left-column",
     header: {
       text: "상호",
     },
@@ -61,9 +54,6 @@ export const columns = [
     fieldName: "saupSajang",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "대표",
     },

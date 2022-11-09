@@ -166,6 +166,7 @@ const Form = React.forwardRef(
             label="코드"
             register={register("jyCode")}
             errors={errors["jyCode"]?.message}
+            maxLength="2"
           />
           <Field>
             <FormGroup>

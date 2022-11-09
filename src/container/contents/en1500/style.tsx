@@ -44,11 +44,14 @@ export const DetailWrapper = styled.div`
 
 export const VolReading = styled.div`
   width: 707px;
-  height: 187px;
+  height: 194px;
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
   border-radius: 8px;
   margin-top: 13px;
+  .volReadCnt {
+    padding: 0 17px;
+  }
   .title {
     height: 31px;
     background: rgba(101, 84, 255, 0.37);
@@ -78,7 +81,6 @@ export const VolReading = styled.div`
     position: relative;
     width: 99%;
     align-items: center;
-    padding-left: 17px;
   }
 `;
 export const Container = styled.div`
@@ -128,8 +130,11 @@ export const BasicItems = styled.div`
   border-radius: 8px;
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
+  .basicItemsCnt {
+    padding: 0 20px;
+  }
   .volWrapper {
-    margin-left: 20px;
+    // margin-left: 20px;
   }
   select {
     width: 77px;
@@ -146,7 +151,7 @@ export const BasicItems = styled.div`
     line-height: 24px;
     display: flex;
     align-items: center;
-    margin-top: 78px;
+    margin-top: 77px;
     justify-content: center;
     span {
       margin-left: 6px;

@@ -372,7 +372,7 @@ const Form = React.forwardRef(
           />
         </Wrapper>
         <DividerGray />
-        <Wrapper>
+        <Wrapper style={{ width: "630px" }}>
           <CustomDate
             label="정기검사일"
             name="caJdate1"
@@ -523,7 +523,7 @@ const Form = React.forwardRef(
           </Field>
         </Wrapper>
         <DividerGray />
-        <Wrapper>
+        <Wrapper style={{ width: "630px" }}>
           <CustomDate
             label="보험기간"
             name="caBsdate"

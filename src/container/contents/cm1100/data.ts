@@ -61,9 +61,6 @@ export const columns = [
     fieldName: "areaCode",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "center",
-    },
     header: {
       text: "영업소",
     },
@@ -73,9 +70,6 @@ export const columns = [
     fieldName: "cuTypeName",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "구분",
     },
@@ -85,9 +79,6 @@ export const columns = [
     fieldName: "cuCode",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "코드",
     },
@@ -97,9 +88,6 @@ export const columns = [
     fieldName: "cuViewName",
     type: "data",
     width: "200",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "거래처명",
     },
@@ -109,9 +97,6 @@ export const columns = [
     fieldName: "cuAddrn2",
     type: "data",
     width: "250",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "주소",
     },
@@ -121,9 +106,6 @@ export const columns = [
     fieldName: "cuTel",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "전화",
     },
@@ -133,9 +115,6 @@ export const columns = [
     fieldName: "cuTongkum",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "용기보증금",
     },
@@ -145,9 +124,6 @@ export const columns = [
     fieldName: "cuJmisu",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "중량미수",
     },
@@ -157,9 +133,6 @@ export const columns = [
     fieldName: "cuCmisu",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "체적미수",
     },
@@ -169,9 +142,6 @@ export const columns = [
     fieldName: "cuGongdate10",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "공급계약일",
     },
@@ -181,9 +151,6 @@ export const columns = [
     fieldName: "cuHdate10",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "최종점검일",
     },
@@ -193,9 +160,6 @@ export const columns = [
     fieldName: "cuCutypeName",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "소비형태",
     },
@@ -205,9 +169,6 @@ export const columns = [
     fieldName: "cuStaeName",
     type: "data",
     width: "100",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "상태",
     },

@@ -1,6 +1,6 @@
 export interface ICUSTJY {
   areaCode: string;
-  jyCode: string;
+  jyCode: number;
   jyName: string;
   jyBigo: string;
 }
