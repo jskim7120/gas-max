@@ -2,3 +2,11 @@
   font-family: "NotoSansKRRegular";
   font-size: 12px;
 }
+
+.rg-right-column {
+  text-align: right;
+}
+
+.rg-left-column {
+  text-align: left;
+}
