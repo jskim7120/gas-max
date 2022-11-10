@@ -4,12 +4,15 @@ import { columns, fields } from "./data";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { Notebook, Edit2, WhiteCloseCircle } from "components/allSvgIcon";
+import { useDispatch } from "app/store";
+import { openModal } from "app/state/modal/modalSlice";
 
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
 
 function Tab1({ data }: { data: any }) {
+  const dispatch = useDispatch();
   const [gridData, setGridData] = useState([]);
   const realgridElement = useRef<HTMLDivElement>(null);
 
@@ -57,6 +60,10 @@ function Tab1({ data }: { data: any }) {
     };
   }, [gridData]);
 
+  const openPopupCM1106 = async () => {
+    dispatch(openModal({ type: "cm1106Modal" }));
+  };
+
   return (
     <div style={{ display: "flex" }}>
       <div
@@ -80,6 +87,7 @@ function Tab1({ data }: { data: any }) {
             marginBottom: "7px",
           }}
           type="button"
+          onClick={openPopupCM1106}
         />
 
         <Button

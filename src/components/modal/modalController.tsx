@@ -30,7 +30,9 @@ const PopupContiner = styled.div<{ type: string }>`
   position: fixed;
 
   ${(props) =>
-    (props.type === "customerModal" || props.type === "cm1105Modal") &&
+    (props.type === "customerModal" ||
+      props.type === "cm1105Modal" ||
+      props.type === "cm1106Modal") &&
     `
       top: 50%;
       left: 50%;  
