@@ -110,6 +110,9 @@ export const RubeUnit = styled.div`
   table {
     width: 240px;
     margin: 0 auto;
+    input {
+      height: 20px;
+    }
   }
   .rubeDesc {
     color: #1b8c8e;
