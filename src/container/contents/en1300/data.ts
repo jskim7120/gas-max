@@ -54,11 +54,8 @@ export const columns = [
     fieldName: "areaCode",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "center",
-    },
     header: {
-      text: "업소",
+      text: "영업소",
     },
   },
   {
@@ -66,11 +63,8 @@ export const columns = [
     fieldName: "jpGubun",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "구분",
+      text: "코드",
     },
   },
   {
@@ -78,11 +72,9 @@ export const columns = [
     fieldName: "jpCode",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-left-column",
     header: {
-      text: "코드",
+      text: "품명",
     },
   },
 
@@ -91,11 +83,9 @@ export const columns = [
     fieldName: "jpCode",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-left-column",
     header: {
-      text: "품명",
+      text: "규격",
     },
   },
   {
@@ -103,11 +93,8 @@ export const columns = [
     fieldName: "jpCode",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "규격",
+      text: "가스구분",
     },
   },
   {
@@ -115,11 +102,8 @@ export const columns = [
     fieldName: "jpCode",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "단위",
+      text: "용량 ",
     },
   },
   {
@@ -127,11 +111,8 @@ export const columns = [
     fieldName: "jpCode",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "용량",
+      text: "단위",
     },
   },
   {
@@ -139,11 +120,9 @@ export const columns = [
     fieldName: "jpCode",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-right-column",
     header: {
-      text: "가스단가",
+      text: "가스판매단가",
     },
   },
   {
@@ -151,11 +130,9 @@ export const columns = [
     fieldName: "jpCode",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-right-column",
     header: {
-      text: "용기단가",
+      text: "용기판매단가",
     },
   },
   {
@@ -163,11 +140,8 @@ export const columns = [
     fieldName: "jpCode",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "순번",
+      text: "재고사용유무",
     },
   },
   {
@@ -175,11 +149,8 @@ export const columns = [
     fieldName: "jpCode",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "재고사용",
+      text: "순번",
     },
   },
 ];

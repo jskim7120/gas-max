@@ -194,7 +194,7 @@ const Form = React.forwardRef(
             label="코드"
             register={register("jpCode")}
             errors={errors["jpCode"]?.message}
-            maxLength={"4"}
+            maxLength="4"
             inputSize={InputSize.en1300}
           />
         </Wrapper>
@@ -350,6 +350,7 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field flex>
             <Input

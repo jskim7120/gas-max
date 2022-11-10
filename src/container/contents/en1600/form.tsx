@@ -399,7 +399,7 @@ const Form = React.forwardRef(
               </button>
             </Wrapper>
             <DividerGray />
-            <Wrapper style={{ width: "fit-content" }}>
+            <Wrapper style={{ width: "600px" }}>
               <CustomDate
                 label="입사일"
                 name="swIndate"
@@ -425,12 +425,15 @@ const Form = React.forwardRef(
             </Wrapper>
             <DividerGray />
             <Wrapper grid>
-              <Input
-                label="급여액"
-                register={register("swPaykum")}
-                errors={errors["swPaykum"]?.message}
-                textAlign="right"
-              />
+              <Field flex>
+                <Input
+                  label="급여액"
+                  register={register("swPaykum")}
+                  errors={errors["swPaykum"]?.message}
+                  textAlign="right"
+                />
+                <p>원</p>
+              </Field>
               <Input
                 label="급여일"
                 register={register("swPaydate")}
@@ -455,7 +458,7 @@ const Form = React.forwardRef(
           />
         </Wrapper>
         <DividerGray />
-        <Wrapper style={{ width: "610px" }}>
+        <Wrapper style={{ width: "600px" }}>
           <CustomDate
             label="적성검사"
             name="swJdate1"

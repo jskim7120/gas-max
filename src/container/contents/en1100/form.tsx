@@ -209,6 +209,7 @@ const Form = React.forwardRef(
             label="사업자번호"
             register={register("jnSsno")}
             errors={errors["jnSsno"]?.message}
+            formatNumber
           />
           <Input
             label="상호"

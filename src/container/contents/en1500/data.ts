@@ -17,9 +17,6 @@ export const columns = [
     fieldName: "areaCode",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "center",
-    },
     header: {
       text: "코드",
     },
@@ -29,6 +26,7 @@ export const columns = [
     fieldName: "areaName",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     styles: {
       textAlignment: "near",
     },

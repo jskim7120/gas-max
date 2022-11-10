@@ -127,20 +127,36 @@ export const Input = ({
               {label}
             </Label>
           ))}
-        <InputForm
-          type={type ? type : "text"}
-          inputSize={inputSize && inputSize}
-          fullWidth={fullWidth && fullWidth}
-          {...register}
-          value={formatNumber ? inputValue : value && value}
-          placeholder={placeholder}
-          style={style}
-          className={className}
-          maxLength={maxLength && maxLength}
-          kind={kind && kind}
-          textAlign={textAlign && textAlign}
-          onChange={formatNumber ? (e) => handleInput(e) : null}
-        />
+        {formatNumber ? (
+          <InputForm
+            type={type ? type : "text"}
+            inputSize={inputSize && inputSize}
+            fullWidth={fullWidth && fullWidth}
+            {...register}
+            value={formatNumber ? inputValue : value && value}
+            placeholder={placeholder}
+            style={style}
+            className={className}
+            maxLength={maxLength && maxLength}
+            kind={kind && kind}
+            textAlign={textAlign && textAlign}
+            onChange={formatNumber ? (e) => handleInput(e) : null}
+          />
+        ) : (
+          <InputForm
+            type={type ? type : "text"}
+            inputSize={inputSize && inputSize}
+            fullWidth={fullWidth && fullWidth}
+            {...register}
+            value={formatNumber ? inputValue : value && value}
+            placeholder={placeholder}
+            style={style}
+            className={className}
+            maxLength={maxLength && maxLength}
+            kind={kind && kind}
+            textAlign={textAlign && textAlign}
+          />
+        )}
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>
     </InputWrapper>

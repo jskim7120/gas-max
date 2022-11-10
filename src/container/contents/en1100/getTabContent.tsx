@@ -146,14 +146,14 @@ function getTabContent(
         <Input
           register={register("jnJiroSNo04")}
           errors={errors["jnJiroSNo04"]?.message}
-          textAlign="right"
+          textAlign="center"
         />
       ),
       3: (
         <Input
           register={register("jnJirono04")}
           errors={errors["jnJirono04"]?.message}
-          textAlign="right"
+          textAlign="center"
         />
       ),
       4: (
