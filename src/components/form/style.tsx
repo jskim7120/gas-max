@@ -2,14 +2,6 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { InputSize, FieldKind } from "components/componentsType";
 
-// import {
-//   Path,
-//   UseFormRegister,
-//   FieldError,
-//   FieldValues,
-// } from "react-hook-form";
-// import { IFormProps } from "container/contents/en1100/type";
-
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
     case InputSize.sm:
@@ -39,9 +31,6 @@ export const getInputKind = (kind?: FieldKind) => {
 };
 
 interface IInputProps {
-  // name: Path<IFormProps>;
-  // register: UseFormRegister<IFormProps>;
-  // errors?: FieldError | any;
   type?: string;
   label?: string;
   name?: string;
