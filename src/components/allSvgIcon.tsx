@@ -4537,3 +4537,155 @@ export const WhiteClose = () => {
     </svg>
   );
 };
+
+export const Notebook = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="13.269"
+      height="15.063"
+      viewBox="0 0 13.269 15.063"
+    >
+      <g id="Group_1354" data-name="Group 1354" transform="translate(0.5 0.5)">
+        <rect
+          id="Rectangle_1994"
+          data-name="Rectangle 1994"
+          width="12.269"
+          height="14.063"
+          transform="translate(0 0)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+        <line
+          id="Line_222"
+          data-name="Line 222"
+          x2="6.651"
+          transform="translate(2.809 3.767)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+        <line
+          id="Line_223"
+          data-name="Line 223"
+          x2="6.651"
+          transform="translate(2.809 7.032)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+        <line
+          id="Line_224"
+          data-name="Line 224"
+          x2="6.651"
+          transform="translate(2.809 10.296)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const Edit2 = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="13.269"
+      height="13.269"
+      viewBox="0 0 13.269 13.269"
+    >
+      <g
+        id="Group_1377"
+        data-name="Group 1377"
+        transform="translate(-991.932 -844.777)"
+      >
+        <path
+          id="Path_3069"
+          data-name="Path 3069"
+          d="M4.3,53.705l1.892-.817L5.113,51.814Z"
+          transform="translate(991.116 800.713)"
+          fill="#fff"
+        />
+        <line
+          id="Line_219"
+          data-name="Line 219"
+          y1="7.245"
+          x2="7.244"
+          transform="translate(997.177 845.409)"
+          fill="#231815"
+        />
+        <rect
+          id="Rectangle_1993"
+          data-name="Rectangle 1993"
+          width="9.447"
+          height="1.519"
+          transform="matrix(0.707, -0.707, 0.707, 0.707, 996.64, 852.116)"
+          fill="#fff"
+        />
+        <path
+          id="Path_3071"
+          data-name="Path 3071"
+          d="M8.134,44.51H1.257V56.778H13.526V49.9"
+          transform="translate(991.176 800.767)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const WhiteCloseCircle = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14.11"
+      height="15.238"
+      viewBox="0 0 14.11 15.238"
+    >
+      <g id="Group_1353" data-name="Group 1353" transform="translate(0.5 0.5)">
+        <path
+          id="Path_3070"
+          data-name="Path 3070"
+          d="M12.02,12.983a6.193,6.193,0,0,1-9.27,0,7.558,7.558,0,0,1,0-10.067,6.193,6.193,0,0,1,9.27,0A7.558,7.558,0,0,1,12.02,12.983Z"
+          transform="translate(-0.83 -0.83)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+        <line
+          id="Line_220"
+          data-name="Line 220"
+          x1="5.221"
+          y2="5.221"
+          transform="translate(4.046 4.392)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+        <line
+          id="Line_221"
+          data-name="Line 221"
+          x1="5.221"
+          y1="5.221"
+          transform="translate(4.046 4.392)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+      </g>
+    </svg>
+  );
+};

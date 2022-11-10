@@ -2,14 +2,6 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { InputSize, FieldKind } from "components/componentsType";
 
-// import {
-//   Path,
-//   UseFormRegister,
-//   FieldError,
-//   FieldValues,
-// } from "react-hook-form";
-// import { IFormProps } from "container/contents/en1100/type";
-
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
     case InputSize.sm:
@@ -39,9 +31,6 @@ export const getInputKind = (kind?: FieldKind) => {
 };
 
 interface IInputProps {
-  // name: Path<IFormProps>;
-  // register: UseFormRegister<IFormProps>;
-  // errors?: FieldError | any;
   type?: string;
   label?: string;
   name?: string;
@@ -107,15 +96,23 @@ export const Input = ({
   }
   return (
     <InputWrapper fullWidth={fullWidth}>
-      <FormGroup>
+      <FormGroup className={className && className}>
         {/* {label !== undefined && <Label labelLong={labelLong}>{label}</Label>} */}
         {label !== undefined &&
           (label === "~" ? (
-            <Label style={{ minWidth: "auto" }} labelLong={labelLong}>
+            <Label
+              style={{ minWidth: "auto" }}
+              labelLong={labelLong}
+              className={className && className}
+            >
               {label}
             </Label>
           ) : (
-            <Label labelLong={labelLong} style={labelStyle && labelStyle}>
+            <Label
+              labelLong={labelLong}
+              style={labelStyle && labelStyle}
+              className={className && className}
+            >
               {label}
             </Label>
           ))}
@@ -152,29 +149,6 @@ export const Input = ({
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>
     </InputWrapper>
-  );
-};
-export const SelectCom = ({
-  label,
-  labelLong,
-  errors,
-  selectOption,
-  defaultValue,
-}: IInputProps) => {
-  return (
-    <div>
-      <FormGroup>
-        {label !== undefined && <Label labelLong={labelLong}>{label}</Label>}
-        <Select value={defaultValue} onChange={() => {}}>
-          {selectOption?.map((obj: any, idx: any) => (
-            <option key={idx} value={obj.code1}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
-      </FormGroup>
-      <ErrorText>{errors && errors}</ErrorText>
-    </div>
   );
 };
 
@@ -215,6 +189,11 @@ export const InputForm = styled.input<{
     }
   }
 
+  &.small {
+    height: 22px;
+    margin: 2px;
+  }
+
   border: ${(props) =>
     props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
 `;
@@ -234,6 +213,14 @@ export const FormGroup = styled.div`
   input,
   select {
     margin: 5px 5px 5px 5px;
+  }
+
+  &.small {
+    gap: 0;
+  }
+
+  &.jccenter {
+    justify-content: center;
   }
 
   label.login {
@@ -257,6 +244,27 @@ export const Label = styled.label<{ labelLong?: boolean; style?: any }>`
   padding: 7px 10px;
   background: #f5fcff;
   white-space: nowrap;
+
+  &.small {
+    text-align: center;
+    height: 27px;
+    margin: 0px;
+    padding: 3px 0 0 0;
+  }
+
+  &.green {
+    background: #d3e175;
+  }
+  &.light-green {
+    background: #ebf69c;
+  }
+  &.white {
+    background: #fff;
+  }
+
+  &.brgray {
+    border-right: 1px solid #e6e5e5;
+  }
 `;
 
 export const Field = styled.div<{ flex?: boolean }>`
@@ -295,6 +303,9 @@ export const Field = styled.div<{ flex?: boolean }>`
       padding: 1px 2px;
       color: #fff;
     }
+  }
+  &.br {
+    border-right: 1px solid #e6e5e5;
   }
 `;
 

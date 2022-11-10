@@ -7,7 +7,7 @@ import API from "app/axios";
 import { schema } from "./validation";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import { Plus, Trash, Update, Reset, WhiteClose } from "components/allSvgIcon";
+import { Plus, Update, Reset, WhiteClose } from "components/allSvgIcon";
 import { ICM1105SEARCH } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { closeModal, addCM1105 } from "app/state/modal/modalSlice";
@@ -22,6 +22,7 @@ import {
   Divider,
   Label,
 } from "components/form/style";
+import { CM1105SEARCH } from "app/path";
 
 import CheckBox from "components/checkbox";
 import PlainTab from "components/plainTab";
@@ -30,7 +31,7 @@ import getTabContent from "./getTabContent";
 import { CM1105INSERT, CM1105UPDATE } from "app/path";
 import { toast } from "react-toastify";
 
-function Form() {
+function FormCM1105() {
   const [data, setData] = useState<any>(null);
   const [addr, setAddress] = useState<string>("");
   const [addr2, setAddress2] = useState<string>("");
@@ -43,7 +44,6 @@ function Form() {
     groupId: "CM",
     functionName: "CM1105",
   });
-  // console.log("dataCommonDic:====>", dataCommonDic);
 
   const {
     register,
@@ -55,8 +55,6 @@ function Form() {
     mode: "onChange",
     resolver: yupResolver(schema),
   });
-
-  // console.log("errors=================================>", errors);
 
   useEffect(() => {
     if (cm1105.areaCode && cm1105.cuCode) {
@@ -83,12 +81,6 @@ function Form() {
       const virtualAccount = data?.virturalAccoount
         ? data?.virturalAccoount[0]
         : {};
-
-      // console.log("data==============>", data);
-      // console.log("customerInfo==============>", customerInfo);
-      // console.log("cms==============>", cms);
-      // console.log("cuTank==============>", cuTank);
-      // console.log("virtualAccount==============>", virtualAccount);
 
       if (type === "clear") {
         for (const [key, value] of Object.entries(customerInfo)) {
@@ -188,7 +180,7 @@ function Form() {
 
   const fetchData = async () => {
     try {
-      const { data } = await API.get("/app/CM1105/search", {
+      const { data } = await API.get(CM1105SEARCH, {
         params: { cuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
       });
       setData(data);
@@ -253,7 +245,7 @@ function Form() {
         </Field>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Button
-            text="등록"
+            text="연속등록"
             icon={<Plus />}
             style={{ marginRight: "5px" }}
             type="button"
@@ -283,7 +275,7 @@ function Form() {
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
-              dispatch(addCM1105({ cuCode: "", areaCode: "" }));
+              // dispatch(addCM1105({ cuCode: "", areaCode: "" }));
               dispatch(closeModal());
             }}
           >
@@ -584,6 +576,7 @@ function Form() {
               <Input
                 register={register("cuTongkum")}
                 errors={errors["cuTongkum"]?.message}
+                textAlign="right"
               />
             </FormGroup>
             <FormGroup>
@@ -591,6 +584,7 @@ function Form() {
               <Input
                 register={register("cuJmisu")}
                 errors={errors["cuJmisu"]?.message}
+                textAlign="right"
               />
             </FormGroup>
             <FormGroup>
@@ -598,6 +592,7 @@ function Form() {
               <Input
                 register={register("cuCmisu")}
                 errors={errors["cuCmisu"]?.message}
+                textAlign="right"
               />
             </FormGroup>
           </Field>
@@ -631,4 +626,4 @@ function Form() {
   );
 }
 
-export default Form;
+export default FormCM1105;

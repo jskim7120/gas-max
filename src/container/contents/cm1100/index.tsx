@@ -1,4 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { ICM1100SEARCH } from "./model";
+import { useForm } from "react-hook-form";
+import { openModal, closeModal, addCM1105 } from "app/state/modal/modalSlice";
+import { useSelector, useDispatch } from "app/store";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import {
@@ -9,9 +14,6 @@ import {
   MagnifyingGlass,
   ExcelIcon,
 } from "components/allSvgIcon";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { ICM1100SEARCH } from "./model";
-import { useForm } from "react-hook-form";
 import {
   Input,
   Select,
@@ -30,9 +32,7 @@ import Grid from "./grid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./validation";
 import { columns, fields } from "./data";
-import { openModal, closeModal, addCM1105 } from "app/state/modal/modalSlice";
-import { useSelector, useDispatch } from "app/store";
-
+import CM1100Footer from "./footer";
 const initialData: any = [
   {
     areaCode: "",
@@ -129,7 +129,7 @@ function CM1100Page({
   };
 
   return (
-    <>
+    <div style={{ borderLeft: "5px solid #707070" }}>
       <form onSubmit={handleSubmit(submit)}>
         <DetailHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -403,7 +403,8 @@ function CM1100Page({
         setSelected={setSelected}
         openPopup={handleOpenPopup}
       />
-    </>
+      <CM1100Footer />
+    </div>
   );
 }
 

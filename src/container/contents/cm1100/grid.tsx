@@ -1,5 +1,7 @@
+import { useDispatch, useSelector } from "app/store";
 import React, { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
+import { addCM1105 } from "app/state/modal/modalSlice";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -20,6 +22,7 @@ function Grid({
   openPopup?: any;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
     dp = new LocalDataProvider(true);
@@ -45,11 +48,16 @@ function Grid({
     //   dataRow: selectedRowIndex,
     // });
 
-    // gv.onSelectionChanged = () => {
-    //   const itemIndex: any = gv.getCurrent().dataRow;
-    //   //   setSelected(data[itemIndex]);
-    //   openPopup && openPopup(itemIndex);
-    // };
+    gv.onSelectionChanged = () => {
+      const itemIndex: any = gv.getCurrent().dataRow;
+      //   setSelected(data[itemIndex]);
+      dispatch(
+        addCM1105({
+          cuCode: data[itemIndex].cuCode,
+          areaCode: data[itemIndex].areaCode,
+        })
+      );
+    };
 
     gv.onCellDblClicked = function (grid: any, e: any) {
       const itemIndex: any = e.dataRow;
@@ -66,8 +74,7 @@ function Grid({
     <div
       style={{
         width: "100%",
-        height: "500px",
-        borderLeft: "5px solid #707070",
+        height: "450px",
       }}
       ref={realgridElement}
     ></div>
