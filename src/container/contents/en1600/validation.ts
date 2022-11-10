@@ -6,15 +6,10 @@ export const schema = yup.object({
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
-  swName: yup
-    .string()
-    .required()
-    .typeError("이 필드는 필수 항목입니다")
-    .min(1)
-    .max(12),
+  swName: yup.string().required().typeError("이 필드는 필수 항목입니다"),
   swJuminno: yup.string().nullable().max(14, "too long"),
   swTel: yup.string().nullable().max(14, "too long"),
   swHp: yup.string().nullable().max(14, "too long"),
@@ -36,8 +31,7 @@ export const schema = yup.object({
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
-    .nullable(true)
-    .max(18),
+    .nullable(true),
 });

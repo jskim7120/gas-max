@@ -243,6 +243,7 @@ const Form = React.forwardRef(
               errors={errors["jpKg"]?.message}
               style={{ width: "56px" }}
               textAlign="right"
+              maxLength="10"
             />
             <FormGroup>
               <Select {...register("jpKgDanwi")} style={{ minWidth: "64px" }}>
@@ -358,8 +359,9 @@ const Form = React.forwardRef(
               label="가스판매단가"
               register={register("jpOutdanga")}
               errors={errors["jpOutdanga"]?.message}
-              inputSize={InputSize.en1300}
+              // inputSize={InputSize.en1300}
               textAlign="right"
+              formatNumber
             />
             <p>원</p>
           </Field>

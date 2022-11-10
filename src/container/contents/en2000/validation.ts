@@ -6,7 +6,7 @@ export const schema = yup.object({
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
   ccName: yup.string().nullable().max(30, "too long"),

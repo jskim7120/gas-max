@@ -10,75 +10,67 @@ export const schema = yup.object({
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
   jpKg: yup
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
-    .nullable(true)
-    .max(10),
+    .nullable(true),
   jpIndanga: yup
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
-    .nullable(true)
-    .min(2)
-    .max(18),
-  jpOutdanga: yup
-    .number()
-    .typeError("숫자만 입력")
-    .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
-    })
-    .nullable(true)
-    .min(2)
-    .max(18),
+    .nullable(true),
+  // jpOutdanga: yup
+  //   .number()
+  //   .typeError("숫자만 입력")
+  //   .transform((_, val) => {
+  //     return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+  //   })
+  //   .nullable(true),
+  // .min(2)
+  // .max(18),
   jpIntong: yup
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
-    .nullable(true)
-    .max(18),
+    .nullable(true),
   jpOuttong: yup
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
-    .nullable(true)
-    .max(18),
+    .nullable(true),
   jpBaedal: yup
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
-    .nullable(true)
-    .max(18),
+    .nullable(true),
   jpSort: yup
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
-    .nullable(true)
-    .max(10),
+    .nullable(true),
   jpKghigh: yup
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
-    .nullable(true)
-    .max(10),
+    .nullable(true),
   jpName: yup.string().nullable().max(30, "too long"),
   jpBasictong: yup.string().nullable().max(1, "too long"),
   jpSpec: yup.string().nullable().max(10, "too long"),

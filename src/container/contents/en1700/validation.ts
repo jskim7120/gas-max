@@ -6,7 +6,7 @@ export const schema = yup.object({
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
   caName: yup.string().nullable().max(15, "too long"),
@@ -35,9 +35,8 @@ export const schema = yup.object({
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
-    .nullable(true)
-    .max(10),
+    .nullable(true),
   // caBage: yup.string().nullable().max(1, "too long"),
 });

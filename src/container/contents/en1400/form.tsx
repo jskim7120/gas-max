@@ -170,7 +170,7 @@ const Form = React.forwardRef(
         <DividerGray />
         <Wrapper>
           <Input
-            label="코드"
+            label="부품코드"
             register={register("bpCode")}
             errors={errors["bpCode"]?.message}
             inputSize={InputSize.md}

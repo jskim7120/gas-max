@@ -7,7 +7,7 @@ export const schema = yup.object({
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
   bpName: yup.string().nullable().max(20, "too long"),
@@ -17,18 +17,14 @@ export const schema = yup.object({
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
-    .nullable(true)
-    .min(2)
-    .max(18),
+    .nullable(true),
   bpOutdanga: yup
     .number()
     .typeError("숫자만 입력")
     .transform((_, val) => {
-      return val != "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
-    .nullable(true)
-    .min(2)
-    .max(18),
+    .nullable(true),
 });
