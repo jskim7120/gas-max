@@ -425,12 +425,15 @@ const Form = React.forwardRef(
             </Wrapper>
             <DividerGray />
             <Wrapper grid>
-              <Input
-                label="급여액"
-                register={register("swPaykum")}
-                errors={errors["swPaykum"]?.message}
-                textAlign="right"
-              />
+              <Field flex>
+                <Input
+                  label="급여액"
+                  register={register("swPaykum")}
+                  errors={errors["swPaykum"]?.message}
+                  textAlign="right"
+                />
+                <p>원</p>
+              </Field>
               <Input
                 label="급여일"
                 register={register("swPaydate")}
