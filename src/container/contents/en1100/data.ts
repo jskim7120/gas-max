@@ -18,7 +18,6 @@ export const columns = [
     type: "data",
     width: "80",
     styleName: "rg-left-column",
-
     header: {
       text: "영업소코드",
     },

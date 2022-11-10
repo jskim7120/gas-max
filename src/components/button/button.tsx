@@ -23,7 +23,8 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
       attributes.bg = "#17A2B8";
       attributes.color = "#FFF";
       attributes.bgHover = "#1EC5DF";
-    } else if (color === ButtonColor.SECONDARY) {
+    }
+    if (color === ButtonColor.SECONDARY) {
       attributes.bg = "linear-gradient(#FFB300, #E67F09)";
       attributes.color = "#FFF";
       attributes.bgHover =
@@ -103,6 +104,7 @@ export interface IButtonProps
   kind?: ButtonType;
   textColor?: ButtonTextColor;
   icon?: React.ReactNode;
+  withoutLine?: boolean;
   loader?: React.ReactNode;
   isHover?: boolean;
   disabled?: boolean;
@@ -147,17 +149,20 @@ function Button(
           }}
         >
           {props.icon}
-          <div
-            style={{
-              height: "13px",
-              width: "1px",
-              // background: color === ButtonColor.SECONDARY ? "#fff" : "#707070",
-              background: "#fff",
-              marginLeft: "5px",
-            }}
-          ></div>
+          {!props.withoutLine && (
+            <div
+              style={{
+                height: "13px",
+                width: "1px",
+                // background: color === ButtonColor.SECONDARY ? "#fff" : "#707070",
+                background: "#fff",
+                marginLeft: "5px",
+              }}
+            ></div>
+          )}
         </span>
       )}
+
       {props.loader && props.loader}
       {props.text}
     </ButtonComponent>

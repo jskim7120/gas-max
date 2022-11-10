@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import FormCM1105 from "container/contents/cm1105/form";
+import FormCM1106 from "container/contents/cm1106/form";
 const ModalWrapper = styled.div`
   width: 80vw;
   min-height: 80vh;
@@ -8,12 +8,12 @@ const ModalWrapper = styled.div`
   background: #fff;
 `;
 
-function CM1105Modal() {
+function CM1106Modal() {
   return (
     <ModalWrapper>
-      <FormCM1105 />
+      <FormCM1106 />
     </ModalWrapper>
   );
 }
 
-export default CM1105Modal;
+export default CM1106Modal;

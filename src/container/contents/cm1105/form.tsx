@@ -253,7 +253,7 @@ function Form() {
         </Field>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Button
-            text="등록"
+            text="연속등록"
             icon={<Plus />}
             style={{ marginRight: "5px" }}
             type="button"
@@ -283,7 +283,7 @@ function Form() {
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
-              dispatch(addCM1105({ cuCode: "", areaCode: "" }));
+              // dispatch(addCM1105({ cuCode: "", areaCode: "" }));
               dispatch(closeModal());
             }}
           >
@@ -584,6 +584,7 @@ function Form() {
               <Input
                 register={register("cuTongkum")}
                 errors={errors["cuTongkum"]?.message}
+                textAlign="right"
               />
             </FormGroup>
             <FormGroup>
@@ -591,6 +592,7 @@ function Form() {
               <Input
                 register={register("cuJmisu")}
                 errors={errors["cuJmisu"]?.message}
+                textAlign="right"
               />
             </FormGroup>
             <FormGroup>
@@ -598,6 +600,7 @@ function Form() {
               <Input
                 register={register("cuCmisu")}
                 errors={errors["cuCmisu"]?.message}
+                textAlign="right"
               />
             </FormGroup>
           </Field>

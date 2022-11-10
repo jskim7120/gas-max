@@ -7,7 +7,7 @@ export const DetailHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 6px 0 15px;
-  border-left: 5px solid #707070;
+  // border-left: 5px solid #707070;
 
   p {
     color: #0a0a0a;
