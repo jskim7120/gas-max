@@ -163,6 +163,27 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
+      if (formValues.caAmt) {
+        formValues.caAmt = parseFloat(formValues.caAmt.replaceAll(",", ""));
+      }
+      if (formValues.caDiscountM) {
+        formValues.caDiscountM = parseFloat(
+          formValues.caDiscountM.replaceAll(",", "")
+        );
+      }
+      if (formValues.caMAmt) {
+        formValues.caMAmt = parseFloat(formValues.caMAmt.replaceAll(",", ""));
+      }
+      if (formValues.caDiscountAmt) {
+        formValues.caDiscountAmt = parseFloat(
+          formValues.caDiscountAmt.replaceAll(",", "")
+        );
+      }
+      if (formValues.caInsuranceAmt) {
+        formValues.caInsuranceAmt = parseFloat(
+          formValues.caInsuranceAmt.replaceAll(",", "")
+        );
+      }
 
       formValues.caBkYn = formValues.caBkYn ? "Y" : "N";
       formValues.caRentYn = formValues.caRentYn ? "Y" : "N";
@@ -407,6 +428,8 @@ const Form = React.forwardRef(
               errors={errors["caAmt"]?.message}
               inputSize={InputSize.sm}
               textAlign="right"
+              formatNumber="comNumber"
+              maxLength="13"
             />
             <p>원 </p>
           </Field>
@@ -430,6 +453,8 @@ const Form = React.forwardRef(
               errors={errors["caAmt"]?.message}
               inputSize={InputSize.sm}
               textAlign="right"
+              formatNumber="comNumber"
+              maxLength="13"
             />
             <p>원</p>
           </Field>
@@ -440,6 +465,8 @@ const Form = React.forwardRef(
               errors={errors["caDiscountAmt"]?.message}
               inputSize={InputSize.sm}
               textAlign="right"
+              formatNumber="comNumber"
+              maxLength="13"
             />
             <p>원</p>
           </Field>
@@ -548,6 +575,8 @@ const Form = React.forwardRef(
               errors={errors["caInsuranceAmt"]?.message}
               inputSize={InputSize.sm}
               textAlign="right"
+              formatNumber="comNumber"
+              maxLength="13"
             />
             <p>원</p>
           </Field>

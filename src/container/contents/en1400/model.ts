@@ -3,9 +3,9 @@ export interface IBUPUM {
   areaName: string;
   bpCode: string;
   bpDanwi: string;
-  bpIndanga: number;
+  bpIndanga: any;
   bpJaego: number;
   bpName: string;
-  bpOutdanga: number;
+  bpOutdanga: any;
   bpType: string;
 }

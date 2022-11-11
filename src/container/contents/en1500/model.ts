@@ -38,7 +38,7 @@ export interface IJNOTRY2 {
   jnCost2500: number;
   jnCost7000: number;
   jnR: string;
-  jnAnkum: number;
+  jnAnkum: any;
   jnGumdate: string;
   jnSukumtype: string;
   jnPer: number;

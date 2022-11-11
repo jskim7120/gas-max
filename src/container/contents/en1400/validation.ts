@@ -13,18 +13,6 @@ export const schema = yup.object({
   bpName: yup.string().nullable().max(20, "too long"),
   bpType: yup.string().nullable().max(10, "too long"),
   bpDanwi: yup.string().nullable().max(10, "too long"),
-  bpIndanga: yup
-    .number()
-    .typeError("숫자만 입력")
-    .transform((_, val) => {
-      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
-    })
-    .nullable(true),
-  bpOutdanga: yup
-    .number()
-    .typeError("숫자만 입력")
-    .transform((_, val) => {
-      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
-    })
-    .nullable(true),
+  bpIndanga: yup.string().nullable(),
+  bpOutdanga: yup.string().nullable(),
 });

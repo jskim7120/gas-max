@@ -246,7 +246,7 @@ const Form = React.forwardRef(
                 register={register("saupSsno")}
                 errors={errors["saupSsno"]?.message}
                 inputSize={InputSize.md}
-                formatNumber
+                formatNumber="telNumber"
               />
               <Input
                 label="종사업자번호"

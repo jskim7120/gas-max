@@ -31,12 +31,6 @@ export const schema = yup.object({
   caBno: yup.string().nullable().max(20, "too long"),
   caBsdate: yup.string().nullable().max(10, "too long"),
   caBldate: yup.string().nullable().max(10, "too long"),
-  caInsuranceAmt: yup
-    .number()
-    .typeError("숫자만 입력")
-    .transform((_, val) => {
-      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
-    })
-    .nullable(true),
+  caInsuranceAmt: yup.string().nullable(),
   // caBage: yup.string().nullable().max(1, "too long"),
 });

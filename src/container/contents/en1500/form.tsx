@@ -100,6 +100,9 @@ const Form = (
 
   const submit = async (data: IJNOTRY2) => {
     const formValues = getValues();
+    if (formValues.jnAnkum) {
+      formValues.jnAnkum = parseFloat(formValues.jnAnkum.replaceAll(",", ""));
+    }
     //form aldaagui uyd ajillana
 
     const path = `${base}update`;
@@ -389,6 +392,8 @@ const Form = (
                     register={register("jnAnkum")}
                     errors={errors["jnAnkum"]?.message}
                     textAlign="right"
+                    formatNumber="comNumber"
+                    maxLength="23"
                   />
                   <span>원</span>
                 </FormGroup>

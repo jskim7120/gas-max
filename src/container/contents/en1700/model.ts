@@ -17,7 +17,7 @@ export interface ICAR {
   caChargeDate: string;
   caCode: string;
   caInDate: string;
-  caInsuranceAmt: string;
+  caInsuranceAmt: any;
   caJaegoyn: string;
   caJaegoynName: string;
   caJdate1: string;
@@ -35,8 +35,8 @@ export interface ICAR {
 
   //bhgui talbaruud
 
-  caAmt: string;
-  caDiscountM: string;
-  caMAmt: string;
-  caDiscountAmt: string;
+  caAmt: any;
+  caDiscountM: any;
+  caMAmt: any;
+  caDiscountAmt: any;
 }

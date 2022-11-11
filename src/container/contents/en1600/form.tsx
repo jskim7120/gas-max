@@ -159,6 +159,17 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
+      if (formValues.swPaykum) {
+        formValues.swPaykum = parseFloat(
+          formValues.swPaykum.replaceAll(",", "")
+        );
+      }
+
+      if (formValues.sgKumack) {
+        formValues.sgKumack = parseFloat(
+          formValues.sgKumack.replaceAll(",", "")
+        );
+      }
 
       formValues.swWorkOut = formValues.swWorkOut ? "Y" : "N";
       formValues.cuSeEmail =
@@ -431,6 +442,8 @@ const Form = React.forwardRef(
                   register={register("swPaykum")}
                   errors={errors["swPaykum"]?.message}
                   textAlign="right"
+                  formatNumber="comNumber"
+                  maxLength="23"
                 />
                 <p>원</p>
               </Field>
@@ -536,6 +549,8 @@ const Form = React.forwardRef(
               register={register("sgKumack")}
               errors={errors["sgKumack"]?.message}
               textAlign="right"
+              formatNumber="comNumber"
+              maxLength="23"
             />
             <p>원</p>
           </Field>

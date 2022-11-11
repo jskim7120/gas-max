@@ -20,43 +20,11 @@ export const schema = yup.object({
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
-  jpIndanga: yup
-    .number()
-    .typeError("숫자만 입력")
-    .transform((_, val) => {
-      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
-    })
-    .nullable(true),
-  // jpOutdanga: yup
-  //   .number()
-  //   .typeError("숫자만 입력")
-  //   .transform((_, val) => {
-  //     return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
-  //   })
-  //   .nullable(true),
-  // .min(2)
-  // .max(18),
-  jpIntong: yup
-    .number()
-    .typeError("숫자만 입력")
-    .transform((_, val) => {
-      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
-    })
-    .nullable(true),
-  jpOuttong: yup
-    .number()
-    .typeError("숫자만 입력")
-    .transform((_, val) => {
-      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
-    })
-    .nullable(true),
-  jpBaedal: yup
-    .number()
-    .typeError("숫자만 입력")
-    .transform((_, val) => {
-      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
-    })
-    .nullable(true),
+  jpIndanga: yup.string().nullable(),
+  jpOutdanga: yup.string().nullable(),
+  jpIntong: yup.string().nullable(),
+  jpOuttong: yup.string().nullable(),
+  jpBaedal: yup.string().nullable(),
   jpSort: yup
     .number()
     .typeError("숫자만 입력")

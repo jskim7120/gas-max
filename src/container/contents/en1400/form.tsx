@@ -116,6 +116,16 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
+      if (formValues.bpIndanga) {
+        formValues.bpIndanga = parseFloat(
+          formValues.bpIndanga.replaceAll(",", "")
+        );
+      }
+      if (formValues.bpOutdanga) {
+        formValues.bpOutdanga = parseFloat(
+          formValues.bpOutdanga.replaceAll(",", "")
+        );
+      }
 
       try {
         const response: any = await API.post(path, formValues);
@@ -213,6 +223,8 @@ const Form = React.forwardRef(
               errors={errors["bpIndanga"]?.message}
               inputSize={InputSize.md}
               textAlign="right"
+              formatNumber="comDecNumber"
+              maxLength="26"
             />
             <p>원</p>
           </Field>
@@ -226,6 +238,8 @@ const Form = React.forwardRef(
               errors={errors["bpOutdanga"]?.message}
               inputSize={InputSize.md}
               textAlign="right"
+              formatNumber="comDecNumber"
+              maxLength="26"
             />
             <p>원</p>
           </Field>

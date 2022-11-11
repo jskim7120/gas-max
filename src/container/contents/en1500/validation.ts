@@ -10,13 +10,7 @@ export const schema = yup.object({
     })
     .nullable(true),
   areaName: yup.string().nullable().max(20, "too long"),
-  jnAnkum: yup
-    .number()
-    .typeError("숫자만 입력")
-    .transform((_, val) => {
-      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
-    })
-    .nullable(true),
+  jnAnkum: yup.string().nullable(),
   jnPer: yup
     .number()
     .typeError("숫자만 입력")

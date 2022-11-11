@@ -27,11 +27,5 @@ export const schema = yup.object({
   swBigo: yup.string().nullable().max(40, "too long"),
   // swWorkOut: yup.string().nullable().max(1, "too long"),
   swOutDate: yup.string().nullable().max(10, "too long"),
-  swPaykum: yup
-    .number()
-    .typeError("숫자만 입력")
-    .transform((_, val) => {
-      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
-    })
-    .nullable(true),
+  swPaykum: yup.string().nullable(),
 });

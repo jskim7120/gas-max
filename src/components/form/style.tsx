@@ -50,7 +50,7 @@ interface IInputProps {
   maxLength?: string;
   kind?: FieldKind;
   textAlign?: string;
-  formatNumber?: boolean;
+  formatNumber?: string;
   labelStyle?: any;
 }
 
@@ -76,10 +76,52 @@ export const Input = ({
   const [inputValue, setInputValue] = useState("");
 
   // format input value
-  const handleInput = (e: any) => {
-    const formattedPhoneNumber = formatPhoneNumber(e.target.value);
-    setInputValue(formattedPhoneNumber);
+  const handleInput = (e: any, forNum?: string) => {
+    switch (forNum) {
+      case "telNumber":
+        const formattedPhoneNumber = formatPhoneNumber(e.target.value);
+        setInputValue(formattedPhoneNumber);
+        return;
+      case "comDecNumber":
+        const formattedDecNumber = formatNumFraction(e.target.value);
+        setInputValue(formattedDecNumber);
+        return;
+      case "comNumber":
+        const formattedNumber = formatNum(e.target.value);
+        setInputValue(formattedNumber);
+        return;
+    }
   };
+
+  // format number with fraction
+  function formatNumFraction(value: any) {
+    if (value == "" || !value) {
+      return;
+    }
+
+    const val = value.replaceAll(",", "").replaceAll(".", "");
+    if (val % 100 === 0) {
+      value = val / 100 + ".00";
+    } else {
+      value = val / 100;
+    }
+
+    value = parseFloat(value).toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+    });
+    return value;
+  }
+
+  // format number with comma
+  function formatNum(value: any) {
+    if (!value) {
+      value = 0;
+      return value;
+    }
+    const number = parseFloat(value.replaceAll(",", ""));
+    const forNum = number.toLocaleString();
+    return forNum;
+  }
 
   function formatPhoneNumber(value: any) {
     if (!value) return value;
@@ -129,7 +171,7 @@ export const Input = ({
             maxLength={maxLength && maxLength}
             kind={kind && kind}
             textAlign={textAlign && textAlign}
-            onChange={formatNumber ? (e) => handleInput(e) : null}
+            onChange={formatNumber ? (e) => handleInput(e, formatNumber) : null}
           />
         ) : (
           <InputForm
