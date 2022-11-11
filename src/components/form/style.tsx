@@ -231,7 +231,12 @@ export const FormGroup = styled.div`
   }
 `;
 
-export const Label = styled.label<{ labelLong?: boolean; style?: any }>`
+export const Label = styled.label<{
+  labelLong?: boolean;
+  style?: any;
+  align?: string;
+}>`
+  text-align: ${(props) => props.align + "!important"};
   font-family: "NotoSansKRRegular";
   font-size: 12px;
   font-weight: 600;

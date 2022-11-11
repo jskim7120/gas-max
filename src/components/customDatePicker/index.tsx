@@ -61,7 +61,7 @@ function CustomDate({
 }: {
   register?: any;
   reset?: any;
-  errors: any;
+  errors?: any;
   label?: string;
   name: string;
 }) {

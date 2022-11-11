@@ -27,15 +27,15 @@ export const Wrapper = styled.div`
   height: calc(100% - 37px);
 `;
 
-export const TableWrapper = styled.div`
-  width: 50%;
+export const TableWrapper = styled.div<{ width?: string }>`
+  width: ${(props) => (props.width ? props.width : "50%")};
   border: 5px solid #707070;
   border-right: 3px solid #707070;
   border-bottom: 3px solid #707070;
 `;
 
-export const DetailWrapper = styled.div`
-  width: 50%;
+export const DetailWrapper = styled.div<{ width?: string }>`
+  width: ${(props) => (props.width ? props.width : "50%")};
   border: 5px solid #707070;
   border-left: none;
   border-bottom: 4px solid #707070;
@@ -58,4 +58,15 @@ export const ImageWrapper = styled.div`
     height: 100%;
     object-fit: contain;
   }
+`;
+
+export const SearchTopWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 20px;
+  border-left: 5px solid #707070;
+  border-bottom: 5px solid #707070;
+  padding-bottom: 10px;
 `;

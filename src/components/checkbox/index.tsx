@@ -63,7 +63,7 @@ const CheckBoxWrapper = styled.div<{ rtl: boolean }>`
 function CheckBox(props: {
   title?: string;
   rtl?: boolean;
-  register: any;
+  register?: any;
   onChange?: any;
 }) {
   return (
