@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CM110065 } from "app/path";
 import {
   Wrapper,
@@ -24,6 +24,31 @@ function Tab2({ data }: { data: any }) {
     formState: { errors },
     getValues,
   } = useForm<ICM110065>();
+
+  useEffect(() => {
+    if (
+      data !== undefined &&
+      (data?.tab31.length > 0 || data?.tab32.length > 0)
+    ) {
+      reset({
+        cuBigo1: data.tab31[0].cuBigo1,
+        cuBigo2: data.tab31[0].cuBigo2,
+        cuMemo: data.tab31[0].cuMemo,
+        cuRh2o: data.tab31[0].cuRh2o,
+        cuRdangaTypeName: data.tab31[0].cuRdangaTypeName,
+        cuRdanga: data.tab31[0].cuRdanga,
+        bankName: data.tab32[0].bankName,
+        acctNo: data.tab32[0].acctNo,
+        depositor: data.tab32[0].depositor,
+        cmsGubun: data.tab32[0].cmsGubun,
+        cmsBanknm: data.tab32[0].cmsBanknm,
+        cmsAcctno: data.tab32[0].cmsAcctno,
+        cmsDepositor: data.tab32[0].cmsDepositor,
+        cmsAppdt: data.tab32[0].cmsAppdt,
+        cmsState: data.tab32[0].cmsState,
+      });
+    }
+  }, [data]);
 
   return (
     <>

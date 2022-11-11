@@ -1,5 +1,5 @@
-import React from "react";
-import { CM110065 } from "app/path";
+import React, { useEffect } from "react";
+// import { CM110065 } from "app/path";
 import {
   Wrapper,
   Divider,
@@ -24,6 +24,49 @@ function Tab2({ data }: { data: any }) {
     formState: { errors },
     getValues,
   } = useForm<ICM110065>();
+
+  useEffect(() => {
+    if (
+      data !== undefined &&
+      (data?.tab21.length > 0 || data?.tab22.length > 0)
+    ) {
+      reset({
+        cuNo: data?.tab21[0].cuNo,
+        cuSangho: data?.tab21[0].cuSangho,
+        cuSajang: data?.tab21[0].cuSajang,
+        cuSvKumack: data?.tab21[0].cuSvKumack,
+        cuTankName: data?.tab21[0].cuTankName,
+        cuFinishDate: data?.tab21[0].cuFinishDate,
+        cuMeterTypeName: data?.tab21[0].cuMeterTypeName,
+        cuMeterTurm: data?.tab21[0].cuMeterTurm,
+        cuMTransmCd: data?.tab21[0].cuMTransmCd,
+        cuCircuitDate: data?.tab21[0].cuCircuitDate,
+        cuMeterLrName: data?.tab21[0].cuMeterLrName,
+        cuMeterM3: data?.tab21[0].cuMeterM3,
+        cuRh2o: data?.tab21[0].cuRh2o,
+        tankVol1: data?.tab22[0].tankVol1,
+        tankSno1: data?.tab22[0].tankSno1,
+        tankMakeDate1: data?.tab22[0].tankMakeDate1,
+        tankOutsideDate1: data?.tab22[0].tankOutsideDate1,
+        tankInsideDate1: data?.tab22[0].tankInsideDate1,
+        tankTransmCd1: data?.tab22[0].tankTransmCd1,
+        gasifyVol1: data?.tab22[0].gasifyVol1,
+        gasifySno1: data?.tab22[0].gasifySno1,
+        gasifyMakeDate1: data?.tab22[0].gasifyMakeDate1,
+        gasifyCheckDate1: data?.tab22[0].gasifyCheckDate1,
+        tankVol2: data?.tab22[0].tankVol2,
+        tankSno2: data?.tab22[0].tankSno2,
+        tankMakeDate2: data?.tab22[0].tankMakeDate2,
+        tankOutsideDate2: data?.tab22[0].tankOutsideDate2,
+        tankInsideDate2: data?.tab22[0].tankInsideDate2,
+        tankTransmCd2: data?.tab22[0].tankTransmCd2,
+        gasifyVol2: data?.tab22[0].gasifyVol2,
+        gasifySno2: data?.tab22[0].gasifySno2,
+        gasifyMakeDate2: data?.tab22[0].gasifyMakeDate2,
+        gasifyCheckDate2: data?.tab22[0].gasifyCheckDate2,
+      });
+    }
+  }, [data]);
 
   return (
     <TabTable>
