@@ -65,6 +65,7 @@ function FormCM1105() {
   useEffect(() => {
     if (data) {
       resetForm("reset");
+      console.log("============CM1106:", data);
     }
   }, [data]);
 
@@ -354,18 +355,20 @@ function FormCM1105() {
           </Field>
         </Wrapper>
         <DividerGray />
-        <Wrapper style={{ alignItems: "center" }}>
-          <Input
-            label="주소"
-            register={register("cuZipcode")}
-            errors={errors["cuZipcode"]?.message}
-          />
-          <DaumAddress setAddress={setAddress} />
-          <Input
-            register={register("cuAddr1")}
-            errors={errors["cuAddr1"]?.message}
-            fullWidth
-          />
+        <Wrapper grid col={2}>
+          <Field flex style={{ alignItems: "center" }}>
+            <Input
+              label="주소"
+              register={register("cuZipcode")}
+              errors={errors["cuZipcode"]?.message}
+            />
+            <DaumAddress setAddress={setAddress} />
+            <Input
+              register={register("cuAddr1")}
+              errors={errors["cuAddr1"]?.message}
+              fullWidth
+            />
+          </Field>
           <Input
             register={register("cuAddr2")}
             errors={errors["cuAddr2"]?.message}
@@ -392,6 +395,7 @@ function FormCM1105() {
             label="메모"
             register={register("cuMemo")}
             errors={errors["cuMemo"]?.message}
+            fullWidth
           />
         </Wrapper>
         <DividerGray />
@@ -406,7 +410,7 @@ function FormCM1105() {
             <Wrapper grid>
               <Field>
                 <FormGroup>
-                  <Label>담당사원</Label>
+                  <Label>담당 사원</Label>
                   <Select {...register("cuSwCode")}>
                     {dataCommonDic?.cuSwCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -422,7 +426,7 @@ function FormCM1105() {
 
               <Field>
                 <FormGroup>
-                  <Label>지역분류</Label>
+                  <Label>지역 분류</Label>
                   <Select {...register("cuJyCode")}>
                     {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -437,7 +441,7 @@ function FormCM1105() {
               </Field>
               <Field>
                 <FormGroup>
-                  <Label>관리자분류</Label>
+                  <Label>관리자 분류</Label>
                   <Select {...register("cuCustgubun")}>
                     {dataCommonDic?.cuCustgubun?.map(
                       (obj: any, idx: number) => (
@@ -457,7 +461,7 @@ function FormCM1105() {
             <Wrapper grid>
               <Field>
                 <FormGroup>
-                  <Label>소비자형태</Label>
+                  <Label>소비자 형태</Label>
                   <Select {...register("cuCutype")}>
                     {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code1}>
@@ -471,14 +475,14 @@ function FormCM1105() {
                 </div>
               </Field>
               <Input
-                label="청구구분"
+                label="청구 구분"
                 register={register("cuRequestType")}
                 errors={errors["cuRequestType"]?.message}
               />
 
               <Field>
                 <FormGroup>
-                  <Label>수금방법</Label>
+                  <Label>수금 방법</Label>
                   <Select {...register("cuSukumtype")}>
                     {dataCommonDic?.cuSukumtype?.map(
                       (obj: any, idx: number) => (
@@ -498,7 +502,7 @@ function FormCM1105() {
             <Wrapper grid>
               <Field>
                 <FormGroup>
-                  <Label>품목단가</Label>
+                  <Label>품목 단가</Label>
                   <Select {...register("cuJdc")}>
                     {dataCommonDic?.cuJdc?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code1}>
@@ -529,7 +533,7 @@ function FormCM1105() {
               </Field>
               <Field>
                 <FormGroup>
-                  <Label>원미만금액계산</Label>
+                  <Label>원미만 금액계산</Label>
                   <Select {...register("cuRoundType")}>
                     {dataCommonDic?.cuRoundType?.map(
                       (obj: any, idx: number) => (
@@ -549,18 +553,18 @@ function FormCM1105() {
             <Wrapper grid>
               <Field>
                 <FormGroup>
-                  <Label>계산서발행유무</Label>
+                  <Label>계산서 발행유무</Label>
                   <CheckBox register={{ ...register("cuSekumyn") }} />
                 </FormGroup>
               </Field>
               <Field>
                 <FormGroup>
-                  <Label>장부사용유무</Label>
+                  <Label>장부 사용유무</Label>
                   <CheckBox register={{ ...register("cuJangbuYn") }} />
                 </FormGroup>
               </Field>
               <Input
-                label="무료시설투자비"
+                label="무료시설 투자비"
                 register={register("cuSvKumack")}
                 errors={errors["cuSvKumack"]?.message}
                 fullWidth

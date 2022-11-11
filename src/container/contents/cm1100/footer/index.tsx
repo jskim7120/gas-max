@@ -22,7 +22,7 @@ function CM1100Footer() {
       const { data } = await API.get(CM110065, {
         params: { cuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
       });
-
+      console.log("===============", data);
       setData(data);
     } catch (err) {
       console.log("CM1100 data search fetch error =======>", err);
