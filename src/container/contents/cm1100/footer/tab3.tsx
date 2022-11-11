@@ -63,13 +63,11 @@ function Tab2({ data }: { data: any }) {
                 register={register("cuBigo1")}
                 errors={errors["cuBigo1"]?.message}
                 className="small"
-                inputSize={InputSize.md}
               />
               <Input
                 register={register("cuBigo2")}
                 errors={errors["cuBigo2"]?.message}
                 className="small"
-                inputSize={InputSize.md}
               />
             </td>
             <th className="blue" rowSpan={2}>
@@ -80,7 +78,6 @@ function Tab2({ data }: { data: any }) {
                 register={register("cuMemo")}
                 errors={errors["cuMemo"]?.message}
                 className="small"
-                inputSize={InputSize.md}
               />
             </td>
           </tr>

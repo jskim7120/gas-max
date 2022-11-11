@@ -298,12 +298,14 @@ export const Field = styled.div<{ flex?: boolean }>`
     padding: 5px;
 
     label {
+      min-width: 50px;
       font-family: "NotoSansKRRegular";
       font-size: 10px;
       background: #a7a7a7;
       border-radius: 2px;
       padding: 1px 2px;
       color: #fff;
+      text-align: center;
     }
   }
   &.br {

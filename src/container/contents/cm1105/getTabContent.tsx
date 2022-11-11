@@ -54,7 +54,7 @@ function getTabContent(
 ) {
   const data0 = (
     <Field className="outer-border">
-      <Wrapper grid col={4}>
+      <Wrapper grid col={4} fields="1fr 2fr 1.5fr 1.5fr">
         <Field>
           <FormGroup>
             <Label>공급 받는자</Label>
@@ -71,6 +71,7 @@ function getTabContent(
           </div>
         </Field>
         <Input register={register("cuNo")} errors={errors["cuNo"]?.message} />
+
         <Input
           label="종사업장"
           register={register("cuRCode")}
@@ -107,22 +108,25 @@ function getTabContent(
         />
       </Wrapper>
       <DividerGray />
-      <Wrapper style={{ alignItems: "center" }}>
-        <Input
-          label="주소"
-          register={register("cuSzipcode")}
-          errors={errors["cuSzipcode"]?.message}
-        />
-        <DaumAddress setAddress={setAddress} />
-        <Input
-          register={register("cuSaddr1")}
-          errors={errors["cuSaddr1"]?.message}
-          fullWidth
-        />
+      <Wrapper grid col={2}>
+        <Field flex style={{ alignItems: "center" }}>
+          <Input
+            label="주소"
+            register={register("cuSzipcode")}
+            errors={errors["cuSzipcode"]?.message}
+          />
+          <DaumAddress setAddress={setAddress} />
+          <Input
+            register={register("cuSaddr1")}
+            errors={errors["cuSaddr1"]?.message}
+            fullWidth
+          />
+        </Field>
         <Input
           register={register("cuSaddr2")}
           errors={errors["cuSaddr2"]?.message}
           fullWidth
+          style={{ marginLeft: "0px" }}
         />
       </Wrapper>
       <DividerGray />
