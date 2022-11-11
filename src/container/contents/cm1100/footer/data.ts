@@ -57,7 +57,7 @@ export const columns = [
       textAlignment: "center",
     },
     header: {
-      text: "영업소",
+      text: "코드",
     },
   },
   {
@@ -69,7 +69,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "구분",
+      text: "품명",
     },
   },
   {
@@ -81,7 +81,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "코드",
+      text: "적용구분",
     },
   },
   {
@@ -93,7 +93,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "거래처명",
+      text: "Vat",
     },
   },
   {
@@ -105,7 +105,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "주소",
+      text: "단가",
     },
   },
   {
@@ -117,7 +117,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "전화",
+      text: "대여",
     },
   },
   {
@@ -129,7 +129,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "용기보증금",
+      text: "보관",
     },
   },
   {
@@ -141,7 +141,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "중량미수",
+      text: "단가적용일",
     },
   },
   {
@@ -153,7 +153,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "체적미수",
+      text: "최종공급일",
     },
   },
   {
@@ -165,7 +165,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "공급계약일",
+      text: "공급주기",
     },
   },
   {
@@ -177,7 +177,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "최종점검일",
+      text: "상태",
     },
   },
 ];
