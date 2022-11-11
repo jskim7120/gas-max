@@ -96,7 +96,8 @@ export const columns = [
     name: "cuAddrn2",
     fieldName: "cuAddrn2",
     type: "data",
-    width: "250",
+    width: "300",
+    styleName: "rg-left-column",
     header: {
       text: "주소",
     },
@@ -115,6 +116,7 @@ export const columns = [
     fieldName: "cuTongkum",
     type: "data",
     width: "120",
+    styleName: "rg-right-column",
     header: {
       text: "용기보증금",
     },
@@ -124,6 +126,7 @@ export const columns = [
     fieldName: "cuJmisu",
     type: "data",
     width: "120",
+    styleName: "rg-right-column",
     header: {
       text: "중량미수",
     },
@@ -133,6 +136,7 @@ export const columns = [
     fieldName: "cuCmisu",
     type: "data",
     width: "120",
+    styleName: "rg-right-column",
     header: {
       text: "체적미수",
     },
