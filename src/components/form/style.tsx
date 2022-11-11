@@ -118,6 +118,7 @@ export const Input = ({
           ))}
         {formatNumber ? (
           <InputForm
+            id={register.name}
             type={type ? type : "text"}
             inputSize={inputSize && inputSize}
             fullWidth={fullWidth && fullWidth}
@@ -133,6 +134,7 @@ export const Input = ({
           />
         ) : (
           <InputForm
+            id={register.name}
             type={type ? type : "text"}
             inputSize={inputSize && inputSize}
             fullWidth={fullWidth && fullWidth}
