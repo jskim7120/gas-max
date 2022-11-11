@@ -397,7 +397,7 @@ function CM1100Page({
       </form>
 
       <Grid
-        data={data.length > 0 ? data : initialData}
+        data={data.length > 0 && data}
         columns={columns}
         fields={fields}
         setSelected={setSelected}
