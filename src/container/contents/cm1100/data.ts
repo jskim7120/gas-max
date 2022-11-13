@@ -63,6 +63,9 @@ export const columns = [
     width: "80",
     header: {
       text: "영업소",
+      styles: {
+        background: "linear,#22ffd500,#ffffd500,90",
+      },
     },
   },
   {

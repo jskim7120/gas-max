@@ -33,6 +33,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./validation";
 import { columns, fields } from "./data";
 import CM1100Footer from "./footer";
+import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 const initialData: any = [
   {
     areaCode: "",
@@ -129,7 +130,7 @@ function CM1100Page({
   };
 
   return (
-    <div style={{ borderLeft: "5px solid #707070" }}>
+    <div>
       <form onSubmit={handleSubmit(submit)}>
         <DetailHeader>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -404,6 +405,7 @@ function CM1100Page({
         openPopup={handleOpenPopup}
       />
       <CM1100Footer />
+      <DataGridFooter dataLength={data.length > 0 ? data.length : 0} />
     </div>
   );
 }
