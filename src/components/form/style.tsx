@@ -35,6 +35,15 @@ export const getInputKind = (kind?: FieldKind) => {
   }
 };
 
+export const getSelectSize = (size?: InputSize) => {
+  switch (size) {
+    case InputSize.md:
+      return {
+        width: "100%",
+      };
+  }
+};
+
 interface IInputProps {
   type?: string;
   label?: string;
@@ -408,7 +417,11 @@ export const Wrapper = styled.div<{
   align-items: ${(props) => props.grid && "center"};
 `;
 
-export const Select = styled.select<{ kind?: FieldKind }>`
+export const Select = styled.select<{
+  kind?: FieldKind;
+  size?: InputSize;
+  fullWidth?: boolean;
+}>`
   height: 25px;
   border-radius: 4px;
 
@@ -428,6 +441,8 @@ export const Select = styled.select<{ kind?: FieldKind }>`
 
   border: ${(props) =>
     props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
+
+  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
 `;
 
 export const InfoDesc = styled.div`
