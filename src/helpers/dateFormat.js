@@ -29,3 +29,8 @@ export function formatDateByRemoveDash(date) {
 
   return newDate;
 }
+
+export function formatCurrencyRemoveComma(num) {
+  num = parseFloat(String(num).replaceAll(",", ""));
+  return num;
+}

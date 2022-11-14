@@ -19,7 +19,7 @@ export const schema = yup.object({
   swAddr2: yup.string().nullable().max(40, "too long"),
   eyeSwCode: yup.string().nullable().max(10, "too long"),
   swStampFile: yup.string().nullable().max(80, "too long"),
-  swIndate: yup.string().nullable().max(8, "too long"),
+  swIndate: yup.string().nullable().max(10, "too long"),
   swDriverNo: yup.string().nullable().max(17, "too long"),
   swDriverType: yup.string().nullable().max(15, "too long"),
   swJdate1: yup.string().nullable().max(10, "too long"),
