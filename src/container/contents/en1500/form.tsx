@@ -23,6 +23,7 @@ import {
 import { IconInfo } from "components/allSvgIcon";
 import { IJNOTRY2 } from "./model";
 import { schema } from "./validation";
+import { formatCurrencyRemoveComma } from "helpers/dateFormat";
 import { VolReading, Container, RubeUnit, BasicItems } from "../en1500/style";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
 import API from "app/axios";
@@ -100,9 +101,9 @@ const Form = (
 
   const submit = async (data: IJNOTRY2) => {
     const formValues = getValues();
-    if (formValues.jnAnkum) {
-      formValues.jnAnkum = parseFloat(formValues.jnAnkum.replaceAll(",", ""));
-    }
+    formValues.jnAnkum = formValues.jnAnkum
+      ? formatCurrencyRemoveComma(formValues.jnAnkum)
+      : "";
     //form aldaagui uyd ajillana
 
     const path = `${base}update`;

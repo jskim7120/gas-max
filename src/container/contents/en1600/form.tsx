@@ -19,7 +19,11 @@ import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import { SearchIcon, IconInfo } from "components/allSvgIcon";
-import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
+import {
+  formatDate,
+  formatDateByRemoveDash,
+  formatCurrencyRemoveComma,
+} from "helpers/dateFormat";
 import { convertBase64 } from "helpers/convertBase64";
 import CustomDate from "components/customDatePicker";
 import API from "app/axios";
@@ -159,17 +163,13 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
-      if (formValues.swPaykum) {
-        formValues.swPaykum = parseFloat(
-          formValues.swPaykum.replaceAll(",", "")
-        );
-      }
 
-      if (formValues.sgKumack) {
-        formValues.sgKumack = parseFloat(
-          formValues.sgKumack.replaceAll(",", "")
-        );
-      }
+      formValues.swPaykum = formValues.swPaykum
+        ? formatCurrencyRemoveComma(formValues.swPaykum)
+        : "";
+      formValues.sgKumack = formValues.sgKumack
+        ? formatCurrencyRemoveComma(formValues.sgKumack)
+        : "";
 
       formValues.swWorkOut = formValues.swWorkOut ? "Y" : "N";
       formValues.cuSeEmail =

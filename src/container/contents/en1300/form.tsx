@@ -21,6 +21,7 @@ import {
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { ISANGPUM } from "./model";
 import { schema } from "./validation";
+import { formatCurrencyRemoveComma } from "helpers/dateFormat";
 import API from "app/axios";
 import { InputSize } from "components/componentsType";
 
@@ -141,31 +142,21 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
-      if (formValues.jpOutdanga) {
-        formValues.jpOutdanga = parseFloat(
-          formValues.jpOutdanga.replaceAll(",", "")
-        );
-      }
-      if (formValues.jpIndanga) {
-        formValues.jpIndanga = parseFloat(
-          formValues.jpIndanga.replaceAll(",", "")
-        );
-      }
-      if (formValues.jpIntong) {
-        formValues.jpIntong = parseFloat(
-          formValues.jpIntong.replaceAll(",", "")
-        );
-      }
-      if (formValues.jpOuttong) {
-        formValues.jpOuttong = parseFloat(
-          formValues.jpOuttong.replaceAll(",", "")
-        );
-      }
-      if (formValues.jpBaedal) {
-        formValues.jpBaedal = parseFloat(
-          formValues.jpBaedal.replaceAll(",", "")
-        );
-      }
+      formValues.jpOutdanga = formValues.jpOutdanga
+        ? formatCurrencyRemoveComma(formValues.jpOutdanga)
+        : "";
+      formValues.jpIndanga = formValues.jpIndanga
+        ? formatCurrencyRemoveComma(formValues.jpIndanga)
+        : "";
+      formValues.jpIntong = formValues.jpIntong
+        ? formatCurrencyRemoveComma(formValues.jpIntong)
+        : "";
+      formValues.jpOuttong = formValues.jpOuttong
+        ? formatCurrencyRemoveComma(formValues.jpOuttong)
+        : "";
+      formValues.jpBaedal = formValues.jpBaedal
+        ? formatCurrencyRemoveComma(formValues.jpBaedal)
+        : "";
       try {
         const response: any = await API.post(path, formValues);
 

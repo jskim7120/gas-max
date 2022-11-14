@@ -15,6 +15,7 @@ import {
 } from "components/form/style";
 import { IBUPUM } from "./model";
 import { schema } from "./validation";
+import { formatCurrencyRemoveComma } from "helpers/dateFormat";
 import { InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
@@ -116,16 +117,13 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
-      if (formValues.bpIndanga) {
-        formValues.bpIndanga = parseFloat(
-          formValues.bpIndanga.replaceAll(",", "")
-        );
-      }
-      if (formValues.bpOutdanga) {
-        formValues.bpOutdanga = parseFloat(
-          formValues.bpOutdanga.replaceAll(",", "")
-        );
-      }
+
+      formValues.bpIndanga = formValues.bpIndanga
+        ? formatCurrencyRemoveComma(formValues.bpIndanga)
+        : "";
+      formValues.bpOutdanga = formValues.bpOutdanga
+        ? formatCurrencyRemoveComma(formValues.bpOutdanga)
+        : "";
 
       try {
         const response: any = await API.post(path, formValues);

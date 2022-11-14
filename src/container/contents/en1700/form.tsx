@@ -17,7 +17,11 @@ import {
 import CheckBox from "components/checkbox";
 import { ICAR } from "./model";
 import { schema } from "./validation";
-import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
+import {
+  formatDate,
+  formatDateByRemoveDash,
+  formatCurrencyRemoveComma,
+} from "helpers/dateFormat";
 import CustomDate from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -163,31 +167,25 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
-      if (formValues.caAmt) {
-        formValues.caAmt = parseFloat(formValues.caAmt.replaceAll(",", ""));
-      }
-      if (formValues.caDiscountM) {
-        formValues.caDiscountM = parseFloat(
-          formValues.caDiscountM.replaceAll(",", "")
-        );
-      }
-      if (formValues.caMAmt) {
-        formValues.caMAmt = parseFloat(formValues.caMAmt.replaceAll(",", ""));
-      }
-      if (formValues.caDiscountAmt) {
-        formValues.caDiscountAmt = parseFloat(
-          formValues.caDiscountAmt.replaceAll(",", "")
-        );
-      }
-      if (formValues.caInsuranceAmt) {
-        formValues.caInsuranceAmt = parseFloat(
-          formValues.caInsuranceAmt.replaceAll(",", "")
-        );
-      }
 
       formValues.caBkYn = formValues.caBkYn ? "Y" : "N";
       formValues.caRentYn = formValues.caRentYn ? "Y" : "N";
 
+      formValues.caAmt = formValues.caAmt
+        ? formatCurrencyRemoveComma(formValues.caAmt)
+        : "";
+      formValues.caMAmt = formValues.caMAmt
+        ? formatCurrencyRemoveComma(formValues.caMAmt)
+        : "";
+      formValues.caDiscountM = formValues.caDiscountM
+        ? formatCurrencyRemoveComma(formValues.caDiscountM)
+        : "";
+      formValues.caDiscountAmt = formValues.caDiscountAmt
+        ? formatCurrencyRemoveComma(formValues.caDiscountAmt)
+        : "";
+      formValues.caInsuranceAmt = formValues.caInsuranceAmt
+        ? formatCurrencyRemoveComma(formValues.caInsuranceAmt)
+        : "";
       formValues.caSafeDate = formValues.caSafeDate
         ? formatDateByRemoveDash(formValues.caSafeDate)
         : "";
