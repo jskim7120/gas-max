@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const TabContainer = styled.div`
   width: 100%;
   height: 100%;
+  border-left: 5px solid #707070;
+  border-right: 5px solid #707070;
 `;
 
 export const TabHeaderWrapper = styled.div`
@@ -11,7 +13,8 @@ export const TabHeaderWrapper = styled.div`
   align-items: end;
   background-color: #626161;
   justify-content: space-between;
-  height: 45px;
+  height: 35px;
+
   .sideBar {
     display: flex;
     align-items: center;
@@ -19,8 +22,7 @@ export const TabHeaderWrapper = styled.div`
     height: 31px;
     width: 45px;
     background: rgb(170, 223, 11);
-    border: 1px solid #707070;
-    border-left: 2px solid #707070;
+    border-right: 1px solid #707070;
   }
 
   ul {
@@ -87,16 +89,13 @@ export const List = styled.li<{ isActive: boolean }>`
       : `linear-gradient(#F1F1F1, #C7C7C7)`};
 
   color: #0a0a0a;
-  border: 1px solid #707070;
-  border-left: none;
+  border-left: 1px solid #707070;
 `;
 
 export const TabContentWrapper = styled.div`
   width: 100%;
-  // min-height: 89%;
-  // height: auto;
   margin-top: 3px;
-  height: calc(100% - 63px);
+  height: calc(100% - 70px);
 `;
 
 export const TabBorderLine = styled.div<{
@@ -104,10 +103,10 @@ export const TabBorderLine = styled.div<{
   isOpen: boolean;
 }>`
   position: absolute;
-  top: 88px;
-  left: ${(props) => (props.isOpen ? `82px` : `0`)};
-  right: 0px;
+  top: 78px;
+  left: ${(props) => (props.isOpen ? `87px` : `5px`)};
+  right: 5px;
   height: 4.5px;
   background: ${(props) => (props.isHome ? `#8CB808;` : `#FC6767;`)};
-  border-top: 1.5px solid #707070;
+  border-top: 1px solid #707070;
 `;

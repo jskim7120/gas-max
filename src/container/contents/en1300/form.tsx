@@ -21,6 +21,7 @@ import {
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { ISANGPUM } from "./model";
 import { schema } from "./validation";
+import { formatCurrencyRemoveComma } from "helpers/dateFormat";
 import API from "app/axios";
 import { InputSize } from "components/componentsType";
 
@@ -141,7 +142,21 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
-
+      formValues.jpOutdanga = formValues.jpOutdanga
+        ? formatCurrencyRemoveComma(formValues.jpOutdanga)
+        : "";
+      formValues.jpIndanga = formValues.jpIndanga
+        ? formatCurrencyRemoveComma(formValues.jpIndanga)
+        : "";
+      formValues.jpIntong = formValues.jpIntong
+        ? formatCurrencyRemoveComma(formValues.jpIntong)
+        : "";
+      formValues.jpOuttong = formValues.jpOuttong
+        ? formatCurrencyRemoveComma(formValues.jpOuttong)
+        : "";
+      formValues.jpBaedal = formValues.jpBaedal
+        ? formatCurrencyRemoveComma(formValues.jpBaedal)
+        : "";
       try {
         const response: any = await API.post(path, formValues);
 
@@ -194,7 +209,7 @@ const Form = React.forwardRef(
             label="코드"
             register={register("jpCode")}
             errors={errors["jpCode"]?.message}
-            maxLength={"4"}
+            maxLength="4"
             inputSize={InputSize.en1300}
           />
         </Wrapper>
@@ -243,6 +258,7 @@ const Form = React.forwardRef(
               errors={errors["jpKg"]?.message}
               style={{ width: "56px" }}
               textAlign="right"
+              maxLength="10"
             />
             <FormGroup>
               <Select {...register("jpKgDanwi")} style={{ minWidth: "64px" }}>
@@ -350,6 +366,7 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
+        <DividerGray />
         <Wrapper>
           <Field flex>
             <Input
@@ -359,6 +376,8 @@ const Form = React.forwardRef(
               errors={errors["jpOutdanga"]?.message}
               inputSize={InputSize.en1300}
               textAlign="right"
+              formatNumber="comDecNumber"
+              maxLength="26"
             />
             <p>원</p>
           </Field>
@@ -373,6 +392,8 @@ const Form = React.forwardRef(
               errors={errors["jpOuttong"]?.message}
               inputSize={InputSize.en1300}
               textAlign="right"
+              formatNumber="comNumber"
+              maxLength="23"
             />
             <p>원</p>
           </Field>
@@ -387,6 +408,8 @@ const Form = React.forwardRef(
               errors={errors["jpIndanga"]?.message}
               inputSize={InputSize.en1300}
               textAlign="right"
+              formatNumber="comDecNumber"
+              maxLength="26"
             />
             <p>원</p>
           </Field>
@@ -401,6 +424,8 @@ const Form = React.forwardRef(
               errors={errors["jpIntong"]?.message}
               inputSize={InputSize.en1300}
               textAlign="right"
+              formatNumber="comNumber"
+              maxLength="23"
             />
             <p>원</p>
           </Field>
@@ -415,6 +440,8 @@ const Form = React.forwardRef(
               errors={errors["jpBaedal"]?.message}
               inputSize={InputSize.en1300}
               textAlign="right"
+              formatNumber="comNumber"
+              maxLength="23"
             />
             <p>원</p>
           </Field>

@@ -17,11 +17,8 @@ export const columns = [
     fieldName: "ccCode",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "center",
-    },
     header: {
-      text: "업소",
+      text: "영업소",
     },
   },
   {
@@ -29,9 +26,7 @@ export const columns = [
     fieldName: "ccName",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-left-column",
     header: {
       text: "코드",
     },

@@ -8,7 +8,7 @@ const ModalWrapper = styled.div`
   background: #fff;
 `;
 
-function AccountModal() {
+function CM1105Modal() {
   return (
     <ModalWrapper>
       <FormCM1105 />
@@ -16,4 +16,4 @@ function AccountModal() {
   );
 }
 
-export default AccountModal;
+export default CM1105Modal;

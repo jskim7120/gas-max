@@ -10,3 +10,15 @@
 .rg-left-column {
   text-align: left;
 }
+
+.rg-grid {
+  border: none;
+}
+
+.rg-header-select {
+  background-color: #e4e7eb;
+}
+
+.rg-header-focus {
+  background-color: #e4e7eb;
+}

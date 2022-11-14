@@ -18,10 +18,12 @@ import {
   Divider,
   Label,
   Input,
+  DividerGray,
 } from "components/form/style";
 import { IconInfo } from "components/allSvgIcon";
 import { IJNOTRY2 } from "./model";
 import { schema } from "./validation";
+import { formatCurrencyRemoveComma } from "helpers/dateFormat";
 import { VolReading, Container, RubeUnit, BasicItems } from "../en1500/style";
 import { useGetCommonGubunQuery } from "app/api/commonGubun";
 import API from "app/axios";
@@ -99,6 +101,9 @@ const Form = (
 
   const submit = async (data: IJNOTRY2) => {
     const formValues = getValues();
+    formValues.jnAnkum = formValues.jnAnkum
+      ? formatCurrencyRemoveComma(formValues.jnAnkum)
+      : "";
     //form aldaagui uyd ajillana
 
     const path = `${base}update`;
@@ -238,97 +243,104 @@ const Form = (
       <Divider />
       <VolReading>
         <div className="title">체적검침 환경</div>
-        <Wrapper className="volWrapper">
-          <Field>
-            <FormGroup>
-              <Label>연체료 적용방법</Label>
-              {isJnPerMethError ? (
-                "error occured"
-              ) : (
-                <Select {...register("jnPerMeth")}>
-                  {jnPerMeth?.map((obj, idx) => (
-                    <option key={idx} value={obj.code1}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              )}
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jnPerMeth"]?.message}</ErrorText>
-            </div>
-          </Field>
-          <p style={{ right: "32px" }}>
-            <IconInfo />
-            <span>검침 등록시 미납금액에 대하여 연체료를 부과</span>
-          </p>
-        </Wrapper>
-        <Wrapper className="volWrapper">
-          <Field className="field">
-            <FormGroup>
-              <Input
-                label="표준기화율"
-                register={register("jnKgdanga")}
-                errors={errors["jnKgdanga"]?.message}
-                textAlign="right"
-              />
-            </FormGroup>
-          </Field>
-          <p>
-            <IconInfo />
-            <span>검침오차에서 사용량 (㎥-Kg) 변환시 적용</span>
-          </p>
-        </Wrapper>
-        <Wrapper className="volWrapper">
-          <Field>
-            <FormGroup>
-              <Label>체적사용료 계산</Label>
-              {isJnChekumError ? (
-                "error occured"
-              ) : (
-                <Select {...register("jnChekum")}>
-                  {jnChekum?.map((obj, idx) => (
-                    <option key={idx} value={obj.code1}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              )}
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jnChekum"]?.message}</ErrorText>
-            </div>
-          </Field>
-          <p>
-            <IconInfo />
-            <span>당월합계금액의 1원단위 계산방법</span>
-          </p>
-        </Wrapper>
-        <Wrapper className="volWrapper">
-          <Field>
-            <FormGroup>
-              <Label>지로출력 조건</Label>
-              {isJnJiroPrintError ? (
-                "error occured"
-              ) : (
-                <Select {...register("jnJiroPrint")}>
-                  {jnJiroPrint?.map((obj, idx) => (
-                    <option key={idx} value={obj.code1}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              )}
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jnJiroPrint"]?.message}</ErrorText>
-            </div>
-          </Field>
-          <p>
-            <IconInfo />
-            <span>지로 청구서 출력시 범위 지정</span>
-          </p>
-        </Wrapper>
+        <div className="volReadCnt">
+          <DividerGray />
+          <Wrapper className="volWrapper">
+            <Field>
+              <FormGroup>
+                <Label>연체료 적용방법</Label>
+                {isJnPerMethError ? (
+                  "error occured"
+                ) : (
+                  <Select {...register("jnPerMeth")}>
+                    {jnPerMeth?.map((obj, idx) => (
+                      <option key={idx} value={obj.code1}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+                )}
+              </FormGroup>
+              <div>
+                <ErrorText>{errors["jnPerMeth"]?.message}</ErrorText>
+              </div>
+            </Field>
+            <p style={{ right: "32px" }}>
+              <IconInfo />
+              <span>검침 등록시 미납금액에 대하여 연체료를 부과</span>
+            </p>
+          </Wrapper>
+          <DividerGray />
+          <Wrapper className="volWrapper">
+            <Field className="field">
+              <FormGroup>
+                <Input
+                  label="표준기화율"
+                  register={register("jnKgdanga")}
+                  errors={errors["jnKgdanga"]?.message}
+                  textAlign="right"
+                />
+              </FormGroup>
+            </Field>
+            <p>
+              <IconInfo />
+              <span>검침오차에서 사용량 (㎥-Kg) 변환시 적용</span>
+            </p>
+          </Wrapper>
+          <DividerGray />
+          <Wrapper className="volWrapper">
+            <Field>
+              <FormGroup>
+                <Label>체적사용료 계산</Label>
+                {isJnChekumError ? (
+                  "error occured"
+                ) : (
+                  <Select {...register("jnChekum")}>
+                    {jnChekum?.map((obj, idx) => (
+                      <option key={idx} value={obj.code1}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+                )}
+              </FormGroup>
+              <div>
+                <ErrorText>{errors["jnChekum"]?.message}</ErrorText>
+              </div>
+            </Field>
+            <p>
+              <IconInfo />
+              <span>당월합계금액의 1원단위 계산방법</span>
+            </p>
+          </Wrapper>
+          <DividerGray />
+          <Wrapper className="volWrapper">
+            <Field>
+              <FormGroup>
+                <Label>지로출력 조건</Label>
+                {isJnJiroPrintError ? (
+                  "error occured"
+                ) : (
+                  <Select {...register("jnJiroPrint")}>
+                    {jnJiroPrint?.map((obj, idx) => (
+                      <option key={idx} value={obj.code1}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+                )}
+              </FormGroup>
+              <div>
+                <ErrorText>{errors["jnJiroPrint"]?.message}</ErrorText>
+              </div>
+            </Field>
+            <p>
+              <IconInfo />
+              <span>지로 청구서 출력시 범위 지정</span>
+            </p>
+          </Wrapper>
+          <DividerGray />
+        </div>
       </VolReading>
       <Container>
         <RubeUnit>
@@ -345,94 +357,104 @@ const Form = (
         </RubeUnit>
         <BasicItems>
           <div className="title">신규거래처 기본설정 항목</div>
-          <Wrapper className="volWrapper">
-            <Field>
-              <FormGroup>
-                <Label>조정기압력</Label>
-                {isJnR ? (
-                  "error occured"
-                ) : (
-                  <Select
-                    {...register("jnR")}
-                    style={{ minWidth: "104px", textAlign: "end" }}
-                  >
-                    {jnR?.map((obj, idx) => (
-                      <option key={idx} value={obj.code1}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                )}
-                <span>mmH2O</span>
-              </FormGroup>
-              <div>
-                <ErrorText>{errors["jnR"]?.message}</ErrorText>
-              </div>
-            </Field>
-          </Wrapper>
-          <Wrapper className="volWrapper">
-            <Field className="field">
-              <FormGroup>
-                <Input
-                  label="안전관리비"
-                  register={register("jnAnkum")}
-                  errors={errors["jnAnkum"]?.message}
-                  textAlign="right"
-                />
-                <span>원</span>
-              </FormGroup>
-            </Field>
-          </Wrapper>
-          <Wrapper className="volWrapper">
-            <Field className="field">
-              <FormGroup>
-                <Input
-                  label="정기검침일"
-                  register={register("jnGumdate")}
-                  errors={errors["jnGumdate"]?.message}
-                  textAlign="right"
-                />
-                <span>일</span>
-              </FormGroup>
-            </Field>
-          </Wrapper>
-          <Wrapper className="volWrapper">
-            <Field>
-              <FormGroup>
-                <Label>수금방법</Label>
-                {isJnSukumtypeError ? (
-                  "error occured"
-                ) : (
-                  <Select
-                    {...register("jnSukumtype")}
-                    style={{ minWidth: "104px" }}
-                  >
-                    {jnSukumtype?.map((obj, idx) => (
-                      <option key={idx} value={obj.code1}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                )}
-              </FormGroup>
-              <div>
-                <ErrorText>{errors["jnSukumtype"]?.message}</ErrorText>
-              </div>
-            </Field>
-          </Wrapper>
-          <Wrapper className="volWrapper">
-            <Field className="field">
-              <FormGroup>
-                <Input
-                  label="연체율"
-                  register={register("jnPer")}
-                  errors={errors["jnPer"]?.message}
-                  textAlign="right"
-                />
-                <span>%</span>
-              </FormGroup>
-            </Field>
-          </Wrapper>
+          <div className="basicItemsCnt">
+            <DividerGray />
+            <Wrapper className="volWrapper">
+              <Field>
+                <FormGroup>
+                  <Label>조정기압력</Label>
+                  {isJnR ? (
+                    "error occured"
+                  ) : (
+                    <Select
+                      {...register("jnR")}
+                      style={{ minWidth: "104px", textAlign: "end" }}
+                    >
+                      {jnR?.map((obj, idx) => (
+                        <option key={idx} value={obj.code1}>
+                          {obj.codeName}
+                        </option>
+                      ))}
+                    </Select>
+                  )}
+                  <span>mmH2O</span>
+                </FormGroup>
+                <div>
+                  <ErrorText>{errors["jnR"]?.message}</ErrorText>
+                </div>
+              </Field>
+            </Wrapper>
+            <DividerGray />
+            <Wrapper className="volWrapper">
+              <Field className="field">
+                <FormGroup>
+                  <Input
+                    label="안전관리비"
+                    register={register("jnAnkum")}
+                    errors={errors["jnAnkum"]?.message}
+                    textAlign="right"
+                    formatNumber="comNumber"
+                    maxLength="23"
+                  />
+                  <span>원</span>
+                </FormGroup>
+              </Field>
+            </Wrapper>
+            <DividerGray />
+            <Wrapper className="volWrapper">
+              <Field className="field">
+                <FormGroup>
+                  <Input
+                    label="정기검침일"
+                    register={register("jnGumdate")}
+                    errors={errors["jnGumdate"]?.message}
+                    textAlign="right"
+                  />
+                  <span>일</span>
+                </FormGroup>
+              </Field>
+            </Wrapper>
+            <DividerGray />
+            <Wrapper className="volWrapper">
+              <Field>
+                <FormGroup>
+                  <Label>수금방법</Label>
+                  {isJnSukumtypeError ? (
+                    "error occured"
+                  ) : (
+                    <Select
+                      {...register("jnSukumtype")}
+                      style={{ minWidth: "104px" }}
+                    >
+                      {jnSukumtype?.map((obj, idx) => (
+                        <option key={idx} value={obj.code1}>
+                          {obj.codeName}
+                        </option>
+                      ))}
+                    </Select>
+                  )}
+                </FormGroup>
+                <div>
+                  <ErrorText>{errors["jnSukumtype"]?.message}</ErrorText>
+                </div>
+              </Field>
+            </Wrapper>
+            <DividerGray />
+            <Wrapper className="volWrapper">
+              <Field className="field">
+                <FormGroup>
+                  <Input
+                    label="연체율"
+                    register={register("jnPer")}
+                    errors={errors["jnPer"]?.message}
+                    textAlign="right"
+                  />
+                  <span>%</span>
+                </FormGroup>
+              </Field>
+            </Wrapper>
+            <DividerGray />
+          </div>
           <p className="basicDesc">
             <IconInfo />
             <span>신규 거래처 등록시 자동적용 항목.</span>

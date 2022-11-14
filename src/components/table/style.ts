@@ -37,9 +37,6 @@ const Table = styled.table`
         border-right: 1px solid #d6d2ce;
         font-size: 12px;
         height: 30px;
-        input {
-          height: 20px;
-        }
       }
     }
     tr.active {

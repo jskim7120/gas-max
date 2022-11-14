@@ -19,7 +19,11 @@ import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import { SearchIcon, IconInfo } from "components/allSvgIcon";
-import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
+import {
+  formatDate,
+  formatDateByRemoveDash,
+  formatCurrencyRemoveComma,
+} from "helpers/dateFormat";
 import { convertBase64 } from "helpers/convertBase64";
 import CustomDate from "components/customDatePicker";
 import API from "app/axios";
@@ -159,6 +163,13 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
+
+      formValues.swPaykum = formValues.swPaykum
+        ? formatCurrencyRemoveComma(formValues.swPaykum)
+        : "";
+      formValues.sgKumack = formValues.sgKumack
+        ? formatCurrencyRemoveComma(formValues.sgKumack)
+        : "";
 
       formValues.swWorkOut = formValues.swWorkOut ? "Y" : "N";
       formValues.cuSeEmail =
@@ -399,7 +410,7 @@ const Form = React.forwardRef(
               </button>
             </Wrapper>
             <DividerGray />
-            <Wrapper style={{ width: "fit-content" }}>
+            <Wrapper style={{ width: "600px" }}>
               <CustomDate
                 label="입사일"
                 name="swIndate"
@@ -425,12 +436,17 @@ const Form = React.forwardRef(
             </Wrapper>
             <DividerGray />
             <Wrapper grid>
-              <Input
-                label="급여액"
-                register={register("swPaykum")}
-                errors={errors["swPaykum"]?.message}
-                textAlign="right"
-              />
+              <Field flex>
+                <Input
+                  label="급여액"
+                  register={register("swPaykum")}
+                  errors={errors["swPaykum"]?.message}
+                  textAlign="right"
+                  formatNumber="comNumber"
+                  maxLength="23"
+                />
+                <p>원</p>
+              </Field>
               <Input
                 label="급여일"
                 register={register("swPaydate")}
@@ -455,7 +471,7 @@ const Form = React.forwardRef(
           />
         </Wrapper>
         <DividerGray />
-        <Wrapper style={{ width: "610px" }}>
+        <Wrapper style={{ width: "600px" }}>
           <CustomDate
             label="적성검사"
             name="swJdate1"
@@ -533,6 +549,8 @@ const Form = React.forwardRef(
               register={register("sgKumack")}
               errors={errors["sgKumack"]?.message}
               textAlign="right"
+              formatNumber="comNumber"
+              maxLength="23"
             />
             <p>원</p>
           </Field>

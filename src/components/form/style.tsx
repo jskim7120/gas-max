@@ -2,14 +2,6 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { InputSize, FieldKind } from "components/componentsType";
 
-// import {
-//   Path,
-//   UseFormRegister,
-//   FieldError,
-//   FieldValues,
-// } from "react-hook-form";
-// import { IFormProps } from "container/contents/en1100/type";
-
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
     case InputSize.xs:
@@ -37,13 +29,24 @@ export const getInputKind = (kind?: FieldKind) => {
       return {
         border: "1px solid #e6e5e5",
       };
+    case FieldKind.RECTANGLE:
+      return {
+        border: "1px solid #e6e5e5",
+        borderRadius: "0px",
+      };
+  }
+};
+
+export const getSelectSize = (size?: InputSize) => {
+  switch (size) {
+    case InputSize.md:
+      return {
+        width: "100%",
+      };
   }
 };
 
 interface IInputProps {
-  // name: Path<IFormProps>;
-  // register: UseFormRegister<IFormProps>;
-  // errors?: FieldError | any;
   type?: string;
   label?: string;
   name?: string;
@@ -63,7 +66,7 @@ interface IInputProps {
   maxLength?: string;
   kind?: FieldKind;
   textAlign?: string;
-  formatNumber?: boolean;
+  formatNumber?: string;
   labelStyle?: any;
 }
 
@@ -89,10 +92,52 @@ export const Input = ({
   const [inputValue, setInputValue] = useState("");
 
   // format input value
-  const handleInput = (e: any) => {
-    const formattedPhoneNumber = formatPhoneNumber(e.target.value);
-    setInputValue(formattedPhoneNumber);
+  const handleInput = (e: any, forNum?: string) => {
+    switch (forNum) {
+      case "telNumber":
+        const formattedPhoneNumber = formatPhoneNumber(e.target.value);
+        setInputValue(formattedPhoneNumber);
+        return;
+      case "comDecNumber":
+        const formattedDecNumber = formatNumFraction(e.target.value);
+        setInputValue(formattedDecNumber);
+        return;
+      case "comNumber":
+        const formattedNumber = formatNum(e.target.value);
+        setInputValue(formattedNumber);
+        return;
+    }
   };
+
+  // format number with fraction
+  function formatNumFraction(value: any) {
+    if (value == "" || !value) {
+      return;
+    }
+
+    const val = value.replaceAll(",", "").replaceAll(".", "");
+    if (val % 100 === 0) {
+      value = val / 100 + ".00";
+    } else {
+      value = val / 100;
+    }
+
+    value = parseFloat(value).toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+    });
+    return value;
+  }
+
+  // format number with comma
+  function formatNum(value: any) {
+    if (!value) {
+      value = 0;
+      return value;
+    }
+    const number = parseFloat(value.replaceAll(",", ""));
+    const forNum = number.toLocaleString();
+    return forNum;
+  }
 
   function formatPhoneNumber(value: any) {
     if (!value) return value;
@@ -109,58 +154,61 @@ export const Input = ({
   }
   return (
     <InputWrapper fullWidth={fullWidth}>
-      <FormGroup>
+      <FormGroup className={className && className}>
         {/* {label !== undefined && <Label labelLong={labelLong}>{label}</Label>} */}
         {label !== undefined &&
           (label === "~" ? (
-            <Label style={{ minWidth: "auto" }} labelLong={labelLong}>
+            <Label
+              style={{ minWidth: "auto" }}
+              labelLong={labelLong}
+              className={className && className}
+            >
               {label}
             </Label>
           ) : (
-            <Label labelLong={labelLong} style={labelStyle && labelStyle}>
+            <Label
+              labelLong={labelLong}
+              style={labelStyle && labelStyle}
+              className={className && className}
+            >
               {label}
             </Label>
           ))}
-        <InputForm
-          type={type ? type : "text"}
-          inputSize={inputSize && inputSize}
-          fullWidth={fullWidth && fullWidth}
-          {...register}
-          value={formatNumber ? inputValue : value && value}
-          placeholder={placeholder}
-          style={style}
-          className={className}
-          maxLength={maxLength && maxLength}
-          kind={kind && kind}
-          textAlign={textAlign && textAlign}
-          onChange={formatNumber ? (e) => handleInput(e) : null}
-        />
+        {formatNumber ? (
+          <InputForm
+            id={register.name}
+            type={type ? type : "text"}
+            inputSize={inputSize && inputSize}
+            fullWidth={fullWidth && fullWidth}
+            {...register}
+            value={formatNumber ? inputValue : value && value}
+            placeholder={placeholder}
+            style={style}
+            className={className}
+            maxLength={maxLength && maxLength}
+            kind={kind && kind}
+            textAlign={textAlign && textAlign}
+            onChange={formatNumber ? (e) => handleInput(e, formatNumber) : null}
+          />
+        ) : (
+          <InputForm
+            id={register.name}
+            type={type ? type : "text"}
+            inputSize={inputSize && inputSize}
+            fullWidth={fullWidth && fullWidth}
+            {...register}
+            value={formatNumber ? inputValue : value && value}
+            placeholder={placeholder}
+            style={style}
+            className={className}
+            maxLength={maxLength && maxLength}
+            kind={kind && kind}
+            textAlign={textAlign && textAlign}
+          />
+        )}
       </FormGroup>
       <ErrorText>{errors && errors}</ErrorText>
     </InputWrapper>
-  );
-};
-export const SelectCom = ({
-  label,
-  labelLong,
-  errors,
-  selectOption,
-  defaultValue,
-}: IInputProps) => {
-  return (
-    <div>
-      <FormGroup>
-        {label !== undefined && <Label labelLong={labelLong}>{label}</Label>}
-        <Select value={defaultValue} onChange={() => {}}>
-          {selectOption?.map((obj: any, idx: any) => (
-            <option key={idx} value={obj.code1}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
-      </FormGroup>
-      <ErrorText>{errors && errors}</ErrorText>
-    </div>
   );
 };
 
@@ -179,7 +227,9 @@ export const InputForm = styled.input<{
     props.inputSize ? getInputSize(props.inputSize) : "100%"};
   flex: ${(props) => props.fullWidth && "1"};
   text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
-  border-radius: 4px;
+  border-radius: ${(props) =>
+    props.kind ? getInputKind(props.kind)?.borderRadius : "4px"};
+
   outline: none;
   display: inline-block;
   padding: 0 6px;
@@ -201,6 +251,11 @@ export const InputForm = styled.input<{
     }
   }
 
+  &.small {
+    height: 22px;
+    margin: 2px;
+  }
+
   border: ${(props) =>
     props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
 `;
@@ -220,6 +275,14 @@ export const FormGroup = styled.div`
   input,
   select {
     margin: 5px 5px 5px 5px;
+  }
+
+  &.small {
+    gap: 0;
+  }
+
+  &.jccenter {
+    justify-content: center;
   }
 
   label.login {
@@ -248,6 +311,31 @@ export const Label = styled.label<{
   padding: 7px 10px;
   background: #f5fcff;
   white-space: nowrap;
+
+  &.small {
+    text-align: center;
+    height: 27px;
+    margin: 0px;
+    padding: 3px 0 0 0;
+  }
+
+  &.gray {
+    background: rgba(104, 103, 103, 0.35);
+  }
+
+  &.green {
+    background: #d3e175;
+  }
+  &.light-green {
+    background: #ebf69c;
+  }
+  &.white {
+    background: #fff;
+  }
+
+  &.brgray {
+    border-right: 1px solid #e6e5e5;
+  }
 `;
 
 export const Field = styled.div<{ flex?: boolean }>`
@@ -279,13 +367,18 @@ export const Field = styled.div<{ flex?: boolean }>`
     padding: 5px;
 
     label {
+      min-width: 50px;
       font-family: "NotoSansKRRegular";
       font-size: 10px;
       background: #a7a7a7;
       border-radius: 2px;
       padding: 1px 2px;
       color: #fff;
+      text-align: center;
     }
+  }
+  &.br {
+    border-right: 1px solid #e6e5e5;
   }
 `;
 
@@ -331,7 +424,11 @@ export const Wrapper = styled.div<{
   align-items: ${(props) => props.grid && "center"};
 `;
 
-export const Select = styled.select<{ kind?: FieldKind }>`
+export const Select = styled.select<{
+  kind?: FieldKind;
+  size?: InputSize;
+  fullWidth?: boolean;
+}>`
   height: 25px;
   border-radius: 4px;
 
@@ -351,6 +448,8 @@ export const Select = styled.select<{ kind?: FieldKind }>`
 
   border: ${(props) =>
     props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
+
+  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
 `;
 
 export const InfoDesc = styled.div`
@@ -379,3 +478,5 @@ export const PaymentLineCnt = styled.div`
     height: 45px;
   }
 `;
+
+// export const TextArea = styled.textarea<{}>``;

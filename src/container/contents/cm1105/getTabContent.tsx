@@ -54,7 +54,7 @@ function getTabContent(
 ) {
   const data0 = (
     <Field className="outer-border">
-      <Wrapper grid col={4}>
+      <Wrapper grid col={4} fields="1fr 2fr 1.5fr 1.5fr">
         <Field>
           <FormGroup>
             <Label>공급 받는자</Label>
@@ -71,6 +71,7 @@ function getTabContent(
           </div>
         </Field>
         <Input register={register("cuNo")} errors={errors["cuNo"]?.message} />
+
         <Input
           label="종사업장"
           register={register("cuRCode")}
@@ -107,22 +108,25 @@ function getTabContent(
         />
       </Wrapper>
       <DividerGray />
-      <Wrapper style={{ alignItems: "center" }}>
-        <Input
-          label="주소"
-          register={register("cuSzipcode")}
-          errors={errors["cuSzipcode"]?.message}
-        />
-        <DaumAddress setAddress={setAddress} />
-        <Input
-          register={register("cuSaddr1")}
-          errors={errors["cuSaddr1"]?.message}
-          fullWidth
-        />
+      <Wrapper grid col={2}>
+        <Field flex style={{ alignItems: "center" }}>
+          <Input
+            label="주소"
+            register={register("cuSzipcode")}
+            errors={errors["cuSzipcode"]?.message}
+          />
+          <DaumAddress setAddress={setAddress} />
+          <Input
+            register={register("cuSaddr1")}
+            errors={errors["cuSaddr1"]?.message}
+            fullWidth
+          />
+        </Field>
         <Input
           register={register("cuSaddr2")}
           errors={errors["cuSaddr2"]?.message}
           fullWidth
+          style={{ marginLeft: "0px" }}
         />
       </Wrapper>
       <DividerGray />
@@ -587,17 +591,17 @@ function getTabContent(
         </Field>
         <Field style={{ width: "100%" }}>
           <Wrapper grid col={11}>
-            <Label>제조사</Label>
-            <Label>용량(kg)</Label>
-            <Label>제조번호</Label>
-            <Label>제작년월</Label>
-            <Label>대여처</Label>
-            <Label>최초검사</Label>
-            <Label>외관검사</Label>
-            <Label>개방검사</Label>
-            <Label>게이지</Label>
-            <Label>발신기코드</Label>
-            <Label>잔량고객코드</Label>
+            <Label style={{ textAlign: "center" }}>제조사</Label>
+            <Label style={{ textAlign: "center" }}>용량(kg)</Label>
+            <Label style={{ textAlign: "center" }}>제조번호</Label>
+            <Label style={{ textAlign: "center" }}>제작년월</Label>
+            <Label style={{ textAlign: "center" }}>대여처</Label>
+            <Label style={{ textAlign: "center" }}>최초검사</Label>
+            <Label style={{ textAlign: "center" }}>외관검사</Label>
+            <Label style={{ textAlign: "center" }}>개방검사</Label>
+            <Label style={{ textAlign: "center" }}>게이지</Label>
+            <Label style={{ textAlign: "center" }}>발신기코드</Label>
+            <Label style={{ textAlign: "center" }}>잔량고객코드</Label>
           </Wrapper>
           <DividerGray />
           <Wrapper grid col={11}>
@@ -781,12 +785,12 @@ function getTabContent(
         </Field>
         <Field style={{ width: "100%" }}>
           <Wrapper grid col={8}>
-            <Label>제조사</Label>
-            <Label>용량(k)</Label>
-            <Label>제조번호</Label>
-            <Label>제작년월</Label>
-            <Label>전원</Label>
-            <Label>장치검사</Label>
+            <Label style={{ textAlign: "center" }}>제조사</Label>
+            <Label style={{ textAlign: "center" }}>용량(k)</Label>
+            <Label style={{ textAlign: "center" }}>제조번호</Label>
+            <Label style={{ textAlign: "center" }}>제작년월</Label>
+            <Label style={{ textAlign: "center" }}>전원</Label>
+            <Label style={{ textAlign: "center" }}>장치검사</Label>
           </Wrapper>
           <DividerGray />
           <Wrapper grid col={8}>
@@ -1142,13 +1146,13 @@ function getTabContent(
             />
           </Wrapper>
           <DividerGray />
-          <Wrapper grid>
+          <Wrapper grid col={2} fields="2fr 1fr">
             <Input
               label="비고"
               register={register("bigo")}
               errors={errors["bigo"]?.message}
             />
-            <div></div>
+
             <Input
               label="등록일시"
               register={register("CMSregDate")}

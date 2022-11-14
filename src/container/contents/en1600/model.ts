@@ -17,7 +17,7 @@ export interface IJNOSAUP {
   swJuminno: string;
   swName: string;
   swPaydate: string;
-  swPaykum: number;
+  swPaykum: any;
   swPaytype: string;
   swTel: string;
   swWorkOut: string;
@@ -28,5 +28,5 @@ export interface IJNOSAUP {
   swDepartment: string;
   swStampFile: string | null;
   swOutDate: string;
-  sgKumack: number;
+  sgKumack: any;
 }

@@ -7,7 +7,7 @@ import API from "app/axios";
 import { schema } from "./validation";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import { Plus, Trash, Update, Reset, WhiteClose } from "components/allSvgIcon";
+import { Plus, Update, Reset, WhiteClose } from "components/allSvgIcon";
 import { ICM1105SEARCH } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { closeModal, addCM1105 } from "app/state/modal/modalSlice";
@@ -22,6 +22,7 @@ import {
   Divider,
   Label,
 } from "components/form/style";
+import { CM1105SEARCH } from "app/path";
 
 import CheckBox from "components/checkbox";
 import PlainTab from "components/plainTab";
@@ -30,7 +31,7 @@ import getTabContent from "./getTabContent";
 import { CM1105INSERT, CM1105UPDATE } from "app/path";
 import { toast } from "react-toastify";
 
-function Form() {
+function FormCM1105() {
   const [data, setData] = useState<any>(null);
   const [addr, setAddress] = useState<string>("");
   const [addr2, setAddress2] = useState<string>("");
@@ -43,7 +44,6 @@ function Form() {
     groupId: "CM",
     functionName: "CM1105",
   });
-  // console.log("dataCommonDic:====>", dataCommonDic);
 
   const {
     register,
@@ -56,8 +56,6 @@ function Form() {
     resolver: yupResolver(schema),
   });
 
-  // console.log("errors=================================>", errors);
-
   useEffect(() => {
     if (cm1105.areaCode && cm1105.cuCode) {
       fetchData();
@@ -67,6 +65,7 @@ function Form() {
   useEffect(() => {
     if (data) {
       resetForm("reset");
+      console.log("============CM1106:", data);
     }
   }, [data]);
 
@@ -83,12 +82,6 @@ function Form() {
       const virtualAccount = data?.virturalAccoount
         ? data?.virturalAccoount[0]
         : {};
-
-      // console.log("data==============>", data);
-      // console.log("customerInfo==============>", customerInfo);
-      // console.log("cms==============>", cms);
-      // console.log("cuTank==============>", cuTank);
-      // console.log("virtualAccount==============>", virtualAccount);
 
       if (type === "clear") {
         for (const [key, value] of Object.entries(customerInfo)) {
@@ -188,7 +181,7 @@ function Form() {
 
   const fetchData = async () => {
     try {
-      const { data } = await API.get("/app/CM1105/search", {
+      const { data } = await API.get(CM1105SEARCH, {
         params: { cuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
       });
       setData(data);
@@ -253,7 +246,7 @@ function Form() {
         </Field>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Button
-            text="등록"
+            text="연속등록"
             icon={<Plus />}
             style={{ marginRight: "5px" }}
             type="button"
@@ -283,7 +276,7 @@ function Form() {
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
-              dispatch(addCM1105({ cuCode: "", areaCode: "" }));
+              // dispatch(addCM1105({ cuCode: "", areaCode: "" }));
               dispatch(closeModal());
             }}
           >
@@ -324,7 +317,7 @@ function Form() {
           <Field>
             <FormGroup>
               <Label>거래구분</Label>
-              <Select {...register("cuType")}>
+              <Select {...register("cuType")} fullWidth>
                 {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -348,7 +341,7 @@ function Form() {
           <Field>
             <FormGroup>
               <Label>거래상태</Label>
-              <Select {...register("cuStae")}>
+              <Select {...register("cuStae")} fullWidth>
                 {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -362,18 +355,20 @@ function Form() {
           </Field>
         </Wrapper>
         <DividerGray />
-        <Wrapper style={{ alignItems: "center" }}>
-          <Input
-            label="주소"
-            register={register("cuZipcode")}
-            errors={errors["cuZipcode"]?.message}
-          />
-          <DaumAddress setAddress={setAddress} />
-          <Input
-            register={register("cuAddr1")}
-            errors={errors["cuAddr1"]?.message}
-            fullWidth
-          />
+        <Wrapper grid col={2}>
+          <Field flex style={{ alignItems: "center" }}>
+            <Input
+              label="주소"
+              register={register("cuZipcode")}
+              errors={errors["cuZipcode"]?.message}
+            />
+            <DaumAddress setAddress={setAddress} />
+            <Input
+              register={register("cuAddr1")}
+              errors={errors["cuAddr1"]?.message}
+              fullWidth
+            />
+          </Field>
           <Input
             register={register("cuAddr2")}
             errors={errors["cuAddr2"]?.message}
@@ -400,6 +395,7 @@ function Form() {
             label="메모"
             register={register("cuMemo")}
             errors={errors["cuMemo"]?.message}
+            fullWidth
           />
         </Wrapper>
         <DividerGray />
@@ -414,8 +410,8 @@ function Form() {
             <Wrapper grid>
               <Field>
                 <FormGroup>
-                  <Label>담당사원</Label>
-                  <Select {...register("cuSwCode")}>
+                  <Label>담당 사원</Label>
+                  <Select {...register("cuSwCode")} fullWidth>
                     {dataCommonDic?.cuSwCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -430,8 +426,8 @@ function Form() {
 
               <Field>
                 <FormGroup>
-                  <Label>지역분류</Label>
-                  <Select {...register("cuJyCode")}>
+                  <Label>지역 분류</Label>
+                  <Select {...register("cuJyCode")} fullWidth>
                     {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -445,8 +441,8 @@ function Form() {
               </Field>
               <Field>
                 <FormGroup>
-                  <Label>관리자분류</Label>
-                  <Select {...register("cuCustgubun")}>
+                  <Label>관리자 분류</Label>
+                  <Select {...register("cuCustgubun")} fullWidth>
                     {dataCommonDic?.cuCustgubun?.map(
                       (obj: any, idx: number) => (
                         <option key={idx} value={obj.code}>
@@ -465,8 +461,8 @@ function Form() {
             <Wrapper grid>
               <Field>
                 <FormGroup>
-                  <Label>소비자형태</Label>
-                  <Select {...register("cuCutype")}>
+                  <Label>소비자 형태</Label>
+                  <Select {...register("cuCutype")} fullWidth>
                     {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code1}>
                         {obj.code1}
@@ -479,15 +475,15 @@ function Form() {
                 </div>
               </Field>
               <Input
-                label="청구구분"
+                label="청구 구분"
                 register={register("cuRequestType")}
                 errors={errors["cuRequestType"]?.message}
               />
 
               <Field>
                 <FormGroup>
-                  <Label>수금방법</Label>
-                  <Select {...register("cuSukumtype")}>
+                  <Label>수금 방법</Label>
+                  <Select {...register("cuSukumtype")} fullWidth>
                     {dataCommonDic?.cuSukumtype?.map(
                       (obj: any, idx: number) => (
                         <option key={idx} value={obj.code1}>
@@ -506,8 +502,8 @@ function Form() {
             <Wrapper grid>
               <Field>
                 <FormGroup>
-                  <Label>품목단가</Label>
-                  <Select {...register("cuJdc")}>
+                  <Label>품목 단가</Label>
+                  <Select {...register("cuJdc")} fullWidth>
                     {dataCommonDic?.cuJdc?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code1}>
                         {obj.code1}
@@ -523,7 +519,7 @@ function Form() {
               <Field>
                 <FormGroup>
                   <Label>Vat 적용방법</Label>
-                  <Select {...register("cuVatKind")}>
+                  <Select {...register("cuVatKind")} fullWidth>
                     {dataCommonDic?.cuVatKind?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -537,8 +533,8 @@ function Form() {
               </Field>
               <Field>
                 <FormGroup>
-                  <Label>원미만금액계산</Label>
-                  <Select {...register("cuRoundType")}>
+                  <Label>원미만 금액계산</Label>
+                  <Select {...register("cuRoundType")} fullWidth>
                     {dataCommonDic?.cuRoundType?.map(
                       (obj: any, idx: number) => (
                         <option key={idx} value={obj.code}>
@@ -557,18 +553,18 @@ function Form() {
             <Wrapper grid>
               <Field>
                 <FormGroup>
-                  <Label>계산서발행유무</Label>
+                  <Label>계산서 발행유무</Label>
                   <CheckBox register={{ ...register("cuSekumyn") }} />
                 </FormGroup>
               </Field>
               <Field>
                 <FormGroup>
-                  <Label>장부사용유무</Label>
+                  <Label>장부 사용유무</Label>
                   <CheckBox register={{ ...register("cuJangbuYn") }} />
                 </FormGroup>
               </Field>
               <Input
-                label="무료시설투자비"
+                label="무료시설 투자비"
                 register={register("cuSvKumack")}
                 errors={errors["cuSvKumack"]?.message}
                 fullWidth
@@ -584,6 +580,7 @@ function Form() {
               <Input
                 register={register("cuTongkum")}
                 errors={errors["cuTongkum"]?.message}
+                textAlign="right"
               />
             </FormGroup>
             <FormGroup>
@@ -591,6 +588,7 @@ function Form() {
               <Input
                 register={register("cuJmisu")}
                 errors={errors["cuJmisu"]?.message}
+                textAlign="right"
               />
             </FormGroup>
             <FormGroup>
@@ -598,6 +596,7 @@ function Form() {
               <Input
                 register={register("cuCmisu")}
                 errors={errors["cuCmisu"]?.message}
+                textAlign="right"
               />
             </FormGroup>
           </Field>
@@ -631,4 +630,4 @@ function Form() {
   );
 }
 
-export default Form;
+export default FormCM1105;

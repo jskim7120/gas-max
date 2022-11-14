@@ -17,7 +17,11 @@ import {
 import CheckBox from "components/checkbox";
 import { ICAR } from "./model";
 import { schema } from "./validation";
-import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
+import {
+  formatDate,
+  formatDateByRemoveDash,
+  formatCurrencyRemoveComma,
+} from "helpers/dateFormat";
 import CustomDate from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -167,6 +171,21 @@ const Form = React.forwardRef(
       formValues.caBkYn = formValues.caBkYn ? "Y" : "N";
       formValues.caRentYn = formValues.caRentYn ? "Y" : "N";
 
+      formValues.caAmt = formValues.caAmt
+        ? formatCurrencyRemoveComma(formValues.caAmt)
+        : "";
+      formValues.caMAmt = formValues.caMAmt
+        ? formatCurrencyRemoveComma(formValues.caMAmt)
+        : "";
+      formValues.caDiscountM = formValues.caDiscountM
+        ? formatCurrencyRemoveComma(formValues.caDiscountM)
+        : "";
+      formValues.caDiscountAmt = formValues.caDiscountAmt
+        ? formatCurrencyRemoveComma(formValues.caDiscountAmt)
+        : "";
+      formValues.caInsuranceAmt = formValues.caInsuranceAmt
+        ? formatCurrencyRemoveComma(formValues.caInsuranceAmt)
+        : "";
       formValues.caSafeDate = formValues.caSafeDate
         ? formatDateByRemoveDash(formValues.caSafeDate)
         : "";
@@ -372,7 +391,7 @@ const Form = React.forwardRef(
           />
         </Wrapper>
         <DividerGray />
-        <Wrapper>
+        <Wrapper style={{ width: "630px" }}>
           <CustomDate
             label="정기검사일"
             name="caJdate1"
@@ -407,6 +426,8 @@ const Form = React.forwardRef(
               errors={errors["caAmt"]?.message}
               inputSize={InputSize.sm}
               textAlign="right"
+              formatNumber="comNumber"
+              maxLength="13"
             />
             <p>원 </p>
           </Field>
@@ -430,6 +451,8 @@ const Form = React.forwardRef(
               errors={errors["caAmt"]?.message}
               inputSize={InputSize.sm}
               textAlign="right"
+              formatNumber="comNumber"
+              maxLength="13"
             />
             <p>원</p>
           </Field>
@@ -440,6 +463,8 @@ const Form = React.forwardRef(
               errors={errors["caDiscountAmt"]?.message}
               inputSize={InputSize.sm}
               textAlign="right"
+              formatNumber="comNumber"
+              maxLength="13"
             />
             <p>원</p>
           </Field>
@@ -523,7 +548,7 @@ const Form = React.forwardRef(
           </Field>
         </Wrapper>
         <DividerGray />
-        <Wrapper>
+        <Wrapper style={{ width: "630px" }}>
           <CustomDate
             label="보험기간"
             name="caBsdate"
@@ -548,6 +573,8 @@ const Form = React.forwardRef(
               errors={errors["caInsuranceAmt"]?.message}
               inputSize={InputSize.sm}
               textAlign="right"
+              formatNumber="comNumber"
+              maxLength="13"
             />
             <p>원</p>
           </Field>

@@ -9,7 +9,7 @@ export const Sidebar = styled.div<{ isOpen?: boolean }>`
   left: ${(props) => !props.isOpen && "-82px"};
   .header_cnt {
     background: #626161;
-    padding-top: 15px;
+    padding-top: 4px;
   }
 
   .header {
@@ -56,5 +56,5 @@ export const UnOrderedList = styled.ul`
 export const Main = styled.div`
   display: flex;
   width: 100%;
-  height: calc(100vh - 123px);
+  height: calc(100vh - 113px);
 `;

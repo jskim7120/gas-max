@@ -1,14 +1,14 @@
 export interface ISANGPUM {
   areaCode: string;
   areaName: string;
-  jpBaedal: number;
+  jpBaedal: any;
   jpCode: string;
   jpGasType: string;
   jpGasuse: string;
   jpGubun: string;
   jpGubunName: string;
-  jpIndanga: number;
-  jpIntong: number;
+  jpIndanga: any;
+  jpIntong: any;
   jpJaegoYn: string;
   jpKg: number;
   jpKgDanwi: string;
@@ -16,8 +16,8 @@ export interface ISANGPUM {
   jpKind: string;
   jpKindName: string;
   jpName: string;
-  jpOutdanga: number;
-  jpOuttong: number;
+  jpOutdanga: any;
+  jpOuttong: any;
   jpSort: number;
   jpSpec: string;
   jpUnit: string;

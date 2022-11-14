@@ -45,11 +45,8 @@ export const columns = [
     fieldName: "areaCode",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "업소",
+      text: "영업소",
     },
   },
   {
@@ -57,11 +54,8 @@ export const columns = [
     fieldName: "caCode",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "차량명",
+      text: "코드",
     },
   },
   {
@@ -69,11 +63,8 @@ export const columns = [
     fieldName: "caName",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "담당사원",
+      text: "차량번호",
     },
   },
   {
@@ -81,11 +72,8 @@ export const columns = [
     fieldName: "caSwName",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "차종",
+      text: "담당사원",
     },
   },
   {
@@ -93,11 +81,8 @@ export const columns = [
     fieldName: "caType",
     type: "data",
     width: "100",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "연식",
+      text: "차량종류",
     },
   },
   {
@@ -105,11 +90,8 @@ export const columns = [
     fieldName: "caYear",
     type: "data",
     width: "100",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "보험기간",
+      text: "연식",
     },
   },
 
@@ -118,9 +100,6 @@ export const columns = [
     fieldName: "caBldate",
     type: "data",
     width: "100",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "검사기간",
     },
@@ -131,11 +110,8 @@ export const columns = [
     fieldName: "caJaegoyn",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
-      text: "재고사용",
+      text: "재고사용유",
     },
   },
 
@@ -144,9 +120,7 @@ export const columns = [
     fieldName: "caBigo",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-left-column",
     header: {
       text: "비고",
     },

@@ -15,6 +15,7 @@ import {
 } from "components/form/style";
 import { IBUPUM } from "./model";
 import { schema } from "./validation";
+import { formatCurrencyRemoveComma } from "helpers/dateFormat";
 import { InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
@@ -117,6 +118,13 @@ const Form = React.forwardRef(
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
 
+      formValues.bpIndanga = formValues.bpIndanga
+        ? formatCurrencyRemoveComma(formValues.bpIndanga)
+        : "";
+      formValues.bpOutdanga = formValues.bpOutdanga
+        ? formatCurrencyRemoveComma(formValues.bpOutdanga)
+        : "";
+
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
@@ -170,7 +178,7 @@ const Form = React.forwardRef(
         <DividerGray />
         <Wrapper>
           <Input
-            label="코드"
+            label="부품코드"
             register={register("bpCode")}
             errors={errors["bpCode"]?.message}
             inputSize={InputSize.md}
@@ -213,6 +221,8 @@ const Form = React.forwardRef(
               errors={errors["bpIndanga"]?.message}
               inputSize={InputSize.md}
               textAlign="right"
+              formatNumber="comDecNumber"
+              maxLength="26"
             />
             <p>원</p>
           </Field>
@@ -226,6 +236,8 @@ const Form = React.forwardRef(
               errors={errors["bpOutdanga"]?.message}
               inputSize={InputSize.md}
               textAlign="right"
+              formatNumber="comDecNumber"
+              maxLength="26"
             />
             <p>원</p>
           </Field>

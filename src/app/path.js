@@ -50,6 +50,10 @@ export const EN2000INSERT = "/app/EN2000/insert";
 export const EN2000UPDATE = "/app/EN2000/update";
 export const EN2000DELETE = "/app/EN2000/delete";
 
+export const CM110065 = "/app/CM1100/65";
+
 export const CM1105SEARCH = "/app/CM1105/search";
 export const CM1105UPDATE = "/app/CM1105/update";
 export const CM1105INSERT = "/app/CM1105/insert";
+
+export const CM1106LIST = "/app/CM1106/list";

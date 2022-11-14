@@ -8,7 +8,7 @@ import { Update, Reset } from "components/allSvgIcon";
 import { columns, fields } from "./data";
 import Form from "./form";
 import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
-import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "./style";
+import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
 import { useDispatch } from "app/store";
 
 let container: HTMLDivElement;

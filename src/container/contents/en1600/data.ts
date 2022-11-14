@@ -41,12 +41,8 @@ export const columns = [
     fieldName: "areaCode",
     type: "data",
     width: "80",
-
-    styles: {
-      textAlignment: "center",
-    },
     header: {
-      text: "영업소코드",
+      text: "영업소",
     },
   },
   {
@@ -54,11 +50,9 @@ export const columns = [
     fieldName: "swName",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-left-column",
     header: {
-      text: "사원명칭",
+      text: "사원명",
     },
   },
   {
@@ -66,9 +60,6 @@ export const columns = [
     fieldName: "swTel",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "전화번호",
     },
@@ -78,9 +69,6 @@ export const columns = [
     fieldName: "swHp",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "핸드폰",
     },
@@ -90,9 +78,7 @@ export const columns = [
     fieldName: "swDepartment",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-left-column",
     header: {
       text: "부서명",
     },
@@ -102,9 +88,6 @@ export const columns = [
     fieldName: "swGubun",
     type: "data",
     width: "120",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "업무구분",
     },
@@ -114,9 +97,6 @@ export const columns = [
     fieldName: "swPaydate",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "급여일",
     },
@@ -126,9 +106,6 @@ export const columns = [
     fieldName: "swWorkOut",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "퇴사",
     },
