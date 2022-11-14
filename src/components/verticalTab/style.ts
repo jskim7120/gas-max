@@ -1,16 +1,15 @@
 import styled from "styled-components";
 
 export const TabHeaderWrapper = styled.ul`
-  width: 97px;  
-  
+  width: 97px;
   list-style: none;
   margin: 0;
   padding: 0;
   display:flex;
   flex-direction: column;  
   background: #fff;
-  position:relative;
-  border-bottom:1px solid #707070;
+  position:relative;  
+  
   
 }
 `;
