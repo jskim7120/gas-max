@@ -31,7 +31,7 @@ function CM1200({
   menuId: string;
 }) {
   const { register, handleSubmit } = useForm({ mode: "onSubmit" });
-  const buildingRealgridElements = useRef<HTMLDivElement>(null);
+  const realgridElement = useRef<HTMLDivElement>(null);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
 
@@ -41,7 +41,7 @@ function CM1200({
 
   useEffect(() => {
     if (data.length > 0) {
-      container = buildingRealgridElements.current as HTMLDivElement;
+      container = realgridElement.current as HTMLDivElement;
       dp = new LocalDataProvider(true);
       gv = new GridView(container);
 
@@ -87,7 +87,6 @@ function CM1200({
       const { data } = await API.get("/app/CM1200/search", { params: params });
       if (data) {
         setData(data);
-        console.log("data", data);
       }
     } catch (err) {
       console.log("CM1200 data search fetch error =======>", err);
@@ -100,7 +99,7 @@ function CM1200({
         <p>{depthFullName}</p>
         <div className="buttons">
           <Button
-            text="등록"
+            text="건물등록"
             icon={<Plus />}
             style={{ marginRight: "5px" }}
             onClick={() => {
@@ -138,28 +137,32 @@ function CM1200({
       </DetailHeader>
       <Wrapper>
         <div></div>
-        <TableWrapper width="30%" ref={buildingRealgridElements}>
-            <form onSubmit={handleSubmit(onSearchSubmit)}>
-              <Field>
-                <FormGroup>
-                  <Label>
-                    <CheckBox title="관리비" rtl={false} />
-                  </Label>
-                  <Input
-                    register={register("searchInput", {
-                      required: true,
-                    })}
-                    kind={FieldKind.BORDER}
-                  />
-                  <Button
-                    text="검색"
-                    type="submit"
-                    icon={<MagnifyingGlass />}
-                    style={{ marginRight: "5px", background: "red" }}
-                  />
-                </FormGroup>
-              </Field>
-            </form>
+        <TableWrapper width="30%">
+          <form onSubmit={handleSubmit(onSearchSubmit)}>
+            <Field>
+              <FormGroup>
+                <Label>
+                  <CheckBox title="건물명" rtl={false} />
+                </Label>
+                <Input
+                  register={register("searchInput", {
+                    required: true,
+                  })}
+                  kind={FieldKind.BORDER}
+                />
+                <Button
+                  text="검색"
+                  type="submit"
+                  icon={<MagnifyingGlass />}
+                  style={{ marginRight: "5px", background: "red" }}
+                />
+              </FormGroup>
+            </Field>
+          </form>
+          <div
+            style={{ width: "100%", height: "400px" }}
+            ref={realgridElement}
+          ></div>
         </TableWrapper>
         <DetailWrapper width="70%">
           <Form selected={selected} selectedRowIndex={selectedRowIndex} />

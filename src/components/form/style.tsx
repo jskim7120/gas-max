@@ -12,6 +12,8 @@ import { InputSize, FieldKind } from "components/componentsType";
 
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
+    case InputSize.xs:
+      return `70px`;
     case InputSize.sm:
       return `100px`;
     case InputSize.en1300:
