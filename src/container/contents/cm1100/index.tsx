@@ -34,6 +34,8 @@ import { schema } from "./validation";
 import { columns, fields } from "./data";
 import CM1100Footer from "./footer";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
+import {} from "app/path";
+
 const initialData: any = [
   {
     areaCode: "",
@@ -156,6 +158,15 @@ function CM1100Page({
               icon={<Plus />}
               style={{ marginRight: "5px" }}
               type="button"
+              onClick={() => {
+                dispatch(
+                  addCM1105({
+                    cuCode: "",
+                    areaCode: "",
+                  })
+                );
+                dispatch(openModal({ type: "cm1105Modal" }));
+              }}
             />
 
             <Button
@@ -163,6 +174,20 @@ function CM1100Page({
               icon={<Reset />}
               style={{ marginRight: "5px" }}
               type="button"
+              onClick={() => {
+                reset({
+                  areaCode: dataCommonDic?.areaCode[0].code,
+                  cuType: dataCommonDic?.cuType[0].code,
+                  cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
+                  swCode: dataCommonDic?.swCode[0].code,
+                  cuEtOption: dataCommonDic?.cuEtOption[0].code,
+                  cuJyCode: dataCommonDic?.cuJyCode[0].code,
+                  cuGong: dataCommonDic?.cuGong[0].code,
+                  cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
+                  cuStae: dataCommonDic?.cuStae[0].code,
+                });
+                setData([]);
+              }}
             />
             <Button text="삭제" icon={<Trash />} type="button" />
           </div>

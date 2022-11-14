@@ -591,17 +591,17 @@ function getTabContent(
         </Field>
         <Field style={{ width: "100%" }}>
           <Wrapper grid col={11}>
-            <Label>제조사</Label>
-            <Label>용량(kg)</Label>
-            <Label>제조번호</Label>
-            <Label>제작년월</Label>
-            <Label>대여처</Label>
-            <Label>최초검사</Label>
-            <Label>외관검사</Label>
-            <Label>개방검사</Label>
-            <Label>게이지</Label>
-            <Label>발신기코드</Label>
-            <Label>잔량고객코드</Label>
+            <Label style={{ textAlign: "center" }}>제조사</Label>
+            <Label style={{ textAlign: "center" }}>용량(kg)</Label>
+            <Label style={{ textAlign: "center" }}>제조번호</Label>
+            <Label style={{ textAlign: "center" }}>제작년월</Label>
+            <Label style={{ textAlign: "center" }}>대여처</Label>
+            <Label style={{ textAlign: "center" }}>최초검사</Label>
+            <Label style={{ textAlign: "center" }}>외관검사</Label>
+            <Label style={{ textAlign: "center" }}>개방검사</Label>
+            <Label style={{ textAlign: "center" }}>게이지</Label>
+            <Label style={{ textAlign: "center" }}>발신기코드</Label>
+            <Label style={{ textAlign: "center" }}>잔량고객코드</Label>
           </Wrapper>
           <DividerGray />
           <Wrapper grid col={11}>
@@ -785,12 +785,12 @@ function getTabContent(
         </Field>
         <Field style={{ width: "100%" }}>
           <Wrapper grid col={8}>
-            <Label>제조사</Label>
-            <Label>용량(k)</Label>
-            <Label>제조번호</Label>
-            <Label>제작년월</Label>
-            <Label>전원</Label>
-            <Label>장치검사</Label>
+            <Label style={{ textAlign: "center" }}>제조사</Label>
+            <Label style={{ textAlign: "center" }}>용량(k)</Label>
+            <Label style={{ textAlign: "center" }}>제조번호</Label>
+            <Label style={{ textAlign: "center" }}>제작년월</Label>
+            <Label style={{ textAlign: "center" }}>전원</Label>
+            <Label style={{ textAlign: "center" }}>장치검사</Label>
           </Wrapper>
           <DividerGray />
           <Wrapper grid col={8}>
@@ -1146,13 +1146,13 @@ function getTabContent(
             />
           </Wrapper>
           <DividerGray />
-          <Wrapper grid>
+          <Wrapper grid col={2} fields="2fr 1fr">
             <Input
               label="비고"
               register={register("bigo")}
               errors={errors["bigo"]?.message}
             />
-            <div></div>
+
             <Input
               label="등록일시"
               register={register("CMSregDate")}

@@ -22,7 +22,7 @@ function CM1100Footer() {
       const { data } = await API.get(CM110065, {
         params: { cuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
       });
-      console.log("===============", data);
+
       setData(data);
     } catch (err) {
       console.log("CM1100 data search fetch error =======>", err);
@@ -30,7 +30,7 @@ function CM1100Footer() {
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", borderTop: "1px solid #707070" }}>
       <VerticalTab
         tabHeader={["사용품목", "공급시설", "결재정보"]}
         onClick={(id) => setTabId(id)}

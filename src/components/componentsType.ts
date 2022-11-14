@@ -35,4 +35,5 @@ export enum ButtonType {
 
 export enum FieldKind {
   BORDER = "border",
+  RECTANGLE = "rectangle",
 }

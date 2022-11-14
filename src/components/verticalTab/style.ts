@@ -8,9 +8,7 @@ export const TabHeaderWrapper = styled.ul`
   display:flex;
   flex-direction: column;  
   background: #fff;
-  position:relative;  
-  
-  
+  position:relative;
 }
 `;
 

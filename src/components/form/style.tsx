@@ -27,6 +27,11 @@ export const getInputKind = (kind?: FieldKind) => {
       return {
         border: "1px solid #e6e5e5",
       };
+    case FieldKind.RECTANGLE:
+      return {
+        border: "1px solid #e6e5e5",
+        borderRadius: "0px",
+      };
   }
 };
 
@@ -211,7 +216,9 @@ export const InputForm = styled.input<{
     props.inputSize ? getInputSize(props.inputSize) : "100%"};
   flex: ${(props) => props.fullWidth && "1"};
   text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
-  border-radius: 4px;
+  border-radius: ${(props) =>
+    props.kind ? getInputKind(props.kind)?.borderRadius : "4px"};
+
   outline: none;
   display: inline-block;
   padding: 0 6px;
@@ -294,6 +301,10 @@ export const Label = styled.label<{ labelLong?: boolean; style?: any }>`
     height: 27px;
     margin: 0px;
     padding: 3px 0 0 0;
+  }
+
+  &.gray {
+    background: rgba(104, 103, 103, 0.35);
   }
 
   &.green {
@@ -445,3 +456,5 @@ export const PaymentLineCnt = styled.div`
     height: 45px;
   }
 `;
+
+// export const TextArea = styled.textarea<{}>``;
