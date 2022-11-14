@@ -4,6 +4,10 @@ import { InputSize, FieldKind } from "components/componentsType";
 
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
+    case InputSize.xxs:
+      return `30px`;
+    case InputSize.xs:
+      return `50px`;
     case InputSize.sm:
       return `100px`;
     case InputSize.en1300:
@@ -66,6 +70,7 @@ interface IInputProps {
   textAlign?: string;
   formatNumber?: string;
   labelStyle?: any;
+  onChange?: Function;
 }
 
 export const Input = ({
@@ -86,6 +91,7 @@ export const Input = ({
   textAlign,
   formatNumber,
   labelStyle,
+  onChange,
 }: IInputProps) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -202,6 +208,7 @@ export const Input = ({
             maxLength={maxLength && maxLength}
             kind={kind && kind}
             textAlign={textAlign && textAlign}
+            onChange={onChange && onChange}
           />
         )}
       </FormGroup>

@@ -45,12 +45,17 @@ const radioOptions2 = [
 ];
 
 function getTabContent(
+  customerInfo: any,
   id: number,
   register: any,
   errors: any,
   dataCommonDic: any,
   setAddress: any,
-  reset: any
+  reset: any,
+  too: number,
+  setToo: Function,
+  sign: string,
+  setSign: Function
 ) {
   const data0 = (
     <Field className="outer-border">
@@ -299,11 +304,45 @@ function getTabContent(
                 <ErrorText>{errors["cuRdangaType"]?.message}</ErrorText>
               </div>
             </Field>
-            <Input
-              register={register("cuRdanga")}
-              errors={errors["cuRdanga"]?.message}
-              inputSize={InputSize.md}
-            />
+            <Field flex style={{ alignItems: "center" }}>
+              <Input
+                register={register("cuRdanga")}
+                errors={errors["cuRdanga"]?.message}
+                inputSize={InputSize.sm}
+                textAlign="right"
+              />
+              {/* <Input
+                register={register("cuRdangaSign")}
+                errors={errors["cuRdangaSign"]?.message}
+                inputSize={InputSize.xxs}
+                style={{ textAlign: "center" }}
+              /> */}
+
+              <Select
+                {...register("cuRdangaSign")}
+                onChange={(e: any) => setSign(e.target.value)}
+                style={{ minWidth: "50px" }}
+              >
+                <option value="+">+</option>
+                <option value="*">*</option>
+                <option value="-">-</option>
+              </Select>
+
+              <Input
+                register={register("percentage")}
+                errors={errors["percentage"]?.message}
+                inputSize={InputSize.xs}
+                style={{ textAlign: "center" }}
+                onChange={(e: any) => setToo(Number(e.target.value))}
+              />
+
+              <p>
+                {sign === "*" && "%"}
+                {sign === "+" && "원"}
+              </p>
+              <p style={{ margin: "0 5px" }}>=</p>
+              <p>{eval(`${customerInfo?.cuRdanga} ${sign} ${too}`)}</p>
+            </Field>
           </Wrapper>
           <DividerGray />
           <Wrapper grid fields={"1fr 1fr 2fr"}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSelector, useDispatch } from "app/store";
@@ -51,7 +51,8 @@ const FFormGroup = styled.div`
 function FormCM1106() {
   const cm1105 = useSelector((state) => state.modal.cm1105);
   const [data, setData] = useState([]);
-
+  const [selected, setSelected] = useState({});
+  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const {
     register,
     handleSubmit,
@@ -106,7 +107,9 @@ function FormCM1106() {
             icon={<Plus />}
             style={{ marginRight: "5px" }}
             type="button"
-            onClick={() => {}}
+            onClick={() => {
+              formRef.current.bla();
+            }}
           />
           <Button
             text="삭제"
@@ -171,8 +174,8 @@ function FormCM1106() {
           </div>
         </div>
         <div style={{ display: "flex", width: "100%" }}>
-          <Grid data={data} />
-          <Form />
+          <Grid data={data} setSelected={setSelected} />
+          <Form selected={selected} ref={formRef} />
         </div>
       </form>
     </>

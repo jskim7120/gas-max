@@ -152,6 +152,8 @@ export interface ICM1105SEARCH {
   cms: ICMS;
   virtualAccount: IVIRTUALACCOUNT;
   cuTank: ICUTANK;
+
+  percentage: number;
 }
 
 interface ICMS {
