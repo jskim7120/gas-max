@@ -310,6 +310,7 @@ function getTabContent(
                 errors={errors["cuRdanga"]?.message}
                 inputSize={InputSize.sm}
                 textAlign="right"
+                style={{ border: "1px solid #e6e5e5" }}
               />
               {/* <Input
                 register={register("cuRdangaSign")}
@@ -321,7 +322,7 @@ function getTabContent(
               <Select
                 {...register("cuRdangaSign")}
                 onChange={(e: any) => setSign(e.target.value)}
-                style={{ minWidth: "50px" }}
+                style={{ minWidth: "50px", border: "1px solid #e6e5e5" }}
               >
                 <option value="+">+</option>
                 <option value="*">*</option>
@@ -332,7 +333,7 @@ function getTabContent(
                 register={register("percentage")}
                 errors={errors["percentage"]?.message}
                 inputSize={InputSize.xs}
-                style={{ textAlign: "center" }}
+                style={{ textAlign: "center", border: "1px solid #e6e5e5" }}
                 onChange={(e: any) => setToo(Number(e.target.value))}
               />
 
