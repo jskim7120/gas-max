@@ -455,4 +455,15 @@ export const Select = styled.select<{
   text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
 `;
 
-// export const TextArea = styled.textarea<{}>``;
+export const TextArea = styled.textarea`
+  border: 1px solid transparent;
+  outline: none;
+  font-family: "NotoSansKRRegular";
+  font-size: 12px;
+  box-sizing: border-box;
+
+  &:hover {
+    border: 1px solid #e6e5e5;
+    background: #fffacd;
+  }
+`;
