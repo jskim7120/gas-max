@@ -49,7 +49,6 @@ function CM1200({
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
   useEffect(() => {
-    if (data.length > 0) {
       container = realgridElement.current as HTMLDivElement;
       dp = new LocalDataProvider(true);
       gv = new GridView(container);
@@ -84,7 +83,6 @@ function CM1200({
         gv.destroy();
         dp.destroy();
       };
-    }
   }, [data]);
 
   const onSearchSubmit = async (data: any) => {
