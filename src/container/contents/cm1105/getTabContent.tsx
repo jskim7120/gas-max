@@ -343,6 +343,7 @@ function getTabContent(
                 errors={errors["percentage"]?.message}
                 inputSize={InputSize.xs}
                 style={{ textAlign: "center", border: "1px solid #e6e5e5" }}
+                formatNumber="comNumber"
                 onChange={(e: any) => setToo(Number(e.target.value))}
               />
 
@@ -394,6 +395,7 @@ function getTabContent(
                 register={register("cuAnkum")}
                 errors={errors["cuAnkum"]?.message}
                 textAlign="right"
+                formatNumber="comNumber"
               />
               <p style={{ marginLeft: "-3px" }}>원</p>
             </Field>
@@ -403,6 +405,7 @@ function getTabContent(
                 register={register("cuSisulkum")}
                 errors={errors["cuSisulkum"]?.message}
                 textAlign="right"
+                formatNumber="comNumber"
               />
               <p style={{ marginLeft: "-3px" }}>원</p>
             </Field>
@@ -412,6 +415,7 @@ function getTabContent(
                 register={register("cuMeterkum")}
                 errors={errors["cuMeterkum"]?.message}
                 textAlign="right"
+                formatNumber="comNumber"
               />
               <p>원</p>
             </Field>

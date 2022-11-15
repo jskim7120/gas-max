@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  position: absolute;
+  bottom: 80px;
+  right: 5px;
+  left: 87px;
+
   background: #dbdbdb;
   height: 27px;
   display: flex;

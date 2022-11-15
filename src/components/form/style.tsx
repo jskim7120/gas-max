@@ -226,7 +226,6 @@ export const InputForm = styled.input<{
   fullWidth?: boolean;
   kind?: FieldKind;
   textAlign?: string;
-  onChange?: Function;
 }>`
   height: 25px;
   width: ${(props) =>

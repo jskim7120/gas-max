@@ -284,9 +284,9 @@ const FORMCM1106 = React.forwardRef(
               marginRight: "20px",
               border: "1px solid #5284CE",
               borderRadius: "999px",
-              height: "31px",
-              width: "60px",
-              padding: "0",
+              height: "28px",
+              minWidth: "60px",
+              padding: "0 15px",
             }}
             type="button"
             withoutLine
@@ -299,9 +299,10 @@ const FORMCM1106 = React.forwardRef(
               marginRight: "5px",
               border: "1px solid #707070",
               borderRadius: "999px",
-              height: "31px",
-              width: "60px",
-              padding: "0",
+              height: "28px",
+              minWidth: "60px",
+              padding: "0 15px",
+              fontSize: "14px",
             }}
             type="button"
             withoutLine
