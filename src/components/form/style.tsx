@@ -301,7 +301,12 @@ export const FormGroup = styled.div`
   }
 `;
 
-export const Label = styled.label<{ labelLong?: boolean; style?: any }>`
+export const Label = styled.label<{
+  labelLong?: boolean;
+  style?: any;
+  align?: string;
+}>`
+  text-align: ${(props) => props.align + "!important"};
   font-family: "NotoSansKRRegular";
   font-size: 12px;
   font-weight: 600;
@@ -338,8 +343,9 @@ export const Label = styled.label<{ labelLong?: boolean; style?: any }>`
   }
 `;
 
-export const Field = styled.div<{ flex?: boolean }>`
+export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
   display: ${(props) => props.flex && "flex"};
+  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
 
   p {
     font-family: "NotoSansKRRegular";
@@ -428,10 +434,12 @@ export const Select = styled.select<{
   kind?: FieldKind;
   size?: InputSize;
   fullWidth?: boolean;
+  inputWidth?: string;
   textAlign?: string;
 }>`
   height: 25px;
   border-radius: 4px;
+  text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
 
   outline: none;
   font-family: "NotoSansKRRegular";
@@ -450,7 +458,8 @@ export const Select = styled.select<{
   border: ${(props) =>
     props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
 
-  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
+  width: ${(props) =>
+    props.fullWidth ? "100%" : props.inputWidth ? props.inputWidth : "auto"};
   text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
 `;
 
