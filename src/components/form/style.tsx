@@ -4,8 +4,10 @@ import { InputSize, FieldKind } from "components/componentsType";
 
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
+    case InputSize.xxs:
+      return `30px`;
     case InputSize.xs:
-      return `70px`;
+      return `50px`;
     case InputSize.sm:
       return `100px`;
     case InputSize.en1300:
@@ -68,6 +70,7 @@ interface IInputProps {
   textAlign?: string;
   formatNumber?: string;
   labelStyle?: any;
+  onChange?: Function;
 }
 
 export const Input = ({
@@ -88,6 +91,7 @@ export const Input = ({
   textAlign,
   formatNumber,
   labelStyle,
+  onChange,
 }: IInputProps) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -204,6 +208,7 @@ export const Input = ({
             maxLength={maxLength && maxLength}
             kind={kind && kind}
             textAlign={textAlign && textAlign}
+            onChange={onChange && onChange}
           />
         )}
       </FormGroup>
@@ -434,7 +439,7 @@ export const Select = styled.select<{
 }>`
   height: 25px;
   border-radius: 4px;
-  text-align: ${(props)=>props.textAlign? props.textAlign: "left" };
+  text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
 
   outline: none;
   font-family: "NotoSansKRRegular";
@@ -455,33 +460,18 @@ export const Select = styled.select<{
 
   width: ${(props) =>
     props.fullWidth ? "100%" : props.inputWidth ? props.inputWidth : "auto"};
+  text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
 `;
 
-export const InfoDesc = styled.div`
-  display: flex;
-  margin-left: 20px;
-  span {
-    font-size: 12px;
-    color: #1b8c8e;
+export const TextArea = styled.textarea`
+  border: 1px solid transparent;
+  outline: none;
+  font-family: "NotoSansKRRegular";
+  font-size: 12px;
+  box-sizing: border-box;
+
+  &:hover {
+    border: 1px solid #e6e5e5;
+    background: #fffacd;
   }
 `;
-
-export const PaymentLineCnt = styled.div`
-  display: flex;
-  border: 1px solid #bbbbbb;
-  width: 632px;
-  .title {
-    writing-mode: vertical-rl;
-    text-align: center;
-    font-size: 14px;
-    width: 22px;
-    height: 78px;
-    letter-spacing: 11px;
-    background: rgba(104, 103, 103, 0.35);
-  }
-  table tbody tr td {
-    height: 45px;
-  }
-`;
-
-// export const TextArea = styled.textarea<{}>``;

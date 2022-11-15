@@ -36,6 +36,9 @@ function FormCM1105() {
   const [addr, setAddress] = useState<string>("");
   const [addr2, setAddress2] = useState<string>("");
   const [tabId, setTabId] = useState(0);
+  const [sign, setSign] = useState<string>("+");
+  const [too, setToo] = useState<number>(0);
+
   const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
   const dispatch = useDispatch();
 
@@ -65,7 +68,6 @@ function FormCM1105() {
   useEffect(() => {
     if (data) {
       resetForm("reset");
-      console.log("============CM1106:", data);
     }
   }, [data]);
 
@@ -606,7 +608,7 @@ function FormCM1105() {
           <PlainTab
             tabHeader={[
               "사업자 정보",
-              "체적 정보",
+              "체적시설 정보",
               "공급시설 정보",
               "공급계약 정보",
               "CMS/가상계좌",
@@ -616,12 +618,17 @@ function FormCM1105() {
           />
           <TabContentWrapper>
             {getTabContent(
+              data?.customerInfo[0],
               tabId,
               register,
               errors,
               dataCommonDic,
               setAddress2,
-              reset
+              reset,
+              too,
+              setToo,
+              sign,
+              setSign
             )}
           </TabContentWrapper>
         </div>

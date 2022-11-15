@@ -1,14 +1,5 @@
-import React, { useEffect } from "react";
-import { CM110065 } from "app/path";
-import {
-  Wrapper,
-  Divider,
-  DividerGray,
-  Input,
-  Select,
-  Field,
-  Label,
-} from "components/form/style";
+import { useEffect } from "react";
+import { Input, TextArea } from "components/form/style";
 import { useForm } from "react-hook-form";
 import { InputSize } from "components/componentsType";
 import { TabTable } from "./style";
@@ -30,6 +21,7 @@ function Tab2({ data }: { data: any }) {
       data !== undefined &&
       (data?.tab31.length > 0 || data?.tab32.length > 0)
     ) {
+      console.log("seelected:", data);
       reset({
         cuBigo1: data.tab31[0].cuBigo1,
         cuBigo2: data.tab31[0].cuBigo2,
@@ -74,10 +66,10 @@ function Tab2({ data }: { data: any }) {
               메모
             </th>
             <td rowSpan={2} style={{ verticalAlign: "top" }}>
-              <Input
-                register={register("cuMemo")}
-                errors={errors["cuMemo"]?.message}
-                className="small"
+              <TextArea
+                style={{ width: "99.4%", height: "92%", margin: "2px" }}
+                id={register("cuMemo").name}
+                {...register("cuMemo")}
               />
             </td>
           </tr>

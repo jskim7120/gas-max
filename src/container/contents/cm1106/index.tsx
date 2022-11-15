@@ -1,32 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+// import { yupResolver } from "@hookform/resolvers/yup";
 import { useSelector, useDispatch } from "app/store";
 import API from "app/axios";
 import Button from "components/button/button";
-import { ButtonColor, FieldKind } from "components/componentsType";
+import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset, WhiteClose } from "components/allSvgIcon";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { closeModal, addCM1105 } from "app/state/modal/modalSlice";
 import SEARCH_RED from "assets/image/search_red.png";
 import Grid from "./grid";
 import Form from "./form";
-
-import {
-  Input,
-  Select,
-  Field,
-  ErrorText,
-  FormGroup,
-  Wrapper,
-  DividerGray,
-  Divider,
-  Label,
-} from "components/form/style";
-
+import { closeModal } from "app/state/modal/modalSlice";
+import { Field } from "components/form/style";
 import { CM1106LIST } from "app/path";
 import { ICM1106 } from "./model";
-
 import styled from "styled-components";
 
 const LLabel = styled.label`
@@ -51,7 +37,9 @@ const FFormGroup = styled.div`
 function FormCM1106() {
   const cm1105 = useSelector((state) => state.modal.cm1105);
   const [data, setData] = useState([]);
-
+  const [selected, setSelected] = useState({});
+  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const {
     register,
     handleSubmit,
@@ -74,8 +62,6 @@ function FormCM1106() {
         params: { jcCuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
       });
       setData(data);
-
-      console.log("CM1106LIST:", data);
     } catch (error) {
       console.log("aldaa");
     }
@@ -106,21 +92,28 @@ function FormCM1106() {
             icon={<Plus />}
             style={{ marginRight: "5px" }}
             type="button"
-            onClick={() => {}}
+            onClick={() => {
+              formRef.current.setIsAddBtnClicked(true);
+              formRef.current.resetForm("clear");
+            }}
           />
           <Button
             text="삭제"
             icon={<Trash />}
             style={{ marginRight: "5px" }}
             type="button"
-            onClick={() => {}}
+            onClick={() => {
+              // dispatch(openModal({ type: "delModal" }));
+              // dispatch(addDeleteMenuId({ menuId: "CM1106" }));
+              formRef.current.crud("delete");
+            }}
           />
           <Button
             text="저장"
             icon={<Update />}
             style={{ marginRight: "5px" }}
             color={ButtonColor.SECONDARY}
-            onClick={() => console.log("first")}
+            onClick={() => formRef.current.crud(null)}
             type="button"
           />
           <Button
@@ -128,7 +121,10 @@ function FormCM1106() {
             style={{ marginRight: "5px" }}
             icon={<Reset />}
             type="button"
-            onClick={() => {}}
+            onClick={() => {
+              formRef.current.setIsAddBtnClicked(false);
+              formRef.current.resetForm("reset");
+            }}
           />
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
@@ -171,8 +167,16 @@ function FormCM1106() {
           </div>
         </div>
         <div style={{ display: "flex", width: "100%" }}>
-          <Grid data={data} />
-          <Form />
+          <Grid data={data} setSelected={setSelected} />
+          <Form
+            selected={selected}
+            ref={formRef}
+            fetchData={fetchData}
+            setData={setData}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            setSelected={setSelected}
+          />
         </div>
       </form>
     </>
