@@ -45,12 +45,17 @@ const radioOptions2 = [
 ];
 
 function getTabContent(
+  customerInfo: any,
   id: number,
   register: any,
   errors: any,
   dataCommonDic: any,
   setAddress: any,
-  reset: any
+  reset: any,
+  too: number,
+  setToo: Function,
+  sign: string,
+  setSign: Function
 ) {
   const data0 = (
     <Field className="outer-border">
@@ -199,17 +204,26 @@ function getTabContent(
         </Field>
       </Wrapper>
       <DividerGray />
-      <Wrapper grid col={4}>
-        <Field>
-          <FormGroup>
-            <Label>SMS전송 유무</Label>
-            <CheckBox register={{ ...register("cuSeSmsYn") }} />
-          </FormGroup>
+      <Wrapper grid col={2}>
+        <Field
+          flex
+          style={{
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginRight: "50px",
+          }}
+        >
+          <Field>
+            <FormGroup>
+              <Label>SMS전송 유무</Label>
+              <CheckBox register={{ ...register("cuSeSmsYn") }} />
+            </FormGroup>
+          </Field>
+          <CheckBox
+            title="거래명세표 첨부발행 유무"
+            register={{ ...register("cuSeListYn") }}
+          />
         </Field>
-        <CheckBox
-          title="거래명세표 첨부발행 유무"
-          register={{ ...register("cuSeListYn") }}
-        />
         <Field>
           <FormGroup>
             <Label>팩스 번호</Label>
@@ -271,7 +285,7 @@ function getTabContent(
             <Field>
               <FormGroup>
                 <Label>조정기압력</Label>
-                <Select {...register("cuRh2o")}>
+                <Select {...register("cuRh2o")} textAlign="right">
                   {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -299,29 +313,78 @@ function getTabContent(
                 <ErrorText>{errors["cuRdangaType"]?.message}</ErrorText>
               </div>
             </Field>
-            <Input
-              register={register("cuRdanga")}
-              errors={errors["cuRdanga"]?.message}
-              inputSize={InputSize.md}
-            />
+            <Field flex style={{ alignItems: "center" }}>
+              <Input
+                register={register("cuRdanga")}
+                errors={errors["cuRdanga"]?.message}
+                inputSize={InputSize.sm}
+                textAlign="right"
+                style={{ border: "1px solid #e6e5e5" }}
+              />
+              {/* <Input
+                register={register("cuRdangaSign")}
+                errors={errors["cuRdangaSign"]?.message}
+                inputSize={InputSize.xxs}
+                style={{ textAlign: "center" }}
+              /> */}
+
+              <Select
+                {...register("cuRdangaSign")}
+                onChange={(e: any) => setSign(e.target.value)}
+                style={{ minWidth: "50px", border: "1px solid #e6e5e5" }}
+              >
+                <option value="+">+</option>
+                <option value="*">*</option>
+                <option value="-">-</option>
+              </Select>
+
+              <Input
+                register={register("percentage")}
+                errors={errors["percentage"]?.message}
+                inputSize={InputSize.xs}
+                style={{ textAlign: "center", border: "1px solid #e6e5e5" }}
+                formatNumber="comNumber"
+                onChange={(e: any) => setToo(Number(e.target.value))}
+              />
+
+              <p>
+                {sign === "*" && "%"}
+                {sign === "+" && "원"}
+              </p>
+              <p style={{ margin: "0 5px" }}>=</p>
+              <p>
+                {sign !== "*"
+                  ? eval(`${customerInfo?.cuRdanga} ${sign} ${too}`)
+                  : eval(`${customerInfo?.cuRdanga} ${sign} ${too}/100`)}
+              </p>
+            </Field>
           </Wrapper>
           <DividerGray />
           <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <Input
-              label="연체율"
-              register={register("cuPer")}
-              errors={errors["cuPer"]?.message}
-            />
-            <Input
-              label="할인율"
-              register={register("cuCdc")}
-              errors={errors["cuCdc"]?.message}
-            />
+            <Field flex>
+              <Input
+                label="연체율"
+                register={register("cuPer")}
+                errors={errors["cuPer"]?.message}
+                textAlign="right"
+              />
+              <p style={{ marginLeft: "-3px" }}>%</p>
+            </Field>
+            <Field flex>
+              <Input
+                label="할인율"
+                register={register("cuCdc")}
+                errors={errors["cuCdc"]?.message}
+                textAlign="right"
+              />
+              <p style={{ marginLeft: "-3px" }}>%</p>
+            </Field>
             <Input
               label="순번"
               register={register("cuCno")}
               errors={errors["cuCno"]?.message}
-              inputSize={InputSize.md}
+              inputSize={InputSize.sm}
+              textAlign="right"
             />
           </Wrapper>
           <DividerGray />
@@ -331,22 +394,28 @@ function getTabContent(
                 label="관리비"
                 register={register("cuAnkum")}
                 errors={errors["cuAnkum"]?.message}
+                textAlign="right"
+                formatNumber="comNumber"
               />
-              <p>원</p>
+              <p style={{ marginLeft: "-3px" }}>원</p>
             </Field>
             <Field flex>
               <Input
                 label="시설비"
                 register={register("cuSisulkum")}
                 errors={errors["cuSisulkum"]?.message}
+                textAlign="right"
+                formatNumber="comNumber"
               />
-              <p>원</p>
+              <p style={{ marginLeft: "-3px" }}>원</p>
             </Field>
             <Field flex>
               <Input
                 label="계량기교체비"
                 register={register("cuMeterkum")}
                 errors={errors["cuMeterkum"]?.message}
+                textAlign="right"
+                formatNumber="comNumber"
               />
               <p>원</p>
             </Field>
@@ -445,10 +514,14 @@ function getTabContent(
                   <ErrorText>{errors["cuMeterType"]?.message}</ErrorText>
                 </div>
               </Field>
-              <Input
-                register={register("cuMeterM3")}
-                errors={errors["cuMeterM3"]?.message}
-              />
+              <Field flex>
+                <Input
+                  register={register("cuMeterM3")}
+                  errors={errors["cuMeterM3"]?.message}
+                  inputSize={InputSize.xs}
+                />
+                <p>㎥/h</p>
+              </Field>
             </Field>
           </Wrapper>
           <Wrapper grid fields={"1fr 1fr 2fr"}>
@@ -591,17 +664,17 @@ function getTabContent(
         </Field>
         <Field style={{ width: "100%" }}>
           <Wrapper grid col={11}>
-            <Label>제조사</Label>
-            <Label>용량(kg)</Label>
-            <Label>제조번호</Label>
-            <Label>제작년월</Label>
-            <Label>대여처</Label>
-            <Label>최초검사</Label>
-            <Label>외관검사</Label>
-            <Label>개방검사</Label>
-            <Label>게이지</Label>
-            <Label>발신기코드</Label>
-            <Label>잔량고객코드</Label>
+            <Label style={{ textAlign: "center" }}>제조사</Label>
+            <Label style={{ textAlign: "center" }}>용량(kg)</Label>
+            <Label style={{ textAlign: "center" }}>제조번호</Label>
+            <Label style={{ textAlign: "center" }}>제작년월</Label>
+            <Label style={{ textAlign: "center" }}>대여처</Label>
+            <Label style={{ textAlign: "center" }}>최초검사</Label>
+            <Label style={{ textAlign: "center" }}>외관검사</Label>
+            <Label style={{ textAlign: "center" }}>개방검사</Label>
+            <Label style={{ textAlign: "center" }}>게이지</Label>
+            <Label style={{ textAlign: "center" }}>발신기코드</Label>
+            <Label style={{ textAlign: "center" }}>잔량고객코드</Label>
           </Wrapper>
           <DividerGray />
           <Wrapper grid col={11}>
@@ -609,7 +682,7 @@ function getTabContent(
               register={register("tankMakeCo1")}
               errors={errors["tankMakeCo1"]?.message}
             />
-            <Select {...register("tankVol1")}>
+            <Select {...register("tankVol1")} textAlign="right">
               {dataCommonDic?.tankVol1?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -652,18 +725,25 @@ function getTabContent(
                 errors={errors["tankInsideDate1"]?.message}
               />
             </Field>
-            <Input
-              register={register("tankMax1")}
-              errors={errors["tankMax1"]?.message}
-            />
+            <Field flex>
+              <Input
+                register={register("tankMax1")}
+                errors={errors["tankMax1"]?.message}
+                inputSize={InputSize.sm}
+                textAlign="right"
+              />
+              <p style={{ marginLeft: "-3px" }}>%</p>
+            </Field>
             <Input
               register={register("tankTransmCd1")}
               errors={errors["tankTransmCd1"]?.message}
+              inputSize={InputSize.sm}
             />
             <Field flex style={{ alignItems: "center" }}>
               <Input
                 register={register("tankCuCd1")}
                 errors={errors["tankCuCd1"]?.message}
+                inputSize={InputSize.sm}
               />
               <SearchBtn type="button" onClick={() => alert("dsdsds")}>
                 <MagnifyingGlass />
@@ -676,7 +756,7 @@ function getTabContent(
               register={register("tankMakeCo2")}
               errors={errors["tankMakeCo2"]?.message}
             />
-            <Select {...register("tankVol2")}>
+            <Select {...register("tankVol2")} textAlign="right">
               {dataCommonDic?.tankVol2?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -719,18 +799,25 @@ function getTabContent(
                 errors={errors["tankInsideDate2"]?.message}
               />
             </Field>
-            <Input
-              register={register("tankMax2")}
-              errors={errors["tankMax2"]?.message}
-            />
+            <Field flex>
+              <Input
+                register={register("tankMax2")}
+                errors={errors["tankMax2"]?.message}
+                inputSize={InputSize.sm}
+                textAlign="right"
+              />
+              <p style={{ marginLeft: "-3px" }}>%</p>
+            </Field>
             <Input
               register={register("tankTransmCd2")}
               errors={errors["tankTransmCd2"]?.message}
+              inputSize={InputSize.sm}
             />
             <Field flex style={{ alignItems: "center" }}>
               <Input
                 register={register("tankCuCd2")}
                 errors={errors["tankCuCd2"]?.message}
+                inputSize={InputSize.sm}
               />
               <SearchBtn type="button" onClick={() => alert("dsdsds")}>
                 <MagnifyingGlass />
@@ -744,7 +831,62 @@ function getTabContent(
         <Field className="gray-title">
           <p>용기</p>
         </Field>
-        <Wrapper grid col={2}>
+
+        <Wrapper grid col={4}>
+          <FormGroup>
+            <Label>용기구분</Label>
+            {radioOptions2.map((option, index) => (
+              <Item key={index}>
+                <RadioButton
+                  type="radio"
+                  value={option.id}
+                  {...register(`cuCylinderType`)}
+                  id={option.id}
+                  // onChange={() => console.log(option.label)}
+                />
+                <RadioButtonLabel htmlFor={`${option.label}`}>
+                  {option.label}
+                </RadioButtonLabel>
+              </Item>
+            ))}
+          </FormGroup>
+
+          <Field flex style={{ alignItems: "center" }}>
+            <Input
+              label="용기수량"
+              register={register("cuCylinderName")}
+              errors={errors["cuCylinderName"]?.message}
+              inputSize={InputSize.sm}
+            />
+            <p>×</p>
+            <Input
+              register={register("cuCylinderQty")}
+              errors={errors["cuCylinderQty"]?.message}
+              inputSize={InputSize.xs}
+              textAlign="right"
+            />
+            <p>개</p>
+          </Field>
+          <div></div>
+          <Field flex style={{ alignItems: "center", justifyContent: "end" }}>
+            <Input
+              register={register("cuTransmCd")}
+              errors={errors["cuTransmCd"]?.message}
+              inputSize={InputSize.sm}
+            />
+
+            <Input
+              register={register("cuTransmCuCd")}
+              errors={errors["cuTransmCuCd"]?.message}
+              inputSize={InputSize.sm}
+              style={{ marginLeft: "24px" }}
+            />
+            <SearchBtn type="button" onClick={() => alert("dsdsds")}>
+              <MagnifyingGlass />
+            </SearchBtn>
+          </Field>
+        </Wrapper>
+        {/* <Wrapper grid col={2}>
           <FormGroup>
             <Label>용기구분</Label>
             {radioOptions2.map((option, index) => (
@@ -776,7 +918,7 @@ function getTabContent(
             />
             <p>개</p>
           </Field>
-        </Wrapper>
+        </Wrapper> */}
       </Field>
       <DividerDark />
       <Field flex>
@@ -785,12 +927,12 @@ function getTabContent(
         </Field>
         <Field style={{ width: "100%" }}>
           <Wrapper grid col={8}>
-            <Label>제조사</Label>
-            <Label>용량(k)</Label>
-            <Label>제조번호</Label>
-            <Label>제작년월</Label>
-            <Label>전원</Label>
-            <Label>장치검사</Label>
+            <Label style={{ textAlign: "center" }}>제조사</Label>
+            <Label style={{ textAlign: "center" }}>용량(k)</Label>
+            <Label style={{ textAlign: "center" }}>제조번호</Label>
+            <Label style={{ textAlign: "center" }}>제작년월</Label>
+            <Label style={{ textAlign: "center" }}>전원</Label>
+            <Label style={{ textAlign: "center" }}>장치검사</Label>
           </Wrapper>
           <DividerGray />
           <Wrapper grid col={8}>
@@ -814,10 +956,15 @@ function getTabContent(
               register={register("gasifyPower1")}
               errors={errors["gasifyPower1"]?.message}
             />
-            <Input
-              register={register("gasifyCheckDate1")}
-              errors={errors["gasifyCheckDate1"]?.message}
-            />
+
+            <Field style={{ width: "100%" }}>
+              <CustomDate
+                name="gasifyCheckDate1"
+                register={register("gasifyCheckDate1")}
+                reset={reset}
+                errors={errors["gasifyCheckDate1"]?.message}
+              />
+            </Field>
           </Wrapper>
           <DividerGray />
           <Wrapper grid col={8}>
@@ -1146,13 +1293,13 @@ function getTabContent(
             />
           </Wrapper>
           <DividerGray />
-          <Wrapper grid>
+          <Wrapper grid col={2} fields="2fr 1fr">
             <Input
               label="비고"
               register={register("bigo")}
               errors={errors["bigo"]?.message}
             />
-            <div></div>
+
             <Input
               label="등록일시"
               register={register("CMSregDate")}

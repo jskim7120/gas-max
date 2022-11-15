@@ -1,12 +1,7 @@
 import React from "react";
 import Table from "components/table";
-import {
-  Input,
-  Select,
-  Field,
-  ErrorText,
-  PaymentLineCnt,
-} from "components/form/style";
+import { Input, Select, Field, ErrorText } from "components/form/style";
+import { PaymentLineCnt } from "../style";
 import { InputSize } from "components/componentsType";
 
 function getTabContent(

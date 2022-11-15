@@ -27,13 +27,18 @@ export const Wrapper = styled.div`
   height: calc(100% - 40px);
 `;
 
-export const TableWrapper = styled.div`
-  width: 50%;
+export const WrapperContent = styled.div`
+  height: calc(100% - 156px);
+`;
+
+export const TableWrapper = styled.div<{ width?: string }>`
+  width: ${(props) => (props.width ? props.width : "50%")};
   border-right: 3px solid #707070;
 `;
 
-export const DetailWrapper = styled.div`
-  width: 50%;
+export const DetailWrapper = styled.div<{ width?: string }>`
+  width: ${(props) => (props.width ? props.width : "50%")};
+  overflow-y: auto;
 `;
 
 export const ImageWrapper = styled.div`
@@ -52,5 +57,57 @@ export const ImageWrapper = styled.div`
     width: 100%;
     height: 100%;
     object-fit: contain;
+  }
+`;
+
+export const SearchTopWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 20px;
+  border-left: 5px solid #707070;
+  border-bottom: 5px solid #707070;
+  padding-bottom: 10px;
+`;
+
+export const FormSeaction = styled.div<{ topBorder: boolean }>`
+  border-top: ${(props) => (props.topBorder ? "4px solid #707070;" : "none")};
+  padding: 0px 10px 20px 10px;
+`;
+
+export const FormSectionTitle = styled.div`
+  display: flex;
+  padding: 10px 0px;
+  h4 {
+    padding-left: 10px;
+    color: #1b8c8e;
+  }
+`;
+
+export const InfoDesc = styled.div`
+  display: flex;
+  margin-left: 20px;
+  span {
+    font-size: 12px;
+    color: #1b8c8e;
+  }
+`;
+
+export const PaymentLineCnt = styled.div`
+  display: flex;
+  border: 1px solid #bbbbbb;
+  width: 632px;
+  .title {
+    writing-mode: vertical-rl;
+    text-align: center;
+    font-size: 14px;
+    width: 22px;
+    height: 78px;
+    letter-spacing: 11px;
+    background: rgba(104, 103, 103, 0.35);
+  }
+  table tbody tr td {
+    height: 45px;
   }
 `;

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import FormCM1106 from "container/contents/cm1106/form";
+import FormCM1106 from "container/contents/cm1106";
 const ModalWrapper = styled.div`
   width: 80vw;
   min-height: 80vh;

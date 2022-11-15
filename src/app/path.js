@@ -57,3 +57,6 @@ export const CM1105UPDATE = "/app/CM1105/update";
 export const CM1105INSERT = "/app/CM1105/insert";
 
 export const CM1106LIST = "/app/CM1106/list";
+export const CM1106INSERT = "/app/CM1106/insert";
+export const CM1106UPDATE = "/app/CM1106/update";
+export const CM1106DELETE = "/app/CM1106/delete";

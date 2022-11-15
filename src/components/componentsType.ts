@@ -18,6 +18,8 @@ export enum ButtonTextColor {
 }
 
 export enum InputSize {
+  xxs = "xxs",
+  xs = "xs",
   sm = "sm",
   en1300 = "en1300",
   lg = "lg",
@@ -35,4 +37,5 @@ export enum ButtonType {
 
 export enum FieldKind {
   BORDER = "border",
+  RECTANGLE = "rectangle",
 }

@@ -1,123 +1,316 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useSelector, useDispatch } from "app/store";
-import API from "app/axios";
-// import { schema } from "./validation";
-import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
-import { Plus, Trash, Update, Reset, WhiteClose } from "components/allSvgIcon";
-// import { ICM1105SEARCH } from "./model";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { closeModal, addCM1105 } from "app/state/modal/modalSlice";
-
+import React, { useState, useEffect, useImperativeHandle } from "react";
 import {
   Input,
-  Select,
-  Field,
-  ErrorText,
   FormGroup,
-  Wrapper,
-  DividerGray,
-  Divider,
   Label,
+  DividerGray,
+  Field,
+  Select,
+  ErrorText,
 } from "components/form/style";
-
-import { CM1106LIST } from "app/path";
+import {
+  MagnifyingGlass,
+  SmallWhiteClose,
+  SmallWhiteTick,
+} from "components/allSvgIcon";
+import { SearchBtn } from "components/daum";
+import { useForm } from "react-hook-form";
+import { FieldKind, InputSize } from "components/componentsType";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import Button from "components/button/button";
 import { ICM1106 } from "./model";
+import { CM1106INSERT, CM1106UPDATE, CM1106DELETE } from "app/path";
+import { toast } from "react-toastify";
+import API from "app/axios";
 
-function FormCM1106() {
-  const cm1105 = useSelector((state) => state.modal.cm1105);
+const FORMCM1106 = React.forwardRef(
+  (
+    {
+      selected,
+      fetchData,
+      setData,
+      selectedRowIndex,
+      setSelectedRowIndex,
+      setSelected,
+    }: {
+      selected: any;
+      fetchData: Function;
+      setData: Function;
+      selectedRowIndex: any;
+      setSelectedRowIndex: Function;
+      setSelected: Function;
+    },
+    ref: React.ForwardedRef<HTMLFormElement>
+  ) => {
+    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   reset,
-  //   formState: { errors },
-  //   getValues,
-  // } = useForm<ICM1106>({
-  //   mode: "onChange",
-  //   resolver: yupResolver(schema),
-  // });
-  const dispatch = useDispatch();
+    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
+      groupId: "CM",
+      functionName: "CM1106",
+    });
 
-  useEffect(() => {
-    if (cm1105.areaCode && cm1105.cuCode) {
-      fetchData();
-    }
-  }, [cm1105.areaCode, cm1105.cuCode]);
+    const {
+      register,
+      handleSubmit,
+      reset,
+      formState: { errors },
+      getValues,
+    } = useForm<ICM1106>();
 
-  const fetchData = async () => {
-    try {
-      const { data } = await API.get(CM1106LIST, {
-        params: { jcCuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
-      });
+    useImperativeHandle<HTMLFormElement, any>(ref, () => ({
+      resetForm,
+      crud,
+      setIsAddBtnClicked,
+    }));
 
-      console.log("CM1106LIST:", data);
-    } catch (error) {
-      console.log("aldaa");
-    }
-  };
+    useEffect(() => {
+      resetForm("reset");
+    }, [selected]);
 
-  return (
-    <form>
-      <div
-        style={{
-          width: "100%",
-          height: "35px",
-          background: "#0B97F6",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "0 15px",
-        }}
+    const resetForm = (type: string | null) => {
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+        let newData: any = {};
+
+        if (type === "clear") {
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = null;
+          }
+          reset(newData);
+        } else if (type === "reset") {
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = value;
+          }
+          reset(newData);
+        }
+      }
+    };
+    const crud = async (type: string | null) => {
+      if (type === "delete") {
+        const path = CM1106DELETE;
+        const formValues = getValues();
+
+        try {
+          const response: any = await API.post(path, formValues);
+          if (response.status === 200) {
+            toast.success("Deleted", {
+              autoClose: 500,
+            });
+            await fetchData();
+          } else {
+            toast.error(response?.response?.message);
+          }
+        } catch (err) {
+          toast.error("Couldn't delete");
+        }
+      }
+
+      if (type === null) {
+        handleSubmit(submit)();
+      }
+    };
+
+    const submit = async (data: ICM1106) => {
+      //form aldaagui uyd ajillana
+      const path = isAddBtnClicked ? CM1106INSERT : CM1106UPDATE;
+      const formValues = getValues();
+
+      try {
+        const response: any = await API.post(path, formValues);
+        if (response.status === 200) {
+          if (isAddBtnClicked) {
+            setData((prev: any) => [formValues, ...prev]);
+            setSelectedRowIndex(0);
+          } else {
+            setData((prev: any) => {
+              prev[selectedRowIndex] = formValues;
+              return [...prev];
+            });
+          }
+          // setSelected(formValues);
+          setIsAddBtnClicked(false);
+
+          toast.success("Action successful", {
+            autoClose: 500,
+          });
+        } else {
+          toast.error(response?.response?.data?.message);
+        }
+      } catch (err: any) {
+        toast.error(err?.message);
+      }
+    };
+
+    return (
+      <form
+        onSubmit={handleSubmit(submit)}
+        style={{ width: "25%", margin: "30px 30px 0 0" }}
       >
         <Field flex style={{ alignItems: "center" }}>
-          <p style={{ color: "#fff", fontSize: "14px" }}>거래처 사용품목</p>
-          <Field></Field>
+          <Input
+            label="코드"
+            register={register("jcCuCode")}
+            errors={errors["jcCuCode"]?.message}
+            inputSize={InputSize.sm}
+            kind={FieldKind.BORDER}
+          />
+          <SearchBtn type="button" onClick={() => alert("dsdsds")}>
+            <MagnifyingGlass />
+          </SearchBtn>
         </Field>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Button
-            text="등록"
-            icon={<Plus />}
-            style={{ marginRight: "5px" }}
-            type="button"
-            onClick={() => {}}
+        <Field>
+          <Input
+            label="품명"
+            register={register("jcCuName")}
+            errors={errors["jcCuName"]?.message}
+            kind={FieldKind.BORDER}
           />
-          <Button
-            text="삭제"
-            icon={<Trash />}
-            style={{ marginRight: "5px" }}
-            type="button"
-            onClick={() => {}}
+        </Field>
+        <Field>
+          <Input
+            label="규격"
+            register={register("jcJpSpec")}
+            errors={errors["jcJpSpec"]?.message}
+            kind={FieldKind.BORDER}
           />
+        </Field>
+        <Field>
+          <FormGroup>
+            <Label></Label>
+            <p style={{ marginLeft: "5px" }}>환경단가 : 25,000 원 (Vat포함)</p>
+          </FormGroup>
+        </Field>
+        <DividerGray />
+        <Field>
+          <FormGroup>
+            <Label>적용구분</Label>
+            <Select
+              {...register("jcDangaType")}
+              kind={FieldKind.BORDER}
+              style={{ width: "100%" }}
+            >
+              {dataCommonDic?.jcDangaType?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code1}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <div>
+            <ErrorText>{errors["jcDangaType"]?.message}</ErrorText>
+          </div>
+        </Field>
+        <Field>
+          <FormGroup>
+            <Label>Vat구분</Label>
+            <Select
+              {...register("jcVatKind")}
+              kind={FieldKind.BORDER}
+              style={{ width: "100%" }}
+            >
+              {dataCommonDic?.jcVatKind?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code1}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <div>
+            <ErrorText>{errors["jcVatKind"]?.message}</ErrorText>
+          </div>
+        </Field>
+        <Field flex>
+          <Input
+            label="할인액"
+            register={register("jcJdcAmt")}
+            errors={errors["jcJdcAmt"]?.message}
+            kind={FieldKind.BORDER}
+          />
+          <p>원</p>
+        </Field>
+        <Field flex>
+          <Input
+            label="할인율"
+            register={register("jcJdcPer")}
+            errors={errors["jcJdcPer"]?.message}
+            kind={FieldKind.BORDER}
+          />
+          <p>%</p>
+        </Field>
+        <Field flex>
+          <Input
+            label="적용단가"
+            register={register("jcJpDanga")}
+            errors={errors["jcJpDanga"]?.message}
+            kind={FieldKind.BORDER}
+          />
+          <p>원</p>
+        </Field>
+        <DividerGray />
+        <Field flex>
+          <Input
+            label="기초재고"
+            register={register("jcBasicJaego")}
+            errors={errors["jcBasicJaego"]?.message}
+            kind={FieldKind.BORDER}
+            inputSize={InputSize.sm}
+          />
+          <p>개</p>
+        </Field>
+        {/* <Field>
+          <FormGroup>
+            <Label>사용상태</Label>
+            <Select
+              {...register("jcVatKind")}
+              kind={FieldKind.BORDER}
+              style={{ width: "100%" }}
+            >
+              {dataCommonDic?.jcVatKind?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code1}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <div>
+            <ErrorText>{errors["jcVatKind"]?.message}</ErrorText>
+          </div>
+        </Field> */}
+        <Field flex style={{ justifyContent: "center", marginTop: "20px" }}>
           <Button
-            text="저장"
-            icon={<Update />}
-            style={{ marginRight: "5px" }}
-            color={ButtonColor.SECONDARY}
-            onClick={() => console.log("first")}
+            text="선택"
+            icon={<SmallWhiteTick />}
+            style={{
+              background: "#5284CE",
+              marginRight: "20px",
+              border: "1px solid #5284CE",
+              borderRadius: "999px",
+              height: "28px",
+              minWidth: "60px",
+              padding: "0 15px",
+            }}
             type="button"
+            withoutLine
           />
           <Button
             text="취소"
-            style={{ marginRight: "5px" }}
-            icon={<Reset />}
-            type="button"
-            onClick={() => {}}
-          />
-          <span
-            style={{ marginLeft: "10px", marginTop: "1px" }}
-            onClick={() => {
-              dispatch(closeModal());
+            icon={<SmallWhiteClose />}
+            style={{
+              background: "#707070",
+              marginRight: "5px",
+              border: "1px solid #707070",
+              borderRadius: "999px",
+              height: "28px",
+              minWidth: "60px",
+              padding: "0 15px",
+              fontSize: "14px",
             }}
-          >
-            <WhiteClose />
-          </span>
-        </div>
-      </div>
-    </form>
-  );
-}
+            type="button"
+            withoutLine
+          />
+        </Field>
+      </form>
+    );
+  }
+);
 
-export default FormCM1106;
+export default FORMCM1106;

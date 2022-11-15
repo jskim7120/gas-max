@@ -23,7 +23,6 @@ function Tab1({ data }: { data: any }) {
   }, [data?.tab1]);
 
   useEffect(() => {
-    console.log(gridData);
     container = realgridElement.current as HTMLDivElement;
     dp = new LocalDataProvider(true);
     gv = new GridView(container);

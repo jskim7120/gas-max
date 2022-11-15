@@ -4,6 +4,10 @@ import { InputSize, FieldKind } from "components/componentsType";
 
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
+    case InputSize.xxs:
+      return `30px`;
+    case InputSize.xs:
+      return `50px`;
     case InputSize.sm:
       return `100px`;
     case InputSize.en1300:
@@ -26,6 +30,20 @@ export const getInputKind = (kind?: FieldKind) => {
     case FieldKind.BORDER:
       return {
         border: "1px solid #e6e5e5",
+      };
+    case FieldKind.RECTANGLE:
+      return {
+        border: "1px solid #e6e5e5",
+        borderRadius: "0px",
+      };
+  }
+};
+
+export const getSelectSize = (size?: InputSize) => {
+  switch (size) {
+    case InputSize.md:
+      return {
+        width: "100%",
       };
   }
 };
@@ -52,6 +70,7 @@ interface IInputProps {
   textAlign?: string;
   formatNumber?: string;
   labelStyle?: any;
+  onChange?: Function;
 }
 
 export const Input = ({
@@ -72,6 +91,7 @@ export const Input = ({
   textAlign,
   formatNumber,
   labelStyle,
+  onChange,
 }: IInputProps) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -188,6 +208,7 @@ export const Input = ({
             maxLength={maxLength && maxLength}
             kind={kind && kind}
             textAlign={textAlign && textAlign}
+            onChange={onChange && onChange}
           />
         )}
       </FormGroup>
@@ -211,7 +232,9 @@ export const InputForm = styled.input<{
     props.inputSize ? getInputSize(props.inputSize) : "100%"};
   flex: ${(props) => props.fullWidth && "1"};
   text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
-  border-radius: 4px;
+  border-radius: ${(props) =>
+    props.kind ? getInputKind(props.kind)?.borderRadius : "4px"};
+
   outline: none;
   display: inline-block;
   padding: 0 6px;
@@ -278,7 +301,12 @@ export const FormGroup = styled.div`
   }
 `;
 
-export const Label = styled.label<{ labelLong?: boolean; style?: any }>`
+export const Label = styled.label<{
+  labelLong?: boolean;
+  style?: any;
+  align?: string;
+}>`
+  text-align: ${(props) => props.align + "!important"};
   font-family: "NotoSansKRRegular";
   font-size: 12px;
   font-weight: 600;
@@ -296,6 +324,10 @@ export const Label = styled.label<{ labelLong?: boolean; style?: any }>`
     padding: 3px 0 0 0;
   }
 
+  &.gray {
+    background: rgba(104, 103, 103, 0.35);
+  }
+
   &.green {
     background: #d3e175;
   }
@@ -311,8 +343,9 @@ export const Label = styled.label<{ labelLong?: boolean; style?: any }>`
   }
 `;
 
-export const Field = styled.div<{ flex?: boolean }>`
+export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
   display: ${(props) => props.flex && "flex"};
+  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
 
   p {
     font-family: "NotoSansKRRegular";
@@ -397,9 +430,16 @@ export const Wrapper = styled.div<{
   align-items: ${(props) => props.grid && "center"};
 `;
 
-export const Select = styled.select<{ kind?: FieldKind }>`
+export const Select = styled.select<{
+  kind?: FieldKind;
+  size?: InputSize;
+  fullWidth?: boolean;
+  inputWidth?: string;
+  textAlign?: string;
+}>`
   height: 25px;
   border-radius: 4px;
+  text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
 
   outline: none;
   font-family: "NotoSansKRRegular";
@@ -417,31 +457,21 @@ export const Select = styled.select<{ kind?: FieldKind }>`
 
   border: ${(props) =>
     props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
+
+  width: ${(props) =>
+    props.fullWidth ? "100%" : props.inputWidth ? props.inputWidth : "auto"};
+  text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
 `;
 
-export const InfoDesc = styled.div`
-  display: flex;
-  margin-left: 20px;
-  span {
-    font-size: 12px;
-    color: #1b8c8e;
-  }
-`;
+export const TextArea = styled.textarea`
+  border: 1px solid transparent;
+  outline: none;
+  font-family: "NotoSansKRRegular";
+  font-size: 12px;
+  box-sizing: border-box;
 
-export const PaymentLineCnt = styled.div`
-  display: flex;
-  border: 1px solid #bbbbbb;
-  width: 632px;
-  .title {
-    writing-mode: vertical-rl;
-    text-align: center;
-    font-size: 14px;
-    width: 22px;
-    height: 78px;
-    letter-spacing: 11px;
-    background: rgba(104, 103, 103, 0.35);
-  }
-  table tbody tr td {
-    height: 45px;
+  &:hover {
+    border: 1px solid #e6e5e5;
+    background: #fffacd;
   }
 `;

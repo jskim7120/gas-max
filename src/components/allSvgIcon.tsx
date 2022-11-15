@@ -4689,3 +4689,65 @@ export const WhiteCloseCircle = () => {
     </svg>
   );
 };
+
+export const SmallWhiteClose = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="10.536"
+      height="11.471"
+      viewBox="0 0 10.536 11.471"
+    >
+      <g
+        id="Group_1374"
+        data-name="Group 1374"
+        transform="translate(-923.587 -615.445)"
+      >
+        <line
+          id="Line_201"
+          data-name="Line 201"
+          x1="7.71"
+          y2="8.436"
+          transform="translate(925 616.857)"
+          fill="none"
+          stroke="#fff"
+          strokeLinecap="round"
+          stroke-width="2"
+        />
+        <path
+          id="Path_3054"
+          data-name="Path 3054"
+          d="M0,0,7.71,8.647"
+          transform="translate(932.71 625.504) rotate(180)"
+          fill="none"
+          stroke="#fff"
+          strokeLinecap="round"
+          stroke-width="2"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const SmallWhiteTick = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="11.69"
+      height="8.974"
+      viewBox="0 0 11.69 8.974"
+    >
+      <path
+        id="Path_3053"
+        data-name="Path 3053"
+        d="M-1191.5,965.684l3.193,3.677,5.676-6.563"
+        transform="translate(1192.915 -961.388)"
+        fill="none"
+        stroke="#fff"
+        strokeLinecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      />
+    </svg>
+  );
+};
