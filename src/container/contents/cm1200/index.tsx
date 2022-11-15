@@ -1,13 +1,12 @@
-import {
-  MagnifyingGlass,
-  Plus,
-  Reset,
-  Trash,
-  Update,
-} from "components/allSvgIcon";
-import Button from "components/button/button";
+// REACT
 import { useEffect, useRef, useState } from "react";
-import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
+import { useForm } from "react-hook-form";
+import API from "app/axios";
+import { useDispatch } from "app/store";
+// ./
+import { fields, columns } from "./data";
+import GridTable from "./gridTable";
+import Form from "./form";
 import {
   DetailHeader,
   DetailWrapper,
@@ -16,15 +15,21 @@ import {
   FormSectionTitle,
   FormSeaction,
 } from "../style";
-import { fields, columns } from "./data";
-import Form from "./form";
+// COMPONENTS
+import Button from "components/button/button";
+import {
+  MagnifyingGlass,
+  Plus,
+  Reset,
+  Trash,
+  Update,
+} from "components/allSvgIcon";
 import { ButtonColor, FieldKind } from "components/componentsType";
-import { useDispatch } from "app/store";
-import { GridView, LocalDataProvider } from "realgrid";
 import { Field, FormGroup, Input, Label } from "components/form/style";
 import CheckBox from "components/checkbox";
-import { useForm } from "react-hook-form";
-import API from "app/axios";
+//GRID
+import { GridView, LocalDataProvider } from "realgrid";
+import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import HomeIconSvg from "assets/image/home-icon.svg";
 import PersonIconSvg from "assets/image/person-icon.svg";
 
@@ -49,40 +54,40 @@ function CM1200({
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
   useEffect(() => {
-      container = realgridElement.current as HTMLDivElement;
-      dp = new LocalDataProvider(true);
-      gv = new GridView(container);
+    container = realgridElement.current as HTMLDivElement;
+    dp = new LocalDataProvider(true);
+    gv = new GridView(container);
 
-      gv.setDataSource(dp);
-      dp.setFields(fields);
-      gv.setColumns(columns);
-      dp.setRows(data);
-      gv.setHeader({ header: 35 });
-      gv.setFooter({ visible: false });
-      gv.setOptions({
-        indicator: { visible: true },
-        checkBar: { visible: false },
-        stateBar: { visible: false },
-      });
-      gv.sortingOptions.enabled = true;
-      gv.displayOptions._selectionStyle = "singleRow";
-      gv.setEditOptions({ editable: false });
+    gv.setDataSource(dp);
+    dp.setFields(fields);
+    gv.setColumns(columns);
+    dp.setRows(data);
+    gv.setHeader({ header: 35 });
+    gv.setFooter({ visible: false });
+    gv.setOptions({
+      indicator: { visible: true },
+      checkBar: { visible: false },
+      stateBar: { visible: false },
+    });
+    gv.sortingOptions.enabled = true;
+    gv.displayOptions._selectionStyle = "singleRow";
+    gv.setEditOptions({ editable: false });
 
-      gv.setCurrent({
-        dataRow: selectedRowIndex,
-      });
+    gv.setCurrent({
+      dataRow: selectedRowIndex,
+    });
 
-      gv.onSelectionChanged = () => {
-        const itemIndex: any = gv.getCurrent().dataRow;
-        setSelected(data[itemIndex]);
-        setSelectedRowIndex(itemIndex);
-      };
+    gv.onSelectionChanged = () => {
+      const itemIndex: any = gv.getCurrent().dataRow;
+      setSelected(data[itemIndex]);
+      setSelectedRowIndex(itemIndex);
+    };
 
-      return () => {
-        dp.clearRows();
-        gv.destroy();
-        dp.destroy();
-      };
+    return () => {
+      dp.clearRows();
+      gv.destroy();
+      dp.destroy();
+    };
   }, [data]);
 
   const onSearchSubmit = async (data: any) => {
@@ -173,17 +178,38 @@ function CM1200({
         <DetailWrapper width="70%">
           <FormSeaction topBorder={false}>
             <FormSectionTitle>
-              <img src={HomeIconSvg} />
-              <h4>건물 정보</h4>
+              <h4>
+                <img src={HomeIconSvg} />
+                건물 정보
+              </h4>
             </FormSectionTitle>
             <Form selected={selected} selectedRowIndex={selectedRowIndex} />
           </FormSeaction>
           <FormSeaction topBorder={true}>
             <FormSectionTitle>
-              <img src={PersonIconSvg} />
-              <h4>건물 정보</h4>
+              <h4>
+                <img src={PersonIconSvg} />
+                건물 정보
+              </h4>
+              <div className="buttons">
+                <Button
+                  text="사용자 추가"
+                  icon={<Plus />}
+                  style={{ marginRight: "5px" }}
+                />
+                <Button
+                  text="사용자 수정"
+                  icon={<Plus />}
+                  style={{ marginRight: "5px" }}
+                />
+                <Button
+                  text="삭제"
+                  icon={<Trash />}
+                  style={{ marginRight: "5px" }}
+                />
+              </div>
             </FormSectionTitle>
-            <p>table</p>
+            <GridTable selected={selected} />
           </FormSeaction>
         </DetailWrapper>
       </Wrapper>

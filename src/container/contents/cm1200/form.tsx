@@ -90,7 +90,6 @@ function Form({
         for (const [key, value] of Object.entries(selected)) {
           newData[key] = value;
         }
-        console.log("reset", newData);
         reset({ ...newData });
       }
     }
@@ -492,6 +491,7 @@ function Form({
           <Label align={"center"}>개방검사</Label>
         </Wrapper>
       </Field>
+      <DividerGray />
       {/* 3-2-2 Wrapper */}
       <Field flex>
         <FormGroup>
@@ -568,6 +568,7 @@ function Form({
           </Field>
         </Wrapper>
       </Field>
+      <DividerGray />
       {/* 3-2-3 Wrapper */}
       <Field flex>
         <FormGroup>
@@ -644,6 +645,7 @@ function Form({
           </Field>
         </Wrapper>
       </Field>
+      <DividerGray />
       {/* 3-2-4 Wrapper */}
       <Field flex>
         <FormGroup>
@@ -787,6 +789,7 @@ function Form({
           <FormGroup>{` `}</FormGroup>
         </Wrapper>
       </Field>
+      <DividerGray />
       {/* 3-4-2 Wrapper */}
       <Field flex>
         <FormGroup>
@@ -852,6 +855,7 @@ function Form({
           </Field>
         </Wrapper>
       </Field>
+      <DividerGray />
       {/* 3-4-3 Wrapper */}
       <Field flex>
         <FormGroup>
