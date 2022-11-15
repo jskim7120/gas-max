@@ -428,6 +428,7 @@ export const Select = styled.select<{
   kind?: FieldKind;
   size?: InputSize;
   fullWidth?: boolean;
+  textAlign?: string;
 }>`
   height: 25px;
   border-radius: 4px;
@@ -450,6 +451,7 @@ export const Select = styled.select<{
     props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
 
   width: ${(props) => (props.fullWidth ? "100%" : "auto")};
+  text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
 `;
 
 export const InfoDesc = styled.div`

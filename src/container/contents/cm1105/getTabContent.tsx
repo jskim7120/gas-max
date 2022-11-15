@@ -276,7 +276,7 @@ function getTabContent(
             <Field>
               <FormGroup>
                 <Label>조정기압력</Label>
-                <Select {...register("cuRh2o")}>
+                <Select {...register("cuRh2o")} textAlign="right">
                   {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -342,26 +342,39 @@ function getTabContent(
                 {sign === "+" && "원"}
               </p>
               <p style={{ margin: "0 5px" }}>=</p>
-              <p>{eval(`${customerInfo?.cuRdanga} ${sign} ${too}`)}</p>
+              <p>
+                {sign !== "*"
+                  ? eval(`${customerInfo?.cuRdanga} ${sign} ${too}`)
+                  : eval(`${customerInfo?.cuRdanga} ${sign} ${too}/100`)}
+              </p>
             </Field>
           </Wrapper>
           <DividerGray />
           <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <Input
-              label="연체율"
-              register={register("cuPer")}
-              errors={errors["cuPer"]?.message}
-            />
-            <Input
-              label="할인율"
-              register={register("cuCdc")}
-              errors={errors["cuCdc"]?.message}
-            />
+            <Field flex>
+              <Input
+                label="연체율"
+                register={register("cuPer")}
+                errors={errors["cuPer"]?.message}
+                textAlign="right"
+              />
+              <p style={{ marginLeft: "-3px" }}>%</p>
+            </Field>
+            <Field flex>
+              <Input
+                label="할인율"
+                register={register("cuCdc")}
+                errors={errors["cuCdc"]?.message}
+                textAlign="right"
+              />
+              <p style={{ marginLeft: "-3px" }}>%</p>
+            </Field>
             <Input
               label="순번"
               register={register("cuCno")}
               errors={errors["cuCno"]?.message}
-              inputSize={InputSize.md}
+              inputSize={InputSize.sm}
+              textAlign="right"
             />
           </Wrapper>
           <DividerGray />
@@ -371,22 +384,25 @@ function getTabContent(
                 label="관리비"
                 register={register("cuAnkum")}
                 errors={errors["cuAnkum"]?.message}
+                textAlign="right"
               />
-              <p>원</p>
+              <p style={{ marginLeft: "-3px" }}>원</p>
             </Field>
             <Field flex>
               <Input
                 label="시설비"
                 register={register("cuSisulkum")}
                 errors={errors["cuSisulkum"]?.message}
+                textAlign="right"
               />
-              <p>원</p>
+              <p style={{ marginLeft: "-3px" }}>원</p>
             </Field>
             <Field flex>
               <Input
                 label="계량기교체비"
                 register={register("cuMeterkum")}
                 errors={errors["cuMeterkum"]?.message}
+                textAlign="right"
               />
               <p>원</p>
             </Field>
@@ -692,18 +708,25 @@ function getTabContent(
                 errors={errors["tankInsideDate1"]?.message}
               />
             </Field>
-            <Input
-              register={register("tankMax1")}
-              errors={errors["tankMax1"]?.message}
-            />
+            <Field flex>
+              <Input
+                register={register("tankMax1")}
+                errors={errors["tankMax1"]?.message}
+                inputSize={InputSize.sm}
+                textAlign="right"
+              />
+              <p style={{ marginLeft: "-3px" }}>%</p>
+            </Field>
             <Input
               register={register("tankTransmCd1")}
               errors={errors["tankTransmCd1"]?.message}
+              inputSize={InputSize.sm}
             />
             <Field flex style={{ alignItems: "center" }}>
               <Input
                 register={register("tankCuCd1")}
                 errors={errors["tankCuCd1"]?.message}
+                inputSize={InputSize.sm}
               />
               <SearchBtn type="button" onClick={() => alert("dsdsds")}>
                 <MagnifyingGlass />
@@ -759,18 +782,25 @@ function getTabContent(
                 errors={errors["tankInsideDate2"]?.message}
               />
             </Field>
-            <Input
-              register={register("tankMax2")}
-              errors={errors["tankMax2"]?.message}
-            />
+            <Field flex>
+              <Input
+                register={register("tankMax2")}
+                errors={errors["tankMax2"]?.message}
+                inputSize={InputSize.sm}
+                textAlign="right"
+              />
+              <p style={{ marginLeft: "-3px" }}>%</p>
+            </Field>
             <Input
               register={register("tankTransmCd2")}
               errors={errors["tankTransmCd2"]?.message}
+              inputSize={InputSize.sm}
             />
             <Field flex style={{ alignItems: "center" }}>
               <Input
                 register={register("tankCuCd2")}
                 errors={errors["tankCuCd2"]?.message}
+                inputSize={InputSize.sm}
               />
               <SearchBtn type="button" onClick={() => alert("dsdsds")}>
                 <MagnifyingGlass />
@@ -784,7 +814,61 @@ function getTabContent(
         <Field className="gray-title">
           <p>용기</p>
         </Field>
-        <Wrapper grid col={2}>
+
+        <Wrapper grid col={4}>
+          <FormGroup>
+            <Label>용기구분</Label>
+            {radioOptions2.map((option, index) => (
+              <Item key={index}>
+                <RadioButton
+                  type="radio"
+                  value={option.id}
+                  {...register(`cuCylinderType`)}
+                  id={option.id}
+                  // onChange={() => console.log(option.label)}
+                />
+                <RadioButtonLabel htmlFor={`${option.label}`}>
+                  {option.label}
+                </RadioButtonLabel>
+              </Item>
+            ))}
+          </FormGroup>
+
+          <Field flex style={{ alignItems: "center" }}>
+            <Input
+              label="용기수량"
+              register={register("cuCylinderName")}
+              errors={errors["cuCylinderName"]?.message}
+              inputSize={InputSize.sm}
+            />
+            <p>×</p>
+            <Input
+              register={register("cuCylinderQty")}
+              errors={errors["cuCylinderQty"]?.message}
+              inputSize={InputSize.xs}
+            />
+            <p>개</p>
+          </Field>
+          <div></div>
+          <Field flex style={{ alignItems: "center", justifyContent: "end" }}>
+            <Input
+              register={register("cuTransmCd")}
+              errors={errors["cuTransmCd"]?.message}
+              inputSize={InputSize.sm}
+            />
+
+            <Input
+              register={register("cuTransmCuCd")}
+              errors={errors["cuTransmCuCd"]?.message}
+              inputSize={InputSize.sm}
+              style={{ marginLeft: "24px" }}
+            />
+            <SearchBtn type="button" onClick={() => alert("dsdsds")}>
+              <MagnifyingGlass />
+            </SearchBtn>
+          </Field>
+        </Wrapper>
+        {/* <Wrapper grid col={2}>
           <FormGroup>
             <Label>용기구분</Label>
             {radioOptions2.map((option, index) => (
@@ -816,7 +900,7 @@ function getTabContent(
             />
             <p>개</p>
           </Field>
-        </Wrapper>
+        </Wrapper> */}
       </Field>
       <DividerDark />
       <Field flex>
@@ -854,10 +938,15 @@ function getTabContent(
               register={register("gasifyPower1")}
               errors={errors["gasifyPower1"]?.message}
             />
-            <Input
-              register={register("gasifyCheckDate1")}
-              errors={errors["gasifyCheckDate1"]?.message}
-            />
+
+            <Field style={{ width: "100%" }}>
+              <CustomDate
+                name="gasifyCheckDate1"
+                register={register("gasifyCheckDate1")}
+                reset={reset}
+                errors={errors["gasifyCheckDate1"]?.message}
+              />
+            </Field>
           </Wrapper>
           <DividerGray />
           <Wrapper grid col={8}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { columns, fields } from "./data";
 import { GridView, LocalDataProvider } from "realgrid";
 
@@ -9,7 +9,6 @@ export default function Grid({
   data: any;
   setSelected: Function;
 }) {
-  console.log("dtataa:", data);
   const realgridElement = useRef<HTMLDivElement>(null);
 
   let container: HTMLDivElement;

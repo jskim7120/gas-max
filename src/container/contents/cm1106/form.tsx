@@ -1,17 +1,13 @@
-import React, { useEffect, forwardRef, useImperativeHandle } from "react";
+import React, { useState, useEffect, useImperativeHandle } from "react";
 import {
   Input,
-  Wrapper,
   FormGroup,
   Label,
-  Divider,
   DividerGray,
   Field,
   Select,
   ErrorText,
 } from "components/form/style";
-
-import { ICM1106 } from "./model";
 import {
   MagnifyingGlass,
   SmallWhiteClose,
@@ -22,12 +18,32 @@ import { useForm } from "react-hook-form";
 import { FieldKind, InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import Button from "components/button/button";
+import { ICM1106 } from "./model";
+import { CM1106INSERT, CM1106UPDATE, CM1106DELETE } from "app/path";
+import { toast } from "react-toastify";
+import API from "app/axios";
 
 const FORMCM1106 = React.forwardRef(
   (
-    { selected }: { selected: any },
+    {
+      selected,
+      fetchData,
+      setData,
+      selectedRowIndex,
+      setSelectedRowIndex,
+      setSelected,
+    }: {
+      selected: any;
+      fetchData: Function;
+      setData: Function;
+      selectedRowIndex: any;
+      setSelectedRowIndex: Function;
+      setSelected: Function;
+    },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
+    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
+
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "CM",
       functionName: "CM1106",
@@ -42,33 +58,88 @@ const FORMCM1106 = React.forwardRef(
     } = useForm<ICM1106>();
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
-      // crud,
-      // resetForm,
-      // setIsAddBtnClicked,
-      submit,
-      bla,
+      resetForm,
+      crud,
+      setIsAddBtnClicked,
     }));
 
     useEffect(() => {
-      if (selected !== undefined) {
-        reset({
-          jcCuCode: selected?.jcCuCode,
-          jcCuName: selected?.jcCuName,
-          jcJpSpec: selected?.jcJpSpec,
-          jcDangaType: selected?.jcDangaType,
-          jcVatKind: selected?.jcVatKind,
-          jcJdcAmt: selected?.jcJdcAmt,
-          jcJdcPer: selected?.jcJdcPer,
-          jcJpDanga: selected?.jcJpDanga,
-          jcBasicJaego: selected?.jcBasicJaego,
-        });
-      }
+      resetForm("reset");
     }, [selected]);
 
-    const submit = () => {};
-    const bla = () => {
-      console.log("sddscdsdc");
+    const resetForm = (type: string | null) => {
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+        let newData: any = {};
+
+        if (type === "clear") {
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = null;
+          }
+          reset(newData);
+        } else if (type === "reset") {
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = value;
+          }
+          reset(newData);
+        }
+      }
     };
+    const crud = async (type: string | null) => {
+      if (type === "delete") {
+        const path = CM1106DELETE;
+        const formValues = getValues();
+
+        try {
+          const response: any = await API.post(path, formValues);
+          if (response.status === 200) {
+            toast.success("Deleted", {
+              autoClose: 500,
+            });
+            await fetchData();
+          } else {
+            toast.error(response?.response?.message);
+          }
+        } catch (err) {
+          toast.error("Couldn't delete");
+        }
+      }
+
+      if (type === null) {
+        handleSubmit(submit)();
+      }
+    };
+
+    const submit = async (data: ICM1106) => {
+      //form aldaagui uyd ajillana
+      const path = isAddBtnClicked ? CM1106INSERT : CM1106UPDATE;
+      const formValues = getValues();
+
+      try {
+        const response: any = await API.post(path, formValues);
+        if (response.status === 200) {
+          if (isAddBtnClicked) {
+            setData((prev: any) => [formValues, ...prev]);
+            setSelectedRowIndex(0);
+          } else {
+            setData((prev: any) => {
+              prev[selectedRowIndex] = formValues;
+              return [...prev];
+            });
+          }
+          // setSelected(formValues);
+          setIsAddBtnClicked(false);
+
+          toast.success("Action successful", {
+            autoClose: 500,
+          });
+        } else {
+          toast.error(response?.response?.data?.message);
+        }
+      } catch (err: any) {
+        toast.error(err?.message);
+      }
+    };
+
     return (
       <form
         onSubmit={handleSubmit(submit)}
