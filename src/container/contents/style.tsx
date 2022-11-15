@@ -27,6 +27,10 @@ export const Wrapper = styled.div`
   height: calc(100% - 40px);
 `;
 
+export const WrapperContent = styled.div`
+  height: calc(100% - 156px);
+`;
+
 export const TableWrapper = styled.div<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "50%")};
   border-right: 3px solid #707070;
