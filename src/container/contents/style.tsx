@@ -29,15 +29,11 @@ export const Wrapper = styled.div`
 
 export const TableWrapper = styled.div<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "50%")};
-  border: 5px solid #707070;
   border-right: 3px solid #707070;
 `;
 
 export const DetailWrapper = styled.div<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "50%")};
-  border: 5px solid #707070;
-  border-left: none;
-  border-bottom: 4px solid #707070;
   overflow-y: auto;
 `;
 
