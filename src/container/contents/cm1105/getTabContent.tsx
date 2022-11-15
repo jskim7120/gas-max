@@ -204,17 +204,26 @@ function getTabContent(
         </Field>
       </Wrapper>
       <DividerGray />
-      <Wrapper grid col={4}>
-        <Field>
-          <FormGroup>
-            <Label>SMS전송 유무</Label>
-            <CheckBox register={{ ...register("cuSeSmsYn") }} />
-          </FormGroup>
+      <Wrapper grid col={2}>
+        <Field
+          flex
+          style={{
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginRight: "50px",
+          }}
+        >
+          <Field>
+            <FormGroup>
+              <Label>SMS전송 유무</Label>
+              <CheckBox register={{ ...register("cuSeSmsYn") }} />
+            </FormGroup>
+          </Field>
+          <CheckBox
+            title="거래명세표 첨부발행 유무"
+            register={{ ...register("cuSeListYn") }}
+          />
         </Field>
-        <CheckBox
-          title="거래명세표 첨부발행 유무"
-          register={{ ...register("cuSeListYn") }}
-        />
         <Field>
           <FormGroup>
             <Label>팩스 번호</Label>
@@ -501,10 +510,14 @@ function getTabContent(
                   <ErrorText>{errors["cuMeterType"]?.message}</ErrorText>
                 </div>
               </Field>
-              <Input
-                register={register("cuMeterM3")}
-                errors={errors["cuMeterM3"]?.message}
-              />
+              <Field flex>
+                <Input
+                  register={register("cuMeterM3")}
+                  errors={errors["cuMeterM3"]?.message}
+                  inputSize={InputSize.xs}
+                />
+                <p>㎥/h</p>
+              </Field>
             </Field>
           </Wrapper>
           <Wrapper grid fields={"1fr 1fr 2fr"}>
@@ -665,7 +678,7 @@ function getTabContent(
               register={register("tankMakeCo1")}
               errors={errors["tankMakeCo1"]?.message}
             />
-            <Select {...register("tankVol1")}>
+            <Select {...register("tankVol1")} textAlign="right">
               {dataCommonDic?.tankVol1?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -739,7 +752,7 @@ function getTabContent(
               register={register("tankMakeCo2")}
               errors={errors["tankMakeCo2"]?.message}
             />
-            <Select {...register("tankVol2")}>
+            <Select {...register("tankVol2")} textAlign="right">
               {dataCommonDic?.tankVol2?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -846,6 +859,7 @@ function getTabContent(
               register={register("cuCylinderQty")}
               errors={errors["cuCylinderQty"]?.message}
               inputSize={InputSize.xs}
+              textAlign="right"
             />
             <p>개</p>
           </Field>

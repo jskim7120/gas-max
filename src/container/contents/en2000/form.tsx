@@ -13,8 +13,8 @@ import {
   ErrorText,
   FormGroup,
   Label,
-  InfoDesc,
 } from "components/form/style";
+import { InfoDesc } from "../style";
 import CheckBox from "components/checkbox";
 import { ICARJBC } from "./model";
 import { schema } from "./validation";
