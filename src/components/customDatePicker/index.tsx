@@ -37,7 +37,9 @@ const CustomInput = React.forwardRef(
           style={{
             width: "30px",
             height: "25px",
-            padding: "0px 0 0 9px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             background: "#fff",
             border: "1px solid #e6e5e5",
             borderTopRightRadius: "4px",

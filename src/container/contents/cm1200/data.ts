@@ -48,7 +48,7 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "194",
+    width: "250",
     styles: {
       textAlignment: "near",
     },

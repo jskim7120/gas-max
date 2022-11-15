@@ -8,7 +8,14 @@ import {
 import Button from "components/button/button";
 import { useEffect, useRef, useState } from "react";
 import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
-import { DetailHeader, DetailWrapper, TableWrapper, Wrapper } from "../style";
+import {
+  DetailHeader,
+  DetailWrapper,
+  TableWrapper,
+  Wrapper,
+  FormSectionTitle,
+  FormSeaction,
+} from "../style";
 import { fields, columns } from "./data";
 import Form from "./form";
 import { ButtonColor, FieldKind } from "components/componentsType";
@@ -18,6 +25,8 @@ import { Field, FormGroup, Input, Label } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { useForm } from "react-hook-form";
 import API from "app/axios";
+import HomeIconSvg from "assets/image/home-icon.svg";
+import PersonIconSvg from "assets/image/person-icon.svg";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -136,7 +145,6 @@ function CM1200({
         </div>
       </DetailHeader>
       <Wrapper>
-        <div></div>
         <TableWrapper width="30%">
           <form onSubmit={handleSubmit(onSearchSubmit)}>
             <Field>
@@ -160,12 +168,25 @@ function CM1200({
             </Field>
           </form>
           <div
-            style={{ width: "100%", height: "400px" }}
+            style={{ width: "100%", height: "95%" }}
             ref={realgridElement}
           ></div>
         </TableWrapper>
         <DetailWrapper width="70%">
-          <Form selected={selected} selectedRowIndex={selectedRowIndex} />
+          <FormSeaction topBorder={false}>
+            <FormSectionTitle>
+              <img src={HomeIconSvg} />
+              <h4>건물 정보</h4>
+            </FormSectionTitle>
+            <Form selected={selected} selectedRowIndex={selectedRowIndex} />
+          </FormSeaction>
+          <FormSeaction topBorder={true}>
+            <FormSectionTitle>
+              <img src={PersonIconSvg} />
+              <h4>건물 정보</h4>
+            </FormSectionTitle>
+            <p>table</p>
+          </FormSeaction>
         </DetailWrapper>
       </Wrapper>
     </>
