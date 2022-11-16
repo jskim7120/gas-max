@@ -198,6 +198,7 @@ export const columnsSelected = [
     name: "cuRdangaTypeName",
     fieldName: "cuRdangaTypeName",
     type: "data",
+    headerSpan: 2,
     width: "90",
     styles: {
       textAlignment: "near",

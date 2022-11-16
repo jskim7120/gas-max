@@ -33,7 +33,27 @@ function GridTable({ selected }: { selected: any }) {
       indicator: { visible: true },
       checkBar: { visible: false },
       stateBar: { visible: false },
+      itemIndex: { visible: false },
     });
+    gv.setColumnLayout([
+      "cuCode",
+      "cuUserName",
+      "cuTel",
+      "cuAnkum",
+      "cuCdc",
+      "cuPer",
+
+      {
+        name: "㎥ 단가",
+        directions: "horizontal",
+        hideChildHeaders: true,
+        items: ["cuRdangaTypeName", "cuRdanga"],
+      },
+      "cuJungumDate",
+      "cuCmisu",
+      "cuSukumType",
+      "cuState",
+    ]);
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
     gv.setEditOptions({ editable: false });
