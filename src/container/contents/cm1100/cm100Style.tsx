@@ -6,7 +6,6 @@ export const SearchWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding-right: 20px;
-  padding-bottom: 10px;
 
   div.button-wrapper {
     display: flex;

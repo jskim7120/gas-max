@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Input,
+  Input2,
   Select,
   Field,
   ErrorText,
@@ -337,13 +338,19 @@ function getTabContent(
                 <option value="*">*</option>
                 <option value="-">-</option>
               </Select>
-
+              {/* 
               <Input
                 register={register("percentage")}
                 errors={errors["percentage"]?.message}
                 inputSize={InputSize.xs}
                 style={{ textAlign: "center", border: "1px solid #e6e5e5" }}
                 formatNumber="comNumber"
+                onChange={(e: any) => setToo(Number(e.target.value))}
+              /> */}
+              <Input2
+                name="percentage"
+                id="percentage"
+                type="text"
                 onChange={(e: any) => setToo(Number(e.target.value))}
               />
 

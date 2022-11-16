@@ -436,7 +436,7 @@ function CM1100Page({
         />
         <CM1100Footer />
       </WrapperContent>
-      <DataGridFooter dataLength={data.length > 0 ? data.length : 0} />
+      <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>
   );
 }
