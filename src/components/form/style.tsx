@@ -208,7 +208,7 @@ export const Input = ({
             maxLength={maxLength && maxLength}
             kind={kind && kind}
             textAlign={textAlign && textAlign}
-            onChange={onChange && onChange}
+            // onChange={onChange && onChange}
           />
         )}
       </FormGroup>
@@ -469,6 +469,25 @@ export const TextArea = styled.textarea`
   font-family: "NotoSansKRRegular";
   font-size: 12px;
   box-sizing: border-box;
+
+  &:hover {
+    border: 1px solid #e6e5e5;
+    background: #fffacd;
+  }
+`;
+
+export const Input2 = styled.input`
+  width: 50px;
+  height: 25px;
+  border: 1px solid #e6e5e5;
+  border-radius: 4px;
+
+  padding: 0 6px;
+  margin: 0 5px;
+
+  outline: none;
+  font-family: "NotoSansKRRegular";
+  font-size: 12px;
 
   &:hover {
     border: 1px solid #e6e5e5;
