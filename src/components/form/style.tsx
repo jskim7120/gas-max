@@ -360,6 +360,7 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
   }
 
   &.outer-border {
