@@ -4712,7 +4712,7 @@ export const SmallWhiteClose = () => {
           fill="none"
           stroke="#fff"
           strokeLinecap="round"
-          stroke-width="2"
+          strokeWidth="2"
         />
         <path
           id="Path_3054"
@@ -4722,7 +4722,7 @@ export const SmallWhiteClose = () => {
           fill="none"
           stroke="#fff"
           strokeLinecap="round"
-          stroke-width="2"
+          strokeWidth="2"
         />
       </g>
     </svg>
@@ -4745,8 +4745,8 @@ export const SmallWhiteTick = () => {
         fill="none"
         stroke="#fff"
         strokeLinecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinejoin="round"
+        strokeWidth="2"
       />
     </svg>
   );
