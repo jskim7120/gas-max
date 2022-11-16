@@ -129,7 +129,7 @@ function EN1500({
           />
         </DetailWrapper>
       </Wrapper>
-      <DataGridFooter dataLength={data.length > 0 ? data.length : 0} />
+      <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>
   );
 }
