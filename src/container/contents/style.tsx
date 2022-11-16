@@ -77,10 +77,15 @@ export const FormSeaction = styled.div<{ topBorder: boolean }>`
 `;
 
 export const FormSectionTitle = styled.div`
-  display: flex;
   padding: 10px 0px;
+  display: flex;
+  justify-content: space-between;
+
   h4 {
-    padding-left: 10px;
+    img {
+      padding-right: 10px;
+    }
+    display: flex;
     color: #1b8c8e;
   }
 `;

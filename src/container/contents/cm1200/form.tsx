@@ -90,7 +90,6 @@ function Form({
         for (const [key, value] of Object.entries(selected)) {
           newData[key] = value;
         }
-        console.log("reset", newData);
         reset({ ...newData });
       }
     }
@@ -220,7 +219,7 @@ function Form({
           <FormGroup>
             <Label>
               <CheckBox
-                title="개별단가 "
+                title="루베단가 "
                 register={register("chkCuRdange")}
                 rtl={false}
               />
@@ -492,6 +491,7 @@ function Form({
           <Label align={"center"}>개방검사</Label>
         </Wrapper>
       </Field>
+      <DividerGray />
       {/* 3-2-2 Wrapper */}
       <Field flex>
         <FormGroup>
@@ -568,6 +568,7 @@ function Form({
           </Field>
         </Wrapper>
       </Field>
+      <DividerGray />
       {/* 3-2-3 Wrapper */}
       <Field flex>
         <FormGroup>
@@ -644,17 +645,16 @@ function Form({
           </Field>
         </Wrapper>
       </Field>
+      <DividerGray />
       {/* 3-2-4 Wrapper */}
       <Field flex>
         <FormGroup>
           <Label>{``}</Label>
+        </FormGroup>{" "}
+        <FormGroup>
+          <Label>Max레벨 / 발신기코드 / 탱크고객코드</Label>
         </FormGroup>
-        <Wrapper grid col={3}>
-          <Field>
-            <FormGroup>
-              <Label>Max레벨 / 발신기코드 / 탱크고객코드</Label>
-            </FormGroup>
-          </Field>
+        <Wrapper grid col={2}>
           <Field style={{ padding: "0px 5px" }}>
             <FormGroup>
               <p>{`1)`}</p>
@@ -678,14 +678,17 @@ function Form({
             </FormGroup>
           </Field>
           <Field style={{ paddingLeft: "5px" }}>
-            <FormGroup>
-              <p>{`2)`}</p>
-              <Input
-                register={register("tankMax2")}
-                inputSize={InputSize.xs}
-                textAlign="right"
-              />
-              <p>%</p>
+            <FormGroup style={{ justifyContent: "space-between" }}>
+              <Field flex>
+                <p>{`2)`}</p>
+                <Input
+                  register={register("tankMax2")}
+                  inputSize={InputSize.xs}
+                  textAlign="right"
+                />
+                <p>%</p>
+              </Field>
+
               <Input
                 register={register("tankTransmCd2")}
                 inputSize={InputSize.sm}
@@ -708,7 +711,7 @@ function Form({
           <Label>용기시설</Label>
         </FormGroup>
         <Wrapper grid col={3}>
-          <Field>
+          <Field style={{ padding: "0px 5px" }}>
             <FormGroup>
               {["일반", "싸이폰"].map((option, index) => {
                 return (
@@ -727,7 +730,7 @@ function Form({
               })}
             </FormGroup>
           </Field>
-          <Field>
+          <Field style={{ padding: "0px 5px" }}>
             <FormGroup>
               <Label align="center">용기수량</Label>
               <Select {...register("cuCylinderName")} inputWidth="175px">
@@ -787,6 +790,7 @@ function Form({
           <FormGroup>{` `}</FormGroup>
         </Wrapper>
       </Field>
+      <DividerGray />
       {/* 3-4-2 Wrapper */}
       <Field flex>
         <FormGroup>
@@ -852,6 +856,7 @@ function Form({
           </Field>
         </Wrapper>
       </Field>
+      <DividerGray />
       {/* 3-4-3 Wrapper */}
       <Field flex>
         <FormGroup>
