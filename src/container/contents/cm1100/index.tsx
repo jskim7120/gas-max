@@ -5,14 +5,14 @@ import { useForm } from "react-hook-form";
 import { openModal, closeModal, addCM1105 } from "app/state/modal/modalSlice";
 import { useSelector, useDispatch } from "app/store";
 import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
+import { ButtonColor, ButtonType } from "components/componentsType";
 
 import {
   Plus,
   Trash,
   Update,
   Reset,
-  MagnifyingGlass,
+  MagnifyingGlassBig,
   ExcelIcon,
 } from "components/allSvgIcon";
 import {
@@ -408,18 +408,15 @@ function CM1100Page({
             <div className="button-wrapper">
               <Button
                 text="검색"
-                icon={<MagnifyingGlass />}
-                style={{ marginRight: "5px", background: "red" }}
+                icon={<MagnifyingGlassBig />}
+                kind={ButtonType.ROUND}
                 type="submit"
               />
               <Button
                 text="엑셀"
                 icon={<ExcelIcon />}
-                style={{
-                  marginRight: "5px",
-                  background: "#ECECEC",
-                  color: "#000",
-                }}
+                kind={ButtonType.ROUND}
+                color={ButtonColor.SECONDARY}
                 type="button"
               />
             </div>
