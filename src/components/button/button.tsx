@@ -16,6 +16,7 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
       borderRad: "4px",
       fontSize: "12px",
       fontFamily: "SegoeUI",
+      fontWeight: "normal",
       height: "21px",
       padding: "0 5px",
       lineHeight: "13px",
@@ -41,6 +42,7 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
       borderRad: "4px",
       fontSize: "16px",
       fontFamily: "NotoSansKRRegular",
+      fontWeight: "normal",
       height: "40px",
       padding: "0 5px",
       lineHeight: "13px",
@@ -64,6 +66,7 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
       borderRad: "15px",
       fontSize: "12px",
       fontFamily: "NotoSansKRRegular",
+      fontWeight: "normal",
       height: "30px",
       padding: "0 8px",
       lineHeight: "16px",
@@ -80,6 +83,24 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
       attributes.border = "#707070";
       attributes.color = "#0A0A0A";
       attributes.lineColor = "#707070";
+    }
+  } else if (kind === ButtonType.SQUARE_BIG) {
+    attributes = {
+      borderRad: "4px",
+      fontSize: "12px",
+      fontFamily: "SegoeUI",
+      fontWeight: "500",
+      height: "25px",
+      padding: "0 6px",
+      lineHeight: "0px",
+      lineMarginLeft: "0px",
+      iconMarginRight: "5px",
+    };
+    if (color === ButtonColor.PRIMARY) {
+      attributes.bg = "#5284CE";
+      attributes.border = "#5284CE";
+      attributes.color = "#fff";
+      attributes.lineColor = "#fff";
     }
   }
   return attributes;
@@ -103,8 +124,9 @@ const ButtonComponent = styled.button<{
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-family: "NotoSansKRRegular";
+      font-family: ${BtnAttribute(props.kind, props.color).fontFamily};
       font-size: ${BtnAttribute(props.kind, props.color).fontSize};
+      font-weight: ${BtnAttribute(props.kind, props.color)?.fontWeight};
       text-decoration: none;
       border-radius: 2px;
       transition: all 0.3s ease;
@@ -115,7 +137,6 @@ const ButtonComponent = styled.button<{
       color: ${BtnAttribute(props.kind, props.color).color};
       padding: ${BtnAttribute(props.kind, props.color).padding};
       &:hover {
-        // background: #1ec5df;
         background: ${BtnAttribute(props.kind, props.color).bgHover};
       }
       &:focus {

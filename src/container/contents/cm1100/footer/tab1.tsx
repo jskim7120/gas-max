@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { columns, fields } from "./data";
 import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
+import { ButtonColor, ButtonType } from "components/componentsType";
 import { Notebook, Edit2, WhiteCloseCircle } from "components/allSvgIcon";
 import { useDispatch } from "app/store";
 import { openModal } from "app/state/modal/modalSlice";
@@ -80,11 +80,9 @@ function Tab1({ data }: { data: any }) {
           icon={<Notebook />}
           withoutLine
           style={{
-            marginRight: "5px",
-            background: "#5284CE",
-            color: "#fff",
             marginBottom: "7px",
           }}
+          kind={ButtonType.SQUARE_BIG}
           type="button"
           onClick={openPopupCM1106}
         />
@@ -94,22 +92,18 @@ function Tab1({ data }: { data: any }) {
           icon={<Edit2 />}
           withoutLine
           style={{
-            marginRight: "5px",
-            background: "#5284CE",
-            color: "#fff",
             marginBottom: "7px",
           }}
+          kind={ButtonType.SQUARE_BIG}
           type="button"
         />
+
         <Button
           text="품목삭제"
           icon={<WhiteCloseCircle />}
           withoutLine
-          style={{
-            marginRight: "5px",
-            background: "#5284CE",
-            color: "#fff",
-          }}
+          style={{}}
+          kind={ButtonType.SQUARE_BIG}
           type="button"
         />
       </div>

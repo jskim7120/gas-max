@@ -35,7 +35,7 @@ export enum ButtonType {
   FORM = "form",
   ROUND = "round",
   SQUARE_SMALL = "square_small",
-  SQUARE_BIG = "square_BIG",
+  SQUARE_BIG = "square_big",
 }
 
 export enum FieldKind {
