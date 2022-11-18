@@ -150,7 +150,7 @@ export const columnsSelected = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "100",
+    width: "90",
     styles: {
       textAlignment: "near",
     },
@@ -223,7 +223,7 @@ export const columnsSelected = [
     name: "cuJungumDate",
     fieldName: "cuJungumDate",
     type: "data",
-    width: "100",
+    width: "90",
     styles: {
       textAlignment: "near",
     },
@@ -235,7 +235,7 @@ export const columnsSelected = [
     name: "cuCmisu",
     fieldName: "cuCmisu",
     type: "data",
-    width: "150",
+    width: "140",
     styles: {
       textAlignment: "near",
     },

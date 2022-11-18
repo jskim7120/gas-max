@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import API from "app/axios";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 // ./
 import { fields, columns } from "./data";
 import GridTable from "./gridTable";
@@ -27,11 +27,18 @@ import {
 import { ButtonColor, FieldKind } from "components/componentsType";
 import { Field, FormGroup, Input, Label } from "components/form/style";
 import CheckBox from "components/checkbox";
+import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 //GRID
 import { GridView, LocalDataProvider } from "realgrid";
-import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
+import {
+  openModal,
+  addDeleteMenuId,
+  setIsDelete,
+  closeModal,
+} from "app/state/modal/modalSlice";
 import HomeIconSvg from "assets/image/home-icon.svg";
 import PersonIconSvg from "assets/image/person-icon.svg";
+import { CM1200SEARCH } from "app/path";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -52,6 +59,7 @@ function CM1200({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState();
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
@@ -88,17 +96,41 @@ function CM1200({
       gv.destroy();
       dp.destroy();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
+
+  useEffect(() => {
+    fetchData({});
+  }, []);
+
+  useEffect(() => {
+    if (isDelete.menuId === menuId && isDelete.isDelete) {
+      deleteRowGrid();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDelete.isDelete]);
 
   const onSearchSubmit = async (data: any) => {
     fetchData(data);
   };
 
+  function deleteRowGrid() {
+    try {
+      formRef.current.setIsAddBtnClicked(false);
+      formRef.current.crud("delete");
+      dispatch(addDeleteMenuId({ menuId: "" }));
+      dispatch(setIsDelete({ isDelete: false }));
+      dispatch(closeModal());
+    } catch (error) {}
+  }
+
   const fetchData = async (params: any) => {
     try {
-      const { data } = await API.get("/app/CM1200/search", { params: params });
-      if (data) {
+      const { data } = await API.get(CM1200SEARCH, { params: params });
+      if (data && data[0]) {
         setData(data);
+        setSelected(data[0]);
+        setSelectedRowIndex(0)
       }
     } catch (err) {
       console.log("CM1200 data search fetch error =======>", err);
@@ -183,7 +215,15 @@ function CM1200({
                 건물 정보
               </h4>
             </FormSectionTitle>
-            <Form selected={selected} selectedRowIndex={selectedRowIndex} />
+            <Form
+              ref={formRef}
+              selected={selected}
+              fetchData={fetchData}
+              setData={setData}
+              selectedRowIndex={selectedRowIndex}
+              setSelectedRowIndex={setSelectedRowIndex}
+              setSelected={setSelected}
+            />
           </FormSeaction>
           <FormSeaction topBorder={true}>
             <FormSectionTitle>
@@ -213,6 +253,7 @@ function CM1200({
           </FormSeaction>
         </DetailWrapper>
       </Wrapper>
+      <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>
   );
 }

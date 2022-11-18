@@ -1,39 +1,47 @@
 export interface ICM1200SEARCH {
+  /* 1-1 Wrapper */
+  areaCode: string;
+  cuCode: string;
+  cuName: string;
+  cuAptnameYn: string;
+  /* 1-2 Wrapper */
+  chkCuZipCode: string;
+  cuZipcode: string;
+  cuAddr1: string;
+  cuAddr2: string;
+  /* 1-3 Wrapper */
+  cuSwCode: string;
+  cuJyCode: string;
+  cuCustgubun: string;
+  // 2-1 Wrapper
+  chkCuRh20: string;
+  cuRh20: string;
+  chkCuRdange: string;
+  cuRdangaType: string;
+  cuRdangaSign: string;
+  cuRdangaAmt: number;
+
   cuGumTurm: string;
   cuCylinderType: null;
-  cuRh2o: string;
   cuTransmCuCd: null;
   cuScheduleDate: null;
   cuGumdate: null;
-  cuRdangaAmt: null;
-  cuRdangaSign: null;
   cuAnkum: number;
   cuCylinderName: null;
   cuCylinderQty: null;
   cuFinishDate: null;
-  cuName: string;
   cuMeterkum: number;
-  cuCustgubun: null;
-  cuRdangaType: null;
   cuTankYn: string;
-  cuSwCode: null;
   cuSisulkum: number;
   cuRdanga: number;
   cuPer: number;
-  cuAptnameYn: string;
   cuCircuitDate: null;
   cuCount: number;
-  cuZipcode: null;
   queryType: string;
-  areaCode: string;
-  cuJyCode: string;
   cuTransmCd: null;
   cuCdc: string;
   cuSukumtype: string;
   cuCno: string;
-  cuAddr1: string;
-  cuAddr2: string;
-  cuCode: string;
 }
 
 export interface ICM1200GRID {}
