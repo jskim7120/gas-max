@@ -8,10 +8,7 @@ import {
   removeAllTabs,
   refreshTabs,
 } from "app/state/tab/tabSlice";
-import {
-  removeRowIndex,
-  removeAllRowIndexes,
-} from "app/state/gridSelectedRowSlice";
+
 import { openModal } from "app/state/modal/modalSlice";
 import { toggleSidebar } from "app/state/sidebar/sidebarSlice";
 import { getContent } from "./tabContent";
@@ -73,7 +70,6 @@ const TabHeader = ({ header, isActive, onClick, closeTab }: ITabHeader) => {
   );
 };
 
-// let content: React.ReactNode;
 let tabHeader: Array<any>;
 let activeTabId: any;
 
@@ -92,12 +88,9 @@ const Tab = (props: TabProps): JSX.Element => {
 
   tabHeader = tabState.tabs;
   activeTabId = tabState.activeTabId;
-  // const { depthFullName } = tabHeader.find((tab) => tab.menuId === activeTabId);
-  // content = getContent(activeTabId, depthFullName);
 
   const closeTab = (menuId: string) => {
     dispatch(removeTab({ menuId: menuId }));
-    dispatch(removeRowIndex({ tabId: menuId }));
   };
 
   const changeTab = (menuId: string) => {
@@ -138,7 +131,6 @@ const Tab = (props: TabProps): JSX.Element => {
           <span
             onClick={() => {
               dispatch(removeAllTabs());
-              dispatch(removeAllRowIndexes());
             }}
             style={{
               marginLeft: "8px",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import DaumAddress from "components/daum";
@@ -10,7 +10,7 @@ import { ButtonColor } from "components/componentsType";
 import { Plus, Update, Reset, WhiteClose } from "components/allSvgIcon";
 import { ICM1105SEARCH } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { closeModal, addCM1105 } from "app/state/modal/modalSlice";
+import { closeModal } from "app/state/modal/modalSlice";
 import {
   Input,
   Select,
@@ -618,8 +618,8 @@ function FormCM1105() {
           />
           <TabContentWrapper>
             {getTabContent(
-              data?.customerInfo[0],
               tabId,
+              data?.customerInfo[0],
               register,
               errors,
               dataCommonDic,

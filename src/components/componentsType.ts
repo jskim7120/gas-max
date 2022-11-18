@@ -33,6 +33,9 @@ export enum InputSize {
 export enum ButtonType {
   LOGIN = "login",
   FORM = "form",
+  ROUND = "round",
+  SQUARE_SMALL = "square_small",
+  SQUARE_BIG = "square_big",
 }
 
 export enum FieldKind {
