@@ -125,7 +125,9 @@ const Form = React.forwardRef(
             await fetchData();
           }
         } catch (err) {
-          toast.error("Couldn't delete");
+          toast.error("Couldn't delete", {
+            autoClose: 500,
+          });
         }
       }
 
@@ -172,10 +174,14 @@ const Form = React.forwardRef(
           });
           setIsAddBtnClicked(false);
         } else {
-          toast.error(response?.message);
+          toast.error(response?.message, {
+            autoClose: 500,
+          });
         }
       } catch (err: any) {
-        toast.error(err?.message);
+        toast.error(err?.message, {
+          autoClose: 500,
+        });
       }
     };
 
@@ -274,7 +280,6 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>단위</Label>
-
               <Select {...register("jpUnit")}>
                 {dataCommonDic?.jpUnit?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>

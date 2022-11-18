@@ -4,13 +4,7 @@ import { Input, Select, Field, ErrorText } from "components/form/style";
 import { PaymentLineCnt } from "../style";
 import { InputSize } from "components/componentsType";
 
-function getTabContent(
-  id: number,
-  register: any,
-  errors: any,
-  jnJiro: any,
-  isJnJiroError: boolean
-) {
+function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
   const data1 = [
     {
       1: "양식 1",
@@ -36,17 +30,14 @@ function getTabContent(
       ),
       5: (
         <Field>
-          {isJnJiroError ? (
-            "error occured"
-          ) : (
-            <Select style={{ width: "195px" }} {...register("jnJiro")}>
-              {jnJiro?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code1}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          )}
+          <Select style={{ width: "195px" }} {...register("jnJiro")}>
+            {jnJiro?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code1}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+
           <div>
             <ErrorText>{errors && errors["jnJiro"]?.message}</ErrorText>
           </div>
@@ -77,17 +68,13 @@ function getTabContent(
       ),
       5: (
         <Field>
-          {isJnJiroError ? (
-            "error occured"
-          ) : (
-            <Select style={{ width: "195px" }} {...register("jnJiro2")}>
-              {jnJiro?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code1}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          )}
+          <Select style={{ width: "195px" }} {...register("jnJiro2")}>
+            {jnJiro?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code1}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
           <div>
             <ErrorText>{errors && errors["jnJiro2"]?.message}</ErrorText>
           </div>
@@ -118,17 +105,13 @@ function getTabContent(
       ),
       5: (
         <Field>
-          {isJnJiroError ? (
-            "error occured"
-          ) : (
-            <Select style={{ width: "195px" }} {...register("jnJiro3")}>
-              {jnJiro?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code1}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          )}
+          <Select style={{ width: "195px" }} {...register("jnJiro3")}>
+            {jnJiro?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code1}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
           <div>
             <ErrorText>{errors && errors["jnJiro3"]?.message}</ErrorText>
           </div>
@@ -159,17 +142,13 @@ function getTabContent(
       ),
       5: (
         <Field>
-          {isJnJiroError ? (
-            "error occured"
-          ) : (
-            <Select style={{ width: "195px" }} {...register("jnJiro4")}>
-              {jnJiro?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code1}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          )}
+          <Select style={{ width: "195px" }} {...register("jnJiro4")}>
+            {jnJiro?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code1}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
           <div>
             <ErrorText>{errors && errors["jnJiro4"]?.message}</ErrorText>
           </div>

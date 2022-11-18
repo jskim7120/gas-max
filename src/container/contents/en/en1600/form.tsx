@@ -2,7 +2,9 @@ import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { useDispatch } from "app/store";
+import API from "app/axios";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { EN1600INSERT, EN1600UPDATE, EN1600DELETE } from "app/path";
 import {
   Input,
   Select,
@@ -26,28 +28,22 @@ import {
 } from "helpers/dateFormat";
 import { convertBase64 } from "helpers/convertBase64";
 import CustomDate from "components/customDatePicker";
-import API from "app/axios";
-import { useGetCommonGubunQuery } from "app/api/commonGubun";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { ImageWrapper } from "../style";
 
 interface IForm {
   selected: any;
   fetchData: any;
-  menuId: string;
   setData: any;
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
 }
-const base = "/app/EN1600/";
 
 const Form = React.forwardRef(
   (
     {
       selected,
       fetchData,
-      menuId,
       setData,
       selectedRowIndex,
       setSelected,
@@ -55,17 +51,12 @@ const Form = React.forwardRef(
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const dispatch = useDispatch();
-
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [addr, setAddress] = useState<string>("");
     const [image, setImage] = useState<{
       name: string;
     }>();
     const [image64, setImage64] = useState<any>(null);
-    const { data: swGubun } = useGetCommonGubunQuery("1");
-    const { data: swPaytype } = useGetCommonGubunQuery("2");
-    const { data: dataEmailType } = useGetCommonGubunQuery("5");
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
@@ -138,11 +129,9 @@ const Form = React.forwardRef(
     };
     const crud = async (type: string | null) => {
       if (type === "delete") {
-        const path = `${base}delete`;
         const formValues = getValues();
-
         try {
-          const response = await API.post(path, formValues);
+          const response = await API.post(EN1600DELETE, formValues);
           if (response.status === 200) {
             toast.success("Deleted", {
               autoClose: 500,
@@ -150,7 +139,9 @@ const Form = React.forwardRef(
             await fetchData();
           }
         } catch (err) {
-          toast.error("Couldn't delete");
+          toast.error("Couldn't delete", {
+            autoClose: 500,
+          });
         }
       }
 
@@ -161,7 +152,7 @@ const Form = React.forwardRef(
 
     const submit = async (data: IJNOSAUP) => {
       //form aldaagui uyd ajillana
-      const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
+      const path = isAddBtnClicked ? EN1600INSERT : EN1600UPDATE;
       const formValues = getValues();
 
       formValues.swPaykum = formValues.swPaykum
@@ -210,10 +201,14 @@ const Form = React.forwardRef(
           });
           setIsAddBtnClicked(false);
         } else {
-          toast.error(response?.message);
+          toast.error(response?.message, {
+            autoClose: 500,
+          });
         }
       } catch (err: any) {
-        toast.error(err?.message);
+        toast.error(err?.message, {
+          autoClose: 500,
+        });
       }
     };
 
@@ -279,7 +274,7 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>업무구분</Label>
               <Select {...register("swGubun")}>
-                {swGubun?.map((obj, idx) => (
+                {dataCommonDic?.swGubun?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
                     {obj.codeName}
                   </option>
@@ -318,7 +313,7 @@ const Form = React.forwardRef(
           />
           @
           <Select {...register("mailKind")}>
-            {dataEmailType?.map((obj, idx) => (
+            {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.codeName}>
                 {obj.codeName}
               </option>
@@ -422,7 +417,7 @@ const Form = React.forwardRef(
                 <FormGroup>
                   <Label>급여방식</Label>
                   <Select {...register("swPaytype")}>
-                    {swPaytype?.map((obj, idx) => (
+                    {dataCommonDic?.swPaytype?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code1}>
                         {obj.codeName}
                       </option>

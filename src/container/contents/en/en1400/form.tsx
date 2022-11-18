@@ -43,7 +43,6 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1400",
@@ -101,7 +100,9 @@ const Form = React.forwardRef(
             await fetchData();
           }
         } catch (err) {
-          toast.error("Couldn't delete");
+          toast.error("Couldn't delete", {
+            autoClose: 500,
+          });
         }
       }
 
@@ -135,15 +136,19 @@ const Form = React.forwardRef(
             });
           }
           setSelected(formValues);
+          setIsAddBtnClicked(false);
           toast.success("Action successful", {
             autoClose: 500,
           });
-          setIsAddBtnClicked(false);
         } else {
-          toast.error(response.response.data?.message);
+          toast.error(response.response.data?.message, {
+            autoClose: 500,
+          });
         }
       } catch (err: any) {
-        toast.error(err?.message);
+        toast.error(err?.message, {
+          autoClose: 500,
+        });
       }
     };
 
@@ -153,8 +158,6 @@ const Form = React.forwardRef(
         onSubmit={handleSubmit(submit)}
         style={{ padding: "0px 10px" }}
       >
-        {/* <p>{isAddBtnClicked ? "true" : "false"}</p> */}
-
         <Wrapper>
           <Field>
             <FormGroup>
