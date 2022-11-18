@@ -26,7 +26,7 @@ import {
   DividerGray,
 } from "components/form/style";
 import { InputSize, FieldKind } from "components/componentsType";
-import { DetailHeader, WrapperContent } from "../style";
+import { DetailHeader, WrapperContent } from "../en/style";
 import { SearchWrapper } from "./cm100Style";
 import API from "app/axios";
 import Grid from "./grid";

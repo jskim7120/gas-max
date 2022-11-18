@@ -13,14 +13,19 @@ import {
   setIsDelete,
 } from "app/state/modal/modalSlice";
 import Form from "./form";
-import { Wrapper, TableWrapper, DetailWrapper, DetailHeader } from "../style";
+import {
+  Wrapper,
+  TableWrapper,
+  DetailWrapper,
+  DetailHeader,
+} from "../en/style";
 import {
   Grid1Container,
   Grid2Container,
   Table1Wrapper,
   Detail1Wrapper,
 } from "./style";
-import { setRowIndex, resetFromStorage } from "app/state/gridSelectedRowSlice";
+
 import { useDispatch, useSelector } from "app/store";
 
 let container: HTMLDivElement;

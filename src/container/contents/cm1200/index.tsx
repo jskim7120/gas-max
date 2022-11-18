@@ -14,7 +14,7 @@ import {
   Wrapper,
   FormSectionTitle,
   FormSeaction,
-} from "../style";
+} from "../en/style";
 // COMPONENTS
 import Button from "components/button/button";
 import {
