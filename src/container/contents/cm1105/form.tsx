@@ -306,7 +306,7 @@ function FormCM1105() {
           <Field>
             <FormGroup>
               <Label>거래구분</Label>
-              <Select {...register("cuType")} fullWidth>
+              <Select {...register("cuType")} width={InputSize.i100}>
                 {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

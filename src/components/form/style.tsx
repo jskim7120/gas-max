@@ -4,6 +4,16 @@ import { InputSize, FieldKind } from "components/componentsType";
 
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
+    case InputSize.i100:
+      return `100px`;
+    case InputSize.i130:
+      return `130px`;
+    case InputSize.i150:
+      return `150px`;
+    case InputSize.i175:
+      return `175px`;
+    case InputSize.i200:
+      return `200px`;
     case InputSize.xxs:
       return `30px`;
     case InputSize.xs:
@@ -12,12 +22,6 @@ export const getInputSize = (size?: InputSize) => {
       return `100px`;
     case InputSize.en1300:
       return `130px`;
-    case InputSize.i150:
-      return `150px`;
-    case InputSize.i175:
-      return `175px`;
-    case InputSize.i200:
-      return `200px`;
     case InputSize.md:
       return `250px`;
     case InputSize.md290:
@@ -268,7 +272,7 @@ export const InputForm = styled.input<{
   }
 
   border: ${(props) =>
-    props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
+    props.kind ? getInputKind(props.kind)?.border : "1px solid  #e6e5e5"};
 `;
 
 export const ErrorText = styled.p`
@@ -446,11 +450,9 @@ export const Select = styled.select<{
   height: 25px;
   border-radius: 4px;
   text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
-
   outline: none;
   font-family: "NotoSansKRRegular";
   font-size: 12px;
-  min-width: 130px;
 
   &:hover,
   &:focus {
@@ -464,7 +466,11 @@ export const Select = styled.select<{
   border: ${(props) =>
     props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
   width: ${(props) =>
-    props.fullWidth ? "100%" : props.size ? getInputSize(props.width) : "auto"};
+    props.fullWidth
+      ? "100%"
+      : props.width
+      ? getInputSize(props.width)
+      : "auto"};
   text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
 `;
 
