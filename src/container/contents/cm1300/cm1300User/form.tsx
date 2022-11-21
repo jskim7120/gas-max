@@ -28,7 +28,7 @@ interface IForm {
   setSelected: any;
   setSelectedRowIndex: any;
 }
-const base = "/app/CM1300/";
+const base = "/app/CM1300/65/";
 
 const Form = React.forwardRef(
   (

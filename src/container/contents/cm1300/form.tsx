@@ -113,7 +113,6 @@ const Form = React.forwardRef(
       }
     };
     const crud = async (type: string | null) => {
-      console.log("works");
       if (type === "delete") {
         const path = `${base}delete`;
         const formValues = getValues();
@@ -137,11 +136,9 @@ const Form = React.forwardRef(
     };
 
     const submit = async (data: ICM1300) => {
-      console.log("works");
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
-
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
