@@ -340,7 +340,7 @@ const Form = React.forwardRef(
               </Label>
               <Select
                 {...register("aptRh2o")}
-                inputWidth="175px"
+                width={InputSize.i175}
                 textAlign="right"
               >
                 {dataCommonDic?.aptRh2o?.map((option: any, index: number) => {
@@ -468,7 +468,7 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Select {...register("aptGumdate")} inputWidth="200px">
+              <Select {...register("aptGumdate")} width={InputSize.i200}>
                 {dataCommonDic?.aptGumdate?.map(
                   (option: any, index: number) => {
                     return (
@@ -491,7 +491,7 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Select {...register("aptSukumtype")} inputWidth="200px">
+              <Select {...register("aptSukumtype")} width={InputSize.i200}>
                 {dataCommonDic?.aptSukumtype?.map(
                   (option: any, index: number) => {
                     return (

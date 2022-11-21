@@ -12,6 +12,12 @@ export const getInputSize = (size?: InputSize) => {
       return `100px`;
     case InputSize.en1300:
       return `130px`;
+    case InputSize.i150:
+      return `150px`;
+    case InputSize.i175:
+      return `175px`;
+    case InputSize.i200:
+      return `200px`;
     case InputSize.md:
       return `250px`;
     case InputSize.md290:
@@ -311,10 +317,10 @@ export const Label = styled.label<{
   font-size: 12px;
   font-weight: 600;
   min-width: ${(props) => (props.labelLong ? "200px" : "105px")};
-  height: 35px;
+  height: 25px;
   text-align: right;
-  padding: 7px 10px;
-  background: #f5fcff;
+  padding: 3px 10px;
+  background: rgba(104, 103, 103, 0.26);
   white-space: nowrap;
 
   &.small {
@@ -433,9 +439,8 @@ export const Wrapper = styled.div<{
 
 export const Select = styled.select<{
   kind?: FieldKind;
-  size?: InputSize;
+  width?: InputSize;
   fullWidth?: boolean;
-  inputWidth?: string;
   textAlign?: string;
 }>`
   height: 25px;
@@ -458,9 +463,8 @@ export const Select = styled.select<{
 
   border: ${(props) =>
     props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
-
   width: ${(props) =>
-    props.fullWidth ? "100%" : props.inputWidth ? props.inputWidth : "auto"};
+    props.fullWidth ? "100%" : props.size ? getInputSize(props.width) : "auto"};
   text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
 `;
 

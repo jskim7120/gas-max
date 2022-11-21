@@ -201,7 +201,7 @@ function Form({
             </Label>
             <Select
               {...register("cuRh20")}
-              inputWidth="175px"
+              width={InputSize.i175}
               textAlign="right"
             >
               {dataCommonDic?.cuRh20?.map((option: any, index: number) => {
@@ -224,7 +224,7 @@ function Form({
                 rtl={false}
               />
             </Label>
-            <Select {...register("cuRdangaType")} inputWidth="175px">
+            <Select {...register("cuRdangaType")} width={InputSize.i175}>
               {dataCommonDic?.cuRdangaType.map((option: any, index: number) => {
                 return (
                   <option key={index} value={option.code}>
@@ -351,7 +351,7 @@ function Form({
                 rtl={false}
               />
             </Label>
-            <Select {...register("cuSukumtype")} inputWidth="175px">
+            <Select {...register("cuSukumtype")} width={InputSize.i175}>
               {dataCommonDic?.cuSukumtype?.map((option: any, index: number) => {
                 return (
                   <option key={index} value={option.code}>
@@ -375,7 +375,7 @@ function Form({
                 rtl={false}
               />
             </Label>
-            <Select {...register("cuGumTurm")} inputWidth="175px">
+            <Select {...register("cuGumTurm")} width={InputSize.i175}>
               {dataCommonDic?.cuGumTurm?.map((option: any, index: number) => {
                 return (
                   <option key={index} value={option.code}>
@@ -395,7 +395,7 @@ function Form({
                 rtl={false}
               />
             </Label>
-            <Select {...register("cuGumDate")} inputWidth="175px">
+            <Select {...register("cuGumDate")} width={InputSize.i175}>
               {dataCommonDic?.cuGumDate?.map((option: any, index: number) => {
                 return (
                   <option key={index} value={option.code}>
@@ -733,7 +733,7 @@ function Form({
           <Field style={{ padding: "0px 5px" }}>
             <FormGroup>
               <Label align="center">용기수량</Label>
-              <Select {...register("cuCylinderName")} inputWidth="175px">
+              <Select {...register("cuCylinderName")} width={InputSize.i175}>
                 {dataCommonDic?.cuCylinderName?.map(
                   (option: any, index: number) => {
                     return (

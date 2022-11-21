@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "app/store";
 import API from "app/axios";
 import { schema } from "./validation";
 import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
+import { ButtonColor, InputSize } from "components/componentsType";
 import { Plus, Update, Reset, WhiteClose } from "components/allSvgIcon";
 import { ICM1105SEARCH } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -275,16 +275,19 @@ function FormCM1105() {
             label="거래처코드"
             register={register("cuCode")}
             errors={errors["cuCode"]?.message}
+            inputSize={InputSize.sm}
           />
           <Input
             label="거래처명(건물명)"
             register={register("cuName")}
             errors={errors["cuName"]?.message}
+            inputSize={InputSize.i150}
           />
           <Input
             label="사용자명"
             register={register("cuUsername")}
             errors={errors["cuUsername"]?.message}
+            inputSize={InputSize.i150}
           />
         </Wrapper>
         <DividerGray />
@@ -293,10 +296,12 @@ function FormCM1105() {
             label="전화번호"
             register={register("cuTel")}
             errors={errors["cuTel"]?.message}
+            inputSize={InputSize.i150}
           />
           <Input
             register={register("cuTel21")}
             errors={errors["cuTel21"]?.message}
+            inputSize={InputSize.i150}
           />
           <Field>
             <FormGroup>
