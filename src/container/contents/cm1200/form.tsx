@@ -7,6 +7,7 @@ import DaumAddress from "components/daum";
 import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
 import CustomDate from "components/customDatePicker";
+import CustomDatePicker from "components/customDatePicker/customdate2";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import {
@@ -67,9 +68,10 @@ const Form = React.forwardRef(
       groupId: "CM",
       functionName: "CM1200",
     });
-
-    console.log("selected", selected, dataCommonDic);
-    console.log("selectedSupplyTab", selectedSupplyTab[0]);
+    // CustomDatePickers
+    const [cuFinishDate, setCuFinishDate] = useState("");
+    const [cuCircuitDate, setCuCircuitDate] = useState("");
+    const [cuScheduleDate, setCuScheduleDate] = useState("");
 
     const {
       handleSubmit,
@@ -132,7 +134,6 @@ const Form = React.forwardRef(
     const resetForm = (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         const newFormData = { ...selected, ...selectedSupplyTab[0] };
-        console.log("---newFormData", newFormData);
         let newData: any = {};
 
         if (type === "clear") {
@@ -163,17 +164,24 @@ const Form = React.forwardRef(
             chkCuGumTurm: newFormData?.chkCuGumTurm === "Y",
             chkCuGumdate: newFormData?.chkCuGumdate === "Y",
             chkCuCno: newFormData?.chkCuCno === "Y",
-
-            cuFinishDate: newFormData?.cuFinishDate
-              ? formatDate(newFormData?.cuFinishDate)
-              : "",
-            cuCircuitDate: newFormData?.cuCircuitDate
-              ? formatDate(newFormData?.cuCircuitDate)
-              : "",
-            cuScheduleDate: newFormData?.cuScheduleDate
-              ? formatDate(newFormData?.cuScheduleDate)
-              : "",
           });
+
+          setCuFinishDate(
+            newFormData?.cuFinishDate
+              ? formatDate(newFormData?.cuFinishDate)
+              : ""
+          );
+          setCuCircuitDate(
+            newFormData?.cuCircuitDate
+              ? formatDate(newFormData?.cuCircuitDate)
+              : ""
+          );
+          setCuScheduleDate(
+            newFormData?.cuScheduleDate
+              ? formatDate(newFormData?.cuScheduleDate)
+              : ""
+          );
+
           setRdangaTotal(0);
         }
       }
@@ -210,7 +218,6 @@ const Form = React.forwardRef(
     const submit = async (data: ICM1200SEARCH) => {
       const formValues = getValues();
       const path = isAddBtnClicked ? CM1200INSERT : CM1200UPDATE;
-      console.log("formValues", formValues);
 
       formValues.areaCode = "00";
       formValues.cuAptnameYn = formValues.cuAptnameYn ? "Y" : "N";
@@ -239,14 +246,14 @@ const Form = React.forwardRef(
         ? formatCurrencyRemoveComma(formValues.cuMeterKum)
         : "";
 
-      formValues.cuFinishDate = formValues.cuFinishDate
-        ? formatDateByRemoveDash(formValues.cuFinishDate)
+      formValues.cuFinishDate = cuFinishDate
+        ? formatDateByRemoveDash(cuFinishDate)
         : "";
-      formValues.cuCircuitDate = formValues.cuCircuitDate
-        ? formatDateByRemoveDash(formValues.cuCircuitDate)
+      formValues.cuCircuitDate = cuCircuitDate
+        ? formatDateByRemoveDash(cuCircuitDate)
         : "";
-      formValues.cuScheduleDate = formValues.cuScheduleDate
-        ? formatDateByRemoveDash(formValues.cuScheduleDate)
+      formValues.cuScheduleDate = cuScheduleDate
+        ? formatDateByRemoveDash(cuScheduleDate)
         : "";
 
       try {
@@ -258,7 +265,6 @@ const Form = React.forwardRef(
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
-              console.log("prev", prev);
               return [...prev];
             });
           }
@@ -405,7 +411,7 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Select {...register("cuRh20")} inputWidth="175px">
+              <Select {...register("cuRh20")} width={InputSize.i175}>
                 {dataCommonDic?.cuRh20?.map((option: any, index: number) => {
                   return (
                     <option key={index} value={option.code}>
@@ -426,7 +432,7 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Select {...register("cuRdangaType")} inputWidth="175px">
+              <Select {...register("cuRdangaType")} width={InputSize.i175}>
                 {dataCommonDic?.cuRdangaType.map(
                   (option: any, index: number) => {
                     return (
@@ -572,7 +578,7 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Select {...register("cuSukumtype")} inputWidth="175px">
+              <Select {...register("cuSukumtype")} width={InputSize.i175}>
                 {dataCommonDic?.cuSukumtype?.map(
                   (option: any, index: number) => {
                     return (
@@ -598,7 +604,7 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Select {...register("cuGumTurm")} inputWidth="175px">
+              <Select {...register("cuGumTurm")} width={InputSize.i175}>
                 {dataCommonDic?.cuGumTurm?.map((option: any, index: number) => {
                   return (
                     <option key={index} value={option.code}>
@@ -618,7 +624,7 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Select {...register("cuGumdate")} inputWidth="175px">
+              <Select {...register("cuGumdate")} width={InputSize.i175}>
                 {dataCommonDic?.cuGumdate?.map((option: any, index: number) => {
                   return (
                     <option key={index} value={option.code}>
@@ -669,35 +675,29 @@ const Form = React.forwardRef(
               })}
             </FormGroup>
           </Field>
-          <Field>
-            <FormGroup>
-              <CustomDate
-                label="완성검사일"
-                name="cuFinishDate"
-                register={register("cuFinishDate")}
-                reset={reset}
-              />
-            </FormGroup>
+          <Field flex style={{ alignItems: "center" }}>
+            <Label>완성검사일</Label>
+            <CustomDatePicker
+              value={cuFinishDate}
+              name="cuFinishDate"
+              setValue={setCuFinishDate}
+            />
           </Field>
-          <Field>
-            <FormGroup>
-              <CustomDate
-                label="정기검사일"
-                name="cuCircuitDate"
-                register={register("cuCircuitDate")}
-                reset={reset}
-              />
-            </FormGroup>
+          <Field flex style={{ alignItems: "center" }}>
+            <Label>정기검사일</Label>
+            <CustomDatePicker
+              name="cuCircuitDate"
+              value={cuCircuitDate}
+              setValue={setCuCircuitDate}
+            />
           </Field>
-          <Field>
-            <FormGroup>
-              <CustomDate
-                label="검사예정일"
-                name="cuScheduleDate"
-                register={register("cuScheduleDate")}
-                reset={reset}
-              />
-            </FormGroup>
+          <Field flex style={{ alignItems: "center" }}>
+            <Label>검사예정일</Label>
+            <CustomDatePicker
+              value={cuScheduleDate}
+              name="cuScheduleDate"
+              setValue={setCuScheduleDate}
+            />
           </Field>
         </Wrapper>
         <DividerGray />
@@ -907,7 +907,7 @@ const Form = React.forwardRef(
             <Field style={{ padding: "0px 5px" }}>
               <FormGroup>
                 <Label align="center">용기수량</Label>
-                <Select {...register("cuCylinderName")} inputWidth="175px">
+                <Select {...register("cuCylinderName")} width={InputSize.i175}>
                   {dataCommonDic?.cuCylinderName?.map(
                     (option: any, index: number) => {
                       return (
