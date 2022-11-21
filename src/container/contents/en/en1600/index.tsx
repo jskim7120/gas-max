@@ -121,7 +121,6 @@ function EN1600({
             selected={selected}
             ref={formRef}
             fetchData={fetchData}
-            menuId={menuId}
             setData={setData}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}

@@ -121,7 +121,6 @@ function EN1900({
             selected={selected}
             ref={formRef}
             fetchData={fetchData}
-            menuId={menuId}
             setData={setData}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}

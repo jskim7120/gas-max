@@ -1,15 +1,9 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useEffect,
-  useState,
-} from "react";
+import React, { forwardRef, useImperativeHandle, useEffect } from "react";
 import Table from "components/table";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "app/store";
 import { toast } from "react-toastify";
-import { useGetCommonGubunQuery } from "app/api/commonGubun";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { EN1600UPDATE } from "app/path";
 import {
   Select,
@@ -50,23 +44,10 @@ const Form = (
   }: IForm,
   ref: React.ForwardedRef<any>
 ) => {
-  const dispatch = useDispatch();
-  // const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-  const [isClickedAdd, setIsClikedAdd] = useState(false);
-  const [tabId, setTabId] = useState(0);
-
-  const { data: jnPerMeth, isError: isJnPerMethError } =
-    useGetCommonGubunQuery("11");
-  const { data: jnChekum, isError: isJnChekumError } =
-    useGetCommonGubunQuery("12");
-
-  const { data: jnJiroPrint, isError: isJnJiroPrintError } =
-    useGetCommonGubunQuery("13");
-
-  const { data: jnR, isError: isJnR } = useGetCommonGubunQuery("14");
-
-  const { data: jnSukumtype, isError: isJnSukumtypeError } =
-    useGetCommonGubunQuery("15");
+  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
+    groupId: "EN",
+    functionName: "EN1500",
+  });
 
   useEffect(() => {
     if (selected !== undefined && JSON.stringify(selected) !== "{}") {
@@ -103,28 +84,24 @@ const Form = (
     formValues.jnAnkum = formValues.jnAnkum
       ? formatCurrencyRemoveComma(formValues.jnAnkum)
       : "";
-    //form aldaagui uyd ajillana
 
     try {
       const response = await API.post(EN1600UPDATE, formValues);
       if (response.status === 200) {
-        // if (isAddBtnClicked) {
-        //   setData((prev: any) => [formValues, ...prev]);
-        //   setSelectedRowIndex(0);
-        // } else {
         setData((prev: any) => {
           prev[selectedRowIndex] = formValues;
           return [...prev];
         });
-        // }
+
         setSelected(formValues);
-        // setIsAddBtnClicked(false);
         toast.success("Action successful", {
           autoClose: 500,
         });
       }
     } catch (err: any) {
-      toast.error(err?.message);
+      toast.error(err?.message, {
+        autoClose: 500,
+      });
     }
   };
 
@@ -132,9 +109,7 @@ const Form = (
     update: () => {
       handleSubmit(submit)();
     },
-
     resetForm,
-    // setIsAddBtnClicked,
   }));
 
   const data1500 = [
@@ -246,17 +221,13 @@ const Form = (
             <Field>
               <FormGroup>
                 <Label>연체료 적용방법</Label>
-                {isJnPerMethError ? (
-                  "error occured"
-                ) : (
-                  <Select {...register("jnPerMeth")}>
-                    {jnPerMeth?.map((obj, idx) => (
-                      <option key={idx} value={obj.code1}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                )}
+                <Select {...register("jnPerMeth")}>
+                  {dataCommonDic?.jnPerMeth?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code1}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
               </FormGroup>
               <div>
                 <ErrorText>{errors["jnPerMeth"]?.message}</ErrorText>
@@ -289,17 +260,13 @@ const Form = (
             <Field>
               <FormGroup>
                 <Label>체적사용료 계산</Label>
-                {isJnChekumError ? (
-                  "error occured"
-                ) : (
-                  <Select {...register("jnChekum")}>
-                    {jnChekum?.map((obj, idx) => (
-                      <option key={idx} value={obj.code1}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                )}
+                <Select {...register("jnChekum")}>
+                  {dataCommonDic?.jnChekum?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code1}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
               </FormGroup>
               <div>
                 <ErrorText>{errors["jnChekum"]?.message}</ErrorText>
@@ -315,17 +282,14 @@ const Form = (
             <Field>
               <FormGroup>
                 <Label>지로출력 조건</Label>
-                {isJnJiroPrintError ? (
-                  "error occured"
-                ) : (
-                  <Select {...register("jnJiroPrint")}>
-                    {jnJiroPrint?.map((obj, idx) => (
-                      <option key={idx} value={obj.code1}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                )}
+
+                <Select {...register("jnJiroPrint")}>
+                  {dataCommonDic?.jnJiroPrint?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code1}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
               </FormGroup>
               <div>
                 <ErrorText>{errors["jnJiroPrint"]?.message}</ErrorText>
@@ -360,20 +324,18 @@ const Form = (
               <Field>
                 <FormGroup>
                   <Label>조정기압력</Label>
-                  {isJnR ? (
-                    "error occured"
-                  ) : (
-                    <Select
-                      {...register("jnR")}
-                      style={{ minWidth: "104px", textAlign: "end" }}
-                    >
-                      {jnR?.map((obj, idx) => (
-                        <option key={idx} value={obj.code1}>
-                          {obj.codeName}
-                        </option>
-                      ))}
-                    </Select>
-                  )}
+                  <Select
+                    {...register("jnR")}
+                    style={{ minWidth: "104px" }}
+                    textAlign="right"
+                  >
+                    {dataCommonDic?.jnR?.map((obj: any, idx: number) => (
+                      <option key={idx} value={obj.code1}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+
                   <span>mmH2O</span>
                 </FormGroup>
                 <div>
@@ -416,20 +378,18 @@ const Form = (
               <Field>
                 <FormGroup>
                   <Label>수금방법</Label>
-                  {isJnSukumtypeError ? (
-                    "error occured"
-                  ) : (
-                    <Select
-                      {...register("jnSukumtype")}
-                      style={{ minWidth: "104px" }}
-                    >
-                      {jnSukumtype?.map((obj, idx) => (
+                  <Select
+                    {...register("jnSukumtype")}
+                    style={{ minWidth: "104px" }}
+                  >
+                    {dataCommonDic?.jnSukumtype?.map(
+                      (obj: any, idx: number) => (
                         <option key={idx} value={obj.code1}>
                           {obj.codeName}
                         </option>
-                      ))}
-                    </Select>
-                  )}
+                      )
+                    )}
+                  </Select>
                 </FormGroup>
                 <div>
                   <ErrorText>{errors["jnSukumtype"]?.message}</ErrorText>

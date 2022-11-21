@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
-import { useGetCommonGubunQuery } from "app/api/commonGubun";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { EN1100INSERT, EN1100UPDATE, EN1100DELETE } from "app/path";
 import {
   Input,
@@ -27,7 +27,6 @@ import getTabContent from "./getTabContent";
 interface IForm {
   selected: any;
   fetchData: any;
-  menuId: string;
   setData: any;
   selectedRowIndex: number;
   setSelected: any;
@@ -39,7 +38,6 @@ const Form = React.forwardRef(
     {
       selected,
       fetchData,
-      menuId,
       setData,
       selectedRowIndex,
       setSelected,
@@ -50,15 +48,10 @@ const Form = React.forwardRef(
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [tabId, setTabId] = useState(0);
     const [addr, setAddress] = useState<string>("");
-
-    const { data: jnSekum, isError: isJnSekumError } =
-      useGetCommonGubunQuery("12");
-
-    const { data: jnJangbu, isError: isJnJangbuError } =
-      useGetCommonGubunQuery("10");
-
-    const { data: jnJiro, isError: isJnJiroError } =
-      useGetCommonGubunQuery("17");
+    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
+      groupId: "EN",
+      functionName: "EN1100",
+    });
 
     const {
       register,
@@ -66,7 +59,6 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
-      control,
     } = useForm<IJNOTRY>({
       mode: "onChange",
       resolver: yupResolver(schema),
@@ -132,10 +124,14 @@ const Form = React.forwardRef(
             });
             await fetchData();
           } else {
-            toast.error(response?.response?.message);
+            toast.error(response?.response?.message, {
+              autoClose: 500,
+            });
           }
         } catch (err) {
-          toast.error("Couldn't delete");
+          toast.error("Couldn't delete", {
+            autoClose: 500,
+          });
         }
       }
 
@@ -307,17 +303,13 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>세금계산서 양식</Label>
-              {isJnSekumError ? (
-                "error occured"
-              ) : (
-                <Select {...register("jnSekum")}>
-                  {jnSekum?.map((obj, idx) => (
-                    <option key={idx} value={obj.code1}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              )}
+              <Select {...register("jnSekum")}>
+                {dataCommonDic?.jnSekum?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
             </FormGroup>
             <div>
               <ErrorText>{errors["jnSekum"]?.message}</ErrorText>
@@ -364,17 +356,13 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>거래명세표 양식</Label>
-              {isJnJangbuError ? (
-                "error occured"
-              ) : (
-                <Select {...register("jnJangbu")}>
-                  {jnJangbu?.map((obj, idx) => (
-                    <option key={idx} value={obj.code1}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              )}
+              <Select {...register("jnJangbu")}>
+                {dataCommonDic?.jnJangbu?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
             </FormGroup>
             <div>
               <ErrorText>{errors["jnJangbu"]?.message}</ErrorText>
@@ -425,7 +413,7 @@ const Form = React.forwardRef(
             onClick={(id) => setTabId(id)}
           />
           <TabContentWrapper>
-            {getTabContent(tabId, register, errors, jnJiro, isJnJiroError)}
+            {getTabContent(tabId, register, errors, dataCommonDic?.jnJiro)}
           </TabContentWrapper>
         </div>
       </form>

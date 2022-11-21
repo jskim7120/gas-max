@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
-import { useDispatch } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { EN1900INSERT, EN1900UPDATE, EN1900DELETE } from "app/path";
 import {
@@ -23,7 +22,6 @@ import { schema } from "./validation";
 interface IForm {
   selected: any;
   fetchData: any;
-  menuId: string;
   setData: any;
   selectedRowIndex: number;
   setSelected: any;
@@ -35,7 +33,6 @@ const Form = React.forwardRef(
     {
       selected,
       fetchData,
-      menuId,
       setData,
       selectedRowIndex,
       setSelected,
@@ -43,8 +40,6 @@ const Form = React.forwardRef(
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const dispatch = useDispatch();
-
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -113,7 +108,9 @@ const Form = React.forwardRef(
             await fetchData();
           }
         } catch (err) {
-          toast.error("Couldn't delete");
+          toast.error("Couldn't delete", {
+            autoClose: 500,
+          });
         }
       }
 
@@ -145,10 +142,14 @@ const Form = React.forwardRef(
           });
           setIsAddBtnClicked(false);
         } else {
-          toast.error(response?.message);
+          toast.error(response?.message, {
+            autoClose: 500,
+          });
         }
       } catch (err: any) {
-        toast.error(err?.message);
+        toast.error(err?.message, {
+          autoClose: 500,
+        });
       }
     };
 

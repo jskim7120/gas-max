@@ -23,7 +23,6 @@ import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
 import CustomDate from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { convertBase64 } from "helpers/convertBase64";
-import { useGetCommonGubunQuery } from "app/api/commonGubun";
 import API from "app/axios";
 import IconInfo from "assets/image/Icon-info.png";
 import { ImageWrapper } from "../style";
@@ -59,7 +58,6 @@ const Form = React.forwardRef(
       groupId: "EN",
       functionName: "EN1200",
     });
-    const { data: dataEmailType } = useGetCommonGubunQuery("5");
 
     const {
       register,
@@ -130,7 +128,9 @@ const Form = React.forwardRef(
             await fetchData();
           }
         } catch (err) {
-          toast.error("Couldn't delete");
+          toast.error("Couldn't delete", {
+            autoClose: 500,
+          });
         }
       }
 
@@ -174,10 +174,14 @@ const Form = React.forwardRef(
           });
           setIsAddBtnClicked(false);
         } else {
-          toast.error(response.response.data?.message);
+          toast.error(response.response.data?.message, {
+            autoClose: 500,
+          });
         }
       } catch (err: any) {
-        toast.error(err?.message);
+        toast.error(err?.message, {
+          autoClose: 500,
+        });
       }
     };
 
@@ -449,7 +453,7 @@ const Form = React.forwardRef(
               />
               @
               <Select {...register("saupEdiId")}>
-                {dataEmailType?.map((obj, idx) => (
+                {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
                     {obj.codeName}
                   </option>

@@ -6,25 +6,22 @@ import API from "app/axios";
 import { EN2000INSERT, EN2000UPDATE, EN2000DELETE } from "app/path";
 import {
   Input,
-  Select,
   Wrapper,
   Divider,
   DividerGray,
-  Field,
   ErrorText,
   FormGroup,
   Label,
 } from "components/form/style";
+import { InfoText } from "components/text";
 import { InfoDesc } from "../style";
 import CheckBox from "components/checkbox";
 import { ICARJBC } from "./model";
 import { schema } from "./validation";
-import { InfoText } from "components/text";
 
 interface IForm {
   selected: any;
   fetchData: any;
-  menuId: string;
   setData: any;
   selectedRowIndex: number;
   setSelected: any;
@@ -36,7 +33,6 @@ const Form = React.forwardRef(
     {
       selected,
       fetchData,
-      menuId,
       setData,
       selectedRowIndex,
       setSelected,
@@ -107,7 +103,9 @@ const Form = React.forwardRef(
             await fetchData();
           }
         } catch (err) {
-          toast.error("Couldn't delete");
+          toast.error("Couldn't delete", {
+            autoClose: 500,
+          });
         }
       }
 
@@ -140,10 +138,14 @@ const Form = React.forwardRef(
           });
           setIsAddBtnClicked(false);
         } else {
-          toast.error(response?.message);
+          toast.error(response?.message, {
+            autoClose: 500,
+          });
         }
       } catch (err: any) {
-        toast.error(err?.message);
+        toast.error(err?.message, {
+          autoClose: 500,
+        });
       }
     };
 
@@ -153,7 +155,6 @@ const Form = React.forwardRef(
         onSubmit={handleSubmit(submit)}
         style={{ padding: "0px 10px" }}
       >
-        {/* <p>{isAddBtnClicked ? "true" : "false"}</p> */}
         <Wrapper>
           <Input
             label="코드"
