@@ -27,7 +27,7 @@ import {
   formatCurrencyRemoveComma,
 } from "helpers/dateFormat";
 import { convertBase64 } from "helpers/convertBase64";
-import CustomDate from "components/customDatePicker";
+import CustomDatePicker from "components/customDatePicker/customdate2";
 import { ImageWrapper } from "../style";
 
 interface IForm {
@@ -57,6 +57,10 @@ const Form = React.forwardRef(
       name: string;
     }>();
     const [image64, setImage64] = useState<any>(null);
+    const [swIndate, setSwIndate] = useState("");
+    const [swJdate1, setSwJdate1] = useState("");
+    const [swJdate2, setSwJdate2] = useState("");
+    const [swOutDate, setSwOutDate] = useState("");
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
@@ -115,11 +119,14 @@ const Form = React.forwardRef(
             swWorkOut: selected.swWorkOut === "Y",
             cuSeEmail: selected.cuSeEmail ? selected.cuSeEmail.trim() : "",
             mailKind: selected.mailKind ? selected.mailKind.trim() : "",
-            swIndate: selected.swIndate ? formatDate(selected.swIndate) : "",
-            swJdate1: selected.swJdate1 ? formatDate(selected.swJdate1) : "",
-            swJdate2: selected.swJdate2 ? formatDate(selected.swJdate2) : "",
-            swOutDate: selected.swOutDate ? formatDate(selected.swOutDate) : "",
           });
+
+          setSwIndate(selected.swIndate ? formatDate(selected.swIndate) : "");
+          setSwJdate1(selected.swJdate1 ? formatDate(selected.swJdate1) : "");
+          setSwJdate2(selected.swJdate2 ? formatDate(selected.swJdate2) : "");
+          setSwOutDate(
+            selected.swOutDate ? formatDate(selected.swOutDate) : ""
+          );
 
           selected.swStampFile
             ? setImage64(selected.swStampFile)
@@ -167,18 +174,10 @@ const Form = React.forwardRef(
         formValues.cuSeEmail &&
         `${formValues.cuSeEmail.trim()}@${formValues.mailKind}`;
 
-      formValues.swIndate = formValues.swIndate
-        ? formatDateByRemoveDash(formValues.swIndate)
-        : "";
-      formValues.swJdate1 = formValues.swJdate1
-        ? formatDateByRemoveDash(formValues.swJdate1)
-        : "";
-      formValues.swJdate2 = formValues.swJdate2
-        ? formatDateByRemoveDash(formValues.swJdate2)
-        : "";
-      formValues.swOutDate = formValues.swOutDate
-        ? formatDateByRemoveDash(formValues.swOutDate)
-        : "";
+      formValues.swIndate = swIndate ? formatDateByRemoveDash(swIndate) : "";
+      formValues.swJdate1 = swJdate1 ? formatDateByRemoveDash(swJdate1) : "";
+      formValues.swJdate2 = swJdate2 ? formatDateByRemoveDash(swJdate2) : "";
+      formValues.swOutDate = swOutDate ? formatDateByRemoveDash(swOutDate) : "";
 
       formValues.swStampFile = image64 && image64;
 
@@ -406,13 +405,14 @@ const Form = React.forwardRef(
             </Wrapper>
             <DividerGray />
             <Wrapper style={{ width: "600px" }}>
-              <CustomDate
-                label="입사일"
-                name="swIndate"
-                register={register("swIndate")}
-                reset={reset}
-                errors={errors["swIndate"]?.message}
-              />
+              <Field flex style={{ alignItems: "center" }}>
+                <Label>입사일</Label>
+                <CustomDatePicker
+                  value={swIndate}
+                  setValue={setSwIndate}
+                  name="swIndate"
+                />
+              </Field>
               <Field style={{ width: "100%" }}>
                 <FormGroup>
                   <Label>급여방식</Label>
@@ -467,20 +467,23 @@ const Form = React.forwardRef(
         </Wrapper>
         <DividerGray />
         <Wrapper style={{ width: "600px" }}>
-          <CustomDate
-            label="적성검사"
-            name="swJdate1"
-            register={register("swJdate1")}
-            reset={reset}
-            errors={errors["swJdate1"]?.message}
-          />
-          <CustomDate
-            label="~"
-            name="swJdate2"
-            register={register("swJdate2")}
-            reset={reset}
-            errors={errors["swJdate2"]?.message}
-          />
+          <Field flex style={{ alignItems: "center" }}>
+            <Label>적성검사</Label>
+            <CustomDatePicker
+              value={swJdate1}
+              setValue={setSwJdate1}
+              name="swJdate1"
+            />
+          </Field>
+
+          <Field flex style={{ alignItems: "center" }}>
+            <Label style={{ minWidth: "auto" }}>~</Label>
+            <CustomDatePicker
+              value={swJdate2}
+              setValue={setSwJdate2}
+              name="swJdate2"
+            />
+          </Field>
         </Wrapper>
         <DividerGray />
         <Wrapper>
@@ -511,13 +514,14 @@ const Form = React.forwardRef(
               <ErrorText>{errors["swWorkOut"]?.message}</ErrorText>
             </div>
           </Field>
-          <CustomDate
-            label="퇴사일"
-            name="swOutDate"
-            register={register("swOutDate")}
-            reset={reset}
-            errors={errors["swOutDate"]?.message}
-          />
+          <Field flex style={{ alignItems: "center" }}>
+            <Label>퇴사일</Label>
+            <CustomDatePicker
+              value={swOutDate}
+              setValue={setSwOutDate}
+              name="swOutDate"
+            />
+          </Field>
         </Wrapper>
         <DividerGray />
         <p

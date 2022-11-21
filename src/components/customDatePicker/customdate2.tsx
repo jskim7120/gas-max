@@ -1,97 +1,90 @@
-import React from "react";
+import MaskedInput from "react-text-mask";
 import DatePicker from "react-datepicker";
-import { Input } from "components/form/style";
+import styled from "styled-components";
+
 import { formatDateToString } from "helpers/dateFormat";
 import CalendarIcon from "assets/image/calendar.png";
-import { InputSize } from "components/componentsType";
 
-interface IProps {
-  value?: string;
-  onClick?: any;
-  placeholder?: any;
-  register?: any;
-  errors?: any;
-  label?: string;
-}
-
-const CustomInput = React.forwardRef(
-  (props: IProps, ref?: React.ForwardedRef<HTMLDivElement>): JSX.Element => {
-    return (
-      <div
-        style={{
-          width: "fit-content",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-        }}
-        onClick={props.onClick}
-        ref={ref}
-      >
-        <Input
-          register={props.register}
-          errors={props.errors}
-          label={props.label && props.label}
-          style={{ border: "1px solid #e6e5e5" }}
-        />
-        <div
-          style={{
-            width: "30px",
-            height: "25px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "#fff",
-            border: "1px solid #e6e5e5",
-            borderTopRightRadius: "4px",
-            borderBottomRightRadius: "4px",
-            margin: "0 5px 0 -8px",
-          }}
-        >
-          <img src={CalendarIcon} />
-        </div>
-      </div>
-    );
-  }
-);
-
-function CustomDate({
-  register,
-  reset,
-  errors,
-  label,
+function CustomDatePicker({
   name,
+  style,
+  value,
+  setValue,
 }: {
-  register?: any;
-  reset?: any;
-  errors?: any;
-  label?: string;
   name: string;
+  style?: any;
+  value: string;
+  setValue: Function;
 }) {
-  const handleDateChange = (date: Date) => {
-    const stringDate = formatDateToString(date);
-
-    reset({
-      [name]: stringDate,
-    });
+  const onChange = (date: Date) => {
+    setValue(formatDateToString(date));
   };
+
   return (
-    <>
-      <DatePicker
-        wrapperClassName="datePicker"
-        onChange={handleDateChange}
-        showMonthDropdown
-        showYearDropdown
-        // dateFormat="MM/dd/yyyy h:mm aa"
-        customInput={
-          <CustomInput
-            register={register}
-            errors={errors}
-            label={label && label}
+    <DatePicker
+      value={value}
+      onChange={onChange}
+      showMonthDropdown
+      showYearDropdown
+      customInput={
+        <InputWrapper style={style}>
+          <MaskedInput
+            mask={[/\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, "-", /\d/, /\d/]}
+            value={value}
+            className="customMaskInput"
+            name={name}
           />
-        }
-      />
-    </>
+          <div className="calendarImageWrapper">
+            <img src={CalendarIcon} alt="calendar" />
+          </div>
+        </InputWrapper>
+      }
+    />
   );
 }
 
-export default CustomDate;
+const InputWrapper = styled.div`
+  height: 25px;
+  width: 110px;
+  position: relative;
+  border: 1px solid #e6e5e5;
+  border-radius: 4px;
+  margin: 5px 5px 0 9px;
+
+  &:hover,
+  &:hover .customMaskInput {
+    background: #fffacd;
+  }
+
+  .customMaskInput {
+    width: 85px;
+    height: 17px;
+    position: absolute;
+    padding-left: 5px;
+    top: 3px;
+    left: 1px;
+    border: none;
+    outline: none;
+
+    &:hover {
+      background: #fffacd;
+    }
+  }
+
+  .calendarImageWrapper {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    width: 20px;
+    padding-left: 3px;
+    border-left: 1px solid #e6e5e5;
+
+    img {
+      width: 13px;
+      height: 14px;
+    }
+  }
+`;
+
+export default CustomDatePicker;
