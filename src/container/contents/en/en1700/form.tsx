@@ -24,7 +24,7 @@ import {
   formatDateByRemoveDash,
   formatCurrencyRemoveComma,
 } from "helpers/dateFormat";
-import CustomDate from "components/customDatePicker";
+import CustomDatePicker from "components/customDatePicker/customdate2";
 import { InputSize } from "components/componentsType";
 import { InfoText } from "components/text";
 
@@ -79,6 +79,13 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
+    const [caSafeDate, setCaSafeDate] = useState("");
+    const [caInDate, setCaInDate] = useState("");
+    const [caRentDate, setCaRentDate] = useState("");
+    const [caJdate1, setCaJdate1] = useState("");
+    const [caJdate2, setCaJdate2] = useState("");
+    const [caBsdate, setCaBsdate] = useState("");
+    const [caBldate, setCaBldate] = useState("");
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
@@ -122,18 +129,18 @@ const Form = React.forwardRef(
             ...newData,
             caBkYn: selected?.caBkYn === "Y",
             caRentYn: selected?.caRentYn === "Y",
-            caSafeDate: selected?.caSafeDate
-              ? formatDate(selected.caSafeDate)
-              : "",
-            caInDate: selected.caInDate ? formatDate(selected.caInDate) : "",
-            caRentDate: selected.caRentDate
-              ? formatDate(selected.caRentDate)
-              : "",
-            caJdate1: selected.caJdate1 ? formatDate(selected.caJdate1) : "",
-            caJdate2: selected.caJdate2 ? formatDate(selected.caJdate2) : "",
-            caBsdate: selected.caBsdate ? formatDate(selected.caBsdate) : "",
-            caBldate: selected.caBldate ? formatDate(selected.caBldate) : "",
           });
+          setCaSafeDate(
+            selected.caSafeDate ? formatDate(selected.caSafeDate) : ""
+          );
+          setCaInDate(selected.caInDate ? formatDate(selected.caInDate) : "");
+          setCaRentDate(
+            selected.caRentDate ? formatDate(selected.caRentDate) : ""
+          );
+          setCaJdate1(selected.caJdate1 ? formatDate(selected.caJdate1) : "");
+          setCaJdate2(selected.caJdate2 ? formatDate(selected.caJdate2) : "");
+          setCaBsdate(selected.caBsdate ? formatDate(selected.caBsdate) : "");
+          setCaBldate(selected.caBldate ? formatDate(selected.caBldate) : "");
         }
       }
     };
@@ -169,6 +176,18 @@ const Form = React.forwardRef(
       formValues.caBkYn = formValues.caBkYn ? "Y" : "N";
       formValues.caRentYn = formValues.caRentYn ? "Y" : "N";
 
+      formValues.caSafeDate = caSafeDate
+        ? formatDateByRemoveDash(caSafeDate)
+        : "";
+      formValues.caInDate = caInDate ? formatDateByRemoveDash(caInDate) : "";
+      formValues.caRentDate = caRentDate
+        ? formatDateByRemoveDash(caRentDate)
+        : "";
+      formValues.caJdate1 = caJdate1 ? formatDateByRemoveDash(caJdate1) : "";
+      formValues.caJdate2 = caJdate2 ? formatDateByRemoveDash(caJdate2) : "";
+      formValues.caBsdate = caBsdate ? formatDateByRemoveDash(caBsdate) : "";
+      formValues.caBldate = caBsdate ? formatDateByRemoveDash(caBldate) : "";
+      // --------------------------
       formValues.caAmt = formValues.caAmt
         ? formatCurrencyRemoveComma(formValues.caAmt)
         : "";
@@ -183,27 +202,6 @@ const Form = React.forwardRef(
         : "";
       formValues.caInsuranceAmt = formValues.caInsuranceAmt
         ? formatCurrencyRemoveComma(formValues.caInsuranceAmt)
-        : "";
-      formValues.caSafeDate = formValues.caSafeDate
-        ? formatDateByRemoveDash(formValues.caSafeDate)
-        : "";
-      formValues.caInDate = formValues.caInDate
-        ? formatDateByRemoveDash(formValues.caInDate)
-        : "";
-      formValues.caRentDate = formValues.caRentDate
-        ? formatDateByRemoveDash(formValues.caRentDate)
-        : "";
-      formValues.caJdate1 = formValues.caJdate1
-        ? formatDateByRemoveDash(formValues.caJdate1)
-        : "";
-      formValues.caJdate2 = formValues.caJdate2
-        ? formatDateByRemoveDash(formValues.caJdate2)
-        : "";
-      formValues.caBsdate = formValues.caBsdate
-        ? formatDateByRemoveDash(formValues.caBsdate)
-        : "";
-      formValues.caBldate = formValues.caBldate
-        ? formatDateByRemoveDash(formValues.caBldate)
         : "";
 
       try {
@@ -325,13 +323,14 @@ const Form = React.forwardRef(
           <InfoText text="탱크잔량 원격검침 시스템의 매핑할 차량코드를 지정." />
         </Wrapper>
         <Wrapper>
-          <CustomDate
-            label="안전검사일"
-            name="caSafeDate"
-            register={register("caSafeDate")}
-            reset={reset}
-            errors={errors["caSafeDate"]?.message}
-          />
+          <Field flex style={{ alignItems: "center" }}>
+            <Label>안전검사일</Label>
+            <CustomDatePicker
+              value={caSafeDate}
+              setValue={setCaSafeDate}
+              name="caSafeDate"
+            />
+          </Field>
           <Field style={{ width: "100%" }}>
             <Input
               label="충전기한"
@@ -364,13 +363,15 @@ const Form = React.forwardRef(
             errors={errors["caManager"]?.message}
             inputSize={InputSize.sm}
           />
-          <CustomDate
-            label="구입일자"
-            name="caInDate"
-            register={register("caInDate")}
-            reset={reset}
-            errors={errors["caInDate"]?.message}
-          />
+
+          <Field flex style={{ alignItems: "center" }}>
+            <Label>구입일자</Label>
+            <CustomDatePicker
+              value={caInDate}
+              setValue={setCaInDate}
+              name="caInDate"
+            />
+          </Field>
         </Wrapper>
         <DividerGray />
         <Wrapper grid col={2}>
@@ -383,31 +384,33 @@ const Form = React.forwardRef(
               <ErrorText>{errors["caRentYn"]?.message}</ErrorText>
             </div>
           </Field>
-
-          <CustomDate
-            label="리스기간"
-            name="caRentDate"
-            register={register("caRentDate")}
-            reset={reset}
-            errors={errors["caRentDate"]?.message}
-          />
+          <Field flex style={{ alignItems: "center" }}>
+            <Label>리스기간</Label>
+            <CustomDatePicker
+              value={caRentDate}
+              setValue={setCaRentDate}
+              name="caRentDate"
+            />
+          </Field>
         </Wrapper>
         <DividerGray />
         <Wrapper style={{ width: "630px" }}>
-          <CustomDate
-            label="정기검사일"
-            name="caJdate1"
-            register={register("caJdate1")}
-            reset={reset}
-            errors={errors["caJdate1"]?.message}
-          />
-          <CustomDate
-            label="~"
-            name="caJdate2"
-            register={register("caJdate2")}
-            reset={reset}
-            errors={errors["caJdate2"]?.message}
-          />
+          <Field flex style={{ alignItems: "center" }}>
+            <Label>정기검사일</Label>
+            <CustomDatePicker
+              value={caJdate1}
+              setValue={setCaJdate1}
+              name="caJdate1"
+            />
+          </Field>
+          <Field flex style={{ alignItems: "center" }}>
+            <Label style={{ minWidth: "auto" }}>~</Label>
+            <CustomDatePicker
+              value={caJdate2}
+              setValue={setCaJdate2}
+              name="caJdate2"
+            />
+          </Field>
         </Wrapper>
         <DividerGray />
         <Wrapper>
@@ -551,20 +554,22 @@ const Form = React.forwardRef(
         </Wrapper>
         <DividerGray />
         <Wrapper style={{ width: "630px" }}>
-          <CustomDate
-            label="보험기간"
-            name="caBsdate"
-            register={register("caBsdate")}
-            reset={reset}
-            errors={errors["caBsdate"]?.message}
-          />
-          <CustomDate
-            label="~"
-            name="caBldate"
-            register={register("caBldate")}
-            reset={reset}
-            errors={errors["caBldate"]?.message}
-          />
+          <Field flex style={{ alignItems: "center" }}>
+            <Label>보험기간</Label>
+            <CustomDatePicker
+              value={caBsdate}
+              setValue={setCaBsdate}
+              name="caBsdate"
+            />
+          </Field>
+          <Field flex style={{ alignItems: "center" }}>
+            <Label style={{ minWidth: "auto" }}>~</Label>
+            <CustomDatePicker
+              value={caBldate}
+              setValue={setCaBldate}
+              name="caBldate"
+            />
+          </Field>
         </Wrapper>
         <DividerGray />
         <Wrapper>

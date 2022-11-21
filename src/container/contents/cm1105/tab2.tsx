@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Input,
   Input2,
@@ -35,6 +36,7 @@ function Tab2({
   setSign: Function;
   reset: Function;
 }) {
+  const [cuRdangaType, setCuRdangaType] = useState("");
   return (
     <div>
       <Field flex className="outer-border ">
@@ -49,7 +51,7 @@ function Tab2({
             <Field>
               <FormGroup>
                 <Label>조정기압력</Label>
-                <Select {...register("cuRh2o")} textAlign="right">
+                <Select {...register("cuRh2o")}>
                   {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -65,7 +67,13 @@ function Tab2({
             <Field>
               <FormGroup>
                 <Label>루베단가</Label>
-                <Select {...register("cuRdangaType")}>
+                <Select
+                  {...register("cuRdangaType")}
+                  onChange={(e: any) => {
+                    console.log(e.target.value);
+                    setCuRdangaType(e.target.value);
+                  }}
+                >
                   {dataCommonDic?.cuRdangaType?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -77,7 +85,44 @@ function Tab2({
                 <ErrorText>{errors["cuRdangaType"]?.message}</ErrorText>
               </div>
             </Field>
-            <Field flex style={{ alignItems: "center" }}>
+            {cuRdangaType === "2" ? (
+              <Field flex style={{ alignItems: "center" }}>
+                <Input
+                  register={register("cuRdanga")}
+                  errors={errors["cuRdanga"]?.message}
+                  inputSize={InputSize.sm}
+                  textAlign="right"
+                  style={{ border: "1px solid #e6e5e5" }}
+                />
+                <Select
+                  {...register("cuRdangaSign")}
+                  onChange={(e: any) => setSign(e.target.value)}
+                  style={{ minWidth: "50px", border: "1px solid #e6e5e5" }}
+                >
+                  <option value="+">+</option>
+                  <option value="*">*</option>
+                  <option value="-">-</option>
+                </Select>
+
+                <Input2
+                  name="percentage"
+                  id="percentage"
+                  type="text"
+                  onChange={(e: any) => setToo(Number(e.target.value))}
+                />
+
+                <p>
+                  {sign === "*" && "%"}
+                  {sign === "+" && "원"}
+                </p>
+                <p style={{ margin: "0 5px" }}>=</p>
+                <p>
+                  {sign !== "*"
+                    ? eval(`${customerInfo?.cuRdanga} ${sign} ${too}`)
+                    : eval(`${customerInfo?.cuRdanga} ${sign} ${too}/100`)}
+                </p>
+              </Field>
+            ) : (
               <Input
                 register={register("cuRdanga")}
                 errors={errors["cuRdanga"]?.message}
@@ -85,35 +130,7 @@ function Tab2({
                 textAlign="right"
                 style={{ border: "1px solid #e6e5e5" }}
               />
-
-              <Select
-                {...register("cuRdangaSign")}
-                onChange={(e: any) => setSign(e.target.value)}
-                style={{ minWidth: "50px", border: "1px solid #e6e5e5" }}
-              >
-                <option value="+">+</option>
-                <option value="*">*</option>
-                <option value="-">-</option>
-              </Select>
-
-              <Input2
-                name="percentage"
-                id="percentage"
-                type="text"
-                onChange={(e: any) => setToo(Number(e.target.value))}
-              />
-
-              <p>
-                {sign === "*" && "%"}
-                {sign === "+" && "원"}
-              </p>
-              <p style={{ margin: "0 5px" }}>=</p>
-              <p>
-                {sign !== "*"
-                  ? eval(`${customerInfo?.cuRdanga} ${sign} ${too}`)
-                  : eval(`${customerInfo?.cuRdanga} ${sign} ${too}/100`)}
-              </p>
-            </Field>
+            )}
           </Wrapper>
           <DividerGray />
           <Wrapper grid fields={"1fr 1fr 2fr"}>
@@ -140,7 +157,6 @@ function Tab2({
               register={register("cuCno")}
               errors={errors["cuCno"]?.message}
               inputSize={InputSize.sm}
-              textAlign="right"
             />
           </Wrapper>
           <DividerGray />

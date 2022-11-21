@@ -23,6 +23,7 @@ import {
   Label,
 } from "components/form/style";
 import { CM1105SEARCH } from "app/path";
+import { ModalHeader } from "./cm1105Style";
 
 import CheckBox from "components/checkbox";
 import PlainTab from "components/plainTab";
@@ -172,15 +173,6 @@ function FormCM1105() {
     }
   };
 
-  // useEffect(() => {
-  //   if (addr.length > 0) {
-  //     reset({
-  //       cuZipcode: addr ? addr?.split("/")[1] : "",
-  //       cuAddr1: addr ? addr?.split("/")[0] : "",
-  //     });
-  //   }
-  // }, [addr]);
-
   const fetchData = async () => {
     try {
       const { data } = await API.get(CM1105SEARCH, {
@@ -194,11 +186,7 @@ function FormCM1105() {
 
   const submit = async (data: ICM1105SEARCH) => {
     const formValues = getValues();
-    // formValues.jnSegongYn = formValues.jnSegongYn ? "Y" : "N";
-    // formValues.jnVatSumyn = formValues.jnVatSumyn ? "Y" : "N";
-    // formValues.jnSekumEa = formValues.jnSekumEa ? "Y" : "N";
-    // formValues.niceBankYn = formValues.niceBankYn ? "Y" : "N";
-    // formValues.innopayBankYn = formValues.innopayBankYn ? "Y" : "N";
+
     const path = isAddBtnClicked ? CM1105INSERT : CM1105UPDATE;
     try {
       const response: any = await API.post(path, formValues);
@@ -208,31 +196,25 @@ function FormCM1105() {
         });
         setIsAddBtnClicked(false);
       } else {
-        toast.error(response?.response?.data?.message);
+        toast.error(response?.response?.data?.message, {
+          autoClose: 500,
+        });
       }
     } catch (err: any) {
-      toast.error(err?.message);
+      toast.error(err?.message, {
+        autoClose: 500,
+      });
     }
   };
 
   return (
     <form onSubmit={handleSubmit(submit)}>
-      <div
-        style={{
-          width: "100%",
-          height: "35px",
-          background: "#0B97F6",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "0 15px",
-        }}
-      >
+      <ModalHeader>
         <Field flex style={{ alignItems: "center" }}>
-          <p style={{ color: "#fff", fontSize: "14px" }}>거래처 정보</p>
+          <p>거래처 정보</p>
           <Field>
             <FormGroup>
-              <Label style={{ background: "transparent" }}>영업소</Label>
+              <Label>영업소</Label>
               <Select {...register("areaCode")}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -240,9 +222,9 @@ function FormCM1105() {
                   </option>
                 ))}
               </Select>
-              <div>
+              {/* <div>
                 <ErrorText>{errors["areaCode"]?.message}</ErrorText>
-              </div>
+              </div> */}
             </FormGroup>
           </Field>
         </Field>
@@ -285,7 +267,7 @@ function FormCM1105() {
             <WhiteClose />
           </span>
         </div>
-      </div>
+      </ModalHeader>
       <div style={{ padding: "12px" }}>
         <Divider />
         <Wrapper grid>
@@ -569,6 +551,7 @@ function FormCM1105() {
                 label="무료시설 투자비"
                 register={register("cuSvKumack")}
                 errors={errors["cuSvKumack"]?.message}
+                textAlign="right"
                 fullWidth
               />
             </Wrapper>

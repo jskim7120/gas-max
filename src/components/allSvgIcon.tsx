@@ -4751,6 +4751,27 @@ export const SmallWhiteTick = () => {
     </svg>
   );
 };
+export const UserCm1300Icon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="17.298"
+      height="20.017"
+      viewBox="0 0 17.298 20.017"
+    >
+      <path
+        id="Path_3177"
+        data-name="Path 3177"
+        d="M17.728,56.231A10.092,10.092,0,0,0,12.565,48.6a4.347,4.347,0,0,0,1.009-2.8,4,4,0,1,0-7.991-.443,3.849,3.849,0,0,0,0,.443,4.342,4.342,0,0,0,1.009,2.8A10.092,10.092,0,0,0,1.43,56.231a9.824,9.824,0,0,0,16.3,0Z"
+        transform="translate(-0.93 -41.068)"
+        fill="none"
+        stroke="#707070"
+        strokeLinejoin="round"
+        strokeWidth="1"
+      />
+    </svg>
+  );
+};
 
 export const MagnifyingGlassBig = () => {
   return (

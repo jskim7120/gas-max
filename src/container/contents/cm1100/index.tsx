@@ -399,6 +399,7 @@ function CM1100Page({
                   register={register("cuMisu")}
                   errors={errors["cuMisu"]?.message}
                   kind={FieldKind.BORDER}
+                  textAlign="right"
                   labelStyle={{
                     minWidth: "137px",
                   }}

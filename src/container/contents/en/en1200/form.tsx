@@ -20,7 +20,7 @@ import { schema } from "./validation";
 import { SearchIcon, IconHome, IconReceipt } from "components/allSvgIcon";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
-import CustomDate from "components/customDatePicker";
+import CustomDatePicker from "components/customDatePicker/customdate2";
 import { InputSize } from "components/componentsType";
 import { convertBase64 } from "helpers/convertBase64";
 import API from "app/axios";
@@ -53,6 +53,8 @@ const Form = React.forwardRef(
     const [addr, setAddress] = useState<string>("");
     const [image, setImage] = useState<{ name: string }>();
     const [image64, setImage64] = useState<any>(null);
+
+    const [saupDate, setSaupDate] = useState("");
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
@@ -107,8 +109,10 @@ const Form = React.forwardRef(
             saupStampQu: selected?.saupStampQu === "Y",
             saupStampEs: selected?.saupStampEs === "Y",
             saupStampSe: selected?.saupStampSe === "Y",
-            saupDate: selected.saupDate ? formatDate(selected.saupDate) : "",
           });
+
+          setSaupDate(selected.saupDate ? formatDate(selected.saupDate) : "");
+
           selected.saupStampImg
             ? setImage64(selected.saupStampImg)
             : setImage64(null);
@@ -118,6 +122,7 @@ const Form = React.forwardRef(
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
+
         try {
           const response = await API.post(EN1200DELETE, formValues);
           if (response.status === 200) {
@@ -147,10 +152,8 @@ const Form = React.forwardRef(
       formValues.saupStampQu = formValues.saupStampQu ? "Y" : "N";
       formValues.saupStampEs = formValues.saupStampEs ? "Y" : "N";
       formValues.saupStampSe = formValues.saupStampSe ? "Y" : "N";
+      formValues.saupDate = saupDate ? formatDateByRemoveDash(saupDate) : "";
 
-      formValues.saupDate = formValues.saupDate
-        ? formatDateByRemoveDash(formValues.saupDate)
-        : "";
       formValues.saupEdiEmail =
         formValues.saupEdiEmail && formValues.saupEdiEmail.trim();
 
@@ -390,13 +393,14 @@ const Form = React.forwardRef(
                 </Wrapper>
                 <DividerGray />
                 <Wrapper>
-                  <CustomDate
-                    label="개업일"
-                    name="saupDate"
-                    register={register("saupDate")}
-                    reset={reset}
-                    errors={errors["saupDate"]?.message}
-                  />
+                  <Field flex style={{ alignItems: "center" }}>
+                    <Label>개업일</Label>
+                    <CustomDatePicker
+                      value={saupDate}
+                      setValue={setSaupDate}
+                      name="saupDate"
+                    />
+                  </Field>
                   <Field style={{ width: "100%" }}>
                     <Input
                       label="주민번호/법인번호"

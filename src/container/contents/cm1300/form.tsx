@@ -2,7 +2,6 @@ import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { useDispatch } from "app/store";
 import {
   Input,
   Select,
@@ -19,16 +18,9 @@ import CheckBox from "components/checkbox";
 import { ICM1300 } from "./model";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
-import {
-  formatDate,
-  formatDateByRemoveDash,
-  formatCurrencyRemoveComma,
-} from "helpers/dateFormat";
-import CustomDate from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
-import { InfoText } from "components/text";
 import {
   Item,
   RadioButton,
@@ -104,7 +96,6 @@ const Form = React.forwardRef(
 
     const resetForm = (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        console.log("type:", type);
         let newData: any = {};
         if (type === "clear") {
           for (const [key, value] of Object.entries(selected)) {
@@ -122,6 +113,7 @@ const Form = React.forwardRef(
       }
     };
     const crud = async (type: string | null) => {
+      console.log("works");
       if (type === "delete") {
         const path = `${base}delete`;
         const formValues = getValues();
@@ -145,6 +137,7 @@ const Form = React.forwardRef(
     };
 
     const submit = async (data: ICM1300) => {
+      console.log("works");
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
       const formValues = getValues();
@@ -178,10 +171,10 @@ const Form = React.forwardRef(
       <form
         className="form_control"
         onSubmit={handleSubmit(submit)}
-        style={{ padding: "15px 0px 29px" }}
+        style={{ padding: "15px 0px 29px", height: "auto" }}
       >
         <Divider />
-        <Wrapper grid col={2}>
+        <Wrapper grid col={3}>
           <Input
             label="건물코드"
             register={register("aptCode")}
@@ -191,13 +184,7 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>건물명</Label>
-              <Select {...register("aptName")}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
+              <Input inputSize={InputSize.md} register={register("aptName")} />
             </FormGroup>
             <div>
               <ErrorText>{errors["aptName"]?.message}</ErrorText>
@@ -205,7 +192,7 @@ const Form = React.forwardRef(
           </Field>
         </Wrapper>
         <DividerGray />
-        <Wrapper grid col={2}>
+        <Wrapper grid col={3}>
           <Input
             label="건물층수"
             register={register("aptF")}
@@ -214,7 +201,7 @@ const Form = React.forwardRef(
           />
           <Field>
             <FormGroup>
-              <Label>건물구조</Label>
+              <Label style={{ marginRight: "10px" }}>건물구조</Label>
               {radioOptions.map((option, index) => (
                 <Item key={index}>
                   <RadioButton
@@ -235,7 +222,7 @@ const Form = React.forwardRef(
           </Field>
         </Wrapper>
         <DividerGray />
-        <Wrapper>
+        <Wrapper grid col={3}>
           <div style={{ width: "50%" }}>
             <Input
               label="층당세대"
@@ -279,12 +266,13 @@ const Form = React.forwardRef(
           </CheckBoxContainer>
         </Wrapper>
         <Divider />
-        <Wrapper>
-          <Label style={{ textAlign: "center", position: "relative" }}>
-            주 소
-            <div style={{ position: "absolute", right: "10px", top: "9px" }}>
-              <input type="checkbox"></input>
-            </div>
+        <Wrapper style={{ alignItems: "center" }}>
+          <Label>
+            <CheckBox
+              title="주 소"
+              register={register("aptZipcode")}
+              rtl={false}
+            />
           </Label>
           <Input
             register={register("aptZipcode")}
@@ -295,35 +283,229 @@ const Form = React.forwardRef(
           <Input
             register={register("aptAddr1")}
             errors={errors["aptAddr1"]?.message}
-            inputSize={InputSize.lg}
+            inputSize={InputSize.md}
           />
-          <Input
-            register={register("aptAddr2")}
-            errors={errors["aptAddr2"]?.message}
-            inputSize={InputSize.sm}
-          />
+          <p className="addr2">(대덕동) 자양현대아파트 205동 1502호</p>
         </Wrapper>
-        {/* <Wrapper>
+        <DividerGray />
+        <Wrapper grid col={3}>
           <Field>
             <FormGroup>
               <Label>담당사원</Label>
-              {aptSwCode ? (
-                "error occured"
-              ) : (
-                <Select {...register("aptSwCode")}>
-                  {aptSwCode?.map((obj, idx) => (
-                    <option key={idx} value={obj.code1}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              )}
+              <Select {...register("aptSwCode")}>
+                {dataCommonDic?.aptSwCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
             </FormGroup>
-            <div>
-              <ErrorText>{errors["aptSwCode"]?.message}</ErrorText>
-            </div>
           </Field>
-        </Wrapper> */}
+          <Field>
+            <FormGroup>
+              <Label>지역분류</Label>
+              <Select {...register("aptJyCode")}>
+                {dataCommonDic?.aptJyCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+              <DaumAddress setAddress={setAddress} />
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <Label>관리자</Label>
+              <Select {...register("aptGubun")}>
+                {dataCommonDic?.aptGubun?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+          </Field>
+        </Wrapper>
+        <Divider />
+        <Wrapper grid col={3}>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="조정기"
+                  register={register("aptRh2o")}
+                  rtl={false}
+                />
+              </Label>
+              <Select
+                {...register("aptRh2o")}
+                inputWidth="175px"
+                textAlign="right"
+              >
+                {dataCommonDic?.aptRh2o?.map((option: any, index: number) => {
+                  return (
+                    <option key={index} value={option.code}>
+                      {option.codeName}
+                    </option>
+                  );
+                })}
+              </Select>
+              <p>mmH20</p>
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="개별단가 "
+                  register={register("aptRdangaType")}
+                  rtl={false}
+                />
+              </Label>
+              <Select
+                {...register("aptRdangaType")}
+                style={{ minWidth: "20%" }}
+              >
+                {dataCommonDic?.aptRdangaType.map(
+                  (option: any, index: number) => {
+                    return (
+                      <option key={index} value={option.code}>
+                        {option.codeName}
+                      </option>
+                    );
+                  }
+                )}
+              </Select>
+              <p>2,850원</p>
+              <Select
+                {...register("aptRdangaSign")}
+                style={{ minWidth: "40px" }}
+              >
+                {dataCommonDic?.aptRdangaSign.map(
+                  (option: any, index: number) => {
+                    return (
+                      <option key={index} value={option.code}>
+                        {option.codeName}
+                      </option>
+                    );
+                  }
+                )}
+              </Select>
+              <Input
+                inputSize={InputSize.xs}
+                register={register("aptRdangaSign")}
+              />
+              <p>%</p>
+              <p>=</p>
+              <p>2900 원</p>
+            </FormGroup>
+          </Field>
+        </Wrapper>
+        <DividerGray />
+        <Wrapper grid col={3}>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="관리비"
+                  register={register("aptAnkum")}
+                  rtl={false}
+                />
+              </Label>
+              <Input register={register("aptAnkum")} textAlign="right" />
+              <p>{`원`}</p>
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="시설비"
+                  register={register("aptSisulkum")}
+                  rtl={false}
+                />
+              </Label>
+              <Input register={register("aptSisulkum")} textAlign="right" />
+              <p>{`원`}</p>
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="계량기"
+                  register={register("aptMeterkum")}
+                  rtl={false}
+                />
+              </Label>
+              <Input register={register("aptMeterkum")} textAlign="right" />
+              <p>{`원`}</p>
+            </FormGroup>
+          </Field>
+        </Wrapper>
+        <DividerGray />
+        <Wrapper grid col={3}>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="연체율"
+                  register={register("aptPer")}
+                  rtl={false}
+                />
+              </Label>
+              <Input register={register("aptPer")} textAlign="right" />
+              <p>{`%`}</p>
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="검침일"
+                  register={register("aptGumdate")}
+                  rtl={false}
+                />
+              </Label>
+              <Select {...register("aptGumdate")} inputWidth="200px">
+                {dataCommonDic?.aptGumdate?.map(
+                  (option: any, index: number) => {
+                    return (
+                      <option key={index} value={option.code}>
+                        {option.codeName}
+                      </option>
+                    );
+                  }
+                )}
+              </Select>
+              <p>{`원`}</p>
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="계량기"
+                  register={register("aptSukumtype")}
+                  rtl={false}
+                />
+              </Label>
+              <Select {...register("aptSukumtype")} inputWidth="200px">
+                {dataCommonDic?.aptSukumtype?.map(
+                  (option: any, index: number) => {
+                    return (
+                      <option key={index} value={option.code}>
+                        {option.codeName}
+                      </option>
+                    );
+                  }
+                )}
+              </Select>
+            </FormGroup>
+          </Field>
+        </Wrapper>
+        <Divider />
       </form>
     );
   }
