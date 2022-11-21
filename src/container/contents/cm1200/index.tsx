@@ -18,16 +18,18 @@ import {
 // COMPONENTS
 import Button from "components/button/button";
 import {
-  MagnifyingGlass,
+  MagnifyingGlassBig,
   Plus,
   Reset,
   Trash,
   Update,
 } from "components/allSvgIcon";
-import { ButtonColor, FieldKind } from "components/componentsType";
+import { ButtonColor, ButtonType, FieldKind } from "components/componentsType";
 import { Field, FormGroup, Input, Label } from "components/form/style";
 import CheckBox from "components/checkbox";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
+import HomeIconSvg from "assets/image/home-icon.svg";
+import PersonIconSvg from "assets/image/person-icon.svg";
 //GRID
 import { GridView, LocalDataProvider } from "realgrid";
 import {
@@ -36,9 +38,8 @@ import {
   setIsDelete,
   closeModal,
 } from "app/state/modal/modalSlice";
-import HomeIconSvg from "assets/image/home-icon.svg";
-import PersonIconSvg from "assets/image/person-icon.svg";
-import { CM1200SEARCH } from "app/path";
+import { CM120065, CM1200SEARCH } from "app/path";
+import { ICM1200SEARCH, ICM120065USERINFO, ICM120065SUPPLYTYPE } from "./modul";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -57,7 +58,13 @@ function CM1200({
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState<ICM1200SEARCH>();
+  const [selectedUserInfo, setSelectedUserInfo] = useState([
+    {} as ICM120065USERINFO,
+  ]);
+  const [selectedSupplyTab, setSelectedSupplyTab] = useState([
+    {} as ICM120065SUPPLYTYPE,
+  ]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const { isDelete } = useSelector((state) => state.modal);
 
@@ -104,6 +111,14 @@ function CM1200({
   }, []);
 
   useEffect(() => {
+    if (selected && selected.cuCode) {
+      searchFetchData({ cuCode: selected.cuCode });
+    } else {
+      setSelectedUserInfo([]);
+    }
+  }, [selected]);
+
+  useEffect(() => {
     if (isDelete.menuId === menuId && isDelete.isDelete) {
       deleteRowGrid();
     }
@@ -130,10 +145,29 @@ function CM1200({
       if (data && data[0]) {
         setData(data);
         setSelected(data[0]);
-        setSelectedRowIndex(0)
+        setSelectedRowIndex(0);
       }
     } catch (err) {
       console.log("CM1200 data search fetch error =======>", err);
+    }
+  };
+
+  const searchFetchData = async ({ cuCode }: { cuCode: string }) => {
+    try {
+      const { data } = await API.get(CM120065, {
+        params: { cuCode },
+      });
+      if (data && data?.userInfo) {
+        setSelectedUserInfo(data?.userInfo);
+      } else {
+        setSelectedUserInfo([]);
+      }
+
+      if (data && data?.supplyTab) {
+        setSelectedSupplyTab(data?.supplyTab);
+      }
+    } catch (err) {
+      console.log("CM120065 data fetch error =======>", err);
     }
   };
 
@@ -181,7 +215,7 @@ function CM1200({
       </DetailHeader>
       <Wrapper>
         <TableWrapper width="30%">
-          <form onSubmit={handleSubmit(onSearchSubmit)}>
+          <form onSubmit={handleSubmit(onSearchSubmit)}  style={{padding: "5px 0px"}}>
             <Field>
               <FormGroup>
                 <Label>
@@ -195,10 +229,16 @@ function CM1200({
                 />
                 <Button
                   text="검색"
+                  icon={<MagnifyingGlassBig />}
+                  kind={ButtonType.ROUND}
+                  type="submit"
+                />
+                {/* <Button
+                  text="검색"
                   type="submit"
                   icon={<MagnifyingGlass />}
                   style={{ marginRight: "5px", background: "red" }}
-                />
+                /> */}
               </FormGroup>
             </Field>
           </form>
@@ -212,12 +252,13 @@ function CM1200({
             <FormSectionTitle>
               <h4>
                 <img src={HomeIconSvg} />
-                건물 정보
+                사용자 정보
               </h4>
             </FormSectionTitle>
             <Form
               ref={formRef}
               selected={selected}
+              selectedSupplyTab={selectedSupplyTab}
               fetchData={fetchData}
               setData={setData}
               selectedRowIndex={selectedRowIndex}
@@ -249,7 +290,7 @@ function CM1200({
                 />
               </div>
             </FormSectionTitle>
-            <GridTable selected={selected} />
+            <GridTable selected={selectedUserInfo} />
           </FormSeaction>
         </DetailWrapper>
       </Wrapper>

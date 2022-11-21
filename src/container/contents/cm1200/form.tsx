@@ -32,11 +32,17 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { ICM1200SEARCH } from "./modul";
 import API from "app/axios";
 import { CM1200DELETE, CM1200INSERT, CM1200UPDATE } from "app/path";
+import {
+  formatCurrencyRemoveComma,
+  formatDate,
+  formatDateByRemoveDash,
+} from "helpers/dateFormat";
 
 const Form = React.forwardRef(
   (
     {
       selected,
+      selectedSupplyTab,
       fetchData,
       setData,
       selectedRowIndex,
@@ -44,6 +50,7 @@ const Form = React.forwardRef(
       setSelectedRowIndex,
     }: {
       selected: any;
+      selectedSupplyTab: any;
       fetchData: any;
       setData: any;
       selectedRowIndex: number;
@@ -61,7 +68,8 @@ const Form = React.forwardRef(
       functionName: "CM1200",
     });
 
-    console.log("selected", selected);
+    console.log("selected", selected, dataCommonDic);
+    console.log("selectedSupplyTab", selectedSupplyTab[0]);
 
     const {
       handleSubmit,
@@ -102,9 +110,13 @@ const Form = React.forwardRef(
         cuRdangaType: dataCommonDic?.cuRdangaType[0].code,
         cuRdangaSign: dataCommonDic?.cuRdangaSign[0].code,
 
+        cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
+        cuGumTurm: dataCommonDic?.cuGumTurm[0].code,
+
+        // cuGumdate: dataCommonDic?.cuGumdate[0].code, // dataCommonDic-d baihgvi
+        // cuCylinderName: dataCommonDic?.cuCylinderName[0].code, // dataCommonDic-d baihgvi
+
         // areaCode: dataCommonDic?.areaCode[0].code,
-        // cuGumTurm: dataCommonDic?.cuGumTurm[0].code,
-        // cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
         // tankMakeVol1: dataCommonDic?.tankMakeVol1[0].code,
         // tankMakeVol2: dataCommonDic?.tankMakeVol2[0].code,
       });
@@ -119,25 +131,48 @@ const Form = React.forwardRef(
 
     const resetForm = (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+        const newFormData = { ...selected, ...selectedSupplyTab[0] };
+        console.log("---newFormData", newFormData);
         let newData: any = {};
 
         if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
+          for (const [key, value] of Object.entries(newFormData)) {
             newData[key] = null;
           }
           reset(newData);
         }
 
         if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
+          for (const [key, value] of Object.entries(newFormData)) {
             newData[key] = value;
           }
           reset({
             ...newData,
-            cuAptnameYn: selected?.cuAptnameYn === "Y",
-            chkCuZipCode: selected?.chkCuZipCode === "Y",
-            chkCuRh20: selected?.chkCuRh20 === "Y",
-            chkCuRdange: selected?.chkCuRdange === "Y",
+            cuAptnameYn: newFormData?.cuAptnameYn === "Y",
+            chkCuZipCode: newFormData?.chkCuZipCode === "Y",
+            chkCuRh20: newFormData?.chkCuRh20 === "Y",
+            chkCuRdange: newFormData?.chkCuRdange === "Y",
+
+            chkCuAnKum: newFormData?.chkCuAnKum === "Y",
+            ckCuSisulKum: newFormData?.ckCuSisulKum === "Y",
+            chkCuMeterKum: newFormData?.chkCuMeterKum === "Y",
+
+            chkCuPer: newFormData?.chkCuPer === "Y",
+            chkCuCdc: newFormData?.chkCuCdc === "Y",
+            chkCuSukumtype: newFormData?.chkCuSukumtype === "Y",
+            chkCuGumTurm: newFormData?.chkCuGumTurm === "Y",
+            chkCuGumdate: newFormData?.chkCuGumdate === "Y",
+            chkCuCno: newFormData?.chkCuCno === "Y",
+
+            cuFinishDate: newFormData?.cuFinishDate
+              ? formatDate(newFormData?.cuFinishDate)
+              : "",
+            cuCircuitDate: newFormData?.cuCircuitDate
+              ? formatDate(newFormData?.cuCircuitDate)
+              : "",
+            cuScheduleDate: newFormData?.cuScheduleDate
+              ? formatDate(newFormData?.cuScheduleDate)
+              : "",
           });
           setRdangaTotal(0);
         }
@@ -156,10 +191,14 @@ const Form = React.forwardRef(
             });
             await fetchData();
           } else {
-            toast.error(response?.response?.message);
+            toast.error(response?.response?.message, {
+              autoClose: 500,
+            });
           }
         } catch (err) {
-          toast.error("Couldn't delete");
+          toast.error("Couldn't delete", {
+            autoClose: 500,
+          });
         }
       }
 
@@ -171,12 +210,44 @@ const Form = React.forwardRef(
     const submit = async (data: ICM1200SEARCH) => {
       const formValues = getValues();
       const path = isAddBtnClicked ? CM1200INSERT : CM1200UPDATE;
+      console.log("formValues", formValues);
 
       formValues.areaCode = "00";
       formValues.cuAptnameYn = formValues.cuAptnameYn ? "Y" : "N";
       formValues.chkCuZipCode = formValues.chkCuZipCode ? "Y" : "N";
       formValues.chkCuRh20 = formValues.chkCuRh20 ? "Y" : "N";
       formValues.chkCuRdange = formValues.chkCuRdange ? "Y" : "N";
+
+      formValues.chkCuAnKum = formValues.chkCuAnKum ? "Y" : "N";
+      formValues.ckCuSisulKum = formValues.ckCuSisulKum ? "Y" : "N";
+      formValues.chkCuMeterKum = formValues.chkCuMeterKum ? "Y" : "N";
+
+      formValues.chkCuPer = formValues.chkCuPer ? "Y" : "N";
+      formValues.chkCuCdc = formValues.chkCuCdc ? "Y" : "N";
+      formValues.chkCuSukumtype = formValues.chkCuSukumtype ? "Y" : "N";
+      formValues.chkCuGumTurm = formValues.chkCuMeterKum ? "Y" : "N";
+      formValues.chkCuGumdate = formValues.chkCuGumdate ? "Y" : "N";
+      formValues.chkCuCno = formValues.chkCuCno ? "Y" : "N";
+
+      formValues.cuAnKum = formValues.cuAnKum
+        ? formatCurrencyRemoveComma(formValues.cuAnKum)
+        : "";
+      formValues.cuSisulKum = formValues.cuSisulKum
+        ? formatCurrencyRemoveComma(formValues.cuSisulKum)
+        : "";
+      formValues.cuMeterKum = formValues.cuMeterKum
+        ? formatCurrencyRemoveComma(formValues.cuMeterKum)
+        : "";
+
+      formValues.cuFinishDate = formValues.cuFinishDate
+        ? formatDateByRemoveDash(formValues.cuFinishDate)
+        : "";
+      formValues.cuCircuitDate = formValues.cuCircuitDate
+        ? formatDateByRemoveDash(formValues.cuCircuitDate)
+        : "";
+      formValues.cuScheduleDate = formValues.cuScheduleDate
+        ? formatDateByRemoveDash(formValues.cuScheduleDate)
+        : "";
 
       try {
         const response: any = await API.post(path, formValues);
@@ -198,10 +269,14 @@ const Form = React.forwardRef(
 
           setIsAddBtnClicked(false);
         } else {
-          toast.error(response?.response?.data?.message);
+          toast.error(response?.response?.data?.message, {
+            autoClose: 500,
+          });
         }
       } catch (err: any) {
-        toast.error(err?.message);
+        toast.error(err?.message, {
+          autoClose: 500,
+        });
       }
     };
 
@@ -227,9 +302,6 @@ const Form = React.forwardRef(
             label="건물코드"
             maxLength="3"
             name="cuCode"
-            labelStyle={{
-              aligin: "center",
-            }}
             register={register("cuCode")}
             errors={errors["cuCode"]?.message}
           />
@@ -322,6 +394,10 @@ const Form = React.forwardRef(
         <Wrapper grid col={3}>
           <Field>
             <FormGroup>
+              {/* 1 - urd taliin selectees hamaarsan dun garna input idewhigvi, 
+              2 - huwi ntr bodolttoi
+              3 - gants input bna
+              */}
               <Label>
                 <CheckBox
                   title="조정기"
@@ -329,11 +405,7 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Select
-                {...register("cuRh20")}
-                inputWidth="175px"
-                textAlign="right"
-              >
+              <Select {...register("cuRh20")} inputWidth="175px">
                 {dataCommonDic?.cuRh20?.map((option: any, index: number) => {
                   return (
                     <option key={index} value={option.code}>
@@ -400,6 +472,635 @@ const Form = React.forwardRef(
           </Field>
         </Wrapper>
         <DividerGray />
+        {/* 2-2 Wrapper */}
+        <Wrapper grid col={3}>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="관리비"
+                  register={register("chkCuAnKum")}
+                  rtl={false}
+                />
+              </Label>
+              <Input
+                register={register("cuAnKum")}
+                textAlign="right"
+                formatNumber="comDecNumber"
+              />
+              <p>원</p>
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="시설비"
+                  register={register("ckCuSisulKum")}
+                  rtl={false}
+                />
+              </Label>
+              <Input
+                register={register("cuSisulKum")}
+                textAlign="right"
+                formatNumber="comDecNumber"
+              />
+              <p>{selected?.cuSukumType}</p>
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="계량기"
+                  register={register("chkCuMeterKum")}
+                  rtl={false}
+                />
+              </Label>
+              <Input
+                register={register("cuMeterKum")}
+                textAlign="right"
+                formatNumber="comDecNumber"
+              />
+              <p>원</p>
+            </FormGroup>
+          </Field>
+        </Wrapper>
+        <DividerGray />
+        {/* 2-3 Wrapper */}
+        <Wrapper grid col={3}>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="연체율"
+                  register={register("chkCuPer")}
+                  rtl={false}
+                />
+              </Label>
+              <Input
+                register={register("cuPer")}
+                type="number"
+                textAlign="right"
+              />
+              <p>{`%`}</p>
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="할인율"
+                  register={register("chkCuCdc")}
+                  rtl={false}
+                />
+              </Label>
+              <Input
+                register={register("cuCdc")}
+                textAlign="right"
+                type="number"
+              />
+              <p>{`%`}</p>
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="수금방법"
+                  register={register("chkCuSukumtype")}
+                  rtl={false}
+                />
+              </Label>
+              <Select {...register("cuSukumtype")} inputWidth="175px">
+                {dataCommonDic?.cuSukumtype?.map(
+                  (option: any, index: number) => {
+                    return (
+                      <option key={index} value={option.code}>
+                        {option.codeName}
+                      </option>
+                    );
+                  }
+                )}
+              </Select>
+            </FormGroup>
+          </Field>
+        </Wrapper>
+        <DividerGray />
+        {/* 2-4 Wrapper */}
+        <Wrapper grid col={3}>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="검침주기"
+                  register={register("chkCuGumTurm")}
+                  rtl={false}
+                />
+              </Label>
+              <Select {...register("cuGumTurm")} inputWidth="175px">
+                {dataCommonDic?.cuGumTurm?.map((option: any, index: number) => {
+                  return (
+                    <option key={index} value={option.code}>
+                      {option.codeName}
+                    </option>
+                  );
+                })}
+              </Select>
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="검침일"
+                  register={register("chkCuGumdate")}
+                  rtl={false}
+                />
+              </Label>
+              <Select {...register("cuGumdate")} inputWidth="175px">
+                {dataCommonDic?.cuGumdate?.map((option: any, index: number) => {
+                  return (
+                    <option key={index} value={option.code}>
+                      {option.codeName}
+                    </option>
+                  );
+                })}
+              </Select>
+              <p>일</p>
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <Label>
+                <CheckBox
+                  title="순 번"
+                  register={register("chkCuCno")}
+                  rtl={false}
+                />
+              </Label>
+              <Input register={register("cuCno")} />
+            </FormGroup>
+          </Field>
+        </Wrapper>
+        <Divider />
+        {/* 3-1-1 Wrapper */}
+        <Wrapper grid col={4}>
+          <Field>
+            <FormGroup>
+              <Label>공급시설구분</Label>
+              {[
+                { name: "벌크공급", value: "Y" },
+                { name: "용기공급", value: "N" },
+              ].map((option, index) => {
+                return (
+                  <Item key={index}>
+                    <RadioButton
+                      type="radio"
+                      value={option.value}
+                      {...register("cuTankYn")}
+                      id={option.value}
+                    />
+                    <RadioButtonLabel htmlFor={`${option.value}`}>
+                      {option.name}
+                    </RadioButtonLabel>
+                  </Item>
+                );
+              })}
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <CustomDate
+                label="완성검사일"
+                name="cuFinishDate"
+                register={register("cuFinishDate")}
+                reset={reset}
+              />
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <CustomDate
+                label="정기검사일"
+                name="cuCircuitDate"
+                register={register("cuCircuitDate")}
+                reset={reset}
+              />
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <CustomDate
+                label="검사예정일"
+                name="cuScheduleDate"
+                register={register("cuScheduleDate")}
+                reset={reset}
+              />
+            </FormGroup>
+          </Field>
+        </Wrapper>
+        <DividerGray />
+        {/* 3-2-1 Wrapper */}
+        <Field flex>
+          <FormGroup>
+            <Label>벌크 시설</Label>
+          </FormGroup>
+          <Wrapper grid col={8}>
+            <Label align={"center"}>제조사</Label>
+            <Label align={"center"}>용량(kg)</Label>
+            <Label align={"center"}>제조번호</Label>
+            <Label align={"center"}>제작년월</Label>
+            <Label align={"center"}>대여처</Label>
+            <Label align={"center"}>최초검사</Label>
+            <Label align={"center"}>외관검사</Label>
+            <Label align={"center"}>개방검사</Label>
+          </Wrapper>
+        </Field>
+        <DividerGray />
+        {/* 3-2-2 Wrapper */}
+        <Field flex>
+          <FormGroup>
+            <Label>{`1)`}</Label>
+          </FormGroup>
+          <Wrapper grid col={8}>
+            <Field>
+              <FormGroup>
+                <Select {...register("makeCo1")} fullWidth>
+                  {dataCommonDic?.makeCo1?.map((option: any, index: number) => {
+                    return (
+                      <option key={index} value={option.code}>
+                        {option.codeName}
+                      </option>
+                    );
+                  })}
+                </Select>
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Select {...register("tankVol1")} fullWidth>
+                  {dataCommonDic?.tankVol1?.map(
+                    (option: any, index: number) => {
+                      return (
+                        <option key={index} value={option.code}>
+                          {option.codeName}
+                        </option>
+                      );
+                    }
+                  )}
+                </Select>
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Input register={register("tankMakeSno1")} />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Input register={register("tankMakeDate1")} />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Input register={register("tankRcv1")} />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <CustomDate
+                  name="tankFinishDate1"
+                  register={register("tankFinishDate1")}
+                  reset={reset}
+                />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <CustomDate
+                  name="tankOutsiderDate1"
+                  register={register("tankOutsiderDate1")}
+                  reset={reset}
+                />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <CustomDate
+                  name="tankInsiderDate1"
+                  register={register("tankInsiderDate1")}
+                  reset={reset}
+                />
+              </FormGroup>
+            </Field>
+          </Wrapper>
+        </Field>
+        <DividerGray />
+        {/* 3-2-3 Wrapper */}
+        <Field flex>
+          <FormGroup>
+            <Label>{`2)`}</Label>
+          </FormGroup>
+          <Wrapper grid col={8}>
+            <Field>
+              <FormGroup>
+                <Select {...register("makeCo2")} fullWidth>
+                  {dataCommonDic?.makeCo2?.map((option: any, index: number) => {
+                    return (
+                      <option key={index} value={option.code}>
+                        {option.codeName}
+                      </option>
+                    );
+                  })}
+                </Select>
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Select {...register("tankVol2")} fullWidth>
+                  {dataCommonDic?.tankVol2?.map(
+                    (option: any, index: number) => {
+                      return (
+                        <option key={index} value={option.code}>
+                          {option.codeName}
+                        </option>
+                      );
+                    }
+                  )}
+                </Select>
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Input register={register("tankMakeSno2")} />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Input register={register("tankMakeDate2")} />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Input register={register("tankRcv1")} />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <CustomDate
+                  name="tankFinishDate2"
+                  register={register("tankFinishDate2")}
+                  reset={reset}
+                />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <CustomDate
+                  name="tankOutsiderDate2"
+                  register={register("tankOutsiderDate2")}
+                  reset={reset}
+                />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <CustomDate
+                  name="tankInsiderDate2"
+                  register={register("tankInsiderDate2")}
+                  reset={reset}
+                />
+              </FormGroup>
+            </Field>
+          </Wrapper>
+        </Field>
+        <DividerGray />
+        {/* 3-3-1 Wrapper */}
+        <Field flex>
+          <FormGroup>
+            <Label>용기시설</Label>
+          </FormGroup>
+          <Wrapper grid col={3}>
+            <Field style={{ padding: "0px 5px" }}>
+              <FormGroup>
+                {[
+                  { name: "일반", value: "Y" },
+                  { name: "싸이폰", value: "N" },
+                ].map((option, index) => {
+                  return (
+                    <Item key={index}>
+                      <RadioButton
+                        type="radio"
+                        value={index}
+                        {...register("cuCylinderType")}
+                        id={option.value}
+                      />
+                      <RadioButtonLabel htmlFor={``}>
+                        {option.name}
+                      </RadioButtonLabel>
+                    </Item>
+                  );
+                })}
+              </FormGroup>
+            </Field>
+            <Field style={{ padding: "0px 5px" }}>
+              <FormGroup>
+                <Label align="center">용기수량</Label>
+                <Select {...register("cuCylinderName")} inputWidth="175px">
+                  {dataCommonDic?.cuCylinderName?.map(
+                    (option: any, index: number) => {
+                      return (
+                        <option key={index} value={option.code}>
+                          {option.codeName}
+                        </option>
+                      );
+                    }
+                  )}
+                </Select>
+                <p>x</p>
+                <Input
+                  register={register("cuCylinderQty")}
+                  inputSize={InputSize.xs}
+                />
+                <p>개</p>
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Label>발신기코드 / 절체고객코드</Label>
+                <Input
+                  register={register("cuTransmCd")}
+                  inputSize={InputSize.sm}
+                />
+                <Input
+                  register={register("cuTransmCuCd")}
+                  inputSize={InputSize.sm}
+                />
+                <SearchBtn
+                  type="button"
+                  onClick={() => console.log("cuTransmCuCd")}
+                >
+                  <MagnifyingGlass />
+                </SearchBtn>
+              </FormGroup>
+            </Field>
+          </Wrapper>
+        </Field>
+        <DividerGray />
+        {/* 3-4-1 Wrapper */}
+        <Field flex>
+          <FormGroup>
+            <Label>기화기</Label>
+          </FormGroup>
+          <Wrapper grid col={8}>
+            <Label align={"center"}>제조사</Label>
+            <Label align={"center"}>용량(kg)</Label>
+            <Label align={"center"}>제조번호</Label>
+            <Label align={"center"}>제작년월</Label>
+            <Label align={"center"}>전원</Label>
+            <Label align={"center"}>장치검사</Label>
+            <FormGroup>{` `}</FormGroup>
+            <FormGroup>{` `}</FormGroup>
+          </Wrapper>
+        </Field>
+        <DividerGray />
+
+        {/* 3-4-2 Wrapper */}
+        <Field flex>
+          <FormGroup>
+            <Label>{`1)`}</Label>
+          </FormGroup>
+
+          <Wrapper grid col={8}>
+            <Field>
+              <FormGroup>
+                <Select {...register("gasifyCo1")} fullWidth>
+                  {dataCommonDic?.gasifyCo1?.map(
+                    (option: any, index: number) => {
+                      return (
+                        <option key={index} value={option.code}>
+                          {option.codeName}
+                        </option>
+                      );
+                    }
+                  )}
+                </Select>
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Select {...register("gasifyVol1")} fullWidth>
+                  {dataCommonDic?.gasifyVol1?.map(
+                    (option: any, index: number) => {
+                      return (
+                        <option key={index} value={option.code}>
+                          {option.codeName}
+                        </option>
+                      );
+                    }
+                  )}
+                </Select>
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Input register={register("gasifySno1")} />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Input register={register("gasifyMakeDate1")} />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Input register={register("gasifyPower1")} />
+              </FormGroup>
+            </Field>
+            <Field>
+              <CustomDate
+                name="gasifyCheckDate1"
+                register={register("gasifyCheckDate1")}
+                reset={reset}
+              />
+            </Field>
+            <Field>
+              <FormGroup>{` `}</FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>{` `}</FormGroup>
+            </Field>
+          </Wrapper>
+        </Field>
+        <DividerGray />
+        {/* 3-4-3 Wrapper */}
+        <Field flex>
+          <FormGroup>
+            <Label>{`2)`}</Label>
+          </FormGroup>
+          <Wrapper grid col={8}>
+            <Field>
+              <FormGroup>
+                <Select {...register("gasifyCo2")} fullWidth>
+                  {dataCommonDic?.gasifyCo2?.map(
+                    (option: any, index: number) => {
+                      return (
+                        <option key={index} value={option.code}>
+                          {option.codeName}
+                        </option>
+                      );
+                    }
+                  )}
+                </Select>
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Select {...register("gasifyVol2")} fullWidth>
+                  {dataCommonDic?.gasifyVol2?.map(
+                    (option: any, index: number) => {
+                      return (
+                        <option key={index} value={option.code}>
+                          {option.codeName}
+                        </option>
+                      );
+                    }
+                  )}
+                </Select>
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Input register={register("gasifySno2")} />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Input register={register("gasifyMakeDate2")} />
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <Input register={register("gasifyPower2")} />
+              </FormGroup>
+            </Field>
+            <Field>
+              <CustomDate
+                name="gasifyCheckDate2"
+                register={register("gasifyCheckDate2")}
+                reset={reset}
+              />
+            </Field>
+            <Field>
+              <FormGroup>{` `}</FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>{` `}</FormGroup>
+            </Field>
+          </Wrapper>
+        </Field>
+        <Divider />
       </form>
     );
   }

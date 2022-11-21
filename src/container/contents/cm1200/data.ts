@@ -25,7 +25,7 @@ export const fieldsSelected = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuUserName",
+    fieldName: "cuUsernam",
     dataType: ValueType.TEXT,
   },
   {
@@ -53,7 +53,7 @@ export const fieldsSelected = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuJungumDate",
+    fieldName: "cuJungumdate",
     dataType: ValueType.TEXT,
   },
   {
@@ -61,11 +61,11 @@ export const fieldsSelected = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuSukumType",
+    fieldName: "cuSukumtype",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuState",
+    fieldName: "cuStae",
     dataType: ValueType.TEXT,
   },
 ];
@@ -135,8 +135,8 @@ export const columnsSelected = [
     },
   },
   {
-    name: "cuUserName",
-    fieldName: "cuUserName",
+    name: "cuUsernam",
+    fieldName: "cuUsernam",
     type: "data",
     width: "150",
     styles: {
@@ -220,8 +220,8 @@ export const columnsSelected = [
     },
   },
   {
-    name: "cuJungumDate",
-    fieldName: "cuJungumDate",
+    name: "cuJungumdate",
+    fieldName: "cuJungumdate",
     type: "data",
     width: "90",
     styles: {
@@ -244,8 +244,8 @@ export const columnsSelected = [
     },
   },
   {
-    name: "cuSukumType",
-    fieldName: "cuSukumType",
+    name: "cuSukumtype",
+    fieldName: "cuSukumtype",
     type: "data",
     width: "90",
     styles: {
@@ -256,8 +256,8 @@ export const columnsSelected = [
     },
   },
   {
-    name: "cuState",
-    fieldName: "cuState",
+    name: "cuStae",
+    fieldName: "cuStae",
     type: "data",
     width: "90",
     styles: {
