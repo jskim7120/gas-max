@@ -17,6 +17,7 @@ export interface ICM1300 {
   aptSwCode: string;
   aptJyCode: string;
   aptCustgubun: string;
+  aptGubun: string;
   aptRh2o: string;
   aptRdangaType: string;
   aptAnkum: string;

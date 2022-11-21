@@ -9,6 +9,16 @@ export const DetailHeader = styled.div`
   padding: 0 6px 0 15px;
   border-bottom: 5px solid #707070;
 
+  .m_left {
+    margin-right: 432px;
+    align-items: center;
+  }
+  .b_right {
+    width: 5px;
+    height: 35px;
+    background: #707070;
+  }
+
   p {
     color: #0a0a0a;
     font-family: "SegoeUI";
