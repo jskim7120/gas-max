@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import FormCM1105 from "container/contents/cm1105/form";
 const ModalWrapper = styled.div`
-  width: 80vw;
-  min-height: 80vh;
+  width: 1150px;
+  // min-height: 0px;
   height: auto;
   background: #fff;
 `;
