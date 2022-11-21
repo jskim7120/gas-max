@@ -131,8 +131,9 @@ const Form = React.forwardRef(
             caRentYn: selected?.caRentYn === "Y",
           });
           setCaSafeDate(
-            selected.caSafeDate ? formatDate(selected.saupDate) : ""
+            selected.caSafeDate ? formatDate(selected.caSafeDate) : ""
           );
+          setCaInDate(selected.caInDate ? formatDate(selected.caInDate) : "");
           setCaRentDate(
             selected.caRentDate ? formatDate(selected.caRentDate) : ""
           );
