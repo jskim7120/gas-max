@@ -5,14 +5,14 @@ import { useForm } from "react-hook-form";
 import { openModal, closeModal, addCM1105 } from "app/state/modal/modalSlice";
 import { useSelector, useDispatch } from "app/store";
 import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
+import { ButtonColor, ButtonType } from "components/componentsType";
 
 import {
   Plus,
   Trash,
   Update,
   Reset,
-  MagnifyingGlass,
+  MagnifyingGlassBig,
   ExcelIcon,
 } from "components/allSvgIcon";
 import {
@@ -26,7 +26,7 @@ import {
   DividerGray,
 } from "components/form/style";
 import { InputSize, FieldKind } from "components/componentsType";
-import { DetailHeader, WrapperContent } from "../style";
+import { DetailHeader, WrapperContent } from "../en/style";
 import { SearchWrapper } from "./cm100Style";
 import API from "app/axios";
 import Grid from "./grid";
@@ -408,18 +408,15 @@ function CM1100Page({
             <div className="button-wrapper">
               <Button
                 text="검색"
-                icon={<MagnifyingGlass />}
-                style={{ marginRight: "5px", background: "red" }}
+                icon={<MagnifyingGlassBig />}
+                kind={ButtonType.ROUND}
                 type="submit"
               />
               <Button
                 text="엑셀"
                 icon={<ExcelIcon />}
-                style={{
-                  marginRight: "5px",
-                  background: "#ECECEC",
-                  color: "#000",
-                }}
+                kind={ButtonType.ROUND}
+                color={ButtonColor.SECONDARY}
                 type="button"
               />
             </div>
@@ -436,7 +433,7 @@ function CM1100Page({
         />
         <CM1100Footer />
       </WrapperContent>
-      <DataGridFooter dataLength={data.length > 0 ? data.length : 0} />
+      <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>
   );
 }

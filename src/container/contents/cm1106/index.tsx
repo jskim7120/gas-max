@@ -62,6 +62,7 @@ function FormCM1106() {
         params: { jcCuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
       });
       setData(data);
+      console.log("data====>", data);
     } catch (error) {
       console.log("aldaa");
     }

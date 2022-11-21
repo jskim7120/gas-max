@@ -4712,7 +4712,7 @@ export const SmallWhiteClose = () => {
           fill="none"
           stroke="#fff"
           strokeLinecap="round"
-          stroke-width="2"
+          strokeWidth="2"
         />
         <path
           id="Path_3054"
@@ -4722,7 +4722,7 @@ export const SmallWhiteClose = () => {
           fill="none"
           stroke="#fff"
           strokeLinecap="round"
-          stroke-width="2"
+          strokeWidth="2"
         />
       </g>
     </svg>
@@ -4745,8 +4745,8 @@ export const SmallWhiteTick = () => {
         fill="none"
         stroke="#fff"
         strokeLinecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinejoin="round"
+        strokeWidth="2"
       />
     </svg>
   );
@@ -4769,6 +4769,51 @@ export const UserCm1300Icon = () => {
         strokeLinejoin="round"
         strokeWidth="1"
       />
+    </svg>
+  );
+};
+
+export const MagnifyingGlassBig = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20.89"
+      height="20.832"
+      viewBox="0 0 20.89 20.832"
+    >
+      <g
+        id="Group_1345"
+        data-name="Group 1345"
+        transform="translate(-1828.662 -145.428)"
+      >
+        <g
+          id="Group_272"
+          data-name="Group 272"
+          transform="translate(1833.037 147.803)"
+        >
+          <g
+            id="Ellipse_15"
+            data-name="Ellipse 15"
+            transform="translate(-4.375 -2.375)"
+            fill="none"
+            stroke="#fff"
+            strokeWidth="2"
+          >
+            <circle cx="8.352" cy="8.352" r="8.352" stroke="none" />
+            <circle cx="8.352" cy="8.352" r="7.352" fill="none" />
+          </g>
+        </g>
+        <path
+          id="Path_3064"
+          data-name="Path 3064"
+          d="M3863.345,7217.265l5.427,5.427"
+          transform="translate(-2020.633 -7057.846)"
+          fill="none"
+          stroke="#fff"
+          strokeLinecap="round"
+          strokeWidth="2"
+        />
+      </g>
     </svg>
   );
 };

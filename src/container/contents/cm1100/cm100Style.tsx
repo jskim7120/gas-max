@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
 export const SearchWrapper = styled.div`
-  width: 100%;
+  width: 98%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-right: 20px;
-  padding-bottom: 10px;
+  // padding-right: 37px;
 
   div.button-wrapper {
     display: flex;

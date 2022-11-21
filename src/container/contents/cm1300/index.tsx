@@ -21,7 +21,7 @@ import {
 } from "app/state/modal/modalSlice";
 import Form from "./form";
 import { ButtonColor, FieldKind } from "components/componentsType";
-import { Wrapper, DetailHeader } from "../style";
+import { Wrapper, DetailHeader } from "../en/style";
 import {
   Grid1Container,
   Grid2Container,

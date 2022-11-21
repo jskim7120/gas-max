@@ -7,7 +7,7 @@ export const getInputSize = (size?: InputSize) => {
     case InputSize.xxs:
       return `30px`;
     case InputSize.xs:
-      return `50px`;
+      return `60px`;
     case InputSize.sm:
       return `100px`;
     case InputSize.en1300:
@@ -208,7 +208,7 @@ export const Input = ({
             maxLength={maxLength && maxLength}
             kind={kind && kind}
             textAlign={textAlign && textAlign}
-            onChange={onChange && onChange}
+            // onChange={onChange && onChange}
           />
         )}
       </FormGroup>
@@ -360,6 +360,7 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
   }
 
   &.outer-border {
@@ -469,6 +470,25 @@ export const TextArea = styled.textarea`
   font-family: "NotoSansKRRegular";
   font-size: 12px;
   box-sizing: border-box;
+
+  &:hover {
+    border: 1px solid #e6e5e5;
+    background: #fffacd;
+  }
+`;
+
+export const Input2 = styled.input`
+  width: 50px;
+  height: 25px;
+  border: 1px solid #e6e5e5;
+  border-radius: 4px;
+
+  padding: 0 6px;
+  margin: 0 5px;
+
+  outline: none;
+  font-family: "NotoSansKRRegular";
+  font-size: 12px;
 
   &:hover {
     border: 1px solid #e6e5e5;

@@ -16,36 +16,91 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
       borderRad: "4px",
       fontSize: "12px",
       fontFamily: "SegoeUI",
+      fontWeight: "normal",
       height: "21px",
+      padding: "0 5px",
+      lineHeight: "13px",
+      lineMarginLeft: "5px",
+      iconMarginRight: "7px",
     };
 
     if (color === ButtonColor.PRIMARY) {
       attributes.bg = "#17A2B8";
       attributes.color = "#FFF";
       attributes.bgHover = "#1EC5DF";
+      attributes.lineColor = "#fff";
     }
     if (color === ButtonColor.SECONDARY) {
       attributes.bg = "linear-gradient(#FFB300, #E67F09)";
       attributes.color = "#FFF";
       attributes.bgHover =
         "linear-gradient(#F5D998 5%, #F4D38E 10%, #F3CD85 15%, #F2C77B 20%, #F1C171 25%, #F0BC69 30%, #E67F09 100%)";
+      attributes.lineColor = "#fff";
     }
   } else if (kind === ButtonType.LOGIN) {
     attributes = {
       borderRad: "4px",
       fontSize: "16px",
       fontFamily: "NotoSansKRRegular",
+      fontWeight: "normal",
       height: "40px",
+      padding: "0 5px",
+      lineHeight: "13px",
+      lineMarginLeft: "5px",
+      iconMarginRight: "7px",
     };
 
     if (color === ButtonColor.PRIMARY) {
       attributes.bg = "#0098FF";
       attributes.border = "#0098FF";
       attributes.color = "#fff";
+      attributes.lineColor = "#fff";
     } else if (color === ButtonColor.SECONDARY) {
       attributes.bg = "#9A9A9A";
       attributes.border = "#9A9A9A";
       attributes.color = "#fff";
+      attributes.lineColor = "#fff";
+    }
+  } else if (kind === ButtonType.ROUND) {
+    attributes = {
+      borderRad: "15px",
+      fontSize: "12px",
+      fontFamily: "NotoSansKRRegular",
+      fontWeight: "normal",
+      height: "30px",
+      padding: "0 8px",
+      lineHeight: "16px",
+      lineMarginLeft: "6px",
+      iconMarginRight: "3px",
+    };
+    if (color === ButtonColor.PRIMARY) {
+      attributes.bg = "#FF0000";
+      attributes.border = "#FF0000";
+      attributes.color = "#fff";
+      attributes.lineColor = "#fff";
+    } else if (color === ButtonColor.SECONDARY) {
+      attributes.bg = "#ECECEC";
+      attributes.border = "#707070";
+      attributes.color = "#0A0A0A";
+      attributes.lineColor = "#707070";
+    }
+  } else if (kind === ButtonType.SQUARE_BIG) {
+    attributes = {
+      borderRad: "4px",
+      fontSize: "12px",
+      fontFamily: "SegoeUI",
+      fontWeight: "500",
+      height: "25px",
+      padding: "0 6px",
+      lineHeight: "0px",
+      lineMarginLeft: "0px",
+      iconMarginRight: "5px",
+    };
+    if (color === ButtonColor.PRIMARY) {
+      attributes.bg = "#5284CE";
+      attributes.border = "#5284CE";
+      attributes.color = "#fff";
+      attributes.lineColor = "#fff";
     }
   }
   return attributes;
@@ -64,12 +119,14 @@ const ButtonComponent = styled.button<{
   ${(props) => {
     return css`
       height: ${BtnAttribute(props.kind, props.color).height};
+      width: ${props.fullWidth ? "100%" : "auto"};
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-family: "NotoSansKRRegular";
+      font-family: ${BtnAttribute(props.kind, props.color).fontFamily};
       font-size: ${BtnAttribute(props.kind, props.color).fontSize};
+      font-weight: ${BtnAttribute(props.kind, props.color)?.fontWeight};
       text-decoration: none;
       border-radius: 2px;
       transition: all 0.3s ease;
@@ -78,9 +135,8 @@ const ButtonComponent = styled.button<{
       border: 1px solid ${BtnAttribute(props.kind, props.color).border};
       border-radius: ${BtnAttribute(props.kind, props.color).borderRad};
       color: ${BtnAttribute(props.kind, props.color).color};
-      padding: 0 5px;
+      padding: ${BtnAttribute(props.kind, props.color).padding};
       &:hover {
-        // background: #1ec5df;
         background: ${BtnAttribute(props.kind, props.color).bgHover};
       }
       &:focus {
@@ -90,7 +146,6 @@ const ButtonComponent = styled.button<{
         background-color: #5284ce;
         cursor: default;
       }
-      width: ${props.fullWidth ? "100%" : "auto"};
       line-height: 12px;
     `;
   }}
@@ -145,18 +200,30 @@ function Button(
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            marginRight: "7px",
+            marginRight: BtnAttribute(
+              props.kind ? props.kind : ButtonType.FORM,
+              props.color ? props.color : ButtonColor.PRIMARY
+            ).iconMarginRight,
           }}
         >
           {props.icon}
           {!props.withoutLine && (
             <div
               style={{
-                height: "13px",
+                height: BtnAttribute(
+                  props.kind ? props.kind : ButtonType.FORM,
+                  props.color ? props.color : ButtonColor.PRIMARY
+                ).lineHeight,
                 width: "1px",
-                // background: color === ButtonColor.SECONDARY ? "#fff" : "#707070",
-                background: "#fff",
-                marginLeft: "5px",
+
+                background: BtnAttribute(
+                  props.kind ? props.kind : ButtonType.FORM,
+                  props.color ? props.color : ButtonColor.PRIMARY
+                ).lineColor,
+                marginLeft: BtnAttribute(
+                  props.kind ? props.kind : ButtonType.FORM,
+                  props.color ? props.color : ButtonColor.PRIMARY
+                ).lineMarginLeft,
               }}
             ></div>
           )}
