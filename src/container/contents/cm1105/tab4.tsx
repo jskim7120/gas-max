@@ -8,7 +8,9 @@ import {
   Label,
   ErrorText,
 } from "components/form/style";
-import CustomDate from "components/customDatePicker";
+// import CustomDate from "components/customDatePicker";
+import CustomDatePicker from "components/customDatePicker/customdate2";
+import { useState } from "react";
 
 function Tab4({
   dataCommonDic,
@@ -21,6 +23,13 @@ function Tab4({
   errors: any;
   reset: Function;
 }) {
+  const [cuHdate, setCuHdate] = useState("");
+  const [cuGongdate, setCuGongdate] = useState("");
+  const [cuGongdateT, setCuGongdateT] = useState("");
+  const [cuExtendDate, setCuExtendDate] = useState("");
+  const [cuSisuldate, setCuSisuldate] = useState("");
+  const [cuPdate, setCuPdate] = useState("");
+
   return (
     <Field className="outer-border">
       <Wrapper grid col={4}>
@@ -39,32 +48,53 @@ function Tab4({
           register={register("cuJuminno")}
           errors={errors["cuJuminno"]?.message}
         />
-        <CustomDate
+        {/* <CustomDate
           label="최종점검일"
           name="cuHdate"
           register={register("cuHdate")}
           reset={reset}
           errors={errors["cuHdate"]?.message}
-        />
+        /> */}
+        <Field flex style={{ alignItems: "center" }}>
+          <Label>최종점검일</Label>
+          <CustomDatePicker
+            value={cuHdate}
+            setValue={setCuHdate}
+            name="cuHdate"
+          />
+        </Field>
       </Wrapper>
       <DividerGray />
       <Wrapper grid col={4}>
-        <Field style={{ width: "100%" }}>
-          <CustomDate
+        {/* <CustomDate
             label="공급계약일"
             name="cuGongdate"
             register={register("cuGongdate")}
             reset={reset}
             errors={errors["cuGongdate"]?.message}
+          /> */}
+        <Field flex style={{ alignItems: "center" }}>
+          <Label>공급계약일</Label>
+          <CustomDatePicker
+            value={cuGongdate}
+            setValue={setCuGongdate}
+            name="cuGongdate"
           />
         </Field>
-        <Field style={{ width: "100%" }}>
-          <CustomDate
+
+        {/* <CustomDate
             label="계약만료일"
             name="cuGongdateT"
             register={register("cuGongdateT")}
             reset={reset}
             errors={errors["cuGongdateT"]?.message}
+          /> */}
+        <Field flex style={{ alignItems: "center" }}>
+          <Label>계약만료일</Label>
+          <CustomDatePicker
+            value={cuGongdateT}
+            setValue={setCuGongdateT}
+            name="cuGongdateT"
           />
         </Field>
         <Field>
@@ -82,13 +112,20 @@ function Tab4({
             <ErrorText>{errors["cuExtendType"]?.message}</ErrorText>
           </div>
         </Field>
-        <Field style={{ width: "100%" }}>
-          <CustomDate
+        <Field flex style={{ alignItems: "center" }}>
+          {/* <CustomDate
             label="계약갱신일"
             name="cuExtendDate"
             register={register("cuExtendDate")}
             reset={reset}
             errors={errors["cuExtendDate"]?.message}
+          /> */}
+
+          <Label>계약갱신일</Label>
+          <CustomDatePicker
+            value={cuExtendDate}
+            setValue={setCuExtendDate}
+            name="cuExtendDate"
           />
         </Field>
       </Wrapper>
@@ -221,22 +258,34 @@ function Tab4({
       </Wrapper>
       <DividerGray />
       <Wrapper grid col={4}>
-        <Field style={{ width: "100%" }}>
-          <CustomDate
+        <Field flex style={{ alignItems: "center" }}>
+          {/* <CustomDate
             label="체적시설 개선일"
             name="cuSisuldate"
             register={register("cuSisuldate")}
             reset={reset}
             errors={errors["cuSisuldate"]?.message}
+          /> */}
+          <Label>체적시설 개선일</Label>
+          <CustomDatePicker
+            value={cuSisuldate}
+            setValue={setCuSisuldate}
+            name="cuSisuldate"
           />
         </Field>
-        <Field style={{ width: "100%" }}>
-          <CustomDate
+        <Field flex style={{ alignItems: "center" }}>
+          {/* <CustomDate
             label="퓨즈콕 개선일"
             name="cuPdate"
             register={register("cuPdate")}
             reset={reset}
             errors={errors["cuPdate"]?.message}
+          /> */}
+          <Label>퓨즈콕 개선일</Label>
+          <CustomDatePicker
+            value={cuPdate}
+            setValue={setCuPdate}
+            name="cuPdate"
           />
         </Field>
         <Label style={{ width: "105px" }}></Label>

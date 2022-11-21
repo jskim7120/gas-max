@@ -11,6 +11,7 @@ import {
   Label,
 } from "components/form/style";
 import CustomDate from "components/customDatePicker";
+import CustomDatePicker from "components/customDatePicker/customdate2";
 import { InputSize } from "components/componentsType";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { SearchBtn } from "components/daum";
@@ -37,6 +38,9 @@ function Tab2({
   reset: Function;
 }) {
   const [cuRdangaType, setCuRdangaType] = useState("");
+  const [cuMeterTurm, setCuMeterTurm] = useState("");
+  const [cuMeterDt, setCuMeterDt] = useState("");
+  const [cuMdate, setCuMdate] = useState("");
   return (
     <div>
       <Field flex className="outer-border ">
@@ -69,6 +73,7 @@ function Tab2({
                 <Label>루베단가</Label>
                 <Select
                   {...register("cuRdangaType")}
+                  width={InputSize.i100}
                   onChange={(e: any) => {
                     console.log(e.target.value);
                     setCuRdangaType(e.target.value);
@@ -139,6 +144,7 @@ function Tab2({
                 label="연체율"
                 register={register("cuPer")}
                 errors={errors["cuPer"]?.message}
+                inputSize={InputSize.i120}
                 textAlign="right"
               />
               <p style={{ marginLeft: "-3px" }}>%</p>
@@ -149,6 +155,7 @@ function Tab2({
                 register={register("cuCdc")}
                 errors={errors["cuCdc"]?.message}
                 textAlign="right"
+                inputSize={InputSize.i120}
               />
               <p style={{ marginLeft: "-3px" }}>%</p>
             </Field>
@@ -168,6 +175,7 @@ function Tab2({
                 errors={errors["cuAnkum"]?.message}
                 textAlign="right"
                 formatNumber="comNumber"
+                inputSize={InputSize.i120}
               />
               <p style={{ marginLeft: "-3px" }}>원</p>
             </Field>
@@ -178,6 +186,7 @@ function Tab2({
                 errors={errors["cuSisulkum"]?.message}
                 textAlign="right"
                 formatNumber="comNumber"
+                inputSize={InputSize.i120}
               />
               <p style={{ marginLeft: "-3px" }}>원</p>
             </Field>
@@ -188,6 +197,7 @@ function Tab2({
                 errors={errors["cuMeterkum"]?.message}
                 textAlign="right"
                 formatNumber="comNumber"
+                inputSize={InputSize.i120}
               />
               <p>원</p>
             </Field>
@@ -228,7 +238,7 @@ function Tab2({
             <Field>
               <FormGroup>
                 <Label>계량기 제조사</Label>
-                <Select {...register("cuMeterCo")}>
+                <Select {...register("cuMeterCo")} width={InputSize.i100}>
                   {dataCommonDic?.cuMeterCo?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -261,7 +271,7 @@ function Tab2({
               <Field>
                 <FormGroup>
                   <Label>계량기정보</Label>
-                  <Select {...register("cuMeterLr")}>
+                  <Select {...register("cuMeterLr")} width={InputSize.i100}>
                     {dataCommonDic?.cuMeterLr?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -301,13 +311,19 @@ function Tab2({
               register={register("cuMeterNo")}
               errors={errors["cuMeterNo"]?.message}
             />
-            <Field style={{ width: "100%" }}>
-              <CustomDate
+            <Field flex style={{ alignItems: "center" }}>
+              {/* <CustomDate
                 label="유효기간"
                 name="cuMeterTurm"
                 register={register("cuMeterTurm")}
                 reset={reset}
                 errors={errors["cuMeterTurm"]?.message}
+              /> */}
+              <Label>유효기간</Label>
+              <CustomDatePicker
+                value={cuMeterTurm}
+                setValue={setCuMeterTurm}
+                name="cuMeterTurm"
               />
             </Field>
             <Field flex style={{ alignItems: "center" }}>
@@ -336,22 +352,35 @@ function Tab2({
             </Field>
           </Wrapper>
           <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <Field style={{ width: "100%" }}>
-              <CustomDate
+            <Field flex style={{ alignItems: "center" }}>
+              {/* <CustomDate
                 label="교체일자"
                 name="cuMeterDt"
                 register={register("cuMeterDt")}
                 reset={reset}
                 errors={errors["cuMeterDt"]?.message}
+              /> */}
+
+              <Label>교체일자</Label>
+              <CustomDatePicker
+                value={cuMeterDt}
+                setValue={setCuMeterDt}
+                name="cuMeterDt"
               />
             </Field>
-            <Field style={{ width: "100%" }}>
-              <CustomDate
+            <Field flex style={{ alignItems: "center" }}>
+              {/* <CustomDate
                 label="교체예정일"
                 name="cuMdate"
                 register={register("cuMdate")}
                 reset={reset}
                 errors={errors["cuMdate"]?.message}
+              /> */}
+              <Label>교체예정일</Label>
+              <CustomDatePicker
+                value={cuMdate}
+                setValue={setCuMdate}
+                name="cuMdate"
               />
             </Field>
             <Field flex style={{ alignItems: "center" }}>

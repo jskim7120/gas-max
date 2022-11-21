@@ -6,6 +6,10 @@ export const getInputSize = (size?: InputSize) => {
   switch (size) {
     case InputSize.i100:
       return `100px`;
+    case InputSize.i110:
+      return `110px`;
+    case InputSize.i120:
+      return `120px`;
     case InputSize.i130:
       return `130px`;
     case InputSize.i150:
