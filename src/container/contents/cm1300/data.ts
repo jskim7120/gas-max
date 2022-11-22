@@ -59,6 +59,7 @@ export const columns = [
     fieldName: "aptName",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "건물명",
     },
@@ -68,6 +69,7 @@ export const columns = [
     fieldName: "aptTypeName",
     type: "data",
     width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "건물구조",
     },
@@ -104,6 +106,7 @@ export const columns = [
     fieldName: "swName",
     type: "data",
     width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "담당사원",
     },
