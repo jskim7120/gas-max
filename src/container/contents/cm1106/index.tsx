@@ -155,7 +155,7 @@ function FormCM1106() {
             </FFormGroup>
 
             <FFormGroup>
-              <LLabel style={{}}>거래처코드</LLabel>
+              <LLabel style={{}}>거래처명</LLabel>
               <IInput {...register("areaCode")} />
             </FFormGroup>
 

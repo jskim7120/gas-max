@@ -59,7 +59,7 @@ function Tab3({
         </Field>
         <Wrapper grid col={4}>
           <FormGroup>
-            <Label>시설구분</Label>
+            <Label style={{ minWidth: "auto" }}>시설구분</Label>
             {radioOptions.map((option, index) => (
               <Item key={index}>
                 <RadioButton
@@ -111,17 +111,39 @@ function Tab3({
         </Field>
         <Field style={{ width: "100%" }}>
           <Wrapper grid col={11}>
-            <Label style={{ textAlign: "center" }}>제조사</Label>
-            <Label style={{ textAlign: "center" }}>용량(kg)</Label>
-            <Label style={{ textAlign: "center" }}>제조번호</Label>
-            <Label style={{ textAlign: "center" }}>제작년월</Label>
-            <Label style={{ textAlign: "center" }}>대여처</Label>
-            <Label style={{ textAlign: "center" }}>최초검사</Label>
-            <Label style={{ textAlign: "center" }}>외관검사</Label>
-            <Label style={{ textAlign: "center" }}>개방검사</Label>
-            <Label style={{ textAlign: "center" }}>게이지</Label>
-            <Label style={{ textAlign: "center" }}>발신기코드</Label>
-            <Label style={{ textAlign: "center" }}>잔량고객코드</Label>
+            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+              제조사
+            </Label>
+            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+              용량(kg)
+            </Label>
+            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+              제조번호
+            </Label>
+            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+              제작년월
+            </Label>
+            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+              대여처
+            </Label>
+            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+              최초검사
+            </Label>
+            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+              외관검사
+            </Label>
+            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+              개방검사
+            </Label>
+            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+              게이지
+            </Label>
+            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+              발신기코드
+            </Label>
+            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+              잔량고객코드
+            </Label>
           </Wrapper>
           <DividerGray />
           <Wrapper grid col={11}>

@@ -18,6 +18,10 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
+    fieldName: "jcJpDanga",
+    dataType: ValueType.TEXT,
+  },
+  {
     fieldName: "jcVatKind",
     dataType: ValueType.TEXT,
   },
@@ -29,10 +33,7 @@ export const fields = [
     fieldName: "jcJdcPer",
     dataType: ValueType.TEXT,
   },
-  {
-    fieldName: "jcJpDanga",
-    dataType: ValueType.TEXT,
-  },
+
   {
     fieldName: "jcBasicJaego",
     dataType: ValueType.TEXT,
@@ -81,6 +82,15 @@ export const columns = [
     },
   },
   {
+    name: "jcJpDanga",
+    fieldName: "jcJpDanga",
+    type: "data",
+    width: "80",
+    header: {
+      text: "적용단가",
+    },
+  },
+  {
     name: "jcVatKind",
     fieldName: "jcVatKind",
     type: "data",
@@ -107,15 +117,7 @@ export const columns = [
       text: "할인율",
     },
   },
-  {
-    name: "jcJpDanga",
-    fieldName: "jcJpDanga",
-    type: "data",
-    width: "80",
-    header: {
-      text: "대여",
-    },
-  },
+
   {
     name: "jcBasicJaego",
     fieldName: "jcBasicJaego",
