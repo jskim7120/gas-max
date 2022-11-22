@@ -25,9 +25,6 @@ export const columns = [
     fieldName: "areaCode",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "center",
-    },
     header: {
       text: "코드",
     },
@@ -37,9 +34,6 @@ export const columns = [
     fieldName: "cuCode",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "center",
-    },
     header: {
       text: "거래처코드",
     },
@@ -49,9 +43,7 @@ export const columns = [
     fieldName: "cuUserName",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "center",
-    },
+    styleName: "rg-left-column",
     header: {
       text: "사용자명",
     },
@@ -61,9 +53,6 @@ export const columns = [
     fieldName: "cuName",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "center",
-    },
     header: {
       text: "건물명",
     },

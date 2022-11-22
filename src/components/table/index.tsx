@@ -4,15 +4,16 @@ import AppTable from "./style";
 interface ITable {
   tableHeader: any;
   tableData: any;
-  onClick: (arg: any) => any;
+  onClick?: (arg: any) => any;
+  style?: any;
 }
 
-function Table({ tableHeader, tableData, onClick }: ITable) {
+function Table({ tableHeader, tableData, onClick, style }: ITable) {
   const [clickedRowIndex, setClickedRowIndex] = useState(0);
   // const data = JSON.parse(JSON.stringify(tableData));
 
   return (
-    <AppTable>
+    <AppTable style={style}>
       <thead>
         <tr>
           {tableHeader?.map((header: string, idx: number) => (
@@ -27,7 +28,7 @@ function Table({ tableHeader, tableData, onClick }: ITable) {
             className={i === clickedRowIndex ? "active" : ""}
             onClick={() => {
               setClickedRowIndex(i);
-              onClick(item);
+              onClick && onClick(item);
             }}
           >
             {Object.entries(item)?.map(([key, value], idx: number) => (
