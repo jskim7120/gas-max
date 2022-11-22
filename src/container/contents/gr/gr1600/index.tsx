@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DetailHeader, LeftSection, RightSection, Wrapper } from "../style";
+import { LeftSection, RightSection, Wrapper } from "../style";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import LeftHalf from "./leftHalf";
 import RightHalf from "./rightHalf";
@@ -15,9 +15,6 @@ function GR1600({
 
   return (
     <>
-      {/* <DetailHeader>
-        <p>{depthFullName}</p>
-      </DetailHeader> */}
       <Wrapper>
         <LeftSection>
           <LeftHalf depthFullName={depthFullName} setData={setData} />
