@@ -10,6 +10,7 @@ import {
 } from "components/form/style";
 import CheckBox from "components/checkbox";
 import DaumAddress from "components/daum";
+import { InputSize } from "components/componentsType";
 
 function Tab1({
   dataCommonDic,
@@ -28,7 +29,7 @@ function Tab1({
         <Field>
           <FormGroup>
             <Label>공급 받는자</Label>
-            <Select {...register("cuNoType")}>
+            <Select {...register("cuNoType")} width={InputSize.i100}>
               {dataCommonDic?.cuNoType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -50,7 +51,7 @@ function Tab1({
         <Field>
           <FormGroup>
             <Label>과세구분</Label>
-            <Select {...register("cuBilltype")}>
+            <Select {...register("cuBilltype")} width={InputSize.i100}>
               {dataCommonDic?.cuBilltype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -201,7 +202,7 @@ function Tab1({
         <Field>
           <FormGroup>
             <Label>공급사업자</Label>
-            <Select {...register("cuGongsano")}>
+            <Select {...register("cuGongsano")} width={InputSize.i100}>
               {dataCommonDic?.cuGongsano?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -217,7 +218,7 @@ function Tab1({
         <Field>
           <FormGroup>
             <Label>계산서 발행주기</Label>
-            <Select {...register("cuSekumMm")}>
+            <Select {...register("cuSekumMm")} width={InputSize.i100}>
               {dataCommonDic?.cuSekumNm?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}

@@ -256,27 +256,9 @@ const FORMCM1106 = React.forwardRef(
           />
           <p>개</p>
         </Field>
-        {/* <Field>
-          <FormGroup>
-            <Label>사용상태</Label>
-            <Select
-              {...register("jcVatKind")}
-              kind={FieldKind.BORDER}
-              style={{ width: "100%" }}
-            >
-              {dataCommonDic?.jcVatKind?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code1}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jcVatKind"]?.message}</ErrorText>
-          </div>
-        </Field> */}
+
         <Field flex style={{ justifyContent: "center", marginTop: "20px" }}>
-          <Button
+          {/* <Button
             text="선택"
             icon={<SmallWhiteTick />}
             style={{
@@ -306,7 +288,7 @@ const FORMCM1106 = React.forwardRef(
             }}
             type="button"
             withoutLine
-          />
+          /> */}
         </Field>
       </form>
     );

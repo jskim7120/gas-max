@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Input,
   Field,
@@ -7,7 +8,8 @@ import {
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
-import CustomDate from "components/customDatePicker";
+// import CustomDate from "components/customDatePicker";
+import CustomDatePicker from "components/customDatePicker/customdate2";
 
 function Tab6({
   register,
@@ -18,6 +20,8 @@ function Tab6({
   errors: any;
   reset: Function;
 }) {
+  const [cuSmsDate, setCuSmsDate] = useState("");
+  const [cuCashpayDate, setCuCashpayDate] = useState("");
   return (
     <Field>
       <Field
@@ -49,13 +53,21 @@ function Tab6({
               errors={errors["cuSmsHp"]?.message}
               fullWidth
             />
-            <CustomDate
+            {/* <CustomDate
               label="신청일자"
               name="cuSmsDate"
               register={register("cuSmsDate")}
               reset={reset}
               errors={errors["cuSmsDate"]?.message}
-            />
+            /> */}
+            <Field flex style={{ alignItems: "center" }}>
+              <Label>신청일자</Label>
+              <CustomDatePicker
+                value={cuSmsDate}
+                setValue={setCuSmsDate}
+                name="cuSmsDate"
+              />
+            </Field>
           </Wrapper>
           <DividerGray />
           <Wrapper>
@@ -98,13 +110,22 @@ function Tab6({
               register={register("cuCashpayNo")}
               errors={errors["cuCashpayNo"]?.message}
             />
-            <CustomDate
+            {/* <CustomDate
               label="신청일자"
               name="cuCashpayDate"
               register={register("cuCashpayDate")}
               reset={reset}
               errors={errors["cuCashpayDate"]?.message}
-            />
+            /> */}
+
+            <Field flex style={{ alignItems: "center" }}>
+              <Label>신청일자</Label>
+              <CustomDatePicker
+                value={cuCashpayDate}
+                setValue={setCuCashpayDate}
+                name="cuCashpayDate"
+              />
+            </Field>
           </Wrapper>
           <DividerGray />
           <Wrapper>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { fieldsSelected, columnsSelected } from "./data";
+import { ICM120065USERINFO } from "./modul";
 
 let containerr: HTMLDivElement;
 let dp: any;
@@ -8,11 +9,11 @@ let gv: any;
 
 function GridTable({ selected }: { selected: any }) {
   const realgridTableElement = useRef<HTMLDivElement>(null);
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState([{} as ICM120065USERINFO]);
 
   useEffect(() => {
     if (selected) {
-      return setData([selected]);
+      return setData(selected);
     }
   }, [selected]);
 
@@ -37,7 +38,7 @@ function GridTable({ selected }: { selected: any }) {
     });
     gv.setColumnLayout([
       "cuCode",
-      "cuUserName",
+      "cuUsernam",
       "cuTel",
       "cuAnkum",
       "cuCdc",
@@ -49,10 +50,10 @@ function GridTable({ selected }: { selected: any }) {
         hideChildHeaders: true,
         items: ["cuRdangaTypeName", "cuRdanga"],
       },
-      "cuJungumDate",
+      "cuJungumdate",
       "cuCmisu",
-      "cuSukumType",
-      "cuState",
+      "cuSukumtype",
+      "cuStae",
     ]);
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
