@@ -4,6 +4,14 @@ import { InputSize, FieldKind } from "components/componentsType";
 
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
+    case InputSize.i60:
+      return `60px`;
+    case InputSize.i70:
+      return `70px`;
+    case InputSize.i80:
+      return `80px`;
+    case InputSize.i90:
+      return `90px`;
     case InputSize.i100:
       return `100px`;
     case InputSize.i110:
@@ -276,7 +284,7 @@ export const InputForm = styled.input<{
   }
 
   border: ${(props) =>
-    props.kind ? getInputKind(props.kind)?.border : "1px solid  #e6e5e5"};
+    props.kind ? getInputKind(props.kind)?.border : "1px solid  transparent"};
 `;
 
 export const ErrorText = styled.p`
