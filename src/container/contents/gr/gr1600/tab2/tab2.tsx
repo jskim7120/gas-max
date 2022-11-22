@@ -60,15 +60,15 @@ function Tab2({ buCode }: { buCode: any }) {
           jpName: params.tabJpGubun1,
         },
       });
-      tab2Data?.map(
-        (d: any, idx: number) =>
-          (d.buycustYn =
-            d.buycustYn === "Y" ? (
-              <input type="checkbox" checked={true} />
-            ) : (
-              <input type="checkbox" checked={false} />
-            ))
-      );
+      // tab2Data?.map(
+      //   (d: any, idx: number) =>
+      //     (d.buycustYn =
+      //       d.buycustYn === "Y" ? (
+      //         <input type="checkbox" checked={true} />
+      //       ) : (
+      //         <input type="checkbox" checked={false} />
+      //       ))
+      // );
       console.log("tab2=================", tab2Data);
       setData(tab2Data);
     } catch (error) {
