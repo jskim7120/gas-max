@@ -11,6 +11,7 @@ import {
   Reset,
   MagnifyingGlass,
   UserCm1300Icon,
+  MagnifyingGlassBig,
 } from "components/allSvgIcon";
 import { columns, fields } from "./data";
 import {
@@ -20,7 +21,7 @@ import {
   setIsDelete,
 } from "app/state/modal/modalSlice";
 import Form from "./form";
-import { ButtonColor, FieldKind } from "components/componentsType";
+import { ButtonColor, FieldKind, ButtonType } from "components/componentsType";
 import { Wrapper, DetailHeader } from "../en/style";
 import {
   Grid1Container,
@@ -221,9 +222,9 @@ function CM1300({
                 />
                 <Button
                   text="검색"
+                  icon={<MagnifyingGlassBig />}
+                  kind={ButtonType.ROUND}
                   type="submit"
-                  icon={<MagnifyingGlass />}
-                  style={{ marginRight: "5px", background: "red" }}
                 />
               </FormGroup>
             </Field>
