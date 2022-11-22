@@ -45,11 +45,16 @@ export const LeftSection = styled.div<{ width?: string }>`
 
 export const RightSection = styled.div<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "50%")};
+
   overflow-y: auto;
 
   .top-header {
     background-color: #dbdbdb;
     height: 35px;
     border-bottom: 5px solid #707070;
+  }
+
+  .with-border {
+    border-left: 3px solid #707070;
   }
 `;

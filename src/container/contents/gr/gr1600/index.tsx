@@ -12,15 +12,21 @@ function GR1600({
   menuId: string;
 }) {
   const [data, setData] = useState([]);
+  const [selected, setSelected] = useState({});
 
   return (
     <>
       <Wrapper>
         <LeftSection>
-          <LeftHalf depthFullName={depthFullName} setData={setData} />
+          <LeftHalf
+            depthFullName={depthFullName}
+            data={data}
+            setData={setData}
+            setSelected={setSelected}
+          />
         </LeftSection>
         <RightSection>
-          <RightHalf />
+          <RightHalf selected={selected} />
         </RightSection>
       </Wrapper>
       <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />

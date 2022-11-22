@@ -4773,12 +4773,12 @@ export const UserCm1300Icon = () => {
   );
 };
 
-export const MagnifyingGlassBig = () => {
+export const MagnifyingGlassBig = ({ width = "20.89", height = "20.832" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="20.89"
-      height="20.832"
+      width={width}
+      height={height}
       viewBox="0 0 20.89 20.832"
     >
       <g
