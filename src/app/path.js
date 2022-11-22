@@ -56,6 +56,12 @@ export const CM1105SEARCH = "/app/CM1105/search";
 export const CM1105UPDATE = "/app/CM1105/update";
 export const CM1105INSERT = "/app/CM1105/insert";
 
+export const CM1200SEARCH = "/app/CM1200/search";
+export const CM1200UPDATE = "/app/CM1200/update";
+export const CM1200INSERT = "/app/CM1200/insert";
+export const CM1200DELETE = "/app/CM1200/delete";
+export const CM120065 = "/app/CM1200/65";
+
 export const CM1106LIST = "/app/CM1106/list";
 export const CM1106INSERT = "/app/CM1106/insert";
 export const CM1106UPDATE = "/app/CM1106/update";

@@ -111,6 +111,7 @@ const Form = React.forwardRef(
         }
       }
     };
+    
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
