@@ -12,6 +12,7 @@ import {
   Divider,
   DividerGray,
   Label,
+  Input2,
 } from "components/form/style";
 import { CheckBoxContainer } from "./style";
 import CheckBox from "components/checkbox";
@@ -68,6 +69,8 @@ const Form = React.forwardRef(
   ) => {
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [addr, setAddress] = useState<string>("");
+    const [cuRdangaType, setCuRdangaType] = useState("");
+    const [sign, setSign] = useState("");
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "CM",
@@ -87,6 +90,16 @@ const Form = React.forwardRef(
         resetForm("reset");
       }
     }, [selected]);
+
+    useEffect(() => {
+      if (addr.length > 0) {
+        console.log("hayag===>", addr);
+        reset({
+          aptZipcode: addr ? addr?.split("/")[1] : "",
+          aptAddr1: addr ? addr?.split("/")[0] : "",
+        });
+      }
+    }, [addr]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
@@ -267,20 +280,20 @@ const Form = React.forwardRef(
           <Label>
             <CheckBox
               title="주 소"
-              register={register("aptZipcode")}
+              // register={register("aptZipcode")}
               rtl={false}
             />
           </Label>
           <Input
             register={register("aptZipcode")}
             errors={errors["aptZipcode"]?.message}
-            inputSize={InputSize.sm}
+            inputSize={InputSize.xs}
           />
           <DaumAddress setAddress={setAddress} />
           <Input
             register={register("aptAddr1")}
             errors={errors["aptAddr1"]?.message}
-            inputSize={InputSize.md}
+            inputSize={InputSize.md290}
           />
           <p className="addr2">(대덕동) 자양현대아파트 205동 1502호</p>
         </Wrapper>
@@ -289,7 +302,7 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>담당사원</Label>
-              <Select {...register("aptSwCode")}>
+              <Select {...register("aptSwCode")} width={InputSize.i120}>
                 {dataCommonDic?.aptSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -301,7 +314,7 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>지역분류</Label>
-              <Select {...register("aptJyCode")}>
+              <Select {...register("aptJyCode")} width={InputSize.i120}>
                 {dataCommonDic?.aptJyCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -314,7 +327,7 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>관리자</Label>
-              <Select {...register("aptGubun")}>
+              <Select {...register("aptGubun")} width={InputSize.i120}>
                 {dataCommonDic?.aptGubun?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -337,7 +350,7 @@ const Form = React.forwardRef(
               </Label>
               <Select
                 {...register("aptRh2o")}
-                width={InputSize.i175}
+                width={InputSize.i120}
                 textAlign="right"
               >
                 {dataCommonDic?.aptRh2o?.map((option: any, index: number) => {
@@ -355,7 +368,7 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>
                 <CheckBox
-                  title="개별단가 "
+                  title="루베단가 "
                   register={register("aptRdangaType")}
                   rtl={false}
                 />
@@ -363,6 +376,10 @@ const Form = React.forwardRef(
               <Select
                 {...register("aptRdangaType")}
                 style={{ minWidth: "20%" }}
+                onChange={(e: any) => {
+                  console.log(e.target.value);
+                  setCuRdangaType(e.target.value);
+                }}
               >
                 {dataCommonDic?.aptRdangaType.map(
                   (option: any, index: number) => {
@@ -374,7 +391,63 @@ const Form = React.forwardRef(
                   }
                 )}
               </Select>
-              <p>2,850원</p>
+              {cuRdangaType === "1" ? (
+                <Field flex style={{ alignItems: "center" }}>
+                  <Input2
+                    name="percentage"
+                    id="number1"
+                    type="text"
+                    // onChange={(e: any) => setToo(Number(e.target.value))}
+                    onChange={(e: any) => {}}
+                  />
+                  <Select
+                    {...register("aptRdangaSign")}
+                    onChange={(e: any) => {
+                      console.log(e.target.value);
+                      setSign(e.target.value);
+                    }}
+                    style={{ minWidth: "30px", border: "1px solid #e6e5e5" }}
+                  >
+                    <option value="+">+</option>
+                    <option value="*">*</option>
+                    <option value="-">-</option>
+                  </Select>
+
+                  <Input2
+                    name="percentage"
+                    id="number2"
+                    type="text"
+                    // onChange={(e: any) => setToo(Number(e.target.value))}
+                    onChange={(e: any) => {}}
+                  />
+
+                  <p>
+                    {sign === "*" && "%"}
+                    {sign === "-" && "원"}
+                    {sign === "+" && "원"}
+                  </p>
+                  <p style={{ margin: "0 5px" }}>=</p>
+                  <p>
+                    2900 원
+                    {/* {sign !== "*"
+                    ? eval(`${customerInfo?.cuRdanga} ${sign} ${too}`)
+                    : eval(`${customerInfo?.cuRdanga} ${sign} ${too}/100`)} */}
+                  </p>
+                </Field>
+              ) : (
+                <Input
+                  register={register("aptRdangaType")}
+                  errors={errors["aptRdangaType"]?.message}
+                  inputSize={InputSize.sm}
+                  textAlign="right"
+                  style={{ border: "1px solid #e6e5e5" }}
+                />
+              )}
+              {/* <Input
+                register={register("aptZipcode")}
+                errors={errors["aptZipcode"]?.message}
+                inputSize={InputSize.xs}
+              />
               <Select
                 {...register("aptRdangaSign")}
                 style={{ minWidth: "40px" }}
@@ -395,7 +468,7 @@ const Form = React.forwardRef(
               />
               <p>%</p>
               <p>=</p>
-              <p>2900 원</p>
+              <p>2900 원</p> */}
             </FormGroup>
           </Field>
         </Wrapper>
@@ -410,7 +483,12 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Input register={register("aptAnkum")} textAlign="right" />
+              <Input
+                register={register("aptAnkum")}
+                textAlign="right"
+                inputSize={InputSize.i120}
+                formatNumber="comDecNumber"
+              />
               <p>{`원`}</p>
             </FormGroup>
           </Field>
@@ -423,7 +501,11 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Input register={register("aptSisulkum")} textAlign="right" />
+              <Input
+                register={register("aptSisulkum")}
+                textAlign="right"
+                formatNumber="comDecNumber"
+              />
               <p>{`원`}</p>
             </FormGroup>
           </Field>
@@ -436,7 +518,11 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Input register={register("aptMeterkum")} textAlign="right" />
+              <Input
+                register={register("aptMeterkum")}
+                textAlign="right"
+                formatNumber="comDecNumber"
+              />
               <p>{`원`}</p>
             </FormGroup>
           </Field>
@@ -452,7 +538,11 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Input register={register("aptPer")} textAlign="right" />
+              <Input
+                register={register("aptPer")}
+                textAlign="right"
+                inputSize={InputSize.i120}
+              />
               <p>{`%`}</p>
             </FormGroup>
           </Field>
@@ -465,7 +555,7 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Select {...register("aptGumdate")} width={InputSize.i200}>
+              <Select {...register("aptGumdate")} width={InputSize.i175}>
                 {dataCommonDic?.aptGumdate?.map(
                   (option: any, index: number) => {
                     return (
@@ -476,14 +566,14 @@ const Form = React.forwardRef(
                   }
                 )}
               </Select>
-              <p>{`원`}</p>
+              <p>{`일`}</p>
             </FormGroup>
           </Field>
           <Field>
             <FormGroup>
               <Label>
                 <CheckBox
-                  title="계량기"
+                  title="수금방법"
                   register={register("aptSukumtype")}
                   rtl={false}
                 />

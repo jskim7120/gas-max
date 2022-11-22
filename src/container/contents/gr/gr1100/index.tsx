@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { DetailHeader, DetailWrapper, Wrapper } from "../style";
+import React, { useEffect, useState } from "react";
+import { LeftSection, RightSection, Wrapper } from "../style";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
-import Grid from "./grid";
+import LeftHalf from "./leftHalf";
+import RightHalf from "./rightHalf";
+
 function GR1100({
   depthFullName,
   menuId,
@@ -10,14 +12,16 @@ function GR1100({
   menuId: string;
 }) {
   const [data, setData] = useState([]);
+
   return (
     <>
-      <DetailHeader>
-        <p>{depthFullName}</p>
-      </DetailHeader>
       <Wrapper>
-        {/* <Grid /> */}
-        <DetailWrapper></DetailWrapper>
+        <LeftSection>
+          <LeftHalf depthFullName={depthFullName} setData={setData} />
+        </LeftSection>
+        <RightSection>
+          <RightHalf />
+        </RightSection>
       </Wrapper>
       <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>

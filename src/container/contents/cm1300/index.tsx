@@ -33,9 +33,10 @@ import {
   BorderRight,
   Detail2Wrapper,
 } from "./style";
-import { Field, FormGroup, Input } from "components/form/style";
+import { Field, FormGroup, Input, Select } from "components/form/style";
 import HomeIconSvg from "assets/image/home-icon.svg";
 import { useDispatch, useSelector } from "app/store";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import FormCM1300User from "./cm1300User";
 
 let container: HTMLDivElement;
@@ -59,6 +60,11 @@ function CM1300({
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
   const { isDelete } = useSelector((state) => state.modal);
+
+  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
+    groupId: "CM",
+    functionName: "CM1300",
+  });
 
   useEffect(() => {
     // if (data?.length > 0) {
@@ -175,6 +181,24 @@ function CM1300({
     <>
       <DetailHeader>
         <p>{depthFullName}</p>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            position: "absolute",
+            left: "245px",
+            gap: "7px",
+          }}
+        >
+          <p className="big">영업소</p>
+          <Select name="areaCode" kind={FieldKind.BORDER}>
+            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </div>
         <div className="buttons m_left">
           <Button
             text="건물등록"
