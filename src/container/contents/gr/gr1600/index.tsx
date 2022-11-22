@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { GR1600SEARCH } from "app/path";
-import { DetailHeader, DetailWrapper, TableWrapper, Wrapper } from "../style";
+import { DetailHeader, LeftSection, RightSection, Wrapper } from "../style";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import Grid from "./grid1";
 
@@ -41,8 +41,8 @@ function GR1600({
         <p>{depthFullName}</p>
       </DetailHeader>
       <Wrapper>
-        <TableWrapper>{/* <Grid /> */}</TableWrapper>
-        <DetailWrapper></DetailWrapper>
+        <LeftSection>{/* <Grid /> */}left</LeftSection>
+        <RightSection>right</RightSection>
       </Wrapper>
       <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>
