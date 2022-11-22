@@ -100,6 +100,7 @@ export const columns = [
     fieldName: "cuName",
     type: "data",
     width: "265",
+    alignText: "left",
     styles: {
       textAlignment: "near",
     },

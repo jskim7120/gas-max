@@ -49,7 +49,7 @@ const InputWrapper = styled.div`
   position: relative;
   border: 1px solid #e6e5e5;
   border-radius: 4px;
-  margin: 5px 5px 0 9px;
+  margin: 5px 5px 0 5px;
 
   &:hover,
   &:hover .customMaskInput {
