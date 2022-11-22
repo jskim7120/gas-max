@@ -59,7 +59,8 @@ function LeftHalf({
     <div>
       <form>
         <div className="top-header">
-          <p>{depthFullName}</p>
+          <p>매입 단가 관리</p>
+          <p className="big">영업소</p>
           <Select name="areaCode" kind={FieldKind.BORDER}>
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
