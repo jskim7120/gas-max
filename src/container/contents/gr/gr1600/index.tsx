@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { DetailHeader, Wrapper } from "./style";
+import { DetailHeader, DetailWrapper, Wrapper } from "../style";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
+import Grid from "./grid1";
 function GR1600({
   depthFullName,
   menuId,
@@ -14,7 +15,10 @@ function GR1600({
       <DetailHeader>
         <p>{depthFullName}</p>
       </DetailHeader>
-      <Wrapper></Wrapper>
+      <Wrapper>
+        {/* <Grid /> */}
+        <DetailWrapper></DetailWrapper>
+      </Wrapper>
       <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>
   );
