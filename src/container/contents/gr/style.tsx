@@ -7,7 +7,6 @@ export const DetailHeader = styled.div`
   align-items: center;
   padding: 0 6px 0 15px;
   border-bottom: 5px solid #707070;
-
   p {
     color: #0a0a0a;
     font-family: "SegoeUI";
@@ -22,12 +21,12 @@ export const Wrapper = styled.div`
   border: 1px solid red;
 `;
 
-export const TableWrapper = styled.div<{ width?: string }>`
+export const LeftSection = styled.div<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "50%")};
   border-right: 3px solid #707070;
 `;
 
-export const DetailWrapper = styled.div<{ width?: string }>`
+export const RightSection = styled.div<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "50%")};
   overflow-y: auto;
 `;
