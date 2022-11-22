@@ -19,7 +19,6 @@ export const Wrapper = styled.div`
   display: flex;
   gap: 0px;
   height: calc(100% - 40px);
-  border: 1px solid red;
 `;
 
 export const TableWrapper = styled.div<{ width?: string }>`
