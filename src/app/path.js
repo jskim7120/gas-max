@@ -67,9 +67,9 @@ export const CM1106INSERT = "/app/CM1106/insert";
 export const CM1106UPDATE = "/app/CM1106/update";
 export const CM1106DELETE = "/app/CM1106/delete";
 
-export const GR1600SEARCH = "​/app​/GR1600​/search";
-export const GR1600TAB2 = "​/app/GR1600/tab2";
-export const GR1600TAB3 = "​/app/GR1600/tab3";
+export const GR1600SEARCH = "/app/GR1600/search";
+export const GR1600TAB2 = "/app/GR1600/tab2";
+export const GR1600TAB3 = "/app/GR1600/tab3";
 export const GR160065 = "/app/GR1600/65";
 
 export const GR1100SEARCH = "​/app​/GR1100​/search";

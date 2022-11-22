@@ -7,7 +7,7 @@ import { InputSize, FieldKind } from "components/componentsType";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType } from "components/componentsType";
 import { MagnifyingGlassBig, ExcelIcon } from "components/allSvgIcon";
-import Grid1 from "./grid1";
+import Grid from "./grid";
 import {
   Input,
   Input2,
@@ -22,20 +22,22 @@ import {
 
 function LeftHalf({
   depthFullName,
+  data,
   setData,
+  setSelected,
 }: {
   depthFullName: string;
+  data: any;
   setData: any;
+  setSelected: any;
 }) {
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = async (params: any) => {
     try {
-      const { data } = await API.get(GR1600SEARCH);
-      console.log("data::::", data);
-      setData(data);
+      const { data: SEARCHDATA } = await API.get(GR1600SEARCH, {
+        params: params,
+      });
+
+      setData(SEARCHDATA);
     } catch (error) {
       console.log("GR1600 DATA fetch error =======>", error);
     }
@@ -53,64 +55,82 @@ function LeftHalf({
     mode: "onSubmit",
   });
 
-  console.log("dataCommonDic:", dataCommonDic);
+  const submit = async (data: any) => {
+    fetchData(data);
+  };
 
   return (
     <div>
-      <form>
-        <div className="top-header">
-          <p>매입 단가 관리</p>
-          <p className="big">영업소</p>
-          <Select name="areaCode" kind={FieldKind.BORDER}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </div>
-
-        <Field>
-          <FormGroup>
-            <Label>구분</Label>
-            <Select
-              name="sBuGubun"
-              kind={FieldKind.BORDER}
-              style={{ marginLeft: "5px" }}
-            >
-              {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
+      <div style={{ marginBottom: "5px" }}>
+        <form onSubmit={handleSubmit(submit)}>
+          <div className="top-header">
+            <p>매입 단가 관리</p>
+            <p className="big">영업소</p>
+            <Select {...register("areaCode")} kind={FieldKind.BORDER}>
+              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
               ))}
             </Select>
-          </FormGroup>
-        </Field>
-        <Field>
-          <Input
-            label="매입처명"
-            register={register("cuAddr")}
-            errors={errors["cuAddr"]?.message}
-            kind={FieldKind.BORDER}
-            inputSize={InputSize.i100}
-          />
-        </Field>
-        <div className="button-wrapper">
-          <Button
-            text="검색"
-            icon={<MagnifyingGlassBig />}
-            kind={ButtonType.ROUND}
-            type="submit"
-          />
-          <Button
-            text="엑셀"
-            icon={<ExcelIcon />}
-            kind={ButtonType.ROUND}
-            color={ButtonColor.SECONDARY}
-            type="button"
-          />
-        </div>
-      </form>
+          </div>
+          <Field
+            flex
+            style={{
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingRight: "20px",
+              borderRight: "3px solid #707070",
+            }}
+          >
+            <Field>
+              <FormGroup>
+                <Label style={{ background: "transparent" }}>구분</Label>
+                <Select
+                  kind={FieldKind.BORDER}
+                  style={{ marginLeft: "5px" }}
+                  {...register("sBuGubun")}
+                >
+                  {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+            </Field>
+            <Field>
+              <Input
+                label="매입처명"
+                labelStyle={{ background: "transparent" }}
+                register={register("sBuName")}
+                errors={errors["sBuName"]?.message}
+                kind={FieldKind.BORDER}
+                inputSize={InputSize.i100}
+              />
+            </Field>
+            <div className="button-wrapper">
+              <Button
+                text="검색"
+                icon={<MagnifyingGlassBig width="17.188" height="17.141" />}
+                kind={ButtonType.ROUND}
+                type="submit"
+                style={{ marginRight: "5px", height: "26px" }}
+              />
+
+              <Button
+                text="엑셀"
+                icon={<ExcelIcon />}
+                kind={ButtonType.ROUND}
+                color={ButtonColor.SECONDARY}
+                type="button"
+              />
+            </div>
+          </Field>
+        </form>
+      </div>
+      <Grid data={data ? data : []} setSelected={setSelected} />
     </div>
   );
 }
