@@ -8,7 +8,8 @@ import {
   Label,
   DividerDark,
 } from "components/form/style";
-import CustomDate from "components/customDatePicker";
+// import CustomDate from "components/customDatePicker";
+import CustomDatePicker from "components/customDatePicker/customdate2";
 import {
   Item,
   RadioButton,
@@ -17,6 +18,7 @@ import {
 import { InputSize } from "components/componentsType";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { SearchBtn } from "components/daum";
+import { useState } from "react";
 
 const radioOptions = [
   {
@@ -51,6 +53,17 @@ function Tab3({
   errors: any;
   reset: Function;
 }) {
+  const [cuFinishDate, setCuFinishDate] = useState("");
+  const [cuCircuitDate, setCuCircuitDate] = useState("");
+  const [cuScheduleDate, setCuScheduleDate] = useState("");
+  const [tankFirstDate1, setTankFirstDate1] = useState("");
+  const [tankOutsideDate1, setTankOutsideDate1] = useState("");
+  const [tankInsideDate1, setTankInsideDate1] = useState("");
+  const [tankFirstDate2, setTankFirstDate2] = useState("");
+  const [tankOutsideDate2, setTankOutsideDate2] = useState("");
+  const [tankInsideDate2, setTankInsideDate2] = useState("");
+  const [gasifyCheckDate1, setGasifyCheckDate1] = useState("");
+
   return (
     <Field className="outer-border">
       <Field flex>
@@ -75,7 +88,7 @@ function Tab3({
               </Item>
             ))}
           </FormGroup>
-          <Field style={{ width: "100%" }}>
+          {/* <Field style={{ width: "100%" }}>
             <CustomDate
               label="완성검사일"
               name="cuFinishDate"
@@ -83,8 +96,17 @@ function Tab3({
               reset={reset}
               errors={errors["cuFinishDate"]?.message}
             />
+          </Field> */}
+          <Field flex style={{ alignItems: "center" }}>
+            <Label>완성검사일</Label>
+            <CustomDatePicker
+              value={cuFinishDate}
+              setValue={setCuFinishDate}
+              name="cuFinishDate"
+              style={{ margin: "5px 5px 0 5px" }}
+            />
           </Field>
-          <Field style={{ width: "100%" }}>
+          {/* <Field style={{ width: "100%" }}>
             <CustomDate
               label="정기검사일"
               name="cuCircuitDate"
@@ -92,14 +114,32 @@ function Tab3({
               reset={reset}
               errors={errors["cuCircuitDate"]?.message}
             />
+          </Field> */}
+          <Field flex style={{ alignItems: "center" }}>
+            <Label>정기검사일</Label>
+            <CustomDatePicker
+              value={cuCircuitDate}
+              setValue={setCuCircuitDate}
+              name="cuCircuitDate"
+              style={{ margin: "5px 5px 0 5px" }}
+            />
           </Field>
-          <Field style={{ width: "100%" }}>
+          {/* <Field style={{ width: "100%" }}>
             <CustomDate
               label="검사 예정일"
               name="cuScheduleDate"
               register={register("cuScheduleDate")}
               reset={reset}
               errors={errors["cuScheduleDate"]?.message}
+            />
+          </Field> */}
+          <Field flex style={{ alignItems: "center" }}>
+            <Label>검사 예정일</Label>
+            <CustomDatePicker
+              value={cuScheduleDate}
+              setValue={setCuScheduleDate}
+              name="cuScheduleDate"
+              style={{ margin: "5px 5px 0 5px" }}
             />
           </Field>
         </Wrapper>
@@ -110,7 +150,11 @@ function Tab3({
           <p>탱크</p>
         </Field>
         <Field style={{ width: "100%" }}>
-          <Wrapper grid col={11}>
+          <Wrapper
+            grid
+            col={11}
+            fields="1fr 1fr 1.1fr 1.1fr 1fr 1.5fr 1.5fr 1.5fr 1fr 1.1fr 1.1fr"
+          >
             <Label style={{ textAlign: "center", minWidth: "auto" }}>
               제조사
             </Label>
@@ -146,12 +190,21 @@ function Tab3({
             </Label>
           </Wrapper>
           <DividerGray />
-          <Wrapper grid col={11}>
+          <Wrapper
+            grid
+            col={11}
+            fields="1fr 1fr 1fr 1fr 1fr 1.5fr 1.5fr 1.5fr 1fr 1fr 1fr"
+          >
             <Input
               register={register("tankMakeCo1")}
               errors={errors["tankMakeCo1"]?.message}
+              inputSize={InputSize.i80}
             />
-            <Select {...register("tankVol1")} textAlign="right">
+            <Select
+              {...register("tankVol1")}
+              textAlign="right"
+              width={InputSize.i80}
+            >
               {dataCommonDic?.tankVol1?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -161,44 +214,72 @@ function Tab3({
             <Input
               register={register("tankMakeSno1")}
               errors={errors["tankMakeSno1"]?.message}
+              inputSize={InputSize.i80}
             />
             <Input
               register={register("tankMakeDate1")}
               errors={errors["tankMakeDate1"]?.message}
+              inputSize={InputSize.i80}
             />
             <Input
               register={register("tankRcv1")}
               errors={errors["tankRcv1"]?.message}
+              inputSize={InputSize.i80}
             />
-            <Field style={{ width: "100%" }}>
+            {/* <Field style={{ width: "100%" }}>
               <CustomDate
                 name="tankFirstDate1"
                 register={register("tankFirstDate1")}
                 reset={reset}
                 errors={errors["tankFirstDate1"]?.message}
               />
+            </Field> */}
+            <Field>
+              <CustomDatePicker
+                value={tankFirstDate1}
+                setValue={setTankFirstDate1}
+                name="tankFirstDate1"
+                style={{ margin: "5px 5px 0 5px" }}
+              />
             </Field>
-            <Field style={{ width: "100%" }}>
+
+            {/* <Field style={{ width: "100%" }}>
               <CustomDate
                 name="tankOutsideDate1"
                 register={register("tankOutsideDate1")}
                 reset={reset}
                 errors={errors["tankOutsideDate1"]?.message}
               />
+            </Field> */}
+            <Field>
+              <CustomDatePicker
+                value={tankOutsideDate1}
+                setValue={setTankOutsideDate1}
+                name="tankOutsideDate1"
+                style={{ margin: "5px 5px 0 5px" }}
+              />
             </Field>
-            <Field style={{ width: "100%" }}>
+            {/* <Field style={{ width: "100%" }}>
               <CustomDate
                 name="tankInsideDate1"
                 register={register("tankInsideDate1")}
                 reset={reset}
                 errors={errors["tankInsideDate1"]?.message}
               />
+            </Field> */}
+            <Field>
+              <CustomDatePicker
+                value={tankInsideDate1}
+                setValue={setTankInsideDate1}
+                name="tankInsideDate1"
+                style={{ margin: "5px 5px 0 5px" }}
+              />
             </Field>
             <Field flex>
               <Input
                 register={register("tankMax1")}
                 errors={errors["tankMax1"]?.message}
-                inputSize={InputSize.sm}
+                inputSize={InputSize.i60}
                 textAlign="right"
               />
               <p style={{ marginLeft: "-3px" }}>%</p>
@@ -206,13 +287,13 @@ function Tab3({
             <Input
               register={register("tankTransmCd1")}
               errors={errors["tankTransmCd1"]?.message}
-              inputSize={InputSize.sm}
+              inputSize={InputSize.i60}
             />
             <Field flex style={{ alignItems: "center" }}>
               <Input
                 register={register("tankCuCd1")}
                 errors={errors["tankCuCd1"]?.message}
-                inputSize={InputSize.sm}
+                inputSize={InputSize.i60}
               />
               <SearchBtn type="button" onClick={() => alert("dsdsds")}>
                 <MagnifyingGlass />
@@ -220,12 +301,21 @@ function Tab3({
             </Field>
           </Wrapper>
           <DividerGray />
-          <Wrapper grid col={11}>
+          <Wrapper
+            grid
+            col={11}
+            fields="1fr 1fr 1fr 1fr 1fr 1.5fr 1.5fr 1.5fr 1fr 1fr 1fr"
+          >
             <Input
               register={register("tankMakeCo2")}
               errors={errors["tankMakeCo2"]?.message}
+              inputSize={InputSize.i80}
             />
-            <Select {...register("tankVol2")} textAlign="right">
+            <Select
+              {...register("tankVol2")}
+              textAlign="right"
+              width={InputSize.i80}
+            >
               {dataCommonDic?.tankVol2?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -235,58 +325,88 @@ function Tab3({
             <Input
               register={register("tankMakeSno2")}
               errors={errors["tankMakeSno2"]?.message}
+              inputSize={InputSize.i80}
             />
             <Input
               register={register("tankMakeDate2")}
               errors={errors["tankMakeDate2"]?.message}
+              inputSize={InputSize.i80}
             />
             <Input
               register={register("tankRcv2")}
               errors={errors["tankRcv2"]?.message}
+              inputSize={InputSize.i80}
             />
-            <Field style={{ width: "100%" }}>
+            {/* <Field style={{ width: "100%" }}>
               <CustomDate
                 name="tankFirstDate2"
                 register={register("tankFirstDate2")}
                 reset={reset}
                 errors={errors["tankFirstDate2"]?.message}
               />
+            </Field> */}
+            <Field>
+              <CustomDatePicker
+                value={tankFirstDate2}
+                setValue={setTankFirstDate2}
+                name="tankFirstDate2"
+                style={{ margin: "5px 5px 0 5px" }}
+              />
             </Field>
-            <Field style={{ width: "100%" }}>
+
+            {/* <Field style={{ width: "100%" }}>
               <CustomDate
                 name="tankOutsideDate2"
                 register={register("tankOutsideDate2")}
                 reset={reset}
                 errors={errors["tankOutsideDate2"]?.message}
               />
+            </Field> */}
+            <Field>
+              <CustomDatePicker
+                value={tankOutsideDate2}
+                setValue={setTankOutsideDate2}
+                name="tankOutsideDate2"
+                style={{ margin: "5px 5px 0 5px" }}
+              />
             </Field>
-            <Field style={{ width: "100%" }}>
+            {/* <Field style={{ width: "100%" }}>
               <CustomDate
                 name="tankInsideDate2"
                 register={register("tankInsideDate2")}
                 reset={reset}
                 errors={errors["tankInsideDate2"]?.message}
               />
+            </Field> */}
+            <Field>
+              <CustomDatePicker
+                value={tankInsideDate2}
+                setValue={setTankInsideDate2}
+                name="tankInsideDate2"
+                style={{ margin: "5px 5px 0 5px" }}
+              />
             </Field>
             <Field flex>
               <Input
                 register={register("tankMax2")}
                 errors={errors["tankMax2"]?.message}
-                inputSize={InputSize.sm}
+                inputSize={InputSize.i60}
                 textAlign="right"
               />
               <p style={{ marginLeft: "-3px" }}>%</p>
             </Field>
+
             <Input
               register={register("tankTransmCd2")}
               errors={errors["tankTransmCd2"]?.message}
-              inputSize={InputSize.sm}
+              inputSize={InputSize.i60}
             />
+
             <Field flex style={{ alignItems: "center" }}>
               <Input
                 register={register("tankCuCd2")}
                 errors={errors["tankCuCd2"]?.message}
-                inputSize={InputSize.sm}
+                inputSize={InputSize.i60}
               />
               <SearchBtn type="button" onClick={() => alert("dsdsds")}>
                 <MagnifyingGlass />
@@ -301,7 +421,7 @@ function Tab3({
           <p>용기</p>
         </Field>
 
-        <Wrapper grid col={4}>
+        <Wrapper grid col={3}>
           <FormGroup>
             <Label>용기구분</Label>
             {radioOptions2.map((option, index) => (
@@ -336,19 +456,19 @@ function Tab3({
             />
             <p>개</p>
           </Field>
-          <div></div>
+
           <Field flex style={{ alignItems: "center", justifyContent: "end" }}>
             <Input
               register={register("cuTransmCd")}
               errors={errors["cuTransmCd"]?.message}
-              inputSize={InputSize.sm}
+              inputSize={InputSize.i60}
             />
 
             <Input
               register={register("cuTransmCuCd")}
               errors={errors["cuTransmCuCd"]?.message}
-              inputSize={InputSize.sm}
-              style={{ marginLeft: "24px" }}
+              inputSize={InputSize.i60}
+              style={{ marginLeft: "5px" }}
             />
             <SearchBtn type="button" onClick={() => alert("dsdsds")}>
               <MagnifyingGlass />
@@ -426,14 +546,20 @@ function Tab3({
               errors={errors["gasifyPower1"]?.message}
             />
 
-            <Field style={{ width: "100%" }}>
+            {/* <Field style={{ width: "100%" }}>
               <CustomDate
                 name="gasifyCheckDate1"
                 register={register("gasifyCheckDate1")}
                 reset={reset}
                 errors={errors["gasifyCheckDate1"]?.message}
               />
-            </Field>
+            </Field> */}
+            <CustomDatePicker
+              value={gasifyCheckDate1}
+              setValue={setGasifyCheckDate1}
+              name="gasifyCheckDate1"
+              style={{ margin: "5px 5px 0 5px" }}
+            />
           </Wrapper>
           <DividerGray />
           <Wrapper grid col={8}>
