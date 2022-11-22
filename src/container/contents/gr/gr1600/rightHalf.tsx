@@ -1,7 +1,11 @@
 import React from "react";
 
 function RightHalf() {
-  return <div>rightHalf</div>;
+  return (
+    <div>
+      <div className="top-header"></div>
+    </div>
+  );
 }
 
 export default RightHalf;
