@@ -29,6 +29,11 @@ export const DetailHeader = styled.div`
     display: flex;
     alignitems: center;
   }
+
+  .title-and-areacode {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const Wrapper = styled.div`

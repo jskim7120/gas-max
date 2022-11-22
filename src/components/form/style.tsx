@@ -80,6 +80,7 @@ interface IInputProps {
   defaultValue?: any;
   optionSlt?: any;
   maxLength?: string;
+  minLength?: string;
   kind?: FieldKind;
   textAlign?: string;
   formatNumber?: string;
@@ -101,6 +102,7 @@ export const Input = ({
   style,
   className,
   maxLength,
+  minLength,
   kind,
   textAlign,
   formatNumber,
@@ -204,6 +206,7 @@ export const Input = ({
             style={style}
             className={className}
             maxLength={maxLength && maxLength}
+            minLength={minLength && minLength}
             kind={kind && kind}
             textAlign={textAlign && textAlign}
             onChange={formatNumber ? (e) => handleInput(e, formatNumber) : null}
@@ -220,6 +223,7 @@ export const Input = ({
             style={style}
             className={className}
             maxLength={maxLength && maxLength}
+            minLength={minLength && minLength}
             kind={kind && kind}
             textAlign={textAlign && textAlign}
             // onChange={onChange && onChange}
@@ -254,6 +258,12 @@ export const InputForm = styled.input<{
   padding: 0 6px;
   font-family: "NotoSansKRRegular";
   font-size: 12px;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
   &:hover,
   &:focus {
@@ -354,6 +364,12 @@ export const Label = styled.label<{
 
   &.brgray {
     border-right: 1px solid #e6e5e5;
+  }
+
+  &.lable-check {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
   }
 `;
 
