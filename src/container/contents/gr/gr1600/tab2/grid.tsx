@@ -2,17 +2,7 @@ import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { fields, columns } from "./data";
 
-function Grid({
-  data,
-}: //   setSelected,
-// selectedRowIndex,
-// setSelectedRowIndex,
-{
-  data: any;
-  //   setSelected: Function;
-  // selectedRowIndex: number | null;
-  // setSelectedRowIndex: Function;
-}) {
+function Grid({ data, setData }: { data: any; setData: any }) {
   let container: HTMLDivElement;
   let dp: any;
   let gv: any;
@@ -30,6 +20,7 @@ function Grid({
     gv.setHeader({
       height: 35,
     });
+
     gv.setFooter({ visible: false });
     gv.setOptions({
       indicator: { visible: true },
@@ -38,16 +29,18 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
-    gv.setEditOptions({ editable: false });
-
-    gv.setCurrent({
-      // dataRow: selectedRowIndex,
-    });
+    gv.setEditOptions({ editable: true });
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
-      //   setSelected(data[itemIndex]);
-      // setSelectedRowIndex(itemIndex);
+    };
+
+    gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
+      console.log("index:", index);
+      console.log("oldValue:", oldValue);
+      console.log("newValue:", newValue);
+      data[index.dataRow][index.fieldName] = newValue;
+      setData(data);
     };
 
     return () => {
