@@ -150,29 +150,29 @@ const Form = React.forwardRef(
       <form
         onSubmit={handleSubmit(submit)}
         style={{
-          padding: "15px 50px 5px",
+          padding: "15px 50px 22px",
           height: "auto",
           borderTop: "1px solid #707070",
         }}
       >
-        <Wrapper grid col={1} style={{ gap: "10px" }}>
+        <Wrapper grid col={1} style={{ gap: "3px" }}>
           <div style={{ display: "flex" }}>
             <Input
               label="거래처코드"
               register={register("cuCode1")}
               errors={errors["cuCode1"]?.message}
-              inputSize={InputSize.sm}
+              inputSize={InputSize.xs}
             />
             <Input
               register={register("cuCode2")}
               errors={errors["cuCode2"]?.message}
-              inputSize={InputSize.sm}
+              inputSize={InputSize.xs}
             />
           </div>
           <Field>
             <FormGroup>
               <Label>건물명</Label>
-              <Input inputSize={InputSize.sm} register={register("cuName")} />
+              <Input inputSize={InputSize.xs} register={register("cuName")} />
             </FormGroup>
             <div>
               <ErrorText>{errors["cuName"]?.message}</ErrorText>
@@ -182,7 +182,7 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>사용자명</Label>
               <Input
-                inputSize={InputSize.md}
+                inputSize={InputSize.i120}
                 register={register("cuUserName")}
               />
             </FormGroup>

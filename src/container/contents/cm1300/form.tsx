@@ -69,8 +69,10 @@ const Form = React.forwardRef(
   ) => {
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [addr, setAddress] = useState<string>("");
-    const [cuRdangaType, setCuRdangaType] = useState("");
+    const [aptCuRdangaType, setAptCuRdangaType] = useState("");
     const [sign, setSign] = useState("");
+    const [number1, setNumber1] = useState(0);
+    const [number2, setNumber2] = useState(0);
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "CM",
@@ -93,7 +95,6 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (addr.length > 0) {
-        console.log("hayag===>", addr);
         reset({
           aptZipcode: addr ? addr?.split("/")[1] : "",
           aptAddr1: addr ? addr?.split("/")[0] : "",
@@ -377,8 +378,10 @@ const Form = React.forwardRef(
                 {...register("aptRdangaType")}
                 style={{ minWidth: "20%" }}
                 onChange={(e: any) => {
-                  console.log(e.target.value);
-                  setCuRdangaType(e.target.value);
+                  setAptCuRdangaType(e.target.value);
+                  setSign("");
+                  setNumber1(0);
+                  setNumber2(0);
                 }}
               >
                 {dataCommonDic?.aptRdangaType.map(
@@ -391,19 +394,17 @@ const Form = React.forwardRef(
                   }
                 )}
               </Select>
-              {cuRdangaType === "1" ? (
+              {aptCuRdangaType === "1" ? (
                 <Field flex style={{ alignItems: "center" }}>
                   <Input2
                     name="percentage"
                     id="number1"
                     type="text"
-                    // onChange={(e: any) => setToo(Number(e.target.value))}
-                    onChange={(e: any) => {}}
+                    onChange={(e: any) => setNumber1(Number(e.target.value))}
                   />
                   <Select
                     {...register("aptRdangaSign")}
                     onChange={(e: any) => {
-                      console.log(e.target.value);
                       setSign(e.target.value);
                     }}
                     style={{ minWidth: "30px", border: "1px solid #e6e5e5" }}
@@ -417,8 +418,7 @@ const Form = React.forwardRef(
                     name="percentage"
                     id="number2"
                     type="text"
-                    // onChange={(e: any) => setToo(Number(e.target.value))}
-                    onChange={(e: any) => {}}
+                    onChange={(e: any) => setNumber2(Number(e.target.value))}
                   />
 
                   <p>
@@ -426,13 +426,17 @@ const Form = React.forwardRef(
                     {sign === "-" && "원"}
                     {sign === "+" && "원"}
                   </p>
-                  <p style={{ margin: "0 5px" }}>=</p>
+                  <p style={{ margin: "0 15px" }}>=</p>
                   <p>
-                    2900 원
-                    {/* {sign !== "*"
-                    ? eval(`${customerInfo?.cuRdanga} ${sign} ${too}`)
-                    : eval(`${customerInfo?.cuRdanga} ${sign} ${too}/100`)} */}
+                    {sign !== "*"
+                      ? sign === "+"
+                        ? number1 + number2
+                        : sign === "-"
+                        ? number1 - number2
+                        : null
+                      : (number1 * number2) / 100}
                   </p>
+                  <span style={{ marginLeft: "3px" }}>원</span>
                 </Field>
               ) : (
                 <Input
