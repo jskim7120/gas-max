@@ -14,7 +14,6 @@ import {
   Divider,
   Label,
   Input,
-  DividerGray,
 } from "components/form/style";
 import { IconInfo } from "components/allSvgIcon";
 import { IJNOTRY2 } from "./model";
@@ -216,7 +215,6 @@ const Form = (
       <VolReading>
         <div className="title">체적검침 환경</div>
         <div className="volReadCnt">
-          <DividerGray />
           <Wrapper className="volWrapper">
             <Field>
               <FormGroup>
@@ -238,7 +236,7 @@ const Form = (
               <span>검침 등록시 미납금액에 대하여 연체료를 부과</span>
             </p>
           </Wrapper>
-          <DividerGray />
+
           <Wrapper className="volWrapper">
             <Field className="field">
               <FormGroup>
@@ -255,7 +253,7 @@ const Form = (
               <span>검침오차에서 사용량 (㎥-Kg) 변환시 적용</span>
             </p>
           </Wrapper>
-          <DividerGray />
+
           <Wrapper className="volWrapper">
             <Field>
               <FormGroup>
@@ -277,7 +275,7 @@ const Form = (
               <span>당월합계금액의 1원단위 계산방법</span>
             </p>
           </Wrapper>
-          <DividerGray />
+
           <Wrapper className="volWrapper">
             <Field>
               <FormGroup>
@@ -300,7 +298,6 @@ const Form = (
               <span>지로 청구서 출력시 범위 지정</span>
             </p>
           </Wrapper>
-          <DividerGray />
         </div>
       </VolReading>
       <Container>
@@ -319,7 +316,6 @@ const Form = (
         <BasicItems>
           <div className="title">신규거래처 기본설정 항목</div>
           <div className="basicItemsCnt">
-            <DividerGray />
             <Wrapper className="volWrapper">
               <Field>
                 <FormGroup>
@@ -343,7 +339,7 @@ const Form = (
                 </div>
               </Field>
             </Wrapper>
-            <DividerGray />
+
             <Wrapper className="volWrapper">
               <Field className="field">
                 <FormGroup>
@@ -359,7 +355,7 @@ const Form = (
                 </FormGroup>
               </Field>
             </Wrapper>
-            <DividerGray />
+
             <Wrapper className="volWrapper">
               <Field className="field">
                 <FormGroup>
@@ -373,7 +369,7 @@ const Form = (
                 </FormGroup>
               </Field>
             </Wrapper>
-            <DividerGray />
+
             <Wrapper className="volWrapper">
               <Field>
                 <FormGroup>
@@ -396,7 +392,7 @@ const Form = (
                 </div>
               </Field>
             </Wrapper>
-            <DividerGray />
+
             <Wrapper className="volWrapper">
               <Field className="field">
                 <FormGroup>
@@ -410,7 +406,6 @@ const Form = (
                 </FormGroup>
               </Field>
             </Wrapper>
-            <DividerGray />
           </div>
           <p className="basicDesc">
             <IconInfo />

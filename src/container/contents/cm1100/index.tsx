@@ -23,7 +23,7 @@ import {
   FormGroup,
   Wrapper,
   Label,
-  DividerGray,
+  // DividerGray,
 } from "components/form/style";
 import { InputSize, FieldKind } from "components/componentsType";
 import { DetailHeader, WrapperContent } from "../en/style";
@@ -134,7 +134,7 @@ function CM1100Page({
 
   return (
     <>
-      <div>
+      <div style={{ borderBottom: "2px solid #707070" }}>
         <form onSubmit={handleSubmit(submit)}>
           <DetailHeader>
             <div style={{ display: "flex", alignItems: "center" }}>
@@ -225,7 +225,7 @@ function CM1100Page({
                   }}
                 />
               </Wrapper>
-              <DividerGray />
+
               <Wrapper grid col={5}>
                 <Field>
                   <FormGroup>

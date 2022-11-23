@@ -18,7 +18,6 @@ import {
   ErrorText,
   FormGroup,
   Wrapper,
-  DividerGray,
   Divider,
   Label,
 } from "components/form/style";
@@ -290,7 +289,7 @@ function FormCM1105() {
             inputSize={InputSize.i150}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid>
           <Input
             label="전화번호"
@@ -319,7 +318,7 @@ function FormCM1105() {
             </div>
           </Field>
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid>
           <Input
             label="핸드폰"
@@ -343,7 +342,7 @@ function FormCM1105() {
             </div>
           </Field>
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid col={2}>
           <Field flex style={{ alignItems: "center" }}>
             <Input
@@ -364,7 +363,7 @@ function FormCM1105() {
             fullWidth
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid col={2}>
           <Input
             label="비고"
@@ -387,7 +386,7 @@ function FormCM1105() {
             fullWidth
           />
         </Wrapper>
-        <DividerGray />
+
         <Field
           style={{
             display: "flex",
@@ -446,7 +445,7 @@ function FormCM1105() {
                 </div>
               </Field>
             </Wrapper>
-            <DividerGray />
+
             <Wrapper grid>
               <Field>
                 <FormGroup>
@@ -488,7 +487,7 @@ function FormCM1105() {
                 </div>
               </Field>
             </Wrapper>
-            <DividerGray />
+
             <Wrapper grid>
               <Field>
                 <FormGroup>
@@ -539,7 +538,7 @@ function FormCM1105() {
                 </div>
               </Field>
             </Wrapper>
-            <DividerGray />
+
             <Wrapper grid>
               <Field>
                 <FormGroup>
@@ -596,7 +595,7 @@ function FormCM1105() {
           </Field>
         </Field>
         <Divider />
-        <div style={{ marginTop: "30px" }}>
+        <div style={{ marginTop: "5px" }}>
           <PlainTab
             tabHeader={[
               "사업자 정보",

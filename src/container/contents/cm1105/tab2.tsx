@@ -6,7 +6,6 @@ import {
   Field,
   ErrorText,
   Wrapper,
-  DividerGray,
   FormGroup,
   Label,
 } from "components/form/style";
@@ -137,7 +136,7 @@ function Tab2({
               />
             )}
           </Wrapper>
-          <DividerGray />
+
           <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Field flex>
               <Input
@@ -166,7 +165,7 @@ function Tab2({
               inputSize={InputSize.sm}
             />
           </Wrapper>
-          <DividerGray />
+
           <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Field flex>
               <Input
@@ -202,7 +201,7 @@ function Tab2({
               <p>원</p>
             </Field>
           </Wrapper>
-          <DividerGray />
+
           <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Input
               label="검침주기"

@@ -13,7 +13,6 @@ import {
   FormGroup,
   Wrapper,
   Divider,
-  DividerGray,
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
@@ -287,7 +286,7 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid col={2}>
           <Field>
             <FormGroup style={{ alignItems: "center" }}>
@@ -355,7 +354,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.sm}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid col={2}>
           <Input
             label="차량소유자"
@@ -373,7 +372,7 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid col={2}>
           <Field>
             <FormGroup style={{ alignItems: "center" }}>
@@ -393,7 +392,7 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
-        <DividerGray />
+
         <Wrapper style={{ width: "630px" }}>
           <Field flex style={{ alignItems: "center" }}>
             <Label>정기검사일</Label>
@@ -412,7 +411,7 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
-        <DividerGray />
+
         <Wrapper>
           <Input
             label="메모"
@@ -447,7 +446,7 @@ const Form = React.forwardRef(
             <p>월</p>
           </Field>
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid col={2}>
           <Field flex>
             <Input
@@ -483,7 +482,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.sm}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid col={2}>
           <Input
             label="계약지점"
@@ -498,7 +497,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.sm}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid col={2}>
           <Input
             label="전화번호"
@@ -513,7 +512,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.sm}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid col={2}>
           <Input
             label="피보험자"
@@ -528,7 +527,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.sm}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper>
           <Field>
             <FormGroup>
@@ -552,7 +551,7 @@ const Form = React.forwardRef(
             </FormGroup>
           </Field>
         </Wrapper>
-        <DividerGray />
+
         <Wrapper style={{ width: "630px" }}>
           <Field flex style={{ alignItems: "center" }}>
             <Label>보험기간</Label>
@@ -571,7 +570,7 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
-        <DividerGray />
+
         <Wrapper>
           <Field flex>
             <Input
@@ -586,7 +585,6 @@ const Form = React.forwardRef(
             <p>원</p>
           </Field>
         </Wrapper>
-        <DividerGray />
       </form>
     );
   }

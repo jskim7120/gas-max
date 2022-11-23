@@ -13,7 +13,7 @@ function getTabContent(
     case 0:
       return <Tab1 register={register} errors={errors} tabData={tabData} />;
     case 1:
-      return <Tab2 buCode={selected?.buCode} />;
+      return <Tab2 buCode={selected?.buCode} areaCode={selected?.areaCode} />;
     case 2:
       return <Tab3 register={register} errors={errors} />;
   }
