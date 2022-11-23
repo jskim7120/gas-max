@@ -495,7 +495,9 @@ export const Select = styled.select<{
   }
 
   border: ${(props) =>
-    props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
+    props.kind
+      ? getInputKind(props.kind)?.border
+      : `1px solid rgb(188, 185 ,185)`};
   width: ${(props) =>
     props.fullWidth
       ? "100%"
