@@ -188,6 +188,8 @@ function CM1300({
             position: "absolute",
             left: "245px",
             gap: "7px",
+            fontSize: "14px",
+            fontWeight: "bold",
           }}
         >
           <p className="big">영업소</p>
