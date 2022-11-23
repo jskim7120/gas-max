@@ -101,7 +101,7 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(path, formValues);
           if (response.status === 200) {
-            toast.success("Deleted", {
+            toast.success("삭제했습니다", {
               autoClose: 500,
             });
             await fetchData();
@@ -134,7 +134,7 @@ const Form = React.forwardRef(
             });
           }
           setSelected(formValues);
-          toast.success("Action successful", {
+          toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
           setIsAddBtnClicked(false);
