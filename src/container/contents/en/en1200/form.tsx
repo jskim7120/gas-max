@@ -10,7 +10,6 @@ import {
   FormGroup,
   Wrapper,
   Divider,
-  DividerGray,
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
@@ -258,7 +257,6 @@ const Form = React.forwardRef(
                 inputSize={InputSize.sm}
               />
             </Wrapper>
-            <DividerGray />
             <Wrapper grid col={2}>
               <Input
                 label="상호"
@@ -273,7 +271,6 @@ const Form = React.forwardRef(
                 inputSize={InputSize.md}
               />
             </Wrapper>
-            <DividerGray />
             <Wrapper style={{ alignItems: "center" }}>
               <Input
                 label="주소"
@@ -287,7 +284,6 @@ const Form = React.forwardRef(
                 fullWidth
               />
             </Wrapper>
-            <DividerGray />
             <Wrapper>
               <Input
                 label=""
@@ -296,7 +292,6 @@ const Form = React.forwardRef(
                 fullWidth
               />
             </Wrapper>
-            <DividerGray />
             <Wrapper>
               <Input
                 label="업태"
@@ -350,7 +345,6 @@ const Form = React.forwardRef(
                     />
                   </button>
                 </Wrapper>
-                <DividerGray />
                 <Wrapper
                   style={{
                     justifyContent: "space-between",
@@ -391,7 +385,6 @@ const Form = React.forwardRef(
                     </div>
                   </Field>
                 </Wrapper>
-                <DividerGray />
                 <Wrapper>
                   <Field flex style={{ alignItems: "center" }}>
                     <Label>개업일</Label>
@@ -412,7 +405,6 @@ const Form = React.forwardRef(
               </div>
               <ImageWrapper>{image64 && <img src={image64} />}</ImageWrapper>
             </Wrapper>
-            <DividerGray />
             <Wrapper>
               <Input
                 label="메모"
@@ -435,7 +427,6 @@ const Form = React.forwardRef(
                 type="password"
               />
             </Wrapper>
-            <DividerGray />
             <Wrapper grid>
               <Input
                 label="담당자명"
@@ -448,7 +439,6 @@ const Form = React.forwardRef(
                 errors={errors["saupEdiSmsNo"]?.message}
               />
             </Wrapper>
-            <DividerGray />
             <Wrapper style={{ alignItems: "center" }}>
               <Input
                 label="이메일"
@@ -464,8 +454,6 @@ const Form = React.forwardRef(
                 ))}
               </Select>
             </Wrapper>
-
-            <DividerGray />
             <Wrapper style={{ alignItems: "center" }}>
               <Input
                 label="공인인증서"
@@ -499,7 +487,6 @@ const Form = React.forwardRef(
                 />
               </button>
             </Wrapper>
-            <DividerGray />
             <Wrapper
               style={{
                 padding: "10px 0 0 105px",

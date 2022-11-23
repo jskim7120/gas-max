@@ -10,7 +10,6 @@ import {
   Select,
   Wrapper,
   Divider,
-  DividerGray,
   Field,
   ErrorText,
   FormGroup,
@@ -191,7 +190,7 @@ const Form = React.forwardRef(
             errors={errors["jyName"]?.message}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper>
           <Input
             label="비고"
@@ -200,7 +199,6 @@ const Form = React.forwardRef(
             fullWidth
           />
         </Wrapper>
-        <DividerGray />
       </form>
     );
   }

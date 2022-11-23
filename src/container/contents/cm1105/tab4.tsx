@@ -3,7 +3,6 @@ import {
   Select,
   Field,
   Wrapper,
-  DividerGray,
   FormGroup,
   Label,
   ErrorText,
@@ -64,7 +63,7 @@ function Tab4({
           />
         </Field>
       </Wrapper>
-      <DividerGray />
+
       <Wrapper grid col={4}>
         {/* <CustomDate
             label="공급계약일"
@@ -129,7 +128,7 @@ function Tab4({
           />
         </Field>
       </Wrapper>
-      <DividerGray />
+
       <Wrapper grid col={4}>
         <Field>
           <FormGroup>
@@ -193,7 +192,7 @@ function Tab4({
           </div>
         </Field>
       </Wrapper>
-      <DividerGray />
+
       <Wrapper grid col={4}>
         <Field>
           <FormGroup>
@@ -256,7 +255,7 @@ function Tab4({
           </div>
         </Field>
       </Wrapper>
-      <DividerGray />
+
       <Wrapper grid col={4}>
         <Field flex style={{ alignItems: "center" }}>
           {/* <CustomDate

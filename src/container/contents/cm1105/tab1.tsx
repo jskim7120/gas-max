@@ -4,7 +4,6 @@ import {
   Field,
   ErrorText,
   Wrapper,
-  DividerGray,
   FormGroup,
   Label,
 } from "components/form/style";
@@ -64,7 +63,7 @@ function Tab1({
           </div>
         </Field>
       </Wrapper>
-      <DividerGray />
+
       <Wrapper grid col={4}>
         <Input
           label="상호"
@@ -78,7 +77,7 @@ function Tab1({
           errors={errors["cuSajang"]?.message}
         />
       </Wrapper>
-      <DividerGray />
+
       <Wrapper grid col={2}>
         <Field flex style={{ alignItems: "center" }}>
           <Input
@@ -100,7 +99,7 @@ function Tab1({
           style={{ marginLeft: "0px" }}
         />
       </Wrapper>
-      <DividerGray />
+
       <Wrapper grid col={2}>
         <Input
           label="업태"
@@ -113,7 +112,7 @@ function Tab1({
           errors={errors["cuJongmok"]?.message}
         />
       </Wrapper>
-      <DividerGray />
+
       <Wrapper grid col={4}>
         <Input
           label="담당자"
@@ -141,7 +140,7 @@ function Tab1({
           </Select>
         </Field>
       </Wrapper>
-      <DividerGray />
+
       <Wrapper grid col={4}>
         <Input
           label="담당자"
@@ -169,7 +168,7 @@ function Tab1({
           </Select>
         </Field>
       </Wrapper>
-      <DividerGray />
+
       <Wrapper grid col={2}>
         <Field
           flex
@@ -197,7 +196,7 @@ function Tab1({
           </FormGroup>
         </Field>
       </Wrapper>
-      <DividerGray />
+
       <Wrapper grid col={4}>
         <Field>
           <FormGroup>

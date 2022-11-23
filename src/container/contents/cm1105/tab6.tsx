@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  Input,
-  Field,
-  Wrapper,
-  DividerGray,
-  FormGroup,
-  Label,
-} from "components/form/style";
+import { Input, Field, Wrapper, FormGroup, Label } from "components/form/style";
 import CheckBox from "components/checkbox";
 // import CustomDate from "components/customDatePicker";
 import CustomDatePicker from "components/customDatePicker/customdate2";
@@ -69,7 +62,7 @@ function Tab6({
               />
             </Field>
           </Wrapper>
-          <DividerGray />
+
           <Wrapper>
             <Input
               label="비고"
@@ -127,7 +120,7 @@ function Tab6({
               />
             </Field>
           </Wrapper>
-          <DividerGray />
+
           <Wrapper>
             <Input
               label="비고"

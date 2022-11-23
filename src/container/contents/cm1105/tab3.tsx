@@ -3,7 +3,6 @@ import {
   Select,
   Field,
   Wrapper,
-  DividerGray,
   FormGroup,
   Label,
   DividerDark,
@@ -189,7 +188,7 @@ function Tab3({
               잔량고객코드
             </Label>
           </Wrapper>
-          <DividerGray />
+
           <Wrapper
             grid
             col={11}
@@ -300,7 +299,7 @@ function Tab3({
               </SearchBtn>
             </Field>
           </Wrapper>
-          <DividerGray />
+
           <Wrapper
             grid
             col={11}
@@ -523,7 +522,7 @@ function Tab3({
             <Label style={{ textAlign: "center" }}>전원</Label>
             <Label style={{ textAlign: "center" }}>장치검사</Label>
           </Wrapper>
-          <DividerGray />
+
           <Wrapper grid col={8}>
             <Input
               register={register("gasifyCo1")}
@@ -561,7 +560,7 @@ function Tab3({
               style={{ margin: "5px 5px 0 5px" }}
             />
           </Wrapper>
-          <DividerGray />
+
           <Wrapper grid col={8}>
             <Input
               register={register("gasifyCo2")}
