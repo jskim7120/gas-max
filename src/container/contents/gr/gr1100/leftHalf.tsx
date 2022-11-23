@@ -19,6 +19,7 @@ import {
   Label,
   DividerGray,
 } from "components/form/style";
+import { ButtonWrapper } from "./style";
 
 function LeftHalf({
   depthFullName,
@@ -69,7 +70,7 @@ function LeftHalf({
             ))}
           </Select>
         </div>
-        <Wrapper>
+        <Wrapper style={{ position: "relative" }}>
           <Field>
             <FormGroup>
               <Label>구분</Label>
@@ -111,7 +112,7 @@ function LeftHalf({
               </Select>
             </FormGroup>
           </Field>
-          <div className="button-wrapper">
+          <ButtonWrapper>
             <Button
               text="검색"
               icon={<MagnifyingGlassBig />}
@@ -125,7 +126,7 @@ function LeftHalf({
               color={ButtonColor.SECONDARY}
               type="button"
             />
-          </div>
+          </ButtonWrapper>
         </Wrapper>
       </form>
     </div>

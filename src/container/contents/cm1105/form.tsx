@@ -191,7 +191,7 @@ function FormCM1105() {
     try {
       const response: any = await API.post(path, formValues);
       if (response.status === 200) {
-        toast.success("Action successful", {
+        toast.success("저장이 성공하였습니다", {
           autoClose: 500,
         });
         setIsAddBtnClicked(false);
