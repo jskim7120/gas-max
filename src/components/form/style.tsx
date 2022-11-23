@@ -293,7 +293,9 @@ export const InputForm = styled.input<{
   }
 
   border: ${(props) =>
-    props.kind ? getInputKind(props.kind)?.border : "1px solid #e6e5e5"};
+    props.kind
+      ? getInputKind(props.kind)?.border
+      : `1px solid rgb(188, 185 ,185)`};
   background: aliceblue;
 `;
 
