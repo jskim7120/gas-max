@@ -53,23 +53,23 @@ export interface ICM1200SEARCH {
   cuTransmCd: string;
   cuTransmCuCd: string;
   /* 3-2-2 Wrapper */
-  makeCo1: string;
+  tankMakeCo1: string;
   tankVol1: string;
   tankMakeSno1: string;
   tankMakeDate1: string;
   tankRcv1: string;
-  tankFinishDate1: string;
-  tankOutsiderDate1: string;
-  tankInsiderDate1: string;
+  tankFirstDate1: string;
+  tankOutsideDate1: string;
+  tankInsideDate1: string;
   /* 3-2-3 Wrapper */
-  makeCo2: string;
+  tankMakeCo2: string;
   tankVol2: string;
   tankMakeSno2: string;
   tankMakeDate2: string;
   tankRcv2: string;
-  tankFinishDate2: string;
-  tankOutsiderDate2: string;
-  tankInsiderDate2: string;
+  tankFirstDate2: string;
+  tankOutsideDate2: string;
+  tankInsideDate2: string;
   /* 3-4-2 Wrapper */
   gasifyCo1: string;
   gasifyVol1: string;
@@ -92,23 +92,23 @@ export interface ICM1200SEARCH {
 export interface ICM1200GRID {}
 
 export interface CM120065 {
-  makeCo1: string;
+  tankMakeCo1: string;
   tankVol1: string;
   tankMakeSno1: string;
   tankMakeDate1: string;
   tankRcv1: string;
-  tankFinishDate1: string;
-  tankOutsiderDate1: string;
-  tankInsiderDate1: string;
+  tankFirstDate1: string;
+  tankOutsideDate1: string;
+  tankInsideDate1: string;
 
-  makeCo2: string;
+  tankMakeCo2: string;
   tankVol2: string;
   tankMakeSno2: string;
   tankMakeDate2: string;
   tankRcv2: string;
-  tankFinishDate2: string;
-  tankOutsiderDate2: string;
-  tankInsiderDate2: string;
+  tankFirstDate2: string;
+  tankOutsideDate2: string;
+  tankInsideDate2: string;
 }
 
 export interface ICM120065USERINFO {
@@ -130,21 +130,21 @@ export interface ICM120065USERINFO {
 
 export interface ICM120065SUPPLYTYPE {
   /* 3-2-2 Wrapper */
-  makeCo1: string;
+  tankMakeCo1: string;
   tankVol1: string;
   tankMakeSno1: string;
   tankMakeDate1: string;
   tankRcv1: string;
-  tankFinishDate1: string;
-  tankOutsiderDate1: string;
-  tankInsiderDate1: string;
+  tankFirstDate1: string;
+  tankOutsideDate1: string;
+  tankInsideDate1: string;
   /* 3-2-3 Wrapper */
-  makeCo2: string;
+  tankMakeCo2: string;
   tankVol2: string;
   tankMakeSno2: string;
   tankMakeDate2: string;
   tankRcv2: string;
-  tankFinishDate2: string;
-  tankOutsiderDate2: string;
-  tankInsiderDate2: string;
+  tankFirstDate2: string;
+  tankOutsideDate2: string;
+  tankInsideDate2: string;
 }

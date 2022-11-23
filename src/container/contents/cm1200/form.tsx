@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import DaumAddress from "components/daum";
 import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
-import CustomDate from "components/customDatePicker";
 import CustomDatePicker from "components/customDatePicker/customdate2";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
@@ -29,7 +28,6 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./validation";
 //API
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { ICM1200SEARCH } from "./modul";
 import API from "app/axios";
 import { CM1200DELETE, CM1200INSERT, CM1200UPDATE } from "app/path";
@@ -43,20 +41,24 @@ const Form = React.forwardRef(
   (
     {
       selected,
+      dataCommonDic,
       selectedSupplyTab,
       fetchData,
       setData,
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      selectAreaCode,
     }: {
       selected: any;
+      dataCommonDic: any;
       selectedSupplyTab: any;
       fetchData: any;
       setData: any;
       selectedRowIndex: number;
       setSelected: any;
       setSelectedRowIndex: any;
+      selectAreaCode: string;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -64,14 +66,19 @@ const Form = React.forwardRef(
     const [rdangaCalc, setRdangaCalc] = useState("");
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [rdangaTotal, setRdangaTotal] = useState(0);
-    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-      groupId: "CM",
-      functionName: "CM1200",
-    });
+
     // CustomDatePickers
     const [cuFinishDate, setCuFinishDate] = useState("");
     const [cuCircuitDate, setCuCircuitDate] = useState("");
     const [cuScheduleDate, setCuScheduleDate] = useState("");
+    const [tankFirstDate1, setTankFirstDate1] = useState("");
+    const [tankFirstDate2, setTankFirstDate2] = useState("");
+    const [tankOutsideDate1, setTankOutsideDate1] = useState("");
+    const [tankOutsideDate2, setTankOutsideDate2] = useState("");
+    const [tankInsideDate1, setTankInsideDate1] = useState("");
+    const [tankInsideDate2, setTankInsideDate2] = useState("");
+    const [gasifyCheckDate1, setGasifyCheckDate1] = useState("");
+    const [gasifyCheckDate2, setGasifyCheckDate2] = useState("");
 
     const {
       handleSubmit,
@@ -115,12 +122,13 @@ const Form = React.forwardRef(
         cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
         cuGumTurm: dataCommonDic?.cuGumTurm[0].code,
 
-        // cuGumdate: dataCommonDic?.cuGumdate[0].code, // dataCommonDic-d baihgvi
-        // cuCylinderName: dataCommonDic?.cuCylinderName[0].code, // dataCommonDic-d baihgvi
+        tankMakeCo1: dataCommonDic?.tankMakeCo1[0].code,
+        tankMakeCo2: dataCommonDic?.tankMakeCo2[0].code,
+        tankVol1: dataCommonDic?.tankVol1[0].code,
+        tankVol2: dataCommonDic?.tankVol2[0].code,
 
-        // areaCode: dataCommonDic?.areaCode[0].code,
-        // tankMakeVol1: dataCommonDic?.tankMakeVol1[0].code,
-        // tankMakeVol2: dataCommonDic?.tankMakeVol2[0].code,
+        gasifyCo1: dataCommonDic?.gasifyCo1[0].code,
+        gasifyCo2: dataCommonDic?.gasifyCo2[0].code,
       });
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dataCommonDic]);
@@ -141,6 +149,17 @@ const Form = React.forwardRef(
             newData[key] = null;
           }
           reset(newData);
+          setCuFinishDate("");
+          setCuCircuitDate("");
+          setCuScheduleDate("");
+          setTankFirstDate1("");
+          setTankFirstDate2("");
+          setTankOutsideDate1("");
+          setTankOutsideDate2("");
+          setTankInsideDate1("");
+          setTankInsideDate2("");
+          setGasifyCheckDate1("");
+          setGasifyCheckDate2("");
         }
 
         if (type === "reset") {
@@ -181,6 +200,47 @@ const Form = React.forwardRef(
               ? formatDate(newFormData?.cuScheduleDate)
               : ""
           );
+          setTankFirstDate1(
+            newFormData?.tankFirstDate1
+              ? formatDate(newFormData?.tankFirstDate1)
+              : ""
+          );
+          setTankFirstDate2(
+            newFormData?.tankFirstDate2
+              ? formatDate(newFormData?.tankFirstDate2)
+              : ""
+          );
+          setTankOutsideDate1(
+            newFormData?.tankOutsideDate1
+              ? formatDate(newFormData?.tankOutsideDate1)
+              : ""
+          );
+          setTankOutsideDate2(
+            newFormData?.tankOutsideDate2
+              ? formatDate(newFormData?.tankOutsideDate2)
+              : ""
+          );
+          setTankInsideDate1(
+            newFormData?.tankInsideDate1
+              ? formatDate(newFormData?.tankInsideDate1)
+              : ""
+          );
+          setTankInsideDate2(
+            newFormData?.tankInsideDate2
+              ? formatDate(newFormData?.tankInsideDate2)
+              : ""
+          );
+
+          setGasifyCheckDate1(
+            newFormData?.gasifyCheckDate1
+              ? formatDate(newFormData?.gasifyCheckDate1)
+              : ""
+          );
+          setGasifyCheckDate2(
+            newFormData?.gasifyCheckDate2
+              ? formatDate(newFormData?.gasifyCheckDate2)
+              : ""
+          );
 
           setRdangaTotal(0);
         }
@@ -219,7 +279,7 @@ const Form = React.forwardRef(
       const formValues = getValues();
       const path = isAddBtnClicked ? CM1200INSERT : CM1200UPDATE;
 
-      formValues.areaCode = "00";
+      formValues.areaCode = selectAreaCode;
       formValues.cuAptnameYn = formValues.cuAptnameYn ? "Y" : "N";
       formValues.chkCuZipCode = formValues.chkCuZipCode ? "Y" : "N";
       formValues.chkCuRh20 = formValues.chkCuRh20 ? "Y" : "N";
@@ -255,32 +315,55 @@ const Form = React.forwardRef(
       formValues.cuScheduleDate = cuScheduleDate
         ? formatDateByRemoveDash(cuScheduleDate)
         : "";
+      formValues.tankFirstDate1 = tankFirstDate1
+        ? formatDateByRemoveDash(tankFirstDate1)
+        : "";
+      formValues.tankFirstDate2 = tankFirstDate2
+        ? formatDateByRemoveDash(tankFirstDate2)
+        : "";
+      formValues.tankOutsideDate1 = tankOutsideDate1
+        ? formatDateByRemoveDash(tankOutsideDate1)
+        : "";
+      formValues.tankOutsideDate2 = tankOutsideDate2
+        ? formatDateByRemoveDash(tankOutsideDate2)
+        : "";
+      formValues.tankInsideDate1 = tankInsideDate1
+        ? formatDateByRemoveDash(tankInsideDate1)
+        : "";
+      formValues.tankInsideDate2 = tankInsideDate2
+        ? formatDateByRemoveDash(tankInsideDate2)
+        : "";
+      if (selectAreaCode) {
+        try {
+          const response: any = await API.post(path, formValues);
+          if (response.status === 200) {
+            if (isAddBtnClicked) {
+              setData((prev: any) => [formValues, ...prev]);
+              setSelectedRowIndex(0);
+            } else {
+              setData((prev: any) => {
+                prev[selectedRowIndex] = formValues;
+                return [...prev];
+              });
+            }
+            setSelected(formValues);
+            toast.success("Action successful", {
+              autoClose: 500,
+            });
 
-      try {
-        const response: any = await API.post(path, formValues);
-        if (response.status === 200) {
-          if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
+            setIsAddBtnClicked(false);
           } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
+            toast.error(response?.response?.data?.message, {
+              autoClose: 500,
             });
           }
-          setSelected(formValues);
-          toast.success("Action successful", {
-            autoClose: 500,
-          });
-
-          setIsAddBtnClicked(false);
-        } else {
-          toast.error(response?.response?.data?.message, {
+        } catch (err: any) {
+          toast.error(err?.message, {
             autoClose: 500,
           });
         }
-      } catch (err: any) {
-        toast.error(err?.message, {
+      } else {
+        toast.error("지역코드 선택하세요", {
           autoClose: 500,
         });
       }
@@ -303,27 +386,41 @@ const Form = React.forwardRef(
       <form onSubmit={handleSubmit(submit)}>
         {/* 1-1 Wrapper */}
         <Divider />
-        <Wrapper grid col={3}>
-          <Input
-            label="건물코드"
-            maxLength="3"
-            name="cuCode"
-            register={register("cuCode")}
-            errors={errors["cuCode"]?.message}
-          />
-          <Input label="건물명" register={register("cuName")} />
-          <CheckBox
-            title="건물명 지로 출력 안함."
-            register={register("cuAptnameYn")}
-            rtl={true}
-          />
+        <Wrapper grid col={4}>
+          <Field>
+            <FormGroup>
+              <Input
+                label="건물코드"
+                maxLength="3"
+                minLength="3"
+                name="cuCode"
+                register={register("cuCode")}
+                errors={errors["cuCode"]?.message}
+                inputSize={InputSize.xs}
+              />
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <Input label="건물명" register={register("cuName")} />
+            </FormGroup>
+          </Field>
+          <Field>
+            <FormGroup>
+              <CheckBox
+                title="건물명 지로 출력 안함."
+                register={register("cuAptnameYn")}
+                rtl={true}
+              />
+            </FormGroup>
+          </Field>
         </Wrapper>
         <DividerGray />
         {/* 1-2 Wrapper */}
         <Wrapper col={3}>
           <Field>
             <FormGroup>
-              <Label>
+              <Label className="lable-check">
                 <CheckBox
                   title=""
                   register={register("chkCuZipCode")}
@@ -334,7 +431,6 @@ const Form = React.forwardRef(
                 register={register("cuZipcode")}
                 inputSize={InputSize.xs}
               />
-
               <DaumAddress setAddress={setAddress} />
             </FormGroup>
           </Field>
@@ -343,11 +439,11 @@ const Form = React.forwardRef(
         </Wrapper>
         <DividerGray />
         {/* 1-3 Wrapper */}
-        <Wrapper grid col={3}>
+        <Wrapper grid col={4}>
           <Field>
             <FormGroup>
               <Label>담당사원</Label>
-              <Select {...register("cuSwCode")} fullWidth>
+              <Select {...register("cuSwCode")} width={InputSize.i120}>
                 {dataCommonDic?.cuSwCode?.map((option: any, index: number) => {
                   return (
                     <option key={index} value={option.code}>
@@ -361,7 +457,7 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>지역분류</Label>
-              <Select {...register("cuJyCode")} style={{ width: "60%" }}>
+              <Select {...register("cuJyCode")} width={InputSize.i120}>
                 {dataCommonDic?.cuJyCode?.map((option: any, index: number) => {
                   return (
                     <option key={index} value={option.code}>
@@ -381,7 +477,7 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>관리자분류</Label>
-              <Select {...register("cuCustgubun")} fullWidth>
+              <Select {...register("cuCustgubun")} width={InputSize.i120}>
                 {dataCommonDic?.cuCustgubun?.map(
                   (option: any, index: number) => {
                     return (
@@ -397,21 +493,21 @@ const Form = React.forwardRef(
         </Wrapper>
         <Divider />
         {/* 2-1 Wrapper */}
-        <Wrapper grid col={3}>
+        <Wrapper grid col={4}>
           <Field>
             <FormGroup>
               {/* 1 - urd taliin selectees hamaarsan dun garna input idewhigvi, 
               2 - huwi ntr bodolttoi
               3 - gants input bna
               */}
-              <Label>
+              <Label className="lable-check">
                 <CheckBox
                   title="조정기"
                   register={register("chkCuRh20")}
                   rtl={false}
                 />
               </Label>
-              <Select {...register("cuRh20")} width={InputSize.i175}>
+              <Select {...register("cuRh20")} width={InputSize.i120}>
                 {dataCommonDic?.cuRh20?.map((option: any, index: number) => {
                   return (
                     <option key={index} value={option.code}>
@@ -425,14 +521,14 @@ const Form = React.forwardRef(
           </Field>
           <Field>
             <FormGroup>
-              <Label>
+              <Label className="lable-check">
                 <CheckBox
                   title="루베단가 "
                   register={register("chkCuRdange")}
                   rtl={false}
                 />
               </Label>
-              <Select {...register("cuRdangaType")} width={InputSize.i175}>
+              <Select {...register("cuRdangaType")} width={InputSize.i120}>
                 {dataCommonDic?.cuRdangaType.map(
                   (option: any, index: number) => {
                     return (
@@ -479,10 +575,10 @@ const Form = React.forwardRef(
         </Wrapper>
         <DividerGray />
         {/* 2-2 Wrapper */}
-        <Wrapper grid col={3}>
+        <Wrapper grid col={4}>
           <Field>
             <FormGroup>
-              <Label>
+              <Label className="lable-check">
                 <CheckBox
                   title="관리비"
                   register={register("chkCuAnKum")}
@@ -493,13 +589,14 @@ const Form = React.forwardRef(
                 register={register("cuAnKum")}
                 textAlign="right"
                 formatNumber="comDecNumber"
+                inputSize={InputSize.i120}
               />
               <p>원</p>
             </FormGroup>
           </Field>
           <Field>
             <FormGroup>
-              <Label>
+              <Label className="lable-check">
                 <CheckBox
                   title="시설비"
                   register={register("ckCuSisulKum")}
@@ -510,13 +607,14 @@ const Form = React.forwardRef(
                 register={register("cuSisulKum")}
                 textAlign="right"
                 formatNumber="comDecNumber"
+                inputSize={InputSize.i120}
               />
               <p>{selected?.cuSukumType}</p>
             </FormGroup>
           </Field>
           <Field>
             <FormGroup>
-              <Label>
+              <Label className="lable-check">
                 <CheckBox
                   title="계량기"
                   register={register("chkCuMeterKum")}
@@ -527,6 +625,7 @@ const Form = React.forwardRef(
                 register={register("cuMeterKum")}
                 textAlign="right"
                 formatNumber="comDecNumber"
+                inputSize={InputSize.i120}
               />
               <p>원</p>
             </FormGroup>
@@ -534,10 +633,10 @@ const Form = React.forwardRef(
         </Wrapper>
         <DividerGray />
         {/* 2-3 Wrapper */}
-        <Wrapper grid col={3}>
+        <Wrapper grid col={4}>
           <Field>
             <FormGroup>
-              <Label>
+              <Label className="lable-check">
                 <CheckBox
                   title="연체율"
                   register={register("chkCuPer")}
@@ -545,16 +644,25 @@ const Form = React.forwardRef(
                 />
               </Label>
               <Input
-                register={register("cuPer")}
-                type="number"
+                register={register("cuPer", {
+                  valueAsNumber: true,
+
+                  pattern: {
+                    value: /[0-9]{3}/,
+                    message: "",
+                  },
+                })}
+                maxLength="3"
+                type="text"
                 textAlign="right"
+                inputSize={InputSize.i120}
               />
               <p>{`%`}</p>
             </FormGroup>
           </Field>
           <Field>
             <FormGroup>
-              <Label>
+              <Label className="lable-check">
                 <CheckBox
                   title="할인율"
                   register={register("chkCuCdc")}
@@ -562,23 +670,31 @@ const Form = React.forwardRef(
                 />
               </Label>
               <Input
-                register={register("cuCdc")}
+                register={register("cuCdc", {
+                  valueAsNumber: true,
+                  pattern: {
+                    value: /[0-9]{3}/,
+                    message: "",
+                  },
+                })}
                 textAlign="right"
-                type="number"
+                maxLength="3"
+                type="text"
+                inputSize={InputSize.i120}
               />
               <p>{`%`}</p>
             </FormGroup>
           </Field>
           <Field>
             <FormGroup>
-              <Label>
+              <Label className="lable-check">
                 <CheckBox
                   title="수금방법"
                   register={register("chkCuSukumtype")}
                   rtl={false}
                 />
               </Label>
-              <Select {...register("cuSukumtype")} width={InputSize.i175}>
+              <Select {...register("cuSukumtype")} width={InputSize.i120}>
                 {dataCommonDic?.cuSukumtype?.map(
                   (option: any, index: number) => {
                     return (
@@ -594,17 +710,17 @@ const Form = React.forwardRef(
         </Wrapper>
         <DividerGray />
         {/* 2-4 Wrapper */}
-        <Wrapper grid col={3}>
+        <Wrapper grid col={4}>
           <Field>
             <FormGroup>
-              <Label>
+              <Label className="lable-check">
                 <CheckBox
                   title="검침주기"
                   register={register("chkCuGumTurm")}
                   rtl={false}
                 />
               </Label>
-              <Select {...register("cuGumTurm")} width={InputSize.i175}>
+              <Select {...register("cuGumTurm")} width={InputSize.i120}>
                 {dataCommonDic?.cuGumTurm?.map((option: any, index: number) => {
                   return (
                     <option key={index} value={option.code}>
@@ -617,35 +733,30 @@ const Form = React.forwardRef(
           </Field>
           <Field>
             <FormGroup>
-              <Label>
+              <Label className="lable-check">
                 <CheckBox
                   title="검침일"
                   register={register("chkCuGumdate")}
                   rtl={false}
                 />
               </Label>
-              <Select {...register("cuGumdate")} width={InputSize.i175}>
-                {dataCommonDic?.cuGumdate?.map((option: any, index: number) => {
-                  return (
-                    <option key={index} value={option.code}>
-                      {option.codeName}
-                    </option>
-                  );
-                })}
-              </Select>
+              <Input
+                register={register("cuGumdate")}
+                inputSize={InputSize.i120}
+              />
               <p>일</p>
             </FormGroup>
           </Field>
           <Field>
             <FormGroup>
-              <Label>
+              <Label className="lable-check">
                 <CheckBox
                   title="순 번"
                   register={register("chkCuCno")}
                   rtl={false}
                 />
               </Label>
-              <Input register={register("cuCno")} />
+              <Input register={register("cuCno")} inputSize={InputSize.i120} />
             </FormGroup>
           </Field>
         </Wrapper>
@@ -678,6 +789,7 @@ const Form = React.forwardRef(
           <Field flex style={{ alignItems: "center" }}>
             <Label>완성검사일</Label>
             <CustomDatePicker
+              style={{ width: "92%" }}
               value={cuFinishDate}
               name="cuFinishDate"
               setValue={setCuFinishDate}
@@ -686,6 +798,7 @@ const Form = React.forwardRef(
           <Field flex style={{ alignItems: "center" }}>
             <Label>정기검사일</Label>
             <CustomDatePicker
+              style={{ width: "92%" }}
               name="cuCircuitDate"
               value={cuCircuitDate}
               setValue={setCuCircuitDate}
@@ -694,6 +807,7 @@ const Form = React.forwardRef(
           <Field flex style={{ alignItems: "center" }}>
             <Label>검사예정일</Label>
             <CustomDatePicker
+              style={{ width: "92%" }}
               value={cuScheduleDate}
               name="cuScheduleDate"
               setValue={setCuScheduleDate}
@@ -726,14 +840,16 @@ const Form = React.forwardRef(
           <Wrapper grid col={8}>
             <Field>
               <FormGroup>
-                <Select {...register("makeCo1")} fullWidth>
-                  {dataCommonDic?.makeCo1?.map((option: any, index: number) => {
-                    return (
-                      <option key={index} value={option.code}>
-                        {option.codeName}
-                      </option>
-                    );
-                  })}
+                <Select {...register("tankMakeCo1")} fullWidth>
+                  {dataCommonDic?.tankMakeCo1?.map(
+                    (option: any, index: number) => {
+                      return (
+                        <option key={index} value={option.code}>
+                          {option.codeName}
+                        </option>
+                      );
+                    }
+                  )}
                 </Select>
               </FormGroup>
             </Field>
@@ -768,31 +884,28 @@ const Form = React.forwardRef(
               </FormGroup>
             </Field>
             <Field>
-              <FormGroup>
-                <CustomDate
-                  name="tankFinishDate1"
-                  register={register("tankFinishDate1")}
-                  reset={reset}
-                />
-              </FormGroup>
+              <CustomDatePicker
+                style={{ width: "94%" }}
+                value={tankFirstDate1}
+                setValue={setTankFirstDate1}
+                name="tankFirstDate1"
+              />
             </Field>
             <Field>
-              <FormGroup>
-                <CustomDate
-                  name="tankOutsiderDate1"
-                  register={register("tankOutsiderDate1")}
-                  reset={reset}
-                />
-              </FormGroup>
+              <CustomDatePicker
+                style={{ width: "94%" }}
+                value={tankOutsideDate1}
+                setValue={setTankOutsideDate1}
+                name="tankOutsideDate1"
+              />
             </Field>
             <Field>
-              <FormGroup>
-                <CustomDate
-                  name="tankInsiderDate1"
-                  register={register("tankInsiderDate1")}
-                  reset={reset}
-                />
-              </FormGroup>
+              <CustomDatePicker
+                style={{ width: "94%" }}
+                value={tankInsideDate1}
+                setValue={setTankInsideDate1}
+                name="tankInsideDate1"
+              />
             </Field>
           </Wrapper>
         </Field>
@@ -805,14 +918,16 @@ const Form = React.forwardRef(
           <Wrapper grid col={8}>
             <Field>
               <FormGroup>
-                <Select {...register("makeCo2")} fullWidth>
-                  {dataCommonDic?.makeCo2?.map((option: any, index: number) => {
-                    return (
-                      <option key={index} value={option.code}>
-                        {option.codeName}
-                      </option>
-                    );
-                  })}
+                <Select {...register("tankMakeCo2")} fullWidth>
+                  {dataCommonDic?.tankMakeCo2?.map(
+                    (option: any, index: number) => {
+                      return (
+                        <option key={index} value={option.code}>
+                          {option.codeName}
+                        </option>
+                      );
+                    }
+                  )}
                 </Select>
               </FormGroup>
             </Field>
@@ -843,35 +958,32 @@ const Form = React.forwardRef(
             </Field>
             <Field>
               <FormGroup>
-                <Input register={register("tankRcv1")} />
+                <Input register={register("tankRcv2")} />
               </FormGroup>
             </Field>
             <Field>
-              <FormGroup>
-                <CustomDate
-                  name="tankFinishDate2"
-                  register={register("tankFinishDate2")}
-                  reset={reset}
-                />
-              </FormGroup>
+              <CustomDatePicker
+                style={{ width: "94%" }}
+                value={tankFirstDate2}
+                setValue={setTankFirstDate2}
+                name="tankFirstDate2"
+              />
             </Field>
             <Field>
-              <FormGroup>
-                <CustomDate
-                  name="tankOutsiderDate2"
-                  register={register("tankOutsiderDate2")}
-                  reset={reset}
-                />
-              </FormGroup>
+              <CustomDatePicker
+                style={{ width: "94%" }}
+                value={tankOutsideDate2}
+                setValue={setTankOutsideDate2}
+                name="tankOutsideDate1"
+              />
             </Field>
             <Field>
-              <FormGroup>
-                <CustomDate
-                  name="tankInsiderDate2"
-                  register={register("tankInsiderDate2")}
-                  reset={reset}
-                />
-              </FormGroup>
+              <CustomDatePicker
+                style={{ width: "94%" }}
+                value={tankInsideDate2}
+                setValue={setTankInsideDate2}
+                name="tankInsideDate2"
+              />
             </Field>
           </Wrapper>
         </Field>
@@ -907,17 +1019,7 @@ const Form = React.forwardRef(
             <Field style={{ padding: "0px 5px" }}>
               <FormGroup>
                 <Label align="center">용기수량</Label>
-                <Select {...register("cuCylinderName")} width={InputSize.i175}>
-                  {dataCommonDic?.cuCylinderName?.map(
-                    (option: any, index: number) => {
-                      return (
-                        <option key={index} value={option.code}>
-                          {option.codeName}
-                        </option>
-                      );
-                    }
-                  )}
-                </Select>
+                <Input register={register("cuCylinderName")} />
                 <p>x</p>
                 <Input
                   register={register("cuCylinderQty")}
@@ -1019,10 +1121,11 @@ const Form = React.forwardRef(
               </FormGroup>
             </Field>
             <Field>
-              <CustomDate
+              <CustomDatePicker
+                style={{ width: "94%" }}
+                value={gasifyCheckDate1}
                 name="gasifyCheckDate1"
-                register={register("gasifyCheckDate1")}
-                reset={reset}
+                setValue={setGasifyCheckDate1}
               />
             </Field>
             <Field>
@@ -1086,10 +1189,11 @@ const Form = React.forwardRef(
               </FormGroup>
             </Field>
             <Field>
-              <CustomDate
+              <CustomDatePicker
+                style={{ width: "94%" }}
+                value={gasifyCheckDate2}
                 name="gasifyCheckDate2"
-                register={register("gasifyCheckDate2")}
-                reset={reset}
+                setValue={setGasifyCheckDate2}
               />
             </Field>
             <Field>

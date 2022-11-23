@@ -1,10 +1,9 @@
 // REACT
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import API from "app/axios";
-import { useDispatch, useSelector } from "app/store";
 // ./
 import { fields, columns } from "./data";
+import { ICM1200SEARCH, ICM120065USERINFO, ICM120065SUPPLYTYPE } from "./modul";
 import GridTable from "./gridTable";
 import Form from "./form";
 import {
@@ -24,22 +23,30 @@ import {
   Trash,
   Update,
 } from "components/allSvgIcon";
-import { ButtonColor, ButtonType, FieldKind } from "components/componentsType";
-import { Field, FormGroup, Input, Label } from "components/form/style";
+import {
+  ButtonColor,
+  ButtonType,
+  FieldKind,
+  InputSize,
+} from "components/componentsType";
+import { Field, FormGroup, Input, Label, Select } from "components/form/style";
 import CheckBox from "components/checkbox";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import HomeIconSvg from "assets/image/home-icon.svg";
 import PersonIconSvg from "assets/image/person-icon.svg";
 //GRID
 import { GridView, LocalDataProvider } from "realgrid";
+// APP
 import {
   openModal,
   addDeleteMenuId,
   setIsDelete,
   closeModal,
 } from "app/state/modal/modalSlice";
+import { useDispatch, useSelector } from "app/store";
 import { CM120065, CM1200SEARCH } from "app/path";
-import { ICM1200SEARCH, ICM120065USERINFO, ICM120065SUPPLYTYPE } from "./modul";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import API from "app/axios";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -66,7 +73,12 @@ function CM1200({
     {} as ICM120065SUPPLYTYPE,
   ]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [selectAreaCode, setSelectAreaCode] = useState("");
   const { isDelete } = useSelector((state) => state.modal);
+  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
+    groupId: "CM",
+    functionName: "CM1200",
+  });
 
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
@@ -171,10 +183,32 @@ function CM1200({
     }
   };
 
+  const onChangeAreaCode = (e: string) => {
+    e && setSelectAreaCode(e);
+  };
+
   return (
     <>
       <DetailHeader>
-        <p>{depthFullName}</p>
+        <div className="title-and-areacode">
+          <p>{depthFullName}</p>
+          <Field flex style={{ margin: "0px 10px" }}>
+            <p>영업소 </p>
+            <Select
+              onChange={(e) => onChangeAreaCode(e.target.value)}
+              width={InputSize.i120}
+              style={{ marginLeft: "5px" }}
+            >
+              {dataCommonDic?.areaCode?.map((option: any, index: number) => {
+                return (
+                  <option key={index} value={option.code}>
+                    {option.codeName}
+                  </option>
+                );
+              })}
+            </Select>
+          </Field>
+        </div>
         <div className="buttons">
           <Button
             text="건물등록"
@@ -215,10 +249,13 @@ function CM1200({
       </DetailHeader>
       <Wrapper>
         <TableWrapper width="30%">
-          <form onSubmit={handleSubmit(onSearchSubmit)}  style={{padding: "5px 0px"}}>
+          <form
+            onSubmit={handleSubmit(onSearchSubmit)}
+            style={{ padding: "5px 0px" }}
+          >
             <Field>
               <FormGroup>
-                <Label>
+                <Label className="lable-check">
                   <CheckBox title="건물명" rtl={false} />
                 </Label>
                 <Input
@@ -252,12 +289,14 @@ function CM1200({
             <FormSectionTitle>
               <h4>
                 <img src={HomeIconSvg} />
-                사용자 정보
+                건물 정보
               </h4>
             </FormSectionTitle>
             <Form
               ref={formRef}
+              selectAreaCode={selectAreaCode}
               selected={selected}
+              dataCommonDic={dataCommonDic}
               selectedSupplyTab={selectedSupplyTab}
               fetchData={fetchData}
               setData={setData}
@@ -270,7 +309,7 @@ function CM1200({
             <FormSectionTitle>
               <h4>
                 <img src={PersonIconSvg} />
-                건물 정보
+                사용자 정보
               </h4>
               <div className="buttons">
                 <Button
