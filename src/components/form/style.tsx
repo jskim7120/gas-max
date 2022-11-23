@@ -341,7 +341,7 @@ export const Label = styled.label<{
   text-align: ${(props) => props.align + "!important"};
   font-family: "NotoSansKRRegular";
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 550;
   min-width: ${(props) => (props.labelLong ? "200px" : "105px")};
   height: 25px;
   text-align: right;
