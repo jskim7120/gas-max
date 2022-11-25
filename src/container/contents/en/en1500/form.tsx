@@ -221,7 +221,7 @@ const Form = (
                 <Label>연체료 적용방법</Label>
                 <Select {...register("jnPerMeth")}>
                   {dataCommonDic?.jnPerMeth?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code1}>
+                    <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
                   ))}
@@ -260,7 +260,7 @@ const Form = (
                 <Label>체적사용료 계산</Label>
                 <Select {...register("jnChekum")}>
                   {dataCommonDic?.jnChekum?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code1}>
+                    <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
                   ))}
@@ -283,7 +283,7 @@ const Form = (
 
                 <Select {...register("jnJiroPrint")}>
                   {dataCommonDic?.jnJiroPrint?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code1}>
+                    <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
                   ))}
@@ -326,8 +326,8 @@ const Form = (
                     textAlign="right"
                   >
                     {dataCommonDic?.jnR?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code1}>
-                        {obj.codeName}
+                      <option key={idx} value={obj.code}>
+                        {obj.code}
                       </option>
                     ))}
                   </Select>
@@ -380,7 +380,7 @@ const Form = (
                   >
                     {dataCommonDic?.jnSukumtype?.map(
                       (obj: any, idx: number) => (
-                        <option key={idx} value={obj.code1}>
+                        <option key={idx} value={obj.code}>
                           {obj.codeName}
                         </option>
                       )

@@ -399,6 +399,8 @@ const Form = React.forwardRef(
                       label="주민번호/법인번호"
                       register={register("saupJumin")}
                       errors={errors["saupJumin"]?.message}
+                      formatNumber="corpNumber"
+                      maxLength="14"
                     />
                   </Field>
                 </Wrapper>

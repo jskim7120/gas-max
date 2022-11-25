@@ -288,6 +288,8 @@ const Form = React.forwardRef(
             label="주민번호"
             register={register("swJuminno")}
             errors={errors["swJuminno"]?.message}
+            formatNumber="corpNumber"
+            maxLength={"14"}
           />
         </Wrapper>
 

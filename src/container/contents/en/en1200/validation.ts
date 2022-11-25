@@ -22,7 +22,7 @@ export const schema = yup.object({
   // saupStampSe: yup.string().nullable().max(1, "입력 초과"),
   // saupStampEs: yup.string().nullable().max(1, "입력 초과"),
   saupDate: yup.string().nullable().max(10, "입력 초과"),
-  saupJumin: yup.string().nullable().max(13, "입력 초과"),
+  saupJumin: yup.string().nullable().max(14, "입력 초과"),
   saupBigo: yup.string().nullable().max(50, "입력 초과"),
   saupEdiId: yup.string().nullable().max(20, "입력 초과"),
   saupEdiPass: yup.string().nullable().max(20, "입력 초과"),
