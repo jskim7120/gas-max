@@ -293,7 +293,6 @@ const Form = React.forwardRef(
             errors={errors["aptAddr1"]?.message}
             inputSize={InputSize.md290}
           />
-          <p className="addr2">(대덕동) 자양현대아파트 205동 1502호</p>
         </Wrapper>
         <Wrapper grid col={3}>
           <Field>
