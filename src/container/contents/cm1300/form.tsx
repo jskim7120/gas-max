@@ -10,7 +10,6 @@ import {
   FormGroup,
   Wrapper,
   Divider,
-  DividerGray,
   Label,
   Input2,
 } from "components/form/style";
@@ -19,6 +18,7 @@ import CheckBox from "components/checkbox";
 import { ICM1300 } from "./model";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
+import { CM1300INSERT, CM1300UPDATE, CM1200DELETE } from "app/path";
 import { InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
@@ -128,11 +128,10 @@ const Form = React.forwardRef(
     };
     const crud = async (type: string | null) => {
       if (type === "delete") {
-        const path = `${base}delete`;
         const formValues = getValues();
 
         try {
-          const response = await API.post(path, formValues);
+          const response = await API.post(CM1200DELETE, formValues);
           if (response.status === 200) {
             toast.success("삭제했습니다", {
               autoClose: 500,
@@ -151,7 +150,7 @@ const Form = React.forwardRef(
 
     const submit = async (data: ICM1300) => {
       //form aldaagui uyd ajillana
-      const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
+      const path = isAddBtnClicked ? CM1300INSERT : CM1300UPDATE;
       const formValues = getValues();
       try {
         const response: any = await API.post(path, formValues);
@@ -202,7 +201,6 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper grid col={3}>
           <Input
             label="건물층수"
@@ -232,7 +230,6 @@ const Form = React.forwardRef(
             </FormGroup>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper grid col={3}>
           <div style={{ width: "50%" }}>
             <Input
@@ -296,9 +293,7 @@ const Form = React.forwardRef(
             errors={errors["aptAddr1"]?.message}
             inputSize={InputSize.md290}
           />
-          <p className="addr2">(대덕동) 자양현대아파트 205동 1502호</p>
         </Wrapper>
-        <DividerGray />
         <Wrapper grid col={3}>
           <Field>
             <FormGroup>
@@ -447,36 +442,9 @@ const Form = React.forwardRef(
                   style={{ border: "1px solid #e6e5e5" }}
                 />
               )}
-              {/* <Input
-                register={register("aptZipcode")}
-                errors={errors["aptZipcode"]?.message}
-                inputSize={InputSize.xs}
-              />
-              <Select
-                {...register("aptRdangaSign")}
-                style={{ minWidth: "40px" }}
-              >
-                {dataCommonDic?.aptRdangaSign.map(
-                  (option: any, index: number) => {
-                    return (
-                      <option key={index} value={option.code}>
-                        {option.codeName}
-                      </option>
-                    );
-                  }
-                )}
-              </Select>
-              <Input
-                inputSize={InputSize.xs}
-                register={register("aptRdangaSign")}
-              />
-              <p>%</p>
-              <p>=</p>
-              <p>2900 원</p> */}
             </FormGroup>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper grid col={3}>
           <Field>
             <FormGroup>
@@ -531,7 +499,6 @@ const Form = React.forwardRef(
             </FormGroup>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper grid col={3}>
           <Field>
             <FormGroup>

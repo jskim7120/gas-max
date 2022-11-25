@@ -15,6 +15,7 @@ import {
 import Form from "./form";
 import { ButtonColor } from "components/componentsType";
 import { useDispatch, useSelector } from "app/store";
+import { CM130065 } from "app/path";
 import {
   Grid2TableContainer,
   FormContainer,
@@ -45,6 +46,7 @@ function FormCM1300User({
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
   const { isDelete } = useSelector((state) => state.modal);
+  const { modalIsOpen } = useSelector((state) => state.modal);
 
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
@@ -101,9 +103,13 @@ function FormCM1300User({
     fetchSearchData(selectedUser);
   }, [selectedUser]);
 
+  useEffect(() => {
+    fetchSearchData(selectedUser);
+  }, [modalIsOpen]);
+
   const fetchSearchData = async (selectedUser: any) => {
     try {
-      const { data } = await API.get("/app/CM1300/65", {
+      const { data } = await API.get(CM130065, {
         params: { aptCode: selectedUser.aptCode },
       });
       if (data.length > 0) {
@@ -131,7 +137,6 @@ function FormCM1300User({
 
   const handleOpenPopup = async (cuCode: string, areaCode: string) => {
     try {
-      console.log("aaa==>", cuCode);
       dispatch(
         addCM1105({
           cuCode: cuCode,
