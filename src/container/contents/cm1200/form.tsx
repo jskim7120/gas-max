@@ -49,6 +49,7 @@ const Form = React.forwardRef(
       setSelected,
       setSelectedRowIndex,
       selectAreaCode,
+      setSelectAreaCode,
     }: {
       selected: any;
       dataCommonDic: any;
@@ -58,7 +59,8 @@ const Form = React.forwardRef(
       selectedRowIndex: number;
       setSelected: any;
       setSelectedRowIndex: any;
-      selectAreaCode: string;
+      selectAreaCode?: string;
+      setSelectAreaCode?: any;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -79,6 +81,8 @@ const Form = React.forwardRef(
     const [tankInsideDate2, setTankInsideDate2] = useState("");
     const [gasifyCheckDate1, setGasifyCheckDate1] = useState("");
     const [gasifyCheckDate2, setGasifyCheckDate2] = useState("");
+
+    console.log("selected", selected);
 
     const {
       handleSubmit,
@@ -102,8 +106,8 @@ const Form = React.forwardRef(
       if (addr) {
         reset({
           cuZipcode: addr ? addr?.split("/")[1] : "",
-          cuAddr1: addr ? addr?.split("/")[2] : "",
-          cuAddr2: addr ? addr?.split("/")[3] : "",
+          cuAddr1: addr ? addr?.split("/")[0].split("(")[0] : "",
+          cuAddr2: addr ? `(${addr?.split("/")[0].split("(")[1]}` : "",
         });
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -115,7 +119,7 @@ const Form = React.forwardRef(
         cuSwCode: dataCommonDic?.cuSwCode[0].code,
         cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
 
-        cuRh20: dataCommonDic?.cuRh20[0].code,
+        cuRh2o: dataCommonDic?.cuRh20[0].code,
         cuRdangaType: dataCommonDic?.cuRdangaType[0].code,
         cuRdangaSign: dataCommonDic?.cuRdangaSign[0].code,
 
@@ -241,7 +245,7 @@ const Form = React.forwardRef(
               ? formatDate(newFormData?.gasifyCheckDate2)
               : ""
           );
-
+          setSelectAreaCode("");
           setRdangaTotal(0);
         }
       }
@@ -276,77 +280,99 @@ const Form = React.forwardRef(
     };
 
     const submit = async (data: ICM1200SEARCH) => {
+      let newRemovedData: any = {};
       const formValues = getValues();
+
+      for (const [key, value] of Object.entries(formValues)) {
+        if (
+          key !== "tankMakeCo1" &&
+          key !== "tankMakeCo2" &&
+          key !== "tankVol2" &&
+          key !== "tankVol2" &&
+          key !== "tankMakeSno2" &&
+          key !== "tankMakeSno2" &&
+          key !== "tankMakeDate1" &&
+          key !== "tankMakeDate2" &&
+          key !== "tankRcv1" &&
+          key !== "tankRcv2" &&
+          key !== "tankFirstDate1" &&
+          key !== "tankFirstDate2" &&
+          key !== "tankOutsideDate1" &&
+          key !== "tankOutsideDate2" &&
+          key !== "tankInsideDate1" &&
+          key !== "tankInsideDate2" &&
+          key !== "gasifyCo1" &&
+          key !== "gasifyCo2" &&
+          key !== "gasifyVol1" &&
+          key !== "gasifyVol2" &&
+          key !== "gasifySno1" &&
+          key !== "gasifySno2" &&
+          key !== "gasifyMakeDate1" &&
+          key !== "gasifyMakeDate2" &&
+          key !== "gasifyPower1" &&
+          key !== "gasifyPower2" &&
+          key !== "gasifyCheckDate1" &&
+          key !== "gasifyCheckDate2"
+        ) {
+          newRemovedData[key] = value;
+        }
+      }
+
+      console.log("newRemovedData", newRemovedData);
+
       const path = isAddBtnClicked ? CM1200INSERT : CM1200UPDATE;
 
-      formValues.areaCode = selectAreaCode;
-      formValues.cuAptnameYn = formValues.cuAptnameYn ? "Y" : "N";
-      formValues.chkCuZipCode = formValues.chkCuZipCode ? "Y" : "N";
-      formValues.chkCuRh20 = formValues.chkCuRh20 ? "Y" : "N";
-      formValues.chkCuRdange = formValues.chkCuRdange ? "Y" : "N";
+      newRemovedData.areaCode = selectAreaCode;
+      newRemovedData.cuAptnameYn = newRemovedData.cuAptnameYn ? "Y" : "N";
+      newRemovedData.chkCuZipCode = newRemovedData.chkCuZipCode ? "Y" : "N";
+      newRemovedData.chkCuRh20 = newRemovedData.chkCuRh20 ? "Y" : "N";
+      newRemovedData.chkCuRdange = newRemovedData.chkCuRdange ? "Y" : "N";
 
-      formValues.chkCuAnKum = formValues.chkCuAnKum ? "Y" : "N";
-      formValues.ckCuSisulKum = formValues.ckCuSisulKum ? "Y" : "N";
-      formValues.chkCuMeterKum = formValues.chkCuMeterKum ? "Y" : "N";
+      newRemovedData.chkCuAnKum = newRemovedData.chkCuAnKum ? "Y" : "N";
+      newRemovedData.ckCuSisulKum = newRemovedData.ckCuSisulKum ? "Y" : "N";
+      newRemovedData.chkCuMeterKum = newRemovedData.chkCuMeterKum ? "Y" : "N";
 
-      formValues.chkCuPer = formValues.chkCuPer ? "Y" : "N";
-      formValues.chkCuCdc = formValues.chkCuCdc ? "Y" : "N";
-      formValues.chkCuSukumtype = formValues.chkCuSukumtype ? "Y" : "N";
-      formValues.chkCuGumTurm = formValues.chkCuMeterKum ? "Y" : "N";
-      formValues.chkCuGumdate = formValues.chkCuGumdate ? "Y" : "N";
-      formValues.chkCuCno = formValues.chkCuCno ? "Y" : "N";
+      newRemovedData.chkCuPer = newRemovedData.chkCuPer ? "Y" : "N";
+      newRemovedData.chkCuCdc = newRemovedData.chkCuCdc ? "Y" : "N";
+      newRemovedData.chkCuSukumtype = newRemovedData.chkCuSukumtype ? "Y" : "N";
+      newRemovedData.chkCuGumTurm = newRemovedData.chkCuMeterKum ? "Y" : "N";
+      newRemovedData.chkCuGumdate = newRemovedData.chkCuGumdate ? "Y" : "N";
+      newRemovedData.chkCuCno = newRemovedData.chkCuCno ? "Y" : "N";
 
-      formValues.cuAnKum = formValues.cuAnKum
-        ? formatCurrencyRemoveComma(formValues.cuAnKum)
+      newRemovedData.cuAnKum = newRemovedData.cuAnKum
+        ? formatCurrencyRemoveComma(newRemovedData.cuAnKum)
         : "";
-      formValues.cuSisulKum = formValues.cuSisulKum
-        ? formatCurrencyRemoveComma(formValues.cuSisulKum)
+      newRemovedData.cuSisulKum = newRemovedData.cuSisulKum
+        ? formatCurrencyRemoveComma(newRemovedData.cuSisulKum)
         : "";
-      formValues.cuMeterKum = formValues.cuMeterKum
-        ? formatCurrencyRemoveComma(formValues.cuMeterKum)
+      newRemovedData.cuMeterKum = newRemovedData.cuMeterKum
+        ? formatCurrencyRemoveComma(newRemovedData.cuMeterKum)
         : "";
 
-      formValues.cuFinishDate = cuFinishDate
+      newRemovedData.cuFinishDate = cuFinishDate
         ? formatDateByRemoveDash(cuFinishDate)
         : "";
-      formValues.cuCircuitDate = cuCircuitDate
+      newRemovedData.cuCircuitDate = cuCircuitDate
         ? formatDateByRemoveDash(cuCircuitDate)
         : "";
-      formValues.cuScheduleDate = cuScheduleDate
+      newRemovedData.cuScheduleDate = cuScheduleDate
         ? formatDateByRemoveDash(cuScheduleDate)
         : "";
-      formValues.tankFirstDate1 = tankFirstDate1
-        ? formatDateByRemoveDash(tankFirstDate1)
-        : "";
-      formValues.tankFirstDate2 = tankFirstDate2
-        ? formatDateByRemoveDash(tankFirstDate2)
-        : "";
-      formValues.tankOutsideDate1 = tankOutsideDate1
-        ? formatDateByRemoveDash(tankOutsideDate1)
-        : "";
-      formValues.tankOutsideDate2 = tankOutsideDate2
-        ? formatDateByRemoveDash(tankOutsideDate2)
-        : "";
-      formValues.tankInsideDate1 = tankInsideDate1
-        ? formatDateByRemoveDash(tankInsideDate1)
-        : "";
-      formValues.tankInsideDate2 = tankInsideDate2
-        ? formatDateByRemoveDash(tankInsideDate2)
-        : "";
+
       if (selectAreaCode) {
         try {
-          const response: any = await API.post(path, formValues);
+          const response: any = await API.post(path, newRemovedData);
           if (response.status === 200) {
             if (isAddBtnClicked) {
-              setData((prev: any) => [formValues, ...prev]);
+              setData((prev: any) => [newRemovedData, ...prev]);
               setSelectedRowIndex(0);
             } else {
               setData((prev: any) => {
-                prev[selectedRowIndex] = formValues;
+                prev[selectedRowIndex] = newRemovedData;
                 return [...prev];
               });
             }
-            setSelected(formValues);
+            setSelected(newRemovedData);
             toast.success("Action successful", {
               autoClose: 500,
             });
@@ -392,7 +418,8 @@ const Form = React.forwardRef(
               <Input
                 label="건물코드"
                 maxLength="3"
-                minLength="3"
+                numbericDefValue={selected?.cuCode}
+                codeFormatNumber={true}
                 name="cuCode"
                 register={register("cuCode")}
                 errors={errors["cuCode"]?.message}
@@ -415,7 +442,6 @@ const Form = React.forwardRef(
             </FormGroup>
           </Field>
         </Wrapper>
-        <DividerGray />
         {/* 1-2 Wrapper */}
         <Wrapper col={3}>
           <Field>
@@ -437,7 +463,6 @@ const Form = React.forwardRef(
           <Input register={register("cuAddr1")} inputSize={InputSize.md} />
           <Input register={register("cuAddr2")} inputSize={InputSize.md} />
         </Wrapper>
-        <DividerGray />
         {/* 1-3 Wrapper */}
         <Wrapper grid col={4}>
           <Field>
@@ -507,7 +532,7 @@ const Form = React.forwardRef(
                   rtl={false}
                 />
               </Label>
-              <Select {...register("cuRh20")} width={InputSize.i120}>
+              <Select {...register("cuRh2o")} width={InputSize.i120}>
                 {dataCommonDic?.cuRh20?.map((option: any, index: number) => {
                   return (
                     <option key={index} value={option.code}>
@@ -573,7 +598,6 @@ const Form = React.forwardRef(
             </FormGroup>
           </Field>
         </Wrapper>
-        <DividerGray />
         {/* 2-2 Wrapper */}
         <Wrapper grid col={4}>
           <Field>
@@ -632,7 +656,6 @@ const Form = React.forwardRef(
           </Field>
         </Wrapper>
         <DividerGray />
-        {/* 2-3 Wrapper */}
         <Wrapper grid col={4}>
           <Field>
             <FormGroup>
@@ -644,17 +667,11 @@ const Form = React.forwardRef(
                 />
               </Label>
               <Input
-                register={register("cuPer", {
-                  valueAsNumber: true,
-
-                  pattern: {
-                    value: /[0-9]{3}/,
-                    message: "",
-                  },
-                })}
+                register={register("cuPer")}
                 maxLength="3"
-                type="text"
                 textAlign="right"
+                codeFormatNumber={true}
+                numbericDefValue={selected?.cuPer ? selected?.cuPer : null}
                 inputSize={InputSize.i120}
               />
               <p>{`%`}</p>
@@ -670,16 +687,11 @@ const Form = React.forwardRef(
                 />
               </Label>
               <Input
-                register={register("cuCdc", {
-                  valueAsNumber: true,
-                  pattern: {
-                    value: /[0-9]{3}/,
-                    message: "",
-                  },
-                })}
+                register={register("cuCdc")}
                 textAlign="right"
                 maxLength="3"
-                type="text"
+                // codeFormatNumber={true}
+                // numbericDefValue={selected?.cuCdc}
                 inputSize={InputSize.i120}
               />
               <p>{`%`}</p>
@@ -708,7 +720,6 @@ const Form = React.forwardRef(
             </FormGroup>
           </Field>
         </Wrapper>
-        <DividerGray />
         {/* 2-4 Wrapper */}
         <Wrapper grid col={4}>
           <Field>
@@ -814,7 +825,6 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
-        <DividerGray />
         {/* 3-2-1 Wrapper */}
         <Field flex>
           <FormGroup>
@@ -831,7 +841,6 @@ const Form = React.forwardRef(
             <Label align={"center"}>개방검사</Label>
           </Wrapper>
         </Field>
-        <DividerGray />
         {/* 3-2-2 Wrapper */}
         <Field flex>
           <FormGroup>
@@ -909,7 +918,6 @@ const Form = React.forwardRef(
             </Field>
           </Wrapper>
         </Field>
-        <DividerGray />
         {/* 3-2-3 Wrapper */}
         <Field flex>
           <FormGroup>
@@ -987,7 +995,6 @@ const Form = React.forwardRef(
             </Field>
           </Wrapper>
         </Field>
-        <DividerGray />
         {/* 3-3-1 Wrapper */}
         <Field flex>
           <FormGroup>
@@ -1049,7 +1056,6 @@ const Form = React.forwardRef(
             </Field>
           </Wrapper>
         </Field>
-        <DividerGray />
         {/* 3-4-1 Wrapper */}
         <Field flex>
           <FormGroup>
@@ -1066,7 +1072,6 @@ const Form = React.forwardRef(
             <FormGroup>{` `}</FormGroup>
           </Wrapper>
         </Field>
-        <DividerGray />
 
         {/* 3-4-2 Wrapper */}
         <Field flex>
@@ -1136,7 +1141,6 @@ const Form = React.forwardRef(
             </Field>
           </Wrapper>
         </Field>
-        <DividerGray />
         {/* 3-4-3 Wrapper */}
         <Field flex>
           <FormGroup>

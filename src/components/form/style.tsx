@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { InputSize, FieldKind } from "components/componentsType";
 
@@ -94,6 +94,9 @@ interface IInputProps {
   formatNumber?: string;
   labelStyle?: any;
   onChange?: Function;
+  //numberic
+  codeFormatNumber?: boolean;
+  numbericDefValue?: any;
 }
 
 export const Input = ({
@@ -116,8 +119,23 @@ export const Input = ({
   formatNumber,
   labelStyle,
   onChange,
+  codeFormatNumber,
+  numbericDefValue,
 }: IInputProps) => {
   const [inputValue, setInputValue] = useState("");
+  const [formatNumberic, setFormatNumberic] = useState({
+    value: "",
+    status: false,
+  });
+
+  useEffect(() => {
+    if (codeFormatNumber && numbericDefValue === numbericDefValue) {
+      setFormatNumberic({
+        value: "",
+        status: false,
+      });
+    }
+  }, [numbericDefValue, codeFormatNumber]);
 
   // format input value
   const handleInput = (e: any, forNum?: string) => {
@@ -180,6 +198,25 @@ export const Input = ({
       5
     )}-${phoneNumber.slice(5, 10)}`;
   }
+
+  const formatCodeNumber = (e: any) => {
+    return setFormatNumberic({
+      value: e.replace(/[a-zA-Z]/, ""),
+      status: true,
+    });
+  };
+
+  const renderNumbericValue = () => {
+    if (formatNumberic.status) {
+      return formatNumberic.value;
+      // console.log("formatNumberic.value", formatNumberic.value);
+      // console.log("numbericDefValue", numbericDefValue);
+      // if (numbericDefValue === numbericDefValue) {
+      //   return formatNumberic.value;
+      // } else return numbericDefValue;
+    } else return numbericDefValue;
+  };
+
   return (
     <InputWrapper fullWidth={fullWidth}>
       <FormGroup className={className && className}>
@@ -219,6 +256,23 @@ export const Input = ({
             textAlign={textAlign && textAlign}
             onChange={formatNumber ? (e) => handleInput(e, formatNumber) : null}
           />
+        ) : codeFormatNumber ? (
+          <InputForm
+            id={register.name}
+            inputMode="numberic"
+            type={type ? type : "text"}
+            inputSize={inputSize && inputSize}
+            fullWidth={fullWidth && fullWidth}
+            {...register}
+            value={renderNumbericValue()}
+            placeholder={placeholder}
+            style={style}
+            className={className}
+            maxLength={maxLength && maxLength}
+            minLength={minLength && minLength}
+            textAlign={textAlign && textAlign}
+            onChange={(e) => formatCodeNumber(e.target.value)}
+          />
         ) : (
           <InputForm
             id={register.name}
@@ -234,7 +288,6 @@ export const Input = ({
             minLength={minLength && minLength}
             kind={kind && kind}
             textAlign={textAlign && textAlign}
-            // onChange={onChange && onChange}
           />
         )}
       </FormGroup>

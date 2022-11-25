@@ -42,6 +42,7 @@ import {
   addDeleteMenuId,
   setIsDelete,
   closeModal,
+  addCM1105,
 } from "app/state/modal/modalSlice";
 import { useDispatch, useSelector } from "app/store";
 import { CM120065, CM1200SEARCH } from "app/path";
@@ -192,11 +193,12 @@ function CM1200({
       <DetailHeader>
         <div className="title-and-areacode">
           <p>{depthFullName}</p>
-          <Field flex style={{ margin: "0px 10px" }}>
+          <Field flex style={{ margin: "0px 20px" }}>
             <p>영업소 </p>
             <Select
               onChange={(e) => onChangeAreaCode(e.target.value)}
               width={InputSize.i120}
+              value={selected?.areaCode ? selected?.areaCode : selectAreaCode}
               style={{ marginLeft: "5px" }}
             >
               {dataCommonDic?.areaCode?.map((option: any, index: number) => {
@@ -295,6 +297,7 @@ function CM1200({
             <Form
               ref={formRef}
               selectAreaCode={selectAreaCode}
+              setSelectAreaCode={setSelectAreaCode}
               selected={selected}
               dataCommonDic={dataCommonDic}
               selectedSupplyTab={selectedSupplyTab}
@@ -316,6 +319,15 @@ function CM1200({
                   text="사용자 추가"
                   icon={<Plus />}
                   style={{ marginRight: "5px" }}
+                  onClick={() => {
+                    dispatch(
+                      addCM1105({
+                        cuCode: selected?.cuCode,
+                        areaCode: selectAreaCode,
+                      })
+                    );
+                    dispatch(openModal({ type: "cm1105Modal" }));
+                  }}
                 />
                 <Button
                   text="사용자 수정"
