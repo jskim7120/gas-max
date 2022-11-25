@@ -17,7 +17,6 @@ import {
   Select,
   Wrapper,
   Divider,
-  DividerGray,
   Field,
   ErrorText,
   FormGroup,
@@ -119,7 +118,7 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(EN1300DELETE, formValues);
           if (response.status === 200) {
-            toast.success("Deleted", {
+            toast.success("삭제했습니다", {
               autoClose: 500,
             });
             await fetchData();
@@ -169,7 +168,7 @@ const Form = React.forwardRef(
             });
           }
           setSelected(formValues);
-          toast.success("Action successfull", {
+          toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
           setIsAddBtnClicked(false);
@@ -204,7 +203,6 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Input
             label="코드"
@@ -223,7 +221,6 @@ const Form = React.forwardRef(
             inputSize={InputSize.en1300}
           />
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Input
             label="규격"
@@ -232,7 +229,6 @@ const Form = React.forwardRef(
             inputSize={InputSize.en1300}
           />
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Field>
             <FormGroup>
@@ -250,7 +246,6 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Field style={{ display: "flex" }}>
             <Input
@@ -275,7 +270,6 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Field>
             <FormGroup>
@@ -293,7 +287,6 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Field>
             <FormGroup>
@@ -311,7 +304,6 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Field>
             <FormGroup>
@@ -330,7 +322,6 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Field>
             <FormGroup>
@@ -366,7 +357,6 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Field flex>
             <Input
@@ -382,7 +372,6 @@ const Form = React.forwardRef(
             <p>원</p>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Field flex>
             <Input
@@ -398,7 +387,6 @@ const Form = React.forwardRef(
             <p>원</p>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Field flex>
             <Input
@@ -414,7 +402,6 @@ const Form = React.forwardRef(
             <p>원</p>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Field flex>
             <Input
@@ -430,7 +417,6 @@ const Form = React.forwardRef(
             <p>원</p>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Field flex>
             <Input
@@ -471,7 +457,6 @@ const Form = React.forwardRef(
             <ErrorText>{errors["jpJaegoYn"]?.message}</ErrorText>
           </div>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Field>
             <Input
@@ -484,7 +469,6 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
-        <DividerGray />
       </form>
     );
   }

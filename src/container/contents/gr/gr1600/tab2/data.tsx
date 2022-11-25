@@ -52,6 +52,12 @@ export const columns = [
     header: {
       text: "매입퓸목",
     },
+
+    renderer: {
+      type: "check",
+      trueValues: "Y",
+      falseValues: "N",
+    },
   },
   {
     name: "jpCode",
@@ -61,6 +67,7 @@ export const columns = [
     header: {
       text: "코드",
     },
+    editable: false,
   },
   {
     name: "jpName",
@@ -70,6 +77,7 @@ export const columns = [
     header: {
       text: "품명",
     },
+    editable: false,
   },
   {
     name: "jpSpec",
@@ -79,6 +87,7 @@ export const columns = [
     header: {
       text: "규격",
     },
+    editable: false,
   },
   {
     name: "jpKg",
@@ -88,6 +97,7 @@ export const columns = [
     header: {
       text: "용량",
     },
+    editable: false,
   },
   {
     name: "jpDangaType",
@@ -97,6 +107,10 @@ export const columns = [
     header: {
       text: "단가구분",
     },
+    lookupDisplay: true,
+    values: ["", "0", "1", "2"],
+    labels: ["", "환경단가", "할인단가", "개별단가"],
+    editor: { type: "dropdown" },
   },
   {
     name: "jpDanga",
@@ -115,6 +129,10 @@ export const columns = [
     header: {
       text: "Vat",
     },
+    lookupDisplay: true,
+    values: ["", "0", "1", "2"],
+    labels: ["", "포함", "별도", "비과세"],
+    editor: { type: "dropdown" },
   },
   {
     name: "jpChangedate",
@@ -124,6 +142,7 @@ export const columns = [
     header: {
       text: "단가 변경일",
     },
+    editable: false,
   },
   {
     name: "jpFreeYn",
@@ -133,5 +152,6 @@ export const columns = [
     header: {
       text: "무료품목",
     },
+    editable: false,
   },
 ];

@@ -10,7 +10,7 @@ import {
   Select,
   Wrapper,
   Divider,
-  DividerGray,
+  // DividerGray,
   Field,
   ErrorText,
   FormGroup,
@@ -140,7 +140,7 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(EN1600DELETE, formValues);
           if (response.status === 200) {
-            toast.success("Deleted", {
+            toast.success("삭제했습니다", {
               autoClose: 500,
             });
             await fetchData();
@@ -195,7 +195,7 @@ const Form = React.forwardRef(
             });
           }
           setSelected(formValues);
-          toast.success("Action successfull", {
+          toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
           setIsAddBtnClicked(false);
@@ -267,7 +267,7 @@ const Form = React.forwardRef(
             errors={errors["swDepartment"]?.message}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper>
           <Field style={{ marginRight: "52px" }}>
             <FormGroup>
@@ -290,7 +290,7 @@ const Form = React.forwardRef(
             errors={errors["swJuminno"]?.message}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper>
           <Input
             label="전화번호"
@@ -303,7 +303,7 @@ const Form = React.forwardRef(
             errors={errors["swHp"]?.message}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper style={{ alignItems: "center" }}>
           <Input
             label="이메일"
@@ -319,7 +319,7 @@ const Form = React.forwardRef(
             ))}
           </Select>
         </Wrapper>
-        <DividerGray />
+
         <Wrapper style={{ alignItems: "center" }}>
           <Input
             label="주소"
@@ -333,7 +333,7 @@ const Form = React.forwardRef(
             fullWidth
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper>
           <Input
             label=""
@@ -342,7 +342,7 @@ const Form = React.forwardRef(
             fullWidth
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper>
           <Input
             label="매핑코드"
@@ -403,7 +403,7 @@ const Form = React.forwardRef(
                 />
               </button>
             </Wrapper>
-            <DividerGray />
+
             <Wrapper style={{ width: "600px" }}>
               <Field flex style={{ alignItems: "center" }}>
                 <Label>입사일</Label>
@@ -429,7 +429,7 @@ const Form = React.forwardRef(
                 </div>
               </Field>
             </Wrapper>
-            <DividerGray />
+
             <Wrapper grid>
               <Field flex>
                 <Input
@@ -452,7 +452,6 @@ const Form = React.forwardRef(
           <ImageWrapper>{image64 && <img src={image64} />}</ImageWrapper>
         </Wrapper>
 
-        <DividerGray />
         <Wrapper>
           <Input
             label="면허종류"
@@ -465,7 +464,7 @@ const Form = React.forwardRef(
             errors={errors["swDriverNo"]?.message}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper style={{ width: "600px" }}>
           <Field flex style={{ alignItems: "center" }}>
             <Label>적성검사</Label>
@@ -485,7 +484,7 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
-        <DividerGray />
+
         <Wrapper>
           <Input
             label="메모"
@@ -523,7 +522,7 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
-        <DividerGray />
+
         <p
           style={{
             display: "flex",
@@ -540,7 +539,7 @@ const Form = React.forwardRef(
             퇴사사원은 판매등록 사원에서 제외 됩니다.
           </span>
         </p>
-        <DividerGray />
+
         <Wrapper>
           <Field flex>
             <Input
@@ -554,7 +553,6 @@ const Form = React.forwardRef(
             <p>원</p>
           </Field>
         </Wrapper>
-        <DividerGray />
       </form>
     );
   }

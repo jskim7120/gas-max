@@ -1,10 +1,4 @@
-import {
-  Input,
-  Field,
-  Wrapper,
-  DividerGray,
-  Label,
-} from "components/form/style";
+import { Input, Field, Wrapper, Label } from "components/form/style";
 
 function Tab5({ register, errors }: { register: Function; errors: any }) {
   return (
@@ -41,7 +35,7 @@ function Tab5({ register, errors }: { register: Function; errors: any }) {
               errors={errors["managerNo"]?.message}
             />
           </Wrapper>
-          <DividerGray />
+
           <Wrapper grid>
             <Input
               label="은행/카드"
@@ -59,7 +53,7 @@ function Tab5({ register, errors }: { register: Function; errors: any }) {
               errors={errors["tel"]?.message}
             />
           </Wrapper>
-          <DividerGray />
+
           <Wrapper grid>
             <Input
               label="승인일자"
@@ -77,7 +71,7 @@ function Tab5({ register, errors }: { register: Function; errors: any }) {
               errors={errors["stateName"]?.message}
             />
           </Wrapper>
-          <DividerGray />
+
           <Wrapper grid col={2} fields="2fr 1fr">
             <Input
               label="비고"
@@ -129,7 +123,7 @@ function Tab5({ register, errors }: { register: Function; errors: any }) {
               fullWidth
             />
           </Wrapper>
-          <DividerGray />
+
           <Wrapper grid>
             <Input
               label="계좌번호"

@@ -11,6 +11,7 @@ import {
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { MagnifyingGlassBig, ExcelIcon } from "components/allSvgIcon";
+import { Update, Reset } from "components/allSvgIcon";
 
 import {
   Field,
@@ -34,14 +35,9 @@ const radioOptions = [
     id: "1",
   },
 ];
-function Tab2({ buCode }: { buCode: any }) {
+function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
   const [data, setData] = useState([]);
-
-  // useEffect(() => {
-  //   if (buCode) {
-  //     fetchData();
-  //   }
-  // }, [buCode]);
+  const [dataCopy, setDataCopy] = useState([]);
 
   const {
     register,
@@ -55,22 +51,15 @@ function Tab2({ buCode }: { buCode: any }) {
     try {
       const { data: tab2Data } = await API.get(GR1600TAB2, {
         params: {
+          areaCode: areaCode,
           buCode: buCode,
           jpGubun: params.tabJpGubun1,
           jpName: params.tabJpGubun1,
         },
       });
-      // tab2Data?.map(
-      //   (d: any, idx: number) =>
-      //     (d.buycustYn =
-      //       d.buycustYn === "Y" ? (
-      //         <input type="checkbox" checked={true} />
-      //       ) : (
-      //         <input type="checkbox" checked={false} />
-      //       ))
-      // );
-      console.log("tab2=================", tab2Data);
+
       setData(tab2Data);
+      setDataCopy(tab2Data);
     } catch (error) {
       console.log(error);
     }
@@ -87,44 +76,73 @@ function Tab2({ buCode }: { buCode: any }) {
     }
   };
 
+  const update = () => {};
+
+  const resetTable = () => {};
+
   return (
     <div>
-      <form style={{ marginBottom: "10px" }}>
-        <Wrapper>
-          <FormGroup style={{ alignItems: "center" }}>
-            <Label style={{ background: "transparent" }}>조회구분</Label>
-            {radioOptions.map((option, index) => (
-              <Item key={index}>
-                <RadioButton
-                  type="radio"
-                  value={option.id}
-                  {...register("jpGubun")}
-                  id={option.id}
-                />
-                <RadioButtonLabel htmlFor={`${option.label}`}>
-                  {option.label}
-                </RadioButtonLabel>
-              </Item>
-            ))}
-          </FormGroup>
-          <Input
-            label="품명"
-            register={register("jpName")}
-            kind={FieldKind.BORDER}
-            inputSize={InputSize.i120}
-          />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <form style={{ marginBottom: "10px" }}>
+          <Wrapper>
+            <FormGroup style={{ alignItems: "center" }}>
+              <Label style={{ background: "transparent" }}>조회구분</Label>
+              {radioOptions.map((option, index) => (
+                <Item key={index}>
+                  <RadioButton
+                    type="radio"
+                    value={option.id}
+                    {...register("jpGubun")}
+                    id={option.id}
+                  />
+                  <RadioButtonLabel htmlFor={`${option.label}`}>
+                    {option.label}
+                  </RadioButtonLabel>
+                </Item>
+              ))}
+            </FormGroup>
+            <Input
+              label="품명"
+              register={register("jpName")}
+              kind={FieldKind.BORDER}
+              inputSize={InputSize.i120}
+            />
 
+            <Button
+              text="검색"
+              icon={<MagnifyingGlassBig width="17.188" height="17.141" />}
+              kind={ButtonType.ROUND}
+              type="button"
+              style={{ marginRight: "5px", height: "26px" }}
+              onClick={handleSubmit(submit)}
+            />
+          </Wrapper>
+        </form>
+        <div>
           <Button
-            text="검색"
-            icon={<MagnifyingGlassBig width="17.188" height="17.141" />}
-            kind={ButtonType.ROUND}
-            type="button"
-            style={{ marginRight: "5px", height: "26px" }}
-            onClick={handleSubmit(submit)}
+            text="저장"
+            icon={<Update />}
+            style={{ marginRight: "5px" }}
+            color={ButtonColor.SECONDARY}
+            onClick={update}
           />
-        </Wrapper>
-      </form>
-      <Grid data={data} />
+          <Button
+            text="취소"
+            icon={<Reset />}
+            onClick={() => {
+              setDataCopy(data);
+            }}
+          />
+        </div>
+      </div>
+
+      <Grid data={dataCopy} setData={setData} />
     </div>
   );
 }

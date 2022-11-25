@@ -13,7 +13,6 @@ import {
   FormGroup,
   Wrapper,
   Divider,
-  DividerGray,
   Label,
 } from "components/form/style";
 import { IBUPUM } from "./model";
@@ -94,7 +93,7 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(EN1400DELETE, formValues);
           if (response.status === 200) {
-            toast.success("Deleted", {
+            toast.success("삭제했습니다", {
               autoClose: 500,
             });
             await fetchData();
@@ -137,7 +136,7 @@ const Form = React.forwardRef(
           }
           setSelected(formValues);
           setIsAddBtnClicked(false);
-          toast.success("Action successful", {
+          toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
         } else {
@@ -175,7 +174,6 @@ const Form = React.forwardRef(
             </div>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Input
             label="부품코드"
@@ -194,7 +192,6 @@ const Form = React.forwardRef(
             inputSize={InputSize.md}
           />
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Input
             label="규격"
@@ -203,7 +200,6 @@ const Form = React.forwardRef(
             inputSize={InputSize.md}
           />
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Input
             label="단위"
@@ -227,7 +223,6 @@ const Form = React.forwardRef(
             <p>원</p>
           </Field>
         </Wrapper>
-        <DividerGray />
         <Wrapper>
           <Field flex>
             <Input
@@ -242,7 +237,6 @@ const Form = React.forwardRef(
             <p>원</p>
           </Field>
         </Wrapper>
-        <DividerGray />
       </form>
     );
   }

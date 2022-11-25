@@ -51,7 +51,7 @@ export const getInputKind = (kind?: FieldKind) => {
   switch (kind) {
     case FieldKind.BORDER:
       return {
-        border: "1px solid #e6e5e5",
+        border: "1px solid #707070",
       };
     case FieldKind.RECTANGLE:
       return {
@@ -328,7 +328,6 @@ export const InputForm = styled.input<{
 
   &:hover,
   &:focus {
-    border: 1px solid #e6e5e5;
     background: #fffacd;
   }
 
@@ -347,7 +346,10 @@ export const InputForm = styled.input<{
   }
 
   border: ${(props) =>
-    props.kind ? getInputKind(props.kind)?.border : "1px solid  transparent"};
+    props.kind
+      ? getInputKind(props.kind)?.border
+      : `1px solid rgb(188, 185 ,185)`};
+  background: aliceblue;
 `;
 
 export const ErrorText = styled.p`
@@ -394,12 +396,12 @@ export const Label = styled.label<{
   text-align: ${(props) => props.align + "!important"};
   font-family: "NotoSansKRRegular";
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 550;
   min-width: ${(props) => (props.labelLong ? "200px" : "105px")};
   height: 25px;
   text-align: right;
   padding: 3px 10px;
-  background: rgba(104, 103, 103, 0.26);
+  background: transparent;
   white-space: nowrap;
 
   &.small {
@@ -481,7 +483,7 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
 `;
 
 export const Divider = styled.div`
-  height: 1px;
+  height: 2px;
   background: #000;
 `;
 export const DividerGray = styled.div`
@@ -534,10 +536,11 @@ export const Select = styled.select<{
   outline: none;
   font-family: "NotoSansKRRegular";
   font-size: 12px;
+  border: 1px solid #e6e5e5;
+  background: aliceblue;
 
   &:hover,
   &:focus {
-    border: 1px solid #e6e5e5;
     background: #fffacd;
   }
   option {
@@ -545,7 +548,9 @@ export const Select = styled.select<{
   }
 
   border: ${(props) =>
-    props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
+    props.kind
+      ? getInputKind(props.kind)?.border
+      : `1px solid rgb(188, 185 ,185)`};
   width: ${(props) =>
     props.fullWidth
       ? "100%"

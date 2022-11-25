@@ -8,6 +8,7 @@ export const DetailHeader = styled.div`
   align-items: center;
   padding: 0 6px 0 15px;
   border-bottom: 5px solid #707070;
+  margin-top: 4px;
 
   .m_left {
     margin-right: 432px;

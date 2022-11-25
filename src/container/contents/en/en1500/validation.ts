@@ -9,7 +9,7 @@ export const schema = yup.object({
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
-  areaName: yup.string().nullable().max(20, "too long"),
+  areaName: yup.string().nullable().max(20, "입력 초과"),
   jnAnkum: yup.string().nullable(),
   jnPer: yup
     .number()

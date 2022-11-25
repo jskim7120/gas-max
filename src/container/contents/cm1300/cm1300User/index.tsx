@@ -10,6 +10,7 @@ import {
   closeModal,
   addDeleteMenuId,
   setIsDelete,
+  addCM1105,
 } from "app/state/modal/modalSlice";
 import Form from "./form";
 import { ButtonColor } from "components/componentsType";
@@ -77,6 +78,12 @@ function FormCM1300User({
       setSelectedRowIndex(itemIndex);
     };
 
+    gv.onCellDblClicked = function (grid: any, e: any) {
+      const itemIndex: any = e.dataRow;
+      setSelected(data[itemIndex]);
+      handleOpenPopup(data[itemIndex]["cuCode"], data[itemIndex]["areaCode"]);
+    };
+
     return () => {
       dp.clearRows();
       gv.destroy();
@@ -122,6 +129,19 @@ function FormCM1300User({
     } catch (error) {}
   }
 
+  const handleOpenPopup = async (cuCode: string, areaCode: string) => {
+    try {
+      console.log("aaa==>", cuCode);
+      dispatch(
+        addCM1105({
+          cuCode: cuCode,
+          areaCode: areaCode,
+        })
+      );
+      dispatch(openModal({ type: "cm1105Modal" }));
+    } catch (err: any) {}
+  };
+
   if (!data) return <p>...Loading</p>;
 
   return (
@@ -132,8 +152,13 @@ function FormCM1300User({
           icon={<Plus />}
           style={{ marginRight: "5px" }}
           onClick={() => {
-            formRef.current.setIsAddBtnClicked(true);
-            formRef.current.resetForm("clear");
+            dispatch(
+              addCM1105({
+                cuCode: "",
+                areaCode: "",
+              })
+            );
+            dispatch(openModal({ type: "cm1105Modal" }));
           }}
         />
         <Button
