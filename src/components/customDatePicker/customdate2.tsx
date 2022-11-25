@@ -47,7 +47,7 @@ const InputWrapper = styled.div`
   height: 25px;
   width: 110px;
   position: relative;
-  border: 1px solid #e6e5e5;
+  border: 1px solid rgb(188, 185, 185);
   border-radius: 4px;
   margin: 5px 5px 0 5px;
 
@@ -78,7 +78,7 @@ const InputWrapper = styled.div`
     height: 100%;
     width: 20px;
     padding-left: 3px;
-    border-left: 1px solid #e6e5e5;
+    border-left: 1px solid rgb(188, 185, 185);
 
     img {
       width: 13px;

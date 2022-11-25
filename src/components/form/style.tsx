@@ -293,7 +293,9 @@ export const InputForm = styled.input<{
   }
 
   border: ${(props) =>
-    props.kind ? getInputKind(props.kind)?.border : "1px solid #e6e5e5"};
+    props.kind
+      ? getInputKind(props.kind)?.border
+      : `1px solid rgb(188, 185 ,185)`};
   background: aliceblue;
 `;
 
@@ -341,7 +343,7 @@ export const Label = styled.label<{
   text-align: ${(props) => props.align + "!important"};
   font-family: "NotoSansKRRegular";
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 550;
   min-width: ${(props) => (props.labelLong ? "200px" : "105px")};
   height: 25px;
   text-align: right;
@@ -493,7 +495,9 @@ export const Select = styled.select<{
   }
 
   border: ${(props) =>
-    props.kind ? getInputKind(props.kind)?.border : "1px solid transparent"};
+    props.kind
+      ? getInputKind(props.kind)?.border
+      : `1px solid rgb(188, 185 ,185)`};
   width: ${(props) =>
     props.fullWidth
       ? "100%"
