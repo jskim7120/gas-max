@@ -50,6 +50,7 @@ const InputWrapper = styled.div`
   border: 1px solid rgb(188, 185, 185);
   border-radius: 4px;
   margin: 5px 5px 0 5px;
+  background: aliceblue;
 
   &:hover,
   &:hover .customMaskInput {
@@ -65,6 +66,7 @@ const InputWrapper = styled.div`
     left: 1px;
     border: none;
     outline: none;
+    background: aliceblue;
 
     &:hover {
       background: #fffacd;

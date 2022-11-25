@@ -10,6 +10,7 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import { Plus, Update, Reset, WhiteClose } from "components/allSvgIcon";
 import { ICM1105SEARCH } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { formatDateByRemoveDash, formatDate } from "helpers/dateFormat";
 import { closeModal } from "app/state/modal/modalSlice";
 import {
   Input,
@@ -48,6 +49,29 @@ function FormCM1105() {
     functionName: "CM1105",
   });
 
+  //tab2
+  const [cuMeterTurm, setCuMeterTurm] = useState("");
+  const [cuMeterDt, setCuMeterDt] = useState("");
+  const [cuMdate, setCuMdate] = useState("");
+  //tab3
+  const [cuFinishDate, setCuFinishDate] = useState("");
+  const [cuCircuitDate, setCuCircuitDate] = useState("");
+  const [cuScheduleDate, setCuScheduleDate] = useState("");
+  const [tankFirstDate1, setTankFirstDate1] = useState("");
+  const [tankOutsideDate1, setTankOutsideDate1] = useState("");
+  const [tankInsideDate1, setTankInsideDate1] = useState("");
+  const [tankFirstDate2, setTankFirstDate2] = useState("");
+  const [tankOutsideDate2, setTankOutsideDate2] = useState("");
+  const [tankInsideDate2, setTankInsideDate2] = useState("");
+  const [gasifyCheckDate1, setGasifyCheckDate1] = useState("");
+  //tab4
+  const [cuHdate, setCuHdate] = useState("");
+  const [cuGongdate, setCuGongdate] = useState("");
+  const [cuGongdateT, setCuGongdateT] = useState("");
+  const [cuExtendDate, setCuExtendDate] = useState("");
+  const [cuSisuldate, setCuSisuldate] = useState("");
+  const [cuPdate, setCuPdate] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -70,6 +94,24 @@ function FormCM1105() {
       resetForm("reset");
     }
   }, [data]);
+
+  useEffect(() => {
+    if (addr.length > 0) {
+      reset({
+        cuZipcode: addr ? addr?.split("/")[1] : "",
+        cuAddr1: addr ? addr?.split("/")[0] : "",
+      });
+    }
+  }, [addr]);
+
+  useEffect(() => {
+    if (addr2.length > 0) {
+      reset({
+        cuSzipcode: addr2 ? addr2?.split("/")[1] : "",
+        cuSaddr1: addr2 ? addr2?.split("/")[0] : "",
+      });
+    }
+  }, [addr2]);
 
   const resetForm = (type: string) => {
     if (data !== undefined && data) {
@@ -168,6 +210,28 @@ function FormCM1105() {
           cuSeSmsYn: customerInfo?.cuSeSmsYn === "Y",
           cuSeListYn: customerInfo?.cuSeListYn === "Y",
         });
+
+        customerInfo?.cuMeterTurm && setCuMeterTurm(customerInfo.cuMeterTurm);
+        customerInfo?.cuMeterDt && setCuMeterDt(customerInfo.cuMeterDt);
+        customerInfo?.cuMdate && setCuMdate(customerInfo.cuMdate);
+        customerInfo?.cuFinishDate &&
+          setCuFinishDate(customerInfo.cuFinishDate);
+        customerInfo?.cuCircuitDate &&
+          setCuCircuitDate(customerInfo.cuCircuitDate);
+        customerInfo?.cuScheduleDate &&
+          setCuScheduleDate(customerInfo.cuScheduleDate);
+        customerInfo?.tankFirstDate1 &&
+          setTankFirstDate1(customerInfo.tankFirstDate1);
+        customerInfo?.tankOutsideDate1 &&
+          setTankOutsideDate1(customerInfo.tankOutsideDate1);
+        customerInfo?.tankFirstDate2 &&
+          setTankFirstDate2(customerInfo.tankFirstDate2);
+        customerInfo?.tankOutsideDate2 &&
+          setTankOutsideDate2(customerInfo.tankOutsideDate2);
+        customerInfo?.tankInsideDate2 &&
+          setTankInsideDate2(customerInfo.tankInsideDate2);
+        customerInfo?.gasifyCheckDate1 &&
+          setGasifyCheckDate1(customerInfo.gasifyCheckDate1);
       }
     }
   };
@@ -177,6 +241,7 @@ function FormCM1105() {
       const { data } = await API.get(CM1105SEARCH, {
         params: { cuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
       });
+
       setData(data);
     } catch (error) {
       console.log("aldaa");
@@ -184,9 +249,80 @@ function FormCM1105() {
   };
 
   const submit = async (data: ICM1105SEARCH) => {
+    const path = isAddBtnClicked ? CM1105INSERT : CM1105UPDATE;
     const formValues = getValues();
 
-    const path = isAddBtnClicked ? CM1105INSERT : CM1105UPDATE;
+    formValues.cuMeterDt = cuMeterDt ? formatDateByRemoveDash(cuMeterDt) : "";
+    formValues.cuMdate = cuMdate ? formatDateByRemoveDash(cuMdate) : "";
+    formValues.cuMeterTurm = cuMeterTurm
+      ? formatDateByRemoveDash(cuMeterTurm)
+      : "";
+
+    formValues.cuFinishDate = cuFinishDate
+      ? formatDateByRemoveDash(cuFinishDate)
+      : "";
+
+    formValues.cuCircuitDate = cuCircuitDate
+      ? formatDateByRemoveDash(cuCircuitDate)
+      : "";
+
+    formValues.cuScheduleDate = cuScheduleDate
+      ? formatDateByRemoveDash(cuScheduleDate)
+      : "";
+
+    formValues.tankFirstDate1 = tankFirstDate1
+      ? formatDateByRemoveDash(tankFirstDate1)
+      : "";
+    formValues.tankOutsideDate1 = tankOutsideDate1
+      ? formatDateByRemoveDash(tankOutsideDate1)
+      : "";
+
+    formValues.tankInsideDate1 = tankInsideDate1
+      ? formatDateByRemoveDash(tankInsideDate1)
+      : "";
+
+    formValues.tankFirstDate2 = tankFirstDate2
+      ? formatDateByRemoveDash(tankFirstDate2)
+      : "";
+
+    formValues.tankOutsideDate2 = tankOutsideDate2
+      ? formatDateByRemoveDash(tankOutsideDate2)
+      : "";
+
+    formValues.tankInsideDate2 = tankInsideDate2
+      ? formatDateByRemoveDash(tankInsideDate2)
+      : "";
+
+    formValues.gasifyCheckDate1 = gasifyCheckDate1
+      ? formatDateByRemoveDash(gasifyCheckDate1)
+      : "";
+
+    formValues.cuHdate = cuHdate ? formatDateByRemoveDash(cuHdate) : "";
+
+    formValues.cuGongdate = cuGongdate
+      ? formatDateByRemoveDash(cuGongdate)
+      : "";
+
+    formValues.cuGongdateT = cuGongdateT
+      ? formatDateByRemoveDash(cuGongdateT)
+      : "";
+
+    formValues.cuExtendDate = cuExtendDate
+      ? formatDateByRemoveDash(cuExtendDate)
+      : "";
+
+    formValues.cuExtendDate = cuExtendDate
+      ? formatDateByRemoveDash(cuExtendDate)
+      : "";
+
+    formValues.cuSisuldate = cuSisuldate
+      ? formatDateByRemoveDash(cuSisuldate)
+      : "";
+
+    formValues.cuPdate = cuPdate ? formatDateByRemoveDash(cuPdate) : "";
+
+    console.log("============================>", formValues);
+
     try {
       const response: any = await API.post(path, formValues);
       if (response.status === 200) {
@@ -619,7 +755,48 @@ function FormCM1105() {
               too,
               setToo,
               sign,
-              setSign
+              setSign,
+              //setCuRdangaType,
+              setCuMeterTurm,
+              setCuMeterDt,
+              setCuMdate,
+              //cuRdangaType,
+              cuMeterTurm,
+              cuMeterDt,
+              cuMdate,
+              setCuFinishDate,
+              setCuCircuitDate,
+              setCuScheduleDate,
+              setTankFirstDate1,
+              setTankOutsideDate1,
+              setTankInsideDate1,
+              setTankFirstDate2,
+              setTankOutsideDate2,
+              setTankInsideDate2,
+              setGasifyCheckDate1,
+              cuFinishDate,
+              cuCircuitDate,
+              cuScheduleDate,
+              tankFirstDate1,
+              tankOutsideDate1,
+              tankInsideDate1,
+              tankFirstDate2,
+              tankOutsideDate2,
+              tankInsideDate2,
+              gasifyCheckDate1,
+
+              cuHdate,
+              setCuHdate,
+              cuGongdate,
+              setCuGongdate,
+              cuGongdateT,
+              setCuGongdateT,
+              cuExtendDate,
+              setCuExtendDate,
+              cuSisuldate,
+              setCuSisuldate,
+              cuPdate,
+              setCuPdate
             )}
           </TabContentWrapper>
         </div>
