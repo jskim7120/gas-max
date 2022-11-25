@@ -105,40 +105,6 @@ function Tab2({ data }: { data: any }) {
             <th className="light-blue">루베단가</th>
           </tr>
           <tr>
-            <th>농협은행</th>
-            <th>12345-12345-12345</th>
-            <th>조아테크</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th>
-              <Input
-                register={register("cuRh2o")}
-                errors={errors["cuRh2o"]?.message}
-                className="small"
-              />
-            </th>
-            <th>
-              <div style={{ display: "flex" }}>
-                <Input
-                  register={register("cuRdangaTypeName")}
-                  errors={errors["cuRdangaTypeName"]?.message}
-                  className="small"
-                  inputSize={InputSize.sm}
-                />
-                <Input
-                  register={register("cuRdanga")}
-                  errors={errors["cuRdanga"]?.message}
-                  className="small"
-                  inputSize={InputSize.sm}
-                />
-              </div>
-            </th>
-          </tr>
-          <tr>
             <td>
               <Input
                 register={register("bankName")}
@@ -208,8 +174,29 @@ function Tab2({ data }: { data: any }) {
                 inputSize={InputSize.sm}
               />
             </td>
-            <td></td>
-            <td></td>
+            <td>
+              <Input
+                register={register("cuRh2o")}
+                errors={errors["cuRh2o"]?.message}
+                className="small"
+              />
+            </td>
+            <td>
+              <div style={{ display: "flex" }}>
+                <Input
+                  register={register("cuRdangaTypeName")}
+                  errors={errors["cuRdangaTypeName"]?.message}
+                  className="small"
+                  inputSize={InputSize.sm}
+                />
+                <Input
+                  register={register("cuRdanga")}
+                  errors={errors["cuRdanga"]?.message}
+                  className="small"
+                  inputSize={InputSize.sm}
+                />
+              </div>
+            </td>
           </tr>
         </tbody>
       </TabTable>

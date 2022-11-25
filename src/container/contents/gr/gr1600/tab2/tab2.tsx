@@ -35,9 +35,12 @@ const radioOptions = [
     id: "1",
   },
 ];
+
+let dataCopy: any;
+
 function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
-  const [data, setData] = useState([]);
-  const [dataCopy, setDataCopy] = useState([]);
+  const [data, setData] = useState<any>([]);
+  // oldMessages = Object.assign({}, messages);
 
   const {
     register,
@@ -59,7 +62,8 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
       });
 
       setData(tab2Data);
-      setDataCopy(tab2Data);
+      //setDataCopy(tab2Data);
+      dataCopy = JSON.parse(JSON.stringify(tab2Data));
     } catch (error) {
       console.log(error);
     }
@@ -78,7 +82,14 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
 
   const update = () => {};
 
-  const resetTable = () => {};
+  const resetTable = () => {
+    console.log("dataCopy:", dataCopy);
+    setData([]);
+    setData([...dataCopy]);
+    // setData([...dataCopy]);
+  };
+
+  console.log("data:", data);
 
   return (
     <div>
@@ -132,17 +143,10 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
             color={ButtonColor.SECONDARY}
             onClick={update}
           />
-          <Button
-            text="취소"
-            icon={<Reset />}
-            onClick={() => {
-              setDataCopy(data);
-            }}
-          />
+          <Button text="취소" icon={<Reset />} onClick={resetTable} />
         </div>
       </div>
-
-      <Grid data={dataCopy} setData={setData} />
+      <Grid data={data} setData={setData} />
     </div>
   );
 }

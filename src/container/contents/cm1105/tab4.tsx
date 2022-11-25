@@ -16,19 +16,36 @@ function Tab4({
   register,
   errors,
   reset,
+  cuHdate,
+  setCuHdate,
+  cuGongdate,
+  setCuGongdate,
+  cuGongdateT,
+  setCuGongdateT,
+  cuExtendDate,
+  setCuExtendDate,
+  cuSisuldate,
+  setCuSisuldate,
+  cuPdate,
+  setCuPdate,
 }: {
   dataCommonDic: any;
   register: Function;
   errors: any;
   reset: Function;
+  cuHdate: string;
+  setCuHdate: Function;
+  cuGongdate: string;
+  setCuGongdate: Function;
+  cuGongdateT: string;
+  setCuGongdateT: Function;
+  cuExtendDate: string;
+  setCuExtendDate: Function;
+  cuSisuldate: string;
+  setCuSisuldate: Function;
+  cuPdate: string;
+  setCuPdate: Function;
 }) {
-  const [cuHdate, setCuHdate] = useState("");
-  const [cuGongdate, setCuGongdate] = useState("");
-  const [cuGongdateT, setCuGongdateT] = useState("");
-  const [cuExtendDate, setCuExtendDate] = useState("");
-  const [cuSisuldate, setCuSisuldate] = useState("");
-  const [cuPdate, setCuPdate] = useState("");
-
   return (
     <Field className="outer-border">
       <Wrapper grid col={4}>

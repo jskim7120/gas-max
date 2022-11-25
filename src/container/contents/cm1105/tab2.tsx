@@ -9,7 +9,7 @@ import {
   FormGroup,
   Label,
 } from "components/form/style";
-import CustomDate from "components/customDatePicker";
+//import CustomDate from "components/customDatePicker";
 import CustomDatePicker from "components/customDatePicker/customdate2";
 import { InputSize } from "components/componentsType";
 import { MagnifyingGlass } from "components/allSvgIcon";
@@ -25,6 +25,14 @@ function Tab2({
   sign,
   setSign,
   reset,
+  //setCuRdangaType,
+  setCuMeterTurm,
+  setCuMeterDt,
+  setCuMdate,
+  //cuRdangaType,
+  cuMeterTurm,
+  cuMeterDt,
+  cuMdate,
 }: {
   customerInfo: any;
   dataCommonDic: any;
@@ -35,11 +43,17 @@ function Tab2({
   sign: string;
   setSign: Function;
   reset: Function;
+  //setCuRdangaType: any;
+  setCuMeterTurm: any;
+  setCuMeterDt: any;
+  setCuMdate: any;
+  //  cuRdangaType: any;
+  cuMeterTurm: any;
+  cuMeterDt: any;
+  cuMdate: any;
 }) {
   const [cuRdangaType, setCuRdangaType] = useState("");
-  const [cuMeterTurm, setCuMeterTurm] = useState("");
-  const [cuMeterDt, setCuMeterDt] = useState("");
-  const [cuMdate, setCuMdate] = useState("");
+  console.log("cuMeterTurm:", cuMeterTurm);
   return (
     <div>
       <Field flex className="outer-border ">
