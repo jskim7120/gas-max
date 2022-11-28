@@ -2,7 +2,15 @@ import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { fields, columns } from "./data";
 
-function Grid({ data, setData }: { data: any; setData: any }) {
+function Grid({
+  data,
+  setData,
+  setEditedRowIds,
+}: {
+  data: any;
+  setData: any;
+  setEditedRowIds: any;
+}) {
   let container: HTMLDivElement;
   let dp: any;
   let gv: any;
@@ -38,6 +46,7 @@ function Grid({ data, setData }: { data: any; setData: any }) {
     gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
       data[index.dataRow][index.fieldName] = Number(newValue);
       setData(data);
+      setEditedRowIds((prev: any) => [...prev, index.dataRow]);
     };
 
     return () => {
