@@ -204,6 +204,7 @@ const Form = React.forwardRef(
         : "";
 
       try {
+        console.log("formValues", formValues);
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {
@@ -269,6 +270,7 @@ const Form = React.forwardRef(
             register={register("caName")}
             errors={errors["caName"]?.message}
             inputSize={InputSize.md}
+            maxLength="15"
           />
           <Field>
             <FormGroup>
@@ -318,6 +320,7 @@ const Form = React.forwardRef(
             label="매핑코드"
             register={register("eyeCarCode")}
             errors={errors["eyeCarCode"]?.message}
+            maxLength="10"
           />
           <InfoText text="탱크잔량 원격검침 시스템의 매핑할 차량코드를 지정." />
         </Wrapper>
@@ -336,6 +339,7 @@ const Form = React.forwardRef(
               register={register("caChargeDate")}
               errors={errors["caChargeDate"]?.message}
               inputSize={InputSize.sm}
+              maxLength="8"
             />
           </Field>
         </Wrapper>
@@ -346,12 +350,14 @@ const Form = React.forwardRef(
             register={register("caType")}
             errors={errors["caType"]?.message}
             inputSize={InputSize.sm}
+            maxLength="20"
           />
           <Input
             label="연식"
             register={register("caYear")}
             errors={errors["caYear"]?.message}
             inputSize={InputSize.sm}
+            maxLength="6"
           />
         </Wrapper>
 
@@ -361,6 +367,7 @@ const Form = React.forwardRef(
             register={register("caManager")}
             errors={errors["caManager"]?.message}
             inputSize={InputSize.sm}
+            maxLength="20"
           />
 
           <Field flex style={{ alignItems: "center" }}>
@@ -419,6 +426,7 @@ const Form = React.forwardRef(
             errors={errors["caBigo"]?.message}
             inputSize={InputSize.sm}
             fullWidth
+            maxLength="40"
           />
         </Wrapper>
         <Divider />
@@ -480,6 +488,7 @@ const Form = React.forwardRef(
             register={register("caBco")}
             errors={errors["caBco"]?.message}
             inputSize={InputSize.sm}
+            maxLength="20"
           />
         </Wrapper>
 
@@ -489,12 +498,14 @@ const Form = React.forwardRef(
             register={register("caBjijum")}
             errors={errors["caBjijum"]?.message}
             inputSize={InputSize.sm}
+            maxLength="20"
           />
           <Input
             label="담당자"
             register={register("caBdamdang")}
             errors={errors["caBdamdang"]?.message}
             inputSize={InputSize.sm}
+            maxLength="10"
           />
         </Wrapper>
 
@@ -504,12 +515,14 @@ const Form = React.forwardRef(
             register={register("caBtel")}
             errors={errors["caBtel"]?.message}
             inputSize={InputSize.sm}
+            maxLength="14"
           />
           <Input
             label="핸드폰"
             register={register("caBhp")}
             errors={errors["caBhp"]?.message}
             inputSize={InputSize.sm}
+            maxLength="14"
           />
         </Wrapper>
 
@@ -519,12 +532,14 @@ const Form = React.forwardRef(
             register={register("caBman")}
             errors={errors["caBman"]?.message}
             inputSize={InputSize.sm}
+            maxLength="10"
           />
           <Input
             label="증권번호"
             register={register("caBno")}
             errors={errors["caBno"]?.message}
             inputSize={InputSize.sm}
+            maxLength="20"
           />
         </Wrapper>
 

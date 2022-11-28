@@ -298,11 +298,13 @@ const Form = React.forwardRef(
             label="전화번호"
             register={register("swTel")}
             errors={errors["swTel"]?.message}
+            maxLength="14"
           />
           <Input
             label="핸드폰"
             register={register("swHp")}
             errors={errors["swHp"]?.message}
+            maxLength="14"
           />
         </Wrapper>
 
@@ -311,6 +313,7 @@ const Form = React.forwardRef(
             label="이메일"
             register={register("cuSeEmail")}
             errors={errors["cuSeEmail"]?.message}
+            maxLength="50"
           />
           @
           <Select {...register("mailKind")}>
@@ -327,12 +330,14 @@ const Form = React.forwardRef(
             label="주소"
             register={register("swZipcode")}
             errors={errors["swZipcode"]?.message}
+            maxLength="6"
           />
           <DaumAddress setAddress={setAddress} />
           <Input
             register={register("swAddr1")}
             errors={errors["swAddr1"]?.message}
             fullWidth
+            maxLength="40"
           />
         </Wrapper>
 
@@ -342,6 +347,7 @@ const Form = React.forwardRef(
             register={register("swAddr2")}
             errors={errors["swAddr2"]?.message}
             fullWidth
+            maxLength="40"
           />
         </Wrapper>
 
@@ -350,6 +356,7 @@ const Form = React.forwardRef(
             label="매핑코드"
             register={register("eyeSwCode")}
             errors={errors["eyeSwCode"]?.message}
+            maxLength="10"
           />
           <p
             style={{
@@ -376,6 +383,7 @@ const Form = React.forwardRef(
                 register={register("swStampFile")}
                 errors={errors["swStampFile"]?.message}
                 value={image?.name}
+                maxLength="80"
               />
 
               <button
@@ -459,11 +467,13 @@ const Form = React.forwardRef(
             label="면허종류"
             register={register("swDriverType")}
             errors={errors["swDriverType"]?.message}
+            maxLength="15"
           />
           <Input
             label="면허번호"
             register={register("swDriverNo")}
             errors={errors["swDriverNo"]?.message}
+            maxLength="17"
           />
         </Wrapper>
 
@@ -493,6 +503,7 @@ const Form = React.forwardRef(
             register={register("swBigo")}
             errors={errors["swBigo"]?.message}
             fullWidth
+            maxLength="40"
           />
         </Wrapper>
         <Divider />

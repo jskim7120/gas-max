@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { EN1600UPDATE } from "app/path";
+import { InputSize } from "components/componentsType";
 import {
   Select,
   Field,
@@ -207,6 +208,7 @@ const Form = (
               label="영업소명"
               register={register("areaName")}
               errors={errors["areaName"]?.message}
+              maxLength="20"
             />
           </FormGroup>
         </Field>
@@ -322,8 +324,8 @@ const Form = (
                   <Label>조정기압력</Label>
                   <Select
                     {...register("jnR")}
-                    style={{ minWidth: "104px" }}
-                    textAlign="right"
+                    style={{ minWidth: "85px" }}
+                    textAlign="left"
                   >
                     {dataCommonDic?.jnR?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -350,6 +352,7 @@ const Form = (
                     textAlign="right"
                     formatNumber="comNumber"
                     maxLength="23"
+                    inputSize={InputSize.xl}
                   />
                   <span>원</span>
                 </FormGroup>
@@ -376,7 +379,7 @@ const Form = (
                   <Label>수금방법</Label>
                   <Select
                     {...register("jnSukumtype")}
-                    style={{ minWidth: "104px" }}
+                    style={{ minWidth: "85px" }}
                   >
                     {dataCommonDic?.jnSukumtype?.map(
                       (obj: any, idx: number) => (

@@ -168,6 +168,7 @@ const Form = React.forwardRef(
             label="정비명"
             register={register("ccName")}
             errors={errors["ccName"]?.message}
+            maxLength="30"
           />
         </Wrapper>
 
@@ -177,6 +178,7 @@ const Form = React.forwardRef(
             register={register("ccBigo")}
             errors={errors["ccBigo"]?.message}
             fullWidth
+            maxLength="50"
           />
         </Wrapper>
 

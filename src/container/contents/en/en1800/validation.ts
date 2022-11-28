@@ -9,6 +9,6 @@ export const schema = yup.object({
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
-  jyName: yup.string().nullable().max(4, "입력 초과"),
-  jyBigo: yup.string().nullable().max(4, "입력 초과"),
+  jyName: yup.string().nullable(),
+  jyBigo: yup.string().nullable(),
 });
