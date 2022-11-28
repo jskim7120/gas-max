@@ -5,11 +5,11 @@ import { fields, columns } from "./data";
 function Grid({
   data,
   setData,
-  setEditedRowIds,
+  setCommitedRowId,
 }: {
   data: any;
   setData: any;
-  setEditedRowIds: any;
+  setCommitedRowId: any;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -44,9 +44,9 @@ function Grid({
     };
 
     gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
-      data[index.dataRow][index.fieldName] = Number(newValue);
+      data[index.dataRow][index.fieldName] = newValue;
       setData(data);
-      setEditedRowIds((prev: any) => [...prev, index.dataRow]);
+      setCommitedRowId(index.dataRow);
     };
 
     return () => {

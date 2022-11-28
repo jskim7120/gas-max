@@ -38,16 +38,21 @@ const radioOptions = [
 ];
 
 let dataOrig: any;
+let editedRowIds: [];
 
 function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
   const [data, setData] = useState<any>([]);
-  const [editedRowIds, setEditedRowIds] = useState<Array<number>>([]);
+  const [commitedRowId, setCommitedRowId] = useState<any>();
 
   useEffect(() => {
     if (areaCode && buCode) {
       fetchData(null);
     }
   }, [areaCode, buCode]);
+
+  useEffect(() => {
+    console.log(commitedRowId);
+  }, [commitedRowId]);
 
   const {
     register,
@@ -86,11 +91,12 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
       console.log("buCode bhgui");
     }
   };
+  console.log(editedRowIds);
 
   const update = async () => {
     try {
-      let successList: Array<number> = [];
-      let failList: Array<number> = [];
+      let successList: any = [];
+      let failList: any = [];
 
       editedRowIds.forEach(async (id: any) => {
         let response = await API.post(GR1600JPUPDATE, {
@@ -100,17 +106,19 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
         });
 
         if (response.status === 200) {
-          successList = [...successList, id];
+          successList.push(id);
         } else {
-          failList = [...failList, id];
+          failList.push(id);
         }
       });
 
+      console.log(successList, successList.length);
+
       if (successList.length > 0) {
-        toast.success(
-          `${successList} successfully changed. ${failList} haven't changed`
-        );
+        console.log("successList.length:", successList);
+        toast.success(`successfully changed.`);
       }
+      //setEditedRowIds([]);
     } catch (error: any) {}
   };
 
@@ -174,7 +182,7 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
           <Button text="취소" icon={<Reset />} onClick={resetTable} />
         </div>
       </div>
-      <Grid data={data} setData={setData} setEditedRowIds={setEditedRowIds} />
+      <Grid data={data} setData={setData} setCommitedRowId={setCommitedRowId} />
     </div>
   );
 }
