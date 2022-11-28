@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { GR1600TAB2 } from "app/path";
+import { GR1600TAB2, GR1600JPUPDATE } from "app/path";
 import API from "app/axios";
 import Grid from "./grid";
 import { useForm } from "react-hook-form";
@@ -24,6 +24,7 @@ import {
   FormGroup,
 } from "components/form/style";
 import { FieldKind } from "components/componentsType";
+import { toast } from "react-toastify";
 
 const radioOptions = [
   {
@@ -36,11 +37,17 @@ const radioOptions = [
   },
 ];
 
-let dataCopy: any;
+let dataOrig: any;
 
 function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
   const [data, setData] = useState<any>([]);
-  // oldMessages = Object.assign({}, messages);
+  const [editedRowIds, setEditedRowIds] = useState<Array<number>>([]);
+
+  useEffect(() => {
+    if (areaCode && buCode) {
+      fetchData(null);
+    }
+  }, [areaCode, buCode]);
 
   const {
     register,
@@ -52,18 +59,20 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
 
   const fetchData = async (params: any) => {
     try {
-      const { data: tab2Data } = await API.get(GR1600TAB2, {
-        params: {
-          areaCode: areaCode,
-          buCode: buCode,
-          jpGubun: params.tabJpGubun1,
-          jpName: params.tabJpGubun1,
-        },
-      });
+      if (areaCode && buCode) {
+        const { data: tab2Data } = await API.get(GR1600TAB2, {
+          params: {
+            areaCode: areaCode,
+            buCode: buCode,
+            jpGubun: params && params.tabJpGubun1,
+            jpName: params && params.tabJpGubun1,
+          },
+        });
 
-      setData(tab2Data);
-      //setDataCopy(tab2Data);
-      dataCopy = JSON.parse(JSON.stringify(tab2Data));
+        setData(tab2Data);
+
+        dataOrig = JSON.parse(JSON.stringify(tab2Data));
+      }
     } catch (error) {
       console.log(error);
     }
@@ -72,24 +81,43 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
   const submit = async () => {
     if (buCode) {
       const formValues = getValues();
-
       await fetchData(formValues);
-      console.log("buCode:", buCode);
     } else {
       console.log("buCode bhgui");
     }
   };
 
-  const update = () => {};
+  const update = async () => {
+    try {
+      let successList: Array<number> = [];
+      let failList: Array<number> = [];
 
-  const resetTable = () => {
-    console.log("dataCopy:", dataCopy);
-    setData([]);
-    setData([...dataCopy]);
-    // setData([...dataCopy]);
+      editedRowIds.forEach(async (id: any) => {
+        let response = await API.post(GR1600JPUPDATE, {
+          areaCode: areaCode,
+          buCode: buCode,
+          ...data[id],
+        });
+
+        if (response.status === 200) {
+          successList = [...successList, id];
+        } else {
+          failList = [...failList, id];
+        }
+      });
+
+      if (successList.length > 0) {
+        toast.success(
+          `${successList} successfully changed. ${failList} haven't changed`
+        );
+      }
+    } catch (error: any) {}
   };
 
-  console.log("data:", data);
+  const resetTable = () => {
+    let dataCopy: any = JSON.parse(JSON.stringify(dataOrig));
+    setData([...dataCopy]);
+  };
 
   return (
     <div>
@@ -146,7 +174,7 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
           <Button text="취소" icon={<Reset />} onClick={resetTable} />
         </div>
       </div>
-      <Grid data={data} setData={setData} />
+      <Grid data={data} setData={setData} setEditedRowIds={setEditedRowIds} />
     </div>
   );
 }
