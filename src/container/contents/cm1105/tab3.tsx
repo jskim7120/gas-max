@@ -46,23 +46,52 @@ function Tab3({
   register,
   errors,
   reset,
+  setCuFinishDate,
+  setCuCircuitDate,
+  setCuScheduleDate,
+  setTankFirstDate1,
+  setTankOutsideDate1,
+  setTankInsideDate1,
+  setTankFirstDate2,
+  setTankOutsideDate2,
+  setTankInsideDate2,
+  setGasifyCheckDate1,
+  cuFinishDate,
+  cuCircuitDate,
+  cuScheduleDate,
+  tankFirstDate1,
+  tankOutsideDate1,
+  tankInsideDate1,
+  tankFirstDate2,
+  tankOutsideDate2,
+  tankInsideDate2,
+  gasifyCheckDate1,
 }: {
   dataCommonDic: any;
   register: Function;
   errors: any;
   reset: Function;
+  setCuFinishDate: any;
+  setCuCircuitDate: any;
+  setCuScheduleDate: any;
+  setTankFirstDate1: any;
+  setTankOutsideDate1: any;
+  setTankInsideDate1: any;
+  setTankFirstDate2: any;
+  setTankOutsideDate2: any;
+  setTankInsideDate2: any;
+  setGasifyCheckDate1: any;
+  cuFinishDate: string;
+  cuCircuitDate: string;
+  cuScheduleDate: string;
+  tankFirstDate1: string;
+  tankOutsideDate1: string;
+  tankInsideDate1: string;
+  tankFirstDate2: string;
+  tankOutsideDate2: string;
+  tankInsideDate2: string;
+  gasifyCheckDate1: string;
 }) {
-  const [cuFinishDate, setCuFinishDate] = useState("");
-  const [cuCircuitDate, setCuCircuitDate] = useState("");
-  const [cuScheduleDate, setCuScheduleDate] = useState("");
-  const [tankFirstDate1, setTankFirstDate1] = useState("");
-  const [tankOutsideDate1, setTankOutsideDate1] = useState("");
-  const [tankInsideDate1, setTankInsideDate1] = useState("");
-  const [tankFirstDate2, setTankFirstDate2] = useState("");
-  const [tankOutsideDate2, setTankOutsideDate2] = useState("");
-  const [tankInsideDate2, setTankInsideDate2] = useState("");
-  const [gasifyCheckDate1, setGasifyCheckDate1] = useState("");
-
   return (
     <Field className="outer-border">
       <Field flex>

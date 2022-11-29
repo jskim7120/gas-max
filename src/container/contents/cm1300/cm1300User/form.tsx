@@ -5,13 +5,10 @@ import { toast } from "react-toastify";
 import { useDispatch } from "app/store";
 import {
   Input,
-  Select,
   Field,
   ErrorText,
   FormGroup,
   Wrapper,
-  Divider,
-  DividerGray,
   Label,
 } from "components/form/style";
 import { ICM1300User } from "./model";
@@ -19,6 +16,7 @@ import { schema } from "../validation";
 import { InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
+// import { CM1300INSERT, CM1300UPDATE } from "app/path";
 
 interface IForm {
   selected: any;
@@ -64,6 +62,8 @@ const Form = React.forwardRef(
     useEffect(() => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         resetForm("reset");
+      } else {
+        resetForm("clear");
       }
     }, [selected]);
 
@@ -91,6 +91,13 @@ const Form = React.forwardRef(
             cuCode2: selected.cuCode.replaceAll("-", "").substring(3, 8),
           });
         }
+      } else {
+        reset({
+          cuCode1: "",
+          cuCode2: "",
+          cuUserName: "",
+          cuName: "",
+        });
       }
     };
     const crud = async (type: string | null) => {
@@ -172,7 +179,7 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>건물명</Label>
-              <Input inputSize={InputSize.xs} register={register("cuName")} />
+              <Input inputSize={InputSize.i130} register={register("cuName")} />
             </FormGroup>
             <div>
               <ErrorText>{errors["cuName"]?.message}</ErrorText>
@@ -182,7 +189,7 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>사용자명</Label>
               <Input
-                inputSize={InputSize.i120}
+                inputSize={InputSize.i130}
                 register={register("cuUserName")}
               />
             </FormGroup>

@@ -149,38 +149,7 @@ export interface ICM1105SEARCH {
   swName: string;
   tCustCode: string;
 
-  cms: ICMS;
-  virtualAccount: IVIRTUALACCOUNT;
-  cuTank: ICUTANK;
-
-  percentage: number;
-}
-
-interface ICMS {
-  CMSacctno: string; //davhtsaj bn
-  appdt: string;
-  CMSbankName: string; //davhtsaj bn
-  bigo: string;
-  cmsGubun: string;
-  CMSdepositor: string; //davhtsaj bn
-  managerNo: string;
-  monthday: string;
-  queryType: string;
-  CMSregDate: string; //davhtsaj bn
-  stateName: string;
-  tel: string;
-}
-interface IVIRTUALACCOUNT {
-  VIRacctno: string; //davhtsaj bn
-  bankCd: string;
-  VIRbankName: string; //davhtsaj bn
-  VIRdepositor: string; //davhtsaj bn
-  managerCode: string;
-  queryType: string;
-  VIRregDate: string; //davhtsaj bn
-}
-
-interface ICUTANK {
+  //cuTank: ICUTANK;
   gasifyCheckDate1: string;
   gasifyCheckDate2: string;
   gasifyCo1: string;
@@ -193,7 +162,7 @@ interface ICUTANK {
   gasifySno2: string;
   gasifyVol1: string;
   gasifyVol2: string;
-  queryType: string;
+  //queryType: string;
   seq: number;
   tankCuCd1: string;
   tankCuCd2: string;
@@ -219,4 +188,46 @@ interface ICUTANK {
   tankTransmCd2: string;
   tankVol1: string;
   tankVol2: string;
+
+  //cms: ICMS;
+  //virtualAccount: IVIRTUALACCOUNT;
+  percentage: number;
+
+  CMSacctno: string; //davhtsaj bn
+  appdt: string;
+  CMSbankName: string; //davhtsaj bn
+  bigo: string;
+  cmsGubun: string;
+  CMSdepositor: string; //davhtsaj bn
+  managerNo: string;
+  monthday: string;
+  //queryType: string;
+  CMSregDate: string; //davhtsaj bn
+  stateName: string;
+  tel: string;
+
+  VIRacctno: string; //davhtsaj bn
+  bankCd: string;
+  VIRbankName: string; //davhtsaj bn
+  VIRdepositor: string; //davhtsaj bn
+  managerCode: string;
+  //queryType: string;
+  VIRregDate: string; //davhtsaj bn
+}
+
+{
+  /*
+interface ICMS {
+ 
+}
+interface IVIRTUALACCOUNT {
+  VIRacctno: string; //davhtsaj bn
+  bankCd: string;
+  VIRbankName: string; //davhtsaj bn
+  VIRdepositor: string; //davhtsaj bn
+  managerCode: string;
+  queryType: string;
+  VIRregDate: string; //davhtsaj bn
+}
+*/
 }

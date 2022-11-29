@@ -6,7 +6,7 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { InputSize, FieldKind } from "components/componentsType";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType } from "components/componentsType";
-import { MagnifyingGlassBig, ExcelIcon } from "components/allSvgIcon";
+import { MagnifyingGlassBig, ExcelIcon, Reset } from "components/allSvgIcon";
 import Grid from "./grid";
 import {
   Input,
@@ -19,7 +19,11 @@ import {
   Label,
   DividerGray,
 } from "components/form/style";
-
+interface ISEARCH {
+  areaCode: string;
+  sBuGubun: string;
+  sBuName: string;
+}
 function LeftHalf({
   depthFullName,
   data,
@@ -31,7 +35,7 @@ function LeftHalf({
   setData: any;
   setSelected: any;
 }) {
-  const fetchData = async (params: any) => {
+  const fetchData = async (params: ISEARCH) => {
     try {
       const { data: SEARCHDATA } = await API.get(GR1600SEARCH, {
         params: params,
@@ -47,15 +51,23 @@ function LeftHalf({
     functionName: "GR1600",
   });
 
+  useEffect(() => {
+    reset({
+      areaCode: dataCommonDic?.areaCode[0].code,
+      sBuGubun: dataCommonDic?.sBuGubun[0].code,
+    });
+  }, [dataCommonDic]);
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<any>({
+  } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const submit = async (data: any) => {
+  const submit = async (data: ISEARCH) => {
     fetchData(data);
   };
 

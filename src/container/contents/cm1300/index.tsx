@@ -9,7 +9,6 @@ import {
   Trash,
   Update,
   Reset,
-  MagnifyingGlass,
   UserCm1300Icon,
   MagnifyingGlassBig,
 } from "components/allSvgIcon";
@@ -23,6 +22,7 @@ import {
 import Form from "./form";
 import { ButtonColor, FieldKind, ButtonType } from "components/componentsType";
 import { Wrapper, DetailHeader } from "../en/style";
+import { CM1300SEARCH } from "app/path";
 import {
   Grid1Container,
   Grid2Container,
@@ -67,7 +67,6 @@ function CM1300({
   });
 
   useEffect(() => {
-    // if (data?.length > 0) {
     container = realgridElement.current as HTMLDivElement;
     dp = new LocalDataProvider(true);
     gv = new GridView(container);
@@ -104,7 +103,6 @@ function CM1300({
       gv.destroy();
       dp.destroy();
     };
-    // }
   }, [data]);
 
   useEffect(() => {
@@ -125,13 +123,13 @@ function CM1300({
     try {
       let data: any;
       if (params.searchInput1) {
-        const { data } = await API.get("/app/CM1300/search", {
+        const { data } = await API.get(CM1300SEARCH, {
           params: { aptCode: params.searchInput1 },
         });
         if (data?.length > 0) {
           setData(data);
         } else if (params.searchInput2) {
-          const { data } = await API.get("/app/CM1300/search", {
+          const { data } = await API.get(CM1300SEARCH, {
             params: { aptName: params.searchInput2 },
           });
           if (data?.length > 0) {
@@ -139,7 +137,7 @@ function CM1300({
           }
         }
       } else if (params.searchInput2) {
-        const { data } = await API.get("/app/CM1300/search", {
+        const { data } = await API.get(CM1300SEARCH, {
           params: { aptName: params.searchInput2 },
         });
         if (data) {
@@ -156,7 +154,7 @@ function CM1300({
 
   const fetchListData = async () => {
     try {
-      const { data } = await API.get("/app/CM1300/search");
+      const { data } = await API.get(CM1300SEARCH);
       if (data) {
         setData(data);
       }
