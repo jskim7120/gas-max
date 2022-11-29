@@ -28,23 +28,37 @@ function Form({
     register,
     reset,
     formState: { errors },
+    getValues,
   } = useForm<any>();
 
   const fetchData = async () => {
-    try {
-      const { data: tabData } = await API.get(GR160065, {
-        params: {
-          areaCode: selected.areaCode,
-          buCode: selected?.buCode,
-        },
-      });
-      setTabData(tabData);
-    } catch (err) {}
+    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      try {
+        const { data: tabData } = await API.get(GR160065, {
+          params: {
+            areaCode: selected.areaCode,
+            buCode: selected?.buCode,
+          },
+        });
+        console.log("--------------", tabData);
+        setTabData(tabData);
+      } catch (err) {}
+    }
   };
 
   useEffect(() => {
+    fetchData();
+    clearForm();
+  }, [selected]);
+
+  const update = () => {
+    console.log("update");
+    const formValues = getValues();
+    console.log("formValues:", formValues);
+  };
+
+  const clearForm = () => {
     if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-      fetchData();
       let newData: any = {};
 
       for (const [key, value] of Object.entries(selected)) {
@@ -52,7 +66,7 @@ function Form({
       }
       reset(newData);
     }
-  }, [selected]);
+  };
 
   return (
     <>
@@ -164,7 +178,9 @@ function Form({
             values1,
             values2,
             labels1,
-            labels2
+            labels2,
+            update,
+            clearForm
           )}
         </TabContentWrapper>
       </div>

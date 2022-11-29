@@ -141,11 +141,11 @@ function Tab3({
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: "baseline",
         }}
       >
-        <form style={{ marginBottom: "10px" }}>
-          <Wrapper>
+        <form>
+          <Wrapper style={{ alignItems: "center" }}>
             <FormGroup style={{ alignItems: "center" }}>
               <Label style={{ background: "transparent" }}>조회구분</Label>
               {radioOptions.map((option, index) => (
@@ -162,6 +162,7 @@ function Tab3({
                 </Item>
               ))}
             </FormGroup>
+
             <Input
               label="부품명"
               register={register("bpName")}
@@ -174,12 +175,17 @@ function Tab3({
               icon={<MagnifyingGlassBig width="17.188" height="17.141" />}
               kind={ButtonType.ROUND}
               type="button"
-              style={{ marginRight: "5px", height: "26px" }}
+              style={{ height: "26px", marginBottom: "1px" }}
               onClick={handleSubmit(submit)}
             />
           </Wrapper>
         </form>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           <Button
             text="저장"
             icon={<Update />}

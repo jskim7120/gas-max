@@ -11,7 +11,7 @@ import {
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { MagnifyingGlassBig, Update, Reset } from "components/allSvgIcon";
-import { Input, Wrapper, Label, FormGroup } from "components/form/style";
+import { Input, Wrapper, Label, FormGroup, Field } from "components/form/style";
 import { FieldKind } from "components/componentsType";
 import { toast } from "react-toastify";
 
@@ -140,11 +140,11 @@ function Tab2({
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: "baseline",
         }}
       >
-        <form style={{ marginBottom: "10px" }}>
-          <Wrapper>
+        <form>
+          <Wrapper style={{ alignItems: "center" }}>
             <FormGroup style={{ alignItems: "center" }}>
               <Label style={{ background: "transparent" }}>조회구분</Label>
               {radioOptions.map((option, index) => (
@@ -161,6 +161,7 @@ function Tab2({
                 </Item>
               ))}
             </FormGroup>
+
             <Input
               label="품명"
               register={register("jpName")}
@@ -173,12 +174,17 @@ function Tab2({
               icon={<MagnifyingGlassBig width="17.188" height="17.141" />}
               kind={ButtonType.ROUND}
               type="button"
-              style={{ marginRight: "5px", height: "26px" }}
+              style={{ height: "26px", marginBottom: "1px" }}
               onClick={handleSubmit(submit)}
             />
           </Wrapper>
         </form>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           <Button
             text="저장"
             icon={<Update />}

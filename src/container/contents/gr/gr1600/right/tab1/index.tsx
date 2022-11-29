@@ -9,10 +9,14 @@ function Tab1({
   register,
   errors,
   tabData,
+  update,
+  clearForm,
 }: {
   register: any;
   errors: any;
   tabData: any;
+  update: any;
+  clearForm: any;
 }) {
   const data0 = [
     {
@@ -128,7 +132,7 @@ function Tab1({
   ];
   return (
     <>
-      <Field
+      {/* <Field
         flex
         style={{
           justifyContent: "space-between",
@@ -149,20 +153,45 @@ function Tab1({
             icon={<Update />}
             style={{ marginRight: "5px" }}
             color={ButtonColor.SECONDARY}
+            onClick={update}
           />
-          <Button text="취소" icon={<Reset />} />
+          <Button text="취소" icon={<Reset />} onClick={clearForm} />
         </Field>
-      </Field>
-      <Field flex>
-        <div>
-          <Table
-            tableHeader={["구분", "kg 단가", "수송비", "합계"]}
-            tableData={data0}
+      </Field> */}
+      <Field flex style={{ justifyContent: "space-between" }}>
+        <Field flex>
+          <Field>
+            <Field flex style={{ marginBottom: "10px" }}>
+              <img src={InfoPerson} alt="info" />
+              <p style={{ fontSize: "14px", marginLeft: "7px" }}>
+                LPG 매입 단가
+              </p>
+            </Field>
+            <Table
+              tableHeader={["구분", "kg 단가", "수송비", "합계"]}
+              tableData={data0}
+            />
+          </Field>
+          <Field style={{ marginLeft: "30px" }}>
+            <Field flex style={{ marginBottom: "10px" }}>
+              <img src={InfoPerson} alt="info" />
+              <p style={{ fontSize: "14px", marginLeft: "7px" }}>
+                무료 충전 품목
+              </p>
+            </Field>
+            <Table tableHeader={["품목"]} tableData={data1} />
+          </Field>
+        </Field>
+        <Field flex>
+          <Button
+            text="저장"
+            icon={<Update />}
+            style={{ marginRight: "5px" }}
+            color={ButtonColor.SECONDARY}
+            onClick={update}
           />
-        </div>
-        <div style={{ marginLeft: "30px" }}>
-          <Table tableHeader={["품목"]} tableData={data1} />
-        </div>
+          <Button text="취소" icon={<Reset />} onClick={clearForm} />
+        </Field>
       </Field>
     </>
   );

@@ -11,11 +11,21 @@ function getTabContent(
   values1: any,
   values2: any,
   labels1: any,
-  labels2: any
+  labels2: any,
+  update: any,
+  clearForm: any
 ) {
   switch (id) {
     case 0:
-      return <Tab1 register={register} errors={errors} tabData={tabData} />;
+      return (
+        <Tab1
+          register={register}
+          errors={errors}
+          tabData={tabData}
+          update={update}
+          clearForm={clearForm}
+        />
+      );
     case 1:
       return (
         <Tab2
