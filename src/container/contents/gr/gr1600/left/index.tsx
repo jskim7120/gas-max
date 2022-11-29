@@ -2,23 +2,12 @@ import React, { useEffect } from "react";
 import API from "app/axios";
 import { GR1600SEARCH } from "app/path";
 import { useForm } from "react-hook-form";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { InputSize, FieldKind } from "components/componentsType";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType } from "components/componentsType";
-import { MagnifyingGlassBig, ExcelIcon, Reset } from "components/allSvgIcon";
+import { MagnifyingGlassBig, ExcelIcon } from "components/allSvgIcon";
 import Grid from "./grid";
-import {
-  Input,
-  Input2,
-  Select,
-  Field,
-  ErrorText,
-  FormGroup,
-  Wrapper,
-  Label,
-  DividerGray,
-} from "components/form/style";
+import { Input, Select, Field, FormGroup, Label } from "components/form/style";
 interface ISEARCH {
   areaCode: string;
   sBuGubun: string;
@@ -29,33 +18,21 @@ function LeftHalf({
   data,
   setData,
   setSelected,
+  dataCommonDic,
 }: {
   depthFullName: string;
   data: any;
   setData: any;
   setSelected: any;
+  dataCommonDic: any;
 }) {
-  const fetchData = async (params: ISEARCH) => {
-    try {
-      const { data: SEARCHDATA } = await API.get(GR1600SEARCH, {
-        params: params,
-      });
-
-      setData(SEARCHDATA);
-    } catch (error) {
-      console.log("GR1600 DATA fetch error =======>", error);
-    }
-  };
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "GR",
-    functionName: "GR1600",
-  });
-
   useEffect(() => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-      sBuGubun: dataCommonDic?.sBuGubun[0].code,
-    });
+    if (dataCommonDic !== undefined && dataCommonDic) {
+      reset({
+        areaCode: dataCommonDic?.areaCode[0].code,
+        sBuGubun: dataCommonDic?.sBuGubun[0].code,
+      });
+    }
   }, [dataCommonDic]);
 
   const {
@@ -71,14 +48,26 @@ function LeftHalf({
     fetchData(data);
   };
 
+  const fetchData = async (params: ISEARCH) => {
+    try {
+      const { data: SEARCHDATA } = await API.get(GR1600SEARCH, {
+        params: params,
+      });
+
+      setData(SEARCHDATA);
+    } catch (error) {
+      console.log("GR1600 DATA fetch error =======>", error);
+    }
+  };
+
   return (
     <div>
       <div style={{ marginBottom: "5px" }}>
         <form onSubmit={handleSubmit(submit)}>
           <div className="top-header">
-            <p>매입 단가 관리</p>
+            <p>{depthFullName}</p>
             <p className="big">영업소</p>
-            <Select {...register("areaCode")} kind={FieldKind.BORDER}>
+            <Select {...register("areaCode")}>
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -90,20 +79,23 @@ function LeftHalf({
             flex
             style={{
               width: "100%",
+              height: "100%",
               justifyContent: "space-between",
               alignItems: "center",
               paddingRight: "20px",
-              borderRight: "3px solid #707070",
             }}
           >
-            <Field>
+            <Field flex>
               <FormGroup>
-                <Label style={{ background: "transparent" }}>구분</Label>
-                <Select
-                  kind={FieldKind.BORDER}
-                  style={{ marginLeft: "5px" }}
-                  {...register("sBuGubun")}
+                <Label
+                  style={{
+                    minWidth: "auto",
+                    padding: "3px 0 3px 12px",
+                  }}
                 >
+                  구분
+                </Label>
+                <Select {...register("sBuGubun")}>
                   {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -111,18 +103,20 @@ function LeftHalf({
                   ))}
                 </Select>
               </FormGroup>
-            </Field>
-            <Field>
+
               <Input
                 label="매입처명"
-                labelStyle={{ background: "transparent" }}
+                labelStyle={{
+                  minWidth: "auto",
+                  marginLeft: "15px",
+                  padding: "3px 0 3px 12px",
+                }}
                 register={register("sBuName")}
                 errors={errors["sBuName"]?.message}
-                kind={FieldKind.BORDER}
                 inputSize={InputSize.i100}
               />
             </Field>
-            <div className="button-wrapper">
+            <div style={{ display: "flex", alignItems: "center" }}>
               <Button
                 text="검색"
                 icon={<MagnifyingGlassBig width="17.188" height="17.141" />}
@@ -137,6 +131,7 @@ function LeftHalf({
                 kind={ButtonType.ROUND}
                 color={ButtonColor.SECONDARY}
                 type="button"
+                style={{ marginRight: "5px", height: "26px" }}
               />
             </div>
           </Field>

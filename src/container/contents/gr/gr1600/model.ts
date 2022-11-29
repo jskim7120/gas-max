@@ -55,3 +55,16 @@ export interface IGR1600TAB2 {
   jpVatKind: string;
   queryType: string;
 }
+
+export interface IGR1600TAB3 {
+  bpChangedate: string;
+  bpCode: string;
+  bpDanga: number;
+  bpDangaType: string;
+  bpDanwi: string;
+  bpName: string;
+  bpSpec: string;
+  bpVatKind: string;
+  buycustYn: string;
+  queryType: string;
+}

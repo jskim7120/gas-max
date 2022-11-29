@@ -12,13 +12,13 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   display: flex;
   gap: 0px;
-  height: calc(100% - 10px);
+  height: calc(100% - 6px);
+  margin-top: 4px;
   border: 1px solid red;
 `;
 
 export const LeftSection = styled.div<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "50%")};
-  // border-right: 3px solid #707070;
 
   .top-header {
     background-color: #dbdbdb;
@@ -37,7 +37,7 @@ export const LeftSection = styled.div<{ width?: string }>`
         font-family: "NotoSansKRRegular";
         font-size: 14px;
         font-weight: bold;
-        margin: 0 10px;
+        margin: 0 10px 0 15px;
       }
     }
   }
@@ -45,7 +45,7 @@ export const LeftSection = styled.div<{ width?: string }>`
 
 export const RightSection = styled.div<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "50%")};
-
+  height: 100%;
   overflow-y: auto;
 
   .top-header {
