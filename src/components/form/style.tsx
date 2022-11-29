@@ -95,8 +95,13 @@ interface IInputProps {
   labelStyle?: any;
   onChange?: Function;
   //numberic
-  codeFormatNumber?: boolean;
-  numbericDefValue?: any;
+  codeFormatNumber?: {
+    status: boolean;
+    selectedRowIndex?: number;
+    numbericDefValue: any;
+    clear?: boolean;
+    reset?: boolean;
+  };
 }
 
 export const Input = ({
@@ -120,22 +125,31 @@ export const Input = ({
   labelStyle,
   onChange,
   codeFormatNumber,
-  numbericDefValue,
 }: IInputProps) => {
   const [inputValue, setInputValue] = useState("");
   const [formatNumberic, setFormatNumberic] = useState({
-    value: "",
+    value: "" as any,
     status: false,
   });
 
   useEffect(() => {
-    if (codeFormatNumber && numbericDefValue === numbericDefValue) {
+    if (codeFormatNumber?.clear) {
       setFormatNumberic({
         value: "",
         status: false,
       });
+    } else if (codeFormatNumber?.numbericDefValue === 0) {
+      setFormatNumberic({
+        value: 0,
+        status: false,
+      });
+    } else {
+      setFormatNumberic({
+        value: codeFormatNumber?.numbericDefValue,
+        status: false,
+      });
     }
-  }, [numbericDefValue, codeFormatNumber]);
+  }, [codeFormatNumber]);
 
   // format input value
   const handleInput = (e: any, forNum?: string) => {
@@ -206,17 +220,6 @@ export const Input = ({
     });
   };
 
-  const renderNumbericValue = () => {
-    if (formatNumberic.status) {
-      return formatNumberic.value;
-      // console.log("formatNumberic.value", formatNumberic.value);
-      // console.log("numbericDefValue", numbericDefValue);
-      // if (numbericDefValue === numbericDefValue) {
-      //   return formatNumberic.value;
-      // } else return numbericDefValue;
-    } else return numbericDefValue;
-  };
-
   return (
     <InputWrapper fullWidth={fullWidth}>
       <FormGroup className={className && className}>
@@ -256,7 +259,7 @@ export const Input = ({
             textAlign={textAlign && textAlign}
             onChange={formatNumber ? (e) => handleInput(e, formatNumber) : null}
           />
-        ) : codeFormatNumber ? (
+        ) : codeFormatNumber?.status ? (
           <InputForm
             id={register.name}
             inputMode="numberic"
@@ -264,7 +267,7 @@ export const Input = ({
             inputSize={inputSize && inputSize}
             fullWidth={fullWidth && fullWidth}
             {...register}
-            value={renderNumbericValue()}
+            value={formatNumberic?.value ? formatNumberic?.value : ""}
             placeholder={placeholder}
             style={style}
             className={className}

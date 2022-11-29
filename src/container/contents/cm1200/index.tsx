@@ -138,6 +138,12 @@ function CM1200({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDelete.isDelete]);
 
+  useEffect(() => {
+    if (selected && selected?.areaCode) {
+      setSelectAreaCode(selected?.areaCode);
+    }
+  }, [selected]);
+
   const onSearchSubmit = async (data: any) => {
     fetchData(data);
   };
@@ -198,7 +204,7 @@ function CM1200({
             <Select
               onChange={(e) => onChangeAreaCode(e.target.value)}
               width={InputSize.i120}
-              value={selected?.areaCode ? selected?.areaCode : selectAreaCode}
+              value={selectAreaCode ? selectAreaCode : ""}
               style={{ marginLeft: "5px" }}
             >
               {dataCommonDic?.areaCode?.map((option: any, index: number) => {
@@ -261,7 +267,7 @@ function CM1200({
                   <CheckBox title="건물명" rtl={false} />
                 </Label>
                 <Input
-                  register={register("searchInput", {
+                  register={register("S_CU_NAME", {
                     required: true,
                   })}
                   kind={FieldKind.BORDER}
@@ -272,12 +278,6 @@ function CM1200({
                   kind={ButtonType.ROUND}
                   type="submit"
                 />
-                {/* <Button
-                  text="검색"
-                  type="submit"
-                  icon={<MagnifyingGlass />}
-                  style={{ marginRight: "5px", background: "red" }}
-                /> */}
               </FormGroup>
             </Field>
           </form>

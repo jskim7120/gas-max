@@ -65,9 +65,7 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [addr, setAddress] = useState<string>("");
-    const [rdangaCalc, setRdangaCalc] = useState("");
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-    const [rdangaTotal, setRdangaTotal] = useState(0);
 
     // CustomDatePickers
     const [cuFinishDate, setCuFinishDate] = useState("");
@@ -81,14 +79,15 @@ const Form = React.forwardRef(
     const [tankInsideDate2, setTankInsideDate2] = useState("");
     const [gasifyCheckDate1, setGasifyCheckDate1] = useState("");
     const [gasifyCheckDate2, setGasifyCheckDate2] = useState("");
-
-    console.log("selected", selected);
+    const [clearNumberic, setClearNumberic] = useState(false);
 
     const {
       handleSubmit,
       reset,
       register,
       getValues,
+      setValue,
+      watch,
       formState: { errors },
     } = useForm<ICM1200SEARCH>({
       mode: "onChange",
@@ -98,6 +97,7 @@ const Form = React.forwardRef(
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
         resetForm("reset");
+        setClearNumberic(false);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selected]);
@@ -164,6 +164,8 @@ const Form = React.forwardRef(
           setTankInsideDate2("");
           setGasifyCheckDate1("");
           setGasifyCheckDate2("");
+          setSelectAreaCode("");
+          setClearNumberic(true);
         }
 
         if (type === "reset") {
@@ -245,8 +247,8 @@ const Form = React.forwardRef(
               ? formatDate(newFormData?.gasifyCheckDate2)
               : ""
           );
-          setSelectAreaCode("");
-          setRdangaTotal(0);
+          setClearNumberic(false);
+          setSelectAreaCode(selected?.areaCode);
         }
       }
     };
@@ -318,8 +320,6 @@ const Form = React.forwardRef(
         }
       }
 
-      console.log("newRemovedData", newRemovedData);
-
       const path = isAddBtnClicked ? CM1200INSERT : CM1200UPDATE;
 
       newRemovedData.areaCode = selectAreaCode;
@@ -359,6 +359,12 @@ const Form = React.forwardRef(
         ? formatDateByRemoveDash(cuScheduleDate)
         : "";
 
+      newRemovedData.cuRdangaAmt =
+        newRemovedData.cuRdangaType != "1"
+          ? 0
+          : Number(newRemovedData.cuRdangaAmt);
+      newRemovedData.cuRdanga = Number(newRemovedData.cuRdanga);
+
       if (selectAreaCode) {
         try {
           const response: any = await API.post(path, newRemovedData);
@@ -395,17 +401,97 @@ const Form = React.forwardRef(
       }
     };
 
-    const renderRdangaATM = (e: any) => {
-      setRdangaCalc(e.target.value);
-      var bill = e.target.value;
-      var number = Number(getValues("cuRdangaAmt"));
+    const renderRdangaCalc = () => {
+      var selectedcuRdanga = watch("cuRdanga") ?? 0;
+      var selectedRdangaType = watch("cuRdangaType");
+      var selectedRdangaSign = watch("cuRdangaSign") ?? null;
+      var selectedRdangaAmt = watch("cuRdangaAmt") ?? 0;
+      var totalValue = 0;
 
-      const total =
-        bill !== "X"
-          ? eval(`${selected?.cuRdanga} ${bill} ${number}`)
-          : eval(`${selected?.cuRdanga} ${`*`} ${number}/100`);
+      if (selectedRdangaSign === null) {
+        totalValue = 0;
+      } else if (selectedRdangaSign === "+") {
+        totalValue = eval(`${selectedcuRdanga} + ${selectedRdangaAmt}`);
+      } else if (selectedRdangaSign === "-") {
+        totalValue = selectedcuRdanga - selectedRdangaAmt;
+      } else if (selectedRdangaSign === "X") {
+        totalValue = selectedcuRdanga * selectedRdangaAmt;
+      } else {
+        totalValue = 0;
+      }
 
-      setRdangaTotal(total);
+      if (selectedRdangaType === "0") {
+        return (
+          <Field>
+            <FormGroup>
+              {/* cuRdanga  */}
+              <Input
+                type="hidden"
+                name="cuRdanga"
+                register={register("cuRdanga")}
+                inputSize={InputSize.xs}
+              />
+              <p>{selected.cuRdanga} 원</p>
+            </FormGroup>
+          </Field>
+        );
+      }
+      if (selectedRdangaType === "1") {
+        return (
+          <Field>
+            <FormGroup>
+              {/* cuRdanga  */}
+              <Input
+                type="number"
+                name="cuRdanga"
+                register={register("cuRdanga")}
+                inputSize={InputSize.xs}
+              />
+              <p>원</p>
+              <Select {...register("cuRdangaSign")} style={{ minWidth: "15%" }}>
+                {dataCommonDic?.cuRdangaSign.map(
+                  (option: any, index: number) => {
+                    return (
+                      <option key={index} value={option.code}>
+                        {option.codeName}
+                      </option>
+                    );
+                  }
+                )}
+              </Select>
+              <Input
+                type="number"
+                inputSize={InputSize.xs}
+                textAlign="right"
+                register={register("cuRdangaAmt")}
+              />
+              <p>
+                {selectedRdangaSign === "X"
+                  ? "%"
+                  : selectedRdangaSign === "+"
+                  ? "원"
+                  : "원"}
+              </p>
+              <p>=</p>
+              <p>{totalValue}원</p>
+            </FormGroup>
+          </Field>
+        );
+      }
+      if (selectedRdangaType === "2") {
+        return (
+          <Field>
+            <FormGroup>
+              <Input
+                name="cuRdanga"
+                type="number"
+                register={register("cuRdanga")}
+                inputSize={InputSize.xs}
+              />
+            </FormGroup>
+          </Field>
+        );
+      }
     };
 
     return (
@@ -418,8 +504,12 @@ const Form = React.forwardRef(
               <Input
                 label="건물코드"
                 maxLength="3"
-                numbericDefValue={selected?.cuCode}
-                codeFormatNumber={true}
+                codeFormatNumber={{
+                  status: true,
+                  clear: clearNumberic,
+                  selectedRowIndex: selectedRowIndex,
+                  numbericDefValue: selected?.cuCode,
+                }}
                 name="cuCode"
                 register={register("cuCode")}
                 errors={errors["cuCode"]?.message}
@@ -521,10 +611,6 @@ const Form = React.forwardRef(
         <Wrapper grid col={4}>
           <Field>
             <FormGroup>
-              {/* 1 - urd taliin selectees hamaarsan dun garna input idewhigvi, 
-              2 - huwi ntr bodolttoi
-              3 - gants input bna
-              */}
               <Label className="lable-check">
                 <CheckBox
                   title="조정기"
@@ -566,37 +652,7 @@ const Form = React.forwardRef(
               </Select>
             </FormGroup>
           </Field>
-          <Field>
-            <FormGroup>
-              {/* cuRdanga  */}
-              <p>{selected?.cuRdanga} 원</p>
-              <Select
-                {...register("cuRdangaSign")}
-                onChange={(e: any) => renderRdangaATM(e)}
-                style={{ minWidth: "15%" }}
-              >
-                {dataCommonDic?.cuRdangaSign.map(
-                  (option: any, index: number) => {
-                    return (
-                      <option key={index} value={option.code}>
-                        {option.codeName}
-                      </option>
-                    );
-                  }
-                )}
-              </Select>
-              <Input
-                inputSize={InputSize.xs}
-                textAlign="right"
-                register={register("cuRdangaAmt")}
-              />
-              <p>
-                {rdangaCalc === "X" ? "%" : rdangaCalc === "+" ? "원" : "원"}
-              </p>
-              <p>=</p>
-              <p>{rdangaTotal} 원</p>
-            </FormGroup>
-          </Field>
+          {renderRdangaCalc()}
         </Wrapper>
         {/* 2-2 Wrapper */}
         <Wrapper grid col={4}>
@@ -668,10 +724,14 @@ const Form = React.forwardRef(
               </Label>
               <Input
                 register={register("cuPer")}
+                codeFormatNumber={{
+                  status: true,
+                  clear: clearNumberic,
+                  selectedRowIndex: selectedRowIndex,
+                  numbericDefValue: selected?.cuPer,
+                }}
                 maxLength="3"
                 textAlign="right"
-                codeFormatNumber={true}
-                numbericDefValue={selected?.cuPer ? selected?.cuPer : null}
                 inputSize={InputSize.i120}
               />
               <p>{`%`}</p>
@@ -688,10 +748,14 @@ const Form = React.forwardRef(
               </Label>
               <Input
                 register={register("cuCdc")}
+                codeFormatNumber={{
+                  status: true,
+                  clear: clearNumberic,
+                  selectedRowIndex: selectedRowIndex,
+                  numbericDefValue: selected?.cuCdc,
+                }}
                 textAlign="right"
                 maxLength="3"
-                // codeFormatNumber={true}
-                // numbericDefValue={selected?.cuCdc}
                 inputSize={InputSize.i120}
               />
               <p>{`%`}</p>
