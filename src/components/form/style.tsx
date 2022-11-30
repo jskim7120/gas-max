@@ -51,7 +51,7 @@ export const getInputKind = (kind?: FieldKind) => {
   switch (kind) {
     case FieldKind.BORDER:
       return {
-        border: "1px solid #707070",
+        border: "1px solid rgb(188, 185 ,185)",
       };
     case FieldKind.RECTANGLE:
       return {
@@ -520,11 +520,13 @@ export const TextArea = styled.textarea`
   }
 `;
 
-export const Input2 = styled.input`
-  width: 50px;
+export const Input2 = styled.input<{ inputSize?: InputSize }>`
+  width: ${(props) =>
+    props.inputSize ? getInputSize(props.inputSize) : "50px"};
   height: 25px;
-  border: 1px solid #e6e5e5;
+  border: 1px solid rgb(188, 185, 185);
   border-radius: 4px;
+  background: aliceblue;
 
   padding: 0 6px;
   margin: 0 5px;

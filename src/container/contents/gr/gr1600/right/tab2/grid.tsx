@@ -80,7 +80,7 @@ function Grid({
     };
   }, [data, columns]);
 
-  return <div ref={realgridElement} style={{ height: "300px" }}></div>;
+  return <div ref={realgridElement} style={{ height: "400px" }}></div>;
 }
 
 export default Grid;

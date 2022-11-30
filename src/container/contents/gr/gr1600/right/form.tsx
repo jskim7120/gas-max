@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Input, Divider, DividerGray, Wrapper } from "components/form/style";
+import { useState, useEffect } from "react";
+import { Input, Divider, Wrapper } from "components/form/style";
 import { useForm } from "react-hook-form";
-import { InputSize } from "components/componentsType";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
 import API from "app/axios";
-import { GR160065 } from "app/path";
+import { toast } from "react-toastify";
+import { GR160065, GR1600UPDATE } from "app/path";
+import { IGR1600SEARCH } from "../model";
 
 function Form({
   selected,
@@ -14,12 +15,14 @@ function Form({
   values2,
   labels1,
   labels2,
+  fetchLeftData,
 }: {
   selected: any;
   values1: any;
   values2: any;
   labels1: any;
   labels2: any;
+  fetchLeftData: any;
 }) {
   const [tabId, setTabId] = useState(0);
   const [tabData, setTabData] = useState(null);
@@ -29,7 +32,7 @@ function Form({
     reset,
     formState: { errors },
     getValues,
-  } = useForm<any>();
+  } = useForm<IGR1600SEARCH>();
 
   const fetchData = async () => {
     if (selected !== undefined && JSON.stringify(selected) !== "{}") {
@@ -40,7 +43,7 @@ function Form({
             buCode: selected?.buCode,
           },
         });
-        console.log("--------------", tabData);
+
         setTabData(tabData);
       } catch (err) {}
     }
@@ -51,10 +54,45 @@ function Form({
     clearForm();
   }, [selected]);
 
-  const update = () => {
-    console.log("update");
-    const formValues = getValues();
-    console.log("formValues:", formValues);
+  const update = async () => {
+    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      try {
+        const formValues = getValues();
+
+        const response: any = await API.post(GR1600UPDATE, {
+          areaCode: formValues.areaCode,
+          buCode: formValues.buCode,
+          buPdanga:
+            formValues.buPdanga && Number(formValues.buPdanga.replace(",", "")),
+          buBdanga:
+            formValues.buBdanga && Number(formValues.buBdanga.replace(",", "")),
+          buBldanga:
+            formValues.buBldanga &&
+            Number(formValues.buBldanga.replace(",", "")),
+          buPcost:
+            formValues.buPcost && Number(formValues.buPcost.replace(",", "")),
+          buBcost:
+            formValues.buBcost && Number(formValues.buBcost.replace(",", "")),
+          buBlcost:
+            formValues.buBlcost && Number(formValues.buBlcost.replace(",", "")),
+          buJpCode1: formValues.buJpCode1,
+          buJpCode2: formValues.buJpCode2,
+          buJpCode3: formValues.buJpCode3,
+          buJpCode4: formValues.buJpCode4,
+        });
+
+        if (response.status === 200) {
+          fetchLeftData();
+          toast.success("update successfull", {
+            autoClose: 500,
+          });
+        } else {
+          toast.error(response?.response?.data?.message, { autoClose: 500 });
+        }
+      } catch (err) {
+        console.log("error::::::::", err);
+      }
+    }
   };
 
   const clearForm = () => {
@@ -69,7 +107,7 @@ function Form({
   };
 
   return (
-    <>
+    <div style={{ padding: "0px 10px" }}>
       <form>
         <Wrapper grid>
           <Input
@@ -135,10 +173,12 @@ function Form({
           <div
             style={{
               display: "flex",
+              justifySelf: "flex-end",
+              margin: "0 5px",
               alignItems: "center",
               background: `rgba(104,103,103,0.09)`,
-              width: "200px",
-              height: "23px",
+              width: "250px",
+              height: "25px",
               borderRadius: "4px",
             }}
           >
@@ -157,10 +197,18 @@ function Form({
             >
               미지급액
             </span>
-            <span style={{ marginLeft: "20px" }}>{selected?.buCode}</span>
+            <span
+              style={{
+                marginLeft: "20px",
+                fontFamily: "NotoSansKRRegular",
+                fontSize: "12px",
+              }}
+            >
+              {selected?.buCode}
+            </span>
           </div>
         </Wrapper>
-        <DividerGray />
+        <Divider />
       </form>
 
       <div style={{ marginTop: "15px" }}>
@@ -184,7 +232,7 @@ function Form({
           )}
         </TabContentWrapper>
       </div>
-    </>
+    </div>
   );
 }
 
