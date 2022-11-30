@@ -6,10 +6,6 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "jpGubun",
-    dataType: ValueType.TEXT,
-  },
-  {
     fieldName: "jpCode",
     dataType: ValueType.TEXT,
   },
@@ -22,11 +18,15 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "jpUnit",
+    fieldName: "jpGubunName",
     dataType: ValueType.TEXT,
   },
   {
     fieldName: "jpKg",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "jpUnitName",
     dataType: ValueType.NUMBER,
   },
   {
@@ -39,11 +39,11 @@ export const fields = [
     dataType: ValueType.NUMBER,
   },
   {
-    fieldName: "jpSort",
+    fieldName: "jpJaegoYn",
     dataType: ValueType.NUMBER,
   },
   {
-    fieldName: "jpJaegoYn",
+    fieldName: "jpSort",
     dataType: ValueType.TEXT,
   },
 ];
@@ -59,8 +59,8 @@ export const columns = [
     },
   },
   {
-    name: "jpGubun",
-    fieldName: "jpGubun",
+    name: "jpCode",
+    fieldName: "jpCode",
     type: "data",
     width: "120",
     header: {
@@ -68,8 +68,8 @@ export const columns = [
     },
   },
   {
-    name: "jpCode",
-    fieldName: "jpCode",
+    name: "jpName",
+    fieldName: "jpName",
     type: "data",
     width: "120",
     styleName: "rg-left-column",
@@ -79,8 +79,8 @@ export const columns = [
   },
 
   {
-    name: "jpName",
-    fieldName: "jpCode",
+    name: "jpSpec",
+    fieldName: "jpSpec",
     type: "data",
     width: "120",
     styleName: "rg-left-column",
@@ -89,8 +89,8 @@ export const columns = [
     },
   },
   {
-    name: "jpSpec",
-    fieldName: "jpCode",
+    name: "jpGubunName",
+    fieldName: "jpGubunName",
     type: "data",
     width: "120",
     header: {
@@ -98,8 +98,8 @@ export const columns = [
     },
   },
   {
-    name: "jpUnit",
-    fieldName: "jpCode",
+    name: "jpKg",
+    fieldName: "jpKg",
     type: "data",
     width: "120",
     header: {
@@ -107,8 +107,8 @@ export const columns = [
     },
   },
   {
-    name: "jpKg",
-    fieldName: "jpCode",
+    name: "jpUnitName",
+    fieldName: "jpUnitName",
     type: "data",
     width: "120",
     header: {
@@ -117,7 +117,7 @@ export const columns = [
   },
   {
     name: "jpOutdanga",
-    fieldName: "jpCode",
+    fieldName: "jpOutdanga",
     type: "data",
     width: "120",
     styleName: "rg-right-column",
@@ -127,7 +127,7 @@ export const columns = [
   },
   {
     name: "jpOuttong",
-    fieldName: "jpCode",
+    fieldName: "jpOuttong",
     type: "data",
     width: "120",
     styleName: "rg-right-column",
@@ -136,8 +136,8 @@ export const columns = [
     },
   },
   {
-    name: "jpSort",
-    fieldName: "jpCode",
+    name: "jpJaegoYn",
+    fieldName: "jpJaegoYn",
     type: "data",
     width: "120",
     header: {
@@ -145,8 +145,8 @@ export const columns = [
     },
   },
   {
-    name: "jpJaegoyn",
-    fieldName: "jpCode",
+    name: "jpSort",
+    fieldName: "jpSort",
     type: "data",
     width: "120",
     header: {

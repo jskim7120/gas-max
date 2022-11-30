@@ -386,6 +386,7 @@ const Form = React.forwardRef(
             register={register("jnCMngNo")}
             errors={errors["jnCMngNo"]?.message}
             textAlign="right"
+            maxLength="4"
           />
           <Field>
             <FormGroup>

@@ -9,6 +9,7 @@ export const EN1200LIST = "/app/EN1200/list";
 export const EN1200INSERT = "/app/EN1200/insert";
 export const EN1200UPDATE = "/app/EN1200/update";
 export const EN1200DELETE = "/app/EN1200/delete";
+export const EN120011 = "/app/EN1200/11";
 
 export const EN1300LIST = "/app/EN1300/list";
 export const EN1300INSERT = "/app/EN1300/insert";

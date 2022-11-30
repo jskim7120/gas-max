@@ -25,7 +25,7 @@ import { convertBase64 } from "helpers/convertBase64";
 import API from "app/axios";
 import IconInfo from "assets/image/Icon-info.png";
 import { ImageWrapper } from "../style";
-import { EN1200INSERT, EN1200UPDATE, EN1200DELETE } from "app/path";
+import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
 
 interface IForm {
   selected: any;
@@ -89,15 +89,29 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
     }));
 
-    const resetForm = (type: string) => {
+    const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        console.log("type:", type);
         let newData: any = {};
         if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
+          const path = EN120011;
+          try {
+            const response: any = await API.get(path, {
+              params: { areaCode: selected.areaCode },
+            });
+            if (response.status === 200) {
+              for (const [key, value] of Object.entries(selected)) {
+                newData[key] = null;
+              }
+              newData.saupSno = response.data.tempCode;
+              reset(newData);
+            } else {
+              toast.error(response.response.data?.message, {
+                autoClose: 500,
+              });
+            }
+          } catch (err: any) {
+            console.log("areaCode select error", err);
           }
-          reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -198,6 +212,27 @@ const Form = React.forwardRef(
         setImage64(response);
       } catch (err: any) {
         console.log("image convert 64 error occured.", err);
+      }
+    };
+
+    const handleSelectCode = async (areaCode: any) => {
+      const path = EN120011;
+      const formValues = getValues();
+      formValues.areaCode = areaCode;
+      try {
+        const response: any = await API.get(path, {
+          params: { areaCode: areaCode },
+        });
+        if (response.status === 200) {
+          console.log("works", response);
+          return response;
+        } else {
+          toast.error(response.response.data?.message, {
+            autoClose: 500,
+          });
+        }
+      } catch (err: any) {
+        console.log("areaCode select error", err);
       }
     };
 

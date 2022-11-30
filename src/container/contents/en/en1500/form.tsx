@@ -367,6 +367,7 @@ const Form = (
                     register={register("jnGumdate")}
                     errors={errors["jnGumdate"]?.message}
                     textAlign="right"
+                    maxLength="2"
                   />
                   <span>일</span>
                 </FormGroup>
@@ -404,6 +405,7 @@ const Form = (
                     register={register("jnPer")}
                     errors={errors["jnPer"]?.message}
                     textAlign="right"
+                    maxLength="3"
                   />
                   <span>%</span>
                 </FormGroup>
