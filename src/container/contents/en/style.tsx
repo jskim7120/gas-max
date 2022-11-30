@@ -118,13 +118,13 @@ export const InfoDesc = styled.div`
 export const PaymentLineCnt = styled.div`
   display: flex;
   border: 1px solid #bbbbbb;
-  width: 632px;
+  width: fit-content;
   .title {
     writing-mode: vertical-rl;
     text-align: center;
     font-size: 14px;
     width: 22px;
-    height: 78px;
+    // height: 78px;
     letter-spacing: 11px;
     background: rgba(104, 103, 103, 0.35);
   }

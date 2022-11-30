@@ -114,7 +114,6 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? EN1400INSERT : EN1400UPDATE;
       const formValues = getValues();
-
       formValues.bpIndanga = formValues.bpIndanga
         ? formatCurrencyRemoveComma(formValues.bpIndanga)
         : "";
@@ -163,7 +162,7 @@ const Form = React.forwardRef(
               <Label>영업소</Label>
               <Select {...register("areaCode")}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
@@ -190,6 +189,7 @@ const Form = React.forwardRef(
             register={register("bpName")}
             errors={errors["bpName"]?.message}
             inputSize={InputSize.md}
+            maxLength="20"
           />
         </Wrapper>
         <Wrapper>
@@ -198,6 +198,7 @@ const Form = React.forwardRef(
             register={register("bpType")}
             errors={errors["bpType"]?.message}
             inputSize={InputSize.md}
+            maxLength="10"
           />
         </Wrapper>
         <Wrapper>
@@ -206,6 +207,7 @@ const Form = React.forwardRef(
             register={register("bpDanwi")}
             errors={errors["bpDanwi"]?.message}
             inputSize={InputSize.md}
+            maxLength="10"
           />
         </Wrapper>
         <Divider />

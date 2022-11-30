@@ -219,6 +219,7 @@ const Form = React.forwardRef(
             register={register("jpName")}
             errors={errors["jpName"]?.message}
             inputSize={InputSize.en1300}
+            maxLength="30"
           />
         </Wrapper>
         <Wrapper>
@@ -227,6 +228,7 @@ const Form = React.forwardRef(
             register={register("jpSpec")}
             errors={errors["jpSpec"]?.message}
             inputSize={InputSize.en1300}
+            maxLength="10"
           />
         </Wrapper>
         <Wrapper>
@@ -254,7 +256,7 @@ const Form = React.forwardRef(
               errors={errors["jpKg"]?.message}
               style={{ width: "56px" }}
               textAlign="right"
-              maxLength="10"
+              maxLength="5"
             />
             <FormGroup>
               <Select {...register("jpKgDanwi")} style={{ minWidth: "64px" }}>

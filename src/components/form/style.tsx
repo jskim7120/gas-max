@@ -134,6 +134,10 @@ export const Input = ({
         const formattedNumber = formatNum(e.target.value);
         setInputValue(formattedNumber);
         return;
+      case "corpNumber":
+        const formattedCorpNumber = corporateNumber(e.target.value);
+        setInputValue(formattedCorpNumber);
+        return;
     }
   };
 
@@ -180,6 +184,15 @@ export const Input = ({
       5
     )}-${phoneNumber.slice(5, 10)}`;
   }
+
+  function corporateNumber(value: any) {
+    if (!value) return value;
+    const corpNumber = value.replace(/[^\d]/g, "");
+    const corpNumberLength = corpNumber.length;
+    if (corpNumberLength < 7) return corpNumber;
+    return `${corpNumber.slice(0, 6)}-${corpNumber.slice(6, 13)}`;
+  }
+
   return (
     <InputWrapper fullWidth={fullWidth}>
       <FormGroup className={className && className}>

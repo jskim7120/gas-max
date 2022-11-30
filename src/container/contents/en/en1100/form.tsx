@@ -194,6 +194,7 @@ const Form = React.forwardRef(
             label="영업소명"
             register={register("areaName")}
             errors={errors["areaName"]?.message}
+            maxLength="20"
           />
         </Wrapper>
         <Divider />
@@ -203,16 +204,19 @@ const Form = React.forwardRef(
             register={register("jnSsno")}
             errors={errors["jnSsno"]?.message}
             formatNumber="telNumber"
+            maxLength="13"
           />
           <Input
             label="상호"
             register={register("jnSangho")}
             errors={errors["jnSangho"]?.message}
+            maxLength="26"
           />
           <Input
             label="대표"
             register={register("jnSajang")}
             errors={errors["jnSajang"]?.message}
+            maxLength="14"
           />
         </Wrapper>
         <Wrapper style={{ alignItems: "center" }}>
@@ -220,12 +224,14 @@ const Form = React.forwardRef(
             label="주소"
             register={register("jnZipcode")}
             errors={errors["jnZipcode"]?.message}
+            maxLength="6"
           />
           <DaumAddress setAddress={setAddress} />
           <Input
             register={register("jnAddr1")}
             errors={errors["jnAddr1"]?.message}
             fullWidth
+            maxLength="40"
           />
         </Wrapper>
         <Wrapper>
@@ -234,6 +240,7 @@ const Form = React.forwardRef(
             register={register("jnAddr2")}
             errors={errors["jnAddr2"]?.message}
             fullWidth
+            maxLength="40"
           />
         </Wrapper>
         <Wrapper>
@@ -242,12 +249,14 @@ const Form = React.forwardRef(
             register={register("jnUptae")}
             errors={errors["jnUptae"]?.message}
             fullWidth
+            maxLength="50"
           />
           <Input
             label="종목"
             register={register("jnJongmok")}
             errors={errors["jnJongmok"]?.message}
             fullWidth
+            maxLength="50"
           />
         </Wrapper>
         <Wrapper grid>
@@ -255,17 +264,20 @@ const Form = React.forwardRef(
             label="대표전화"
             register={register("jnTel1")}
             errors={errors["jnTel1"]?.message}
+            maxLength="14"
           />
           <Input
             label="대표전화2"
             register={register("jnTel2")}
             errors={errors["jnTel2"]?.message}
+            maxLength="14"
           />
 
           <Input
             label="팩스"
             register={register("jnFax")}
             errors={errors["jnFax"]?.message}
+            maxLength="14"
           />
         </Wrapper>
         <Divider />
@@ -274,11 +286,13 @@ const Form = React.forwardRef(
             label="안전관리 총괄자"
             register={register("jnAnname1")}
             errors={errors["jnAnname1"]?.message}
+            maxLength="10"
           />
           <Input
             label="전화"
             register={register("jnAntel1")}
             errors={errors["jnAntel1"]?.message}
+            maxLength="14"
           />
         </Wrapper>
         <Wrapper grid>
@@ -286,11 +300,13 @@ const Form = React.forwardRef(
             label="안전관리 책임자"
             register={register("jnAnname2")}
             errors={errors["jnAnname2"]?.message}
+            maxLength="10"
           />
           <Input
             label="전화"
             register={register("jnAntel2")}
             errors={errors["jnAntel2"]?.message}
+            maxLength="14"
           />
         </Wrapper>
         <Divider />
@@ -370,6 +386,7 @@ const Form = React.forwardRef(
             register={register("jnCMngNo")}
             errors={errors["jnCMngNo"]?.message}
             textAlign="right"
+            maxLength="4"
           />
           <Field>
             <FormGroup>

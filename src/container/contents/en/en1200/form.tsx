@@ -25,7 +25,7 @@ import { convertBase64 } from "helpers/convertBase64";
 import API from "app/axios";
 import IconInfo from "assets/image/Icon-info.png";
 import { ImageWrapper } from "../style";
-import { EN1200INSERT, EN1200UPDATE, EN1200DELETE } from "app/path";
+import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
 
 interface IForm {
   selected: any;
@@ -89,15 +89,29 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
     }));
 
-    const resetForm = (type: string) => {
+    const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        console.log("type:", type);
         let newData: any = {};
         if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
+          const path = EN120011;
+          try {
+            const response: any = await API.get(path, {
+              params: { areaCode: selected.areaCode },
+            });
+            if (response.status === 200) {
+              for (const [key, value] of Object.entries(selected)) {
+                newData[key] = null;
+              }
+              newData.saupSno = response.data.tempCode;
+              reset(newData);
+            } else {
+              toast.error(response.response.data?.message, {
+                autoClose: 500,
+              });
+            }
+          } catch (err: any) {
+            console.log("areaCode select error", err);
           }
-          reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -201,6 +215,27 @@ const Form = React.forwardRef(
       }
     };
 
+    const handleSelectCode = async (areaCode: any) => {
+      const path = EN120011;
+      const formValues = getValues();
+      formValues.areaCode = areaCode;
+      try {
+        const response: any = await API.get(path, {
+          params: { areaCode: areaCode },
+        });
+        if (response.status === 200) {
+          console.log("works", response);
+          return response;
+        } else {
+          toast.error(response.response.data?.message, {
+            autoClose: 500,
+          });
+        }
+      } catch (err: any) {
+        console.log("areaCode select error", err);
+      }
+    };
+
     return (
       <form
         className="form_control"
@@ -249,12 +284,14 @@ const Form = React.forwardRef(
                 errors={errors["saupSsno"]?.message}
                 inputSize={InputSize.md}
                 formatNumber="telNumber"
+                maxLength="12"
               />
               <Input
                 label="종사업자번호"
                 register={register("saupRCode")}
                 errors={errors["saupRCode"]?.message}
                 inputSize={InputSize.sm}
+                maxLength="4"
               />
             </Wrapper>
             <Wrapper grid col={2}>
@@ -263,12 +300,14 @@ const Form = React.forwardRef(
                 register={register("saupSangho")}
                 errors={errors["saupSangho"]?.message}
                 inputSize={InputSize.md}
+                maxLength="50"
               />
               <Input
                 label="대표"
                 register={register("saupSajang")}
                 errors={errors["saupSajang"]?.message}
                 inputSize={InputSize.md}
+                maxLength="20"
               />
             </Wrapper>
             <Wrapper style={{ alignItems: "center" }}>
@@ -276,12 +315,14 @@ const Form = React.forwardRef(
                 label="주소"
                 register={register("saupZipcode")}
                 errors={errors["saupZipcode"]?.message}
+                maxLength="6"
               />
               <DaumAddress setAddress={setAddress} />
               <Input
                 register={register("saupAddr1")}
                 errors={errors["saupAddr1"]?.message}
                 fullWidth
+                maxLength="40"
               />
             </Wrapper>
             <Wrapper>
@@ -290,6 +331,7 @@ const Form = React.forwardRef(
                 register={register("saupAddr2")}
                 errors={errors["saupAddr2"]?.message}
                 fullWidth
+                maxLength="40"
               />
             </Wrapper>
             <Wrapper>
@@ -298,12 +340,14 @@ const Form = React.forwardRef(
                 register={register("saupUptae")}
                 errors={errors["saupUptae"]?.message}
                 fullWidth
+                maxLength="50"
               />
               <Input
                 label="종목"
                 register={register("saupJongmok")}
                 errors={errors["saupJongmok"]?.message}
                 fullWidth
+                maxLength="50"
               />
             </Wrapper>
             <Divider />
@@ -399,6 +443,8 @@ const Form = React.forwardRef(
                       label="주민번호/법인번호"
                       register={register("saupJumin")}
                       errors={errors["saupJumin"]?.message}
+                      formatNumber="corpNumber"
+                      maxLength="14"
                     />
                   </Field>
                 </Wrapper>
@@ -411,6 +457,7 @@ const Form = React.forwardRef(
                 register={register("saupBigo")}
                 errors={errors["saupBigo"]?.message}
                 fullWidth
+                maxLength="50"
               />
             </Wrapper>
             <Divider />
@@ -419,12 +466,14 @@ const Form = React.forwardRef(
                 label="아이디"
                 register={register("saupEdiId")}
                 errors={errors["saupEdiId"]?.message}
+                maxLength="20"
               />
               <Input
                 label="비밀번호"
                 register={register("saupEdiPass")}
                 errors={errors["saupEdiPass"]?.message}
                 type="password"
+                maxLength="20"
               />
             </Wrapper>
             <Wrapper grid>
@@ -432,11 +481,13 @@ const Form = React.forwardRef(
                 label="담당자명"
                 register={register("saupEdiSawon")}
                 errors={errors["saupEdiSawon"]?.message}
+                maxLength="14"
               />
               <Input
                 label="전화번호"
                 register={register("saupEdiSmsNo")}
                 errors={errors["saupEdiSmsNo"]?.message}
+                maxLength="14"
               />
             </Wrapper>
             <Wrapper style={{ alignItems: "center" }}>
@@ -444,6 +495,7 @@ const Form = React.forwardRef(
                 label="이메일"
                 register={register("saupEdiEmail")}
                 errors={errors["saupEdiEmail"]?.message}
+                maxLength="35"
               />
               @
               <Select {...register("saupEdiId")}>

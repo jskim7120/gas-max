@@ -68,6 +68,15 @@ export const RubeUnit = styled.div`
   table {
     width: 240px;
     margin: 0 auto;
+    tr {
+      td {
+        div {
+          div {
+            justify-content: center;
+          }
+        }
+      }
+    }
     input {
       height: 20px;
     }
@@ -104,7 +113,7 @@ export const BasicItems = styled.div`
     line-height: 26px;
   }
   input {
-    width: 77px;
+    width: 85px;
   }
   .basicDesc {
     color: #1b8c8e;

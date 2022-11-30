@@ -188,6 +188,7 @@ const Form = React.forwardRef(
             label="분류명"
             register={register("gubunName")}
             errors={errors["gubunName"]?.message}
+            maxLength="20"
           />
         </Wrapper>
         <Wrapper>
@@ -196,6 +197,7 @@ const Form = React.forwardRef(
             register={register("gubunBigo")}
             errors={errors["gubunBigo"]?.message}
             fullWidth
+            maxLength="20"
           />
         </Wrapper>
       </form>

@@ -39,11 +39,11 @@ export const schema = yup.object({
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
-  jpName: yup.string().nullable().max(30, "입력 초과"),
-  jpBasictong: yup.string().nullable().max(1, "입력 초과"),
-  jpSpec: yup.string().nullable().max(10, "입력 초과"),
-  jpJaegoyn: yup.string().nullable().max(1, "입력 초과"),
-  jpCodeold: yup.string().nullable().max(15, "입력 초과"),
-  jpCodedt: yup.string().nullable().max(16, "입력 초과"),
-  jpUserid: yup.string().nullable().max(30, "입력 초과"),
+  jpName: yup.string().nullable(),
+  jpBasictong: yup.string().nullable(),
+  jpSpec: yup.string().nullable(),
+  jpJaegoyn: yup.string().nullable(),
+  jpCodeold: yup.string().nullable(),
+  jpCodedt: yup.string().nullable(),
+  jpUserid: yup.string().nullable(),
 });
