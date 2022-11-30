@@ -1,20 +1,43 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { fields, columns } from "./data";
+import { fields, col1, col2, col3, vatKind, dangaType } from "./data";
 
 function Grid({
   data,
   setData,
-  setEditedRowIds,
+  setCommitedRowId,
+  values1,
+  values2,
+  labels1,
+  labels2,
 }: {
   data: any;
   setData: any;
-  setEditedRowIds: any;
+  setCommitedRowId: any;
+  values1: any;
+  values2: any;
+  labels1: any;
+  labels2: any;
 }) {
   let container: HTMLDivElement;
   let dp: any;
   let gv: any;
+
   const realgridElement = useRef<HTMLDivElement>(null);
+
+  const [columns, setColumns] = useState<Array<any>>([]);
+
+  useEffect(() => {
+    if (values1 && values2 && labels1 && labels2) {
+      dangaType.values = values1;
+      dangaType.labels = labels1;
+
+      vatKind.values = values1;
+      vatKind.labels = labels1;
+
+      setColumns([...col1, dangaType, ...col2, vatKind, ...col3]);
+    }
+  }, [values1, values2, labels1, labels2]);
 
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
@@ -39,14 +62,10 @@ function Grid({
     gv.displayOptions._selectionStyle = "singleRow";
     gv.setEditOptions({ editable: true });
 
-    gv.onSelectionChanged = () => {
-      const itemIndex: any = gv.getCurrent().dataRow;
-    };
-
     gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
-      data[index.dataRow][index.fieldName] = Number(newValue);
+      data[index.dataRow][index.fieldName] = newValue;
       setData(data);
-      setEditedRowIds((prev: any) => [...prev, index.dataRow]);
+      setCommitedRowId(index.dataRow);
     };
 
     return () => {
@@ -54,7 +73,7 @@ function Grid({
       gv.destroy();
       dp.destroy();
     };
-  }, [data]);
+  }, [data, columns]);
 
   return <div ref={realgridElement} style={{ height: "300px" }}></div>;
 }

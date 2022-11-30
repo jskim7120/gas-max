@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Field,
-  Input,
-  Input2,
-  Select,
-  DividerGray,
-  Wrapper,
-  Label,
-  FormGroup,
-} from "components/form/style";
+import { Input, Divider, DividerGray, Wrapper } from "components/form/style";
 import { useForm } from "react-hook-form";
 import { InputSize } from "components/componentsType";
 import PlainTab from "components/plainTab";
@@ -17,7 +8,19 @@ import getTabContent from "./getTabContent";
 import API from "app/axios";
 import { GR160065 } from "app/path";
 
-function Form({ selected }: { selected: any }) {
+function Form({
+  selected,
+  values1,
+  values2,
+  labels1,
+  labels2,
+}: {
+  selected: any;
+  values1: any;
+  values2: any;
+  labels1: any;
+  labels2: any;
+}) {
   const [tabId, setTabId] = useState(0);
   const [tabData, setTabData] = useState(null);
 
@@ -25,23 +28,37 @@ function Form({ selected }: { selected: any }) {
     register,
     reset,
     formState: { errors },
+    getValues,
   } = useForm<any>();
 
   const fetchData = async () => {
-    try {
-      const { data: tabData } = await API.get(GR160065, {
-        params: {
-          areaCode: selected.areaCode,
-          buCode: selected?.buCode,
-        },
-      });
-      setTabData(tabData);
-    } catch (err) {}
+    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      try {
+        const { data: tabData } = await API.get(GR160065, {
+          params: {
+            areaCode: selected.areaCode,
+            buCode: selected?.buCode,
+          },
+        });
+        console.log("--------------", tabData);
+        setTabData(tabData);
+      } catch (err) {}
+    }
   };
 
   useEffect(() => {
+    fetchData();
+    clearForm();
+  }, [selected]);
+
+  const update = () => {
+    console.log("update");
+    const formValues = getValues();
+    console.log("formValues:", formValues);
+  };
+
+  const clearForm = () => {
     if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-      fetchData();
       let newData: any = {};
 
       for (const [key, value] of Object.entries(selected)) {
@@ -49,7 +66,8 @@ function Form({ selected }: { selected: any }) {
       }
       reset(newData);
     }
-  }, [selected]);
+  };
+
   return (
     <>
       <form>
@@ -70,7 +88,7 @@ function Form({ selected }: { selected: any }) {
             errors={errors["buName"]?.message}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid>
           <Input
             label="대표전화"
@@ -88,7 +106,7 @@ function Form({ selected }: { selected: any }) {
             errors={errors["buStaeName"]?.message}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid>
           <Input
             label="담당자명"
@@ -106,7 +124,7 @@ function Form({ selected }: { selected: any }) {
             errors={errors["buEmail"]?.message}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid>
           <Input
             label="비고"
@@ -142,16 +160,28 @@ function Form({ selected }: { selected: any }) {
             <span style={{ marginLeft: "20px" }}>{selected?.buCode}</span>
           </div>
         </Wrapper>
-
         <DividerGray />
       </form>
+
       <div style={{ marginTop: "15px" }}>
         <PlainTab
           tabHeader={["LPG  매입단가", "품목별 매입단가", "부품 매입단가"]}
           onClick={(id) => setTabId(id)}
         />
         <TabContentWrapper>
-          {getTabContent(tabId, register, errors, tabData, selected)}
+          {getTabContent(
+            tabId,
+            register,
+            errors,
+            tabData,
+            selected,
+            values1,
+            values2,
+            labels1,
+            labels2,
+            update,
+            clearForm
+          )}
         </TabContentWrapper>
       </div>
     </>
