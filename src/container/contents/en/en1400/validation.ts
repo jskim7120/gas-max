@@ -5,7 +5,7 @@ const reg = /^\d+$/;
 export const schema = yup.object({
   bpCode: yup
     .number()
-    .typeError("숫자만 입력")
+    .typeError("")
     .transform((_, val) => {
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })

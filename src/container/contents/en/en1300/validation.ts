@@ -5,17 +5,17 @@ export const schema = yup.object({
   // jpCode: yup
   //   .string()
   //   .typeError("이 필드는 필수 항목입니다")
-  //   .matches(/[0-9]+/gi, "숫자만 입력"),
+  //   .matches(/[0-9]+/gi, ""),
   jpCode: yup
     .number()
-    .typeError("숫자만 입력")
+    .typeError("")
     .transform((_, val) => {
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
   jpKg: yup
     .number()
-    .typeError("숫자만 입력")
+    .typeError("")
     .transform((_, val) => {
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
@@ -27,14 +27,14 @@ export const schema = yup.object({
   jpBaedal: yup.string().nullable(),
   jpSort: yup
     .number()
-    .typeError("숫자만 입력")
+    .typeError("")
     .transform((_, val) => {
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
   jpKghigh: yup
     .number()
-    .typeError("숫자만 입력")
+    .typeError("")
     .transform((_, val) => {
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })

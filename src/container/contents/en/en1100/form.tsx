@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { EN1100INSERT, EN1100UPDATE, EN1100DELETE } from "app/path";
+import { EN1100INSERT, EN1100UPDATE, EN1100DELETE, EN110011 } from "app/path";
 import {
   Input,
   Select,
@@ -85,16 +85,31 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
     }));
 
-    const resetForm = (type: string) => {
+    const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        console.log("type:", type);
         let newData: any = {};
 
         if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
+          document.getElementById("areaName")?.focus();
+          const path = EN110011;
+          try {
+            const response: any = await API.get(path, {
+              params: { areaCode: selected.areaCode },
+            });
+            if (response.status === 200) {
+              for (const [key, value] of Object.entries(selected)) {
+                newData[key] = null;
+              }
+              newData.areaCode = response.data.tempCode;
+              reset(newData);
+            } else {
+              toast.error(response.response.data?.message, {
+                autoClose: 500,
+              });
+            }
+          } catch (err: any) {
+            console.log("areaCode select error", err);
           }
-          reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -189,6 +204,7 @@ const Form = React.forwardRef(
             errors={errors["areaCode"]?.message}
             fullWidth
             maxLength="2"
+            readOnly={isAddBtnClicked}
           />
           <Input
             label="영업소명"
