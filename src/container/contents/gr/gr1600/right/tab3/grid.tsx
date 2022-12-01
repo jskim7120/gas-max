@@ -60,6 +60,7 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
+    gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: true });
 
     gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
