@@ -2,17 +2,7 @@ import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { fields, columns } from "./data";
 
-function Grid({
-  data,
-  setSelected,
-}: // selectedRowIndex,
-// setSelectedRowIndex,
-{
-  data: any;
-  setSelected: Function;
-  // selectedRowIndex: number | null;
-  // setSelectedRowIndex: Function;
-}) {
+function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
   let container: HTMLDivElement;
   let dp: any;
   let gv: any;
@@ -38,16 +28,12 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
+    gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
-
-    gv.setCurrent({
-      // dataRow: selectedRowIndex,
-    });
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected(data[itemIndex]);
-      // setSelectedRowIndex(itemIndex);
     };
 
     return () => {

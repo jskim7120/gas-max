@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LeftSection, RightSection, Wrapper } from "../style";
+import { LeftSection, RightSection, MainWrapper } from "../style";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import LeftHalf from "./leftHalf";
 import RightHalf from "./rightHalf";
@@ -15,14 +15,14 @@ function GR1100({
 
   return (
     <>
-      <Wrapper>
+      <MainWrapper>
         <LeftSection>
           <LeftHalf depthFullName={depthFullName} setData={setData} />
         </LeftSection>
         <RightSection>
           <RightHalf />
         </RightSection>
-      </Wrapper>
+      </MainWrapper>
       <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>
   );

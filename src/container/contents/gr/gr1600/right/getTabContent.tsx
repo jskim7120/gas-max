@@ -24,6 +24,7 @@ function getTabContent(
           tabData={tabData}
           update={update}
           clearForm={clearForm}
+          selected={selected}
         />
       );
     case 1:
