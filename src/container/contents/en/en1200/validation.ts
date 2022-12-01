@@ -4,7 +4,7 @@ const reg = /^\d+$/;
 export const schema = yup.object({
   saupSno: yup
     .number()
-    .typeError("숫자만 입력")
+    .typeError("")
     .transform((_, val) => {
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
@@ -19,7 +19,7 @@ export const schema = yup.object({
   saupUptae: yup.string().nullable(),
   saupJongmok: yup.string().nullable(),
   saupStamp: yup.string().nullable(),
-  // saupStampSe: yup.string().nullable().max(1, "입력 초과"),
+  // saupStampSe: yup.string().nullable().max( 초과"),
   // saupStampEs: yup.string().nullable().max(1, "입력 초과"),
   saupDate: yup.string().nullable(),
   saupJumin: yup.string().nullable(),
