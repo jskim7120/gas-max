@@ -94,6 +94,7 @@ interface IInputProps {
   formatNumber?: string;
   labelStyle?: any;
   onChange?: Function;
+  readOnly?: boolean;
 }
 
 export const Input = ({
@@ -116,6 +117,7 @@ export const Input = ({
   formatNumber,
   labelStyle,
   onChange,
+  readOnly,
 }: IInputProps) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -231,6 +233,7 @@ export const Input = ({
             kind={kind && kind}
             textAlign={textAlign && textAlign}
             onChange={formatNumber ? (e) => handleInput(e, formatNumber) : null}
+            readOnly={readOnly}
           />
         ) : (
           <InputForm
@@ -247,6 +250,7 @@ export const Input = ({
             minLength={minLength && minLength}
             kind={kind && kind}
             textAlign={textAlign && textAlign}
+            readOnly={readOnly}
             // onChange={onChange && onChange}
           />
         )}
@@ -265,6 +269,7 @@ export const InputForm = styled.input<{
   fullWidth?: boolean;
   kind?: FieldKind;
   textAlign?: string;
+  readOnly?: boolean;
 }>`
   height: 25px;
   width: ${(props) =>

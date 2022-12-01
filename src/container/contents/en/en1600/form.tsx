@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { EN1600INSERT, EN1600UPDATE, EN1600DELETE } from "app/path";
+import { EN1600INSERT, EN1600UPDATE, EN1600DELETE, EN160011 } from "app/path";
 import {
   Input,
   Select,
@@ -99,16 +99,32 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
     }));
 
-    const resetForm = (type: string) => {
+    const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        console.log("type:", type);
         let newData: any = {};
-
         if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
+          document.getElementById("swName")?.focus();
+          const path = EN160011;
+
+          try {
+            const response: any = await API.get(path, {
+              params: { areaCode: selected.areaCode },
+            });
+            if (response.status === 200) {
+              for (const [key, value] of Object.entries(selected)) {
+                newData[key] = null;
+              }
+              newData.swCode = response.data.tempCode;
+              newData.areaCode = selected.areaCode;
+              reset(newData);
+            } else {
+              toast.error(response.response.data?.message, {
+                autoClose: 500,
+              });
+            }
+          } catch (err: any) {
+            console.log("areaCode select error", err);
           }
-          reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -225,6 +241,30 @@ const Form = React.forwardRef(
       }
     };
 
+    const handleSelectCode = async (event: any) => {
+      let newData: any = {};
+      const path = EN160011;
+      try {
+        const response: any = await API.get(path, {
+          params: { areaCode: event.target.value },
+        });
+        if (response.status === 200) {
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = value;
+          }
+          newData.swCode = response.data.tempCode;
+          newData.areaCode = event.target.value;
+          reset(newData);
+        } else {
+          toast.error(response.response.data?.message, {
+            autoClose: 500,
+          });
+        }
+      } catch (err: any) {
+        console.log("areaCode select error", err);
+      }
+    };
+
     return (
       <form
         className="form_control"
@@ -237,11 +277,12 @@ const Form = React.forwardRef(
             register={register("swCode")}
             errors={errors["swCode"]?.message}
             maxLength="2"
+            readOnly={isAddBtnClicked}
           />
           <Field>
             <FormGroup>
               <Label>영업소</Label>
-              <Select {...register("areaCode")}>
+              <Select {...register("areaCode")} onChange={handleSelectCode}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

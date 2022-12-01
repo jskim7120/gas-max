@@ -72,6 +72,7 @@ const Form = React.forwardRef(
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         resetForm("reset");
       }
+      setIsAddBtnClicked(false);
     }, [selected]);
 
     useEffect(() => {
@@ -93,6 +94,7 @@ const Form = React.forwardRef(
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         let newData: any = {};
         if (type === "clear") {
+          document.getElementById("saupSsno")?.focus();
           const path = EN120011;
           try {
             const response: any = await API.get(path, {
@@ -103,6 +105,7 @@ const Form = React.forwardRef(
                 newData[key] = null;
               }
               newData.saupSno = response.data.tempCode;
+              newData.areaCode = selected.areaCode;
               reset(newData);
             } else {
               toast.error(response.response.data?.message, {
@@ -215,17 +218,20 @@ const Form = React.forwardRef(
       }
     };
 
-    const handleSelectCode = async (areaCode: any) => {
+    const handleSelectCode = async (event: any) => {
+      let newData: any = {};
       const path = EN120011;
-      const formValues = getValues();
-      formValues.areaCode = areaCode;
       try {
         const response: any = await API.get(path, {
-          params: { areaCode: areaCode },
+          params: { areaCode: event.target.value },
         });
         if (response.status === 200) {
-          console.log("works", response);
-          return response;
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = value;
+          }
+          newData.saupSno = response.data.tempCode;
+          newData.areaCode = event.target.value;
+          reset(newData);
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,
@@ -259,11 +265,12 @@ const Form = React.forwardRef(
                 errors={errors["saupSno"]?.message}
                 inputSize={InputSize.sm}
                 maxLength="2"
+                readOnly={isAddBtnClicked}
               />
               <Field>
                 <FormGroup>
                   <Label>영업소</Label>
-                  <Select {...register("areaCode")}>
+                  <Select {...register("areaCode")} onChange={handleSelectCode}>
                     {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
