@@ -88,3 +88,6 @@ export const GR1600UPDATE = "/app/GR1600/update";
 export const GR1600JPUPDATE = "/app/GR1600/JP/update";
 export const GR1600BPUPDATE = "/app/GR1600/BP/update";
 export const GR160065 = "/app/GR1600/65";
+
+export const FOOT61 = "/app/CM1100/foot61";
+export const FOOTER = "/app/CM1100/footer";

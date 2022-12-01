@@ -4,8 +4,8 @@ import { Container, TopSide, TopLeftWrapper, Icons } from "./style";
 import { HeaderBtn, Settings, User } from "components/allSvgIcon";
 import Navbar from "components/menu/navbar";
 import LogoImg from "assets/image/Logo.png";
-import Footer from "./footer";
 import { openModal } from "app/state/modal/modalSlice";
+import Footer from "../contents/footer";
 
 let menuData: Array<any>;
 

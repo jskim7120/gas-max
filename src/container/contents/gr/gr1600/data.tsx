@@ -48,7 +48,7 @@ export const columns = [
     type: "data",
     width: "120",
     header: {
-      text: "구분",
+      text: "코드",
     },
   },
   {
