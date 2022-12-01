@@ -32,8 +32,8 @@ function Grid({
       dangaType.values = values1;
       dangaType.labels = labels1;
 
-      vatKind.values = values1;
-      vatKind.labels = labels1;
+      vatKind.values = values2;
+      vatKind.labels = labels2;
 
       setColumns([...col1, dangaType, ...col2, vatKind, ...col3]);
     }
