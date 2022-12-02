@@ -1,6 +1,8 @@
 export enum ButtonColor {
   PRIMARY = "primary",
   SECONDARY = "secondary",
+  WARNING = "warning",
+  SUCCESS = "success",
 }
 
 export enum ButtonSize {
@@ -70,4 +72,10 @@ export enum BadgeColor {
 export enum BadgeShape {
   circle = "circle",
   rectangle = "rectangle",
+}
+
+export enum BadgeSize {
+  size1 = "size1",
+  size2 = "size2",
+  size3 = "size3",
 }

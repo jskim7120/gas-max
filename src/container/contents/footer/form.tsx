@@ -2,15 +2,29 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "app/store";
 import { useForm } from "react-hook-form";
-import { WhiteClose, UserWhite } from "components/allSvgIcon";
+import {
+  WhiteClose,
+  Plus,
+  UserWhite,
+  Update,
+  Reset,
+  TickInCircle,
+} from "components/allSvgIcon";
 import { Input, Select, Field, FormGroup, Label } from "components/form/style";
 import { FOOT61, FOOTER } from "app/path";
 import API from "app/axios";
 import Grid from "./grid";
-
+import { closeModal } from "app/state/modal/modalSlice";
+import { add } from "app/state/modal/footerSlice";
 import Button from "components/button/button";
-import { ButtonType } from "components/componentsType";
+import {
+  ButtonColor,
+  ButtonType,
+  BadgeColor,
+  BadgeSize,
+} from "components/componentsType";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
+import Badge from "components/badge";
 
 const FooterWrapper = styled.div`
   .top {
@@ -83,21 +97,65 @@ const FooterWrapper = styled.div`
     }
   }
   .bottom {
-    width: 100%;
-
     .bottom__upper {
+      width: 100%;
       height: 32px;
       background: #e8e8e8;
       border-top: 1px solid #707070;
+      padding: 0 5px 0 20px;
     }
 
     .bottom__lower {
       height: 43px;
+      width: 100%;
       background: #cde7eb;
       border-top: 1px solid #707070;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5px 0 20px;
+
+      .buttons {
+        display: flex;
+        align-items: center;
+      }
     }
   }
 `;
+//ustgah----------------------------
+const temp = {
+  areaCode: "02",
+  barcodeYn: "N",
+  cuAddr1n2: " ",
+  cuBigo1: null,
+  cuBigo2: null,
+  cuCmisu: "3,120",
+  cuCode: "001-00002",
+  cuGongdate: null,
+  cuHdate: null,
+  cuHdateT: "",
+  cuHp: null,
+  cuJmisu: "",
+  cuNo: null,
+  cuSaddr1: null,
+  cuSangho: null,
+  cuStae: "0",
+  cuStaeName: "정상",
+  cuSukumtype: " ",
+  cuSukumtypeName: null,
+  cuSwCode: null,
+  cuSwName: null,
+  cuTel: null,
+  cuTel2: null,
+  cuTongkum: "0",
+  cuType: "8",
+  cuTypeName: null,
+  cuUsername: "102호",
+  cuViewName: "하나빌 102호",
+  jTransYn: "N",
+  mTransYn: "N",
+  tTransYn: "N",
+};
 
 interface ISEARCH {
   areaCode: string;
@@ -116,7 +174,9 @@ function Form() {
   >([]);
 
   const [data, setData] = useState();
-  const [selected, setSelected] = useState({});
+  const [selected, setSelected] = useState<any>({});
+
+  console.log("selected=====================>", selected);
 
   const {
     register,
@@ -160,6 +220,10 @@ function Form() {
     }
   };
 
+  useEffect(() => {
+    dispatch(add({ info: selected }));
+  }, [selected]);
+
   const submit = async (data: ISEARCH) => {
     fetchData(data);
   };
@@ -180,7 +244,15 @@ function Form() {
               ))}
             </Select>
           </div>
-          <WhiteClose />
+
+          <span
+            style={{}}
+            onClick={() => {
+              dispatch(closeModal());
+            }}
+          >
+            <WhiteClose />
+          </span>
         </div>
         <div className="search-form">
           <div className="search-form__grid">
@@ -225,8 +297,45 @@ function Form() {
 
       <Grid data={data} setSelected={setSelected} />
       <div className="bottom">
-        <div className="bottom__upper"></div>
-        <div className="bottom__lower"></div>
+        <div className="bottom__upper">
+          <Badge
+            title="사업정보"
+            color={BadgeColor.orange}
+            size={BadgeSize.size3}
+          />
+          <input type="text" value={selected?.cuNo ? selected.cuNo : ""} />
+          <input
+            type="text"
+            value={selected?.cuSangho ? selected.cuSangho : ""}
+          />
+          <input
+            type="text"
+            value={selected?.cuSajang ? selected.cuSajang : ""}
+          />
+          <input
+            type="text"
+            value={selected?.cuSaddr1 ? selected.cuSaddr1 : ""}
+          />
+        </div>
+        <div className="bottom__lower">
+          <Button
+            text="신규거래등록 (F12)"
+            style={{ marginRight: "5px" }}
+            icon={<Plus />}
+            type="button"
+            color={ButtonColor.WARNING}
+          />
+          <div className="buttons">
+            <Button
+              text="선택"
+              style={{ marginRight: "5px" }}
+              icon={<TickInCircle />}
+              type="button"
+              color={ButtonColor.SUCCESS}
+            />
+            <Button text="취소" icon={<Reset />} type="button" />
+          </div>
+        </div>
       </div>
     </FooterWrapper>
   );

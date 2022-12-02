@@ -9,9 +9,9 @@ export const FooterContainer = styled.div`
   width: 100%;
   height: 80px;
   display: flex;
-  //   align-items: center;
+
   background: #c6c0ff;
-  border-top: 5px solid #707070;
+  border-top: 3px solid #707070;
   padding: 10px 20px 8px 12px;
 
   .bussiness_partner_cnt {

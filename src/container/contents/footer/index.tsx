@@ -25,6 +25,7 @@ function Footer() {
         </div>
         <p>거래처명, -전화, +주소, *코드</p>
       </form>
+      <div></div>
     </FooterContainer>
   );
 }

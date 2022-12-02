@@ -10,7 +10,7 @@ export const Container = styled.div`
   height: 27px;
   display: flex;
   flex-direction: row;
-  border-top: 5px solid #707070;
+  border-top: 3px solid #707070;
 
   .totalCnt {
     width: 77px;
