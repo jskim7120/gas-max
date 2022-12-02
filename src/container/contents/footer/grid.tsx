@@ -43,7 +43,7 @@ function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
     };
   }, [data]);
 
-  return <div ref={realgridElement} style={{ height: "500px" }}></div>;
+  return <div ref={realgridElement} style={{ height: "470px" }}></div>;
 }
 
 export default Grid;

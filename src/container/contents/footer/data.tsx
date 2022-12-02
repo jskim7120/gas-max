@@ -1,39 +1,5 @@
 import { ValueType } from "realgrid";
 
-const dff = {
-  areaCode: "01",
-  barcodeYn: "N",
-  cuAddr1n2: "세종시 금남면 감성리 ",
-  cuBigo1: "",
-  cuBigo2: "",
-  cuCmisu: "0",
-  cuCode: "000-00004",
-  cuGongdate: "",
-  cuHdate: "20210624",
-  cuHdateT: "2021-12-24",
-  cuHp: "",
-  cuJmisu: "",
-  cuNo: null,
-  cuSaddr1: null,
-  cuSangho: null,
-  cuStae: "0",
-  cuStaeName: "정상",
-  cuSukumtype: "1",
-  cuSukumtypeName: "지로",
-  cuSwCode: "4",
-  cuSwName: null,
-  cuTel: "866-8384",
-  cuTel2: "010-2385-8385;;;",
-  cuTongkum: "0",
-  cuType: "0",
-  cuTypeName: "중량",
-  cuUsername: "감성 이창길",
-  cuViewName: "감성 이창길",
-  jTransYn: "N",
-  mTransYn: "N",
-  tTransYn: "N",
-};
-
 export const fields = [
   {
     fieldName: "areaCode",

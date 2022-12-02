@@ -52,6 +52,7 @@ const FooterWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #707070;
 
     .form-group {
       display: flex;
@@ -79,6 +80,21 @@ const FooterWrapper = styled.div`
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px 15px;
+    }
+  }
+  .bottom {
+    width: 100%;
+
+    .bottom__upper {
+      height: 32px;
+      background: #e8e8e8;
+      border-top: 1px solid #707070;
+    }
+
+    .bottom__lower {
+      height: 43px;
+      background: #cde7eb;
+      border-top: 1px solid #707070;
     }
   }
 `;
@@ -208,6 +224,10 @@ function Form() {
       </form>
 
       <Grid data={data} setSelected={setSelected} />
+      <div className="bottom">
+        <div className="bottom__upper"></div>
+        <div className="bottom__lower"></div>
+      </div>
     </FooterWrapper>
   );
 }

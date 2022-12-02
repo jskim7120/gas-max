@@ -53,3 +53,21 @@ export enum FieldKind {
   BORDER = "border",
   RECTANGLE = "rectangle",
 }
+
+export enum BadgeColor {
+  orange = "orange",
+  brownDark = "brownDark",
+  brownLight = "brownLight",
+  purpleLight = "purpleLight",
+  purpleMedium = "purpleMedium",
+  purpleDark = "purpleDark",
+  goldenBrown = "goldenBrown",
+  greenLight = "greenLight",
+  greenMedium = "greenMedium",
+  greenDark = "greenDark",
+}
+
+export enum BadgeShape {
+  circle = "circle",
+  rectangle = "rectangle",
+}
