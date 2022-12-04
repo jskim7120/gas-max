@@ -176,8 +176,6 @@ function Form() {
   const [data, setData] = useState();
   const [selected, setSelected] = useState<any>({});
 
-  console.log("selected=====================>", selected);
-
   const {
     register,
     handleSubmit,
@@ -211,8 +209,6 @@ function Form() {
       const { data: SEARCHDATA } = await API.get(FOOTER, {
         params: params,
       });
-
-      console.log("data==============>", data);
 
       setData(SEARCHDATA);
     } catch (error) {
