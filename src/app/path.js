@@ -40,6 +40,7 @@ export const EN1700INSERT = "/app/EN1700/insert";
 export const EN1700UPDATE = "/app/EN1700/update";
 export const EN1700DELETE = "/app/EN1700/delete";
 export const EN170011 = "/app/EN1700/11";
+export const EN170065 = "/app/EN1700/65";
 
 export const EN1800LIST = "/app/EN1800/list";
 export const EN1800INSERT = "/app/EN1800/insert";

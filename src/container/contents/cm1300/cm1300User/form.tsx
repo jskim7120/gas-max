@@ -159,7 +159,6 @@ const Form = React.forwardRef(
         style={{
           padding: "15px 50px 22px",
           height: "auto",
-          borderTop: "1px solid #707070",
         }}
       >
         <Wrapper grid col={1} style={{ gap: "3px" }}>
