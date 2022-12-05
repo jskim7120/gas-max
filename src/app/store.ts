@@ -6,6 +6,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import menuReducer from "app/state/menu/menuSlice";
 import tabReducer from "app/state/tab/tabSlice";
 import modalReducer from "app/state/modal/modalSlice";
+import footerReducer from "app/state/modal/footerSlice";
 import sidebarReducer from "app/state/sidebar/sidebarSlice";
 import authReducer from "app/state/auth/authSlice";
 import { commonGubunApi } from "app/api/commonGubun";
@@ -17,6 +18,7 @@ export const store = configureStore({
     menu: menuReducer,
     tab: tabReducer,
     modal: modalReducer,
+    footer: footerReducer,
     sidebar: sidebarReducer,
     auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,

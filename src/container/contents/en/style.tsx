@@ -7,7 +7,7 @@ export const DetailHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 6px 0 15px;
-  border-bottom: 5px solid #707070;
+  border-bottom: 3px solid #707070;
   margin-top: 4px;
 
   .m_left {
@@ -76,16 +76,20 @@ export const ImageWrapper = styled.div`
   }
 `;
 
+{
+  /*
 export const SearchTopWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-right: 20px;
-  border-left: 5px solid #707070;
-  border-bottom: 5px solid #707070;
+  border-left: 3px solid #707070;
+  border-bottom: 3px solid #707070;
   padding-bottom: 10px;
 `;
+*/
+}
 
 export const FormSeaction = styled.div<{ topBorder: boolean }>`
   border-top: ${(props) => (props.topBorder ? "4px solid #707070;" : "none")};

@@ -173,6 +173,7 @@ function Form({
           <div
             style={{
               display: "flex",
+              justifyContent: "space-between",
               justifySelf: "flex-end",
               margin: "0 5px",
               alignItems: "center",
@@ -202,6 +203,7 @@ function Form({
                 marginLeft: "20px",
                 fontFamily: "NotoSansKRRegular",
                 fontSize: "12px",
+                paddingRight: "10px",
               }}
             >
               {selected?.buCode}
