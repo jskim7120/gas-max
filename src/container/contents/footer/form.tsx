@@ -6,11 +6,10 @@ import {
   WhiteClose,
   Plus,
   UserWhite,
-  Update,
   Reset,
   TickInCircle,
 } from "components/allSvgIcon";
-import { Input, Select, Field, FormGroup, Label } from "components/form/style";
+import { Select } from "components/form/style";
 import { FOOT61, FOOTER } from "app/path";
 import API from "app/axios";
 import Grid from "./grid";
@@ -98,11 +97,33 @@ const FooterWrapper = styled.div`
   }
   .bottom {
     .bottom__upper {
+      display: flex;
+      align-items: center;
+
       width: 100%;
       height: 32px;
       background: #e8e8e8;
       border-top: 1px solid #707070;
-      padding: 0 5px 0 20px;
+      padding: 0 5px 0 10px;
+
+      span.info {
+        height: 21px;
+        width: 208px;
+        margin-left: 5px;
+        border: 1px solid #707070;
+        border-radius: 4px;
+        background: #fff;
+        padding: 0 5px;
+        display: flex;
+        overflow: hidden;
+
+        p {
+          font-size: 12px;
+          &:first-child {
+            margin-right: 10px;
+          }
+        }
+      }
     }
 
     .bottom__lower {
@@ -122,40 +143,6 @@ const FooterWrapper = styled.div`
     }
   }
 `;
-//ustgah----------------------------
-const temp = {
-  areaCode: "02",
-  barcodeYn: "N",
-  cuAddr1n2: " ",
-  cuBigo1: null,
-  cuBigo2: null,
-  cuCmisu: "3,120",
-  cuCode: "001-00002",
-  cuGongdate: null,
-  cuHdate: null,
-  cuHdateT: "",
-  cuHp: null,
-  cuJmisu: "",
-  cuNo: null,
-  cuSaddr1: null,
-  cuSangho: null,
-  cuStae: "0",
-  cuStaeName: "정상",
-  cuSukumtype: " ",
-  cuSukumtypeName: null,
-  cuSwCode: null,
-  cuSwName: null,
-  cuTel: null,
-  cuTel2: null,
-  cuTongkum: "0",
-  cuType: "8",
-  cuTypeName: null,
-  cuUsername: "102호",
-  cuViewName: "하나빌 102호",
-  jTransYn: "N",
-  mTransYn: "N",
-  tTransYn: "N",
-};
 
 interface ISEARCH {
   areaCode: string;
@@ -176,12 +163,7 @@ function Form() {
   const [data, setData] = useState();
   const [selected, setSelected] = useState<any>({});
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -299,19 +281,23 @@ function Form() {
             color={BadgeColor.orange}
             size={BadgeSize.size3}
           />
-          <input type="text" value={selected?.cuNo ? selected.cuNo : ""} />
-          <input
-            type="text"
-            value={selected?.cuSangho ? selected.cuSangho : ""}
-          />
-          <input
-            type="text"
-            value={selected?.cuSajang ? selected.cuSajang : ""}
-          />
-          <input
-            type="text"
-            value={selected?.cuSaddr1 ? selected.cuSaddr1 : ""}
-          />
+
+          <span className="info">
+            <p>사업번호:</p>
+            <p>{selected.cuNo}</p>
+          </span>
+          <span className="info">
+            <p>상호:</p>
+            <p>{selected.cuSangho}</p>
+          </span>
+          <span className="info">
+            <p>대표:</p>
+            <p>{selected.cuSajang}</p>
+          </span>
+          <span className="info">
+            <p>주소:</p>
+            <p>{selected.cuSaddr1}</p>
+          </span>
         </div>
         <div className="bottom__lower">
           <Button
