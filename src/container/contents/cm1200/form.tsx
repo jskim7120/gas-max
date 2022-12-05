@@ -817,6 +817,13 @@ const Form = React.forwardRef(
               </Label>
               <Input
                 register={register("cuGumdate")}
+                codeFormatNumber={{
+                  status: true,
+                  clear: clearNumberic,
+                  selectedRowIndex: selectedRowIndex,
+                  numbericDefValue: selected?.cuGumdate,
+                }}
+                maxLength="2"
                 inputSize={InputSize.i120}
               />
               <p>일</p>

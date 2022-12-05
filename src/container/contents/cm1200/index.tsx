@@ -194,6 +194,18 @@ function CM1200({
     e && setSelectAreaCode(e);
   };
 
+  const handleOpenPopup = async (index: number, cuCode: any, areaCode: any) => {
+    try {
+      dispatch(
+        addCM1105({
+          cuCode: cuCode,
+          areaCode: areaCode,
+        })
+      );
+      dispatch(openModal({ type: "cm1105Modal" }));
+    } catch (err: any) {}
+  };
+
   return (
     <>
       <DetailHeader>
@@ -267,7 +279,7 @@ function CM1200({
                   <CheckBox title="건물명" rtl={false} />
                 </Label>
                 <Input
-                  register={register("S_CU_NAME", {
+                  register={register("sCuName", {
                     required: true,
                   })}
                   kind={FieldKind.BORDER}
@@ -322,8 +334,10 @@ function CM1200({
                   onClick={() => {
                     dispatch(
                       addCM1105({
-                        cuCode: selected?.cuCode,
-                        areaCode: selectAreaCode,
+                        cuCode: selected?.cuCode ? selected?.cuCode : "",
+                        areaCode: selectAreaCode ? selectAreaCode : "",
+                        status: "INSERT",
+                        cuCount: selected?.cuCount ?? 0,
                       })
                     );
                     dispatch(openModal({ type: "cm1105Modal" }));
@@ -341,7 +355,10 @@ function CM1200({
                 />
               </div>
             </FormSectionTitle>
-            <GridTable selected={selectedUserInfo} />
+            <GridTable
+              selected={selectedUserInfo}
+              openPopup={handleOpenPopup}
+            />
           </FormSeaction>
         </DetailWrapper>
       </Wrapper>
