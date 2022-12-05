@@ -22,6 +22,7 @@ import {
   TableContainer,
   UpdateButtonsContainer2,
 } from "./style";
+import { Divider } from "components/form/style";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -179,6 +180,7 @@ function FormCM1300User({
       <Grid2TableContainer>
         <FormContainer>
           <TableContainer ref={realgridElement}></TableContainer>
+          <Divider />
           <Form
             selected={selected}
             ref={formRef}
