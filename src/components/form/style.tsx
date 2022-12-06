@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { InputSize, FieldKind } from "components/componentsType";
 
@@ -94,6 +94,14 @@ interface IInputProps {
   formatNumber?: string;
   labelStyle?: any;
   onChange?: Function;
+  //numberic
+  codeFormatNumber?: {
+    status: boolean;
+    selectedRowIndex?: number;
+    numbericDefValue: any;
+    clear?: boolean;
+    reset?: boolean;
+  };
   readOnly?: boolean;
 }
 
@@ -117,9 +125,33 @@ export const Input = ({
   formatNumber,
   labelStyle,
   onChange,
+  codeFormatNumber,
   readOnly,
 }: IInputProps) => {
   const [inputValue, setInputValue] = useState("");
+  const [formatNumberic, setFormatNumberic] = useState({
+    value: "" as any,
+    status: false,
+  });
+
+  useEffect(() => {
+    if (codeFormatNumber?.clear) {
+      setFormatNumberic({
+        value: "",
+        status: false,
+      });
+    } else if (codeFormatNumber?.numbericDefValue === 0) {
+      setFormatNumberic({
+        value: 0,
+        status: false,
+      });
+    } else {
+      setFormatNumberic({
+        value: codeFormatNumber?.numbericDefValue,
+        status: false,
+      });
+    }
+  }, [codeFormatNumber]);
 
   // format input value
   const handleInput = (e: any, forNum?: string) => {
@@ -187,6 +219,12 @@ export const Input = ({
     )}-${phoneNumber.slice(5, 10)}`;
   }
 
+  const formatCodeNumber = (e: any) => {
+    return setFormatNumberic({
+      value: e.replace(/[a-zA-Z]/, ""),
+      status: true,
+    });
+  };
   function corporateNumber(value: any) {
     if (!value) return value;
     const corpNumber = value.replace(/[^\d]/g, "");
@@ -234,6 +272,23 @@ export const Input = ({
             textAlign={textAlign && textAlign}
             onChange={formatNumber ? (e) => handleInput(e, formatNumber) : null}
             readOnly={readOnly}
+          />
+        ) : codeFormatNumber?.status ? (
+          <InputForm
+            id={register.name}
+            inputMode="numberic"
+            type={type ? type : "text"}
+            inputSize={inputSize && inputSize}
+            fullWidth={fullWidth && fullWidth}
+            {...register}
+            value={formatNumberic?.value ? formatNumberic?.value : ""}
+            placeholder={placeholder}
+            style={style}
+            className={className}
+            maxLength={maxLength && maxLength}
+            minLength={minLength && minLength}
+            textAlign={textAlign && textAlign}
+            onChange={(e) => formatCodeNumber(e.target.value)}
           />
         ) : (
           <InputForm

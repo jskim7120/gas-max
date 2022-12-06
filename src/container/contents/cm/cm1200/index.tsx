@@ -42,11 +42,13 @@ import {
   addDeleteMenuId,
   setIsDelete,
   closeModal,
+  addCM1105,
 } from "app/state/modal/modalSlice";
 import { useDispatch, useSelector } from "app/store";
 import { CM120065, CM1200SEARCH } from "app/path";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
+import { SearchWrapper } from "../cm1100/cm100Style";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -89,7 +91,7 @@ function CM1200({
     dp.setFields(fields);
     gv.setColumns(columns);
     dp.setRows(data);
-    gv.setHeader({ header: 35 });
+    gv.setHeader({ height: 35, heightFill: "fixed" });
     gv.setFooter({ visible: false });
     gv.setOptions({
       indicator: { visible: true },
@@ -136,6 +138,12 @@ function CM1200({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDelete.isDelete]);
+
+  useEffect(() => {
+    if (selected && selected?.areaCode) {
+      setSelectAreaCode(selected?.areaCode);
+    }
+  }, [selected]);
 
   const onSearchSubmit = async (data: any) => {
     fetchData(data);
@@ -187,16 +195,29 @@ function CM1200({
     e && setSelectAreaCode(e);
   };
 
+  const handleOpenPopup = async (index: number, cuCode: any, areaCode: any) => {
+    try {
+      dispatch(
+        addCM1105({
+          cuCode: cuCode,
+          areaCode: areaCode,
+        })
+      );
+      dispatch(openModal({ type: "cm1105Modal" }));
+    } catch (err: any) {}
+  };
+
   return (
     <>
       <DetailHeader>
         <div className="title-and-areacode">
           <p>{depthFullName}</p>
-          <Field flex style={{ margin: "0px 10px" }}>
+          <Field flex style={{ margin: "0px 20px" }}>
             <p>영업소 </p>
             <Select
               onChange={(e) => onChangeAreaCode(e.target.value)}
               width={InputSize.i120}
+              value={selectAreaCode ? selectAreaCode : ""}
               style={{ marginLeft: "5px" }}
             >
               {dataCommonDic?.areaCode?.map((option: any, index: number) => {
@@ -249,38 +270,34 @@ function CM1200({
       </DetailHeader>
       <Wrapper>
         <TableWrapper width="30%">
-          <form
-            onSubmit={handleSubmit(onSearchSubmit)}
-            style={{ padding: "5px 0px" }}
-          >
-            <Field>
-              <FormGroup>
-                <Label className="lable-check">
-                  <CheckBox title="건물명" rtl={false} />
-                </Label>
-                <Input
-                  register={register("searchInput", {
-                    required: true,
-                  })}
-                  kind={FieldKind.BORDER}
-                />
-                <Button
-                  text="검색"
-                  icon={<MagnifyingGlassBig />}
-                  kind={ButtonType.ROUND}
-                  type="submit"
-                />
-                {/* <Button
-                  text="검색"
-                  type="submit"
-                  icon={<MagnifyingGlass />}
-                  style={{ marginRight: "5px", background: "red" }}
-                /> */}
-              </FormGroup>
-            </Field>
-          </form>
+          <SearchWrapper style={{ borderBottom: "2px solid #707070" }}>
+            <form
+              onSubmit={handleSubmit(onSearchSubmit)}
+              style={{ padding: "5px 0px" }}
+            >
+              <Field>
+                <FormGroup>
+                  <Label className="lable-check">
+                    <CheckBox title="건물명" rtl={false} />
+                  </Label>
+                  <Input
+                    register={register("sCuName", {
+                      required: true,
+                    })}
+                    kind={FieldKind.BORDER}
+                  />
+                  <Button
+                    text="검색"
+                    icon={<MagnifyingGlassBig />}
+                    kind={ButtonType.ROUND}
+                    type="submit"
+                  />
+                </FormGroup>
+              </Field>
+            </form>
+          </SearchWrapper>
           <div
-            style={{ width: "100%", height: "95%" }}
+            style={{ width: "100%", height: "93%" }}
             ref={realgridElement}
           ></div>
         </TableWrapper>
@@ -295,6 +312,7 @@ function CM1200({
             <Form
               ref={formRef}
               selectAreaCode={selectAreaCode}
+              setSelectAreaCode={setSelectAreaCode}
               selected={selected}
               dataCommonDic={dataCommonDic}
               selectedSupplyTab={selectedSupplyTab}
@@ -316,6 +334,17 @@ function CM1200({
                   text="사용자 추가"
                   icon={<Plus />}
                   style={{ marginRight: "5px" }}
+                  onClick={() => {
+                    dispatch(
+                      addCM1105({
+                        cuCode: selected?.cuCode ? selected?.cuCode : "",
+                        areaCode: selectAreaCode ? selectAreaCode : "",
+                        status: "INSERT",
+                        cuCount: selected?.cuCount ?? 0,
+                      })
+                    );
+                    dispatch(openModal({ type: "cm1105Modal" }));
+                  }}
                 />
                 <Button
                   text="사용자 수정"
@@ -329,7 +358,10 @@ function CM1200({
                 />
               </div>
             </FormSectionTitle>
-            <GridTable selected={selectedUserInfo} />
+            <GridTable
+              selected={selectedUserInfo}
+              openPopup={handleOpenPopup}
+            />
           </FormSeaction>
         </DetailWrapper>
       </Wrapper>

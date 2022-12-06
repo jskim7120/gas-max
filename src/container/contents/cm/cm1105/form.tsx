@@ -85,10 +85,14 @@ function FormCM1105() {
   });
 
   useEffect(() => {
-    if (cm1105.areaCode && cm1105.cuCode) {
+    if (cm1105.status === "INSERT") {
+      setIsAddBtnClicked(true);
+      var renderCuCode = cm1105?.cuCode + "-" + "000" + (cm1105?.cuCount + 1);
+      reset({ cuCode: renderCuCode, areaCode: cm1105?.areaCode ?? "" });
+    } else if (cm1105.areaCode && cm1105.cuCode) {
       fetchData();
     }
-  }, [cm1105.areaCode, cm1105.cuCode]);
+  }, [cm1105.areaCode, cm1105.cuCode, cm1105.status]);
 
   useEffect(() => {
     if (data) {
@@ -658,7 +662,9 @@ function FormCM1105() {
           <TabContentWrapper>
             {getTabContent(
               tabId,
-              data?.customerInfo[0],
+              data && data?.customerInfo && data?.customerInfo[0]
+                ? data?.customerInfo[0]
+                : { cuRdanga: 0 },
               register,
               errors,
               dataCommonDic,
