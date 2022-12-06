@@ -415,7 +415,11 @@ const Form = React.forwardRef(
       } else if (selectedRdangaSign === "-") {
         totalValue = selectedcuRdanga - selectedRdangaAmt;
       } else if (selectedRdangaSign === "X") {
+        if(selectedcuRdanga === 0 || selectedRdangaAmt === 0 ){
+          totalValue = 0;
+        }else{
         totalValue = selectedcuRdanga * selectedRdangaAmt;
+        }
       } else {
         totalValue = 0;
       }
@@ -690,6 +694,7 @@ const Form = React.forwardRef(
                 inputSize={InputSize.i120}
               />
               <p>{selected?.cuSukumType}</p>
+              <p>원</p>
             </FormGroup>
           </Field>
           <Field>
