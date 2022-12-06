@@ -416,10 +416,10 @@ const Form = React.forwardRef(
       } else if (selectedRdangaSign === "-") {
         totalValue = selectedcuRdanga - selectedRdangaAmt;
       } else if (selectedRdangaSign === "X") {
-        if(selectedcuRdanga === 0 || selectedRdangaAmt === 0 ){
+        if (selectedcuRdanga === 0 || selectedRdangaAmt === 0) {
           totalValue = 0;
-        }else{
-        totalValue = selectedcuRdanga * selectedRdangaAmt;
+        } else {
+          totalValue = selectedcuRdanga * selectedRdangaAmt;
         }
       } else {
         totalValue = 0;
@@ -1069,6 +1069,73 @@ const Form = React.forwardRef(
                 setValue={setTankInsideDate2}
                 name="tankInsideDate2"
               />
+            </Field>
+          </Wrapper>
+        </Field>
+        {/* 3-2-4 Wrapper */}
+        <Field flex>
+          <FormGroup>
+            <Label></Label>
+          </FormGroup>
+          <Wrapper grid col={3}>
+            <Field>
+              <FormGroup>
+                <Label>Max레벨 / 발신기코드 / 탱크고객코드</Label>
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <p>{`1)`}</p>
+                <Input
+                  register={register("tankMax1")}
+                  placeholder=""
+                  inputSize={InputSize.sm}
+                />
+                <p>%</p>
+                <Input
+                  register={register("tankTransmCd1")}
+                  placeholder=""
+                  inputSize={InputSize.sm}
+                />
+                <Input
+                  register={register("tankCuCd1")}
+                  placeholder=""
+                  inputSize={InputSize.sm}
+                />
+                <SearchBtn
+                  type="button"
+                  onClick={() => console.log("cuZipCode")}
+                >
+                  <MagnifyingGlass />
+                </SearchBtn>
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <p>{`2)`}</p>
+                <Input
+                  register={register("tankMax1")}
+                  placeholder=""
+                  inputSize={InputSize.sm}
+                />
+                <p>%</p>
+                <Input
+                  register={register("tankTransmCd2")}
+                  placeholder=""
+                  inputSize={InputSize.sm}
+                />
+                <Input
+                  register={register("tankCuCd2")}
+                  placeholder=""
+                  inputSize={InputSize.sm}
+                />
+                <SearchBtn
+                  type="button"
+                  onClick={() => console.log("cuZipCode")}
+                >
+                  <MagnifyingGlass />
+                </SearchBtn>
+              </FormGroup>
             </Field>
           </Wrapper>
         </Field>
