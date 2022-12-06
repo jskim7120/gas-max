@@ -6,35 +6,57 @@ import {
   FormGroup,
   Label,
   Select,
+  ErrorText,
+  Field,
 } from "components/form/style";
 import { useForm } from "react-hook-form";
+import DaumAddress from "components/daum";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
+import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
+import Button from "components/button/button";
+import InfoPerson from "assets/image/infoPerson.png";
+import { ButtonColor, ButtonType } from "components/componentsType";
+import { InfoText } from "components/text";
 // import getTabContent from "./getTabContent";
 import API from "app/axios";
 import { toast } from "react-toastify";
 import { GR110065, GR1100UPDATE } from "app/path";
+import {
+  Item,
+  RadioButton,
+  RadioButtonLabel,
+} from "components/radioButton/style";
 import { IGR1100SEARCH } from "../model";
+import Tab1 from "./table";
+
+const radioOptions = [
+  {
+    label: "충전소",
+    id: "0",
+  },
+  {
+    label: "기구상",
+    id: "1",
+  },
+  {
+    label: "기타",
+    id: "2",
+  },
+];
 
 function Form({
   selected,
-  values1,
-  values2,
-  labels1,
-  labels2,
   fetchLeftData,
   dataCommonDic,
 }: {
   selected: any;
-  values1: any;
-  values2: any;
-  labels1: any;
-  labels2: any;
   fetchLeftData: any;
   dataCommonDic: any;
 }) {
   const [tabId, setTabId] = useState(0);
   const [tabData, setTabData] = useState(null);
+  const [addr, setAddress] = useState<string>("");
 
   const {
     register,
@@ -60,8 +82,17 @@ function Form({
 
   useEffect(() => {
     fetchData();
-    clearForm();
+    clearForm("clear");
   }, [selected]);
+
+  useEffect(() => {
+    if (addr.length > 0) {
+      reset({
+        buZipcode: addr ? addr?.split("/")[1] : "",
+        buAddr1: addr ? addr?.split("/")[0] : "",
+      });
+    }
+  }, [addr]);
 
   const update = async () => {
     if (selected !== undefined && JSON.stringify(selected) !== "{}") {
@@ -104,31 +135,104 @@ function Form({
     }
   };
 
-  const clearForm = () => {
+  const clearForm = (type: string) => {
     if (selected !== undefined && JSON.stringify(selected) !== "{}") {
       let newData: any = {};
+      if (type === "clear") {
+        for (const [key, value] of Object.entries(selected)) {
+          newData[key] = null;
+        }
+        reset(newData);
+      } else if (type === "reset") {
+        for (const [key, value] of Object.entries(selected)) {
+          newData[key] = value;
+        }
 
-      for (const [key, value] of Object.entries(selected)) {
-        newData[key] = value;
+        reset({
+          ...newData,
+        });
       }
-      reset(newData);
     }
   };
-
   return (
     <div style={{ padding: "0px 10px" }}>
       <form>
+        <div className="buttons">
+          <Button
+            text="등록"
+            icon={<Plus />}
+            style={{ marginRight: "5px" }}
+            onClick={() => {
+              // formRef.current.setIsAddBtnClicked(true);
+              // formRef.current.resetForm("clear");
+            }}
+          />
+          <Button
+            text="삭제"
+            icon={<Trash />}
+            style={{ marginRight: "5px" }}
+            onClick={() => {
+              // dispatch(openModal({ type: "delModal" }));
+              // dispatch(addDeleteMenuId({ menuId: menuId }));
+            }}
+          />
+          <Button
+            text="저장"
+            icon={<Update />}
+            style={{ marginRight: "5px" }}
+            color={ButtonColor.SECONDARY}
+            onClick={() => {
+              // formRef.current.crud(null);
+            }}
+          />
+          <Button
+            text="취소"
+            icon={<Reset />}
+            // onClick={() => {
+            //   formRef.current.setIsAddBtnClicked(false);
+            //   formRef.current.resetForm("reset");
+            // }}
+            onClick={() => {
+              clearForm("reset");
+            }}
+          />
+        </div>
+        <Field flex style={{ marginBottom: "6px", marginTop: "7px" }}>
+          <img src={InfoPerson} alt="info" />
+          <p style={{ fontSize: "14px", marginLeft: "7px" }}>매입처 정보</p>
+        </Field>
+        <Divider />
         <Wrapper grid>
           <Input
             label="매입처코드"
             register={register("buCode")}
             errors={errors["buCode"]?.message}
           />
-          <Input
-            label="매입처 구분"
-            register={register("buGubun")}
-            errors={errors["buGubun"]?.message}
-          />
+          <FormGroup style={{ alignItems: "center" }}>
+            <Label style={{ marginRight: "16px" }}>매입처 구분</Label>
+            {radioOptions.map((option, index) => (
+              <Item
+                key={index}
+                style={{ paddingLeft: "11px", marginRight: "16px" }}
+              >
+                <RadioButton
+                  type="radio"
+                  value={option.id}
+                  {...register(`buGubun`, {
+                    required: "required",
+                  })}
+                  id={option.id}
+                  // onChange={() => console.log(option.label)}
+                />
+                <RadioButtonLabel htmlFor={`${option.label}`}>
+                  {option.label}
+                </RadioButtonLabel>
+              </Item>
+            ))}
+          </FormGroup>
+          <div>
+            <ErrorText>{errors["buGubun"]?.message}</ErrorText>
+          </div>
         </Wrapper>
 
         <Wrapper grid>
@@ -169,6 +273,7 @@ function Form({
             errors={errors["buBigo"]?.message}
           />
         </Wrapper>
+        <Divider />
         <Wrapper grid>
           <Input
             label="사업자번호"
@@ -194,29 +299,90 @@ function Form({
           />
         </Wrapper>
         <Divider />
-      </form>
-
-      {/* <div style={{ marginTop: "15px" }}>
-        <PlainTab
-          tabHeader={["LPG  매입단가", "품목별 매입단가", "부품 매입단가"]}
-          onClick={(id) => setTabId(id)}
+        <Wrapper style={{ alignItems: "center" }}>
+          <Input
+            label="주소"
+            register={register("buZipcode")}
+            errors={errors["buZipcode"]?.message}
+          />
+          <DaumAddress setAddress={setAddress} />
+          <Input
+            register={register("buAddr1")}
+            errors={errors["buAddr1"]?.message}
+          />
+          <Input
+            register={register("buAddr2")}
+            errors={errors["buAddr2"]?.message}
+          />
+        </Wrapper>
+        <Wrapper grid>
+          <Input
+            label="업태"
+            register={register("buUptae")}
+            errors={errors["buUptae"]?.message}
+          />
+          <Input
+            label="종목"
+            register={register("buJongmok")}
+            errors={errors["buJongmok"]?.message}
+          />
+        </Wrapper>
+        <Wrapper grid>
+          <Input
+            label="담당자명"
+            register={register("buDamdang")}
+            errors={errors["buDamdang"]?.message}
+          />
+          <Input
+            label="담당자 번호"
+            register={register("buHp")}
+            errors={errors["buHp"]?.message}
+          />
+        </Wrapper>
+        <Wrapper grid>
+          <Input
+            label="이메일"
+            register={register("buEmail")}
+            errors={errors["buEmail"]?.message}
+          />
+          <Input
+            register={register("mailKind")}
+            errors={errors["mailKind"]?.message}
+          />
+        </Wrapper>
+        <Divider />
+        <Wrapper grid>
+          <Input
+            label="결재은행"
+            register={register("buBank")}
+            errors={errors["buBank"]?.message}
+          />
+          <Input
+            label="계좌번호"
+            register={register("buBankno")}
+            errors={errors["buBankno"]?.message}
+          />
+        </Wrapper>
+        <Wrapper grid>
+          <Input
+            label="예금주"
+            register={register("buBankju")}
+            errors={errors["buBankju"]?.message}
+          />
+          <Input
+            label="미지급액"
+            register={register("buMisu")}
+            errors={errors["buMisu"]?.message}
+          />
+        </Wrapper>
+        <Divider />
+        <Tab1
+          register={register}
+          errors={errors}
+          tabData={tabData}
+          selected={selected}
         />
-        <TabContentWrapper>
-          {getTabContent(
-            tabId,
-            register,
-            errors,
-            tabData,
-            selected,
-            values1,
-            values2,
-            labels1,
-            labels2,
-            update,
-            clearForm
-          )}
-        </TabContentWrapper>
-      </div> */}
+      </form>
     </div>
   );
 }

@@ -13,15 +13,11 @@ import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import RightHalf from "./right";
 import Grid from "./grid";
 
-let values1: any;
-let labels1: any;
-let values2: any;
-let labels2: any;
-
 interface ISEARCH {
   areaCode: string;
   sBuGubun: string;
   sBuName: string;
+  sBuStae: string;
 }
 
 function GR1100({
@@ -54,23 +50,7 @@ function GR1100({
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
         sBuGubun: dataCommonDic?.sBuGubun[0].code,
-      });
-
-      values1 = [];
-      labels1 = [];
-      values2 = [];
-      labels2 = [];
-
-      // check
-      dataCommonDic?.jpDangaType?.map((item: any) => {
-        values1.push(item.code);
-        labels1.push(item.codeName);
-      });
-
-      // check
-      dataCommonDic?.jpVatKind?.map((item: any) => {
-        values2.push(item.code);
-        labels2.push(item.codeName);
+        sBuStae: dataCommonDic?.sBuStae[0].code,
       });
     }
   }, [dataCommonDic]);
@@ -93,7 +73,7 @@ function GR1100({
 
   return (
     <>
-      <DetailHeader>
+      <DetailHeader style={{ justifyContent: "space-between" }}>
         <Field flex>
           <p>{depthFullName}</p>
           <p className="big">영업소</p>
@@ -160,8 +140,8 @@ function GR1100({
                     >
                       거래상태
                     </Label>
-                    <Select {...register("sBuGubun")}>
-                      {dataCommonDic?.buStae?.map((obj: any, idx: number) => (
+                    <Select {...register("sBuStae")}>
+                      {dataCommonDic?.sBuStae?.map((obj: any, idx: number) => (
                         <option key={idx} value={obj.code}>
                           {obj.codeName}
                         </option>
@@ -196,10 +176,6 @@ function GR1100({
         <RightSection>
           <RightHalf
             selected={selected}
-            values1={values1}
-            values2={values2}
-            labels1={labels1}
-            labels2={labels2}
             fetchLeftData={handleSubmit(submit)}
             dataCommonDic={dataCommonDic}
           />

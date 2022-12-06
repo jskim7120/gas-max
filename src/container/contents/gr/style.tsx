@@ -19,6 +19,9 @@ export const DetailHeader = styled.div`
       margin: 0 10px 0 15px;
     }
   }
+  .buttons {
+    display: flex;
+  }
 `;
 
 export const MainWrapper = styled.div`
