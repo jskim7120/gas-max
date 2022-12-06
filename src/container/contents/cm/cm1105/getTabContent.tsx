@@ -35,6 +35,7 @@ function getTabContent(
   setTankOutsideDate2: any,
   setTankInsideDate2: any,
   setGasifyCheckDate1: any,
+  setGasifyCheckDate2: any,
   cuFinishDate: string,
   cuCircuitDate: string,
   cuScheduleDate: string,
@@ -45,6 +46,7 @@ function getTabContent(
   tankOutsideDate2: string,
   tankInsideDate2: string,
   gasifyCheckDate1: string,
+  gasifyCheckDate2: string,
 
   cuHdate: string,
   setCuHdate: any,
@@ -59,13 +61,13 @@ function getTabContent(
   cuPdate: string,
   setCuPdate: any
 ) {
+  console.log("dsdsdssdvdsfvfffvf:", dataCommonDic);
   switch (id) {
     case 0: {
       return (
         <Tab1
           dataCommonDic={dataCommonDic}
           register={register}
-          errors={errors}
           setAddress={setAddress}
         />
       );
@@ -76,12 +78,10 @@ function getTabContent(
           customerInfo={customerInfo}
           dataCommonDic={dataCommonDic}
           register={register}
-          errors={errors}
           too={too}
           setToo={setToo}
           sign={sign}
           setSign={setSign}
-          reset={reset}
           //setCuRdangaType={setCuRdangaType}
           setCuMeterTurm={setCuMeterTurm}
           setCuMeterDt={setCuMeterDt}
@@ -97,8 +97,6 @@ function getTabContent(
         <Tab3
           dataCommonDic={dataCommonDic}
           register={register}
-          errors={errors}
-          reset={reset}
           setCuFinishDate={setCuFinishDate}
           setCuCircuitDate={setCuCircuitDate}
           setCuScheduleDate={setCuScheduleDate}
@@ -119,6 +117,8 @@ function getTabContent(
           tankOutsideDate2={tankOutsideDate2}
           tankInsideDate2={tankInsideDate2}
           gasifyCheckDate1={gasifyCheckDate1}
+          gasifyCheckDate2={gasifyCheckDate2}
+          setGasifyCheckDate2={setGasifyCheckDate2}
         />
       );
     case 3:
@@ -126,8 +126,6 @@ function getTabContent(
         <Tab4
           dataCommonDic={dataCommonDic}
           register={register}
-          errors={errors}
-          reset={reset}
           cuHdate={cuHdate}
           setCuHdate={setCuHdate}
           cuGongdate={cuGongdate}
@@ -143,9 +141,9 @@ function getTabContent(
         />
       );
     case 4:
-      return <Tab5 register={register} errors={errors} />;
+      return <Tab5 register={register} />;
     case 5:
-      return <Tab6 register={register} errors={errors} reset={reset} />;
+      return <Tab6 register={register} />;
   }
   return null;
 }

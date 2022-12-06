@@ -209,7 +209,7 @@ const FORMCM1106 = React.forwardRef(
             register={register("jcJdcAmt")}
             kind={FieldKind.BORDER}
             textAlign="right"
-            formatNumber="comNumber"
+            formatNumber="comDecNumber"
           />
           <p>원</p>
         </Field>
@@ -228,7 +228,7 @@ const FORMCM1106 = React.forwardRef(
             register={register("jcJpDanga")}
             kind={FieldKind.BORDER}
             textAlign="right"
-            formatNumber="comNumber"
+            formatNumber="comDecNumber"
           />
           <p>원</p>
         </Field>
@@ -242,6 +242,20 @@ const FORMCM1106 = React.forwardRef(
           />
           <p>개</p>
         </Field>
+        <FormGroup>
+          <Label>사용상태</Label>
+          <Select
+            {...register("jcJpState")}
+            kind={FieldKind.BORDER}
+            style={{ width: "100%" }}
+          >
+            {dataCommonDic?.jcJpState?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code1}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
 
         <Field flex style={{ justifyContent: "center", marginTop: "20px" }}>
           {/* <Button

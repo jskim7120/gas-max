@@ -16,7 +16,6 @@ import {
   Input,
   Select,
   Field,
-  ErrorText,
   FormGroup,
   Wrapper,
   Divider,
@@ -64,6 +63,8 @@ function FormCM1105() {
   const [tankOutsideDate2, setTankOutsideDate2] = useState("");
   const [tankInsideDate2, setTankInsideDate2] = useState("");
   const [gasifyCheckDate1, setGasifyCheckDate1] = useState("");
+  const [gasifyCheckDate2, setGasifyCheckDate2] = useState("");
+
   //tab4
   const [cuHdate, setCuHdate] = useState("");
   const [cuGongdate, setCuGongdate] = useState("");
@@ -245,7 +246,6 @@ function FormCM1105() {
       const { data } = await API.get(CM1105SEARCH, {
         params: { cuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
       });
-
       setData(data);
     } catch (error) {
       console.log("aldaa");
@@ -325,8 +325,6 @@ function FormCM1105() {
 
     formValues.cuPdate = cuPdate ? formatDateByRemoveDash(cuPdate) : "";
 
-    console.log("============================>", formValues);
-
     try {
       const response: any = await API.post(path, formValues);
       if (response.status === 200) {
@@ -351,21 +349,16 @@ function FormCM1105() {
       <ModalHeader>
         <Field flex style={{ alignItems: "center" }}>
           <p>거래처 정보</p>
-          <Field>
-            <FormGroup>
-              <Label>영업소</Label>
-              <Select {...register("areaCode")}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-              {/* <div>
-                <ErrorText>{errors["areaCode"]?.message}</ErrorText>
-              </div> */}
-            </FormGroup>
-          </Field>
+          <FormGroup>
+            <Label>영업소</Label>
+            <Select {...register("areaCode")}>
+              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </Field>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Button
@@ -442,21 +435,17 @@ function FormCM1105() {
             errors={errors["cuTel21"]?.message}
             inputSize={InputSize.i150}
           />
-          <Field>
-            <FormGroup>
-              <Label>거래구분</Label>
-              <Select {...register("cuType")} width={InputSize.i100}>
-                {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["cuType"]?.message}</ErrorText>
-            </div>
-          </Field>
+
+          <FormGroup>
+            <Label>거래구분</Label>
+            <Select {...register("cuType")} width={InputSize.i100}>
+              {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </Wrapper>
 
         <Wrapper grid>
@@ -464,67 +453,38 @@ function FormCM1105() {
             label="핸드폰"
             register={register("cuHp")}
             errors={errors["cuHp"]?.message}
+            formatNumber="telNumber"
           />
           <Input register={register("cuHp")} errors={errors["cuHp"]?.message} />
-          <Field>
-            <FormGroup>
-              <Label>거래상태</Label>
-              <Select {...register("cuStae")} width={InputSize.i100}>
-                {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["cuStae"]?.message}</ErrorText>
-            </div>
-          </Field>
+
+          <FormGroup>
+            <Label>거래상태</Label>
+            <Select {...register("cuStae")} width={InputSize.i100}>
+              {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </Wrapper>
 
         <Wrapper grid col={2}>
           <Field flex style={{ alignItems: "center" }}>
-            <Input
-              label="주소"
-              register={register("cuZipcode")}
-              errors={errors["cuZipcode"]?.message}
-            />
+            <Input label="주소" register={register("cuZipcode")} />
             <DaumAddress setAddress={setAddress} />
-            <Input
-              register={register("cuAddr1")}
-              errors={errors["cuAddr1"]?.message}
-              fullWidth
-            />
+            <Input register={register("cuAddr1")} fullWidth />
           </Field>
-          <Input
-            register={register("cuAddr2")}
-            errors={errors["cuAddr2"]?.message}
-            fullWidth
-          />
+          <Input register={register("cuAddr2")} fullWidth />
         </Wrapper>
 
         <Wrapper grid col={2}>
-          <Input
-            label="비고"
-            register={register("cuBigo1")}
-            errors={errors["cuBigo1"]?.message}
-            fullWidth
-          />
-          <Input
-            register={register("cuBigo2")}
-            errors={errors["cuBigo2"]?.message}
-            fullWidth
-          />
+          <Input label="비고" register={register("cuBigo1")} fullWidth />
+          <Input register={register("cuBigo2")} fullWidth />
         </Wrapper>
         <Divider />
         <Wrapper>
-          <Input
-            label="메모"
-            register={register("cuMemo")}
-            errors={errors["cuMemo"]?.message}
-            fullWidth
-          />
+          <Input label="메모" register={register("cuMemo")} fullWidth />
         </Wrapper>
 
         <Field
@@ -536,147 +496,103 @@ function FormCM1105() {
         >
           <Field style={{ width: "80%" }}>
             <Wrapper grid>
-              <Field>
-                <FormGroup>
-                  <Label>담당 사원</Label>
-                  <Select {...register("cuSwCode")} width={InputSize.i100}>
-                    {dataCommonDic?.cuSwCode?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <div>
-                  <ErrorText>{errors["cuSwCode"]?.message}</ErrorText>
-                </div>
-              </Field>
+              <FormGroup>
+                <Label>담당 사원</Label>
+                <Select {...register("cuSwCode")} width={InputSize.i100}>
+                  {dataCommonDic?.cuSwCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
 
-              <Field>
-                <FormGroup>
-                  <Label>지역 분류</Label>
-                  <Select {...register("cuJyCode")} width={InputSize.i100}>
-                    {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <div>
-                  <ErrorText>{errors["cuJyCode"]?.message}</ErrorText>
-                </div>
-              </Field>
-              <Field>
-                <FormGroup>
-                  <Label>관리자 분류</Label>
-                  <Select {...register("cuCustgubun")} width={InputSize.i100}>
-                    {dataCommonDic?.cuCustgubun?.map(
-                      (obj: any, idx: number) => (
-                        <option key={idx} value={obj.code}>
-                          {obj.codeName}
-                        </option>
-                      )
-                    )}
-                  </Select>
-                </FormGroup>
-                <div>
-                  <ErrorText>{errors["cuCustgubun"]?.message}</ErrorText>
-                </div>
-              </Field>
+              <FormGroup>
+                <Label>지역 분류</Label>
+                <Select {...register("cuJyCode")} width={InputSize.i100}>
+                  {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+
+              <FormGroup>
+                <Label>관리자 분류</Label>
+                <Select {...register("cuCustgubun")} width={InputSize.i100}>
+                  {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
             </Wrapper>
 
             <Wrapper grid>
-              <Field>
-                <FormGroup>
-                  <Label>소비자 형태</Label>
-                  <Select {...register("cuCutype")} width={InputSize.i100}>
-                    {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code1}>
-                        {obj.code1}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <div>
-                  <ErrorText>{errors["cuCutype"]?.message}</ErrorText>
-                </div>
-              </Field>
+              <FormGroup>
+                <Label>소비자 형태</Label>
+                <Select {...register("cuCutype")} width={InputSize.i100}>
+                  {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code1}>
+                      {obj.code1}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+
               <Input
                 label="청구 구분"
                 register={register("cuRequestType")}
                 inputSize={InputSize.i100}
-                errors={errors["cuRequestType"]?.message}
               />
 
-              <Field>
-                <FormGroup>
-                  <Label>수금 방법</Label>
-                  <Select {...register("cuSukumtype")} width={InputSize.i100}>
-                    {dataCommonDic?.cuSukumtype?.map(
-                      (obj: any, idx: number) => (
-                        <option key={idx} value={obj.code1}>
-                          {obj.code1}
-                        </option>
-                      )
-                    )}
-                  </Select>
-                </FormGroup>
-                <div>
-                  <ErrorText>{errors["cuSukumtype"]?.message}</ErrorText>
-                </div>
-              </Field>
+              <FormGroup>
+                <Label>수금 방법</Label>
+                <Select {...register("cuSukumtype")} width={InputSize.i100}>
+                  {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code1}>
+                      {obj.code1}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
             </Wrapper>
 
             <Wrapper grid>
-              <Field>
-                <FormGroup>
-                  <Label>품목 단가</Label>
-                  <Select {...register("cuJdc")} width={InputSize.i100}>
-                    {dataCommonDic?.cuJdc?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code1}>
-                        {obj.code1}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <div>
-                  <ErrorText>{errors["cuJdc"]?.message}</ErrorText>
-                </div>
-              </Field>
+              <FormGroup>
+                <Label>품목 단가</Label>
+                <Select {...register("cuJdc")} width={InputSize.i100}>
+                  {dataCommonDic?.cuJdc?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code1}>
+                      {obj.code1}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
 
-              <Field>
-                <FormGroup>
-                  <Label>Vat 적용방법</Label>
-                  <Select {...register("cuVatKind")} width={InputSize.i100}>
-                    {dataCommonDic?.cuVatKind?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <div>
-                  <ErrorText>{errors["cuVatKind"]?.message}</ErrorText>
-                </div>
-              </Field>
-              <Field>
-                <FormGroup>
-                  <Label>원미만 금액계산</Label>
-                  <Select {...register("cuRoundType")} width={InputSize.i100}>
-                    {dataCommonDic?.cuRoundType?.map(
-                      (obj: any, idx: number) => (
-                        <option key={idx} value={obj.code}>
-                          {obj.codeName}
-                        </option>
-                      )
-                    )}
-                  </Select>
-                </FormGroup>
-                <div>
-                  <ErrorText>{errors["cuRoundType"]?.message}</ErrorText>
-                </div>
-              </Field>
+              <FormGroup>
+                <Label>Vat 적용방법</Label>
+                <Select {...register("cuVatKind")} width={InputSize.i100}>
+                  {dataCommonDic?.cuVatKind?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+
+              <FormGroup>
+                <Label>원미만 금액계산</Label>
+                <Select {...register("cuRoundType")} width={InputSize.i100}>
+                  {dataCommonDic?.cuRoundType?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
             </Wrapper>
 
             <Wrapper grid>
@@ -695,7 +611,6 @@ function FormCM1105() {
               <Input
                 label="무료시설 투자비"
                 register={register("cuSvKumack")}
-                errors={errors["cuSvKumack"]?.message}
                 textAlign="right"
                 inputSize={InputSize.i100}
               />
@@ -710,7 +625,6 @@ function FormCM1105() {
               <Input
                 register={register("cuTongkum")}
                 inputSize={InputSize.i100}
-                errors={errors["cuTongkum"]?.message}
                 textAlign="right"
               />
             </FormGroup>
@@ -719,7 +633,6 @@ function FormCM1105() {
               <Input
                 register={register("cuJmisu")}
                 inputSize={InputSize.i100}
-                errors={errors["cuJmisu"]?.message}
                 textAlign="right"
               />
             </FormGroup>
@@ -728,7 +641,6 @@ function FormCM1105() {
               <Input
                 register={register("cuCmisu")}
                 inputSize={InputSize.i100}
-                errors={errors["cuCmisu"]?.message}
                 textAlign="right"
               />
             </FormGroup>
@@ -780,6 +692,7 @@ function FormCM1105() {
               setTankOutsideDate2,
               setTankInsideDate2,
               setGasifyCheckDate1,
+              setGasifyCheckDate2,
               cuFinishDate,
               cuCircuitDate,
               cuScheduleDate,
@@ -790,6 +703,7 @@ function FormCM1105() {
               tankOutsideDate2,
               tankInsideDate2,
               gasifyCheckDate1,
+              gasifyCheckDate2,
 
               cuHdate,
               setCuHdate,

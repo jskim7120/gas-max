@@ -2,7 +2,6 @@ import {
   Input,
   Select,
   Field,
-  ErrorText,
   Wrapper,
   FormGroup,
   Label,
@@ -14,121 +13,70 @@ import { InputSize } from "components/componentsType";
 function Tab1({
   dataCommonDic,
   register,
-  errors,
   setAddress,
 }: {
   dataCommonDic: any;
   register: Function;
-  errors: any;
   setAddress: (arg: any) => void;
 }) {
   return (
     <Field className="outer-border">
       <Wrapper grid col={4} fields="1fr 2fr 1.5fr 1.5fr">
-        <Field>
-          <FormGroup>
-            <Label>공급 받는자</Label>
-            <Select {...register("cuNoType")} width={InputSize.i100}>
-              {dataCommonDic?.cuNoType?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["cuNoType"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Input register={register("cuNo")} errors={errors["cuNo"]?.message} />
+        <FormGroup>
+          <Label>공급 받는자</Label>
+          <Select {...register("cuNoType")} width={InputSize.i100}>
+            {dataCommonDic?.cuNoType?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
 
-        <Input
-          label="종사업장"
-          register={register("cuRCode")}
-          errors={errors["cuRCode"]?.message}
-        />
-        <Field>
-          <FormGroup>
-            <Label>과세구분</Label>
-            <Select {...register("cuBilltype")} width={InputSize.i100}>
-              {dataCommonDic?.cuBilltype?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["cuBilltype"]?.message}</ErrorText>
-          </div>
-        </Field>
+        <Input register={register("cuNo")} />
+
+        <Input label="종사업장" register={register("cuRCode")} maxLength="4" />
+
+        <FormGroup>
+          <Label>과세구분</Label>
+          <Select {...register("cuBilltype")} width={InputSize.i100}>
+            {dataCommonDic?.cuBilltype?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
       </Wrapper>
 
       <Wrapper grid col={4}>
-        <Input
-          label="상호"
-          register={register("cuSangho")}
-          errors={errors["cuSangho"]?.message}
-        />
+        <Input label="상호" register={register("cuSangho")} />
         <div></div>
-        <Input
-          label="대표"
-          register={register("cuSajang")}
-          errors={errors["cuSajang"]?.message}
-        />
+        <Input label="대표" register={register("cuSajang")} />
       </Wrapper>
 
       <Wrapper grid col={2}>
         <Field flex style={{ alignItems: "center" }}>
-          <Input
-            label="주소"
-            register={register("cuSzipcode")}
-            errors={errors["cuSzipcode"]?.message}
-          />
+          <Input label="주소" register={register("cuSzipcode")} />
           <DaumAddress setAddress={setAddress} />
-          <Input
-            register={register("cuSaddr1")}
-            errors={errors["cuSaddr1"]?.message}
-            fullWidth
-          />
+          <Input register={register("cuSaddr1")} fullWidth />
         </Field>
         <Input
           register={register("cuSaddr2")}
-          errors={errors["cuSaddr2"]?.message}
           fullWidth
           style={{ marginLeft: "0px" }}
         />
       </Wrapper>
 
       <Wrapper grid col={2}>
-        <Input
-          label="업태"
-          register={register("cuUptae")}
-          errors={errors["cuUptae"]?.message}
-        />
-        <Input
-          label="종목"
-          register={register("cuJongmok")}
-          errors={errors["cuJongmok"]?.message}
-        />
+        <Input label="업태" register={register("cuUptae")} />
+        <Input label="종목" register={register("cuJongmok")} />
       </Wrapper>
 
       <Wrapper grid col={4}>
-        <Input
-          label="담당자"
-          register={register("cuSeSawon")}
-          errors={errors["cuSeSawon"]?.message}
-        />
-        <Input
-          label="부서명"
-          register={register("cuDepartment")}
-          errors={errors["cuDepartment"]?.message}
-        />
-        <Input
-          label="이메일"
-          register={register("cuSeEmail")}
-          errors={errors["cuSeEmail"]?.message}
-        />
+        <Input label="담당자" register={register("cuSeSawon")} />
+        <Input label="부서명" register={register("cuDepartment")} />
+        <Input label="이메일" register={register("cuSeEmail")} />
         <Field>
           @
           <Select {...register("emailKind")}>
@@ -142,21 +90,9 @@ function Tab1({
       </Wrapper>
 
       <Wrapper grid col={4}>
-        <Input
-          label="담당자"
-          register={register("cuSeSawon2")}
-          errors={errors["cuSeSawon2"]?.message}
-        />
-        <Input
-          label="부서명"
-          register={register("cuDepartment2")}
-          errors={errors["cuDepartment2"]?.message}
-        />
-        <Input
-          label="이메일"
-          register={register("cuSeEmail2")}
-          errors={errors["cuSeEmail2"]?.message}
-        />
+        <Input label="담당자" register={register("cuSeSawon2")} />
+        <Input label="부서명" register={register("cuDepartment2")} />
+        <Input label="이메일" register={register("cuSeEmail2")} />
         <Field>
           @
           <Select {...register("emailKind2")}>
@@ -198,23 +134,19 @@ function Tab1({
       </Wrapper>
 
       <Wrapper grid col={4}>
-        <Field>
-          <FormGroup>
-            <Label>공급사업자</Label>
-            <Select {...register("cuGongsano")} width={InputSize.i100}>
-              {dataCommonDic?.cuGongsano?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["cuGongsano"]?.message}</ErrorText>
-          </div>
-        </Field>
+        <FormGroup>
+          <Label>공급사업자</Label>
+          <Select {...register("cuGongsano")} width={InputSize.i100}>
+            {dataCommonDic?.cuGongsano?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+
         <div></div>
-        <Field>
+        <Field flex style={{ alignItems: "center" }}>
           <FormGroup>
             <Label>계산서 발행주기</Label>
             <Select {...register("cuSekumMm")} width={InputSize.i100}>
@@ -225,14 +157,15 @@ function Tab1({
               ))}
             </Select>
           </FormGroup>
-          <div>
-            <ErrorText>{errors["cuSekumMm"]?.message}</ErrorText>
-          </div>
+
+          <Input
+            register={register("cuSekumDate")}
+            maxLength="2"
+            inputSize={InputSize.i60}
+            style={{ marginLeft: "0" }}
+          />
+          <p>일</p>
         </Field>
-        <Input
-          register={register("cuSekumDate")}
-          errors={errors["cuSekumDate"]?.message}
-        />
       </Wrapper>
     </Field>
   );
