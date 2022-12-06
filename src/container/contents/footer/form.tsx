@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import { useForm } from "react-hook-form";
 import {
   WhiteClose,
@@ -162,6 +162,34 @@ function Form() {
 
   const [data, setData] = useState();
   const [selected, setSelected] = useState<any>({});
+  const [sCuCode, setSCuCode] = useState("");
+  const [sCuAddr, setSCuAddr] = useState("");
+  const [sCuTel, setSCuTel] = useState("");
+  const [sCuName, setSCuName] = useState("");
+
+  const searchState = useSelector((state) => state.footer.search);
+
+  useEffect(() => {
+    if (searchState !== undefined && JSON.stringify(searchState) !== "{}") {
+      searchState.fieldName === "sCuAddr" && setSCuAddr(searchState.text);
+      searchState.fieldName === "sCuTel" && setSCuTel(searchState.text);
+      searchState.fieldName === "sCuCode" && setSCuCode(searchState.text);
+      searchState.fieldName === "sCuName" && setSCuName(searchState.text);
+
+      // if (areaCode) {
+      //   fetchData({
+      //     areaCode: areaCode[0].code,
+      //     sCuCode: "",
+      //     sCuName: "",
+      //     sCuUsername: "",
+      //     sCuTel: "",
+      //     sCuNo: "",
+      //     sCuAddr: "",
+      //     [searchState.fieldName]: searchState.text,
+      //   });
+      // }
+    }
+  }, [searchState, areaCode]);
 
   const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -236,11 +264,21 @@ function Form() {
           <div className="search-form__grid">
             <div className="form-group">
               <label>거래처코드</label>
-              <input type="text" {...register("sCuCode")} />
+              <input
+                type="text"
+                {...register("sCuCode")}
+                value={sCuCode}
+                onChange={(e: any) => setSCuCode(e.target.value)}
+              />
             </div>
             <div className="form-group">
               <label>거래처명,성명</label>
-              <input type="text" {...register("sCuName")} />
+              <input
+                type="text"
+                {...register("sCuName")}
+                value={sCuName}
+                onChange={(e: any) => setSCuName(e.target.value)}
+              />
             </div>
             <div className="form-group">
               <label>사용자명</label>
@@ -249,7 +287,12 @@ function Form() {
 
             <div className="form-group">
               <label>전화번호</label>
-              <input type="text" {...register("sCuTel")} />
+              <input
+                type="text"
+                {...register("sCuTel")}
+                value={sCuTel}
+                onChange={(e: any) => setSCuTel(e.target.value)}
+              />
             </div>
 
             <div className="form-group">
@@ -258,7 +301,12 @@ function Form() {
             </div>
             <div className="form-group">
               <label>주소 /비고</label>
-              <input type="text" {...register("sCuAddr")} />
+              <input
+                type="text"
+                {...register("sCuAddr")}
+                value={sCuAddr}
+                onChange={(e: any) => setSCuAddr(e.target.value)}
+              />
             </div>
           </div>
           <div>

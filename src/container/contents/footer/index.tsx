@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "app/store";
 import { openModal } from "app/state/modal/modalSlice";
 import { FooterContainer } from "./style";
@@ -9,15 +9,12 @@ import Badge from "components/badge";
 import { BadgeColor, BadgeSize } from "components/componentsType";
 import CARIMG from "assets/image/carIMG.png";
 import YIMG from "assets/image/yellowBtn.png";
+import { addSearchText, removeSearchText } from "app/state/modal/footerSlice";
 
 function Footer() {
   const dispatch = useDispatch();
   const { info } = useSelector((state) => state.footer);
-
-  // useEffect(() => {
-  //   if (info && JSON.stringify(info) !== "{}") {
-  //   }
-  // }, [info]);
+  const [searchText, setSearchText] = useState("");
 
   return (
     <FooterContainer>
@@ -28,10 +25,46 @@ function Footer() {
         </div>
         <form>
           <div className="search_wrapper">
-            <input type="text" placeholder="" />
+            <input
+              type="text"
+              placeholder=""
+              value={searchText}
+              onChange={(e: any) => setSearchText(e.target.value)}
+            />
             <button
               type="button"
-              onClick={() => dispatch(openModal({ type: "customerModal" }))}
+              onClick={() => {
+                if (searchText.length > 0) {
+                  let fieldName = "";
+                  let text = "";
+
+                  if (searchText.charAt(0) === "+") {
+                    fieldName = "sCuAddr";
+                    text = searchText.slice(1);
+                  } else if (searchText.charAt(0) === "-") {
+                    fieldName = "sCuTel";
+                    text = searchText.slice(1);
+                  } else if (searchText.charAt(0) === "*") {
+                    fieldName = "sCuCode";
+                    text = searchText.slice(1);
+                  } else {
+                    fieldName = "sCuName";
+                    text = searchText;
+                  }
+                  dispatch(
+                    addSearchText({
+                      search: {
+                        fieldName: fieldName,
+                        text: text,
+                      },
+                    })
+                  );
+                } else {
+                  dispatch(removeSearchText({}));
+                }
+
+                dispatch(openModal({ type: "customerModal" }));
+              }}
             >
               <SearchIcon />
             </button>
