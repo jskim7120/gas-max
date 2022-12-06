@@ -70,6 +70,13 @@ export interface ICM1200SEARCH {
   tankFirstDate2: string;
   tankOutsideDate2: string;
   tankInsideDate2: string;
+  /* 3-2-4 Wrapper */
+  tankMax1: string;
+  tankTransmCd1: string;
+  tankCuCd1: string;
+  tankMax2: string;
+  tankTransmCd2: string;
+  tankCuCd2: string;
   /* 3-4-2 Wrapper */
   gasifyCo1: string;
   gasifyVol1: string;
