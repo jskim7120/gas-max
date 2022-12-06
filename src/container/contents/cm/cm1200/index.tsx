@@ -91,7 +91,7 @@ function CM1200({
     dp.setFields(fields);
     gv.setColumns(columns);
     dp.setRows(data);
-    gv.setHeader({ header: 35 });
+    gv.setHeader({ height: 35, heightFill: "fixed" });
     gv.setFooter({ visible: false });
     gv.setOptions({
       indicator: { visible: true },
@@ -297,7 +297,7 @@ function CM1200({
             </form>
           </SearchWrapper>
           <div
-            style={{ width: "100%", height: "95%" }}
+            style={{ width: "100%", height: "93%" }}
             ref={realgridElement}
           ></div>
         </TableWrapper>
