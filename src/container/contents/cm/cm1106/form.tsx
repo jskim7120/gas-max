@@ -6,13 +6,8 @@ import {
   DividerGray,
   Field,
   Select,
-  ErrorText,
 } from "components/form/style";
-import {
-  MagnifyingGlass,
-  SmallWhiteClose,
-  SmallWhiteTick,
-} from "components/allSvgIcon";
+import { MagnifyingGlass } from "components/allSvgIcon";
 import { SearchBtn } from "components/daum";
 import { useForm } from "react-hook-form";
 import { FieldKind, InputSize } from "components/componentsType";
@@ -148,8 +143,7 @@ const FORMCM1106 = React.forwardRef(
         <Field flex style={{ alignItems: "center" }}>
           <Input
             label="코드"
-            register={register("jcCuCode")}
-            errors={errors["jcCuCode"]?.message}
+            register={register("jcJpCode")}
             inputSize={InputSize.sm}
             kind={FieldKind.BORDER}
           />
@@ -160,8 +154,7 @@ const FORMCM1106 = React.forwardRef(
         <Field>
           <Input
             label="품명"
-            register={register("jcCuName")}
-            errors={errors["jcCuName"]?.message}
+            register={register("jcJpName")}
             kind={FieldKind.BORDER}
           />
         </Field>
@@ -169,7 +162,6 @@ const FORMCM1106 = React.forwardRef(
           <Input
             label="규격"
             register={register("jcJpSpec")}
-            errors={errors["jcJpSpec"]?.message}
             kind={FieldKind.BORDER}
           />
         </Field>
@@ -180,50 +172,44 @@ const FORMCM1106 = React.forwardRef(
           </FormGroup>
         </Field>
         <DividerGray />
-        <Field>
-          <FormGroup>
-            <Label>적용구분</Label>
-            <Select
-              {...register("jcDangaType")}
-              kind={FieldKind.BORDER}
-              style={{ width: "100%" }}
-            >
-              {dataCommonDic?.jcDangaType?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code1}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jcDangaType"]?.message}</ErrorText>
-          </div>
-        </Field>
-        <Field>
-          <FormGroup>
-            <Label>Vat구분</Label>
-            <Select
-              {...register("jcVatKind")}
-              kind={FieldKind.BORDER}
-              style={{ width: "100%" }}
-            >
-              {dataCommonDic?.jcVatKind?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code1}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-          <div>
-            <ErrorText>{errors["jcVatKind"]?.message}</ErrorText>
-          </div>
-        </Field>
+
+        <FormGroup>
+          <Label>적용구분</Label>
+          <Select
+            {...register("jcDangaType")}
+            kind={FieldKind.BORDER}
+            style={{ width: "100%" }}
+          >
+            {dataCommonDic?.jcDangaType?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code1}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
+          <Label>Vat구분</Label>
+          <Select
+            {...register("jcVatKind")}
+            kind={FieldKind.BORDER}
+            style={{ width: "100%" }}
+          >
+            {dataCommonDic?.jcVatKind?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code1}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+
         <Field flex>
           <Input
             label="할인액"
             register={register("jcJdcAmt")}
-            errors={errors["jcJdcAmt"]?.message}
             kind={FieldKind.BORDER}
+            textAlign="right"
+            formatNumber="comDecNumber"
           />
           <p>원</p>
         </Field>
@@ -231,8 +217,8 @@ const FORMCM1106 = React.forwardRef(
           <Input
             label="할인율"
             register={register("jcJdcPer")}
-            errors={errors["jcJdcPer"]?.message}
             kind={FieldKind.BORDER}
+            maxLength="3"
           />
           <p>%</p>
         </Field>
@@ -240,8 +226,9 @@ const FORMCM1106 = React.forwardRef(
           <Input
             label="적용단가"
             register={register("jcJpDanga")}
-            errors={errors["jcJpDanga"]?.message}
             kind={FieldKind.BORDER}
+            textAlign="right"
+            formatNumber="comDecNumber"
           />
           <p>원</p>
         </Field>
@@ -250,12 +237,25 @@ const FORMCM1106 = React.forwardRef(
           <Input
             label="기초재고"
             register={register("jcBasicJaego")}
-            errors={errors["jcBasicJaego"]?.message}
             kind={FieldKind.BORDER}
             inputSize={InputSize.sm}
           />
           <p>개</p>
         </Field>
+        <FormGroup>
+          <Label>사용상태</Label>
+          <Select
+            {...register("jcJpState")}
+            kind={FieldKind.BORDER}
+            style={{ width: "100%" }}
+          >
+            {dataCommonDic?.jcJpState?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code1}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
 
         <Field flex style={{ justifyContent: "center", marginTop: "20px" }}>
           {/* <Button

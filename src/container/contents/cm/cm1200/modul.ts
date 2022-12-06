@@ -15,7 +15,7 @@ export interface ICM1200SEARCH {
   cuCustgubun: string;
   // 2-1 Wrapper
   chkCuRh20: string;
-  cuRh20: string;
+  cuRh2o: string;
   chkCuRdange: string;
   cuRdangaType: string;
   cuRdanga: number;

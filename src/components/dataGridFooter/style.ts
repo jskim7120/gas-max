@@ -5,6 +5,8 @@ export const Container = styled.div`
   height: 27px;
   background: #dbdbdb;
   display: flex;
+  z-index: 9;
+  position: relative;
   flex-direction: row;
   border-top: 3px solid #707070;
 

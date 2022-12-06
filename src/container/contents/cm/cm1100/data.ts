@@ -89,7 +89,7 @@ export const columns = [
     type: "data",
     width: "200",
     header: {
-      text: "거래처명",
+      text: "거래처명-",
     },
   },
   {

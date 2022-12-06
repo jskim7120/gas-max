@@ -2,11 +2,11 @@ import { ValueType } from "realgrid";
 
 export const fields = [
   {
-    fieldName: "jcCuCode",
+    fieldName: "jcJpCode",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "jcCuName",
+    fieldName: "jcJpName",
     dataType: ValueType.TEXT,
   },
   {
@@ -14,7 +14,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "jcDangaType",
+    fieldName: "jcDangaTypeName",
     dataType: ValueType.TEXT,
   },
   {
@@ -22,7 +22,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "jcVatKind",
+    fieldName: "jcVatKindName",
     dataType: ValueType.TEXT,
   },
   {
@@ -35,19 +35,23 @@ export const fields = [
   },
 
   {
-    fieldName: "jcBasicJaego",
+    fieldName: "custOut",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "jcJpState",
+    fieldName: "custIn",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "jcJpSateName",
     dataType: ValueType.TEXT,
   },
 ];
 
 export const columns = [
   {
-    name: "jcCuCode",
-    fieldName: "jcCuCode",
+    name: "jcJpCode",
+    fieldName: "jcJpCode",
     type: "data",
     width: "80",
     header: {
@@ -55,8 +59,8 @@ export const columns = [
     },
   },
   {
-    name: "jcCuName",
-    fieldName: "jcCuName",
+    name: "jcJpName",
+    fieldName: "jcJpName",
     type: "data",
     width: "80",
     header: {
@@ -73,12 +77,12 @@ export const columns = [
     },
   },
   {
-    name: "jcDangaType",
-    fieldName: "jcDangaType",
+    name: "jcDangaTypeName",
+    fieldName: "jcDangaTypeName",
     type: "data",
     width: "80",
     header: {
-      text: "구분",
+      text: "적용구분",
     },
   },
   {
@@ -91,12 +95,12 @@ export const columns = [
     },
   },
   {
-    name: "jcVatKind",
-    fieldName: "jcVatKind",
+    name: "jcVatKindName",
+    fieldName: "jcVatKindName",
     type: "data",
     width: "80",
     header: {
-      text: "Vat",
+      text: "VAT",
     },
   },
   {
@@ -105,7 +109,7 @@ export const columns = [
     type: "data",
     width: "80",
     header: {
-      text: "할앤액",
+      text: "할인액",
     },
   },
   {
@@ -119,17 +123,26 @@ export const columns = [
   },
 
   {
-    name: "jcBasicJaego",
-    fieldName: "jcBasicJaego",
+    name: "custOut",
+    fieldName: "custOut",
     type: "data",
-    width: "80",
+    width: "50",
+    header: {
+      text: "대여",
+    },
+  },
+  {
+    name: "custIn",
+    fieldName: "custIn",
+    type: "data",
+    width: "50",
     header: {
       text: "보관",
     },
   },
   {
-    name: "jcJpState",
-    fieldName: "jcJpState",
+    name: "jcJpSateName",
+    fieldName: "jcJpSateName",
     type: "data",
     width: "80",
     header: {

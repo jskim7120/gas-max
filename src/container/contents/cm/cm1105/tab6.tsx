@@ -1,18 +1,9 @@
 import { useState } from "react";
 import { Input, Field, Wrapper, FormGroup, Label } from "components/form/style";
 import CheckBox from "components/checkbox";
-// import CustomDate from "components/customDatePicker";
 import CustomDatePicker from "components/customDatePicker/customdate2";
 
-function Tab6({
-  register,
-  errors,
-  reset,
-}: {
-  register: Function;
-  errors: any;
-  reset: Function;
-}) {
+function Tab6({ register }: { register: Function }) {
   const [cuSmsDate, setCuSmsDate] = useState("");
   const [cuCashpayDate, setCuCashpayDate] = useState("");
   return (
@@ -43,16 +34,9 @@ function Tab6({
             <Input
               label="수신자 번호"
               register={register("cuSmsHp")}
-              errors={errors["cuSmsHp"]?.message}
               fullWidth
             />
-            {/* <CustomDate
-              label="신청일자"
-              name="cuSmsDate"
-              register={register("cuSmsDate")}
-              reset={reset}
-              errors={errors["cuSmsDate"]?.message}
-            /> */}
+
             <Field flex style={{ alignItems: "center" }}>
               <Label>신청일자</Label>
               <CustomDatePicker
@@ -64,12 +48,7 @@ function Tab6({
           </Wrapper>
 
           <Wrapper>
-            <Input
-              label="비고"
-              register={register("cuSmsMemo")}
-              errors={errors["cuSmsMemo"]?.message}
-              fullWidth
-            />
+            <Input label="비고" register={register("cuSmsMemo")} fullWidth />
           </Wrapper>
         </Field>
       </Field>
@@ -98,18 +77,7 @@ function Tab6({
                 <CheckBox register={{ ...register("cuCashpayYn") }} />
               </FormGroup>
             </Field>
-            <Input
-              label="발행 번호"
-              register={register("cuCashpayNo")}
-              errors={errors["cuCashpayNo"]?.message}
-            />
-            {/* <CustomDate
-              label="신청일자"
-              name="cuCashpayDate"
-              register={register("cuCashpayDate")}
-              reset={reset}
-              errors={errors["cuCashpayDate"]?.message}
-            /> */}
+            <Input label="발행 번호" register={register("cuCashpayNo")} />
 
             <Field flex style={{ alignItems: "center" }}>
               <Label>신청일자</Label>
@@ -125,7 +93,6 @@ function Tab6({
             <Input
               label="비고"
               register={register("cuCashpayMemo")}
-              errors={errors["cuSmscuCashpayMemoMemo"]?.message}
               fullWidth
             />
           </Wrapper>
