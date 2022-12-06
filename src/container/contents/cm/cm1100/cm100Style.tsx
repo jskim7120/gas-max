@@ -5,8 +5,8 @@ export const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  // padding-right: 37px;
   background: #dbdbdb;
+  border-bottom: 2px solid #707070;
 
   div.button-wrapper {
     display: flex;

@@ -4,12 +4,11 @@ import {
   Input2,
   Select,
   Field,
-  ErrorText,
   Wrapper,
   FormGroup,
   Label,
 } from "components/form/style";
-//import CustomDate from "components/customDatePicker";
+
 import CustomDatePicker from "components/customDatePicker/customdate2";
 import { InputSize } from "components/componentsType";
 import { MagnifyingGlass } from "components/allSvgIcon";
@@ -19,17 +18,13 @@ function Tab2({
   customerInfo,
   dataCommonDic,
   register,
-  errors,
   too,
   setToo,
   sign,
   setSign,
-  reset,
-  //setCuRdangaType,
   setCuMeterTurm,
   setCuMeterDt,
   setCuMdate,
-  //cuRdangaType,
   cuMeterTurm,
   cuMeterDt,
   cuMdate,
@@ -37,23 +32,19 @@ function Tab2({
   customerInfo: any;
   dataCommonDic: any;
   register: Function;
-  errors: any;
   too: number;
   setToo: Function;
   sign: string;
   setSign: Function;
-  reset: Function;
-  //setCuRdangaType: any;
   setCuMeterTurm: any;
   setCuMeterDt: any;
   setCuMdate: any;
-  //  cuRdangaType: any;
   cuMeterTurm: any;
   cuMeterDt: any;
   cuMdate: any;
 }) {
   const [cuRdangaType, setCuRdangaType] = useState("");
-  console.log("cuMeterTurm:", cuMeterTurm);
+
   return (
     <div>
       <Field flex className="outer-border ">
@@ -65,49 +56,40 @@ function Tab2({
         </Field>
         <Field>
           <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <Field>
-              <FormGroup>
-                <Label>조정기압력</Label>
-                <Select {...register("cuRh2o")}>
-                  {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-                <p>mmH20</p>
-              </FormGroup>
-              <div>
-                <ErrorText>{errors["cuRh2o"]?.message}</ErrorText>
-              </div>
-            </Field>
-            <Field>
-              <FormGroup>
-                <Label>루베단가</Label>
-                <Select
-                  {...register("cuRdangaType")}
-                  width={InputSize.i100}
-                  onChange={(e: any) => {
-                    console.log(e.target.value);
-                    setCuRdangaType(e.target.value);
-                  }}
-                >
-                  {dataCommonDic?.cuRdangaType?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-              <div>
-                <ErrorText>{errors["cuRdangaType"]?.message}</ErrorText>
-              </div>
-            </Field>
-            {cuRdangaType === "2" ? (
+            <FormGroup>
+              <Label>조정기압력</Label>
+              <Select {...register("cuRh2o")}>
+                {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+              <p>mmH20</p>
+            </FormGroup>
+
+            <FormGroup>
+              <Label>루베단가</Label>
+              <Select
+                {...register("cuRdangaType")}
+                width={InputSize.i100}
+                onChange={(e: any) => {
+                  console.log(e.target.value);
+                  setCuRdangaType(e.target.value);
+                }}
+              >
+                {dataCommonDic?.cuRdangaType?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+
+            {cuRdangaType === "1" ? (
               <Field flex style={{ alignItems: "center" }}>
                 <Input
                   register={register("cuRdanga")}
-                  errors={errors["cuRdanga"]?.message}
                   inputSize={InputSize.sm}
                   textAlign="right"
                   style={{ border: "1px solid #e6e5e5" }}
@@ -143,7 +125,6 @@ function Tab2({
             ) : (
               <Input
                 register={register("cuRdanga")}
-                errors={errors["cuRdanga"]?.message}
                 inputSize={InputSize.sm}
                 textAlign="right"
                 style={{ border: "1px solid #e6e5e5" }}
@@ -156,9 +137,9 @@ function Tab2({
               <Input
                 label="연체율"
                 register={register("cuPer")}
-                errors={errors["cuPer"]?.message}
                 inputSize={InputSize.i120}
                 textAlign="right"
+                maxLength="3"
               />
               <p style={{ marginLeft: "-3px" }}>%</p>
             </Field>
@@ -166,16 +147,15 @@ function Tab2({
               <Input
                 label="할인율"
                 register={register("cuCdc")}
-                errors={errors["cuCdc"]?.message}
                 textAlign="right"
                 inputSize={InputSize.i120}
+                maxLength="3"
               />
               <p style={{ marginLeft: "-3px" }}>%</p>
             </Field>
             <Input
               label="순번"
               register={register("cuCno")}
-              errors={errors["cuCno"]?.message}
               inputSize={InputSize.sm}
             />
           </Wrapper>
@@ -185,7 +165,6 @@ function Tab2({
               <Input
                 label="관리비"
                 register={register("cuAnkum")}
-                errors={errors["cuAnkum"]?.message}
                 textAlign="right"
                 formatNumber="comNumber"
                 inputSize={InputSize.i120}
@@ -196,7 +175,6 @@ function Tab2({
               <Input
                 label="시설비"
                 register={register("cuSisulkum")}
-                errors={errors["cuSisulkum"]?.message}
                 textAlign="right"
                 formatNumber="comNumber"
                 inputSize={InputSize.i120}
@@ -207,7 +185,6 @@ function Tab2({
               <Input
                 label="계량기교체비"
                 register={register("cuMeterkum")}
-                errors={errors["cuMeterkum"]?.message}
                 textAlign="right"
                 formatNumber="comNumber"
                 inputSize={InputSize.i120}
@@ -217,16 +194,25 @@ function Tab2({
           </Wrapper>
 
           <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <Input
-              label="검침주기"
-              register={register("cuGumTurm")}
-              errors={errors["cuGumTurm"]?.message}
-            />
-            <Input
-              label="검침일"
-              register={register("cuGumdate")}
-              errors={errors["cuGumdate"]?.message}
-            />
+            <FormGroup>
+              <Label>검침주기</Label>
+              <Select {...register("cuGumTurm")} width={InputSize.i120}>
+                {dataCommonDic?.cuGumTurm?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+            <Field flex style={{ alignItems: "center" }}>
+              <Input
+                label="검침일"
+                register={register("cuGumdate")}
+                inputSize={InputSize.i60}
+                maxLength="2"
+              />
+              <p>일</p>
+            </Field>
             <Label style={{ width: "105px" }}></Label>
           </Wrapper>
         </Field>
@@ -248,70 +234,51 @@ function Tab2({
         </Field>
         <Field>
           <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <Field>
-              <FormGroup>
-                <Label>계량기 제조사</Label>
-                <Select {...register("cuMeterCo")} width={InputSize.i100}>
-                  {dataCommonDic?.cuMeterCo?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-              <div>
-                <ErrorText>{errors["cuMeterCo"]?.message}</ErrorText>
-              </div>
-            </Field>
-            <Field>
-              <FormGroup>
-                <Label>계량기유형</Label>
-                <Select {...register("cuMeterFeture")}>
-                  {dataCommonDic?.cuMeterFeture?.map(
-                    (obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    )
-                  )}
-                </Select>
-              </FormGroup>
-              <div>
-                <ErrorText>{errors["cuMeterFeture"]?.message}</ErrorText>
-              </div>
-            </Field>
+            <FormGroup>
+              <Label>계량기 제조사</Label>
+              <Select {...register("cuMeterCo")} width={InputSize.i100}>
+                {dataCommonDic?.cuMeterCo?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+
+            <FormGroup>
+              <Label>계량기유형</Label>
+              <Select {...register("cuMeterFeture")}>
+                {dataCommonDic?.cuMeterFeture?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+
             <Field flex style={{ alignItems: "center" }}>
-              <Field>
-                <FormGroup>
-                  <Label>계량기정보</Label>
-                  <Select {...register("cuMeterLr")} width={InputSize.i100}>
-                    {dataCommonDic?.cuMeterLr?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <div>
-                  <ErrorText>{errors["cuMeterLr"]?.message}</ErrorText>
-                </div>
-              </Field>
-              <Field>
-                <Select {...register("cuMeterType")}>
-                  {dataCommonDic?.cuMeterType?.map((obj: any, idx: number) => (
+              <FormGroup>
+                <Label>계량기정보</Label>
+                <Select {...register("cuMeterLr")} width={InputSize.i100}>
+                  {dataCommonDic?.cuMeterLr?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
                   ))}
                 </Select>
-                <div>
-                  <ErrorText>{errors["cuMeterType"]?.message}</ErrorText>
-                </div>
-              </Field>
+              </FormGroup>
+
+              <Select {...register("cuMeterType")}>
+                {dataCommonDic?.cuMeterType?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+
               <Field flex>
                 <Input
                   register={register("cuMeterM3")}
-                  errors={errors["cuMeterM3"]?.message}
                   inputSize={InputSize.xs}
                 />
                 <p>㎥/h</p>
@@ -319,19 +286,8 @@ function Tab2({
             </Field>
           </Wrapper>
           <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <Input
-              label="계량기번호"
-              register={register("cuMeterNo")}
-              errors={errors["cuMeterNo"]?.message}
-            />
+            <Input label="계량기번호" register={register("cuMeterNo")} />
             <Field flex style={{ alignItems: "center" }}>
-              {/* <CustomDate
-                label="유효기간"
-                name="cuMeterTurm"
-                register={register("cuMeterTurm")}
-                reset={reset}
-                errors={errors["cuMeterTurm"]?.message}
-              /> */}
               <Label>유효기간</Label>
               <CustomDatePicker
                 value={cuMeterTurm}
@@ -340,40 +296,23 @@ function Tab2({
               />
             </Field>
             <Field flex style={{ alignItems: "center" }}>
-              <Field>
-                <FormGroup style={{ alignItems: "center" }}>
-                  <Label>설치장소</Label>
-                  <Select {...register("cuMeterPlace")}>
-                    {dataCommonDic?.cuMeterPlace?.map(
-                      (obj: any, idx: number) => (
-                        <option key={idx} value={obj.code}>
-                          {obj.codeName}
-                        </option>
-                      )
-                    )}
-                  </Select>
-                  <p>바코드번호</p>
-                </FormGroup>
-                <div>
-                  <ErrorText>{errors["cuMeterPlace"]?.message}</ErrorText>
-                </div>
-              </Field>
-              <Input
-                register={register("cuBarcode")}
-                errors={errors["cuBarcode"]?.message}
-              />
+              <FormGroup style={{ alignItems: "center" }}>
+                <Label>설치장소</Label>
+                <Select {...register("cuMeterPlace")}>
+                  {dataCommonDic?.cuMeterPlace?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+                <p>바코드번호</p>
+              </FormGroup>
+
+              <Input register={register("cuBarcode")} />
             </Field>
           </Wrapper>
           <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Field flex style={{ alignItems: "center" }}>
-              {/* <CustomDate
-                label="교체일자"
-                name="cuMeterDt"
-                register={register("cuMeterDt")}
-                reset={reset}
-                errors={errors["cuMeterDt"]?.message}
-              /> */}
-
               <Label>교체일자</Label>
               <CustomDatePicker
                 value={cuMeterDt}
@@ -382,13 +321,6 @@ function Tab2({
               />
             </Field>
             <Field flex style={{ alignItems: "center" }}>
-              {/* <CustomDate
-                label="교체예정일"
-                name="cuMdate"
-                register={register("cuMdate")}
-                reset={reset}
-                errors={errors["cuMdate"]?.message}
-              /> */}
               <Label>교체예정일</Label>
               <CustomDatePicker
                 value={cuMdate}
@@ -397,17 +329,9 @@ function Tab2({
               />
             </Field>
             <Field flex style={{ alignItems: "center" }}>
-              <Input
-                label="발신기코드"
-                register={register("cuMTransmCd")}
-                errors={errors["cuMTransmCd"]?.message}
-              />
+              <Input label="발신기코드" register={register("cuMTransmCd")} />
               <p>원격검침 고객코드</p>
-              <Input
-                register={register("blabla")}
-                errors={errors["blabla"]?.message}
-                inputSize={InputSize.sm}
-              />
+              <Input register={register("blabla")} inputSize={InputSize.sm} />
               <SearchBtn type="button" onClick={() => alert("dsdsds")}>
                 <MagnifyingGlass />
               </SearchBtn>

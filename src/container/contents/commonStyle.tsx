@@ -44,7 +44,9 @@ export const Wrapper = styled.div`
 `;
 
 export const WrapperContent = styled.div`
-  height: calc(100% - 156px);
+  gap: 0px;
+  height: calc(100% - 40px);
+  width: 100%;
 `;
 
 export const TableWrapper = styled.div<{ width?: string }>`
