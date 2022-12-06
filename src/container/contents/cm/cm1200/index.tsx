@@ -13,7 +13,7 @@ import {
   Wrapper,
   FormSectionTitle,
   FormSeaction,
-} from "../en/style";
+} from "../../commonStyle";
 // COMPONENTS
 import Button from "components/button/button";
 import {
