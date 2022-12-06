@@ -411,15 +411,14 @@ const Form = React.forwardRef(
       if (selectedRdangaSign === null) {
         totalValue = 0;
       } else if (selectedRdangaSign === "+") {
-        // totalValue = eval(`${selectedcuRdanga} + ${selectedRdangaAmt}`);
         totalValue = Number(selectedcuRdanga) + Number(selectedRdangaAmt);
       } else if (selectedRdangaSign === "-") {
         totalValue = selectedcuRdanga - selectedRdangaAmt;
       } else if (selectedRdangaSign === "X") {
-        if (selectedcuRdanga === 0 || selectedRdangaAmt === 0) {
+        if(selectedcuRdanga === 0 || selectedRdangaAmt === 0 ){
           totalValue = 0;
-        } else {
-          totalValue = selectedcuRdanga * selectedRdangaAmt;
+        }else{
+        totalValue = selectedcuRdanga * selectedRdangaAmt;
         }
       } else {
         totalValue = 0;
@@ -961,7 +960,7 @@ const Form = React.forwardRef(
             </Field>
             <Field>
               <FormGroup>
-                <Input register={register("tankMakeDate1")} />
+                <Input maxLength="7" register={register("tankMakeDate1")} />
               </FormGroup>
             </Field>
             <Field>
@@ -1069,73 +1068,6 @@ const Form = React.forwardRef(
                 setValue={setTankInsideDate2}
                 name="tankInsideDate2"
               />
-            </Field>
-          </Wrapper>
-        </Field>
-        {/* 3-2-4 Wrapper */}
-        <Field flex>
-          <FormGroup>
-            <Label></Label>
-          </FormGroup>
-          <Wrapper grid col={3}>
-            <Field>
-              <FormGroup>
-                <Label>Max레벨 / 발신기코드 / 탱크고객코드</Label>
-              </FormGroup>
-            </Field>
-            <Field>
-              <FormGroup>
-                <p>{`1)`}</p>
-                <Input
-                  register={register("tankMax1")}
-                  placeholder=""
-                  inputSize={InputSize.sm}
-                />
-                <p>%</p>
-                <Input
-                  register={register("tankTransmCd1")}
-                  placeholder=""
-                  inputSize={InputSize.sm}
-                />
-                <Input
-                  register={register("tankCuCd1")}
-                  placeholder=""
-                  inputSize={InputSize.sm}
-                />
-                <SearchBtn
-                  type="button"
-                  onClick={() => console.log("cuZipCode")}
-                >
-                  <MagnifyingGlass />
-                </SearchBtn>
-              </FormGroup>
-            </Field>
-            <Field>
-              <FormGroup>
-                <p>{`2)`}</p>
-                <Input
-                  register={register("tankMax1")}
-                  placeholder=""
-                  inputSize={InputSize.sm}
-                />
-                <p>%</p>
-                <Input
-                  register={register("tankTransmCd2")}
-                  placeholder=""
-                  inputSize={InputSize.sm}
-                />
-                <Input
-                  register={register("tankCuCd2")}
-                  placeholder=""
-                  inputSize={InputSize.sm}
-                />
-                <SearchBtn
-                  type="button"
-                  onClick={() => console.log("cuZipCode")}
-                >
-                  <MagnifyingGlass />
-                </SearchBtn>
-              </FormGroup>
             </Field>
           </Wrapper>
         </Field>
@@ -1269,7 +1201,7 @@ const Form = React.forwardRef(
             </Field>
             <Field>
               <FormGroup>
-                <Input register={register("gasifyMakeDate1")} />
+                <Input maxLength="7" register={register("gasifyMakeDate1")} />
               </FormGroup>
             </Field>
             <Field>
@@ -1336,7 +1268,7 @@ const Form = React.forwardRef(
             </Field>
             <Field>
               <FormGroup>
-                <Input register={register("gasifyMakeDate2")} />
+                <Input maxLength="7" register={register("gasifyMakeDate2")} />
               </FormGroup>
             </Field>
             <Field>
