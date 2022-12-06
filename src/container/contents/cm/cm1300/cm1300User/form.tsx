@@ -87,8 +87,8 @@ const Form = React.forwardRef(
           }
           reset({
             ...newData,
-            cuCode1: selected.cuCode.replaceAll("-", "").substring(0, 3),
-            cuCode2: selected.cuCode.replaceAll("-", "").substring(3, 8),
+            cuCode1: selected?.cuCode?.replaceAll("-", "").substring(0, 3),
+            cuCode2: selected?.cuCode?.replaceAll("-", "").substring(3, 8),
           });
         }
       } else {

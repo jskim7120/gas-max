@@ -54,7 +54,6 @@ function Form({
   fetchLeftData: any;
   dataCommonDic: any;
 }) {
-  const [tabId, setTabId] = useState(0);
   const [tabData, setTabData] = useState(null);
   const [addr, setAddress] = useState<string>("");
 
@@ -82,7 +81,7 @@ function Form({
 
   useEffect(() => {
     fetchData();
-    clearForm("clear");
+    clearForm("reset");
   }, [selected]);
 
   useEffect(() => {
