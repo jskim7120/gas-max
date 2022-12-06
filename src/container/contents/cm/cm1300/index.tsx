@@ -21,7 +21,7 @@ import {
 } from "app/state/modal/modalSlice";
 import Form from "./form";
 import { ButtonColor, FieldKind, ButtonType } from "components/componentsType";
-import { Wrapper, DetailHeader } from "../en/style";
+import { Wrapper, DetailHeader } from "../../commonStyle";
 import { CM1300SEARCH } from "app/path";
 import {
   Grid1Container,

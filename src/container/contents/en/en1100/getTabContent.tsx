@@ -1,7 +1,7 @@
 import React from "react";
 import Table from "components/table";
 import { Input, Select, Field, ErrorText } from "components/form/style";
-import { PaymentLineCnt } from "../style";
+import { PaymentLineCnt } from "../../commonStyle";
 import { InputSize } from "components/componentsType";
 
 function getTabContent(id: number, register: any, errors: any, jnJiro: any) {

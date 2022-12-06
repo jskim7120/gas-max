@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { TableWrapper } from "./style";
+import { TableWrapper } from "../commonStyle";
 
 function Grid({
   data,

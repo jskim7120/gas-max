@@ -78,4 +78,5 @@ export enum BadgeSize {
   size1 = "size1",
   size2 = "size2",
   size3 = "size3",
+  size4 = "size4",
 }

@@ -28,7 +28,7 @@ import {
 } from "helpers/dateFormat";
 import { convertBase64 } from "helpers/convertBase64";
 import CustomDatePicker from "components/customDatePicker/customdate2";
-import { ImageWrapper } from "../style";
+import { ImageWrapper } from "../../commonStyle";
 
 interface IForm {
   selected: any;
