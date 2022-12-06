@@ -37,6 +37,16 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
         "linear-gradient(#F5D998 5%, #F4D38E 10%, #F3CD85 15%, #F2C77B 20%, #F1C171 25%, #F0BC69 30%, #E67F09 100%)";
       attributes.lineColor = "#fff";
     }
+    if (color === ButtonColor.WARNING) {
+      attributes.bg = "linear-gradient(#FF4E00, #7A1710)";
+      attributes.color = "#FFF";
+      attributes.lineColor = "#fff";
+    }
+    if (color === ButtonColor.SUCCESS) {
+      attributes.bg = "linear-gradient(#96E165, #19953A)";
+      attributes.color = "#FFF";
+      attributes.lineColor = "#fff";
+    }
   } else if (kind === ButtonType.LOGIN) {
     attributes = {
       borderRad: "4px",

@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { EN1300INSERT, EN1300UPDATE, EN1300DELETE } from "app/path";
+import { EN1300INSERT, EN1300UPDATE, EN1300DELETE, EN130011 } from "app/path";
 import {
   Item,
   RadioButton,
@@ -90,16 +90,31 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
     }));
 
-    const resetForm = (type: string) => {
+    const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        console.log("type:", type);
         let newData: any = {};
-
         if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
+          document.getElementById("jpName")?.focus();
+          const path = EN130011;
+          try {
+            const response: any = await API.get(path, {
+              params: { areaCode: selected.areaCode },
+            });
+            if (response.status === 200) {
+              for (const [key, value] of Object.entries(selected)) {
+                newData[key] = null;
+              }
+              newData.jpCode = response.data.tempCode;
+              newData.areaCode = selected.areaCode;
+              reset(newData);
+            } else {
+              toast.error(response.response.data?.message, {
+                autoClose: 500,
+              });
+            }
+          } catch (err: any) {
+            console.log("areaCode select error", err);
           }
-          reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -184,13 +199,37 @@ const Form = React.forwardRef(
       }
     };
 
+    const handleSelectCode = async (event: any) => {
+      let newData: any = {};
+      const path = EN130011;
+      try {
+        const response: any = await API.get(path, {
+          params: { areaCode: event.target.value },
+        });
+        if (response.status === 200) {
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = value;
+          }
+          newData.jpCode = response.data.tempCode;
+          newData.areaCode = event.target.value;
+          reset(newData);
+        } else {
+          toast.error(response.response.data?.message, {
+            autoClose: 500,
+          });
+        }
+      } catch (err: any) {
+        console.log("areaCode select error", err);
+      }
+    };
+
     return (
       <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
         <Wrapper>
           <Field>
             <FormGroup>
               <Label>영업소</Label>
-              <Select {...register("areaCode")}>
+              <Select {...register("areaCode")} onChange={handleSelectCode}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -210,6 +249,7 @@ const Form = React.forwardRef(
             errors={errors["jpCode"]?.message}
             maxLength="4"
             inputSize={InputSize.en1300}
+            readOnly={isAddBtnClicked}
           />
         </Wrapper>
         <Divider />
@@ -219,6 +259,7 @@ const Form = React.forwardRef(
             register={register("jpName")}
             errors={errors["jpName"]?.message}
             inputSize={InputSize.en1300}
+            maxLength="30"
           />
         </Wrapper>
         <Wrapper>
@@ -227,6 +268,7 @@ const Form = React.forwardRef(
             register={register("jpSpec")}
             errors={errors["jpSpec"]?.message}
             inputSize={InputSize.en1300}
+            maxLength="10"
           />
         </Wrapper>
         <Wrapper>
@@ -254,7 +296,7 @@ const Form = React.forwardRef(
               errors={errors["jpKg"]?.message}
               style={{ width: "56px" }}
               textAlign="right"
-              maxLength="10"
+              maxLength="5"
             />
             <FormGroup>
               <Select {...register("jpKgDanwi")} style={{ minWidth: "64px" }}>

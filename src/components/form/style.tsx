@@ -51,7 +51,7 @@ export const getInputKind = (kind?: FieldKind) => {
   switch (kind) {
     case FieldKind.BORDER:
       return {
-        border: "1px solid #707070",
+        border: "1px solid rgb(188, 185 ,185)",
       };
     case FieldKind.RECTANGLE:
       return {
@@ -102,6 +102,7 @@ interface IInputProps {
     clear?: boolean;
     reset?: boolean;
   };
+  readOnly?: boolean;
 }
 
 export const Input = ({
@@ -125,6 +126,7 @@ export const Input = ({
   labelStyle,
   onChange,
   codeFormatNumber,
+  readOnly,
 }: IInputProps) => {
   const [inputValue, setInputValue] = useState("");
   const [formatNumberic, setFormatNumberic] = useState({
@@ -165,6 +167,10 @@ export const Input = ({
       case "comNumber":
         const formattedNumber = formatNum(e.target.value);
         setInputValue(formattedNumber);
+        return;
+      case "corpNumber":
+        const formattedCorpNumber = corporateNumber(e.target.value);
+        setInputValue(formattedCorpNumber);
         return;
     }
   };
@@ -219,6 +225,13 @@ export const Input = ({
       status: true,
     });
   };
+  function corporateNumber(value: any) {
+    if (!value) return value;
+    const corpNumber = value.replace(/[^\d]/g, "");
+    const corpNumberLength = corpNumber.length;
+    if (corpNumberLength < 7) return corpNumber;
+    return `${corpNumber.slice(0, 6)}-${corpNumber.slice(6, 13)}`;
+  }
 
   return (
     <InputWrapper fullWidth={fullWidth}>
@@ -258,6 +271,7 @@ export const Input = ({
             kind={kind && kind}
             textAlign={textAlign && textAlign}
             onChange={formatNumber ? (e) => handleInput(e, formatNumber) : null}
+            readOnly={readOnly}
           />
         ) : codeFormatNumber?.status ? (
           <InputForm
@@ -291,6 +305,8 @@ export const Input = ({
             minLength={minLength && minLength}
             kind={kind && kind}
             textAlign={textAlign && textAlign}
+            readOnly={readOnly}
+            // onChange={onChange && onChange}
           />
         )}
       </FormGroup>
@@ -308,6 +324,7 @@ export const InputForm = styled.input<{
   fullWidth?: boolean;
   kind?: FieldKind;
   textAlign?: string;
+  readOnly?: boolean;
 }>`
   height: 25px;
   width: ${(props) =>
@@ -576,11 +593,13 @@ export const TextArea = styled.textarea`
   }
 `;
 
-export const Input2 = styled.input`
-  width: 50px;
+export const Input2 = styled.input<{ inputSize?: InputSize }>`
+  width: ${(props) =>
+    props.inputSize ? getInputSize(props.inputSize) : "50px"};
   height: 25px;
-  border: 1px solid #e6e5e5;
+  border: 1px solid rgb(188, 185, 185);
   border-radius: 4px;
+  background: aliceblue;
 
   padding: 0 6px;
   margin: 0 5px;

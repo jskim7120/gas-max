@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
-import { EN2000INSERT, EN2000UPDATE, EN2000DELETE } from "app/path";
+import { EN2000INSERT, EN2000UPDATE, EN2000DELETE, EN200011 } from "app/path";
 import {
   Input,
   Wrapper,
@@ -67,16 +67,31 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
     }));
 
-    const resetForm = (type: string) => {
+    const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        console.log("type:", type);
         let newData: any = {};
 
         if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
+          document.getElementById("ccName")?.focus();
+          const path = EN200011;
+          try {
+            const response: any = await API.get(path, {
+              params: { areaCode: selected.areaCode },
+            });
+            if (response.status === 200) {
+              for (const [key, value] of Object.entries(selected)) {
+                newData[key] = null;
+              }
+              newData.ccCode = response.data.tempCode;
+              reset(newData);
+            } else {
+              toast.error(response.response.data?.message, {
+                autoClose: 500,
+              });
+            }
+          } catch (err: any) {
+            console.log("areaCode select error", err);
           }
-          reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -160,6 +175,7 @@ const Form = React.forwardRef(
             register={register("ccCode")}
             errors={errors["ccCode"]?.message}
             maxLength="2"
+            readOnly={isAddBtnClicked}
           />
         </Wrapper>
         <Divider />
@@ -168,6 +184,7 @@ const Form = React.forwardRef(
             label="정비명"
             register={register("ccName")}
             errors={errors["ccName"]?.message}
+            maxLength="30"
           />
         </Wrapper>
 
@@ -177,6 +194,7 @@ const Form = React.forwardRef(
             register={register("ccBigo")}
             errors={errors["ccBigo"]?.message}
             fullWidth
+            maxLength="50"
           />
         </Wrapper>
 

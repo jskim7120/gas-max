@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { EN1700INSERT, EN1700UPDATE, EN1700DELETE } from "app/path";
+import { EN1700INSERT, EN1700UPDATE, EN1700DELETE, EN170011 } from "app/path";
 import {
   Input,
   Select,
@@ -111,15 +111,32 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
     }));
 
-    const resetForm = (type: string) => {
+    const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        console.log("type:", type);
         let newData: any = {};
         if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
+          document.getElementById("caName")?.focus();
+          const path = EN170011;
+
+          try {
+            const response: any = await API.get(path, {
+              params: { areaCode: selected.areaCode },
+            });
+            if (response.status === 200) {
+              for (const [key, value] of Object.entries(selected)) {
+                newData[key] = null;
+              }
+              newData.caCode = response.data.tempCode;
+              newData.areaCode = selected.areaCode;
+              reset(newData);
+            } else {
+              toast.error(response.response.data?.message, {
+                autoClose: 500,
+              });
+            }
+          } catch (err: any) {
+            console.log("areaCode select error", err);
           }
-          reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -204,6 +221,7 @@ const Form = React.forwardRef(
         : "";
 
       try {
+        console.log("formValues", formValues);
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {
@@ -232,6 +250,30 @@ const Form = React.forwardRef(
       }
     };
 
+    const handleSelectCode = async (event: any) => {
+      let newData: any = {};
+      const path = EN170011;
+      try {
+        const response: any = await API.get(path, {
+          params: { areaCode: event.target.value },
+        });
+        if (response.status === 200) {
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = value;
+          }
+          newData.caCode = response.data.tempCode;
+          newData.areaCode = event.target.value;
+          reset(newData);
+        } else {
+          toast.error(response.response.data?.message, {
+            autoClose: 500,
+          });
+        }
+      } catch (err: any) {
+        console.log("areaCode select error", err);
+      }
+    };
+
     return (
       <form
         className="form_control"
@@ -245,13 +287,14 @@ const Form = React.forwardRef(
             errors={errors["caCode"]?.message}
             inputSize={InputSize.sm}
             maxLength="2"
+            readOnly={isAddBtnClicked}
           />
           <Field>
             <FormGroup>
               <Label>영업소</Label>
-              <Select {...register("areaCode")}>
+              <Select {...register("areaCode")} onChange={handleSelectCode}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
@@ -269,6 +312,7 @@ const Form = React.forwardRef(
             register={register("caName")}
             errors={errors["caName"]?.message}
             inputSize={InputSize.md}
+            maxLength="15"
           />
           <Field>
             <FormGroup>
@@ -318,6 +362,7 @@ const Form = React.forwardRef(
             label="매핑코드"
             register={register("eyeCarCode")}
             errors={errors["eyeCarCode"]?.message}
+            maxLength="10"
           />
           <InfoText text="탱크잔량 원격검침 시스템의 매핑할 차량코드를 지정." />
         </Wrapper>
@@ -336,6 +381,7 @@ const Form = React.forwardRef(
               register={register("caChargeDate")}
               errors={errors["caChargeDate"]?.message}
               inputSize={InputSize.sm}
+              maxLength="8"
             />
           </Field>
         </Wrapper>
@@ -346,12 +392,14 @@ const Form = React.forwardRef(
             register={register("caType")}
             errors={errors["caType"]?.message}
             inputSize={InputSize.sm}
+            maxLength="20"
           />
           <Input
             label="연식"
             register={register("caYear")}
             errors={errors["caYear"]?.message}
             inputSize={InputSize.sm}
+            maxLength="6"
           />
         </Wrapper>
 
@@ -361,6 +409,7 @@ const Form = React.forwardRef(
             register={register("caManager")}
             errors={errors["caManager"]?.message}
             inputSize={InputSize.sm}
+            maxLength="20"
           />
 
           <Field flex style={{ alignItems: "center" }}>
@@ -419,6 +468,7 @@ const Form = React.forwardRef(
             errors={errors["caBigo"]?.message}
             inputSize={InputSize.sm}
             fullWidth
+            maxLength="40"
           />
         </Wrapper>
         <Divider />
@@ -480,6 +530,7 @@ const Form = React.forwardRef(
             register={register("caBco")}
             errors={errors["caBco"]?.message}
             inputSize={InputSize.sm}
+            maxLength="20"
           />
         </Wrapper>
 
@@ -489,12 +540,14 @@ const Form = React.forwardRef(
             register={register("caBjijum")}
             errors={errors["caBjijum"]?.message}
             inputSize={InputSize.sm}
+            maxLength="20"
           />
           <Input
             label="담당자"
             register={register("caBdamdang")}
             errors={errors["caBdamdang"]?.message}
             inputSize={InputSize.sm}
+            maxLength="10"
           />
         </Wrapper>
 
@@ -504,12 +557,14 @@ const Form = React.forwardRef(
             register={register("caBtel")}
             errors={errors["caBtel"]?.message}
             inputSize={InputSize.sm}
+            maxLength="14"
           />
           <Input
             label="핸드폰"
             register={register("caBhp")}
             errors={errors["caBhp"]?.message}
             inputSize={InputSize.sm}
+            maxLength="14"
           />
         </Wrapper>
 
@@ -519,12 +574,14 @@ const Form = React.forwardRef(
             register={register("caBman")}
             errors={errors["caBman"]?.message}
             inputSize={InputSize.sm}
+            maxLength="10"
           />
           <Input
             label="증권번호"
             register={register("caBno")}
             errors={errors["caBno"]?.message}
             inputSize={InputSize.sm}
+            maxLength="20"
           />
         </Wrapper>
 

@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { EN1600INSERT, EN1600UPDATE, EN1600DELETE } from "app/path";
+import { EN1600INSERT, EN1600UPDATE, EN1600DELETE, EN160011 } from "app/path";
 import {
   Input,
   Select,
@@ -99,16 +99,32 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
     }));
 
-    const resetForm = (type: string) => {
+    const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        console.log("type:", type);
         let newData: any = {};
-
         if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
+          document.getElementById("swName")?.focus();
+          const path = EN160011;
+
+          try {
+            const response: any = await API.get(path, {
+              params: { areaCode: selected.areaCode },
+            });
+            if (response.status === 200) {
+              for (const [key, value] of Object.entries(selected)) {
+                newData[key] = null;
+              }
+              newData.swCode = response.data.tempCode;
+              newData.areaCode = selected.areaCode;
+              reset(newData);
+            } else {
+              toast.error(response.response.data?.message, {
+                autoClose: 500,
+              });
+            }
+          } catch (err: any) {
+            console.log("areaCode select error", err);
           }
-          reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -225,6 +241,30 @@ const Form = React.forwardRef(
       }
     };
 
+    const handleSelectCode = async (event: any) => {
+      let newData: any = {};
+      const path = EN160011;
+      try {
+        const response: any = await API.get(path, {
+          params: { areaCode: event.target.value },
+        });
+        if (response.status === 200) {
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = value;
+          }
+          newData.swCode = response.data.tempCode;
+          newData.areaCode = event.target.value;
+          reset(newData);
+        } else {
+          toast.error(response.response.data?.message, {
+            autoClose: 500,
+          });
+        }
+      } catch (err: any) {
+        console.log("areaCode select error", err);
+      }
+    };
+
     return (
       <form
         className="form_control"
@@ -237,11 +277,12 @@ const Form = React.forwardRef(
             register={register("swCode")}
             errors={errors["swCode"]?.message}
             maxLength="2"
+            readOnly={isAddBtnClicked}
           />
           <Field>
             <FormGroup>
               <Label>영업소</Label>
-              <Select {...register("areaCode")}>
+              <Select {...register("areaCode")} onChange={handleSelectCode}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -288,6 +329,8 @@ const Form = React.forwardRef(
             label="주민번호"
             register={register("swJuminno")}
             errors={errors["swJuminno"]?.message}
+            formatNumber="corpNumber"
+            maxLength={"14"}
           />
         </Wrapper>
 
@@ -296,11 +339,13 @@ const Form = React.forwardRef(
             label="전화번호"
             register={register("swTel")}
             errors={errors["swTel"]?.message}
+            maxLength="14"
           />
           <Input
             label="핸드폰"
             register={register("swHp")}
             errors={errors["swHp"]?.message}
+            maxLength="14"
           />
         </Wrapper>
 
@@ -309,6 +354,7 @@ const Form = React.forwardRef(
             label="이메일"
             register={register("cuSeEmail")}
             errors={errors["cuSeEmail"]?.message}
+            maxLength="50"
           />
           @
           <Select {...register("mailKind")}>
@@ -325,12 +371,14 @@ const Form = React.forwardRef(
             label="주소"
             register={register("swZipcode")}
             errors={errors["swZipcode"]?.message}
+            maxLength="6"
           />
           <DaumAddress setAddress={setAddress} />
           <Input
             register={register("swAddr1")}
             errors={errors["swAddr1"]?.message}
             fullWidth
+            maxLength="40"
           />
         </Wrapper>
 
@@ -340,6 +388,7 @@ const Form = React.forwardRef(
             register={register("swAddr2")}
             errors={errors["swAddr2"]?.message}
             fullWidth
+            maxLength="40"
           />
         </Wrapper>
 
@@ -348,6 +397,7 @@ const Form = React.forwardRef(
             label="매핑코드"
             register={register("eyeSwCode")}
             errors={errors["eyeSwCode"]?.message}
+            maxLength="10"
           />
           <p
             style={{
@@ -374,6 +424,7 @@ const Form = React.forwardRef(
                 register={register("swStampFile")}
                 errors={errors["swStampFile"]?.message}
                 value={image?.name}
+                maxLength="80"
               />
 
               <button
@@ -457,11 +508,13 @@ const Form = React.forwardRef(
             label="면허종류"
             register={register("swDriverType")}
             errors={errors["swDriverType"]?.message}
+            maxLength="15"
           />
           <Input
             label="면허번호"
             register={register("swDriverNo")}
             errors={errors["swDriverNo"]?.message}
+            maxLength="17"
           />
         </Wrapper>
 
@@ -491,6 +544,7 @@ const Form = React.forwardRef(
             register={register("swBigo")}
             errors={errors["swBigo"]?.message}
             fullWidth
+            maxLength="40"
           />
         </Wrapper>
         <Divider />

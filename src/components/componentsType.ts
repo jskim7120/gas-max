@@ -1,6 +1,8 @@
 export enum ButtonColor {
   PRIMARY = "primary",
   SECONDARY = "secondary",
+  WARNING = "warning",
+  SUCCESS = "success",
 }
 
 export enum ButtonSize {
@@ -52,4 +54,28 @@ export enum ButtonType {
 export enum FieldKind {
   BORDER = "border",
   RECTANGLE = "rectangle",
+}
+
+export enum BadgeColor {
+  orange = "orange",
+  brownDark = "brownDark",
+  brownLight = "brownLight",
+  purpleLight = "purpleLight",
+  purpleMedium = "purpleMedium",
+  purpleDark = "purpleDark",
+  goldenBrown = "goldenBrown",
+  greenLight = "greenLight",
+  greenMedium = "greenMedium",
+  greenDark = "greenDark",
+}
+
+export enum BadgeShape {
+  circle = "circle",
+  rectangle = "rectangle",
+}
+
+export enum BadgeSize {
+  size1 = "size1",
+  size2 = "size2",
+  size3 = "size3",
 }

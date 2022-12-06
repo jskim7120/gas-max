@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { EN1100INSERT, EN1100UPDATE, EN1100DELETE } from "app/path";
+import { EN1100INSERT, EN1100UPDATE, EN1100DELETE, EN110011 } from "app/path";
 import {
   Input,
   Select,
@@ -85,16 +85,31 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
     }));
 
-    const resetForm = (type: string) => {
+    const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        console.log("type:", type);
         let newData: any = {};
 
         if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
+          document.getElementById("areaName")?.focus();
+          const path = EN110011;
+          try {
+            const response: any = await API.get(path, {
+              params: { areaCode: selected.areaCode },
+            });
+            if (response.status === 200) {
+              for (const [key, value] of Object.entries(selected)) {
+                newData[key] = null;
+              }
+              newData.areaCode = response.data.tempCode;
+              reset(newData);
+            } else {
+              toast.error(response.response.data?.message, {
+                autoClose: 500,
+              });
+            }
+          } catch (err: any) {
+            console.log("areaCode select error", err);
           }
-          reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -189,11 +204,13 @@ const Form = React.forwardRef(
             errors={errors["areaCode"]?.message}
             fullWidth
             maxLength="2"
+            readOnly={isAddBtnClicked}
           />
           <Input
             label="영업소명"
             register={register("areaName")}
             errors={errors["areaName"]?.message}
+            maxLength="20"
           />
         </Wrapper>
         <Divider />
@@ -203,16 +220,19 @@ const Form = React.forwardRef(
             register={register("jnSsno")}
             errors={errors["jnSsno"]?.message}
             formatNumber="telNumber"
+            maxLength="13"
           />
           <Input
             label="상호"
             register={register("jnSangho")}
             errors={errors["jnSangho"]?.message}
+            maxLength="26"
           />
           <Input
             label="대표"
             register={register("jnSajang")}
             errors={errors["jnSajang"]?.message}
+            maxLength="14"
           />
         </Wrapper>
         <Wrapper style={{ alignItems: "center" }}>
@@ -220,12 +240,14 @@ const Form = React.forwardRef(
             label="주소"
             register={register("jnZipcode")}
             errors={errors["jnZipcode"]?.message}
+            maxLength="6"
           />
           <DaumAddress setAddress={setAddress} />
           <Input
             register={register("jnAddr1")}
             errors={errors["jnAddr1"]?.message}
             fullWidth
+            maxLength="40"
           />
         </Wrapper>
         <Wrapper>
@@ -234,6 +256,7 @@ const Form = React.forwardRef(
             register={register("jnAddr2")}
             errors={errors["jnAddr2"]?.message}
             fullWidth
+            maxLength="40"
           />
         </Wrapper>
         <Wrapper>
@@ -242,12 +265,14 @@ const Form = React.forwardRef(
             register={register("jnUptae")}
             errors={errors["jnUptae"]?.message}
             fullWidth
+            maxLength="50"
           />
           <Input
             label="종목"
             register={register("jnJongmok")}
             errors={errors["jnJongmok"]?.message}
             fullWidth
+            maxLength="50"
           />
         </Wrapper>
         <Wrapper grid>
@@ -255,17 +280,20 @@ const Form = React.forwardRef(
             label="대표전화"
             register={register("jnTel1")}
             errors={errors["jnTel1"]?.message}
+            maxLength="14"
           />
           <Input
             label="대표전화2"
             register={register("jnTel2")}
             errors={errors["jnTel2"]?.message}
+            maxLength="14"
           />
 
           <Input
             label="팩스"
             register={register("jnFax")}
             errors={errors["jnFax"]?.message}
+            maxLength="14"
           />
         </Wrapper>
         <Divider />
@@ -274,11 +302,13 @@ const Form = React.forwardRef(
             label="안전관리 총괄자"
             register={register("jnAnname1")}
             errors={errors["jnAnname1"]?.message}
+            maxLength="10"
           />
           <Input
             label="전화"
             register={register("jnAntel1")}
             errors={errors["jnAntel1"]?.message}
+            maxLength="14"
           />
         </Wrapper>
         <Wrapper grid>
@@ -286,11 +316,13 @@ const Form = React.forwardRef(
             label="안전관리 책임자"
             register={register("jnAnname2")}
             errors={errors["jnAnname2"]?.message}
+            maxLength="10"
           />
           <Input
             label="전화"
             register={register("jnAntel2")}
             errors={errors["jnAntel2"]?.message}
+            maxLength="14"
           />
         </Wrapper>
         <Divider />
@@ -370,6 +402,7 @@ const Form = React.forwardRef(
             register={register("jnCMngNo")}
             errors={errors["jnCMngNo"]?.message}
             textAlign="right"
+            maxLength="4"
           />
           <Field>
             <FormGroup>

@@ -10,19 +10,8 @@ import {
 } from "components/radioButton/style";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
-import { MagnifyingGlassBig, ExcelIcon } from "components/allSvgIcon";
-import { Update, Reset } from "components/allSvgIcon";
-
-import {
-  Field,
-  Input,
-  Input2,
-  Select,
-  DividerGray,
-  Wrapper,
-  Label,
-  FormGroup,
-} from "components/form/style";
+import { MagnifyingGlassBig, Update, Reset } from "components/allSvgIcon";
+import { Input, Wrapper, Label, FormGroup, Field } from "components/form/style";
 import { FieldKind } from "components/componentsType";
 import { toast } from "react-toastify";
 
@@ -38,9 +27,23 @@ const radioOptions = [
 ];
 
 let dataOrig: any;
-let editedRowIds: [];
+let editedRowIds: any = [];
 
-function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
+function Tab2({
+  buCode,
+  areaCode,
+  values1,
+  values2,
+  labels1,
+  labels2,
+}: {
+  buCode: string;
+  areaCode: string;
+  values1: any;
+  values2: any;
+  labels1: any;
+  labels2: any;
+}) {
   const [data, setData] = useState<any>([]);
   const [commitedRowId, setCommitedRowId] = useState<any>();
 
@@ -51,7 +54,12 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
   }, [areaCode, buCode]);
 
   useEffect(() => {
-    console.log(commitedRowId);
+    if (commitedRowId !== undefined) {
+      console.log("commitedRowId:", commitedRowId);
+      if (!checkAvailability(editedRowIds, commitedRowId)) {
+        editedRowIds.push(commitedRowId);
+      }
+    }
   }, [commitedRowId]);
 
   const {
@@ -62,6 +70,10 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
     formState: { errors },
   } = useForm<{ jpGubun: string; jpName: string }>();
 
+  const checkAvailability = (arr: any, val: any) => {
+    return arr.some((arrVal: any) => val === arrVal);
+  };
+
   const fetchData = async (params: any) => {
     try {
       if (areaCode && buCode) {
@@ -69,13 +81,12 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
           params: {
             areaCode: areaCode,
             buCode: buCode,
-            jpGubun: params && params.tabJpGubun1,
-            jpName: params && params.tabJpGubun1,
+            jpGubun: params && params.jpGubun,
+            jpName: params && params.jpName,
           },
         });
-
+        console.log("tab2Data:", tab2Data);
         setData(tab2Data);
-
         dataOrig = JSON.parse(JSON.stringify(tab2Data));
       }
     } catch (error) {
@@ -84,42 +95,38 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
   };
 
   const submit = async () => {
-    if (buCode) {
-      const formValues = getValues();
-      await fetchData(formValues);
-    } else {
-      console.log("buCode bhgui");
-    }
+    const formValues = getValues();
+    console.log("formValues:", formValues);
+    await fetchData(formValues);
   };
-  console.log(editedRowIds);
 
   const update = async () => {
-    try {
-      let successList: any = [];
-      let failList: any = [];
+    if (areaCode && buCode) {
+      try {
+        // let successList: any = [];
+        // let failList: any = [];
 
-      editedRowIds.forEach(async (id: any) => {
-        let response = await API.post(GR1600JPUPDATE, {
-          areaCode: areaCode,
-          buCode: buCode,
-          ...data[id],
+        editedRowIds.forEach(async (id: any) => {
+          let response = await API.post(GR1600JPUPDATE, {
+            areaCode: areaCode,
+            buCode: buCode,
+            ...data[id],
+          });
+
+          // if (response.status === 200) {
+          //   successList.push(id);
+          // } else {
+          //   failList.push(id);
+          // }
         });
 
-        if (response.status === 200) {
-          successList.push(id);
-        } else {
-          failList.push(id);
-        }
-      });
+        toast.success(`row ${editedRowIds} successfully changed.`, {
+          autoClose: 500,
+        });
 
-      console.log(successList, successList.length);
-
-      if (successList.length > 0) {
-        console.log("successList.length:", successList);
-        toast.success(`successfully changed.`);
-      }
-      //setEditedRowIds([]);
-    } catch (error: any) {}
+        editedRowIds = [];
+      } catch (error: any) {}
+    }
   };
 
   const resetTable = () => {
@@ -133,11 +140,11 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: "baseline",
         }}
       >
-        <form style={{ marginBottom: "10px" }}>
-          <Wrapper>
+        <form>
+          <Wrapper style={{ alignItems: "center" }}>
             <FormGroup style={{ alignItems: "center" }}>
               <Label style={{ background: "transparent" }}>조회구분</Label>
               {radioOptions.map((option, index) => (
@@ -154,6 +161,7 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
                 </Item>
               ))}
             </FormGroup>
+
             <Input
               label="품명"
               register={register("jpName")}
@@ -166,12 +174,17 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
               icon={<MagnifyingGlassBig width="17.188" height="17.141" />}
               kind={ButtonType.ROUND}
               type="button"
-              style={{ marginRight: "5px", height: "26px" }}
+              style={{ height: "26px", marginBottom: "1px" }}
               onClick={handleSubmit(submit)}
             />
           </Wrapper>
         </form>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           <Button
             text="저장"
             icon={<Update />}
@@ -182,7 +195,15 @@ function Tab2({ buCode, areaCode }: { buCode: string; areaCode: string }) {
           <Button text="취소" icon={<Reset />} onClick={resetTable} />
         </div>
       </div>
-      <Grid data={data} setData={setData} setCommitedRowId={setCommitedRowId} />
+      <Grid
+        data={data}
+        setData={setData}
+        setCommitedRowId={setCommitedRowId}
+        values1={values1}
+        values2={values2}
+        labels1={labels1}
+        labels2={labels2}
+      />
     </div>
   );
 }

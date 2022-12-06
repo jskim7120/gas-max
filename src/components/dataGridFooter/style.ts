@@ -1,16 +1,12 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  position: absolute;
-  bottom: 80px;
-  right: 5px;
-  left: 87px;
-
-  background: #dbdbdb;
+  width: 100%;
   height: 27px;
+  background: #dbdbdb;
   display: flex;
   flex-direction: row;
-  border-top: 5px solid #707070;
+  border-top: 3px solid #707070;
 
   .totalCnt {
     width: 77px;

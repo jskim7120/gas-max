@@ -1,23 +1,29 @@
-import React, { useState, useEffect } from "react";
-import {
-  Field,
-  Input,
-  Input2,
-  Select,
-  DividerGray,
-  Wrapper,
-  Label,
-  FormGroup,
-} from "components/form/style";
+import { useState, useEffect } from "react";
+import { Input, Divider, Wrapper } from "components/form/style";
 import { useForm } from "react-hook-form";
-import { InputSize } from "components/componentsType";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
 import API from "app/axios";
-import { GR160065 } from "app/path";
+import { toast } from "react-toastify";
+import { GR160065, GR1600UPDATE } from "app/path";
+import { IGR1600SEARCH } from "../model";
 
-function Form({ selected }: { selected: any }) {
+function Form({
+  selected,
+  values1,
+  values2,
+  labels1,
+  labels2,
+  fetchLeftData,
+}: {
+  selected: any;
+  values1: any;
+  values2: any;
+  labels1: any;
+  labels2: any;
+  fetchLeftData: any;
+}) {
   const [tabId, setTabId] = useState(0);
   const [tabData, setTabData] = useState(null);
 
@@ -25,23 +31,72 @@ function Form({ selected }: { selected: any }) {
     register,
     reset,
     formState: { errors },
-  } = useForm<any>();
+    getValues,
+  } = useForm<IGR1600SEARCH>();
 
   const fetchData = async () => {
-    try {
-      const { data: tabData } = await API.get(GR160065, {
-        params: {
-          areaCode: selected.areaCode,
-          buCode: selected?.buCode,
-        },
-      });
-      setTabData(tabData);
-    } catch (err) {}
+    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      try {
+        const { data: tabData } = await API.get(GR160065, {
+          params: {
+            areaCode: selected.areaCode,
+            buCode: selected?.buCode,
+          },
+        });
+
+        setTabData(tabData);
+      } catch (err) {}
+    }
   };
 
   useEffect(() => {
+    fetchData();
+    clearForm();
+  }, [selected]);
+
+  const update = async () => {
     if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-      fetchData();
+      try {
+        const formValues = getValues();
+
+        const response: any = await API.post(GR1600UPDATE, {
+          areaCode: formValues.areaCode,
+          buCode: formValues.buCode,
+          buPdanga:
+            formValues.buPdanga && Number(formValues.buPdanga.replace(",", "")),
+          buBdanga:
+            formValues.buBdanga && Number(formValues.buBdanga.replace(",", "")),
+          buBldanga:
+            formValues.buBldanga &&
+            Number(formValues.buBldanga.replace(",", "")),
+          buPcost:
+            formValues.buPcost && Number(formValues.buPcost.replace(",", "")),
+          buBcost:
+            formValues.buBcost && Number(formValues.buBcost.replace(",", "")),
+          buBlcost:
+            formValues.buBlcost && Number(formValues.buBlcost.replace(",", "")),
+          buJpCode1: formValues.buJpCode1,
+          buJpCode2: formValues.buJpCode2,
+          buJpCode3: formValues.buJpCode3,
+          buJpCode4: formValues.buJpCode4,
+        });
+
+        if (response.status === 200) {
+          fetchLeftData();
+          toast.success("update successfull", {
+            autoClose: 500,
+          });
+        } else {
+          toast.error(response?.response?.data?.message, { autoClose: 500 });
+        }
+      } catch (err) {
+        console.log("error::::::::", err);
+      }
+    }
+  };
+
+  const clearForm = () => {
+    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
       let newData: any = {};
 
       for (const [key, value] of Object.entries(selected)) {
@@ -49,9 +104,10 @@ function Form({ selected }: { selected: any }) {
       }
       reset(newData);
     }
-  }, [selected]);
+  };
+
   return (
-    <>
+    <div style={{ padding: "0px 10px" }}>
       <form>
         <Wrapper grid>
           <Input
@@ -70,7 +126,7 @@ function Form({ selected }: { selected: any }) {
             errors={errors["buName"]?.message}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid>
           <Input
             label="대표전화"
@@ -88,7 +144,7 @@ function Form({ selected }: { selected: any }) {
             errors={errors["buStaeName"]?.message}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid>
           <Input
             label="담당자명"
@@ -106,7 +162,7 @@ function Form({ selected }: { selected: any }) {
             errors={errors["buEmail"]?.message}
           />
         </Wrapper>
-        <DividerGray />
+
         <Wrapper grid>
           <Input
             label="비고"
@@ -117,10 +173,13 @@ function Form({ selected }: { selected: any }) {
           <div
             style={{
               display: "flex",
+              justifyContent: "space-between",
+              justifySelf: "flex-end",
+              margin: "0 5px",
               alignItems: "center",
               background: `rgba(104,103,103,0.09)`,
-              width: "200px",
-              height: "23px",
+              width: "250px",
+              height: "25px",
               borderRadius: "4px",
             }}
           >
@@ -139,22 +198,43 @@ function Form({ selected }: { selected: any }) {
             >
               미지급액
             </span>
-            <span style={{ marginLeft: "20px" }}>{selected?.buCode}</span>
+            <span
+              style={{
+                marginLeft: "20px",
+                fontFamily: "NotoSansKRRegular",
+                fontSize: "12px",
+                paddingRight: "10px",
+              }}
+            >
+              {selected?.buCode}
+            </span>
           </div>
         </Wrapper>
-
-        <DividerGray />
+        <Divider />
       </form>
+
       <div style={{ marginTop: "15px" }}>
         <PlainTab
           tabHeader={["LPG  매입단가", "품목별 매입단가", "부품 매입단가"]}
           onClick={(id) => setTabId(id)}
         />
         <TabContentWrapper>
-          {getTabContent(tabId, register, errors, tabData, selected)}
+          {getTabContent(
+            tabId,
+            register,
+            errors,
+            tabData,
+            selected,
+            values1,
+            values2,
+            labels1,
+            labels2,
+            update,
+            clearForm
+          )}
         </TabContentWrapper>
       </div>
-    </>
+    </div>
   );
 }
 
