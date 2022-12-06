@@ -411,8 +411,6 @@ const Form = React.forwardRef(
       if (selectedRdangaSign === null) {
         totalValue = 0;
       } else if (selectedRdangaSign === "+") {
-        console.log("Mother fker", selectedcuRdanga);
-        console.log("Error hander on purpose");
         // totalValue = eval(`${selectedcuRdanga} + ${selectedRdangaAmt}`);
         totalValue = Number(selectedcuRdanga) + Number(selectedRdangaAmt);
       } else if (selectedRdangaSign === "-") {
@@ -1105,7 +1103,15 @@ const Form = React.forwardRef(
             <Field style={{ padding: "0px 5px" }}>
               <FormGroup>
                 <Label align="center">용기수량</Label>
-                <Input register={register("cuCylinderName")} />
+                <Select {...register("cuCylinderName")} width={InputSize.i120}>
+                {dataCommonDic?.cuJyCode?.map((option: any, index: number) => {
+                  return (
+                    <option key={index} value={option.code}>
+                      {option.codeName}
+                    </option>
+                  );
+                })}
+              </Select>
                 <p>x</p>
                 <Input
                   register={register("cuCylinderQty")}
