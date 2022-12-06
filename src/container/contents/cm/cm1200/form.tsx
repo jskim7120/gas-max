@@ -411,11 +411,15 @@ const Form = React.forwardRef(
       if (selectedRdangaSign === null) {
         totalValue = 0;
       } else if (selectedRdangaSign === "+") {
-        totalValue = eval(`${selectedcuRdanga} + ${selectedRdangaAmt}`);
+        totalValue = Number(selectedcuRdanga) + Number(selectedRdangaAmt);
       } else if (selectedRdangaSign === "-") {
         totalValue = selectedcuRdanga - selectedRdangaAmt;
       } else if (selectedRdangaSign === "X") {
+        if(selectedcuRdanga === 0 || selectedRdangaAmt === 0 ){
+          totalValue = 0;
+        }else{
         totalValue = selectedcuRdanga * selectedRdangaAmt;
+        }
       } else {
         totalValue = 0;
       }
@@ -460,7 +464,7 @@ const Form = React.forwardRef(
                 )}
               </Select>
               <Input
-                type="number"
+                type="text"
                 inputSize={InputSize.xs}
                 textAlign="right"
                 register={register("cuRdangaAmt")}
@@ -690,6 +694,7 @@ const Form = React.forwardRef(
                 inputSize={InputSize.i120}
               />
               <p>{selected?.cuSukumType}</p>
+              <p>원</p>
             </FormGroup>
           </Field>
           <Field>
@@ -711,7 +716,7 @@ const Form = React.forwardRef(
             </FormGroup>
           </Field>
         </Wrapper>
-        <DividerGray />
+        {/* <DividerGray /> */}
         <Wrapper grid col={4}>
           <Field>
             <FormGroup>
@@ -955,7 +960,7 @@ const Form = React.forwardRef(
             </Field>
             <Field>
               <FormGroup>
-                <Input register={register("tankMakeDate1")} />
+                <Input maxLength="7" register={register("tankMakeDate1")} />
               </FormGroup>
             </Field>
             <Field>
@@ -1097,7 +1102,15 @@ const Form = React.forwardRef(
             <Field style={{ padding: "0px 5px" }}>
               <FormGroup>
                 <Label align="center">용기수량</Label>
-                <Input register={register("cuCylinderName")} />
+                <Select {...register("cuCylinderName")} width={InputSize.i120}>
+                {dataCommonDic?.cuJyCode?.map((option: any, index: number) => {
+                  return (
+                    <option key={index} value={option.code}>
+                      {option.codeName}
+                    </option>
+                  );
+                })}
+              </Select>
                 <p>x</p>
                 <Input
                   register={register("cuCylinderQty")}
@@ -1188,7 +1201,7 @@ const Form = React.forwardRef(
             </Field>
             <Field>
               <FormGroup>
-                <Input register={register("gasifyMakeDate1")} />
+                <Input maxLength="7" register={register("gasifyMakeDate1")} />
               </FormGroup>
             </Field>
             <Field>
@@ -1255,7 +1268,7 @@ const Form = React.forwardRef(
             </Field>
             <Field>
               <FormGroup>
-                <Input register={register("gasifyMakeDate2")} />
+                <Input maxLength="7" register={register("gasifyMakeDate2")} />
               </FormGroup>
             </Field>
             <Field>
