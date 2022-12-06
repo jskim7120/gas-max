@@ -24,7 +24,7 @@ import { InputSize } from "components/componentsType";
 import { convertBase64 } from "helpers/convertBase64";
 import API from "app/axios";
 import IconInfo from "assets/image/Icon-info.png";
-import { ImageWrapper } from "../style";
+import { ImageWrapper } from "../../commonStyle";
 import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
 
 interface IForm {

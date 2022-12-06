@@ -8,9 +8,9 @@ import EN1200 from "container/contents/en/en1200";
 import EN1800 from "container/contents/en/en1800";
 import EN1900 from "container/contents/en/en1900";
 import EN2000 from "container/contents/en/en2000";
-import CM1100 from "container/contents/cm1100";
-import CM1300 from "container/contents/cm1300";
-import CM1200 from "container/contents/cm1200";
+import CM1100 from "container/contents/cm/cm1100";
+import CM1300 from "container/contents/cm/cm1300";
+import CM1200 from "container/contents/cm/cm1200";
 import GR1100 from "container/contents/gr/gr1100";
 import GR1600 from "container/contents/gr/gr1600";
 

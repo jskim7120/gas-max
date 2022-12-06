@@ -37,7 +37,7 @@ const FFormGroup = styled.div`
 function FormCM1106() {
   const cm1105 = useSelector((state) => state.modal.cm1105);
   const [data, setData] = useState([]);
-  const [selected, setSelected] = useState({});
+  const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const {
@@ -67,6 +67,8 @@ function FormCM1106() {
       console.log("aldaa");
     }
   };
+
+  console.log("selected::::::", selected);
 
   const submit = async (data: ICM1106) => {};
 
@@ -151,12 +153,12 @@ function FormCM1106() {
           <div style={{ width: "60%", display: "flex" }}>
             <FFormGroup>
               <LLabel style={{}}>거래처코드</LLabel>
-              <IInput {...register("areaCode")} />
+              <IInput name="jcCuCode" value={selected?.jcCuCode} />
             </FFormGroup>
 
             <FFormGroup>
               <LLabel style={{}}>거래처명</LLabel>
-              <IInput {...register("areaCode")} />
+              <IInput name="jcCuName" value={selected?.jcCuName} />
             </FFormGroup>
 
             <button

@@ -349,7 +349,7 @@ const Form = React.forwardRef(
                 width={InputSize.i120}
                 textAlign="right"
               >
-                {dataCommonDic?.aptRh2o?.map((option: any, index: number) => {
+                {dataCommonDic?.aptRh20?.map((option: any, index: number) => {
                   return (
                     <option key={index} value={option.code}>
                       {option.codeName}
@@ -513,6 +513,7 @@ const Form = React.forwardRef(
                 register={register("aptPer")}
                 textAlign="right"
                 inputSize={InputSize.i120}
+                maxLength="3"
               />
               <p>{`%`}</p>
             </FormGroup>

@@ -4,7 +4,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { EN1700INSERT, EN1700UPDATE, EN1700DELETE, EN170011 } from "app/path";
+import {
+  EN1700INSERT,
+  EN1700UPDATE,
+  EN1700DELETE,
+  EN170011,
+  EN170065,
+} from "app/path";
 import {
   Input,
   Select,
@@ -85,6 +91,7 @@ const Form = React.forwardRef(
     const [caJdate2, setCaJdate2] = useState("");
     const [caBsdate, setCaBsdate] = useState("");
     const [caBldate, setCaBldate] = useState("");
+    const [empChargeData, setEmpChargeData] = useState([]);
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
@@ -102,6 +109,7 @@ const Form = React.forwardRef(
     useEffect(() => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         resetForm("reset");
+        empChargeDataSelect(selected.areaCode);
       }
     }, [selected]);
 
@@ -141,6 +149,7 @@ const Form = React.forwardRef(
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
           }
+          empChargeDataSelect(newData.areaCode);
           reset({
             ...newData,
             caBkYn: selected?.caBkYn === "Y",
@@ -221,7 +230,6 @@ const Form = React.forwardRef(
         : "";
 
       try {
-        console.log("formValues", formValues);
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {
@@ -253,11 +261,13 @@ const Form = React.forwardRef(
     const handleSelectCode = async (event: any) => {
       let newData: any = {};
       const path = EN170011;
+
       try {
         const response: any = await API.get(path, {
           params: { areaCode: event.target.value },
         });
         if (response.status === 200) {
+          console.log("works", response);
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
           }
@@ -268,6 +278,30 @@ const Form = React.forwardRef(
           toast.error(response.response.data?.message, {
             autoClose: 500,
           });
+        }
+        empChargeDataSelect(event);
+      } catch (err: any) {
+        console.log("areaCode select error", err);
+      }
+    };
+
+    const empChargeDataSelect = async (event: any) => {
+      const path2 = EN170065;
+      try {
+        if (typeof event === "string") {
+          const responseEmpCharge: any = await API.get(path2, {
+            params: { areaCode: event },
+          });
+          if (responseEmpCharge.status === 200) {
+            setEmpChargeData(responseEmpCharge.data);
+          }
+        } else {
+          const responseEmpCharge: any = await API.get(path2, {
+            params: { areaCode: event.target.value },
+          });
+          if (responseEmpCharge.status === 200) {
+            setEmpChargeData(responseEmpCharge.data);
+          }
         }
       } catch (err: any) {
         console.log("areaCode select error", err);
@@ -318,7 +352,7 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>담당사원</Label>
               <Select {...register("caSwCode")}>
-                {dataCommonDic?.caSwCode?.map((obj: any, idx: number) => (
+                {empChargeData?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>

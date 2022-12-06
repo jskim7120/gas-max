@@ -3,7 +3,7 @@ export const Grid1Container = styled.div`
   width: 76%;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #707070;
+  border-right: 4px solid #707070;
   gap: 4px;
 `;
 export const Grid2Container = styled.div`
@@ -15,11 +15,9 @@ export const Grid2Container = styled.div`
 `;
 export const Table1Wrapper = styled.div`
   height: 45%;
-  border-bottom: 1px solid #707070;
 `;
 export const Detail1Wrapper = styled.div`
   // height: 40%;
-  border-top: 1px solid #707070;
   position: relative;
   .addr2 {
     font-size: 12px;

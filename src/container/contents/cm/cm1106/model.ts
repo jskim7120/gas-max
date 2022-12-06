@@ -1,6 +1,8 @@
 export interface ICM1106 {
   areaCode: string;
   areaName: string;
+  custIn: string;
+  custOut: string;
   jcBasicJaego: string;
   jcCuCode: string;
   jcCuName: string;

@@ -13,7 +13,7 @@ import {
   Label,
 } from "components/form/style";
 import { InfoText } from "components/text";
-import { InfoDesc } from "../style";
+import { InfoDesc } from "../../commonStyle";
 import CheckBox from "components/checkbox";
 import { ICARJBC } from "./model";
 import { schema } from "./validation";

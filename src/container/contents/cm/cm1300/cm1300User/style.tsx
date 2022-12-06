@@ -14,7 +14,6 @@ export const FormContainer = styled.div`
 
 export const TableContainer = styled.div`
   height: 500px;
-  border-bottom: 1px solid #707070;
 `;
 export const UpdateButtonsContainer2 = styled.div`
   display: flex;

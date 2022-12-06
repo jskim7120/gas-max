@@ -21,7 +21,7 @@ import {
 } from "app/state/modal/modalSlice";
 import Form from "./form";
 import { ButtonColor, FieldKind, ButtonType } from "components/componentsType";
-import { Wrapper, DetailHeader } from "../en/style";
+import { Wrapper, DetailHeader } from "../../commonStyle";
 import { CM1300SEARCH } from "app/path";
 import {
   Grid1Container,
@@ -33,7 +33,13 @@ import {
   BorderRight,
   Detail2Wrapper,
 } from "./style";
-import { Field, FormGroup, Input, Select } from "components/form/style";
+import {
+  Field,
+  FormGroup,
+  Input,
+  Select,
+  Divider,
+} from "components/form/style";
 import HomeIconSvg from "assets/image/home-icon.svg";
 import { useDispatch, useSelector } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -221,9 +227,16 @@ function CM1300({
           <BorderRight />
         </div>
       </DetailHeader>
-      <Wrapper style={{ gap: "3px" }}>
+      <Wrapper>
         <Grid1Container>
-          <form onSubmit={handleSubmit(onSearchSubmit)}>
+          <form
+            onSubmit={handleSubmit(onSearchSubmit)}
+            style={{
+              background: "#dbdbdb",
+              borderBottom: "3px solid #707070",
+              height: "40px",
+            }}
+          >
             <Field>
               <FormGroup>
                 <FormTitle onClick={fetchListData}>
@@ -253,6 +266,7 @@ function CM1300({
               </FormGroup>
             </Field>
           </form>
+
           <Table1Wrapper ref={realgridElement}></Table1Wrapper>
           <Detail1Wrapper>
             <Form

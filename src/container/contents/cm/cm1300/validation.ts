@@ -28,21 +28,21 @@ export const schema = yup.object({
   aptSukumtype: yup.string().nullable(),
   aptF: yup
     .number()
-    .typeError("숫자만 입력")
+    .typeError("")
     .transform((_, val) => {
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
   aptS: yup
     .number()
-    .typeError("숫자만 입력")
+    .typeError("")
     .transform((_, val) => {
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
   aptSum: yup
     .number()
-    .typeError("숫자만 입력")
+    .typeError("")
     .transform((_, val) => {
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
