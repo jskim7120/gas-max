@@ -1279,7 +1279,6 @@ const Form = React.forwardRef(
             </Field>
           </Wrapper>
         </Field>
-        <Divider />
       </form>
     );
   }

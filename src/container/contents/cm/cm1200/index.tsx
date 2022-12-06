@@ -48,6 +48,7 @@ import { useDispatch, useSelector } from "app/store";
 import { CM120065, CM1200SEARCH } from "app/path";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
+import { SearchWrapper } from "../cm1100/cm100Style";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -269,30 +270,32 @@ function CM1200({
       </DetailHeader>
       <Wrapper>
         <TableWrapper width="30%">
-          <form
-            onSubmit={handleSubmit(onSearchSubmit)}
-            style={{ padding: "5px 0px" }}
-          >
-            <Field>
-              <FormGroup>
-                <Label className="lable-check">
-                  <CheckBox title="건물명" rtl={false} />
-                </Label>
-                <Input
-                  register={register("sCuName", {
-                    required: true,
-                  })}
-                  kind={FieldKind.BORDER}
-                />
-                <Button
-                  text="검색"
-                  icon={<MagnifyingGlassBig />}
-                  kind={ButtonType.ROUND}
-                  type="submit"
-                />
-              </FormGroup>
-            </Field>
-          </form>
+          <SearchWrapper style={{ borderBottom: "2px solid #707070" }}>
+            <form
+              onSubmit={handleSubmit(onSearchSubmit)}
+              style={{ padding: "5px 0px" }}
+            >
+              <Field>
+                <FormGroup>
+                  <Label className="lable-check">
+                    <CheckBox title="건물명" rtl={false} />
+                  </Label>
+                  <Input
+                    register={register("sCuName", {
+                      required: true,
+                    })}
+                    kind={FieldKind.BORDER}
+                  />
+                  <Button
+                    text="검색"
+                    icon={<MagnifyingGlassBig />}
+                    kind={ButtonType.ROUND}
+                    type="submit"
+                  />
+                </FormGroup>
+              </Field>
+            </form>
+          </SearchWrapper>
           <div
             style={{ width: "100%", height: "95%" }}
             ref={realgridElement}
