@@ -1,3 +1,5 @@
+import { addCM1105 } from "app/state/modal/modalSlice";
+import { useDispatch } from "app/store";
 import { useEffect, useRef, useState } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { fieldsSelected, columnsSelected } from "./data";
@@ -7,8 +9,11 @@ let containerr: HTMLDivElement;
 let dp: any;
 let gv: any;
 
-function GridTable({ selected }: { selected: any }) {
+function GridTable({ selected, openPopup }: { selected: any; openPopup: any }) {
+  const dispatch = useDispatch();
   const realgridTableElement = useRef<HTMLDivElement>(null);
+  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+
   const [data, setData] = useState([{} as ICM120065USERINFO]);
 
   useEffect(() => {
@@ -58,6 +63,26 @@ function GridTable({ selected }: { selected: any }) {
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
     gv.setEditOptions({ editable: false });
+
+    gv.setCurrent({
+      dataRow: selectedRowIndex,
+    });
+
+    gv.onSelectionChanged = () => {
+      const itemIndex: any = gv.getCurrent().dataRow;
+      dispatch(
+        addCM1105({
+          cuCode: data[itemIndex].cuCode,
+          areaCode: selected?.areaCode,
+        })
+      );
+      setSelectedRowIndex(itemIndex);
+    };
+
+    gv.onCellDblClicked = function (grid: any, e: any) {
+      const itemIndex: any = e.dataRow;
+      // openPopup && openPopup(itemIndex, data[itemIndex].cuCode, areaCode);
+    };
 
     return () => {
       dp.clearRows();

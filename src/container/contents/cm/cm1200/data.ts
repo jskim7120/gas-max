@@ -99,7 +99,7 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "265",
+    width: "283",
     alignText: "left",
     styles: {
       textAlignment: "near",
