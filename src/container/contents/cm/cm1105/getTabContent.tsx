@@ -61,7 +61,6 @@ function getTabContent(
   cuPdate: string,
   setCuPdate: any
 ) {
-  console.log("dsdsdssdvdsfvfffvf:", dataCommonDic);
   switch (id) {
     case 0: {
       return (

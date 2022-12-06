@@ -84,11 +84,11 @@ export const CM1106INSERT = "/app/CM1106/insert";
 export const CM1106UPDATE = "/app/CM1106/update";
 export const CM1106DELETE = "/app/CM1106/delete";
 
-export const GR1100SEARCH = "​/app​/GR1100​/search";
-export const GR1100INSERT = "​/app/GR1100/insert";
-export const GR1100UPDATE = "​/app/GR1100/update";
-export const GR1100DELETE = "​/app/GR1100/delete";
-export const GR1100INSERTSEQ = "​/app/GR1100/insertseq";
+export const GR1100SEARCH = "/app/GR1100/search";
+export const GR1100INSERT = "/app/GR1100/insert";
+export const GR1100UPDATE = "/app/GR1100/update";
+export const GR1100DELETE = "/app/GR1100/delete";
+export const GR1100INSERTSEQ = "/app/GR1100/insertseq";
 export const GR110065 = "/app/GR1100/65";
 
 export const GR1600SEARCH = "/app/GR1600/search";

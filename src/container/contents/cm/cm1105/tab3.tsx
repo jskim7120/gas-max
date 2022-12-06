@@ -380,11 +380,16 @@ function Tab3({
           </FormGroup>
 
           <Field flex style={{ alignItems: "center" }}>
-            <Input
-              label="용기수량"
-              register={register("cuCylinderName")}
-              inputSize={InputSize.sm}
-            />
+            <FormGroup>
+              <Label>용기수량</Label>
+              <Select {...register("cuCylinderName")}>
+                {dataCommonDic?.cuCylinderName?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
             <p>×</p>
             <Input
               register={register("cuCylinderQty")}
@@ -403,7 +408,7 @@ function Tab3({
             <Input
               register={register("cuTransmCuCd")}
               inputSize={InputSize.i60}
-              style={{ marginLeft: "5px" }}
+              style={{ marginLeft: "20px" }}
             />
             <SearchBtn type="button" onClick={() => alert("dsdsds")}>
               <MagnifyingGlass />

@@ -34,6 +34,10 @@ export interface initialStateType {
     mTransYn: string;
     tTransYn: string;
   };
+  search: {
+    fieldName: string;
+    text: string;
+  };
 }
 
 const initialState: initialStateType = {
@@ -70,6 +74,10 @@ const initialState: initialStateType = {
     mTransYn: "",
     tTransYn: "",
   },
+  search: {
+    fieldName: "",
+    text: "",
+  },
 };
 
 const footerSlice = createSlice({
@@ -83,9 +91,16 @@ const footerSlice = createSlice({
     remove: (state, action) => {
       state.info = initialState.info;
     },
+    addSearchText: (state, action) => {
+      state.search = action.payload.search;
+    },
+    removeSearchText: (state, action) => {
+      state.search = initialState.search;
+    },
   },
 });
 
-export const { add, remove } = footerSlice.actions;
+export const { add, remove, addSearchText, removeSearchText } =
+  footerSlice.actions;
 
 export default footerSlice.reducer;

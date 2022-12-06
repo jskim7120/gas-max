@@ -6,7 +6,27 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "areaName",
+    fieldName: "buGubunName",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "buCode",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "buName",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "buTel",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "buMisu",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "buStaeName",
     dataType: ValueType.TEXT,
   },
 ];
@@ -18,17 +38,61 @@ export const columns = [
     type: "data",
     width: "80",
     header: {
-      text: "영업소코드",
+      text: "영업소",
     },
   },
   {
-    name: "areaName",
-    fieldName: "areaName",
+    name: "buGubunName",
+    fieldName: "buGubunName",
+    type: "data",
+    width: "80",
+    header: {
+      text: "구분",
+    },
+  },
+  {
+    name: "buCode",
+    fieldName: "buCode",
+    type: "data",
+    width: "80",
+    header: {
+      text: "코드",
+    },
+  },
+  {
+    name: "buName",
+    fieldName: "buName",
+    type: "data",
+    width: "150",
+    header: {
+      text: "매입처명",
+    },
+  },
+  {
+    name: "buTel",
+    fieldName: "buTel",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
     header: {
-      text: "영업소명칭",
+      text: "전화번호",
+    },
+  },
+  {
+    name: "buMisu",
+    fieldName: "buMisu",
+    type: "data",
+    width: "120",
+    header: {
+      text: "미지급액",
+    },
+  },
+  {
+    name: "buStaeName",
+    fieldName: "buStaeName",
+    type: "data",
+    width: "100",
+    header: {
+      text: "상태",
     },
   },
 ];
