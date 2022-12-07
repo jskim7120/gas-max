@@ -363,7 +363,6 @@ function FormCM1105() {
         params: { cuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
       });
       setData(data);
-      console.log("*********************", data);
     } catch (error) {
       console.log("aldaa");
     }
