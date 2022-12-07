@@ -17,7 +17,7 @@ export const FooterContainer = styled.div`
   padding: 10px 20px 8px 12px;
 
   .bussiness_partner_cnt {
-    width: 69px;
+    width: 72.5px;
     height: 60px;
     border-right: 1px solid #092f53;
     p {
