@@ -73,6 +73,10 @@ function FormCM1105() {
   const [cuSisuldate, setCuSisuldate] = useState("");
   const [cuPdate, setCuPdate] = useState("");
 
+  //tab6
+  const [cuSmsDate, setCuSmsDate] = useState("");
+  const [cuCashpayDate, setCuCashpayDate] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -126,11 +130,32 @@ function FormCM1105() {
       let newDataCuTank: any = {};
 
       const customerInfo = data?.customerInfo ? data?.customerInfo[0] : {};
-      const cms = data?.cms ? data?.cms[0] : {};
+      const cms = data?.cms
+        ? data?.cms[0]
+        : {
+            acctno: "",
+            appdt: "",
+            bankName: "",
+            bigo: "",
+            cmsGubun: "",
+            depositor: "",
+            managerNo: "",
+            monthday: "",
+            regDate: "",
+            stateName: "",
+            tel: "",
+          };
       const cuTank = data?.cuTank ? data?.cuTank[0] : {};
       const virtualAccount = data?.virturalAccoount
         ? data?.virturalAccoount[0]
-        : {};
+        : {
+            acctno: "",
+            bankCd: "",
+            bankName: "",
+            depositor: "",
+            managerCode: "",
+            regDate: "",
+          };
 
       if (type === "clear") {
         for (const [key, value] of Object.entries(customerInfo)) {
@@ -171,6 +196,33 @@ function FormCM1105() {
           ...newDataVirtualAccount,
           ...newDataCuTank,
         });
+
+        //tab2 date
+        setCuMeterTurm("");
+        setCuMeterDt("");
+        setCuMdate("");
+        //tab3 date
+        setCuFinishDate("");
+        setCuCircuitDate("");
+        setCuScheduleDate("");
+        setTankFirstDate1("");
+        setTankFirstDate2("");
+        setTankOutsideDate1("");
+        setTankOutsideDate2("");
+        setTankInsideDate1("");
+        setTankInsideDate2("");
+        setGasifyCheckDate1("");
+        setGasifyCheckDate2("");
+        //tab4 date
+        setCuHdate("");
+        setCuGongdate("");
+        setCuGongdateT("");
+        setCuExtendDate("");
+        setCuSisuldate("");
+        setCuPdate("");
+        //tab6 date
+        setCuSmsDate("");
+        setCuCashpayDate("");
       } else if (type === "reset") {
         for (const [key, value] of Object.entries(customerInfo)) {
           newDataCustomerInfo[key] = value;
@@ -209,34 +261,98 @@ function FormCM1105() {
           ...newDataCms,
           ...newDataVirtualAccount,
           ...newDataCuTank,
-          cuSekumyn: customerInfo?.cuSekumyn === "Y",
-          cuJangbuYn: customerInfo?.cuJangbuYn === "Y",
-          cuSvKumack: customerInfo?.cuSvKumack === "Y",
-          cuSeSmsYn: customerInfo?.cuSeSmsYn === "Y",
-          cuSeListYn: customerInfo?.cuSeListYn === "Y",
         });
+        //tab2 date
+        setCuMeterTurm(
+          customerInfo?.cuMeterTurm === null ? "" : customerInfo.cuMeterTurm
+        );
+        setCuMeterDt(
+          customerInfo?.cuMeterDt === null ? "" : customerInfo.cuMeterDt
+        );
+        setCuMdate(customerInfo?.cuMdate === null ? "" : customerInfo.cuMdate);
 
-        customerInfo?.cuMeterTurm && setCuMeterTurm(customerInfo.cuMeterTurm);
-        customerInfo?.cuMeterDt && setCuMeterDt(customerInfo.cuMeterDt);
-        customerInfo?.cuMdate && setCuMdate(customerInfo.cuMdate);
-        customerInfo?.cuFinishDate &&
-          setCuFinishDate(customerInfo.cuFinishDate);
-        customerInfo?.cuCircuitDate &&
-          setCuCircuitDate(customerInfo.cuCircuitDate);
-        customerInfo?.cuScheduleDate &&
-          setCuScheduleDate(customerInfo.cuScheduleDate);
-        customerInfo?.tankFirstDate1 &&
-          setTankFirstDate1(customerInfo.tankFirstDate1);
-        customerInfo?.tankOutsideDate1 &&
-          setTankOutsideDate1(customerInfo.tankOutsideDate1);
-        customerInfo?.tankFirstDate2 &&
-          setTankFirstDate2(customerInfo.tankFirstDate2);
-        customerInfo?.tankOutsideDate2 &&
-          setTankOutsideDate2(customerInfo.tankOutsideDate2);
-        customerInfo?.tankInsideDate2 &&
-          setTankInsideDate2(customerInfo.tankInsideDate2);
-        customerInfo?.gasifyCheckDate1 &&
-          setGasifyCheckDate1(customerInfo.gasifyCheckDate1);
+        //tab3 date
+        setCuFinishDate(
+          customerInfo?.cuFinishDate === null ? "" : customerInfo.cuFinishDate
+        );
+        setCuCircuitDate(
+          customerInfo?.cuCircuitDate === null ? "" : customerInfo.cuCircuitDate
+        );
+        setCuScheduleDate(
+          customerInfo?.cuScheduleDate === null
+            ? ""
+            : customerInfo.cuScheduleDate
+        );
+        setTankFirstDate1(
+          customerInfo?.tankFirstDate1 === null
+            ? ""
+            : customerInfo.tankFirstDate1
+        );
+        setTankFirstDate2(
+          customerInfo?.tankFirstDate2 === null
+            ? ""
+            : customerInfo.tankFirstDate2
+        );
+        setTankOutsideDate1(
+          customerInfo?.tankOutsideDate1 === null
+            ? ""
+            : customerInfo.tankOutsideDate1
+        );
+        setTankOutsideDate2(
+          customerInfo?.tankOutsideDate2 === null
+            ? ""
+            : customerInfo.tankOutsideDate2
+        );
+        setTankInsideDate1(
+          customerInfo?.tankInsideDate1 === null
+            ? ""
+            : customerInfo.tankInsideDate1
+        );
+        setTankInsideDate2(
+          customerInfo?.tankInsideDate2 === null
+            ? ""
+            : customerInfo.tankInsideDate2
+        );
+        setGasifyCheckDate1(
+          customerInfo?.gasifyCheckDate1 === null
+            ? ""
+            : customerInfo.gasifyCheckDate1
+        );
+        setGasifyCheckDate2(
+          customerInfo?.gasifyCheckDate2 === null
+            ? ""
+            : customerInfo.gasifyCheckDate2
+        );
+
+        //tab4 date
+        setCuHdate(customerInfo?.cuHdate === null ? "" : customerInfo.cuHdate);
+
+        setCuGongdate(
+          customerInfo?.cuGongdate === null ? "" : customerInfo.cuGongdate
+        );
+
+        setCuGongdateT(
+          customerInfo?.cuGongdateT === null ? "" : customerInfo.cuGongdateT
+        );
+
+        setCuExtendDate(
+          customerInfo?.cuExtendDate === null ? "" : customerInfo.cuExtendDate
+        );
+
+        setCuSisuldate(
+          customerInfo?.cuSisuldate === null ? "" : customerInfo.cuSisuldate
+        );
+
+        setCuPdate(customerInfo?.cuPdate === null ? "" : customerInfo.cuPdate);
+
+        //tab6 date
+        setCuSmsDate(
+          customerInfo?.cuSmsDate === null ? "" : customerInfo.cuSmsDate
+        );
+
+        setCuCashpayDate(
+          customerInfo?.cuCashpayDate === null ? "" : customerInfo.cuCashpayDate
+        );
       }
     }
   };
@@ -247,6 +363,7 @@ function FormCM1105() {
         params: { cuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
       });
       setData(data);
+      console.log("*********************", data);
     } catch (error) {
       console.log("aldaa");
     }
@@ -256,74 +373,70 @@ function FormCM1105() {
     const path = isAddBtnClicked ? CM1105INSERT : CM1105UPDATE;
     const formValues = getValues();
 
+    formValues.cuSekumyn = formValues.cuSekumyn ? "Y" : "N";
+    formValues.cuJangbuYn = formValues.cuJangbuYn ? "Y" : "N";
+    formValues.cuSeSmsYn = formValues.cuSeSmsYn ? "Y" : "N";
+    formValues.cuSeListYn = formValues.cuSeListYn ? "Y" : "N";
+    formValues.cuSeFaxYn = formValues.cuSeFaxYn ? "Y" : "N";
+    formValues.cuSmsYn = formValues.cuSmsYn ? "Y" : "N";
+    formValues.cuCashpayYn = formValues.cuCashpayYn ? "Y" : "N";
+
     formValues.cuMeterDt = cuMeterDt ? formatDateByRemoveDash(cuMeterDt) : "";
     formValues.cuMdate = cuMdate ? formatDateByRemoveDash(cuMdate) : "";
     formValues.cuMeterTurm = cuMeterTurm
       ? formatDateByRemoveDash(cuMeterTurm)
       : "";
-
     formValues.cuFinishDate = cuFinishDate
       ? formatDateByRemoveDash(cuFinishDate)
       : "";
-
     formValues.cuCircuitDate = cuCircuitDate
       ? formatDateByRemoveDash(cuCircuitDate)
       : "";
-
     formValues.cuScheduleDate = cuScheduleDate
       ? formatDateByRemoveDash(cuScheduleDate)
       : "";
-
     formValues.tankFirstDate1 = tankFirstDate1
       ? formatDateByRemoveDash(tankFirstDate1)
+      : "";
+    formValues.tankFirstDate2 = tankFirstDate2
+      ? formatDateByRemoveDash(tankFirstDate2)
+      : "";
+    formValues.tankInsideDate1 = tankInsideDate1
+      ? formatDateByRemoveDash(tankInsideDate1)
+      : "";
+    formValues.tankInsideDate2 = tankInsideDate2
+      ? formatDateByRemoveDash(tankInsideDate2)
       : "";
     formValues.tankOutsideDate1 = tankOutsideDate1
       ? formatDateByRemoveDash(tankOutsideDate1)
       : "";
-
-    formValues.tankInsideDate1 = tankInsideDate1
-      ? formatDateByRemoveDash(tankInsideDate1)
-      : "";
-
-    formValues.tankFirstDate2 = tankFirstDate2
-      ? formatDateByRemoveDash(tankFirstDate2)
-      : "";
-
     formValues.tankOutsideDate2 = tankOutsideDate2
       ? formatDateByRemoveDash(tankOutsideDate2)
       : "";
-
-    formValues.tankInsideDate2 = tankInsideDate2
-      ? formatDateByRemoveDash(tankInsideDate2)
-      : "";
-
     formValues.gasifyCheckDate1 = gasifyCheckDate1
       ? formatDateByRemoveDash(gasifyCheckDate1)
       : "";
-
+    formValues.gasifyCheckDate2 = gasifyCheckDate2
+      ? formatDateByRemoveDash(gasifyCheckDate2)
+      : "";
     formValues.cuHdate = cuHdate ? formatDateByRemoveDash(cuHdate) : "";
-
     formValues.cuGongdate = cuGongdate
       ? formatDateByRemoveDash(cuGongdate)
       : "";
-
     formValues.cuGongdateT = cuGongdateT
       ? formatDateByRemoveDash(cuGongdateT)
       : "";
-
     formValues.cuExtendDate = cuExtendDate
       ? formatDateByRemoveDash(cuExtendDate)
       : "";
-
-    formValues.cuExtendDate = cuExtendDate
-      ? formatDateByRemoveDash(cuExtendDate)
-      : "";
-
     formValues.cuSisuldate = cuSisuldate
       ? formatDateByRemoveDash(cuSisuldate)
       : "";
-
     formValues.cuPdate = cuPdate ? formatDateByRemoveDash(cuPdate) : "";
+    formValues.cuSmsDate = cuSmsDate ? formatDateByRemoveDash(cuSmsDate) : "";
+    formValues.cuCashpayDate = cuCashpayDate
+      ? formatDateByRemoveDash(cuCashpayDate)
+      : "";
 
     try {
       const response: any = await API.post(path, formValues);
@@ -716,7 +829,12 @@ function FormCM1105() {
               cuSisuldate,
               setCuSisuldate,
               cuPdate,
-              setCuPdate
+              setCuPdate,
+              //tab6 date
+              cuSmsDate,
+              setCuSmsDate,
+              cuCashpayDate,
+              setCuCashpayDate
             )}
           </TabContentWrapper>
         </div>

@@ -219,6 +219,7 @@ const FORMCM1106 = React.forwardRef(
             register={register("jcJdcPer")}
             kind={FieldKind.BORDER}
             maxLength="3"
+            textAlign="right"
           />
           <p>%</p>
         </Field>
@@ -239,6 +240,7 @@ const FORMCM1106 = React.forwardRef(
             register={register("jcBasicJaego")}
             kind={FieldKind.BORDER}
             inputSize={InputSize.sm}
+            textAlign="right"
           />
           <p>개</p>
         </Field>
