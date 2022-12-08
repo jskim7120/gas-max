@@ -59,7 +59,11 @@ function getTabContent(
   cuSisuldate: string,
   setCuSisuldate: any,
   cuPdate: string,
-  setCuPdate: any
+  setCuPdate: any,
+  cuSmsDate: string,
+  setCuSmsDate: Function,
+  cuCashpayDate: string,
+  setCuCashpayDate: Function
 ) {
   switch (id) {
     case 0: {
@@ -142,7 +146,15 @@ function getTabContent(
     case 4:
       return <Tab5 register={register} />;
     case 5:
-      return <Tab6 register={register} />;
+      return (
+        <Tab6
+          register={register}
+          cuSmsDate={cuSmsDate}
+          setCuSmsDate={setCuSmsDate}
+          cuCashpayDate={cuCashpayDate}
+          setCuCashpayDate={setCuCashpayDate}
+        />
+      );
   }
   return null;
 }

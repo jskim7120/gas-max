@@ -189,9 +189,9 @@ export interface ICM1105SEARCH {
   tankVol1: string;
   tankVol2: string;
 
+  percentage: number;
   //cms: ICMS;
   //virtualAccount: IVIRTUALACCOUNT;
-  percentage: number;
 
   CMSacctno: string; //davhtsaj bn
   appdt: string;
