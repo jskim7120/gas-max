@@ -388,7 +388,6 @@ function FormCM1105() {
     formValues.cuSeFaxYn = formValues.cuSeFaxYn ? "Y" : "N";
     formValues.cuSmsYn = formValues.cuSmsYn ? "Y" : "N";
     formValues.cuCashpayYn = formValues.cuCashpayYn ? "Y" : "N";
-    // -----------------------
 
     formValues.cuHdate =
       typeof formValues.cuHdate === "string"
@@ -397,7 +396,12 @@ function FormCM1105() {
         ? formatDateToStringWithoutDash(formValues.cuHdate)
         : "";
 
-    console.log("formValus:", formValues);
+    formValues.cuExtendDate =
+      typeof formValues.cuExtendDate === "string"
+        ? formatDateByRemoveDash(formValues.cuExtendDate)
+        : (formValues.cuExtendDate as any) instanceof Date
+        ? formatDateToStringWithoutDash(formValues.cuExtendDate)
+        : "";
 
     // formValues.cuHdate = formValues.cuHdate?
 
