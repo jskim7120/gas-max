@@ -89,9 +89,9 @@ const Form = React.forwardRef(
     const [chkCuPerCheck, setChkCuPerCheck] = useState(false);
     const [chkCuRdangeCheck, setChkCuRdangeCheck] = useState(false);
     const [chkCuGumTurm, setchkCuGumTurmCheck] = useState(false);
-    const [chkCuGumdate,setChkCuGumdateCheck] = useState(false);
-    const [chkCuSukumtype,setChkCuSukumtypeCheck] = useState(false);
-    const [chkCuCdcCheck,setChkCuCdcCheck] = useState(false);
+    const [chkCuGumdate, setChkCuGumdateCheck] = useState(false);
+    const [chkCuSukumtype, setChkCuSukumtypeCheck] = useState(false);
+    const [chkCuCdcCheck, setChkCuCdcCheck] = useState(false);
 
     const {
       handleSubmit,
@@ -427,10 +427,10 @@ const Form = React.forwardRef(
       } else if (selectedRdangaSign === "-") {
         totalValue = selectedcuRdanga - selectedRdangaAmt;
       } else if (selectedRdangaSign === "X") {
-        if(selectedcuRdanga === 0 || selectedRdangaAmt === 0 ){
+        if (selectedcuRdanga === 0 || selectedRdangaAmt === 0) {
           totalValue = 0;
-        }else{
-        totalValue = selectedcuRdanga * selectedRdangaAmt;
+        } else {
+          totalValue = selectedcuRdanga * selectedRdangaAmt;
         }
       } else {
         totalValue = 0;
@@ -557,7 +557,7 @@ const Form = React.forwardRef(
                   title=""
                   register={register("chkCuZipCode")}
                   rtl={false}
-                  onChange={(e : any) => setChkCuZipCodeCheck(e.target.checked)}
+                  onChange={(e: any) => setChkCuZipCodeCheck(e.target.checked)}
                 />
               </Label>
               <Input
@@ -634,10 +634,14 @@ const Form = React.forwardRef(
                   title="조정기"
                   register={register("chkCuRh20")}
                   rtl={false}
-                  onChange={(e : any) => setChkCuRh20Check(e.target.checked)}
+                  onChange={(e: any) => setChkCuRh20Check(e.target.checked)}
                 />
               </Label>
-              <Select disabled={!chkCuRh20?true : false} {...register("cuRh2o")} width={InputSize.i120}>
+              <Select
+                disabled={!chkCuRh20 ? true : false}
+                {...register("cuRh2o")}
+                width={InputSize.i120}
+              >
                 {dataCommonDic?.cuRh20?.map((option: any, index: number) => {
                   return (
                     <option key={index} value={option.code}>
@@ -656,10 +660,14 @@ const Form = React.forwardRef(
                   title="루베단가 "
                   register={register("chkCuRdange")}
                   rtl={false}
-                  onChange={(e : any) => setChkCuRdangeCheck(e.target.checked)}
+                  onChange={(e: any) => setChkCuRdangeCheck(e.target.checked)}
                 />
               </Label>
-              <Select disabled={!chkCuRdangeCheck?true:false} {...register("cuRdangaType")} width={InputSize.i120}>
+              <Select
+                disabled={!chkCuRdangeCheck ? true : false}
+                {...register("cuRdangaType")}
+                width={InputSize.i120}
+              >
                 {dataCommonDic?.cuRdangaType.map(
                   (option: any, index: number) => {
                     return (
@@ -683,7 +691,7 @@ const Form = React.forwardRef(
                   title="관리비"
                   register={register("chkCuAnKum")}
                   rtl={false}
-                  onChange={(e : any) => setChkCuAnKumCheck(e.target.checked)}
+                  onChange={(e: any) => setChkCuAnKumCheck(e.target.checked)}
                 />
               </Label>
               <Input
@@ -703,7 +711,7 @@ const Form = React.forwardRef(
                   title="시설비"
                   register={register("ckCuSisulKum")}
                   rtl={false}
-                  onChange={(e : any)=>setCkCuSisulKumCheck(e.target.checked)}
+                  onChange={(e: any) => setCkCuSisulKumCheck(e.target.checked)}
                 />
               </Label>
               <Input
@@ -724,7 +732,7 @@ const Form = React.forwardRef(
                   title="계량기"
                   register={register("chkCuMeterKum")}
                   rtl={false}
-                  onChange={(e : any)=>setChkCuMeterKumCheck(e.target.checked)}
+                  onChange={(e: any) => setChkCuMeterKumCheck(e.target.checked)}
                 />
               </Label>
               <Input
@@ -747,7 +755,7 @@ const Form = React.forwardRef(
                   title="연체율"
                   register={register("chkCuPer")}
                   rtl={false}
-                  onChange={(e : any)=>setChkCuPerCheck(e.target.checked)}
+                  onChange={(e: any) => setChkCuPerCheck(e.target.checked)}
                 />
               </Label>
               <Input
@@ -773,7 +781,7 @@ const Form = React.forwardRef(
                   title="할인율"
                   register={register("chkCuCdc")}
                   rtl={false}
-                  onChange={(e : any)=>setChkCuCdcCheck(e.target.checked)}
+                  onChange={(e: any) => setChkCuCdcCheck(e.target.checked)}
                 />
               </Label>
               <Input
@@ -799,10 +807,16 @@ const Form = React.forwardRef(
                   title="수금방법"
                   register={register("chkCuSukumtype")}
                   rtl={false}
-                  onChange={(e : any)=>setChkCuSukumtypeCheck(e.target.checked)}
+                  onChange={(e: any) =>
+                    setChkCuSukumtypeCheck(e.target.checked)
+                  }
                 />
               </Label>
-              <Select disabled={chkCuSukumtype?false:true} {...register("cuSukumtype")} width={InputSize.i120}>
+              <Select
+                disabled={chkCuSukumtype ? false : true}
+                {...register("cuSukumtype")}
+                width={InputSize.i120}
+              >
                 {dataCommonDic?.cuSukumtype?.map(
                   (option: any, index: number) => {
                     return (
@@ -825,10 +839,14 @@ const Form = React.forwardRef(
                   title="검침주기"
                   register={register("chkCuGumTurm")}
                   rtl={false}
-                  onChange={(e : any)=>setchkCuGumTurmCheck(e.target.checked)}
+                  onChange={(e: any) => setchkCuGumTurmCheck(e.target.checked)}
                 />
               </Label>
-              <Select disabled={!chkCuGumTurm?true:false} {...register("cuGumTurm")} width={InputSize.i120}>
+              <Select
+                disabled={!chkCuGumTurm ? true : false}
+                {...register("cuGumTurm")}
+                width={InputSize.i120}
+              >
                 {dataCommonDic?.cuGumTurm?.map((option: any, index: number) => {
                   return (
                     <option key={index} value={option.code}>
@@ -846,12 +864,12 @@ const Form = React.forwardRef(
                   title="검침일"
                   register={register("chkCuGumdate")}
                   rtl={false}
-                  onChange={(e : any)=>setChkCuGumdateCheck(e.target.checked)}
+                  onChange={(e: any) => setChkCuGumdateCheck(e.target.checked)}
                 />
               </Label>
               <Input
                 register={register("cuGumdate")}
-                readOnly={!chkCuGumdate} 
+                readOnly={!chkCuGumdate}
                 // codeFormatNumber={{
                 //   status: true,
                 //   clear: clearNumberic,
@@ -871,10 +889,14 @@ const Form = React.forwardRef(
                   title="순 번"
                   register={register("chkCuCno")}
                   rtl={false}
-                  onChange={(e : any)=>setChkCuCnoCheck(e.target.checked)}
+                  onChange={(e: any) => setChkCuCnoCheck(e.target.checked)}
                 />
               </Label>
-              <Input register={register("cuCno")} inputSize={InputSize.i120} readOnly={!chkCuCno} />
+              <Input
+                register={register("cuCno")}
+                inputSize={InputSize.i120}
+                readOnly={!chkCuCno}
+              />
             </FormGroup>
           </Field>
         </Wrapper>
@@ -1102,6 +1124,73 @@ const Form = React.forwardRef(
             </Field>
           </Wrapper>
         </Field>
+        {/* 3-2-4 Wrapper */}
+        <Field flex>
+          <FormGroup>
+            <Label></Label>
+          </FormGroup>
+          <Wrapper grid col={3}>
+            <Field>
+              <FormGroup>
+                <Label>Max레벨 / 발신기코드 / 탱크고객코드</Label>
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <p>{`1)`}</p>
+                <Input
+                  register={register("tankMax1")}
+                  placeholder=""
+                  inputSize={InputSize.sm}
+                />
+                <p>%</p>
+                <Input
+                  register={register("tankTransmCd1")}
+                  placeholder=""
+                  inputSize={InputSize.sm}
+                />
+                <Input
+                  register={register("tankCuCd1")}
+                  placeholder=""
+                  inputSize={InputSize.sm}
+                />
+                <SearchBtn
+                  type="button"
+                  onClick={() => console.log("cuZipCode")}
+                >
+                  <MagnifyingGlass />
+                </SearchBtn>
+              </FormGroup>
+            </Field>
+            <Field>
+              <FormGroup>
+                <p>{`2)`}</p>
+                <Input
+                  register={register("tankMax1")}
+                  placeholder=""
+                  inputSize={InputSize.sm}
+                />
+                <p>%</p>
+                <Input
+                  register={register("tankTransmCd2")}
+                  placeholder=""
+                  inputSize={InputSize.sm}
+                />
+                <Input
+                  register={register("tankCuCd2")}
+                  placeholder=""
+                  inputSize={InputSize.sm}
+                />
+                <SearchBtn
+                  type="button"
+                  onClick={() => console.log("cuZipCode")}
+                >
+                  <MagnifyingGlass />
+                </SearchBtn>
+              </FormGroup>
+            </Field>
+          </Wrapper>
+        </Field>
         {/* 3-3-1 Wrapper */}
         <Field flex>
           <FormGroup>
@@ -1134,14 +1223,16 @@ const Form = React.forwardRef(
               <FormGroup>
                 <Label align="center">용기수량</Label>
                 <Select {...register("cuCylinderName")} width={InputSize.i120}>
-                {dataCommonDic?.cuCylinderName?.map((option: any, index: number) => {
-                  return (
-                    <option key={index} value={option.code}>
-                      {option.codeName}
-                    </option>
-                  );
-                })}
-              </Select>
+                  {dataCommonDic?.cuCylinderName?.map(
+                    (option: any, index: number) => {
+                      return (
+                        <option key={index} value={option.code}>
+                          {option.codeName}
+                        </option>
+                      );
+                    }
+                  )}
+                </Select>
                 <p>x</p>
                 <Input
                   register={register("cuCylinderQty")}
