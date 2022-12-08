@@ -69,7 +69,7 @@ function CheckBox(props: {
   return (
     <CheckBoxWrapper rtl={props.rtl ? props.rtl : false}>
       <label>
-        <input type="checkbox" {...props.register} />
+        <input type="checkbox" {...props.register} onChange={props.onChange}/>
         {props.title && props.title}
       </label>
     </CheckBoxWrapper>
