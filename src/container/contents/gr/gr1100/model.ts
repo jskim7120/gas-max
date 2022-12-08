@@ -1,4 +1,4 @@
-export interface IGR1100SEARCH {
+export interface ISANGPUM {
   areaCode: string;
   buAddr1: string;
   buAddr2: string;
@@ -40,35 +40,4 @@ export interface IGR1100SEARCH {
   buUptae: string;
   buZipcode: string;
   mailKind: string;
-
-  buPsum: string;
-  buBsum: string;
-  buBlsum: string;
-}
-
-export interface IGR1600TAB2 {
-  buycustYn: string;
-  jpChangedate: string;
-  jpCode: string;
-  jpDanga: string;
-  jpDangaType: string;
-  jpFreeYn: string;
-  jpKg: number;
-  jpName: string;
-  jpSpec: string;
-  jpVatKind: string;
-  queryType: string;
-}
-
-export interface IGR1600TAB3 {
-  bpChangedate: string;
-  bpCode: string;
-  bpDanga: number;
-  bpDangaType: string;
-  bpDanwi: string;
-  bpName: string;
-  bpSpec: string;
-  bpVatKind: string;
-  buycustYn: string;
-  queryType: string;
 }
