@@ -282,7 +282,7 @@ function CM1200({
                   </Label>
                   <Input
                     register={register("sCuName", {
-                      required: true,
+                      required: false,
                     })}
                     kind={FieldKind.BORDER}
                   />

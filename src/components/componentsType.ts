@@ -24,6 +24,7 @@ export enum InputSize {
   xs = "xs",
   sm = "sm",
   en1300 = "en1300",
+  i40 = "i40",
   i70 = "i70",
   i60 = "i60",
   i80 = "i80",
