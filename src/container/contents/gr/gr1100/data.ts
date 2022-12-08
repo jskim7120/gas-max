@@ -82,6 +82,7 @@ export const columns = [
     fieldName: "buMisu",
     type: "data",
     width: "120",
+    styleName: "rg-right-column",
     header: {
       text: "미지급액",
     },

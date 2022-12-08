@@ -4,7 +4,6 @@ export const Grid1Container = styled.div`
   display: flex;
   flex-direction: column;
   border-right: 4px solid #707070;
-  gap: 4px;
 `;
 export const Grid2Container = styled.div`
   width: 24%;

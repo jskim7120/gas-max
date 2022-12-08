@@ -76,10 +76,6 @@ function GR1100({
     }
   }, [dataCommonDic]);
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
   useEffect(() => {
     if (isDelete.menuId === menuId && isDelete.isDelete) {
       deleteRowGrid();
@@ -182,7 +178,12 @@ function GR1100({
           style={{ width: "50%", gap: "50%", borderRight: "3px solid #707070" }}
         >
           <form onSubmit={handleSubmit(submit)}>
-            <div style={{ marginBottom: "5px" }}>
+            <div
+              style={{
+                borderBottom: "2px solid #707070",
+                background: "#dbdbdb",
+              }}
+            >
               <Field
                 flex
                 style={{
