@@ -4,6 +4,8 @@ import { InputSize, FieldKind } from "components/componentsType";
 
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
+    case InputSize.i40:
+      return `40px`;
     case InputSize.i60:
       return `60px`;
     case InputSize.i70:
@@ -300,6 +302,7 @@ export const Input = ({
             value={formatNumber ? inputValue : value && value}
             placeholder={placeholder}
             style={style}
+            
             className={className}
             maxLength={maxLength && maxLength}
             minLength={minLength && minLength}
@@ -349,6 +352,9 @@ export const InputForm = styled.input<{
   &:hover,
   &:focus {
     background: #fffacd;
+  }
+  &:read-only {
+    background:#ebeae6;
   }
 
   &.login {
