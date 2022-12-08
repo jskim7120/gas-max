@@ -1,17 +1,34 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useState, useEffect, useRef } from "react";
 import API from "app/axios";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "app/store";
+import {
+  openModal,
+  closeModal,
+  addDeleteMenuId,
+  setIsDelete,
+} from "app/state/modal/modalSlice";
+import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { GR1100SEARCH } from "app/path";
-import { InputSize } from "components/componentsType";
 import Button from "components/button/button";
-import { ButtonColor, ButtonType } from "components/componentsType";
 import { Input, Select, Field, FormGroup, Label } from "components/form/style";
-import { MagnifyingGlassBig, ExcelIcon } from "components/allSvgIcon";
-import { LeftSection, RightSection, MainWrapper, DetailHeader } from "../style";
-import DataGridFooter from "components/dataGridFooter/dataGridFooter";
-import RightHalf from "./right";
+import {
+  Plus,
+  Trash,
+  Update,
+  Reset,
+  MagnifyingGlassBig,
+  ExcelIcon,
+} from "components/allSvgIcon";
+import Form from "./form";
+// import Grid from "../../en/grid";
 import Grid from "./grid";
+import { columns, fields } from "./data";
+import DataGridFooter from "components/dataGridFooter/dataGridFooter";
+import { Wrapper, DetailWrapper, DetailHeader } from "../../commonStyle";
+import { useParams } from "react-router-dom";
+import { LeftSection } from "../style";
 
 interface ISEARCH {
   areaCode: string;
@@ -27,14 +44,16 @@ function GR1100({
   depthFullName: string;
   menuId: string;
 }) {
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState({});
+  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const dispatch = useDispatch();
 
+  const [data, setData] = useState([]);
+  const [selected, setSelected] = useState<any>();
+  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
     functionName: "GR1100",
   });
-  console.log("dataCommonDiction", dataCommonDic);
 
   const {
     register,
@@ -44,6 +63,8 @@ function GR1100({
   } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+
+  const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
     if (dataCommonDic !== undefined && dataCommonDic) {
@@ -55,15 +76,28 @@ function GR1100({
     }
   }, [dataCommonDic]);
 
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+  useEffect(() => {
+    if (isDelete.menuId === menuId && isDelete.isDelete) {
+      deleteRowGrid();
+    }
+  }, [isDelete.isDelete]);
+
   const fetchData = async (params: ISEARCH) => {
     try {
-      const { data: SEARCHDATA } = await API.get(GR1100SEARCH, {
+      const { data } = await API.get(GR1100SEARCH, {
         params: params,
       });
-
-      setData(SEARCHDATA);
-    } catch (error) {
-      console.log("GR1100 DATA fetch error =======>", error);
+      if (data) {
+        setData(data);
+        setSelected(data[0]);
+        setSelectedRowIndex(0);
+      }
+    } catch (err) {
+      console.log("DATA fetch error =======>", err);
     }
   };
 
@@ -71,12 +105,32 @@ function GR1100({
     fetchData(data);
   };
 
+  function deleteRowGrid() {
+    try {
+      formRef.current.setIsAddBtnClicked(false);
+      formRef.current.crud("delete");
+      dispatch(addDeleteMenuId({ menuId: "" }));
+      dispatch(setIsDelete({ isDelete: false }));
+      dispatch(closeModal());
+    } catch (error) {}
+  }
+
   return (
     <>
-      <DetailHeader style={{ justifyContent: "space-between" }}>
+      <DetailHeader>
         <Field flex>
           <p>{depthFullName}</p>
-          <p className="big">영업소</p>
+          <p
+            className="big"
+            style={{
+              marginLeft: "27px",
+              marginRight: "7px",
+              fontSize: "14px",
+              fontWeight: "bold",
+            }}
+          >
+            영업소
+          </p>
           <Select {...register("areaCode")}>
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
@@ -85,9 +139,48 @@ function GR1100({
             ))}
           </Select>
         </Field>
+        <div className="buttons">
+          <Button
+            text="등록"
+            icon={<Plus />}
+            style={{ marginRight: "5px" }}
+            onClick={() => {
+              formRef.current.setIsAddBtnClicked(true);
+              formRef.current.resetForm("clear");
+            }}
+          />
+          <Button
+            text="삭제"
+            icon={<Trash />}
+            style={{ marginRight: "5px" }}
+            onClick={() => {
+              dispatch(openModal({ type: "delModal" }));
+              dispatch(addDeleteMenuId({ menuId: menuId }));
+            }}
+          />
+          <Button
+            text="저장"
+            icon={<Update />}
+            style={{ marginRight: "5px" }}
+            color={ButtonColor.SECONDARY}
+            onClick={() => {
+              formRef.current.crud(null);
+            }}
+          />
+          <Button
+            text="취소"
+            icon={<Reset />}
+            onClick={() => {
+              formRef.current.setIsAddBtnClicked(false);
+              formRef.current.resetForm("reset");
+            }}
+          />
+        </div>
       </DetailHeader>
-      <MainWrapper>
-        <LeftSection>
+      <div style={{ display: "flex", gap: "0px", height: "calc(100% - 40px)" }}>
+        <div
+          style={{ width: "50%", gap: "50%", borderRight: "3px solid #707070" }}
+        >
           <form onSubmit={handleSubmit(submit)}>
             <div style={{ marginBottom: "5px" }}>
               <Field
@@ -169,19 +262,28 @@ function GR1100({
                 </div>
               </Field>
             </div>
-            <Grid data={data ? data : []} setSelected={setSelected} />
+            <Grid
+              data={data ? data : []}
+              fields={fields}
+              columns={columns}
+              setSelected={setSelected}
+              selectedRowIndex={selectedRowIndex}
+              setSelectedRowIndex={setSelectedRowIndex}
+            />
           </form>
-        </LeftSection>
-
-        <RightSection>
-          <RightHalf
+        </div>
+        <DetailWrapper>
+          <Form
             selected={selected}
-            fetchLeftData={handleSubmit(submit)}
-            dataCommonDic={dataCommonDic}
+            ref={formRef}
+            fetchData={fetchData}
+            setData={setData}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            setSelected={setSelected}
           />
-        </RightSection>
-      </MainWrapper>
-
+        </DetailWrapper>
+      </div>
       <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>
   );
