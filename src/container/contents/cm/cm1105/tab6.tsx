@@ -1,11 +1,20 @@
-import { useState } from "react";
 import { Input, Field, Wrapper, FormGroup, Label } from "components/form/style";
 import CheckBox from "components/checkbox";
 import CustomDatePicker from "components/customDatePicker/customdate2";
 
-function Tab6({ register }: { register: Function }) {
-  const [cuSmsDate, setCuSmsDate] = useState("");
-  const [cuCashpayDate, setCuCashpayDate] = useState("");
+function Tab6({
+  register,
+  cuSmsDate,
+  setCuSmsDate,
+  cuCashpayDate,
+  setCuCashpayDate,
+}: {
+  register: Function;
+  cuSmsDate: string;
+  setCuSmsDate: Function;
+  cuCashpayDate: string;
+  setCuCashpayDate: Function;
+}) {
   return (
     <Field>
       <Field

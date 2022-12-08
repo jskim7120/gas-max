@@ -1,12 +1,4 @@
 import styled from "styled-components";
-import Badge from "components/badge";
-import {
-  BadgeColor,
-  BadgeShape,
-  BadgeSize,
-  ButtonSize,
-} from "components/componentsType";
-
 import T_IMG from "assets/image/T.png";
 import C_IMG from "assets/image/C.png";
 import M_IMG from "assets/image/M.png";
@@ -61,16 +53,16 @@ export function getCuStae(cuStae: string) {
 }
 
 export function getCircleBadge(fieldName: string, value: string) {
-  if (fieldName === "tTransYn" && value === "N") {
+  if (fieldName === "tTransYn" && value === "Y") {
     return <img src={T_IMG} alt="t" />;
   }
-  if (fieldName === "jTransYn" && value === "N") {
+  if (fieldName === "jTransYn" && value === "Y") {
     return <img src={C_IMG} alt="c" />;
   }
-  if (fieldName === "mTransYn" && value === "N") {
+  if (fieldName === "mTransYn" && value === "Y") {
     return <img src={M_IMG} alt="m" />;
   }
-  if (fieldName === "barcodeYn" && value === "N") {
+  if (fieldName === "barcodeYn" && value === "Y") {
     return <img src={B_IMG} alt="b" />;
   }
 }

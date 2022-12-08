@@ -1,8 +1,21 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { fields, columns } from "./data";
 
-function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
+function Grid({
+  data,
+  fields,
+  columns,
+  setSelected,
+  selectedRowIndex,
+  setSelectedRowIndex,
+}: {
+  data: any;
+  fields: any;
+  columns: any;
+  setSelected: Function;
+  selectedRowIndex: number | null;
+  setSelectedRowIndex: Function;
+}) {
   let container: HTMLDivElement;
   let dp: any;
   let gv: any;
@@ -31,9 +44,14 @@ function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
     gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
 
+    gv.setCurrent({
+      dataRow: selectedRowIndex,
+    });
+
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected(data[itemIndex]);
+      setSelectedRowIndex(itemIndex);
     };
 
     return () => {

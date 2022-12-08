@@ -14,7 +14,7 @@ import { FOOT61, FOOTER } from "app/path";
 import API from "app/axios";
 import Grid from "./grid";
 import { closeModal } from "app/state/modal/modalSlice";
-import { add } from "app/state/modal/footerSlice";
+import { addInfo } from "app/state/modal/footerSlice";
 import Button from "components/button/button";
 import {
   ButtonColor,
@@ -170,38 +170,40 @@ function Form() {
   const searchState = useSelector((state) => state.footer.search);
 
   useEffect(() => {
+    fetchAreaCode();
+  }, []);
+
+  useEffect(() => {
     if (searchState !== undefined && JSON.stringify(searchState) !== "{}") {
       searchState.fieldName === "sCuAddr" && setSCuAddr(searchState.text);
       searchState.fieldName === "sCuTel" && setSCuTel(searchState.text);
       searchState.fieldName === "sCuCode" && setSCuCode(searchState.text);
       searchState.fieldName === "sCuName" && setSCuName(searchState.text);
-
-      // if (areaCode) {
-      //   fetchData({
-      //     areaCode: areaCode[0].code,
-      //     sCuCode: "",
-      //     sCuName: "",
-      //     sCuUsername: "",
-      //     sCuTel: "",
-      //     sCuNo: "",
-      //     sCuAddr: "",
-      //     [searchState.fieldName]: searchState.text,
-      //   });
-      // }
     }
-  }, [searchState, areaCode]);
+  }, [searchState]);
 
   const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
   useEffect(() => {
-    fetchAreaCode();
-  }, []);
-
-  useEffect(() => {
     if (areaCode.length > 0) {
       reset({ areaCode: areaCode[0].code });
+      if (
+        searchState !== undefined &&
+        JSON.stringify(searchState) !== "{}" &&
+        searchState.text !== ""
+      ) {
+        fetchData({
+          areaCode: areaCode[0].code,
+          sCuCode: sCuCode,
+          sCuName: sCuName,
+          sCuUsername: "",
+          sCuTel: sCuTel,
+          sCuNo: "",
+          sCuAddr: sCuAddr,
+        });
+      }
     }
   }, [areaCode]);
 
@@ -226,9 +228,18 @@ function Form() {
     }
   };
 
-  useEffect(() => {
-    dispatch(add({ info: selected }));
-  }, [selected]);
+  const handleChoose = () => {
+    if (JSON.stringify(selected) !== "{}") {
+      dispatch(addInfo({ info: selected }));
+      dispatch(closeModal());
+    } else {
+      alert("please choose row from grid ");
+    }
+  };
+
+  const handleCancel = () => {
+    dispatch(closeModal());
+  };
 
   const submit = async (data: ISEARCH) => {
     fetchData(data);
@@ -251,12 +262,7 @@ function Form() {
             </Select>
           </div>
 
-          <span
-            style={{}}
-            onClick={() => {
-              dispatch(closeModal());
-            }}
-          >
+          <span style={{}} onClick={handleCancel}>
             <WhiteClose />
           </span>
         </div>
@@ -362,8 +368,14 @@ function Form() {
               icon={<TickInCircle />}
               type="button"
               color={ButtonColor.SUCCESS}
+              onClick={handleChoose}
             />
-            <Button text="취소" icon={<Reset />} type="button" />
+            <Button
+              text="취소"
+              icon={<Reset />}
+              type="button"
+              onClick={handleCancel}
+            />
           </div>
         </div>
       </div>

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { ICM1100SEARCH } from "./model";
 import { useForm } from "react-hook-form";
-import { openModal, closeModal, addCM1105 } from "app/state/modal/modalSlice";
-import { useSelector, useDispatch } from "app/store";
+import { openModal, addCM1105 } from "app/state/modal/modalSlice";
+import { useDispatch } from "app/store";
 import Button from "components/button/button";
 import {
   ButtonColor,

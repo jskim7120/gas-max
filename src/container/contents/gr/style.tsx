@@ -19,9 +19,6 @@ export const DetailHeader = styled.div`
       margin: 0 10px 0 15px;
     }
   }
-  .buttons {
-    display: flex;
-  }
 `;
 
 export const MainWrapper = styled.div`
@@ -38,4 +35,12 @@ export const LeftSection = styled.div<{ width?: string }>`
 export const RightSection = styled.div<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "50%")};
   overflow-y: auto;
+  .buttonsGr {
+    display: flex;
+    position: absolute;
+    top: 87px;
+    right: 11px;
+    display: flex;
+    align-items: center;
+  }
 `;

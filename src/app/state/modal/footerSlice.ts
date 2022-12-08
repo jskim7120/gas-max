@@ -85,10 +85,10 @@ const footerSlice = createSlice({
   initialState: initialState,
 
   reducers: {
-    add: (state, action) => {
+    addInfo: (state, action) => {
       state.info = action.payload.info;
     },
-    remove: (state, action) => {
+    removeInfo: (state, action) => {
       state.info = initialState.info;
     },
     addSearchText: (state, action) => {
@@ -100,7 +100,7 @@ const footerSlice = createSlice({
   },
 });
 
-export const { add, remove, addSearchText, removeSearchText } =
+export const { addInfo, removeInfo, addSearchText, removeSearchText } =
   footerSlice.actions;
 
 export default footerSlice.reducer;

@@ -44,7 +44,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "영업소",
     },
@@ -62,7 +62,7 @@ export const columns = [
     name: "cuTypeName",
     fieldName: "cuTypeName",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "구분",
     },
@@ -71,7 +71,7 @@ export const columns = [
     name: "cuViewName",
     fieldName: "cuViewName",
     type: "data",
-    width: "350",
+    width: "200",
     styleName: "rg-left-column",
     header: {
       text: "매출처명",
@@ -101,7 +101,7 @@ export const columns = [
     name: "cuAddr1n2",
     fieldName: "cuAddr1n2",
     type: "data",
-    width: "120",
+    width: "200",
     header: {
       text: "주소",
     },
@@ -110,7 +110,7 @@ export const columns = [
     name: "cuUsername",
     fieldName: "cuUsername",
     type: "data",
-    width: "120",
+    width: "90",
     header: {
       text: "성명",
     },
@@ -119,7 +119,7 @@ export const columns = [
     name: "cuStaeName",
     fieldName: "cuStaeName",
     type: "data",
-    width: "120",
+    width: "80",
     header: {
       text: "상태",
     },

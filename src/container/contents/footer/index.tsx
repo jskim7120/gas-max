@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "app/store";
 import { openModal } from "app/state/modal/modalSlice";
+import { addSearchText, removeSearchText } from "app/state/modal/footerSlice";
 import { FooterContainer } from "./style";
-import PartnerImg from "assets/image/company_partners.png";
 import { SearchIcon } from "components/allSvgIcon";
 import { getCuType, getCuStae, getCircleBadge } from "./helper";
 import Badge from "components/badge";
 import { BadgeColor, BadgeSize } from "components/componentsType";
+import PartnerImg from "assets/image/company_partners.png";
 import CARIMG from "assets/image/carIMG.png";
 import YIMG from "assets/image/yellowBtn.png";
-import { addSearchText, removeSearchText } from "app/state/modal/footerSlice";
 
 function Footer() {
   const dispatch = useDispatch();

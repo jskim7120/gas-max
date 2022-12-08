@@ -2,20 +2,20 @@ import { useEffect, useState } from "react";
 import Table from "components/table";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import { Update, Reset } from "components/allSvgIcon";
+import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { Input2, Select, Field } from "components/form/style";
 import { InputSize } from "components/componentsType";
 import InfoPerson from "assets/image/infoPerson.png";
 import { InfoText } from "components/text";
-function Tab1({
+function TableData({
   register,
   errors,
-  tabData,
+  tableData,
   selected,
 }: {
   register: any;
   errors: any;
-  tabData: any;
+  tableData: any;
   selected: any;
 }) {
   const [buPdanga, setBuPdanga] = useState<string>();
@@ -176,7 +176,7 @@ function Tab1({
           style={{ margin: "5px" }}
           width={InputSize.i100}
         >
-          {tabData?.buJpCode1?.map((obj: any, idx: number) => (
+          {tableData?.buJpCode1?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.jpCode}>
               {obj.jpName}
             </option>
@@ -191,7 +191,7 @@ function Tab1({
           style={{ margin: "5px" }}
           width={InputSize.i100}
         >
-          {tabData?.buJpCode2?.map((obj: any, idx: number) => (
+          {tableData?.buJpCode2?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.jpCode}>
               {obj.jpName}
             </option>
@@ -206,7 +206,7 @@ function Tab1({
           style={{ margin: "5px" }}
           width={InputSize.i100}
         >
-          {tabData?.buJpCode3?.map((obj: any, idx: number) => (
+          {tableData?.buJpCode3?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.jpCode}>
               {obj.jpName}
             </option>
@@ -221,7 +221,7 @@ function Tab1({
           style={{ margin: "5px" }}
           width={InputSize.i100}
         >
-          {tabData?.buJpCode4?.map((obj: any, idx: number) => (
+          {tableData?.buJpCode4?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.jpCode}>
               {obj.jpName}
             </option>
@@ -271,4 +271,4 @@ function Tab1({
   );
 }
 
-export default Tab1;
+export default TableData;

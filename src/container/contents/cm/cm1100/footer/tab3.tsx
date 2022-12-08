@@ -21,7 +21,6 @@ function Tab2({ data }: { data: any }) {
       data !== undefined &&
       (data?.tab31.length > 0 || data?.tab32.length > 0)
     ) {
-      console.log("seelected:", data);
       reset({
         cuBigo1: data.tab31[0].cuBigo1,
         cuBigo2: data.tab31[0].cuBigo2,
