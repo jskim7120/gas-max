@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import {
@@ -18,8 +18,8 @@ import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import { SearchIcon, IconHome, IconReceipt } from "components/allSvgIcon";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
-import CustomDatePicker from "components/customDatePicker/customdate2";
+import { formatDate, formatDateToStringWithoutDash } from "helpers/dateFormat";
+import CustomDatePicker from "components/customDatePicker/test-datepicker";
 import { InputSize } from "components/componentsType";
 import { convertBase64 } from "helpers/convertBase64";
 import API from "app/axios";
@@ -53,8 +53,6 @@ const Form = React.forwardRef(
     const [image, setImage] = useState<{ name: string }>();
     const [image64, setImage64] = useState<any>(null);
 
-    const [saupDate, setSaupDate] = useState("");
-
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1200",
@@ -63,6 +61,7 @@ const Form = React.forwardRef(
     const {
       register,
       handleSubmit,
+      control,
       reset,
       formState: { errors },
       getValues,
@@ -125,9 +124,8 @@ const Form = React.forwardRef(
             saupStampQu: selected?.saupStampQu === "Y",
             saupStampEs: selected?.saupStampEs === "Y",
             saupStampSe: selected?.saupStampSe === "Y",
+            saupDate: selected?.saupDate ? formatDate(selected.saupDate) : "",
           });
-
-          setSaupDate(selected.saupDate ? formatDate(selected.saupDate) : "");
 
           selected.saupStampImg
             ? setImage64(selected.saupStampImg)
@@ -168,8 +166,9 @@ const Form = React.forwardRef(
       formValues.saupStampQu = formValues.saupStampQu ? "Y" : "N";
       formValues.saupStampEs = formValues.saupStampEs ? "Y" : "N";
       formValues.saupStampSe = formValues.saupStampSe ? "Y" : "N";
-      formValues.saupDate = saupDate ? formatDateByRemoveDash(saupDate) : "";
-
+      formValues.saupDate = formValues.saupDate
+        ? formatDateToStringWithoutDash(formValues.saupDate)
+        : "";
       formValues.saupEdiEmail =
         formValues.saupEdiEmail && formValues.saupEdiEmail.trim();
 
@@ -248,7 +247,6 @@ const Form = React.forwardRef(
         onSubmit={handleSubmit(submit)}
         style={{ padding: "0px 10px" }}
       >
-        {/* <p>{isAddBtnClicked ? "true" : "false"}</p> */}
         <div
           style={{
             display: "flex",
@@ -439,10 +437,12 @@ const Form = React.forwardRef(
                 <Wrapper>
                   <Field flex style={{ alignItems: "center" }}>
                     <Label>개업일</Label>
-                    <CustomDatePicker
-                      value={saupDate}
-                      setValue={setSaupDate}
-                      name="saupDate"
+                    <Controller
+                      control={control}
+                      {...register("saupDate")}
+                      render={({ field: { onChange, onBlur, value, ref } }) => (
+                        <CustomDatePicker value={value} onChange={onChange} />
+                      )}
                     />
                   </Field>
                   <Field style={{ width: "100%" }}>
