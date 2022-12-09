@@ -26,9 +26,7 @@ import Form from "./form";
 import Grid from "./grid";
 import { columns, fields } from "./data";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
-import { Wrapper, DetailWrapper, DetailHeader } from "../../commonStyle";
-import { useParams } from "react-router-dom";
-import { LeftSection } from "../style";
+import { DetailWrapper, DetailHeader } from "../../commonStyle";
 
 interface ISEARCH {
   areaCode: string;
