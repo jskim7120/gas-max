@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
 import Table from "components/table";
-import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
-import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { Input2, Select, Field } from "components/form/style";
 import { InputSize } from "components/componentsType";
 import InfoPerson from "assets/image/infoPerson.png";
@@ -40,6 +37,29 @@ function TableData({
     }
   }, [selected]);
 
+  const handleChange = (e: any) => {
+    switch (e.target.name) {
+      case "buPdanga":
+        setBuPdanga(e.target.value);
+        break;
+      case "buPcost":
+        setBuPcost(e.target.value);
+        break;
+      case "buBdanga":
+        setBuBdanga(e.target.value);
+        break;
+      case "buBcost":
+        setBuBcost(e.target.value);
+        break;
+      case "buBldanga":
+        setBuBldanga(e.target.value);
+        break;
+      case "buBlcost":
+        setBuBlcost(e.target.value);
+        break;
+    }
+  };
+
   const data0 = [
     {
       1: <p>프로판</p>,
@@ -50,7 +70,7 @@ function TableData({
           type="text"
           value={buPdanga}
           inputSize={InputSize.i80}
-          onChange={(e: any) => setBuPdanga(e.target.value)}
+          onChange={handleChange}
         />
       ),
       3: (
@@ -60,9 +80,7 @@ function TableData({
           type="text"
           value={buPcost}
           inputSize={InputSize.i80}
-          onChange={(e: any) => {
-            setBuPcost(e.target.value);
-          }}
+          onChange={handleChange}
         />
       ),
       4: (
@@ -90,9 +108,7 @@ function TableData({
           type="text"
           value={buBdanga}
           inputSize={InputSize.i80}
-          onChange={(e: any) => {
-            setBuBdanga(e.target.value);
-          }}
+          onChange={handleChange}
         />
       ),
 
@@ -103,9 +119,7 @@ function TableData({
           type="text"
           value={buBcost}
           inputSize={InputSize.i80}
-          onChange={(e: any) => {
-            setBuBcost(e.target.value);
-          }}
+          onChange={handleChange}
         />
       ),
       4: (
@@ -133,9 +147,7 @@ function TableData({
           type="text"
           value={buBldanga}
           inputSize={InputSize.i80}
-          onChange={(e: any) => {
-            setBuBldanga(e.target.value);
-          }}
+          onChange={handleChange}
         />
       ),
       3: (
@@ -145,9 +157,7 @@ function TableData({
           type="text"
           value={buBlcost}
           inputSize={InputSize.i80}
-          onChange={(e: any) => {
-            setBuBlcost(e.target.value);
-          }}
+          onChange={handleChange}
         />
       ),
       4: (

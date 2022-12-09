@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -84,6 +83,15 @@ const Form = React.forwardRef(
       fetchTableData();
     }, [selected]);
 
+    useEffect(() => {
+      if (addr.length > 0) {
+        reset({
+          buZipcode: addr ? addr?.split("/")[1] : "",
+          buAddr1: addr ? addr?.split("/")[0] : "",
+        });
+      }
+    }, [addr]);
+
     const {
       register,
       handleSubmit,
@@ -112,7 +120,6 @@ const Form = React.forwardRef(
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
           }
-          console.log("data=============>", newData);
           reset({
             ...newData,
           });
@@ -122,13 +129,14 @@ const Form = React.forwardRef(
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
+
         try {
           const response = await API.post(GR1100DELETE, formValues);
           if (response.status === 200) {
             toast.success("삭제했습니다", {
               autoClose: 500,
             });
-            await fetchData();
+            await handleSubmit(submit)();
           }
         } catch (err) {
           toast.error("Couldn't delete", {
@@ -146,6 +154,8 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? GR1100INSERT : GR1100UPDATE;
       const formValues = getValues();
+      formValues.areaCode = selected.areaCode;
+
       try {
         const response: any = await API.post(path, formValues);
 
@@ -215,9 +225,7 @@ const Form = React.forwardRef(
                   <RadioButton
                     type="radio"
                     value={option.id}
-                    {...register(`buGubun`, {
-                      required: "required",
-                    })}
+                    {...register(`buGubun`)}
                     id={option.id}
                     // onChange={() => console.log(option.label)}
                   />
@@ -280,12 +288,15 @@ const Form = React.forwardRef(
               register={register("buNo")}
               errors={errors["buNo"]?.message}
               inputSize={InputSize.i110}
+              formatNumber="telNumber"
+              maxLength="13"
             />
             <Input
               label="종사업장"
               register={register("buRCode")}
               errors={errors["buRCode"]?.message}
               inputSize={InputSize.xs}
+              maxLength="4"
             />
           </Wrapper>
           <Wrapper grid>
@@ -306,11 +317,13 @@ const Form = React.forwardRef(
               label="주소"
               register={register("buZipcode")}
               errors={errors["buZipcode"]?.message}
+              inputSize={InputSize.i70}
             />
             <DaumAddress setAddress={setAddress} />
             <Input
               register={register("buAddr1")}
               errors={errors["buAddr1"]?.message}
+              inputSize={InputSize.md290}
             />
           </Wrapper>
           <Wrapper style={{ marginLeft: "110px" }}>
@@ -350,10 +363,16 @@ const Form = React.forwardRef(
               register={register("buEmail")}
               errors={errors["buEmail"]?.message}
             />
-            <Input
-              register={register("mailKind")}
-              errors={errors["mailKind"]?.message}
-            />
+            <FormGroup>
+              <p>@</p>
+              <Select {...register("emailKind")} width={InputSize.i120}>
+                {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
           </Wrapper>
           <Divider />
           <Wrapper grid>
@@ -378,6 +397,8 @@ const Form = React.forwardRef(
               label="미지급액"
               register={register("buMisu")}
               errors={errors["buMisu"]?.message}
+              formatNumber="comNumber"
+              style={{ textAlign: "right" }}
             />
           </Wrapper>
           <Divider />
@@ -390,297 +411,6 @@ const Form = React.forwardRef(
         </form>
       </div>
     );
-
-    // return (
-    //   <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
-    //     <Wrapper>
-    //       <Field>
-    //         <FormGroup>
-    //           <Label>영업소</Label>
-    //           <Select {...register("areaCode")}>
-    //             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-    //               <option key={idx} value={obj.code}>
-    //                 {obj.codeName}
-    //               </option>
-    //             ))}
-    //           </Select>
-    //         </FormGroup>
-    //         <div>
-    //           <ErrorText>{errors["areaCode"]?.message}</ErrorText>
-    //         </div>
-    //       </Field>
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Input
-    //         label="코드"
-    //         register={register("jpCode")}
-    //         errors={errors["jpCode"]?.message}
-    //         maxLength="4"
-    //         inputSize={InputSize.en1300}
-    //         readOnly={isAddBtnClicked}
-    //       />
-    //     </Wrapper>
-    //     <Divider />
-    //     <Wrapper>
-    //       <Input
-    //         label="품명"
-    //         register={register("jpName")}
-    //         errors={errors["jpName"]?.message}
-    //         inputSize={InputSize.en1300}
-    //         maxLength="30"
-    //       />
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Input
-    //         label="규격"
-    //         register={register("jpSpec")}
-    //         errors={errors["jpSpec"]?.message}
-    //         inputSize={InputSize.en1300}
-    //         maxLength="10"
-    //       />
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Field>
-    //         <FormGroup>
-    //           <Label>가스구분</Label>
-    //           <Select {...register("jpGubun")}>
-    //             {dataCommonDic?.jpGubun?.map((obj: any, idx: number) => (
-    //               <option key={idx} value={obj.code}>
-    //                 {obj.codeName}
-    //               </option>
-    //             ))}
-    //           </Select>
-    //         </FormGroup>
-    //         <div>
-    //           <ErrorText>{errors["jpGubun"]?.message}</ErrorText>
-    //         </div>
-    //       </Field>
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Field style={{ display: "flex" }}>
-    //         <Input
-    //           label="용량"
-    //           register={register("jpKg")}
-    //           errors={errors["jpKg"]?.message}
-    //           style={{ width: "56px" }}
-    //           textAlign="right"
-    //           maxLength="5"
-    //         />
-    //         <FormGroup>
-    //           <Select {...register("jpKgDanwi")} style={{ minWidth: "64px" }}>
-    //             {dataCommonDic?.jpKgDanwi?.map((obj: any, idx: number) => (
-    //               <option key={idx} value={obj.code}>
-    //                 {obj.codeName}
-    //               </option>
-    //             ))}
-    //           </Select>
-    //         </FormGroup>
-    //         <div>
-    //           <ErrorText>{errors["jpKgDanwi"]?.message}</ErrorText>
-    //         </div>
-    //       </Field>
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Field>
-    //         <FormGroup>
-    //           <Label>단위</Label>
-    //           <Select {...register("jpUnit")}>
-    //             {dataCommonDic?.jpUnit?.map((obj: any, idx: number) => (
-    //               <option key={idx} value={obj.code}>
-    //                 {obj.codeName}
-    //               </option>
-    //             ))}
-    //           </Select>
-    //         </FormGroup>
-    //         <div>
-    //           <ErrorText>{errors["jpUnit"]?.message}</ErrorText>
-    //         </div>
-    //       </Field>
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Field>
-    //         <FormGroup>
-    //           <Label>가스분류</Label>
-    //           <Select {...register("jpGasType")}>
-    //             {dataCommonDic?.jpGasType?.map((obj: any, idx: number) => (
-    //               <option key={idx} value={obj.code}>
-    //                 {obj.codeName}
-    //               </option>
-    //             ))}
-    //           </Select>
-    //         </FormGroup>
-    //         <div>
-    //           <ErrorText>{errors["jpGasType"]?.message}</ErrorText>
-    //         </div>
-    //       </Field>
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Field>
-    //         <FormGroup>
-    //           <Label>품목구분</Label>
-
-    //           <Select {...register("jpKind")}>
-    //             {dataCommonDic?.jpKind?.map((obj: any, idx: number) => (
-    //               <option key={idx} value={obj.code}>
-    //                 {obj.codeName}
-    //               </option>
-    //             ))}
-    //           </Select>
-    //         </FormGroup>
-    //         <div>
-    //           <ErrorText>{errors["jpKind"]?.message}</ErrorText>
-    //         </div>
-    //       </Field>
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Field>
-    //         <FormGroup>
-    //           <Label>용도구분</Label>
-    //           <Select {...register("jpGasuse")}>
-    //             {dataCommonDic?.jpGasuse?.map((obj: any, idx: number) => (
-    //               <option key={idx} value={obj.code}>
-    //                 {obj.codeName}
-    //               </option>
-    //             ))}
-    //           </Select>
-    //         </FormGroup>
-    //         <div>
-    //           <ErrorText>{errors["jpGasuse"]?.message}</ErrorText>
-    //         </div>
-    //       </Field>
-    //     </Wrapper>
-    //     <Divider />
-    //     <Wrapper>
-    //       <Field>
-    //         <FormGroup>
-    //           <Label>Vat구분</Label>
-    //           <Select {...register("jpVatKind")}>
-    //             {dataCommonDic?.jpVatKind?.map((obj: any, idx: number) => (
-    //               <option key={idx} value={obj.code}>
-    //                 {obj.codeName}
-    //               </option>
-    //             ))}
-    //           </Select>
-    //         </FormGroup>
-    //         <div>
-    //           <ErrorText>{errors["jpVatKind"]?.message}</ErrorText>
-    //         </div>
-    //       </Field>
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Field flex>
-    //         <Input
-    //           style={{ textAlign: "end" }}
-    //           label="가스판매단가"
-    //           register={register("jpOutdanga")}
-    //           errors={errors["jpOutdanga"]?.message}
-    //           inputSize={InputSize.en1300}
-    //           textAlign="right"
-    //           formatNumber="comDecNumber"
-    //           maxLength="26"
-    //         />
-    //         <p>원</p>
-    //       </Field>
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Field flex>
-    //         <Input
-    //           style={{ textAlign: "end" }}
-    //           label="용기판매단가"
-    //           register={register("jpOuttong")}
-    //           errors={errors["jpOuttong"]?.message}
-    //           inputSize={InputSize.en1300}
-    //           textAlign="right"
-    //           formatNumber="comNumber"
-    //           maxLength="23"
-    //         />
-    //         <p>원</p>
-    //       </Field>
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Field flex>
-    //         <Input
-    //           style={{ textAlign: "end" }}
-    //           label="가스매입원가"
-    //           register={register("jpIndanga")}
-    //           errors={errors["jpIndanga"]?.message}
-    //           inputSize={InputSize.en1300}
-    //           textAlign="right"
-    //           formatNumber="comDecNumber"
-    //           maxLength="26"
-    //         />
-    //         <p>원</p>
-    //       </Field>
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Field flex>
-    //         <Input
-    //           style={{ textAlign: "end" }}
-    //           label="용기구입단가"
-    //           register={register("jpIntong")}
-    //           errors={errors["jpIntong"]?.message}
-    //           inputSize={InputSize.en1300}
-    //           textAlign="right"
-    //           formatNumber="comNumber"
-    //           maxLength="23"
-    //         />
-    //         <p>원</p>
-    //       </Field>
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Field flex>
-    //         <Input
-    //           style={{ textAlign: "end" }}
-    //           label="사원배달수수료"
-    //           register={register("jpBaedal")}
-    //           errors={errors["jpBaedal"]?.message}
-    //           inputSize={InputSize.en1300}
-    //           textAlign="right"
-    //           formatNumber="comNumber"
-    //           maxLength="23"
-    //         />
-    //         <p>원</p>
-    //       </Field>
-    //     </Wrapper>
-    //     <Divider />
-    //     <Wrapper>
-    //       <FormGroup style={{ alignItems: "center" }}>
-    //         <Label>재고사용 유무</Label>
-    //         {radioOptions.map((option, index) => (
-    //           <Item key={index}>
-    //             <RadioButton
-    //               type="radio"
-    //               value={option.id}
-    //               {...register(`jpJaegoYn`, {
-    //                 required: "required",
-    //               })}
-    //               id={option.id}
-    //               // onChange={() => console.log(option.label)}
-    //             />
-    //             <RadioButtonLabel htmlFor={`${option.label}`}>
-    //               {option.label}
-    //             </RadioButtonLabel>
-    //           </Item>
-    //         ))}
-    //       </FormGroup>
-    //       <div>
-    //         <ErrorText>{errors["jpJaegoYn"]?.message}</ErrorText>
-    //       </div>
-    //     </Wrapper>
-    //     <Wrapper>
-    //       <Field>
-    //         <Input
-    //           style={{ textAlign: "end" }}
-    //           label="순번(조회순서)"
-    //           register={register("jpSort")}
-    //           errors={errors["jpSort"]?.message}
-    //           inputSize={InputSize.en1300}
-    //           textAlign="right"
-    //         />
-    //       </Field>
-    //     </Wrapper>
-    //   </form>
-    // );
   }
 );
 

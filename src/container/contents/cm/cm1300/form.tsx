@@ -18,7 +18,7 @@ import CheckBox from "components/checkbox";
 import { ICM1300 } from "./model";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
-import { CM1300INSERT, CM1300UPDATE, CM1200DELETE } from "app/path";
+import { CM1300INSERT, CM1300UPDATE, CM1300DELETE } from "app/path";
 import { InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
@@ -27,6 +27,7 @@ import {
   RadioButton,
   RadioButtonLabel,
 } from "components/radioButton/style";
+import { createNoSubstitutionTemplateLiteral } from "typescript";
 
 interface IForm {
   selected: any;
@@ -127,11 +128,12 @@ const Form = React.forwardRef(
       }
     };
     const crud = async (type: string | null) => {
+      console.log("type", type);
       if (type === "delete") {
         const formValues = getValues();
 
         try {
-          const response = await API.post(CM1200DELETE, formValues);
+          const response = await API.post(CM1300DELETE, formValues);
           if (response.status === 200) {
             toast.success("삭제했습니다", {
               autoClose: 500,
@@ -149,9 +151,13 @@ const Form = React.forwardRef(
     };
 
     const submit = async (data: ICM1300) => {
+      console.log("working");
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? CM1300INSERT : CM1300UPDATE;
       const formValues = getValues();
+      formValues.areaCode = selected.areaCode;
+      formValues.aptF = Number(formValues.aptF);
+      formValues.aptS = Number(formValues.aptS);
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
@@ -245,7 +251,7 @@ const Form = React.forwardRef(
               <CheckBox
                 title="4호포함"
                 rtl
-                register={{ ...register("apt4ho") }}
+                // register={{ ...register("apt4ho") }}
               />
               <div>
                 <ErrorText>{errors["apt4ho"]?.message}</ErrorText>
@@ -255,7 +261,7 @@ const Form = React.forwardRef(
               <CheckBox
                 title="4층포함"
                 rtl
-                register={{ ...register("apt4f") }}
+                // register={{ ...register("apt4f") }}
               />
               <div>
                 <ErrorText>{errors["apt4f"]?.message}</ErrorText>
@@ -265,7 +271,7 @@ const Form = React.forwardRef(
               <CheckBox
                 title="지층포함"
                 rtl
-                register={{ ...register("aptBf") }}
+                // register={{ ...register("aptBf") }}
               />
               <div>
                 <ErrorText>{errors["aptBf"]?.message}</ErrorText>
@@ -340,7 +346,7 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="조정기"
-                  register={register("aptRh2o")}
+                  // register={register("aptRh2o")}
                   rtl={false}
                 />
               </Label>
@@ -365,7 +371,7 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="루베단가 "
-                  register={register("aptRdangaType")}
+                  // register={register("aptRdangaType")}
                   rtl={false}
                 />
               </Label>
@@ -451,7 +457,7 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="관리비"
-                  register={register("aptAnkum")}
+                  // register={register("aptAnkum")}
                   rtl={false}
                 />
               </Label>
@@ -469,7 +475,7 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="시설비"
-                  register={register("aptSisulkum")}
+                  // register={register("aptSisulkum")}
                   rtl={false}
                 />
               </Label>
@@ -486,7 +492,7 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="계량기"
-                  register={register("aptMeterkum")}
+                  // register={register("aptMeterkum")}
                   rtl={false}
                 />
               </Label>
@@ -505,7 +511,7 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="연체율"
-                  register={register("aptPer")}
+                  // register={register("aptPer")}
                   rtl={false}
                 />
               </Label>
@@ -523,21 +529,16 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="검침일"
-                  register={register("aptGumdate")}
+                  // register={register("aptGumdate")}
                   rtl={false}
                 />
               </Label>
-              <Select {...register("aptGumdate")} width={InputSize.i175}>
-                {dataCommonDic?.aptGumdate?.map(
-                  (option: any, index: number) => {
-                    return (
-                      <option key={index} value={option.code}>
-                        {option.codeName}
-                      </option>
-                    );
-                  }
-                )}
-              </Select>
+              <Input
+                register={register("aptGumdate")}
+                textAlign="right"
+                inputSize={InputSize.i120}
+                maxLength="2"
+              />
               <p>{`일`}</p>
             </FormGroup>
           </Field>
@@ -546,7 +547,7 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="수금방법"
-                  register={register("aptSukumtype")}
+                  // register={register("aptSukumtype")}
                   rtl={false}
                 />
               </Label>

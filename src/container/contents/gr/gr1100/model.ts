@@ -39,5 +39,5 @@ export interface ISANGPUM {
   buTel: string;
   buUptae: string;
   buZipcode: string;
-  mailKind: string;
+  emailKind: string;
 }

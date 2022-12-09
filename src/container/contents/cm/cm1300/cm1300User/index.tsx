@@ -171,10 +171,7 @@ function FormCM1300User({
           text="삭제"
           icon={<Trash />}
           style={{ marginRight: "12px" }}
-          onClick={() => {
-            dispatch(openModal({ type: "delModal" }));
-            dispatch(addDeleteMenuId({ menuId: menuId }));
-          }}
+          onClick={() => {}}
         />
       </div>
       <Grid2TableContainer>
