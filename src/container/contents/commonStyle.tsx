@@ -40,12 +40,12 @@ export const DetailHeader = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   gap: 0px;
-  height: calc(100% - 40px);
+  height: calc(100% - 41px);
 `;
 
 export const WrapperContent = styled.div`
   gap: 0px;
-  height: calc(100% - 40px);
+  height: calc(100% - 41px);
   width: 100%;
 `;
 
