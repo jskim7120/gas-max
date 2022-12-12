@@ -92,6 +92,7 @@ function CM9003({
 
   const cancel = () => {
     resetForm();
+    setDataChk(true);
     setData([]);
   };
 
