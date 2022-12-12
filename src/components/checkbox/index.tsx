@@ -74,7 +74,7 @@ function CheckBox(props: {
           type="checkbox"
           {...props.register}
           onChange={props.onChange}
-          checked={props.checked ? props.checked : false}
+          checked={props.checked && props.checked}
         />
         {props.title && props.title}
       </label>
