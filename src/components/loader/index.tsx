@@ -5,6 +5,7 @@ const SpinnerWrap = styled.div<{
   size?: number;
   color?: string;
   style?: any;
+  borderWidth?: string;
 }>`
   display: inline-block;
   position: relative;
@@ -16,7 +17,7 @@ const SpinnerWrap = styled.div<{
     position: absolute;
     width: 100%;
     height: 100%;
-    border-width: 4px;
+    border-width: ${(props) => props.borderWidth};
     border-style: solid;
     border-radius: 50%;
     animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
@@ -50,16 +51,19 @@ function Loader({
   size,
   color,
   style,
+  borderWidth,
 }: {
   size?: number;
   color?: string;
   style?: any;
+  borderWidth?: string;
 }) {
   return (
     <SpinnerWrap
       size={size && size}
       color={color && color}
       style={style && style}
+      borderWidth={borderWidth ? borderWidth : "4px"}
     >
       <div></div>
       <div></div>

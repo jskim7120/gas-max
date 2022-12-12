@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CM9003SEARCH } from "app/path";
+import { CM9006SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import API from "app/axios";
 import { DetailHeader, WrapperContent } from "../../commonStyle";
@@ -22,9 +22,9 @@ import {
   InputSize,
   FieldKind,
 } from "components/componentsType";
+import CheckBox from "components/checkbox";
 import CustomDatePicker from "components/customDatePicker/test-datepicker";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
-
 import Grid from "./grid";
 
 function CM9003({
@@ -39,7 +39,7 @@ function CM9003({
   const [reportKind, setReportKind] = useState("");
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
-    functionName: "CM9003",
+    functionName: "CM9006",
   });
 
   const {
@@ -60,7 +60,10 @@ function CM9003({
       cuType: dataCommonDic?.cuType[0].code,
       cuJyCode: dataCommonDic?.cuJyCode[0].code,
       swCode: dataCommonDic?.swCode[0].code,
+      cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
       cuCutype: dataCommonDic?.cuCutype[0].code,
+      cuStae: dataCommonDic?.cuStae[0].code,
+      cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
     });
     setReportKind(dataCommonDic?.reportKind[0].code);
   }, [dataCommonDic]);
@@ -75,7 +78,7 @@ function CM9003({
 
     try {
       setLoading(true);
-      const { data } = await API.get(CM9003SEARCH, { params: paramTemp });
+      const { data } = await API.get(CM9006SEARCH, { params: paramTemp });
 
       if (data) {
         setData(data);
@@ -108,11 +111,11 @@ function CM9003({
           </Select>
         </div>
       </DetailHeader>
-      <WrapperContent>
+      <WrapperContent style={{ height: `calc(100% - 113px)` }}>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper>
-            <div style={{ width: "80%" }}>
-              <Wrapper grid col={6}>
+            <div style={{ width: "80%", border: "1px solid red" }}>
+              <Wrapper grid col={5} fields="1fr 1fr 1fr 1fr 1fr">
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>보고서종류</Label>
                   <Select
@@ -143,24 +146,6 @@ function CM9003({
                     ))}
                   </Select>
                 </FormGroup>
-
-                <Field flex style={{ alignItems: "center" }}>
-                  <Label>기간</Label>
-                  <Controller
-                    control={control}
-                    {...register("sDate")}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
-                      <CustomDatePicker value={value} onChange={onChange} />
-                    )}
-                  />
-                  <Controller
-                    control={control}
-                    {...register("eDate")}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
-                      <CustomDatePicker value={value} onChange={onChange} />
-                    )}
-                  />
-                </Field>
 
                 <FormGroup>
                   <Label>지역분류</Label>
@@ -193,6 +178,28 @@ function CM9003({
                 </FormGroup>
 
                 <FormGroup>
+                  <Label>관리책임자</Label>
+                  <Select
+                    {...register("cuCustgubun")}
+                    kind={FieldKind.BORDER}
+                    style={{ width: "100%" }}
+                  >
+                    {dataCommonDic?.cuCustgubun?.map(
+                      (obj: any, idx: number) => (
+                        <option key={idx} value={obj.code}>
+                          {obj.codeName}
+                        </option>
+                      )
+                    )}
+                    <option key="sdcdcds00" value="">
+                      hooson
+                    </option>
+                  </Select>
+                </FormGroup>
+              </Wrapper>
+              <Wrapper grid col={5} fields="1fr 1fr 1fr 1fr 1fr">
+                <div></div>
+                <FormGroup>
                   <Label>소비자형태</Label>
                   <Select
                     {...register("cuCutype")}
@@ -209,6 +216,69 @@ function CM9003({
                     </option>
                   </Select>
                 </FormGroup>
+                <FormGroup>
+                  <Label>거래상태</Label>
+                  <Select
+                    {...register("cuStae")}
+                    kind={FieldKind.BORDER}
+                    style={{ width: "100%" }}
+                  >
+                    {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
+                      <option key={idx} value={obj.code}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                    <option key="sdcdcds00" value="">
+                      hooson
+                    </option>
+                  </Select>
+                </FormGroup>
+                <FormGroup>
+                  <Label>수금방법</Label>
+                  <Select
+                    {...register("cuSukumtype")}
+                    kind={FieldKind.BORDER}
+                    style={{ width: "100%" }}
+                  >
+                    {dataCommonDic?.cuSukumtype?.map(
+                      (obj: any, idx: number) => (
+                        <option key={idx} value={obj.code}>
+                          {obj.codeName}
+                        </option>
+                      )
+                    )}
+                    <option key="sdcdcds00" value="">
+                      hooson
+                    </option>
+                  </Select>
+                </FormGroup>
+                <Field
+                  flex
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    border: "1px solid red",
+                  }}
+                >
+                  <CheckBox
+                    register={{ ...register("dataChk") }}
+                    title="등록기간"
+                  />
+                  <Controller
+                    control={control}
+                    {...register("sDate")}
+                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                      <CustomDatePicker value={value} onChange={onChange} />
+                    )}
+                  />
+                  <Controller
+                    control={control}
+                    {...register("eDate")}
+                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                      <CustomDatePicker value={value} onChange={onChange} />
+                    )}
+                  />
+                </Field>
               </Wrapper>
             </div>
 
@@ -234,7 +304,7 @@ function CM9003({
               />
               <Button
                 text="수정"
-                icon={<Reset color="#707070" />}
+                icon={<Reset />}
                 style={{ marginRight: "10px" }}
                 type="button"
                 color={ButtonColor.LIGHT}

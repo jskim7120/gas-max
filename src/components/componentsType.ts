@@ -3,6 +3,7 @@ export enum ButtonColor {
   SECONDARY = "secondary",
   WARNING = "warning",
   SUCCESS = "success",
+  LIGHT = "light",
 }
 
 export enum ButtonSize {
