@@ -75,6 +75,16 @@ const Form = React.forwardRef(
     const [number1, setNumber1] = useState(0);
     const [number2, setNumber2] = useState(0);
 
+    const [chkAptZipCode, setChkAptZipCode] = useState(false);
+    const [chkAptRh2o, setChkAptRh2o] = useState(false);
+    const [chkAptRdangaType, setChkAptRdangaType] = useState(false);
+    const [chkAptAnkum, setChkAptAnkum] = useState(false);
+    const [chkAptSisulkum, setChkAptSisulkum] = useState(false);
+    const [chkAptMeterkum, setChkAptMeterkum] = useState(false);
+    const [chkAptPer, setChkAptPer] = useState(false);
+    const [chkAptGumdate, setChkAptGumdate] = useState(false);
+    const [chkAptSukumtype, setChkAptSukumtype] = useState(false);
+
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "CM",
       functionName: "CM1300",
@@ -90,6 +100,15 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+        setChkAptZipCode(false);
+        setChkAptRh2o(false);
+        setChkAptRdangaType(false);
+        setChkAptAnkum(false);
+        setChkAptSisulkum(false);
+        setChkAptMeterkum(false);
+        setChkAptPer(false);
+        setChkAptGumdate(false);
+        setChkAptSukumtype(false);
         resetForm("reset");
       }
     }, [selected]);
@@ -123,6 +142,15 @@ const Form = React.forwardRef(
           }
           reset({
             ...newData,
+            chkAptZipCode: false,
+            chkAptRh2o: false,
+            chkAptRdangaType: false,
+            chkAptAnkum: false,
+            chkAptSisulkum: false,
+            chkAptMeterkum: false,
+            chkAptPer: false,
+            chkAptGumdate: false,
+            chkAptSukumtype: false,
           });
         }
       }
@@ -284,14 +312,16 @@ const Form = React.forwardRef(
           <Label>
             <CheckBox
               title="주 소"
-              // register={register("aptZipcode")}
+              register={register("chkAptZipCode")}
               rtl={false}
+              onChange={(e: any) => setChkAptZipCode(e.target.checked)}
             />
           </Label>
           <Input
             register={register("aptZipcode")}
             errors={errors["aptZipcode"]?.message}
             inputSize={InputSize.xs}
+            readOnly={!chkAptZipCode}
           />
           <DaumAddress setAddress={setAddress} />
           <Input
@@ -346,12 +376,14 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="조정기"
-                  // register={register("aptRh2o")}
+                  register={register("chkAptRh2o")}
                   rtl={false}
+                  onChange={(e: any) => setChkAptRh2o(e.target.checked)}
                 />
               </Label>
               <Select
-                {...register("aptRh2o")}
+                disabled={!chkAptRh2o ? true : false}
+                {...register("chkAptRh2o")}
                 width={InputSize.i120}
                 textAlign="right"
               >
@@ -371,11 +403,13 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="루베단가 "
-                  // register={register("aptRdangaType")}
+                  register={register("chkAptRdangaType")}
                   rtl={false}
+                  onChange={(e: any) => setChkAptRdangaType(e.target.checked)}
                 />
               </Label>
               <Select
+                disabled={!chkAptRdangaType ? true : false}
                 {...register("aptRdangaType")}
                 style={{ minWidth: "20%" }}
                 onChange={(e: any) => {
@@ -402,6 +436,7 @@ const Form = React.forwardRef(
                     id="number1"
                     type="text"
                     onChange={(e: any) => setNumber1(Number(e.target.value))}
+                    readOnly={!chkAptRdangaType}
                   />
                   <Select
                     {...register("aptRdangaSign")}
@@ -420,6 +455,7 @@ const Form = React.forwardRef(
                     id="number2"
                     type="text"
                     onChange={(e: any) => setNumber2(Number(e.target.value))}
+                    readOnly={!chkAptRdangaType}
                   />
 
                   <p>
@@ -446,6 +482,7 @@ const Form = React.forwardRef(
                   inputSize={InputSize.sm}
                   textAlign="right"
                   style={{ border: "1px solid #e6e5e5" }}
+                  readOnly={!chkAptRdangaType}
                 />
               )}
             </FormGroup>
@@ -457,8 +494,9 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="관리비"
-                  // register={register("aptAnkum")}
+                  register={register("chkAptAnkum")}
                   rtl={false}
+                  onChange={(e: any) => setChkAptAnkum(e.target.checked)}
                 />
               </Label>
               <Input
@@ -466,6 +504,7 @@ const Form = React.forwardRef(
                 textAlign="right"
                 inputSize={InputSize.i120}
                 formatNumber="comDecNumber"
+                readOnly={!chkAptAnkum}
               />
               <p>{`원`}</p>
             </FormGroup>
@@ -475,14 +514,16 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="시설비"
-                  // register={register("aptSisulkum")}
+                  register={register("chkAptSisulkum")}
                   rtl={false}
+                  onChange={(e: any) => setChkAptSisulkum(e.target.checked)}
                 />
               </Label>
               <Input
                 register={register("aptSisulkum")}
                 textAlign="right"
                 formatNumber="comDecNumber"
+                readOnly={!chkAptSisulkum}
               />
               <p>{`원`}</p>
             </FormGroup>
@@ -492,14 +533,16 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="계량기"
-                  // register={register("aptMeterkum")}
+                  register={register("chkAptMeterkum")}
                   rtl={false}
+                  onChange={(e: any) => setChkAptMeterkum(e.target.checked)}
                 />
               </Label>
               <Input
                 register={register("aptMeterkum")}
                 textAlign="right"
                 formatNumber="comDecNumber"
+                readOnly={!chkAptMeterkum}
               />
               <p>{`원`}</p>
             </FormGroup>
@@ -511,8 +554,9 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="연체율"
-                  // register={register("aptPer")}
+                  register={register("chkAptPer")}
                   rtl={false}
+                  onChange={(e: any) => setChkAptPer(e.target.checked)}
                 />
               </Label>
               <Input
@@ -520,6 +564,7 @@ const Form = React.forwardRef(
                 textAlign="right"
                 inputSize={InputSize.i120}
                 maxLength="3"
+                readOnly={!chkAptPer}
               />
               <p>{`%`}</p>
             </FormGroup>
@@ -529,8 +574,9 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="검침일"
-                  // register={register("aptGumdate")}
+                  register={register("chkAptGumdate")}
                   rtl={false}
+                  onChange={(e: any) => setChkAptGumdate(e.target.checked)}
                 />
               </Label>
               <Input
@@ -538,6 +584,7 @@ const Form = React.forwardRef(
                 textAlign="right"
                 inputSize={InputSize.i120}
                 maxLength="2"
+                readOnly={!chkAptGumdate}
               />
               <p>{`일`}</p>
             </FormGroup>
@@ -547,11 +594,16 @@ const Form = React.forwardRef(
               <Label>
                 <CheckBox
                   title="수금방법"
-                  // register={register("aptSukumtype")}
+                  register={register("chkAptSukumtype")}
                   rtl={false}
+                  onChange={(e: any) => setChkAptSukumtype(e.target.checked)}
                 />
               </Label>
-              <Select {...register("aptSukumtype")} width={InputSize.i200}>
+              <Select
+                {...register("aptSukumtype")}
+                width={InputSize.i200}
+                disabled={!chkAptSukumtype ? true : false}
+              >
                 {dataCommonDic?.aptSukumtype?.map(
                   (option: any, index: number) => {
                     return (

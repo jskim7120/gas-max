@@ -52,6 +52,13 @@ export interface IJNOTRY {
   edJnOrderO5: string;
   edJnOrderO6: string;
 
+  jnOrder01: string;
+  jnOrder02: string;
+  jnOrder03: string;
+  jnOrder04: string;
+  jnOrder05: string;
+  jnOrder06: string;
+
   jnBank1: string;
   jnBank2: string;
   jnBank3: string;

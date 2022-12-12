@@ -171,55 +171,55 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
 
   const data2 = [
     {
-      JnOrderO1: (
+      jnOrder01: (
         <Input
-          register={register("JnOrderO1")}
-          errors={errors["JnOrderO1"]?.message}
+          register={register("jnOrder01")}
+          errors={errors["jnOrder01"]?.message}
           inputSize={InputSize.xxl}
         />
       ),
     },
     {
-      JnOrderO2: (
+      jnOrder02: (
         <Input
-          register={register("JnOrderO2")}
-          errors={errors["JnOrderO2"]?.message}
+          register={register("jnOrder02")}
+          errors={errors["jnOrder02"]?.message}
           inputSize={InputSize.xxl}
         />
       ),
     },
     {
-      JnOrderO3: (
+      jnOrder03: (
         <Input
-          register={register("JnOrderO3")}
-          errors={errors["JnOrderO3"]?.message}
+          register={register("jnOrder03")}
+          errors={errors["jnOrder03"]?.message}
           inputSize={InputSize.xxl}
         />
       ),
     },
     {
-      JnOrderO4: (
+      jnOrder04: (
         <Input
-          register={register("JnOrderO4")}
-          errors={errors["JnOrderO4"]?.message}
+          register={register("jnOrder04")}
+          errors={errors["jnOrder04"]?.message}
           inputSize={InputSize.xxl}
         />
       ),
     },
     {
-      JnOrderO5: (
+      jnOrder05: (
         <Input
-          register={register("JnOrderO5")}
-          errors={errors["JnOrderO5"]?.message}
+          register={register("jnOrder05")}
+          errors={errors["jnOrder05"]?.message}
           inputSize={InputSize.xxl}
         />
       ),
     },
     {
-      JnOrderO6: (
+      jnOrder06: (
         <Input
-          register={register("JnOrderO6")}
-          errors={errors["JnOrderO6"]?.message}
+          register={register("jnOrder06")}
+          errors={errors["jnOrder06"]?.message}
           inputSize={InputSize.xxl}
         />
       ),

@@ -215,13 +215,12 @@ const Form = React.forwardRef(
               errors={errors["buCode"]?.message}
               inputSize={InputSize.xs}
             />
-            <FormGroup style={{ alignItems: "center" }}>
-              <Label style={{ marginRight: "16px" }}>매입처 구분</Label>
+            <FormGroup style={{ alignItems: "center", width: "347px" }}>
+              <Label style={{ marginRight: "4px", marginLeft: "17px" }}>
+                매입처 구분
+              </Label>
               {radioOptions.map((option, index) => (
-                <Item
-                  key={index}
-                  style={{ paddingLeft: "11px", marginRight: "16px" }}
-                >
+                <Item key={index}>
                   <RadioButton
                     type="radio"
                     value={option.id}
