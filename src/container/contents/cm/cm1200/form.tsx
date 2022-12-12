@@ -1140,8 +1140,10 @@ const Form = React.forwardRef(
                 <p>{`1)`}</p>
                 <Input
                   register={register("tankMax1")}
+                  maxLength="3"
+                  textAlign="right"
+                  inputSize={InputSize.i40}
                   placeholder=""
-                  inputSize={InputSize.sm}
                 />
                 <p>%</p>
                 <Input
