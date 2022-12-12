@@ -1,16 +1,23 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Checked from "assets/image/checked.png";
 
-const CheckBoxWrapper = styled.div<{ rtl: boolean }>`
+const CheckBoxWrapper = styled.div<{ rtl: boolean; gap?: string }>`
   label {
     display: flex;
     align-items: center;
     flex-direction: ${(props) => (props.rtl ? "row" : "row-reverse")};
-    gap: ${(props) => (props.rtl ? "8px" : "5px")};
+    gap: ${(props) =>
+      props.rtl
+        ? props.gap
+          ? props.gap
+          : "8px"
+        : props.gap
+        ? props.gap
+        : "5px"};
     font-family: "NotoSansKRRegular";
     font-size: 12px;
     font-weight: 400;
+    width: max-content;
   }
 
   input[type="checkbox"]:before {
@@ -44,17 +51,6 @@ const CheckBoxWrapper = styled.div<{ rtl: boolean }>`
     background-image: url(${Checked});
   }
 
-  // input[type="checkbox"]:disabled:after {
-  //   -webkit-filter: opacity(0.4);
-  // }
-
-  // input[type="checkbox"]:not(:disabled):checked:hover:after {
-  //   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAQAAABuW59YAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAB2SURBVHjaAGkAlv8A3QDyAP0A/QD+Dam3W+kCAAD8APYAAgTVZaZCGwwA5wr0AvcA+Dh+7UX/x24AqK3Wg/8nt6w4/5q71wAAVP9g/7rTXf9n/+9N+AAAtpJa/zf/S//DhP8H/wAA4gzWj2P4lsf0JP0A/wADAHB0Ngka6UmKAAAAAElFTkSuQmCC");
-  // }
-
-  // input[type="checkbox"]:not(:disabled):hover:after {
-  // }
-
   input[type="checkbox"]:not(:disabled):hover:before {
     border-color: #707070;
   }
@@ -65,11 +61,15 @@ function CheckBox(props: {
   rtl?: boolean;
   register?: any;
   onChange?: any;
+  gap?: string;
 }) {
   return (
-    <CheckBoxWrapper rtl={props.rtl ? props.rtl : false}>
+    <CheckBoxWrapper
+      rtl={props.rtl ? props.rtl : false}
+      gap={props.gap && props.gap}
+    >
       <label>
-        <input type="checkbox" {...props.register} onChange={props.onChange}/>
+        <input type="checkbox" {...props.register} onChange={props.onChange} />
         {props.title && props.title}
       </label>
     </CheckBoxWrapper>

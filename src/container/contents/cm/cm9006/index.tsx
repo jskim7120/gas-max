@@ -111,17 +111,17 @@ function CM9003({
           </Select>
         </div>
       </DetailHeader>
-      <WrapperContent style={{ height: `calc(100% - 113px)` }}>
+      <WrapperContent style={{ height: `calc(100% - 76px)` }}>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper>
-            <div style={{ width: "80%", border: "1px solid red" }}>
-              <Wrapper grid col={5} fields="1fr 1fr 1fr 1fr 1fr">
+            <div style={{ width: "75%" }}>
+              <Wrapper grid col={5} fields="1fr 1fr 1fr 1fr 1.5fr">
                 <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>보고서종류</Label>
+                  <Label style={{ minWidth: "90px" }}>보고서종류</Label>
                   <Select
+                    width={InputSize.i130}
                     {...register("reportKind")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
                     onChange={(e) => setReportKind(e.target.value)}
                   >
                     {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
@@ -133,11 +133,11 @@ function CM9003({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label>거래구분</Label>
+                  <Label style={{ minWidth: "90px" }}>거래구분</Label>
                   <Select
                     {...register("cuType")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -148,11 +148,11 @@ function CM9003({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label>지역분류</Label>
+                  <Label style={{ minWidth: "90px" }}>지역분류</Label>
                   <Select
                     {...register("cuJyCode")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -163,11 +163,11 @@ function CM9003({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label>담당사원</Label>
+                  <Label style={{ minWidth: "90px" }}>담당사원</Label>
                   <Select
                     {...register("swCode")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -178,11 +178,11 @@ function CM9003({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label>관리책임자</Label>
+                  <Label style={{ minWidth: "90px" }}>관리책임자</Label>
                   <Select
                     {...register("cuCustgubun")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuCustgubun?.map(
                       (obj: any, idx: number) => (
@@ -197,14 +197,14 @@ function CM9003({
                   </Select>
                 </FormGroup>
               </Wrapper>
-              <Wrapper grid col={5} fields="1fr 1fr 1fr 1fr 1fr">
+              <Wrapper grid col={5} fields="1fr 1fr 1fr 1fr 1.5fr">
                 <div></div>
                 <FormGroup>
-                  <Label>소비자형태</Label>
+                  <Label style={{ minWidth: "90px" }}>소비자형태</Label>
                   <Select
                     {...register("cuCutype")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -217,11 +217,11 @@ function CM9003({
                   </Select>
                 </FormGroup>
                 <FormGroup>
-                  <Label>거래상태</Label>
+                  <Label style={{ minWidth: "90px" }}>거래상태</Label>
                   <Select
                     {...register("cuStae")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -234,11 +234,11 @@ function CM9003({
                   </Select>
                 </FormGroup>
                 <FormGroup>
-                  <Label>수금방법</Label>
+                  <Label style={{ minWidth: "90px" }}>수금방법</Label>
                   <Select
                     {...register("cuSukumtype")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuSukumtype?.map(
                       (obj: any, idx: number) => (
@@ -256,8 +256,7 @@ function CM9003({
                   flex
                   style={{
                     alignItems: "center",
-                    justifyContent: "flex-start",
-                    border: "1px solid red",
+                    marginLeft: "22px",
                   }}
                 >
                   <CheckBox
@@ -268,14 +267,22 @@ function CM9003({
                     control={control}
                     {...register("sDate")}
                     render={({ field: { onChange, onBlur, value, ref } }) => (
-                      <CustomDatePicker value={value} onChange={onChange} />
+                      <CustomDatePicker
+                        value={value}
+                        onChange={onChange}
+                        style={{ marginLeft: "15px" }}
+                      />
                     )}
                   />
                   <Controller
                     control={control}
                     {...register("eDate")}
                     render={({ field: { onChange, onBlur, value, ref } }) => (
-                      <CustomDatePicker value={value} onChange={onChange} />
+                      <CustomDatePicker
+                        value={value}
+                        onChange={onChange}
+                        style={{ margin: "5px 0 0 0" }}
+                      />
                     )}
                   />
                 </Field>
