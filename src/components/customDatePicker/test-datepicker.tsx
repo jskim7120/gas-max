@@ -9,13 +9,16 @@ function CustomDatePicker({
   style,
   value,
   onChange,
+  readOnly,
 }: {
   style?: any;
   value: any;
   onChange: any;
+  readOnly?: boolean;
 }) {
   return (
     <DatePicker
+      readOnly={readOnly}
       onChange={onChange}
       showMonthDropdown
       showYearDropdown

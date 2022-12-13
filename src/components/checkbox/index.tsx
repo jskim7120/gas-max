@@ -62,6 +62,7 @@ function CheckBox(props: {
   register?: any;
   onChange?: any;
   gap?: string;
+  checked?: boolean;
 }) {
   return (
     <CheckBoxWrapper
@@ -69,7 +70,12 @@ function CheckBox(props: {
       gap={props.gap && props.gap}
     >
       <label>
-        <input type="checkbox" {...props.register} onChange={props.onChange} />
+        <input
+          type="checkbox"
+          {...props.register}
+          onChange={props.onChange}
+          checked={props.checked && props.checked}
+        />
         {props.title && props.title}
       </label>
     </CheckBoxWrapper>

@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { CM9006SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import API from "app/axios";
-import { DetailHeader, WrapperContent } from "../../commonStyle";
-import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { Reset, MagnifyingGlass, ExcelIcon } from "components/allSvgIcon";
-import { SearchWrapper } from "./style";
+import Loader from "components/loader";
+import Button from "components/button/button";
+import { ButtonColor, InputSize, FieldKind } from "components/componentsType";
+import CheckBox from "components/checkbox";
+import CustomDatePicker from "components/customDatePicker/test-datepicker";
+import DataGridFooter from "components/dataGridFooter/dataGridFooter";
+import Grid from "./grid";
 import {
   Select,
   FormGroup,
@@ -14,18 +18,9 @@ import {
   Label,
   Field,
 } from "components/form/style";
-import Loader from "components/loader";
-import Button from "components/button/button";
-import {
-  ButtonColor,
-  ButtonType,
-  InputSize,
-  FieldKind,
-} from "components/componentsType";
-import CheckBox from "components/checkbox";
-import CustomDatePicker from "components/customDatePicker/test-datepicker";
-import DataGridFooter from "components/dataGridFooter/dataGridFooter";
-import Grid from "./grid";
+import { ResetGray, MagnifyingGlass, ExcelIcon } from "components/allSvgIcon";
+import { DetailHeader, WrapperContent } from "../../commonStyle";
+import { SearchWrapper } from "./style";
 
 function CM9003({
   depthFullName,
@@ -34,38 +29,22 @@ function CM9003({
   depthFullName: string;
   menuId: string;
 }) {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [reportKind, setReportKind] = useState("");
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
     functionName: "CM9006",
   });
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    getValues,
-    control,
-  } = useForm<ISEARCH>({
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [reportKind, setReportKind] = useState("");
+  const [dataChk, setDataChk] = useState(true);
+
+  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
   useEffect(() => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-      reportKind: dataCommonDic?.reportKind[0].code,
-      cuType: dataCommonDic?.cuType[0].code,
-      cuJyCode: dataCommonDic?.cuJyCode[0].code,
-      swCode: dataCommonDic?.swCode[0].code,
-      cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
-      cuCutype: dataCommonDic?.cuCutype[0].code,
-      cuStae: dataCommonDic?.cuStae[0].code,
-      cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
-    });
-    setReportKind(dataCommonDic?.reportKind[0].code);
+    resetForm();
   }, [dataCommonDic]);
 
   const fetchData = async (params: any) => {
@@ -79,18 +58,42 @@ function CM9003({
     try {
       setLoading(true);
       const { data } = await API.get(CM9006SEARCH, { params: paramTemp });
-
       if (data) {
         setData(data);
         setLoading(false);
       }
     } catch (err) {
-      console.log("CM9003 data search fetch error =======>", err);
+      setData([]);
+      setLoading(false);
+      console.log("CM9003 data search error =======>", err);
     }
   };
 
   const submit = (data: ISEARCH) => {
     fetchData(data);
+  };
+
+  const resetForm = () => {
+    if (dataCommonDic !== undefined) {
+      reset({
+        areaCode: dataCommonDic?.areaCode[0].code,
+        reportKind: dataCommonDic?.reportKind[0].code,
+        cuType: dataCommonDic?.cuType[0].code,
+        cuJyCode: dataCommonDic?.cuJyCode[0].code,
+        swCode: dataCommonDic?.swCode[0].code,
+        cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
+        cuCutype: dataCommonDic?.cuCutype[0].code,
+        cuStae: dataCommonDic?.cuStae[0].code,
+        cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
+      });
+      setReportKind(dataCommonDic?.reportKind[0].code);
+    }
+  };
+
+  const cancel = () => {
+    resetForm();
+    setDataChk(true);
+    setData([]);
   };
 
   return (
@@ -102,7 +105,11 @@ function CM9003({
             <b>영업소</b>
           </p>
 
-          <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
+          <Select
+            {...register("areaCode")}
+            style={{ marginLeft: "5px" }}
+            width={InputSize.i130}
+          >
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -113,8 +120,8 @@ function CM9003({
       </DetailHeader>
       <WrapperContent style={{ height: `calc(100% - 76px)` }}>
         <form onSubmit={handleSubmit(submit)}>
-          <SearchWrapper>
-            <div style={{ width: "75%" }}>
+          <SearchWrapper style={{ alignItems: "baseline" }}>
+            <div>
               <Wrapper grid col={5} fields="1fr 1fr 1fr 1fr 1.5fr">
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>보고서종류</Label>
@@ -191,9 +198,6 @@ function CM9003({
                         </option>
                       )
                     )}
-                    <option key="sdcdcds00" value="">
-                      hooson
-                    </option>
                   </Select>
                 </FormGroup>
               </Wrapper>
@@ -228,9 +232,6 @@ function CM9003({
                         {obj.codeName}
                       </option>
                     ))}
-                    <option key="sdcdcds00" value="">
-                      hooson
-                    </option>
                   </Select>
                 </FormGroup>
                 <FormGroup>
@@ -247,9 +248,6 @@ function CM9003({
                         </option>
                       )
                     )}
-                    <option key="sdcdcds00" value="">
-                      hooson
-                    </option>
                   </Select>
                 </FormGroup>
                 <Field
@@ -262,26 +260,30 @@ function CM9003({
                   <CheckBox
                     register={{ ...register("dataChk") }}
                     title="등록기간"
+                    onChange={(e: any) => setDataChk(e.target.checked)}
+                    checked={dataChk}
                   />
                   <Controller
                     control={control}
                     {...register("sDate")}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                    render={({ field: { onChange, value } }) => (
                       <CustomDatePicker
                         value={value}
                         onChange={onChange}
                         style={{ marginLeft: "15px" }}
+                        readOnly={!dataChk}
                       />
                     )}
                   />
                   <Controller
                     control={control}
                     {...register("eDate")}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                    render={({ field: { onChange, value } }) => (
                       <CustomDatePicker
                         value={value}
                         onChange={onChange}
                         style={{ margin: "5px 0 0 0" }}
+                        readOnly={!dataChk}
                       />
                     )}
                   />
@@ -291,9 +293,9 @@ function CM9003({
 
             <div className="button-wrapper">
               <Button
-                text="등록"
+                text="검색"
                 icon={!loading && <MagnifyingGlass />}
-                color={ButtonColor.SECONDARY}
+                color={ButtonColor.DANGER}
                 type="submit"
                 loader={
                   loading && (
@@ -310,16 +312,16 @@ function CM9003({
                 style={{ marginRight: "10px" }}
               />
               <Button
-                text="수정"
-                icon={<Reset />}
+                text="취소"
+                icon={<ResetGray />}
                 style={{ marginRight: "10px" }}
                 type="button"
                 color={ButtonColor.LIGHT}
-                onClick={() => {}}
+                onClick={cancel}
               />
               <Button
-                text="삭제"
-                icon={<ExcelIcon />}
+                text="엑셀"
+                icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
               />
