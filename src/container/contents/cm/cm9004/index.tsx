@@ -52,7 +52,6 @@ function CM9004({
   } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
-  console.log(dataCommonDic);
   useEffect(() => {
     reset({
       areaCode: dataCommonDic?.areaCode[0].code,
