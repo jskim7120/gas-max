@@ -4884,3 +4884,39 @@ export const TickInCircle = () => {
     </svg>
   );
 };
+
+export const ResetGray = ({
+  width = "16.828",
+  height = "16.831",
+  color = "#707070",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 16.828 16.831"
+    >
+      <g id="Group_130" data-name="Group 130" transform="translate(0.711 0.4)">
+        <path
+          id="Path_101"
+          data-name="Path 101"
+          d="M.277,7.3a5.567,5.567,0,1,1,2.472,3.068"
+          transform="matrix(-0.545, 0.839, -0.839, -0.545, 15.403, 6.382)"
+          fill="none"
+          stroke={color}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+        <path
+          id="Polygon_3"
+          data-name="Polygon 3"
+          d="M2,0l2,3.207H0Z"
+          transform="matrix(0.454, -0.891, 0.891, 0.454, 6.721, 3.572)"
+          fill={color}
+        />
+      </g>
+    </svg>
+  );
+};

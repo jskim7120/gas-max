@@ -86,6 +86,7 @@ export const CM1106DELETE = "/app/CM1106/delete";
 
 export const CM9002SEARCH = "/app/CM9002/search";
 export const CM9003SEARCH = "/app/CM9003/search";
+export const CM9006SEARCH = "/app/CM9006/search";
 
 export const GR1100SEARCH = "/app/GR1100/search";
 export const GR1100INSERT = "/app/GR1100/insert";
