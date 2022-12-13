@@ -92,7 +92,7 @@ export const columns1 = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "영업소",
     },
