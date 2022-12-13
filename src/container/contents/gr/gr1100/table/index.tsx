@@ -97,8 +97,10 @@ function TableData({
             margin: "5px",
           }}
         >
-          {Number(buPdanga && buPdanga.replace(",", "")) +
-            Number(buPcost && buPcost.replace(",", ""))}
+          {buPdanga && buPcost
+            ? Number(buPdanga && buPdanga.replace(",", "")) +
+              Number(buPcost && buPcost.replace(",", ""))
+            : null}
         </p>
       ),
     },
@@ -139,8 +141,10 @@ function TableData({
             margin: "5px",
           }}
         >
-          {Number(buBdanga && buBdanga.replace(",", "")) +
-            Number(buBcost && buBcost.replace(",", ""))}
+          {buBdanga && buBcost
+            ? Number(buBdanga && buBdanga.replace(",", "")) +
+              Number(buBcost && buBcost.replace(",", ""))
+            : null}
         </p>
       ),
     },
@@ -180,8 +184,10 @@ function TableData({
             justifyContent: "right",
           }}
         >
-          {Number(buBldanga && buBldanga.replace(",", "")) +
-            Number(buBlcost && buBlcost.replace(",", ""))}
+          {buBldanga && buBlcost
+            ? Number(buBldanga && buBldanga.replace(",", "")) +
+              Number(buBlcost && buBlcost.replace(",", ""))
+            : null}
         </p>
       ),
     },
