@@ -241,7 +241,7 @@ export const columns1 = [
     name: "cuSeListYn",
     fieldName: "cuSeListYn",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "거래명세Y/N",
     },
@@ -250,7 +250,7 @@ export const columns1 = [
     name: "cuSmsYn",
     fieldName: "cuSmsYn",
     type: "data",
-    width: "120",
+    width: "80",
     header: {
       text: "SMS Y/N",
     },
@@ -259,7 +259,7 @@ export const columns1 = [
     name: "cuSeFaxYn",
     fieldName: "cuSeFaxYn",
     type: "data",
-    width: "120",
+    width: "80",
     header: {
       text: "FAX Y/N",
     },
