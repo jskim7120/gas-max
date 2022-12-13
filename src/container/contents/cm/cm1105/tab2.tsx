@@ -9,7 +9,9 @@ import {
   Label,
 } from "components/form/style";
 
-import CustomDatePicker from "components/customDatePicker/customdate2";
+import { Controller } from "react-hook-form";
+
+import CustomDatePicker from "components/customDatePicker/test-datepicker";
 import { InputSize } from "components/componentsType";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { SearchBtn } from "components/daum";
@@ -22,13 +24,14 @@ function Tab2({
   setToo,
   sign,
   setSign,
-  setCuMeterTurm,
-  setCuMeterDt,
-  setCuMdate,
-  cuMeterTurm,
-  cuMeterDt,
-  cuMdate,
-}: {
+  control,
+}: // setCuMeterTurm,
+// setCuMeterDt,
+// setCuMdate,
+// cuMeterTurm,
+// cuMeterDt,
+// cuMdate,
+{
   customerInfo: any;
   dataCommonDic: any;
   register: Function;
@@ -36,12 +39,13 @@ function Tab2({
   setToo: Function;
   sign: string;
   setSign: Function;
-  setCuMeterTurm: any;
-  setCuMeterDt: any;
-  setCuMdate: any;
-  cuMeterTurm: any;
-  cuMeterDt: any;
-  cuMdate: any;
+  control: any;
+  // setCuMeterTurm: any;
+  // setCuMeterDt: any;
+  // setCuMdate: any;
+  // cuMeterTurm: any;
+  // cuMeterDt: any;
+  // cuMdate: any;
 }) {
   const [cuRdangaType, setCuRdangaType] = useState("");
 
@@ -289,10 +293,17 @@ function Tab2({
             <Input label="계량기번호" register={register("cuMeterNo")} />
             <Field flex style={{ alignItems: "center" }}>
               <Label>유효기간</Label>
-              <CustomDatePicker
+              {/* <CustomDatePicker
                 value={cuMeterTurm}
                 setValue={setCuMeterTurm}
                 name="cuMeterTurm"
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuMeterTurm")}
+                render={({ field: { onChange, onBlur, value, ref } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
               />
             </Field>
             <Field flex style={{ alignItems: "center" }}>
@@ -314,18 +325,32 @@ function Tab2({
           <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Field flex style={{ alignItems: "center" }}>
               <Label>교체일자</Label>
-              <CustomDatePicker
+              {/* <CustomDatePicker
                 value={cuMeterDt}
                 setValue={setCuMeterDt}
                 name="cuMeterDt"
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuMeterDt")}
+                render={({ field: { onChange, onBlur, value, ref } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
               />
             </Field>
             <Field flex style={{ alignItems: "center" }}>
               <Label>교체예정일</Label>
-              <CustomDatePicker
+              {/* <CustomDatePicker
                 value={cuMdate}
                 setValue={setCuMdate}
                 name="cuMdate"
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuMdate")}
+                render={({ field: { onChange, onBlur, value, ref } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
               />
             </Field>
             <Field flex style={{ alignItems: "center" }}>

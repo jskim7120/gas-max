@@ -26,9 +26,7 @@ import Form from "./form";
 import Grid from "./grid";
 import { columns, fields } from "./data";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
-import { Wrapper, DetailWrapper, DetailHeader } from "../../commonStyle";
-import { useParams } from "react-router-dom";
-import { LeftSection } from "../style";
+import { DetailWrapper, DetailHeader } from "../../commonStyle";
 
 interface ISEARCH {
   areaCode: string;
@@ -75,10 +73,6 @@ function GR1100({
       });
     }
   }, [dataCommonDic]);
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
 
   useEffect(() => {
     if (isDelete.menuId === menuId && isDelete.isDelete) {
@@ -182,7 +176,12 @@ function GR1100({
           style={{ width: "50%", gap: "50%", borderRight: "3px solid #707070" }}
         >
           <form onSubmit={handleSubmit(submit)}>
-            <div style={{ marginBottom: "5px" }}>
+            <div
+              style={{
+                borderBottom: "2px solid #707070",
+                background: "#dbdbdb",
+              }}
+            >
               <Field
                 flex
                 style={{

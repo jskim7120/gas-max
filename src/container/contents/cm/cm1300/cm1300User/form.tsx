@@ -101,23 +101,22 @@ const Form = React.forwardRef(
       }
     };
     const crud = async (type: string | null) => {
-      if (type === "delete") {
-        const path = `${base}delete`;
-        const formValues = getValues();
+      // if (type === "delete") {
+      //   const path = `${base}delete`;
+      //   const formValues = getValues();
 
-        try {
-          const response = await API.post(path, formValues);
-          if (response.status === 200) {
-            toast.success("삭제했습니다", {
-              autoClose: 500,
-            });
-            await fetchData();
-          }
-        } catch (err) {
-          toast.error("Couldn't delete");
-        }
-      }
-
+      //   try {
+      //     const response = await API.post(path, formValues);
+      //     if (response.status === 200) {
+      //       toast.success("삭제했습니다", {
+      //         autoClose: 500,
+      //       });
+      //       await fetchData();
+      //     }
+      //   } catch (err) {
+      //     toast.error("Couldn't delete");
+      //   }
+      // }
       if (type === null) {
         handleSubmit(submit)();
       }
@@ -157,7 +156,7 @@ const Form = React.forwardRef(
       <form
         onSubmit={handleSubmit(submit)}
         style={{
-          padding: "15px 50px 22px",
+          padding: "15px 50px 10px",
           height: "auto",
         }}
       >

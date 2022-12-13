@@ -40,11 +40,11 @@ export const schema = yup.object({
       return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
     })
     .nullable(true),
-  aptSum: yup
-    .number()
-    .typeError("")
-    .transform((_, val) => {
-      return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
-    })
-    .nullable(true),
+  // aptSum: yup
+  //   .number()
+  //   .typeError("qqq")
+  //   .transform((_, val) => {
+  //     return val !== "" ? (reg.test(val) ? parseInt(val) : "string") : 0;
+  //   })
+  //   .nullable(true),
 });

@@ -1,19 +1,22 @@
 import { Input, Field, Wrapper, FormGroup, Label } from "components/form/style";
 import CheckBox from "components/checkbox";
-import CustomDatePicker from "components/customDatePicker/customdate2";
+import CustomDatePicker from "components/customDatePicker/test-datepicker";
+import { Controller } from "react-hook-form";
 
 function Tab6({
   register,
-  cuSmsDate,
-  setCuSmsDate,
-  cuCashpayDate,
-  setCuCashpayDate,
-}: {
+  control,
+}: // cuSmsDate,
+// setCuSmsDate,
+// cuCashpayDate,
+// setCuCashpayDate,
+{
   register: Function;
-  cuSmsDate: string;
-  setCuSmsDate: Function;
-  cuCashpayDate: string;
-  setCuCashpayDate: Function;
+  control: any;
+  // cuSmsDate: string;
+  // setCuSmsDate: Function;
+  // cuCashpayDate: string;
+  // setCuCashpayDate: Function;
 }) {
   return (
     <Field>
@@ -48,10 +51,17 @@ function Tab6({
 
             <Field flex style={{ alignItems: "center" }}>
               <Label>신청일자</Label>
-              <CustomDatePicker
+              {/* <CustomDatePicker
                 value={cuSmsDate}
                 setValue={setCuSmsDate}
                 name="cuSmsDate"
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuSmsDate")}
+                render={({ field: { onChange, onBlur, value, ref } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
               />
             </Field>
           </Wrapper>
@@ -90,10 +100,17 @@ function Tab6({
 
             <Field flex style={{ alignItems: "center" }}>
               <Label>신청일자</Label>
-              <CustomDatePicker
+              {/* <CustomDatePicker
                 value={cuCashpayDate}
                 setValue={setCuCashpayDate}
                 name="cuCashpayDate"
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuCashpayDate")}
+                render={({ field: { onChange, onBlur, value, ref } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
               />
             </Field>
           </Wrapper>

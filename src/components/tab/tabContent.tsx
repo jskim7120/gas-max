@@ -1,17 +1,18 @@
 import EN1100 from "container/contents/en/en1100";
+import EN1200 from "container/contents/en/en1200";
 import EN1300 from "container/contents/en/en1300";
 import EN1400 from "container/contents/en/en1400";
 import EN1500 from "container/contents/en/en1500";
 import EN1600 from "container/contents/en/en1600";
 import EN1700 from "container/contents/en/en1700";
-import EN1200 from "container/contents/en/en1200";
 import EN1800 from "container/contents/en/en1800";
 import EN1900 from "container/contents/en/en1900";
 import EN2000 from "container/contents/en/en2000";
 import CM1100 from "container/contents/cm/cm1100";
-import CM1300 from "container/contents/cm/cm1300";
 import CM1200 from "container/contents/cm/cm1200";
 import CM9002 from "container/contents/cm/cm9002";
+import CM1300 from "container/contents/cm/cm1300";
+import CM9003 from "container/contents/cm/cm9003";
 import GR1100 from "container/contents/gr/gr1100";
 import GR1600 from "container/contents/gr/gr1600";
 
@@ -41,12 +42,14 @@ export const getContent = (id: any, depthFullName: string) => {
       return <EN2000 depthFullName={depthFullName} menuId={id} />;
     case "CM1100":
       return <CM1100 depthFullName={depthFullName} menuId={id} />;
-    case "CM1300":
-      return <CM1300 depthFullName={depthFullName} menuId={id} />;
     case "CM1200":
       return <CM1200 depthFullName={depthFullName} menuId={id} />;
     case "CM9002":
       return <CM9002 depthFullName={depthFullName} menuId={id} />;
+    case "CM1300":
+      return <CM1300 depthFullName={depthFullName} menuId={id} />;
+    case "CM9003":
+      return <CM9003 depthFullName={depthFullName} menuId={id} />;
     case "GR1100":
       return <GR1100 depthFullName={depthFullName} menuId={id} />;
     case "GR1600":

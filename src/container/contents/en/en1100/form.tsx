@@ -13,7 +13,6 @@ import {
   FormGroup,
   Wrapper,
   Divider,
-  // DividerGray,
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";

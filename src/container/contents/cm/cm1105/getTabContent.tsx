@@ -17,53 +17,54 @@ function getTabContent(
   setToo: Function,
   sign: string,
   setSign: Function,
-  //setCuRdangaType: any,
-  setCuMeterTurm: any,
-  setCuMeterDt: any,
-  setCuMdate: any,
-  //cuRdangaType: string,
-  cuMeterTurm: string,
-  cuMeterDt: string,
-  cuMdate: string,
-  setCuFinishDate: any,
-  setCuCircuitDate: any,
-  setCuScheduleDate: any,
-  setTankFirstDate1: any,
-  setTankOutsideDate1: any,
-  setTankInsideDate1: any,
-  setTankFirstDate2: any,
-  setTankOutsideDate2: any,
-  setTankInsideDate2: any,
-  setGasifyCheckDate1: any,
-  setGasifyCheckDate2: any,
-  cuFinishDate: string,
-  cuCircuitDate: string,
-  cuScheduleDate: string,
-  tankFirstDate1: string,
-  tankOutsideDate1: string,
-  tankInsideDate1: string,
-  tankFirstDate2: string,
-  tankOutsideDate2: string,
-  tankInsideDate2: string,
-  gasifyCheckDate1: string,
-  gasifyCheckDate2: string,
+  control: any
 
-  cuHdate: string,
-  setCuHdate: any,
-  cuGongdate: string,
-  setCuGongdate: any,
-  cuGongdateT: string,
-  setCuGongdateT: any,
-  cuExtendDate: string,
-  setCuExtendDate: any,
-  cuSisuldate: string,
-  setCuSisuldate: any,
-  cuPdate: string,
-  setCuPdate: any,
-  cuSmsDate: string,
-  setCuSmsDate: Function,
-  cuCashpayDate: string,
-  setCuCashpayDate: Function
+  // setCuMeterTurm: any,
+  // setCuMeterDt: any,
+  // setCuMdate: any,
+
+  // cuMeterTurm: string,
+  // cuMeterDt: string,
+  // cuMdate: string,
+  // setCuFinishDate: any,
+  // setCuCircuitDate: any,
+  // setCuScheduleDate: any,
+  // setTankFirstDate1: any,
+  // setTankOutsideDate1: any,
+  // setTankInsideDate1: any,
+  // setTankFirstDate2: any,
+  // setTankOutsideDate2: any,
+  // setTankInsideDate2: any,
+  // setGasifyCheckDate1: any,
+  // setGasifyCheckDate2: any,
+  // cuFinishDate: string,
+  // cuCircuitDate: string,
+  // cuScheduleDate: string,
+  // tankFirstDate1: string,
+  // tankOutsideDate1: string,
+  // tankInsideDate1: string,
+  // tankFirstDate2: string,
+  // tankOutsideDate2: string,
+  // tankInsideDate2: string,
+  // gasifyCheckDate1: string,
+  // gasifyCheckDate2: string,
+
+  // cuHdate: string,
+  // setCuHdate: any,
+  // cuGongdate: string,
+  // setCuGongdate: any,
+  // cuGongdateT: string,
+  // setCuGongdateT: any,
+  // cuExtendDate: string,
+  // setCuExtendDate: any,
+  // cuSisuldate: string,
+  // setCuSisuldate: any,
+  // cuPdate: string,
+  // setCuPdate: any,
+  // cuSmsDate: string,
+  // setCuSmsDate: Function,
+  // cuCashpayDate: string,
+  // setCuCashpayDate: Function
 ) {
   switch (id) {
     case 0: {
@@ -85,14 +86,13 @@ function getTabContent(
           setToo={setToo}
           sign={sign}
           setSign={setSign}
-          //setCuRdangaType={setCuRdangaType}
-          setCuMeterTurm={setCuMeterTurm}
-          setCuMeterDt={setCuMeterDt}
-          setCuMdate={setCuMdate}
-          //cuRdangaType={cuRdangaType}
-          cuMeterTurm={cuMeterTurm}
-          cuMeterDt={cuMeterDt}
-          cuMdate={cuMdate}
+          control={control}
+          // setCuMeterTurm={setCuMeterTurm}
+          // setCuMeterDt={setCuMeterDt}
+          // setCuMdate={setCuMdate}
+          // cuMeterTurm={cuMeterTurm}
+          // cuMeterDt={cuMeterDt}
+          // cuMdate={cuMdate}
         />
       );
     case 2:
@@ -100,28 +100,29 @@ function getTabContent(
         <Tab3
           dataCommonDic={dataCommonDic}
           register={register}
-          setCuFinishDate={setCuFinishDate}
-          setCuCircuitDate={setCuCircuitDate}
-          setCuScheduleDate={setCuScheduleDate}
-          setTankFirstDate1={setTankFirstDate1}
-          setTankOutsideDate1={setTankOutsideDate1}
-          setTankInsideDate1={setTankInsideDate1}
-          setTankFirstDate2={setTankFirstDate2}
-          setTankOutsideDate2={setTankOutsideDate2}
-          setTankInsideDate2={setTankInsideDate2}
-          setGasifyCheckDate1={setGasifyCheckDate1}
-          cuFinishDate={cuFinishDate}
-          cuCircuitDate={cuCircuitDate}
-          cuScheduleDate={cuScheduleDate}
-          tankFirstDate1={tankFirstDate1}
-          tankOutsideDate1={tankOutsideDate1}
-          tankInsideDate1={tankInsideDate1}
-          tankFirstDate2={tankFirstDate2}
-          tankOutsideDate2={tankOutsideDate2}
-          tankInsideDate2={tankInsideDate2}
-          gasifyCheckDate1={gasifyCheckDate1}
-          gasifyCheckDate2={gasifyCheckDate2}
-          setGasifyCheckDate2={setGasifyCheckDate2}
+          control={control}
+          // setCuFinishDate={setCuFinishDate}
+          // setCuCircuitDate={setCuCircuitDate}
+          // setCuScheduleDate={setCuScheduleDate}
+          // setTankFirstDate1={setTankFirstDate1}
+          // setTankOutsideDate1={setTankOutsideDate1}
+          // setTankInsideDate1={setTankInsideDate1}
+          // setTankFirstDate2={setTankFirstDate2}
+          // setTankOutsideDate2={setTankOutsideDate2}
+          // setTankInsideDate2={setTankInsideDate2}
+          // setGasifyCheckDate1={setGasifyCheckDate1}
+          // cuFinishDate={cuFinishDate}
+          // cuCircuitDate={cuCircuitDate}
+          // cuScheduleDate={cuScheduleDate}
+          // tankFirstDate1={tankFirstDate1}
+          // tankOutsideDate1={tankOutsideDate1}
+          // tankInsideDate1={tankInsideDate1}
+          // tankFirstDate2={tankFirstDate2}
+          // tankOutsideDate2={tankOutsideDate2}
+          // tankInsideDate2={tankInsideDate2}
+          // gasifyCheckDate1={gasifyCheckDate1}
+          // gasifyCheckDate2={gasifyCheckDate2}
+          // setGasifyCheckDate2={setGasifyCheckDate2}
         />
       );
     case 3:
@@ -129,18 +130,19 @@ function getTabContent(
         <Tab4
           dataCommonDic={dataCommonDic}
           register={register}
-          cuHdate={cuHdate}
-          setCuHdate={setCuHdate}
-          cuGongdate={cuGongdate}
-          setCuGongdate={setCuGongdate}
-          cuGongdateT={cuGongdateT}
-          setCuGongdateT={setCuGongdateT}
-          cuExtendDate={cuExtendDate}
-          setCuExtendDate={setCuExtendDate}
-          cuSisuldate={cuSisuldate}
-          setCuSisuldate={setCuSisuldate}
-          cuPdate={cuPdate}
-          setCuPdate={setCuPdate}
+          control={control}
+          // cuHdate={cuHdate}
+          // setCuHdate={setCuHdate}
+          // cuGongdate={cuGongdate}
+          // setCuGongdate={setCuGongdate}
+          // cuGongdateT={cuGongdateT}
+          // setCuGongdateT={setCuGongdateT}
+          // cuExtendDate={cuExtendDate}
+          // setCuExtendDate={setCuExtendDate}
+          // cuSisuldate={cuSisuldate}
+          // setCuSisuldate={setCuSisuldate}
+          // cuPdate={cuPdate}
+          // setCuPdate={setCuPdate}
         />
       );
     case 4:
@@ -149,10 +151,11 @@ function getTabContent(
       return (
         <Tab6
           register={register}
-          cuSmsDate={cuSmsDate}
-          setCuSmsDate={setCuSmsDate}
-          cuCashpayDate={cuCashpayDate}
-          setCuCashpayDate={setCuCashpayDate}
+          control={control}
+          // cuSmsDate={cuSmsDate}
+          // setCuSmsDate={setCuSmsDate}
+          // cuCashpayDate={cuCashpayDate}
+          // setCuCashpayDate={setCuCashpayDate}
         />
       );
   }
