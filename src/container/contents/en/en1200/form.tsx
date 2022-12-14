@@ -283,13 +283,39 @@ const Form = React.forwardRef(
             </Wrapper>
             <Divider />
             <Wrapper grid col={2}>
-              <Input
-                label="사업자번호"
+              {/* <Input
+                label=""
                 register={register("saupSsno")}
                 errors={errors["saupSsno"]?.message}
                 inputSize={InputSize.md}
                 formatNumber="telNumber"
                 maxLength="12"
+              /> */}
+              <Controller
+                control={control}
+                {...register("saupSsno")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    label="사업자번호"
+                    value={value}
+                    onChange={onChange}
+                    mask={[
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      "-",
+                      /\d/,
+                      /\d/,
+                      "-",
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                    ]}
+                    name={name}
+                  />
+                )}
               />
               <Input
                 label="종사업자번호"
@@ -446,12 +472,40 @@ const Form = React.forwardRef(
                     />
                   </Field>
                   <Field style={{ width: "100%" }}>
-                    <Input
+                    {/* <Input
                       label="주민번호/법인번호"
                       register={register("saupJumin")}
                       errors={errors["saupJumin"]?.message}
                       formatNumber="corpNumber"
                       maxLength="14"
+                    /> */}
+                    <Controller
+                      control={control}
+                      {...register("saupJumin")}
+                      render={({ field: { onChange, value, name } }) => (
+                        <Input
+                          label="주민번호/법인번호"
+                          value={value}
+                          onChange={onChange}
+                          mask={[
+                            /\d/,
+                            /\d/,
+                            /\d/,
+                            /\d/,
+                            /\d/,
+                            /\d/,
+                            "-",
+                            /\d/,
+                            /\d/,
+                            /\d/,
+                            /\d/,
+                            /\d/,
+                            /\d/,
+                            /\d/,
+                          ]}
+                          name={name}
+                        />
+                      )}
                     />
                   </Field>
                 </Wrapper>
@@ -490,11 +544,38 @@ const Form = React.forwardRef(
                 errors={errors["saupEdiSawon"]?.message}
                 maxLength="14"
               />
-              <Input
-                label="전화번호"
+              {/* <Input
+                label=""
                 register={register("saupEdiSmsNo")}
                 errors={errors["saupEdiSmsNo"]?.message}
                 maxLength="14"
+              /> */}
+              <Controller
+                control={control}
+                {...register("saupEdiSmsNo")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    label="전화번호"
+                    value={value}
+                    onChange={onChange}
+                    mask={[
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      "-",
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      "-",
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                    ]}
+                    name={name}
+                  />
+                )}
               />
             </Wrapper>
             <Wrapper style={{ alignItems: "center" }}>

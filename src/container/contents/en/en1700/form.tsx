@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -32,7 +32,7 @@ import {
 import CustomDatePicker from "components/customDatePicker/customdate2";
 import { InputSize } from "components/componentsType";
 import { InfoText } from "components/text";
-
+import { currencyMask } from "helpers/currency";
 import {
   Item,
   RadioButton,
@@ -103,6 +103,7 @@ const Form = React.forwardRef(
       handleSubmit,
       reset,
       formState: { errors },
+      control,
       getValues,
     } = useForm<ICAR>({ mode: "onChange", resolver: yupResolver(schema) });
 
@@ -345,7 +346,7 @@ const Form = React.forwardRef(
             label="차량번호"
             register={register("caName")}
             errors={errors["caName"]?.message}
-            inputSize={InputSize.md}
+            inputSize={InputSize.i140}
             maxLength="15"
           />
           <Field>
@@ -397,6 +398,7 @@ const Form = React.forwardRef(
             register={register("eyeCarCode")}
             errors={errors["eyeCarCode"]?.message}
             maxLength="10"
+            inputSize={InputSize.i140}
           />
           <InfoText text="탱크잔량 원격검침 시스템의 매핑할 차량코드를 지정." />
         </Wrapper>
@@ -508,7 +510,7 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper grid col={2}>
           <Field flex>
-            <Input
+            {/* <Input
               label="차량가액"
               register={register("caAmt")}
               errors={errors["caAmt"]?.message}
@@ -516,6 +518,21 @@ const Form = React.forwardRef(
               textAlign="right"
               formatNumber="comNumber"
               maxLength="13"
+            /> */}
+            <Controller
+              control={control}
+              {...register("caAmt")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="차량가액"
+                  value={value}
+                  onChange={onChange}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i100}
+                  name={name}
+                />
+              )}
             />
             <p>원 </p>
           </Field>
@@ -525,7 +542,8 @@ const Form = React.forwardRef(
               label="감가 기간"
               register={register("caDiscountM")}
               errors={errors["caDiscountM"]?.message}
-              inputSize={InputSize.sm}
+              inputSize={InputSize.i100}
+              maxLength="10"
             />
             <p>월</p>
           </Field>
@@ -533,7 +551,7 @@ const Form = React.forwardRef(
 
         <Wrapper grid col={2}>
           <Field flex>
-            <Input
+            {/* <Input
               label="월리스료"
               register={register("caMAmt")}
               errors={errors["caAmt"]?.message}
@@ -541,11 +559,26 @@ const Form = React.forwardRef(
               textAlign="right"
               formatNumber="comNumber"
               maxLength="13"
+            /> */}
+            <Controller
+              control={control}
+              {...register("caMAmt")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="월리스료"
+                  value={value}
+                  onChange={onChange}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i100}
+                  name={name}
+                />
+              )}
             />
             <p>원</p>
           </Field>
           <Field flex>
-            <Input
+            {/* <Input
               label="월 감가상각비"
               register={register("caDiscountAmt")}
               errors={errors["caDiscountAmt"]?.message}
@@ -553,6 +586,21 @@ const Form = React.forwardRef(
               textAlign="right"
               formatNumber="comNumber"
               maxLength="13"
+            /> */}
+            <Controller
+              control={control}
+              {...register("caDiscountAmt")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="월 감가상각비"
+                  value={value}
+                  onChange={onChange}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i100}
+                  name={name}
+                />
+              )}
             />
             <p>원</p>
           </Field>
@@ -593,12 +641,39 @@ const Form = React.forwardRef(
             inputSize={InputSize.sm}
             maxLength="14"
           />
-          <Input
+          {/* <Input
             label="핸드폰"
             register={register("caBhp")}
             errors={errors["caBhp"]?.message}
             inputSize={InputSize.sm}
             maxLength="14"
+          /> */}
+          <Controller
+            control={control}
+            {...register("caBhp")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="핸드폰"
+                value={value}
+                onChange={onChange}
+                inputSize={InputSize.i100}
+                mask={[
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
+              />
+            )}
           />
         </Wrapper>
 
@@ -614,7 +689,7 @@ const Form = React.forwardRef(
             label="증권번호"
             register={register("caBno")}
             errors={errors["caBno"]?.message}
-            inputSize={InputSize.sm}
+            inputSize={InputSize.i150}
             maxLength="20"
           />
         </Wrapper>
@@ -664,7 +739,7 @@ const Form = React.forwardRef(
 
         <Wrapper>
           <Field flex>
-            <Input
+            {/* <Input
               label="보험료"
               register={register("caInsuranceAmt")}
               errors={errors["caInsuranceAmt"]?.message}
@@ -672,6 +747,21 @@ const Form = React.forwardRef(
               textAlign="right"
               formatNumber="comNumber"
               maxLength="13"
+            /> */}
+            <Controller
+              control={control}
+              {...register("caInsuranceAmt")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="보험료"
+                  value={value}
+                  onChange={onChange}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i100}
+                  name={name}
+                />
+              )}
             />
             <p>원</p>
           </Field>

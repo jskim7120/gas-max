@@ -1,3 +1,9 @@
+export interface ISEARCH {
+  areaCode: string;
+  sCuName: string;
+  dataChk: string;
+}
+
 export interface ICM1200SEARCH {
   /* 1-1 Wrapper */
   areaCode: string;

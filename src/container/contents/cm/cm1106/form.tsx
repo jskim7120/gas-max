@@ -9,12 +9,13 @@ import {
 } from "components/form/style";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { SearchBtn } from "components/daum";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { FieldKind, InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import Button from "components/button/button";
 import { ICM1106 } from "./model";
 import { CM1106INSERT, CM1106UPDATE, CM1106DELETE } from "app/path";
+import { currencyMask } from "helpers/currency";
 import { toast } from "react-toastify";
 import API from "app/axios";
 
@@ -50,6 +51,7 @@ const FORMCM1106 = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
+      control,
     } = useForm<ICM1106>();
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
@@ -144,7 +146,7 @@ const FORMCM1106 = React.forwardRef(
           <Input
             label="코드"
             register={register("jcJpCode")}
-            inputSize={InputSize.sm}
+            inputSize={InputSize.i130}
             kind={FieldKind.BORDER}
           />
           <SearchBtn type="button" onClick={() => alert("dsdsds")}>
@@ -156,6 +158,7 @@ const FORMCM1106 = React.forwardRef(
             label="품명"
             register={register("jcJpName")}
             kind={FieldKind.BORDER}
+            inputSize={InputSize.i130}
           />
         </Field>
         <Field>
@@ -163,6 +166,7 @@ const FORMCM1106 = React.forwardRef(
             label="규격"
             register={register("jcJpSpec")}
             kind={FieldKind.BORDER}
+            inputSize={InputSize.i130}
           />
         </Field>
         <Field>
@@ -178,7 +182,7 @@ const FORMCM1106 = React.forwardRef(
           <Select
             {...register("jcDangaType")}
             kind={FieldKind.BORDER}
-            style={{ width: "100%" }}
+            width={InputSize.i130}
           >
             {dataCommonDic?.jcDangaType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
@@ -193,7 +197,7 @@ const FORMCM1106 = React.forwardRef(
           <Select
             {...register("jcVatKind")}
             kind={FieldKind.BORDER}
-            style={{ width: "100%" }}
+            width={InputSize.i130}
           >
             {dataCommonDic?.jcVatKind?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
@@ -204,32 +208,77 @@ const FORMCM1106 = React.forwardRef(
         </FormGroup>
 
         <Field flex>
-          <Input
+          {/* <Input
             label="할인액"
             register={register("jcJdcAmt")}
             kind={FieldKind.BORDER}
             textAlign="right"
             formatNumber="comDecNumber"
+          /> */}
+          <Controller
+            control={control}
+            {...register("jcJdcAmt")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="할인액"
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i130}
+                name={name}
+              />
+            )}
           />
           <p>원</p>
         </Field>
         <Field flex>
-          <Input
+          {/* <Input
             label="할인율"
             register={register("jcJdcPer")}
             kind={FieldKind.BORDER}
             maxLength="3"
             textAlign="right"
+          /> */}
+          <Controller
+            control={control}
+            {...register("jcJdcPer")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="할인율"
+                value={value}
+                onChange={onChange}
+                mask={[/\d/, /\d/, /\d/]}
+                name={name}
+                inputSize={InputSize.i40}
+              />
+            )}
           />
+
           <p>%</p>
         </Field>
         <Field flex>
-          <Input
+          {/* <Input
             label="적용단가"
             register={register("jcJpDanga")}
             kind={FieldKind.BORDER}
             textAlign="right"
             formatNumber="comDecNumber"
+          /> */}
+          <Controller
+            control={control}
+            {...register("jcJpDanga")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="적용단가"
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i130}
+                name={name}
+              />
+            )}
           />
           <p>원</p>
         </Field>
@@ -239,7 +288,7 @@ const FORMCM1106 = React.forwardRef(
             label="기초재고"
             register={register("jcBasicJaego")}
             kind={FieldKind.BORDER}
-            inputSize={InputSize.sm}
+            inputSize={InputSize.i130}
             textAlign="right"
           />
           <p>개</p>
@@ -249,7 +298,7 @@ const FORMCM1106 = React.forwardRef(
           <Select
             {...register("jcJpState")}
             kind={FieldKind.BORDER}
-            style={{ width: "100%" }}
+            width={InputSize.i130}
           >
             {dataCommonDic?.jcJpState?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>

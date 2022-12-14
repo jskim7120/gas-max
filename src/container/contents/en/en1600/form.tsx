@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -29,6 +29,8 @@ import {
 import { convertBase64 } from "helpers/convertBase64";
 import CustomDatePicker from "components/customDatePicker/customdate2";
 import { ImageWrapper } from "../../commonStyle";
+import { currencyMask } from "helpers/currency";
+import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
@@ -88,6 +90,7 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
+      control,
     } = useForm<IJNOSAUP>({
       mode: "onChange",
       resolver: yupResolver(schema),
@@ -325,12 +328,41 @@ const Form = React.forwardRef(
               <ErrorText>{errors["swGubun"]?.message}</ErrorText>
             </div>
           </Field>
-          <Input
+          {/* <Input
             label="주민번호"
             register={register("swJuminno")}
             errors={errors["swJuminno"]?.message}
             formatNumber="corpNumber"
             maxLength={"14"}
+          /> */}
+
+          <Controller
+            control={control}
+            {...register("swJuminno")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="주민번호"
+                value={value}
+                onChange={onChange}
+                mask={[
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
+                name={name}
+              />
+            )}
           />
         </Wrapper>
 
@@ -341,11 +373,37 @@ const Form = React.forwardRef(
             errors={errors["swTel"]?.message}
             maxLength="14"
           />
-          <Input
+          {/* <Input
             label="핸드폰"
             register={register("swHp")}
             errors={errors["swHp"]?.message}
             maxLength="14"
+          /> */}
+          <Controller
+            control={control}
+            {...register("swHp")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="핸드폰"
+                value={value}
+                onChange={onChange}
+                mask={[
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
+              />
+            )}
           />
         </Wrapper>
 
@@ -483,20 +541,49 @@ const Form = React.forwardRef(
 
             <Wrapper grid>
               <Field flex>
-                <Input
+                {/* <Input
                   label="급여액"
                   register={register("swPaykum")}
                   errors={errors["swPaykum"]?.message}
                   textAlign="right"
                   formatNumber="comNumber"
                   maxLength="23"
+                /> */}
+                <Controller
+                  control={control}
+                  {...register("swPaykum")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <Input
+                      label="급여액"
+                      value={value}
+                      onChange={onChange}
+                      mask={currencyMask}
+                      name={name}
+                      textAlign="right"
+                    />
+                  )}
                 />
+
                 <p>원</p>
               </Field>
-              <Input
+              {/* <Input
                 label="급여일"
                 register={register("swPaydate")}
                 errors={errors["swPaydate"]?.message}
+              /> */}
+              <Controller
+                control={control}
+                {...register("swPaydate")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    label="급여일"
+                    value={value}
+                    onChange={onChange}
+                    mask={[/\d/, /\d/]}
+                    name={name}
+                    inputSize={InputSize.i40}
+                  />
+                )}
               />
             </Wrapper>
           </div>
@@ -515,6 +602,7 @@ const Form = React.forwardRef(
             register={register("swDriverNo")}
             errors={errors["swDriverNo"]?.message}
             maxLength="17"
+            inputSize={InputSize.i130}
           />
         </Wrapper>
 
@@ -596,13 +684,27 @@ const Form = React.forwardRef(
 
         <Wrapper>
           <Field flex>
-            <Input
+            {/* <Input
               label="가불금액"
               register={register("sgKumack")}
               errors={errors["sgKumack"]?.message}
               textAlign="right"
               formatNumber="comNumber"
               maxLength="23"
+            /> */}
+            <Controller
+              control={control}
+              {...register("sgKumack")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="가불금액"
+                  value={value}
+                  onChange={onChange}
+                  mask={currencyMask}
+                  name={name}
+                  textAlign="right"
+                />
+              )}
             />
             <p>원</p>
           </Field>

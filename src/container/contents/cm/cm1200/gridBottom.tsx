@@ -3,7 +3,7 @@ import { useDispatch } from "app/store";
 import { useEffect, useRef, useState } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { fieldsSelected, columnsSelected } from "./data";
-import { ICM120065USERINFO } from "./modul";
+import { ICM120065USERINFO } from "./model";
 
 let containerr: HTMLDivElement;
 let dp: any;
