@@ -156,7 +156,6 @@ function FormCM1300User({
         <Button
           text="사용자 추가"
           icon={<Plus />}
-          style={{ marginRight: "5px" }}
           onClick={() => {
             dispatch(
               addCM1105({
@@ -167,11 +166,23 @@ function FormCM1300User({
             dispatch(openModal({ type: "cm1105Modal" }));
           }}
         />
+        <Button text="삭제" icon={<Trash />} onClick={() => {}} />
         <Button
-          text="삭제"
-          icon={<Trash />}
-          style={{ marginRight: "12px" }}
-          onClick={() => {}}
+          text="저장"
+          icon={<Update />}
+          color={ButtonColor.SECONDARY}
+          onClick={() => {
+            formRef.current.crud(null);
+          }}
+        />
+        <Button
+          text="취소"
+          icon={<Reset />}
+          onClick={() => {
+            formRef.current.setIsAddBtnClicked(false);
+            formRef.current.resetForm("reset");
+          }}
+          style={{ padding: "0 3px" }}
         />
       </div>
       <Grid2TableContainer>
@@ -187,26 +198,6 @@ function FormCM1300User({
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
           />
-          <UpdateButtonsContainer2>
-            <Button
-              text="저장"
-              icon={<Update />}
-              style={{ marginRight: "5px" }}
-              color={ButtonColor.SECONDARY}
-              onClick={() => {
-                formRef.current.crud(null);
-              }}
-            />
-            <Button
-              text="취소"
-              icon={<Reset />}
-              onClick={() => {
-                formRef.current.setIsAddBtnClicked(false);
-                formRef.current.resetForm("reset");
-              }}
-              style={{ padding: "0 3px" }}
-            />
-          </UpdateButtonsContainer2>
         </FormContainer>
       </Grid2TableContainer>
     </>

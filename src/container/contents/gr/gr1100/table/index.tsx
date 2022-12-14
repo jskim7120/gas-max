@@ -71,6 +71,7 @@ function TableData({
           value={buPdanga}
           inputSize={InputSize.i80}
           onChange={handleChange}
+          style={{ textAlign: "right" }}
         />
       ),
       3: (
@@ -81,11 +82,13 @@ function TableData({
           value={buPcost}
           inputSize={InputSize.i80}
           onChange={handleChange}
+          style={{ textAlign: "right" }}
         />
       ),
       4: (
         <p
           style={{
+            justifyContent: "right",
             height: "25px",
             borderRadius: "4px",
             border: "1px solid rgb(188,185 ,185)",
@@ -94,8 +97,10 @@ function TableData({
             margin: "5px",
           }}
         >
-          {Number(buPdanga && buPdanga.replace(",", "")) +
-            Number(buPcost && buPcost.replace(",", ""))}
+          {buPdanga && buPcost
+            ? Number(buPdanga && buPdanga.replace(",", "")) +
+              Number(buPcost && buPcost.replace(",", ""))
+            : null}
         </p>
       ),
     },
@@ -109,6 +114,7 @@ function TableData({
           value={buBdanga}
           inputSize={InputSize.i80}
           onChange={handleChange}
+          style={{ textAlign: "right" }}
         />
       ),
 
@@ -120,11 +126,13 @@ function TableData({
           value={buBcost}
           inputSize={InputSize.i80}
           onChange={handleChange}
+          style={{ textAlign: "right" }}
         />
       ),
       4: (
         <p
           style={{
+            justifyContent: "right",
             height: "25px",
             borderRadius: "4px",
             border: "1px solid rgb(188,185 ,185)",
@@ -133,8 +141,10 @@ function TableData({
             margin: "5px",
           }}
         >
-          {Number(buBdanga && buBdanga.replace(",", "")) +
-            Number(buBcost && buBcost.replace(",", ""))}
+          {buBdanga && buBcost
+            ? Number(buBdanga && buBdanga.replace(",", "")) +
+              Number(buBcost && buBcost.replace(",", ""))
+            : null}
         </p>
       ),
     },
@@ -148,6 +158,7 @@ function TableData({
           value={buBldanga}
           inputSize={InputSize.i80}
           onChange={handleChange}
+          style={{ textAlign: "right" }}
         />
       ),
       3: (
@@ -158,6 +169,7 @@ function TableData({
           value={buBlcost}
           inputSize={InputSize.i80}
           onChange={handleChange}
+          style={{ textAlign: "right" }}
         />
       ),
       4: (
@@ -169,10 +181,13 @@ function TableData({
             padding: "0 6px",
             background: "aliceblue",
             margin: "5px",
+            justifyContent: "right",
           }}
         >
-          {Number(buBldanga && buBldanga.replace(",", "")) +
-            Number(buBlcost && buBlcost.replace(",", ""))}
+          {buBldanga && buBlcost
+            ? Number(buBldanga && buBldanga.replace(",", "")) +
+              Number(buBlcost && buBlcost.replace(",", ""))
+            : null}
         </p>
       ),
     },

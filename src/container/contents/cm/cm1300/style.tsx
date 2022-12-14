@@ -16,8 +16,6 @@ export const Table1Wrapper = styled.div`
   height: 45%;
 `;
 export const Detail1Wrapper = styled.div`
-  // height: 40%;
-  position: relative;
   .addr2 {
     font-size: 12px;
     font-weight: 400;
@@ -27,21 +25,19 @@ export const Detail2Wrapper = styled.div`
   margin-top: 9px;
   .buttons {
     position: absolute;
-    right: 1px;
-    top: 86px;
+    right: 12px;
+    top: 88px;
     display: flex;
+    gap: 8px;
   }
 `;
 export const CheckBoxContainer = styled.div`
   display: flex;
-  // justify-content: space-between;
   align-items: center;
   grid-gap: 15px;
-  //   border: 1px solid rgba(187, 187, 187, 0.35);
 `;
 export const FormTitle = styled.div`
   display: flex;
-  // justify-content: space-between;
   align-items: center;
   grid-gap: 3px;
   margin-left: 16px;

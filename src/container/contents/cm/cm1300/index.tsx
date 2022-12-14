@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import API from "app/axios";
 import Button from "components/button/button";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
+import Loader from "components/loader";
 import {
   Plus,
   Trash,
@@ -64,7 +65,7 @@ function CM1300({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
-
+  const [loading, setLoading] = useState(false);
   const { isDelete } = useSelector((state) => state.modal);
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -128,18 +129,21 @@ function CM1300({
   const fetchSearchData = async (params: any) => {
     try {
       let data: any;
+      setLoading(true);
       if (params.searchInput1) {
         const { data } = await API.get(CM1300SEARCH, {
           params: { aptCode: params.searchInput1 },
         });
         if (data?.length > 0) {
           setData(data);
+          setLoading(false);
         } else if (params.searchInput2) {
           const { data } = await API.get(CM1300SEARCH, {
             params: { aptName: params.searchInput2 },
           });
           if (data?.length > 0) {
             setData(data);
+            setLoading(false);
           }
         }
       } else if (params.searchInput2) {
@@ -148,10 +152,14 @@ function CM1300({
         });
         if (data) {
           setData(data);
+          setLoading(false);
         }
+      } else {
+        if (data === undefined) setLoading(false);
       }
       if (data) {
         setData(data);
+        setLoading(false);
       }
     } catch (err) {
       console.log("CM1300 data search fetch error =======>", err);
@@ -160,9 +168,11 @@ function CM1300({
 
   const fetchListData = async () => {
     try {
+      setLoading(true);
       const { data } = await API.get(CM1300SEARCH);
       if (data) {
         setData(data);
+        setLoading(false);
       }
     } catch (err) {
       console.log("CM1300 data list fetch error =======>", err);
@@ -209,7 +219,6 @@ function CM1300({
           <Button
             text="건물등록"
             icon={<Plus />}
-            style={{ marginRight: "5px" }}
             onClick={() => {
               formRef.current.setIsAddBtnClicked(true);
               formRef.current.resetForm("clear");
@@ -218,11 +227,27 @@ function CM1300({
           <Button
             text="삭제"
             icon={<Trash />}
-            style={{ marginRight: "12px" }}
             onClick={() => {
               dispatch(openModal({ type: "delModal" }));
               dispatch(addDeleteMenuId({ menuId: menuId }));
             }}
+          />
+          <Button
+            text="저장"
+            icon={<Update />}
+            color={ButtonColor.SECONDARY}
+            onClick={() => {
+              formRef.current.crud(null);
+            }}
+          />
+          <Button
+            text="취소"
+            icon={<Reset />}
+            onClick={() => {
+              formRef.current.setIsAddBtnClicked(false);
+              formRef.current.resetForm("reset");
+            }}
+            style={{ padding: "0 3px" }}
           />
           <BorderRight />
         </div>
@@ -259,9 +284,20 @@ function CM1300({
                 />
                 <Button
                   text="검색"
-                  icon={<MagnifyingGlassBig />}
+                  icon={!loading && <MagnifyingGlassBig />}
                   kind={ButtonType.ROUND}
                   type="submit"
+                  loader={
+                    loading && (
+                      <>
+                        <Loader
+                          color="white"
+                          size={21}
+                          style={{ marginRight: "10px" }}
+                        />
+                      </>
+                    )
+                  }
                 />
               </FormGroup>
             </Field>
@@ -279,26 +315,6 @@ function CM1300({
               setSelectedRowIndex={setSelectedRowIndex}
               setSelected={setSelected}
             />
-            <UpdateButtonsContainer>
-              <Button
-                text="저장"
-                icon={<Update />}
-                style={{ marginRight: "5px" }}
-                color={ButtonColor.SECONDARY}
-                onClick={() => {
-                  formRef.current.crud(null);
-                }}
-              />
-              <Button
-                text="취소"
-                icon={<Reset />}
-                onClick={() => {
-                  formRef.current.setIsAddBtnClicked(false);
-                  formRef.current.resetForm("reset");
-                }}
-                style={{ padding: "0 3px" }}
-              />
-            </UpdateButtonsContainer>
           </Detail1Wrapper>
         </Grid1Container>
         <Grid2Container>

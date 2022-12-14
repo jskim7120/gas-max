@@ -22,11 +22,11 @@ import {
   ExcelIcon,
 } from "components/allSvgIcon";
 import Form from "./form";
-// import Grid from "../../en/grid";
 import Grid from "./grid";
 import { columns, fields } from "./data";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import { DetailWrapper, DetailHeader } from "../../commonStyle";
+import Loader from "components/loader";
 
 interface ISEARCH {
   areaCode: string;
@@ -48,6 +48,7 @@ function GR1100({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>();
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
     functionName: "GR1100",
@@ -82,11 +83,13 @@ function GR1100({
 
   const fetchData = async (params: ISEARCH) => {
     try {
+      setLoading(true);
       const { data } = await API.get(GR1100SEARCH, {
         params: params,
       });
       if (data) {
         setData(data);
+        setLoading(false);
         setSelected(data[0]);
         setSelectedRowIndex(0);
       }
@@ -244,9 +247,20 @@ function GR1100({
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <Button
                     text="검색"
-                    icon={<MagnifyingGlassBig width="17.188" height="17.141" />}
+                    icon={!loading && <MagnifyingGlassBig />}
                     kind={ButtonType.ROUND}
                     type="submit"
+                    loader={
+                      loading && (
+                        <>
+                          <Loader
+                            color="white"
+                            size={21}
+                            style={{ marginRight: "10px" }}
+                          />
+                        </>
+                      )
+                    }
                     style={{ marginRight: "5px", height: "26px" }}
                   />
 

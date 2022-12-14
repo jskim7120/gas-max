@@ -27,4 +27,15 @@ export interface ICM1300 {
   aptPer: string;
   aptGumdate: string;
   aptSukumtype: string;
+
+  //
+  chkAptZipCode: boolean;
+  chkAptRh2o: boolean;
+  chkAptRdangaType: boolean;
+  chkAptAnkum: boolean;
+  chkAptSisulkum: boolean;
+  chkAptMeterkum: boolean;
+  chkAptPer: boolean;
+  chkAptGumdate: boolean;
+  chkAptSukumtype: boolean;
 }
