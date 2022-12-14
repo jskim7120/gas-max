@@ -13,6 +13,7 @@ export const DetailHeader = styled.div`
   .m_left {
     margin-right: 23.85%;
     align-items: center;
+    gap: 8px;
   }
   .b_right {
     width: 5px;

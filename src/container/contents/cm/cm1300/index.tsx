@@ -219,7 +219,6 @@ function CM1300({
           <Button
             text="건물등록"
             icon={<Plus />}
-            style={{ marginRight: "5px" }}
             onClick={() => {
               formRef.current.setIsAddBtnClicked(true);
               formRef.current.resetForm("clear");
@@ -228,11 +227,27 @@ function CM1300({
           <Button
             text="삭제"
             icon={<Trash />}
-            style={{ marginRight: "12px" }}
             onClick={() => {
               dispatch(openModal({ type: "delModal" }));
               dispatch(addDeleteMenuId({ menuId: menuId }));
             }}
+          />
+          <Button
+            text="저장"
+            icon={<Update />}
+            color={ButtonColor.SECONDARY}
+            onClick={() => {
+              formRef.current.crud(null);
+            }}
+          />
+          <Button
+            text="취소"
+            icon={<Reset />}
+            onClick={() => {
+              formRef.current.setIsAddBtnClicked(false);
+              formRef.current.resetForm("reset");
+            }}
+            style={{ padding: "0 3px" }}
           />
           <BorderRight />
         </div>
@@ -300,26 +315,6 @@ function CM1300({
               setSelectedRowIndex={setSelectedRowIndex}
               setSelected={setSelected}
             />
-            <UpdateButtonsContainer>
-              <Button
-                text="저장"
-                icon={<Update />}
-                style={{ marginRight: "5px" }}
-                color={ButtonColor.SECONDARY}
-                onClick={() => {
-                  formRef.current.crud(null);
-                }}
-              />
-              <Button
-                text="취소"
-                icon={<Reset />}
-                onClick={() => {
-                  formRef.current.setIsAddBtnClicked(false);
-                  formRef.current.resetForm("reset");
-                }}
-                style={{ padding: "0 3px" }}
-              />
-            </UpdateButtonsContainer>
           </Detail1Wrapper>
         </Grid1Container>
         <Grid2Container>
