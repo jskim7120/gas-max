@@ -5,6 +5,7 @@ import API from "app/axios";
 import { DetailHeader, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import CheckBox from "components/checkbox";
 import {
   Plus,
   Trash,
@@ -12,6 +13,7 @@ import {
   Reset,
   MagnifyingGlass,
   ExcelIcon,
+  ResetGray,
 } from "components/allSvgIcon";
 import { SearchWrapper } from "./style";
 import {
@@ -53,6 +55,8 @@ function CM9002({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [dataChk, setDataChk] = useState(true);
+  const [reportKind, setReportKind] = useState("");
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
     functionName: "CM9002",
@@ -69,6 +73,24 @@ function CM9002({
   } = useForm<ICM9002SEARCH>({
     mode: "onSubmit",
   });
+
+  const resetForm = () => {
+    if (dataCommonDic !== undefined) {
+      reset({
+        areaCode: dataCommonDic?.areaCode[0].code,
+        reportKind: dataCommonDic?.reportKind[0].code,
+        cuType: dataCommonDic?.cuType[0].code,
+        cuGumsa: dataCommonDic?.cuGumsa[0].code,
+        cuJyCode: dataCommonDic?.cuJyCode[0].code,
+        swCode: dataCommonDic?.swCode[0].code,
+        cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
+        cuCutype: dataCommonDic?.cuCutype[0].code,
+        cuStae: dataCommonDic?.cuStae[0].code,
+        cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
+      });
+      setReportKind(dataCommonDic?.reportKind[0].code);
+    }
+  };
 
   useEffect(() => {
     reset({
@@ -96,6 +118,12 @@ function CM9002({
     }
   };
 
+  const cancel = () => {
+    resetForm();
+    setDataChk(true);
+    setData([]);
+  };
+
   const submit = (data: ICM9002SEARCH) => {
     console.log("IISEARCH:", data);
     fetchData(data);
@@ -121,15 +149,16 @@ function CM9002({
       </DetailHeader>
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
-          <SearchWrapper>
+          <SearchWrapper style={{ alignItems: "baseline" }}>
             <div style={{ width: "80%" }}>
-              <Wrapper grid col={6}>
+              <Wrapper grid col={6} fields="1fr 1fr 1fr 2fr 1fr 1fr">
                 <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>보고서종류</Label>
+                  <Label>보고서종류</Label>
                   <Select
+                    width={InputSize.i130}
                     {...register("reportKind")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "80%" }}
+                    onChange={(e) => setReportKind(e.target.value)}
                   >
                     {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -144,7 +173,7 @@ function CM9002({
                   <Select
                     {...register("cuType")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -159,7 +188,7 @@ function CM9002({
                   <Select
                     {...register("cuJyCode")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -174,7 +203,7 @@ function CM9002({
                   <Select
                     {...register("swCode")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -189,7 +218,7 @@ function CM9002({
                   <Select
                     {...register("cuCustgubun")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuCustgubun?.map(
                       (obj: any, idx: number) => (
@@ -200,13 +229,12 @@ function CM9002({
                     )}
                   </Select>
                 </FormGroup>
-
                 <FormGroup>
                   <Label>검사대상</Label>
                   <Select
                     {...register("cuGumsa")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuGumsa?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -216,43 +244,47 @@ function CM9002({
                   </Select>
                 </FormGroup>
               </Wrapper>
-              <Wrapper grid col={6}>
-                <FormGroup style={{ marginLeft: "20px" }}>
-                  <Label style={{ minWidth: "auto" }}>미수구</Label>
+              <Wrapper grid col={6} fields="1fr 1fr 1fr 2fr 1fr 1fr">
+                <FormGroup>
+                  <Label>미수구</Label>
                   <Select
                     {...register("cuMisu")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuMisu?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
                       </option>
                     ))}
+                    <option key="sdcdcds00" value="">
+                      hooson
+                    </option>
                   </Select>
                 </FormGroup>
-
                 <FormGroup>
                   <Label>소비자형태</Label>
                   <Select
                     {...register("cuCutype")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
                       </option>
                     ))}
+                    <option key="sdcdcds00" value="">
+                      hooson
+                    </option>
                   </Select>
                 </FormGroup>
-
                 <FormGroup>
                   <Label>거래상태</Label>
                   <Select
                     {...register("cuStae")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -261,44 +293,50 @@ function CM9002({
                     ))}
                   </Select>
                 </FormGroup>
-
-                <FormGroup>
-                  <Label>등록기간</Label>
-                  <Select
-                    {...register("swCode")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
-                    {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <Field flex style={{ alignItems: "center" }}>
-                  <Label>기간</Label>
+                <Field
+                  flex
+                  style={{
+                    alignItems: "center",
+                    marginLeft: "22px",
+                  }}
+                >
+                  <CheckBox
+                    register={{ ...register("dataChk") }}
+                    title="등록기간"
+                    onChange={(e: any) => setDataChk(e.target.checked)}
+                    checked={dataChk}
+                  />
                   <Controller
                     control={control}
                     {...register("sDate")}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
-                      <CustomDatePicker value={value} onChange={onChange} />
+                    render={({ field: { onChange, value } }) => (
+                      <CustomDatePicker
+                        value={value}
+                        onChange={onChange}
+                        style={{ marginLeft: "15px" }}
+                        readOnly={!dataChk}
+                      />
                     )}
                   />
                   <Controller
                     control={control}
                     {...register("eDate")}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
-                      <CustomDatePicker value={value} onChange={onChange} />
+                    render={({ field: { onChange, value } }) => (
+                      <CustomDatePicker
+                        value={value}
+                        onChange={onChange}
+                        style={{ margin: "5px 0 0 0" }}
+                        readOnly={!dataChk}
+                      />
                     )}
                   />
                 </Field>
                 <FormGroup>
                   <Label>수금방법</Label>
                   <Select
-                    {...register("cuSukumType")}
+                    {...register("cuSukumtype")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuSukumtype?.map(
                       (obj: any, idx: number) => (
@@ -309,13 +347,12 @@ function CM9002({
                     )}
                   </Select>
                 </FormGroup>
-
                 <FormGroup>
                   <Label>장부구분</Label>
                   <Select
                     {...register("cuJangbu")}
                     kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
+                    width={InputSize.i130}
                   >
                     {dataCommonDic?.cuJangbu?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -327,18 +364,19 @@ function CM9002({
               </Wrapper>
             </div>
 
-            <div className="button-wrapper">
+            <div className="button-wrapper" style={{ flexDirection: "row" }}>
               <Button
-                text="등록"
+                text="검색"
                 icon={!loading && <MagnifyingGlass />}
-                color={ButtonColor.SECONDARY}
+                color={ButtonColor.DANGER}
                 type="submit"
                 loader={
                   loading && (
                     <>
                       <Loader
                         color="white"
-                        size={21}
+                        size={13}
+                        borderWidth="2px"
                         style={{ marginRight: "10px" }}
                       />
                     </>
@@ -347,12 +385,18 @@ function CM9002({
                 style={{ marginRight: "10px" }}
               />
               <Button
-                text="수정"
-                icon={<Reset />}
+                text="취소"
+                icon={<ResetGray />}
                 style={{ marginRight: "10px" }}
                 type="button"
-                color={ButtonColor.SUCCESS}
-                onClick={() => {}}
+                color={ButtonColor.LIGHT}
+                onClick={cancel}
+              />
+              <Button
+                text="엑셀"
+                icon={<ExcelIcon width="19px" height="19px" />}
+                color={ButtonColor.LIGHT}
+                type="button"
               />
             </div>
           </SearchWrapper>
