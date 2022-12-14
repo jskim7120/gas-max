@@ -406,34 +406,49 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper grid col={3}>
           <Field>
-            <Input
-              label="가상 계좌 서비스"
-              register={register("jnVirtualAcc")}
-              errors={errors["jnVirtualAcc"]?.message}
-              textAlign="right"
-              maxLength="14"
-              inputSize={InputSize.i150}
-            />
+            <FormGroup>
+              <Label>가상 계좌 서비스</Label>
+              <Select {...register("jnVirtualAcc")} width={InputSize.i150}>
+                {dataCommonDic?.jnVirtualAcc?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+            <div>
+              <ErrorText>{errors["jnVirtualAcc"]?.message}</ErrorText>
+            </div>
           </Field>
           <Field>
-            <Input
-              label="계좌 자동이체"
-              register={register("jnBankCms")}
-              errors={errors["jnBankCms"]?.message}
-              textAlign="right"
-              maxLength="14"
-              inputSize={InputSize.i150}
-            />
+            <FormGroup>
+              <Label>계좌 자동이체</Label>
+              <Select {...register("jnBankCms")} width={InputSize.i100}>
+                {dataCommonDic?.jnBankCms?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+            <div>
+              <ErrorText>{errors["jnBankCms"]?.message}</ErrorText>
+            </div>
           </Field>
           <Field>
-            <Input
-              label="카드 자동이체"
-              register={register("jnCardCms")}
-              errors={errors["jnCardCms"]?.message}
-              textAlign="right"
-              maxLength="14"
-              inputSize={InputSize.i150}
-            />
+            <FormGroup>
+              <Label>카드 자동이체</Label>
+              <Select {...register("jnCardCms")} width={InputSize.i130}>
+                {dataCommonDic?.jnCardCms?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+            <div>
+              <ErrorText>{errors["jnCardCms"]?.message}</ErrorText>
+            </div>
           </Field>
         </Wrapper>
         <div style={{ marginTop: "5px" }}>
