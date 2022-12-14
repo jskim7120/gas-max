@@ -467,14 +467,19 @@ const Form = React.forwardRef(
             </div>
           </Field>
           <Field style={{ marginLeft: "35px" }}>
-            <Input
-              label="탱크잔량/원격검침 발신기 업체번호"
-              labelLong
-              register={register("jnCMngNo")}
-              errors={errors["jnCMngNo"]?.message}
-              textAlign="right"
-              maxLength="4"
-              inputSize={InputSize.i60}
+            <Controller
+              control={control}
+              {...register("jnCMngNo")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="탱크잔량/원격검침 발신기 업체번호"
+                  value={value}
+                  onChange={onChange}
+                  mask={[/\d/, /\d/, /\d/, /\d/]}
+                  inputSize={InputSize.i60}
+                  name={name}
+                />
+              )}
             />
           </Field>
         </Wrapper>
@@ -487,20 +492,6 @@ const Form = React.forwardRef(
             textAlign="right"
             maxLength="4"
           /> */}
-          <Controller
-            control={control}
-            {...register("jnCMngNo")}
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="탱크잔량/원격검침 발신기 업체번호"
-                value={value}
-                onChange={onChange}
-                mask={[/\d/, /\d/, /\d/, /\d/]}
-                inputSize={InputSize.i60}
-                name={name}
-              />
-            )}
-          />
 
           <Field>
             <FormGroup>
