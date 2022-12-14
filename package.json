@@ -28,6 +28,7 @@
     "realgrid": "^2.5.4",
     "redux-logger": "^3.0.6",
     "styled-components": "^5.3.5",
+    "text-mask-addons": "^3.8.0",
     "typescript": "^4.8.2",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11",

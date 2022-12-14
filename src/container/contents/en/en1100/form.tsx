@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -60,6 +60,7 @@ const Form = React.forwardRef(
       handleSubmit,
       reset,
       formState: { errors },
+      control,
       getValues,
     } = useForm<IJNOTRY>({
       mode: "onChange",
@@ -213,12 +214,31 @@ const Form = React.forwardRef(
         </Wrapper>
         <Divider />
         <Wrapper grid>
-          <Input
-            label="사업자번호"
-            register={register("jnSsno")}
-            errors={errors["jnSsno"]?.message}
-            formatNumber="telNumber"
-            maxLength="13"
+          <Controller
+            control={control}
+            {...register("jnSsno")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="사업자번호"
+                value={value}
+                onChange={onChange}
+                mask={[
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
+                name={name}
+              />
+            )}
           />
           <Input
             label="상호"
@@ -302,11 +322,38 @@ const Form = React.forwardRef(
             errors={errors["jnAnname1"]?.message}
             maxLength="10"
           />
-          <Input
-            label="전화"
+          {/* <Input
+            label="전화----"
             register={register("jnAntel1")}
             errors={errors["jnAntel1"]?.message}
             maxLength="14"
+          /> */}
+
+          <Controller
+            control={control}
+            {...register("jnAntel1")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="전화"
+                value={value}
+                onChange={onChange}
+                mask={[
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
+              />
+            )}
           />
         </Wrapper>
         <Wrapper grid>
@@ -316,11 +363,38 @@ const Form = React.forwardRef(
             errors={errors["jnAnname2"]?.message}
             maxLength="10"
           />
-          <Input
+          {/* <Input
             label="전화"
             register={register("jnAntel2")}
             errors={errors["jnAntel2"]?.message}
             maxLength="14"
+          /> */}
+
+          <Controller
+            control={control}
+            {...register("jnAntel2")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="전화"
+                value={value}
+                onChange={onChange}
+                mask={[
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
+              />
+            )}
           />
         </Wrapper>
         <Divider />
@@ -405,6 +479,29 @@ const Form = React.forwardRef(
           </Field>
         </Wrapper>
         <Wrapper grid col={3}>
+          {/* <Input
+            label="탱크잔량/원격검침 발신기 업체번호"
+            labelLong
+            register={register("jnCMngNo")}
+            errors={errors["jnCMngNo"]?.message}
+            textAlign="right"
+            maxLength="4"
+          /> */}
+          <Controller
+            control={control}
+            {...register("jnCMngNo")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="탱크잔량/원격검침 발신기 업체번호"
+                value={value}
+                onChange={onChange}
+                mask={[/\d/, /\d/, /\d/, /\d/]}
+                inputSize={InputSize.i60}
+                name={name}
+              />
+            )}
+          />
+
           <Field>
             <FormGroup>
               <Label>가상 계좌 서비스</Label>

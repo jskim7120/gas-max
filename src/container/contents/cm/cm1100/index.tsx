@@ -93,6 +93,7 @@ function CM1100Page({
         setLoading(false);
       }
     } catch (err) {
+      setLoading(false);
       console.log("CM1100 data search fetch error =======>", err);
     }
   };
@@ -354,6 +355,7 @@ function CM1100Page({
                         color="white"
                         size={21}
                         style={{ marginRight: "10px" }}
+                        borderWidth="3px"
                       />
                     </>
                   )

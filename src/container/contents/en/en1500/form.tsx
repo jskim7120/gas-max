@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useEffect } from "react";
 import Table from "components/table";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -20,6 +20,7 @@ import { IconInfo } from "components/allSvgIcon";
 import { IJNOTRY2 } from "./model";
 import { schema } from "./validation";
 import { formatCurrencyRemoveComma } from "helpers/dateFormat";
+import { currencyMask } from "helpers/currency";
 import { VolReading, Container, RubeUnit, BasicItems } from "../en1500/style";
 
 import API from "app/axios";
@@ -61,9 +62,10 @@ const Form = (
     reset,
     formState: { errors },
     getValues,
+    control,
   } = useForm<IJNOTRY2>({
     mode: "onChange",
-    resolver: yupResolver(schema),
+    // resolver: yupResolver(schema),
   });
 
   const resetForm = (type: string) => {
@@ -78,8 +80,9 @@ const Form = (
       reset(newData);
     }
   };
-
+  console.log("errors:", errors);
   const submit = async (data: IJNOTRY2) => {
+    console.log("fbsfgbgfbggf");
     const formValues = getValues();
     formValues.jnAnkum = formValues.jnAnkum
       ? formatCurrencyRemoveComma(formValues.jnAnkum)
@@ -116,70 +119,168 @@ const Form = (
     {
       title: "280 mmH2O",
       jnCost280: (
-        <Input
-          register={register("jnCost280")}
-          errors={errors["jnCost280"]?.message}
-          textAlign="right"
+        // <Input
+        //   register={register("jnCost280")}
+        //   errors={errors["jnCost280"]?.message}
+        //   textAlign="right"
+        // />
+        <Controller
+          control={control}
+          {...register("jnCost280")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i70}
+              name={name}
+            />
+          )}
         />
       ),
     },
     {
       title: "600 mmH2O",
       jnCost600: (
-        <Input
-          register={register("jnCost600")}
-          errors={errors["jnCost600"]?.message}
-          textAlign="right"
+        // <Input
+        //   register={register("jnCost600")}
+        //   errors={errors["jnCost600"]?.message}
+        //   textAlign="right"
+        // />
+        <Controller
+          control={control}
+          {...register("jnCost600")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i70}
+              name={name}
+            />
+          )}
         />
       ),
     },
     {
       title: "1000 mmH2O",
       jnCost1000: (
-        <Input
-          register={register("jnCost1000")}
-          errors={errors["jnCost1000"]?.message}
-          textAlign="right"
+        // <Input
+        //   register={register("jnCost1000")}
+        //   errors={errors["jnCost1000"]?.message}
+        //   textAlign="right"
+        // />
+        <Controller
+          control={control}
+          {...register("jnCost1000")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i70}
+              name={name}
+            />
+          )}
         />
       ),
     },
     {
       title: "1500 mmH2O",
       jnCost1500: (
-        <Input
-          register={register("jnCost1500")}
-          errors={errors["jnCost1500"]?.message}
-          textAlign="right"
+        // <Input
+        //   register={register("jnCost1500")}
+        //   errors={errors["jnCost1500"]?.message}
+        //   textAlign="right"
+        // />
+        <Controller
+          control={control}
+          {...register("jnCost1500")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i70}
+              name={name}
+            />
+          )}
         />
       ),
     },
     {
       title: "2000 mmH2O",
       jnCost2000: (
-        <Input
-          register={register("jnCost2000")}
-          errors={errors["jnCost2000"]?.message}
-          textAlign="right"
+        // <Input
+        //   register={register("jnCost2000")}
+        //   errors={errors["jnCost2000"]?.message}
+        //   textAlign="right"
+        // />
+        <Controller
+          control={control}
+          {...register("jnCost2000")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i70}
+              name={name}
+            />
+          )}
         />
       ),
     },
     {
       title: "2500 mmH2O",
       jnCost2500: (
-        <Input
-          register={register("jnCost2500")}
-          errors={errors["jnCost2500"]?.message}
-          textAlign="right"
+        // <Input
+        //   register={register("jnCost2500")}
+        //   errors={errors["jnCost2500"]?.message}
+        //   textAlign="right"
+        // />
+        <Controller
+          control={control}
+          {...register("jnCost2500")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i70}
+              name={name}
+            />
+          )}
         />
       ),
     },
     {
       title: "7000 mmH2O",
       jnCost7000: (
-        <Input
-          register={register("jnCost7000")}
-          errors={errors["jnCost7000"]?.message}
-          textAlign="right"
+        // <Input
+        //   register={register("jnCost7000")}
+        //   errors={errors["jnCost7000"]?.message}
+        //   textAlign="right"
+        // />
+        <Controller
+          control={control}
+          {...register("jnCost7000")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i70}
+              name={name}
+            />
+          )}
         />
       ),
     },
@@ -345,7 +446,7 @@ const Form = (
             <Wrapper className="volWrapper">
               <Field className="field">
                 <FormGroup>
-                  <Input
+                  {/* <Input
                     label="안전관리비"
                     register={register("jnAnkum")}
                     errors={errors["jnAnkum"]?.message}
@@ -353,6 +454,21 @@ const Form = (
                     formatNumber="comNumber"
                     maxLength="23"
                     inputSize={InputSize.xl}
+                  /> */}
+                  <Controller
+                    control={control}
+                    {...register("jnAnkum")}
+                    render={({ field: { onChange, value, name } }) => (
+                      <Input
+                        label="안전관리비"
+                        value={value}
+                        onChange={onChange}
+                        mask={currencyMask}
+                        textAlign="right"
+                        inputSize={InputSize.i85}
+                        name={name}
+                      />
+                    )}
                   />
                   <span>원</span>
                 </FormGroup>
@@ -362,12 +478,27 @@ const Form = (
             <Wrapper className="volWrapper">
               <Field className="field">
                 <FormGroup>
-                  <Input
+                  {/* <Input
                     label="정기검침일"
                     register={register("jnGumdate")}
                     errors={errors["jnGumdate"]?.message}
                     textAlign="right"
                     maxLength="2"
+                  /> */}
+                  <Controller
+                    control={control}
+                    {...register("jnGumdate")}
+                    render={({ field: { onChange, value, name } }) => (
+                      <Input
+                        label="정기검침일"
+                        value={value}
+                        onChange={onChange}
+                        mask={[/\d/, /\d/]}
+                        textAlign="right"
+                        inputSize={InputSize.i85}
+                        name={name}
+                      />
+                    )}
                   />
                   <span>일</span>
                 </FormGroup>
@@ -400,12 +531,27 @@ const Form = (
             <Wrapper className="volWrapper">
               <Field className="field">
                 <FormGroup>
-                  <Input
+                  {/* <Input
                     label="연체율"
                     register={register("jnPer")}
                     errors={errors["jnPer"]?.message}
                     textAlign="right"
                     maxLength="3"
+                  /> */}
+                  <Controller
+                    control={control}
+                    {...register("jnPer")}
+                    render={({ field: { onChange, value, name } }) => (
+                      <Input
+                        label="연체율"
+                        value={value}
+                        onChange={onChange}
+                        mask={[/\d/, /\d/, /\d/]}
+                        textAlign="right"
+                        inputSize={InputSize.i85}
+                        name={name}
+                      />
+                    )}
                   />
                   <span>%</span>
                 </FormGroup>

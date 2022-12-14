@@ -93,6 +93,7 @@ export const columns = [
     header: {
       text: "적용단가",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "jcVatKindName",
@@ -111,6 +112,7 @@ export const columns = [
     header: {
       text: "할인액",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "jcJdcPer",
@@ -120,6 +122,7 @@ export const columns = [
     header: {
       text: "할인율",
     },
+    styleName: "rg-right-column",
   },
 
   {

@@ -8,6 +8,7 @@ import {
 } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker/test-datepicker";
 import { Controller } from "react-hook-form";
+import { InputSize } from "components/componentsType";
 
 function Tab4({
   dataCommonDic,
@@ -47,7 +48,21 @@ function Tab4({
       <Wrapper grid col={4}>
         <Input label="계약번호" register={register("cuGongno")} />
         <Input label="계약자명" register={register("cuGongname")} />
-        <Input label="생년월일" register={register("cuJuminno")} />
+        {/* <Input label="생년월일" register={register("cuJuminno")} /> */}
+        <Controller
+          control={control}
+          {...register("cuJuminno")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              label="생년월일"
+              value={value}
+              onChange={onChange}
+              name={name}
+              mask={[/\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, "-", /\d/, /\d/]}
+              inputSize={InputSize.i80}
+            />
+          )}
+        />
 
         <Field flex style={{ alignItems: "center" }}>
           <Label>최종점검일</Label>
@@ -101,7 +116,7 @@ function Tab4({
 
         <FormGroup>
           <Label>계약갱신</Label>
-          <Select {...register("cuExtendType")}>
+          <Select {...register("cuExtendType")} width={InputSize.i80}>
             {dataCommonDic?.cuExtendType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -152,7 +167,7 @@ function Tab4({
 
         <FormGroup>
           <Label>보일러 사용</Label>
-          <Select {...register("cuBoilerYn")}>
+          <Select {...register("cuBoilerYn")} width={InputSize.i80}>
             {dataCommonDic?.cuBoilerYn?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -198,7 +213,7 @@ function Tab4({
 
         <FormGroup>
           <Label>시설적합유무</Label>
-          <Select {...register("cuSisulyn")}>
+          <Select {...register("cuSisulyn")} width={InputSize.i80}>
             {dataCommonDic?.cuSisulyn?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}

@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -18,6 +18,7 @@ import {
 import { IBUPUM } from "./model";
 import { schema } from "./validation";
 import { formatCurrencyRemoveComma } from "helpers/dateFormat";
+import { currencyMask } from "helpers/currency";
 import { InputSize } from "components/componentsType";
 
 interface IForm {
@@ -53,6 +54,7 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
+      control,
     } = useForm<IBUPUM>({ mode: "onChange", resolver: yupResolver(schema) });
 
     useEffect(() => {
@@ -255,7 +257,7 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper>
           <Field flex>
-            <Input
+            {/* <Input
               label="매입단가"
               register={register("bpIndanga")}
               errors={errors["bpIndanga"]?.message}
@@ -263,13 +265,28 @@ const Form = React.forwardRef(
               textAlign="right"
               formatNumber="comDecNumber"
               maxLength="26"
+            /> */}
+            <Controller
+              control={control}
+              {...register("bpIndanga")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="매입단가"
+                  value={value}
+                  onChange={onChange}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i130}
+                  name={name}
+                />
+              )}
             />
             <p>원</p>
           </Field>
         </Wrapper>
         <Wrapper>
           <Field flex>
-            <Input
+            {/* <Input
               label="판매단가"
               register={register("bpOutdanga")}
               errors={errors["bpOutdanga"]?.message}
@@ -277,6 +294,21 @@ const Form = React.forwardRef(
               textAlign="right"
               formatNumber="comDecNumber"
               maxLength="26"
+            /> */}
+            <Controller
+              control={control}
+              {...register("bpOutdanga")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="판매단가"
+                  value={value}
+                  onChange={onChange}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i130}
+                  name={name}
+                />
+              )}
             />
             <p>원</p>
           </Field>

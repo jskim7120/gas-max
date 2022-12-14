@@ -9,15 +9,18 @@ import {
 import CheckBox from "components/checkbox";
 import DaumAddress from "components/daum";
 import { InputSize } from "components/componentsType";
+import { Controller } from "react-hook-form";
 
 function Tab1({
   dataCommonDic,
   register,
   setAddress,
+  control,
 }: {
   dataCommonDic: any;
   register: Function;
   setAddress: (arg: any) => void;
+  control: any;
 }) {
   return (
     <Field className="outer-border">
@@ -35,7 +38,12 @@ function Tab1({
 
         <Input register={register("cuNo")} />
 
-        <Input label="종사업장" register={register("cuRCode")} maxLength="4" />
+        <Input
+          label="종사업장"
+          register={register("cuRCode")}
+          maxLength="4"
+          inputSize={InputSize.i50}
+        />
 
         <FormGroup>
           <Label>과세구분</Label>
@@ -57,7 +65,11 @@ function Tab1({
 
       <Wrapper grid col={2}>
         <Field flex style={{ alignItems: "center" }}>
-          <Input label="주소" register={register("cuSzipcode")} />
+          <Input
+            label="주소"
+            register={register("cuSzipcode")}
+            inputSize={InputSize.i100}
+          />
           <DaumAddress setAddress={setAddress} />
           <Input register={register("cuSaddr1")} fullWidth />
         </Field>
@@ -158,11 +170,25 @@ function Tab1({
             </Select>
           </FormGroup>
 
-          <Input
+          {/* <Input
             register={register("cuSekumDate")}
             maxLength="2"
             inputSize={InputSize.i60}
             style={{ marginLeft: "0" }}
+          /> */}
+
+          <Controller
+            control={control}
+            {...register("cuSekumDate")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                value={value}
+                onChange={onChange}
+                name={name}
+                mask={[/\d/, /\d/]}
+                inputSize={InputSize.i40}
+              />
+            )}
           />
           <p>일</p>
         </Field>

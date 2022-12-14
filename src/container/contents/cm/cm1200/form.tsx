@@ -1,14 +1,17 @@
 // REACT
 import React, { useEffect, useImperativeHandle, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
+
 import { toast } from "react-toastify";
 // COMPONENTS
 import DaumAddress from "components/daum";
 import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
-import CustomDatePicker from "components/customDatePicker/customdate2";
+import CustomDatePicker from "components/customDatePicker/test-datepicker";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
+import { currencyMask } from "helpers/currency";
+
 import {
   Item,
   RadioButton,
@@ -28,13 +31,14 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./validation";
 //API
-import { ICM1200SEARCH } from "./modul";
+import { ICM1200SEARCH } from "./model";
 import API from "app/axios";
 import { CM1200DELETE, CM1200INSERT, CM1200UPDATE } from "app/path";
 import {
   formatCurrencyRemoveComma,
   formatDate,
   formatDateByRemoveDash,
+  formatDateToStringWithoutDash,
 } from "helpers/dateFormat";
 
 const Form = React.forwardRef(
@@ -42,25 +46,21 @@ const Form = React.forwardRef(
     {
       selected,
       dataCommonDic,
-      selectedSupplyTab,
       fetchData,
       setData,
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
-      selectAreaCode,
-      setSelectAreaCode,
+      selectedSupplyTab,
     }: {
       selected: any;
       dataCommonDic: any;
-      selectedSupplyTab: any;
       fetchData: any;
       setData: any;
       selectedRowIndex: number;
       setSelected: any;
       setSelectedRowIndex: any;
-      selectAreaCode?: string;
-      setSelectAreaCode?: any;
+      selectedSupplyTab: any;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -68,9 +68,13 @@ const Form = React.forwardRef(
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
     // CustomDatePickers
+    {
+      /*
     const [cuFinishDate, setCuFinishDate] = useState("");
     const [cuCircuitDate, setCuCircuitDate] = useState("");
     const [cuScheduleDate, setCuScheduleDate] = useState("");
+
+
     const [tankFirstDate1, setTankFirstDate1] = useState("");
     const [tankFirstDate2, setTankFirstDate2] = useState("");
     const [tankOutsideDate1, setTankOutsideDate1] = useState("");
@@ -80,25 +84,29 @@ const Form = React.forwardRef(
     const [gasifyCheckDate1, setGasifyCheckDate1] = useState("");
     const [gasifyCheckDate2, setGasifyCheckDate2] = useState("");
     const [clearNumberic, setClearNumberic] = useState(false);
+    */
+    }
+
+    const [chkCuZipCode, setChkCuZipCodeCheck] = useState(false);
+    const [chkCuRdangeCheck, setChkCuRdangeCheck] = useState(false);
+    const [chkCuGumdate, setChkCuGumdateCheck] = useState(false);
+    const [chkCuCdcCheck, setChkCuCdcCheck] = useState(false);
+    const [chkCuPerCheck, setChkCuPerCheck] = useState(false);
+    const [chkCuRh20, setChkCuRh20Check] = useState(false);
     const [chkCuMeterKumCheck, setChkCuMeterKumCheck] = useState(false);
     const [ckCuSisulKumCheck, setCkCuSisulKumCheck] = useState(false);
     const [chkCuAnKumCheck, setChkCuAnKumCheck] = useState(false);
     const [chkCuCno, setChkCuCnoCheck] = useState(false);
-    const [chkCuZipCode, setChkCuZipCodeCheck] = useState(false);
-    const [chkCuRh20, setChkCuRh20Check] = useState(false);
-    const [chkCuPerCheck, setChkCuPerCheck] = useState(false);
-    const [chkCuRdangeCheck, setChkCuRdangeCheck] = useState(false);
     const [chkCuGumTurm, setchkCuGumTurmCheck] = useState(false);
-    const [chkCuGumdate, setChkCuGumdateCheck] = useState(false);
     const [chkCuSukumtype, setChkCuSukumtypeCheck] = useState(false);
-    const [chkCuCdcCheck, setChkCuCdcCheck] = useState(false);
 
     const {
       handleSubmit,
       reset,
       register,
+      unregister,
       getValues,
-      setValue,
+      control,
       watch,
       formState: { errors },
     } = useForm<ICM1200SEARCH>({
@@ -109,9 +117,7 @@ const Form = React.forwardRef(
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
         resetForm("reset");
-        setClearNumberic(false);
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selected]);
 
     useEffect(() => {
@@ -122,7 +128,6 @@ const Form = React.forwardRef(
           cuAddr2: addr ? `(${addr?.split("/")[0].split("(")[1]}` : "",
         });
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [addr]);
 
     useEffect(() => {
@@ -146,7 +151,6 @@ const Form = React.forwardRef(
         gasifyCo1: dataCommonDic?.gasifyCo1[0].code,
         gasifyCo2: dataCommonDic?.gasifyCo2[0].code,
       });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dataCommonDic]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
@@ -165,19 +169,6 @@ const Form = React.forwardRef(
             newData[key] = null;
           }
           reset(newData);
-          setCuFinishDate("");
-          setCuCircuitDate("");
-          setCuScheduleDate("");
-          setTankFirstDate1("");
-          setTankFirstDate2("");
-          setTankOutsideDate1("");
-          setTankOutsideDate2("");
-          setTankInsideDate1("");
-          setTankInsideDate2("");
-          setGasifyCheckDate1("");
-          setGasifyCheckDate2("");
-          setSelectAreaCode("");
-          setClearNumberic(true);
         }
 
         if (type === "reset") {
@@ -201,69 +192,47 @@ const Form = React.forwardRef(
             chkCuGumTurm: newFormData?.chkCuGumTurm === "Y",
             chkCuGumdate: newFormData?.chkCuGumdate === "Y",
             chkCuCno: newFormData?.chkCuCno === "Y",
+
+            cuFinishDate: selected?.cuFinishDate
+              ? formatDate(selected.cuFinishDate)
+              : "",
+            cuCircuitDate: selected?.cuCircuitDate
+              ? formatDate(selected.cuCircuitDate)
+              : "",
+            cuScheduleDate: selected?.cuScheduleDate
+              ? formatDate(selected.cuScheduleDate)
+              : "",
+            tankFirstDate1: selected?.tankFirstDate1
+              ? formatDate(selected.tankFirstDate1)
+              : "",
+            tankFirstDate2: selected?.tankFirstDate2
+              ? formatDate(selected.tankFirstDate2)
+              : "",
+            tankOutsideDate1: selected?.tankOutsideDate1
+              ? formatDate(selected.tankOutsideDate1)
+              : "",
+            tankOutsideDate2: selected?.tankOutsideDate2
+              ? formatDate(selected.tankOutsideDate2)
+              : "",
+            tankInsideDate1: selected?.tankInsideDate1
+              ? formatDate(selected.tankInsideDate1)
+              : "",
+
+            tankInsideDate2: selected?.tankInsideDate2
+              ? formatDate(selected.tankInsideDate2)
+              : "",
+            gasifyCheckDate1: selected?.gasifyCheckDate1
+              ? formatDate(selected.gasifyCheckDate1)
+              : "",
+            gasifyCheckDate2: selected?.gasifyCheckDate2
+              ? formatDate(selected.gasifyCheckDate2)
+              : "",
           });
-
-          setCuFinishDate(
-            newFormData?.cuFinishDate
-              ? formatDate(newFormData?.cuFinishDate)
-              : ""
-          );
-          setCuCircuitDate(
-            newFormData?.cuCircuitDate
-              ? formatDate(newFormData?.cuCircuitDate)
-              : ""
-          );
-          setCuScheduleDate(
-            newFormData?.cuScheduleDate
-              ? formatDate(newFormData?.cuScheduleDate)
-              : ""
-          );
-          setTankFirstDate1(
-            newFormData?.tankFirstDate1
-              ? formatDate(newFormData?.tankFirstDate1)
-              : ""
-          );
-          setTankFirstDate2(
-            newFormData?.tankFirstDate2
-              ? formatDate(newFormData?.tankFirstDate2)
-              : ""
-          );
-          setTankOutsideDate1(
-            newFormData?.tankOutsideDate1
-              ? formatDate(newFormData?.tankOutsideDate1)
-              : ""
-          );
-          setTankOutsideDate2(
-            newFormData?.tankOutsideDate2
-              ? formatDate(newFormData?.tankOutsideDate2)
-              : ""
-          );
-          setTankInsideDate1(
-            newFormData?.tankInsideDate1
-              ? formatDate(newFormData?.tankInsideDate1)
-              : ""
-          );
-          setTankInsideDate2(
-            newFormData?.tankInsideDate2
-              ? formatDate(newFormData?.tankInsideDate2)
-              : ""
-          );
-
-          setGasifyCheckDate1(
-            newFormData?.gasifyCheckDate1
-              ? formatDate(newFormData?.gasifyCheckDate1)
-              : ""
-          );
-          setGasifyCheckDate2(
-            newFormData?.gasifyCheckDate2
-              ? formatDate(newFormData?.gasifyCheckDate2)
-              : ""
-          );
-          setClearNumberic(false);
-          setSelectAreaCode(selected?.areaCode);
         }
       }
     };
+
+    console.log("register:", register("cuCode"));
 
     const crud = async (type: string | null) => {
       if (type === "delete") {
@@ -297,44 +266,47 @@ const Form = React.forwardRef(
       let newRemovedData: any = {};
       const formValues = getValues();
 
-      for (const [key, value] of Object.entries(formValues)) {
-        if (
-          key !== "tankMakeCo1" &&
-          key !== "tankMakeCo2" &&
-          key !== "tankVol2" &&
-          key !== "tankVol2" &&
-          key !== "tankMakeSno2" &&
-          key !== "tankMakeSno2" &&
-          key !== "tankMakeDate1" &&
-          key !== "tankMakeDate2" &&
-          key !== "tankRcv1" &&
-          key !== "tankRcv2" &&
-          key !== "tankFirstDate1" &&
-          key !== "tankFirstDate2" &&
-          key !== "tankOutsideDate1" &&
-          key !== "tankOutsideDate2" &&
-          key !== "tankInsideDate1" &&
-          key !== "tankInsideDate2" &&
-          key !== "gasifyCo1" &&
-          key !== "gasifyCo2" &&
-          key !== "gasifyVol1" &&
-          key !== "gasifyVol2" &&
-          key !== "gasifySno1" &&
-          key !== "gasifySno2" &&
-          key !== "gasifyMakeDate1" &&
-          key !== "gasifyMakeDate2" &&
-          key !== "gasifyPower1" &&
-          key !== "gasifyPower2" &&
-          key !== "gasifyCheckDate1" &&
-          key !== "gasifyCheckDate2"
-        ) {
-          newRemovedData[key] = value;
-        }
-      }
+      console.log("formValues=================", formValues);
+
+      // for (const [key, value] of Object.entries(formValues)) {
+      //   if (
+      //     key !== "tankMakeCo1" &&
+      //     key !== "tankMakeCo2" &&
+      //     key !== "tankVol1" &&
+      //     key !== "tankVol2" &&
+      //     key !== "tankMakeSno1" &&
+      //     key !== "tankMakeSno2" &&
+      //     key !== "tankMakeDate1" &&
+      //     key !== "tankMakeDate2" &&
+      //     key !== "tankRcv1" &&
+      //     key !== "tankRcv2" &&
+      //     key !== "tankFirstDate1" &&
+      //     key !== "tankFirstDate2" &&
+      //     key !== "tankOutsideDate1" &&
+      //     key !== "tankOutsideDate2" &&
+      //     key !== "tankInsideDate1" &&
+      //     key !== "tankInsideDate2" &&
+      //     key !== "gasifyCo1" &&
+      //     key !== "gasifyCo2" &&
+      //     key !== "gasifyVol1" &&
+      //     key !== "gasifyVol2" &&
+      //     key !== "gasifySno1" &&
+      //     key !== "gasifySno2" &&
+      //     key !== "gasifyMakeDate1" &&
+      //     key !== "gasifyMakeDate2" &&
+      //     key !== "gasifyPower1" &&
+      //     key !== "gasifyPower2" &&
+      //     key !== "gasifyCheckDate1" &&
+      //     key !== "gasifyCheckDate2"
+      //   ) {
+      //     newRemovedData[key] = value;
+      //   }
+      // }
+
+      newRemovedData = formValues;
 
       const path = isAddBtnClicked ? CM1200INSERT : CM1200UPDATE;
 
-      newRemovedData.areaCode = selectAreaCode;
       newRemovedData.cuAptnameYn = newRemovedData.cuAptnameYn ? "Y" : "N";
       newRemovedData.chkCuZipCode = newRemovedData.chkCuZipCode ? "Y" : "N";
       newRemovedData.chkCuRh20 = newRemovedData.chkCuRh20 ? "Y" : "N";
@@ -361,14 +333,15 @@ const Form = React.forwardRef(
         ? formatCurrencyRemoveComma(newRemovedData.cuMeterKum)
         : "";
 
-      newRemovedData.cuFinishDate = cuFinishDate
-        ? formatDateByRemoveDash(cuFinishDate)
+      newRemovedData.cuFinishDate = newRemovedData.newRemovedData
+        ? formatDateToStringWithoutDash(newRemovedData.newRemovedData)
         : "";
-      newRemovedData.cuCircuitDate = cuCircuitDate
-        ? formatDateByRemoveDash(cuCircuitDate)
+      newRemovedData.cuCircuitDate = newRemovedData.cuCircuitDate
+        ? formatDateToStringWithoutDash(newRemovedData.cuCircuitDate)
         : "";
-      newRemovedData.cuScheduleDate = cuScheduleDate
-        ? formatDateByRemoveDash(cuScheduleDate)
+
+      newRemovedData.cuScheduleDate = newRemovedData.cuScheduleDate
+        ? formatDateToStringWithoutDash(newRemovedData.cuScheduleDate)
         : "";
 
       newRemovedData.cuRdangaAmt =
@@ -377,37 +350,31 @@ const Form = React.forwardRef(
           : Number(newRemovedData.cuRdangaAmt);
       newRemovedData.cuRdanga = Number(newRemovedData.cuRdanga);
 
-      if (selectAreaCode) {
-        try {
-          const response: any = await API.post(path, newRemovedData);
-          if (response.status === 200) {
-            if (isAddBtnClicked) {
-              setData((prev: any) => [newRemovedData, ...prev]);
-              setSelectedRowIndex(0);
-            } else {
-              setData((prev: any) => {
-                prev[selectedRowIndex] = newRemovedData;
-                return [...prev];
-              });
-            }
-            setSelected(newRemovedData);
-            toast.success("저장이 성공하였습니다", {
-              autoClose: 500,
-            });
-
-            setIsAddBtnClicked(false);
+      try {
+        const response: any = await API.post(path, newRemovedData);
+        if (response.status === 200) {
+          if (isAddBtnClicked) {
+            setData((prev: any) => [newRemovedData, ...prev]);
+            setSelectedRowIndex(0);
           } else {
-            toast.error(response?.response?.data?.message, {
-              autoClose: 500,
+            setData((prev: any) => {
+              prev[selectedRowIndex] = newRemovedData;
+              return [...prev];
             });
           }
-        } catch (err: any) {
-          toast.error(err?.message, {
+          setSelected(newRemovedData);
+          toast.success("저장이 성공하였습니다", {
+            autoClose: 500,
+          });
+
+          setIsAddBtnClicked(false);
+        } else {
+          toast.error(response?.response?.data?.message, {
             autoClose: 500,
           });
         }
-      } else {
-        toast.error("지역코드 선택하세요", {
+      } catch (err: any) {
+        toast.error(err?.message, {
           autoClose: 500,
         });
       }
@@ -517,19 +484,24 @@ const Form = React.forwardRef(
         <Wrapper grid col={4}>
           <Field>
             <FormGroup>
+              {/* <Controller
+                control={control}
+                {...register("cuCode")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    label="건물코드---"
+                    inputSize={InputSize.xs}
+                    value={value}
+                    onChange={onChange}
+                    mask={[/\d/, /\d/, /\d/]}
+                    name={name}
+                  />
+                )}
+              /> */}
               <Input
                 label="건물코드"
-                maxLength="3"
-                codeFormatNumber={{
-                  status: true,
-                  clear: clearNumberic,
-                  selectedRowIndex: selectedRowIndex,
-                  numbericDefValue: selected?.cuCode,
-                }}
-                name="cuCode"
                 register={register("cuCode")}
-                errors={errors["cuCode"]?.message}
-                inputSize={InputSize.xs}
+                inputSize={InputSize.i50}
               />
             </FormGroup>
           </Field>
@@ -694,12 +666,27 @@ const Form = React.forwardRef(
                   onChange={(e: any) => setChkCuAnKumCheck(e.target.checked)}
                 />
               </Label>
-              <Input
+              {/* <Input
                 register={register("cuAnKum")}
                 textAlign="right"
                 formatNumber="comDecNumber"
                 inputSize={InputSize.i120}
                 readOnly={!chkCuAnKumCheck}
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuAnKum")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={currencyMask}
+                    textAlign="right"
+                    inputSize={InputSize.i120}
+                    readOnly={!chkCuAnKumCheck}
+                  />
+                )}
               />
               <p>원</p>
             </FormGroup>
@@ -714,12 +701,27 @@ const Form = React.forwardRef(
                   onChange={(e: any) => setCkCuSisulKumCheck(e.target.checked)}
                 />
               </Label>
-              <Input
+              {/* <Input
                 register={register("cuSisulKum")}
                 textAlign="right"
                 formatNumber="comDecNumber"
                 inputSize={InputSize.i120}
                 readOnly={!ckCuSisulKumCheck}
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuSisulKum")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={currencyMask}
+                    textAlign="right"
+                    inputSize={InputSize.i120}
+                    readOnly={!ckCuSisulKumCheck}
+                  />
+                )}
               />
               <p>{selected?.cuSukumType}</p>
               <p>원</p>
@@ -735,13 +737,30 @@ const Form = React.forwardRef(
                   onChange={(e: any) => setChkCuMeterKumCheck(e.target.checked)}
                 />
               </Label>
-              <Input
+              {/* <Input
                 register={register("cuMeterKum")}
                 textAlign="right"
                 formatNumber="comDecNumber"
                 inputSize={InputSize.i120}
                 readOnly={!chkCuMeterKumCheck}
+              /> */}
+
+              <Controller
+                control={control}
+                {...register("cuMeterKum")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={currencyMask}
+                    textAlign="right"
+                    inputSize={InputSize.i120}
+                    readOnly={!chkCuMeterKumCheck}
+                  />
+                )}
               />
+
               <p>원</p>
             </FormGroup>
           </Field>
@@ -758,18 +777,27 @@ const Form = React.forwardRef(
                   onChange={(e: any) => setChkCuPerCheck(e.target.checked)}
                 />
               </Label>
-              <Input
+              {/* <Input
                 register={register("cuPer")}
-                // codeFormatNumber={{
-                //   status: true,
-                //   clear: clearNumberic,
-                //   selectedRowIndex: selectedRowIndex,
-                //   numbericDefValue: selected?.cuPer,
-                // }}
                 maxLength="3"
                 textAlign="right"
                 inputSize={InputSize.i40}
                 readOnly={!chkCuPerCheck}
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuPer")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={[/\d/, /\d/, /\d/]}
+                    readOnly={!chkCuPerCheck}
+                    inputSize={InputSize.i50}
+                    textAlign="right"
+                  />
+                )}
               />
               <p>{`%`}</p>
             </FormGroup>
@@ -784,18 +812,27 @@ const Form = React.forwardRef(
                   onChange={(e: any) => setChkCuCdcCheck(e.target.checked)}
                 />
               </Label>
-              <Input
+              {/* <Input
                 register={register("cuCdc")}
-                // codeFormatNumber={{
-                //   status: true,
-                //   clear: clearNumberic,
-                //   selectedRowIndex: selectedRowIndex,
-                //   numbericDefValue: selected?.cuCdc,
-                // }}
                 textAlign="right"
                 maxLength="3"
                 readOnly={!chkCuCdcCheck}
                 inputSize={InputSize.i40}
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuCdc")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={[/\d/, /\d/, /\d/]}
+                    readOnly={!chkCuPerCheck}
+                    inputSize={InputSize.i50}
+                    textAlign="right"
+                  />
+                )}
               />
               <p>{`%`}</p>
             </FormGroup>
@@ -867,17 +904,25 @@ const Form = React.forwardRef(
                   onChange={(e: any) => setChkCuGumdateCheck(e.target.checked)}
                 />
               </Label>
-              <Input
+              {/* <Input
                 register={register("cuGumdate")}
                 readOnly={!chkCuGumdate}
-                // codeFormatNumber={{
-                //   status: true,
-                //   clear: clearNumberic,
-                //   selectedRowIndex: selectedRowIndex,
-                //   numbericDefValue: selected?.cuGumdate,
-                // }}
                 maxLength="2"
                 inputSize={InputSize.i120}
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuGumdate")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={[/\d/, /\d/]}
+                    inputSize={InputSize.i40}
+                    readOnly={!chkCuGumdate}
+                  />
+                )}
               />
               <p>일</p>
             </FormGroup>
@@ -928,29 +973,32 @@ const Form = React.forwardRef(
           </Field>
           <Field flex style={{ alignItems: "center" }}>
             <Label>완성검사일</Label>
-            <CustomDatePicker
-              style={{ width: "92%" }}
-              value={cuFinishDate}
-              name="cuFinishDate"
-              setValue={setCuFinishDate}
+            <Controller
+              control={control}
+              {...register("cuFinishDate")}
+              render={({ field: { onChange, value } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
             />
           </Field>
           <Field flex style={{ alignItems: "center" }}>
             <Label>정기검사일</Label>
-            <CustomDatePicker
-              style={{ width: "92%" }}
-              name="cuCircuitDate"
-              value={cuCircuitDate}
-              setValue={setCuCircuitDate}
+            <Controller
+              control={control}
+              {...register("cuCircuitDate")}
+              render={({ field: { onChange, value } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
             />
           </Field>
           <Field flex style={{ alignItems: "center" }}>
             <Label>검사예정일</Label>
-            <CustomDatePicker
-              style={{ width: "92%" }}
-              value={cuScheduleDate}
-              name="cuScheduleDate"
-              setValue={setCuScheduleDate}
+            <Controller
+              control={control}
+              {...register("cuScheduleDate")}
+              render={({ field: { onChange, value } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
             />
           </Field>
         </Wrapper>
@@ -975,7 +1023,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label>{`1)`}</Label>
           </FormGroup>
-          <Wrapper grid col={8}>
+          <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <Field>
               <FormGroup>
                 <Select {...register("tankMakeCo1")} fullWidth>
@@ -993,7 +1041,7 @@ const Form = React.forwardRef(
             </Field>
             <Field>
               <FormGroup>
-                <Select {...register("tankVol1")} fullWidth>
+                <Select {...register("tankVol1")} fullWidth textAlign="right">
                   {dataCommonDic?.tankVol1?.map(
                     (option: any, index: number) => {
                       return (
@@ -1022,27 +1070,30 @@ const Form = React.forwardRef(
               </FormGroup>
             </Field>
             <Field>
-              <CustomDatePicker
-                style={{ width: "94%" }}
-                value={tankFirstDate1}
-                setValue={setTankFirstDate1}
-                name="tankFirstDate1"
+              <Controller
+                control={control}
+                {...register("tankFirstDate1")}
+                render={({ field: { onChange, value } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
               />
             </Field>
             <Field>
-              <CustomDatePicker
-                style={{ width: "94%" }}
-                value={tankOutsideDate1}
-                setValue={setTankOutsideDate1}
-                name="tankOutsideDate1"
+              <Controller
+                control={control}
+                {...register("tankOutsideDate1")}
+                render={({ field: { onChange, value } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
               />
             </Field>
             <Field>
-              <CustomDatePicker
-                style={{ width: "94%" }}
-                value={tankInsideDate1}
-                setValue={setTankInsideDate1}
-                name="tankInsideDate1"
+              <Controller
+                control={control}
+                {...register("tankInsideDate1")}
+                render={({ field: { onChange, value } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
               />
             </Field>
           </Wrapper>
@@ -1052,7 +1103,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label>{`2)`}</Label>
           </FormGroup>
-          <Wrapper grid col={8}>
+          <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <Field>
               <FormGroup>
                 <Select {...register("tankMakeCo2")} fullWidth>
@@ -1070,7 +1121,7 @@ const Form = React.forwardRef(
             </Field>
             <Field>
               <FormGroup>
-                <Select {...register("tankVol2")} fullWidth>
+                <Select {...register("tankVol2")} fullWidth textAlign="right">
                   {dataCommonDic?.tankVol2?.map(
                     (option: any, index: number) => {
                       return (
@@ -1099,27 +1150,30 @@ const Form = React.forwardRef(
               </FormGroup>
             </Field>
             <Field>
-              <CustomDatePicker
-                style={{ width: "94%" }}
-                value={tankFirstDate2}
-                setValue={setTankFirstDate2}
-                name="tankFirstDate2"
+              <Controller
+                control={control}
+                {...register("tankFirstDate2")}
+                render={({ field: { onChange, value } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
               />
             </Field>
             <Field>
-              <CustomDatePicker
-                style={{ width: "94%" }}
-                value={tankOutsideDate2}
-                setValue={setTankOutsideDate2}
-                name="tankOutsideDate1"
+              <Controller
+                control={control}
+                {...register("tankOutsideDate2")}
+                render={({ field: { onChange, value } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
               />
             </Field>
             <Field>
-              <CustomDatePicker
-                style={{ width: "94%" }}
-                value={tankInsideDate2}
-                setValue={setTankInsideDate2}
-                name="tankInsideDate2"
+              <Controller
+                control={control}
+                {...register("tankInsideDate2")}
+                render={({ field: { onChange, value } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
               />
             </Field>
           </Wrapper>
@@ -1168,9 +1222,10 @@ const Form = React.forwardRef(
               <FormGroup>
                 <p>{`2)`}</p>
                 <Input
-                  register={register("tankMax1")}
+                  register={register("tankMax2")}
                   placeholder=""
                   inputSize={InputSize.sm}
+                  textAlign="right"
                 />
                 <p>%</p>
                 <Input
@@ -1334,11 +1389,12 @@ const Form = React.forwardRef(
               </FormGroup>
             </Field>
             <Field>
-              <CustomDatePicker
-                style={{ width: "94%" }}
-                value={gasifyCheckDate1}
-                name="gasifyCheckDate1"
-                setValue={setGasifyCheckDate1}
+              <Controller
+                control={control}
+                {...register("gasifyCheckDate1")}
+                render={({ field: { onChange, value } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
               />
             </Field>
             <Field>
@@ -1401,11 +1457,12 @@ const Form = React.forwardRef(
               </FormGroup>
             </Field>
             <Field>
-              <CustomDatePicker
-                style={{ width: "94%" }}
-                value={gasifyCheckDate2}
-                name="gasifyCheckDate2"
-                setValue={setGasifyCheckDate2}
+              <Controller
+                control={control}
+                {...register("gasifyCheckDate2")}
+                render={({ field: { onChange, value } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
               />
             </Field>
             <Field>

@@ -10,6 +10,7 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import { Plus, Update, Reset, WhiteClose } from "components/allSvgIcon";
 import { ICM1105SEARCH } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { currencyMask } from "helpers/currency";
 import {
   formatDateByRemoveDash,
   formatDate,
@@ -565,7 +566,7 @@ function FormCM1105() {
             label="전화번호"
             register={register("cuTel")}
             errors={errors["cuTel"]?.message}
-            inputSize={InputSize.i150}
+            inputSize={InputSize.i100}
           />
           <Input
             register={register("cuTel21")}
@@ -586,12 +587,40 @@ function FormCM1105() {
         </Wrapper>
 
         <Wrapper grid>
-          <Input
+          {/* <Input
             label="핸드폰"
             register={register("cuHp")}
             errors={errors["cuHp"]?.message}
             formatNumber="telNumber"
+          /> */}
+          <Controller
+            control={control}
+            {...register("cuHp")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="핸드폰"
+                value={value}
+                onChange={onChange}
+                mask={[
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
+                inputSize={InputSize.i100}
+              />
+            )}
           />
+
           <Input register={register("cuHp")} errors={errors["cuHp"]?.message} />
 
           <FormGroup>
@@ -745,11 +774,26 @@ function FormCM1105() {
                   <CheckBox register={{ ...register("cuJangbuYn") }} />
                 </FormGroup>
               </Field>
-              <Input
+              {/* <Input
                 label="무료시설 투자비"
                 register={register("cuSvKumack")}
                 textAlign="right"
                 inputSize={InputSize.i100}
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuSvKumack")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    label="무료시설 투자비"
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={currencyMask}
+                    textAlign="right"
+                    inputSize={InputSize.i130}
+                  />
+                )}
               />
             </Wrapper>
           </Field>

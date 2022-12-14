@@ -244,6 +244,7 @@ function Tab3({
             <Input
               register={register("tankMakeDate1")}
               inputSize={InputSize.i80}
+              maxLength="6"
             />
             <Input register={register("tankRcv1")} inputSize={InputSize.i80} />
 
@@ -295,11 +296,24 @@ function Tab3({
               />
             </Field>
             <Field flex>
-              <Input
+              {/* <Input
                 register={register("tankMax1")}
                 inputSize={InputSize.i60}
                 textAlign="right"
                 maxLength="3"
+              /> */}
+              <Controller
+                control={control}
+                {...register("tankMax1")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={[/\d/, /\d/, /\d/]}
+                    inputSize={InputSize.i50}
+                  />
+                )}
               />
               <p style={{ marginLeft: "-3px" }}>%</p>
             </Field>
@@ -345,6 +359,7 @@ function Tab3({
             <Input
               register={register("tankMakeDate2")}
               inputSize={InputSize.i80}
+              maxLength="6"
             />
             <Input register={register("tankRcv2")} inputSize={InputSize.i80} />
 
@@ -396,11 +411,24 @@ function Tab3({
               />
             </Field>
             <Field flex>
-              <Input
+              {/* <Input
                 register={register("tankMax2")}
                 inputSize={InputSize.i60}
                 textAlign="right"
                 maxLength="3"
+              /> */}
+              <Controller
+                control={control}
+                {...register("tankMax2")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={[/\d/, /\d/, /\d/]}
+                    inputSize={InputSize.i50}
+                  />
+                )}
               />
               <p style={{ marginLeft: "-3px" }}>%</p>
             </Field>
@@ -502,7 +530,7 @@ function Tab3({
             <Input register={register("gasifyCo1")} />
             <Input register={register("gasifyVol1")} />
             <Input register={register("gasifySno1")} />
-            <Input register={register("gasifyMakeDate1")} />
+            <Input register={register("gasifyMakeDate1")} maxLength="6" />
             <Input register={register("gasifyPower1")} />
 
             {/* <CustomDatePicker
@@ -524,7 +552,7 @@ function Tab3({
             <Input register={register("gasifyCo2")} />
             <Input register={register("gasifyVol2")} />
             <Input register={register("gasifySno2")} />
-            <Input register={register("gasifyMakeDate2")} />
+            <Input register={register("gasifyMakeDate2")} maxLength="6" />
             <Input register={register("gasifyPower2")} />
 
             {/* <CustomDatePicker

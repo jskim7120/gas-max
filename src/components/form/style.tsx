@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import { InputSize, FieldKind } from "components/componentsType";
+import MaskedInput from "react-text-mask";
 
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
     case InputSize.i40:
       return `40px`;
+    case InputSize.i50:
+      return `50px`;
     case InputSize.i60:
       return `60px`;
     case InputSize.i70:
       return `70px`;
     case InputSize.i80:
       return `80px`;
+    case InputSize.i85:
+      return `85px`;
     case InputSize.i90:
       return `90px`;
     case InputSize.i100:
@@ -22,6 +27,8 @@ export const getInputSize = (size?: InputSize) => {
       return `120px`;
     case InputSize.i130:
       return `130px`;
+    case InputSize.i140:
+      return `140px`;
     case InputSize.i150:
       return `150px`;
     case InputSize.i175:
@@ -81,30 +88,22 @@ interface IInputProps {
   errors?: any;
   inputSize?: InputSize;
   fullWidth?: boolean;
-  grow?: boolean;
-  value?: string;
+  value?: string | number;
   placeholder?: string;
   style?: any;
   className?: string;
   selectOption?: any;
   defaultValue?: any;
   optionSlt?: any;
-  maxLength?: string;
+  maxLength?: any;
   minLength?: string;
   kind?: FieldKind;
   textAlign?: string;
-  formatNumber?: string;
   labelStyle?: any;
-  onChange?: Function;
-  //numberic
-  codeFormatNumber?: {
-    status: boolean;
-    selectedRowIndex?: number;
-    numbericDefValue: any;
-    clear?: boolean;
-    reset?: boolean;
-  };
+  onChange?: any;
   readOnly?: boolean;
+  mask?: any;
+  formatNumber?: string;
 }
 
 export const Input = ({
@@ -124,192 +123,170 @@ export const Input = ({
   minLength,
   kind,
   textAlign,
-  formatNumber,
+
   labelStyle,
   onChange,
-  codeFormatNumber,
   readOnly,
+  mask,
+  formatNumber,
 }: IInputProps) => {
-  const [inputValue, setInputValue] = useState("");
-  const [formatNumberic, setFormatNumberic] = useState({
-    value: "" as any,
-    status: false,
-  });
+  // const [inputValue, setInputValue] = useState("123");
+  // const [formatNumberic, setFormatNumberic] = useState({
+  //   value: "" as any,
+  //   status: false,
+  // });
 
-  useEffect(() => {
-    if (codeFormatNumber?.clear) {
-      setFormatNumberic({
-        value: "",
-        status: false,
-      });
-    } else if (codeFormatNumber?.numbericDefValue === 0) {
-      setFormatNumberic({
-        value: 0,
-        status: false,
-      });
-    } else {
-      setFormatNumberic({
-        value: codeFormatNumber?.numbericDefValue,
-        status: false,
-      });
-    }
-  }, [codeFormatNumber]);
+  // useEffect(() => {
+  //   if (codeFormatNumber?.clear) {
+  //     setFormatNumberic({
+  //       value: "",
+  //       status: false,
+  //     });
+  //   } else if (codeFormatNumber?.numbericDefValue === 0) {
+  //     setFormatNumberic({
+  //       value: 0,
+  //       status: false,
+  //     });
+  //   } else {
+  //     setFormatNumberic({
+  //       value: codeFormatNumber?.numbericDefValue,
+  //       status: false,
+  //     });
+  //   }
+  // }, [codeFormatNumber]);
 
   // format input value
-  const handleInput = (e: any, forNum?: string) => {
-    switch (forNum) {
-      case "telNumber":
-        const formattedPhoneNumber = formatPhoneNumber(e.target.value);
-        setInputValue(formattedPhoneNumber);
-        return;
-      case "comDecNumber":
-        const formattedDecNumber = formatNumFraction(e.target.value);
-        setInputValue(formattedDecNumber);
-        return;
-      case "comNumber":
-        const formattedNumber = formatNum(e.target.value);
-        setInputValue(formattedNumber);
-        return;
-      case "corpNumber":
-        const formattedCorpNumber = corporateNumber(e.target.value);
-        setInputValue(formattedCorpNumber);
-        return;
-    }
-  };
+  // const handleInput = (e: any, forNum?: string) => {
+  //   console.log("e: forNum", e, forNum);
+  //   switch (forNum) {
+  //     case "telNumber":
+  //       const formattedPhoneNumber = formatPhoneNumber(e.target.value);
+  //       setInputValue(formattedPhoneNumber);
+  //       return;
+  //     case "comDecNumber":
+  //       const formattedDecNumber = formatNumFraction(e.target.value);
+  //       setInputValue(formattedDecNumber);
+  //       return;
+  //     case "comNumber":
+  //       const formattedNumber = formatNum(e.target.value);
+  //       setInputValue(formattedNumber);
+  //       return;
+  //     case "corpNumber":
+  //       const formattedCorpNumber = formatCorporateNumber(e.target.value);
+  //       setInputValue(formattedCorpNumber);
+  //       return;
+  //     case "usegbichigdehgui":
+  //       const xsx = formatCodeNumber(e.target.value);
+  //       setInputValue(xsx);
+  //       return;
+  //   }
+  // };
 
-  // format number with fraction
-  function formatNumFraction(value: any) {
-    if (value == "" || !value) {
-      return;
-    }
+  // // format number with fraction
+  // function formatNumFraction(value: any) {
+  //   if (value == "" || !value) {
+  //     return;
+  //   }
 
-    const val = value.replaceAll(",", "").replaceAll(".", "");
-    if (val % 100 === 0) {
-      value = val / 100 + ".00";
-    } else {
-      value = val / 100;
-    }
+  //   const val = value.replaceAll(",", "").replaceAll(".", "");
+  //   if (val % 100 === 0) {
+  //     value = val / 100 + ".00";
+  //   } else {
+  //     value = val / 100;
+  //   }
 
-    value = parseFloat(value).toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-    });
-    return value;
-  }
+  //   value = parseFloat(value).toLocaleString(undefined, {
+  //     minimumFractionDigits: 2,
+  //   });
+  //   return value;
+  // }
 
-  // format number with comma
-  function formatNum(value: any) {
-    if (!value) {
-      value = 0;
-      return value;
-    }
-    const number = parseFloat(value.replaceAll(",", ""));
-    const forNum = number.toLocaleString();
-    return forNum;
-  }
+  // // format number with comma
+  // function formatNum(value: any) {
+  //   if (!value) {
+  //     value = 0;
+  //     return value;
+  //   }
+  //   const number = parseFloat(value.replaceAll(",", ""));
+  //   const forNum = number.toLocaleString();
+  //   return forNum;
+  // }
 
-  function formatPhoneNumber(value: any) {
-    if (!value) return value;
-    const phoneNumber = value.replace(/[^\d]/g, "");
-    const phoneNumberLength = phoneNumber.length;
-    if (phoneNumberLength < 4) return phoneNumber;
-    if (phoneNumberLength < 6) {
-      return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3)}`;
-    }
-    return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(
-      3,
-      5
-    )}-${phoneNumber.slice(5, 10)}`;
-  }
+  // function formatPhoneNumber(value: any) {
+  //   if (!value) return value;
+  //   const phoneNumber = value.replace(/[^\d]/g, "");
+  //   const phoneNumberLength = phoneNumber.length;
+  //   if (phoneNumberLength < 4) return phoneNumber;
+  //   if (phoneNumberLength < 6) {
+  //     return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3)}`;
+  //   }
+  //   return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(
+  //     3,
+  //     5
+  //   )}-${phoneNumber.slice(5, 10)}`;
+  // }
 
-  const formatCodeNumber = (e: any) => {
-    return setFormatNumberic({
-      value: e.replace(/[a-zA-Z]/, ""),
-      status: true,
-    });
-  };
-  function corporateNumber(value: any) {
-    if (!value) return value;
-    const corpNumber = value.replace(/[^\d]/g, "");
-    const corpNumberLength = corpNumber.length;
-    if (corpNumberLength < 7) return corpNumber;
-    return `${corpNumber.slice(0, 6)}-${corpNumber.slice(6, 13)}`;
-  }
+  // const formatCodeNumber = (value: any) => {
+  //   // return setFormatNumberic({
+  //   //   value: e.replace(/[a-zA-Z]/, ""),
+  //   //   status: true,
+  //   // });
+  //   return value.replace(/[a-zA-Z]/, "");
+  // };
+  // function formatCorporateNumber(value: any) {
+  //   if (!value) return value;
+  //   const corpNumber = value.replace(/[^\d]/g, "");
+  //   const corpNumberLength = corpNumber.length;
+  //   if (corpNumberLength < 7) return corpNumber;
+  //   return `${corpNumber.slice(0, 6)}-${corpNumber.slice(6, 13)}`;
+  // }
 
   return (
     <InputWrapper fullWidth={fullWidth}>
-      <FormGroup className={className && className}>
-        {/* {label !== undefined && <Label labelLong={labelLong}>{label}</Label>} */}
-        {label !== undefined &&
-          (label === "~" ? (
-            <Label
-              style={{ minWidth: "auto" }}
-              labelLong={labelLong}
-              className={className && className}
-            >
-              {label}
-            </Label>
-          ) : (
-            <Label
-              labelLong={labelLong}
-              style={labelStyle && labelStyle}
-              className={className && className}
-            >
-              {label}
-            </Label>
-          ))}
-        {formatNumber ? (
-          <InputForm
-            id={register.name}
-            type={type ? type : "text"}
-            inputSize={inputSize && inputSize}
-            fullWidth={fullWidth && fullWidth}
-            {...register}
-            value={formatNumber ? inputValue : value && value}
-            placeholder={placeholder}
-            style={style}
-            className={className}
-            maxLength={maxLength && maxLength}
-            minLength={minLength && minLength}
-            kind={kind && kind}
-            textAlign={textAlign && textAlign}
-            onChange={formatNumber ? (e) => handleInput(e, formatNumber) : null}
+      <FormGroup
+        className={className && className}
+        inputSize={inputSize}
+        fullWidth={fullWidth}
+        kind={kind}
+        textAlign={textAlign}
+      >
+        {label !== undefined && (
+          <Label
+            labelLong={labelLong}
+            style={labelStyle && labelStyle}
+            className={className && className}
+          >
+            {label}
+          </Label>
+        )}
+
+        {mask ? (
+          <MaskedInput
+            mask={mask}
+            value={value}
+            onChange={onChange}
+            name={name}
+            guide={false}
             readOnly={readOnly}
-          />
-        ) : codeFormatNumber?.status ? (
-          <InputForm
-            id={register.name}
-            inputMode="numberic"
-            type={type ? type : "text"}
-            inputSize={inputSize && inputSize}
-            fullWidth={fullWidth && fullWidth}
-            {...register}
-            value={formatNumberic?.value ? formatNumberic?.value : ""}
-            placeholder={placeholder}
-            style={style}
-            className={className}
-            maxLength={maxLength && maxLength}
-            minLength={minLength && minLength}
-            textAlign={textAlign && textAlign}
-            onChange={(e) => formatCodeNumber(e.target.value)}
+            className="maskedInput"
+            maxLength={maxLength}
           />
         ) : (
           <InputForm
-            id={register.name}
+            id={register?.name}
             type={type ? type : "text"}
             inputSize={inputSize && inputSize}
             fullWidth={fullWidth && fullWidth}
             {...register}
-            value={formatNumber ? inputValue : value && value}
+            value={value && value}
             placeholder={placeholder}
             style={style}
-            
             className={className}
             maxLength={maxLength && maxLength}
             minLength={minLength && minLength}
             kind={kind && kind}
             textAlign={textAlign && textAlign}
             readOnly={readOnly}
-            // onChange={onChange && onChange}
           />
         )}
       </FormGroup>
@@ -322,18 +299,22 @@ const InputWrapper = styled.div<{ fullWidth?: boolean }>`
   flex: ${(props) => props.fullWidth && "1"};
 `;
 
-export const InputForm = styled.input<{
+const InputCommonProp = css<{
   inputSize?: InputSize;
   fullWidth?: boolean;
   kind?: FieldKind;
   textAlign?: string;
-  readOnly?: boolean;
 }>`
   height: 25px;
   width: ${(props) =>
     props.inputSize ? getInputSize(props.inputSize) : "100%"};
   flex: ${(props) => props.fullWidth && "1"};
   text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
+  border: ${(props) =>
+    props.kind
+      ? getInputKind(props.kind)?.border
+      : `1px solid rgb(188, 185 ,185)`};
+  background: aliceblue;
   border-radius: ${(props) =>
     props.kind ? getInputKind(props.kind)?.borderRadius : "4px"};
 
@@ -354,8 +335,18 @@ export const InputForm = styled.input<{
     background: #fffacd;
   }
   &:read-only {
-    background:#ebeae6;
+    background: #ebeae6;
   }
+`;
+
+export const InputForm = styled.input<{
+  inputSize?: InputSize;
+  fullWidth?: boolean;
+  kind?: FieldKind;
+  textAlign?: string;
+  readOnly?: boolean;
+}>`
+  ${InputCommonProp};
 
   &.login {
     border: 1px solid #bbb;
@@ -370,12 +361,6 @@ export const InputForm = styled.input<{
     height: 22px;
     margin: 2px;
   }
-
-  border: ${(props) =>
-    props.kind
-      ? getInputKind(props.kind)?.border
-      : `1px solid rgb(188, 185 ,185)`};
-  background: aliceblue;
 `;
 
 export const ErrorText = styled.p`
@@ -385,7 +370,13 @@ export const ErrorText = styled.p`
   margin-right: 5px;
 `;
 
-export const FormGroup = styled.div`
+export const FormGroup = styled.div<{
+  //edgeer propsuud zuvhun maskedInput-d heregtei
+  inputSize?: InputSize;
+  fullWidth?: boolean;
+  kind?: FieldKind;
+  textAlign?: string;
+}>`
   display: flex;
   gap: 4px;
   align-items: center;
@@ -411,6 +402,10 @@ export const FormGroup = styled.div`
   span {
     font-size: 12px;
     line-height: 35px;
+  }
+
+  .maskedInput {
+    ${InputCommonProp};
   }
 `;
 

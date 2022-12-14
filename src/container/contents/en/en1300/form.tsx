@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -24,6 +24,7 @@ import {
 } from "components/form/style";
 import { InputSize } from "components/componentsType";
 import { formatCurrencyRemoveComma } from "helpers/dateFormat";
+import { currencyMask } from "helpers/currency";
 
 interface IForm {
   selected: any;
@@ -79,6 +80,7 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
+      control,
     } = useForm<ISANGPUM>({
       mode: "onChange",
       resolver: yupResolver(schema),
@@ -290,13 +292,27 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <Field style={{ display: "flex" }}>
-            <Input
+            {/* <Input
               label="용량"
               register={register("jpKg")}
               errors={errors["jpKg"]?.message}
               style={{ width: "56px" }}
               textAlign="right"
               maxLength="5"
+            /> */}
+            <Controller
+              control={control}
+              {...register("jpKg")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="용량"
+                  value={value}
+                  onChange={onChange}
+                  mask={[/\d/, /\d/, /\d/, /\d/, /\d/]}
+                  inputSize={InputSize.i70}
+                  textAlign="right"
+                />
+              )}
             />
             <FormGroup>
               <Select {...register("jpKgDanwi")} style={{ minWidth: "64px" }}>
@@ -401,7 +417,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <Field flex>
-            <Input
+            {/* <Input
               style={{ textAlign: "end" }}
               label="가스판매단가"
               register={register("jpOutdanga")}
@@ -410,13 +426,28 @@ const Form = React.forwardRef(
               textAlign="right"
               formatNumber="comDecNumber"
               maxLength="26"
+            /> */}
+            <Controller
+              control={control}
+              {...register("jpOutdanga")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="가스판매단가"
+                  value={value}
+                  onChange={onChange}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i130}
+                  name={name}
+                />
+              )}
             />
             <p>원</p>
           </Field>
         </Wrapper>
         <Wrapper>
           <Field flex>
-            <Input
+            {/* <Input
               style={{ textAlign: "end" }}
               label="용기판매단가"
               register={register("jpOuttong")}
@@ -425,13 +456,28 @@ const Form = React.forwardRef(
               textAlign="right"
               formatNumber="comNumber"
               maxLength="23"
+            /> */}
+            <Controller
+              control={control}
+              {...register("jpOuttong")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="용기판매단가"
+                  value={value}
+                  onChange={onChange}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i130}
+                  name={name}
+                />
+              )}
             />
             <p>원</p>
           </Field>
         </Wrapper>
         <Wrapper>
           <Field flex>
-            <Input
+            {/* <Input
               style={{ textAlign: "end" }}
               label="가스매입원가"
               register={register("jpIndanga")}
@@ -440,13 +486,28 @@ const Form = React.forwardRef(
               textAlign="right"
               formatNumber="comDecNumber"
               maxLength="26"
+            /> */}
+            <Controller
+              control={control}
+              {...register("jpIndanga")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="가스매입원가"
+                  value={value}
+                  onChange={onChange}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i130}
+                  name={name}
+                />
+              )}
             />
             <p>원</p>
           </Field>
         </Wrapper>
         <Wrapper>
           <Field flex>
-            <Input
+            {/* <Input
               style={{ textAlign: "end" }}
               label="용기구입단가"
               register={register("jpIntong")}
@@ -455,13 +516,28 @@ const Form = React.forwardRef(
               textAlign="right"
               formatNumber="comNumber"
               maxLength="23"
+            /> */}
+            <Controller
+              control={control}
+              {...register("jpIntong")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="용기구입단가"
+                  value={value}
+                  onChange={onChange}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i130}
+                  name={name}
+                />
+              )}
             />
             <p>원</p>
           </Field>
         </Wrapper>
         <Wrapper>
           <Field flex>
-            <Input
+            {/* <Input
               style={{ textAlign: "end" }}
               label="사원배달수수료"
               register={register("jpBaedal")}
@@ -470,6 +546,21 @@ const Form = React.forwardRef(
               textAlign="right"
               formatNumber="comNumber"
               maxLength="23"
+            /> */}
+            <Controller
+              control={control}
+              {...register("jpBaedal")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="사원배달수수료"
+                  value={value}
+                  onChange={onChange}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i130}
+                  name={name}
+                />
+              )}
             />
             <p>원</p>
           </Field>

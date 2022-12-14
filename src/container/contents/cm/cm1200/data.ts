@@ -76,9 +76,7 @@ export const columns = [
     fieldName: "areaCode",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "near",
-    },
+
     header: {
       text: "영업소",
     },
@@ -88,9 +86,7 @@ export const columns = [
     fieldName: "cuCode",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "near",
-    },
+
     header: {
       text: "코드",
     },
@@ -113,9 +109,7 @@ export const columns = [
     fieldName: "cuCount",
     type: "data",
     width: "80",
-    styles: {
-      textAlignment: "near",
-    },
+
     header: {
       text: "세대",
     },
@@ -128,9 +122,7 @@ export const columnsSelected = [
     fieldName: "cuCode",
     type: "data",
     width: "90",
-    styles: {
-      textAlignment: "near",
-    },
+
     header: {
       text: "코드",
     },
@@ -140,9 +132,7 @@ export const columnsSelected = [
     fieldName: "cuUsernam",
     type: "data",
     width: "150",
-    styles: {
-      textAlignment: "near",
-    },
+
     header: {
       text: "사용자명",
     },
@@ -152,9 +142,6 @@ export const columnsSelected = [
     fieldName: "cuTel",
     type: "data",
     width: "90",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "전화",
     },
@@ -164,36 +151,30 @@ export const columnsSelected = [
     fieldName: "cuAnkum",
     type: "data",
     width: "90",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "관리비",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "cuCdc",
     fieldName: "cuCdc",
     type: "data",
     width: "90",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "할인율",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "cuPer",
     fieldName: "cuPer",
     type: "data",
     width: "90",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "연체율",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "cuRdangaTypeName",
@@ -201,9 +182,6 @@ export const columnsSelected = [
     type: "data",
     headerSpan: 2,
     width: "90",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "㎥ 단가",
     },
@@ -213,9 +191,6 @@ export const columnsSelected = [
     fieldName: "cuRdanga",
     type: "data",
     width: "90",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "㎥ 단가",
     },
@@ -225,9 +200,6 @@ export const columnsSelected = [
     fieldName: "cuJungumdate",
     type: "data",
     width: "90",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: " 최종검침일 ",
     },
@@ -237,9 +209,6 @@ export const columnsSelected = [
     fieldName: "cuCmisu",
     type: "data",
     width: "140",
-    styles: {
-      textAlignment: "near",
-    },
     header: {
       text: "체적미수 ",
     },
@@ -249,9 +218,7 @@ export const columnsSelected = [
     fieldName: "cuSukumtype",
     type: "data",
     width: "90",
-    styles: {
-      textAlignment: "near",
-    },
+
     header: {
       text: "수금방법 ",
     },
@@ -261,9 +228,7 @@ export const columnsSelected = [
     fieldName: "cuStae",
     type: "data",
     width: "90",
-    styles: {
-      textAlignment: "near",
-    },
+
     header: {
       text: "상태 ",
     },

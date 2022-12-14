@@ -54,6 +54,7 @@ function Tab1({
           type="text"
           value={buPdanga}
           inputSize={InputSize.i80}
+          style={{ textAlign: "end" }}
           onChange={(e: any) => setBuPdanga(e.target.value)}
         />
       ),
@@ -64,6 +65,7 @@ function Tab1({
           type="text"
           value={buPcost}
           inputSize={InputSize.i80}
+          style={{ textAlign: "end" }}
           onChange={(e: any) => {
             setBuPcost(e.target.value);
           }}
@@ -72,10 +74,13 @@ function Tab1({
       4: (
         <p
           style={{
+            display: "inline-block",
             height: "25px",
+            width: "80px",
+            textAlign: "right",
             borderRadius: "4px",
             border: "1px solid rgb(188,185 ,185)",
-            padding: "0 6px",
+            padding: "3px 6px",
             background: "aliceblue",
             margin: "5px",
           }}
@@ -94,6 +99,7 @@ function Tab1({
           type="text"
           value={buBdanga}
           inputSize={InputSize.i80}
+          style={{ textAlign: "end" }}
           onChange={(e: any) => {
             setBuBdanga(e.target.value);
           }}
@@ -107,6 +113,7 @@ function Tab1({
           type="text"
           value={buBcost}
           inputSize={InputSize.i80}
+          style={{ textAlign: "end" }}
           onChange={(e: any) => {
             setBuBcost(e.target.value);
           }}
@@ -115,10 +122,13 @@ function Tab1({
       4: (
         <p
           style={{
+            display: "inline-block",
             height: "25px",
+            width: "80px",
             borderRadius: "4px",
             border: "1px solid rgb(188,185 ,185)",
-            padding: "0 6px",
+            textAlign: "right",
+            padding: "3px 6px",
             background: "aliceblue",
             margin: "5px",
           }}
@@ -137,6 +147,7 @@ function Tab1({
           type="text"
           value={buBldanga}
           inputSize={InputSize.i80}
+          style={{ textAlign: "end" }}
           onChange={(e: any) => {
             setBuBldanga(e.target.value);
           }}
@@ -149,6 +160,7 @@ function Tab1({
           type="text"
           value={buBlcost}
           inputSize={InputSize.i80}
+          style={{ textAlign: "end" }}
           onChange={(e: any) => {
             setBuBlcost(e.target.value);
           }}
@@ -157,10 +169,13 @@ function Tab1({
       4: (
         <p
           style={{
+            display: "inline-block",
             height: "25px",
+            width: "80px",
             borderRadius: "4px",
             border: "1px solid rgb(188,185 ,185)",
-            padding: "0 6px",
+            padding: "3px 6px",
+            textAlign: "right",
             background: "aliceblue",
             margin: "5px",
           }}

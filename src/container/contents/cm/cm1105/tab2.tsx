@@ -8,6 +8,7 @@ import {
   FormGroup,
   Label,
 } from "components/form/style";
+import { currencyMask } from "helpers/currency";
 
 import { Controller } from "react-hook-form";
 
@@ -138,22 +139,54 @@ function Tab2({
 
           <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Field flex>
-              <Input
+              {/* <Input
                 label="연체율"
                 register={register("cuPer")}
-                inputSize={InputSize.i120}
+                inputSize={InputSize.i50}
                 textAlign="right"
                 maxLength="3"
+              /> */}
+
+              <Controller
+                control={control}
+                {...register("cuPer")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    label="연체율"
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={[/\d/, /\d/, /\d/]}
+                    inputSize={InputSize.i50}
+                    textAlign="right"
+                  />
+                )}
               />
+
               <p style={{ marginLeft: "-3px" }}>%</p>
             </Field>
             <Field flex>
-              <Input
+              {/* <Input
                 label="할인율"
                 register={register("cuCdc")}
                 textAlign="right"
                 inputSize={InputSize.i120}
                 maxLength="3"
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuCdc")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    label="할인율"
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={[/\d/, /\d/, /\d/]}
+                    inputSize={InputSize.i50}
+                    textAlign="right"
+                  />
+                )}
               />
               <p style={{ marginLeft: "-3px" }}>%</p>
             </Field>
@@ -166,32 +199,77 @@ function Tab2({
 
           <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Field flex>
-              <Input
+              {/* <Input
                 label="관리비"
                 register={register("cuAnkum")}
                 textAlign="right"
                 formatNumber="comNumber"
                 inputSize={InputSize.i120}
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuAnkum")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    label="관리비"
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={currencyMask}
+                    textAlign="right"
+                    inputSize={InputSize.i130}
+                  />
+                )}
               />
               <p style={{ marginLeft: "-3px" }}>원</p>
             </Field>
             <Field flex>
-              <Input
+              {/* <Input
                 label="시설비"
                 register={register("cuSisulkum")}
                 textAlign="right"
                 formatNumber="comNumber"
                 inputSize={InputSize.i120}
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuSisulkum")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    label="시설비"
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={currencyMask}
+                    textAlign="right"
+                    inputSize={InputSize.i130}
+                  />
+                )}
               />
               <p style={{ marginLeft: "-3px" }}>원</p>
             </Field>
             <Field flex>
-              <Input
+              {/* <Input
                 label="계량기교체비"
                 register={register("cuMeterkum")}
                 textAlign="right"
                 formatNumber="comNumber"
                 inputSize={InputSize.i120}
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuMeterkum")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    label="계량기교체비"
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={currencyMask}
+                    textAlign="right"
+                    inputSize={InputSize.i130}
+                  />
+                )}
               />
               <p>원</p>
             </Field>
@@ -209,11 +287,25 @@ function Tab2({
               </Select>
             </FormGroup>
             <Field flex style={{ alignItems: "center" }}>
-              <Input
+              {/* <Input
                 label="검침일"
                 register={register("cuGumdate")}
                 inputSize={InputSize.i60}
                 maxLength="2"
+              /> */}
+              <Controller
+                control={control}
+                {...register("cuGumdate")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    label="검침일"
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={[/\d/, /\d/]}
+                    inputSize={InputSize.i40}
+                  />
+                )}
               />
               <p>일</p>
             </Field>
@@ -284,6 +376,7 @@ function Tab2({
                 <Input
                   register={register("cuMeterM3")}
                   inputSize={InputSize.xs}
+                  textAlign="right"
                 />
                 <p>㎥/h</p>
               </Field>

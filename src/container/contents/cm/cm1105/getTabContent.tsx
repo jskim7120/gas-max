@@ -73,6 +73,7 @@ function getTabContent(
           dataCommonDic={dataCommonDic}
           register={register}
           setAddress={setAddress}
+          control={control}
         />
       );
     }
