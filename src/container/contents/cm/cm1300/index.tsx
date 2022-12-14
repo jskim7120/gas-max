@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import API from "app/axios";
 import Button from "components/button/button";
 import DataGridFooter from "components/dataGridFooter/dataGridFooter";
+import Loader from "components/loader";
 import {
   Plus,
   Trash,
@@ -64,7 +65,7 @@ function CM1300({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
-
+  const [loading, setLoading] = useState(false);
   const { isDelete } = useSelector((state) => state.modal);
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -128,18 +129,21 @@ function CM1300({
   const fetchSearchData = async (params: any) => {
     try {
       let data: any;
+      setLoading(true);
       if (params.searchInput1) {
         const { data } = await API.get(CM1300SEARCH, {
           params: { aptCode: params.searchInput1 },
         });
         if (data?.length > 0) {
           setData(data);
+          setLoading(false);
         } else if (params.searchInput2) {
           const { data } = await API.get(CM1300SEARCH, {
             params: { aptName: params.searchInput2 },
           });
           if (data?.length > 0) {
             setData(data);
+            setLoading(false);
           }
         }
       } else if (params.searchInput2) {
@@ -148,10 +152,12 @@ function CM1300({
         });
         if (data) {
           setData(data);
+          setLoading(false);
         }
       }
       if (data) {
         setData(data);
+        setLoading(false);
       }
     } catch (err) {
       console.log("CM1300 data search fetch error =======>", err);
@@ -160,9 +166,11 @@ function CM1300({
 
   const fetchListData = async () => {
     try {
+      setLoading(true);
       const { data } = await API.get(CM1300SEARCH);
       if (data) {
         setData(data);
+        setLoading(false);
       }
     } catch (err) {
       console.log("CM1300 data list fetch error =======>", err);
@@ -259,9 +267,20 @@ function CM1300({
                 />
                 <Button
                   text="검색"
-                  icon={<MagnifyingGlassBig />}
+                  icon={!loading && <MagnifyingGlassBig />}
                   kind={ButtonType.ROUND}
                   type="submit"
+                  loader={
+                    loading && (
+                      <>
+                        <Loader
+                          color="white"
+                          size={21}
+                          style={{ marginRight: "10px" }}
+                        />
+                      </>
+                    )
+                  }
                 />
               </FormGroup>
             </Field>
