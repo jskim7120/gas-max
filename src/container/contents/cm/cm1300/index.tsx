@@ -154,6 +154,8 @@ function CM1300({
           setData(data);
           setLoading(false);
         }
+      } else {
+        if (data === undefined) setLoading(false);
       }
       if (data) {
         setData(data);
