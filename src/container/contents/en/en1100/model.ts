@@ -74,4 +74,8 @@ export interface IJNOTRY {
   jnMark3: string;
   jnMark4: string;
   jnMark5: string;
+
+  jnVirtualAcc: string;
+  jnBankCms: string;
+  jnCardCms: string;
 }

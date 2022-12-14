@@ -22,6 +22,7 @@ import { schema } from "./validation";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
+import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
@@ -51,6 +52,8 @@ const Form = React.forwardRef(
       groupId: "EN",
       functionName: "EN1100",
     });
+    console.log(dataCommonDic);
+    console.log(selected);
 
     const {
       register,
@@ -116,8 +119,6 @@ const Form = React.forwardRef(
 
           reset({
             ...newData,
-            innopayBankYn: selected?.innopayBankYn === "Y",
-            niceBankYn: selected?.niceBankYn === "Y",
             jnSekumEa: selected?.jnSekumEa === "Y",
             jnSegongYn: selected?.jnSegongYn === "Y",
             jnVatSumyn: selected?.jnVatSumyn === "Y",
@@ -162,8 +163,6 @@ const Form = React.forwardRef(
       formValues.jnSegongYn = formValues.jnSegongYn ? "Y" : "N";
       formValues.jnVatSumyn = formValues.jnVatSumyn ? "Y" : "N";
       formValues.jnSekumEa = formValues.jnSekumEa ? "Y" : "N";
-      formValues.niceBankYn = formValues.niceBankYn ? "Y" : "N";
-      formValues.innopayBankYn = formValues.innopayBankYn ? "Y" : "N";
 
       try {
         const response: any = await API.post(path, formValues);
@@ -393,37 +392,48 @@ const Form = React.forwardRef(
               <ErrorText>{errors["jnJangbu"]?.message}</ErrorText>
             </div>
           </Field>
+          <Field style={{ marginLeft: "35px" }}>
+            <Input
+              label="탱크잔량/원격검침 발신기 업체번호"
+              labelLong
+              register={register("jnCMngNo")}
+              errors={errors["jnCMngNo"]?.message}
+              textAlign="right"
+              maxLength="4"
+              inputSize={InputSize.i60}
+            />
+          </Field>
         </Wrapper>
         <Wrapper grid col={3}>
-          <Input
-            label="탱크잔량/원격검침 발신기 업체번호"
-            labelLong
-            register={register("jnCMngNo")}
-            errors={errors["jnCMngNo"]?.message}
-            textAlign="right"
-            maxLength="4"
-          />
           <Field>
-            <FormGroup>
-              <CheckBox
-                register={{ ...register("niceBankYn") }}
-                title="Nice 계좌자동이체 사용"
-              />
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["niceBankYn"]?.message}</ErrorText>
-            </div>
+            <Input
+              label="가상 계좌 서비스"
+              register={register("jnVirtualAcc")}
+              errors={errors["jnVirtualAcc"]?.message}
+              textAlign="right"
+              maxLength="14"
+              inputSize={InputSize.i150}
+            />
           </Field>
           <Field>
-            <FormGroup>
-              <CheckBox
-                register={{ ...register("innopayBankYn") }}
-                title="Innopay 카드자동이체 사용"
-              />
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["innopayBankYn"]?.message}</ErrorText>
-            </div>
+            <Input
+              label="계좌 자동이체"
+              register={register("jnBankCms")}
+              errors={errors["jnBankCms"]?.message}
+              textAlign="right"
+              maxLength="14"
+              inputSize={InputSize.i150}
+            />
+          </Field>
+          <Field>
+            <Input
+              label="카드 자동이체"
+              register={register("jnCardCms")}
+              errors={errors["jnCardCms"]?.message}
+              textAlign="right"
+              maxLength="14"
+              inputSize={InputSize.i150}
+            />
           </Field>
         </Wrapper>
         <div style={{ marginTop: "5px" }}>
