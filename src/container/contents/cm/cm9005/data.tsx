@@ -52,7 +52,7 @@ export const columns1 = [
     type: "data",
     width: "200",
     header: {
-      text: "거래처",
+      text: "거래처명",
     },
   },
   {
@@ -61,7 +61,7 @@ export const columns1 = [
     type: "data",
     width: "120",
     header: {
-      text: "전화번호",
+      text: "전화",
     },
   },
   {
@@ -71,7 +71,7 @@ export const columns1 = [
     width: "300",
     styleName: "rg-left-column",
     header: {
-      text: "전화번호",
+      text: "주소",
     },
   },
   {
@@ -80,7 +80,7 @@ export const columns1 = [
     type: "data",
     width: "120",
     header: {
-      text: "전화번호",
+      text: "사용품목",
     },
   },
 ];
