@@ -34,7 +34,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./validation";
 import { columns, fields } from "./data";
 import CM1100Footer from "./footer";
-import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import { CM1100SEARCH } from "app/path";
 import Loader from "components/loader";
 
@@ -382,7 +381,6 @@ function CM1100Page({
 
         <CM1100Footer />
       </WrapperContent>
-      <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>
   );
 }

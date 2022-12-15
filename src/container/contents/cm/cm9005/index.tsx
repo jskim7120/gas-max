@@ -22,7 +22,6 @@ import {
   InputSize,
   FieldKind,
 } from "components/componentsType";
-import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 
 import Grid from "./grid";
 
@@ -241,7 +240,6 @@ function CM9005({
         </form>
 
         <Grid data={data ? data : []} />
-        <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
       </WrapperContent>
     </>
   );

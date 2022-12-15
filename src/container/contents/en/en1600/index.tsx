@@ -13,7 +13,6 @@ import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import Form from "./form";
 import Grid from "../grid";
 import { columns, fields } from "./data";
-import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import { Wrapper, DetailWrapper, DetailHeader } from "../../commonStyle";
 
 function EN1600({
@@ -128,7 +127,6 @@ function EN1600({
           />
         </DetailWrapper>
       </Wrapper>
-      <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>
   );
 }

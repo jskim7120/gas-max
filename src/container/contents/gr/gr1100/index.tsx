@@ -24,8 +24,7 @@ import {
 import Form from "./form";
 import Grid from "./grid";
 import { columns, fields } from "./data";
-import DataGridFooter from "components/dataGridFooter/dataGridFooter";
-import { DetailWrapper, DetailHeader } from "../../commonStyle";
+import { Wrapper, DetailWrapper, DetailHeader } from "../../commonStyle";
 import Loader from "components/loader";
 
 interface ISEARCH {
@@ -174,7 +173,7 @@ function GR1100({
           />
         </div>
       </DetailHeader>
-      <div style={{ display: "flex", gap: "0px", height: "calc(100% - 40px)" }}>
+      <Wrapper>
         <div
           style={{ width: "50%", gap: "50%", borderRight: "3px solid #707070" }}
         >
@@ -296,8 +295,7 @@ function GR1100({
             setSelected={setSelected}
           />
         </DetailWrapper>
-      </div>
-      <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
+      </Wrapper>
     </>
   );
 }

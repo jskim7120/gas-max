@@ -8,7 +8,6 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize, FieldKind } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker/test-datepicker";
-import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import Grid from "./grid";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { DetailHeader, WrapperContent } from "../../commonStyle";
@@ -255,7 +254,6 @@ function CM9003({
         </form>
 
         <Grid data={data ? data : []} reportKind={reportKind} />
-        <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
       </WrapperContent>
     </>
   );

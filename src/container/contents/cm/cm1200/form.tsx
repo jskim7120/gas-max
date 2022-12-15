@@ -33,12 +33,18 @@ import { schema } from "./validation";
 //API
 import { ICM1200SEARCH } from "./model";
 import API from "app/axios";
-import { CM1200DELETE, CM1200INSERT, CM1200UPDATE } from "app/path";
+import {
+  CM1200DELETE,
+  CM1200INSERT,
+  CM1200UPDATE,
+  CM1200INSERTSEQ,
+} from "app/path";
 import {
   formatCurrencyRemoveComma,
   formatDate,
   formatDateByRemoveDash,
   formatDateToStringWithoutDash,
+  formatDateToStringWithDash,
 } from "helpers/dateFormat";
 
 const Form = React.forwardRef(
@@ -52,6 +58,7 @@ const Form = React.forwardRef(
       setSelected,
       setSelectedRowIndex,
       selectedSupplyTab,
+      areaCode,
     }: {
       selected: any;
       dataCommonDic: any;
@@ -61,6 +68,7 @@ const Form = React.forwardRef(
       setSelected: any;
       setSelectedRowIndex: any;
       selectedSupplyTab: any;
+      areaCode: string;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -104,7 +112,6 @@ const Form = React.forwardRef(
       handleSubmit,
       reset,
       register,
-      unregister,
       getValues,
       control,
       watch,
@@ -159,16 +166,56 @@ const Form = React.forwardRef(
       crud,
     }));
 
-    const resetForm = (type: string) => {
+    const checkAreaCode = () => {
+      if (areaCode === "undefined" || areaCode === "00") {
+        toast.warning("areaCode can't be 00.", {
+          autoClose: 500,
+        });
+        return false;
+      }
+      return true;
+    };
+
+    const fetchCodes = async (areaCode: string) => {
+      try {
+        const response: any = await API.get(CM1200INSERTSEQ, {
+          params: { areaCode: areaCode },
+        });
+        if (
+          response.status === 200 &&
+          response.data.tempCuCode[0]?.tempCuCode
+        ) {
+          return response.data;
+        } else {
+          toast.error("can't get cuCode", {
+            autoClose: 500,
+          });
+        }
+      } catch (err) {
+        toast.error("Error occured during get CuCode", {
+          autoClose: 500,
+        });
+      }
+      return null;
+    };
+
+    const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         const newFormData = { ...selected, ...selectedSupplyTab[0] };
         let newData: any = {};
 
         if (type === "clear") {
-          for (const [key, value] of Object.entries(newFormData)) {
-            newData[key] = null;
+          if (!checkAreaCode()) {
+            return null;
           }
-          reset(newData);
+          const data = await fetchCodes(areaCode);
+          if (data) {
+            for (const [key, value] of Object.entries(newFormData)) {
+              newData[key] = null;
+            }
+            reset({ ...newData, cuCode: data?.tempCuCode[0]?.tempCuCode });
+          }
+          return;
         }
 
         if (type === "reset") {
@@ -228,25 +275,30 @@ const Form = React.forwardRef(
               ? formatDate(selected.gasifyCheckDate2)
               : "",
           });
+          return;
         }
       }
     };
-
-    console.log("register:", register("cuCode"));
 
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
 
         try {
-          const response: any = await API.post(CM1200DELETE, formValues);
+          const response: any = await API.post(CM1200DELETE, {
+            cuCode: formValues.cuCode,
+            areaCode: areaCode,
+          });
+
+          console.log("ustgay pizdaa:", response);
+
           if (response.status === 200) {
             toast.success("삭제했습니다", {
               autoClose: 500,
             });
             await fetchData();
           } else {
-            toast.error(response?.response?.message, {
+            toast.error(response?.message, {
               autoClose: 500,
             });
           }
@@ -255,6 +307,7 @@ const Form = React.forwardRef(
             autoClose: 500,
           });
         }
+        return;
       }
 
       if (type === null) {
@@ -306,6 +359,7 @@ const Form = React.forwardRef(
       newRemovedData = formValues;
 
       const path = isAddBtnClicked ? CM1200INSERT : CM1200UPDATE;
+      newRemovedData.areaCode = areaCode;
 
       newRemovedData.cuAptnameYn = newRemovedData.cuAptnameYn ? "Y" : "N";
       newRemovedData.chkCuZipCode = newRemovedData.chkCuZipCode ? "Y" : "N";
@@ -333,15 +387,42 @@ const Form = React.forwardRef(
         ? formatCurrencyRemoveComma(newRemovedData.cuMeterKum)
         : "";
 
-      newRemovedData.cuFinishDate = newRemovedData.newRemovedData
-        ? formatDateToStringWithoutDash(newRemovedData.newRemovedData)
+      newRemovedData.cuFinishDate = newRemovedData.cuFinishDate
+        ? formatDateToStringWithDash(newRemovedData.cuFinishDate)
         : "";
       newRemovedData.cuCircuitDate = newRemovedData.cuCircuitDate
-        ? formatDateToStringWithoutDash(newRemovedData.cuCircuitDate)
+        ? formatDateToStringWithDash(newRemovedData.cuCircuitDate)
         : "";
 
       newRemovedData.cuScheduleDate = newRemovedData.cuScheduleDate
-        ? formatDateToStringWithoutDash(newRemovedData.cuScheduleDate)
+        ? formatDateToStringWithDash(newRemovedData.cuScheduleDate)
+        : "";
+
+      newRemovedData.gasifyCheckDate1 = newRemovedData.gasifyCheckDate1
+        ? formatDateToStringWithDash(newRemovedData.gasifyCheckDate1)
+        : "";
+      newRemovedData.gasifyCheckDate2 = newRemovedData.gasifyCheckDate2
+        ? formatDateToStringWithDash(newRemovedData.gasifyCheckDate2)
+        : "";
+      newRemovedData.tankFirstDate1 = newRemovedData.tankFirstDate1
+        ? formatDateToStringWithDash(newRemovedData.tankFirstDate1)
+        : "";
+      newRemovedData.tankFirstDate2 = newRemovedData.tankFirstDate2
+        ? formatDateToStringWithDash(newRemovedData.tankFirstDate2)
+        : "";
+
+      newRemovedData.tankInsideDate1 = newRemovedData.tankInsideDate1
+        ? formatDateToStringWithDash(newRemovedData.tankInsideDate1)
+        : "";
+      newRemovedData.tankInsideDate2 = newRemovedData.tankInsideDate2
+        ? formatDateToStringWithDash(newRemovedData.tankInsideDate2)
+        : "";
+
+      newRemovedData.tankOutsideDate1 = newRemovedData.tankOutsideDate1
+        ? formatDateToStringWithDash(newRemovedData.tankOutsideDate1)
+        : "";
+      newRemovedData.tankOutsideDate2 = newRemovedData.tankOutsideDate2
+        ? formatDateToStringWithDash(newRemovedData.tankOutsideDate2)
         : "";
 
       newRemovedData.cuRdangaAmt =
@@ -481,43 +562,24 @@ const Form = React.forwardRef(
       <form onSubmit={handleSubmit(submit)}>
         {/* 1-1 Wrapper */}
         <Divider />
-        <Wrapper grid col={4}>
+        <Wrapper grid col={5}>
           <Field>
-            <FormGroup>
-              {/* <Controller
-                control={control}
-                {...register("cuCode")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    label="건물코드---"
-                    inputSize={InputSize.xs}
-                    value={value}
-                    onChange={onChange}
-                    mask={[/\d/, /\d/, /\d/]}
-                    name={name}
-                  />
-                )}
-              /> */}
-              <Input
-                label="건물코드"
-                register={register("cuCode")}
-                inputSize={InputSize.i50}
-              />
-            </FormGroup>
+            <Input
+              label="건물코드"
+              register={register("cuCode")}
+              inputSize={InputSize.i50}
+              readOnly={true}
+            />
           </Field>
           <Field>
-            <FormGroup>
-              <Input label="건물명" register={register("cuName")} />
-            </FormGroup>
+            <Input label="건물명" register={register("cuName")} />
           </Field>
           <Field>
-            <FormGroup>
-              <CheckBox
-                title="건물명 지로 출력 안함."
-                register={register("cuAptnameYn")}
-                rtl={true}
-              />
-            </FormGroup>
+            <CheckBox
+              title="건물명 지로 출력 안함."
+              register={register("cuAptnameYn")}
+              rtl={true}
+            />
           </Field>
         </Wrapper>
         {/* 1-2 Wrapper */}
@@ -976,8 +1038,12 @@ const Form = React.forwardRef(
             <Controller
               control={control}
               {...register("cuFinishDate")}
-              render={({ field: { onChange, value } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                />
               )}
             />
           </Field>
@@ -1007,7 +1073,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label>벌크 시설</Label>
           </FormGroup>
-          <Wrapper grid col={8}>
+          <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <Label align={"center"}>제조사</Label>
             <Label align={"center"}>용량(kg)</Label>
             <Label align={"center"}>제조번호</Label>
@@ -1324,7 +1390,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label>기화기</Label>
           </FormGroup>
-          <Wrapper grid col={8}>
+          <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <Label align={"center"}>제조사</Label>
             <Label align={"center"}>용량(kg)</Label>
             <Label align={"center"}>제조번호</Label>
@@ -1342,7 +1408,7 @@ const Form = React.forwardRef(
             <Label>{`1)`}</Label>
           </FormGroup>
 
-          <Wrapper grid col={8}>
+          <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <Field>
               <FormGroup>
                 <Select {...register("gasifyCo1")} fullWidth>
@@ -1410,7 +1476,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label>{`2)`}</Label>
           </FormGroup>
-          <Wrapper grid col={8}>
+          <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <Field>
               <FormGroup>
                 <Select {...register("gasifyCo2")} fullWidth>

@@ -25,6 +25,13 @@ export const DetailHeader = styled.div`
     color: #0a0a0a;
     font-family: "SegoeUI";
     font-size: 12px;
+
+    &.big {
+      font-family: "NotoSansKRRegular";
+      font-size: 14px;
+      font-weight: bold;
+      margin: 0 10px 0 15px;
+    }
   }
 
   div.buttons {
@@ -41,12 +48,12 @@ export const DetailHeader = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   gap: 0px;
-  height: calc(100% - 41px);
+  height: calc(100% - 14px);
 `;
 
 export const WrapperContent = styled.div`
   gap: 0px;
-  height: calc(100% - 41px);
+  height: calc(100% - 14px);
   width: 100%;
 `;
 

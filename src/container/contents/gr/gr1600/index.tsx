@@ -3,13 +3,12 @@ import { useForm } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
 import { GR1600SEARCH } from "app/path";
-import { InputSize } from "components/componentsType";
+import { InputSize, ButtonColor, ButtonType } from "components/componentsType";
 import Button from "components/button/button";
-import { ButtonColor, ButtonType } from "components/componentsType";
 import { Input, Select, Field, FormGroup, Label } from "components/form/style";
 import { MagnifyingGlassBig, ExcelIcon } from "components/allSvgIcon";
-import { LeftSection, RightSection, MainWrapper, DetailHeader } from "../style";
-import DataGridFooter from "components/dataGridFooter/dataGridFooter";
+import { Wrapper, DetailHeader } from "../../commonStyle";
+import { LeftSection, RightSection } from "../style";
 import RightHalf from "./right";
 import Grid from "./grid";
 
@@ -103,7 +102,7 @@ function GR1600({
           </Select>
         </Field>
       </DetailHeader>
-      <MainWrapper>
+      <Wrapper>
         <LeftSection>
           <form onSubmit={handleSubmit(submit)}>
             <div style={{ marginBottom: "5px" }}>
@@ -182,9 +181,7 @@ function GR1600({
             fetchLeftData={handleSubmit(submit)}
           />
         </RightSection>
-      </MainWrapper>
-
-      <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
+      </Wrapper>
     </>
   );
 }
