@@ -72,6 +72,7 @@ export const CM1200UPDATE = "/app/CM1200/update";
 export const CM1200INSERT = "/app/CM1200/insert";
 export const CM1200DELETE = "/app/CM1200/delete";
 export const CM120065 = "/app/CM1200/65";
+export const CM1200INSERTSEQ = "/app/CM1200/insertseq";
 
 export const CM1300SEARCH = "/app/CM1300/search";
 export const CM1300UPDATE = "/app/CM1300/update";

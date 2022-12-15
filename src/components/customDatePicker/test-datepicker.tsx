@@ -10,11 +10,13 @@ function CustomDatePicker({
   value,
   onChange,
   readOnly,
+  name,
 }: {
   style?: any;
   value: any;
   onChange: any;
   readOnly?: boolean;
+  name?: string;
 }) {
   return (
     <DatePicker
@@ -35,6 +37,7 @@ function CustomDatePicker({
                 : ""
             }
             className="customMaskInput"
+            name={name && name}
           />
           <div className="calendarImageWrapper">
             <img src={CalendarIcon} alt="calendar" />

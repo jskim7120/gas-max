@@ -33,7 +33,6 @@ import {
 } from "components/componentsType";
 import { Field, FormGroup, Input, Label, Select } from "components/form/style";
 import CheckBox from "components/checkbox";
-import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import HomeIconSvg from "assets/image/home-icon.svg";
 import PersonIconSvg from "assets/image/person-icon.svg";
 import Loader from "components/loader";
@@ -82,11 +81,17 @@ function CM1200({
   ]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [dataChk, setDataChk] = useState(true);
+  const [areaCode, setAreaCode] = useState("");
 
   useEffect(() => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-    });
+    if (dataCommonDic) {
+      console.log("dataCommonDic::::", dataCommonDic);
+
+      reset({
+        areaCode: dataCommonDic?.areaCode[0].code,
+      });
+      setAreaCode(dataCommonDic?.areaCode[0].code);
+    }
   }, [dataCommonDic]);
 
   useEffect(() => {
@@ -185,6 +190,7 @@ function CM1200({
               width={InputSize.i120}
               {...register("areaCode")}
               style={{ marginLeft: "5px" }}
+              onChange={(e: any) => setAreaCode(e.target.value)}
             >
               {dataCommonDic?.areaCode?.map((option: any, index: number) => {
                 return (
@@ -269,7 +275,7 @@ function CM1200({
                         <>
                           <Loader
                             color="white"
-                            size={20}
+                            size={19}
                             style={{ marginRight: "10px" }}
                             borderWidth="3px"
                           />
@@ -308,6 +314,7 @@ function CM1200({
               selected={selected}
               setSelected={setSelected}
               selectedSupplyTab={selectedSupplyTab}
+              areaCode={areaCode}
             />
           </FormSeaction>
           <FormSeaction topBorder={true}>
@@ -325,8 +332,7 @@ function CM1200({
                     dispatch(
                       addCM1105({
                         cuCode: selected?.cuCode ? selected?.cuCode : "",
-                        // areaCode: selectAreaCode ? selectAreaCode : "",
-                        areaCode: "",
+                        areaCode: areaCode,
                         status: "INSERT",
                         cuCount: selected?.cuCount ?? 0,
                       })
@@ -353,7 +359,6 @@ function CM1200({
           </FormSeaction>
         </DetailWrapper>
       </Wrapper>
-      <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>
   );
 }
