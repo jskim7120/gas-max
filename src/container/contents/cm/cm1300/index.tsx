@@ -3,7 +3,6 @@ import { GridView, LocalDataProvider } from "realgrid";
 import { useForm } from "react-hook-form";
 import API from "app/axios";
 import Button from "components/button/button";
-import DataGridFooter from "components/dataGridFooter/dataGridFooter";
 import Loader from "components/loader";
 import {
   Plus,
@@ -337,7 +336,6 @@ function CM1300({
           </Detail2Wrapper>
         </Grid2Container>
       </Wrapper>
-      <DataGridFooter dataLength={data?.length > 0 ? data.length : 0} />
     </>
   );
 }
