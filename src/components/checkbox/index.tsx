@@ -63,11 +63,13 @@ function CheckBox(props: {
   onChange?: any;
   gap?: string;
   checked?: boolean;
+  style?: any;
 }) {
   return (
     <CheckBoxWrapper
       rtl={props.rtl ? props.rtl : false}
       gap={props.gap && props.gap}
+      style={props.style}
     >
       <label>
         <input

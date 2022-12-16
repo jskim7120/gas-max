@@ -11,7 +11,7 @@ import CustomDatePicker from "components/customDatePicker/test-datepicker";
 import Grid from "./grid";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { DetailHeader, WrapperContent } from "../../commonStyle";
-import { SearchWrapper } from "./style";
+import { SearchWrapper } from "../../commonStyle";
 import {
   Select,
   FormGroup,
@@ -113,7 +113,7 @@ function CM9003({
       </DetailHeader>
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
-          <SearchWrapper>
+          <SearchWrapper style={{ alignItems: "baseline" }}>
             <div style={{ width: "80%" }}>
               <Wrapper grid col={6} style={{ justifyItems: "center" }}>
                 <FormGroup>
@@ -215,7 +215,10 @@ function CM9003({
               </Wrapper>
             </div>
 
-            <div className="button-wrapper">
+            <div
+              className="button-wrapper"
+              style={{ flexDirection: "row", gap: "0px" }}
+            >
               <Button
                 text="검색"
                 icon={!loading && <MagnifyingGlass />}

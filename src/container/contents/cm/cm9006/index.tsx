@@ -19,7 +19,7 @@ import {
 } from "components/form/style";
 import { ResetGray, MagnifyingGlass, ExcelIcon } from "components/allSvgIcon";
 import { DetailHeader, WrapperContent } from "../../commonStyle";
-import { SearchWrapper } from "./style";
+import { SearchWrapper } from "../../commonStyle";
 
 function CM9003({
   depthFullName,
@@ -290,7 +290,10 @@ function CM9003({
               </Wrapper>
             </div>
 
-            <div className="button-wrapper">
+            <div
+              className="button-wrapper"
+              style={{ flexDirection: "row", gap: "0px" }}
+            >
               <Button
                 text="검색"
                 icon={!loading && <MagnifyingGlass />}

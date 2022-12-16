@@ -6,7 +6,7 @@ import {
   ICM120065SUPPLYTYPE,
   ISEARCH,
 } from "./model";
-import GridTop from "./gridTop";
+import GridLeft from "./gridLeft";
 import GridBottom from "./gridBottom";
 import Form from "./form";
 import {
@@ -47,7 +47,7 @@ import { useDispatch, useSelector } from "app/store";
 import { CM120065, CM1200SEARCH } from "app/path";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
-import { SearchWrapper } from "../cm1100/cm100Style";
+import { SearchWrapper } from "../../commonStyle";
 
 function CM1200({
   depthFullName,
@@ -95,8 +95,11 @@ function CM1200({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (selected && selected.cuCode) {
-      fetchAdditionalData({ cuCode: selected.cuCode });
+    if (selected && selected.cuCode && selected.areaCode) {
+      fetchAdditionalData({
+        areaCode: selected.areaCode,
+        cuCode: selected.cuCode,
+      });
     }
   }, [selected]);
 
@@ -144,10 +147,16 @@ function CM1200({
     }
   };
 
-  const fetchAdditionalData = async ({ cuCode }: { cuCode: string }) => {
+  const fetchAdditionalData = async ({
+    areaCode,
+    cuCode,
+  }: {
+    areaCode: string;
+    cuCode: string;
+  }) => {
     try {
       const { data } = await API.get(CM120065, {
-        params: { cuCode },
+        params: { cuCode, areaCode },
       });
 
       console.log("data65==================>", cuCode, data);
@@ -288,7 +297,7 @@ function CM1200({
             </form>
           </SearchWrapper>
 
-          <GridTop
+          <GridLeft
             data={data ? data : []}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
