@@ -76,17 +76,15 @@ function CM1200({
   const [selectedUserInfo, setSelectedUserInfo] = useState([
     {} as ICM120065USERINFO,
   ]);
-  const [selectedSupplyTab, setSelectedSupplyTab] = useState([
-    {} as ICM120065SUPPLYTYPE,
-  ]);
+  const [selectedSupplyTab, setSelectedSupplyTab] = useState(
+    {} as ICM120065SUPPLYTYPE
+  );
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [dataChk, setDataChk] = useState(true);
   const [areaCode, setAreaCode] = useState("");
 
   useEffect(() => {
     if (dataCommonDic) {
-      console.log("dataCommonDic::::", dataCommonDic);
-
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
       });
@@ -159,7 +157,6 @@ function CM1200({
         params: { cuCode, areaCode },
       });
 
-      console.log("data65==================>", cuCode, data);
       if (data && data?.userInfo) {
         setSelectedUserInfo(data?.userInfo);
       } else {
@@ -167,9 +164,9 @@ function CM1200({
       }
 
       if (data && data?.supplyTab) {
-        setSelectedSupplyTab(data?.supplyTab);
+        setSelectedSupplyTab(data?.supplyTab[0]);
       } else {
-        setSelectedSupplyTab([]);
+        setSelectedSupplyTab({} as ICM120065SUPPLYTYPE);
       }
     } catch (err) {
       console.log("CM120065 data fetch error =======>", err);

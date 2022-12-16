@@ -21,15 +21,11 @@ import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
 import { SearchIcon, IconInfo } from "components/allSvgIcon";
-import {
-  formatDate,
-  formatDateByRemoveDash,
-  formatCurrencyRemoveComma,
-} from "helpers/dateFormat";
+import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
 import { convertBase64 } from "helpers/convertBase64";
 import CustomDatePicker from "components/customDatePicker/customdate2";
 import { ImageWrapper } from "../../commonStyle";
-import { currencyMask } from "helpers/currency";
+import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
 import { InputSize } from "components/componentsType";
 
 interface IForm {

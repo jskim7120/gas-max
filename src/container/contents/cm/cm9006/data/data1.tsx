@@ -83,6 +83,7 @@ export const columns1 = [
     header: {
       text: "핸드폰",
     },
+    styleName: "rg-left-column",
   },
 
   {

@@ -352,7 +352,7 @@ function CM1100Page({
                     <>
                       <Loader
                         color="white"
-                        size={21}
+                        size={19}
                         style={{ marginRight: "10px" }}
                         borderWidth="3px"
                       />

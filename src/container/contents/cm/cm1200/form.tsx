@@ -1,7 +1,6 @@
 // REACT
 import React, { useEffect, useImperativeHandle, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-
 import { toast } from "react-toastify";
 // COMPONENTS
 import DaumAddress from "components/daum";
@@ -11,7 +10,6 @@ import CustomDatePicker from "components/customDatePicker/test-datepicker";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { currencyMask } from "helpers/currency";
-
 import {
   Item,
   RadioButton,
@@ -30,7 +28,7 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./validation";
 //API
-import { ICM1200SEARCH } from "./model";
+import { ICM1200SEARCH, emptyObj } from "./model";
 import API from "app/axios";
 import {
   CM1200DELETE,
@@ -39,12 +37,12 @@ import {
   CM1200INSERTSEQ,
 } from "app/path";
 import {
-  formatCurrencyRemoveComma,
   formatDate,
   formatDateByRemoveDash,
   formatDateToStringWithoutDash,
   formatDateToStringWithDash,
 } from "helpers/dateFormat";
+import { formatCurrencyRemoveComma } from "helpers/currency";
 
 const Form = React.forwardRef(
   (
@@ -80,8 +78,6 @@ const Form = React.forwardRef(
     const [cuFinishDate, setCuFinishDate] = useState("");
     const [cuCircuitDate, setCuCircuitDate] = useState("");
     const [cuScheduleDate, setCuScheduleDate] = useState("");
-
-
     const [tankFirstDate1, setTankFirstDate1] = useState("");
     const [tankFirstDate2, setTankFirstDate2] = useState("");
     const [tankOutsideDate1, setTankOutsideDate1] = useState("");
@@ -90,7 +86,7 @@ const Form = React.forwardRef(
     const [tankInsideDate2, setTankInsideDate2] = useState("");
     const [gasifyCheckDate1, setGasifyCheckDate1] = useState("");
     const [gasifyCheckDate2, setGasifyCheckDate2] = useState("");
-    const [clearNumberic, setClearNumberic] = useState(false);
+    
     */
     }
 
@@ -98,7 +94,7 @@ const Form = React.forwardRef(
     const [chkCuRh20, setChkCuRh20] = useState(false);
     const [chkCuRdanga, setChkCuRdanga] = useState(false);
     const [chkCuAnKum, setChkCuAnKum] = useState(false);
-    const [ckCuSisulKum, setCkCuSisulKum] = useState(false);
+    //const [ckCuSisulKum, setCkCuSisulKum] = useState(false);
     const [chkCuMeterKum, setChkCuMeterKum] = useState(false);
     const [chkCuPer, setChkCuPer] = useState(false);
     const [chkCuCdc, setChkCuCdc] = useState(false);
@@ -107,18 +103,11 @@ const Form = React.forwardRef(
     const [chkCuGumdate, setChkCuGumdate] = useState(false);
     const [chkCuCno, setChkCuCno] = useState(false);
 
-    const {
-      handleSubmit,
-      reset,
-      register,
-      getValues,
-      control,
-      watch,
-      formState: { errors },
-    } = useForm<ICM1200SEARCH>({
-      mode: "onChange",
-      resolver: yupResolver(schema),
-    });
+    const { handleSubmit, reset, register, getValues, control, watch } =
+      useForm<ICM1200SEARCH>({
+        mode: "onChange",
+        resolver: yupResolver(schema),
+      });
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
@@ -199,85 +188,65 @@ const Form = React.forwardRef(
     };
 
     const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        console.log("selected::::::", selected);
-        console.log("selectedSupplyTab::::::", selectedSupplyTab[0]);
-
-        const newFormData = { ...selected, ...selectedSupplyTab[0] };
-        let newData: any = {};
-
-        if (type === "clear") {
-          if (!checkAreaCode()) {
-            return null;
-          }
-          const data = await fetchCodes(areaCode);
-          if (data) {
-            for (const [key, value] of Object.entries(newFormData)) {
-              newData[key] = null;
-            }
-            reset({ ...newData, cuCode: data?.tempCuCode[0]?.tempCuCode });
-          }
-          return;
+      if (type === "clear") {
+        if (!checkAreaCode()) {
+          return null;
         }
-
-        if (type === "reset") {
-          for (const [key, value] of Object.entries(newFormData)) {
-            newData[key] = value;
-          }
-
-          reset({
-            ...newData,
-            cuAptnameYn: newFormData?.cuAptnameYn === "Y",
-            //chkCuZipCode: newFormData?.chkCuZipCode === "Y",
-            //chkCuRh20: newFormData?.chkCuRh20 === "Y",
-            //chkCuRdange: newFormData?.chkCuRdange === "Y",
-            //chkCuAnKum: newFormData?.chkCuAnKum === "Y",
-            //ckCuSisulKum: newFormData?.ckCuSisulKum === "Y",
-            //chkCuMeterKum: newFormData?.chkCuMeterKum === "Y",
-            //chkCuPer: newFormData?.chkCuPer === "Y",
-            //chkCuCdc: newFormData?.chkCuCdc === "Y",
-            //chkCuSukumtype: newFormData?.chkCuSukumtype === "Y",
-            //chkCuGumTurm: newFormData?.chkCuGumTurm === "Y",
-            //chkCuGumdate: newFormData?.chkCuGumdate === "Y",
-            //chkCuCno: newFormData?.chkCuCno === "Y",
-
-            cuFinishDate: selected?.cuFinishDate
-              ? formatDate(selected.cuFinishDate)
-              : "",
-            cuCircuitDate: selected?.cuCircuitDate
-              ? formatDate(selected.cuCircuitDate)
-              : "",
-            cuScheduleDate: selected?.cuScheduleDate
-              ? formatDate(selected.cuScheduleDate)
-              : "",
-            tankFirstDate1: selected?.tankFirstDate1
-              ? formatDate(selected.tankFirstDate1)
-              : "",
-            tankFirstDate2: selected?.tankFirstDate2
-              ? formatDate(selected.tankFirstDate2)
-              : "",
-            tankOutsideDate1: selected?.tankOutsideDate1
-              ? formatDate(selected.tankOutsideDate1)
-              : "",
-            tankOutsideDate2: selected?.tankOutsideDate2
-              ? formatDate(selected.tankOutsideDate2)
-              : "",
-            tankInsideDate1: selected?.tankInsideDate1
-              ? formatDate(selected.tankInsideDate1)
-              : "",
-
-            tankInsideDate2: selected?.tankInsideDate2
-              ? formatDate(selected.tankInsideDate2)
-              : "",
-            gasifyCheckDate1: selected?.gasifyCheckDate1
-              ? formatDate(selected.gasifyCheckDate1)
-              : "",
-            gasifyCheckDate2: selected?.gasifyCheckDate2
-              ? formatDate(selected.gasifyCheckDate2)
-              : "",
-          });
-          return;
+        const data = await fetchCodes(areaCode);
+        if (data && data?.tempCuCode[0]) {
+          reset({ ...emptyObj, cuCode: data?.tempCuCode[0]?.tempCuCode });
         }
+        return;
+      }
+
+      if (
+        type === "reset" &&
+        selected !== undefined &&
+        JSON.stringify(selected) !== "{}"
+      ) {
+        let tempData: any = { ...selected, ...selectedSupplyTab };
+
+        reset({
+          ...tempData,
+          cuAptnameYn: tempData?.cuAptnameYn === "Y",
+          cuBaGageYn: tempData?.cuBaGageYn === "Y",
+
+          cuFinishDate: selected?.cuFinishDate
+            ? formatDate(selected.cuFinishDate)
+            : "",
+          cuCircuitDate: selected?.cuCircuitDate
+            ? formatDate(selected.cuCircuitDate)
+            : "",
+          cuScheduleDate: selected?.cuScheduleDate
+            ? formatDate(selected.cuScheduleDate)
+            : "",
+          tankFirstDate1: selected?.tankFirstDate1
+            ? formatDate(selected.tankFirstDate1)
+            : "",
+          tankFirstDate2: selected?.tankFirstDate2
+            ? formatDate(selected.tankFirstDate2)
+            : "",
+          tankOutsideDate1: selected?.tankOutsideDate1
+            ? formatDate(selected.tankOutsideDate1)
+            : "",
+          tankOutsideDate2: selected?.tankOutsideDate2
+            ? formatDate(selected.tankOutsideDate2)
+            : "",
+          tankInsideDate1: selected?.tankInsideDate1
+            ? formatDate(selected.tankInsideDate1)
+            : "",
+
+          tankInsideDate2: selected?.tankInsideDate2
+            ? formatDate(selected.tankInsideDate2)
+            : "",
+          gasifyCheckDate1: selected?.gasifyCheckDate1
+            ? formatDate(selected.gasifyCheckDate1)
+            : "",
+          gasifyCheckDate2: selected?.gasifyCheckDate2
+            ? formatDate(selected.gasifyCheckDate2)
+            : "",
+        });
+        return;
       }
     };
 
@@ -290,8 +259,6 @@ const Form = React.forwardRef(
             cuCode: formValues.cuCode,
             areaCode: areaCode,
           });
-
-          console.log("ustgay pizdaa:", response);
 
           if (response.status === 200) {
             toast.success("삭제했습니다", {
@@ -317,134 +284,119 @@ const Form = React.forwardRef(
     };
 
     const submit = async (data: ICM1200SEARCH) => {
-      let newRemovedData: any = {};
-      const formValues = getValues();
+      const formValues: any = getValues();
+      formValues.areaCode = isAddBtnClicked ? areaCode : selected.areaCode;
 
-      console.log("formValues=================", formValues);
+      if (!chkCuZipCode) {
+        delete formValues.cuZipcode;
+        delete formValues.cuAddr1;
+        delete formValues.cuAddr2;
+      }
+      if (!chkCuRh20) {
+        delete formValues.cuRh2o;
+      }
+      if (!chkCuRdanga) {
+        //talbaruudiig nyagtal
+      }
 
-      // for (const [key, value] of Object.entries(formValues)) {
-      //   if (
-      //     key !== "tankMakeCo1" &&
-      //     key !== "tankMakeCo2" &&
-      //     key !== "tankVol1" &&
-      //     key !== "tankVol2" &&
-      //     key !== "tankMakeSno1" &&
-      //     key !== "tankMakeSno2" &&
-      //     key !== "tankMakeDate1" &&
-      //     key !== "tankMakeDate2" &&
-      //     key !== "tankRcv1" &&
-      //     key !== "tankRcv2" &&
-      //     key !== "tankFirstDate1" &&
-      //     key !== "tankFirstDate2" &&
-      //     key !== "tankOutsideDate1" &&
-      //     key !== "tankOutsideDate2" &&
-      //     key !== "tankInsideDate1" &&
-      //     key !== "tankInsideDate2" &&
-      //     key !== "gasifyCo1" &&
-      //     key !== "gasifyCo2" &&
-      //     key !== "gasifyVol1" &&
-      //     key !== "gasifyVol2" &&
-      //     key !== "gasifySno1" &&
-      //     key !== "gasifySno2" &&
-      //     key !== "gasifyMakeDate1" &&
-      //     key !== "gasifyMakeDate2" &&
-      //     key !== "gasifyPower1" &&
-      //     key !== "gasifyPower2" &&
-      //     key !== "gasifyCheckDate1" &&
-      //     key !== "gasifyCheckDate2"
-      //   ) {
-      //     newRemovedData[key] = value;
-      //   }
+      if (!chkCuAnKum) {
+        delete formValues.cuAnkum;
+      } else {
+        formValues.cuAnkum = formValues.cuAnkum
+          ? formatCurrencyRemoveComma(formValues.cuAnkum)
+          : "";
+      }
+      // if (!ckCuSisulKum) {
+      //   delete formValues.cuSisulkum;
       // }
 
-      newRemovedData = formValues;
+      if (!chkCuMeterKum) {
+        delete formValues.cuMeterkum;
+      } else {
+        formValues.cuMeterkum = formValues.cuMeterkum
+          ? formatCurrencyRemoveComma(formValues.cuMeterkum)
+          : "";
+      }
+      if (!chkCuPer) {
+        delete formValues.cuPer;
+      }
+
+      if (!chkCuCdc) {
+        delete formValues.cuCdc;
+      }
+
+      if (!chkCuSukumtype) {
+        delete formValues.cuSukumtype;
+      }
+      if (!chkCuGumTurm) {
+        delete formValues.cuGumTurm;
+      }
+      if (!chkCuGumdate) {
+        delete formValues.cuGumdate;
+      }
+
+      if (!chkCuCno) {
+        delete formValues.cuCno;
+      }
+
+      formValues.cuAptnameYn = formValues.cuAptnameYn ? "Y" : "N";
+
+      formValues.cuFinishDate = formValues.cuFinishDate
+        ? formatDateToStringWithDash(formValues.cuFinishDate)
+        : "";
+      formValues.cuCircuitDate = formValues.cuCircuitDate
+        ? formatDateToStringWithDash(formValues.cuCircuitDate)
+        : "";
+
+      formValues.cuScheduleDate = formValues.cuScheduleDate
+        ? formatDateToStringWithDash(formValues.cuScheduleDate)
+        : "";
+
+      formValues.gasifyCheckDate1 = formValues.gasifyCheckDate1
+        ? formatDateToStringWithDash(formValues.gasifyCheckDate1)
+        : "";
+      formValues.gasifyCheckDate2 = formValues.gasifyCheckDate2
+        ? formatDateToStringWithDash(formValues.gasifyCheckDate2)
+        : "";
+      formValues.tankFirstDate1 = formValues.tankFirstDate1
+        ? formatDateToStringWithDash(formValues.tankFirstDate1)
+        : "";
+      formValues.tankFirstDate2 = formValues.tankFirstDate2
+        ? formatDateToStringWithDash(formValues.tankFirstDate2)
+        : "";
+
+      formValues.tankInsideDate1 = formValues.tankInsideDate1
+        ? formatDateToStringWithDash(formValues.tankInsideDate1)
+        : "";
+      formValues.tankInsideDate2 = formValues.tankInsideDate2
+        ? formatDateToStringWithDash(formValues.tankInsideDate2)
+        : "";
+
+      formValues.tankOutsideDate1 = formValues.tankOutsideDate1
+        ? formatDateToStringWithDash(formValues.tankOutsideDate1)
+        : "";
+      formValues.tankOutsideDate2 = formValues.tankOutsideDate2
+        ? formatDateToStringWithDash(formValues.tankOutsideDate2)
+        : "";
+
+      formValues.cuRdangaAmt =
+        formValues.cuRdangaType !== "1" ? 0 : Number(formValues.cuRdangaAmt);
+      formValues.cuRdanga = Number(formValues.cuRdanga);
 
       const path = isAddBtnClicked ? CM1200INSERT : CM1200UPDATE;
-      newRemovedData.areaCode = areaCode;
-
-      newRemovedData.cuAptnameYn = newRemovedData.cuAptnameYn ? "Y" : "N";
-      //newRemovedData.chkCuZipCode = newRemovedData.chkCuZipCode ? "Y" : "N";
-      //newRemovedData.chkCuRh20 = newRemovedData.chkCuRh20 ? "Y" : "N";
-      //newRemovedData.chkCuRdange = newRemovedData.chkCuRdange ? "Y" : "N";
-
-      //newRemovedData.chkCuAnKum = newRemovedData.chkCuAnKum ? "Y" : "N";
-      //newRemovedData.ckCuSisulKum = newRemovedData.ckCuSisulKum ? "Y" : "N";
-      //newRemovedData.chkCuMeterKum = newRemovedData.chkCuMeterKum ? "Y" : "N";
-
-      //newRemovedData.chkCuPer = newRemovedData.chkCuPer ? "Y" : "N";
-      //newRemovedData.chkCuCdc = newRemovedData.chkCuCdc ? "Y" : "N";
-      //newRemovedData.chkCuSukumtype = newRemovedData.chkCuSukumtype ? "Y" : "N";
-      //newRemovedData.chkCuGumTurm = newRemovedData.chkCuMeterKum ? "Y" : "N";
-      //newRemovedData.chkCuGumdate = newRemovedData.chkCuGumdate ? "Y" : "N";
-      //newRemovedData.chkCuCno = newRemovedData.chkCuCno ? "Y" : "N";
-
-      newRemovedData.cuAnKum = newRemovedData.cuAnKum
-        ? formatCurrencyRemoveComma(newRemovedData.cuAnKum)
-        : "";
-      newRemovedData.cuSisulKum = newRemovedData.cuSisulKum
-        ? formatCurrencyRemoveComma(newRemovedData.cuSisulKum)
-        : "";
-      newRemovedData.cuMeterKum = newRemovedData.cuMeterKum
-        ? formatCurrencyRemoveComma(newRemovedData.cuMeterKum)
-        : "";
-
-      newRemovedData.cuFinishDate = newRemovedData.cuFinishDate
-        ? formatDateToStringWithDash(newRemovedData.cuFinishDate)
-        : "";
-      newRemovedData.cuCircuitDate = newRemovedData.cuCircuitDate
-        ? formatDateToStringWithDash(newRemovedData.cuCircuitDate)
-        : "";
-
-      newRemovedData.cuScheduleDate = newRemovedData.cuScheduleDate
-        ? formatDateToStringWithDash(newRemovedData.cuScheduleDate)
-        : "";
-
-      newRemovedData.gasifyCheckDate1 = newRemovedData.gasifyCheckDate1
-        ? formatDateToStringWithDash(newRemovedData.gasifyCheckDate1)
-        : "";
-      newRemovedData.gasifyCheckDate2 = newRemovedData.gasifyCheckDate2
-        ? formatDateToStringWithDash(newRemovedData.gasifyCheckDate2)
-        : "";
-      newRemovedData.tankFirstDate1 = newRemovedData.tankFirstDate1
-        ? formatDateToStringWithDash(newRemovedData.tankFirstDate1)
-        : "";
-      newRemovedData.tankFirstDate2 = newRemovedData.tankFirstDate2
-        ? formatDateToStringWithDash(newRemovedData.tankFirstDate2)
-        : "";
-
-      newRemovedData.tankInsideDate1 = newRemovedData.tankInsideDate1
-        ? formatDateToStringWithDash(newRemovedData.tankInsideDate1)
-        : "";
-      newRemovedData.tankInsideDate2 = newRemovedData.tankInsideDate2
-        ? formatDateToStringWithDash(newRemovedData.tankInsideDate2)
-        : "";
-
-      newRemovedData.tankOutsideDate1 = newRemovedData.tankOutsideDate1
-        ? formatDateToStringWithDash(newRemovedData.tankOutsideDate1)
-        : "";
-      newRemovedData.tankOutsideDate2 = newRemovedData.tankOutsideDate2
-        ? formatDateToStringWithDash(newRemovedData.tankOutsideDate2)
-        : "";
-
-      newRemovedData.cuRdangaAmt =
-        newRemovedData.cuRdangaType !== "1"
-          ? 0
-          : Number(newRemovedData.cuRdangaAmt);
-      newRemovedData.cuRdanga = Number(newRemovedData.cuRdanga);
-
       try {
-        const response: any = await API.post(path, newRemovedData);
+        const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {
-            setData((prev: any) => [newRemovedData, ...prev]);
+            setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
           } else {
             setData((prev: any) => {
-              prev[selectedRowIndex] = newRemovedData;
+              prev[selectedRowIndex] = formValues;
               return [...prev];
             });
           }
-          setSelected(newRemovedData);
+          setSelected(formValues);
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
@@ -652,7 +604,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Divider />
         {/* 2-1 Wrapper */}
-        <Wrapper grid col={4}>
+        <Wrapper grid col={3} fields="1fr 1fr 2fr">
           <FormGroup>
             <Label className="lable-check">
               <CheckBox
@@ -699,7 +651,7 @@ const Form = React.forwardRef(
           {renderRdangaCalc()}
         </Wrapper>
         {/* 2-2 Wrapper */}
-        <Wrapper grid col={4}>
+        <Wrapper grid col={3} fields="1fr 1fr 2fr">
           <FormGroup>
             <Label className="lable-check">
               <CheckBox
@@ -730,34 +682,6 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label className="lable-check">
               <CheckBox
-                title="시설비"
-                checked={ckCuSisulKum}
-                onChange={(e: any) => setCkCuSisulKum(e.target.checked)}
-              />
-            </Label>
-
-            <Controller
-              control={control}
-              {...register("cuSukumtype")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i120}
-                  readOnly={!ckCuSisulKum}
-                />
-              )}
-            />
-            <p>{selected?.cuSukumType}</p>
-            <p>원</p>
-          </FormGroup>
-
-          <FormGroup>
-            <Label className="lable-check">
-              <CheckBox
                 title="계량기"
                 checked={chkCuMeterKum}
                 onChange={(e: any) => setChkCuMeterKum(e.target.checked)}
@@ -781,9 +705,38 @@ const Form = React.forwardRef(
             />
             <p>원</p>
           </FormGroup>
+
+          <FormGroup style={{ gap: "0" }}>
+            <Label style={{ minWidth: "auto" }}>기본사용료</Label>
+            <Label className="lable-check" style={{ minWidth: "98px" }}>
+              <CheckBox title="적용" register={{ ...register("cuBaGageYn") }} />
+            </Label>
+
+            <Input
+              register={register("cuBaGageM3")}
+              textAlign="right"
+              inputSize={InputSize.i50}
+            />
+            <p>m3이하 일때</p>
+            <Controller
+              control={control}
+              {...register("cuBaGageKum")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i120}
+                />
+              )}
+            />
+            <p>원 적용</p>
+          </FormGroup>
         </Wrapper>
 
-        <Wrapper grid col={4}>
+        <Wrapper grid col={3} fields="1fr 1fr 2fr">
           <FormGroup>
             <Label className="lable-check">
               <CheckBox
@@ -815,7 +768,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label className="lable-check">
               <CheckBox
-                title="할인율----"
+                title="할인율"
                 checked={chkCuCdc}
                 onChange={(e: any) => setChkCuCdc(e.target.checked)}
               />
@@ -861,7 +814,7 @@ const Form = React.forwardRef(
           </FormGroup>
         </Wrapper>
         {/* 2-4 Wrapper */}
-        <Wrapper grid col={4}>
+        <Wrapper grid col={3} fields="1fr 1fr 2fr">
           <FormGroup>
             <Label className="lable-check">
               <CheckBox

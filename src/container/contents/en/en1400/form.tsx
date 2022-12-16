@@ -17,8 +17,7 @@ import {
 } from "components/form/style";
 import { IBUPUM } from "./model";
 import { schema } from "./validation";
-import { formatCurrencyRemoveComma } from "helpers/dateFormat";
-import { currencyMask } from "helpers/currency";
+import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
 import { InputSize } from "components/componentsType";
 
 interface IForm {

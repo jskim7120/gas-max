@@ -23,8 +23,7 @@ import {
   Label,
 } from "components/form/style";
 import { InputSize } from "components/componentsType";
-import { formatCurrencyRemoveComma } from "helpers/dateFormat";
-import { currencyMask } from "helpers/currency";
+import { formatCurrencyRemoveComma, currencyMask } from "helpers/currency";
 
 interface IForm {
   selected: any;

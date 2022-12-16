@@ -24,15 +24,11 @@ import {
 import CheckBox from "components/checkbox";
 import { ICAR } from "./model";
 import { schema } from "./validation";
-import {
-  formatDate,
-  formatDateByRemoveDash,
-  formatCurrencyRemoveComma,
-} from "helpers/dateFormat";
+import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
 import CustomDatePicker from "components/customDatePicker/customdate2";
 import { InputSize } from "components/componentsType";
 import { InfoText } from "components/text";
-import { currencyMask } from "helpers/currency";
+import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
 import {
   Item,
   RadioButton,
