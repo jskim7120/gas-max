@@ -66,6 +66,7 @@ export const columns0 = [
     header: {
       text: "거래처",
     },
+    styleName: "rg-left-column",
   },
 
   {
@@ -76,6 +77,7 @@ export const columns0 = [
     header: {
       text: "전화번호",
     },
+    styleName: "rg-left-column",
   },
 
   {
@@ -96,6 +98,7 @@ export const columns0 = [
     header: {
       text: "소비자형태",
     },
+    styleName: "rg-left-column",
   },
 
   {
@@ -116,6 +119,7 @@ export const columns0 = [
     header: {
       text: "계약번호",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "cuSwName",
@@ -125,5 +129,6 @@ export const columns0 = [
     header: {
       text: "담당사원",
     },
+    styleName: "rg-left-column",
   },
 ];
