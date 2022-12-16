@@ -18,6 +18,10 @@ export const fields0 = [
     dataType: ValueType.TEXT,
   },
   {
+    fieldName: "cuHp",
+    dataType: ValueType.TEXT,
+  },
+  {
     fieldName: "cuAddrn2",
     dataType: ValueType.TEXT,
   },
@@ -70,6 +74,7 @@ export const columns0 = [
     header: {
       text: "거래처",
     },
+    styleName: "rg-left-column",
   },
 
   {
@@ -79,6 +84,16 @@ export const columns0 = [
     width: "120",
     header: {
       text: "전화번호",
+    },
+    styleName: "rg-left-column",
+  },
+  {
+    name: "cuHp",
+    fieldName: "cuHp",
+    type: "data",
+    width: "120",
+    header: {
+      text: "핸드폰",
     },
   },
 
@@ -90,6 +105,7 @@ export const columns0 = [
     header: {
       text: "주소",
     },
+    styleName: "rg-left-column",
   },
 
   {
@@ -100,6 +116,7 @@ export const columns0 = [
     header: {
       text: "담당사원",
     },
+    styleName: "rg-left-column",
   },
 
   {
