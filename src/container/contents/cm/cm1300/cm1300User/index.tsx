@@ -47,7 +47,6 @@ function FormCM1300User({
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
   const { isDelete } = useSelector((state) => state.modal);
-  const { modalIsOpen } = useSelector((state) => state.modal);
 
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
@@ -94,12 +93,10 @@ function FormCM1300User({
   }, [isDelete.isDelete]);
 
   useEffect(() => {
-    fetchSearchData(selectedUser);
+    if (Object.keys(selectedUser).length > 0) {
+      fetchSearchData(selectedUser);
+    }
   }, [selectedUser]);
-
-  useEffect(() => {
-    fetchSearchData(selectedUser);
-  }, [modalIsOpen]);
 
   const fetchSearchData = async (selectedUser: any) => {
     try {
@@ -173,6 +170,7 @@ function FormCM1300User({
           <TableContainer ref={realgridElement}></TableContainer>
           <Divider />
           <Form
+            userData={data}
             selected={selected}
             ref={formRef}
             fetchData={fetchSearchData}

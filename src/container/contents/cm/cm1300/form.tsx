@@ -43,7 +43,6 @@ interface IForm {
   setSelected: any;
   setSelectedRowIndex: any;
 }
-const base = "/app/CM1300/";
 
 const radioOptions = [
   {

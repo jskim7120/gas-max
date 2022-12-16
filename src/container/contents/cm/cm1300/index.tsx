@@ -117,10 +117,6 @@ function CM1300({
     }
   }, [isDelete.isDelete]);
 
-  useEffect(() => {
-    fetchListData();
-  }, []);
-
   const onSearchSubmit = async (data: any, para: any) => {
     fetchSearchData(data);
   };
@@ -154,7 +150,7 @@ function CM1300({
           setLoading(false);
         }
       } else {
-        if (data === undefined) setLoading(false);
+        fetchListData();
       }
       if (data) {
         setData(data);

@@ -25,6 +25,7 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  userData: any;
 }
 const base = "/app/CM1300/65/";
 
@@ -37,6 +38,7 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      userData,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -66,6 +68,26 @@ const Form = React.forwardRef(
         resetForm("clear");
       }
     }, [selected]);
+
+    useEffect(() => {
+      if (userData.length > 0) {
+        let initData: any = {};
+        for (const [key, value] of Object.entries(userData[0])) {
+          initData[key] = value;
+        }
+        reset({
+          ...initData,
+          cuCode1: userData[0]?.cuCode?.replaceAll("-", "").substring(0, 3),
+          cuCode2: userData[0]?.cuCode?.replaceAll("-", "").substring(3, 8),
+        });
+      } else
+        reset({
+          cuCode1: "",
+          cuCode2: "",
+          cuUserName: "",
+          cuName: "",
+        });
+    }, [userData]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
