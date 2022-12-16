@@ -1,3 +1,8 @@
+export interface ISEARCH {
+  areaCode: string;
+  buGubun: string;
+  buName: string;
+}
 export interface IGR1600SEARCH {
   areaCode: string;
   buAddr1: string;
