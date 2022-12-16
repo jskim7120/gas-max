@@ -80,13 +80,6 @@ function FormCM1300User({
       setSelected(data[itemIndex]);
       setSelectedRowIndex(itemIndex);
     };
-
-    gv.onCellDblClicked = function (grid: any, e: any) {
-      const itemIndex: any = e.dataRow;
-      setSelected(data[itemIndex]);
-      handleOpenPopup(data[itemIndex]["cuCode"], data[itemIndex]["areaCode"]);
-    };
-
     return () => {
       dp.clearRows();
       gv.destroy();
@@ -111,15 +104,17 @@ function FormCM1300User({
   const fetchSearchData = async (selectedUser: any) => {
     try {
       const { data } = await API.get(CM130065, {
-        params: { aptCode: selectedUser.aptCode },
+        params: {
+          areaCode: selectedUser.areaCode,
+          aptCode: selectedUser.aptCode,
+        },
       });
-      if (data.length > 0) {
-        data[0].areaCode = selectedUser.areaCode;
-      }
-      if (data) {
-        setData(data);
+      if (data.userCustomer) {
+        setData(data.userCustomer);
         setSelected(data[0]);
         setSelectedRowIndex(0);
+      } else {
+        setData([]);
       }
     } catch (err) {
       console.log("CM1300 data search fetch error =======>", err);
@@ -135,18 +130,6 @@ function FormCM1300User({
       dispatch(closeModal());
     } catch (error) {}
   }
-
-  const handleOpenPopup = async (cuCode: string, areaCode: string) => {
-    try {
-      dispatch(
-        addCM1105({
-          cuCode: cuCode,
-          areaCode: areaCode,
-        })
-      );
-      dispatch(openModal({ type: "cm1105Modal" }));
-    } catch (err: any) {}
-  };
 
   if (!data) return <p>...Loading</p>;
 

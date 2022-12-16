@@ -18,7 +18,12 @@ import CheckBox from "components/checkbox";
 import { ICM1300 } from "./model";
 import DaumAddress from "components/daum";
 import { schema } from "./validation";
-import { CM1300INSERT, CM1300UPDATE, CM1300DELETE } from "app/path";
+import {
+  CM1300INSERT,
+  CM1300UPDATE,
+  CM1300DELETE,
+  CM1300INSERTSEQ,
+} from "app/path";
 import { InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
@@ -128,14 +133,41 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
     }));
 
-    const resetForm = (type: string) => {
+    const fetchCodes = async (areaCode: string) => {
+      try {
+        const response: any = await API.get(CM1300INSERTSEQ, {
+          params: { areaCode: areaCode },
+        });
+        if (
+          response.status === 200 &&
+          response.data.tempAptCode[0]?.tempAptCode
+        ) {
+          return response.data;
+        } else {
+          toast.error("can't get aptCode", {
+            autoClose: 500,
+          });
+        }
+      } catch (err) {
+        toast.error("Error occured during get aptCode", {
+          autoClose: 500,
+        });
+      }
+      return null;
+    };
+
+    const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         let newData: any = {};
         if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
+          const data = await fetchCodes(selected.areaCode);
+          if (data) {
+            for (const [key, value] of Object.entries(selected)) {
+              newData[key] = null;
+            }
+            reset({ ...newData, aptCode: data?.tempAptCode[0]?.tempAptCode });
           }
-          reset(newData);
+          return;
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -179,7 +211,6 @@ const Form = React.forwardRef(
     };
 
     const submit = async (data: ICM1300) => {
-      console.log("working");
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? CM1300INSERT : CM1300UPDATE;
       const formValues = getValues();
