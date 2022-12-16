@@ -15,7 +15,7 @@ import {
   ExcelIcon,
   ResetGray,
 } from "components/allSvgIcon";
-import { SearchWrapper } from "./style";
+import { SearchWrapper } from "../../commonStyle";
 import {
   Input,
   Select,
@@ -33,7 +33,7 @@ import {
   FieldKind,
 } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker/test-datepicker";
-import Grid from "../../cm/cm9002/grid";
+import Grid from "./grid";
 import { columns, fields } from "./data";
 // import {
 //   Plus,
@@ -147,13 +147,13 @@ function CM9002({
           </Select>
         </div>
       </DetailHeader>
-      <WrapperContent>
+      <WrapperContent style={{ height: `calc(100% - 76px)` }}>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper style={{ alignItems: "baseline" }}>
-            <div style={{ width: "80%" }}>
-              <Wrapper grid col={6} fields="1fr 1fr 1fr 2fr 1fr 1fr">
+            <div>
+              <Wrapper grid col={6} fields="1fr 1fr 1fr 1.3fr 1fr 1fr">
                 <FormGroup>
-                  <Label>보고서종류</Label>
+                  <Label style={{ minWidth: "90px" }}>보고서종류</Label>
                   <Select
                     width={InputSize.i130}
                     {...register("reportKind")}
@@ -169,7 +169,7 @@ function CM9002({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label>거래구분</Label>
+                  <Label style={{ minWidth: "90px" }}>거래구분</Label>
                   <Select
                     {...register("cuType")}
                     kind={FieldKind.BORDER}
@@ -184,7 +184,7 @@ function CM9002({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label>지역분류</Label>
+                  <Label style={{ minWidth: "90px" }}>지역분류</Label>
                   <Select
                     {...register("cuJyCode")}
                     kind={FieldKind.BORDER}
@@ -199,7 +199,7 @@ function CM9002({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label>담당사원</Label>
+                  <Label style={{ minWidth: "90px" }}>담당사원</Label>
                   <Select
                     {...register("swCode")}
                     kind={FieldKind.BORDER}
@@ -214,7 +214,7 @@ function CM9002({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label>관리책임자</Label>
+                  <Label style={{ minWidth: "90px" }}>관리책임자</Label>
                   <Select
                     {...register("cuCustgubun")}
                     kind={FieldKind.BORDER}
@@ -230,7 +230,7 @@ function CM9002({
                   </Select>
                 </FormGroup>
                 <FormGroup>
-                  <Label>검사대상</Label>
+                  <Label style={{ minWidth: "90px" }}>검사대상</Label>
                   <Select
                     {...register("cuGumsa")}
                     kind={FieldKind.BORDER}
@@ -244,9 +244,9 @@ function CM9002({
                   </Select>
                 </FormGroup>
               </Wrapper>
-              <Wrapper grid col={6} fields="1fr 1fr 1fr 2fr 1fr 1fr">
+              <Wrapper grid col={6} fields="1fr 1fr 1fr 1.3fr 1fr 1fr">
                 <FormGroup>
-                  <Label>미수구</Label>
+                  <Label style={{ minWidth: "90px" }}>미수구</Label>
                   <Select
                     {...register("cuMisu")}
                     kind={FieldKind.BORDER}
@@ -263,7 +263,7 @@ function CM9002({
                   </Select>
                 </FormGroup>
                 <FormGroup>
-                  <Label>소비자형태</Label>
+                  <Label style={{ minWidth: "90px" }}>소비자형태</Label>
                   <Select
                     {...register("cuCutype")}
                     kind={FieldKind.BORDER}
@@ -280,7 +280,7 @@ function CM9002({
                   </Select>
                 </FormGroup>
                 <FormGroup>
-                  <Label>거래상태</Label>
+                  <Label style={{ minWidth: "90px" }}>거래상태</Label>
                   <Select
                     {...register("cuStae")}
                     kind={FieldKind.BORDER}
@@ -332,7 +332,7 @@ function CM9002({
                   />
                 </Field>
                 <FormGroup>
-                  <Label>수금방법</Label>
+                  <Label style={{ minWidth: "90px" }}>수금방법</Label>
                   <Select
                     {...register("cuSukumtype")}
                     kind={FieldKind.BORDER}
@@ -348,7 +348,7 @@ function CM9002({
                   </Select>
                 </FormGroup>
                 <FormGroup>
-                  <Label>장부구분</Label>
+                  <Label style={{ minWidth: "90px" }}>장부구분</Label>
                   <Select
                     {...register("cuJangbu")}
                     kind={FieldKind.BORDER}
@@ -364,7 +364,10 @@ function CM9002({
               </Wrapper>
             </div>
 
-            <div className="button-wrapper" style={{ flexDirection: "row" }}>
+            <div
+              className="button-wrapper"
+              style={{ flexDirection: "row", gap: "0px" }}
+            >
               <Button
                 text="검색"
                 icon={!loading && <MagnifyingGlass />}

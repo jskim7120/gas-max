@@ -407,6 +407,11 @@ export const FormGroup = styled.div<{
   .maskedInput {
     ${InputCommonProp};
   }
+
+  p {
+    font-family: "NotoSansKRRegular";
+    font-size: 12px;
+  }
 `;
 
 export const Label = styled.label<{
@@ -564,6 +569,11 @@ export const Select = styled.select<{
   &:focus {
     background: #fffacd;
   }
+
+  &:disabled {
+    background: #ebeae6;
+  }
+
   option {
     background: #fff;
   }

@@ -37,6 +37,7 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
+    gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
 
     gv.setCurrent({
@@ -54,7 +55,6 @@ function Grid({
       gv.destroy();
       dp.destroy();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (

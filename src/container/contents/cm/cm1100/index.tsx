@@ -27,7 +27,7 @@ import {
   Label,
 } from "components/form/style";
 import { DetailHeader, WrapperContent } from "../../commonStyle";
-import { SearchWrapper } from "./cm100Style";
+import { SearchWrapper } from "../../commonStyle";
 import API from "app/axios";
 import Grid from "./grid";
 import { yupResolver } from "@hookform/resolvers/yup";

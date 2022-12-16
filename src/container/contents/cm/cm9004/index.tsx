@@ -6,7 +6,7 @@ import { DetailHeader, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { Reset, MagnifyingGlass, ExcelIcon } from "components/allSvgIcon";
-import { SearchWrapper } from "./style";
+import { SearchWrapper } from "../../commonStyle";
 import CheckBox from "components/checkbox";
 import {
   Select,
@@ -207,7 +207,10 @@ function CM9004({
               </Wrapper>
             </div>
 
-            <div className="button-wrapper">
+            <div
+              className="button-wrapper"
+              style={{ flexDirection: "row", gap: "0px" }}
+            >
               <Button
                 text="등록"
                 icon={!loading && <MagnifyingGlass />}
