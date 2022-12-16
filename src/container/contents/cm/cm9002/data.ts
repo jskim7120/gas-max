@@ -6,15 +6,35 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
+    fieldName: "cuCode",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuViewName",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuTel",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuHp",
+    dataType: ValueType.TEXT,
+  },
+  {
     fieldName: "cuAddrn2",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuCmisu",
+    fieldName: "cuSwName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuCode",
+    fieldName: "cuJmisu",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuCmisu",
     dataType: ValueType.TEXT,
   },
   {
@@ -30,35 +50,15 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuHp",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuJmisu",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuSupplydate",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuSwName",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuTel",
-    dataType: ValueType.TEXT,
-  },
-  {
     fieldName: "cuTypeName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuViewName",
+    fieldName: "cuStaeName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuStaeName",
+    fieldName: "cuSupplyDate",
     dataType: ValueType.TEXT,
   },
 ];
@@ -143,12 +143,22 @@ export const columns = [
     styleName: "rg-right-column",
   },
   {
+    name: "cuCmisu",
+    fieldName: "cuCmisu",
+    type: "data",
+    width: "40",
+    header: {
+      text: "체적미수",
+    },
+    styleName: "rg-right-column",
+  },
+  {
     name: "cuCutypeName",
     fieldName: "cuCutypeName",
     type: "data",
     width: "80",
     header: {
-      text: "체적미수",
+      text: "소비자형태",
     },
     styleName: "rg-right-column",
   },
@@ -158,7 +168,7 @@ export const columns = [
     type: "data",
     width: "80",
     header: {
-      text: "소비자형태",
+      text: "공급계약",
     },
     styleName: "rg-left-column",
   },
@@ -168,7 +178,7 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "공급계약",
+      text: "계약번호",
     },
     styleName: "rg-left-column",
   },
@@ -178,7 +188,7 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "계약번호",
+      text: "거래구분",
     },
     styleName: "rg-left-column",
   },
@@ -188,7 +198,7 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "거래구분",
+      text: "거래상태",
     },
     styleName: "rg-left-column",
   },
