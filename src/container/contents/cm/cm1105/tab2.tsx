@@ -16,6 +16,7 @@ import CustomDatePicker from "components/customDatePicker/test-datepicker";
 import { InputSize } from "components/componentsType";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { SearchBtn } from "components/daum";
+import CheckBox from "components/checkbox";
 
 function Tab2({
   customerInfo,
@@ -139,14 +140,6 @@ function Tab2({
 
           <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Field flex>
-              {/* <Input
-                label="연체율"
-                register={register("cuPer")}
-                inputSize={InputSize.i50}
-                textAlign="right"
-                maxLength="3"
-              /> */}
-
               <Controller
                 control={control}
                 {...register("cuPer")}
@@ -166,13 +159,6 @@ function Tab2({
               <p style={{ marginLeft: "-3px" }}>%</p>
             </Field>
             <Field flex>
-              {/* <Input
-                label="할인율"
-                register={register("cuCdc")}
-                textAlign="right"
-                inputSize={InputSize.i120}
-                maxLength="3"
-              /> */}
               <Controller
                 control={control}
                 {...register("cuCdc")}
@@ -199,13 +185,6 @@ function Tab2({
 
           <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Field flex>
-              {/* <Input
-                label="관리비"
-                register={register("cuAnkum")}
-                textAlign="right"
-                formatNumber="comNumber"
-                inputSize={InputSize.i120}
-              /> */}
               <Controller
                 control={control}
                 {...register("cuAnkum")}
@@ -224,13 +203,6 @@ function Tab2({
               <p style={{ marginLeft: "-3px" }}>원</p>
             </Field>
             <Field flex>
-              {/* <Input
-                label="시설비"
-                register={register("cuSisulkum")}
-                textAlign="right"
-                formatNumber="comNumber"
-                inputSize={InputSize.i120}
-              /> */}
               <Controller
                 control={control}
                 {...register("cuSisulkum")}
@@ -249,13 +221,6 @@ function Tab2({
               <p style={{ marginLeft: "-3px" }}>원</p>
             </Field>
             <Field flex>
-              {/* <Input
-                label="계량기교체비"
-                register={register("cuMeterkum")}
-                textAlign="right"
-                formatNumber="comNumber"
-                inputSize={InputSize.i120}
-              /> */}
               <Controller
                 control={control}
                 {...register("cuMeterkum")}
@@ -287,12 +252,6 @@ function Tab2({
               </Select>
             </FormGroup>
             <Field flex style={{ alignItems: "center" }}>
-              {/* <Input
-                label="검침일"
-                register={register("cuGumdate")}
-                inputSize={InputSize.i60}
-                maxLength="2"
-              /> */}
               <Controller
                 control={control}
                 {...register("cuGumdate")}
@@ -309,7 +268,37 @@ function Tab2({
               />
               <p>일</p>
             </Field>
-            <Label style={{ width: "105px" }}></Label>
+            <FormGroup style={{ gap: "0" }}>
+              <Label>기본사용료</Label>
+              <Label className="lable-check" style={{ minWidth: "auto" }}>
+                <CheckBox
+                  title="적용"
+                  register={{ ...register("cuBaGageYn") }}
+                />
+              </Label>
+
+              <Input
+                register={register("cuBaGageM3")}
+                textAlign="right"
+                inputSize={InputSize.i50}
+              />
+              <p>m3이하 일때</p>
+              <Controller
+                control={control}
+                {...register("cuBaGageKum")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    mask={currencyMask}
+                    textAlign="right"
+                    inputSize={InputSize.i120}
+                  />
+                )}
+              />
+              <p>원 적용</p>
+            </FormGroup>
           </Wrapper>
         </Field>
       </Field>
@@ -386,11 +375,7 @@ function Tab2({
             <Input label="계량기번호" register={register("cuMeterNo")} />
             <Field flex style={{ alignItems: "center" }}>
               <Label>유효기간</Label>
-              {/* <CustomDatePicker
-                value={cuMeterTurm}
-                setValue={setCuMeterTurm}
-                name="cuMeterTurm"
-              /> */}
+
               <Controller
                 control={control}
                 {...register("cuMeterTurm")}
@@ -418,11 +403,7 @@ function Tab2({
           <Wrapper grid fields={"1fr 1fr 2fr"}>
             <Field flex style={{ alignItems: "center" }}>
               <Label>교체일자</Label>
-              {/* <CustomDatePicker
-                value={cuMeterDt}
-                setValue={setCuMeterDt}
-                name="cuMeterDt"
-              /> */}
+
               <Controller
                 control={control}
                 {...register("cuMeterDt")}
@@ -433,11 +414,7 @@ function Tab2({
             </Field>
             <Field flex style={{ alignItems: "center" }}>
               <Label>교체예정일</Label>
-              {/* <CustomDatePicker
-                value={cuMdate}
-                setValue={setCuMdate}
-                name="cuMdate"
-              /> */}
+
               <Controller
                 control={control}
                 {...register("cuMdate")}

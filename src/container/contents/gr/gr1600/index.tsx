@@ -63,8 +63,11 @@ function GR1600({
     }
   }, [dataCommonDic]);
 
-  const fetchData = async (params: ISEARCH) => {
+  const fetchData = async (params: any) => {
     try {
+      if (params?.buGubun && params.buGubun === "9") {
+        delete params.buGubun;
+      }
       setLoading(true);
       const { data: SEARCHDATA } = await API.get(GR1600SEARCH, {
         params: params,

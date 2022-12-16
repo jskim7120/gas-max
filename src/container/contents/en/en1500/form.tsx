@@ -19,8 +19,7 @@ import {
 import { IconInfo } from "components/allSvgIcon";
 import { IJNOTRY2 } from "./model";
 import { schema } from "./validation";
-import { formatCurrencyRemoveComma } from "helpers/dateFormat";
-import { currencyMask } from "helpers/currency";
+import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
 import { VolReading, Container, RubeUnit, BasicItems } from "../en1500/style";
 
 import API from "app/axios";

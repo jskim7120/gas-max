@@ -16,3 +16,8 @@ const defaultMaskOptions = {
 export const currencyMask = createNumberMask({
   ...defaultMaskOptions,
 });
+
+export function formatCurrencyRemoveComma(num) {
+  num = parseFloat(String(num).replaceAll(",", ""));
+  return num;
+}

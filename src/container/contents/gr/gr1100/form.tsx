@@ -23,7 +23,7 @@ import {
   Label,
 } from "components/form/style";
 import { InputSize } from "components/componentsType";
-import { formatCurrencyRemoveComma } from "helpers/dateFormat";
+import { formatCurrencyRemoveComma } from "helpers/currency";
 import TableData from "./table/index";
 
 interface IForm {

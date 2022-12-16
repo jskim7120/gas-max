@@ -8,31 +8,34 @@ export interface ICM1200SEARCH {
   areaCode: string;
   cuAddr1: string;
   cuAddr2: string;
-  cuAnkum: number;
+  cuAnkum: number | undefined;
   cuAptnameYn: string;
-  cuCdc: number;
+  cuBaGageKum: number | undefined;
+  cuBaGageM3: number | undefined;
+  cuBaGageYn: string;
+  cuCdc: number | undefined;
   cuCircuitDate: string;
   cuCno: string;
   cuCode: string;
-  cuCount: number;
+  cuCount: number | undefined;
   cuCustgubun: string;
   cuCylinderName: string;
-  cuCylinderQty: number;
+  cuCylinderQty: number | undefined;
   cuCylinderType: string;
   cuFinishDate: string;
   cuGumTurm: string;
   cuGumdate: string;
   cuJyCode: string;
-  cuMeterkum: number;
+  cuMeterkum: number | undefined;
   cuName: string;
-  cuPer: number;
-  cuRdanga: number;
-  cuRdangaAmt: number;
+  cuPer: number | undefined;
+  cuRdanga: number | undefined;
+  cuRdangaAmt: number | undefined;
   cuRdangaSign: string;
   cuRdangaType: string;
   cuRh2o: string;
   cuScheduleDate: string;
-  cuSisulkum: number;
+  // cuSisulkum: number;
   cuSukumtype: string;
   cuSwCode: string;
   cuTankYn: string;
@@ -52,7 +55,7 @@ export interface ICM1200SEARCH {
   gasifyVol1: string;
   gasifyVol2: string;
   queryType: string;
-  seq: number;
+  seq: number | undefined;
   tankCuCd1: string;
   tankCuCd2: string;
   tankFirstDate1: string;
@@ -138,3 +141,81 @@ export interface ICM120065SUPPLYTYPE {
   tankOutsideDate2: string;
   tankInsideDate2: string;
 }
+
+export const emptyObj = {
+  areaCode: "",
+  cuAddr1: "",
+  cuAddr2: "",
+  cuAnkum: undefined,
+  cuAptnameYn: "",
+  cuBaGageKum: undefined,
+  cuBaGageM3: undefined,
+  cuBaGageYn: "",
+  cuCdc: undefined,
+  cuCircuitDate: "",
+  cuCno: "",
+  cuCode: "",
+  cuCount: undefined,
+  cuCustgubun: "",
+  cuCylinderName: "",
+  cuCylinderQty: undefined,
+  cuCylinderType: "",
+  cuFinishDate: "",
+  cuGumTurm: "",
+  cuGumdate: "",
+  cuJyCode: "",
+  cuMeterkum: undefined,
+  cuName: "",
+  cuPer: undefined,
+  cuRdanga: undefined,
+  cuRdangaAmt: undefined,
+  cuRdangaSign: "",
+  cuRdangaType: "",
+  cuRh2o: "",
+  cuScheduleDate: "",
+  // cuSisulkum:"",
+  cuSukumtype: "",
+  cuSwCode: "",
+  cuTankYn: "",
+  cuTransmCd: "",
+  cuTransmCuCd: "",
+  cuZipcode: "",
+  gasifyCheckDate1: "",
+  gasifyCheckDate2: "",
+  gasifyCo1: "",
+  gasifyCo2: "",
+  gasifyMakeDate1: "",
+  gasifyMakeDate2: "",
+  gasifyPower1: "",
+  gasifyPower2: "",
+  gasifySno1: "",
+  gasifySno2: "",
+  gasifyVol1: "",
+  gasifyVol2: "",
+  queryType: "",
+  seq: undefined,
+  tankCuCd1: "",
+  tankCuCd2: "",
+  tankFirstDate1: "",
+  tankFirstDate2: "",
+  tankInsideDate1: "",
+  tankInsideDate2: "",
+  tankMakeCo1: "",
+  tankMakeCo2: "",
+  tankMakeDate1: "",
+  tankMakeDate2: "",
+  tankMakeSno1: "",
+  tankMakeSno2: "",
+  tankMax1: "",
+  tankMax2: "",
+  tankOutsideDate1: "",
+  tankOutsideDate2: "",
+  tankRcv1: "",
+  tankRcv2: "",
+  tankSno1: "",
+  tankSno2: "",
+  tankTransmCd1: "",
+  tankTransmCd2: "",
+  tankVol1: "",
+  tankVol2: "",
+} as ICM1200SEARCH;

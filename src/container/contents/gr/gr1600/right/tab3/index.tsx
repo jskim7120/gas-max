@@ -82,8 +82,8 @@ function Tab3({
           params: {
             areaCode: areaCode,
             buCode: buCode,
-            jpGubun: params && params.bpGubun,
-            jpName: params && params.bpName,
+            bpGubun: params && params.bpGubun,
+            bpName: params && params.bpName,
           },
         });
 
