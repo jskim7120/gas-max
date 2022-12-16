@@ -95,6 +95,7 @@ export const columns0 = [
     header: {
       text: "핸드폰",
     },
+    styleName: "rg-left-column",
   },
 
   {
