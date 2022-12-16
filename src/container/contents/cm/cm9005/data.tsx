@@ -51,6 +51,7 @@ export const columns1 = [
     fieldName: "cuViewName",
     type: "data",
     width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -60,6 +61,7 @@ export const columns1 = [
     fieldName: "cuTel",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "전화",
     },
@@ -79,6 +81,7 @@ export const columns1 = [
     fieldName: "cuJpName",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "사용품목",
     },

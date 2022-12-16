@@ -111,6 +111,7 @@ export const columns1 = [
     fieldName: "cuViewName",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "거래처",
     },
@@ -121,6 +122,7 @@ export const columns1 = [
     fieldName: "cuTel",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "전화번호",
     },
@@ -131,6 +133,7 @@ export const columns1 = [
     fieldName: "cuNo",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "사업자번호",
     },
@@ -141,6 +144,7 @@ export const columns1 = [
     fieldName: "cuSangho",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "상호(법인명)",
     },
@@ -151,6 +155,7 @@ export const columns1 = [
     fieldName: "cuSajang",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "대표자",
     },
@@ -161,6 +166,7 @@ export const columns1 = [
     fieldName: "cuSaaddr",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "사업장 주소",
     },
@@ -170,6 +176,7 @@ export const columns1 = [
     fieldName: "cuUptae",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "업태",
     },
@@ -179,6 +186,7 @@ export const columns1 = [
     fieldName: "cuJongMok",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "종목",
     },
@@ -188,6 +196,7 @@ export const columns1 = [
     fieldName: "cuSeSawon",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "담당자",
     },
@@ -197,6 +206,7 @@ export const columns1 = [
     fieldName: "cuSeEmail",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "E-mail",
     },
@@ -224,6 +234,7 @@ export const columns1 = [
     fieldName: "cuSeFaxNo",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "발행주기",
     },
@@ -269,6 +280,7 @@ export const columns1 = [
     fieldName: "cuGongSano",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "공급사업자",
     },
@@ -278,6 +290,7 @@ export const columns1 = [
     fieldName: "cuTypeName",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "거래구분",
     },

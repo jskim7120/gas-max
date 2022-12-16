@@ -5,7 +5,12 @@ import API from "app/axios";
 import { DetailHeader, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { Reset, MagnifyingGlass, ExcelIcon } from "components/allSvgIcon";
+import {
+  Reset,
+  MagnifyingGlass,
+  ExcelIcon,
+  ResetGray,
+} from "components/allSvgIcon";
 import { SearchWrapper } from "../../commonStyle";
 import CheckBox from "components/checkbox";
 import {
@@ -52,14 +57,7 @@ function CM9004({
     mode: "onSubmit",
   });
   useEffect(() => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-      cuGong: dataCommonDic?.cuGong[0].code,
-      cuType: dataCommonDic?.cuType[0].code,
-      cuJyCode: dataCommonDic?.cuJyCode[0].code,
-      swCode: dataCommonDic?.swCode[0].code,
-      cuStae: dataCommonDic?.cuStae[0].code,
-    });
+    resetForm();
   }, [dataCommonDic]);
 
   const fetchData = async (params: any) => {
@@ -86,6 +84,24 @@ function CM9004({
 
   const submit = (data: ISEARCH) => {
     fetchData(data);
+  };
+
+  const resetForm = () => {
+    if (dataCommonDic !== undefined) {
+      reset({
+        areaCode: dataCommonDic?.areaCode[0].code,
+        cuGong: dataCommonDic?.cuGong[0].code,
+        cuType: dataCommonDic?.cuType[0].code,
+        cuJyCode: dataCommonDic?.cuJyCode[0].code,
+        swCode: dataCommonDic?.swCode[0].code,
+        cuStae: dataCommonDic?.cuStae[0].code,
+      });
+    }
+  };
+
+  const cancel = () => {
+    resetForm();
+    setData([]);
   };
 
   return (
@@ -209,12 +225,12 @@ function CM9004({
 
             <div
               className="button-wrapper"
-              style={{ flexDirection: "row", gap: "0px" }}
+              style={{ flexDirection: "row", gap: "0px", marginRight: "15px" }}
             >
               <Button
-                text="등록"
+                text="검색"
                 icon={!loading && <MagnifyingGlass />}
-                color={ButtonColor.SECONDARY}
+                color={ButtonColor.DANGER}
                 type="submit"
                 loader={
                   loading && (
@@ -231,16 +247,16 @@ function CM9004({
                 style={{ marginRight: "10px" }}
               />
               <Button
-                text="수정"
-                icon={<Reset color="#707070" />}
+                text="취소"
+                icon={<ResetGray color="#707070" />}
                 style={{ marginRight: "10px" }}
                 type="button"
                 color={ButtonColor.LIGHT}
-                onClick={() => {}}
+                onClick={cancel}
               />
               <Button
-                text="삭제"
-                icon={<ExcelIcon />}
+                text="엑셀"
+                icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
               />
