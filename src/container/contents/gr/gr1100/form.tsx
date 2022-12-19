@@ -3,7 +3,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { GR1100INSERT, GR1100UPDATE, GR1100DELETE, GR110065 } from "app/path";
+import {
+  GR1100INSERT,
+  GR1100UPDATE,
+  GR1100DELETE,
+  GR110065,
+  GR1100INSERTSEQ,
+} from "app/path";
 import DaumAddress from "components/daum";
 import InfoPerson from "assets/image/infoPerson.png";
 import {
@@ -23,7 +29,7 @@ import {
   Label,
 } from "components/form/style";
 import { InputSize } from "components/componentsType";
-import { formatCurrencyRemoveComma } from "helpers/currency";
+import { currencyMask } from "helpers/currency";
 import TableData from "./table/index";
 
 interface IForm {
@@ -77,6 +83,7 @@ const Form = React.forwardRef(
           ...selected,
         });
       }
+      setIsAddBtnClicked(false);
     }, [selected]);
 
     useEffect(() => {
@@ -108,14 +115,35 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
     }));
 
-    const resetForm = (type: string) => {
+    const fetchCodes = async () => {
+      try {
+        const response: any = await API.get(GR1100INSERTSEQ);
+        if (response.status === 200 && response.data.buCode) {
+          return response.data.buCode;
+        } else {
+          toast.error("can't get aptCode", {
+            autoClose: 500,
+          });
+        }
+      } catch (err) {
+        toast.error("Error occured during get aptCode", {
+          autoClose: 500,
+        });
+      }
+      return null;
+    };
+
+    const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         let newData: any = {};
         if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
+          const data = await fetchCodes();
+          if (data) {
+            for (const [key, value] of Object.entries(selected)) {
+              newData[key] = null;
+            }
           }
-          reset(newData);
+          reset({ ...newData, buCode: data });
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -398,6 +426,7 @@ const Form = React.forwardRef(
               errors={errors["buMisu"]?.message}
               formatNumber="comNumber"
               style={{ textAlign: "right" }}
+              mask={currencyMask}
             />
           </Wrapper>
           <Divider />

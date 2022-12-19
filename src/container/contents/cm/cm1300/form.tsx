@@ -647,7 +647,6 @@ const Form = React.forwardRef(
             </FormGroup>
           </Field>
         </Wrapper>
-        <Divider />
       </form>
     );
   }
