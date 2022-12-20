@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -104,6 +104,7 @@ const Form = React.forwardRef(
       handleSubmit,
       reset,
       formState: { errors },
+      control,
       getValues,
     } = useForm<ISANGPUM>({
       mode: "onChange",
@@ -286,11 +287,31 @@ const Form = React.forwardRef(
           </Wrapper>
 
           <Wrapper grid>
-            <Input
-              label="대표전화"
-              register={register("buTel")}
-              errors={errors["buTel"]?.message}
-              inputSize={InputSize.i110}
+            <Controller
+              control={control}
+              {...register("buTel")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="대표전화"
+                  value={value}
+                  onChange={onChange}
+                  mask={[
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    "-",
+                    /\d/,
+                    /\d/,
+                    "-",
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                  ]}
+                  name={name}
+                />
+              )}
             />
             <Input
               label="Fax 번호"
