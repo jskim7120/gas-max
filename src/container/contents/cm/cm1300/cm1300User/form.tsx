@@ -189,11 +189,13 @@ const Form = React.forwardRef(
               register={register("cuCode1")}
               errors={errors["cuCode1"]?.message}
               inputSize={InputSize.xs}
+              readOnly
             />
             <Input
               register={register("cuCode2")}
               errors={errors["cuCode2"]?.message}
               inputSize={InputSize.xs}
+              readOnly
             />
           </div>
           <Field>

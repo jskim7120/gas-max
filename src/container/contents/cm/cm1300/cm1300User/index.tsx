@@ -16,12 +16,7 @@ import Form from "./form";
 import { ButtonColor } from "components/componentsType";
 import { useDispatch, useSelector } from "app/store";
 import { CM130065 } from "app/path";
-import {
-  Grid2TableContainer,
-  FormContainer,
-  TableContainer,
-  UpdateButtonsContainer2,
-} from "./style";
+import { Grid2TableContainer, FormContainer, TableContainer } from "./style";
 import { Divider } from "components/form/style";
 
 let container: HTMLDivElement;
