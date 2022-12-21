@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import AppTable from "./style";
 
 interface ITable {
@@ -10,7 +10,6 @@ interface ITable {
 
 function Table({ tableHeader, tableData, onClick, style }: ITable) {
   const [clickedRowIndex, setClickedRowIndex] = useState(0);
-  // const data = JSON.parse(JSON.stringify(tableData));
 
   return (
     <AppTable style={style}>
