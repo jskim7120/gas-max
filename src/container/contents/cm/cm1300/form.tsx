@@ -254,6 +254,7 @@ const Form = React.forwardRef(
             register={register("aptCode")}
             errors={errors["aptCode"]?.message}
             inputSize={InputSize.sm}
+            readOnly
           />
           <Field>
             <FormGroup>
