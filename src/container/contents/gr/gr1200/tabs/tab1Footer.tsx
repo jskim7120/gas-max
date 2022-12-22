@@ -2,7 +2,6 @@ import React from "react";
 import { TabLikeHeader, CTable2 } from "../style";
 
 function Tab1Footer({ data }: { data: any }) {
-  console.log("fucking datdaatdada:", data);
   return (
     <div>
       <TabLikeHeader>매입량</TabLikeHeader>

@@ -22,9 +22,11 @@ import { ResetGray, Update, Plus, Trash } from "components/allSvgIcon";
 import { InputSize, ButtonColor } from "components/componentsType";
 import { IDATA65 } from "./model";
 import TabGrid from "./tabs/grid";
-import { openModal } from "app/state/modal/modalSlice";
+import { openModal, addGR1200 } from "app/state/modal/modalSlice";
 import { useDispatch } from "app/store";
 import FooterInfo from "./footer";
+import { toast } from "react-toastify";
+
 const radioOptions = [
   {
     label: "창고",
@@ -40,13 +42,17 @@ function Form({
   dataCommonDic,
   data,
   data65Detail,
+  setData65Detail,
 }: {
   dataCommonDic: any;
   data: any;
   data65Detail: any;
+  setData65Detail: Function;
 }) {
   const dispatch = useDispatch();
   const [tabId, setTabId] = useState(0);
+  const [isAddBtnClicked, setAddBtnClicked] = useState(false);
+  const [rowIndex, setRowIndex] = useState<number | null>(null);
   const { register, handleSubmit, reset, control } = useForm<IDATA65>({
     mode: "onSubmit",
   });
@@ -61,10 +67,53 @@ function Form({
 
       setTabId(data?.bcChitType);
     }
+    setAddBtnClicked(false);
   }, [data]);
 
   const openPopup = () => {
-    dispatch(openModal({ type: "gr1200Modal" }));
+    if (data) {
+      dispatch(
+        addGR1200({
+          areaCode: data.areaCode,
+          bcBuCode: data.bcBuCode,
+          bcChitType: data.bcChitType ? data.bcChitType : "0",
+        })
+      );
+      dispatch(openModal({ type: "gr1200Modal" }));
+    }
+  };
+
+  const addRow = () => {
+    setData65Detail((prev: any) => [
+      ...prev,
+      {
+        bclChungbok: null,
+        bclChungdae: null,
+        bclInc: "",
+        bclInmigum: null,
+        bclInqty: null,
+        bclJpCode: "",
+        bclJpName: "",
+        bclOutc: null,
+        bclOutmigum: "",
+        bclOutqty: null,
+        bclSvyn: "",
+        bclTongdel: null,
+      },
+    ]);
+    setRowIndex(null);
+  };
+
+  const deleteRow = () => {
+    if (rowIndex !== null) {
+      setData65Detail((prev: any) =>
+        prev.filter((item: any, idx: number) => idx !== rowIndex)
+      );
+    } else {
+      toast.warning(`please select a row.`, {
+        autoClose: 500,
+      });
+    }
   };
 
   return (
@@ -111,28 +160,40 @@ function Form({
           </Field>
           <Field flex>
             <Button
+              type="button"
               text="등록"
               icon={<Plus />}
               style={{ marginRight: "5px" }}
-              onClick={() => {}}
+              onClick={() => {
+                setAddBtnClicked(true);
+              }}
             />
             <Button
+              type="button"
               text="삭제"
               icon={<Trash />}
               style={{ marginRight: "5px" }}
-              onClick={() => {}}
+              onClick={() => {
+                setAddBtnClicked(false);
+              }}
             />
             <Button
+              type="button"
               text="저장"
               icon={<Update />}
               style={{ marginRight: "5px" }}
               color={ButtonColor.SUCCESS}
-              onClick={() => {}}
+              onClick={() => {
+                setAddBtnClicked(false);
+              }}
             />
             <Button
+              type="button"
               text="취소"
               icon={<ResetGray />}
-              onClick={() => {}}
+              onClick={() => {
+                setAddBtnClicked(false);
+              }}
               color={ButtonColor.LIGHT}
             />
           </Field>
@@ -224,10 +285,41 @@ function Form({
             </Select>
           </FormGroup>
         </Wrapper>
-        <PlainTab
-          tabHeader={["LP가스 매입", "일반가스 매입", "벌크 매입"]}
-          onClick={(id) => setTabId(id)}
-        />
+        <div style={{ display: "flex" }}>
+          <PlainTab
+            tabHeader={["LP가스 매입", "일반가스 매입", "벌크 매입"]}
+            //onClick={(id) => {
+            //  isAddBtnClicked
+            //    ? setTabId(id)
+            //    : data?.bcChitType
+            //    ? setTabId(data?.bcChitType)
+            //    : setTabId(0);
+            //}}
+
+            onClick={(id) => {
+              isAddBtnClicked
+                ? setTabId(id)
+                : data?.bcChitType === null
+                ? setTabId(0)
+                : setTabId(0);
+            }}
+            tabId={tabId ? tabId : 0}
+          />
+          <button
+            style={{ width: "30px", marginRight: "5px" }}
+            type="button"
+            onClick={addRow}
+          >
+            +
+          </button>
+          <button
+            style={{ width: "30px", marginRight: "5px" }}
+            type="button"
+            onClick={deleteRow}
+          >
+            -
+          </button>
+        </div>
         <TabContentWrapper
           style={{
             padding: "0",
@@ -240,8 +332,9 @@ function Form({
           <TabGrid
             data={data65Detail}
             data2={data}
-            tabId={tabId}
+            tabId={tabId ? tabId : 0}
             openPopup={openPopup}
+            setRowIndex={setRowIndex}
           />
         </TabContentWrapper>
       </form>

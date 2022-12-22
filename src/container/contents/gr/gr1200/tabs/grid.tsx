@@ -11,11 +11,13 @@ function Grid({
   data2,
   tabId,
   openPopup,
+  setRowIndex,
 }: {
   data: any;
   data2: any;
   tabId: number;
   openPopup: Function;
+  setRowIndex: Function;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
@@ -60,7 +62,12 @@ function Grid({
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
     gv.displayOptions.fitStyle = "evenFill";
-    gv.setEditOptions({ editable: false });
+    gv.setEditOptions({ editable: true });
+
+    gv.onSelectionChanged = () => {
+      const itemIndex: any = gv.getCurrent().dataRow;
+      setRowIndex(itemIndex);
+    };
 
     gv.onCellDblClicked = function (grid: any, e: any) {};
 

@@ -52,8 +52,6 @@ const Form = React.forwardRef(
       groupId: "EN",
       functionName: "EN1100",
     });
-    console.log(dataCommonDic);
-    console.log(selected);
 
     const {
       register,
@@ -548,6 +546,7 @@ const Form = React.forwardRef(
               "결재 라인",
             ]}
             onClick={(id) => setTabId(id)}
+            tabId={tabId}
           />
           <TabContentWrapper>
             {getTabContent(tabId, register, errors, dataCommonDic?.jnJiro)}
