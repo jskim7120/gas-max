@@ -7,6 +7,7 @@ import MenuModal from "./customModals/menuModal";
 import InfoModal from "./customModals/infoModal";
 import CM1105Modal from "./customModals/cm1105Modal";
 import CM1106Modal from "./customModals/cm1106Modal";
+import GR1200Modal from "./customModals/gr1200Modal";
 import AccountModal from "./customModals/accountModal";
 import DelModal from "./customModals/delModal";
 
@@ -32,7 +33,8 @@ const PopupContiner = styled.div<{ type: string }>`
   ${(props) =>
     (props.type === "customerModal" ||
       props.type === "cm1105Modal" ||
-      props.type === "cm1106Modal") &&
+      props.type === "cm1106Modal" ||
+      props.type === "gr1200Modal") &&
     `
       top: 50%;
       left: 50%;  
@@ -83,6 +85,7 @@ function Popup() {
             {type === "infoModal" && <InfoModal />}
             {type === "cm1105Modal" && <CM1105Modal />}
             {type === "cm1106Modal" && <CM1106Modal />}
+            {type === "gr1200Modal" && <GR1200Modal />}
             {type === "delModal" && <DelModal />}
           </Suspense>
         </PopupContiner>

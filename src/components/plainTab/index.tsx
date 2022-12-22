@@ -5,7 +5,7 @@ interface TabProps {
   className?: string;
   style?: any;
   tabHeader: Array<string>;
-  onClick: (id: number) => void;
+  onClick?: (id: number) => void;
 }
 
 const Tab = (props: TabProps): JSX.Element => {
@@ -19,7 +19,7 @@ const Tab = (props: TabProps): JSX.Element => {
           isActive={activeTabId === index}
           onClick={() => {
             setActiveTabId(index);
-            props.onClick(index);
+            props.onClick && props.onClick(index);
           }}
         >
           {header}
