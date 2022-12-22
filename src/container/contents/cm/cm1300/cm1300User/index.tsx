@@ -132,13 +132,8 @@ function FormCM1300User({
           text="사용자 추가"
           icon={<Plus />}
           onClick={() => {
-            dispatch(
-              addCM1105({
-                cuCode: "",
-                areaCode: "",
-              })
-            );
-            dispatch(openModal({ type: "cm1105Modal" }));
+            formRef.current.setIsAddBtnClicked(true);
+            formRef.current.resetForm("clear");
           }}
         />
         <Button text="삭제" icon={<Trash />} onClick={() => {}} />

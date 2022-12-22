@@ -80,6 +80,9 @@ export const CM1300INSERT = "/app/CM1300/insert";
 export const CM1300DELETE = "/app/CM1300/delete";
 export const CM130065 = "/app/CM1300/65";
 export const CM1300INSERTSEQ = "/app/CM1300/insertseq";
+export const CM1300INSERTSEQ2 = "/app/CM1300/opt12";
+export const CM1300CUSTOMERINSERT = "/app/CM1300/customer/insert";
+export const CM1300CUSTOMERUPDATE = "/app/CM1300/customer/update";
 
 export const CM1106LIST = "/app/CM1106/list";
 export const CM1106INSERT = "/app/CM1106/insert";

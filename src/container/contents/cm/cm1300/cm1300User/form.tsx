@@ -16,7 +16,11 @@ import { schema } from "../validation";
 import { InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
-// import { CM1300INSERT, CM1300UPDATE } from "app/path";
+import {
+  CM1300INSERTSEQ2,
+  CM1300CUSTOMERINSERT,
+  CM1300CUSTOMERUPDATE,
+} from "app/path";
 
 interface IForm {
   selected: any;
@@ -27,8 +31,6 @@ interface IForm {
   setSelectedRowIndex: any;
   userData: any;
 }
-const base = "/app/CM1300/65/";
-
 const Form = React.forwardRef(
   (
     {
@@ -95,14 +97,42 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
     }));
 
-    const resetForm = (type: string) => {
+    const fetchCodes = async (areaCode: string, cuCodeHead: string) => {
+      try {
+        const response: any = await API.get(CM1300INSERTSEQ2, {
+          params: { aptCode: cuCodeHead, areaCode: areaCode },
+        });
+        if (response.status === 200 && response.data[0].tempAptCode) {
+          return response.data;
+        } else {
+          toast.error("can't get aptCode", {
+            autoClose: 500,
+          });
+        }
+      } catch (err) {
+        toast.error("Error occured during get aptCode", {
+          autoClose: 500,
+        });
+      }
+      return null;
+    };
+
+    const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         let newData: any = {};
         if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
+          let cuCodeHead = selected.cuCode.substr(0, 3);
+          const data = await fetchCodes(selected.areaCode, cuCodeHead);
+          if (data) {
+            for (const [key, value] of Object.entries(selected)) {
+              newData[key] = null;
+            }
+            reset({
+              ...newData,
+              cuCode1: data[0]?.tempAptCode.substr(0, 3),
+              cuCode2: data[0]?.tempAptCode.substr(4),
+            });
           }
-          reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -146,9 +176,12 @@ const Form = React.forwardRef(
 
     const submit = async (data: ICM1300User) => {
       //form aldaagui uyd ajillana
-      const path = isAddBtnClicked ? `${base}insert` : `${base}update`;
+      const path = isAddBtnClicked
+        ? CM1300CUSTOMERINSERT
+        : CM1300CUSTOMERUPDATE;
       const formValues = getValues();
-
+      console.log("formValues", formValues);
+      formValues.cuCode = formValues.cuCode1 + "-" + formValues.cuCode2;
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {

@@ -243,6 +243,7 @@ const Form = React.forwardRef(
               register={register("buCode")}
               errors={errors["buCode"]?.message}
               inputSize={InputSize.xs}
+              readOnly
             />
             <FormGroup style={{ alignItems: "center", width: "347px" }}>
               <Label style={{ marginRight: "4px", marginLeft: "17px" }}>
