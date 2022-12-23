@@ -2,7 +2,6 @@ import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { useDispatch } from "app/store";
 import {
   Input,
   Field,
@@ -14,7 +13,6 @@ import {
 import { ICM1300User } from "./model";
 import { schema } from "../validation";
 import { InputSize } from "components/componentsType";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
 import {
   CM1300INSERTSEQ2,
@@ -45,12 +43,6 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-    const [addr, setAddress] = useState<string>("");
-
-    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-      groupId: "CM",
-      functionName: "CM1300",
-    });
 
     const {
       register,
@@ -64,11 +56,15 @@ const Form = React.forwardRef(
     });
 
     useEffect(() => {
+      console.log("working");
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+        console.log("reset");
         resetForm("reset");
       } else {
+        console.log("clear");
         resetForm("clear");
       }
+      setIsAddBtnClicked(false);
     }, [selected]);
 
     useEffect(() => {
@@ -86,7 +82,7 @@ const Form = React.forwardRef(
         reset({
           cuCode1: "",
           cuCode2: "",
-          cuUserName: "",
+          cuUsername: "",
           cuName: "",
         });
     }, [userData]);
@@ -134,6 +130,7 @@ const Form = React.forwardRef(
             });
           }
         } else if (type === "reset") {
+          console.log("selected", selected);
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
           }
@@ -147,7 +144,7 @@ const Form = React.forwardRef(
         reset({
           cuCode1: "",
           cuCode2: "",
-          cuUserName: "",
+          cuUsername: "",
           cuName: "",
         });
       }
@@ -180,8 +177,8 @@ const Form = React.forwardRef(
         ? CM1300CUSTOMERINSERT
         : CM1300CUSTOMERUPDATE;
       const formValues = getValues();
-      console.log("formValues", formValues);
       formValues.cuCode = formValues.cuCode1 + "-" + formValues.cuCode2;
+      formValues.areaCode = selected.areaCode;
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
@@ -193,6 +190,7 @@ const Form = React.forwardRef(
               prev[selectedRowIndex] = formValues;
               return [...prev];
             });
+            setSelectedRowIndex(0);
           }
           setSelected(formValues);
           toast.success("저장이 성공하였습니다", {
@@ -245,11 +243,11 @@ const Form = React.forwardRef(
               <Label>사용자명</Label>
               <Input
                 inputSize={InputSize.i130}
-                register={register("cuUserName")}
+                register={register("cuUsername")}
               />
             </FormGroup>
             <div>
-              <ErrorText>{errors["cuUserName"]?.message}</ErrorText>
+              <ErrorText>{errors["cuUsername"]?.message}</ErrorText>
             </div>
           </Field>
         </Wrapper>
