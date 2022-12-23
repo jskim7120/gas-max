@@ -10,7 +10,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuUserName",
+    fieldName: "cuUsername",
     dataType: ValueType.TEXT,
   },
   {
@@ -39,8 +39,8 @@ export const columns = [
     },
   },
   {
-    name: "cuUserName",
-    fieldName: "cuUserName",
+    name: "cuUsername",
+    fieldName: "cuUsername",
     type: "data",
     width: "80",
     styleName: "rg-left-column",

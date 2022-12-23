@@ -136,7 +136,14 @@ function FormCM1300User({
             formRef.current.resetForm("clear");
           }}
         />
-        <Button text="삭제" icon={<Trash />} onClick={() => {}} />
+        <Button
+          text="삭제"
+          icon={<Trash />}
+          onClick={() => {
+            // dispatch(openModal({ type: "delModal" }));
+            // dispatch(addDeleteMenuId({ menuId: menuId }));
+          }}
+        />
         <Button
           text="저장"
           icon={<Update />}
