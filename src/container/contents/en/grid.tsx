@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { TableWrapper } from "../commonStyle";
+import { LeftSide } from "../commonStyle";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -64,7 +64,7 @@ function Grid({
     }
   }, [data]);
 
-  return <TableWrapper ref={realgridElement}></TableWrapper>;
+  return <LeftSide ref={realgridElement}></LeftSide>;
 }
 
 export default Grid;

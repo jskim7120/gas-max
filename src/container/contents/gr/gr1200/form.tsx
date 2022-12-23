@@ -26,6 +26,7 @@ import { openModal, addGR1200 } from "app/state/modal/modalSlice";
 import { useDispatch } from "app/store";
 import FooterInfo from "./footer";
 import { toast } from "react-toastify";
+import { CircleBtn } from "./style";
 
 const radioOptions = [
   {
@@ -84,24 +85,26 @@ function Form({
   };
 
   const addRow = () => {
-    setData65Detail((prev: any) => [
-      ...prev,
-      {
-        bclChungbok: null,
-        bclChungdae: null,
-        bclInc: "",
-        bclInmigum: null,
-        bclInqty: null,
-        bclJpCode: "",
-        bclJpName: "",
-        bclOutc: null,
-        bclOutmigum: "",
-        bclOutqty: null,
-        bclSvyn: "",
-        bclTongdel: null,
-      },
-    ]);
-    setRowIndex(null);
+    if (data65Detail !== undefined) {
+      setData65Detail((prev: any) => [
+        ...prev,
+        {
+          bclChungbok: null,
+          bclChungdae: null,
+          bclInc: "",
+          bclInmigum: null,
+          bclInqty: null,
+          bclJpCode: "",
+          bclJpName: "",
+          bclOutc: null,
+          bclOutmigum: "",
+          bclOutqty: null,
+          bclSvyn: "",
+          bclTongdel: null,
+        },
+      ]);
+      setRowIndex(null);
+    }
   };
 
   const deleteRow = () => {
@@ -305,20 +308,11 @@ function Form({
             }}
             tabId={tabId ? tabId : 0}
           />
-          <button
-            style={{ width: "30px", marginRight: "5px" }}
-            type="button"
-            onClick={addRow}
-          >
+
+          <CircleBtn onClick={addRow} style={{ marginRight: "5px" }}>
             +
-          </button>
-          <button
-            style={{ width: "30px", marginRight: "5px" }}
-            type="button"
-            onClick={deleteRow}
-          >
-            -
-          </button>
+          </CircleBtn>
+          <CircleBtn onClick={deleteRow}>-</CircleBtn>
         </div>
         <TabContentWrapper
           style={{

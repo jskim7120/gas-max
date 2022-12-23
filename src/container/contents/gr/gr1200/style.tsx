@@ -166,3 +166,20 @@ export const CLabel = styled.label`
   font-family: "NotoSansKRRegular";
   font-size: 11px;
 `;
+
+export const CircleBtn = styled.span`
+  background: #aeaeae;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  line-height: 25px;
+  color: red;
+  cursor: pointer;
+  &:hover {
+    background: rgba(174, 174, 174, 0.7);
+  }
+`;

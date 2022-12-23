@@ -24,7 +24,7 @@ import {
 import Form from "./form";
 import Grid from "./grid";
 import { columns, fields } from "./data";
-import { Wrapper, DetailWrapper, DetailHeader } from "../../commonStyle";
+import { MainWrapper, RightSide, TopBar } from "../../commonStyle";
 import Loader from "components/loader";
 
 interface ISEARCH {
@@ -113,7 +113,7 @@ function GR1100({
 
   return (
     <>
-      <DetailHeader>
+      <TopBar>
         <Field flex>
           <p>{depthFullName}</p>
           <p
@@ -172,8 +172,8 @@ function GR1100({
             }}
           />
         </div>
-      </DetailHeader>
-      <Wrapper>
+      </TopBar>
+      <MainWrapper>
         <div
           style={{ width: "50%", gap: "50%", borderRight: "3px solid #707070" }}
         >
@@ -284,7 +284,7 @@ function GR1100({
             />
           </form>
         </div>
-        <DetailWrapper>
+        <RightSide>
           <Form
             selected={selected}
             ref={formRef}
@@ -294,8 +294,8 @@ function GR1100({
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
           />
-        </DetailWrapper>
-      </Wrapper>
+        </RightSide>
+      </MainWrapper>
     </>
   );
 }

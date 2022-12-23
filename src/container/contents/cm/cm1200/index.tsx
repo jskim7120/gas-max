@@ -10,10 +10,10 @@ import GridLeft from "./gridLeft";
 import GridBottom from "./gridBottom";
 import Form from "./form";
 import {
-  DetailHeader,
-  DetailWrapper,
-  TableWrapper,
-  Wrapper,
+  TopBar,
+  LeftSide,
+  RightSide,
+  MainWrapper,
   FormSectionTitle,
   FormSeaction,
 } from "../../commonStyle";
@@ -187,7 +187,7 @@ function CM1200({
 
   return (
     <>
-      <DetailHeader>
+      <TopBar>
         <div className="title-and-areacode">
           <p>{depthFullName}</p>
           <Field flex style={{ margin: "0px 20px" }}>
@@ -245,9 +245,9 @@ function CM1200({
             }}
           />
         </div>
-      </DetailHeader>
-      <Wrapper>
-        <TableWrapper width="30%">
+      </TopBar>
+      <MainWrapper>
+        <LeftSide width="30%">
           <SearchWrapper style={{ borderBottom: "2px solid #707070" }}>
             <form
               onSubmit={handleSubmit(submit)}
@@ -300,8 +300,8 @@ function CM1200({
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
           />
-        </TableWrapper>
-        <DetailWrapper width="70%">
+        </LeftSide>
+        <RightSide width="70%">
           <FormSeaction topBorder={false}>
             <FormSectionTitle>
               <h4>
@@ -363,8 +363,8 @@ function CM1200({
               openPopup={handleOpenPopup}
             />
           </FormSeaction>
-        </DetailWrapper>
-      </Wrapper>
+        </RightSide>
+      </MainWrapper>
     </>
   );
 }

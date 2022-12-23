@@ -69,8 +69,6 @@ function Grid({
       setRowIndex(itemIndex);
     };
 
-    gv.onCellDblClicked = function (grid: any, e: any) {};
-
     gv.onCellButtonClicked = function (grid: any, index: any, column: any) {
       // alert(`itemIndex: ${index.itemIndex}, fieldName: ${column.fieldName}`);
       openPopup();
@@ -86,7 +84,7 @@ function Grid({
     <>
       <div
         style={{
-          height: `180px`,
+          height: `220px`,
         }}
         ref={realgridElement}
       ></div>

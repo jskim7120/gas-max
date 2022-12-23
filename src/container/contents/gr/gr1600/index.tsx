@@ -7,7 +7,7 @@ import { InputSize, ButtonColor, ButtonType } from "components/componentsType";
 import Button from "components/button/button";
 import { Input, Select, Field, FormGroup, Label } from "components/form/style";
 import { MagnifyingGlassBig, ExcelIcon } from "components/allSvgIcon";
-import { Wrapper, DetailHeader } from "../../commonStyle";
+import { MainWrapper, TopBar } from "../../commonStyle";
 import { LeftSection, RightSection } from "../style";
 import RightHalf from "./right";
 import Grid from "./grid";
@@ -89,7 +89,7 @@ function GR1600({
 
   return (
     <>
-      <DetailHeader>
+      <TopBar>
         <Field flex>
           <p>{depthFullName}</p>
           <p className="big">영업소</p>
@@ -101,8 +101,8 @@ function GR1600({
             ))}
           </Select>
         </Field>
-      </DetailHeader>
-      <Wrapper>
+      </TopBar>
+      <MainWrapper>
         <LeftSection>
           <form onSubmit={handleSubmit(submit)}>
             <div style={{ marginBottom: "5px" }}>
@@ -196,7 +196,7 @@ function GR1600({
             fetchLeftData={handleSubmit(submit)}
           />
         </RightSection>
-      </Wrapper>
+      </MainWrapper>
     </>
   );
 }

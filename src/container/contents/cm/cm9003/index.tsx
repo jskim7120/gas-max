@@ -10,7 +10,7 @@ import { ButtonColor, InputSize, FieldKind } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker/test-datepicker";
 import Grid from "./grid";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { DetailHeader, WrapperContent } from "../../commonStyle";
+import { TopBar, WrapperContent } from "../../commonStyle";
 import { SearchWrapper } from "../../commonStyle";
 import {
   Select,
@@ -91,7 +91,7 @@ function CM9003({
 
   return (
     <>
-      <DetailHeader>
+      <TopBar>
         <div style={{ display: "flex", alignItems: "center" }}>
           <p style={{ marginRight: "20px" }}>{depthFullName}</p>
           <p>
@@ -110,7 +110,7 @@ function CM9003({
             ))}
           </Select>
         </div>
-      </DetailHeader>
+      </TopBar>
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper style={{ alignItems: "baseline" }}>

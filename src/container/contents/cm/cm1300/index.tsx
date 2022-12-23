@@ -21,7 +21,7 @@ import {
 } from "app/state/modal/modalSlice";
 import Form from "./form";
 import { ButtonColor, FieldKind, ButtonType } from "components/componentsType";
-import { Wrapper, DetailHeader } from "../../commonStyle";
+import { MainWrapper, TopBar } from "../../commonStyle";
 import { CM1300SEARCH } from "app/path";
 import {
   Grid1Container,
@@ -188,7 +188,7 @@ function CM1300({
 
   return (
     <>
-      <DetailHeader>
+      <TopBar>
         <p>{depthFullName}</p>
         <div
           style={{
@@ -246,8 +246,8 @@ function CM1300({
           />
           <BorderRight />
         </div>
-      </DetailHeader>
-      <Wrapper>
+      </TopBar>
+      <MainWrapper>
         <Grid1Container>
           <form
             onSubmit={handleSubmit(onSearchSubmit)}
@@ -331,7 +331,7 @@ function CM1300({
             />
           </Detail2Wrapper>
         </Grid2Container>
-      </Wrapper>
+      </MainWrapper>
     </>
   );
 }

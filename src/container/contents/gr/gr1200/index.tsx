@@ -10,12 +10,7 @@ import {
 } from "components/allSvgIcon";
 import API from "app/axios";
 import { ISEARCH } from "./model";
-import {
-  Wrapper,
-  TableWrapper,
-  DetailWrapper,
-  DetailHeader,
-} from "../../commonStyle";
+import { MainWrapper, LeftSide, RightSide, TopBar } from "../../commonStyle";
 import { Select, Field, Label } from "components/form/style";
 import { ButtonColor } from "components/componentsType";
 import GridLeft from "./gridLeft";
@@ -52,7 +47,6 @@ function GR1200({
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
-  //  console.log("dataCommonDic-----:", dataCommonDic);
 
   useEffect(() => {
     if (dataCommonDic !== undefined && dataCommonDic) {
@@ -88,7 +82,6 @@ function GR1200({
       setLoading(true);
       const res = await API.get(GR1200SEARCH, { params: params });
       if (res.status === 200) {
-        console.log("data:", res?.data);
         setData(res?.data?.realgridData);
         setData2(res?.data?.totalData[0]);
         setSelected(res?.data?.realgridData[0]);
@@ -102,7 +95,6 @@ function GR1200({
 
   const fetchData65 = async () => {
     try {
-      console.log("selected:", selected);
       const { data } = await API.get(GR120065, {
         params: {
           areaCode: selected?.areaCode,
@@ -114,9 +106,6 @@ function GR1200({
       });
 
       if (data) {
-        //console.log("data-----------------", data);
-        //console.log("data?.mainData[0]-----------------", data?.mainData[0]);
-        //console.log("data?.detailData===============", data?.detailData);
         setData65(data?.mainData[0]);
         setData65Detail([
           {
@@ -139,8 +128,6 @@ function GR1200({
         setData65({});
         setData65Detail([]);
       }
-
-      //console.log("fucking 65:", data);
     } catch (err) {
       console.log("GR1200 65 DATA fetch error =======>", err);
     }
@@ -152,31 +139,19 @@ function GR1200({
 
   return (
     <>
-      <DetailHeader>
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p
-            className="big"
-            style={{
-              marginLeft: "27px",
-              marginRight: "7px",
-              fontSize: "14px",
-              fontWeight: "bold",
-            }}
-          >
-            영업소
-          </p>
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
-      </DetailHeader>
-      <Wrapper>
-        <TableWrapper style={{ height: "100%" }}>
+      <TopBar style={{ justifyContent: "start" }}>
+        <p>{depthFullName}</p>
+        <p className="big">영업소</p>
+        <Select {...register("areaCode")}>
+          {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+            <option key={idx} value={obj.code}>
+              {obj.codeName}
+            </option>
+          ))}
+        </Select>
+      </TopBar>
+      <MainWrapper>
+        <LeftSide style={{ height: "100%" }}>
           <form onSubmit={handleSubmit(submit)}>
             <div
               style={{
@@ -266,16 +241,16 @@ function GR1200({
             setSelectedRowIndex={setSelectedRowIndex}
           />
           <Table data={data2} />
-        </TableWrapper>
-        <DetailWrapper>
+        </LeftSide>
+        <RightSide>
           <Form
             dataCommonDic={dataCommonDic}
             data={data65}
             setData65Detail={setData65Detail}
             data65Detail={data65Detail}
           />
-        </DetailWrapper>
-      </Wrapper>
+        </RightSide>
+      </MainWrapper>
     </>
   );
 }
