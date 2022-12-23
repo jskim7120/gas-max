@@ -44,7 +44,7 @@ function GR1200({
   const [data, setData] = useState([]);
   const [data2, setData2] = useState({});
   const [data65, setData65] = useState({});
-  const [data65Detail, setData65Detail] = useState([]);
+  const [data65Detail, setData65Detail] = useState<any[]>();
 
   const [selected, setSelected] = useState<any>();
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
@@ -102,23 +102,39 @@ function GR1200({
 
   const fetchData65 = async () => {
     try {
-      // console.log("selected:", selected);
+      console.log("selected:", selected);
       const { data } = await API.get(GR120065, {
         params: {
-          areaCode: "00",
-          bcDate: "20200323",
-          sBcBuCode: "05",
-          bcSno: "01",
+          areaCode: selected?.areaCode,
+          bcDate: selected?.bcDate,
+          sBcBuCode: selected?.bcBuCode,
+          bcSno: selected?.bcSno,
           bcChitType: "0",
         },
       });
 
       if (data) {
-        console.log("data-----------------", data);
+        //console.log("data-----------------", data);
         //console.log("data?.mainData[0]-----------------", data?.mainData[0]);
-        //console.log("data?.detailData[0]===============", data?.detailData[0]);
+        //console.log("data?.detailData===============", data?.detailData);
         setData65(data?.mainData[0]);
-        setData65Detail(data?.detailData);
+        setData65Detail([
+          {
+            bclChungbok: null,
+            bclChungdae: null,
+            bclInc: "",
+            bclInmigum: null,
+            bclInqty: null,
+            bclJpCode: "",
+            bclJpName: "",
+            bclOutc: null,
+            bclOutmigum: "",
+            bclOutqty: null,
+            bclSvyn: "",
+            bclTongdel: null,
+          },
+          ...data?.detailData,
+        ]);
       } else {
         setData65({});
         setData65Detail([]);
@@ -255,6 +271,7 @@ function GR1200({
           <Form
             dataCommonDic={dataCommonDic}
             data={data65}
+            setData65Detail={setData65Detail}
             data65Detail={data65Detail}
           />
         </DetailWrapper>

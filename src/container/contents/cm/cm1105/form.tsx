@@ -839,6 +839,7 @@ function FormCM1105() {
               "SMS 청구서",
             ]}
             onClick={(id) => setTabId(id)}
+            tabId={tabId}
           />
           <TabContentWrapper>
             {getTabContent(

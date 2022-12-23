@@ -60,6 +60,7 @@ export const columns1 = [
     header: {
       text: "코드",
     },
+    editable: false,
   },
   {
     name: "bclJpName",
@@ -70,6 +71,7 @@ export const columns1 = [
     header: {
       text: "품명",
     },
+    editable: false,
   },
   {
     name: "bclInqty",

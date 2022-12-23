@@ -51,7 +51,7 @@ export const columns3 = [
     width: "60",
     type: "data",
     header: {
-      text: "구부",
+      text: "구분",
     },
   },
   {

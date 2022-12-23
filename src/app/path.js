@@ -104,6 +104,8 @@ export const GR110065 = "/app/GR1100/65";
 
 export const GR1200SEARCH = "/app/GR1200/search";
 export const GR120065 = "/app/GR1200/65";
+export const GR120012 = "/app/GR1200/12";
+export const GR120011 = "/app/GR1200/11";
 
 export const GR1600SEARCH = "/app/GR1600/search";
 export const GR1600TAB2 = "/app/GR1600/tab2";
