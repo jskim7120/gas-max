@@ -56,12 +56,9 @@ const Form = React.forwardRef(
     });
 
     useEffect(() => {
-      console.log("working");
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        console.log("reset");
         resetForm("reset");
       } else {
-        console.log("clear");
         resetForm("clear");
       }
       setIsAddBtnClicked(false);
@@ -130,7 +127,6 @@ const Form = React.forwardRef(
             });
           }
         } else if (type === "reset") {
-          console.log("selected", selected);
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
           }
