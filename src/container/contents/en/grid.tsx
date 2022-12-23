@@ -2,10 +2,6 @@ import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { LeftSide } from "../commonStyle";
 
-let container: HTMLDivElement;
-let dp: any;
-let gv: any;
-
 function Grid({
   data,
   fields,
@@ -21,6 +17,9 @@ function Grid({
   selectedRowIndex: number | null;
   setSelectedRowIndex: Function;
 }) {
+  let container: HTMLDivElement;
+  let dp: any;
+  let gv: any;
   const realgridElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
