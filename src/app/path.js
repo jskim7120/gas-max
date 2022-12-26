@@ -99,6 +99,9 @@ export const GR1100DELETE = "/app/GR1100/delete";
 export const GR1100INSERTSEQ = "/app/GR1100/insertseq";
 export const GR110065 = "/app/GR1100/65";
 
+export const GR1500SEARCH = "/app/GR1500/search";
+export const GR1500SEARCH1 = "/app/GR1500/search1";
+export const GR1500SEARCH2 = "/app/GR1500/search2";
 export const GR1600SEARCH = "/app/GR1600/search";
 export const GR1600TAB2 = "/app/GR1600/tab2";
 export const GR1600TAB3 = "/app/GR1600/tab3";
