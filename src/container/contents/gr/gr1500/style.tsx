@@ -64,3 +64,32 @@ export const BorderRight = styled.div`
   height: 35px;
   background: #707070;
 `;
+export const Container = styled.div`
+  display: flex;
+  margin-top: -3px;
+`;
+export const SubContainer = styled.div`
+  width: 77%;
+`;
+export const FormContainer = styled.div`
+  height: 39px;
+  width: 100%;
+  background: #dbdbdb;
+  border-bottom: 3px solid #707070;
+`;
+export const FormHeadCnt = styled.div`
+  height: 37px;
+  border-bottom: 2px solid #707070;
+`;
+export const DividerGrayGR = styled.div`
+  height: 1px;
+  background: rgba(130, 128, 128, 0.64);
+  width: 275px;
+  margin: 4px 0px 4px 39px;
+`;
+export const DividerGR = styled.div`
+  height: 2px;
+  background: #707070;
+  width: 276px;
+  margin: 4px 0px 4px 39px;
+`;

@@ -8,6 +8,7 @@ import { columnsSecond, fieldsSecond } from "./secondData";
 import Grid from "./grid";
 import Loader from "components/loader";
 import { MagnifyingGlass } from "components/allSvgIcon";
+import Form from "./form";
 import CustomDatePicker from "components/customDatePicker/test-datepicker";
 import API from "app/axios";
 import {
@@ -18,6 +19,7 @@ import {
   Field,
   Input,
 } from "components/form/style";
+import { Container, SubContainer } from "./style";
 import { ButtonColor, FieldKind, InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { GR1500SEARCH1, GR1500SEARCH2 } from "app/path";
@@ -29,6 +31,7 @@ function GR1500({
   depthFullName: string;
   menuId: string;
 }) {
+  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const [loading1, setLoading1] = useState(false);
   const [loading2, setLoading2] = useState(false);
   const [data, setData] = useState([]);
@@ -94,232 +97,256 @@ function GR1500({
   });
 
   return (
-    <>
-      <div>
-        <DetailHeader>
-          <p>{depthFullName}</p>
-          <div
+    <Container>
+      <SubContainer>
+        <div>
+          <DetailHeader>
+            <p>{depthFullName}</p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                position: "absolute",
+                left: "245px",
+                gap: "7px",
+                fontSize: "14px",
+                fontWeight: "bold",
+              }}
+            >
+              <p className="big">영업소</p>
+              <Select
+                {...register("areaCode")}
+                name="areaCode"
+                kind={FieldKind.BORDER}
+              >
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </div>
+          </DetailHeader>
+          <WrapperContent
             style={{
-              display: "flex",
-              alignItems: "center",
-              position: "absolute",
-              left: "245px",
-              gap: "7px",
-              fontSize: "14px",
-              fontWeight: "bold",
+              height: `calc(100% - 76px)`,
+              borderRight: "2px solid #707070",
             }}
           >
-            <p className="big">영업소</p>
-            <Select
-              {...register("areaCode")}
-              name="areaCode"
-              kind={FieldKind.BORDER}
+            <form onSubmit={handleSubmit(submitSearch1)}>
+              <SearchWrapper style={{ alignItems: "baseline" }}>
+                <div>
+                  <Wrapper grid col={6} fields="1fr 1fr 1fr">
+                    <FormGroup>
+                      <Label style={{ minWidth: "90px" }}>구분</Label>
+                      <Select
+                        width={InputSize.i130}
+                        {...register("sBuGubun")}
+                        kind={FieldKind.BORDER}
+                        onChange={(e) => setSBuGubun(e.target.value)}
+                      >
+                        {dataCommonDic?.sBuGubun?.map(
+                          (obj: any, idx: number) => (
+                            <option key={idx} value={obj.code}>
+                              {obj.codeName}
+                            </option>
+                          )
+                        )}
+                      </Select>
+                    </FormGroup>
+                    <FormGroup>
+                      <Input
+                        label="매입처명"
+                        register={register("sBuName")}
+                        inputSize={InputSize.i140}
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <Label style={{ minWidth: "90px" }}>거래상태</Label>
+                      <Select
+                        width={InputSize.i130}
+                        {...register("sBuStae")}
+                        kind={FieldKind.BORDER}
+                        onChange={(e) => setSBuStae(e.target.value)}
+                      >
+                        {dataCommonDic?.sBuStae?.map(
+                          (obj: any, idx: number) => (
+                            <option key={idx} value={obj.code}>
+                              {obj.codeName}
+                            </option>
+                          )
+                        )}
+                      </Select>
+                    </FormGroup>
+                  </Wrapper>
+                </div>
+
+                <div
+                  className="button-wrapper"
+                  style={{ flexDirection: "row", gap: "0px" }}
+                >
+                  <Button
+                    text="검색"
+                    icon={!loading1 && <MagnifyingGlass />}
+                    color={ButtonColor.DANGER}
+                    type="submit"
+                    loader={
+                      loading1 && (
+                        <>
+                          <Loader
+                            color="white"
+                            size={13}
+                            borderWidth="2px"
+                            style={{ marginRight: "10px" }}
+                          />
+                        </>
+                      )
+                    }
+                    style={{ marginRight: "10px" }}
+                  />
+                </div>
+              </SearchWrapper>
+            </form>
+
+            <Grid
+              data={data.length > 0 && data}
+              columns={columns}
+              fields={fields}
+              setSelected={setSelected}
+              selectedRowIndex={selectedRowIndex}
+              setSelectedRowIndex={setSelectedRowIndex}
+            />
+          </WrapperContent>
+        </div>
+        <div style={{ borderRight: "2px solid #707070" }}>
+          <DetailHeader style={{ marginTop: "0px" }}>
+            <p>{depthFullName}</p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                position: "absolute",
+                left: "245px",
+                gap: "7px",
+                fontSize: "14px",
+                fontWeight: "bold",
+              }}
             >
-              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </div>
-        </DetailHeader>
-        <WrapperContent style={{ height: `calc(100% - 76px)` }}>
-          <form onSubmit={handleSubmit(submitSearch1)}>
-            <SearchWrapper style={{ alignItems: "baseline" }}>
-              <div>
-                <Wrapper grid col={6} fields="1fr 1fr 1fr">
-                  <FormGroup>
-                    <Label style={{ minWidth: "90px" }}>구분</Label>
-                    <Select
-                      width={InputSize.i130}
-                      {...register("sBuGubun")}
-                      kind={FieldKind.BORDER}
-                      onChange={(e) => setSBuGubun(e.target.value)}
-                    >
-                      {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
-                        <option key={idx} value={obj.code}>
-                          {obj.codeName}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormGroup>
-                  <FormGroup>
-                    <Input
-                      label="매입처명"
-                      register={register("sBuName")}
-                      inputSize={InputSize.i140}
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label style={{ minWidth: "90px" }}>거래상태</Label>
-                    <Select
-                      width={InputSize.i130}
-                      {...register("sBuStae")}
-                      kind={FieldKind.BORDER}
-                      onChange={(e) => setSBuStae(e.target.value)}
-                    >
-                      {dataCommonDic?.sBuStae?.map((obj: any, idx: number) => (
-                        <option key={idx} value={obj.code}>
-                          {obj.codeName}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormGroup>
-                </Wrapper>
-              </div>
-
-              <div
-                className="button-wrapper"
-                style={{ flexDirection: "row", gap: "0px" }}
+              <p className="big">영업소</p>
+              <Select
+                {...register("areaCode1")}
+                name="areaCode1"
+                kind={FieldKind.BORDER}
               >
-                <Button
-                  text="검색"
-                  icon={!loading1 && <MagnifyingGlass />}
-                  color={ButtonColor.DANGER}
-                  type="submit"
-                  loader={
-                    loading1 && (
-                      <>
-                        <Loader
-                          color="white"
-                          size={13}
-                          borderWidth="2px"
-                          style={{ marginRight: "10px" }}
-                        />
-                      </>
-                    )
-                  }
-                  style={{ marginRight: "10px" }}
-                />
-              </div>
-            </SearchWrapper>
-          </form>
-
-          <Grid
-            data={data.length > 0 && data}
-            columns={columns}
-            fields={fields}
-            setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
-          />
-        </WrapperContent>
-      </div>
-      <div>
-        <DetailHeader>
-          <p>{depthFullName}</p>
-          <div
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </div>
+          </DetailHeader>
+          <WrapperContent
             style={{
-              display: "flex",
-              alignItems: "center",
-              position: "absolute",
-              left: "245px",
-              gap: "7px",
-              fontSize: "14px",
-              fontWeight: "bold",
+              height: `calc(100% - 76px)`,
             }}
           >
-            <p className="big">영업소</p>
-            <Select
-              {...register("areaCode1")}
-              name="areaCode1"
-              kind={FieldKind.BORDER}
-            >
-              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </div>
-        </DetailHeader>
-        <WrapperContent style={{ height: `calc(100% - 76px)` }}>
-          <form onSubmit={handleSubmit(submitSearch2)}>
-            <SearchWrapper style={{ alignItems: "baseline" }}>
-              <div>
-                <Wrapper grid col={6} fields="1fr 1fr">
-                  <Field
-                    flex
-                    style={{
-                      alignItems: "center",
-                      marginLeft: "22px",
-                    }}
-                  >
-                    <Label style={{ minWidth: "90px" }}>지급기간</Label>
-                    <Controller
-                      control={control}
-                      {...register("sDate")}
-                      render={({ field: { onChange, value } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          style={{ marginLeft: "15px" }}
-                          readOnly={!dataChk}
-                        />
-                      )}
-                    />
-                    <Controller
-                      control={control}
-                      {...register("eDate")}
-                      render={({ field: { onChange, value } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          style={{ margin: "5px 0 0 0" }}
-                          readOnly={!dataChk}
-                        />
-                      )}
-                    />
-                  </Field>
+            <form onSubmit={handleSubmit(submitSearch2)}>
+              <SearchWrapper style={{ alignItems: "baseline" }}>
+                <div>
+                  <Wrapper grid col={6} fields="1fr 1fr">
+                    <Field
+                      flex
+                      style={{
+                        alignItems: "center",
+                        marginLeft: "22px",
+                      }}
+                    >
+                      <Label style={{ minWidth: "90px" }}>지급기간</Label>
+                      <Controller
+                        control={control}
+                        {...register("sDate")}
+                        render={({ field: { onChange, value } }) => (
+                          <CustomDatePicker
+                            value={value}
+                            onChange={onChange}
+                            style={{ marginLeft: "15px" }}
+                            readOnly={!dataChk}
+                          />
+                        )}
+                      />
+                      <Controller
+                        control={control}
+                        {...register("eDate")}
+                        render={({ field: { onChange, value } }) => (
+                          <CustomDatePicker
+                            value={value}
+                            onChange={onChange}
+                            style={{ margin: "5px 0 0 0" }}
+                            readOnly={!dataChk}
+                          />
+                        )}
+                      />
+                    </Field>
 
-                  <FormGroup>
-                    <Label style={{ minWidth: "90px" }}>거래상태</Label>
-                    <Input
-                      register={register("sBjBuName")}
-                      inputSize={InputSize.md}
-                    />
-                  </FormGroup>
-                </Wrapper>
-              </div>
+                    <FormGroup>
+                      <Label style={{ minWidth: "90px" }}>거래상태</Label>
+                      <Input
+                        register={register("sBjBuName")}
+                        inputSize={InputSize.md}
+                      />
+                    </FormGroup>
+                  </Wrapper>
+                </div>
 
-              <div
-                className="button-wrapper"
-                style={{ flexDirection: "row", gap: "0px" }}
-              >
-                <Button
-                  text="검색"
-                  icon={!loading2 && <MagnifyingGlass />}
-                  color={ButtonColor.DANGER}
-                  type="submit"
-                  loader={
-                    loading2 && (
-                      <>
-                        <Loader
-                          color="white"
-                          size={13}
-                          borderWidth="2px"
-                          style={{ marginRight: "10px" }}
-                        />
-                      </>
-                    )
-                  }
-                  style={{ marginRight: "10px" }}
-                />
-              </div>
-            </SearchWrapper>
-          </form>
+                <div
+                  className="button-wrapper"
+                  style={{ flexDirection: "row", gap: "0px" }}
+                >
+                  <Button
+                    text="검색"
+                    icon={!loading2 && <MagnifyingGlass />}
+                    color={ButtonColor.DANGER}
+                    type="submit"
+                    loader={
+                      loading2 && (
+                        <>
+                          <Loader
+                            color="white"
+                            size={13}
+                            borderWidth="2px"
+                            style={{ marginRight: "10px" }}
+                          />
+                        </>
+                      )
+                    }
+                    style={{ marginRight: "10px" }}
+                  />
+                </div>
+              </SearchWrapper>
+            </form>
 
-          <Grid
-            data={dataSecond.length > 0 && dataSecond}
-            columns={columnsSecond}
-            fields={fieldsSecond}
-            setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
-          />
-        </WrapperContent>
-      </div>
-    </>
+            <Grid
+              data={dataSecond.length > 0 && dataSecond}
+              columns={columnsSecond}
+              fields={fieldsSecond}
+              setSelected={setSelected}
+              selectedRowIndex={selectedRowIndex}
+              setSelectedRowIndex={setSelectedRowIndex}
+            />
+          </WrapperContent>
+        </div>
+      </SubContainer>
+      <Form
+        selected={selected}
+        ref={formRef}
+        fetchData={fetchDataSearch1}
+        setData={setData}
+        selectedRowIndex={selectedRowIndex}
+        setSelectedRowIndex={setSelectedRowIndex}
+        setSelected={setSelected}
+      />
+    </Container>
   );
 }
 
