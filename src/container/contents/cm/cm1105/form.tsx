@@ -28,12 +28,11 @@ import {
 } from "components/form/style";
 import { CM1105SEARCH } from "app/path";
 import { ModalHeader } from "./cm1105Style";
-
 import CheckBox from "components/checkbox";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
-import { CM1105INSERT, CM1105UPDATE } from "app/path";
+import { CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
 import { toast } from "react-toastify";
 
 function FormCM1105() {
@@ -96,9 +95,8 @@ function FormCM1105() {
 
   useEffect(() => {
     if (cm1105.status === "INSERT") {
+      fetchCuCode(cm1105.areaCode, cm1105.cuCode);
       setIsAddBtnClicked(true);
-      var renderCuCode = cm1105?.cuCode + "-" + "000" + (cm1105?.cuCount + 1);
-      reset({ cuCode: renderCuCode, areaCode: cm1105?.areaCode ?? "" });
     } else if (cm1105.areaCode && cm1105.cuCode) {
       fetchData();
     }
@@ -374,7 +372,30 @@ function FormCM1105() {
       });
       setData(data);
     } catch (error) {
-      console.log("aldaa");
+      console.log("Error fetching CM1105 data:", error);
+    }
+  };
+
+  const fetchCuCode = async (areaCode: string, cuCode: string) => {
+    try {
+      const res = await API.get(CM110511, {
+        params: { areaCode: areaCode, cuCode: cuCode },
+      });
+      if (res.status === 200) {
+        console.log("++++++++++++++++++++", res, res.data[0].cuCode);
+
+        reset({ cuCode: res.data[0].cuCode, areaCode: areaCode ?? "" });
+      } else {
+        toast.error("couldn't get CuCode", {
+          autoClose: 500,
+        });
+      }
+      return null;
+    } catch (error: any) {
+      toast.error(error, {
+        autoClose: 500,
+      });
+      console.log("Error fetching CuCode on CM1105: ", error);
     }
   };
 
@@ -544,19 +565,16 @@ function FormCM1105() {
           <Input
             label="거래처코드"
             register={register("cuCode")}
-            errors={errors["cuCode"]?.message}
             inputSize={InputSize.sm}
           />
           <Input
             label="거래처명(건물명)"
             register={register("cuName")}
-            errors={errors["cuName"]?.message}
             inputSize={InputSize.i150}
           />
           <Input
             label="사용자명"
             register={register("cuUsername")}
-            errors={errors["cuUsername"]?.message}
             inputSize={InputSize.i150}
           />
         </Wrapper>
@@ -565,7 +583,6 @@ function FormCM1105() {
           <Input
             label="전화번호"
             register={register("cuTel")}
-            errors={errors["cuTel"]?.message}
             inputSize={InputSize.i100}
           />
           <Input

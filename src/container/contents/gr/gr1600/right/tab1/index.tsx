@@ -5,7 +5,7 @@ import { ButtonColor } from "components/componentsType";
 import { Update, Reset } from "components/allSvgIcon";
 import { Input2, Select, Field } from "components/form/style";
 import { InputSize } from "components/componentsType";
-import InfoPerson from "assets/image/infoPerson.png";
+import { PersonInfoText } from "components/text";
 import { InfoText } from "components/text";
 function Tab1({
   register,
@@ -254,12 +254,10 @@ function Tab1({
       <Field flex style={{ justifyContent: "space-between" }}>
         <Field flex>
           <Field>
-            <Field flex style={{ marginBottom: "10px" }}>
-              <img src={InfoPerson} alt="info" />
-              <p style={{ fontSize: "14px", marginLeft: "7px" }}>
-                LPG 매입 단가
-              </p>
-            </Field>
+            <PersonInfoText
+              text="LPG 매입 단가"
+              style={{ marginBottom: "10px" }}
+            />
             <Table
               tableHeader={["구분", "kg 단가", "수송비", "합계"]}
               tableData={data0}
@@ -270,12 +268,10 @@ function Tab1({
             />
           </Field>
           <Field style={{ marginLeft: "30px" }}>
-            <Field flex style={{ marginBottom: "10px" }}>
-              <img src={InfoPerson} alt="info" />
-              <p style={{ fontSize: "14px", marginLeft: "7px" }}>
-                무료 충전 품목
-              </p>
-            </Field>
+            <PersonInfoText
+              text="무료 충전 품목"
+              style={{ marginBottom: "10px" }}
+            />
             <Table tableHeader={["품목"]} tableData={data1} />
           </Field>
         </Field>

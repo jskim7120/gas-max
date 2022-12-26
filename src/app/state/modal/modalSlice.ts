@@ -8,7 +8,6 @@ export interface initialStateType {
     cuCode: string;
     areaCode: string;
     status: string;
-    cuCount: number;
   };
   gr1200: {
     areaCode: string;
@@ -29,7 +28,6 @@ const initialState: initialStateType = {
     cuCode: "",
     areaCode: "",
     status: "",
-    cuCount: 0,
   },
   gr1200: {
     areaCode: "",
@@ -61,7 +59,6 @@ const modalSlice = createSlice({
       state.cm1105.cuCode = action.payload.cuCode;
       state.cm1105.areaCode = action.payload.areaCode;
       state.cm1105.status = action.payload.status ?? "";
-      state.cm1105.cuCount = action.payload.cuCount;
     },
 
     addGR1200: (state, action) => {

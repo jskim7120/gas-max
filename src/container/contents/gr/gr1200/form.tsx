@@ -17,7 +17,6 @@ import {
   Wrapper,
   Label,
 } from "components/form/style";
-import PersonIconSvg from "assets/image/person-icon.svg";
 import { ResetGray, Update, Plus, Trash } from "components/allSvgIcon";
 import { InputSize, ButtonColor } from "components/componentsType";
 import { IDATA65 } from "./model";
@@ -27,6 +26,7 @@ import { useDispatch } from "app/store";
 import FooterInfo from "./footer";
 import { toast } from "react-toastify";
 import { CircleBtn } from "./style";
+import { PersonInfoText } from "components/text";
 
 const radioOptions = [
   {
@@ -140,10 +140,7 @@ function Form({
           }}
         >
           <Field flex style={{ alignItems: "center" }}>
-            <h4>
-              <img src={PersonIconSvg} />
-              사용자 정보
-            </h4>
+            <PersonInfoText text="가스매입등록" />
             <p
               className="big"
               style={{

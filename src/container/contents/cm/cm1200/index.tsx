@@ -33,8 +33,8 @@ import {
 } from "components/componentsType";
 import { Field, FormGroup, Input, Label, Select } from "components/form/style";
 import CheckBox from "components/checkbox";
-import HomeIconSvg from "assets/image/home-icon.svg";
-import PersonIconSvg from "assets/image/person-icon.svg";
+import { PersonInfoText, BuildingInfoText } from "components/text";
+
 import Loader from "components/loader";
 import {
   openModal,
@@ -48,6 +48,7 @@ import { CM120065, CM1200SEARCH } from "app/path";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
 import { SearchWrapper } from "../../commonStyle";
+import { toast } from "react-toastify";
 
 function CM1200({
   depthFullName,
@@ -173,16 +174,22 @@ function CM1200({
     }
   };
 
-  const handleOpenPopup = async (index: number, cuCode: any, areaCode: any) => {
-    try {
+  const handleOpenModalCM1105 = () => {
+    if (selected) {
       dispatch(
         addCM1105({
-          cuCode: cuCode,
-          areaCode: areaCode,
+          cuCode: selected?.cuCode ? selected?.cuCode : "",
+          areaCode: selected?.areaCode,
+          status: "INSERT",
         })
       );
+
       dispatch(openModal({ type: "cm1105Modal" }));
-    } catch (err: any) {}
+    } else {
+      toast.warning("no data", {
+        autoClose: 500,
+      });
+    }
   };
 
   return (
@@ -304,10 +311,7 @@ function CM1200({
         <RightSide width="70%">
           <FormSeaction topBorder={false}>
             <FormSectionTitle>
-              <h4>
-                <img src={HomeIconSvg} />
-                건물 정보
-              </h4>
+              <BuildingInfoText text="건물 정보" />
             </FormSectionTitle>
 
             <Form
@@ -325,30 +329,24 @@ function CM1200({
           </FormSeaction>
           <FormSeaction topBorder={true}>
             <FormSectionTitle>
-              <h4>
-                <img src={PersonIconSvg} />
-                사용자 정보
-              </h4>
+              <PersonInfoText
+                text="사용자 정보"
+                textStyle={{
+                  color: "#1b8c8e",
+                  fontWeight: "bold",
+                  marginLeft: "1.2px",
+                }}
+              />
               <div className="buttons">
                 <Button
                   text="사용자 추가"
                   icon={<Plus />}
                   style={{ marginRight: "5px" }}
-                  onClick={() => {
-                    dispatch(
-                      addCM1105({
-                        cuCode: selected?.cuCode ? selected?.cuCode : "",
-                        areaCode: areaCode,
-                        status: "INSERT",
-                        cuCount: selected?.cuCount ?? 0,
-                      })
-                    );
-                    dispatch(openModal({ type: "cm1105Modal" }));
-                  }}
+                  onClick={() => handleOpenModalCM1105()}
                 />
                 <Button
                   text="사용자 수정"
-                  icon={<Plus />}
+                  icon={<Update />}
                   style={{ marginRight: "5px" }}
                 />
                 <Button
@@ -359,8 +357,8 @@ function CM1200({
               </div>
             </FormSectionTitle>
             <GridBottom
-              selected={selectedUserInfo}
-              openPopup={handleOpenPopup}
+              selectedUserInfo={selectedUserInfo}
+              areaCode={selected?.areaCode}
             />
           </FormSeaction>
         </RightSide>

@@ -11,7 +11,7 @@ import {
   GR1100INSERTSEQ,
 } from "app/path";
 import DaumAddress from "components/daum";
-import InfoPerson from "assets/image/infoPerson.png";
+import { PersonInfoText } from "components/text";
 import {
   Item,
   RadioButton,
@@ -232,10 +232,10 @@ const Form = React.forwardRef(
     return (
       <div style={{ padding: "0px 10px" }}>
         <form>
-          <Field flex style={{ marginBottom: "6px", marginTop: "7px" }}>
-            <img src={InfoPerson} alt="info" />
-            <p style={{ fontSize: "14px", marginLeft: "7px" }}>매입처 정보</p>
-          </Field>
+          <PersonInfoText
+            text="매입처 정보"
+            style={{ marginBottom: "6px", marginTop: "7px" }}
+          />
           <Divider />
           <Wrapper grid>
             <Input
