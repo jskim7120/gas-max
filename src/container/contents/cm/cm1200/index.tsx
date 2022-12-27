@@ -74,7 +74,7 @@ function CM1200({
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<ICM1200SEARCH>();
-  const [selectedUserInfo, setSelectedUserInfo] = useState([]);
+  const [selectedUserInfo, setSelectedUserInfo] = useState<any[]>([]);
   const [selectedSupplyTab, setSelectedSupplyTab] = useState(
     {} as ICM120065SUPPLYTYPE
   );
@@ -98,6 +98,7 @@ function CM1200({
         areaCode: selected.areaCode,
         cuCode: selected.cuCode,
       });
+      setBuildingSelected(false);
     }
   }, [selected]);
 
@@ -158,7 +159,7 @@ function CM1200({
       });
 
       if (data && data?.userInfo) {
-        setSelectedUserInfo(data?.userInfo);
+        setSelectedUserInfo(data.userInfo);
       } else {
         setSelectedUserInfo([]);
       }
@@ -191,7 +192,14 @@ function CM1200({
     }
   };
   const openPopupCM1105Update = () => {
-    if (isBuildingSelected) {
+    if (isBuildingSelected === true) {
+      dispatch(
+        addCM1105({
+          cuCode: selected?.cuCode ? selected?.cuCode : "",
+          areaCode: selected?.areaCode,
+          status: "",
+        })
+      );
       dispatch(openModal({ type: "cm1105Modal" }));
     } else {
       toast.warning("please select building row", {

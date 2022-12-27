@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+//import { yupResolver } from "@hookform/resolvers/yup";
+//import { schema } from "./validation";
+import { toast } from "react-toastify";
 import DaumAddress from "components/daum";
 import { useSelector, useDispatch } from "app/store";
 import API from "app/axios";
-import { schema } from "./validation";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import { Plus, Update, Reset, WhiteClose } from "components/allSvgIcon";
@@ -13,7 +14,6 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { currencyMask } from "helpers/currency";
 import {
   formatDateByRemoveDash,
-  formatDate,
   formatDateToStringWithoutDash,
 } from "helpers/dateFormat";
 import { closeModal } from "app/state/modal/modalSlice";
@@ -33,7 +33,6 @@ import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
 import { CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
-import { toast } from "react-toastify";
 
 function FormCM1105() {
   const [data, setData] = useState<any>(null);
@@ -52,46 +51,11 @@ function FormCM1105() {
     functionName: "CM1105",
   });
 
-  //tab2
-  // const [cuMeterTurm, setCuMeterTurm] = useState("");
-  // const [cuMeterDt, setCuMeterDt] = useState("");
-  // const [cuMdate, setCuMdate] = useState("");
-  // //tab3
-  // const [cuFinishDate, setCuFinishDate] = useState("");
-  // const [cuCircuitDate, setCuCircuitDate] = useState("");
-  // const [cuScheduleDate, setCuScheduleDate] = useState("");
-  // const [tankFirstDate1, setTankFirstDate1] = useState("");
-  // const [tankOutsideDate1, setTankOutsideDate1] = useState("");
-  // const [tankInsideDate1, setTankInsideDate1] = useState("");
-  // const [tankFirstDate2, setTankFirstDate2] = useState("");
-  // const [tankOutsideDate2, setTankOutsideDate2] = useState("");
-  // const [tankInsideDate2, setTankInsideDate2] = useState("");
-  // const [gasifyCheckDate1, setGasifyCheckDate1] = useState("");
-  // const [gasifyCheckDate2, setGasifyCheckDate2] = useState("");
-
-  // //tab4
-  // const [cuHdate, setCuHdate] = useState("");
-  // const [cuGongdate, setCuGongdate] = useState("");
-  // const [cuGongdateT, setCuGongdateT] = useState("");
-  // const [cuExtendDate, setCuExtendDate] = useState("");
-  // const [cuSisuldate, setCuSisuldate] = useState("");
-  // const [cuPdate, setCuPdate] = useState("");
-
-  // //tab6
-  // const [cuSmsDate, setCuSmsDate] = useState("");
-  // const [cuCashpayDate, setCuCashpayDate] = useState("");
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    getValues,
-    control,
-  } = useForm<ICM1105SEARCH>({
-    mode: "onChange",
-    resolver: yupResolver(schema),
-  });
+  const { register, handleSubmit, reset, getValues, control } =
+    useForm<ICM1105SEARCH>({
+      mode: "onChange",
+      // resolver: yupResolver(schema),
+    });
 
   useEffect(() => {
     if (cm1105.status === "INSERT") {
@@ -200,33 +164,6 @@ function FormCM1105() {
           ...newDataVirtualAccount,
           ...newDataCuTank,
         });
-
-        // //tab2 date
-        // setCuMeterTurm("");
-        // setCuMeterDt("");
-        // setCuMdate("");
-        // //tab3 date
-        // setCuFinishDate("");
-        // setCuCircuitDate("");
-        // setCuScheduleDate("");
-        // setTankFirstDate1("");
-        // setTankFirstDate2("");
-        // setTankOutsideDate1("");
-        // setTankOutsideDate2("");
-        // setTankInsideDate1("");
-        // setTankInsideDate2("");
-        // setGasifyCheckDate1("");
-        // setGasifyCheckDate2("");
-        // //tab4 date
-        // setCuHdate("");
-        // setCuGongdate("");
-        // setCuGongdateT("");
-        // setCuExtendDate("");
-        // setCuSisuldate("");
-        // setCuPdate("");
-        // //tab6 date
-        // setCuSmsDate("");
-        // setCuCashpayDate("");
       } else if (type === "reset") {
         for (const [key, value] of Object.entries(customerInfo)) {
           newDataCustomerInfo[key] = value;
@@ -265,102 +202,7 @@ function FormCM1105() {
           ...newDataCms,
           ...newDataVirtualAccount,
           ...newDataCuTank,
-
-          // setCuSmsDate("");
-          // setCuCashpayDate("");
         });
-
-        // //tab2 date
-        // setCuMeterTurm(
-        //   customerInfo?.cuMeterTurm === null ? "" : customerInfo.cuMeterTurm
-        // );
-        // setCuMeterDt(
-        //   customerInfo?.cuMeterDt === null ? "" : customerInfo.cuMeterDt
-        // );
-        // setCuMdate(customerInfo?.cuMdate === null ? "" : customerInfo.cuMdate);
-
-        // //tab3 date
-        // setCuFinishDate(
-        //   customerInfo?.cuFinishDate === null ? "" : customerInfo.cuFinishDate
-        // );
-        // setCuCircuitDate(
-        //   customerInfo?.cuCircuitDate === null ? "" : customerInfo.cuCircuitDate
-        // );
-        // setCuScheduleDate(
-        //   customerInfo?.cuScheduleDate === null
-        //     ? ""
-        //     : customerInfo.cuScheduleDate
-        // );
-        // setTankFirstDate1(
-        //   customerInfo?.tankFirstDate1 === null
-        //     ? ""
-        //     : customerInfo.tankFirstDate1
-        // );
-        // setTankFirstDate2(
-        //   customerInfo?.tankFirstDate2 === null
-        //     ? ""
-        //     : customerInfo.tankFirstDate2
-        // );
-        // setTankOutsideDate1(
-        //   customerInfo?.tankOutsideDate1 === null
-        //     ? ""
-        //     : customerInfo.tankOutsideDate1
-        // );
-        // setTankOutsideDate2(
-        //   customerInfo?.tankOutsideDate2 === null
-        //     ? ""
-        //     : customerInfo.tankOutsideDate2
-        // );
-        // setTankInsideDate1(
-        //   customerInfo?.tankInsideDate1 === null
-        //     ? ""
-        //     : customerInfo.tankInsideDate1
-        // );
-        // setTankInsideDate2(
-        //   customerInfo?.tankInsideDate2 === null
-        //     ? ""
-        //     : customerInfo.tankInsideDate2
-        // );
-        // setGasifyCheckDate1(
-        //   customerInfo?.gasifyCheckDate1 === null
-        //     ? ""
-        //     : customerInfo.gasifyCheckDate1
-        // );
-        // setGasifyCheckDate2(
-        //   customerInfo?.gasifyCheckDate2 === null
-        //     ? ""
-        //     : customerInfo.gasifyCheckDate2
-        // );
-
-        // //tab4 date
-        // setCuHdate(customerInfo?.cuHdate === null ? "" : customerInfo.cuHdate);
-
-        // setCuGongdate(
-        //   customerInfo?.cuGongdate === null ? "" : customerInfo.cuGongdate
-        // );
-
-        // setCuGongdateT(
-        //   customerInfo?.cuGongdateT === null ? "" : customerInfo.cuGongdateT
-        // );
-
-        // setCuExtendDate(
-        //   customerInfo?.cuExtendDate === null ? "" : customerInfo.cuExtendDate
-        // );
-
-        // setCuSisuldate(
-        //   customerInfo?.cuSisuldate === null ? "" : customerInfo.cuSisuldate
-        // );
-
-        // setCuPdate(customerInfo?.cuPdate === null ? "" : customerInfo.cuPdate);
-
-        // //tab6 date
-        // setCuSmsDate(
-        //   customerInfo?.cuSmsDate === null ? "" : customerInfo.cuSmsDate
-        // );
-
-        // setCuCashpayDate(
-        //   customerInfo?.cuCashpayDate === null ? "" : customerInfo.cuCashpayDate
-        // );
       }
     }
   };
@@ -370,6 +212,7 @@ function FormCM1105() {
       const { data } = await API.get(CM1105SEARCH, {
         params: { cuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
       });
+
       setData(data);
     } catch (error) {
       console.log("Error fetching CM1105 data:", error);
@@ -382,15 +225,13 @@ function FormCM1105() {
         params: { areaCode: areaCode, cuCode: cuCode },
       });
       if (res.status === 200) {
-        console.log("++++++++++++++++++++", res, res.data[0].cuCode);
-
         reset({ cuCode: res.data[0].cuCode, areaCode: areaCode ?? "" });
       } else {
         toast.error("couldn't get CuCode", {
           autoClose: 500,
         });
       }
-      return null;
+      setData(null);
     } catch (error: any) {
       toast.error(error, {
         autoClose: 500,
@@ -424,65 +265,6 @@ function FormCM1105() {
         : (formValues.cuExtendDate as any) instanceof Date
         ? formatDateToStringWithoutDash(formValues.cuExtendDate)
         : "";
-
-    // formValues.cuHdate = formValues.cuHdate?
-
-    // formValues.cuMeterDt = cuMeterDt ? formatDateByRemoveDash(cuMeterDt) : "";
-    // formValues.cuMdate = cuMdate ? formatDateByRemoveDash(cuMdate) : "";
-    // formValues.cuMeterTurm = cuMeterTurm
-    //   ? formatDateByRemoveDash(cuMeterTurm)
-    //   : "";
-    // formValues.cuFinishDate = cuFinishDate
-    //   ? formatDateByRemoveDash(cuFinishDate)
-    //   : "";
-    // formValues.cuCircuitDate = cuCircuitDate
-    //   ? formatDateByRemoveDash(cuCircuitDate)
-    //   : "";
-    // formValues.cuScheduleDate = cuScheduleDate
-    //   ? formatDateByRemoveDash(cuScheduleDate)
-    //   : "";
-    // formValues.tankFirstDate1 = tankFirstDate1
-    //   ? formatDateByRemoveDash(tankFirstDate1)
-    //   : "";
-    // formValues.tankFirstDate2 = tankFirstDate2
-    //   ? formatDateByRemoveDash(tankFirstDate2)
-    //   : "";
-    // formValues.tankInsideDate1 = tankInsideDate1
-    //   ? formatDateByRemoveDash(tankInsideDate1)
-    //   : "";
-    // formValues.tankInsideDate2 = tankInsideDate2
-    //   ? formatDateByRemoveDash(tankInsideDate2)
-    //   : "";
-    // formValues.tankOutsideDate1 = tankOutsideDate1
-    //   ? formatDateByRemoveDash(tankOutsideDate1)
-    //   : "";
-    // formValues.tankOutsideDate2 = tankOutsideDate2
-    //   ? formatDateByRemoveDash(tankOutsideDate2)
-    //   : "";
-    // formValues.gasifyCheckDate1 = gasifyCheckDate1
-    //   ? formatDateByRemoveDash(gasifyCheckDate1)
-    //   : "";
-    // formValues.gasifyCheckDate2 = gasifyCheckDate2
-    //   ? formatDateByRemoveDash(gasifyCheckDate2)
-    //   : "";
-    // formValues.cuHdate = cuHdate ? formatDateByRemoveDash(cuHdate) : "";
-    // formValues.cuGongdate = cuGongdate
-    //   ? formatDateByRemoveDash(cuGongdate)
-    //   : "";
-    // formValues.cuGongdateT = cuGongdateT
-    //   ? formatDateByRemoveDash(cuGongdateT)
-    //   : "";
-    // formValues.cuExtendDate = cuExtendDate
-    //   ? formatDateByRemoveDash(cuExtendDate)
-    //   : "";
-    // formValues.cuSisuldate = cuSisuldate
-    //   ? formatDateByRemoveDash(cuSisuldate)
-    //   : "";
-    // formValues.cuPdate = cuPdate ? formatDateByRemoveDash(cuPdate) : "";
-    // formValues.cuSmsDate = cuSmsDate ? formatDateByRemoveDash(cuSmsDate) : "";
-    // formValues.cuCashpayDate = cuCashpayDate
-    //   ? formatDateByRemoveDash(cuCashpayDate)
-    //   : "";
 
     try {
       const response: any = await API.post(path, formValues);
@@ -585,11 +367,7 @@ function FormCM1105() {
             register={register("cuTel")}
             inputSize={InputSize.i100}
           />
-          <Input
-            register={register("cuTel21")}
-            errors={errors["cuTel21"]?.message}
-            inputSize={InputSize.i150}
-          />
+          <Input register={register("cuTel21")} inputSize={InputSize.i150} />
 
           <FormGroup>
             <Label>거래구분</Label>
@@ -604,12 +382,6 @@ function FormCM1105() {
         </Wrapper>
 
         <Wrapper grid>
-          {/* <Input
-            label="핸드폰"
-            register={register("cuHp")}
-            errors={errors["cuHp"]?.message}
-            formatNumber="telNumber"
-          /> */}
           <Controller
             control={control}
             {...register("cuHp")}
@@ -638,7 +410,7 @@ function FormCM1105() {
             )}
           />
 
-          <Input register={register("cuHp")} errors={errors["cuHp"]?.message} />
+          <Input register={register("cuHp")} />
 
           <FormGroup>
             <Label>거래상태</Label>
@@ -791,12 +563,7 @@ function FormCM1105() {
                   <CheckBox register={{ ...register("cuJangbuYn") }} />
                 </FormGroup>
               </Field>
-              {/* <Input
-                label="무료시설 투자비"
-                register={register("cuSvKumack")}
-                textAlign="right"
-                inputSize={InputSize.i100}
-              /> */}
+
               <Controller
                 control={control}
                 {...register("cuSvKumack")}
@@ -865,64 +632,13 @@ function FormCM1105() {
                 ? data?.customerInfo[0]
                 : { cuRdanga: 0 },
               register,
-              errors,
               dataCommonDic,
               setAddress2,
-              reset,
               too,
               setToo,
               sign,
               setSign,
               control
-              //setCuRdangaType,----------------
-              //cuRdangaType,-------------------------
-              // setCuMeterTurm,
-              // setCuMeterDt,
-              // setCuMdate,
-
-              // cuMeterTurm,
-              // cuMeterDt,
-              // cuMdate,
-              // setCuFinishDate,
-              // setCuCircuitDate,
-              // setCuScheduleDate,
-              // setTankFirstDate1,
-              // setTankOutsideDate1,
-              // setTankInsideDate1,
-              // setTankFirstDate2,
-              // setTankOutsideDate2,
-              // setTankInsideDate2,
-              // setGasifyCheckDate1,
-              // setGasifyCheckDate2,
-              // cuFinishDate,
-              // cuCircuitDate,
-              // cuScheduleDate,
-              // tankFirstDate1,
-              // tankOutsideDate1,
-              // tankInsideDate1,
-              // tankFirstDate2,
-              // tankOutsideDate2,
-              // tankInsideDate2,
-              // gasifyCheckDate1,
-              // gasifyCheckDate2,
-
-              // cuHdate,
-              // setCuHdate,
-              // cuGongdate,
-              // setCuGongdate,
-              // cuGongdateT,
-              // setCuGongdateT,
-              // cuExtendDate,
-              // setCuExtendDate,
-              // cuSisuldate,
-              // setCuSisuldate,
-              // cuPdate,
-              // setCuPdate,
-              // //tab6 date
-              // cuSmsDate,
-              // setCuSmsDate,
-              // cuCashpayDate,
-              // setCuCashpayDate
             )}
           </TabContentWrapper>
         </div>
