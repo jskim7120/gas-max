@@ -287,11 +287,31 @@ const Form = React.forwardRef(
           </Wrapper>
 
           <Wrapper grid>
-            <Input
-              label="대표전화"
-              register={register("buTel")}
-              errors={errors["buTel"]?.message}
-              inputSize={InputSize.i110}
+            <Controller
+              control={control}
+              {...register("buTel")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="대표전화"
+                  value={value}
+                  onChange={onChange}
+                  mask={[
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    "-",
+                    /\d/,
+                    /\d/,
+                    "-",
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                  ]}
+                  name={name}
+                />
+              )}
             />
             <Input
               label="Fax 번호"
@@ -311,32 +331,13 @@ const Form = React.forwardRef(
           </Wrapper>
           <Divider />
           <Wrapper grid>
-            <Controller
-              control={control}
-              {...register("buNo")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="사업자번호"
-                  value={value}
-                  onChange={onChange}
-                  mask={[
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    "-",
-                    /\d/,
-                    /\d/,
-                    "-",
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                  ]}
-                  name={name}
-                  inputSize={InputSize.i110}
-                />
-              )}
+            <Input
+              label="사업자번호"
+              register={register("buNo")}
+              errors={errors["buNo"]?.message}
+              inputSize={InputSize.i110}
+              formatNumber="telNumber"
+              maxLength="13"
             />
             <Input
               label="종사업장"
@@ -440,19 +441,13 @@ const Form = React.forwardRef(
               register={register("buBankju")}
               errors={errors["buBankju"]?.message}
             />
-            <Controller
-              control={control}
-              {...register("buMisu")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="미지급액"
-                  value={value}
-                  onChange={onChange}
-                  mask={currencyMask}
-                  name={name}
-                  textAlign="right"
-                />
-              )}
+            <Input
+              label="미지급액"
+              register={register("buMisu")}
+              errors={errors["buMisu"]?.message}
+              formatNumber="comNumber"
+              style={{ textAlign: "right" }}
+              mask={currencyMask}
             />
           </Wrapper>
           <Divider />
