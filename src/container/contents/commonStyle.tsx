@@ -102,7 +102,7 @@ export const SearchTopWrapper = styled.div`
 }
 
 export const FormSeaction = styled.div<{ topBorder: boolean }>`
-  border-top: ${(props) => (props.topBorder ? "4px solid #707070;" : "none")};
+  border-top: ${(props) => (props.topBorder ? "3px solid #707070;" : "none")};
   padding: 0px 10px 20px 10px;
 `;
 

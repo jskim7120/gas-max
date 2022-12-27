@@ -20,6 +20,11 @@ export const columns = [
     header: {
       text: "코드",
     },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("areaCode", "count");
+      },
+    },
   },
   {
     name: "areaName",

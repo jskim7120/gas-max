@@ -35,7 +35,7 @@ function Grid({
       gv.setHeader({
         height: 35,
       });
-      gv.setFooter({ visible: false });
+
       gv.setOptions({
         indicator: { visible: true },
         checkBar: { visible: false },
@@ -45,6 +45,7 @@ function Grid({
       gv.displayOptions._selectionStyle = "singleRow";
       gv.setEditOptions({ editable: false });
 
+      gv.displayOptions.useFocusClass = true;
       gv.setCurrent({
         dataRow: selectedRowIndex,
       });

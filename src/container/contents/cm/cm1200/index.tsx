@@ -74,15 +74,14 @@ function CM1200({
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<ICM1200SEARCH>();
-  const [selectedUserInfo, setSelectedUserInfo] = useState([
-    {} as ICM120065USERINFO,
-  ]);
+  const [selectedUserInfo, setSelectedUserInfo] = useState([]);
   const [selectedSupplyTab, setSelectedSupplyTab] = useState(
     {} as ICM120065SUPPLYTYPE
   );
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [dataChk, setDataChk] = useState(true);
   const [areaCode, setAreaCode] = useState("");
+  const [isBuildingSelected, setBuildingSelected] = useState(false);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -174,7 +173,7 @@ function CM1200({
     }
   };
 
-  const handleOpenModalCM1105 = () => {
+  const openPopupCM1105Insert = () => {
     if (selected) {
       dispatch(
         addCM1105({
@@ -187,6 +186,15 @@ function CM1200({
       dispatch(openModal({ type: "cm1105Modal" }));
     } else {
       toast.warning("no data", {
+        autoClose: 500,
+      });
+    }
+  };
+  const openPopupCM1105Update = () => {
+    if (isBuildingSelected) {
+      dispatch(openModal({ type: "cm1105Modal" }));
+    } else {
+      toast.warning("please select building row", {
         autoClose: 500,
       });
     }
@@ -342,12 +350,13 @@ function CM1200({
                   text="사용자 추가"
                   icon={<Plus />}
                   style={{ marginRight: "5px" }}
-                  onClick={() => handleOpenModalCM1105()}
+                  onClick={openPopupCM1105Insert}
                 />
                 <Button
                   text="사용자 수정"
                   icon={<Update />}
                   style={{ marginRight: "5px" }}
+                  onClick={openPopupCM1105Update}
                 />
                 <Button
                   text="삭제"
@@ -359,6 +368,7 @@ function CM1200({
             <GridBottom
               selectedUserInfo={selectedUserInfo}
               areaCode={selected?.areaCode}
+              setBuildingSelected={setBuildingSelected}
             />
           </FormSeaction>
         </RightSide>
