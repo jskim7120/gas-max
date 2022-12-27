@@ -1,12 +1,21 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useDispatch, useSelector } from "app/store";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker/test-datepicker";
+import {
+  openModal,
+  closeModal,
+  addDeleteMenuId,
+  setIsDelete,
+} from "app/state/modal/modalSlice";
+import { Plus, ResetGray, Trash, Update } from "components/allSvgIcon";
 import { FormContainer, FormHeadCnt, DividerGrayGR, DividerGR } from "./style";
 import {} from "app/path";
 import { IGR1500SEARCH } from "./model";
+import Button from "components/button/button";
 import {
   Input,
   Select,
@@ -17,7 +26,7 @@ import {
   FormGroup,
   Label,
 } from "components/form/style";
-import { InputSize } from "components/componentsType";
+import { InputSize, ButtonColor } from "components/componentsType";
 
 interface IForm {
   selected: any;
@@ -26,6 +35,7 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  menuId: string;
 }
 
 const Form = React.forwardRef(
@@ -37,17 +47,19 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      menuId,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
+    const dispatch = useDispatch();
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "GR",
       functionName: "GR1500",
     });
 
-    console.log("data", dataCommonDic);
+    const { isDelete } = useSelector((state) => state.modal);
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
@@ -57,6 +69,12 @@ const Form = React.forwardRef(
       }
       setIsAddBtnClicked(false);
     }, [selected]);
+
+    useEffect(() => {
+      if (isDelete.menuId === menuId && isDelete.isDelete) {
+        deleteRowGrid();
+      }
+    }, [isDelete.isDelete]);
 
     const {
       register,
@@ -149,10 +167,55 @@ const Form = React.forwardRef(
       //   }
     };
 
+    function deleteRowGrid() {
+      try {
+        setIsAddBtnClicked(false);
+        crud("delete");
+        dispatch(addDeleteMenuId({ menuId: "" }));
+        dispatch(setIsDelete({ isDelete: false }));
+        dispatch(closeModal());
+      } catch (error) {}
+    }
+
     return (
       <div style={{ width: "23%" }}>
         <FormContainer />
-        <FormHeadCnt />
+        <FormHeadCnt>
+          <Button
+            text="등록"
+            icon={<Plus />}
+            onClick={() => {
+              // setIsAddBtnClicked(true);
+              // resetForm("clear");
+            }}
+          />
+          <Button
+            text="삭제"
+            icon={<Trash />}
+            onClick={() => {
+              dispatch(openModal({ type: "delModal" }));
+              dispatch(addDeleteMenuId({ menuId: menuId }));
+            }}
+          />
+          <Button
+            text="저장"
+            icon={<Update />}
+            color={ButtonColor.SUCCESS}
+            onClick={() => {
+              // crud(null);
+            }}
+          />
+          <Button
+            text="취소"
+            icon={<ResetGray />}
+            color={ButtonColor.LIGHT}
+            onClick={() => {
+              // setIsAddBtnClicked(false);
+              // resetForm("reset");
+            }}
+            style={{ padding: "0 3px" }}
+          />
+        </FormHeadCnt>
         <form style={{ width: "350px", margin: "25px auto 0" }}>
           <Wrapper>
             <Input

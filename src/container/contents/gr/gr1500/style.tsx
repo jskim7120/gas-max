@@ -78,6 +78,11 @@ export const FormContainer = styled.div`
   border-bottom: 3px solid #707070;
 `;
 export const FormHeadCnt = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: end;
+  padding-right: 8px;
   height: 37px;
   border-bottom: 2px solid #707070;
 `;

@@ -345,6 +345,7 @@ function GR1500({
         selectedRowIndex={selectedRowIndex}
         setSelectedRowIndex={setSelectedRowIndex}
         setSelected={setSelected}
+        menuId={menuId}
       />
     </Container>
   );
