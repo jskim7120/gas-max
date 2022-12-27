@@ -29,7 +29,6 @@ function Grid({
     gv.setColumns(columns);
     dp.setRows(data);
     gv.setHeader({ height: 35, heightFill: "fixed" });
-    gv.setFooter({ visible: false });
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
@@ -40,6 +39,7 @@ function Grid({
     gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
 
+    gv.displayOptions.useFocusClass = true;
     gv.setCurrent({
       dataRow: selectedRowIndex,
     });

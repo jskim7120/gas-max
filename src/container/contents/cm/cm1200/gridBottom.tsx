@@ -7,9 +7,11 @@ import { fieldsSelected, columnsSelected } from "./data";
 function GridTable({
   selectedUserInfo,
   areaCode,
+  setBuildingSelected,
 }: {
   selectedUserInfo: any;
   areaCode: string | undefined;
+  setBuildingSelected: Function;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -21,6 +23,8 @@ function GridTable({
 
   useEffect(() => {
     if (selectedUserInfo && selectedUserInfo.length > 0) {
+      console.log("cdscdscdcdsdsds", selectedUserInfo);
+
       setData(selectedUserInfo);
     }
   }, [selectedUserInfo, areaCode]);
@@ -75,6 +79,7 @@ function GridTable({
           areaCode: areaCode,
         })
       );
+      setBuildingSelected(true);
     };
 
     return () => {

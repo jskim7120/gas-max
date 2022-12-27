@@ -22,3 +22,7 @@
 .rg-header-focus {
   background-color: #e4e7eb;
 }
+
+.rg-focused-row {
+  background: #f9d2b9;
+}
