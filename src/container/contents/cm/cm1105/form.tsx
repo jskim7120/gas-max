@@ -266,6 +266,13 @@ function FormCM1105() {
         ? formatDateToStringWithoutDash(formValues.cuExtendDate)
         : "";
 
+    formValues.cuGongdate =
+      typeof formValues.cuGongdate === "string"
+        ? formatDateByRemoveDash(formValues.cuGongdate)
+        : (formValues.cuGongdate as any) instanceof Date
+        ? formatDateToStringWithoutDash(formValues.cuGongdate)
+        : "";
+
     try {
       const response: any = await API.post(path, formValues);
       if (response.status === 200) {
@@ -343,7 +350,7 @@ function FormCM1105() {
       </ModalHeader>
       <div style={{ padding: "12px" }}>
         <Divider />
-        <Wrapper grid>
+        <Wrapper grid col={4}>
           <Input
             label="거래처코드"
             register={register("cuCode")}
@@ -353,6 +360,7 @@ function FormCM1105() {
             label="거래처명(건물명)"
             register={register("cuName")}
             inputSize={InputSize.i150}
+            style={{ marginLeft: "0px" }}
           />
           <Input
             label="사용자명"
@@ -361,14 +369,16 @@ function FormCM1105() {
           />
         </Wrapper>
 
-        <Wrapper grid>
-          <Input
-            label="전화번호"
-            register={register("cuTel")}
-            inputSize={InputSize.i100}
-          />
-          <Input register={register("cuTel21")} inputSize={InputSize.i150} />
-
+        <Wrapper grid col={2}>
+          <Field flex>
+            <Input
+              label="전화번호"
+              register={register("cuTel")}
+              inputSize={InputSize.i120}
+            />
+            <Input register={register("cuTel21")} inputSize={InputSize.i150} />
+            <Input register={register("cuTel22")} inputSize={InputSize.i150} />
+          </Field>
           <FormGroup>
             <Label>거래구분</Label>
             <Select {...register("cuType")} width={InputSize.i100}>
@@ -381,36 +391,91 @@ function FormCM1105() {
           </FormGroup>
         </Wrapper>
 
-        <Wrapper grid>
-          <Controller
-            control={control}
-            {...register("cuHp")}
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="핸드폰"
-                value={value}
-                onChange={onChange}
-                mask={[
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                ]}
-                inputSize={InputSize.i100}
-              />
-            )}
-          />
-
-          <Input register={register("cuHp")} />
+        <Wrapper grid col={2}>
+          <Field flex>
+            <Controller
+              control={control}
+              {...register("cuHp")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="핸드폰"
+                  value={value}
+                  name={name}
+                  onChange={onChange}
+                  mask={[
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    "-",
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    "-",
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                  ]}
+                  inputSize={InputSize.i120}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              {...register("cuTel23")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  mask={[
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    "-",
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    "-",
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                  ]}
+                  inputSize={InputSize.i150}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              {...register("cuTel24")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  mask={[
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    "-",
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    "-",
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                  ]}
+                  inputSize={InputSize.i150}
+                />
+              )}
+            />
+          </Field>
 
           <FormGroup>
             <Label>거래상태</Label>
