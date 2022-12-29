@@ -3,21 +3,7 @@ import CheckBox from "components/checkbox";
 import CustomDatePicker from "components/customDatePicker/test-datepicker";
 import { Controller } from "react-hook-form";
 
-function Tab6({
-  register,
-  control,
-}: // cuSmsDate,
-// setCuSmsDate,
-// cuCashpayDate,
-// setCuCashpayDate,
-{
-  register: Function;
-  control: any;
-  // cuSmsDate: string;
-  // setCuSmsDate: Function;
-  // cuCashpayDate: string;
-  // setCuCashpayDate: Function;
-}) {
+function Tab6({ register, control }: { register: Function; control: any }) {
   return (
     <Field>
       <Field
@@ -51,11 +37,7 @@ function Tab6({
 
             <Field flex style={{ alignItems: "center" }}>
               <Label>신청일자</Label>
-              {/* <CustomDatePicker
-                value={cuSmsDate}
-                setValue={setCuSmsDate}
-                name="cuSmsDate"
-              /> */}
+
               <Controller
                 control={control}
                 {...register("cuSmsDate")}
@@ -100,11 +82,7 @@ function Tab6({
 
             <Field flex style={{ alignItems: "center" }}>
               <Label>신청일자</Label>
-              {/* <CustomDatePicker
-                value={cuCashpayDate}
-                setValue={setCuCashpayDate}
-                name="cuCashpayDate"
-              /> */}
+
               <Controller
                 control={control}
                 {...register("cuCashpayDate")}

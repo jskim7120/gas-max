@@ -27,13 +27,7 @@ function Tab2({
   sign,
   setSign,
   control,
-}: // setCuMeterTurm,
-// setCuMeterDt,
-// setCuMdate,
-// cuMeterTurm,
-// cuMeterDt,
-// cuMdate,
-{
+}: {
   customerInfo: any;
   dataCommonDic: any;
   register: Function;
@@ -42,12 +36,6 @@ function Tab2({
   sign: string;
   setSign: Function;
   control: any;
-  // setCuMeterTurm: any;
-  // setCuMeterDt: any;
-  // setCuMdate: any;
-  // cuMeterTurm: any;
-  // cuMeterDt: any;
-  // cuMdate: any;
 }) {
   const [cuRdangaType, setCuRdangaType] = useState("");
 
@@ -164,7 +152,7 @@ function Tab2({
                 {...register("cuCdc")}
                 render={({ field: { onChange, value, name } }) => (
                   <Input
-                    label="할인율"
+                    label="할인율+++++"
                     value={value}
                     onChange={onChange}
                     name={name}
