@@ -184,7 +184,8 @@ const Form = React.forwardRef(
       const path = isAddBtnClicked ? GR1100INSERT : GR1100UPDATE;
       const formValues = getValues();
       formValues.areaCode = selected.areaCode;
-
+      if (formValues.buMisu)
+        formValues.buMisu = Number(formValues.buMisu.replaceAll(",", ""));
       try {
         const response: any = await API.post(path, formValues);
 
