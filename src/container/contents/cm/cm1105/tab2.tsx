@@ -152,7 +152,7 @@ function Tab2({
                 {...register("cuCdc")}
                 render={({ field: { onChange, value, name } }) => (
                   <Input
-                    label="할인율+++++"
+                    label="할인율"
                     value={value}
                     onChange={onChange}
                     name={name}

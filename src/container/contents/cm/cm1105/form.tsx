@@ -585,8 +585,8 @@ function FormCM1105() {
                 <Label>품목 단가</Label>
                 <Select {...register("cuJdc")} width={InputSize.i100}>
                   {dataCommonDic?.cuJdc?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code1}>
-                      {obj.code1}
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
                     </option>
                   ))}
                 </Select>
