@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { useDispatch } from "app/store";
 import { addCM1105 } from "app/state/modal/modalSlice";
@@ -19,15 +19,6 @@ function GridTable({
   const realgridTableElement = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
-  const [data, setData] = useState<any[]>([]);
-
-  useEffect(() => {
-    if (selectedUserInfo && selectedUserInfo.length > 0) {
-      console.log("cdscdscdcdsdsds", selectedUserInfo);
-
-      setData(selectedUserInfo);
-    }
-  }, [selectedUserInfo, areaCode]);
 
   useEffect(() => {
     container = realgridTableElement.current as HTMLDivElement;
@@ -37,7 +28,7 @@ function GridTable({
     gv.setDataSource(dp);
     dp.setFields(fieldsSelected);
     gv.setColumns(columnsSelected);
-    dp.setRows(data);
+    dp.setRows(selectedUserInfo);
     gv.setHeader({
       height: 35,
     });
@@ -75,7 +66,7 @@ function GridTable({
       const itemIndex: any = gv.getCurrent().dataRow;
       dispatch(
         addCM1105({
-          cuCode: data[itemIndex].cuCode,
+          cuCode: selectedUserInfo[itemIndex].cuCode,
           areaCode: areaCode,
         })
       );
@@ -87,7 +78,7 @@ function GridTable({
       gv.destroy();
       dp.destroy();
     };
-  }, [data]);
+  }, [selectedUserInfo]);
 
   return (
     <div
