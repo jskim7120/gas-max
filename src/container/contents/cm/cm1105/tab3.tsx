@@ -420,7 +420,7 @@ function Tab3({
             <Input register={register("gasifyCo1")} />
             <Input register={register("gasifyVol1")} />
             <Input register={register("gasifySno1")} />
-            <Input register={register("gasifyMakeDate1")} maxLength="6" />
+            <Input register={register("gasifyMakeDate1")} />
             <Input register={register("gasifyPower1")} />
 
             <Controller
@@ -436,7 +436,7 @@ function Tab3({
             <Input register={register("gasifyCo2")} />
             <Input register={register("gasifyVol2")} />
             <Input register={register("gasifySno2")} />
-            <Input register={register("gasifyMakeDate2")} maxLength="6" />
+            <Input register={register("gasifyMakeDate2")} />
             <Input register={register("gasifyPower2")} />
 
             <Controller
