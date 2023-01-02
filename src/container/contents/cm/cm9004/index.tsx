@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CM9004SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import API from "app/axios";
-import { DetailHeader, WrapperContent } from "../../commonStyle";
+import { TopBar, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import {
@@ -106,7 +106,7 @@ function CM9004({
 
   return (
     <>
-      <DetailHeader>
+      <TopBar>
         <div style={{ display: "flex", alignItems: "center" }}>
           <p style={{ marginRight: "20px" }}>{depthFullName}</p>
           <p>
@@ -121,7 +121,7 @@ function CM9004({
             ))}
           </Select>
         </div>
-      </DetailHeader>
+      </TopBar>
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper>

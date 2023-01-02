@@ -46,54 +46,10 @@ function Tab3({
   dataCommonDic,
   register,
   control,
-}: // setCuFinishDate,
-// setCuCircuitDate,
-// setCuScheduleDate,
-// setTankFirstDate1,
-// setTankOutsideDate1,
-// setTankInsideDate1,
-// setTankFirstDate2,
-// setTankOutsideDate2,
-// setTankInsideDate2,
-// setGasifyCheckDate1,
-// cuFinishDate,
-// cuCircuitDate,
-// cuScheduleDate,
-// tankFirstDate1,
-// tankOutsideDate1,
-// tankInsideDate1,
-// tankFirstDate2,
-// tankOutsideDate2,
-// tankInsideDate2,
-// gasifyCheckDate1,
-// gasifyCheckDate2,
-// setGasifyCheckDate2,
-{
+}: {
   dataCommonDic: any;
   register: Function;
   control: any;
-  // setCuFinishDate: any;
-  // setCuCircuitDate: any;
-  // setCuScheduleDate: any;
-  // setTankFirstDate1: any;
-  // setTankOutsideDate1: any;
-  // setTankInsideDate1: any;
-  // setTankFirstDate2: any;
-  // setTankOutsideDate2: any;
-  // setTankInsideDate2: any;
-  // setGasifyCheckDate1: any;
-  // cuFinishDate: string;
-  // cuCircuitDate: string;
-  // cuScheduleDate: string;
-  // tankFirstDate1: string;
-  // tankOutsideDate1: string;
-  // tankInsideDate1: string;
-  // tankFirstDate2: string;
-  // tankOutsideDate2: string;
-  // tankInsideDate2: string;
-  // gasifyCheckDate1: string;
-  // gasifyCheckDate2: string;
-  // setGasifyCheckDate2: any;
 }) {
   return (
     <Field className="outer-border">
@@ -121,12 +77,6 @@ function Tab3({
 
           <Field flex style={{ alignItems: "center" }}>
             <Label>완성검사일</Label>
-            {/* <CustomDatePicker
-              value={cuFinishDate}
-              setValue={setCuFinishDate}
-              name="cuFinishDate"
-              style={{ margin: "5px 5px 0 5px" }}
-            /> */}
             <Controller
               control={control}
               {...register("cuFinishDate")}
@@ -138,12 +88,6 @@ function Tab3({
 
           <Field flex style={{ alignItems: "center" }}>
             <Label>정기검사일</Label>
-            {/* <CustomDatePicker
-              value={cuCircuitDate}
-              setValue={setCuCircuitDate}
-              name="cuCircuitDate"
-              style={{ margin: "5px 5px 0 5px" }}
-            /> */}
             <Controller
               control={control}
               {...register("cuCircuitDate")}
@@ -155,12 +99,6 @@ function Tab3({
 
           <Field flex style={{ alignItems: "center" }}>
             <Label>검사 예정일</Label>
-            {/* <CustomDatePicker
-              value={cuScheduleDate}
-              setValue={setCuScheduleDate}
-              name="cuScheduleDate"
-              style={{ margin: "5px 5px 0 5px" }}
-            /> */}
             <Controller
               control={control}
               {...register("cuScheduleDate")}
@@ -249,12 +187,6 @@ function Tab3({
             <Input register={register("tankRcv1")} inputSize={InputSize.i80} />
 
             <Field>
-              {/* <CustomDatePicker
-                value={tankFirstDate1}
-                setValue={setTankFirstDate1}
-                name="tankFirstDate1"
-                style={{ margin: "5px 5px 0 5px" }}
-              /> */}
               <Controller
                 control={control}
                 {...register("tankFirstDate1")}
@@ -265,12 +197,6 @@ function Tab3({
             </Field>
 
             <Field>
-              {/* <CustomDatePicker
-                value={tankOutsideDate1}
-                setValue={setTankOutsideDate1}
-                name="tankOutsideDate1"
-                style={{ margin: "5px 5px 0 5px" }}
-              /> */}
               <Controller
                 control={control}
                 {...register("tankOutsideDate1")}
@@ -281,12 +207,6 @@ function Tab3({
             </Field>
 
             <Field>
-              {/* <CustomDatePicker
-                value={tankInsideDate1}
-                setValue={setTankInsideDate1}
-                name="tankInsideDate1"
-                style={{ margin: "5px 5px 0 5px" }}
-              /> */}
               <Controller
                 control={control}
                 {...register("tankInsideDate1")}
@@ -296,12 +216,6 @@ function Tab3({
               />
             </Field>
             <Field flex>
-              {/* <Input
-                register={register("tankMax1")}
-                inputSize={InputSize.i60}
-                textAlign="right"
-                maxLength="3"
-              /> */}
               <Controller
                 control={control}
                 {...register("tankMax1")}
@@ -364,12 +278,6 @@ function Tab3({
             <Input register={register("tankRcv2")} inputSize={InputSize.i80} />
 
             <Field>
-              {/* <CustomDatePicker
-                value={tankFirstDate2}
-                setValue={setTankFirstDate2}
-                name="tankFirstDate2"
-                style={{ margin: "5px 5px 0 5px" }}
-              /> */}
               <Controller
                 control={control}
                 {...register("tankFirstDate2")}
@@ -380,12 +288,6 @@ function Tab3({
             </Field>
 
             <Field>
-              {/* <CustomDatePicker
-                value={tankOutsideDate2}
-                setValue={setTankOutsideDate2}
-                name="tankOutsideDate2"
-                style={{ margin: "5px 5px 0 5px" }}
-              /> */}
               <Controller
                 control={control}
                 {...register("tankOutsideDate2")}
@@ -396,12 +298,6 @@ function Tab3({
             </Field>
 
             <Field>
-              {/* <CustomDatePicker
-                value={tankInsideDate2}
-                setValue={setTankInsideDate2}
-                name="tankInsideDate2"
-                style={{ margin: "5px 5px 0 5px" }}
-              /> */}
               <Controller
                 control={control}
                 {...register("tankInsideDate2")}
@@ -411,12 +307,6 @@ function Tab3({
               />
             </Field>
             <Field flex>
-              {/* <Input
-                register={register("tankMax2")}
-                inputSize={InputSize.i60}
-                textAlign="right"
-                maxLength="3"
-              /> */}
               <Controller
                 control={control}
                 {...register("tankMax2")}
@@ -533,12 +423,6 @@ function Tab3({
             <Input register={register("gasifyMakeDate1")} maxLength="6" />
             <Input register={register("gasifyPower1")} />
 
-            {/* <CustomDatePicker
-              value={gasifyCheckDate1}
-              setValue={setGasifyCheckDate1}
-              name="gasifyCheckDate1"
-              style={{ margin: "5px 5px 0 5px" }}
-            /> */}
             <Controller
               control={control}
               {...register("gasifyCheckDate1")}
@@ -555,12 +439,6 @@ function Tab3({
             <Input register={register("gasifyMakeDate2")} maxLength="6" />
             <Input register={register("gasifyPower2")} />
 
-            {/* <CustomDatePicker
-              value={gasifyCheckDate2}
-              setValue={setGasifyCheckDate2}
-              name="gasifyCheckDate2"
-              style={{ margin: "5px 5px 0 5px" }}
-            /> */}
             <Controller
               control={control}
               {...register("gasifyCheckDate2")}

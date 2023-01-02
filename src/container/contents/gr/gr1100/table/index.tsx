@@ -3,6 +3,7 @@ import Table from "components/table";
 import { Input2, Select, Field } from "components/form/style";
 import { InputSize } from "components/componentsType";
 import InfoPerson from "assets/image/infoPerson.png";
+import { PersonInfoText } from "components/text";
 import { InfoText } from "components/text";
 function TableData({
   register,
@@ -261,12 +262,13 @@ function TableData({
         <Field flex>
           <Field>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Field flex style={{ marginBottom: "6px", marginTop: "7px" }}>
-                <img src={InfoPerson} alt="info" />
-                <p style={{ fontSize: "14px", marginLeft: "7px" }}>
-                  LPG 매입 단가
-                </p>
-              </Field>
+              <PersonInfoText
+                text="LPG 매입 단가"
+                style={{
+                  marginBottom: "6px",
+                  marginTop: "7px",
+                }}
+              />
               <InfoText style={{ marginTop: "3px" }} text="Vat 포함 가격" />
             </div>
             <Table
@@ -275,19 +277,14 @@ function TableData({
             />
           </Field>
           <Field style={{ marginLeft: "30px" }}>
-            <Field
-              flex
+            <PersonInfoText
+              text="무료 충전 품목"
               style={{
                 marginBottom: "6px",
                 marginTop: "7px",
                 marginLeft: "4px",
               }}
-            >
-              <img src={InfoPerson} alt="info" />
-              <p style={{ fontSize: "14px", marginLeft: "7px" }}>
-                무료 충전 품목
-              </p>
-            </Field>
+            />
             <Table tableHeader={["품목"]} tableData={data1} />
           </Field>
         </Field>

@@ -20,6 +20,11 @@ export const Detail1Wrapper = styled.div`
     font-size: 12px;
     font-weight: 400;
   }
+  .form_control {
+    label {
+      width: auto;
+    }
+  }
 `;
 export const Detail2Wrapper = styled.div`
   margin-top: 9px;

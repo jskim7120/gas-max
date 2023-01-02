@@ -8,7 +8,7 @@ import { Update, Reset } from "components/allSvgIcon";
 import Form from "./form";
 import Grid from "../grid";
 import { columns, fields } from "./data";
-import { Wrapper, DetailWrapper, DetailHeader } from "../../commonStyle";
+import { MainWrapper, RightSide, TopBar } from "../../commonStyle";
 
 function EN1500({
   depthFullName,
@@ -44,7 +44,7 @@ function EN1500({
   if (!data) return <p>...Loading</p>;
   return (
     <>
-      <DetailHeader>
+      <TopBar>
         <p>{depthFullName}</p>
         <div className="buttons">
           <Button
@@ -65,8 +65,8 @@ function EN1500({
             }}
           />
         </div>
-      </DetailHeader>
-      <Wrapper>
+      </TopBar>
+      <MainWrapper>
         <Grid
           data={data}
           fields={fields}
@@ -75,7 +75,7 @@ function EN1500({
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
         />
-        <DetailWrapper>
+        <RightSide>
           <Form
             selected={selected}
             ref={formRef}
@@ -85,8 +85,8 @@ function EN1500({
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
           />
-        </DetailWrapper>
-      </Wrapper>
+        </RightSide>
+      </MainWrapper>
     </>
   );
 }

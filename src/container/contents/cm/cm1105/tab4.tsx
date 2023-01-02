@@ -14,41 +14,17 @@ function Tab4({
   dataCommonDic,
   register,
   control,
-}: // cuHdate,
-// setCuHdate,
-// cuGongdate,
-// setCuGongdate,
-// cuGongdateT,
-// setCuGongdateT,
-// cuExtendDate,
-// setCuExtendDate,
-// cuSisuldate,
-// setCuSisuldate,
-// cuPdate,
-// setCuPdate,
-{
+}: {
   dataCommonDic: any;
   register: Function;
   control: any;
-  // cuHdate: string;
-  // setCuHdate: Function;
-  // cuGongdate: string;
-  // setCuGongdate: Function;
-  // cuGongdateT: string;
-  // setCuGongdateT: Function;
-  // cuExtendDate: string;
-  // setCuExtendDate: Function;
-  // cuSisuldate: string;
-  // setCuSisuldate: Function;
-  // cuPdate: string;
-  // setCuPdate: Function;
 }) {
   return (
     <Field className="outer-border">
       <Wrapper grid col={4}>
         <Input label="계약번호" register={register("cuGongno")} />
         <Input label="계약자명" register={register("cuGongname")} />
-        {/* <Input label="생년월일" register={register("cuJuminno")} /> */}
+
         <Controller
           control={control}
           {...register("cuJuminno")}
@@ -66,11 +42,7 @@ function Tab4({
 
         <Field flex style={{ alignItems: "center" }}>
           <Label>최종점검일</Label>
-          {/* <CustomDatePicker
-            value={cuHdate}
-            setValue={setCuHdate}
-            name="cuHdate"
-          /> */}
+
           <Controller
             control={control}
             {...register("cuHdate")}
@@ -84,11 +56,7 @@ function Tab4({
       <Wrapper grid col={4}>
         <Field flex style={{ alignItems: "center" }}>
           <Label>공급계약일</Label>
-          {/* <CustomDatePicker
-            value={cuGongdate}
-            setValue={setCuGongdate}
-            name="cuGongdate"
-          /> */}
+
           <Controller
             control={control}
             {...register("cuGongdate")}
@@ -100,11 +68,7 @@ function Tab4({
 
         <Field flex style={{ alignItems: "center" }}>
           <Label>계약만료일</Label>
-          {/* <CustomDatePicker
-            value={cuGongdateT}
-            setValue={setCuGongdateT}
-            name="cuGongdateT"
-          /> */}
+
           <Controller
             control={control}
             {...register("cuGongdateT")}
@@ -127,11 +91,7 @@ function Tab4({
 
         <Field flex style={{ alignItems: "center" }}>
           <Label>계약갱신일</Label>
-          {/* <CustomDatePicker
-            value={cuExtendDate}
-            setValue={setCuExtendDate}
-            name="cuExtendDate"
-          /> */}
+
           <Controller
             control={control}
             {...register("cuExtendDate")}
@@ -237,11 +197,7 @@ function Tab4({
       <Wrapper grid col={4}>
         <Field flex style={{ alignItems: "center" }}>
           <Label>체적시설 개선일</Label>
-          {/* <CustomDatePicker
-            value={cuSisuldate}
-            setValue={setCuSisuldate}
-            name="cuSisuldate"
-          /> */}
+
           <Controller
             control={control}
             {...register("cuSisuldate")}
@@ -252,11 +208,7 @@ function Tab4({
         </Field>
         <Field flex style={{ alignItems: "center" }}>
           <Label>퓨즈콕 개선일</Label>
-          {/* <CustomDatePicker
-            value={cuPdate}
-            setValue={setCuPdate}
-            name="cuPdate"
-          /> */}
+
           <Controller
             control={control}
             {...register("cuPdate")}

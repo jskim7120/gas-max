@@ -3,7 +3,7 @@ export interface ICM1105SEARCH {
   areaName: string;
   cuAddr1: string;
   cuAddr2: string;
-  cuAnkum: number;
+  cuAnkum: number | null; //2nd tab
   cuBarcode: string;
   cuBigo1: string;
   cuBigo2: string;
@@ -17,9 +17,9 @@ export interface ICM1105SEARCH {
   cuCashpayMemo: string;
   cuCashpayNo: string;
   cuCashpayYn: string;
-  cuCdc: number;
+  cuCdc: number | null; // 2nd tab
   cuCircuitDate: string;
-  cuCmisu: number;
+  cuCmisu: number | null; //top
   cuCno: string;
   cuCode: string;
   cuCustgubun: string;
@@ -48,9 +48,9 @@ export interface ICM1105SEARCH {
   cuHdate: string;
   cuHp: string;
   cuJangbuYn: string;
-  cuJdc: number;
-  cuJdcName: number;
-  cuJmisu: number;
+  cuJdc: string; //top
+  //cuJdcName: number | null;
+  cuJmisu: number | null; //top
   cuJongmok: string;
   cuJuminno: string;
   cuJyCode: string;
@@ -64,23 +64,23 @@ export interface ICM1105SEARCH {
   cuMeterFetureName: string;
   cuMeterLr: string;
   cuMeterLrName: string;
-  cuMeterM3: number;
+  cuMeterM3: number | null; //2nd tab
   cuMeterNo: string;
   cuMeterPalceName: string;
   cuMeterPlace: string;
   cuMeterTurm: string;
   cuMeterType: string;
-  cuMeterkum: number;
+  cuMeterkum: number | null; //2nd tab
   cuName: string;
   cuNo: string;
   cuNoType: string;
   cuNoTypeName: string;
   cuPdate: string;
-  cuPer: number;
+  cuPer: number | null;
   cuPipelineYn: string;
   cuPipelineYnNamm: string;
   cuRCode: string;
-  cuRdanga: number;
+  cuRdanga: number | null;
   cuRdangaSign: string;
   cuRdangaType: string;
   cuRequestType: string;
@@ -107,7 +107,7 @@ export interface ICM1105SEARCH {
   cuSekumMmName: string;
   cuSekumyn: string;
   cuSisuldate: string;
-  cuSisulkum: number;
+  cuSisulkum: number | null;
   cuSisulyn: string;
   cuSmsDate: string;
   cuSmsHp: string;
@@ -117,7 +117,7 @@ export interface ICM1105SEARCH {
   cuStaeName: string;
   cuSukumtype: string;
   cuSukumtypeName: string;
-  cuSvKumack: number;
+  cuSvKumack: number | undefined; //2nd tab
   cuSwCode: string;
   cuSzipcode: string;
   cuTankYn: string;
@@ -126,7 +126,7 @@ export interface ICM1105SEARCH {
   cuTel22: string;
   cuTel23: string;
   cuTel24: string;
-  cuTongkum: number;
+  cuTongkum: number | null;
   cuTransmCd: string;
   cuTransmCuCd: string;
   cuType: string;
@@ -148,7 +148,6 @@ export interface ICM1105SEARCH {
   saupSanghoName: string;
   swName: string;
   tCustCode: string;
-
   //cuTank: ICUTANK;
   gasifyCheckDate1: string;
   gasifyCheckDate2: string;
@@ -162,8 +161,7 @@ export interface ICM1105SEARCH {
   gasifySno2: string;
   gasifyVol1: string;
   gasifyVol2: string;
-  //queryType: string;
-  seq: number;
+  seq: number | null;
   tankCuCd1: string;
   tankCuCd2: string;
   tankFirstDate1: string;
@@ -188,11 +186,9 @@ export interface ICM1105SEARCH {
   tankTransmCd2: string;
   tankVol1: string;
   tankVol2: string;
-
-  percentage: number;
+  percentage: number | null;
   //cms: ICMS;
   //virtualAccount: IVIRTUALACCOUNT;
-
   CMSacctno: string; //davhtsaj bn
   appdt: string;
   CMSbankName: string; //davhtsaj bn
@@ -201,17 +197,14 @@ export interface ICM1105SEARCH {
   CMSdepositor: string; //davhtsaj bn
   managerNo: string;
   monthday: string;
-  //queryType: string;
   CMSregDate: string; //davhtsaj bn
   stateName: string;
   tel: string;
-
   VIRacctno: string; //davhtsaj bn
   bankCd: string;
   VIRbankName: string; //davhtsaj bn
   VIRdepositor: string; //davhtsaj bn
   managerCode: string;
-  //queryType: string;
   VIRregDate: string; //davhtsaj bn
 }
 
@@ -231,3 +224,210 @@ interface IVIRTUALACCOUNT {
 }
 */
 }
+
+export const emptyObj = {
+  areaCode: "",
+  areaName: "",
+  cuAddr1: "",
+  cuAddr2: "",
+  cuAnkum: null, // 2nd tab
+  cuBarcode: "",
+  cuBigo1: "",
+  cuBigo2: "",
+  cuBilltype: "",
+  cuBilltypeName: "",
+  cuBlockYn: "",
+  cuBlockYnName: "",
+  cuBoilerName: "",
+  cuBoilerYn: "",
+  cuCashpayDate: "",
+  cuCashpayMemo: "",
+  cuCashpayNo: "",
+  cuCashpayYn: "",
+  cuCdc: null, // 2nd tab
+  cuCircuitDate: "",
+  cuCmisu: null, //top
+  cuCno: "",
+  cuCode: "",
+  cuCustgubun: "",
+  cuCustgubunName: "",
+  cuCutype: "",
+  cuCutypeName: "",
+  cuCylinderName: "",
+  cuCylinderQty: "",
+  cuCylinderType: "",
+  cuDepartment: "",
+  cuDepartment2: "",
+  cuExtendDate: "",
+  cuExtendType: "",
+  cuExtendTypeName: "",
+  cuFinishDate: "",
+  cuGongdate: "",
+  cuGongdateT: "",
+  cuGongname: "",
+  cuGongno: "",
+  cuGongsano: "",
+  cuGumTurm: "",
+  cuGumTurmName: "",
+  cuGumdate: "",
+  cuGumsa: "",
+  cuGumsaName: "",
+  cuHdate: "",
+  cuHp: "",
+  cuJangbuYn: "",
+  cuJdc: "",
+  cuJdcName: null,
+  cuJmisu: null,
+  cuJongmok: "",
+  cuJuminno: "",
+  cuJyCode: "",
+  cuJyName: "",
+  cuMTransmCd: "",
+  cuMdate: "",
+  cuMemo: "",
+  cuMeterCo: "",
+  cuMeterDt: "",
+  cuMeterFeture: "",
+  cuMeterFetureName: "",
+  cuMeterLr: "",
+  cuMeterLrName: "",
+  cuMeterM3: null,
+  cuMeterNo: "",
+  cuMeterPalceName: "",
+  cuMeterPlace: "",
+  cuMeterTurm: "",
+  cuMeterType: "",
+  cuMeterkum: null,
+  cuName: "",
+  cuNo: "",
+  cuNoType: "",
+  cuNoTypeName: "",
+  cuPdate: "",
+  cuPer: null,
+  cuPipelineYn: "",
+  cuPipelineYnNamm: "",
+  cuRCode: "",
+  cuRdanga: null,
+  cuRdangaSign: "",
+  cuRdangaType: "",
+  cuRequestType: "",
+  cuRequestTypeName: "",
+  cuRh2o: "",
+  cuRoundType: "",
+  cuRoundTypeName: "",
+  cuSaddr1: "",
+  cuSaddr2: "",
+  cuSajang: "",
+  cuSangho: "",
+  cuScheduleDate: "",
+  cuSeEmail: "",
+  cuSeEmail2: "",
+  cuSeFaxNo: "",
+  cuSeFaxYn: "",
+  cuSeListYn: "",
+  cuSeSawon: "",
+  cuSeSawon2: "",
+  cuSeSmsNo: "",
+  cuSeSmsYn: "",
+  cuSekumDate: "",
+  cuSekumMm: "",
+  cuSekumMmName: "",
+  cuSekumyn: "",
+  cuSisuldate: "",
+  cuSisulkum: null,
+  cuSisulyn: "",
+  cuSmsDate: "",
+  cuSmsHp: "",
+  cuSmsMemo: "",
+  cuSmsYn: "",
+  cuStae: "",
+  cuStaeName: "",
+  cuSukumtype: "",
+  cuSukumtypeName: "",
+  cuSvKumack: undefined,
+  cuSwCode: "",
+  cuSzipcode: "",
+  cuTankYn: "",
+  cuTel: "",
+  cuTel21: "",
+  cuTel22: "",
+  cuTel23: "",
+  cuTel24: "",
+  cuTongkum: null,
+  cuTransmCd: "",
+  cuTransmCuCd: "",
+  cuType: "",
+  cuTypeName: "",
+  cuUptae: "",
+  cuUsername: "",
+  cuUsersisul: "",
+  cuUsersisulName: "",
+  cuUsertong: "",
+  cuUsertongName: "",
+  cuVatKind: "",
+  cuVatName: "",
+  cuWaterName: "",
+  cuWaterYn: "",
+  cuZipcode: "",
+  emailKind: "",
+  emailKind2: "",
+  queryType: "",
+  saupSanghoName: "",
+  swName: "",
+  tCustCode: "",
+  gasifyCheckDate1: "",
+  gasifyCheckDate2: "",
+  gasifyCo1: "",
+  gasifyCo2: "",
+  gasifyMakeDate1: "",
+  gasifyMakeDate2: "",
+  gasifyPower1: "",
+  gasifyPower2: "",
+  gasifySno1: "",
+  gasifySno2: "",
+  gasifyVol1: "",
+  gasifyVol2: "",
+  seq: null,
+  tankCuCd1: "",
+  tankCuCd2: "",
+  tankFirstDate1: "",
+  tankFirstDate2: "",
+  tankInsideDate1: "",
+  tankInsideDate2: "",
+  tankMakeCo1: "",
+  tankMakeCo2: "",
+  tankMakeDate1: "",
+  tankMakeDate2: "",
+  tankMakeSno1: "",
+  tankMakeSno2: "",
+  tankMax1: "",
+  tankMax2: "",
+  tankOutsideDate1: "",
+  tankOutsideDate2: "",
+  tankRcv1: "",
+  tankRcv2: "",
+  tankSno1: "",
+  tankSno2: "",
+  tankTransmCd1: "",
+  tankTransmCd2: "",
+  tankVol1: "",
+  tankVol2: "",
+  percentage: null,
+  CMSacctno: "", //davhtsaj bn
+  appdt: "",
+  CMSbankName: "", //davhtsaj bn
+  bigo: "",
+  cmsGubun: "",
+  CMSdepositor: "", //davhtsaj bn
+  managerNo: "",
+  monthday: "",
+  CMSregDate: "", //davhtsaj bn
+  stateName: "",
+  tel: "",
+  VIRacctno: "", //davhtsaj bn
+  bankCd: "",
+  VIRbankName: "", //davhtsaj bn
+  VIRdepositor: "", //davhtsaj bn
+  managerCode: "",
+  VIRregDate: "", //davhtsaj bn
+};

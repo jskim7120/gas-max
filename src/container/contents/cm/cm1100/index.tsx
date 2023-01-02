@@ -26,7 +26,7 @@ import {
   Wrapper,
   Label,
 } from "components/form/style";
-import { DetailHeader, WrapperContent } from "../../commonStyle";
+import { TopBar, WrapperContent } from "../../commonStyle";
 import { SearchWrapper } from "../../commonStyle";
 import API from "app/axios";
 import Grid from "./grid";
@@ -113,7 +113,7 @@ function CM1100Page({
 
   return (
     <>
-      <DetailHeader>
+      <TopBar>
         <div style={{ display: "flex", alignItems: "center" }}>
           <p style={{ marginRight: "20px" }}>{depthFullName}</p>
           <p>
@@ -166,7 +166,7 @@ function CM1100Page({
           />
           <Button text="삭제" icon={<Trash />} type="button" />
         </div>
-      </DetailHeader>
+      </TopBar>
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper>

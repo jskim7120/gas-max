@@ -254,6 +254,7 @@ const Form = React.forwardRef(
             register={register("aptCode")}
             errors={errors["aptCode"]?.message}
             inputSize={InputSize.sm}
+            readOnly
           />
           <Field>
             <FormGroup>
@@ -339,7 +340,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Divider />
         <Wrapper style={{ alignItems: "center" }}>
-          <Label>
+          <Label style={{ marginRight: "4px" }}>
             <CheckBox
               title="주 소"
               register={register("chkAptZipCode")}

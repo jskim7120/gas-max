@@ -26,7 +26,7 @@ export interface ISANGPUM {
   buJpName2: string;
   buJpName3: string;
   buJpName4: string;
-  buMisu: string;
+  buMisu: any;
   buName: string;
   buNo: string;
   buPcost: string;

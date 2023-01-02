@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { TabHeaderWrapper, List } from "./style";
 
 interface TabProps {
@@ -6,21 +6,17 @@ interface TabProps {
   style?: any;
   tabHeader: Array<string>;
   onClick: (id: number) => void;
+  tabId: number;
 }
 
 const Tab = (props: TabProps): JSX.Element => {
-  const [activeTabId, setActiveTabId] = useState(0);
-
   return (
     <TabHeaderWrapper>
       {props.tabHeader?.map((header: any, index: number) => (
         <List
           key={index}
-          isActive={activeTabId === index}
-          onClick={() => {
-            setActiveTabId(index);
-            props.onClick(index);
-          }}
+          isActive={props.tabId === index}
+          onClick={() => props.onClick(index)}
         >
           {header}
         </List>

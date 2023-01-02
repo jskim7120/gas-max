@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { TableWrapper } from "../commonStyle";
+import { LeftSide } from "../commonStyle";
 
 function Grid({
   data,
@@ -35,7 +35,7 @@ function Grid({
       gv.setHeader({
         height: 35,
       });
-      gv.setFooter({ visible: false });
+
       gv.setOptions({
         indicator: { visible: true },
         checkBar: { visible: false },
@@ -45,6 +45,7 @@ function Grid({
       gv.displayOptions._selectionStyle = "singleRow";
       gv.setEditOptions({ editable: false });
 
+      gv.displayOptions.useFocusClass = true;
       gv.setCurrent({
         dataRow: selectedRowIndex,
       });
@@ -63,7 +64,7 @@ function Grid({
     }
   }, [data]);
 
-  return <TableWrapper ref={realgridElement}></TableWrapper>;
+  return <LeftSide ref={realgridElement}></LeftSide>;
 }
 
 export default Grid;

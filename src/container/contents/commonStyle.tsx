@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DetailHeader = styled.div`
+export const TopBar = styled.div`
   background-color: #dbdbdb;
   height: 35px;
   display: flex;
@@ -45,7 +45,7 @@ export const DetailHeader = styled.div`
   }
 `;
 
-export const Wrapper = styled.div`
+export const MainWrapper = styled.div`
   display: flex;
   gap: 0px;
   height: calc(100% - 14px);
@@ -57,12 +57,12 @@ export const WrapperContent = styled.div`
   width: 100%;
 `;
 
-export const TableWrapper = styled.div<{ width?: string }>`
+export const LeftSide = styled.div<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "50%")};
   border-right: 3px solid #707070;
 `;
 
-export const DetailWrapper = styled.div<{ width?: string }>`
+export const RightSide = styled.div<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "50%")};
   overflow-y: auto;
 `;
@@ -102,7 +102,7 @@ export const SearchTopWrapper = styled.div`
 }
 
 export const FormSeaction = styled.div<{ topBorder: boolean }>`
-  border-top: ${(props) => (props.topBorder ? "4px solid #707070;" : "none")};
+  border-top: ${(props) => (props.topBorder ? "3px solid #707070;" : "none")};
   padding: 0px 10px 20px 10px;
 `;
 

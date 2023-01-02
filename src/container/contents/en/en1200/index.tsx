@@ -14,7 +14,7 @@ import { EN1200LIST } from "app/path";
 import Form from "./form";
 import Grid from "../grid";
 import { columns, fields } from "./data";
-import { Wrapper, DetailWrapper, DetailHeader } from "../../commonStyle";
+import { MainWrapper, TopBar, RightSide } from "../../commonStyle";
 
 function EN1200({
   depthFullName,
@@ -69,7 +69,7 @@ function EN1200({
 
   return (
     <>
-      <DetailHeader>
+      <TopBar>
         <p>{depthFullName}</p>
         <div className="buttons">
           <Button
@@ -108,8 +108,8 @@ function EN1200({
             }}
           />
         </div>
-      </DetailHeader>
-      <Wrapper>
+      </TopBar>
+      <MainWrapper>
         <Grid
           data={data}
           fields={fields}
@@ -118,7 +118,7 @@ function EN1200({
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
         />
-        <DetailWrapper>
+        <RightSide>
           <Form
             selected={selected}
             ref={formRef}
@@ -128,8 +128,8 @@ function EN1200({
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
           />
-        </DetailWrapper>
-      </Wrapper>
+        </RightSide>
+      </MainWrapper>
     </>
   );
 }

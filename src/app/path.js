@@ -66,6 +66,7 @@ export const CM110065 = "/app/CM1100/65";
 export const CM1105SEARCH = "/app/CM1105/search";
 export const CM1105UPDATE = "/app/CM1105/update";
 export const CM1105INSERT = "/app/CM1105/insert";
+export const CM110511 = "/app/CM1105/11";
 
 export const CM1200SEARCH = "/app/CM1200/search";
 export const CM1200UPDATE = "/app/CM1200/update";
@@ -80,6 +81,9 @@ export const CM1300INSERT = "/app/CM1300/insert";
 export const CM1300DELETE = "/app/CM1300/delete";
 export const CM130065 = "/app/CM1300/65";
 export const CM1300INSERTSEQ = "/app/CM1300/insertseq";
+export const CM1300INSERTSEQ2 = "/app/CM1300/opt12";
+export const CM1300CUSTOMERINSERT = "/app/CM1300/customer/insert";
+export const CM1300CUSTOMERUPDATE = "/app/CM1300/customer/update";
 
 export const CM1106LIST = "/app/CM1106/list";
 export const CM1106INSERT = "/app/CM1106/insert";
@@ -99,9 +103,17 @@ export const GR1100DELETE = "/app/GR1100/delete";
 export const GR1100INSERTSEQ = "/app/GR1100/insertseq";
 export const GR110065 = "/app/GR1100/65";
 
+<<<<<<< HEAD
 export const GR1500SEARCH = "/app/GR1500/search";
 export const GR1500SEARCH1 = "/app/GR1500/search1";
 export const GR1500SEARCH2 = "/app/GR1500/search2";
+=======
+export const GR1200SEARCH = "/app/GR1200/search";
+export const GR120065 = "/app/GR1200/65";
+export const GR120012 = "/app/GR1200/12";
+export const GR120011 = "/app/GR1200/11";
+
+>>>>>>> c484f4a327810c440344451fbd4eec354acdf23f
 export const GR1600SEARCH = "/app/GR1600/search";
 export const GR1600TAB2 = "/app/GR1600/tab2";
 export const GR1600TAB3 = "/app/GR1600/tab3";

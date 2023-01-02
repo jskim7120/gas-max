@@ -1,36 +1,34 @@
-import { addCM1105 } from "app/state/modal/modalSlice";
-import { useDispatch } from "app/store";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
+import { useDispatch } from "app/store";
+import { addCM1105 } from "app/state/modal/modalSlice";
 import { fieldsSelected, columnsSelected } from "./data";
-import { ICM120065USERINFO } from "./model";
 
-let containerr: HTMLDivElement;
-let dp: any;
-let gv: any;
-
-function GridTable({ selected, openPopup }: { selected: any; openPopup: any }) {
-  const dispatch = useDispatch();
+function GridTable({
+  selectedUserInfo,
+  areaCode,
+  setBuildingSelected,
+}: {
+  selectedUserInfo: any;
+  areaCode: string | undefined;
+  setBuildingSelected: Function;
+}) {
+  let container: HTMLDivElement;
+  let dp: any;
+  let gv: any;
   const realgridTableElement = useRef<HTMLDivElement>(null);
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
-  const [data, setData] = useState([{} as ICM120065USERINFO]);
-
-  useEffect(() => {
-    if (selected) {
-      return setData(selected);
-    }
-  }, [selected]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    containerr = realgridTableElement.current as HTMLDivElement;
+    container = realgridTableElement.current as HTMLDivElement;
     dp = new LocalDataProvider(true);
-    gv = new GridView(containerr);
+    gv = new GridView(container);
 
     gv.setDataSource(dp);
     dp.setFields(fieldsSelected);
     gv.setColumns(columnsSelected);
-    dp.setRows(data);
+    dp.setRows(selectedUserInfo);
     gv.setHeader({
       height: 35,
     });
@@ -64,24 +62,15 @@ function GridTable({ selected, openPopup }: { selected: any; openPopup: any }) {
     gv.displayOptions._selectionStyle = "singleRow";
     gv.setEditOptions({ editable: false });
 
-    gv.setCurrent({
-      dataRow: selectedRowIndex,
-    });
-
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
       dispatch(
         addCM1105({
-          cuCode: data[itemIndex].cuCode,
-          areaCode: selected?.areaCode,
+          cuCode: selectedUserInfo[itemIndex].cuCode,
+          areaCode: areaCode,
         })
       );
-      setSelectedRowIndex(itemIndex);
-    };
-
-    gv.onCellDblClicked = function (grid: any, e: any) {
-      const itemIndex: any = e.dataRow;
-      // openPopup && openPopup(itemIndex, data[itemIndex].cuCode, areaCode);
+      setBuildingSelected(true);
     };
 
     return () => {
@@ -89,7 +78,7 @@ function GridTable({ selected, openPopup }: { selected: any; openPopup: any }) {
       gv.destroy();
       dp.destroy();
     };
-  }, [data]);
+  }, [selectedUserInfo]);
 
   return (
     <div

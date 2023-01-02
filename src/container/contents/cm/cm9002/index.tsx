@@ -2,19 +2,11 @@ import React, { useState, useEffect } from "react";
 import { CM9002SEARCH } from "app/path";
 import { ICM9002SEARCH } from "./model";
 import API from "app/axios";
-import { DetailHeader, WrapperContent } from "../../commonStyle";
+import { TopBar, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import CheckBox from "components/checkbox";
-import {
-  Plus,
-  Trash,
-  Update,
-  Reset,
-  MagnifyingGlass,
-  ExcelIcon,
-  ResetGray,
-} from "components/allSvgIcon";
+import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { SearchWrapper } from "../../commonStyle";
 import {
   Input,
@@ -131,7 +123,7 @@ function CM9002({
 
   return (
     <>
-      <DetailHeader>
+      <TopBar>
         <div style={{ display: "flex", alignItems: "center" }}>
           <p style={{ marginRight: "20px" }}>{depthFullName}</p>
           <p>
@@ -146,7 +138,7 @@ function CM9002({
             ))}
           </Select>
         </div>
-      </DetailHeader>
+      </TopBar>
       <WrapperContent style={{ height: `calc(100% - 76px)` }}>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper style={{ alignItems: "baseline" }}>

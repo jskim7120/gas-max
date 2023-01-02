@@ -14,7 +14,7 @@ import { EN1100LIST } from "app/path";
 import Form from "./form";
 import Grid from "../grid";
 import { columns, fields } from "./data";
-import { Wrapper, DetailWrapper, DetailHeader } from "../../commonStyle";
+import { MainWrapper, RightSide, TopBar } from "../../commonStyle";
 
 function EN1100({
   depthFullName,
@@ -67,7 +67,7 @@ function EN1100({
   if (!data) return <p>...Loading</p>;
   return (
     <>
-      <DetailHeader>
+      <TopBar>
         <p>{depthFullName}</p>
         <div className="buttons">
           <Button
@@ -106,8 +106,8 @@ function EN1100({
             }}
           />
         </div>
-      </DetailHeader>
-      <Wrapper>
+      </TopBar>
+      <MainWrapper>
         <Grid
           data={data}
           fields={fields}
@@ -116,7 +116,7 @@ function EN1100({
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
         />
-        <DetailWrapper>
+        <RightSide>
           <Form
             selected={selected}
             ref={formRef}
@@ -126,8 +126,8 @@ function EN1100({
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
           />
-        </DetailWrapper>
-      </Wrapper>
+        </RightSide>
+      </MainWrapper>
     </>
   );
 }

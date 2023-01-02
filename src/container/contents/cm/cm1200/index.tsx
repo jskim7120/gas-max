@@ -10,10 +10,10 @@ import GridLeft from "./gridLeft";
 import GridBottom from "./gridBottom";
 import Form from "./form";
 import {
-  DetailHeader,
-  DetailWrapper,
-  TableWrapper,
-  Wrapper,
+  TopBar,
+  LeftSide,
+  RightSide,
+  MainWrapper,
   FormSectionTitle,
   FormSeaction,
 } from "../../commonStyle";
@@ -33,8 +33,8 @@ import {
 } from "components/componentsType";
 import { Field, FormGroup, Input, Label, Select } from "components/form/style";
 import CheckBox from "components/checkbox";
-import HomeIconSvg from "assets/image/home-icon.svg";
-import PersonIconSvg from "assets/image/person-icon.svg";
+import { PersonInfoText, BuildingInfoText } from "components/text";
+
 import Loader from "components/loader";
 import {
   openModal,
@@ -48,6 +48,7 @@ import { CM120065, CM1200SEARCH } from "app/path";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
 import { SearchWrapper } from "../../commonStyle";
+import { toast } from "react-toastify";
 
 function CM1200({
   depthFullName,
@@ -73,15 +74,14 @@ function CM1200({
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<ICM1200SEARCH>();
-  const [selectedUserInfo, setSelectedUserInfo] = useState([
-    {} as ICM120065USERINFO,
-  ]);
+  const [selectedUserInfo, setSelectedUserInfo] = useState<any[]>([]);
   const [selectedSupplyTab, setSelectedSupplyTab] = useState(
     {} as ICM120065SUPPLYTYPE
   );
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [dataChk, setDataChk] = useState(true);
   const [areaCode, setAreaCode] = useState("");
+  const [isBuildingSelected, setBuildingSelected] = useState(false);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -98,6 +98,7 @@ function CM1200({
         areaCode: selected.areaCode,
         cuCode: selected.cuCode,
       });
+      setBuildingSelected(false);
     }
   }, [selected]);
 
@@ -158,7 +159,7 @@ function CM1200({
       });
 
       if (data && data?.userInfo) {
-        setSelectedUserInfo(data?.userInfo);
+        setSelectedUserInfo(data.userInfo);
       } else {
         setSelectedUserInfo([]);
       }
@@ -173,21 +174,43 @@ function CM1200({
     }
   };
 
-  const handleOpenPopup = async (index: number, cuCode: any, areaCode: any) => {
-    try {
+  const openPopupCM1105Insert = () => {
+    if (selected) {
       dispatch(
         addCM1105({
-          cuCode: cuCode,
-          areaCode: areaCode,
+          cuCode: selected?.cuCode ? selected?.cuCode : "",
+          areaCode: selected?.areaCode,
+          status: "INSERT",
+        })
+      );
+
+      dispatch(openModal({ type: "cm1105Modal" }));
+    } else {
+      toast.warning("no data", {
+        autoClose: 500,
+      });
+    }
+  };
+  const openPopupCM1105Update = () => {
+    if (isBuildingSelected === true) {
+      dispatch(
+        addCM1105({
+          cuCode: selected?.cuCode ? selected?.cuCode : "",
+          areaCode: selected?.areaCode,
+          status: "",
         })
       );
       dispatch(openModal({ type: "cm1105Modal" }));
-    } catch (err: any) {}
+    } else {
+      toast.warning("please select building row", {
+        autoClose: 500,
+      });
+    }
   };
 
   return (
     <>
-      <DetailHeader>
+      <TopBar>
         <div className="title-and-areacode">
           <p>{depthFullName}</p>
           <Field flex style={{ margin: "0px 20px" }}>
@@ -245,9 +268,9 @@ function CM1200({
             }}
           />
         </div>
-      </DetailHeader>
-      <Wrapper>
-        <TableWrapper width="30%">
+      </TopBar>
+      <MainWrapper>
+        <LeftSide width="30%">
           <SearchWrapper style={{ borderBottom: "2px solid #707070" }}>
             <form
               onSubmit={handleSubmit(submit)}
@@ -300,14 +323,11 @@ function CM1200({
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
           />
-        </TableWrapper>
-        <DetailWrapper width="70%">
+        </LeftSide>
+        <RightSide width="70%">
           <FormSeaction topBorder={false}>
             <FormSectionTitle>
-              <h4>
-                <img src={HomeIconSvg} />
-                건물 정보
-              </h4>
+              <BuildingInfoText text="건물 정보" />
             </FormSectionTitle>
 
             <Form
@@ -325,31 +345,26 @@ function CM1200({
           </FormSeaction>
           <FormSeaction topBorder={true}>
             <FormSectionTitle>
-              <h4>
-                <img src={PersonIconSvg} />
-                사용자 정보
-              </h4>
+              <PersonInfoText
+                text="사용자 정보"
+                textStyle={{
+                  color: "#1b8c8e",
+                  fontWeight: "bold",
+                  marginLeft: "1.2px",
+                }}
+              />
               <div className="buttons">
                 <Button
                   text="사용자 추가"
                   icon={<Plus />}
                   style={{ marginRight: "5px" }}
-                  onClick={() => {
-                    dispatch(
-                      addCM1105({
-                        cuCode: selected?.cuCode ? selected?.cuCode : "",
-                        areaCode: areaCode,
-                        status: "INSERT",
-                        cuCount: selected?.cuCount ?? 0,
-                      })
-                    );
-                    dispatch(openModal({ type: "cm1105Modal" }));
-                  }}
+                  onClick={openPopupCM1105Insert}
                 />
                 <Button
                   text="사용자 수정"
-                  icon={<Plus />}
+                  icon={<Update />}
                   style={{ marginRight: "5px" }}
+                  onClick={openPopupCM1105Update}
                 />
                 <Button
                   text="삭제"
@@ -359,12 +374,13 @@ function CM1200({
               </div>
             </FormSectionTitle>
             <GridBottom
-              selected={selectedUserInfo}
-              openPopup={handleOpenPopup}
+              selectedUserInfo={selectedUserInfo}
+              areaCode={selected?.areaCode}
+              setBuildingSelected={setBuildingSelected}
             />
           </FormSeaction>
-        </DetailWrapper>
-      </Wrapper>
+        </RightSide>
+      </MainWrapper>
     </>
   );
 }

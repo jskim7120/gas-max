@@ -217,6 +217,7 @@ function Form({
         <PlainTab
           tabHeader={["LPG  매입단가", "품목별 매입단가", "부품 매입단가"]}
           onClick={(id) => setTabId(id)}
+          tabId={tabId}
         />
         <TabContentWrapper>
           {getTabContent(
