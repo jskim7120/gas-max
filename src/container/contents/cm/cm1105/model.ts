@@ -1,9 +1,14 @@
 export interface ICM1105SEARCH {
+  cuBaGageKum: number | string;
+  cuBaGageM3: number | string;
+  cuBaGageYn: string;
+
+  //-----------
   areaCode: string;
   areaName: string;
   cuAddr1: string;
   cuAddr2: string;
-  cuAnkum: number | null; //2nd tab
+  cuAnkum: number | string; //2nd tab
   cuBarcode: string;
   cuBigo1: string;
   cuBigo2: string;
@@ -117,7 +122,7 @@ export interface ICM1105SEARCH {
   cuStaeName: string;
   cuSukumtype: string;
   cuSukumtypeName: string;
-  cuSvKumack: number | undefined; //2nd tab
+  cuSvKumack: number | string; //2nd tab
   cuSwCode: string;
   cuSzipcode: string;
   cuTankYn: string;
@@ -226,11 +231,15 @@ interface IVIRTUALACCOUNT {
 }
 
 export const emptyObj = {
+  cuBaGageKum: "",
+  cuBaGageM3: "",
+  cuBaGageYn: "",
+  //--------------------
   areaCode: "",
   areaName: "",
   cuAddr1: "",
   cuAddr2: "",
-  cuAnkum: null, // 2nd tab
+  cuAnkum: "", // 2nd tab
   cuBarcode: "",
   cuBigo1: "",
   cuBigo2: "",
@@ -248,7 +257,7 @@ export const emptyObj = {
   cuCircuitDate: "",
   cuCmisu: null, //top
   cuCno: "",
-  cuCode: "",
+  //cuCode: "",
   cuCustgubun: "",
   cuCustgubunName: "",
   cuCutype: "",
@@ -276,7 +285,7 @@ export const emptyObj = {
   cuHp: "",
   cuJangbuYn: "",
   cuJdc: "",
-  cuJdcName: null,
+  //cuJdcName: "",
   cuJmisu: null,
   cuJongmok: "",
   cuJuminno: "",
@@ -344,7 +353,7 @@ export const emptyObj = {
   cuStaeName: "",
   cuSukumtype: "",
   cuSukumtypeName: "",
-  cuSvKumack: undefined,
+  cuSvKumack: "",
   cuSwCode: "",
   cuSzipcode: "",
   cuTankYn: "",
