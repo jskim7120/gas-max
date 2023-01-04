@@ -246,6 +246,7 @@ const Form = React.forwardRef(
               inputSize={InputSize.i60}
             />
             <Input
+              textAlign="center"
               register={register("buBankno")}
               errors={errors["buBankno"]?.message}
               inputSize={InputSize.i130}
@@ -297,6 +298,7 @@ const Form = React.forwardRef(
           <Wrapper>
             <Input
               label="지 급 액"
+              textAlign="right"
               register={register("bjOutkum")}
               errors={errors["bjOutkum"]?.message}
               inputSize={InputSize.i200}
@@ -304,6 +306,7 @@ const Form = React.forwardRef(
           </Wrapper>
           <Wrapper>
             <Input
+              textAlign="right"
               label="D / C"
               register={register("bjDc")}
               errors={errors["bjDc"]?.message}
