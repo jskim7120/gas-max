@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { WrapperContent, SearchWrapper, TopBar } from "../../commonStyle";
 import { IGR1500SEARCH } from "./model";
 import Button from "components/button/button";
@@ -10,6 +10,7 @@ import Loader from "components/loader";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import Form from "./form";
 import CustomDatePicker from "components/customDatePicker/test-datepicker";
+
 import API from "app/axios";
 import {
   FormGroup,
@@ -46,6 +47,17 @@ function GR1500({
     groupId: "GR",
     functionName: "GR1500",
   });
+
+  useEffect(() => {
+    if (dataCommonDic !== undefined && dataCommonDic) {
+      reset({
+        areaCode1: dataCommonDic?.areaCode[0].code,
+        areaCode: dataCommonDic?.areaCode[0].code,
+        sBuGubun: dataCommonDic?.sBuGubun[0].code,
+        sBuStae: dataCommonDic?.sBuStae[0].code,
+      });
+    }
+  }, [dataCommonDic]);
 
   const fetchDataSearch1 = async (params: any) => {
     try {
@@ -91,6 +103,7 @@ function GR1500({
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<IGR1500SEARCH>({
     mode: "onSubmit",
