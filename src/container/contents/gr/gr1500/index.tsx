@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { DetailHeader, WrapperContent, SearchWrapper } from "../../commonStyle";
+import { WrapperContent, SearchWrapper, TopBar } from "../../commonStyle";
 import { IGR1500SEARCH } from "./model";
 import Button from "components/button/button";
 import { useForm, Controller } from "react-hook-form";
@@ -100,7 +100,7 @@ function GR1500({
     <Container>
       <SubContainer>
         <div>
-          <DetailHeader>
+          <TopBar>
             <p>{depthFullName}</p>
             <div
               style={{
@@ -126,7 +126,7 @@ function GR1500({
                 ))}
               </Select>
             </div>
-          </DetailHeader>
+          </TopBar>
           <WrapperContent
             style={{
               height: `calc(100% - 76px)`,
@@ -219,7 +219,7 @@ function GR1500({
           </WrapperContent>
         </div>
         <div style={{ borderRight: "2px solid #707070" }}>
-          <DetailHeader style={{ marginTop: "0px" }}>
+          <TopBar style={{ marginTop: "0px" }}>
             <p>{depthFullName}</p>
             <div
               style={{
@@ -245,7 +245,7 @@ function GR1500({
                 ))}
               </Select>
             </div>
-          </DetailHeader>
+          </TopBar>
           <WrapperContent
             style={{
               height: `calc(100% - 76px)`,
