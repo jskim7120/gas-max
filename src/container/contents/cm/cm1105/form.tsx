@@ -9,7 +9,7 @@ import API from "app/axios";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import { Plus, Update, Reset, WhiteClose } from "components/allSvgIcon";
-import { ICM1105SEARCH } from "./model";
+import { ICM1105SEARCH, emptyObj } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { currencyMask } from "helpers/currency";
 import {
@@ -68,7 +68,7 @@ function FormCM1105() {
 
   useEffect(() => {
     if (data) {
-      resetForm("reset");
+      resetFormTemp("reset");
     }
   }, [data]);
 
@@ -89,6 +89,42 @@ function FormCM1105() {
       });
     }
   }, [addr2]);
+
+  const resetFormTemp = (type: string) => {
+    if (type === "clear") {
+      reset(emptyObj);
+      return;
+    } else if (type === "reset" && data !== undefined && data?.customerInfo) {
+      const customerInfo = data.customerInfo[0];
+      const cms = data?.cms
+        ? data.cms[0]
+        : {
+            acctno: "",
+            appdt: "",
+            bankName: "",
+            bigo: "",
+            cmsGubun: "",
+            depositor: "",
+            managerNo: "",
+            monthday: "",
+            regDate: "",
+            stateName: "",
+            tel: "",
+          };
+      const cuTank = data?.cuTank ? data.cuTank[0] : {};
+      const virtualAccount = data?.virturalAccoount
+        ? data.virturalAccoount[0]
+        : {
+            acctno: "",
+            bankCd: "",
+            bankName: "",
+            depositor: "",
+            managerCode: "",
+            regDate: "",
+          };
+      reset({ ...customerInfo, ...cms, ...cuTank, ...virtualAccount });
+    }
+  };
 
   const resetForm = (type: string) => {
     if (data !== undefined && data) {
@@ -210,7 +246,10 @@ function FormCM1105() {
   const fetchData = async () => {
     try {
       const { data } = await API.get(CM1105SEARCH, {
-        params: { cuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
+        params: {
+          cuCode: cm1105.cuCode,
+          areaCode: cm1105.areaCode,
+        },
       });
 
       setData(data);
@@ -315,7 +354,7 @@ function FormCM1105() {
             style={{ marginRight: "5px" }}
             type="button"
             onClick={() => {
-              resetForm("clear");
+              resetFormTemp("clear");
               setIsAddBtnClicked(true);
             }}
           />
@@ -333,7 +372,7 @@ function FormCM1105() {
             icon={<Reset />}
             type="button"
             onClick={() => {
-              resetForm("reset");
+              resetFormTemp("reset");
               setIsAddBtnClicked(false);
             }}
           />
@@ -585,8 +624,8 @@ function FormCM1105() {
                 <Label>품목 단가</Label>
                 <Select {...register("cuJdc")} width={InputSize.i100}>
                   {dataCommonDic?.cuJdc?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code1}>
-                      {obj.code1}
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
                     </option>
                   ))}
                 </Select>

@@ -193,13 +193,14 @@ function CM1200({
   };
   const openPopupCM1105Update = () => {
     if (isBuildingSelected === true) {
-      dispatch(
-        addCM1105({
-          cuCode: selected?.cuCode ? selected?.cuCode : "",
-          areaCode: selected?.areaCode,
-          status: "",
-        })
-      );
+      //  dispatch(
+      //    addCM1105({
+      //      cuCode: selected?.cuCode ? selected?.cuCode : "",
+      //      areaCode: selected?.areaCode,
+      //      status: "",
+      //    })
+      //  );
+
       dispatch(openModal({ type: "cm1105Modal" }));
     } else {
       toast.warning("please select building row", {

@@ -170,13 +170,6 @@ function Tab1({
             </Select>
           </FormGroup>
 
-          {/* <Input
-            register={register("cuSekumDate")}
-            maxLength="2"
-            inputSize={InputSize.i60}
-            style={{ marginLeft: "0" }}
-          /> */}
-
           <Controller
             control={control}
             {...register("cuSekumDate")}
