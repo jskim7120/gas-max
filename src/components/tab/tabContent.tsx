@@ -18,6 +18,7 @@ import CM9005 from "container/contents/cm/cm9005";
 import CM9006 from "container/contents/cm/cm9006";
 import GR1100 from "container/contents/gr/gr1100";
 import GR1200 from "container/contents/gr/gr1200";
+import GR1300 from "container/contents/gr/gr1300";
 import GR1600 from "container/contents/gr/gr1600";
 
 export const getContent = (id: any, depthFullName: string) => {
@@ -64,6 +65,8 @@ export const getContent = (id: any, depthFullName: string) => {
       return <GR1100 depthFullName={depthFullName} menuId={id} />;
     case "GR1200":
       return <GR1200 depthFullName={depthFullName} menuId={id} />;
+    case "GR1300":
+      return <GR1300 depthFullName={depthFullName} menuId={id} />;
     case "GR1600":
       return <GR1600 depthFullName={depthFullName} menuId={id} />;
   }
