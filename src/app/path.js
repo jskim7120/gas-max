@@ -103,17 +103,14 @@ export const GR1100DELETE = "/app/GR1100/delete";
 export const GR1100INSERTSEQ = "/app/GR1100/insertseq";
 export const GR110065 = "/app/GR1100/65";
 
-<<<<<<< HEAD
 export const GR1500SEARCH = "/app/GR1500/search";
 export const GR1500SEARCH1 = "/app/GR1500/search1";
 export const GR1500SEARCH2 = "/app/GR1500/search2";
-=======
 export const GR1200SEARCH = "/app/GR1200/search";
 export const GR120065 = "/app/GR1200/65";
 export const GR120012 = "/app/GR1200/12";
 export const GR120011 = "/app/GR1200/11";
 
->>>>>>> c484f4a327810c440344451fbd4eec354acdf23f
 export const GR1600SEARCH = "/app/GR1600/search";
 export const GR1600TAB2 = "/app/GR1600/tab2";
 export const GR1600TAB3 = "/app/GR1600/tab3";
