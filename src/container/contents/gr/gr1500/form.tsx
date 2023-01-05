@@ -12,7 +12,7 @@ import {
   setIsDelete,
 } from "app/state/modal/modalSlice";
 import { Plus, ResetGray, Trash, Update } from "components/allSvgIcon";
-import { FormContainer, FormHeadCnt, DividerGrayGR, DividerGR } from "./style";
+import { FormHeadCnt, DividerGrayGR, DividerGR } from "./style";
 import {} from "app/path";
 import { IGR1500SEARCH } from "./model";
 import Button from "components/button/button";
@@ -22,7 +22,6 @@ import {
   Wrapper,
   Divider,
   Field,
-  ErrorText,
   FormGroup,
   Label,
 } from "components/form/style";
@@ -178,8 +177,8 @@ const Form = React.forwardRef(
     }
 
     return (
-      <div style={{ width: "23%" }}>
-        <FormContainer />
+      <div>
+        {/* <FormContainer /> */}
         <FormHeadCnt>
           <Button
             text="등록"
