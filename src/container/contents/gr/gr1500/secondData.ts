@@ -15,11 +15,11 @@ export const fieldsSecond = [
   },
   {
     fieldName: "bjOutkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bjDc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bjOuttypName",
@@ -59,6 +59,9 @@ export const columnsSecond = [
       text: "상호 (매입처명)",
     },
     styleName: "rg-left-column",
+    footer: {
+      text: "합  계",
+    },
   },
   {
     name: "bjOutkum",
@@ -69,6 +72,9 @@ export const columnsSecond = [
       text: "지급액",
     },
     styleName: "rg-right-column",
+    footer: {
+      expression: "sum",
+    },
   },
   {
     name: "bjDc",
@@ -79,6 +85,9 @@ export const columnsSecond = [
       text: "지급 D/C",
     },
     styleName: "rg-right-column",
+    footer: {
+      expression: "sum",
+    },
   },
   {
     name: "bjOuttypName",

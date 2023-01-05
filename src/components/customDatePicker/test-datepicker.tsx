@@ -66,6 +66,7 @@ const InputWrapper = styled.div`
     width: 85px;
     height: 17px;
     position: absolute;
+    margin: 0;
     padding-left: 5px;
     top: 3px;
     left: 1px;
