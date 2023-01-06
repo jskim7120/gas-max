@@ -198,20 +198,21 @@ const Form = React.forwardRef(
           <Input
             label="코드"
             register={register("areaCode")}
-            errors={errors["areaCode"]?.message}
-            fullWidth
             maxLength="2"
             readOnly={isAddBtnClicked}
+            inputSize={InputSize.i40}
           />
           <Input
             label="영업소명"
             register={register("areaName")}
-            errors={errors["areaName"]?.message}
             maxLength="20"
+            inputSize={InputSize.i180}
           />
         </Wrapper>
+
         <Divider />
-        <Wrapper grid>
+
+        <Wrapper>
           <Controller
             control={control}
             {...register("jnSsno")}
@@ -235,97 +236,98 @@ const Form = React.forwardRef(
                   /\d/,
                 ]}
                 name={name}
+                inputSize={InputSize.i90}
               />
             )}
           />
           <Input
             label="상호"
+            labelStyle={{ minWidth: "50px" }}
             register={register("jnSangho")}
-            errors={errors["jnSangho"]?.message}
             maxLength="26"
+            inputSize={InputSize.i180}
           />
           <Input
             label="대표"
+            labelStyle={{ minWidth: "50px" }}
             register={register("jnSajang")}
-            errors={errors["jnSajang"]?.message}
             maxLength="14"
+            inputSize={InputSize.i90}
           />
         </Wrapper>
+
         <Wrapper style={{ alignItems: "center" }}>
           <Input
             label="주소"
             register={register("jnZipcode")}
-            errors={errors["jnZipcode"]?.message}
             maxLength="6"
+            inputSize={InputSize.i70}
           />
           <DaumAddress setAddress={setAddress} />
           <Input
             register={register("jnAddr1")}
-            errors={errors["jnAddr1"]?.message}
-            fullWidth
             maxLength="40"
+            inputSize={InputSize.i367}
           />
         </Wrapper>
+
         <Wrapper>
           <Input
             label=""
             register={register("jnAddr2")}
-            errors={errors["jnAddr2"]?.message}
-            fullWidth
+            inputSize={InputSize.i468}
             maxLength="40"
           />
         </Wrapper>
-        <Wrapper>
+
+        <Wrapper grid col={2}>
           <Input
             label="업태"
             register={register("jnUptae")}
-            errors={errors["jnUptae"]?.message}
-            fullWidth
+            inputSize={InputSize.i180}
             maxLength="50"
           />
           <Input
             label="종목"
+            labelStyle={{ minWidth: "75px" }}
             register={register("jnJongmok")}
-            errors={errors["jnJongmok"]?.message}
-            fullWidth
+            inputSize={InputSize.i180}
             maxLength="50"
           />
         </Wrapper>
-        <Wrapper grid>
+
+        <Wrapper>
           <Input
             label="대표전화"
             register={register("jnTel1")}
-            errors={errors["jnTel1"]?.message}
+            inputSize={InputSize.i100}
             maxLength="14"
           />
           <Input
             label="대표전화2"
+            labelStyle={{ minWidth: "80px" }}
             register={register("jnTel2")}
-            errors={errors["jnTel2"]?.message}
+            inputSize={InputSize.i100}
             maxLength="14"
           />
 
           <Input
             label="팩스"
+            labelStyle={{ minWidth: "80px" }}
             register={register("jnFax")}
-            errors={errors["jnFax"]?.message}
+            inputSize={InputSize.i100}
             maxLength="14"
           />
         </Wrapper>
         <Divider />
+
         <Wrapper grid>
           <Input
             label="안전관리 총괄자"
             register={register("jnAnname1")}
-            errors={errors["jnAnname1"]?.message}
+            inputSize={InputSize.i90}
             maxLength="10"
           />
-          {/* <Input
-            label="전화----"
-            register={register("jnAntel1")}
-            errors={errors["jnAntel1"]?.message}
-            maxLength="14"
-          /> */}
 
           <Controller
             control={control}
@@ -334,6 +336,8 @@ const Form = React.forwardRef(
               <Input
                 label="전화"
                 value={value}
+                name={name}
+                inputSize={InputSize.i150}
                 onChange={onChange}
                 mask={[
                   /\d/,
@@ -354,19 +358,14 @@ const Form = React.forwardRef(
             )}
           />
         </Wrapper>
+
         <Wrapper grid>
           <Input
             label="안전관리 책임자"
             register={register("jnAnname2")}
-            errors={errors["jnAnname2"]?.message}
+            inputSize={InputSize.i90}
             maxLength="10"
           />
-          {/* <Input
-            label="전화"
-            register={register("jnAntel2")}
-            errors={errors["jnAntel2"]?.message}
-            maxLength="14"
-          /> */}
 
           <Controller
             control={control}
@@ -375,7 +374,9 @@ const Form = React.forwardRef(
               <Input
                 label="전화"
                 value={value}
+                name={name}
                 onChange={onChange}
+                inputSize={InputSize.i150}
                 mask={[
                   /\d/,
                   /\d/,
@@ -396,74 +397,55 @@ const Form = React.forwardRef(
           />
         </Wrapper>
         <Divider />
+
         <Wrapper grid col={2} style={{ gridTemplateColumns: " 2fr 4fr" }}>
-          <Field>
-            <FormGroup>
-              <Label>세금계산서 양식</Label>
-              <Select {...register("jnSekum")}>
-                {dataCommonDic?.jnSekum?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jnSekum"]?.message}</ErrorText>
-            </div>
-          </Field>
+          <FormGroup>
+            <Label>세금계산서 양식</Label>
+            <Select {...register("jnSekum")}>
+              {dataCommonDic?.jnSekum?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code1}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+
           <Wrapper grid col={3}>
-            <Field>
-              <FormGroup>
-                <CheckBox
-                  register={{ ...register("jnSegongYn") }}
-                  title="공급사업자 인쇄안함"
-                />
-              </FormGroup>
-              <div>
-                <ErrorText>{errors["jnSegongYn"]?.message}</ErrorText>
-              </div>
-            </Field>
-            <Field>
-              <FormGroup>
-                <CheckBox
-                  register={{ ...register("jnVatSumyn") }}
-                  title="Vat 별도 단가계산"
-                />
-              </FormGroup>
-              <div>
-                <ErrorText>{errors["jnVatSumyn"]?.message}</ErrorText>
-              </div>
-            </Field>
-            <Field>
-              <FormGroup>
-                <CheckBox
-                  register={{ ...register("jnSekumEa") }}
-                  title="수량 단가 인쇄 유무"
-                />
-              </FormGroup>
-              <div>
-                <ErrorText>{errors["jnSekumEa"]?.message}</ErrorText>
-              </div>
-            </Field>
+            <FormGroup>
+              <CheckBox
+                register={{ ...register("jnSegongYn") }}
+                title="공급사업자 인쇄안함"
+              />
+            </FormGroup>
+
+            <FormGroup>
+              <CheckBox
+                register={{ ...register("jnVatSumyn") }}
+                title="Vat 별도 단가계산"
+              />
+            </FormGroup>
+
+            <FormGroup>
+              <CheckBox
+                register={{ ...register("jnSekumEa") }}
+                title="수량 단가 인쇄 유무"
+              />
+            </FormGroup>
           </Wrapper>
         </Wrapper>
+
         <Wrapper>
-          <Field>
-            <FormGroup>
-              <Label>거래명세표 양식</Label>
-              <Select {...register("jnJangbu")}>
-                {dataCommonDic?.jnJangbu?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jnJangbu"]?.message}</ErrorText>
-            </div>
-          </Field>
+          <FormGroup>
+            <Label>거래명세표 양식</Label>
+            <Select {...register("jnJangbu")}>
+              {dataCommonDic?.jnJangbu?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code1}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+
           <Field style={{ marginLeft: "35px" }}>
             <Controller
               control={control}
@@ -481,62 +463,42 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
-        <Wrapper grid col={3}>
-          {/* <Input
-            label="탱크잔량/원격검침 발신기 업체번호"
-            labelLong
-            register={register("jnCMngNo")}
-            errors={errors["jnCMngNo"]?.message}
-            textAlign="right"
-            maxLength="4"
-          /> */}
 
-          <Field>
-            <FormGroup>
-              <Label>가상 계좌 서비스</Label>
-              <Select {...register("jnVirtualAcc")} width={InputSize.i150}>
-                {dataCommonDic?.jnVirtualAcc?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jnVirtualAcc"]?.message}</ErrorText>
-            </div>
-          </Field>
-          <Field>
-            <FormGroup>
-              <Label>계좌 자동이체</Label>
-              <Select {...register("jnBankCms")} width={InputSize.i100}>
-                {dataCommonDic?.jnBankCms?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jnBankCms"]?.message}</ErrorText>
-            </div>
-          </Field>
-          <Field>
-            <FormGroup>
-              <Label>카드 자동이체</Label>
-              <Select {...register("jnCardCms")} width={InputSize.i130}>
-                {dataCommonDic?.jnCardCms?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jnCardCms"]?.message}</ErrorText>
-            </div>
-          </Field>
+        <Wrapper grid col={3}>
+          <FormGroup>
+            <Label>가상 계좌 서비스</Label>
+            <Select {...register("jnVirtualAcc")} width={InputSize.i120}>
+              {dataCommonDic?.jnVirtualAcc?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code1}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+
+          <FormGroup>
+            <Label style={{ minWidth: "85px" }}>계좌 자동이체</Label>
+            <Select {...register("jnBankCms")} width={InputSize.i110}>
+              {dataCommonDic?.jnBankCms?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code1}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>카드 자동이체</Label>
+            <Select {...register("jnCardCms")} width={InputSize.i110}>
+              {dataCommonDic?.jnCardCms?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code1}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </Wrapper>
+
         <div style={{ marginTop: "5px" }}>
           <PlainTab
             tabHeader={[

@@ -14,7 +14,7 @@ import { EN1100LIST } from "app/path";
 import Form from "./form";
 import Grid from "../grid";
 import { columns, fields } from "./data";
-import { MainWrapper, RightSide, TopBar } from "../../commonStyle";
+import { MainWrapper, RightSide, LeftSide, TopBar } from "../../commonStyle";
 
 function EN1100({
   depthFullName,
@@ -116,7 +116,14 @@ function EN1100({
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
         />
-        <RightSide>
+
+        <RightSide
+          style={{
+            width: "655px",
+            minWidth: "655px",
+            maxWidth: "655px",
+          }}
+        >
           <Form
             selected={selected}
             ref={formRef}

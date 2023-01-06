@@ -46,8 +46,10 @@ export const TopBar = styled.div`
 `;
 
 export const MainWrapper = styled.div`
-  display: flex;
-  gap: 0px;
+  // display: flex;
+  //gap: 0px;
+
+  display: table;
   height: calc(100% - 14px);
 `;
 
@@ -58,13 +60,19 @@ export const WrapperContent = styled.div`
 `;
 
 export const LeftSide = styled.div<{ width?: string }>`
-  width: ${(props) => (props.width ? props.width : "50%")};
+  width: ${(props) => (props.width ? props.width : "100%")};
+  display: table-cell;
   border-right: 3px solid #707070;
 `;
 
 export const RightSide = styled.div<{ width?: string }>`
-  width: ${(props) => (props.width ? props.width : "50%")};
-  overflow-y: auto;
+  width: ${(props) => (props.width ? props.width : "100%")};
+  display: table-cell;
+  vertical-align: top;
+
+  @media only screen and (max-width: 662px) {
+    overflow-y: auto;
+  }
 `;
 
 export const ImageWrapper = styled.div`

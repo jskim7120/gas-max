@@ -2,6 +2,7 @@
 import React, { useEffect, useImperativeHandle, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
+import CreatableSelect from "react-select/creatable";
 // COMPONENTS
 import DaumAddress from "components/daum";
 import CheckBox from "components/checkbox";
@@ -20,7 +21,7 @@ import {
   FormGroup,
   Input,
   Label,
-  Select,
+  Select as CSelect,
   Divider,
   Wrapper,
 } from "components/form/style";
@@ -102,6 +103,9 @@ const Form = React.forwardRef(
     const [chkCuGumTurm, setChkCuGumTurm] = useState(false);
     const [chkCuGumdate, setChkCuGumdate] = useState(false);
     const [chkCuCno, setChkCuCno] = useState(false);
+    const [newTankMakeCo1, setNewTankMakeCo1] = useState("");
+
+    let tankMakeCo1: Array<any> = [];
 
     const { handleSubmit, reset, register, getValues, control, watch } =
       useForm<ICM1200SEARCH>({
@@ -145,6 +149,10 @@ const Form = React.forwardRef(
 
         gasifyCo1: dataCommonDic?.gasifyCo1[0].code,
         gasifyCo2: dataCommonDic?.gasifyCo2[0].code,
+      });
+
+      dataCommonDic?.tankMakeCo1?.map((obj: any) => {
+        tankMakeCo1.push({ value: obj.code, label: obj.codeName });
       });
     }, [dataCommonDic]);
 
@@ -339,6 +347,8 @@ const Form = React.forwardRef(
         delete formValues.cuCno;
       }
 
+      formValues.tankMakeCo1 = newTankMakeCo1;
+
       formValues.cuAptnameYn = formValues.cuAptnameYn ? "Y" : "N";
 
       formValues.cuFinishDate = formValues.cuFinishDate
@@ -465,13 +475,16 @@ const Form = React.forwardRef(
                 inputSize={InputSize.xs}
               />
               <p>원</p>
-              <Select {...register("cuRdangaSign")} style={{ minWidth: "15%" }}>
+              <CSelect
+                {...register("cuRdangaSign")}
+                style={{ minWidth: "15%" }}
+              >
                 {dataCommonDic?.cuRdangaSign.map((obj: any, index: number) => (
                   <option key={index} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
-              </Select>
+              </CSelect>
               <Input
                 type="text"
                 inputSize={InputSize.xs}
@@ -505,6 +518,12 @@ const Form = React.forwardRef(
           </Field>
         );
       }
+    };
+
+    const onOptionsChanged = (newOption: any, s: any) => {
+      //console.log("newOptions:", newOption.label);
+      //console.log("=======s:", s);
+      //setNewTankMakeCo1(newOption.label);
     };
 
     return (
@@ -561,18 +580,18 @@ const Form = React.forwardRef(
         <Wrapper grid col={5}>
           <FormGroup>
             <Label>담당사원</Label>
-            <Select {...register("cuSwCode")} width={InputSize.i120}>
+            <CSelect {...register("cuSwCode")} width={InputSize.i120}>
               {dataCommonDic?.cuSwCode?.map((obj: any, index: number) => (
                 <option key={index} value={obj.code}>
                   {obj.codeName}
                 </option>
               ))}
-            </Select>
+            </CSelect>
           </FormGroup>
 
           <FormGroup>
             <Label>지역분류</Label>
-            <Select
+            <CSelect
               {...register("cuJyCode")}
               width={InputSize.i120}
               style={{ marginRight: "0px" }}
@@ -582,7 +601,7 @@ const Form = React.forwardRef(
                   {obj.codeName}
                 </option>
               ))}
-            </Select>
+            </CSelect>
             <SearchBtn
               type="button"
               onClick={() => console.log("cuZipCode BTN")}
@@ -593,13 +612,13 @@ const Form = React.forwardRef(
 
           <FormGroup>
             <Label>관리자분류</Label>
-            <Select {...register("cuCustgubun")} width={InputSize.i120}>
+            <CSelect {...register("cuCustgubun")} width={InputSize.i120}>
               {dataCommonDic?.cuCustgubun?.map((obj: any, index: number) => (
                 <option key={index} value={obj.code}>
                   {obj.codeName}
                 </option>
               ))}
-            </Select>
+            </CSelect>
           </FormGroup>
         </Wrapper>
         <Divider />
@@ -613,7 +632,7 @@ const Form = React.forwardRef(
                 onChange={(e: any) => setChkCuRh20(e.target.checked)}
               />
             </Label>
-            <Select
+            <CSelect
               disabled={!chkCuRh20}
               {...register("cuRh2o")}
               width={InputSize.i120}
@@ -623,7 +642,7 @@ const Form = React.forwardRef(
                   {obj.codeName}
                 </option>
               ))}
-            </Select>
+            </CSelect>
             <p>mmH20</p>
           </FormGroup>
 
@@ -635,7 +654,7 @@ const Form = React.forwardRef(
                 onChange={(e: any) => setChkCuRdanga(e.target.checked)}
               />
             </Label>
-            <Select
+            <CSelect
               disabled={!chkCuRdanga}
               {...register("cuRdangaType")}
               width={InputSize.i120}
@@ -645,7 +664,7 @@ const Form = React.forwardRef(
                   {obj.codeName}
                 </option>
               ))}
-            </Select>
+            </CSelect>
           </FormGroup>
 
           {renderRdangaCalc()}
@@ -800,7 +819,7 @@ const Form = React.forwardRef(
                 onChange={(e: any) => setChkCuSukumtype(e.target.checked)}
               />
             </Label>
-            <Select
+            <CSelect
               disabled={!chkCuSukumtype}
               {...register("cuSukumtype")}
               width={InputSize.i120}
@@ -810,7 +829,7 @@ const Form = React.forwardRef(
                   {obj.codeName}
                 </option>
               ))}
-            </Select>
+            </CSelect>
           </FormGroup>
         </Wrapper>
         {/* 2-4 Wrapper */}
@@ -824,7 +843,7 @@ const Form = React.forwardRef(
                 onChange={(e: any) => setChkCuGumTurm(e.target.checked)}
               />
             </Label>
-            <Select
+            <CSelect
               disabled={!chkCuGumTurm}
               {...register("cuGumTurm")}
               width={InputSize.i120}
@@ -834,7 +853,7 @@ const Form = React.forwardRef(
                   {obj.codeName}
                 </option>
               ))}
-            </Select>
+            </CSelect>
           </FormGroup>
 
           <FormGroup>
@@ -961,7 +980,8 @@ const Form = React.forwardRef(
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <Field>
               <FormGroup>
-                <Select {...register("tankMakeCo1")} fullWidth>
+                {/*
+                <CSelect {...register("tankMakeCo1")} fullWidth>
                   {dataCommonDic?.tankMakeCo1?.map(
                     (obj: any, index: number) => (
                       <option key={index} value={obj.code}>
@@ -969,18 +989,25 @@ const Form = React.forwardRef(
                       </option>
                     )
                   )}
-                </Select>
+                </CSelect>
+                */}
+
+                <CreatableSelect
+                  isClearable
+                  options={tankMakeCo1}
+                  onChange={onOptionsChanged}
+                />
               </FormGroup>
             </Field>
             <Field>
               <FormGroup>
-                <Select {...register("tankVol1")} fullWidth textAlign="right">
+                <CSelect {...register("tankVol1")} fullWidth textAlign="right">
                   {dataCommonDic?.tankVol1?.map((obj: any, index: number) => (
                     <option key={index} value={obj.code}>
                       {obj.codeName}
                     </option>
                   ))}
-                </Select>
+                </CSelect>
               </FormGroup>
             </Field>
             <Field>
@@ -1035,7 +1062,7 @@ const Form = React.forwardRef(
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <Field>
               <FormGroup>
-                <Select {...register("tankMakeCo2")} fullWidth>
+                <CSelect {...register("tankMakeCo2")} fullWidth>
                   {dataCommonDic?.tankMakeCo2?.map(
                     (obj: any, index: number) => (
                       <option key={index} value={obj.code}>
@@ -1043,18 +1070,18 @@ const Form = React.forwardRef(
                       </option>
                     )
                   )}
-                </Select>
+                </CSelect>
               </FormGroup>
             </Field>
             <Field>
               <FormGroup>
-                <Select {...register("tankVol2")} fullWidth textAlign="right">
+                <CSelect {...register("tankVol2")} fullWidth textAlign="right">
                   {dataCommonDic?.tankVol2?.map((obj: any, index: number) => (
                     <option key={index} value={obj.code}>
                       {obj.codeName}
                     </option>
                   ))}
-                </Select>
+                </CSelect>
               </FormGroup>
             </Field>
             <Field>
@@ -1202,7 +1229,7 @@ const Form = React.forwardRef(
             <Field style={{ padding: "0px 5px" }}>
               <FormGroup>
                 <Label align="center">용기수량</Label>
-                <Select {...register("cuCylinderName")} width={InputSize.i120}>
+                <CSelect {...register("cuCylinderName")} width={InputSize.i120}>
                   {dataCommonDic?.cuCylinderName?.map(
                     (obj: any, index: number) => (
                       <option key={index} value={obj.code}>
@@ -1210,7 +1237,7 @@ const Form = React.forwardRef(
                       </option>
                     )
                   )}
-                </Select>
+                </CSelect>
                 <p>x</p>
                 <Input
                   register={register("cuCylinderQty")}
@@ -1265,22 +1292,22 @@ const Form = React.forwardRef(
 
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <FormGroup>
-              <Select {...register("gasifyCo1")} fullWidth>
+              <CSelect {...register("gasifyCo1")} fullWidth>
                 {dataCommonDic?.gasifyCo1?.map((obj: any, idx: number) => {
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>;
                 })}
-              </Select>
+              </CSelect>
             </FormGroup>
             <FormGroup>
-              <Select {...register("gasifyVol1")} fullWidth>
+              <CSelect {...register("gasifyVol1")} fullWidth>
                 {dataCommonDic?.gasifyVol1?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
-              </Select>
+              </CSelect>
             </FormGroup>
             <Field>
               <Input register={register("gasifySno1")} />
@@ -1313,23 +1340,23 @@ const Form = React.forwardRef(
           </FormGroup>
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <FormGroup>
-              <Select {...register("gasifyCo2")} fullWidth>
+              <CSelect {...register("gasifyCo2")} fullWidth>
                 {dataCommonDic?.gasifyCo2?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
-              </Select>
+              </CSelect>
             </FormGroup>
 
             <FormGroup>
-              <Select {...register("gasifyVol2")} fullWidth>
+              <CSelect {...register("gasifyVol2")} fullWidth>
                 {dataCommonDic?.gasifyVol2?.map((obj: any, index: number) => (
                   <option key={index} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
-              </Select>
+              </CSelect>
             </FormGroup>
             <Field>
               <Input register={register("gasifySno2")} />
