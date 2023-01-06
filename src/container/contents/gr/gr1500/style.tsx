@@ -1,4 +1,5 @@
 import styled from "styled-components";
+/*
 export const Grid1Container = styled.div`
   width: 76%;
   display: flex;
@@ -71,12 +72,8 @@ export const Container = styled.div`
 export const SubContainer = styled.div`
   width: 77%;
 `;
-export const FormContainer = styled.div`
-  height: 39px;
-  width: 100%;
-  background: #dbdbdb;
-  border-bottom: 3px solid #707070;
-`;
+*/
+
 export const FormHeadCnt = styled.div`
   display: flex;
   align-items: center;

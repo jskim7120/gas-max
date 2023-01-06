@@ -19,23 +19,23 @@ export const fields = [
   },
   {
     fieldName: "befAmt",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "curAmt",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "curPay",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "curDc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "curUnpa",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
 ];
 
@@ -77,6 +77,9 @@ export const columns = [
       text: "상호 (매입처명)",
     },
     styleName: "rg-left-column",
+    footer: {
+      text: "합  계",
+    },
   },
   {
     name: "befAmt",
@@ -87,6 +90,9 @@ export const columns = [
       text: "이월금액",
     },
     styleName: "rg-left-column",
+    footer: {
+      expression: "sum",
+    },
   },
   {
     name: "curAmt",
@@ -97,6 +103,9 @@ export const columns = [
       text: "당월금액",
     },
     styleName: "rg-left-column",
+    footer: {
+      expression: "sum",
+    },
   },
   {
     name: "curPay",
@@ -107,6 +116,9 @@ export const columns = [
       text: "당월지급",
     },
     styleName: "rg-left-column",
+    footer: {
+      expression: "sum",
+    },
   },
   {
     name: "curDc",
@@ -114,9 +126,12 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "당월지급",
+      text: "지급 D/C",
     },
     styleName: "rg-right-column",
+    footer: {
+      expression: "sum",
+    },
   },
   {
     name: "curUnpa",
@@ -124,8 +139,11 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "지급 D/C",
+      text: "미지급액",
     },
     styleName: "rg-right-column",
+    footer: {
+      expression: "sum",
+    },
   },
 ];
