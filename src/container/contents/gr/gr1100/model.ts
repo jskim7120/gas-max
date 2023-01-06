@@ -5,11 +5,11 @@ export interface ISANGPUM {
   buBank: string;
   buBankju: string;
   buBankno: string;
-  buBcost: string;
-  buBdanga: string;
+  buBcost: any;
+  buBdanga: any;
   buBigo: string;
-  buBlcost: string;
-  buBldanga: string;
+  buBlcost: any;
+  buBldanga: any;
   buCode: string;
   buDamdang: string;
   buEmail: string;
@@ -29,8 +29,8 @@ export interface ISANGPUM {
   buMisu: any;
   buName: string;
   buNo: string;
-  buPcost: string;
-  buPdanga: string;
+  buPcost: any;
+  buPdanga: any;
   buRCode: string;
   buSajang: string;
   buSangho: string;
