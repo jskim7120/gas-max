@@ -68,7 +68,10 @@ export const RightSide = styled.div<{ width?: string }>`
 
   @media only screen and (max-width: 1279px) {
     overflow-x: auto;
-    overflow-y: auto;
+  }
+
+  @media screen and (max-height: 767px) {
+    overflow-y: scroll;
   }
 `;
 
