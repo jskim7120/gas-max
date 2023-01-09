@@ -67,7 +67,8 @@ export const RightSide = styled.div<{ width?: string }>`
   //width: ${(props) => (props.width ? props.width : "100%")};
 
   @media only screen and (max-width: 1280px) {
-    overflow-x: scroll;
+    overflow-x: auto;
+    overflow-y: auto;
   }
 `;
 

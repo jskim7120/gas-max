@@ -6,7 +6,7 @@
 
 body {
   font-family: "NotoSansKRRegular";
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .modal_btn {
@@ -33,7 +33,7 @@ body {
   overflow-y: auto;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 100px;
   height: 12px;
 }
@@ -41,17 +41,17 @@ body {
 ::-webkit-scrollbar-track {
   background: #f8f9fa;
   border: 1px solid #cdd2d9;
-}
+} */
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb {
   background: #eeeff1;
   border: 1px solid #b6bbc3;
   border-radius: 5px;
-}
+} */
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+/* ::-webkit-scrollbar-thumb:hover {
   background: #e3e5e8;
   border: 1px solid #abb0ba;
-}
+} */
