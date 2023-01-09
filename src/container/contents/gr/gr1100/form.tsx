@@ -188,17 +188,17 @@ const Form = React.forwardRef(
       formValues.areaCode = selected.areaCode;
       if (typeof formValues.buMisu === "string")
         formValues.buMisu = Number(formValues.buMisu.replaceAll(",", ""));
-      if (formValues.buBcost)
+      if (typeof formValues.buBcost === "string")
         formValues.buBcost = Number(formValues.buBcost.replaceAll(",", ""));
-      if (formValues.buBdanga)
+      if (typeof formValues.buBdanga === "string")
         formValues.buBdanga = Number(formValues.buBdanga.replaceAll(",", ""));
-      if (formValues.buBlcost)
+      if (typeof formValues.buBlcost === "string")
         formValues.buBlcost = Number(formValues.buBlcost.replaceAll(",", ""));
-      if (formValues.buBldanga)
+      if (typeof formValues.buBldanga === "string")
         formValues.buBldanga = Number(formValues.buBldanga.replaceAll(",", ""));
-      if (formValues.buPcost)
+      if (typeof formValues.buPcost === "string")
         formValues.buPcost = Number(formValues.buPcost.replaceAll(",", ""));
-      if (formValues.buPdanga)
+      if (typeof formValues.buPdanga === "string")
         formValues.buPdanga = Number(formValues.buPdanga.replaceAll(",", ""));
       try {
         const response: any = await API.post(path, formValues);

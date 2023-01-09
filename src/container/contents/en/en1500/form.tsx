@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { EN1600UPDATE } from "app/path";
+import { EN1500UPDATE } from "app/path";
 import { InputSize } from "components/componentsType";
 import {
   Select,
@@ -79,16 +79,35 @@ const Form = (
       reset(newData);
     }
   };
-  console.log("errors:", errors);
   const submit = async (data: IJNOTRY2) => {
-    console.log("fbsfgbgfbggf");
     const formValues = getValues();
+    if (typeof formValues.jnCost280 === "string") {
+      formValues.jnCost280 = Number(formValues.jnCost280.replaceAll(",", ""));
+    }
+    if (typeof formValues.jnCost600 === "string") {
+      formValues.jnCost600 = Number(formValues.jnCost600.replaceAll(",", ""));
+    }
+    if (typeof formValues.jnCost1000 === "string") {
+      formValues.jnCost1000 = Number(formValues.jnCost1000.replaceAll(",", ""));
+    }
+    if (typeof formValues.jnCost1500 === "string") {
+      formValues.jnCost1500 = Number(formValues.jnCost1500.replaceAll(",", ""));
+    }
+    if (typeof formValues.jnCost2000 === "string") {
+      formValues.jnCost2000 = Number(formValues.jnCost2000.replaceAll(",", ""));
+    }
+    if (typeof formValues.jnCost2500 === "string") {
+      formValues.jnCost2500 = Number(formValues.jnCost2500.replaceAll(",", ""));
+    }
+    if (typeof formValues.jnCost7000 === "string") {
+      formValues.jnCost7000 = Number(formValues.jnCost7000.replaceAll(",", ""));
+    }
     formValues.jnAnkum = formValues.jnAnkum
       ? formatCurrencyRemoveComma(formValues.jnAnkum)
       : "";
 
     try {
-      const response = await API.post(EN1600UPDATE, formValues);
+      const response = await API.post(EN1500UPDATE, formValues);
       if (response.status === 200) {
         setData((prev: any) => {
           prev[selectedRowIndex] = formValues;
