@@ -81,6 +81,10 @@ export const FooterContainer = styled.div`
   }
 
   .address-part {
+    @media only screen and (max-width: 1490px) {
+      margin-left: 10px;
+    }
+
     margin-left: 40px;
     display: flex;
     align-items: baseline;
@@ -128,6 +132,10 @@ export const FooterContainer = styled.div`
   }
 
   .badge-part {
+    @media only screen and (max-width: 1490px) {
+      margin-left: 10px;
+    }
+
     margin-left: 30px;
 
     display: flex;

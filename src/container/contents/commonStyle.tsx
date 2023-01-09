@@ -46,11 +46,10 @@ export const TopBar = styled.div`
 `;
 
 export const MainWrapper = styled.div`
-  // display: flex;
-  //gap: 0px;
-
-  display: table;
+  display: flex;
+  gap: 0;
   height: calc(100% - 14px);
+  width: 100%;
 `;
 
 export const WrapperContent = styled.div`
@@ -61,17 +60,14 @@ export const WrapperContent = styled.div`
 
 export const LeftSide = styled.div<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "100%")};
-  display: table-cell;
   border-right: 3px solid #707070;
 `;
 
 export const RightSide = styled.div<{ width?: string }>`
-  width: ${(props) => (props.width ? props.width : "100%")};
-  display: table-cell;
-  vertical-align: top;
+  //width: ${(props) => (props.width ? props.width : "100%")};
 
-  @media only screen and (max-width: 662px) {
-    overflow-y: auto;
+  @media only screen and (max-width: 1280px) {
+    overflow-x: scroll;
   }
 `;
 

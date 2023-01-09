@@ -190,9 +190,9 @@ const Form = React.forwardRef(
 
     return (
       <form
-        className="form_control"
+        //className="form_control"
         onSubmit={handleSubmit(submit)}
-        style={{ padding: "0px 10px" }}
+        style={{ width: "645px", padding: "0px 10px" }}
       >
         <Wrapper grid>
           <Input
