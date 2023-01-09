@@ -117,17 +117,17 @@ export const FooterContainer = styled.div`
     .w-85 {
       width: 85px;
     }
-    .w-100 {
-      width: 100px;
+    .w-90 {
+      width: 90px;
     }
-    .w-150 {
-      width: 150px;
+    .w-120 {
+      width: 120px;
     }
     .w-200 {
       width: 200px;
     }
-    .w-320 {
-      width: 320px;
+    .w-300 {
+      width: 300px;
     }
   }
 
@@ -156,9 +156,19 @@ export const FooterContainer = styled.div`
 
       span {
         display: inline-block;
-        width: 85px;
+        width: 75px;
         margin-left: 5px;
         font-size: 14px;
+      }
+    }
+  }
+
+  .carBtn {
+    @media only screen and (max-width: 1490px) {
+      margin-left: 10px;
+
+      img {
+        width: 30px;
       }
     }
   }

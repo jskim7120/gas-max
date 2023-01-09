@@ -82,8 +82,8 @@ function Footer() {
             </div>
             <div style={{ display: "flex" }}>
               <div className="text small w-70">{info.cuTel}</div>
-              <div className="text small w-100">{info.cuHp}</div>
-              <div className="text small  w-150">{info.cuTel2}</div>
+              <div className="text small w-90">{info.cuHp}</div>
+              <div className="text small  w-120">{info.cuTel2}</div>
             </div>
             <div className="text small w-320">{info.cuAddr1n2}</div>
           </div>
@@ -94,7 +94,7 @@ function Footer() {
               style={{
                 display: "flex",
                 alignItems: "start",
-                width: "200px",
+                width: "100px",
               }}
             >
               <div className="cuStae">
@@ -184,7 +184,7 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div>
+      <div className="carBtn">
         <span>
           <img src={CARIMG} alt="car" style={{ marginRight: "5px" }} />
         </span>
