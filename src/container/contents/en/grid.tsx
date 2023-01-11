@@ -9,6 +9,7 @@ function Grid({
   setSelected,
   selectedRowIndex,
   setSelectedRowIndex,
+  style,
 }: {
   data: any;
   fields: any;
@@ -16,6 +17,7 @@ function Grid({
   setSelected: Function;
   selectedRowIndex: number | null;
   setSelectedRowIndex: Function;
+  style?: any;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -64,7 +66,7 @@ function Grid({
     }
   }, [data]);
 
-  return <LeftSide ref={realgridElement}></LeftSide>;
+  return <LeftSide ref={realgridElement} style={style}></LeftSide>;
 }
 
 export default Grid;

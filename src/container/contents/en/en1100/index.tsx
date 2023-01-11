@@ -116,6 +116,7 @@ function EN1100({
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
         />
+
         <RightSide>
           <Form
             selected={selected}

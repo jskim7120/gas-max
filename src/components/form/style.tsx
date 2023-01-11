@@ -33,8 +33,26 @@ export const getInputSize = (size?: InputSize) => {
       return `150px`;
     case InputSize.i175:
       return `175px`;
+    case InputSize.i180:
+      return `180px`;
     case InputSize.i200:
       return `200px`;
+    case InputSize.i300:
+      return `300px`;
+    case InputSize.i367:
+      return `367px`;
+    case InputSize.i400:
+      return `400px`;
+    case InputSize.i468:
+      return `468px`;
+    case InputSize.i500:
+      return `500px`;
+    case InputSize.i515:
+      return `515px`;
+    case InputSize.i550:
+      return `550px`;
+    case InputSize.i616:
+      return `616px`;
     case InputSize.xxs:
       return `30px`;
     case InputSize.xs:
@@ -383,7 +401,7 @@ export const FormGroup = styled.div<{
 
   input,
   select {
-    margin: 5px 5px 5px 5px;
+    margin: 3px 0 3px 0;
   }
 
   &.small {
@@ -426,7 +444,7 @@ export const Label = styled.label<{
   min-width: ${(props) => (props.labelLong ? "200px" : "105px")};
   height: 25px;
   text-align: right;
-  padding: 3px 10px;
+  padding: 3px;
   background: transparent;
   white-space: nowrap;
 

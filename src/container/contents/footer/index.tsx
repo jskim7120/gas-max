@@ -82,21 +82,15 @@ function Footer() {
             </div>
             <div style={{ display: "flex" }}>
               <div className="text small w-70">{info.cuTel}</div>
-              <div className="text small w-100">{info.cuHp}</div>
-              <div className="text small  w-150">{info.cuTel2}</div>
+              <div className="text small w-90">{info.cuHp}</div>
+              <div className="text small  w-120">{info.cuTel2}</div>
             </div>
             <div className="text small w-320">{info.cuAddr1n2}</div>
           </div>
         </div>
-        <div className="badge-part" style={{ gap: "40px" }}>
+        <div className="badge-part">
           <div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "start",
-                width: "200px",
-              }}
-            >
+            <div className="badge-container">
               <div className="cuStae">
                 <b>{getCuStae(info.cuStae)}</b>
               </div>
@@ -184,7 +178,7 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div>
+      <div className="carBtn">
         <span>
           <img src={CARIMG} alt="car" style={{ marginRight: "5px" }} />
         </span>
