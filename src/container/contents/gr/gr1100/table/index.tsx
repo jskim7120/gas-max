@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Table from "components/table";
 import { Input2, Select, Field } from "components/form/style";
 import { InputSize } from "components/componentsType";
-import InfoPerson from "assets/image/infoPerson.png";
 import { PersonInfoText } from "components/text";
 import { InfoText } from "components/text";
 function TableData({
@@ -10,11 +9,13 @@ function TableData({
   errors,
   tableData,
   selected,
+  tData,
 }: {
   register: any;
   errors: any;
   tableData: any;
   selected: any;
+  tData: any;
 }) {
   const [buPdanga, setBuPdanga] = useState<string>();
   const [buPcost, setBuPcost] = useState<string>();
@@ -24,6 +25,29 @@ function TableData({
 
   const [buBldanga, setBuBldanga] = useState<string>();
   const [buBlcost, setBuBlcost] = useState<string>();
+
+  useEffect(() => {
+    if (selected) {
+      if (typeof selected.buBcost === "number") {
+        selected.buBcost = selected.buBcost.toLocaleString();
+      }
+      if (typeof selected.buBdanga === "number") {
+        selected.buBdanga = selected.buBdanga.toLocaleString();
+      }
+      if (typeof selected.buBlcost === "number") {
+        selected.buBlcost = selected.buBlcost.toLocaleString();
+      }
+      if (typeof selected.buBldanga === "number") {
+        selected.buBldanga = selected.buBldanga.toLocaleString();
+      }
+      if (typeof selected.buPdanga === "number") {
+        selected.buPdanga = selected.buPdanga.toLocaleString();
+      }
+      if (typeof selected.buPcost === "number") {
+        selected.buPcost = selected.buPcost.toLocaleString();
+      }
+    }
+  }, [tData]);
 
   useEffect(() => {
     if (selected !== undefined && JSON.stringify(selected) !== "{}") {
@@ -99,8 +123,8 @@ function TableData({
           }}
         >
           {buPdanga && buPcost
-            ? Number(buPdanga && buPdanga.replace(",", "")) +
-              Number(buPcost && buPcost.replace(",", ""))
+            ? Number(buPdanga && buPdanga.replaceAll(",", "")) +
+              Number(buPcost && buPcost.replaceAll(",", ""))
             : null}
         </p>
       ),
@@ -143,8 +167,8 @@ function TableData({
           }}
         >
           {buBdanga && buBcost
-            ? Number(buBdanga && buBdanga.replace(",", "")) +
-              Number(buBcost && buBcost.replace(",", ""))
+            ? Number(buBdanga && buBdanga.replaceAll(",", "")) +
+              Number(buBcost && buBcost.replaceAll(",", ""))
             : null}
         </p>
       ),
@@ -186,8 +210,8 @@ function TableData({
           }}
         >
           {buBldanga && buBlcost
-            ? Number(buBldanga && buBldanga.replace(",", "")) +
-              Number(buBlcost && buBlcost.replace(",", ""))
+            ? Number(buBldanga && buBldanga.replaceAll(",", "")) +
+              Number(buBlcost && buBlcost.replaceAll(",", ""))
             : null}
         </p>
       ),

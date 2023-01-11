@@ -289,6 +289,7 @@ function GR1100({
             selected={selected}
             ref={formRef}
             fetchData={fetchData}
+            tData={data}
             setData={setData}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}

@@ -9,6 +9,7 @@ import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker/test-datepicker";
 import { SearchBtn } from "components/daum";
+import EditableSelect from "components/editableSelect";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { currencyMask } from "helpers/currency";
 import {
@@ -981,7 +982,9 @@ const Form = React.forwardRef(
             <Field>
               <FormGroup>
                 {/*
-                <CSelect {...register("tankMakeCo1")} fullWidth>
+
+                <Select {...register("tankMakeCo1")} fullWidth>
+
                   {dataCommonDic?.tankMakeCo1?.map(
                     (obj: any, index: number) => (
                       <option key={index} value={obj.code}>
@@ -989,13 +992,13 @@ const Form = React.forwardRef(
                       </option>
                     )
                   )}
-                </CSelect>
+
+
                 */}
 
-                <CreatableSelect
-                  isClearable
-                  options={tankMakeCo1}
-                  onChange={onOptionsChanged}
+                <EditableSelect
+                  list={dataCommonDic?.tankMakeCo1}
+                  register={register("tankMakeCo1")}
                 />
               </FormGroup>
             </Field>
@@ -1062,7 +1065,9 @@ const Form = React.forwardRef(
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <Field>
               <FormGroup>
-                <CSelect {...register("tankMakeCo2")} fullWidth>
+                {/*
+                <Select {...register("tankMakeCo2")} fullWidth>
+
                   {dataCommonDic?.tankMakeCo2?.map(
                     (obj: any, index: number) => (
                       <option key={index} value={obj.code}>
@@ -1070,7 +1075,13 @@ const Form = React.forwardRef(
                       </option>
                     )
                   )}
-                </CSelect>
+
+                </Select>
+                */}
+                <EditableSelect
+                  list={dataCommonDic?.tankMakeCo2}
+                  register={register("tankMakeCo2")}
+                />
               </FormGroup>
             </Field>
             <Field>
@@ -1292,13 +1303,20 @@ const Form = React.forwardRef(
 
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <FormGroup>
-              <CSelect {...register("gasifyCo1")} fullWidth>
+              {/*
+              <Select {...register("gasifyCo1")} fullWidth>
+
                 {dataCommonDic?.gasifyCo1?.map((obj: any, idx: number) => {
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>;
                 })}
-              </CSelect>
+   </Select>
+              */}
+              <EditableSelect
+                list={dataCommonDic?.gasifyCo1}
+                register={register("gasifyCo1")}
+              />
             </FormGroup>
             <FormGroup>
               <CSelect {...register("gasifyVol1")} fullWidth>
@@ -1340,13 +1358,21 @@ const Form = React.forwardRef(
           </FormGroup>
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <FormGroup>
-              <CSelect {...register("gasifyCo2")} fullWidth>
+              {/*
+              <Select {...register("gasifyCo2")} fullWidth>
+
                 {dataCommonDic?.gasifyCo2?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
-              </CSelect>
+
+              </Select>
+              */}
+              <EditableSelect
+                list={dataCommonDic?.gasifyCo2}
+                register={register("gasifyCo2")}
+              />
             </FormGroup>
 
             <FormGroup>

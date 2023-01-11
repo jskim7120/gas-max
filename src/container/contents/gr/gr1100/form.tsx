@@ -35,6 +35,7 @@ import TableData from "./table/index";
 interface IForm {
   selected: any;
   fetchData: any;
+  tData: any;
   setData: any;
   selectedRowIndex: number;
   setSelected: any;
@@ -61,6 +62,7 @@ const Form = React.forwardRef(
     {
       selected,
       fetchData,
+      tData,
       setData,
       selectedRowIndex,
       setSelected,
@@ -184,8 +186,20 @@ const Form = React.forwardRef(
       const path = isAddBtnClicked ? GR1100INSERT : GR1100UPDATE;
       const formValues = getValues();
       formValues.areaCode = selected.areaCode;
-      if (formValues.buMisu)
+      if (typeof formValues.buMisu === "string")
         formValues.buMisu = Number(formValues.buMisu.replaceAll(",", ""));
+      if (typeof formValues.buBcost === "string")
+        formValues.buBcost = Number(formValues.buBcost.replaceAll(",", ""));
+      if (typeof formValues.buBdanga === "string")
+        formValues.buBdanga = Number(formValues.buBdanga.replaceAll(",", ""));
+      if (typeof formValues.buBlcost === "string")
+        formValues.buBlcost = Number(formValues.buBlcost.replaceAll(",", ""));
+      if (typeof formValues.buBldanga === "string")
+        formValues.buBldanga = Number(formValues.buBldanga.replaceAll(",", ""));
+      if (typeof formValues.buPcost === "string")
+        formValues.buPcost = Number(formValues.buPcost.replaceAll(",", ""));
+      if (typeof formValues.buPdanga === "string")
+        formValues.buPdanga = Number(formValues.buPdanga.replaceAll(",", ""));
       try {
         const response: any = await API.post(path, formValues);
 
@@ -463,6 +477,7 @@ const Form = React.forwardRef(
             errors={errors}
             tableData={tableData}
             selected={selected}
+            tData={tData}
           />
         </form>
       </div>
