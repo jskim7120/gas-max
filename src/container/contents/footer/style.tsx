@@ -129,9 +129,36 @@ export const FooterContainer = styled.div`
     .w-300 {
       width: 300px;
     }
+
+    @media only screen and (max-width: 1150px) {
+      margin-left: 15px;
+      .cuType {
+        width: max-content;
+      }
+      .w-70 {
+        width: max-content;
+      }
+      .w-85 {
+        width: max-content;
+        margin-right: 9px;
+      }
+      .w-90 {
+        width: max-content;
+      }
+      .w-120 {
+        width: max-content;
+      }
+      .w-200 {
+        width: max-content;
+      }
+      .w-300 {
+        width: max-content;
+      }
+    }
   }
 
   .badge-part {
+    gap: 40px;
     @media only screen and (max-width: 1490px) {
       margin-left: 10px;
     }
@@ -142,6 +169,12 @@ export const FooterContainer = styled.div`
 
     .cuStae {
       width: 50px;
+    }
+
+    .badge-container {
+      display: flex;
+      align-items: start;
+      width: 100px;
     }
 
     .circle-badge {
@@ -159,6 +192,25 @@ export const FooterContainer = styled.div`
         width: 75px;
         margin-left: 5px;
         font-size: 14px;
+      }
+    }
+
+    @media only screen and (max-width: 1150px) {
+      gap: 25px;
+      margin-left: 15px;
+
+      .cuStae {
+        width: max-content;
+      }
+
+      .badge-container {
+        width: max-content;
+      }
+
+      .rectangle-badge-wrapper {
+        span {
+          width: max-content;
+        }
       }
     }
   }

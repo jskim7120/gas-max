@@ -88,15 +88,9 @@ function Footer() {
             <div className="text small w-320">{info.cuAddr1n2}</div>
           </div>
         </div>
-        <div className="badge-part" style={{ gap: "40px" }}>
+        <div className="badge-part">
           <div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "start",
-                width: "100px",
-              }}
-            >
+            <div className="badge-container">
               <div className="cuStae">
                 <b>{getCuStae(info.cuStae)}</b>
               </div>
