@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "app/store";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import CustomDatePicker from "components/customDatePicker/test-datepicker";
+import CustomDatePicker from "components/customDatePicker";
 import {
   openModal,
   closeModal,

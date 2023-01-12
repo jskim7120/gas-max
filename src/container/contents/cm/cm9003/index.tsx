@@ -7,7 +7,7 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize, FieldKind } from "components/componentsType";
-import CustomDatePicker from "components/customDatePicker/test-datepicker";
+import CustomDatePicker from "components/customDatePicker";
 import Grid from "./grid";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { TopBar, WrapperContent } from "../../commonStyle";

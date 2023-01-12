@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { EN2000INSERT, EN2000UPDATE, EN2000DELETE, EN200011 } from "app/path";
@@ -8,7 +7,6 @@ import {
   Input,
   Wrapper,
   Divider,
-  ErrorText,
   FormGroup,
   Label,
 } from "components/form/style";
@@ -16,7 +14,7 @@ import { InfoText } from "components/text";
 import { InfoDesc } from "../../commonStyle";
 import CheckBox from "components/checkbox";
 import { ICARJBC } from "./model";
-import { schema } from "./validation";
+import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
@@ -50,15 +48,8 @@ const Form = React.forwardRef(
       }
     }, [selected]);
 
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-      getValues,
-    } = useForm<ICARJBC>({
+    const { register, handleSubmit, reset, getValues } = useForm<ICARJBC>({
       mode: "onChange",
-      resolver: yupResolver(schema),
     });
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
@@ -165,34 +156,27 @@ const Form = React.forwardRef(
 
     return (
       <form
-        className="form_control"
         onSubmit={handleSubmit(submit)}
-        style={{ padding: "0px 10px" }}
+        style={{ width: "263px", padding: "0px 10px" }}
       >
         <Wrapper>
           <Input
             label="코드"
             register={register("ccCode")}
-            errors={errors["ccCode"]?.message}
             maxLength="2"
             readOnly={isAddBtnClicked}
+            inputSize={InputSize.i80}
           />
         </Wrapper>
         <Divider />
         <Wrapper>
-          <Input
-            label="정비명"
-            register={register("ccName")}
-            errors={errors["ccName"]?.message}
-            maxLength="30"
-          />
+          <Input label="정비명" register={register("ccName")} maxLength="30" />
         </Wrapper>
 
         <Wrapper>
           <Input
             label="비고"
             register={register("ccBigo")}
-            errors={errors["ccBigo"]?.message}
             fullWidth
             maxLength="50"
           />
@@ -203,9 +187,6 @@ const Form = React.forwardRef(
             <Label>유류비계정 유무</Label>
             <CheckBox title="" rtl register={{ ...register("ccOilYn") }} />
           </FormGroup>
-          <div>
-            <ErrorText>{errors["ccOilYn"]?.message}</ErrorText>
-          </div>
         </Wrapper>
 
         <InfoDesc>

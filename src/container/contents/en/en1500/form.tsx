@@ -1,7 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useEffect } from "react";
 import Table from "components/table";
 import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { EN1500UPDATE } from "app/path";
@@ -9,7 +8,6 @@ import { InputSize } from "components/componentsType";
 import {
   Select,
   Field,
-  ErrorText,
   FormGroup,
   Wrapper,
   Divider,
@@ -18,7 +16,6 @@ import {
 } from "components/form/style";
 import { IconInfo } from "components/allSvgIcon";
 import { IJNOTRY2 } from "./model";
-import { schema } from "./validation";
 import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
 import { VolReading, Container, RubeUnit, BasicItems } from "../en1500/style";
 
@@ -55,17 +52,10 @@ const Form = (
     }
   }, [selected]);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    getValues,
-    control,
-  } = useForm<IJNOTRY2>({
-    mode: "onChange",
-    // resolver: yupResolver(schema),
-  });
+  const { register, handleSubmit, reset, getValues, control } =
+    useForm<IJNOTRY2>({
+      mode: "onChange",
+    });
 
   const resetForm = (type: string) => {
     if (selected !== undefined && JSON.stringify(selected) !== "{}") {
@@ -137,11 +127,6 @@ const Form = (
     {
       title: "280 mmH2O",
       jnCost280: (
-        // <Input
-        //   register={register("jnCost280")}
-        //   errors={errors["jnCost280"]?.message}
-        //   textAlign="right"
-        // />
         <Controller
           control={control}
           {...register("jnCost280")}
@@ -161,11 +146,6 @@ const Form = (
     {
       title: "600 mmH2O",
       jnCost600: (
-        // <Input
-        //   register={register("jnCost600")}
-        //   errors={errors["jnCost600"]?.message}
-        //   textAlign="right"
-        // />
         <Controller
           control={control}
           {...register("jnCost600")}
@@ -185,11 +165,6 @@ const Form = (
     {
       title: "1000 mmH2O",
       jnCost1000: (
-        // <Input
-        //   register={register("jnCost1000")}
-        //   errors={errors["jnCost1000"]?.message}
-        //   textAlign="right"
-        // />
         <Controller
           control={control}
           {...register("jnCost1000")}
@@ -209,11 +184,6 @@ const Form = (
     {
       title: "1500 mmH2O",
       jnCost1500: (
-        // <Input
-        //   register={register("jnCost1500")}
-        //   errors={errors["jnCost1500"]?.message}
-        //   textAlign="right"
-        // />
         <Controller
           control={control}
           {...register("jnCost1500")}
@@ -233,11 +203,6 @@ const Form = (
     {
       title: "2000 mmH2O",
       jnCost2000: (
-        // <Input
-        //   register={register("jnCost2000")}
-        //   errors={errors["jnCost2000"]?.message}
-        //   textAlign="right"
-        // />
         <Controller
           control={control}
           {...register("jnCost2000")}
@@ -257,11 +222,6 @@ const Form = (
     {
       title: "2500 mmH2O",
       jnCost2500: (
-        // <Input
-        //   register={register("jnCost2500")}
-        //   errors={errors["jnCost2500"]?.message}
-        //   textAlign="right"
-        // />
         <Controller
           control={control}
           {...register("jnCost2500")}
@@ -281,11 +241,6 @@ const Form = (
     {
       title: "7000 mmH2O",
       jnCost7000: (
-        // <Input
-        //   register={register("jnCost7000")}
-        //   errors={errors["jnCost7000"]?.message}
-        //   textAlign="right"
-        // />
         <Controller
           control={control}
           {...register("jnCost7000")}
@@ -306,19 +261,13 @@ const Form = (
 
   return (
     <form
-      className="form_control"
       onSubmit={handleSubmit(submit)}
-      style={{ padding: "0px 10px" }}
+      style={{ width: "727px", padding: "0px 10px" }}
     >
       <Wrapper grid>
         <Field className="field">
           <FormGroup>
-            <Input
-              label="코드"
-              register={register("areaCode")}
-              errors={errors["areaCode"]?.message}
-              maxLength="2"
-            />
+            <Input label="코드" register={register("areaCode")} maxLength="2" />
           </FormGroup>
         </Field>
         <Field>
@@ -326,7 +275,6 @@ const Form = (
             <Input
               label="영업소명"
               register={register("areaName")}
-              errors={errors["areaName"]?.message}
               maxLength="20"
             />
           </FormGroup>
@@ -348,9 +296,6 @@ const Form = (
                   ))}
                 </Select>
               </FormGroup>
-              <div>
-                <ErrorText>{errors["jnPerMeth"]?.message}</ErrorText>
-              </div>
             </Field>
             <p style={{ right: "32px" }}>
               <IconInfo />
@@ -364,7 +309,6 @@ const Form = (
                 <Input
                   label="표준기화율"
                   register={register("jnKgdanga")}
-                  errors={errors["jnKgdanga"]?.message}
                   textAlign="right"
                 />
               </FormGroup>
@@ -387,9 +331,6 @@ const Form = (
                   ))}
                 </Select>
               </FormGroup>
-              <div>
-                <ErrorText>{errors["jnChekum"]?.message}</ErrorText>
-              </div>
             </Field>
             <p>
               <IconInfo />
@@ -410,9 +351,6 @@ const Form = (
                   ))}
                 </Select>
               </FormGroup>
-              <div>
-                <ErrorText>{errors["jnJiroPrint"]?.message}</ErrorText>
-              </div>
             </Field>
             <p>
               <IconInfo />
@@ -438,124 +376,85 @@ const Form = (
           <div className="title">신규거래처 기본설정 항목</div>
           <div className="basicItemsCnt">
             <Wrapper className="volWrapper">
-              <Field>
-                <FormGroup>
-                  <Label>조정기압력</Label>
-                  <Select
-                    {...register("jnR")}
-                    style={{ minWidth: "85px" }}
-                    textAlign="left"
-                  >
-                    {dataCommonDic?.jnR?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.code}
-                      </option>
-                    ))}
-                  </Select>
+              <FormGroup>
+                <Label>조정기압력</Label>
+                <Select
+                  {...register("jnR")}
+                  style={{ minWidth: "85px" }}
+                  textAlign="left"
+                >
+                  {dataCommonDic?.jnR?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.code}
+                    </option>
+                  ))}
+                </Select>
 
-                  <span>mmH2O</span>
-                </FormGroup>
-                <div>
-                  <ErrorText>{errors["jnR"]?.message}</ErrorText>
-                </div>
-              </Field>
+                <span>mmH2O</span>
+              </FormGroup>
+            </Wrapper>
+
+            <Wrapper className="volWrapper">
+              <FormGroup>
+                <Controller
+                  control={control}
+                  {...register("jnAnkum")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <Input
+                      label="안전관리비"
+                      value={value}
+                      onChange={onChange}
+                      mask={currencyMask}
+                      textAlign="right"
+                      inputSize={InputSize.i85}
+                      name={name}
+                    />
+                  )}
+                />
+                <span>원</span>
+              </FormGroup>
+            </Wrapper>
+
+            <Wrapper className="volWrapper">
+              <FormGroup>
+                <Controller
+                  control={control}
+                  {...register("jnGumdate")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <Input
+                      label="정기검침일"
+                      value={value}
+                      onChange={onChange}
+                      mask={[/\d/, /\d/]}
+                      textAlign="right"
+                      inputSize={InputSize.i85}
+                      name={name}
+                    />
+                  )}
+                />
+                <span>일</span>
+              </FormGroup>
+            </Wrapper>
+
+            <Wrapper className="volWrapper">
+              <FormGroup>
+                <Label>수금방법</Label>
+                <Select
+                  {...register("jnSukumtype")}
+                  style={{ minWidth: "85px" }}
+                >
+                  {dataCommonDic?.jnSukumtype?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
             </Wrapper>
 
             <Wrapper className="volWrapper">
               <Field className="field">
                 <FormGroup>
-                  {/* <Input
-                    label="안전관리비"
-                    register={register("jnAnkum")}
-                    errors={errors["jnAnkum"]?.message}
-                    textAlign="right"
-                    formatNumber="comNumber"
-                    maxLength="23"
-                    inputSize={InputSize.xl}
-                  /> */}
-                  <Controller
-                    control={control}
-                    {...register("jnAnkum")}
-                    render={({ field: { onChange, value, name } }) => (
-                      <Input
-                        label="안전관리비"
-                        value={value}
-                        onChange={onChange}
-                        mask={currencyMask}
-                        textAlign="right"
-                        inputSize={InputSize.i85}
-                        name={name}
-                      />
-                    )}
-                  />
-                  <span>원</span>
-                </FormGroup>
-              </Field>
-            </Wrapper>
-
-            <Wrapper className="volWrapper">
-              <Field className="field">
-                <FormGroup>
-                  {/* <Input
-                    label="정기검침일"
-                    register={register("jnGumdate")}
-                    errors={errors["jnGumdate"]?.message}
-                    textAlign="right"
-                    maxLength="2"
-                  /> */}
-                  <Controller
-                    control={control}
-                    {...register("jnGumdate")}
-                    render={({ field: { onChange, value, name } }) => (
-                      <Input
-                        label="정기검침일"
-                        value={value}
-                        onChange={onChange}
-                        mask={[/\d/, /\d/]}
-                        textAlign="right"
-                        inputSize={InputSize.i85}
-                        name={name}
-                      />
-                    )}
-                  />
-                  <span>일</span>
-                </FormGroup>
-              </Field>
-            </Wrapper>
-
-            <Wrapper className="volWrapper">
-              <Field>
-                <FormGroup>
-                  <Label>수금방법</Label>
-                  <Select
-                    {...register("jnSukumtype")}
-                    style={{ minWidth: "85px" }}
-                  >
-                    {dataCommonDic?.jnSukumtype?.map(
-                      (obj: any, idx: number) => (
-                        <option key={idx} value={obj.code}>
-                          {obj.codeName}
-                        </option>
-                      )
-                    )}
-                  </Select>
-                </FormGroup>
-                <div>
-                  <ErrorText>{errors["jnSukumtype"]?.message}</ErrorText>
-                </div>
-              </Field>
-            </Wrapper>
-
-            <Wrapper className="volWrapper">
-              <Field className="field">
-                <FormGroup>
-                  {/* <Input
-                    label="연체율"
-                    register={register("jnPer")}
-                    errors={errors["jnPer"]?.message}
-                    textAlign="right"
-                    maxLength="3"
-                  /> */}
                   <Controller
                     control={control}
                     {...register("jnPer")}

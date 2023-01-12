@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -9,14 +8,12 @@ import {
   Input,
   Select,
   Field,
-  ErrorText,
   FormGroup,
   Wrapper,
   Divider,
   Label,
 } from "components/form/style";
 import { IBUPUM } from "./model";
-import { schema } from "./validation";
 import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
 import { InputSize } from "components/componentsType";
 
@@ -47,14 +44,8 @@ const Form = React.forwardRef(
       functionName: "EN1400",
     });
 
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-      getValues,
-      control,
-    } = useForm<IBUPUM>({ mode: "onChange", resolver: yupResolver(schema) });
+    const { register, handleSubmit, reset, getValues, control } =
+      useForm<IBUPUM>({ mode: "onChange" });
 
     useEffect(() => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
@@ -194,33 +185,26 @@ const Form = React.forwardRef(
 
     return (
       <form
-        className="form_control"
         onSubmit={handleSubmit(submit)}
-        style={{ padding: "0px 10px" }}
+        style={{ width: "380px", padding: "0px 10px" }}
       >
         <Wrapper>
-          <Field>
-            <FormGroup>
-              <Label>영업소</Label>
-              <Select {...register("areaCode")} onChange={handleSelectCode}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["areaCode"]?.message}</ErrorText>
-            </div>
-          </Field>
+          <FormGroup>
+            <Label>영업소</Label>
+            <Select {...register("areaCode")} onChange={handleSelectCode}>
+              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </Wrapper>
         <Wrapper>
           <Input
             label="부품코드"
             register={register("bpCode")}
-            errors={errors["bpCode"]?.message}
-            inputSize={InputSize.md}
+            inputSize={InputSize.i80}
             maxLength="3"
             readOnly={isAddBtnClicked}
           />
@@ -230,8 +214,7 @@ const Form = React.forwardRef(
           <Input
             label="부품명"
             register={register("bpName")}
-            errors={errors["bpName"]?.message}
-            inputSize={InputSize.md}
+            inputSize={InputSize.i250}
             maxLength="20"
           />
         </Wrapper>
@@ -239,8 +222,7 @@ const Form = React.forwardRef(
           <Input
             label="규격"
             register={register("bpType")}
-            errors={errors["bpType"]?.message}
-            inputSize={InputSize.md}
+            inputSize={InputSize.i250}
             maxLength="10"
           />
         </Wrapper>
@@ -248,23 +230,13 @@ const Form = React.forwardRef(
           <Input
             label="단위"
             register={register("bpDanwi")}
-            errors={errors["bpDanwi"]?.message}
-            inputSize={InputSize.md}
+            inputSize={InputSize.i250}
             maxLength="10"
           />
         </Wrapper>
         <Divider />
         <Wrapper>
           <Field flex>
-            {/* <Input
-              label="매입단가"
-              register={register("bpIndanga")}
-              errors={errors["bpIndanga"]?.message}
-              inputSize={InputSize.md}
-              textAlign="right"
-              formatNumber="comDecNumber"
-              maxLength="26"
-            /> */}
             <Controller
               control={control}
               {...register("bpIndanga")}
@@ -285,15 +257,6 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <Field flex>
-            {/* <Input
-              label="판매단가"
-              register={register("bpOutdanga")}
-              errors={errors["bpOutdanga"]?.message}
-              inputSize={InputSize.md}
-              textAlign="right"
-              formatNumber="comDecNumber"
-              maxLength="26"
-            /> */}
             <Controller
               control={control}
               {...register("bpOutdanga")}

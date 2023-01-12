@@ -1,17 +1,16 @@
 import React from "react";
 import Table from "components/table";
-import { Input, Select, Field, ErrorText } from "components/form/style";
+import { Input, Select, Field } from "components/form/style";
 import { PaymentLineCnt } from "../../commonStyle";
 import { InputSize } from "components/componentsType";
 
-function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
+function getTabContent(id: number, register: any, jnJiro: any) {
   const data1 = [
     {
       1: "양식 1",
       2: (
         <Input
           register={register("jnJiroSNo")}
-          errors={errors["jnJiroSNo"]?.message}
           textAlign="center"
           maxLength="6"
         />
@@ -19,18 +18,11 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       3: (
         <Input
           register={register("jnJirono")}
-          errors={errors["jnJirono"]?.message}
           textAlign="center"
           maxLength="7"
         />
       ),
-      4: (
-        <Input
-          register={register("jnJiroBigo")}
-          errors={errors["jnJiroBigo"]?.message}
-          maxLength="7"
-        />
-      ),
+      4: <Input register={register("jnJiroBigo")} maxLength="7" />,
       5: (
         <Field>
           <Select style={{ width: "200px" }} {...register("jnJiro")}>
@@ -40,10 +32,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
               </option>
             ))}
           </Select>
-
-          <div>
-            <ErrorText>{errors && errors["jnJiro"]?.message}</ErrorText>
-          </div>
         </Field>
       ),
     },
@@ -52,7 +40,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       2: (
         <Input
           register={register("jnJiroSNo02")}
-          errors={errors["jnJiroSNo02"]?.message}
           textAlign="center"
           maxLength="6"
         />
@@ -60,18 +47,11 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       3: (
         <Input
           register={register("jnJirono02")}
-          errors={errors["jnJirono02"]?.message}
           textAlign="center"
           maxLength="7"
         />
       ),
-      4: (
-        <Input
-          register={register("jnJiroBigo02")}
-          errors={errors["jnJiroBigo02"]?.message}
-          maxLength="20"
-        />
-      ),
+      4: <Input register={register("jnJiroBigo02")} maxLength="20" />,
       5: (
         <Field>
           <Select style={{ width: "200px" }} {...register("jnJiro2")}>
@@ -81,9 +61,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
               </option>
             ))}
           </Select>
-          <div>
-            <ErrorText>{errors && errors["jnJiro2"]?.message}</ErrorText>
-          </div>
         </Field>
       ),
     },
@@ -92,7 +69,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       2: (
         <Input
           register={register("jnJiroSNo03")}
-          errors={errors["jnJiroSNo03"]?.message}
           textAlign="center"
           maxLength="6"
         />
@@ -100,18 +76,11 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       3: (
         <Input
           register={register("jnJirono03")}
-          errors={errors["jnJirono03"]?.message}
           textAlign="center"
           maxLength="7"
         />
       ),
-      4: (
-        <Input
-          register={register("jnJiroBigo03")}
-          errors={errors["jnJiroBigo03"]?.message}
-          maxLength="20"
-        />
-      ),
+      4: <Input register={register("jnJiroBigo03")} maxLength="20" />,
       5: (
         <Field>
           <Select style={{ width: "200px" }} {...register("jnJiro3")}>
@@ -121,9 +90,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
               </option>
             ))}
           </Select>
-          <div>
-            <ErrorText>{errors && errors["jnJiro3"]?.message}</ErrorText>
-          </div>
         </Field>
       ),
     },
@@ -132,7 +98,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       2: (
         <Input
           register={register("jnJiroSNo04")}
-          errors={errors["jnJiroSNo04"]?.message}
           textAlign="center"
           maxLength="6"
         />
@@ -140,18 +105,11 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       3: (
         <Input
           register={register("jnJirono04")}
-          errors={errors["jnJirono04"]?.message}
           textAlign="center"
           maxLength="7"
         />
       ),
-      4: (
-        <Input
-          register={register("jnJiroBigo04")}
-          errors={errors["jnJiroBigo04"]?.message}
-          maxLength="20"
-        />
-      ),
+      4: <Input register={register("jnJiroBigo04")} maxLength="20" />,
       5: (
         <Field>
           <Select style={{ width: "200px" }} {...register("jnJiro4")}>
@@ -161,9 +119,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
               </option>
             ))}
           </Select>
-          <div>
-            <ErrorText>{errors && errors["jnJiro4"]?.message}</ErrorText>
-          </div>
         </Field>
       ),
     },
@@ -172,56 +127,32 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
   const data2 = [
     {
       jnOrder01: (
-        <Input
-          register={register("jnOrder01")}
-          errors={errors["jnOrder01"]?.message}
-          inputSize={InputSize.xxl}
-        />
+        <Input register={register("jnOrder01")} inputSize={InputSize.xxl} />
       ),
     },
     {
       jnOrder02: (
-        <Input
-          register={register("jnOrder02")}
-          errors={errors["jnOrder02"]?.message}
-          inputSize={InputSize.xxl}
-        />
+        <Input register={register("jnOrder02")} inputSize={InputSize.xxl} />
       ),
     },
     {
       jnOrder03: (
-        <Input
-          register={register("jnOrder03")}
-          errors={errors["jnOrder03"]?.message}
-          inputSize={InputSize.xxl}
-        />
+        <Input register={register("jnOrder03")} inputSize={InputSize.xxl} />
       ),
     },
     {
       jnOrder04: (
-        <Input
-          register={register("jnOrder04")}
-          errors={errors["jnOrder04"]?.message}
-          inputSize={InputSize.xxl}
-        />
+        <Input register={register("jnOrder04")} inputSize={InputSize.xxl} />
       ),
     },
     {
       jnOrder05: (
-        <Input
-          register={register("jnOrder05")}
-          errors={errors["jnOrder05"]?.message}
-          inputSize={InputSize.xxl}
-        />
+        <Input register={register("jnOrder05")} inputSize={InputSize.xxl} />
       ),
     },
     {
       jnOrder06: (
-        <Input
-          register={register("jnOrder06")}
-          errors={errors["jnOrder06"]?.message}
-          inputSize={InputSize.xxl}
-        />
+        <Input register={register("jnOrder06")} inputSize={InputSize.xxl} />
       ),
     },
   ];
@@ -231,7 +162,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       jnBank1: (
         <Input
           register={register("jnBank1")}
-          errors={errors["jnBank1"]?.message}
           inputSize={InputSize.md290}
           maxLength="15"
         />
@@ -239,7 +169,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       jnBankNo1: (
         <Input
           register={register("jnBankno1")}
-          errors={errors["jnBankNo1"]?.message}
           inputSize={InputSize.md290}
           maxLength="20"
         />
@@ -249,7 +178,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       jnBank2: (
         <Input
           register={register("jnBank2")}
-          errors={errors["jnBank2"]?.message}
           inputSize={InputSize.md290}
           maxLength="15"
         />
@@ -257,7 +185,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       jnBankNo2: (
         <Input
           register={register("jnBankno2")}
-          errors={errors["jnBankNo2"]?.message}
           inputSize={InputSize.md290}
           maxLength="20"
         />
@@ -267,7 +194,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       jnBank3: (
         <Input
           register={register("jnBank3")}
-          errors={errors["jnBank3"]?.message}
           inputSize={InputSize.md290}
           maxLength="15"
         />
@@ -275,7 +201,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       jnBankNo3: (
         <Input
           register={register("jnBankno3")}
-          errors={errors["jnBankNo3"]?.message}
           inputSize={InputSize.md290}
           maxLength="20"
         />
@@ -285,7 +210,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       jnBank4: (
         <Input
           register={register("jnBank4")}
-          errors={errors["jnBank4"]?.message}
           inputSize={InputSize.md290}
           maxLength="15"
         />
@@ -293,7 +217,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       jnBankNo4: (
         <Input
           register={register("jnBankno4")}
-          errors={errors["jnBankNo4"]?.message}
           inputSize={InputSize.md290}
           maxLength="20"
         />
@@ -306,7 +229,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       jnMark1: (
         <Input
           register={register("jnMark1")}
-          errors={errors["jnMark1"]?.message}
           textAlign="center"
           maxLength="8"
         />
@@ -314,7 +236,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       jnMark2: (
         <Input
           register={register("jnMark2")}
-          errors={errors["jnMark2"]?.message}
           textAlign="center"
           maxLength="8"
         />
@@ -322,7 +243,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       jnMark3: (
         <Input
           register={register("jnMark3")}
-          errors={errors["jnMark3"]?.message}
           textAlign="center"
           maxLength="8"
         />
@@ -330,7 +250,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       jnMark4: (
         <Input
           register={register("jnMark4")}
-          errors={errors["jnMark4"]?.message}
           textAlign="center"
           maxLength="8"
         />
@@ -338,7 +257,6 @@ function getTabContent(id: number, register: any, errors: any, jnJiro: any) {
       jnMark5: (
         <Input
           register={register("jnMark5")}
-          errors={errors["jnMark5"]?.message}
           textAlign="center"
           maxLength="8"
         />

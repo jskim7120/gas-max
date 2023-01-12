@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -11,12 +10,10 @@ import {
   Wrapper,
   Divider,
   Field,
-  ErrorText,
   FormGroup,
   Label,
 } from "components/form/style";
 import { ICUSTJY } from "./model";
-import { schema } from "./validation";
 
 interface IForm {
   selected: any;
@@ -55,15 +52,8 @@ const Form = React.forwardRef(
       }
     }, [selected]);
 
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-      getValues,
-    } = useForm<ICUSTJY>({
+    const { register, handleSubmit, reset, getValues } = useForm<ICUSTJY>({
       mode: "onChange",
-      resolver: yupResolver(schema),
     });
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
@@ -196,49 +186,37 @@ const Form = React.forwardRef(
 
     return (
       <form
-        className="form_control"
         onSubmit={handleSubmit(submit)}
-        style={{ padding: "0px 10px" }}
+        style={{ width: "400px", padding: "0px 10px" }}
       >
         <Wrapper>
           <Input
             label="코드"
             register={register("jyCode")}
-            errors={errors["jyCode"]?.message}
             maxLength="2"
             readOnly={isAddBtnClicked}
           />
-          <Field>
-            <FormGroup>
-              <Label>영업소</Label>
-              <Select {...register("areaCode")} onChange={handleSelectCode}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["areaCode"]?.message}</ErrorText>
-            </div>
-          </Field>
+
+          <FormGroup>
+            <Label>영업소</Label>
+            <Select {...register("areaCode")} onChange={handleSelectCode}>
+              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </Wrapper>
         <Divider />
         <Wrapper>
-          <Input
-            label="분류명"
-            register={register("jyName")}
-            errors={errors["jyName"]?.message}
-            maxLength="4"
-          />
+          <Input label="분류명" register={register("jyName")} maxLength="4" />
         </Wrapper>
 
         <Wrapper>
           <Input
             label="비고"
             register={register("jyBigo")}
-            errors={errors["jyBigo"]?.message}
             fullWidth
             maxLength="4"
           />

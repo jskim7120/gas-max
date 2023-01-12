@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -10,20 +9,17 @@ import {
   Select,
   Wrapper,
   Divider,
-  // DividerGray,
   Field,
-  ErrorText,
   FormGroup,
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
-import { schema } from "./validation";
 import { SearchIcon, IconInfo } from "components/allSvgIcon";
 import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
 import { convertBase64 } from "helpers/convertBase64";
-import CustomDatePicker from "components/customDatePicker/customdate2";
+import CustomDatePicker from "components/customDatePicker";
 import { ImageWrapper } from "../../commonStyle";
 import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
 import { InputSize } from "components/componentsType";
@@ -80,17 +76,10 @@ const Form = React.forwardRef(
       }
     }, [addr]);
 
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-      getValues,
-      control,
-    } = useForm<IJNOSAUP>({
-      mode: "onChange",
-      resolver: yupResolver(schema),
-    });
+    const { register, handleSubmit, reset, getValues, control } =
+      useForm<IJNOSAUP>({
+        mode: "onChange",
+      });
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
@@ -266,46 +255,32 @@ const Form = React.forwardRef(
 
     return (
       <form
-        className="form_control"
         onSubmit={handleSubmit(submit)}
-        style={{ padding: "0px 10px" }}
+        style={{ width: "725px", padding: "0px 10px" }}
       >
         <Wrapper>
           <Input
             label="코드"
             register={register("swCode")}
-            errors={errors["swCode"]?.message}
             maxLength="2"
             readOnly={isAddBtnClicked}
           />
-          <Field>
-            <FormGroup>
-              <Label>영업소</Label>
-              <Select {...register("areaCode")} onChange={handleSelectCode}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["areaCode"]?.message}</ErrorText>
-            </div>
-          </Field>
+
+          <FormGroup>
+            <Label>영업소</Label>
+            <Select {...register("areaCode")} onChange={handleSelectCode}>
+              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </Wrapper>
         <Divider />
         <Wrapper>
-          <Input
-            label="사원명"
-            register={register("swName")}
-            errors={errors["swName"]?.message}
-          />
-          <Input
-            label="부서명"
-            register={register("swDepartment")}
-            errors={errors["swDepartment"]?.message}
-          />
+          <Input label="사원명" register={register("swName")} />
+          <Input label="부서명" register={register("swDepartment")} />
         </Wrapper>
 
         <Wrapper>
@@ -320,17 +295,7 @@ const Form = React.forwardRef(
                 ))}
               </Select>
             </FormGroup>
-            <div>
-              <ErrorText>{errors["swGubun"]?.message}</ErrorText>
-            </div>
           </Field>
-          {/* <Input
-            label="주민번호"
-            register={register("swJuminno")}
-            errors={errors["swJuminno"]?.message}
-            formatNumber="corpNumber"
-            maxLength={"14"}
-          /> */}
 
           <Controller
             control={control}
@@ -363,18 +328,8 @@ const Form = React.forwardRef(
         </Wrapper>
 
         <Wrapper>
-          <Input
-            label="전화번호"
-            register={register("swTel")}
-            errors={errors["swTel"]?.message}
-            maxLength="14"
-          />
-          {/* <Input
-            label="핸드폰"
-            register={register("swHp")}
-            errors={errors["swHp"]?.message}
-            maxLength="14"
-          /> */}
+          <Input label="전화번호" register={register("swTel")} maxLength="14" />
+
           <Controller
             control={control}
             {...register("swHp")}
@@ -407,7 +362,6 @@ const Form = React.forwardRef(
           <Input
             label="이메일"
             register={register("cuSeEmail")}
-            errors={errors["cuSeEmail"]?.message}
             maxLength="50"
           />
           @
@@ -421,26 +375,15 @@ const Form = React.forwardRef(
         </Wrapper>
 
         <Wrapper style={{ alignItems: "center" }}>
-          <Input
-            label="주소"
-            register={register("swZipcode")}
-            errors={errors["swZipcode"]?.message}
-            maxLength="6"
-          />
+          <Input label="주소" register={register("swZipcode")} maxLength="6" />
           <DaumAddress setAddress={setAddress} />
-          <Input
-            register={register("swAddr1")}
-            errors={errors["swAddr1"]?.message}
-            fullWidth
-            maxLength="40"
-          />
+          <Input register={register("swAddr1")} fullWidth maxLength="40" />
         </Wrapper>
 
         <Wrapper>
           <Input
             label=""
             register={register("swAddr2")}
-            errors={errors["swAddr2"]?.message}
             fullWidth
             maxLength="40"
           />
@@ -450,7 +393,6 @@ const Form = React.forwardRef(
           <Input
             label="매핑코드"
             register={register("eyeSwCode")}
-            errors={errors["eyeSwCode"]?.message}
             maxLength="10"
           />
           <p
@@ -476,7 +418,6 @@ const Form = React.forwardRef(
               <Input
                 label="서명화일"
                 register={register("swStampFile")}
-                errors={errors["swStampFile"]?.message}
                 value={image?.name}
                 maxLength="80"
               />
@@ -484,12 +425,13 @@ const Form = React.forwardRef(
               <button
                 style={{
                   width: "100px",
-                  height: "30px",
+                  height: "25px",
                   background: "#666666",
                   borderRadius: "5px",
                   border: "1px solid #707070",
                   color: "#fff",
                   position: "relative",
+                  marginLeft: "3px",
                 }}
               >
                 <SearchIcon />
@@ -512,10 +454,12 @@ const Form = React.forwardRef(
             <Wrapper style={{ width: "600px" }}>
               <Field flex style={{ alignItems: "center" }}>
                 <Label>입사일</Label>
-                <CustomDatePicker
-                  value={swIndate}
-                  setValue={setSwIndate}
-                  name="swIndate"
+                <Controller
+                  control={control}
+                  {...register("swIndate")}
+                  render={({ field: { onChange, onBlur, value, ref } }) => (
+                    <CustomDatePicker value={value} onChange={onChange} />
+                  )}
                 />
               </Field>
               <Field style={{ width: "100%" }}>
@@ -529,22 +473,11 @@ const Form = React.forwardRef(
                     ))}
                   </Select>
                 </FormGroup>
-                <div>
-                  <ErrorText>{errors["swPaytype"]?.message}</ErrorText>
-                </div>
               </Field>
             </Wrapper>
 
             <Wrapper grid>
               <Field flex>
-                {/* <Input
-                  label="급여액"
-                  register={register("swPaykum")}
-                  errors={errors["swPaykum"]?.message}
-                  textAlign="right"
-                  formatNumber="comNumber"
-                  maxLength="23"
-                /> */}
                 <Controller
                   control={control}
                   {...register("swPaykum")}
@@ -562,11 +495,7 @@ const Form = React.forwardRef(
 
                 <p>원</p>
               </Field>
-              {/* <Input
-                label="급여일"
-                register={register("swPaydate")}
-                errors={errors["swPaydate"]?.message}
-              /> */}
+
               <Controller
                 control={control}
                 {...register("swPaydate")}
@@ -590,13 +519,11 @@ const Form = React.forwardRef(
           <Input
             label="면허종류"
             register={register("swDriverType")}
-            errors={errors["swDriverType"]?.message}
             maxLength="15"
           />
           <Input
             label="면허번호"
             register={register("swDriverNo")}
-            errors={errors["swDriverNo"]?.message}
             maxLength="17"
             inputSize={InputSize.i130}
           />
@@ -605,19 +532,23 @@ const Form = React.forwardRef(
         <Wrapper style={{ width: "600px" }}>
           <Field flex style={{ alignItems: "center" }}>
             <Label>적성검사</Label>
-            <CustomDatePicker
-              value={swJdate1}
-              setValue={setSwJdate1}
-              name="swJdate1"
+            <Controller
+              control={control}
+              {...register("swJdate1")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
             />
           </Field>
 
           <Field flex style={{ alignItems: "center" }}>
             <Label style={{ minWidth: "auto" }}>~</Label>
-            <CustomDatePicker
-              value={swJdate2}
-              setValue={setSwJdate2}
-              name="swJdate2"
+            <Controller
+              control={control}
+              {...register("swJdate2")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
             />
           </Field>
         </Wrapper>
@@ -626,7 +557,6 @@ const Form = React.forwardRef(
           <Input
             label="메모"
             register={register("swBigo")}
-            errors={errors["swBigo"]?.message}
             fullWidth
             maxLength="40"
           />
@@ -647,16 +577,16 @@ const Form = React.forwardRef(
                 (체크시 퇴사사원)
               </p>
             </FormGroup>
-            <div>
-              <ErrorText>{errors["swWorkOut"]?.message}</ErrorText>
-            </div>
           </Field>
           <Field flex style={{ alignItems: "center" }}>
             <Label>퇴사일</Label>
-            <CustomDatePicker
-              value={swOutDate}
-              setValue={setSwOutDate}
-              name="swOutDate"
+
+            <Controller
+              control={control}
+              {...register("swOutDate")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
             />
           </Field>
         </Wrapper>
@@ -680,14 +610,6 @@ const Form = React.forwardRef(
 
         <Wrapper>
           <Field flex>
-            {/* <Input
-              label="가불금액"
-              register={register("sgKumack")}
-              errors={errors["sgKumack"]?.message}
-              textAlign="right"
-              formatNumber="comNumber"
-              maxLength="23"
-            /> */}
             <Controller
               control={control}
               {...register("sgKumack")}

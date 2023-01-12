@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -9,7 +8,6 @@ import {
   Input,
   Select,
   Field,
-  ErrorText,
   FormGroup,
   Wrapper,
   Divider,
@@ -18,7 +16,6 @@ import {
 import CheckBox from "components/checkbox";
 import DaumAddress from "components/daum";
 import { IJNOTRY } from "./model";
-import { schema } from "./validation";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
@@ -53,17 +50,10 @@ const Form = React.forwardRef(
       functionName: "EN1100",
     });
 
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-      control,
-      getValues,
-    } = useForm<IJNOTRY>({
-      mode: "onChange",
-      resolver: yupResolver(schema),
-    });
+    const { register, handleSubmit, reset, control, getValues } =
+      useForm<IJNOTRY>({
+        mode: "onChange",
+      });
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
@@ -197,7 +187,6 @@ const Form = React.forwardRef(
           <Input
             label="코드"
             register={register("areaCode")}
-            maxLength="2"
             readOnly={isAddBtnClicked}
             inputSize={InputSize.i40}
           />
@@ -510,7 +499,7 @@ const Form = React.forwardRef(
             tabId={tabId}
           />
           <TabContentWrapper>
-            {getTabContent(tabId, register, errors, dataCommonDic?.jnJiro)}
+            {getTabContent(tabId, register, dataCommonDic?.jnJiro)}
           </TabContentWrapper>
         </div>
       </form>

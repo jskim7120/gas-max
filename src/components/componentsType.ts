@@ -25,7 +25,13 @@ export enum InputSize {
   xxs = "xxs",
   xs = "xs",
   sm = "sm",
-  en1300 = "en1300",
+  lg = "lg",
+  md290 = "md290",
+  md = "md",
+  xl = "xl",
+  xxl = "xxl",
+  xxxl = "xxxl",
+
   i40 = "i40",
   i50 = "i50",
   i60 = "i60",
@@ -42,6 +48,7 @@ export enum InputSize {
   i175 = "i175",
   i180 = "i180",
   i200 = "i200",
+  i250 = "i250",
   i300 = "i300",
   i367 = "i367",
   i400 = "i400",
@@ -50,12 +57,6 @@ export enum InputSize {
   i515 = "i515",
   i550 = "i550",
   i616 = "i616",
-  lg = "lg",
-  md290 = "md290",
-  md = "md",
-  xl = "xl",
-  xxl = "xxl",
-  xxxl = "xxxl",
 }
 
 export enum ButtonType {

@@ -1,12 +1,10 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import {
   Input,
   Select,
   Field,
-  ErrorText,
   FormGroup,
   Wrapper,
   Divider,
@@ -15,11 +13,10 @@ import {
 import CheckBox from "components/checkbox";
 import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
-import { schema } from "./validation";
 import { SearchIcon, IconHome, IconReceipt } from "components/allSvgIcon";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { formatDate, formatDateToStringWithoutDash } from "helpers/dateFormat";
-import CustomDatePicker from "components/customDatePicker/test-datepicker";
+import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { convertBase64 } from "helpers/convertBase64";
 import API from "app/axios";
@@ -58,14 +55,8 @@ const Form = React.forwardRef(
       functionName: "EN1200",
     });
 
-    const {
-      register,
-      handleSubmit,
-      control,
-      reset,
-      formState: { errors },
-      getValues,
-    } = useForm<IJNOSAUP>({ mode: "onChange", resolver: yupResolver(schema) });
+    const { register, handleSubmit, control, reset, getValues } =
+      useForm<IJNOSAUP>({ mode: "onChange" });
 
     useEffect(() => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
@@ -243,9 +234,8 @@ const Form = React.forwardRef(
 
     return (
       <form
-        className="form_control"
         onSubmit={handleSubmit(submit)}
-        style={{ padding: "0px 10px" }}
+        style={{ width: "640px", padding: "0px 10px" }}
       >
         <div
           style={{
@@ -260,37 +250,23 @@ const Form = React.forwardRef(
               <Input
                 label="코드"
                 register={register("saupSno")}
-                errors={errors["saupSno"]?.message}
-                inputSize={InputSize.sm}
-                maxLength="2"
+                inputSize={InputSize.i40}
                 readOnly={isAddBtnClicked}
               />
-              <Field>
-                <FormGroup>
-                  <Label>영업소</Label>
-                  <Select {...register("areaCode")} onChange={handleSelectCode}>
-                    {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <div>
-                  <ErrorText>{errors["areaCode"]?.message}</ErrorText>
-                </div>
-              </Field>
+
+              <FormGroup>
+                <Label>영업소</Label>
+                <Select {...register("areaCode")} onChange={handleSelectCode}>
+                  {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
             </Wrapper>
             <Divider />
             <Wrapper grid col={2}>
-              {/* <Input
-                label=""
-                register={register("saupSsno")}
-                errors={errors["saupSsno"]?.message}
-                inputSize={InputSize.md}
-                formatNumber="telNumber"
-                maxLength="12"
-              /> */}
               <Controller
                 control={control}
                 {...register("saupSsno")}
@@ -298,7 +274,9 @@ const Form = React.forwardRef(
                   <Input
                     label="사업자번호"
                     value={value}
+                    name={name}
                     onChange={onChange}
+                    inputSize={InputSize.i90}
                     mask={[
                       /\d/,
                       /\d/,
@@ -313,15 +291,13 @@ const Form = React.forwardRef(
                       /\d/,
                       /\d/,
                     ]}
-                    name={name}
                   />
                 )}
               />
               <Input
                 label="종사업자번호"
                 register={register("saupRCode")}
-                errors={errors["saupRCode"]?.message}
-                inputSize={InputSize.sm}
+                inputSize={InputSize.i60}
                 maxLength="4"
               />
             </Wrapper>
@@ -329,15 +305,13 @@ const Form = React.forwardRef(
               <Input
                 label="상호"
                 register={register("saupSangho")}
-                errors={errors["saupSangho"]?.message}
-                inputSize={InputSize.md}
+                inputSize={InputSize.i200}
                 maxLength="50"
               />
               <Input
                 label="대표"
                 register={register("saupSajang")}
-                errors={errors["saupSajang"]?.message}
-                inputSize={InputSize.md}
+                inputSize={InputSize.i200}
                 maxLength="20"
               />
             </Wrapper>
@@ -345,23 +319,21 @@ const Form = React.forwardRef(
               <Input
                 label="주소"
                 register={register("saupZipcode")}
-                errors={errors["saupZipcode"]?.message}
                 maxLength="6"
+                inputSize={InputSize.i70}
               />
               <DaumAddress setAddress={setAddress} />
               <Input
                 register={register("saupAddr1")}
-                errors={errors["saupAddr1"]?.message}
-                fullWidth
                 maxLength="40"
+                inputSize={InputSize.i367}
               />
             </Wrapper>
             <Wrapper>
               <Input
                 label=""
                 register={register("saupAddr2")}
-                errors={errors["saupAddr2"]?.message}
-                fullWidth
+                inputSize={InputSize.i468}
                 maxLength="40"
               />
             </Wrapper>
@@ -369,15 +341,13 @@ const Form = React.forwardRef(
               <Input
                 label="업태"
                 register={register("saupUptae")}
-                errors={errors["saupUptae"]?.message}
-                fullWidth
+                inputSize={InputSize.i200}
                 maxLength="50"
               />
               <Input
                 label="종목"
                 register={register("saupJongmok")}
-                errors={errors["saupJongmok"]?.message}
-                fullWidth
+                inputSize={InputSize.i200}
                 maxLength="50"
               />
             </Wrapper>
@@ -388,15 +358,15 @@ const Form = React.forwardRef(
                   <Input
                     label="도장이미지"
                     register={register("saupStampImg")}
-                    errors={errors["saupStampImg"]?.message}
                     value={image?.name}
-                    fullWidth
+                    inputSize={InputSize.i250}
+                    style={{ marginRight: "3px" }}
                   />
 
                   <button
                     style={{
                       width: "100px",
-                      height: "30px",
+                      height: "25px",
                       background: "#666666",
                       borderRadius: "5px",
                       border: "1px solid #707070",
@@ -426,28 +396,21 @@ const Form = React.forwardRef(
                     alignItems: "center",
                   }}
                 >
-                  <Field>
-                    <FormGroup style={{ alignItems: "center" }}>
-                      <Label></Label>
-                      <CheckBox
-                        title="세금계산서 도장출력"
-                        rtl
-                        register={{ ...register("saupStampSe") }}
-                      />
-                    </FormGroup>
-                    <div>
-                      <ErrorText>{errors["saupStampSe"]?.message}</ErrorText>
-                    </div>
-                  </Field>
+                  <FormGroup style={{ alignItems: "center" }}>
+                    <Label></Label>
+                    <CheckBox
+                      title="세금계산서 도장출력"
+                      rtl
+                      register={{ ...register("saupStampSe") }}
+                    />
+                  </FormGroup>
+
                   <Field>
                     <CheckBox
                       title="거래명세표 도장출력"
                       rtl
                       register={{ ...register("saupStampEs") }}
                     />
-                    <div>
-                      <ErrorText>{errors["saupStampEs"]?.message}</ErrorText>
-                    </div>
                   </Field>
                   <Field>
                     <CheckBox
@@ -455,12 +418,9 @@ const Form = React.forwardRef(
                       rtl
                       register={{ ...register("saupStampQu") }}
                     />
-                    <div>
-                      <ErrorText>{errors["saupStampQu"]?.message}</ErrorText>
-                    </div>
                   </Field>
                 </Wrapper>
-                <Wrapper>
+                <Wrapper style={{ alignItems: "center" }}>
                   <Field flex style={{ alignItems: "center" }}>
                     <Label>개업일</Label>
                     <Controller
@@ -471,14 +431,7 @@ const Form = React.forwardRef(
                       )}
                     />
                   </Field>
-                  <Field style={{ width: "100%" }}>
-                    {/* <Input
-                      label="주민번호/법인번호"
-                      register={register("saupJumin")}
-                      errors={errors["saupJumin"]?.message}
-                      formatNumber="corpNumber"
-                      maxLength="14"
-                    /> */}
+                  <Field>
                     <Controller
                       control={control}
                       {...register("saupJumin")}
@@ -486,7 +439,9 @@ const Form = React.forwardRef(
                         <Input
                           label="주민번호/법인번호"
                           value={value}
+                          name={name}
                           onChange={onChange}
+                          inputSize={InputSize.i150}
                           mask={[
                             /\d/,
                             /\d/,
@@ -503,7 +458,6 @@ const Form = React.forwardRef(
                             /\d/,
                             /\d/,
                           ]}
-                          name={name}
                         />
                       )}
                     />
@@ -516,40 +470,34 @@ const Form = React.forwardRef(
               <Input
                 label="메모"
                 register={register("saupBigo")}
-                errors={errors["saupBigo"]?.message}
-                fullWidth
+                inputSize={InputSize.i468}
                 maxLength="50"
               />
             </Wrapper>
             <Divider />
-            <Wrapper grid>
+            <Wrapper>
               <Input
                 label="아이디"
                 register={register("saupEdiId")}
-                errors={errors["saupEdiId"]?.message}
                 maxLength="20"
+                inputSize={InputSize.i175}
               />
               <Input
                 label="비밀번호"
                 register={register("saupEdiPass")}
-                errors={errors["saupEdiPass"]?.message}
                 type="password"
                 maxLength="20"
+                inputSize={InputSize.i120}
               />
             </Wrapper>
-            <Wrapper grid>
+            <Wrapper>
               <Input
                 label="담당자명"
                 register={register("saupEdiSawon")}
-                errors={errors["saupEdiSawon"]?.message}
                 maxLength="14"
+                inputSize={InputSize.i120}
               />
-              {/* <Input
-                label=""
-                register={register("saupEdiSmsNo")}
-                errors={errors["saupEdiSmsNo"]?.message}
-                maxLength="14"
-              /> */}
+
               <Controller
                 control={control}
                 {...register("saupEdiSmsNo")}
@@ -557,7 +505,9 @@ const Form = React.forwardRef(
                   <Input
                     label="전화번호"
                     value={value}
+                    name={name}
                     onChange={onChange}
+                    inputSize={InputSize.i120}
                     mask={[
                       /\d/,
                       /\d/,
@@ -573,7 +523,6 @@ const Form = React.forwardRef(
                       /\d/,
                       /\d/,
                     ]}
-                    name={name}
                   />
                 )}
               />
@@ -582,10 +531,10 @@ const Form = React.forwardRef(
               <Input
                 label="이메일"
                 register={register("saupEdiEmail")}
-                errors={errors["saupEdiEmail"]?.message}
                 maxLength="35"
+                inputSize={InputSize.i175}
               />
-              @
+              <p style={{ margin: "0 1px" }}>@</p>
               <Select {...register("saupEdiId")}>
                 {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
@@ -598,13 +547,13 @@ const Form = React.forwardRef(
               <Input
                 label="공인인증서"
                 register={register("saupEdiSawon")}
-                errors={errors["saupEdiSawon"]?.message}
-                inputSize={InputSize.lg}
+                inputSize={InputSize.i250}
+                style={{ marginRight: "3px" }}
               />
               <button
                 style={{
                   width: "100px",
-                  height: "30px",
+                  height: "25px",
                   background: "#666666",
                   borderRadius: "5px",
                   border: "1px solid #707070",

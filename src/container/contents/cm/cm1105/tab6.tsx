@@ -1,6 +1,6 @@
 import { Input, Field, Wrapper, FormGroup, Label } from "components/form/style";
 import CheckBox from "components/checkbox";
-import CustomDatePicker from "components/customDatePicker/test-datepicker";
+import CustomDatePicker from "components/customDatePicker";
 import { Controller } from "react-hook-form";
 
 function Tab6({ register, control }: { register: Function; control: any }) {

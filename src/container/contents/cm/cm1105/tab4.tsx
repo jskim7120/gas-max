@@ -6,7 +6,7 @@ import {
   FormGroup,
   Label,
 } from "components/form/style";
-import CustomDatePicker from "components/customDatePicker/test-datepicker";
+import CustomDatePicker from "components/customDatePicker";
 import { Controller } from "react-hook-form";
 import { InputSize } from "components/componentsType";
 

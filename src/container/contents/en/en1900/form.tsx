@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -10,13 +9,10 @@ import {
   Select,
   Wrapper,
   Divider,
-  Field,
-  ErrorText,
   FormGroup,
   Label,
 } from "components/form/style";
 import { ICUSTGUBUN } from "./model";
-import { schema } from "./validation";
 
 interface IForm {
   selected: any;
@@ -55,15 +51,8 @@ const Form = React.forwardRef(
       }
     }, [selected]);
 
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-      getValues,
-    } = useForm<ICUSTGUBUN>({
+    const { register, handleSubmit, reset, getValues } = useForm<ICUSTGUBUN>({
       mode: "onChange",
-      resolver: yupResolver(schema),
     });
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
@@ -194,41 +183,33 @@ const Form = React.forwardRef(
 
     return (
       <form
-        className="form_control"
         onSubmit={handleSubmit(submit)}
-        style={{ padding: "0px 10px" }}
+        style={{ width: "401px", padding: "0px 10px" }}
       >
-        {/* <p>{isAddBtnClicked ? "true" : "false"}</p> */}
         <Wrapper>
           <Input
             label="코드"
             register={register("gubunCode")}
-            errors={errors["gubunCode"]?.message}
             maxLength="2"
             readOnly={isAddBtnClicked}
           />
-          <Field>
-            <FormGroup>
-              <Label>영업소</Label>
-              <Select {...register("areaCode")} onChange={handleSelectCode}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["areaCode"]?.message}</ErrorText>
-            </div>
-          </Field>
+
+          <FormGroup>
+            <Label>영업소</Label>
+            <Select {...register("areaCode")} onChange={handleSelectCode}>
+              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </Wrapper>
         <Divider />
         <Wrapper>
           <Input
             label="분류명"
             register={register("gubunName")}
-            errors={errors["gubunName"]?.message}
             maxLength="20"
           />
         </Wrapper>
@@ -236,7 +217,6 @@ const Form = React.forwardRef(
           <Input
             label="비고"
             register={register("gubunBigo")}
-            errors={errors["gubunBigo"]?.message}
             fullWidth
             maxLength="20"
           />

@@ -7,7 +7,7 @@ import CreatableSelect from "react-select/creatable";
 import DaumAddress from "components/daum";
 import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
-import CustomDatePicker from "components/customDatePicker/test-datepicker";
+import CustomDatePicker from "components/customDatePicker";
 import { SearchBtn } from "components/daum";
 import EditableSelect from "components/editableSelect";
 import { MagnifyingGlass } from "components/allSvgIcon";

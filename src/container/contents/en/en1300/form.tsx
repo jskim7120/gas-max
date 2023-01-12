@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -11,14 +10,12 @@ import {
   RadioButtonLabel,
 } from "components/radioButton/style";
 import { ISANGPUM } from "./model";
-import { schema } from "./validation";
 import {
   Input,
   Select,
   Wrapper,
   Divider,
   Field,
-  ErrorText,
   FormGroup,
   Label,
 } from "components/form/style";
@@ -73,17 +70,10 @@ const Form = React.forwardRef(
       }
     }, [selected]);
 
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-      getValues,
-      control,
-    } = useForm<ISANGPUM>({
-      mode: "onChange",
-      resolver: yupResolver(schema),
-    });
+    const { register, handleSubmit, reset, getValues, control } =
+      useForm<ISANGPUM>({
+        mode: "onChange",
+      });
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
@@ -225,31 +215,28 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
+      <form
+        onSubmit={handleSubmit(submit)}
+        style={{ padding: "0px 10px", width: "300px" }}
+      >
         <Wrapper>
-          <Field>
-            <FormGroup>
-              <Label>영업소</Label>
-              <Select {...register("areaCode")} onChange={handleSelectCode}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["areaCode"]?.message}</ErrorText>
-            </div>
-          </Field>
+          <FormGroup>
+            <Label>영업소</Label>
+            <Select {...register("areaCode")} onChange={handleSelectCode}>
+              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </Wrapper>
         <Wrapper>
           <Input
             label="코드"
             register={register("jpCode")}
-            errors={errors["jpCode"]?.message}
             maxLength="4"
-            inputSize={InputSize.en1300}
+            inputSize={InputSize.i80}
             readOnly={isAddBtnClicked}
           />
         </Wrapper>
@@ -258,8 +245,7 @@ const Form = React.forwardRef(
           <Input
             label="품명"
             register={register("jpName")}
-            errors={errors["jpName"]?.message}
-            inputSize={InputSize.en1300}
+            inputSize={InputSize.i130}
             maxLength="30"
           />
         </Wrapper>
@@ -267,165 +253,114 @@ const Form = React.forwardRef(
           <Input
             label="규격"
             register={register("jpSpec")}
-            errors={errors["jpSpec"]?.message}
-            inputSize={InputSize.en1300}
+            inputSize={InputSize.i130}
             maxLength="10"
           />
         </Wrapper>
         <Wrapper>
-          <Field>
-            <FormGroup>
-              <Label>가스구분</Label>
-              <Select {...register("jpGubun")}>
-                {dataCommonDic?.jpGubun?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jpGubun"]?.message}</ErrorText>
-            </div>
-          </Field>
+          <FormGroup>
+            <Label>가스구분</Label>
+            <Select {...register("jpGubun")}>
+              {dataCommonDic?.jpGubun?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </Wrapper>
-        <Wrapper>
-          <Field style={{ display: "flex" }}>
-            {/* <Input
-              label="용량"
-              register={register("jpKg")}
-              errors={errors["jpKg"]?.message}
-              style={{ width: "56px" }}
-              textAlign="right"
-              maxLength="5"
-            /> */}
-            <Controller
-              control={control}
-              {...register("jpKg")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="용량"
-                  value={value}
-                  onChange={onChange}
-                  mask={[/\d/, /\d/, /\d/, /\d/, /\d/]}
-                  inputSize={InputSize.i70}
-                  textAlign="right"
-                />
-              )}
-            />
-            <FormGroup>
-              <Select {...register("jpKgDanwi")} style={{ minWidth: "64px" }}>
-                {dataCommonDic?.jpKgDanwi?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jpKgDanwi"]?.message}</ErrorText>
-            </div>
-          </Field>
-        </Wrapper>
-        <Wrapper>
-          <Field>
-            <FormGroup>
-              <Label>단위</Label>
-              <Select {...register("jpUnit")}>
-                {dataCommonDic?.jpUnit?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jpUnit"]?.message}</ErrorText>
-            </div>
-          </Field>
-        </Wrapper>
-        <Wrapper>
-          <Field>
-            <FormGroup>
-              <Label>가스분류</Label>
-              <Select {...register("jpGasType")}>
-                {dataCommonDic?.jpGasType?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jpGasType"]?.message}</ErrorText>
-            </div>
-          </Field>
-        </Wrapper>
-        <Wrapper>
-          <Field>
-            <FormGroup>
-              <Label>품목구분</Label>
+        <Wrapper style={{ alignItems: "center" }}>
+          <Controller
+            control={control}
+            {...register("jpKg")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="용량"
+                value={value}
+                name={name}
+                onChange={onChange}
+                mask={[/\d/, /\d/, /\d/, /\d/, /\d/]}
+                inputSize={InputSize.i70}
+                textAlign="right"
+              />
+            )}
+          />
 
-              <Select {...register("jpKind")}>
-                {dataCommonDic?.jpKind?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jpKind"]?.message}</ErrorText>
-            </div>
-          </Field>
+          <Select
+            {...register("jpKgDanwi")}
+            style={{ minWidth: "64px", marginLeft: "3px" }}
+          >
+            {dataCommonDic?.jpKgDanwi?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
         </Wrapper>
         <Wrapper>
-          <Field>
-            <FormGroup>
-              <Label>용도구분</Label>
-              <Select {...register("jpGasuse")}>
-                {dataCommonDic?.jpGasuse?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jpGasuse"]?.message}</ErrorText>
-            </div>
-          </Field>
+          <FormGroup>
+            <Label>단위</Label>
+            <Select {...register("jpUnit")}>
+              {dataCommonDic?.jpUnit?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        </Wrapper>
+        <Wrapper>
+          <FormGroup>
+            <Label>가스분류</Label>
+            <Select {...register("jpGasType")}>
+              {dataCommonDic?.jpGasType?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        </Wrapper>
+        <Wrapper>
+          <FormGroup>
+            <Label>품목구분</Label>
+
+            <Select {...register("jpKind")}>
+              {dataCommonDic?.jpKind?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        </Wrapper>
+        <Wrapper>
+          <FormGroup>
+            <Label>용도구분</Label>
+            <Select {...register("jpGasuse")}>
+              {dataCommonDic?.jpGasuse?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </Wrapper>
         <Divider />
         <Wrapper>
-          <Field>
-            <FormGroup>
-              <Label>Vat구분</Label>
-              <Select {...register("jpVatKind")}>
-                {dataCommonDic?.jpVatKind?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["jpVatKind"]?.message}</ErrorText>
-            </div>
-          </Field>
+          <FormGroup>
+            <Label>Vat구분</Label>
+            <Select {...register("jpVatKind")}>
+              {dataCommonDic?.jpVatKind?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </Wrapper>
         <Wrapper>
           <Field flex>
-            {/* <Input
-              style={{ textAlign: "end" }}
-              label="가스판매단가"
-              register={register("jpOutdanga")}
-              errors={errors["jpOutdanga"]?.message}
-              inputSize={InputSize.en1300}
-              textAlign="right"
-              formatNumber="comDecNumber"
-              maxLength="26"
-            /> */}
             <Controller
               control={control}
               {...register("jpOutdanga")}
@@ -446,16 +381,6 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <Field flex>
-            {/* <Input
-              style={{ textAlign: "end" }}
-              label="용기판매단가"
-              register={register("jpOuttong")}
-              errors={errors["jpOuttong"]?.message}
-              inputSize={InputSize.en1300}
-              textAlign="right"
-              formatNumber="comNumber"
-              maxLength="23"
-            /> */}
             <Controller
               control={control}
               {...register("jpOuttong")}
@@ -476,16 +401,6 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <Field flex>
-            {/* <Input
-              style={{ textAlign: "end" }}
-              label="가스매입원가"
-              register={register("jpIndanga")}
-              errors={errors["jpIndanga"]?.message}
-              inputSize={InputSize.en1300}
-              textAlign="right"
-              formatNumber="comDecNumber"
-              maxLength="26"
-            /> */}
             <Controller
               control={control}
               {...register("jpIndanga")}
@@ -506,16 +421,6 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <Field flex>
-            {/* <Input
-              style={{ textAlign: "end" }}
-              label="용기구입단가"
-              register={register("jpIntong")}
-              errors={errors["jpIntong"]?.message}
-              inputSize={InputSize.en1300}
-              textAlign="right"
-              formatNumber="comNumber"
-              maxLength="23"
-            /> */}
             <Controller
               control={control}
               {...register("jpIntong")}
@@ -536,16 +441,6 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <Field flex>
-            {/* <Input
-              style={{ textAlign: "end" }}
-              label="사원배달수수료"
-              register={register("jpBaedal")}
-              errors={errors["jpBaedal"]?.message}
-              inputSize={InputSize.en1300}
-              textAlign="right"
-              formatNumber="comNumber"
-              maxLength="23"
-            /> */}
             <Controller
               control={control}
               {...register("jpBaedal")}
@@ -585,9 +480,6 @@ const Form = React.forwardRef(
               </Item>
             ))}
           </FormGroup>
-          <div>
-            <ErrorText>{errors["jpJaegoYn"]?.message}</ErrorText>
-          </div>
         </Wrapper>
         <Wrapper>
           <Field>
@@ -595,8 +487,7 @@ const Form = React.forwardRef(
               style={{ textAlign: "end" }}
               label="순번(조회순서)"
               register={register("jpSort")}
-              errors={errors["jpSort"]?.message}
-              inputSize={InputSize.en1300}
+              inputSize={InputSize.i130}
               textAlign="right"
             />
           </Field>

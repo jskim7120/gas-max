@@ -24,7 +24,7 @@ import {
   InputSize,
   FieldKind,
 } from "components/componentsType";
-import CustomDatePicker from "components/customDatePicker/test-datepicker";
+import CustomDatePicker from "components/customDatePicker";
 import Grid from "./grid";
 import { columns, fields } from "./data";
 // import {

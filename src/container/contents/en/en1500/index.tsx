@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import API from "app/axios";
-import { useDispatch } from "app/store";
 import { EN1500LIST } from "app/path";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
@@ -18,7 +17,6 @@ function EN1500({
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-  const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState();

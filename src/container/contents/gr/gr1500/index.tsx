@@ -18,7 +18,7 @@ import Grid from "./grid";
 import Loader from "components/loader";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import Form from "./form";
-import CustomDatePicker from "components/customDatePicker/test-datepicker";
+import CustomDatePicker from "components/customDatePicker";
 import { FormGroup, Select, Label, Field, Input } from "components/form/style";
 import { ButtonColor, FieldKind, InputSize } from "components/componentsType";
 

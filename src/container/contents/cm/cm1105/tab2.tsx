@@ -12,7 +12,7 @@ import { currencyMask } from "helpers/currency";
 
 import { Controller } from "react-hook-form";
 
-import CustomDatePicker from "components/customDatePicker/test-datepicker";
+import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { SearchBtn } from "components/daum";
