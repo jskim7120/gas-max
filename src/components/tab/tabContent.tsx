@@ -21,6 +21,10 @@ import GR1500 from "container/contents/gr/gr1500";
 import GR1200 from "container/contents/gr/gr1200";
 import GR1300 from "container/contents/gr/gr1300";
 import GR1600 from "container/contents/gr/gr1600";
+import GR9002 from "container/contents/gr/gr9002";
+import GR9004 from "container/contents/gr/gr9004";
+import GR9006 from "container/contents/gr/gr9006";
+import GR9008 from "container/contents/gr/gr9008";
 
 export const getContent = (id: any, depthFullName: string) => {
   switch (id) {
@@ -72,5 +76,13 @@ export const getContent = (id: any, depthFullName: string) => {
       return <GR1300 depthFullName={depthFullName} menuId={id} />;
     case "GR1600":
       return <GR1600 depthFullName={depthFullName} menuId={id} />;
+    case "GR9002":
+      return <GR9002 depthFullName={depthFullName} menuId={id} />;
+    case "GR9004":
+      return <GR9004 depthFullName={depthFullName} menuId={id} />;
+    case "GR9006":
+      return <GR9006 depthFullName={depthFullName} menuId={id} />;
+    case "GR9008":
+      return <GR9008 depthFullName={depthFullName} menuId={id} />;
   }
 };
