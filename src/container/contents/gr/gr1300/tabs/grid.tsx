@@ -33,12 +33,10 @@ function Grid({
       gv.setColumns(columns1);
     }
 
-    // if (tabId === 1) {
-    //   dp.setFields(fields2);
-    //   gv.setColumns(columns2);
-    //   gv.setColumnLayout(layout2);
-    //   gv.columnByName("bclJpName").buttonVisibility = "always";
-    // }
+    if (tabId === 1) {
+      dp.setFields(fields1);
+      gv.setColumns(columns1);
+    }
     dp.setRows(data65);
 
     gv.setFooter({ visible: false });

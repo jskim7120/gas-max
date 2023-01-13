@@ -1,5 +1,4 @@
 import { ValueType } from "realgrid";
-import BAR from "assets/image/Barcode.png";
 export const fields1 = [
   {
     fieldName: "bblBpCode",
