@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-//import { yupResolver } from "@hookform/resolvers/yup";
-//import { schema } from "./validation";
 import { toast } from "react-toastify";
 import DaumAddress from "components/daum";
 import { useSelector, useDispatch } from "app/store";
@@ -26,13 +24,12 @@ import {
   Divider,
   Label,
 } from "components/form/style";
-import { CM1105SEARCH } from "app/path";
 import { ModalHeader } from "./cm1105Style";
 import CheckBox from "components/checkbox";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
-import { CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
+import { CM1105SEARCH, CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
 
 function FormCM1105() {
   const [data, setData] = useState<any>(null);
@@ -54,7 +51,6 @@ function FormCM1105() {
   const { register, handleSubmit, reset, getValues, control } =
     useForm<ICM1105SEARCH>({
       mode: "onChange",
-      // resolver: yupResolver(schema),
     });
 
   useEffect(() => {
@@ -92,7 +88,8 @@ function FormCM1105() {
 
   const resetFormTemp = (type: string) => {
     if (type === "clear") {
-      reset(emptyObj);
+      //reset(emptyObj);
+      fetchCuCode(cm1105.areaCode, cm1105.cuCode);
       return;
     } else if (type === "reset" && data !== undefined && data?.customerInfo) {
       const customerInfo = data.customerInfo[0];
@@ -261,10 +258,14 @@ function FormCM1105() {
   const fetchCuCode = async (areaCode: string, cuCode: string) => {
     try {
       const res = await API.get(CM110511, {
-        params: { areaCode: areaCode, cuCode: cuCode },
+        params: { areaCode: areaCode, cuCode: cuCode.substring(0, 3) },
       });
       if (res.status === 200) {
-        reset({ cuCode: res.data[0].cuCode, areaCode: areaCode ?? "" });
+        reset({
+          ...emptyObj,
+          cuCode: res.data[0].cuCode,
+          areaCode: areaCode ?? "",
+        });
       } else {
         toast.error("couldn't get CuCode", {
           autoClose: 500,
@@ -281,7 +282,7 @@ function FormCM1105() {
 
   const submit = async (data: ICM1105SEARCH) => {
     const path = isAddBtnClicked ? CM1105INSERT : CM1105UPDATE;
-    const formValues = getValues();
+    const formValues: any = getValues();
 
     formValues.cuSekumyn = formValues.cuSekumyn ? "Y" : "N";
     formValues.cuJangbuYn = formValues.cuJangbuYn ? "Y" : "N";
@@ -311,6 +312,34 @@ function FormCM1105() {
         : (formValues.cuGongdate as any) instanceof Date
         ? formatDateToStringWithoutDash(formValues.cuGongdate)
         : "";
+
+    if (formValues.cuGongdate === "") {
+      delete formValues.cuGongdate;
+    }
+
+    if (formValues.cuHdate === "") {
+      delete formValues.cuHdate;
+    }
+
+    if (formValues.gasifyMakeDate1 === "") {
+      delete formValues.gasifyMakeDate1;
+    }
+
+    if (formValues.gasifyMakeDate2 === "") {
+      delete formValues.gasifyMakeDate2;
+    }
+
+    if (formValues.gasifyCheckDate2 === "") {
+      delete formValues.gasifyCheckDate2;
+    }
+
+    if (formValues.gasifyCheckDate1 === "") {
+      delete formValues.gasifyCheckDate1;
+    }
+
+    if (formValues.cuCmisu) {
+      formValues.cuCmisu = parseInt(formValues.cuCmisu);
+    }
 
     try {
       const response: any = await API.post(path, formValues);
