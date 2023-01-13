@@ -63,16 +63,14 @@ export const RadioButton = styled.input`
   height: 100%;
   cursor: pointer;
 
-  &:focus + ${RadioButtonLabel}::before {
-    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgb(0 63 99 / 25%);
-  }
   &:active + ${RadioButtonLabel}::before {
-    color: #fff;
     background-color: #17aaff;
   }
+
   &:checked + ${RadioButtonLabel}::after {
     background-image: url(${radioCirclePNG});
   }
+
   &:checked + ${RadioButtonLabel}::before {
     background-color: #fff;
     border-color: #aeaeae;

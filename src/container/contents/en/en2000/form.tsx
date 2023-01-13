@@ -157,7 +157,7 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ width: "263px", padding: "0px 10px" }}
+        style={{ width: "400px", padding: "0px 50px 0 10px" }}
       >
         <Wrapper>
           <Input
@@ -170,7 +170,12 @@ const Form = React.forwardRef(
         </Wrapper>
         <Divider />
         <Wrapper>
-          <Input label="정비명" register={register("ccName")} maxLength="30" />
+          <Input
+            label="정비명"
+            register={register("ccName")}
+            maxLength="30"
+            fullWidth
+          />
         </Wrapper>
 
         <Wrapper>

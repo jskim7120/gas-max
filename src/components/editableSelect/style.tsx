@@ -7,7 +7,7 @@ export const Editable = styled.div`
   ul {
     position: absolute;
     top: 30px;
-    right: -5px;
+    right: 0px;
     width: 100%;
     height: auto;
 
@@ -38,7 +38,7 @@ export const Editable = styled.div`
 
   svg {
     position: absolute;
-    right: -2px;
+    right: 2px;
     top: 10px;
   }
 
