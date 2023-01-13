@@ -98,32 +98,16 @@ function GR1200({
       const { data } = await API.get(GR120065, {
         params: {
           areaCode: selected?.areaCode,
-          bcDate: selected?.bcDate,
+          bcDate: formatDateByRemoveDash(selected?.bcDate),
           sBcBuCode: selected?.bcBuCode,
           bcSno: selected?.bcSno,
-          bcChitType: "0",
+          bcChitType: selected?.bcChitType,
         },
       });
 
       if (data) {
         setData65(data?.mainData[0]);
-        setData65Detail([
-          {
-            bclChungbok: null,
-            bclChungdae: null,
-            bclInc: "",
-            bclInmigum: null,
-            bclInqty: null,
-            bclJpCode: "",
-            bclJpName: "",
-            bclOutc: null,
-            bclOutmigum: "",
-            bclOutqty: null,
-            bclSvyn: "",
-            bclTongdel: null,
-          },
-          ...data?.detailData,
-        ]);
+        setData65Detail([...data?.detailData]);
       } else {
         setData65({});
         setData65Detail([]);
@@ -151,7 +135,7 @@ function GR1200({
         </Select>
       </TopBar>
       <MainWrapper>
-        <LeftSide style={{ height: "100%" }}>
+        <LeftSide style={{ width: "50%" }}>
           <form onSubmit={handleSubmit(submit)}>
             <div
               style={{
@@ -242,7 +226,7 @@ function GR1200({
           />
           <Table data={data2} />
         </LeftSide>
-        <RightSide>
+        <RightSide style={{ width: "50%" }}>
           <Form
             dataCommonDic={dataCommonDic}
             data={data65}
