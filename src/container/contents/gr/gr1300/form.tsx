@@ -49,7 +49,7 @@ function Form({
         bbSno: selected?.bbSno,
       });
 
-      setTabId(data65?.bcChitType);
+      selected?.bbTypeName === "부품" ? setTabId(0) : setTabId(1);
     }
     setAddBtnClicked(false);
   }, [data65]);
@@ -156,20 +156,13 @@ function Form({
         <div style={{ display: "flex", marginTop: "10px" }}>
           <PlainTab
             tabHeader={["부품 매입", "용기매입(공병)"]}
-            //onClick={(id) => {
-            //  isAddBtnClicked
-            //    ? setTabId(id)
-            //    : data?.bcChitType
-            //    ? setTabId(data?.bcChitType)
-            //    : setTabId(0);
-            //}}
-
             onClick={(id) => {
-              isAddBtnClicked
-                ? setTabId(id)
-                : data65?.bcChitType === null
-                ? setTabId(0)
-                : setTabId(0);
+              // setTabId(id);
+              // isAddBtnClicked
+              //   ? setTabId(id)
+              //   : data65?.bcChitType === null
+              //   ? setTabId(0)
+              //   : setTabId(0);
             }}
             tabId={tabId ? tabId : 0}
           />
