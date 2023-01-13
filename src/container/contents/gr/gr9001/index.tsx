@@ -52,7 +52,7 @@ function GR9001({
   useEffect(() => {
     reset();
   }, [dataCommonDic]);
-
+  console.log("datacommon", dataCommonDic);
   const fetchData = async (params: any) => {
     try {
       if (params.sDate !== undefined) {
@@ -86,12 +86,12 @@ function GR9001({
   const resetForm = () => {
     if (dataCommonDic !== undefined) {
       reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-        bcBuCode: dataCommonDic?.bcBuCode[0].code,
-        bcCsawon: dataCommonDic?.bcCsawon[0].code,
-        bcCtype: dataCommonDic?.bcCtype[0].code,
-        eDate: dataCommonDic?.eDate[0].code,
-        sDate: dataCommonDic?.sDates[0].code,
+        areaCode: dataCommonDic?.areaCode[0]?.code,
+        bcBuCode: dataCommonDic?.bcBuCode[0]?.code,
+        bcCsawon: dataCommonDic?.bcCsawon[0]?.code,
+        bcCtype: dataCommonDic?.bcCtype[0]?.code,
+        eDate: dataCommonDic?.eDate[0]?.code,
+        sDate: dataCommonDic?.sDate[0]?.code,
       });
     }
   };
