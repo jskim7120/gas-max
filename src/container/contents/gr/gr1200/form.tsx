@@ -3,6 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import Button from "components/button/button";
 import CustomDatePicker from "components/customDatePicker";
 import PlainTab from "components/plainTab";
+import EditableSelect from "components/editableSelect";
 import { TabContentWrapper } from "components/plainTab/style";
 import {
   Item,
@@ -27,6 +28,7 @@ import FooterInfo from "./footer";
 import { toast } from "react-toastify";
 import { CircleBtn } from "./style";
 import { PersonInfoText } from "components/text";
+import { formatDate } from "helpers/dateFormat";
 
 const radioOptions = [
   {
@@ -54,19 +56,26 @@ function Form({
   const [tabId, setTabId] = useState(0);
   const [isAddBtnClicked, setAddBtnClicked] = useState(false);
   const [rowIndex, setRowIndex] = useState<number | null>(null);
+  const [radioChecked, setRadioChecked] = useState(0);
+
   const { register, handleSubmit, reset, control } = useForm<IDATA65>({
     mode: "onSubmit",
   });
 
   useEffect(() => {
     if (data) {
+      let newData: any = {};
+
+      for (const [key, value] of Object.entries(data)) {
+        newData[key] = value;
+      }
+
       reset({
-        areaCode: data.areaCode,
-        bcDate: data.bcDate,
-        bcDateno: data.bcDateno,
+        ...newData,
+        bcDate: data.bcDate ? formatDate(data.bcDate) : "",
       });
 
-      setTabId(data?.bcChitType);
+      setTabId(parseInt(data?.bcChitType));
     }
     setAddBtnClicked(false);
   }, [data]);
@@ -152,11 +161,14 @@ function Form({
             >
               영업소
             </p>
-            <Input
-              register={register("areaCode")}
-              maxLength="2"
-              // readOnly={isAddBtnClicked}
-            />
+
+            <Select {...register("areaCode")}>
+              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
           </Field>
           <Field flex>
             <Button
@@ -204,19 +216,15 @@ function Form({
             <Controller
               control={control}
               {...register("bcDate")}
-              render={({ field: { onChange, value } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                />
               )}
             />
           </Field>
-
-          <Input
-            label="충전 회차"
-            register={register("bcDateno")}
-            inputSize={InputSize.i50}
-          />
-        </Wrapper>
-        <Wrapper grid>
           <FormGroup>
             <Label>매입처</Label>
             <Select {...register("bcBuCode")} width={InputSize.i100}>
@@ -227,26 +235,40 @@ function Form({
               ))}
             </Select>
           </FormGroup>
-          <Input label="전표번호" register={register("bcJunno")} />
         </Wrapper>
         <Wrapper grid>
           <FormGroup>
             <Label>수송방법</Label>
             <Select {...register("bcCtype")} width={InputSize.i100}>
               {dataCommonDic?.bcCtype?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code1}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-            <Label style={{ minWidth: "auto" }}>수송기사</Label>
-            <Select {...register("bcCsawon")} width={InputSize.i100}>
-              {dataCommonDic?.bcCsawon?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
               ))}
             </Select>
+          </FormGroup>
+          <Input label="전표번호" register={register("bcJunno")} />
+          <Input
+            label="충전 회차"
+            register={register("bcDateno")}
+            inputSize={InputSize.i50}
+          />
+        </Wrapper>
+        <Wrapper grid>
+          <FormGroup>
+            <Label>수송기사</Label>
+            {/* <Select {...register("bcCsawon")} width={InputSize.i100}>
+              {dataCommonDic?.bcCsawon?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select> */}
+
+            <EditableSelect
+              list={dataCommonDic?.bcCsawon}
+              register={register("bcCsawon")}
+            />
           </FormGroup>
           <FormGroup>
             <Label>수송차량</Label>
@@ -259,7 +281,7 @@ function Form({
             </Select>
           </FormGroup>
         </Wrapper>
-        <Wrapper>
+        <Wrapper grid>
           <FormGroup>
             <Label>재고 입고처</Label>
             {radioOptions.map((option, index) => (
@@ -269,14 +291,24 @@ function Form({
                   value={option.id}
                   {...register(`bcCaCode`)}
                   id={option.id}
+                  checked={radioChecked === index}
+                  onClick={(e: any) => {
+                    setRadioChecked(parseInt(e.target.value));
+                  }}
                 />
                 <RadioButtonLabel htmlFor={`${option.label}`}>
                   {option.label}
                 </RadioButtonLabel>
               </Item>
             ))}
+          </FormGroup>
+          <FormGroup>
             <Label></Label>
-            <Select {...register("bcCarno1")} width={InputSize.i100}>
+            <Select
+              {...register("bcCarno1")}
+              width={InputSize.i100}
+              disabled={radioChecked === 0}
+            >
               {dataCommonDic?.bcCarno1?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -285,25 +317,16 @@ function Form({
             </Select>
           </FormGroup>
         </Wrapper>
-        <div style={{ display: "flex" }}>
+
+        <div style={{ display: "flex", marginTop: "10px" }}>
           <PlainTab
             tabHeader={["LP가스 매입", "일반가스 매입", "벌크 매입"]}
-            //onClick={(id) => {
-            //  isAddBtnClicked
-            //    ? setTabId(id)
-            //    : data?.bcChitType
-            //    ? setTabId(data?.bcChitType)
-            //    : setTabId(0);
-            //}}
-
             onClick={(id) => {
               isAddBtnClicked
                 ? setTabId(id)
-                : data?.bcChitType === null
-                ? setTabId(0)
-                : setTabId(0);
+                : setTabId(parseInt(data?.bcChitType));
             }}
-            tabId={tabId ? tabId : 0}
+            tabId={tabId}
           />
 
           <CircleBtn onClick={addRow} style={{ marginRight: "5px" }}>

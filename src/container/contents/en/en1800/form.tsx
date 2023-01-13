@@ -14,6 +14,7 @@ import {
   Label,
 } from "components/form/style";
 import { ICUSTJY } from "./model";
+import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
@@ -192,13 +193,15 @@ const Form = React.forwardRef(
         <Wrapper>
           <Input
             label="코드"
+            labelStyle={{ minWidth: "50px" }}
             register={register("jyCode")}
             maxLength="2"
             readOnly={isAddBtnClicked}
+            inputSize={InputSize.i80}
           />
 
           <FormGroup>
-            <Label>영업소</Label>
+            <Label style={{ minWidth: "80px" }}>영업소</Label>
             <Select {...register("areaCode")} onChange={handleSelectCode}>
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -210,12 +213,18 @@ const Form = React.forwardRef(
         </Wrapper>
         <Divider />
         <Wrapper>
-          <Input label="분류명" register={register("jyName")} maxLength="4" />
+          <Input
+            label="분류명"
+            labelStyle={{ minWidth: "50px" }}
+            register={register("jyName")}
+            maxLength="4"
+          />
         </Wrapper>
 
         <Wrapper>
           <Input
             label="비고"
+            labelStyle={{ minWidth: "50px" }}
             register={register("jyBigo")}
             fullWidth
             maxLength="4"
