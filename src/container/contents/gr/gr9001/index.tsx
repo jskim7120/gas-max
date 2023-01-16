@@ -50,9 +50,8 @@ function GR9001({
     mode: "onSubmit",
   });
   useEffect(() => {
-    reset();
+    resetForm();
   }, [dataCommonDic]);
-  console.log("datacommon", dataCommonDic);
   const fetchData = async (params: any) => {
     try {
       if (params.sDate !== undefined) {
@@ -145,14 +144,14 @@ function GR9001({
                   <Controller
                     control={control}
                     {...register("sDate")}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                    render={({ field: { onChange, value } }) => (
                       <CustomDatePicker value={value} onChange={onChange} />
                     )}
                   />
                   <Controller
                     control={control}
                     {...register("eDate")}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                    render={({ field: { onChange, value } }) => (
                       <CustomDatePicker value={value} onChange={onChange} />
                     )}
                   />
