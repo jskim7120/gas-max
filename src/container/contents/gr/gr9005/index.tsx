@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { GR9006SEARCH } from "app/path";
-import { IGR9006SEARCH } from "./model";
+import { GR9005SEARCH } from "app/path";
+import { IGR9005SEARCH } from "./model";
 import API from "app/axios";
 import { TopBar, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
@@ -21,7 +21,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Grid from "./grid";
 import { columns, fields } from "./data";
 
-function GR9006({
+function GR9005({
   depthFullName,
   menuId,
 }: {
@@ -35,10 +35,10 @@ function GR9006({
   const [dataChk, setDataChk] = useState(true);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
-    functionName: "GR9006",
+    functionName: "GR9005",
   });
 
-  console.log("GR9006:", dataCommonDic);
+  console.log("GR9005:", dataCommonDic);
   const {
     register,
     handleSubmit,
@@ -46,7 +46,7 @@ function GR9006({
     formState: { errors },
     getValues,
     control,
-  } = useForm<IGR9006SEARCH>({
+  } = useForm<IGR9005SEARCH>({
     mode: "onSubmit",
   });
 
@@ -69,7 +69,7 @@ function GR9006({
   const fetchData = async (params: any) => {
     try {
       setLoading(true);
-      const { data } = await API.get(GR9006SEARCH, { params: params });
+      const { data } = await API.get(GR9005SEARCH, { params: params });
       console.log("data irev:", data);
       if (data) {
         setData(data);
@@ -87,7 +87,7 @@ function GR9006({
     setData([]);
   };
 
-  const submit = (data: IGR9006SEARCH) => {
+  const submit = (data: IGR9005SEARCH) => {
     console.log("IISEARCH:", data);
     fetchData(data);
   };
@@ -215,4 +215,4 @@ function GR9006({
   );
 }
 
-export default GR9006;
+export default GR9005;

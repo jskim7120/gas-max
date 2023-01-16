@@ -1,4 +1,4 @@
-export interface IGR9006SEARCH {
+export interface IGR9005SEARCH {
   areaCode: String;
   bcBuCode: String;
   sDate: String;

@@ -1,24 +1,17 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
+import { columns1, fields1, layout } from "./data";
 
-function Grid({
-  data,
-  fields,
-  columns,
-  setSelected,
-  selectedRowIndex,
-  setSelectedRowIndex,
-}: {
-  data: any;
-  fields: any;
-  columns: any;
-  setSelected: Function;
-  selectedRowIndex: number | null;
-  setSelectedRowIndex: Function;
-}) {
-  let container: HTMLDivElement;
-  let dp: any;
-  let gv: any;
+let container: HTMLDivElement;
+let dp: any;
+let gv: any;
+let fields: any = [];
+let columns: any = [];
+
+function Grid({ data }: { data: any }) {
+  fields = fields1;
+  columns = columns1;
+
   const realgridElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,6 +22,7 @@ function Grid({
     gv.setDataSource(dp);
     dp.setFields(fields);
     gv.setColumns(columns);
+    gv.setColumnLayout(layout);
     dp.setRows(data);
     gv.setHeader({
       height: 35,
@@ -41,18 +35,7 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
-    gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
-
-    gv.setCurrent({
-      dataRow: selectedRowIndex,
-    });
-
-    gv.onSelectionChanged = () => {
-      const itemIndex: any = gv.getCurrent().dataRow;
-      setSelected(data[itemIndex]);
-      setSelectedRowIndex(itemIndex);
-    };
 
     return () => {
       dp.clearRows();
@@ -61,7 +44,15 @@ function Grid({
     };
   }, [data]);
 
-  return <div ref={realgridElement} style={{ height: "inherit" }}></div>;
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: `calc(100% - 37px)`,
+      }}
+      ref={realgridElement}
+    ></div>
+  );
 }
 
 export default Grid;
