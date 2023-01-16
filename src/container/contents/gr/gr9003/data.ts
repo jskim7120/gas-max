@@ -66,7 +66,7 @@ export const columns = [
     type: "data",
     width: "20",
     header: {
-      text: "영업소",
+      text: "충전소명",
     },
   },
   {
@@ -75,7 +75,7 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "코드",
+      text: "일자",
     },
   },
   {
@@ -84,7 +84,7 @@ export const columns = [
     type: "data",
     width: "80",
     header: {
-      text: "거래처",
+      text: "회차",
     },
   },
   {
@@ -93,7 +93,7 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "전화번호",
+      text: "비고",
     },
   },
   {
@@ -102,7 +102,7 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "핸드폰",
+      text: "비고",
     },
   },
   {
@@ -111,7 +111,7 @@ export const columns = [
     type: "data",
     width: "80",
     header: {
-      text: "주소",
+      text: "수송기사/차량",
     },
   },
   {
@@ -120,7 +120,7 @@ export const columns = [
     type: "data",
     width: "20",
     header: {
-      text: "담당사원",
+      text: "방법",
     },
   },
   {
@@ -129,7 +129,7 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "중량미수",
+      text: "프로판(kg)",
     },
   },
   {
@@ -138,7 +138,7 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "체적미수",
+      text: "부탄(kg)",
     },
   },
   {
@@ -147,7 +147,7 @@ export const columns = [
     type: "data",
     width: "80",
     header: {
-      text: "소비자형태",
+      text: "기타(EA)",
     },
   },
   {
@@ -156,7 +156,7 @@ export const columns = [
     type: "data",
     width: "80",
     header: {
-      text: "공급계약",
+      text: "매입금액",
     },
   },
   {
@@ -165,7 +165,7 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "계약번호",
+      text: "지급액",
     },
   },
   {
@@ -174,7 +174,7 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "거래구분",
+      text: "D/C",
     },
   },
   {
@@ -183,7 +183,7 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "거래상태",
+      text: "잔액",
     },
   },
 ];
