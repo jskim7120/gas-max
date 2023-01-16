@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CM9007SEARCH } from "app/path";
+import { GR9007SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import API from "app/axios";
 import { TopBar, WrapperContent } from "../../commonStyle";
@@ -60,14 +60,14 @@ function GR9007({
             : formatDateToStringWithoutDash(params.eDate);
       }
       setLoading(true);
-      const { data } = await API.get(CM9007SEARCH, { params: params });
+      const { data } = await API.get(GR9007SEARCH, { params: params });
       if (data) {
         setData(data);
         setLoading(false);
       }
     } catch (err) {
       setLoading(false);
-      console.log("CM9007 DATA fetch error =======>", err);
+      console.log("GR9007 DATA fetch error =======>", err);
     }
   };
 
