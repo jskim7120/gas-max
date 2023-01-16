@@ -10,7 +10,7 @@ export const SearchBtn = styled.button`
   padding: 2px 0 0 4px;
   border-radius: 5px;
   border: 1px solid #707070;
-  margin: 0 3px;
+  margin-right: 3px;
 `;
 
 interface IPostcode {

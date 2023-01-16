@@ -23,8 +23,6 @@ import {
   Select,
   Wrapper,
   Divider,
-  Field,
-  ErrorText,
   FormGroup,
   Label,
 } from "components/form/style";
@@ -245,242 +243,226 @@ const Form = React.forwardRef(
     };
 
     return (
-      <div style={{ padding: "0px 10px" }}>
-        <form>
-          <PersonInfoText
-            text="매입처 정보"
-            style={{ marginBottom: "6px", marginTop: "7px" }}
+      <form style={{ padding: "0px 10px", width: "745px" }}>
+        <PersonInfoText
+          text="매입처 정보"
+          style={{ marginBottom: "6px", marginTop: "7px" }}
+        />
+        <Divider />
+        <Wrapper grid>
+          <Input
+            label="매입처코드"
+            register={register("buCode")}
+            errors={errors["buCode"]?.message}
+            inputSize={InputSize.i80}
+            readOnly
           />
-          <Divider />
-          <Wrapper grid>
-            <Input
-              label="매입처코드"
-              register={register("buCode")}
-              errors={errors["buCode"]?.message}
-              inputSize={InputSize.xs}
-              readOnly
-            />
-            <FormGroup style={{ alignItems: "center", width: "347px" }}>
-              <Label style={{ marginRight: "4px", marginLeft: "17px" }}>
-                매입처 구분
-              </Label>
-              {radioOptions.map((option, index) => (
-                <Item key={index}>
-                  <RadioButton
-                    type="radio"
-                    value={option.id}
-                    {...register(`buGubun`)}
-                    id={option.id}
-                    // onChange={() => console.log(option.label)}
-                  />
-                  <RadioButtonLabel htmlFor={`${option.label}`}>
-                    {option.label}
-                  </RadioButtonLabel>
-                </Item>
+          <FormGroup
+            style={{
+              alignItems: "center",
+              width: "347px",
+            }}
+          >
+            <Label>매입처 구분</Label>
+            {radioOptions.map((option, index) => (
+              <Item key={index}>
+                <RadioButton
+                  type="radio"
+                  value={option.id}
+                  {...register(`buGubun`)}
+                  id={option.id}
+                />
+                <RadioButtonLabel htmlFor={`${option.label}`}>
+                  {option.label}
+                </RadioButtonLabel>
+              </Item>
+            ))}
+          </FormGroup>
+        </Wrapper>
+
+        <Wrapper grid>
+          <Input
+            label="매입처명"
+            register={register("buName")}
+            inputSize={InputSize.i150}
+          />
+          <FormGroup>
+            <Label>거래상태</Label>
+            <Select {...register("buStae")} width={InputSize.i80}>
+              {dataCommonDic?.buStae?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
               ))}
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["buGubun"]?.message}</ErrorText>
-            </div>
-          </Wrapper>
+            </Select>
+          </FormGroup>
+        </Wrapper>
 
-          <Wrapper grid>
-            <Input
-              label="매입처명"
-              register={register("buName")}
-              errors={errors["buName"]?.message}
-            />
-            <FormGroup>
-              <Label>거래상태</Label>
-              <Select {...register("buStae")} width={InputSize.i80}>
-                {dataCommonDic?.buStae?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-          </Wrapper>
-
-          <Wrapper grid>
-            <Input
-              label="대표전화"
-              register={register("buTel")}
-              errors={errors["buTel"]?.message}
-              inputSize={InputSize.i110}
-            />
-            <Input
-              label="Fax 번호"
-              register={register("buFax")}
-              errors={errors["buFax"]?.message}
-              inputSize={InputSize.i110}
-            />
-          </Wrapper>
-
-          <Wrapper grid>
-            <Input
-              label="비고"
-              register={register("buBigo")}
-              errors={errors["buBigo"]?.message}
-              inputSize={InputSize.md290}
-            />
-          </Wrapper>
-          <Divider />
-          <Wrapper grid>
-            <Controller
-              control={control}
-              {...register("buNo")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="사업자번호"
-                  value={value}
-                  onChange={onChange}
-                  mask={[
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    "-",
-                    /\d/,
-                    /\d/,
-                    "-",
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                  ]}
-                  name={name}
-                  inputSize={InputSize.i110}
-                />
-              )}
-            />
-            <Input
-              label="종사업장"
-              register={register("buRCode")}
-              errors={errors["buRCode"]?.message}
-              inputSize={InputSize.xs}
-              maxLength="4"
-            />
-          </Wrapper>
-          <Wrapper grid>
-            <Input
-              label="상호"
-              register={register("buSangho")}
-              errors={errors["buSangho"]?.message}
-            />
-            <Input
-              label="대표자명"
-              register={register("buSajang")}
-              errors={errors["buSajang"]?.message}
-            />
-          </Wrapper>
-          <Divider />
-          <Wrapper style={{ alignItems: "center" }}>
-            <Input
-              label="주소"
-              register={register("buZipcode")}
-              errors={errors["buZipcode"]?.message}
-              inputSize={InputSize.i70}
-            />
-            <DaumAddress setAddress={setAddress} />
-            <Input
-              register={register("buAddr1")}
-              errors={errors["buAddr1"]?.message}
-              inputSize={InputSize.md290}
-            />
-          </Wrapper>
-          <Wrapper style={{ paddingLeft: "109px" }}>
-            <Input
-              register={register("buAddr2")}
-              errors={errors["buAddr2"]?.message}
-              inputSize={InputSize.md290}
-            />
-          </Wrapper>
-          <Wrapper grid>
-            <Input
-              label="업태"
-              register={register("buUptae")}
-              errors={errors["buUptae"]?.message}
-            />
-            <Input
-              label="종목"
-              register={register("buJongmok")}
-              errors={errors["buJongmok"]?.message}
-            />
-          </Wrapper>
-          <Wrapper grid>
-            <Input
-              label="담당자명"
-              register={register("buDamdang")}
-              errors={errors["buDamdang"]?.message}
-            />
-            <Input
-              label="담당자 번호"
-              register={register("buHp")}
-              errors={errors["buHp"]?.message}
-            />
-          </Wrapper>
-          <Wrapper grid>
-            <Input
-              label="이메일"
-              register={register("buEmail")}
-              errors={errors["buEmail"]?.message}
-            />
-            <FormGroup>
-              <p>@</p>
-              <Select {...register("emailKind")} width={InputSize.i120}>
-                {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-          </Wrapper>
-          <Divider />
-          <Wrapper grid>
-            <Input
-              label="결재은행"
-              register={register("buBank")}
-              errors={errors["buBank"]?.message}
-            />
-            <Input
-              label="계좌번호"
-              register={register("buBankno")}
-              errors={errors["buBankno"]?.message}
-            />
-          </Wrapper>
-          <Wrapper grid>
-            <Input
-              label="예금주"
-              register={register("buBankju")}
-              errors={errors["buBankju"]?.message}
-            />
-            <Controller
-              control={control}
-              {...register("buMisu")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="미지급액"
-                  value={value}
-                  onChange={onChange}
-                  mask={currencyMask}
-                  name={name}
-                  textAlign="right"
-                />
-              )}
-            />
-          </Wrapper>
-          <Divider />
-          <TableData
-            register={register}
-            errors={errors}
-            tableData={tableData}
-            selected={selected}
-            tData={tData}
+        <Wrapper grid>
+          <Input
+            label="대표전화"
+            register={register("buTel")}
+            inputSize={InputSize.i150}
           />
-        </form>
-      </div>
+          <Input
+            label="Fax 번호"
+            register={register("buFax")}
+            inputSize={InputSize.i110}
+          />
+        </Wrapper>
+
+        <Wrapper grid>
+          <Input
+            label="비고"
+            register={register("buBigo")}
+            inputSize={InputSize.i290}
+          />
+        </Wrapper>
+        <Divider />
+        <Wrapper grid>
+          <Controller
+            control={control}
+            {...register("buNo")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="사업자번호"
+                value={value}
+                onChange={onChange}
+                mask={[
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
+                name={name}
+                inputSize={InputSize.i110}
+              />
+            )}
+          />
+          <Input
+            label="종사업장"
+            register={register("buRCode")}
+            inputSize={InputSize.i70}
+            maxLength="4"
+          />
+        </Wrapper>
+        <Wrapper grid>
+          <Input
+            label="상호"
+            register={register("buSangho")}
+            inputSize={InputSize.i130}
+          />
+          <Input
+            label="대표자명"
+            register={register("buSajang")}
+            inputSize={InputSize.i130}
+          />
+        </Wrapper>
+        <Divider />
+        <Wrapper style={{ alignItems: "center" }}>
+          <Input
+            label="주소"
+            register={register("buZipcode")}
+            inputSize={InputSize.i70}
+          />
+          <DaumAddress setAddress={setAddress} />
+          <Input register={register("buAddr1")} inputSize={InputSize.i290} />
+        </Wrapper>
+        <Wrapper style={{ paddingLeft: "109px" }}>
+          <Input register={register("buAddr2")} inputSize={InputSize.i290} />
+        </Wrapper>
+        <Wrapper grid>
+          <Input
+            label="업태"
+            register={register("buUptae")}
+            inputSize={InputSize.i130}
+          />
+          <Input
+            label="종목"
+            register={register("buJongmok")}
+            inputSize={InputSize.i130}
+          />
+        </Wrapper>
+        <Wrapper grid>
+          <Input
+            label="담당자명"
+            register={register("buDamdang")}
+            inputSize={InputSize.i130}
+          />
+          <Input
+            label="담당자 번호"
+            register={register("buHp")}
+            inputSize={InputSize.i130}
+          />
+        </Wrapper>
+        <Wrapper grid>
+          <Input
+            label="이메일"
+            register={register("buEmail")}
+            inputSize={InputSize.i130}
+          />
+          <FormGroup>
+            <p>@</p>
+            <Select {...register("emailKind")} width={InputSize.i120}>
+              {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        </Wrapper>
+        <Divider />
+        <Wrapper grid>
+          <Input
+            label="결재은행"
+            register={register("buBank")}
+            inputSize={InputSize.i130}
+          />
+          <Input
+            label="계좌번호"
+            register={register("buBankno")}
+            inputSize={InputSize.i130}
+          />
+        </Wrapper>
+        <Wrapper grid>
+          <Input
+            label="예금주"
+            register={register("buBankju")}
+            inputSize={InputSize.i130}
+          />
+          <Controller
+            control={control}
+            {...register("buMisu")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="미지급액"
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                name={name}
+                textAlign="right"
+                inputSize={InputSize.i130}
+              />
+            )}
+          />
+        </Wrapper>
+        <Divider />
+        <TableData
+          register={register}
+          tableData={tableData}
+          selected={selected}
+          tData={tData}
+        />
+      </form>
     );
   }
 );

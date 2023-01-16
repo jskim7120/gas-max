@@ -39,6 +39,8 @@ export const getInputSize = (size?: InputSize) => {
       return `200px`;
     case InputSize.i250:
       return `250px`;
+    case InputSize.i290:
+      return `290px`;
     case InputSize.i300:
       return `300px`;
     case InputSize.i367:
@@ -63,8 +65,6 @@ export const getInputSize = (size?: InputSize) => {
       return `100px`;
     case InputSize.md:
       return `250px`;
-    case InputSize.md290:
-      return `290px`;
     case InputSize.lg:
       return `425px`;
     case InputSize.xl:
@@ -121,7 +121,6 @@ interface IInputProps {
   onChange?: any;
   readOnly?: boolean;
   mask?: any;
-  formatNumber?: string;
 }
 
 export const Input = ({
@@ -146,119 +145,7 @@ export const Input = ({
   onChange,
   readOnly,
   mask,
-  formatNumber,
 }: IInputProps) => {
-  // const [inputValue, setInputValue] = useState("123");
-  // const [formatNumberic, setFormatNumberic] = useState({
-  //   value: "" as any,
-  //   status: false,
-  // });
-
-  // useEffect(() => {
-  //   if (codeFormatNumber?.clear) {
-  //     setFormatNumberic({
-  //       value: "",
-  //       status: false,
-  //     });
-  //   } else if (codeFormatNumber?.numbericDefValue === 0) {
-  //     setFormatNumberic({
-  //       value: 0,
-  //       status: false,
-  //     });
-  //   } else {
-  //     setFormatNumberic({
-  //       value: codeFormatNumber?.numbericDefValue,
-  //       status: false,
-  //     });
-  //   }
-  // }, [codeFormatNumber]);
-
-  // format input value
-  // const handleInput = (e: any, forNum?: string) => {
-  //   console.log("e: forNum", e, forNum);
-  //   switch (forNum) {
-  //     case "telNumber":
-  //       const formattedPhoneNumber = formatPhoneNumber(e.target.value);
-  //       setInputValue(formattedPhoneNumber);
-  //       return;
-  //     case "comDecNumber":
-  //       const formattedDecNumber = formatNumFraction(e.target.value);
-  //       setInputValue(formattedDecNumber);
-  //       return;
-  //     case "comNumber":
-  //       const formattedNumber = formatNum(e.target.value);
-  //       setInputValue(formattedNumber);
-  //       return;
-  //     case "corpNumber":
-  //       const formattedCorpNumber = formatCorporateNumber(e.target.value);
-  //       setInputValue(formattedCorpNumber);
-  //       return;
-  //     case "usegbichigdehgui":
-  //       const xsx = formatCodeNumber(e.target.value);
-  //       setInputValue(xsx);
-  //       return;
-  //   }
-  // };
-
-  // // format number with fraction
-  // function formatNumFraction(value: any) {
-  //   if (value == "" || !value) {
-  //     return;
-  //   }
-
-  //   const val = value.replaceAll(",", "").replaceAll(".", "");
-  //   if (val % 100 === 0) {
-  //     value = val / 100 + ".00";
-  //   } else {
-  //     value = val / 100;
-  //   }
-
-  //   value = parseFloat(value).toLocaleString(undefined, {
-  //     minimumFractionDigits: 2,
-  //   });
-  //   return value;
-  // }
-
-  // // format number with comma
-  // function formatNum(value: any) {
-  //   if (!value) {
-  //     value = 0;
-  //     return value;
-  //   }
-  //   const number = parseFloat(value.replaceAll(",", ""));
-  //   const forNum = number.toLocaleString();
-  //   return forNum;
-  // }
-
-  // function formatPhoneNumber(value: any) {
-  //   if (!value) return value;
-  //   const phoneNumber = value.replace(/[^\d]/g, "");
-  //   const phoneNumberLength = phoneNumber.length;
-  //   if (phoneNumberLength < 4) return phoneNumber;
-  //   if (phoneNumberLength < 6) {
-  //     return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3)}`;
-  //   }
-  //   return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(
-  //     3,
-  //     5
-  //   )}-${phoneNumber.slice(5, 10)}`;
-  // }
-
-  // const formatCodeNumber = (value: any) => {
-  //   // return setFormatNumberic({
-  //   //   value: e.replace(/[a-zA-Z]/, ""),
-  //   //   status: true,
-  //   // });
-  //   return value.replace(/[a-zA-Z]/, "");
-  // };
-  // function formatCorporateNumber(value: any) {
-  //   if (!value) return value;
-  //   const corpNumber = value.replace(/[^\d]/g, "");
-  //   const corpNumberLength = corpNumber.length;
-  //   if (corpNumberLength < 7) return corpNumber;
-  //   return `${corpNumber.slice(0, 6)}-${corpNumber.slice(6, 13)}`;
-  // }
-
   return (
     <InputWrapper fullWidth={fullWidth}>
       <FormGroup
@@ -401,7 +288,7 @@ export const FormGroup = styled.div<{
 
   input,
   select {
-    margin: 3px 0 3px 0;
+    margin: 3px 3px 3px 0;
   }
 
   &.small {

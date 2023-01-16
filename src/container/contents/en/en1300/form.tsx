@@ -286,10 +286,7 @@ const Form = React.forwardRef(
             )}
           />
 
-          <Select
-            {...register("jpKgDanwi")}
-            style={{ minWidth: "64px", marginLeft: "3px" }}
-          >
+          <Select {...register("jpKgDanwi")} style={{ minWidth: "64px" }}>
             {dataCommonDic?.jpKgDanwi?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
