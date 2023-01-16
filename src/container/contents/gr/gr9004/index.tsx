@@ -1,25 +1,23 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { GR9004SEARCH } from "app/path";
-import { IGR9004SEARCH } from "./model";
+import { ISEARCH } from "./model";
 import API from "app/axios";
 import { TopBar, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
+import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { SearchWrapper } from "../../commonStyle";
+import { Select, FormGroup, Wrapper, Label } from "components/form/style";
 import {
-  Select,
-  FormGroup,
-  Wrapper,
-  Label,
-  Field,
-} from "components/form/style";
+  formatDateToStringWithoutDash,
+  formatDateByRemoveDash,
+} from "helpers/dateFormat";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize, FieldKind } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
+
 import Grid from "./grid";
-import { columns, fields } from "./data";
 
 function GR9004({
   depthFullName,
@@ -30,66 +28,67 @@ function GR9004({
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
-  const [dataChk, setDataChk] = useState(true);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
     functionName: "GR9004",
   });
 
-  console.log("GR9004:", dataCommonDic);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-    getValues,
     control,
-  } = useForm<IGR9004SEARCH>({
+  } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+  useEffect(() => {
+    resetForm();
+  }, [dataCommonDic]);
+  const fetchData = async (params: any) => {
+    try {
+      if (params.sDate !== undefined) {
+        params.sDate =
+          typeof params.sDate === "string"
+            ? formatDateByRemoveDash(params.sDate)
+            : formatDateToStringWithoutDash(params.sDate);
+      }
+      if (params.eDate !== undefined) {
+        params.eDate =
+          typeof params.eDate === "string"
+            ? formatDateByRemoveDash(params.eDate)
+            : formatDateToStringWithoutDash(params.eDate);
+      }
+      setLoading(true);
+      const { data } = await API.get(GR9004SEARCH, { params: params });
+      if (data) {
+        setData(data);
+        setLoading(false);
+      }
+    } catch (err) {
+      setLoading(false);
+      console.log("CM9003 DATA fetch error =======>", err);
+    }
+  };
+
+  const submit = (data: ISEARCH) => {
+    fetchData(data);
+  };
 
   const resetForm = () => {
     if (dataCommonDic !== undefined) {
       reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-        bcBuCode: dataCommonDic?.bcBuCode[0].code,
+        areaCode: dataCommonDic?.areaCode[0]?.code,
+        bcBuCode: dataCommonDic?.bcBuCode[0]?.code,
+        eDate: dataCommonDic?.eDate[0]?.code,
+        sDate: dataCommonDic?.sDate[0]?.code,
       });
-    }
-  };
-
-  useEffect(() => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-      bcBuCode: dataCommonDic?.bcBuCode[0].code,
-    });
-  }, [dataCommonDic]);
-
-  const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data } = await API.get(GR9004SEARCH, { params: params });
-      console.log("data irev:", data);
-      if (data) {
-        setData(data);
-        setLoading(false);
-        setSelectedRowIndex(0);
-      }
-    } catch (err) {
-      console.log("GR9003 data search fetch error =======>", err);
     }
   };
 
   const cancel = () => {
     resetForm();
-    setDataChk(true);
     setData([]);
-  };
-
-  const submit = (data: IGR9004SEARCH) => {
-    console.log("IISEARCH:", data);
-    fetchData(data);
   };
 
   return (
@@ -98,7 +97,7 @@ function GR9004({
         <div style={{ display: "flex", alignItems: "center" }}>
           <p style={{ marginRight: "20px" }}>{depthFullName}</p>
           <p>
-            <b>영업소</b>
+            <b>재고입고처</b>
           </p>
 
           <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
@@ -110,17 +109,18 @@ function GR9004({
           </Select>
         </div>
       </TopBar>
-      <WrapperContent style={{ height: `calc(100% - 76px)` }}>
+      <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
-          <SearchWrapper style={{ alignItems: "baseline" }}>
-            <div>
-              <Wrapper grid col={2} fields="1fr 1.5fr">
+          <SearchWrapper style={{ padding: "3px 0" }}>
+            <div style={{ marginLeft: "25px" }}>
+              <Wrapper style={{ gap: "20px" }}>
                 <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>충전소</Label>
+                  <Label style={{ minWidth: "auto" }}>충전소</Label>
                   <Select
-                    width={InputSize.i130}
                     {...register("bcBuCode")}
                     kind={FieldKind.BORDER}
+                    width={InputSize.i150}
+                    // onChange={(e) => setReportKind(e.target.value)}
                   >
                     {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -129,41 +129,30 @@ function GR9004({
                     ))}
                   </Select>
                 </FormGroup>
+
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>기간</Label>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("sDate")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("eDate")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
+                  <Controller
+                    control={control}
+                    {...register("sDate")}
+                    render={({ field: { onChange, value } }) => (
+                      <CustomDatePicker value={value} onChange={onChange} />
+                    )}
+                  />
+                  <Controller
+                    control={control}
+                    {...register("eDate")}
+                    render={({ field: { onChange, value } }) => (
+                      <CustomDatePicker value={value} onChange={onChange} />
+                    )}
+                  />
                 </FormGroup>
               </Wrapper>
             </div>
 
             <div
               className="button-wrapper"
-              style={{ flexDirection: "row", gap: "0px" }}
+              style={{ flexDirection: "row", gap: "0px", marginRight: "10px" }}
             >
               <Button
                 text="검색"
@@ -186,30 +175,16 @@ function GR9004({
               />
               <Button
                 text="취소"
-                icon={<ResetGray />}
-                style={{ marginRight: "10px" }}
+                icon={<ResetGray color="#707070" />}
                 type="button"
                 color={ButtonColor.LIGHT}
                 onClick={cancel}
-              />
-              <Button
-                text="엑셀"
-                icon={<ExcelIcon width="19px" height="19px" />}
-                color={ButtonColor.LIGHT}
-                type="button"
               />
             </div>
           </SearchWrapper>
         </form>
 
-        <Grid
-          data={data.length > 0 && data}
-          columns={columns}
-          fields={fields}
-          setSelected={setSelected}
-          selectedRowIndex={selectedRowIndex}
-          setSelectedRowIndex={setSelectedRowIndex}
-        />
+        <Grid data={data ? data : []} />
       </WrapperContent>
     </>
   );
