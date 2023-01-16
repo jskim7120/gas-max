@@ -86,7 +86,6 @@ export const columns = [
     header: {
       text: "거래처",
     },
-    styleName: "rg-left-column",
   },
   {
     name: "bcSawon",
@@ -96,7 +95,6 @@ export const columns = [
     header: {
       text: "전화번호",
     },
-    styleName: "rg-left-column",
   },
   {
     name: "bcCarno",
@@ -106,7 +104,6 @@ export const columns = [
     header: {
       text: "핸드폰",
     },
-    styleName: "rg-left-column",
   },
   {
     name: "bcType",
@@ -116,7 +113,6 @@ export const columns = [
     header: {
       text: "주소",
     },
-    styleName: "rg-left-column",
   },
   {
     name: "bcTypeName",
@@ -126,7 +122,6 @@ export const columns = [
     header: {
       text: "담당사원",
     },
-    styleName: "rg-left-column",
   },
   {
     name: "bcPin",
@@ -136,7 +131,6 @@ export const columns = [
     header: {
       text: "중량미수",
     },
-    styleName: "rg-right-column",
   },
   {
     name: "bcBin",
@@ -146,7 +140,6 @@ export const columns = [
     header: {
       text: "체적미수",
     },
-    styleName: "rg-right-column",
   },
   {
     name: "bcGin",
@@ -156,7 +149,6 @@ export const columns = [
     header: {
       text: "소비자형태",
     },
-    styleName: "rg-right-column",
   },
   {
     name: "bcSumKum",
@@ -166,7 +158,6 @@ export const columns = [
     header: {
       text: "공급계약",
     },
-    styleName: "rg-left-column",
   },
   {
     name: "bcOutkum",
@@ -176,7 +167,6 @@ export const columns = [
     header: {
       text: "계약번호",
     },
-    styleName: "rg-left-column",
   },
   {
     name: "bcDc",
@@ -186,7 +176,6 @@ export const columns = [
     header: {
       text: "거래구분",
     },
-    styleName: "rg-left-column",
   },
   {
     name: "bcMisu",
@@ -196,6 +185,5 @@ export const columns = [
     header: {
       text: "거래상태",
     },
-    styleName: "rg-left-column",
   },
 ];
