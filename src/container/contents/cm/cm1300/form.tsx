@@ -534,7 +534,6 @@ const Form = React.forwardRef(
                 register={register("aptAnkum")}
                 textAlign="right"
                 inputSize={InputSize.i120}
-                formatNumber="comDecNumber"
                 readOnly={!chkAptAnkum}
               />
               <p>{`원`}</p>
@@ -553,7 +552,6 @@ const Form = React.forwardRef(
               <Input
                 register={register("aptSisulkum")}
                 textAlign="right"
-                formatNumber="comDecNumber"
                 readOnly={!chkAptSisulkum}
               />
               <p>{`원`}</p>
@@ -572,7 +570,6 @@ const Form = React.forwardRef(
               <Input
                 register={register("aptMeterkum")}
                 textAlign="right"
-                formatNumber="comDecNumber"
                 readOnly={!chkAptMeterkum}
               />
               <p>{`원`}</p>

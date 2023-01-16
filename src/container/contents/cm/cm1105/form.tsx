@@ -24,7 +24,7 @@ import {
   Divider,
   Label,
 } from "components/form/style";
-import { ModalHeader } from "./cm1105Style";
+import { ModalHeader } from "./style";
 import CheckBox from "components/checkbox";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
@@ -123,122 +123,122 @@ function FormCM1105() {
     }
   };
 
-  const resetForm = (type: string) => {
-    if (data !== undefined && data) {
-      let newDataCustomerInfo: any = {};
-      let newDataCms: any = {};
-      let newDataVirtualAccount: any = {};
-      let newDataCuTank: any = {};
+  // const resetForm = (type: string) => {
+  //   if (data !== undefined && data) {
+  //     let newDataCustomerInfo: any = {};
+  //     let newDataCms: any = {};
+  //     let newDataVirtualAccount: any = {};
+  //     let newDataCuTank: any = {};
 
-      const customerInfo = data?.customerInfo ? data?.customerInfo[0] : {};
-      const cms = data?.cms
-        ? data?.cms[0]
-        : {
-            acctno: "",
-            appdt: "",
-            bankName: "",
-            bigo: "",
-            cmsGubun: "",
-            depositor: "",
-            managerNo: "",
-            monthday: "",
-            regDate: "",
-            stateName: "",
-            tel: "",
-          };
-      const cuTank = data?.cuTank ? data?.cuTank[0] : {};
-      const virtualAccount = data?.virturalAccoount
-        ? data?.virturalAccoount[0]
-        : {
-            acctno: "",
-            bankCd: "",
-            bankName: "",
-            depositor: "",
-            managerCode: "",
-            regDate: "",
-          };
+  //     const customerInfo = data?.customerInfo ? data?.customerInfo[0] : {};
+  //     const cms = data?.cms
+  //       ? data?.cms[0]
+  //       : {
+  //           acctno: "",
+  //           appdt: "",
+  //           bankName: "",
+  //           bigo: "",
+  //           cmsGubun: "",
+  //           depositor: "",
+  //           managerNo: "",
+  //           monthday: "",
+  //           regDate: "",
+  //           stateName: "",
+  //           tel: "",
+  //         };
+  //     const cuTank = data?.cuTank ? data?.cuTank[0] : {};
+  //     const virtualAccount = data?.virturalAccoount
+  //       ? data?.virturalAccoount[0]
+  //       : {
+  //           acctno: "",
+  //           bankCd: "",
+  //           bankName: "",
+  //           depositor: "",
+  //           managerCode: "",
+  //           regDate: "",
+  //         };
 
-      if (type === "clear") {
-        for (const [key, value] of Object.entries(customerInfo)) {
-          newDataCustomerInfo[key] = null;
-        }
+  //     if (type === "clear") {
+  //       for (const [key, value] of Object.entries(customerInfo)) {
+  //         newDataCustomerInfo[key] = null;
+  //       }
 
-        for (const [key, value] of Object.entries(cms)) {
-          if (
-            key === "acctno" ||
-            key === "bankName" ||
-            key === "depositor" ||
-            key === "regDate"
-          ) {
-            newDataCms[`CMS${key}`] = null;
-          }
-          newDataCms[key] = null;
-        }
+  //       for (const [key, value] of Object.entries(cms)) {
+  //         if (
+  //           key === "acctno" ||
+  //           key === "bankName" ||
+  //           key === "depositor" ||
+  //           key === "regDate"
+  //         ) {
+  //           newDataCms[`CMS${key}`] = null;
+  //         }
+  //         newDataCms[key] = null;
+  //       }
 
-        for (const [key, value] of Object.entries(virtualAccount)) {
-          if (
-            key === "acctno" ||
-            key === "bankName" ||
-            key === "depositor" ||
-            key === "regDate"
-          ) {
-            newDataVirtualAccount[`VIR${key}`] = null;
-          }
-          newDataVirtualAccount[key] = null;
-        }
+  //       for (const [key, value] of Object.entries(virtualAccount)) {
+  //         if (
+  //           key === "acctno" ||
+  //           key === "bankName" ||
+  //           key === "depositor" ||
+  //           key === "regDate"
+  //         ) {
+  //           newDataVirtualAccount[`VIR${key}`] = null;
+  //         }
+  //         newDataVirtualAccount[key] = null;
+  //       }
 
-        for (const [key, value] of Object.entries(cuTank)) {
-          newDataCuTank[key] = null;
-        }
+  //       for (const [key, value] of Object.entries(cuTank)) {
+  //         newDataCuTank[key] = null;
+  //       }
 
-        reset({
-          ...newDataCustomerInfo,
-          ...newDataCms,
-          ...newDataVirtualAccount,
-          ...newDataCuTank,
-        });
-      } else if (type === "reset") {
-        for (const [key, value] of Object.entries(customerInfo)) {
-          newDataCustomerInfo[key] = value;
-        }
+  //       reset({
+  //         ...newDataCustomerInfo,
+  //         ...newDataCms,
+  //         ...newDataVirtualAccount,
+  //         ...newDataCuTank,
+  //       });
+  //     } else if (type === "reset") {
+  //       for (const [key, value] of Object.entries(customerInfo)) {
+  //         newDataCustomerInfo[key] = value;
+  //       }
 
-        for (const [key, value] of Object.entries(cms)) {
-          if (
-            key === "acctno" ||
-            key === "bankName" ||
-            key === "depositor" ||
-            key === "regDate"
-          ) {
-            newDataCms[`CMS${key}`] = value;
-          }
-          newDataCms[key] = value;
-        }
+  //       for (const [key, value] of Object.entries(cms)) {
+  //         if (
+  //           key === "acctno" ||
+  //           key === "bankName" ||
+  //           key === "depositor" ||
+  //           key === "regDate"
+  //         ) {
+  //           newDataCms[`CMS${key}`] = value;
+  //         }
+  //         newDataCms[key] = value;
+  //       }
 
-        for (const [key, value] of Object.entries(virtualAccount)) {
-          if (
-            key === "acctno" ||
-            key === "bankName" ||
-            key === "depositor" ||
-            key === "regDate"
-          ) {
-            newDataVirtualAccount[`VIR${key}`] = value;
-          }
-          newDataVirtualAccount[key] = value;
-        }
+  //       for (const [key, value] of Object.entries(virtualAccount)) {
+  //         if (
+  //           key === "acctno" ||
+  //           key === "bankName" ||
+  //           key === "depositor" ||
+  //           key === "regDate"
+  //         ) {
+  //           newDataVirtualAccount[`VIR${key}`] = value;
+  //         }
+  //         newDataVirtualAccount[key] = value;
+  //       }
 
-        for (const [key, value] of Object.entries(cuTank)) {
-          newDataCuTank[key] = value;
-        }
+  //       for (const [key, value] of Object.entries(cuTank)) {
+  //         newDataCuTank[key] = value;
+  //       }
 
-        reset({
-          ...newDataCustomerInfo,
-          ...newDataCms,
-          ...newDataVirtualAccount,
-          ...newDataCuTank,
-        });
-      }
-    }
-  };
+  //       reset({
+  //         ...newDataCustomerInfo,
+  //         ...newDataCms,
+  //         ...newDataVirtualAccount,
+  //         ...newDataCuTank,
+  //       });
+  //     }
+  //   }
+  // };
 
   const fetchData = async () => {
     try {
@@ -422,7 +422,7 @@ function FormCM1105() {
           <Input
             label="거래처코드"
             register={register("cuCode")}
-            inputSize={InputSize.sm}
+            inputSize={InputSize.i80}
           />
           <Input
             label="거래처명(건물명)"

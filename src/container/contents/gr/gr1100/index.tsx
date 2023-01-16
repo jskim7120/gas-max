@@ -24,7 +24,7 @@ import {
 import Form from "./form";
 import Grid from "./grid";
 import { columns, fields } from "./data";
-import { MainWrapper, RightSide, TopBar } from "../../commonStyle";
+import { MainWrapper, RightSide, LeftSide, TopBar } from "../../commonStyle";
 import Loader from "components/loader";
 
 interface ISEARCH {
@@ -53,12 +53,7 @@ function GR1100({
     functionName: "GR1100",
   });
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -119,10 +114,7 @@ function GR1100({
           <p
             className="big"
             style={{
-              marginLeft: "27px",
-              marginRight: "7px",
-              fontSize: "14px",
-              fontWeight: "bold",
+              marginLeft: "29px",
             }}
           >
             영업소
@@ -174,116 +166,98 @@ function GR1100({
         </div>
       </TopBar>
       <MainWrapper>
-        <div
-          style={{ width: "50%", gap: "50%", borderRight: "3px solid #707070" }}
-        >
+        <LeftSide>
           <form onSubmit={handleSubmit(submit)}>
-            <div
-              style={{
-                borderBottom: "2px solid #707070",
-                background: "#dbdbdb",
-              }}
-            >
-              <Field
-                flex
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  paddingRight: "20px",
-                }}
-              >
-                <Field flex>
-                  <FormGroup>
-                    <Label
-                      style={{
-                        minWidth: "auto",
-                        padding: "3px 0 3px 12px",
-                      }}
-                    >
-                      구분
-                    </Label>
-                    <Select {...register("sBuGubun")}>
-                      {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
-                        <option key={idx} value={obj.code}>
-                          {obj.codeName}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormGroup>
-
-                  <Input
-                    label="매입처명"
-                    labelStyle={{
+            <TopBar style={{ marginTop: "0", alignItems: "center" }}>
+              <Field flex>
+                <FormGroup>
+                  <Label
+                    style={{
                       minWidth: "auto",
-                      marginLeft: "15px",
                       padding: "3px 0 3px 12px",
                     }}
-                    register={register("sBuName")}
-                    errors={errors["sBuName"]?.message}
-                    inputSize={InputSize.i100}
-                  />
+                  >
+                    구분
+                  </Label>
+                  <Select {...register("sBuGubun")}>
+                    {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
+                      <option key={idx} value={obj.code}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
 
-                  <FormGroup>
-                    <Label
-                      style={{
-                        minWidth: "auto",
-                        padding: "3px 0 3px 12px",
-                      }}
-                    >
-                      거래상태
-                    </Label>
-                    <Select {...register("sBuStae")}>
-                      {dataCommonDic?.sBuStae?.map((obj: any, idx: number) => (
-                        <option key={idx} value={obj.code}>
-                          {obj.codeName}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormGroup>
-                </Field>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <Button
-                    text="검색"
-                    icon={!loading && <MagnifyingGlassBig />}
-                    kind={ButtonType.ROUND}
-                    type="submit"
-                    loader={
-                      loading && (
-                        <>
-                          <Loader
-                            color="white"
-                            size={21}
-                            style={{ marginRight: "10px" }}
-                          />
-                        </>
-                      )
-                    }
-                    style={{ marginRight: "5px", height: "26px" }}
-                  />
+                <Input
+                  label="매입처명"
+                  labelStyle={{
+                    minWidth: "auto",
+                    marginLeft: "15px",
+                    padding: "3px 0 3px 12px",
+                  }}
+                  register={register("sBuName")}
+                  inputSize={InputSize.i100}
+                />
 
-                  <Button
-                    text="엑셀"
-                    icon={<ExcelIcon />}
-                    kind={ButtonType.ROUND}
-                    color={ButtonColor.SECONDARY}
-                    type="button"
-                    style={{ marginRight: "5px", height: "26px" }}
-                  />
-                </div>
+                <FormGroup>
+                  <Label
+                    style={{
+                      minWidth: "auto",
+                      padding: "3px 0 3px 12px",
+                    }}
+                  >
+                    거래상태
+                  </Label>
+                  <Select {...register("sBuStae")}>
+                    {dataCommonDic?.sBuStae?.map((obj: any, idx: number) => (
+                      <option key={idx} value={obj.code}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
               </Field>
-            </div>
-            <Grid
-              data={data ? data : []}
-              fields={fields}
-              columns={columns}
-              setSelected={setSelected}
-              selectedRowIndex={selectedRowIndex}
-              setSelectedRowIndex={setSelectedRowIndex}
-            />
+              <Field flex>
+                <Button
+                  text="검색"
+                  icon={!loading && <MagnifyingGlassBig />}
+                  kind={ButtonType.ROUND}
+                  type="submit"
+                  loader={
+                    loading && (
+                      <>
+                        <Loader
+                          color="white"
+                          size={19}
+                          style={{ marginRight: "10px" }}
+                          borderWidth="3px"
+                        />
+                      </>
+                    )
+                  }
+                  style={{ marginRight: "5px", height: "26px" }}
+                />
+
+                <Button
+                  text="엑셀"
+                  icon={<ExcelIcon />}
+                  kind={ButtonType.ROUND}
+                  color={ButtonColor.SECONDARY}
+                  type="button"
+                  style={{ marginRight: "5px", height: "26px" }}
+                />
+              </Field>
+            </TopBar>
           </form>
-        </div>
+          <Grid
+            data={data ? data : []}
+            fields={fields}
+            columns={columns}
+            setSelected={setSelected}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+          />
+        </LeftSide>
         <RightSide>
           <Form
             selected={selected}

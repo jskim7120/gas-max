@@ -33,7 +33,7 @@ function Grid({
     gv.setHeader({
       height: 35,
     });
-    gv.setFooter({ visible: false });
+
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
@@ -41,9 +41,10 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
-    gv.displayOptions.fitStyle = "evenFill";
+
     gv.setEditOptions({ editable: false });
 
+    gv.displayOptions.useFocusClass = true;
     gv.setCurrent({
       dataRow: selectedRowIndex,
     });
@@ -61,7 +62,9 @@ function Grid({
     };
   }, [data]);
 
-  return <div ref={realgridElement} style={{ height: "678px" }}></div>;
+  return (
+    <div ref={realgridElement} style={{ height: `calc(100% - 35px)` }}></div>
+  );
 }
 
 export default Grid;

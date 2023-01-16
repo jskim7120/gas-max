@@ -6,13 +6,11 @@ import { PersonInfoText } from "components/text";
 import { InfoText } from "components/text";
 function TableData({
   register,
-  errors,
   tableData,
   selected,
   tData,
 }: {
   register: any;
-  errors: any;
   tableData: any;
   selected: any;
   tData: any;

@@ -360,7 +360,6 @@ const Form = React.forwardRef(
                     register={register("saupStampImg")}
                     value={image?.name}
                     inputSize={InputSize.i250}
-                    style={{ marginRight: "3px" }}
                   />
 
                   <button
@@ -548,7 +547,6 @@ const Form = React.forwardRef(
                 label="공인인증서"
                 register={register("saupEdiSawon")}
                 inputSize={InputSize.i250}
-                style={{ marginRight: "3px" }}
               />
               <button
                 style={{

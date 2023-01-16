@@ -365,7 +365,7 @@ const Form = React.forwardRef(
             maxLength="50"
           />
           @
-          <Select {...register("mailKind")}>
+          <Select {...register("mailKind")} style={{ marginLeft: "3px" }}>
             {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.codeName}>
                 {obj.codeName}
@@ -431,7 +431,6 @@ const Form = React.forwardRef(
                   border: "1px solid #707070",
                   color: "#fff",
                   position: "relative",
-                  marginLeft: "3px",
                 }}
               >
                 <SearchIcon />
