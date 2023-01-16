@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CM9002SEARCH } from "app/path";
+import { GR9006SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import API from "app/axios";
 import { TopBar, WrapperContent } from "../../commonStyle";
@@ -25,7 +25,7 @@ import CustomDatePicker from "components/customDatePicker";
 
 import Grid from "./grid";
 
-function GR9002({
+function GR9006({
   depthFullName,
   menuId,
 }: {
@@ -34,11 +34,11 @@ function GR9002({
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [reportType, setReportType] = useState("");
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
-    functionName: "GR9001",
+    functionName: "GR9005",
   });
-
   const {
     register,
     handleSubmit,
@@ -67,14 +67,14 @@ function GR9002({
             : formatDateToStringWithoutDash(params.eDate);
       }
       setLoading(true);
-      const { data } = await API.get(CM9002SEARCH, { params: params });
+      const { data } = await API.get(GR9006SEARCH, { params: params });
       if (data) {
         setData(data);
         setLoading(false);
       }
     } catch (err) {
       setLoading(false);
-      console.log("CM9001 DATA fetch error =======>", err);
+      console.log("CM9005 DATA fetch error =======>", err);
     }
   };
 
@@ -87,11 +87,11 @@ function GR9002({
       reset({
         areaCode: dataCommonDic?.areaCode[0]?.code,
         bcBuCode: dataCommonDic?.bcBuCode[0]?.code,
-        bcCsawon: dataCommonDic?.bcCsawon[0]?.code,
-        bcCtype: dataCommonDic?.bcCtype[0]?.code,
+        reportType: dataCommonDic?.reportType[0]?.code,
         eDate: dataCommonDic?.eDate[0]?.code,
         sDate: dataCommonDic?.sDate[0]?.code,
       });
+      setReportType(dataCommonDic?.reportType[0].code);
     }
   };
 
@@ -124,7 +124,22 @@ function GR9002({
             <div style={{ marginLeft: "25px" }}>
               <Wrapper style={{ gap: "20px" }}>
                 <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>충전소</Label>
+                  <Label style={{ minWidth: "auto" }}>보고서종류</Label>
+                  <Select
+                    {...register("reportType")}
+                    kind={FieldKind.BORDER}
+                    width={InputSize.i110}
+                    onChange={(e) => setReportType(e.target.value)}
+                  >
+                    {dataCommonDic?.reportType?.map((obj: any, idx: number) => (
+                      <option key={idx} value={obj.code}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
+                <FormGroup>
+                  <Label style={{ minWidth: "auto" }}>매입처</Label>
                   <Select
                     {...register("bcBuCode")}
                     kind={FieldKind.BORDER}
@@ -155,36 +170,6 @@ function GR9002({
                       <CustomDatePicker value={value} onChange={onChange} />
                     )}
                   />
-                </FormGroup>
-
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>수송기사</Label>
-                  <Select
-                    {...register("bcCsawon")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i110}
-                  >
-                    {dataCommonDic?.bcCsawon?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>수송방법</Label>
-                  <Select
-                    {...register("bcCtype")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i110}
-                  >
-                    {dataCommonDic?.bcCtype?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
                 </FormGroup>
               </Wrapper>
             </div>
@@ -223,10 +208,10 @@ function GR9002({
           </SearchWrapper>
         </form>
 
-        <Grid data={data ? data : []} />
+        <Grid data={data ? data : []} reportType={reportType} />
       </WrapperContent>
     </>
   );
 }
 
-export default GR9002;
+export default GR9006;

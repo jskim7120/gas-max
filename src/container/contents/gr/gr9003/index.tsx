@@ -35,10 +35,10 @@ function GR9003({
   const [dataChk, setDataChk] = useState(true);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
-    functionName: "GR9003",
+    functionName: "GR9002",
   });
 
-  console.log("GR9003:", dataCommonDic);
+  console.log("GR9002:", dataCommonDic);
   const {
     register,
     handleSubmit,

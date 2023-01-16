@@ -25,6 +25,7 @@ import GR9002 from "container/contents/gr/gr9002";
 import GR9003 from "container/contents/gr/gr9003";
 import GR9004 from "container/contents/gr/gr9004";
 import GR9005 from "container/contents/gr/gr9005";
+import GR9006 from "container/contents/gr/gr9006";
 import GR9007 from "container/contents/gr/gr9007";
 import GR9008 from "container/contents/gr/gr9008";
 import GR9009 from "container/contents/gr/gr9009";
@@ -87,6 +88,8 @@ export const getContent = (id: any, depthFullName: string) => {
       return <GR9004 depthFullName={depthFullName} menuId={id} />;
     case "GR9005":
       return <GR9005 depthFullName={depthFullName} menuId={id} />;
+    case "GR9006":
+      return <GR9006 depthFullName={depthFullName} menuId={id} />;
     case "GR9007":
       return <GR9007 depthFullName={depthFullName} menuId={id} />;
     case "GR9008":
