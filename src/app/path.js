@@ -128,6 +128,8 @@ export const GR9004SEARCH = "/app/GR9004/search";
 export const GR900465 = "/app/GR9004/65";
 export const GR9006SEARCH = "/app/GR9006/search";
 export const GR900665 = "/app/GR9006/65";
+export const GR9007SEARCH = "/app/GR9007/search";
+export const GR900765 = "/app/GR9007/65";
 export const GR9008SEARCH = "/app/GR9008/search";
 export const GR900865 = "/app/GR9008/65";
 
