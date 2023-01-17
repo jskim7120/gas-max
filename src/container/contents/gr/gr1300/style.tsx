@@ -6,7 +6,7 @@ export const GrFooter1300Cnt = styled.div`
   }
   .cTextArea {
     margin-right: 2px;
-    margin-left: 0.8px;
+    margin-left: 1px;
     border-radius: 4px;
   }
   .cTable {

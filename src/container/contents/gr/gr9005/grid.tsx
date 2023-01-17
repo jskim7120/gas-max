@@ -1,26 +1,24 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { columns1, fields1 } from "./data/data1";
-import { columns2, fields2 } from "./data/data2";
 
-let container: HTMLDivElement;
-let dp: any;
-let gv: any;
-let fields: any = [];
-let columns: any = [];
-
-function Grid({ data, reportType }: { data: any; reportType: string }) {
-  switch (reportType) {
-    case "0":
-      fields = fields1;
-      columns = columns1;
-      break;
-    case "1":
-      fields = fields2;
-      columns = columns2;
-      break;
-  }
-
+function Grid({
+  data,
+  fields,
+  columns,
+  setSelected,
+  selectedRowIndex,
+  setSelectedRowIndex,
+}: {
+  data: any;
+  fields: any;
+  columns: any;
+  setSelected: Function;
+  selectedRowIndex: number | null;
+  setSelectedRowIndex: Function;
+}) {
+  let container: HTMLDivElement;
+  let dp: any;
+  let gv: any;
   const realgridElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,24 +41,27 @@ function Grid({ data, reportType }: { data: any; reportType: string }) {
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
+    gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
+
+    gv.setCurrent({
+      dataRow: selectedRowIndex,
+    });
+
+    gv.onSelectionChanged = () => {
+      const itemIndex: any = gv.getCurrent().dataRow;
+      setSelected(data[itemIndex]);
+      setSelectedRowIndex(itemIndex);
+    };
 
     return () => {
       dp.clearRows();
       gv.destroy();
       dp.destroy();
     };
-  }, [data, reportType]);
+  }, [data]);
 
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: `calc(100% - 37px)`,
-      }}
-      ref={realgridElement}
-    ></div>
-  );
+  return <div ref={realgridElement} style={{ height: "inherit" }}></div>;
 }
 
 export default Grid;
