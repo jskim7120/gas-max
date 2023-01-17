@@ -24,12 +24,12 @@ function FooterInfo({ data, selected }: { data: any; selected: any }) {
   return (
     <GrFooter1300Cnt>
       <Field flex style={{ marginBottom: "20px", alignItems: "center" }}>
-        <Field flex style={{ width: "80%" }}>
+        <Field flex style={{ width: "75%" }}>
           <CTitle className="cTitle">메모</CTitle>
           <CTextArea className="cTextArea" {...register("bbMemo")} />
         </Field>
 
-        <Field style={{ width: "20%" }}>
+        <Field style={{ width: "170px" }}>
           <Field flex style={{ alignItems: "center" }}>
             <CLabel>공급액</CLabel>
             <Input
