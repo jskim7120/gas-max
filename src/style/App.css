@@ -33,24 +33,23 @@ body {
   overflow-y: auto;
 }
 
-/* ::-webkit-scrollbar {
-  width: 100px;
-  height: 12px;
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
 }
 
 ::-webkit-scrollbar-track {
   background: #f8f9fa;
   border: 1px solid #cdd2d9;
-} */
+}
 
-/* Handle */
-/* ::-webkit-scrollbar-thumb {
-  background: #eeeff1;
-  border: 1px solid #b6bbc3;
+::-webkit-scrollbar-thumb {
+  background: #cdd2d9;
+  border: 1px solid #cdd2d9;
   border-radius: 5px;
-} */
+  touch-action: none;
+}
 
-/* Handle on hover */
 /* ::-webkit-scrollbar-thumb:hover {
   background: #e3e5e8;
   border: 1px solid #abb0ba;

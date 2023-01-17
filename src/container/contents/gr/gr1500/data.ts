@@ -44,7 +44,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "20",
+    width: "80",
     header: {
       text: "영업소",
     },
@@ -53,7 +53,7 @@ export const columns = [
     name: "buGubunName",
     fieldName: "buGubunName",
     type: "data",
-    width: "40",
+    width: "100",
     header: {
       text: "구분",
     },
@@ -62,7 +62,7 @@ export const columns = [
     name: "buCode",
     fieldName: "buCode",
     type: "data",
-    width: "80",
+    width: "100",
     header: {
       text: "코드",
     },
@@ -72,7 +72,7 @@ export const columns = [
     name: "buName",
     fieldName: "buName",
     type: "data",
-    width: "40",
+    width: "200",
     header: {
       text: "상호 (매입처명)",
     },
@@ -85,7 +85,7 @@ export const columns = [
     name: "befAmt",
     fieldName: "befAmt",
     type: "data",
-    width: "40",
+    width: "80",
     header: {
       text: "이월금액",
     },
@@ -111,7 +111,7 @@ export const columns = [
     name: "curPay",
     fieldName: "curPay",
     type: "data",
-    width: "20",
+    width: "80",
     header: {
       text: "당월지급",
     },
@@ -124,7 +124,7 @@ export const columns = [
     name: "curDc",
     fieldName: "curDc",
     type: "data",
-    width: "40",
+    width: "80",
     header: {
       text: "지급 D/C",
     },
@@ -137,7 +137,7 @@ export const columns = [
     name: "curUnpa",
     fieldName: "curUnpa",
     type: "data",
-    width: "40",
+    width: "80",
     header: {
       text: "미지급액",
     },

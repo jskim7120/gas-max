@@ -80,15 +80,16 @@ export const FormHeadCnt = styled.div`
   gap: 6px;
   justify-content: end;
   padding-right: 8px;
-  height: 37px;
+  height: 35px;
   border-bottom: 2px solid #707070;
+  width: auto;
 `;
-export const DividerGrayGR = styled.div`
-  height: 1px;
-  background: rgba(130, 128, 128, 0.64);
-  width: 275px;
-  margin: 4px 0px 4px 39px;
-`;
+// export const DividerGrayGR = styled.div`
+//   height: 1px;
+//   background: rgba(130, 128, 128, 0.64);
+//   width: 275px;
+//   margin: 4px 0px 4px 39px;
+// `;
 export const DividerGR = styled.div`
   height: 2px;
   background: #707070;

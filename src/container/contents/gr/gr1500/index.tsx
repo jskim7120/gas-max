@@ -5,7 +5,7 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { GR1500SEARCH1, GR1500SEARCH2 } from "app/path";
 import {
   SearchWrapper,
-  TopBar,
+  // TopBar,
   MainWrapper,
   LeftSide,
   RightSide,
@@ -99,7 +99,7 @@ function GR1500({
 
   return (
     <>
-      <TopBar>
+      <SearchWrapper className="h35 mt5">
         <Field flex>
           <p>{depthFullName}</p>
           <p className="big">영업소</p>
@@ -115,11 +115,11 @@ function GR1500({
             ))}
           </Select>
         </Field>
-      </TopBar>
+      </SearchWrapper>
       <MainWrapper>
-        <LeftSide style={{ width: "77%" }}>
+        <LeftSide>
           <form onSubmit={handleSubmit(submitSearch1)}>
-            <SearchWrapper>
+            <SearchWrapper className="h35" style={{ minWidth: "925px" }}>
               <Field flex>
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>구분</Label>
@@ -158,7 +158,7 @@ function GR1500({
                 </FormGroup>
               </Field>
 
-              <div className="button-wrapper">
+              <div className="buttons">
                 <Button
                   text="검색"
                   icon={!loading1 && <MagnifyingGlass />}
@@ -190,7 +190,10 @@ function GR1500({
             setSelectedRowIndex={setSelectedRowIndex}
           />
 
-          <TopBar style={{ marginTop: "0px" }}>
+          <SearchWrapper
+            className="h35"
+            style={{ minWidth: "925px", borderTop: "2px solid #707070" }}
+          >
             <Field flex>
               <p>{depthFullName}</p>
               <p className="big">영업소</p>
@@ -206,10 +209,10 @@ function GR1500({
                 ))}
               </Select>
             </Field>
-          </TopBar>
+          </SearchWrapper>
 
           <form onSubmit={handleSubmit(submitSearch2)}>
-            <SearchWrapper>
+            <SearchWrapper style={{ minWidth: "925px" }} className="h35">
               <Field flex>
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>지급기간</Label>
@@ -248,7 +251,7 @@ function GR1500({
                 />
               </Field>
 
-              <div className="button-wrapper">
+              <div className="buttons">
                 <Button
                   text="검색"
                   icon={!loading2 && <MagnifyingGlass />}
@@ -280,7 +283,7 @@ function GR1500({
             setSelectedRowIndex={setSelectedRowIndex}
           />
         </LeftSide>
-        <RightSide style={{ width: "23%" }}>
+        <RightSide style={{ width: "350px" }}>
           <Form
             selected={selected}
             ref={formRef}
