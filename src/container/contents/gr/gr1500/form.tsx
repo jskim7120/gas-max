@@ -12,7 +12,7 @@ import {
   setIsDelete,
 } from "app/state/modal/modalSlice";
 import { Plus, ResetGray, Trash, Update } from "components/allSvgIcon";
-import { FormHeadCnt, DividerGrayGR, DividerGR } from "./style";
+import { FormHeadCnt, DividerGR } from "./style";
 import {} from "app/path";
 import { IGR1500SEARCH } from "./model";
 import Button from "components/button/button";
@@ -75,16 +75,10 @@ const Form = React.forwardRef(
       }
     }, [isDelete.isDelete]);
 
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-      control,
-      getValues,
-    } = useForm<IGR1500SEARCH>({
-      mode: "onChange",
-    });
+    const { register, handleSubmit, reset, control, getValues } =
+      useForm<IGR1500SEARCH>({
+        mode: "onChange",
+      });
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
@@ -177,7 +171,7 @@ const Form = React.forwardRef(
     }
 
     return (
-      <div>
+      <div style={{ minWidth: "350px" }}>
         {/* <FormContainer /> */}
         <FormHeadCnt>
           <Button
@@ -215,13 +209,16 @@ const Form = React.forwardRef(
             style={{ padding: "0 3px" }}
           />
         </FormHeadCnt>
-        <form style={{ width: "350px", margin: "25px auto 0" }}>
+        <form
+          style={{
+            marginTop: "20px",
+          }}
+        >
           <Wrapper>
             <Input
               label="매입처코드"
               register={register("bjBuCode")}
-              errors={errors["bjBuCode"]?.message}
-              inputSize={InputSize.xs}
+              inputSize={InputSize.i80}
             />
           </Wrapper>
           <Wrapper>
@@ -236,18 +233,16 @@ const Form = React.forwardRef(
               </Select>
             </FormGroup>
           </Wrapper>
-          <DividerGrayGR />
+          <DividerGR />
           <Wrapper>
             <Input
               label="결재은행"
               register={register("buBank")}
-              errors={errors["buBank"]?.message}
               inputSize={InputSize.i60}
             />
             <Input
               textAlign="center"
               register={register("buBankno")}
-              errors={errors["buBankno"]?.message}
               inputSize={InputSize.i130}
             />
           </Wrapper>
@@ -255,7 +250,6 @@ const Form = React.forwardRef(
             <Input
               label="예금주"
               register={register("buBankju")}
-              errors={errors["buBankju"]?.message}
               inputSize={InputSize.i200}
             />
           </Wrapper>
@@ -263,7 +257,6 @@ const Form = React.forwardRef(
             <Input
               label="비고"
               register={register("buBigo")}
-              errors={errors["buBigo"]?.message}
               inputSize={InputSize.i200}
             />
           </Wrapper>
@@ -271,7 +264,6 @@ const Form = React.forwardRef(
             <Input
               label="담당자명"
               register={register("buDamdang")}
-              errors={errors["buDamdang"]?.message}
               inputSize={InputSize.i200}
             />
           </Wrapper>
@@ -279,7 +271,6 @@ const Form = React.forwardRef(
             <Input
               label="미지급액"
               register={register("buMisu")}
-              errors={errors["buMisu"]?.message}
               inputSize={InputSize.i200}
             />
           </Wrapper>
@@ -299,7 +290,6 @@ const Form = React.forwardRef(
               label="지 급 액"
               textAlign="right"
               register={register("bjOutkum")}
-              errors={errors["bjOutkum"]?.message}
               inputSize={InputSize.i200}
             />
           </Wrapper>
@@ -308,7 +298,6 @@ const Form = React.forwardRef(
               textAlign="right"
               label="D / C"
               register={register("bjDc")}
-              errors={errors["bjDc"]?.message}
               inputSize={InputSize.i200}
             />
           </Wrapper>
@@ -340,7 +329,6 @@ const Form = React.forwardRef(
             <Input
               label="비 고"
               register={register("bjBigo")}
-              errors={errors["bjBigo"]?.message}
               inputSize={InputSize.i200}
             />
           </Wrapper>

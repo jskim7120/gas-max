@@ -36,7 +36,7 @@ export const columnsSecond = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "20",
+    width: "80",
     header: {
       text: "영업소",
     },
@@ -45,7 +45,7 @@ export const columnsSecond = [
     name: "bjDate",
     fieldName: "bjDate",
     type: "data",
-    width: "30",
+    width: "100",
     header: {
       text: "지급일자",
     },
@@ -54,7 +54,7 @@ export const columnsSecond = [
     name: "bjBuName",
     fieldName: "bjBuName",
     type: "data",
-    width: "80",
+    width: "120",
     header: {
       text: "상호 (매입처명)",
     },
@@ -67,7 +67,7 @@ export const columnsSecond = [
     name: "bjOutkum",
     fieldName: "bjOutkum",
     type: "data",
-    width: "40",
+    width: "150",
     header: {
       text: "지급액",
     },
@@ -80,7 +80,7 @@ export const columnsSecond = [
     name: "bjDc",
     fieldName: "bjDc",
     type: "data",
-    width: "40",
+    width: "100",
     header: {
       text: "지급 D/C",
     },
@@ -93,7 +93,7 @@ export const columnsSecond = [
     name: "bjOuttypName",
     fieldName: "bjOuttypName",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "방법",
     },
@@ -102,7 +102,7 @@ export const columnsSecond = [
     name: "bjBigo",
     fieldName: "bjBigo",
     type: "data",
-    width: "50",
+    width: "200",
     header: {
       text: "비고",
     },

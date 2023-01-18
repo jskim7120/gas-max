@@ -213,24 +213,23 @@ function CM1200({
     <>
       <TopBar>
         <div className="title-and-areacode">
-          <p>{depthFullName}</p>
-          <Field flex style={{ margin: "0px 20px" }}>
-            <p>영업소 </p>
-            <Select
-              width={InputSize.i120}
-              {...register("areaCode")}
-              style={{ marginLeft: "5px" }}
-              onChange={(e: any) => setAreaCode(e.target.value)}
-            >
-              {dataCommonDic?.areaCode?.map((option: any, index: number) => {
-                return (
-                  <option key={index} value={option.code}>
-                    {option.codeName}
-                  </option>
-                );
-              })}
-            </Select>
-          </Field>
+          <p style={{ marginRight: "20px" }}>{depthFullName}</p>
+          <p className="big">영업소</p>
+
+          <Select
+            width={InputSize.i120}
+            {...register("areaCode")}
+            style={{ marginLeft: "5px" }}
+            onChange={(e: any) => setAreaCode(e.target.value)}
+          >
+            {dataCommonDic?.areaCode?.map((option: any, index: number) => {
+              return (
+                <option key={index} value={option.code}>
+                  {option.codeName}
+                </option>
+              );
+            })}
+          </Select>
         </div>
         <div className="buttons">
           <Button

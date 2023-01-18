@@ -116,9 +116,7 @@ function CM1100Page({
       <TopBar>
         <div style={{ display: "flex", alignItems: "center" }}>
           <p style={{ marginRight: "20px" }}>{depthFullName}</p>
-          <p>
-            <b>영업소</b>
-          </p>
+          <p className="big">영업소</p>
 
           <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (

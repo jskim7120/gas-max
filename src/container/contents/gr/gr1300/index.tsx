@@ -34,7 +34,6 @@ function GR1300({
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [data2, setData2] = useState({});
   const [data65, setData65] = useState({});
   const [data65Detail, setData65Detail] = useState<any[]>();
 
@@ -131,19 +130,9 @@ function GR1300({
         </Select>
       </TopBar>
       <MainWrapper>
-        <LeftSide style={{ height: "100%" }}>
+        <LeftSide>
           <form onSubmit={handleSubmit(submit)}>
-            <div
-              style={{
-                backgroundColor: "#dbdbdb",
-                height: "35px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "0 6px 0 15px",
-                borderBottom: "1px solid #707070",
-              }}
-            >
+            <TopBar style={{ marginTop: "0" }}>
               <Field flex style={{ alignItems: "center" }}>
                 <Label style={{ minWidth: "auto", padding: "3px 0px" }}>
                   지급기간
@@ -201,7 +190,7 @@ function GR1300({
                   }
                 />
               </Field>
-            </div>
+            </TopBar>
           </form>
           <Grid
             data={data ? data : []}

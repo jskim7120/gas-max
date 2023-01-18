@@ -151,7 +151,6 @@ function Form({
           <Field flex style={{ alignItems: "center" }}>
             <PersonInfoText text="가스매입등록" />
             <p
-              className="big"
               style={{
                 marginLeft: "27px",
                 marginRight: "7px",
@@ -257,13 +256,6 @@ function Form({
         <Wrapper grid>
           <FormGroup>
             <Label>수송기사</Label>
-            {/* <Select {...register("bcCsawon")} width={InputSize.i100}>
-              {dataCommonDic?.bcCsawon?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select> */}
 
             <EditableSelect
               list={dataCommonDic?.bcCsawon}

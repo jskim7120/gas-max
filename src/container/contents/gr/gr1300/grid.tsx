@@ -21,8 +21,6 @@ function Grid({
   let gv: any;
   const realgridElement = useRef<HTMLDivElement>(null);
 
-  console.log("data", data);
-
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
     dp = new LocalDataProvider(true);
@@ -43,9 +41,10 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
-    gv.displayOptions.fitStyle = "evenFill";
+    // gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
 
+    gv.displayOptions.useFocusClass = true;
     gv.setCurrent({
       dataRow: selectedRowIndex,
     });

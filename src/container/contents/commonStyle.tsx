@@ -45,6 +45,60 @@ export const TopBar = styled.div`
   }
 `;
 
+export const SearchWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  background: #dbdbdb;
+  border-bottom: 2px solid #707070;
+
+  div.button-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 37px;
+  }
+
+  div.buttons {
+    display: flex;
+    alignitems: center;
+  }
+
+  .m_left {
+    margin-right: 23.85%;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .b_right {
+    width: 5px;
+    height: 35px;
+    background: #707070;
+  }
+
+  &.h35 {
+    height: 35px;
+  }
+
+  &.mt5 {
+    margin-top: 5px;
+  }
+
+  p {
+    color: #0a0a0a;
+    font-family: "SegoeUI";
+    font-size: 12px;
+
+    &.big {
+      font-family: "NotoSansKRRegular";
+      font-size: 14px;
+      font-weight: bold;
+      margin: 0 10px 0 15px;
+    }
+  }
+`;
+
 export const MainWrapper = styled.div`
   display: flex;
   gap: 0;
@@ -59,20 +113,21 @@ export const WrapperContent = styled.div`
 `;
 
 export const LeftSide = styled.div<{ width?: string }>`
-  width: ${(props) => (props.width ? props.width : "100%")};
+  flex-grow: 1;
+  overflow-x: auto;
   border-right: 3px solid #707070;
 `;
 
 export const RightSide = styled.div<{ width?: string }>`
+  overflow-x: auto;
+
   //width: ${(props) => (props.width ? props.width : "100%")};
+  // @media only screen and (max-width: 1023px) {
+  // }
 
-  @media only screen and (max-width: 1023px) {
-    overflow-x: auto;
-  }
-
-  @media screen and (max-height: 767px) {
-    overflow-y: scroll;
-  }
+  // @media screen and (max-height: 767px) {
+  //   overflow-y: scroll;
+  // }
 `;
 
 export const ImageWrapper = styled.div`
@@ -93,21 +148,6 @@ export const ImageWrapper = styled.div`
     object-fit: contain;
   }
 `;
-
-{
-  /*
-export const SearchTopWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-right: 20px;
-  border-left: 3px solid #707070;
-  border-bottom: 3px solid #707070;
-  padding-bottom: 10px;
-`;
-*/
-}
 
 export const FormSeaction = styled.div<{ topBorder: boolean }>`
   border-top: ${(props) => (props.topBorder ? "3px solid #707070;" : "none")};
@@ -152,21 +192,5 @@ export const PaymentLineCnt = styled.div`
   }
   table tbody tr td {
     height: 45px;
-  }
-`;
-
-export const SearchWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #dbdbdb;
-  border-bottom: 2px solid #707070;
-
-  div.button-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-right: 37px;
   }
 `;

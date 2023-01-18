@@ -47,7 +47,7 @@ export const columns = [
   {
     name: "bcDate",
     fieldName: "bcDate",
-    width: "70",
+    width: "100",
     type: "data",
     header: {
       text: "일자",
@@ -56,7 +56,7 @@ export const columns = [
   {
     name: "bcChitTypeName",
     fieldName: "bcChitTypeName",
-    width: "50",
+    width: "100",
     type: "data",
     header: {
       text: "구분",
@@ -65,7 +65,7 @@ export const columns = [
   {
     name: "bcBuName",
     fieldName: "bcBuName",
-    width: "80",
+    width: "120",
     type: "data",
     header: {
       text: "충전소명",
@@ -74,7 +74,7 @@ export const columns = [
   {
     name: "bcPin",
     fieldName: "bcPin",
-    width: "80",
+    width: "90",
     type: "data",
     header: {
       text: "프로판(kg)",
@@ -83,7 +83,7 @@ export const columns = [
   {
     name: "bcBin",
     fieldName: "bcBin",
-    width: "80",
+    width: "90",
     type: "data",
     header: {
       text: "부탄(kg)",
@@ -92,7 +92,7 @@ export const columns = [
   {
     name: "bcGin",
     fieldName: "bcGin",
-    width: "80",
+    width: "90",
     type: "data",
     header: {
       text: "기타(Ea)",
@@ -101,7 +101,7 @@ export const columns = [
   {
     name: "bcJTotal",
     fieldName: "bcJTotal",
-    width: "50",
+    width: "90",
     type: "data",
 
     header: {
@@ -111,7 +111,7 @@ export const columns = [
   {
     name: "bcInkum",
     fieldName: "bcInkum",
-    width: "80",
+    width: "90",
     type: "data",
     header: {
       text: "매입금액",
@@ -120,7 +120,7 @@ export const columns = [
   {
     name: "bcCtypeName",
     fieldName: "bcCtypeName",
-    width: "50",
+    width: "90",
     type: "data",
     header: {
       text: "수송방법",
@@ -129,7 +129,7 @@ export const columns = [
   {
     name: "bcDateno",
     fieldName: "bcDateno",
-    width: "50",
+    width: "90",
     type: "data",
     header: {
       text: "충전회차",
