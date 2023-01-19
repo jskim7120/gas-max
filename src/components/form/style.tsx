@@ -210,7 +210,7 @@ const InputCommonProp = css<{
   kind?: FieldKind;
   textAlign?: string;
 }>`
-  height: 25px;
+  height: 30px;
   width: ${(props) =>
     props.inputSize ? getInputSize(props.inputSize) : "100%"};
   flex: ${(props) => props.fullWidth && "1"};
@@ -227,7 +227,7 @@ const InputCommonProp = css<{
   display: inline-block;
   padding: 0 6px;
   font-family: "NotoSansKRRegular";
-  font-size: 12px;
+  font-size: 15px;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -326,12 +326,12 @@ export const Label = styled.label<{
 }>`
   text-align: ${(props) => props.align + "!important"};
   font-family: "NotoSansKRRegular";
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 550;
-  min-width: ${(props) => (props.labelLong ? "200px" : "105px")};
-  height: 25px;
+  min-width: ${(props) => (props.labelLong ? "200px" : "120px")};
+  height: 30px;
   text-align: right;
-  padding: 3px;
+  padding: 5px;
   background: transparent;
   white-space: nowrap;
 
@@ -461,12 +461,12 @@ export const Select = styled.select<{
   fullWidth?: boolean;
   textAlign?: string;
 }>`
-  height: 25px;
+  height: 30px;
   border-radius: 4px;
   text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
   outline: none;
   font-family: "NotoSansKRRegular";
-  font-size: 12px;
+  font-size: 15px;
   border: 1px solid #e6e5e5;
   background: aliceblue;
 

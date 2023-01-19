@@ -181,7 +181,7 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ width: "645px", padding: "0px 10px" }}
+        style={{ minWidth: "814px", padding: "0px 10px" }}
       >
         <Wrapper grid>
           <Input
@@ -455,7 +455,7 @@ const Form = React.forwardRef(
         <Wrapper grid col={3}>
           <FormGroup>
             <Label>가상 계좌 서비스</Label>
-            <Select {...register("jnVirtualAcc")} width={InputSize.i120}>
+            <Select {...register("jnVirtualAcc")} width={InputSize.i175}>
               {dataCommonDic?.jnVirtualAcc?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -466,7 +466,7 @@ const Form = React.forwardRef(
 
           <FormGroup>
             <Label style={{ minWidth: "85px" }}>계좌 자동이체</Label>
-            <Select {...register("jnBankCms")} width={InputSize.i110}>
+            <Select {...register("jnBankCms")} width={InputSize.i175}>
               {dataCommonDic?.jnBankCms?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}

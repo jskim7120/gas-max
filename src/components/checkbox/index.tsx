@@ -15,18 +15,18 @@ const CheckBoxWrapper = styled.div<{ rtl: boolean; gap?: string }>`
         ? props.gap
         : "5px"};
     font-family: "NotoSansKRRegular";
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 400;
     width: max-content;
   }
 
   input[type="checkbox"]:before {
     position: relative;
-    left: -1px;
-    top: -1px;
+    left: 0px;
+    top: -3px;
     display: block;
-    width: 14px;
-    height: 14px;
+    width: 17px;
+    height: 17px;
     border: 2px solid #000;
     border-radius: 4px;
     border-top-right-radius: 0;

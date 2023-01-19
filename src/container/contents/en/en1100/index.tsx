@@ -109,6 +109,7 @@ function EN1100({
       </TopBar>
       <MainWrapper>
         <Grid
+          style={{ minWidth: "232px" }}
           data={data}
           fields={fields}
           columns={columns}
@@ -117,7 +118,7 @@ function EN1100({
           setSelectedRowIndex={setSelectedRowIndex}
         />
 
-        <RightSide>
+        <RightSide style={{ width: "814px" }}>
           <Form
             selected={selected}
             ref={formRef}

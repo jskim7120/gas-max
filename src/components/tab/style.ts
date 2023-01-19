@@ -13,14 +13,14 @@ export const TabHeaderWrapper = styled.div`
   align-items: end;
   background-color: #626161;
   justify-content: space-between;
-  height: 35px;
+  height: 37px;
 
   .sideBar {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 31px;
-    width: 45px;
+    height: 33px;
+    width: 47px;
     background: rgb(170, 223, 11);
     border-right: 1px solid #707070;
   }
@@ -29,13 +29,13 @@ export const TabHeaderWrapper = styled.div`
     list-style: none;
     margin: 0;
     padding: 0;
-    height: 31px;
+    height: 33px;
     width: 100%;
   }
   .subIconCnt {
     display: flex;
     margin-right: 6px;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     span {
       display: flex;
       justify-content: center;
@@ -58,7 +58,7 @@ export const List = styled.li<{ isActive: boolean }>`
 
   position: relative;
   font-family: "NotoSansKRRegular";
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
 
   white-space: nowrap;
@@ -103,7 +103,7 @@ export const TabBorderLine = styled.div<{
   isOpen: boolean;
 }>`
   position: absolute;
-  top: 78px;
+  top: 80px;
   left: ${(props) => (props.isOpen ? `87px` : `5px`)};
   right: 5px;
   height: 4.5px;

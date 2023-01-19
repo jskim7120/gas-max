@@ -24,7 +24,7 @@ export const TopBar = styled.div`
   p {
     color: #0a0a0a;
     font-family: "SegoeUI";
-    font-size: 12px;
+    font-size: 14px;
 
     &.big {
       font-family: "NotoSansKRRegular";

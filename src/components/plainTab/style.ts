@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const TabHeaderWrapper = styled.ul`
   width: 100%;
-  height: 31px;
+  height: 34px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -20,7 +20,7 @@ export const List = styled.li<{ isActive: boolean }>`
   text-align: center;
 
   font-family: "NotoSansKRRegular";
-  font-size: 12px;
+  font-size: 15px;
 
   white-space: nowrap;
   overflow: hidden;
@@ -37,7 +37,7 @@ export const TabContentWrapper = styled.div`
   width: 100%;
   min-height: 240px;
   height: auto;
-  padding: 20px 15px;
+  padding: 20px 25px;
 
   border: 1px solid #707070;
   border-radius: 0 0 8px 8px;

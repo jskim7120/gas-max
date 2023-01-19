@@ -7,7 +7,7 @@ const Table = styled.table`
   width: 100%;
   border-left: 1px solid #d6d2ce;
   font-family: "NotoSansKRRegular";
-  font-size: 12px;
+  font-size: 15px;
   flex: 1;
   display: block;
   overflow-x: auto;
@@ -35,7 +35,7 @@ const Table = styled.table`
         padding: 0px 5px;
         border-bottom: 1px solid #d6d2ce;
         border-right: 1px solid #d6d2ce;
-        font-size: 12px;
+        font-size: 15px;
         height: 30px;
       }
     }
