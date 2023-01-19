@@ -211,7 +211,7 @@ export const layout = [
     direction: "horizontal",
     items: ["bcPsum", "bcBsum"],
     header: {
-      text: "충전향",
+      text: "충전량",
     },
   },
   "bcSumKum",
