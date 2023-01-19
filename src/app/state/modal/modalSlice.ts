@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { number } from "yup";
 
 export interface initialStateType {
   modalIsOpen: boolean;
@@ -10,9 +11,18 @@ export interface initialStateType {
     status: string;
   };
   gr1200: {
+    index: number | undefined;
     areaCode: string;
     bcBuCode: string;
     bcChitType: string;
+
+    jpCode: string | undefined;
+    jpCost: number | undefined;
+    jpDanga: number | undefined;
+    jpGubun: string | undefined;
+    jpKg: number | undefined;
+    jpName: string | undefined;
+    jpSvyn: string | undefined;
   };
   isDelete: {
     menuId: string;
@@ -30,9 +40,17 @@ const initialState: initialStateType = {
     status: "",
   },
   gr1200: {
+    index: undefined,
     areaCode: "",
     bcBuCode: "",
     bcChitType: "",
+    jpCode: undefined,
+    jpCost: undefined,
+    jpDanga: undefined,
+    jpGubun: undefined,
+    jpKg: undefined,
+    jpName: undefined,
+    jpSvyn: undefined,
   },
   isDelete: {
     menuId: "",
@@ -62,10 +80,20 @@ const modalSlice = createSlice({
     },
 
     addGR1200: (state, action) => {
+      state.gr1200.index = action.payload.index;
       state.gr1200.areaCode = action.payload.areaCode;
       state.gr1200.bcBuCode = action.payload.bcBuCode;
       state.gr1200.bcChitType = action.payload.bcChitType;
+
+      state.gr1200.jpCode = action.payload.jpCode;
+      state.gr1200.jpCost = action.payload.jpCost;
+      state.gr1200.jpDanga = action.payload.jpDanga;
+      state.gr1200.jpGubun = action.payload.jpGubun;
+      state.gr1200.jpKg = action.payload.jpKg;
+      state.gr1200.jpName = action.payload.jpName;
+      state.gr1200.jpSvyn = action.payload.jpSvyn;
     },
+
     addDeleteMenuId: (state, action) => {
       state.isDelete.menuId = action.payload.menuId;
     },
