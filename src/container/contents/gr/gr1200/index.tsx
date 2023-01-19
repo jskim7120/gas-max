@@ -38,8 +38,8 @@ function GR1200({
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [data2, setData2] = useState({});
-  const [data65, setData65] = useState({});
-  const [data65Detail, setData65Detail] = useState<any[]>();
+  // const [data65, setData65] = useState({});
+  // const [data65Detail, setData65Detail] = useState<any[]>();
 
   const [selected, setSelected] = useState<any>();
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
@@ -59,11 +59,11 @@ function GR1200({
     }
   }, [dataCommonDic]);
 
-  useEffect(() => {
-    if (selected) {
-      fetchData65();
-    }
-  }, [selected]);
+  // useEffect(() => {
+  //   if (selected) {
+  //     fetchData65();
+  //   }
+  // }, [selected]);
 
   const fetchData = async (params: any) => {
     try {
@@ -93,29 +93,29 @@ function GR1200({
     }
   };
 
-  const fetchData65 = async () => {
-    try {
-      const { data } = await API.get(GR120065, {
-        params: {
-          areaCode: selected?.areaCode,
-          bcDate: formatDateByRemoveDash(selected?.bcDate),
-          sBcBuCode: selected?.bcBuCode,
-          bcSno: selected?.bcSno,
-          bcChitType: selected?.bcChitType,
-        },
-      });
+  // const fetchData65 = async () => {
+  //   try {
+  //     const { data } = await API.get(GR120065, {
+  //       params: {
+  //         areaCode: selected?.areaCode,
+  //         bcDate: formatDateByRemoveDash(selected?.bcDate),
+  //         sBcBuCode: selected?.bcBuCode,
+  //         bcSno: selected?.bcSno,
+  //         bcChitType: selected?.bcChitType,
+  //       },
+  //     });
 
-      if (data) {
-        setData65(data?.mainData[0]);
-        setData65Detail([...data?.detailData]);
-      } else {
-        setData65({});
-        setData65Detail([]);
-      }
-    } catch (err) {
-      console.log("GR1200 65 DATA fetch error =======>", err);
-    }
-  };
+  //     if (data) {
+  //       setData65(data?.mainData[0]);
+  //       setData65Detail([...data?.detailData]);
+  //     } else {
+  //       setData65({});
+  //       setData65Detail([]);
+  //     }
+  //   } catch (err) {
+  //     console.log("GR1200 65 DATA fetch error =======>", err);
+  //   }
+  // };
 
   const submit = async (data: any) => {
     fetchData(data);
@@ -229,9 +229,10 @@ function GR1200({
         <RightSide style={{ width: "50%" }}>
           <Form
             dataCommonDic={dataCommonDic}
-            data={data65}
-            setData65Detail={setData65Detail}
-            data65Detail={data65Detail}
+            selected={selected}
+            // data={data65}
+            // setData65Detail={setData65Detail}
+            // data65Detail={data65Detail}
           />
         </RightSide>
       </MainWrapper>

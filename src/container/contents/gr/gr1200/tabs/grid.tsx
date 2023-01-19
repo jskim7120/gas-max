@@ -5,24 +5,32 @@ import { fields2, columns2, layout2 } from "./data2";
 import { fields3, columns3 } from "./data3";
 import Tab1Footer from "./tab1Footer";
 import Tab2Footer from "./tab2Footer";
+import { useDispatch } from "app/store";
+import { addGR1200, openModal } from "app/state/modal/modalSlice";
 
 function Grid({
   data,
   data2,
   tabId,
-  openPopup,
+  // openPopup,
   setRowIndex,
+  register,
+  setBclInqty,
 }: {
   data: any;
   data2: any;
   tabId: number;
-  openPopup: Function;
+  // openPopup: Function;
   setRowIndex: Function;
+  register: Function;
+  setBclInqty: Function;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
   let dp: any;
   let gv: any;
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
@@ -70,8 +78,24 @@ function Grid({
     };
 
     gv.onCellButtonClicked = function (grid: any, index: any, column: any) {
-      // alert(`itemIndex: ${index.itemIndex}, fieldName: ${column.fieldName}`);
-      openPopup();
+      if (data2) {
+        dispatch(
+          addGR1200({
+            index: index.dataRow,
+            areaCode: data2?.areaCode,
+            bcBuCode: data2?.bcBuCode,
+            bcChitType: data2?.bcChitType ? data2?.bcChitType : "0", //daraa n "0"-iig hasah
+          })
+        );
+        dispatch(openModal({ type: "gr1200Modal" }));
+      }
+    };
+
+    gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
+      // data[index.dataRow][index.fieldName] = newValue;
+
+      setBclInqty(newValue);
+      gv.commit();
     };
 
     return () => {
@@ -88,7 +112,7 @@ function Grid({
         }}
         ref={realgridElement}
       ></div>
-      {tabId === 0 && <Tab1Footer data={data2} />}
+      {tabId === 0 && <Tab1Footer data={data2} register={register} />}
       {tabId === 1 && <Tab2Footer />}
     </>
   );

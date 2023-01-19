@@ -23,12 +23,18 @@ import { InputSize, ButtonColor } from "components/componentsType";
 import { IDATA65 } from "./model";
 import TabGrid from "./tabs/grid";
 import { openModal, addGR1200 } from "app/state/modal/modalSlice";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import FooterInfo from "./footer";
 import { toast } from "react-toastify";
 import { CircleBtn } from "./style";
 import { PersonInfoText } from "components/text";
-import { formatDate } from "helpers/dateFormat";
+import {
+  formatDateToStringWithoutDash,
+  formatDateByRemoveDash,
+  formatDate,
+} from "helpers/dateFormat";
+import { GR120065 } from "app/path";
+import API from "app/axios";
 
 const radioOptions = [
   {
@@ -43,43 +49,83 @@ const radioOptions = [
 
 function Form({
   dataCommonDic,
-  data,
-  data65Detail,
-  setData65Detail,
+  // data,
+  // data65Detail,
+  // setData65Detail,
+  selected,
 }: {
   dataCommonDic: any;
-  data: any;
-  data65Detail: any;
-  setData65Detail: Function;
+  // data: any;
+  // data65Detail: any;
+  // setData65Detail: Function;
+  selected: any;
 }) {
-  const dispatch = useDispatch();
   const [tabId, setTabId] = useState(0);
   const [isAddBtnClicked, setAddBtnClicked] = useState(false);
   const [rowIndex, setRowIndex] = useState<number | null>(null);
   const [radioChecked, setRadioChecked] = useState(0);
 
+  const [data65, setData65] = useState<any>({});
+  const [data65Detail, setData65Detail] = useState<any[]>();
+
+  const [bclInqty, setBclInqty] = useState<number | null>(null);
+
+  const stateGR1200 = useSelector((state: any) => state.modal.gr1200);
+
   const { register, handleSubmit, reset, control } = useForm<IDATA65>({
     mode: "onSubmit",
   });
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (data) {
+    if (selected) {
+      fetchData65();
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    if (data65) {
       let newData: any = {};
 
-      for (const [key, value] of Object.entries(data)) {
+      for (const [key, value] of Object.entries(data65)) {
         newData[key] = value;
       }
 
       reset({
         ...newData,
-        bcDate: data.bcDate ? formatDate(data.bcDate) : "",
+        bcDate: data65.bcDate ? formatDate(data65.bcDate) : "",
       });
 
-      setTabId(parseInt(data?.bcChitType));
+      setTabId(parseInt(data65?.bcChitType));
     }
     setAddBtnClicked(false);
-  }, [data]);
+  }, [data65]);
 
+  useEffect(() => {
+    if (stateGR1200.index !== undefined && stateGR1200.jpName) {
+      setData65Detail((prev: any) =>
+        prev.map((object: any, idx: number) => {
+          if (idx === stateGR1200.index) {
+            return {
+              ...object,
+              bclJpName: stateGR1200.jpName,
+              bclJpCode: stateGR1200.jpCode,
+              bclSvyn: stateGR1200.jpSvyn,
+            };
+          } else return object;
+        })
+      );
+    }
+  }, [stateGR1200]);
+
+  useEffect(() => {
+    if (bclInqty !== null) {
+      console.log("bclInqty::::", bclInqty);
+    }
+  }, [bclInqty]);
+
+  /*
   const openPopup = () => {
     if (data) {
       dispatch(
@@ -92,6 +138,7 @@ function Form({
       dispatch(openModal({ type: "gr1200Modal" }));
     }
   };
+  */
 
   const addRow = () => {
     if (data65Detail !== undefined) {
@@ -125,6 +172,30 @@ function Form({
       toast.warning(`please select a row.`, {
         autoClose: 500,
       });
+    }
+  };
+
+  const fetchData65 = async () => {
+    try {
+      const { data } = await API.get(GR120065, {
+        params: {
+          areaCode: selected?.areaCode,
+          bcDate: formatDateByRemoveDash(selected?.bcDate),
+          sBcBuCode: selected?.bcBuCode,
+          bcSno: selected?.bcSno,
+          bcChitType: selected?.bcChitType,
+        },
+      });
+
+      if (data) {
+        setData65(data?.mainData[0]);
+        setData65Detail([...data?.detailData]);
+      } else {
+        setData65({});
+        setData65Detail([]);
+      }
+    } catch (err) {
+      console.log("GR1200 65 DATA fetch error =======>", err);
     }
   };
 
@@ -316,7 +387,7 @@ function Form({
             onClick={(id) => {
               isAddBtnClicked
                 ? setTabId(id)
-                : setTabId(parseInt(data?.bcChitType));
+                : setTabId(parseInt(data65?.bcChitType));
             }}
             tabId={tabId}
           />
@@ -337,14 +408,16 @@ function Form({
         >
           <TabGrid
             data={data65Detail}
-            data2={data}
+            data2={data65}
             tabId={tabId ? tabId : 0}
-            openPopup={openPopup}
+            //openPopup={openPopup}
             setRowIndex={setRowIndex}
+            register={register}
+            setBclInqty={setBclInqty}
           />
         </TabContentWrapper>
       </form>
-      <FooterInfo data={data} register={register} />
+      <FooterInfo data={data65} register={register} />
     </div>
   );
 }

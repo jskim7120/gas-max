@@ -67,8 +67,8 @@ function Grid({
     gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
       data[index.dataRow][index.fieldName] = newValue;
 
-      console.log("oldValue:", oldValue);
-      console.log("newValue:", newValue);
+      //console.log("oldValue:", oldValue);
+      //console.log("newValue:", newValue);
 
       setData(data);
       setCommitedRowId(index.dataRow);

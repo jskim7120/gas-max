@@ -84,23 +84,29 @@ export const CTable2 = styled.table`
   border-spacing: 0;
   color: #0a0a0a;
   border-top: 1px solid #707070;
+  border-right: 1px solid #707070;
+
   tr {
+    &.active {
+      background: #3297fd;
+    }
+
+    &:hover {
+      background: #3297fd;
+    }
+
     td,
     th {
       height: 22px;
       font-family: "NotoSansKRRegular";
       font-size: 12px;
-
-      border-right: 1px solid #707070;
-
-      &:last-child {
-        border-right: none;
-      }
+      border-left: 1px solid #707070;
     }
 
     th {
       background-color: #d4d0d0;
       border-bottom: 1px solid #707070;
+
       &.light-gray {
         background-color: #ececec;
       }
@@ -108,6 +114,7 @@ export const CTable2 = styled.table`
 
     td {
       border-bottom: 1px solid #707070;
+      cursor: pointer;
     }
   }
 `;
