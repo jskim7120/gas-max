@@ -89,7 +89,7 @@ export const columns = [
     header: {
       text: "이월금액",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     footer: {
       expression: "sum",
     },
@@ -102,7 +102,7 @@ export const columns = [
     header: {
       text: "당월금액",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     footer: {
       expression: "sum",
     },
@@ -115,7 +115,7 @@ export const columns = [
     header: {
       text: "당월지급",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     footer: {
       expression: "sum",
     },
