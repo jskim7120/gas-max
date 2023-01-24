@@ -14,6 +14,10 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
+    fieldName: "bcBigo",
+    dataType: ValueType.TEXT,
+  },
+  {
     fieldName: "bcSawon",
     dataType: ValueType.TEXT,
   },
@@ -66,7 +70,7 @@ export const columns = [
     type: "data",
     width: "20",
     header: {
-      text: "충전소명",
+      text: "영업소",
     },
   },
   {
@@ -75,7 +79,7 @@ export const columns = [
     type: "data",
     width: "40",
     header: {
-      text: "일자",
+      text: "충전소명",
     },
   },
   {
@@ -83,6 +87,15 @@ export const columns = [
     fieldName: "bcDate",
     type: "data",
     width: "80",
+    header: {
+      text: "일자",
+    },
+  },
+  {
+    name: "bcBigo",
+    fieldName: "bcBigo",
+    type: "data",
+    width: "30",
     header: {
       text: "회차",
     },

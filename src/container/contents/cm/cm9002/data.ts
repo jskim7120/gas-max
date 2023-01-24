@@ -160,7 +160,7 @@ export const columns = [
     header: {
       text: "소비자형태",
     },
-    styleName: "rg-right-column",
+    styleName: "rg-left-column",
   },
   {
     name: "cuGongdate",
