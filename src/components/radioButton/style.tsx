@@ -18,7 +18,7 @@ export const RadioButtonLabel = styled.label<{ htmlFor: string }>`
   margin-bottom: 0;
   cursor: pointer;
   font-family: "NotoSansKRRegular";
-  font-size: 12px;
+  font-size: 15px;
 
   ::after {
     position: absolute;

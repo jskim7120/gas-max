@@ -49,8 +49,8 @@ function CustomDatePicker({
 }
 
 const InputWrapper = styled.div`
-  height: 25px;
-  width: 110px;
+  height: 30px;
+  width: 115px;
   position: relative;
   border: 1px solid rgb(188, 185, 185);
   border-radius: 4px;
@@ -68,11 +68,12 @@ const InputWrapper = styled.div`
     position: absolute;
     margin: 0;
     padding-left: 5px;
-    top: 3px;
+    top: 6px;
     left: 1px;
     border: none;
     outline: none;
     background: aliceblue;
+    font-size: 15px;
 
     &:hover {
       background: #fffacd;

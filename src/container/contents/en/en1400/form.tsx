@@ -190,7 +190,7 @@ const Form = React.forwardRef(
       >
         <Wrapper>
           <FormGroup>
-            <Label style={{ minWidth: "50px" }}>영업소</Label>
+            <Label style={{ minWidth: "80px" }}>영업소</Label>
             <Select {...register("areaCode")} onChange={handleSelectCode}>
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -203,7 +203,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <Input
             label="부품코드"
-            labelStyle={{ minWidth: "50px" }}
+            labelStyle={{ minWidth: "80px" }}
             register={register("bpCode")}
             inputSize={InputSize.i80}
             maxLength="3"
@@ -214,7 +214,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <Input
             label="부품명"
-            labelStyle={{ minWidth: "50px" }}
+            labelStyle={{ minWidth: "80px" }}
             register={register("bpName")}
             inputSize={InputSize.i250}
             maxLength="20"
@@ -223,7 +223,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <Input
             label="규격"
-            labelStyle={{ minWidth: "50px" }}
+            labelStyle={{ minWidth: "80px" }}
             register={register("bpType")}
             inputSize={InputSize.i250}
             maxLength="10"
@@ -232,7 +232,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <Input
             label="단위"
-            labelStyle={{ minWidth: "50px" }}
+            labelStyle={{ minWidth: "80px" }}
             register={register("bpDanwi")}
             inputSize={InputSize.i250}
             maxLength="10"
@@ -247,7 +247,7 @@ const Form = React.forwardRef(
               render={({ field: { onChange, value, name } }) => (
                 <Input
                   label="매입단가"
-                  labelStyle={{ minWidth: "50px" }}
+                  labelStyle={{ minWidth: "80px" }}
                   value={value}
                   onChange={onChange}
                   mask={currencyMask}
@@ -268,7 +268,7 @@ const Form = React.forwardRef(
               render={({ field: { onChange, value, name } }) => (
                 <Input
                   label="판매단가"
-                  labelStyle={{ minWidth: "50px" }}
+                  labelStyle={{ minWidth: "80px" }}
                   value={value}
                   onChange={onChange}
                   mask={currencyMask}

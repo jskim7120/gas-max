@@ -305,7 +305,7 @@ export const FormGroup = styled.div<{
     line-height: 21px;
   }
   span {
-    font-size: 12px;
+    font-size: 15px;
     line-height: 35px;
   }
 
@@ -373,7 +373,7 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
 
   p {
     font-family: "NotoSansKRRegular";
-    font-size: 12px;
+    font-size: 15px;
     display: flex;
     align-items: center;
   }

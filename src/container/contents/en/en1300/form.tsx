@@ -217,7 +217,7 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ padding: "0px 10px", width: "300px" }}
+        style={{ padding: "0px 10px", width: "350px" }}
       >
         <Wrapper>
           <FormGroup>

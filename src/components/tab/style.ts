@@ -51,9 +51,9 @@ export const List = styled.li<{ isActive: boolean }>`
   cursor: pointer;
   display: inline-block;
   outline: none;
-  width: 95px;
+  width: 118px;
   height: 100%;
-  padding: 6px 15px 6px 6px;
+  padding: 6px 18px 6px 6px;
   margin-right: 1px;
 
   position: relative;

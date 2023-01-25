@@ -38,8 +38,8 @@ const CheckBoxWrapper = styled.div<{ rtl: boolean; gap?: string }>`
   input[type="checkbox"]:after {
     position: relative;
     display: block;
-    left: 2px;
-    top: -16px;
+    left: 4.5px;
+    top: -19px;
     width: 12px;
     height: 12px;
     content: "";

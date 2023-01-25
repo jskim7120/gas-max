@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const VolReading = styled.div`
-  width: 707px;
+  width: 800px;
   height: 194px;
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
@@ -13,7 +13,7 @@ export const VolReading = styled.div`
   .title {
     height: 31px;
     background: rgba(101, 84, 255, 0.37);
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 400;
     line-height: 28px;
     padding-left: 14px;
@@ -24,7 +24,7 @@ export const VolReading = styled.div`
   }
   p {
     color: #1b8c8e;
-    font-size: 12px;
+    font-size: 15px;
     line-height: 24px;
     position: absolute;
     right: 40px;
@@ -44,12 +44,12 @@ export const VolReading = styled.div`
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 707px;
+  width: 800px;
   margin-top: 24px;
   .title {
     height: 31px;
     background: rgba(101, 84, 255, 0.37);
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 400;
     line-height: 28px;
     padding-left: 14px;
@@ -57,8 +57,8 @@ export const Container = styled.div`
   }
 `;
 export const RubeUnit = styled.div`
-  width: 320px;
-  height: 338px;
+  width: 370px;
+  height: 415px;
   border-radius: 8px;
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
@@ -83,11 +83,11 @@ export const RubeUnit = styled.div`
   }
   .rubeDesc {
     color: #1b8c8e;
-    font-size: 12px;
+    font-size: 15px;
     line-height: 24px;
     display: flex;
     align-items: center;
-    margin-top: 9px;
+    margin-top: 14px;
     justify-content: center;
     span {
       margin-left: 6px;
@@ -95,13 +95,14 @@ export const RubeUnit = styled.div`
   }
 `;
 export const BasicItems = styled.div`
-  width: 320px;
-  height: 338px;
+  width: 370px;
+  height: 415px;
   border-radius: 8px;
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
   .basicItemsCnt {
-    padding: 0 20px;
+    // padding: 0 20px;
+    margin-top: 30px;
   }
   .volWrapper {
     // margin-left: 20px;
@@ -117,11 +118,11 @@ export const BasicItems = styled.div`
   }
   .basicDesc {
     color: #1b8c8e;
-    font-size: 12px;
+    font-size: 15px;
     line-height: 24px;
     display: flex;
     align-items: center;
-    margin-top: 77px;
+    margin-top: 65px;
     justify-content: center;
     span {
       margin-left: 6px;

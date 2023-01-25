@@ -224,7 +224,7 @@ const Form = React.forwardRef(
                   /\d/,
                 ]}
                 name={name}
-                inputSize={InputSize.i90}
+                inputSize={InputSize.i120}
               />
             )}
           />
@@ -288,14 +288,14 @@ const Form = React.forwardRef(
           <Input
             label="대표전화"
             register={register("jnTel1")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i130}
             maxLength="14"
           />
           <Input
             label="대표전화2"
             labelStyle={{ minWidth: "80px" }}
             register={register("jnTel2")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i130}
             maxLength="14"
           />
 
@@ -303,7 +303,7 @@ const Form = React.forwardRef(
             label="팩스"
             labelStyle={{ minWidth: "80px" }}
             register={register("jnFax")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i130}
             maxLength="14"
           />
         </Wrapper>
@@ -313,7 +313,7 @@ const Form = React.forwardRef(
           <Input
             label="안전관리 총괄자"
             register={register("jnAnname1")}
-            inputSize={InputSize.i90}
+            inputSize={InputSize.i100}
             maxLength="10"
           />
 
@@ -351,7 +351,7 @@ const Form = React.forwardRef(
           <Input
             label="안전관리 책임자"
             register={register("jnAnname2")}
-            inputSize={InputSize.i90}
+            inputSize={InputSize.i100}
             maxLength="10"
           />
 
@@ -465,7 +465,9 @@ const Form = React.forwardRef(
           </FormGroup>
 
           <FormGroup>
-            <Label style={{ minWidth: "85px" }}>계좌 자동이체</Label>
+            <Label style={{ minWidth: "85px", marginLeft: "5px" }}>
+              계좌 자동이체
+            </Label>
             <Select {...register("jnBankCms")} width={InputSize.i175}>
               {dataCommonDic?.jnBankCms?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>

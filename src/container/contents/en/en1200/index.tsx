@@ -111,6 +111,7 @@ function EN1200({
       </TopBar>
       <MainWrapper>
         <Grid
+          style={{ minWidth: "162px" }}
           data={data}
           fields={fields}
           columns={columns}

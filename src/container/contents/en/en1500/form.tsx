@@ -262,7 +262,7 @@ const Form = (
   return (
     <form
       onSubmit={handleSubmit(submit)}
-      style={{ width: "727px", padding: "0px 10px" }}
+      style={{ width: "820px", padding: "0px 10px" }}
     >
       <Wrapper grid>
         <Field className="field">
