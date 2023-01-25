@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Input, Field } from "components/form/style";
+import { Input, Field, Select } from "components/form/style";
+import { InputSize } from "components/componentsType";
 import { IGR1300 } from "./model";
 
 import { GrFooter1300Cnt } from "./style";
@@ -12,7 +13,15 @@ import {
   CTable,
 } from "../gr1200/style";
 
-function FooterInfo({ data, selected }: { data: any; selected: any }) {
+function FooterInfo({
+  data,
+  selected,
+  dataCommonDic,
+}: {
+  data: any;
+  selected: any;
+  dataCommonDic: any;
+}) {
   const { register, reset } = useForm<IGR1300>({});
   useEffect(() => {
     if (JSON.stringify(selected) !== "{}") {
@@ -23,8 +32,11 @@ function FooterInfo({ data, selected }: { data: any; selected: any }) {
   }, [selected]);
   return (
     <GrFooter1300Cnt>
-      <Field flex style={{ marginBottom: "20px", alignItems: "center" }}>
-        <Field flex style={{ width: "75%" }}>
+      <Field
+        flex
+        style={{ marginBottom: "20px", alignItems: "center", padding: "0 2px" }}
+      >
+        <Field flex style={{ width: "calc(100% - 170px)" }}>
           <CTitle className="cTitle">메모</CTitle>
           <CTextArea className="cTextArea" {...register("bbMemo")} />
         </Field>
@@ -83,9 +95,21 @@ function FooterInfo({ data, selected }: { data: any; selected: any }) {
         </tr>
         <tr>
           <td className="right">{selected?.bbTotal}</td>
-          <td className="right">{selected?.bbSupplyType}</td>
-          <td className="right">{selected?.bbOutkum}</td>
-          <td className="right">{selected?.bbDc}</td>
+          <td className="right">
+            <Select {...register("bbSupplyType")} width={InputSize.md}>
+              {dataCommonDic?.bbSupplyType?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </td>
+          <td className="right">
+            <Input register={register("bbOutkum")} />
+          </td>
+          <td className="right">
+            <Input register={register("bbDc")} />
+          </td>
           <td className="right"></td>
           <td className="right"></td>
         </tr>

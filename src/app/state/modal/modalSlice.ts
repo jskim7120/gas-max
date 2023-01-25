@@ -24,6 +24,21 @@ export interface initialStateType {
     jpName: string | undefined;
     jpSvyn: string | undefined;
   };
+  gr1300: {
+    index: number | undefined;
+    areaCode: string;
+    bbBuCode: string;
+    bbType: string;
+
+    jbuDangaType: string | undefined;
+    bpName: string | undefined;
+    bpType: string | undefined;
+    jbuChangedate: string | undefined;
+    bpDanwi: string | undefined;
+    jbuVatKind: string | undefined;
+    jbuBpDanga: number | undefined;
+    bpCode: string | undefined;
+  };
   isDelete: {
     menuId: string;
     isDelete: boolean;
@@ -51,6 +66,20 @@ const initialState: initialStateType = {
     jpKg: undefined,
     jpName: undefined,
     jpSvyn: undefined,
+  },
+  gr1300: {
+    index: undefined,
+    areaCode: "",
+    bbBuCode: "",
+    bbType: "",
+    jbuDangaType: undefined,
+    bpName: undefined,
+    bpType: undefined,
+    jbuChangedate: undefined,
+    bpDanwi: undefined,
+    jbuVatKind: undefined,
+    jbuBpDanga: undefined,
+    bpCode: undefined,
   },
   isDelete: {
     menuId: "",
@@ -94,6 +123,22 @@ const modalSlice = createSlice({
       state.gr1200.jpSvyn = action.payload.jpSvyn;
     },
 
+    addGR1300: (state, action) => {
+      state.gr1300.index = action.payload.index;
+      state.gr1300.areaCode = action.payload.areaCode;
+      state.gr1300.bbBuCode = action.payload.bbBuCode;
+      state.gr1300.bbType = action.payload.bbType;
+
+      state.gr1300.jbuDangaType = action.payload.jbuDangaType;
+      state.gr1300.bpName = action.payload.bpName;
+      state.gr1300.bpType = action.payload.bpType;
+      state.gr1300.jbuChangedate = action.payload.jbuChangedate;
+      state.gr1300.bpDanwi = action.payload.bpDanwi;
+      state.gr1300.jbuVatKind = action.payload.jbuVatKind;
+      state.gr1300.jbuBpDanga = action.payload.jbuBpDanga;
+      state.gr1300.bpCode = action.payload.bpCode;
+    },
+
     addDeleteMenuId: (state, action) => {
       state.isDelete.menuId = action.payload.menuId;
     },
@@ -108,6 +153,7 @@ export const {
   closeModal,
   addCM1105,
   addGR1200,
+  addGR1300,
   addDeleteMenuId,
   setIsDelete,
 } = modalSlice.actions;

@@ -35,7 +35,6 @@ function GR1300({
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [data65, setData65] = useState({});
-  const [data65Detail, setData65Detail] = useState<any[]>();
 
   const [selected, setSelected] = useState<any>();
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
@@ -105,7 +104,6 @@ function GR1300({
         setData65(data);
       } else {
         setData65({});
-        setData65Detail([]);
       }
     } catch (err) {
       console.log("GR1300 65 DATA fetch error =======>", err);
@@ -206,7 +204,7 @@ function GR1300({
           <Form
             dataCommonDic={dataCommonDic}
             data65={data65}
-            data65Detail={data65Detail}
+            setData65={setData65}
             selected={selected}
           />
         </RightSide>

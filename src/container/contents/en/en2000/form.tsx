@@ -102,7 +102,7 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(EN2000DELETE, formValues);
           if (response.status === 200) {
-            toast.success("삭제했습니다", {
+            toast.success("삭제하였습니다", {
               autoClose: 500,
             });
             await fetchData();
