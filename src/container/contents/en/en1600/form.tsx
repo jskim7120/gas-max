@@ -144,7 +144,7 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(EN1600DELETE, formValues);
           if (response.status === 200) {
-            toast.success("삭제했습니다", {
+            toast.success("삭제하였습니다", {
               autoClose: 500,
             });
             await fetchData();
@@ -406,7 +406,7 @@ const Form = React.forwardRef(
             }}
           >
             <IconInfo />
-            <span style={{ color: "#1B8C8E", fontSize: "12px" }}>
+            <span style={{ color: "#1B8C8E", fontSize: "15px" }}>
               탱크잔량 원격검침 시스템의 매핑할 사원코드를 지정
             </span>
           </p>
@@ -419,18 +419,20 @@ const Form = React.forwardRef(
                 label="서명화일"
                 register={register("swStampFile")}
                 value={image?.name}
+                inputSize={InputSize.i180}
                 maxLength="80"
               />
 
               <button
                 style={{
                   width: "100px",
-                  height: "25px",
+                  height: "30px",
                   background: "#666666",
                   borderRadius: "5px",
                   border: "1px solid #707070",
                   color: "#fff",
                   position: "relative",
+                  fontSize: "15px",
                 }}
               >
                 <SearchIcon />
@@ -524,7 +526,7 @@ const Form = React.forwardRef(
             label="면허번호"
             register={register("swDriverNo")}
             maxLength="17"
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i175}
           />
         </Wrapper>
 
@@ -569,7 +571,7 @@ const Form = React.forwardRef(
               <p
                 style={{
                   marginLeft: "25px",
-                  fontSize: "12px",
+                  fontSize: "15px",
                   paddingTop: "4px",
                 }}
               >
@@ -602,7 +604,7 @@ const Form = React.forwardRef(
           }}
         >
           <IconInfo />
-          <span style={{ color: "#1B8C8E", fontSize: "12px" }}>
+          <span style={{ color: "#1B8C8E", fontSize: "15px" }}>
             퇴사사원은 판매등록 사원에서 제외 됩니다.
           </span>
         </p>

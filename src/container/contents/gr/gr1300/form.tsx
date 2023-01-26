@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Button from "components/button/button";
+import { toast } from "react-toastify";
 import CustomDatePicker from "components/customDatePicker";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
@@ -16,7 +17,7 @@ import { ResetGray, Update, Plus, Trash } from "components/allSvgIcon";
 import { InputSize, ButtonColor } from "components/componentsType";
 import { IDATA65 } from "./model";
 import TabGrid from "./tabs/grid";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import FooterInfo from "./footer";
 import { CircleBtn } from "../gr1200/style";
 import { PersonInfoText } from "components/text";
@@ -24,18 +25,19 @@ import { PersonInfoText } from "components/text";
 function Form({
   dataCommonDic,
   data65,
-  data65Detail,
+  setData65,
   selected,
 }: {
   dataCommonDic: any;
   data65: any;
-  data65Detail: any;
+  setData65: any;
   selected: any;
 }) {
   const dispatch = useDispatch();
   const [tabId, setTabId] = useState(0);
   const [isAddBtnClicked, setAddBtnClicked] = useState(false);
   const [rowIndex, setRowIndex] = useState<number | null>(null);
+  const stateGR1300 = useSelector((state: any) => state.modal.gr1300);
   const { register, handleSubmit, reset, control } = useForm<IDATA65>({
     mode: "onSubmit",
   });
@@ -54,11 +56,54 @@ function Form({
     setAddBtnClicked(false);
   }, [data65]);
 
+  useEffect(() => {
+    if (stateGR1300.index !== undefined && stateGR1300.bpName) {
+      setData65((prev: any) =>
+        prev.map((object: any, idx: number) => {
+          if (idx === stateGR1300.index) {
+            return {
+              ...object,
+              bblBpName: stateGR1300.bpName,
+              bblBpCode: stateGR1300.bpCode,
+              bblDanga: stateGR1300.jbuBpDanga,
+            };
+          } else return object;
+        })
+      );
+    }
+  }, [stateGR1300]);
+
   const openPopup = () => {};
 
-  const addRow = () => {};
+  const addRow = () => {
+    if (data65 !== undefined) {
+      setData65((prev: any) => [
+        ...prev,
+        {
+          bblBpCode: null,
+          bblBpName: null,
+          bblType: null,
+          bblQty: null,
+          bblDanga: null,
+          bblVatType: null,
+          bblKumack: null,
+        },
+      ]);
+      setRowIndex(null);
+    }
+  };
 
-  const deleteRow = () => {};
+  const deleteRow = () => {
+    if (rowIndex !== null) {
+      setData65((prev: any) =>
+        prev.filter((item: any, idx: number) => idx !== rowIndex)
+      );
+    } else {
+      toast.warning(`please select a row.`, {
+        autoClose: 500,
+      });
+    }
+  };
 
   return (
     <div
@@ -82,6 +127,24 @@ function Form({
         >
           <Field flex style={{ alignItems: "center" }}>
             <PersonInfoText text="매입전표 등록" />
+            <p
+              style={{
+                marginLeft: "27px",
+                marginRight: "7px",
+                fontSize: "14px",
+                fontWeight: "bold",
+              }}
+            >
+              영업소
+            </p>
+
+            <Select {...register("areaCode")}>
+              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
           </Field>
           <Field flex>
             <Button
@@ -182,15 +245,19 @@ function Form({
           }}
         >
           <TabGrid
-            data={data65Detail}
             data65={data65}
             tabId={tabId ? tabId : 0}
             openPopup={openPopup}
             setRowIndex={setRowIndex}
+            selected={selected}
           />
         </TabContentWrapper>
       </form>
-      <FooterInfo data={data65} selected={selected} />
+      <FooterInfo
+        dataCommonDic={dataCommonDic}
+        data={data65}
+        selected={selected}
+      />
     </div>
   );
 }

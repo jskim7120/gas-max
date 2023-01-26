@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Editable = styled.div`
+export const Editable = styled.div<{ textAlign: string }>`
   position: relative;
   width: 157px;
 
@@ -43,17 +43,20 @@ export const Editable = styled.div`
   }
 
   input {
-    height: 25px;
+    height: 30px;
     width: 100%;
     border-radius: 4px;
     outline: none;
     font-family: "NotoSansKRRegular";
-    font-size: 12px;
+    font-size: 15px;
     border: 1px px solid #e6e5e5;
     background: aliceblue;
     border: 1px solid rgb(188, 185, 185);
     padding: 0 18px 0 6px;
-    text-align: right;
+    text-align: ${(props) =>
+      props.textAlign && props.textAlign === "left" && `left`};
+    text-align: ${(props) =>
+      props.textAlign && props.textAlign === "right" && `right`};
 
     &:hover {
       background: #fffacd;

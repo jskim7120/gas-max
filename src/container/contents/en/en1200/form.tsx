@@ -131,7 +131,7 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(EN1200DELETE, formValues);
           if (response.status === 200) {
-            toast.success("삭제했습니다", {
+            toast.success("삭제하였습니다", {
               autoClose: 500,
             });
 
@@ -235,7 +235,7 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ width: "640px", padding: "0px 10px" }}
+        style={{ width: "800px", padding: "0px 10px" }}
       >
         <div
           style={{
@@ -276,7 +276,7 @@ const Form = React.forwardRef(
                     value={value}
                     name={name}
                     onChange={onChange}
-                    inputSize={InputSize.i90}
+                    inputSize={InputSize.i110}
                     mask={[
                       /\d/,
                       /\d/,
@@ -364,8 +364,9 @@ const Form = React.forwardRef(
 
                   <button
                     style={{
-                      width: "100px",
-                      height: "25px",
+                      width: "110px",
+                      height: "29px",
+                      fontSize: "15px",
                       background: "#666666",
                       borderRadius: "5px",
                       border: "1px solid #707070",
@@ -393,6 +394,7 @@ const Form = React.forwardRef(
                   style={{
                     justifyContent: "space-between",
                     alignItems: "center",
+                    gap: "21px",
                   }}
                 >
                   <FormGroup style={{ alignItems: "center" }}>
@@ -479,7 +481,7 @@ const Form = React.forwardRef(
                 label="아이디"
                 register={register("saupEdiId")}
                 maxLength="20"
-                inputSize={InputSize.i175}
+                inputSize={InputSize.i200}
               />
               <Input
                 label="비밀번호"
@@ -494,7 +496,7 @@ const Form = React.forwardRef(
                 label="담당자명"
                 register={register("saupEdiSawon")}
                 maxLength="14"
-                inputSize={InputSize.i120}
+                inputSize={InputSize.i130}
               />
 
               <Controller
@@ -550,8 +552,9 @@ const Form = React.forwardRef(
               />
               <button
                 style={{
-                  width: "100px",
-                  height: "25px",
+                  width: "110px",
+                  height: "29px",
+                  fontSize: "15px",
                   background: "#666666",
                   borderRadius: "5px",
                   border: "1px solid #707070",
@@ -578,7 +581,7 @@ const Form = React.forwardRef(
               style={{
                 padding: "10px 0 0 105px",
                 color: "#1B8C8E",
-                fontSize: "12px",
+                fontSize: "15px",
                 alignItems: "center",
               }}
             >
@@ -594,7 +597,7 @@ const Form = React.forwardRef(
                 background: "rgba(101,84,255,0.2)",
                 width: "100%",
                 height: "auto",
-                fontSize: "12px",
+                fontSize: "15px",
                 color: "#1B8C8E",
                 padding: "20px",
                 display: "flex",
@@ -619,14 +622,14 @@ const Form = React.forwardRef(
                   marginLeft: "50px",
                   marginTop: "5px",
                   position: "absolute",
-                  right: "34px",
+                  right: "10px",
                 }}
               >
                 <div
                   style={{
                     display: "flex",
-                    width: "154px",
-                    height: "34px",
+                    width: "157px",
+                    height: "38px",
                     background: "#5284CE",
                     borderRadius: "999px",
                     justifyContent: "center",
@@ -636,15 +639,15 @@ const Form = React.forwardRef(
                   }}
                 >
                   <IconHome />
-                  <span style={{ fontSize: "14px", color: "#fff" }}>
+                  <span style={{ fontSize: "15px", color: "#fff" }}>
                     조아빌 회원가입
                   </span>
                 </div>
                 <div
                   style={{
                     display: "flex",
-                    width: "154px",
-                    height: "34px",
+                    width: "157px",
+                    height: "38px",
                     background: "#5284CE",
                     borderRadius: "999px",
                     justifyContent: "center",
@@ -654,7 +657,7 @@ const Form = React.forwardRef(
                   }}
                 >
                   <IconReceipt />
-                  <span style={{ fontSize: "14px", color: "#fff" }}>
+                  <span style={{ fontSize: "15px", color: "#fff" }}>
                     인증서 신청
                   </span>
                 </div>

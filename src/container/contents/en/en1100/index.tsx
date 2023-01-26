@@ -118,7 +118,7 @@ function EN1100({
           setSelectedRowIndex={setSelectedRowIndex}
         />
 
-        <RightSide style={{ width: "814px" }}>
+        <RightSide style={{ width: "815px" }}>
           <Form
             selected={selected}
             ref={formRef}

@@ -11,7 +11,7 @@ export const ModalHeader = styled.div`
 
   p {
     color: #fff;
-    font-size: 14px;
+    font-size: 15px;
   }
 
   label {

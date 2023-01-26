@@ -165,7 +165,7 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(EN1700DELETE, formValues);
           if (response.status === 200) {
-            toast.success("삭제했습니다", {
+            toast.success("삭제하였습니다", {
               autoClose: 500,
             });
             await fetchData();
@@ -327,7 +327,7 @@ const Form = React.forwardRef(
           <Input
             label="차량번호"
             register={register("caName")}
-            inputSize={InputSize.i140}
+            inputSize={InputSize.i150}
             maxLength="15"
           />
 
@@ -577,7 +577,7 @@ const Form = React.forwardRef(
           <Input
             label="전화번호"
             register={register("caBtel")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i130}
             maxLength="14"
           />
 
@@ -590,7 +590,7 @@ const Form = React.forwardRef(
                 value={value}
                 name={name}
                 onChange={onChange}
-                inputSize={InputSize.i100}
+                inputSize={InputSize.i130}
                 mask={[
                   /\d/,
                   /\d/,
@@ -615,13 +615,13 @@ const Form = React.forwardRef(
           <Input
             label="피보험자"
             register={register("caBman")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i130}
             maxLength="10"
           />
           <Input
             label="증권번호"
             register={register("caBno")}
-            inputSize={InputSize.i150}
+            inputSize={InputSize.i180}
             maxLength="20"
           />
         </Wrapper>

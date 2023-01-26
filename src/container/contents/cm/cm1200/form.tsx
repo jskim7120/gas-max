@@ -575,7 +575,11 @@ const Form = React.forwardRef(
             inputSize={InputSize.md}
             style={{ marginRight: "0px" }}
           />
-          <Input register={register("cuAddr2")} inputSize={InputSize.md} />
+          <Input
+            register={register("cuAddr2")}
+            inputSize={InputSize.md}
+            style={{ marginLeft: "5px" }}
+          />
         </Wrapper>
         {/* 1-3 Wrapper */}
         <Wrapper grid col={5}>
@@ -726,7 +730,7 @@ const Form = React.forwardRef(
             <p>원</p>
           </FormGroup>
 
-          <FormGroup style={{ gap: "0" }}>
+          <FormGroup style={{ gap: "7px" }}>
             <Label style={{ minWidth: "auto" }}>기본사용료</Label>
             <Label className="lable-check" style={{ minWidth: "98px" }}>
               <CheckBox title="적용" register={{ ...register("cuBaGageYn") }} />
@@ -847,7 +851,7 @@ const Form = React.forwardRef(
             <CSelect
               disabled={!chkCuGumTurm}
               {...register("cuGumTurm")}
-              width={InputSize.i120}
+              width={InputSize.i175}
             >
               {dataCommonDic?.cuGumTurm?.map((obj: any, index: number) => (
                 <option key={index} value={obj.code}>
@@ -999,6 +1003,7 @@ const Form = React.forwardRef(
                 <EditableSelect
                   list={dataCommonDic?.tankMakeCo1}
                   register={register("tankMakeCo1")}
+                  textAlign={"left"}
                 />
               </FormGroup>
             </Field>
@@ -1081,6 +1086,7 @@ const Form = React.forwardRef(
                 <EditableSelect
                   list={dataCommonDic?.tankMakeCo2}
                   register={register("tankMakeCo2")}
+                  textAlign={"left"}
                 />
               </FormGroup>
             </Field>
@@ -1316,6 +1322,7 @@ const Form = React.forwardRef(
               <EditableSelect
                 list={dataCommonDic?.gasifyCo1}
                 register={register("gasifyCo1")}
+                textAlign={"left"}
               />
             </FormGroup>
             <FormGroup>
@@ -1372,6 +1379,7 @@ const Form = React.forwardRef(
               <EditableSelect
                 list={dataCommonDic?.gasifyCo2}
                 register={register("gasifyCo2")}
+                textAlign={"left"}
               />
             </FormGroup>
 

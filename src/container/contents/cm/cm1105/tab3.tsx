@@ -58,7 +58,7 @@ function Tab3({
           <p>법정검사</p>
         </Field>
         <Wrapper grid col={4}>
-          <FormGroup>
+          <FormGroup style={{ width: "269px" }}>
             <Label style={{ minWidth: "auto" }}>시설구분</Label>
             {radioOptions.map((option, index) => (
               <Item key={index}>

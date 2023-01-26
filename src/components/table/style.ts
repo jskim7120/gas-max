@@ -36,7 +36,7 @@ const Table = styled.table`
         border-bottom: 1px solid #d6d2ce;
         border-right: 1px solid #d6d2ce;
         font-size: 15px;
-        height: 30px;
+        height: 40px;
       }
     }
     tr.active {

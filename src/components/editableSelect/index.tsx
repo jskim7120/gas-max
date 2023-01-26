@@ -5,9 +5,11 @@ import { DownArrow } from "components/allSvgIcon";
 function EditableSelect({
   list = [],
   register,
+  textAlign,
 }: {
   list: Array<any>;
   register: any;
+  textAlign?: any;
 }) {
   const [text, setText] = useState("");
   const [suggestion, setSuggestion] = useState<Array<any>>([]);
@@ -78,7 +80,7 @@ function EditableSelect({
   };
 
   return (
-    <Editable ref={divRef}>
+    <Editable ref={divRef} textAlign={textAlign && textAlign}>
       <input
         autoComplete="off"
         {...register}

@@ -1,25 +1,29 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { fields1, columns1 } from "./data1";
+import { useDispatch } from "app/store";
+import { addGR1300, openModal } from "app/state/modal/modalSlice";
 // import { fields2, columns2, layout2 } from "./data2";
 
 function Grid({
-  data,
   data65,
   tabId,
   openPopup,
   setRowIndex,
+  selected,
 }: {
-  data: any;
   data65: any;
   tabId: number;
   openPopup: Function;
   setRowIndex: Function;
+  selected: any;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
   let dp: any;
   let gv: any;
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
@@ -28,16 +32,10 @@ function Grid({
 
     gv.setDataSource(dp);
 
-    if (tabId === 0) {
-      dp.setFields(fields1);
-      gv.setColumns(columns1);
-    }
-
-    if (tabId === 1) {
-      dp.setFields(fields1);
-      gv.setColumns(columns1);
-    }
+    dp.setFields(fields1);
+    gv.setColumns(columns1);
     dp.setRows(data65);
+    gv.columnByName("bblBpName").buttonVisibility = "always";
 
     gv.setFooter({ visible: false });
     gv.setOptions({
@@ -57,8 +55,17 @@ function Grid({
     };
 
     gv.onCellButtonClicked = function (grid: any, index: any, column: any) {
-      // alert(`itemIndex: ${index.itemIndex}, fieldName: ${column.fieldName}`);
-      openPopup();
+      if (selected) {
+        dispatch(
+          addGR1300({
+            index: index.dataRow,
+            areaCode: selected?.areaCode,
+            bbBuCode: selected?.bbBuCode,
+            bbType: selected?.bbType ? selected?.bbType : "0", //daraa n "0"-iig hasah
+          })
+        );
+        dispatch(openModal({ type: "gr1300Modal" }));
+      }
     };
 
     return () => {

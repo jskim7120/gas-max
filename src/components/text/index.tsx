@@ -8,7 +8,7 @@ const InfoDiv = styled.div`
   align-items: center;
   p {
     color: #1b8c8e;
-    font-size: 12px;
+    font-size: 15px;
   }
 `;
 

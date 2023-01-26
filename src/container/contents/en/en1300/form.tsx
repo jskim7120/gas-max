@@ -124,7 +124,7 @@ const Form = React.forwardRef(
         try {
           const response = await API.post(EN1300DELETE, formValues);
           if (response.status === 200) {
-            toast.success("삭제했습니다", {
+            toast.success("삭제하였습니다", {
               autoClose: 500,
             });
             await fetchData();
@@ -217,7 +217,7 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ padding: "0px 10px", width: "300px" }}
+        style={{ padding: "0px 10px", width: "350px" }}
       >
         <Wrapper>
           <FormGroup>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const TabHeaderWrapper = styled.ul`
-  width: 97px;
+  width: 102px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -16,14 +16,14 @@ export const List = styled.li<{ isActive: boolean; tabIndex: number }>`
   cursor: pointer;
   display: inline-block;
   outline: none;
-  width: 92px;
-  height: 30px;
+  width: 102px;
+  height: 34px;
   padding: 5px;
   // margin-top: -1px;
   text-align: center;
 
   font-family: "NotoSansKRRegular";
-  font-size: 12px;
+  font-size: 14px;
 
   white-space: nowrap;
   overflow: hidden;

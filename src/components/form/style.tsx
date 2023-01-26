@@ -306,7 +306,7 @@ export const FormGroup = styled.div<{
     line-height: 21px;
   }
   span {
-    font-size: 12px;
+    font-size: 15px;
     line-height: 35px;
   }
 
@@ -316,7 +316,7 @@ export const FormGroup = styled.div<{
 
   p {
     font-family: "NotoSansKRRegular";
-    font-size: 12px;
+    font-size: 15px;
   }
 `;
 
@@ -374,13 +374,13 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
 
   p {
     font-family: "NotoSansKRRegular";
-    font-size: 12px;
+    font-size: 15px;
     display: flex;
     align-items: center;
   }
 
   .gray-title {
-    width: 55px;
+    width: 85px;
     background: #e8ecf1;
     display: flex;
     align-items: center;
@@ -513,7 +513,7 @@ export const TextArea = styled.textarea`
 export const Input2 = styled.input<{ inputSize?: InputSize }>`
   width: ${(props) =>
     props.inputSize ? getInputSize(props.inputSize) : "50px"};
-  height: 25px;
+  height: 30px;
   border: 1px solid rgb(188, 185, 185);
   border-radius: 4px;
   background: aliceblue;
@@ -523,7 +523,7 @@ export const Input2 = styled.input<{ inputSize?: InputSize }>`
 
   outline: none;
   font-family: "NotoSansKRRegular";
-  font-size: 12px;
+  font-size: 15px;
 
   &:hover {
     border: 1px solid #e6e5e5;
