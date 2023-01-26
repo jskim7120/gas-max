@@ -192,6 +192,7 @@ export const Input = ({
             kind={kind && kind}
             textAlign={textAlign && textAlign}
             readOnly={readOnly}
+            onChange={onChange}
           />
         )}
       </FormGroup>

@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TabLikeHeader, CTable2 } from "../style";
-import {
-  Input,
-  Select,
-  Field,
-  FormGroup,
-  Wrapper,
-  Label,
-} from "components/form/style";
+import { Input } from "components/form/style";
 import { InputSize } from "components/componentsType";
 
-function Tab1Footer({ data, register }: { data: any; register: Function }) {
+function Tab1Footer({
+  data,
+  register,
+  reset,
+  someFunc,
+  anotherFunc,
+}: {
+  data: any;
+  register: Function;
+  reset: Function;
+  someFunc: Function;
+  anotherFunc: Function;
+}) {
+  const [bcPdanga, setBcPdanga] = useState<string | undefined>(undefined);
+  const [bcBdanga, setBcBdanga] = useState<string | undefined>(undefined);
+  const [bcPcost, setBcPcost] = useState<number | undefined>(undefined);
+  const [bcBcost, setBcBcost] = useState<number | undefined>(undefined);
+  const [bcPjan, setBcPjan] = useState<string | undefined>(undefined);
+  const [bcBjan, setBcBjan] = useState<string | undefined>(undefined);
+
   return (
     <div>
       <TabLikeHeader>매입량</TabLikeHeader>
@@ -27,38 +39,110 @@ function Tab1Footer({ data, register }: { data: any; register: Function }) {
         </tr>
         <tr>
           <th className="light-gray ">프로판</th>
-          <td>{data?.bcPin}</td>
           <td>
-            <Input register={register("bcPjan")} />
+            {data.bcPin}
+            <Input register={register("bcPin")} />
           </td>
-          <td>{data?.bcSumP}</td>
           <td>
-            <Input register={register("bcPdanga")} />
+            {data.bcPjan}
+            <Input
+              register={register("bcPjan")}
+              onChange={(e: any) => {
+                setBcPjan(e.target.value);
+                anotherFunc(e.target.value, "bcPjan");
+              }}
+              value={bcPjan}
+            />
           </td>
-          <td>{data?.bcPkum}</td>
           <td>
-            <Input register={register("bcPcost")} />
+            {data.bcSumP}
+            <Input register={register("bcSumP")} />
           </td>
-          <td>{data?.bcPsum}</td>
+          <td>
+            {data.bcPdanga}
+            <Input
+              register={register("bcPdanga")}
+              onChange={(e: any) => {
+                setBcPdanga(e.target.value);
+                anotherFunc(e.target.value, "bcPdanga");
+              }}
+              value={bcPdanga}
+            />
+          </td>
+          <td>
+            {data?.bcPkum}
+            <Input register={register("bcPkum")} />
+          </td>
+          <td>
+            {data?.bcPcost}
+            <Input
+              register={register("bcPcost")}
+              onChange={(e: any) => {
+                setBcPcost(e.target.value);
+                anotherFunc(e.target.value, "bcPcost");
+              }}
+              value={bcPcost}
+            />
+          </td>
+          <td>
+            {data?.bcPsum}
+            <Input register={register("bcPsum")} />
+          </td>
         </tr>
         <tr>
           <th className="light-gray ">부탄</th>
-          <td>{data?.bcBin}</td>
           <td>
-            <Input register={register("bcBjan")} />
+            {data?.bcBin}
+            <Input register={register("bcBin")} />
           </td>
-          <td>{data?.bcSumB}</td>
           <td>
-            <Input register={register("bcBdanga")} />
+            {data.bcBjan}
+            <Input
+              register={register("bcBjan")}
+              onChange={(e: any) => {
+                setBcBjan(e.target.value);
+                anotherFunc(e.target.value, "bcBjan");
+              }}
+              value={bcBjan}
+            />
           </td>
-          <td>{data?.bcBkum}</td>
           <td>
-            <Input register={register("bcBcost")} />
+            {data?.bcSumB}
+            <Input register={register("bcSumB")} />
           </td>
-          <td>{data?.bcBsum}</td>
+          <td>
+            {data?.bcBdanga}
+            <Input
+              register={register("bcBdanga")}
+              onChange={(e: any) => {
+                setBcBdanga(e.target.value);
+                anotherFunc(e.target.value, "bcBdanga");
+              }}
+              value={bcBdanga}
+            />
+          </td>
+          <td>
+            {data?.bcBkum}
+            <Input register={register("bcBkum")} />
+          </td>
+          <td>
+            {data?.bcBcost}
+            <Input
+              register={register("bcBcost")}
+              onChange={(e: any) => {
+                setBcBcost(e.target.value);
+                anotherFunc(e.target.value, "bcBcost");
+              }}
+              value={bcBcost}
+            />
+          </td>
+          <td>
+            {data?.bcBsum}
+            <Input register={register("bcBsum")} />
+          </td>
         </tr>
         <tr>
-          <th className="light-gray ">기타</th>
+          <th className="light-gray">기타</th>
           <td>{data?.bcGin}</td>
           <td></td>
           <td></td>
@@ -71,13 +155,31 @@ function Tab1Footer({ data, register }: { data: any; register: Function }) {
         </tr>
         <tr>
           <th>합계</th>
-          <td>{data?.bcTotal}</td>
-          <td>{data?.bcJTotal}</td>
-          <td>{data?.bcSumTotal}</td>
+          <td>
+            {data?.bcTotal}
+            <Input register={register("bcTotal")} />
+          </td>
+          <td>
+            {data?.bcJTotal}
+            <Input register={register("bcJTotal")} />
+          </td>
+          <td>
+            {data?.bcSumTotal}
+            <Input register={register("bcSumTotal")} />
+          </td>
           <td></td>
-          <td>{data?.bcSumKum}</td>
-          <td>{data?.bcSumCost}</td>
-          <td>{data?.bcSum}</td>
+          <td>
+            {data?.bcSumKum}
+            <Input register={register("bcSumKum")} />
+          </td>
+          <td>
+            {data?.bcSumCost}
+            <Input register={register("bcSumCost")} />
+          </td>
+          <td>
+            {data?.bcSum}
+            <Input register={register("bcSum")} />
+          </td>
         </tr>
       </CTable2>
     </div>
