@@ -35,7 +35,7 @@ function Tab4({
               onChange={onChange}
               name={name}
               mask={[/\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, "-", /\d/, /\d/]}
-              inputSize={InputSize.i80}
+              inputSize={InputSize.i100}
             />
           )}
         />
@@ -80,7 +80,7 @@ function Tab4({
 
         <FormGroup>
           <Label>계약갱신</Label>
-          <Select {...register("cuExtendType")} width={InputSize.i80}>
+          <Select {...register("cuExtendType")} width={InputSize.i100}>
             {dataCommonDic?.cuExtendType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -105,7 +105,7 @@ function Tab4({
       <Wrapper grid col={4}>
         <FormGroup>
           <Label>용기소유자</Label>
-          <Select {...register("cuUsertong")}>
+          <Select {...register("cuUsertong")} width={InputSize.i100}>
             {dataCommonDic?.cuUsertong?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -116,7 +116,7 @@ function Tab4({
 
         <FormGroup>
           <Label>시설소유자</Label>
-          <Select {...register("cuUsersisul")}>
+          <Select {...register("cuUsersisul")} width={InputSize.i100}>
             {dataCommonDic?.cuUsersisul?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -127,7 +127,7 @@ function Tab4({
 
         <FormGroup>
           <Label>보일러 사용</Label>
-          <Select {...register("cuBoilerYn")} width={InputSize.i80}>
+          <Select {...register("cuBoilerYn")} width={InputSize.i100}>
             {dataCommonDic?.cuBoilerYn?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -138,7 +138,7 @@ function Tab4({
 
         <FormGroup>
           <Label>온수기 사용</Label>
-          <Select {...register("cuWaterYn")}>
+          <Select {...register("cuWaterYn")} width={InputSize.i100}>
             {dataCommonDic?.cuWaterYn?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -151,7 +151,7 @@ function Tab4({
       <Wrapper grid col={4}>
         <FormGroup>
           <Label>배관시설</Label>
-          <Select {...register("cuPipelineYn")}>
+          <Select {...register("cuPipelineYn")} width={InputSize.i100}>
             {dataCommonDic?.cuPipelineYn?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -162,7 +162,7 @@ function Tab4({
 
         <FormGroup>
           <Label>차단 장치</Label>
-          <Select {...register("cuBlockYn")}>
+          <Select {...register("cuBlockYn")} width={InputSize.i100}>
             {dataCommonDic?.cuBlockYn?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -173,7 +173,7 @@ function Tab4({
 
         <FormGroup>
           <Label>시설적합유무</Label>
-          <Select {...register("cuSisulyn")} width={InputSize.i80}>
+          <Select {...register("cuSisulyn")} width={InputSize.i100}>
             {dataCommonDic?.cuSisulyn?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}

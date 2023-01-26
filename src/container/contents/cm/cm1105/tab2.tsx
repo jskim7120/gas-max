@@ -172,7 +172,7 @@ function Tab2({
           </Wrapper>
 
           <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <Field flex>
+            <Field flex style={{ width: "260px" }}>
               <Controller
                 control={control}
                 {...register("cuAnkum")}
@@ -190,7 +190,7 @@ function Tab2({
               />
               <p style={{ marginLeft: "-3px" }}>원</p>
             </Field>
-            <Field flex>
+            <Field flex style={{ width: "259px" }}>
               <Controller
                 control={control}
                 {...register("cuSisulkum")}
@@ -256,8 +256,8 @@ function Tab2({
               />
               <p>일</p>
             </Field>
-            <FormGroup style={{ gap: "0" }}>
-              <Label>기본사용료</Label>
+            <FormGroup style={{ gap: "11px" }}>
+              <Label style={{ minWidth: "80px" }}>기본사용료</Label>
               <Label className="lable-check" style={{ minWidth: "auto" }}>
                 <CheckBox
                   title="적용"
@@ -382,7 +382,7 @@ function Tab2({
                     </option>
                   ))}
                 </Select>
-                <p>바코드번호</p>
+                <p style={{ margin: "0 6px" }}>바코드번호</p>
               </FormGroup>
 
               <Input register={register("cuBarcode")} />
@@ -412,9 +412,13 @@ function Tab2({
               />
             </Field>
             <Field flex style={{ alignItems: "center" }}>
-              <Input label="발신기코드" register={register("cuMTransmCd")} />
-              <p>원격검침 고객코드</p>
-              <Input register={register("blabla")} inputSize={InputSize.sm} />
+              <Input
+                label="발신기코드"
+                register={register("cuMTransmCd")}
+                inputSize={InputSize.i60}
+              />
+              <p style={{ margin: "0 6px" }}>원격검침 고객코드</p>
+              <Input register={register("blabla")} inputSize={InputSize.i150} />
               <SearchBtn type="button" onClick={() => alert("dsdsds")}>
                 <MagnifyingGlass />
               </SearchBtn>
