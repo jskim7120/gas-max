@@ -26,6 +26,7 @@ import {
   Label,
 } from "components/form/style";
 import { InputSize, ButtonColor } from "components/componentsType";
+import { currencyMask } from "helpers/currency";
 
 interface IForm {
   selected: any;
@@ -269,9 +270,11 @@ const Form = React.forwardRef(
           </Wrapper>
           <Wrapper>
             <Input
+              textAlign="right"
               label="미지급액"
               register={register("buMisu")}
               inputSize={InputSize.i200}
+              mask={currencyMask}
             />
           </Wrapper>
           <DividerGR />
@@ -291,6 +294,7 @@ const Form = React.forwardRef(
               textAlign="right"
               register={register("bjOutkum")}
               inputSize={InputSize.i200}
+              mask={currencyMask}
             />
           </Wrapper>
           <Wrapper>
@@ -299,6 +303,7 @@ const Form = React.forwardRef(
               label="D / C"
               register={register("bjDc")}
               inputSize={InputSize.i200}
+              mask={currencyMask}
             />
           </Wrapper>
           <Wrapper>
