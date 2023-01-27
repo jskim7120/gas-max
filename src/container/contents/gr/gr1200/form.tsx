@@ -163,7 +163,7 @@ function Form({
   */
 
   const someFunc = () => {
-    if (data65Detail && data65Detail.length > 0) {
+    if (data65Detail) {
       let bcPin = 0;
       let bcBin = 0;
       let bcSumP = 0;
@@ -182,6 +182,7 @@ function Form({
 
       data65Detail.forEach((obj: any) => {
         if (obj.bclGubun === "0") {
+          console.log(obj.bclInqty, obj.bclKg);
           bcPin += (obj.bclInqty ?? 0) * obj.bclKg;
           if (obj.bclSvyn === "N") {
             bcSumP += (obj.bclInqty ?? 0) * obj.bclKg;
@@ -230,17 +231,20 @@ function Form({
         bcBsum = bcBkum;
       }
 
-      bcTotal = bcPin ?? 0 + bcBin ?? 0 + +(data65?.bcGin ?? 0);
-      bcJTotal = bcPjan ?? 0 + bcBjan ?? 0;
-      bcSumTotal = bcSumP ?? 0 + bcSumB ?? 0;
-      bcSumKum = bcPkum ?? 0 + bcBkum ?? 0 + +(data65?.bcGkum ?? 0);
-      bcSumCost = bcPcost ?? 0 + bcBcost ?? 0 + +(data65?.bcGcost ?? 0);
-      bcSum = bcPsum ?? 0 + bcBsum ?? 0 + +(data65?.bcGsum ?? 0);
+      bcTotal =
+        (isNaN(bcPin) ? 0 : +bcPin) +
+        (isNaN(bcBin) ? 0 : +bcBin) +
+        +data65?.bcGin;
+      bcJTotal = +bcPjan + +bcBjan;
+      bcSumTotal = bcSumP + +bcSumB;
+      bcSumKum = bcPkum + +bcBkum + +data65?.bcGkum;
+      bcSumCost = +bcPcost + +bcBcost + +data65?.bcGcost;
+      bcSum = bcPsum + +bcBsum + +data65?.bcGsum;
 
       reset((formValues) => ({
         ...formValues,
-        bcPin: bcPin,
-        bcBin: bcBin,
+        bcPin: isNaN(bcPin) ? 0 : bcPin,
+        bcBin: isNaN(bcBin) ? 0 : bcBin,
         bcSumP: bcSumP,
         bcSumB: bcSumB,
         bcPkum: bcPkum,
@@ -258,135 +262,157 @@ function Form({
   };
 
   const anotherFunc = (num: any, name: string) => {
-    let fieldVal: number = 0;
-    let fieldVal2: number = 0;
-    let fieldVal3: number = 0;
-    let fieldName: string = "";
-    let fieldName2: string = "";
-    let fieldName3: string = "";
-
-    let bcJTotal: number = 0;
-    let bcSumCost: number = 0;
-
     if (name === "bcPjan") {
-      const { bcPdanga, bcPcost, bcBjan } = getValues();
-      fieldName = "bcSumP";
-      fieldName2 = "bcPkum";
-      fieldName3 = "bcPsum";
+      const { bcPdanga, bcPcost, bcBjan, bcSumB, bcBkum, bcBsum } = getValues();
+      let bcSumP: number = 0;
+      let bcPkum: number = 0;
+      let bcPsum: number = 0;
+      let bcJTotal: number = 0;
+      let bcSumTotal: number = 0;
+      let bcSumKum: number = 0;
+      let bcSum: number = 0;
 
-      fieldVal = sumP - parseInt(num === "" ? 0 : num);
+      bcSumP = sumP - parseInt(num === "" ? 0 : num);
 
       if (bcPdanga) {
-        fieldVal2 = fieldVal * bcPdanga;
+        bcPkum = bcSumP * bcPdanga;
       }
 
       if (bcPcost) {
-        fieldVal3 = fieldVal2 + +bcPcost;
+        bcPsum = bcPkum + +bcPcost;
       } else {
-        fieldVal3 = fieldVal2;
+        bcPsum = bcPkum;
       }
 
       bcJTotal = parseInt(num === "" ? 0 : num) + +bcBjan;
+      bcSumTotal = bcSumP + +bcSumB;
+      bcSumKum = bcPkum + +bcBkum;
+      bcSum = bcPsum + bcBsum;
 
       reset((formValues) => ({
         ...formValues,
-        [fieldName]: fieldVal,
-        [fieldName2]: fieldVal2,
-        [fieldName3]: fieldVal3,
+        bcSumP: bcSumP,
+        bcPkum: bcPkum,
+        bcPsum: bcPsum,
         bcJTotal: bcJTotal,
+        bcSumTotal: bcSumTotal,
+        bcSumKum: bcSumKum,
+        bcSum: bcSum,
       }));
     }
 
     if (name === "bcBjan") {
-      const { bcBdanga, bcBcost, bcPjan } = getValues();
-      fieldName = "bcSumB";
-      fieldName2 = "bcBkum";
-      fieldName3 = "bcBsum";
+      const { bcBdanga, bcBcost, bcPjan, bcSumP, bcPkum, bcPsum } = getValues();
+      let bcSumB: number = 0;
+      let bcBkum: number = 0;
+      let bcBsum: number = 0;
+      let bcJTotal: number = 0;
+      let bcSumTotal: number = 0;
+      let bcSumKum: number = 0;
+      let bcSum: number = 0;
 
-      fieldVal = sumB - parseInt(num === "" ? 0 : num);
+      bcSumB = sumB - parseInt(num === "" ? 0 : num);
 
       if (bcBdanga) {
-        fieldVal2 = fieldVal * bcBdanga;
+        bcBkum = bcSumB * bcBdanga;
       }
 
       if (bcBcost) {
-        fieldVal3 = fieldVal2 + +bcBcost;
+        bcBsum = bcBkum + +bcBcost;
       } else {
-        fieldVal3 = fieldVal2;
+        bcBsum = bcBkum;
       }
 
       bcJTotal = parseInt(num === "" ? 0 : num) + +bcPjan;
+      bcSumTotal = bcSumB + +bcSumP;
+      bcSumKum = bcBkum + +bcPkum;
+      bcSum = bcBsum + bcPsum;
 
       reset((formValues) => ({
         ...formValues,
-        [fieldName]: fieldVal,
-        [fieldName2]: fieldVal2,
-        [fieldName3]: fieldVal3,
+        bcSumB: bcSumB,
+        bcBkum: bcBkum,
+        bcBsum: bcBsum,
         bcJTotal: bcJTotal,
+        bcSumTotal: bcSumTotal,
+        bcSumKum: bcSumKum,
+        bcSum: bcSum,
       }));
     }
 
     if (name === "bcPdanga") {
-      const { bcSumP, bcPcost } = getValues();
-      fieldVal = bcSumP * parseInt(num === "" ? 0 : num);
-      fieldName = "bcPkum";
-      fieldName2 = "bcPsum";
+      let bcPsum: number;
+      const { bcSumP, bcPcost, bcBkum, bcBsum } = getValues();
+      const bcPkum = bcSumP * parseInt(num === "" ? 0 : num);
 
       if (bcPcost) {
-        fieldVal2 = fieldVal + +bcPcost;
+        bcPsum = bcPkum + +bcPcost;
       } else {
-        fieldVal2 = fieldVal;
+        bcPsum = bcPkum;
       }
+      const bcSumKum = bcPkum + bcBkum;
+      const bcSum = bcPsum + bcBsum;
 
       reset((formValues) => ({
         ...formValues,
-        [fieldName]: fieldVal,
-        [fieldName2]: fieldVal2,
+        bcPkum: bcPkum,
+        bcPsum: bcPsum,
+        bcSumKum: bcSumKum,
+        bcSum: bcSum,
       }));
     }
 
     if (name === "bcBdanga") {
-      const { bcSumB, bcBcost } = getValues();
-      fieldVal = bcSumB * parseInt(num === "" ? 0 : num);
-      fieldName = "bcBkum";
-      fieldName2 = "bcBsum";
+      let bcBsum: number;
+      const { bcSumB, bcBcost, bcPkum, bcPsum } = getValues();
+      const bcBkum = bcSumB * parseInt(num === "" ? 0 : num);
 
       if (bcBcost) {
-        fieldVal2 = fieldVal + +bcBcost;
+        bcBsum = bcBkum + +bcBcost;
       } else {
-        fieldVal2 = fieldVal;
+        bcBsum = bcBkum;
       }
+      const bcSumKum = bcBkum + bcPkum;
+      const bcSum = bcBsum + bcPsum;
 
       reset((formValues) => ({
         ...formValues,
-        [fieldName]: fieldVal,
-        [fieldName2]: fieldVal2,
+        bcBkum: bcBkum,
+        bcBsum: bcBsum,
+        bcSumKum: bcSumKum,
+        bcSum: bcSum,
       }));
     }
 
     if (name === "bcPcost") {
-      const { bcPkum, bcBcost } = getValues();
-      fieldName = "bcPsum";
-      fieldVal = bcPkum + parseInt(num === "" ? 0 : num);
-
+      const { bcPkum, bcBcost, bcBsum } = getValues();
+      let bcSumCost: number = 0;
+      let bcSum: number = 0;
+      const bcPsum = bcPkum + parseInt(num === "" ? 0 : num);
       bcSumCost = parseInt(num === "" ? 0 : num) + +bcBcost + +data65?.bcGcost;
+      bcSum = bcPsum + +bcBsum;
+
       reset((formValues) => ({
         ...formValues,
-        [fieldName]: fieldVal,
+        bcPsum: bcPsum,
         bcSumCost: bcSumCost,
+        bcSum: bcSum,
       }));
     }
 
     if (name === "bcBcost") {
-      const { bcBkum, bcPcost } = getValues();
-      fieldName = "bcBsum";
-      fieldVal = bcBkum + parseInt(num === "" ? 0 : num);
+      const { bcBkum, bcPcost, bcPsum } = getValues();
+      let bcSumCost: number = 0;
+      let bcSum: number = 0;
+      const bcBsum = bcBkum + parseInt(num === "" ? 0 : num);
       bcSumCost = parseInt(num === "" ? 0 : num) + +bcPcost + +data65?.bcGcost;
+      bcSum = bcBsum + +bcPsum;
 
       reset((formValues) => ({
         ...formValues,
-        [fieldName]: fieldVal,
+        bcBsum: bcBsum,
         bcSumCost: bcSumCost,
+        bcSum: bcSum,
       }));
     }
   };
