@@ -41,7 +41,7 @@ function Tab1Footer({
           <th className="light-gray ">프로판</th>
           <td>
             {data.bcPin}
-            <Input register={register("bcPin")} />
+            <Input register={register("bcPin")} readOnly />
           </td>
           <td>
             {data.bcPjan}
@@ -56,7 +56,7 @@ function Tab1Footer({
           </td>
           <td>
             {data.bcSumP}
-            <Input register={register("bcSumP")} />
+            <Input register={register("bcSumP")} readOnly />
           </td>
           <td>
             {data.bcPdanga}
@@ -71,7 +71,7 @@ function Tab1Footer({
           </td>
           <td>
             {data?.bcPkum}
-            <Input register={register("bcPkum")} />
+            <Input register={register("bcPkum")} readOnly />
           </td>
           <td>
             {data?.bcPcost}
@@ -86,14 +86,14 @@ function Tab1Footer({
           </td>
           <td>
             {data?.bcPsum}
-            <Input register={register("bcPsum")} />
+            <Input register={register("bcPsum")} readOnly />
           </td>
         </tr>
         <tr>
           <th className="light-gray ">부탄</th>
           <td>
             {data?.bcBin}
-            <Input register={register("bcBin")} />
+            <Input register={register("bcBin")} readOnly />
           </td>
           <td>
             {data.bcBjan}
@@ -108,7 +108,7 @@ function Tab1Footer({
           </td>
           <td>
             {data?.bcSumB}
-            <Input register={register("bcSumB")} />
+            <Input register={register("bcSumB")} readOnly />
           </td>
           <td>
             {data?.bcBdanga}
@@ -123,7 +123,7 @@ function Tab1Footer({
           </td>
           <td>
             {data?.bcBkum}
-            <Input register={register("bcBkum")} />
+            <Input register={register("bcBkum")} readOnly />
           </td>
           <td>
             {data?.bcBcost}
@@ -138,7 +138,7 @@ function Tab1Footer({
           </td>
           <td>
             {data?.bcBsum}
-            <Input register={register("bcBsum")} />
+            <Input register={register("bcBsum")} readOnly />
           </td>
         </tr>
         <tr>
@@ -157,28 +157,28 @@ function Tab1Footer({
           <th>합계</th>
           <td>
             {data?.bcTotal}
-            <Input register={register("bcTotal")} />
+            <Input register={register("bcTotal")} readOnly />
           </td>
           <td>
             {data?.bcJTotal}
-            <Input register={register("bcJTotal")} />
+            <Input register={register("bcJTotal")} readOnly />
           </td>
           <td>
             {data?.bcSumTotal}
-            <Input register={register("bcSumTotal")} />
+            <Input register={register("bcSumTotal")} readOnly />
           </td>
           <td></td>
           <td>
             {data?.bcSumKum}
-            <Input register={register("bcSumKum")} />
+            <Input register={register("bcSumKum")} readOnly />
           </td>
           <td>
             {data?.bcSumCost}
-            <Input register={register("bcSumCost")} />
+            <Input register={register("bcSumCost")} readOnly />
           </td>
           <td>
             {data?.bcSum}
-            <Input register={register("bcSum")} />
+            <Input register={register("bcSum")} readOnly />
           </td>
         </tr>
       </CTable2>

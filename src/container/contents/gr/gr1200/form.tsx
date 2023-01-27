@@ -406,7 +406,7 @@ function Form({
       let bcSum: number = 0;
       const bcBsum = bcBkum + parseInt(num === "" ? 0 : num);
       bcSumCost = parseInt(num === "" ? 0 : num) + +bcPcost + +data65?.bcGcost;
-      bcSum = bcBsum + +bcPsum;
+      bcSum = +bcBsum + +bcPsum;
 
       reset((formValues) => ({
         ...formValues,
