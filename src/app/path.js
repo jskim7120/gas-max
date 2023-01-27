@@ -107,10 +107,13 @@ export const GR110065 = "/app/GR1100/65";
 export const GR1500SEARCH = "/app/GR1500/search";
 export const GR1500SEARCH1 = "/app/GR1500/search1";
 export const GR1500SEARCH2 = "/app/GR1500/search2";
+
 export const GR1200SEARCH = "/app/GR1200/search";
 export const GR120065 = "/app/GR1200/65";
 export const GR120012 = "/app/GR1200/12";
 export const GR120011 = "/app/GR1200/11";
+export const GR1200BUYINSERT = "/app/GR1200/BUY/insert";
+export const GR1200BUYUPDATE = "/app/GR1200/BUY/update";
 
 export const GR130065 = "/app/GR1300/65";
 export const GR1300SEARCH = "app/GR1300/search";

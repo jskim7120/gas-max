@@ -33,8 +33,9 @@ import {
   formatDateByRemoveDash,
   formatDate,
 } from "helpers/dateFormat";
-import { GR120065 } from "app/path";
+import { GR120065, GR1200BUYINSERT, GR1200BUYUPDATE } from "app/path";
 import API from "app/axios";
+import { clear } from "console";
 
 const radioOptions = [
   {
@@ -182,7 +183,6 @@ function Form({
 
       data65Detail.forEach((obj: any) => {
         if (obj.bclGubun === "0") {
-          console.log(obj.bclInqty, obj.bclKg);
           bcPin += (obj.bclInqty ?? 0) * obj.bclKg;
           if (obj.bclSvyn === "N") {
             bcSumP += (obj.bclInqty ?? 0) * obj.bclKg;
@@ -481,6 +481,97 @@ function Form({
     }
   };
 
+  const handleInsert = async () => {
+    const formValues = getValues();
+    console.log("formValues:", formValues);
+    try {
+      const response: any = await API.post(GR1200BUYUPDATE, formValues);
+      console.log("response::::", response);
+
+      if (response.status === 200) {
+        toast.success("삭제하였습니다", {
+          autoClose: 500,
+        });
+      } else {
+        toast.error(response?.response?.message, {
+          autoClose: 500,
+        });
+      }
+    } catch (err) {
+      toast.error("Couldn't delete", {
+        autoClose: 500,
+      });
+    }
+
+    // {
+    //   "areaCode": "string",
+    //   "bcBcost": 0,
+    //   "bcBdanga": 0,
+    //   "bcBigo": "string",
+    //   "bcBin": 0,
+    //   "bcBjan": 0,
+    //   "bcBkum": 0,
+    //   "bcBuCode": "string",
+    //   "bcBuName": "string",
+    //   "bcCaCode": "string",
+    //   "bcCarno": "string",
+    //   "bcChitType": "string",
+    //   "bcCsawon": "string",
+    //   "bcCtype": "string",
+    //   "bcDate": "string",
+    //   "bcDateno": "string",
+    //   "bcDc": 0,
+    //   "bcGcost": 0,
+    //   "bcGin": 0,
+    //   "bcGkum": 0,
+    //   "bcInkum": 0,
+    //   "bcJunno": "string",
+    //   "bcMemo": "string",
+    //   "bcMisu": 0,
+    //   "bcOutkum": 0,
+    //   "bcPapNo": "string",
+    //   "bcPcost": 0,
+    //   "bcPdanga": 0,
+    //   "bcPin": 0,
+    //   "bcPjan": 0,
+    //   "bcPkum": 0,
+    //   "bcSno": "string",
+    //   "bcSupplyAmt": 0,
+    //   "bcSupplyType": "string",
+    //   "bcVatAmt": 0,
+    //   "opt": 0
+    // }
+  };
+
+  const clear = () => {
+    console.log("===============>");
+    reset({
+      areaCode: "",
+      bcDate: "",
+      bcBuCode: "",
+      bcCtype: "",
+      bcJunno: "",
+      bcDateno: "",
+      bcCsawon: "",
+      bcCarno: "",
+
+      // bcCtype: data65.bcCtype,
+      // bcCaCode: data65.bcCaCode,
+      // bcPjan: data65.bcPjan,
+      // bcBjan: data65.bcBjan,
+      // bcPdanga: data65.bcPdanga,
+      // bcBdanga: data65.bcBdanga,
+      // bcPcost: data65.bcPcost,
+      // bcBcost: data65.bcBcost,
+      // bcTotal: data65.bcTotal,
+      // bcJTotal: data65.bcJTotal,
+      // bcSumTotal: data65.bcSumTotal,
+      // bcSumKum: data65.bcSumKum,
+      // bcSumCost: data65.bcSumCost,
+      // bcSum: data65.bcSum,
+    });
+  };
+
   return (
     <div
       style={{
@@ -530,6 +621,7 @@ function Form({
               style={{ marginRight: "5px" }}
               onClick={() => {
                 setAddBtnClicked(true);
+                clear();
               }}
             />
             <Button
@@ -549,6 +641,7 @@ function Form({
               color={ButtonColor.SUCCESS}
               onClick={() => {
                 setAddBtnClicked(false);
+                handleInsert();
               }}
             />
             <Button
