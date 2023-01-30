@@ -33,8 +33,15 @@ import {
   formatDateByRemoveDash,
   formatDate,
 } from "helpers/dateFormat";
-import { GR120065 } from "app/path";
+import {
+  GR120065,
+  GR1200BUYINSERT,
+  GR1200BUYUPDATE,
+  GR1200BLUPDATE,
+  GR1200BLINSERT,
+} from "app/path";
 import API from "app/axios";
+import { clear } from "console";
 
 const radioOptions = [
   {
@@ -66,41 +73,21 @@ function Form({
   const [radioChecked, setRadioChecked] = useState(0);
 
   const [data65, setData65] = useState<any>({});
-  const [data65Detail, setData65Detail] = useState<any[]>();
+  const [data65Detail, setData65Detail] = useState<any[]>([]);
+  const [bclInqtyLPG, setBclInqtyLPG] = useState(false);
 
-  const [bclInqty, setBclInqty] = useState<number | null>(null);
+  const [pin, setPin] = useState(0);
+  const [bin, setBin] = useState(0);
+  const [sumP, setSumP] = useState(0);
+  const [sumB, setSumB] = useState(0);
 
   const stateGR1200 = useSelector((state: any) => state.modal.gr1200);
-
-  const { register, handleSubmit, reset, control } = useForm<IDATA65>({
-    mode: "onSubmit",
-  });
-
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (selected) {
-      fetchData65();
-    }
-  }, [selected]);
-
-  useEffect(() => {
-    if (data65) {
-      let newData: any = {};
-
-      for (const [key, value] of Object.entries(data65)) {
-        newData[key] = value;
-      }
-
-      reset({
-        ...newData,
-        bcDate: data65.bcDate ? formatDate(data65.bcDate) : "",
-      });
-
-      setTabId(parseInt(data65?.bcChitType));
-    }
-    setAddBtnClicked(false);
-  }, [data65]);
+  const { register, handleSubmit, reset, control, getValues } =
+    useForm<IDATA65>({
+      mode: "onSubmit",
+    });
 
   useEffect(() => {
     if (stateGR1200.index !== undefined && stateGR1200.jpName) {
@@ -112,6 +99,8 @@ function Form({
               bclJpName: stateGR1200.jpName,
               bclJpCode: stateGR1200.jpCode,
               bclSvyn: stateGR1200.jpSvyn,
+              bclGubun: stateGR1200.jpGubun,
+              bclKg: stateGR1200.jpKg,
             };
           } else return object;
         })
@@ -120,10 +109,50 @@ function Form({
   }, [stateGR1200]);
 
   useEffect(() => {
-    if (bclInqty !== null) {
-      console.log("bclInqty::::", bclInqty);
+    if (selected) {
+      fetchData65();
     }
-  }, [bclInqty]);
+  }, [selected]);
+
+  useEffect(() => {
+    if (data65) {
+      reset({
+        areaCode: data65.areaCode,
+        bcDate: data65.bcDate ? formatDate(data65.bcDate) : "",
+        bcDateno: data65.bcDateno,
+        bcBuCode: data65.bcBuCode,
+        bcJunno: data65.bcJunno,
+        bcCtype: data65.bcCtype,
+        bcCsawon: data65.bcCsawon,
+        bcCarno: data65.bcCarno,
+        bcCaCode: data65.bcCaCode,
+        //---------------
+        bcPjan: data65.bcPjan,
+        bcBjan: data65.bcBjan,
+        bcPdanga: data65.bcPdanga,
+        bcBdanga: data65.bcBdanga,
+        bcPcost: data65.bcPcost,
+        bcBcost: data65.bcBcost,
+        bcTotal: data65.bcTotal,
+        bcJTotal: data65.bcJTotal,
+        bcSumTotal: data65.bcSumTotal,
+        bcSumKum: data65.bcSumKum,
+        bcSumCost: data65.bcSumCost,
+        bcSum: data65.bcSum,
+      });
+
+      setTabId(parseInt(data65?.bcChitType));
+    }
+    setAddBtnClicked(false);
+  }, [data65]);
+
+  useEffect(() => {
+    someFunc();
+  }, [data65Detail]);
+
+  useEffect(() => {
+    someFunc();
+  }, [bclInqtyLPG]);
 
   /*
   const openPopup = () => {
@@ -140,13 +169,270 @@ function Form({
   };
   */
 
+  const someFunc = () => {
+    if (data65Detail) {
+      let bcPin = 0;
+      let bcBin = 0;
+      let bcSumP = 0;
+      let bcSumB = 0;
+      let bcPkum = 0;
+      let bcBkum = 0;
+      let bcPsum = 0;
+      let bcBsum = 0;
+
+      let bcTotal = 0;
+      let bcJTotal = 0;
+      let bcSumTotal = 0;
+      let bcSumKum = 0;
+      let bcSumCost = 0;
+      let bcSum = 0;
+
+      data65Detail.forEach((obj: any) => {
+        if (obj.bclGubun === "0") {
+          bcPin += (obj.bclInqty ?? 0) * obj.bclKg;
+          if (obj.bclSvyn === "N") {
+            bcSumP += (obj.bclInqty ?? 0) * obj.bclKg;
+          }
+        }
+
+        if (obj.bclGubun === "1") {
+          bcBin += (obj.bclInqty ?? 0) * obj.bclKg;
+
+          if (obj.bclSvyn === "N") {
+            bcSumB += (obj.bclInqty ?? 0) * obj.bclKg;
+          }
+        }
+      });
+
+      setPin(bcPin);
+      setBin(bcBin);
+      setSumP(bcSumP);
+      setSumB(bcSumB);
+
+      const { bcPjan, bcBjan, bcPdanga, bcBdanga, bcPcost, bcBcost } =
+        getValues();
+
+      if (bcPjan) {
+        bcSumP -= bcPjan;
+      }
+      if (bcBjan) {
+        bcSumB -= bcBjan;
+      }
+      if (bcPdanga) {
+        bcPkum = bcSumP * bcPdanga;
+      }
+      if (bcBdanga) {
+        bcBkum = bcSumB * bcBdanga;
+      }
+
+      if (bcPcost) {
+        bcPsum = bcPkum + +bcPcost;
+      } else {
+        bcPsum = bcPkum;
+      }
+
+      if (bcBcost) {
+        bcBsum = bcBkum + +bcBcost;
+      } else {
+        bcBsum = bcBkum;
+      }
+
+      bcTotal =
+        (isNaN(bcPin) ? 0 : +bcPin) +
+        (isNaN(bcBin) ? 0 : +bcBin) +
+        +data65?.bcGin;
+      bcJTotal = +bcPjan + +bcBjan;
+      bcSumTotal = bcSumP + +bcSumB;
+      bcSumKum = bcPkum + +bcBkum + +data65?.bcGkum;
+      bcSumCost = +bcPcost + +bcBcost + +data65?.bcGcost;
+      bcSum = bcPsum + +bcBsum + +data65?.bcGsum;
+
+      reset((formValues) => ({
+        ...formValues,
+        bcPin: isNaN(bcPin) ? 0 : bcPin,
+        bcBin: isNaN(bcBin) ? 0 : bcBin,
+        bcSumP: bcSumP,
+        bcSumB: bcSumB,
+        bcPkum: bcPkum,
+        bcBkum: bcBkum,
+        bcPsum: bcPsum,
+        bcBsum: bcBsum,
+        bcTotal: bcTotal,
+        bcJTotal: bcJTotal,
+        bcSumTotal: bcSumTotal,
+        bcSumKum: bcSumKum,
+        bcSumCost: bcSumCost,
+        bcSum: bcSum,
+      }));
+    }
+  };
+
+  const anotherFunc = (num: any, name: string) => {
+    if (name === "bcPjan") {
+      const { bcPdanga, bcPcost, bcBjan, bcSumB, bcBkum, bcBsum } = getValues();
+      let bcSumP: number = 0;
+      let bcPkum: number = 0;
+      let bcPsum: number = 0;
+      let bcJTotal: number = 0;
+      let bcSumTotal: number = 0;
+      let bcSumKum: number = 0;
+      let bcSum: number = 0;
+
+      bcSumP = sumP - parseInt(num === "" ? 0 : num);
+
+      if (bcPdanga) {
+        bcPkum = bcSumP * bcPdanga;
+      }
+
+      if (bcPcost) {
+        bcPsum = bcPkum + +bcPcost;
+      } else {
+        bcPsum = bcPkum;
+      }
+
+      bcJTotal = parseInt(num === "" ? 0 : num) + +bcBjan;
+      bcSumTotal = bcSumP + +bcSumB;
+      bcSumKum = bcPkum + +bcBkum;
+      bcSum = bcPsum + bcBsum;
+
+      reset((formValues) => ({
+        ...formValues,
+        bcSumP: bcSumP,
+        bcPkum: bcPkum,
+        bcPsum: bcPsum,
+        bcJTotal: bcJTotal,
+        bcSumTotal: bcSumTotal,
+        bcSumKum: bcSumKum,
+        bcSum: bcSum,
+      }));
+    }
+
+    if (name === "bcBjan") {
+      const { bcBdanga, bcBcost, bcPjan, bcSumP, bcPkum, bcPsum } = getValues();
+      let bcSumB: number = 0;
+      let bcBkum: number = 0;
+      let bcBsum: number = 0;
+      let bcJTotal: number = 0;
+      let bcSumTotal: number = 0;
+      let bcSumKum: number = 0;
+      let bcSum: number = 0;
+
+      bcSumB = sumB - parseInt(num === "" ? 0 : num);
+
+      if (bcBdanga) {
+        bcBkum = bcSumB * bcBdanga;
+      }
+
+      if (bcBcost) {
+        bcBsum = bcBkum + +bcBcost;
+      } else {
+        bcBsum = bcBkum;
+      }
+
+      bcJTotal = parseInt(num === "" ? 0 : num) + +bcPjan;
+      bcSumTotal = bcSumB + +bcSumP;
+      bcSumKum = bcBkum + +bcPkum;
+      bcSum = bcBsum + bcPsum;
+
+      reset((formValues) => ({
+        ...formValues,
+        bcSumB: bcSumB,
+        bcBkum: bcBkum,
+        bcBsum: bcBsum,
+        bcJTotal: bcJTotal,
+        bcSumTotal: bcSumTotal,
+        bcSumKum: bcSumKum,
+        bcSum: bcSum,
+      }));
+    }
+
+    if (name === "bcPdanga") {
+      let bcPsum: number;
+      const { bcSumP, bcPcost, bcBkum, bcBsum } = getValues();
+      const bcPkum = bcSumP * parseInt(num === "" ? 0 : num);
+
+      if (bcPcost) {
+        bcPsum = bcPkum + +bcPcost;
+      } else {
+        bcPsum = bcPkum;
+      }
+      const bcSumKum = bcPkum + bcBkum;
+      const bcSum = bcPsum + bcBsum;
+
+      reset((formValues) => ({
+        ...formValues,
+        bcPkum: bcPkum,
+        bcPsum: bcPsum,
+        bcSumKum: bcSumKum,
+        bcSum: bcSum,
+      }));
+    }
+
+    if (name === "bcBdanga") {
+      let bcBsum: number;
+      const { bcSumB, bcBcost, bcPkum, bcPsum } = getValues();
+      const bcBkum = bcSumB * parseInt(num === "" ? 0 : num);
+
+      if (bcBcost) {
+        bcBsum = bcBkum + +bcBcost;
+      } else {
+        bcBsum = bcBkum;
+      }
+      const bcSumKum = bcBkum + bcPkum;
+      const bcSum = bcBsum + bcPsum;
+
+      reset((formValues) => ({
+        ...formValues,
+        bcBkum: bcBkum,
+        bcBsum: bcBsum,
+        bcSumKum: bcSumKum,
+        bcSum: bcSum,
+      }));
+    }
+
+    if (name === "bcPcost") {
+      const { bcPkum, bcBcost, bcBsum } = getValues();
+      let bcSumCost: number = 0;
+      let bcSum: number = 0;
+      const bcPsum = bcPkum + parseInt(num === "" ? 0 : num);
+      bcSumCost = parseInt(num === "" ? 0 : num) + +bcBcost + +data65?.bcGcost;
+      bcSum = bcPsum + +bcBsum;
+
+      reset((formValues) => ({
+        ...formValues,
+        bcPsum: bcPsum,
+        bcSumCost: bcSumCost,
+        bcSum: bcSum,
+      }));
+    }
+
+    if (name === "bcBcost") {
+      const { bcBkum, bcPcost, bcPsum } = getValues();
+      let bcSumCost: number = 0;
+      let bcSum: number = 0;
+      const bcBsum = bcBkum + parseInt(num === "" ? 0 : num);
+      bcSumCost = parseInt(num === "" ? 0 : num) + +bcPcost + +data65?.bcGcost;
+      bcSum = +bcBsum + +bcPsum;
+
+      reset((formValues) => ({
+        ...formValues,
+        bcBsum: bcBsum,
+        bcSumCost: bcSumCost,
+        bcSum: bcSum,
+      }));
+    }
+  };
+
   const addRow = () => {
     if (data65Detail !== undefined) {
       setData65Detail((prev: any) => [
         ...prev,
         {
+          bclAmt: null,
           bclChungbok: null,
           bclChungdae: null,
+          bclCost: null,
+          bclGubun: "1",
           bclInc: "",
           bclInmigum: null,
           bclInqty: null,
@@ -157,6 +443,7 @@ function Form({
           bclOutqty: null,
           bclSvyn: "",
           bclTongdel: null,
+          isNew: true,
         },
       ]);
       setRowIndex(null);
@@ -188,8 +475,10 @@ function Form({
       });
 
       if (data) {
-        setData65(data?.mainData[0]);
-        setData65Detail([...data?.detailData]);
+        data?.mainData ? setData65(data?.mainData[0]) : setData65({});
+        data?.detailData
+          ? setData65Detail([...data?.detailData])
+          : setData65Detail([]);
       } else {
         setData65({});
         setData65Detail([]);
@@ -197,6 +486,127 @@ function Form({
     } catch (err) {
       console.log("GR1200 65 DATA fetch error =======>", err);
     }
+  };
+
+  const handleInsert = async () => {
+    const formValues = getValues();
+    console.log("formValues:", formValues);
+
+    let path: string;
+
+    if (isAddBtnClicked) {
+      path = GR1200BUYINSERT;
+    } else {
+      path = GR1200BUYUPDATE;
+    }
+
+    try {
+      if (data65Detail?.length > 0) {
+        const res: any = await Promise.all(
+          data65Detail.map((item: any) => {
+            if (item.isNew) {
+              API.post(GR1200BLINSERT, {
+                ...item,
+                areaCode: formValues.areaCode,
+                bcBuCode: formValues.bcBuCode,
+                bcSno: data65.bcSno,
+                //bclJpSno: data65.bcSno,
+                bcDate: formatDateByRemoveDash(formValues.bcDate),
+              });
+            }
+          })
+        );
+
+        console.log("res::::::::", res.returnValue);
+      }
+    } catch (err) {}
+
+    // try {
+    //   const response: any = await API.post(GR1200BUYUPDATE, formValues);
+    //   console.log("response::::", response);
+
+    //   if (response.status === 200) {
+    //     toast.success("삭제하였습니다", {
+    //       autoClose: 500,
+    //     });
+    //   } else {
+    //     toast.error(response?.response?.message, {
+    //       autoClose: 500,
+    //     });
+    //   }
+    // } catch (err) {
+    //   toast.error("Couldn't delete", {
+    //     autoClose: 500,
+    //   });
+    // }
+
+    // {
+    //   "areaCode": "string",
+    //   "bcBcost": 0,
+    //   "bcBdanga": 0,
+    //   "bcBigo": "string",
+    //   "bcBin": 0,
+    //   "bcBjan": 0,
+    //   "bcBkum": 0,
+    //   "bcBuCode": "string",
+    //   "bcBuName": "string",
+    //   "bcCaCode": "string",
+    //   "bcCarno": "string",
+    //   "bcChitType": "string",
+    //   "bcCsawon": "string",
+    //   "bcCtype": "string",
+    //   "bcDate": "string",
+    //   "bcDateno": "string",
+    //   "bcDc": 0,
+    //   "bcGcost": 0,
+    //   "bcGin": 0,
+    //   "bcGkum": 0,
+    //   "bcInkum": 0,
+    //   "bcJunno": "string",
+    //   "bcMemo": "string",
+    //   "bcMisu": 0,
+    //   "bcOutkum": 0,
+    //   "bcPapNo": "string",
+    //   "bcPcost": 0,
+    //   "bcPdanga": 0,
+    //   "bcPin": 0,
+    //   "bcPjan": 0,
+    //   "bcPkum": 0,
+    //   "bcSno": "string",
+    //   "bcSupplyAmt": 0,
+    //   "bcSupplyType": "string",
+    //   "bcVatAmt": 0,
+    //   "opt": 0
+    // }
+  };
+
+  const clear = () => {
+    console.log("===============>");
+    reset({
+      areaCode: "",
+      bcDate: "",
+      bcBuCode: "",
+      bcCtype: "",
+      bcJunno: "",
+      bcDateno: "",
+      bcCsawon: "",
+      bcCarno: "",
+
+      // bcCtype: data65.bcCtype,
+      // bcCaCode: data65.bcCaCode,
+      // bcPjan: data65.bcPjan,
+      // bcBjan: data65.bcBjan,
+      // bcPdanga: data65.bcPdanga,
+      // bcBdanga: data65.bcBdanga,
+      // bcPcost: data65.bcPcost,
+      // bcBcost: data65.bcBcost,
+      // bcTotal: data65.bcTotal,
+      // bcJTotal: data65.bcJTotal,
+      // bcSumTotal: data65.bcSumTotal,
+      // bcSumKum: data65.bcSumKum,
+      // bcSumCost: data65.bcSumCost,
+      // bcSum: data65.bcSum,
+    });
   };
 
   return (
@@ -248,6 +658,7 @@ function Form({
               style={{ marginRight: "5px" }}
               onClick={() => {
                 setAddBtnClicked(true);
+                clear();
               }}
             />
             <Button
@@ -267,6 +678,7 @@ function Form({
               color={ButtonColor.SUCCESS}
               onClick={() => {
                 setAddBtnClicked(false);
+                handleInsert();
               }}
             />
             <Button
@@ -408,12 +820,16 @@ function Form({
         >
           <TabGrid
             data={data65Detail}
+            setData={setData65Detail}
             data2={data65}
             tabId={tabId ? tabId : 0}
             //openPopup={openPopup}
             setRowIndex={setRowIndex}
             register={register}
-            setBclInqty={setBclInqty}
+            setBclInqtyLPG={setBclInqtyLPG}
+            reset={reset}
+            someFunc={someFunc}
+            anotherFunc={anotherFunc}
           />
         </TabContentWrapper>
       </form>
