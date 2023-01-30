@@ -145,5 +145,7 @@ export const GR900865 = "/app/GR9007/65";
 export const GR9009SEARCH = "/app/GR9008/search";
 export const GR900965 = "/app/GR9008/65";
 
+export const RV1100SEARCH = "/app/RV1100/search";
+
 export const FOOT61 = "/app/CM1100/foot61";
 export const FOOTER = "/app/CM1100/footer";
