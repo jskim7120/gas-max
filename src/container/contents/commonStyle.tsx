@@ -121,7 +121,7 @@ export const LeftSide = styled.div<{ width?: string }>`
 export const RightSide = styled.div<{ width?: string }>`
   overflow-x: auto;
 
-  //width: ${(props) => (props.width ? props.width : "100%")};
+  // width: ${(props) => (props.width ? props.width : "100%")};
   // @media only screen and (max-width: 1023px) {
   // }
 

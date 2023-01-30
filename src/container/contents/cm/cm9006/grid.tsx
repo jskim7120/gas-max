@@ -51,7 +51,7 @@ function Grid({ data, reportKind }: { data: any; reportKind: string }) {
       gv.destroy();
       dp.destroy();
     };
-  }, [data]);
+  }, [data, fields]);
 
   return (
     <div

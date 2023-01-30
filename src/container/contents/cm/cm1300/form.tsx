@@ -275,7 +275,7 @@ const Form = React.forwardRef(
           />
           <Field>
             <FormGroup>
-              <Label style={{ marginRight: "10px" }}>건물구조</Label>
+              <Label>건물구조</Label>
               {radioOptions.map((option, index) => (
                 <Item key={index}>
                   <RadioButton
@@ -287,7 +287,10 @@ const Form = React.forwardRef(
                     id={option.id}
                     // onChange={() => console.log(option.label)}
                   />
-                  <RadioButtonLabel htmlFor={`${option.label}`}>
+                  <RadioButtonLabel
+                    htmlFor={`${option.label}`}
+                    style={{ width: "max-content" }}
+                  >
                     {option.label}
                   </RadioButtonLabel>
                 </Item>
@@ -346,6 +349,7 @@ const Form = React.forwardRef(
               register={register("chkAptZipCode")}
               rtl={false}
               onChange={(e: any) => setChkAptZipCode(e.target.checked)}
+              style={{ marginRight: "2px" }}
             />
           </Label>
           <Input
@@ -358,7 +362,7 @@ const Form = React.forwardRef(
           <Input
             register={register("aptAddr1")}
             errors={errors["aptAddr1"]?.message}
-            inputSize={InputSize.md290}
+            inputSize={InputSize.i367}
           />
         </Wrapper>
         <Wrapper grid col={3}>

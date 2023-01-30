@@ -330,7 +330,7 @@ export const Label = styled.label<{
   font-size: 15px;
   font-weight: 550;
   min-width: ${(props) => (props.labelLong ? "200px" : "120px")};
-  height: 30px;
+  height: 34px;
   text-align: right;
   padding: 5px;
   background: transparent;
@@ -390,6 +390,12 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
 
   &.outer-border {
     border: 1px solid #ccc;
+  }
+
+  .cm1105Label {
+    label {
+      min-width: 150px;
+    }
   }
 
   &.rectangle {

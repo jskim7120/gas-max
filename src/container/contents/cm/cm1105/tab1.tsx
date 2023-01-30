@@ -60,7 +60,11 @@ function Tab1({
       <Wrapper grid col={4}>
         <Input label="상호" register={register("cuSangho")} />
         <div></div>
-        <Input label="대표" register={register("cuSajang")} />
+        <Input
+          label="대표"
+          register={register("cuSajang")}
+          className="cm1105Label"
+        />
       </Wrapper>
 
       <Wrapper grid col={2}>

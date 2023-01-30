@@ -229,7 +229,7 @@ function Tab3({
                   />
                 )}
               />
-              <p style={{ marginLeft: "-3px" }}>%</p>
+              <p style={{ marginLeft: "2px" }}>%</p>
             </Field>
             <Input
               register={register("tankTransmCd1")}
@@ -320,7 +320,7 @@ function Tab3({
                   />
                 )}
               />
-              <p style={{ marginLeft: "-3px" }}>%</p>
+              <p style={{ marginLeft: "2px" }}>%</p>
             </Field>
 
             <Input
