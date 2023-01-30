@@ -46,7 +46,7 @@ function RV9005({
     formState: { errors },
     getValues,
     control,
-  } = useForm<IGR9005SEARCH>({
+  } = useForm<IRV9005SEARCH>({
     mode: "onSubmit",
   });
 
@@ -54,7 +54,6 @@ function RV9005({
     if (dataCommonDic !== undefined) {
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
-        bcBuCode: dataCommonDic?.bcBuCode[0].code,
       });
     }
   };
@@ -62,7 +61,6 @@ function RV9005({
   useEffect(() => {
     reset({
       areaCode: dataCommonDic?.areaCode[0].code,
-      bcBuCode: dataCommonDic?.bcBuCode[0].code,
     });
   }, [dataCommonDic]);
 
@@ -87,7 +85,7 @@ function RV9005({
     setData([]);
   };
 
-  const submit = (data: IGR9005SEARCH) => {
+  const submit = (data: IRV9005SEARCH) => {
     console.log("IISEARCH:", data);
     fetchData(data);
   };
@@ -113,54 +111,6 @@ function RV9005({
       <WrapperContent style={{ height: `calc(100% - 76px)` }}>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper style={{ alignItems: "baseline" }}>
-            <div>
-              <Wrapper grid col={2} fields="1fr 1.5fr">
-                <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>충전소</Label>
-                  <Select
-                    width={InputSize.i130}
-                    {...register("bcBuCode")}
-                    kind={FieldKind.BORDER}
-                  >
-                    {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>기간</Label>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("sDate")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("eDate")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
-                </FormGroup>
-              </Wrapper>
-            </div>
-
             <div
               className="button-wrapper"
               style={{ flexDirection: "row", gap: "0px" }}
