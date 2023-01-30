@@ -144,7 +144,7 @@ function Tab2({
                 )}
               />
 
-              <p style={{ marginLeft: "-3px" }}>%</p>
+              <p style={{ marginLeft: "2px" }}>%</p>
             </Field>
             <Field flex>
               <Controller
@@ -162,7 +162,7 @@ function Tab2({
                   />
                 )}
               />
-              <p style={{ marginLeft: "-3px" }}>%</p>
+              <p style={{ marginLeft: "2px" }}>%</p>
             </Field>
             <Input
               label="순번"
@@ -188,7 +188,7 @@ function Tab2({
                   />
                 )}
               />
-              <p style={{ marginLeft: "-3px" }}>원</p>
+              <p style={{ marginLeft: "2px" }}>원</p>
             </Field>
             <Field flex style={{ width: "259px" }}>
               <Controller
@@ -206,7 +206,7 @@ function Tab2({
                   />
                 )}
               />
-              <p style={{ marginLeft: "-3px" }}>원</p>
+              <p style={{ marginLeft: "2px" }}>원</p>
             </Field>
             <Field flex>
               <Controller
@@ -231,7 +231,7 @@ function Tab2({
           <Wrapper grid fields={"1fr 1fr 2fr"}>
             <FormGroup>
               <Label>검침주기</Label>
-              <Select {...register("cuGumTurm")} width={InputSize.i120}>
+              <Select {...register("cuGumTurm")} width={InputSize.i130}>
                 {dataCommonDic?.cuGumTurm?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

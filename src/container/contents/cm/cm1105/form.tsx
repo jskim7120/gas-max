@@ -422,7 +422,7 @@ function FormCM1105() {
           <Input
             label="거래처코드"
             register={register("cuCode")}
-            inputSize={InputSize.i80}
+            inputSize={InputSize.i120}
           />
           <Input
             label="거래처명(건물명)"
@@ -727,6 +727,7 @@ function FormCM1105() {
               <Input
                 register={register("cuTongkum")}
                 inputSize={InputSize.i140}
+                mask={currencyMask}
                 textAlign="right"
               />
             </FormGroup>
@@ -735,6 +736,7 @@ function FormCM1105() {
               <Input
                 register={register("cuJmisu")}
                 inputSize={InputSize.i140}
+                mask={currencyMask}
                 textAlign="right"
               />
             </FormGroup>
@@ -743,6 +745,7 @@ function FormCM1105() {
               <Input
                 register={register("cuCmisu")}
                 inputSize={InputSize.i140}
+                mask={currencyMask}
                 textAlign="right"
               />
             </FormGroup>

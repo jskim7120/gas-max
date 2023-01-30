@@ -14,12 +14,14 @@ function Grid({
   fields,
   setSelected,
   openPopup,
+  cm1105PopUp,
 }: {
   data: any;
   columns: any;
   fields: any;
   setSelected?: any;
   openPopup?: any;
+  cm1105PopUp?: any;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
@@ -69,7 +71,7 @@ function Grid({
       gv.destroy();
       dp.destroy();
     };
-  }, [data]);
+  }, [data, cm1105PopUp]);
 
   return (
     <div

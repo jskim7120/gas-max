@@ -377,18 +377,19 @@ function CM9002({
                     </>
                   )
                 }
-                style={{ marginRight: "10px" }}
+                style={{ marginRight: "10px", minWidth: "max-content" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ marginRight: "10px" }}
+                style={{ marginRight: "10px", minWidth: "max-content" }}
                 type="button"
                 color={ButtonColor.LIGHT}
                 onClick={cancel}
               />
               <Button
                 text="엑셀"
+                style={{ minWidth: "max-content" }}
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"

@@ -84,7 +84,7 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
   } else if (kind === ButtonType.ROUND) {
     attributes = {
       borderRad: "15px",
-      fontSize: "12px",
+      fontSize: "15px",
       fontFamily: "NotoSansKRRegular",
       fontWeight: "normal",
       height: "30px",
@@ -166,7 +166,7 @@ const ButtonComponent = styled.button<{
         background-color: #5284ce;
         cursor: default;
       }
-      line-height: 12px;
+      line-height: 14px;
     `;
   }}
 `;
