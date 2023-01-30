@@ -33,7 +33,13 @@ import {
   formatDateByRemoveDash,
   formatDate,
 } from "helpers/dateFormat";
-import { GR120065, GR1200BUYINSERT, GR1200BUYUPDATE } from "app/path";
+import {
+  GR120065,
+  GR1200BUYINSERT,
+  GR1200BUYUPDATE,
+  GR1200BLUPDATE,
+  GR1200BLINSERT,
+} from "app/path";
 import API from "app/axios";
 import { clear } from "console";
 
@@ -67,7 +73,7 @@ function Form({
   const [radioChecked, setRadioChecked] = useState(0);
 
   const [data65, setData65] = useState<any>({});
-  const [data65Detail, setData65Detail] = useState<any[]>();
+  const [data65Detail, setData65Detail] = useState<any[]>([]);
   const [bclInqtyLPG, setBclInqtyLPG] = useState(false);
 
   const [pin, setPin] = useState(0);
@@ -437,6 +443,7 @@ function Form({
           bclOutqty: null,
           bclSvyn: "",
           bclTongdel: null,
+          isNew: true,
         },
       ]);
       setRowIndex(null);
@@ -484,24 +491,54 @@ function Form({
   const handleInsert = async () => {
     const formValues = getValues();
     console.log("formValues:", formValues);
-    try {
-      const response: any = await API.post(GR1200BUYUPDATE, formValues);
-      console.log("response::::", response);
 
-      if (response.status === 200) {
-        toast.success("삭제하였습니다", {
-          autoClose: 500,
-        });
-      } else {
-        toast.error(response?.response?.message, {
-          autoClose: 500,
-        });
-      }
-    } catch (err) {
-      toast.error("Couldn't delete", {
-        autoClose: 500,
-      });
+    let path: string;
+
+    if (isAddBtnClicked) {
+      path = GR1200BUYINSERT;
+    } else {
+      path = GR1200BUYUPDATE;
     }
+
+    try {
+      if (data65Detail?.length > 0) {
+        const res: any = await Promise.all(
+          data65Detail.map((item: any) => {
+            if (item.isNew) {
+              API.post(GR1200BLINSERT, {
+                ...item,
+                areaCode: formValues.areaCode,
+                bcBuCode: formValues.bcBuCode,
+                bcSno: data65.bcSno,
+                //bclJpSno: data65.bcSno,
+                bcDate: formatDateByRemoveDash(formValues.bcDate),
+              });
+            }
+          })
+        );
+
+        console.log("res::::::::", res.returnValue);
+      }
+    } catch (err) {}
+
+    // try {
+    //   const response: any = await API.post(GR1200BUYUPDATE, formValues);
+    //   console.log("response::::", response);
+
+    //   if (response.status === 200) {
+    //     toast.success("삭제하였습니다", {
+    //       autoClose: 500,
+    //     });
+    //   } else {
+    //     toast.error(response?.response?.message, {
+    //       autoClose: 500,
+    //     });
+    //   }
+    // } catch (err) {
+    //   toast.error("Couldn't delete", {
+    //     autoClose: 500,
+    //   });
+    // }
 
     // {
     //   "areaCode": "string",
