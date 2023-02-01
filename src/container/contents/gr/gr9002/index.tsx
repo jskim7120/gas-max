@@ -36,7 +36,7 @@ function GR9002({
   const [data, setData] = useState([]);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
-    functionName: "GR9001",
+    functionName: "GR9002",
   });
 
   const {
