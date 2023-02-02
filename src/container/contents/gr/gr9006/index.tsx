@@ -37,7 +37,7 @@ function GR9006({
   const [reportType, setReportType] = useState("");
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
-    functionName: "GR9005",
+    functionName: "GR9006",
   });
   const {
     register,
@@ -74,7 +74,7 @@ function GR9006({
       }
     } catch (err) {
       setLoading(false);
-      console.log("CM9005 DATA fetch error =======>", err);
+      console.log("CM9006 DATA fetch error =======>", err);
     }
   };
 
