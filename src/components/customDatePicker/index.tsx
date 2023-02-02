@@ -11,12 +11,14 @@ function CustomDatePicker({
   onChange,
   readOnly,
   name,
+  showYearDropdown,
 }: {
   style?: any;
   value: any;
   onChange: any;
   readOnly?: boolean;
   name?: string;
+  showYearDropdown?: boolean;
 }) {
   return (
     <DatePicker
@@ -24,6 +26,7 @@ function CustomDatePicker({
       onChange={onChange}
       showMonthDropdown
       showYearDropdown
+      showMonthYearPicker={showYearDropdown && showYearDropdown}
       dateFormat="yyyy-MM-dd"
       customInput={
         <InputWrapper style={style}>
