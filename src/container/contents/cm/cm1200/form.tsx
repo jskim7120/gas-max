@@ -352,49 +352,67 @@ const Form = React.forwardRef(
 
       formValues.cuAptnameYn = formValues.cuAptnameYn ? "Y" : "N";
 
-      formValues.cuFinishDate = formValues.cuFinishDate
-        ? formatDateToStringWithDash(formValues.cuFinishDate)
-        : "";
-      formValues.cuCircuitDate = formValues.cuCircuitDate
-        ? formatDateToStringWithDash(formValues.cuCircuitDate)
-        : "";
+      formValues.cuFinishDate =
+        typeof formValues.cuFinishDate === "object"
+          ? formatDateToStringWithDash(formValues.cuFinishDate)
+          : formValues.cuFinishDate;
+      formValues.cuCircuitDate =
+        typeof formValues.cuCircuitDate === "object"
+          ? formatDateToStringWithDash(formValues.cuCircuitDate)
+          : formValues.cuCircuitDate;
 
-      formValues.cuScheduleDate = formValues.cuScheduleDate
-        ? formatDateToStringWithDash(formValues.cuScheduleDate)
-        : "";
+      formValues.cuScheduleDate =
+        typeof formValues.cuScheduleDate === "object"
+          ? formatDateToStringWithDash(formValues.cuScheduleDate)
+          : formValues.cuScheduleDate;
 
-      formValues.gasifyCheckDate1 = formValues.gasifyCheckDate1
-        ? formatDateToStringWithDash(formValues.gasifyCheckDate1)
-        : "";
-      formValues.gasifyCheckDate2 = formValues.gasifyCheckDate2
-        ? formatDateToStringWithDash(formValues.gasifyCheckDate2)
-        : "";
-      formValues.tankFirstDate1 = formValues.tankFirstDate1
-        ? formatDateToStringWithDash(formValues.tankFirstDate1)
-        : "";
-      formValues.tankFirstDate2 = formValues.tankFirstDate2
-        ? formatDateToStringWithDash(formValues.tankFirstDate2)
-        : "";
+      formValues.gasifyCheckDate1 =
+        typeof formValues.gasifyCheckDate1 === "object"
+          ? formatDateToStringWithDash(formValues.gasifyCheckDate1)
+          : formValues.gasifyCheckDate1;
+      formValues.gasifyCheckDate2 =
+        typeof formValues.gasifyCheckDate2 === "object"
+          ? formatDateToStringWithDash(formValues.gasifyCheckDate2)
+          : formValues.gasifyCheckDate2;
+      formValues.tankFirstDate1 =
+        typeof formValues.tankFirstDate1 === "object"
+          ? formatDateToStringWithDash(formValues.tankFirstDate1)
+          : "";
+      formValues.tankFirstDate2 =
+        typeof formValues.tankFirstDate2 === "object"
+          ? formatDateToStringWithDash(formValues.tankFirstDate2)
+          : formValues.tankFirstDate2;
 
-      formValues.tankInsideDate1 = formValues.tankInsideDate1
-        ? formatDateToStringWithDash(formValues.tankInsideDate1)
-        : "";
-      formValues.tankInsideDate2 = formValues.tankInsideDate2
-        ? formatDateToStringWithDash(formValues.tankInsideDate2)
-        : "";
+      formValues.tankInsideDate1 =
+        typeof formValues.tankInsideDate1 === "object"
+          ? formatDateToStringWithDash(formValues.tankInsideDate1)
+          : formValues.tankInsideDate1;
+      formValues.tankInsideDate2 =
+        typeof formValues.tankInsideDate2 === "object"
+          ? formatDateToStringWithDash(formValues.tankInsideDate2)
+          : formValues.tankInsideDate2;
 
-      formValues.tankOutsideDate1 = formValues.tankOutsideDate1
-        ? formatDateToStringWithDash(formValues.tankOutsideDate1)
-        : "";
-      formValues.tankOutsideDate2 = formValues.tankOutsideDate2
-        ? formatDateToStringWithDash(formValues.tankOutsideDate2)
-        : "";
+      formValues.tankOutsideDate1 =
+        typeof formValues.tankOutsideDate1 === "object"
+          ? formatDateToStringWithDash(formValues.tankOutsideDate1)
+          : formValues.tankOutsideDate1;
+      formValues.tankOutsideDate2 =
+        typeof formValues.tankOutsideDate2 === "object"
+          ? formatDateToStringWithDash(formValues.tankOutsideDate2)
+          : formValues.tankOutsideDate2;
 
       formValues.cuRdangaAmt =
         formValues.cuRdangaType !== "1" ? 0 : Number(formValues.cuRdangaAmt);
       formValues.cuRdanga = Number(formValues.cuRdanga);
 
       const path = isAddBtnClicked ? CM1200INSERT : CM1200UPDATE;
+
+      if (!isAddBtnClicked) {
+        delete formValues.gasifyCheckDate1;
+        delete formValues.gasifyCheckDate2;
+        delete formValues.gasifyMakeDate1;
+        delete formValues.gasifyMakeDate2;
+      }
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {

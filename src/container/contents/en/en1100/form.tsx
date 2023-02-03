@@ -108,7 +108,7 @@ const Form = React.forwardRef(
 
           reset({
             ...newData,
-            jnSekumEa: selected?.jnSekumEa === "Y",
+            jnSekumea: selected?.jnSekumea === "Y",
             jnSegongYn: selected?.jnSegongYn === "Y",
             jnVatSumyn: selected?.jnVatSumyn === "Y",
           });
@@ -151,7 +151,7 @@ const Form = React.forwardRef(
 
       formValues.jnSegongYn = formValues.jnSegongYn ? "Y" : "N";
       formValues.jnVatSumyn = formValues.jnVatSumyn ? "Y" : "N";
-      formValues.jnSekumEa = formValues.jnSekumEa ? "Y" : "N";
+      formValues.jnSekumea = formValues.jnSekumea ? "Y" : "N";
 
       try {
         const response: any = await API.post(path, formValues);
@@ -415,7 +415,7 @@ const Form = React.forwardRef(
 
             <FormGroup>
               <CheckBox
-                register={{ ...register("jnSekumEa") }}
+                register={{ ...register("jnSekumea") }}
                 title="수량 단가 인쇄 유무"
               />
             </FormGroup>

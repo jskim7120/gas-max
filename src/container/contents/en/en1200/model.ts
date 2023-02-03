@@ -13,7 +13,7 @@ export interface IJNOSAUP {
   saupEdiSmsNo: number;
   saupEdiYn: string;
   saupJongmok: string;
-  saupJumin: number;
+  saupJumin: string;
   saupRCode: string;
   saupSajang: string;
   saupSangho: string;

@@ -34,11 +34,11 @@ interface IForm {
 const radioOptions = [
   {
     label: "사용(Y)",
-    id: "0",
+    id: "Y",
   },
   {
     label: "안함(N)",
-    id: "1",
+    id: "N",
   },
 ];
 

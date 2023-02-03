@@ -299,6 +299,7 @@ function CM1200({
                     icon={!loading && <MagnifyingGlassBig />}
                     kind={ButtonType.ROUND}
                     type="submit"
+                    style={{ minWidth: "80px" }}
                     loader={
                       loading && (
                         <>
