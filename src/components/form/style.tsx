@@ -29,6 +29,8 @@ export const getInputSize = (size?: InputSize) => {
       return `130px`;
     case InputSize.i140:
       return `140px`;
+    case InputSize.i145:
+      return `145px`;
     case InputSize.i150:
       return `150px`;
     case InputSize.i175:
@@ -284,16 +286,12 @@ export const FormGroup = styled.div<{
   textAlign?: string;
 }>`
   display: flex;
-  gap: 4px;
   align-items: center;
+  //gap: 4px;
 
   input,
   select {
-    margin: 3px 3px 3px 0;
-  }
-
-  &.small {
-    gap: 0;
+    margin: 3px;
   }
 
   &.jccenter {
@@ -305,6 +303,7 @@ export const FormGroup = styled.div<{
     font-size: 12px;
     line-height: 21px;
   }
+
   span {
     font-size: 15px;
     line-height: 35px;
@@ -330,9 +329,9 @@ export const Label = styled.label<{
   font-size: 15px;
   font-weight: 550;
   min-width: ${(props) => (props.labelLong ? "200px" : "120px")};
-  height: 34px;
+  height: 30px;
   text-align: right;
-  padding: 5px;
+  padding: 3px 7px 0px 0px;
   background: transparent;
   white-space: nowrap;
 

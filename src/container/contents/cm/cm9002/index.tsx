@@ -249,9 +249,6 @@ function CM9002({
                         {obj.codeName}
                       </option>
                     ))}
-                    <option key="sdcdcds00" value="">
-                      hooson
-                    </option>
                   </Select>
                 </FormGroup>
                 <FormGroup>
@@ -266,9 +263,6 @@ function CM9002({
                         {obj.codeName}
                       </option>
                     ))}
-                    <option key="sdcdcds00" value="">
-                      hooson
-                    </option>
                   </Select>
                 </FormGroup>
                 <FormGroup>
