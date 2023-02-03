@@ -6,7 +6,6 @@ import Button from "components/button/button";
 import {
   Document,
   Settings2,
-  MagnifyingGlassBig,
   MagnifyingGlass,
   Users,
   Reset,
