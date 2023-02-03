@@ -1,7 +1,6 @@
 import MaskedInput from "react-text-mask";
 import DatePicker from "react-datepicker";
 import styled from "styled-components";
-
 import { formatDateToString } from "helpers/dateFormat";
 import CalendarIcon from "assets/image/calendar.png";
 
@@ -57,7 +56,6 @@ const InputWrapper = styled.div`
   position: relative;
   border: 1px solid rgb(188, 185, 185);
   border-radius: 4px;
-  margin: 5px 5px 0 5px;
   background: aliceblue;
 
   &:hover,

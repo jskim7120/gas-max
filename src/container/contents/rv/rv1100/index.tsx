@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { SearchWrapper } from "../../commonStyle";
+import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import Button from "components/button/button";
 import {
   Document,
   Settings2,
   MagnifyingGlassBig,
+  MagnifyingGlass,
   Users,
   Reset,
 } from "components/allSvgIcon";
@@ -103,13 +104,13 @@ function RV1100({
   };
 
   return (
-    <div>
-      <SearchWrapper style={{ height: "35px", marginTop: "4px" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
+    <>
+      <SearchWrapper style={{ height: "35px", marginTop: "5px" }}>
+        <div style={{ display: "flex", alignItems: "baseline" }}>
           <p>{depthFullName}</p>
           <p className="big">영업소</p>
 
-          <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
+          <Select {...register("areaCode")}>
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -135,8 +136,8 @@ function RV1100({
       </SearchWrapper>
       <SearchWrapper>
         <div style={{ width: "70%" }}>
-          <Wrapper grid col={4} fields="1.2fr 0.7fr 0.7fr 1.2fr">
-            <FormGroup style={{ gap: "0" }}>
+          <Wrapper grid col={4} fields="1fr 0.5fr 0.6fr 1fr">
+            <FormGroup>
               <Label style={{ minWidth: "auto" }}>검침년월</Label>
               <Controller
                 control={control}
@@ -160,7 +161,7 @@ function RV1100({
               </Select>
             </FormGroup>
 
-            <FormGroup style={{ gap: "0" }}>
+            <FormGroup>
               <Label style={{ minWidth: "80px" }}>검침일자</Label>
               <Controller
                 control={control}
@@ -176,7 +177,7 @@ function RV1100({
               />
             </FormGroup>
 
-            <FormGroup>
+            <FormGroup style={{ gap: "8px" }}>
               <CheckBox
                 register={{ ...register("sGjPerYn") }}
                 title="연체적요일"
@@ -196,19 +197,19 @@ function RV1100({
             <Field flex>
               <Button
                 text="검색"
-                icon={!loading && <MagnifyingGlassBig />}
+                icon={!loading && <MagnifyingGlass />}
                 type="button"
                 color={ButtonColor.SECONDARY}
-                style={{ marginLeft: "6px" }}
+                //style={{ marginLeft: "8px" }}
                 onClick={handleSubmit(submit)}
                 loader={
                   loading && (
                     <>
                       <Loader
                         color="white"
-                        size={17}
+                        size={16}
                         style={{ marginRight: "10px" }}
-                        borderWidth="3px"
+                        borderWidth="2px"
                       />
                     </>
                   )
@@ -231,16 +232,16 @@ function RV1100({
             </Field>
           </Wrapper>
 
-          <Wrapper grid col={4} fields="1.2fr 0.7fr 0.7fr 1.2fr">
-            <FormGroup style={{ gap: "0" }}>
+          <Wrapper grid col={4} fields="1fr 0.5fr 0.6fr 1fr">
+            <FormGroup>
               <Input
                 label="건물명"
                 register={register("sCuName")}
-                labelStyle={{ minWidth: "66px" }}
+                labelStyle={{ minWidth: "62px" }}
                 fullWidth
               />
             </FormGroup>
-            <FormGroup style={{ gap: "0" }}>
+            <FormGroup>
               <Label style={{ minWidth: "80px" }}>담당사원</Label>
               <Select {...register("sSwCode")}>
                 {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
@@ -250,8 +251,8 @@ function RV1100({
                 ))}
               </Select>
             </FormGroup>
-            <FormGroup style={{ gap: "0" }}>
-              <Label style={{ minWidth: "auto" }}>지역분류</Label>
+            <FormGroup>
+              <Label style={{ minWidth: "67px" }}>지역분류</Label>
               <Select {...register("sJyCode")} style={{ width: "149px" }}>
                 {dataCommonDic?.sJyCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -262,8 +263,8 @@ function RV1100({
             </FormGroup>
 
             <Field flex>
-              <FormGroup style={{ gap: "0" }}>
-                <Label style={{ minWidth: "81px" }}>관리책임자</Label>
+              <FormGroup>
+                <Label style={{ minWidth: "76px" }}>관리책임자</Label>
                 <Select {...register("sCuCustgubun")}>
                   {dataCommonDic?.sCustgubun?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -273,7 +274,7 @@ function RV1100({
                 </Select>
               </FormGroup>
 
-              <FormGroup style={{ gap: "0" }}>
+              <FormGroup>
                 <Label>수금방법</Label>
                 <Select {...register("sSukumtype")}>
                   {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
@@ -287,14 +288,16 @@ function RV1100({
           </Wrapper>
         </div>
       </SearchWrapper>
-      <Grid
-        fields={fields}
-        columns={columns}
-        data={data}
-        setSelected={setSelected}
-      />
-      <Footer data={selected} />
-    </div>
+      <WrapperContent>
+        <Grid
+          fields={fields}
+          columns={columns}
+          data={data}
+          setSelected={setSelected}
+        />
+        <Footer data={selected} />
+      </WrapperContent>
+    </>
   );
 }
 

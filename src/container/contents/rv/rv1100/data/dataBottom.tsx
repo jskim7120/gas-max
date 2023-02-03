@@ -72,7 +72,7 @@ export const columns = [
     name: "gjGumymsno",
     fieldName: "gjGumymsno",
     type: "data",
-    width: "80",
+    width: "100",
     header: {
       text: "년월 회차",
     },
@@ -86,7 +86,7 @@ export const columns = [
     name: "gjDate",
     fieldName: "gjDate",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "검침일자",
     },
@@ -95,7 +95,8 @@ export const columns = [
     name: "gjJungum",
     fieldName: "gjJungum",
     type: "data",
-    width: "120",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "전월",
     },
@@ -104,7 +105,8 @@ export const columns = [
     name: "gjGum",
     fieldName: "gjGum",
     type: "data",
-    width: "200",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "당월",
     },
@@ -113,7 +115,8 @@ export const columns = [
     name: "gjGage",
     fieldName: "gjGage",
     type: "data",
-    width: "300",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "사용량",
     },
@@ -122,7 +125,8 @@ export const columns = [
     name: "gjDanga",
     fieldName: "gjDanga",
     type: "data",
-    width: "120",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "단가",
     },
@@ -131,7 +135,8 @@ export const columns = [
     name: "gjKumack",
     fieldName: "gjKumack",
     type: "data",
-    width: "120",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "사용료",
     },
@@ -140,7 +145,8 @@ export const columns = [
     name: "maintCost",
     fieldName: "maintCost",
     type: "data",
-    width: "120",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "관리비외",
     },
@@ -149,7 +155,8 @@ export const columns = [
     name: "gjPerkum",
     fieldName: "gjPerkum",
     type: "data",
-    width: "120",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "연체료",
     },
@@ -158,7 +165,8 @@ export const columns = [
     name: "gjDangkum",
     fieldName: "gjDangkum",
     type: "data",
-    width: "120",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "당월금액",
     },
@@ -167,7 +175,8 @@ export const columns = [
     name: "gjMisu",
     fieldName: "gjMisu",
     type: "data",
-    width: "120",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "미납액",
     },
@@ -176,7 +185,7 @@ export const columns = [
     name: "gjCuSwCode",
     fieldName: "gjCuSwCode",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "검침원",
     },
@@ -185,7 +194,7 @@ export const columns = [
     name: "gjBigo",
     fieldName: "gjBigo",
     type: "data",
-    width: "100",
+    width: "120",
     header: {
       text: "비고",
     },

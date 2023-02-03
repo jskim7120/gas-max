@@ -6,20 +6,13 @@ import { RV110065 } from "app/path";
 import API from "app/axios";
 import CustomDatePicker from "components/customDatePicker";
 import CheckBox from "components/checkbox";
-import {
-  Wrapper,
-  FormGroup,
-  Select,
-  Label,
-  Field,
-  Input,
-} from "components/form/style";
-import { ISEARCH } from "./model";
+import { Wrapper, FormGroup, Label, Field, Input } from "components/form/style";
 import { formatDate } from "helpers/dateFormat";
 import { InputSize, ButtonColor, ButtonType } from "components/componentsType";
 import Button from "components/button/button";
 import Grid from "./grid";
 import { fields, columns } from "./data/dataBottom";
+import PinImg from "assets/image/pin.png";
 
 function Footer({ data }: { data: any }) {
   const [data65, setData65] = useState([]);
@@ -71,7 +64,7 @@ function Footer({ data }: { data: any }) {
   };
 
   const getGjJanType = () => {
-    if (data.gjJanType === "10")
+    if (data.gjJanType === "0")
       return (
         <Input
           label="잔 량"
@@ -93,7 +86,7 @@ function Footer({ data }: { data: any }) {
           <p>{data?.gjEyeTank1Dt}</p>
         </Field>
       );
-    if (data.gjJanType === "0")
+    if (data.gjJanType === "2")
       return (
         <Field flex style={{ alignItems: "center", gap: "4px" }}>
           <Label style={{ minWidth: "68px" }}>잔 량</Label>
@@ -119,7 +112,7 @@ function Footer({ data }: { data: any }) {
       <InfoBox style={{ width: "1400px" }}>
         <Field flex>
           <div>
-            <Wrapper grid col={5} fields="1fr 1fr 1fr 1fr 1fr">
+            <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
               <FormGroup className="small">
                 <Label style={{ minWidth: "80px" }}>검침년월</Label>
                 <Controller
@@ -143,7 +136,7 @@ function Footer({ data }: { data: any }) {
               <Input
                 label="㎥ 단가"
                 register={register("gjDanga")}
-                labelStyle={{ minWidth: "68px" }}
+                labelStyle={{ minWidth: "76px" }}
                 inputSize={InputSize.i120}
               />
               <Input
@@ -155,11 +148,11 @@ function Footer({ data }: { data: any }) {
               <Input
                 label="당월금액"
                 register={register("gjTotal")}
-                labelStyle={{ minWidth: "82px" }}
+                labelStyle={{ minWidth: "89px" }}
                 inputSize={InputSize.i120}
               />
             </Wrapper>
-            <Wrapper grid col={5} fields="1fr 1fr 1fr 1fr 1fr">
+            <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
               <FormGroup className="small">
                 <Label style={{ minWidth: "80px" }}>사용시작일</Label>
                 <Controller
@@ -199,12 +192,23 @@ function Footer({ data }: { data: any }) {
               <Input
                 label="전미수"
                 register={register("gjMisu")}
-                labelStyle={{ minWidth: "82px" }}
+                labelStyle={{ minWidth: "89px" }}
                 inputSize={InputSize.i120}
               />
             </Wrapper>
-            <Wrapper grid col={5} fields="1fr 1fr 1fr 1fr 1fr">
-              <div></div>
+            <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
+              <Field flex style={{ alignItems: "center" }}>
+                <img src={PinImg} style={{ marginLeft: "15px" }} />
+                <p
+                  style={{
+                    fontSize: "9px",
+                    color: "#686767",
+                    marginLeft: "10px",
+                  }}
+                >
+                  원격검침일시 2022-12-30 12:52
+                </p>
+              </Field>
               <Input
                 label="사용량"
                 register={register("gjGage")}
@@ -214,7 +218,7 @@ function Footer({ data }: { data: any }) {
               <Input
                 label="관리비"
                 register={register("maintCost")}
-                labelStyle={{ minWidth: "68px" }}
+                labelStyle={{ minWidth: "76px" }}
                 inputSize={InputSize.i120}
               />
               <Input
@@ -279,7 +283,29 @@ function Footer({ data }: { data: any }) {
           </div>
         </Field>
       </InfoBox>
-      <Grid fields={fields} columns={columns} data={data65} />
+      <Field flex style={{ width: "100%" }}>
+        <div
+          style={{
+            background: "rgba(104,103,103,0.26)",
+            width: "70px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          최근 <br />
+          이력
+        </div>
+        <Grid
+          fields={fields}
+          columns={columns}
+          data={data65}
+          style={{
+            height: "150px",
+            width: `100%`,
+          }}
+        />
+      </Field>
     </div>
   );
 }

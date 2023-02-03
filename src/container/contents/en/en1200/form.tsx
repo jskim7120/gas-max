@@ -365,7 +365,7 @@ const Form = React.forwardRef(
                   <button
                     style={{
                       width: "110px",
-                      height: "29px",
+                      height: "30px",
                       fontSize: "15px",
                       background: "#666666",
                       borderRadius: "5px",
@@ -553,7 +553,7 @@ const Form = React.forwardRef(
               <button
                 style={{
                   width: "110px",
-                  height: "29px",
+                  height: "30px",
                   fontSize: "15px",
                   background: "#666666",
                   borderRadius: "5px",

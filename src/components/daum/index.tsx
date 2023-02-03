@@ -4,13 +4,12 @@ import { MagnifyingGlass } from "components/allSvgIcon";
 import styled from "styled-components";
 
 export const SearchBtn = styled.button`
-  width: 25px;
-  height: 25px;
+  width: 26px;
+  height: 26px;
   background: #666666;
   padding: 2px 0 0 4px;
   border-radius: 5px;
   border: 1px solid #707070;
-  margin-right: 3px;
 `;
 
 interface IPostcode {

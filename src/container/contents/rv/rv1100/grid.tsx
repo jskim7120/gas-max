@@ -6,11 +6,13 @@ function Grid({
   columns,
   fields,
   setSelected,
+  style,
 }: {
   data: any;
   columns: any;
   fields: any;
   setSelected?: Function;
+  style?: any;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -27,7 +29,7 @@ function Grid({
     gv.setColumns(columns);
     dp.setRows(data);
     gv.setHeader({
-      height: 35,
+      height: 30,
     });
 
     gv.setOptions({
@@ -37,7 +39,7 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
-    gv.displayOptions.fitStyle = "evenFill";
+    // gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
 
     gv.onSelectionChanged = () => {
@@ -54,10 +56,13 @@ function Grid({
 
   return (
     <div
-      style={{
-        width: "100%",
-        height: `448px`,
-      }}
+      style={
+        style
+          ? style
+          : {
+              height: `calc(100% - 347px)`,
+            }
+      }
       ref={realgridElement}
     ></div>
   );

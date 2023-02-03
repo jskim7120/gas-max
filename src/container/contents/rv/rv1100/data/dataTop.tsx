@@ -88,7 +88,7 @@ export const columns = [
     name: "cuCno",
     fieldName: "cuCno",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "순번",
     },
@@ -102,7 +102,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "120",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -111,7 +111,7 @@ export const columns = [
     name: "gjCuCode",
     fieldName: "gjCuCode",
     type: "data",
-    width: "120",
+    width: "80",
     header: {
       text: "코드",
     },
@@ -120,7 +120,8 @@ export const columns = [
     name: "viewCuName",
     fieldName: "viewCuName",
     type: "data",
-    width: "200",
+    width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -129,7 +130,7 @@ export const columns = [
     name: "gjDate",
     fieldName: "gjDate",
     type: "data",
-    width: "300",
+    width: "100",
     header: {
       text: "검침일자",
     },
@@ -138,7 +139,8 @@ export const columns = [
     name: "gjJungum",
     fieldName: "gjJungum",
     type: "data",
-    width: "120",
+    width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "전월",
     },
@@ -147,7 +149,8 @@ export const columns = [
     name: "gjGum",
     fieldName: "gjGum",
     type: "data",
-    width: "120",
+    width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "당월",
     },
@@ -156,7 +159,8 @@ export const columns = [
     name: "gjGage",
     fieldName: "gjGage",
     type: "data",
-    width: "120",
+    width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "사용량",
     },
@@ -165,7 +169,8 @@ export const columns = [
     name: "gjDanga",
     fieldName: "gjDanga",
     type: "data",
-    width: "120",
+    width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "단가",
     },
@@ -174,7 +179,8 @@ export const columns = [
     name: "gjKumack",
     fieldName: "gjKumack",
     type: "data",
-    width: "120",
+    width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "사용금액",
     },
@@ -183,7 +189,8 @@ export const columns = [
     name: "maintCost",
     fieldName: "maintCost",
     type: "data",
-    width: "120",
+    width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "관리비",
     },
@@ -192,7 +199,8 @@ export const columns = [
     name: "gjDc",
     fieldName: "gjDc",
     type: "data",
-    width: "120",
+    width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "할인액",
     },
@@ -201,7 +209,8 @@ export const columns = [
     name: "gjPerkum",
     fieldName: "gjPerkum",
     type: "data",
-    width: "100",
+    width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "연체료",
     },
@@ -210,7 +219,8 @@ export const columns = [
     name: "gjMisu",
     fieldName: "gjMisu",
     type: "data",
-    width: "100",
+    width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "전미수",
     },
@@ -219,7 +229,8 @@ export const columns = [
     name: "gjTotal",
     fieldName: "gjTotal",
     type: "data",
-    width: "100",
+    width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "당월금액",
     },
@@ -228,7 +239,7 @@ export const columns = [
     name: "gjBigo",
     fieldName: "",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "비고",
     },
@@ -237,16 +248,21 @@ export const columns = [
     name: "gjCheck",
     fieldName: "gjCheck",
     type: "data",
-    width: "100",
+    width: "50",
     header: {
       text: "선택",
+    },
+    renderer: {
+      type: "check",
+      trueValues: "Y",
+      falseValues: "N",
     },
   },
   {
     name: "cuSukumtypeName",
     fieldName: "cuSukumtypeName",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "청구",
     },
@@ -255,7 +271,7 @@ export const columns = [
     name: "gjZdate",
     fieldName: "gjZdate",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "납부마감일",
     },
@@ -264,7 +280,7 @@ export const columns = [
     name: "gjJirodate",
     fieldName: "gjJirodate",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "지로출력일",
     },
