@@ -5,16 +5,10 @@ function Grid({
   data,
   fields,
   columns,
-  setSelected,
-  selectedRowIndex,
-  setSelectedRowIndex,
 }: {
   data: any;
   fields: any;
   columns: any;
-  setSelected: Function;
-  selectedRowIndex: number | null;
-  setSelectedRowIndex: Function;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -44,15 +38,10 @@ function Grid({
     gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
 
-    gv.setCurrent({
-      dataRow: selectedRowIndex,
-    });
+    // gv.onSelectionChanged = () => {
+    //   const itemIndex: any = gv.getCurrent().dataRow;
 
-    gv.onSelectionChanged = () => {
-      const itemIndex: any = gv.getCurrent().dataRow;
-      setSelected(data[itemIndex]);
-      setSelectedRowIndex(itemIndex);
-    };
+    // };
 
     return () => {
       dp.clearRows();

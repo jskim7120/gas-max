@@ -14,5 +14,6 @@ export interface IRV9005SEARCH {
   sCuCustgubun: String;
   sSukumtype: String;
   sRh20: String;
-  sType: String;
+  sType2: String;
+  sSort: string;
 }
