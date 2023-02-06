@@ -10,6 +10,11 @@ import { SearchWrapper } from "../../commonStyle";
 import CustomDatePicker from "components/customDatePicker";
 import CheckBox from "components/checkbox";
 import {
+  Item,
+  RadioButton,
+  RadioButtonLabel,
+} from "components/radioButton/style";
+import {
   Select,
   FormGroup,
   Wrapper,
@@ -21,6 +26,26 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize, FieldKind } from "components/componentsType";
 import Grid from "./grid";
 import { columns, fields } from "./data";
+import { formatDateToStringWithoutDash } from "helpers/dateFormat";
+
+const radioOptions = [
+  {
+    label: "검침일자",
+    id: "0",
+  },
+  {
+    label: "지로 발행일",
+    id: "1",
+  },
+  {
+    label: "등록일자",
+    id: "2",
+  },
+  {
+    label: "수정일자",
+    id: "3",
+  },
+];
 
 function RV9005({
   depthFullName,
@@ -68,6 +93,10 @@ function RV9005({
   const fetchData = async (params: any) => {
     try {
       setLoading(true);
+      params.sGjGumymF = formatDateToStringWithoutDash(params.sGjGumymF);
+      params.sGjGumymT = formatDateToStringWithoutDash(params.sGjGumymT);
+      params.sDateF = formatDateToStringWithoutDash(params.sDateF);
+      params.sDateT = formatDateToStringWithoutDash(params.sDateT);
       const { data } = await API.get(RV9005SEARCH, { params: params });
       console.log("data irev:", data);
       if (data) {
@@ -241,25 +270,19 @@ function RV9005({
               style={{ flexDirection: "row", gap: "0px" }}
             >
               <FormGroup>
-                <CheckBox register={{ ...register("sSwCode") }} />
-                <Label>검침일자</Label>
-              </FormGroup>
-              <FormGroup>
-                <CheckBox register={{ ...register("sSwCode") }} />
-                <Label>지로 발행일</Label>
-              </FormGroup>
-              <FormGroup>
-                <CheckBox register={{ ...register("sSwCode") }} />
-                <Label>등록일자</Label>
-              </FormGroup>
-              <FormGroup>
-                <CheckBox register={{ ...register("sSwCode") }} />
-                <Label>수정일자</Label>
-              </FormGroup>
-
-              <FormGroup>
-                <Label>체 적 검침사원</Label>
-                <CheckBox register={{ ...register("sSwCode") }} />
+                {radioOptions.map((option, index) => (
+                  <Item key={index}>
+                    <RadioButton
+                      type="radio"
+                      value={option.id}
+                      {...register(`sType1`)}
+                      id={option.id}
+                    />
+                    <RadioButtonLabel htmlFor={`${option.label}`}>
+                      {option.label}
+                    </RadioButtonLabel>
+                  </Item>
+                ))}
               </FormGroup>
               <FormGroup>
                 <Select

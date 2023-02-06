@@ -29,11 +29,7 @@ import GR9006 from "container/contents/gr/gr9006";
 import GR9007 from "container/contents/gr/gr9007";
 import GR9008 from "container/contents/gr/gr9008";
 import GR9009 from "container/contents/gr/gr9009";
-<<<<<<< HEAD
 import RV9005 from "container/contents/rv/rv9005";
-=======
-import RV1100 from "container/contents/rv/rv1100";
->>>>>>> 2efd2e6289c971121a1a79ec1ae0ea724c086971
 
 export const getContent = (id: any, depthFullName: string) => {
   switch (id) {
