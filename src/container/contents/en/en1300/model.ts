@@ -10,6 +10,7 @@ export interface ISANGPUM {
   jpIndanga: any;
   jpIntong: any;
   jpJaegoYn: string;
+  jpJaegoYnName: string;
   jpKg: number;
   jpKgDanwi: string;
   jpKgDanwiName: string;

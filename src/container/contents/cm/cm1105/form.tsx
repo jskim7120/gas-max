@@ -422,7 +422,7 @@ function FormCM1105() {
           <Input
             label="거래처코드"
             register={register("cuCode")}
-            inputSize={InputSize.i80}
+            inputSize={InputSize.i120}
           />
           <Input
             label="거래처명(건물명)"
@@ -449,7 +449,7 @@ function FormCM1105() {
           </Field>
           <FormGroup>
             <Label>거래구분</Label>
-            <Select {...register("cuType")} width={InputSize.i100}>
+            <Select {...register("cuType")} width={InputSize.i150}>
               {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -547,7 +547,7 @@ function FormCM1105() {
 
           <FormGroup>
             <Label>거래상태</Label>
-            <Select {...register("cuStae")} width={InputSize.i100}>
+            <Select {...register("cuStae")} width={InputSize.i150}>
               {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -559,9 +559,13 @@ function FormCM1105() {
 
         <Wrapper grid col={2}>
           <Field flex style={{ alignItems: "center" }}>
-            <Input label="주소" register={register("cuZipcode")} />
+            <Input
+              label="주소"
+              register={register("cuZipcode")}
+              inputSize={InputSize.i175}
+            />
             <DaumAddress setAddress={setAddress} />
-            <Input register={register("cuAddr1")} fullWidth />
+            <Input register={register("cuAddr1")} inputSize={InputSize.i468} />
           </Field>
           <Input register={register("cuAddr2")} fullWidth />
         </Wrapper>
@@ -586,7 +590,7 @@ function FormCM1105() {
             <Wrapper grid>
               <FormGroup>
                 <Label>담당 사원</Label>
-                <Select {...register("cuSwCode")} width={InputSize.i100}>
+                <Select {...register("cuSwCode")} width={InputSize.i130}>
                   {dataCommonDic?.cuSwCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -597,7 +601,7 @@ function FormCM1105() {
 
               <FormGroup>
                 <Label>지역 분류</Label>
-                <Select {...register("cuJyCode")} width={InputSize.i100}>
+                <Select {...register("cuJyCode")} width={InputSize.i130}>
                   {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -608,7 +612,7 @@ function FormCM1105() {
 
               <FormGroup>
                 <Label>관리자 분류</Label>
-                <Select {...register("cuCustgubun")} width={InputSize.i100}>
+                <Select {...register("cuCustgubun")} width={InputSize.i130}>
                   {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -621,7 +625,7 @@ function FormCM1105() {
             <Wrapper grid>
               <FormGroup>
                 <Label>소비자 형태</Label>
-                <Select {...register("cuCutype")} width={InputSize.i100}>
+                <Select {...register("cuCutype")} width={InputSize.i130}>
                   {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code1}>
                       {obj.code1}
@@ -633,12 +637,12 @@ function FormCM1105() {
               <Input
                 label="청구 구분"
                 register={register("cuRequestType")}
-                inputSize={InputSize.i100}
+                inputSize={InputSize.i130}
               />
 
               <FormGroup>
                 <Label>수금 방법</Label>
-                <Select {...register("cuSukumtype")} width={InputSize.i100}>
+                <Select {...register("cuSukumtype")} width={InputSize.i130}>
                   {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code1}>
                       {obj.code1}
@@ -651,7 +655,7 @@ function FormCM1105() {
             <Wrapper grid>
               <FormGroup>
                 <Label>품목 단가</Label>
-                <Select {...register("cuJdc")} width={InputSize.i100}>
+                <Select {...register("cuJdc")} width={InputSize.i130}>
                   {dataCommonDic?.cuJdc?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -662,7 +666,7 @@ function FormCM1105() {
 
               <FormGroup>
                 <Label>Vat 적용방법</Label>
-                <Select {...register("cuVatKind")} width={InputSize.i100}>
+                <Select {...register("cuVatKind")} width={InputSize.i130}>
                   {dataCommonDic?.cuVatKind?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -673,7 +677,7 @@ function FormCM1105() {
 
               <FormGroup>
                 <Label>원미만 금액계산</Label>
-                <Select {...register("cuRoundType")} width={InputSize.i100}>
+                <Select {...register("cuRoundType")} width={InputSize.i130}>
                   {dataCommonDic?.cuRoundType?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -718,27 +722,30 @@ function FormCM1105() {
             className="rectangle"
             style={{ width: "20%", marginLeft: "5px" }}
           >
-            <FormGroup>
+            <FormGroup style={{ justifyContent: "center" }}>
               <label>용기보증금</label>
               <Input
                 register={register("cuTongkum")}
-                inputSize={InputSize.i100}
+                inputSize={InputSize.i140}
+                mask={currencyMask}
                 textAlign="right"
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup style={{ justifyContent: "center" }}>
               <label>중량미수</label>
               <Input
                 register={register("cuJmisu")}
-                inputSize={InputSize.i100}
+                inputSize={InputSize.i140}
+                mask={currencyMask}
                 textAlign="right"
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup style={{ justifyContent: "center" }}>
               <label>체적미수</label>
               <Input
                 register={register("cuCmisu")}
-                inputSize={InputSize.i100}
+                inputSize={InputSize.i140}
+                mask={currencyMask}
                 textAlign="right"
               />
             </FormGroup>

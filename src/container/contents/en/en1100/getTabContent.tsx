@@ -168,7 +168,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       ),
       jnBankNo1: (
         <Input
-          register={register("jnBankno1")}
+          register={register("jnBankNo1")}
           inputSize={InputSize.md290}
           maxLength="20"
         />
@@ -184,7 +184,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       ),
       jnBankNo2: (
         <Input
-          register={register("jnBankno2")}
+          register={register("jnBankNo2")}
           inputSize={InputSize.md290}
           maxLength="20"
         />
@@ -200,7 +200,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       ),
       jnBankNo3: (
         <Input
-          register={register("jnBankno3")}
+          register={register("jnBankNo3")}
           inputSize={InputSize.md290}
           maxLength="20"
         />
@@ -216,7 +216,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       ),
       jnBankNo4: (
         <Input
-          register={register("jnBankno4")}
+          register={register("jnBankNo4")}
           inputSize={InputSize.md290}
           maxLength="20"
         />

@@ -27,7 +27,7 @@ function Tab1({
       <Wrapper grid col={4} fields="1fr 2fr 1.5fr 1.5fr">
         <FormGroup>
           <Label>공급 받는자</Label>
-          <Select {...register("cuNoType")} width={InputSize.i100}>
+          <Select {...register("cuNoType")} width={InputSize.i110}>
             {dataCommonDic?.cuNoType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -47,7 +47,7 @@ function Tab1({
 
         <FormGroup>
           <Label>과세구분</Label>
-          <Select {...register("cuBilltype")} width={InputSize.i100}>
+          <Select {...register("cuBilltype")} width={InputSize.i130}>
             {dataCommonDic?.cuBilltype?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -60,7 +60,11 @@ function Tab1({
       <Wrapper grid col={4}>
         <Input label="상호" register={register("cuSangho")} />
         <div></div>
-        <Input label="대표" register={register("cuSajang")} />
+        <Input
+          label="대표"
+          register={register("cuSajang")}
+          className="cm1105Label"
+        />
       </Wrapper>
 
       <Wrapper grid col={2}>
@@ -71,7 +75,7 @@ function Tab1({
             inputSize={InputSize.i100}
           />
           <DaumAddress setAddress={setAddress} />
-          <Input register={register("cuSaddr1")} fullWidth />
+          <Input register={register("cuSaddr1")} inputSize={InputSize.i400} />
         </Field>
         <Input
           register={register("cuSaddr2")}
@@ -91,7 +95,7 @@ function Tab1({
         <Input label="이메일" register={register("cuSeEmail")} />
         <Field>
           @
-          <Select {...register("emailKind")}>
+          <Select {...register("emailKind")} width={InputSize.i140}>
             {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
                 {obj.codeName}
@@ -107,7 +111,7 @@ function Tab1({
         <Input label="이메일" register={register("cuSeEmail2")} />
         <Field>
           @
-          <Select {...register("emailKind2")}>
+          <Select {...register("emailKind2")} width={InputSize.i140}>
             {dataCommonDic?.emailKind2?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
                 {obj.codeName}
@@ -148,7 +152,7 @@ function Tab1({
       <Wrapper grid col={4}>
         <FormGroup>
           <Label>공급사업자</Label>
-          <Select {...register("cuGongsano")} width={InputSize.i100}>
+          <Select {...register("cuGongsano")} width={InputSize.i250}>
             {dataCommonDic?.cuGongsano?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -161,7 +165,7 @@ function Tab1({
         <Field flex style={{ alignItems: "center" }}>
           <FormGroup>
             <Label>계산서 발행주기</Label>
-            <Select {...register("cuSekumMm")} width={InputSize.i100}>
+            <Select {...register("cuSekumMm")} width={InputSize.i130}>
               {dataCommonDic?.cuSekumNm?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}

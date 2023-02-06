@@ -297,7 +297,7 @@ const Form = (
                 </Select>
               </FormGroup>
             </Field>
-            <p style={{ right: "32px" }}>
+            <p>
               <IconInfo />
               <span>검침 등록시 미납금액에 대하여 연체료를 부과</span>
             </p>
@@ -310,6 +310,7 @@ const Form = (
                   label="표준기화율"
                   register={register("jnKgdanga")}
                   textAlign="right"
+                  className="vapInput"
                 />
               </FormGroup>
             </Field>

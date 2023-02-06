@@ -9,6 +9,11 @@ export const VolReading = styled.div`
   margin-top: 13px;
   .volReadCnt {
     padding: 0 17px;
+    .vapInput {
+      input {
+        min-width: 259px;
+      }
+    }
   }
   .title {
     height: 31px;
@@ -27,8 +32,8 @@ export const VolReading = styled.div`
     font-size: 15px;
     line-height: 24px;
     position: absolute;
-    right: 40px;
-    min-width: 244px;
+    right: 34px;
+    min-width: 310px;
     display: flex;
     align-items: center;
     span {
@@ -111,7 +116,7 @@ export const BasicItems = styled.div`
     width: 77px;
   }
   label {
-    line-height: 26px;
+    line-height: 18px;
   }
   input {
     width: 85px;
@@ -122,7 +127,7 @@ export const BasicItems = styled.div`
     line-height: 24px;
     display: flex;
     align-items: center;
-    margin-top: 65px;
+    margin-top: 127px;
     justify-content: center;
     span {
       margin-left: 6px;

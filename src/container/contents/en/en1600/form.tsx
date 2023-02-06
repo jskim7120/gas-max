@@ -297,34 +297,36 @@ const Form = React.forwardRef(
             </FormGroup>
           </Field>
 
-          <Controller
-            control={control}
-            {...register("swJuminno")}
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="주민번호"
-                value={value}
-                onChange={onChange}
-                mask={[
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                ]}
-                name={name}
-              />
-            )}
-          />
+          <Field style={{ marginLeft: "72px" }}>
+            <Controller
+              control={control}
+              {...register("swJuminno")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="주민번호"
+                  value={value}
+                  onChange={onChange}
+                  mask={[
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    "-",
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                  ]}
+                  name={name}
+                />
+              )}
+            />
+          </Field>
         </Wrapper>
 
         <Wrapper>
@@ -358,7 +360,7 @@ const Form = React.forwardRef(
           />
         </Wrapper>
 
-        <Wrapper style={{ alignItems: "center" }}>
+        <Wrapper style={{ alignItems: "center", gap: "4.5px" }}>
           <Input
             label="이메일"
             register={register("cuSeEmail")}
@@ -406,7 +408,9 @@ const Form = React.forwardRef(
             }}
           >
             <IconInfo />
-            <span style={{ color: "#1B8C8E", fontSize: "15px" }}>
+            <span
+              style={{ color: "#1B8C8E", fontSize: "15px", marginTop: "-1px" }}
+            >
               탱크잔량 원격검침 시스템의 매핑할 사원코드를 지정
             </span>
           </p>
@@ -490,27 +494,29 @@ const Form = React.forwardRef(
                       mask={currencyMask}
                       name={name}
                       textAlign="right"
+                      inputSize={InputSize.i120}
                     />
                   )}
                 />
 
                 <p>원</p>
               </Field>
-
-              <Controller
-                control={control}
-                {...register("swPaydate")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    label="급여일"
-                    value={value}
-                    onChange={onChange}
-                    mask={[/\d/, /\d/]}
-                    name={name}
-                    inputSize={InputSize.i40}
-                  />
-                )}
-              />
+              <Field style={{ marginLeft: "-15px" }}>
+                <Controller
+                  control={control}
+                  {...register("swPaydate")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <Input
+                      label="급여일"
+                      value={value}
+                      onChange={onChange}
+                      mask={[/\d/, /\d/]}
+                      name={name}
+                      inputSize={InputSize.i40}
+                    />
+                  )}
+                />
+              </Field>
             </Wrapper>
           </div>
           <ImageWrapper>{image64 && <img src={image64} />}</ImageWrapper>
@@ -572,7 +578,6 @@ const Form = React.forwardRef(
                 style={{
                   marginLeft: "25px",
                   fontSize: "15px",
-                  paddingTop: "4px",
                 }}
               >
                 (체크시 퇴사사원)
@@ -597,7 +602,7 @@ const Form = React.forwardRef(
             display: "flex",
             right: "32px",
             alignItems: "center",
-            marginLeft: "113px",
+            marginLeft: "125px",
             marginBottom: "18px",
             gap: "6px",
             marginTop: "6px",

@@ -17,7 +17,7 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
       fontSize: "14px",
       fontFamily: "SegoeUI",
       fontWeight: "normal",
-      height: "21px",
+      height: "25px",
       padding: "0 5px",
       lineHeight: "13px",
       lineMarginLeft: "5px",
@@ -84,7 +84,7 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
   } else if (kind === ButtonType.ROUND) {
     attributes = {
       borderRad: "15px",
-      fontSize: "12px",
+      fontSize: "15px",
       fontFamily: "NotoSansKRRegular",
       fontWeight: "normal",
       height: "30px",
@@ -107,10 +107,10 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
   } else if (kind === ButtonType.SQUARE_BIG) {
     attributes = {
       borderRad: "4px",
-      fontSize: "12px",
+      fontSize: "14px",
       fontFamily: "SegoeUI",
       fontWeight: "500",
-      height: "25px",
+      height: "30px",
       padding: "0 6px",
       lineHeight: "0px",
       lineMarginLeft: "0px",
@@ -166,7 +166,7 @@ const ButtonComponent = styled.button<{
         background-color: #5284ce;
         cursor: default;
       }
-      line-height: 12px;
+      line-height: 14px;
     `;
   }}
 `;

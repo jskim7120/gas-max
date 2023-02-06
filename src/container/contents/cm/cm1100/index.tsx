@@ -190,7 +190,7 @@ function CM1100Page({
                   register={register("cuGongname")}
                   kind={FieldKind.BORDER}
                   labelStyle={{
-                    minWidth: "137px",
+                    minWidth: "160px",
                   }}
                 />
               </Wrapper>
@@ -244,7 +244,7 @@ function CM1100Page({
                 <FormGroup>
                   <Label
                     style={{
-                      minWidth: "137px",
+                      minWidth: "160px",
                     }}
                   >
                     관리자
@@ -334,7 +334,7 @@ function CM1100Page({
                   kind={FieldKind.BORDER}
                   textAlign="right"
                   labelStyle={{
-                    minWidth: "137px",
+                    minWidth: "160px",
                   }}
                 />
               </Wrapper>

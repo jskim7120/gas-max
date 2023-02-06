@@ -23,28 +23,28 @@ export const fields = [
   },
   {
     fieldName: "jpKg",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "jpUnitName",
-    dataType: ValueType.NUMBER,
+    dataType: ValueType.TEXT,
   },
   {
     fieldName: "jpOutdanga",
-    dataType: ValueType.NUMBER,
+    dataType: ValueType.TEXT,
   },
 
   {
     fieldName: "jpOuttong",
-    dataType: ValueType.NUMBER,
+    dataType: ValueType.TEXT,
   },
   {
-    fieldName: "jpJaegoYn",
-    dataType: ValueType.NUMBER,
+    fieldName: "jpJaegoYnName",
+    dataType: ValueType.TEXT,
   },
   {
     fieldName: "jpSort",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
 ];
 
@@ -141,8 +141,8 @@ export const columns = [
     },
   },
   {
-    name: "jpJaegoYn",
-    fieldName: "jpJaegoYn",
+    name: "jpJaegoYnName",
+    fieldName: "jpJaegoYnName",
     type: "data",
     width: "120",
     header: {

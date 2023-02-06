@@ -29,6 +29,8 @@ export const getInputSize = (size?: InputSize) => {
       return `130px`;
     case InputSize.i140:
       return `140px`;
+    case InputSize.i145:
+      return `145px`;
     case InputSize.i150:
       return `150px`;
     case InputSize.i175:
@@ -192,6 +194,7 @@ export const Input = ({
             kind={kind && kind}
             textAlign={textAlign && textAlign}
             readOnly={readOnly}
+            onChange={onChange}
           />
         )}
       </FormGroup>
@@ -283,16 +286,12 @@ export const FormGroup = styled.div<{
   textAlign?: string;
 }>`
   display: flex;
-  gap: 4px;
   align-items: center;
+  //gap: 4px;
 
   input,
   select {
-    margin: 3px 3px 3px 0;
-  }
-
-  &.small {
-    gap: 0;
+    margin: 3px;
   }
 
   &.jccenter {
@@ -304,6 +303,7 @@ export const FormGroup = styled.div<{
     font-size: 12px;
     line-height: 21px;
   }
+
   span {
     font-size: 15px;
     line-height: 35px;
@@ -315,7 +315,7 @@ export const FormGroup = styled.div<{
 
   p {
     font-family: "NotoSansKRRegular";
-    font-size: 12px;
+    font-size: 15px;
   }
 `;
 
@@ -331,7 +331,7 @@ export const Label = styled.label<{
   min-width: ${(props) => (props.labelLong ? "200px" : "120px")};
   height: 30px;
   text-align: right;
-  padding: 5px;
+  padding: 3px 7px 0px 0px;
   background: transparent;
   white-space: nowrap;
 
@@ -379,7 +379,7 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
   }
 
   .gray-title {
-    width: 55px;
+    width: 85px;
     background: #e8ecf1;
     display: flex;
     align-items: center;
@@ -389,6 +389,12 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
 
   &.outer-border {
     border: 1px solid #ccc;
+  }
+
+  .cm1105Label {
+    label {
+      min-width: 150px;
+    }
   }
 
   &.rectangle {
@@ -512,7 +518,7 @@ export const TextArea = styled.textarea`
 export const Input2 = styled.input<{ inputSize?: InputSize }>`
   width: ${(props) =>
     props.inputSize ? getInputSize(props.inputSize) : "50px"};
-  height: 25px;
+  height: 30px;
   border: 1px solid rgb(188, 185, 185);
   border-radius: 4px;
   background: aliceblue;
@@ -522,7 +528,7 @@ export const Input2 = styled.input<{ inputSize?: InputSize }>`
 
   outline: none;
   font-family: "NotoSansKRRegular";
-  font-size: 12px;
+  font-size: 15px;
 
   &:hover {
     border: 1px solid #e6e5e5;

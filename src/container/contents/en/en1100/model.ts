@@ -19,7 +19,7 @@ export interface IJNOTRY {
   jnSekum: string;
   jnSegongYn: string;
   jnVatSumyn: string;
-  jnSekumEa: string;
+  jnSekumea: string;
   jnJangbu: string;
   jnCMngNo: number;
   innopayBankYn: string;

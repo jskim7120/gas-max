@@ -10,20 +10,28 @@ import { addGR1200, openModal } from "app/state/modal/modalSlice";
 
 function Grid({
   data,
+  setData,
   data2,
   tabId,
   // openPopup,
   setRowIndex,
   register,
-  setBclInqty,
+  setBclInqtyLPG,
+  reset,
+  someFunc,
+  anotherFunc,
 }: {
   data: any;
+  setData: Function;
   data2: any;
   tabId: number;
   // openPopup: Function;
   setRowIndex: Function;
   register: Function;
-  setBclInqty: Function;
+  setBclInqtyLPG: Function;
+  reset: Function;
+  someFunc: Function;
+  anotherFunc: Function;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
@@ -92,10 +100,18 @@ function Grid({
     };
 
     gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
-      // data[index.dataRow][index.fieldName] = newValue;
-
-      setBclInqty(newValue);
-      gv.commit();
+      setData((prev: any) =>
+        prev.map((object: any, idx: number) => {
+          if (idx === index.dataRow) {
+            return {
+              ...object,
+              [index.fieldName]: newValue,
+            };
+          } else return object;
+        })
+      );
+      setBclInqtyLPG((prev: boolean) => !prev);
+      gv.cancel();
     };
 
     return () => {
@@ -112,7 +128,15 @@ function Grid({
         }}
         ref={realgridElement}
       ></div>
-      {tabId === 0 && <Tab1Footer data={data2} register={register} />}
+      {tabId === 0 && (
+        <Tab1Footer
+          data={data2}
+          register={register}
+          reset={reset}
+          someFunc={someFunc}
+          anotherFunc={anotherFunc}
+        />
+      )}
       {tabId === 1 && <Tab2Footer />}
     </>
   );

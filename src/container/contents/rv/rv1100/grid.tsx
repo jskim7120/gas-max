@@ -1,30 +1,24 @@
-import { useDispatch, useSelector } from "app/store";
 import React, { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { addCM1105 } from "app/state/modal/modalSlice";
-
-let container: HTMLDivElement;
-let dp: any;
-let gv: any;
-let selectedRowIndex: number = 0;
 
 function Grid({
   data,
   columns,
   fields,
   setSelected,
-  openPopup,
-  cm1105PopUp,
+  style,
 }: {
   data: any;
   columns: any;
   fields: any;
-  setSelected?: any;
-  openPopup?: any;
-  cm1105PopUp?: any;
+  setSelected?: Function;
+  style?: any;
 }) {
+  let container: HTMLDivElement;
+  let dp: any;
+  let gv: any;
   const realgridElement = useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
+
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
     dp = new LocalDataProvider(true);
@@ -35,7 +29,7 @@ function Grid({
     gv.setColumns(columns);
     dp.setRows(data);
     gv.setHeader({
-      height: 35,
+      height: 30,
     });
 
     gv.setOptions({
@@ -45,40 +39,30 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
-    gv.displayOptions.fitStyle = "evenFill";
+    // gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
-    // gv.setCurrent({
-    //   dataRow: selectedRowIndex,
-    // });
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
-      //   setSelected(data[itemIndex]);
-      dispatch(
-        addCM1105({
-          cuCode: data[itemIndex].cuCode,
-          areaCode: data[itemIndex].areaCode,
-        })
-      );
+      setSelected && setSelected(data[itemIndex]);
     };
 
-    gv.onCellDblClicked = function (grid: any, e: any) {
-      const itemIndex: any = e.dataRow;
-      openPopup && openPopup(itemIndex);
-    };
     return () => {
       dp.clearRows();
       gv.destroy();
       dp.destroy();
     };
-  }, [data, cm1105PopUp]);
+  }, [data]);
 
   return (
     <div
-      style={{
-        width: "100%",
-        height: `448px`,
-      }}
+      style={
+        style
+          ? style
+          : {
+              height: `calc(100% - 347px)`,
+            }
+      }
       ref={realgridElement}
     ></div>
   );

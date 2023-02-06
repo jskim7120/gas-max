@@ -8,9 +8,9 @@ export const TabTable = styled.table`
   tr {
     th,
     td {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: normal;
-      height: 25px;
+      height: 29px;
       border-bottom: 1px solid #ccc;
       border-right: 1px solid #ccc;
 
