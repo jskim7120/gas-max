@@ -237,7 +237,7 @@ export const columns = [
     type: "data",
     width: "20",
     header: {
-      text: "영업소",
+      text: "선택",
     },
   },
   {
@@ -246,7 +246,7 @@ export const columns = [
     type: "data",
     width: "20",
     header: {
-      text: "영업소",
+      text: "청구",
     },
   },
   {
@@ -255,7 +255,7 @@ export const columns = [
     type: "data",
     width: "20",
     header: {
-      text: "영업소",
+      text: "납부마감일",
     },
   },
   {
@@ -264,7 +264,7 @@ export const columns = [
     type: "data",
     width: "20",
     header: {
-      text: "영업소",
+      text: "지로출력일",
     },
   },
 ];
