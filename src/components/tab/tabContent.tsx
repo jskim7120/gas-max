@@ -33,6 +33,8 @@ import RV1100 from "container/contents/rv/rv1100";
 import RV9005 from "container/contents/rv/rv9005";
 import RV9006 from "container/contents/rv/rv9006";
 
+import CC1100 from "container/contents/cc/cc1100";
+
 export const getContent = (id: any, depthFullName: string) => {
   switch (id) {
     case "HOME":
@@ -105,5 +107,8 @@ export const getContent = (id: any, depthFullName: string) => {
       return <RV9005 depthFullName={depthFullName} menuId={id} />;
     case "RV9006":
       return <RV9006 depthFullName={depthFullName} menuId={id} />;
+
+    case "CC1100":
+      return <CC1100 depthFullName={depthFullName} menuId={id} />;
   }
 };

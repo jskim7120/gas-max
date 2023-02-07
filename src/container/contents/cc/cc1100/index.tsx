@@ -195,12 +195,6 @@ function CC1100({
                 color={ButtonColor.LIGHT}
                 onClick={cancel}
               />
-              <Button
-                text="엑셀"
-                icon={<ExcelIcon width="19px" height="19px" />}
-                color={ButtonColor.LIGHT}
-                type="button"
-              />
             </div>
           </SearchWrapper>
         </form>
