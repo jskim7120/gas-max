@@ -27,7 +27,7 @@ function Grid({
     gv.setHeader({
       height: 35,
     });
-    gv.setFooter({ visible: false });
+
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
@@ -38,11 +38,6 @@ function Grid({
     gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
 
-    // gv.onSelectionChanged = () => {
-    //   const itemIndex: any = gv.getCurrent().dataRow;
-
-    // };
-
     return () => {
       dp.clearRows();
       gv.destroy();
@@ -50,7 +45,9 @@ function Grid({
     };
   }, [data]);
 
-  return <div ref={realgridElement} style={{ height: "inherit" }}></div>;
+  return (
+    <div ref={realgridElement} style={{ height: `calc(100% - 113px)` }}></div>
+  );
 }
 
 export default Grid;

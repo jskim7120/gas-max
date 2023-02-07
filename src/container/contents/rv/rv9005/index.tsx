@@ -22,10 +22,15 @@ import {
 } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
+import { ButtonColor, InputSize } from "components/componentsType";
 import Grid from "./grid";
 import { columns, fields } from "./data";
-import { formatDateToStringWithoutDash } from "helpers/dateFormat";
+import {
+  formatDateToStringWithoutDash,
+  formatDateByRemoveDash,
+  formatOnlyYearMonthDateByRemoveDash,
+  formatDateToStringWithoutDashOnlyYearMonth,
+} from "helpers/dateFormat";
 
 const radioOptions = [
   {
@@ -63,52 +68,98 @@ function RV9005({
     functionName: "RV9005",
   });
 
-  console.log("dataCommonDic:", dataCommonDic);
   const { register, handleSubmit, reset, getValues, control } =
     useForm<IRV9005SEARCH>({
       mode: "onSubmit",
     });
 
-  const resetForm = () => {
-    if (dataCommonDic !== undefined) {
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-      });
-    }
-  };
-
   useEffect(() => {
+    if (dataCommonDic) {
+      console.log("dataCommonDic::::", dataCommonDic);
+      resetSearchForm();
+    }
+  }, [dataCommonDic]);
+
+  const resetSearchForm = () => {
     reset({
       areaCode: dataCommonDic?.areaCode[0].code,
+      sType1: dataCommonDic?.sType1[0].code,
+      sGjGumymF: dataCommonDic?.sGjGumymF[0].code,
+      sGjSnoF: dataCommonDic?.sGjSnoF[0].code,
+      sGjGumymT: dataCommonDic?.sGjGumymT[0].code,
+      sGjSnoT: dataCommonDic?.sGjSnoT[0].code,
+      sType2: dataCommonDic?.sType2[0].code,
+      sSwCode: dataCommonDic?.sSwCode[0].code,
+      sCuSwCode: dataCommonDic?.sCuSwCode[0].code,
+      sCuCustgubun: dataCommonDic?.sCuCustgubun[0].code,
+      sJyCode: dataCommonDic?.sJyCode[0].code,
+      sSukumtype: dataCommonDic?.cuSukumtype[0].code,
+      sSort: dataCommonDic?.sSort[0].code,
+      sDateF: dataCommonDic?.sDateF[0].code,
+      sDateT: dataCommonDic?.sDateT[0].code,
+      sRh20: dataCommonDic?.sRh20[0].code,
     });
-  }, [dataCommonDic]);
+  };
 
   const fetchData = async (params: any) => {
     try {
       setLoading(true);
-      params.sGjGumymF = formatDateToStringWithoutDash(params.sGjGumymF);
-      params.sGjGumymT = formatDateToStringWithoutDash(params.sGjGumymT);
-      params.sDateF = formatDateToStringWithoutDash(params.sDateF);
-      params.sDateT = formatDateToStringWithoutDash(params.sDateT);
       const { data } = await API.get(RV9005SEARCH, { params: params });
-      console.log("data irev:", data);
+
       if (data) {
         setData(data);
-        setLoading(false);
       }
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       console.log("RV9005 data search fetch error =======>", err);
     }
   };
 
-  const cancel = () => {
-    resetForm();
-    setData([]);
-  };
+  const submit = (params: any) => {
+    if (sType1) {
+      delete params.sGjGumymF;
+      delete params.sGjGumymT;
+      delete params.sGjSnoF;
+      delete params.sGjSnoT;
+      params.sDateF =
+        typeof params.sDateF === "string"
+          ? formatDateByRemoveDash(params.sDateF)
+          : formatDateToStringWithoutDash(params.sDateF);
+      params.sDateT =
+        typeof params.sDateT === "string"
+          ? formatDateByRemoveDash(params.sDateT)
+          : formatDateToStringWithoutDash(params.sDateT);
+    } else {
+      delete params.sDateF;
+      delete params.sDateT;
+      params.sGjGumymF =
+        typeof params.sGjGumymF === "string"
+          ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumymF)
+          : params.sGjGumymF instanceof Date
+          ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumymF)
+          : "";
 
-  const submit = (data: IRV9005SEARCH) => {
-    console.log("IISEARCH:", data);
-    fetchData(data);
+      params.sGjGumymT =
+        typeof params.sGjGumymT === "string"
+          ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumymT)
+          : params.sGjGumymT instanceof Date
+          ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumymT)
+          : "";
+    }
+
+    if (sType2 === "0") {
+      delete params.sCuSwCode;
+      delete params.sCuCustgubun;
+    } else if (sType2 === "1") {
+      delete params.sSwCode;
+      delete params.sCuCustgubun;
+    } else if (sType2 === "2") {
+      delete params.sSwCode;
+      delete params.sCuSwCode;
+    }
+
+    fetchData(params);
   };
 
   return (
@@ -137,24 +188,17 @@ function RV9005({
       </SearchWrapper>
       <SearchWrapper>
         <div style={{ width: "80%" }}>
-          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.3fr 0.7fr">
-            <FormGroup>
+          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
+            <FormGroup style={{ justifyContent: "start" }}>
               <Item>
                 <RadioButton
                   type="radio"
                   value="0"
-                  {...register(`sType1`, {
-                    required: "required",
-                  })}
+                  {...register(`sType1`)}
                   id="0"
                   onChange={() => setSType1(false)}
                 />
-                <RadioButtonLabel
-                  htmlFor={`검침년월`}
-                  style={{ width: "max-content" }}
-                >
-                  검침년월
-                </RadioButtonLabel>
+                <RadioButtonLabel htmlFor={``}>검침년월</RadioButtonLabel>
               </Item>
               <Controller
                 control={control}
@@ -199,7 +243,7 @@ function RV9005({
                 disabled={sType1}
                 style={{ marginLeft: "0" }}
               >
-                {dataCommonDic?.sGjSnoF?.map((obj: any, idx: number) => (
+                {dataCommonDic?.sGjSnoT?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
@@ -230,14 +274,18 @@ function RV9005({
               </Select>
             </FormGroup>
 
-            <Input label="건물명" register={register("sCuName")} />
+            <Input
+              label="건물명"
+              register={register("sCuName")}
+              labelStyle={{ minWidth: "70px" }}
+              inputSize={InputSize.i100}
+            />
             <FormGroup>
               <Button
                 text="검색"
                 icon={!loading && <MagnifyingGlass />}
                 type="button"
                 color={ButtonColor.SECONDARY}
-                style={{ marginLeft: "30px" }}
                 onClick={handleSubmit(submit)}
                 loader={
                   loading && (
@@ -257,11 +305,11 @@ function RV9005({
                 icon={<ResetGray />}
                 style={{ marginLeft: "5px" }}
                 color={ButtonColor.LIGHT}
-                // onClick={resetSearch}
+                onClick={resetSearchForm}
               />
             </FormGroup>
           </Wrapper>
-          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.3fr 0.7fr">
+          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
             <FormGroup>
               {radioOptions.map((option, index) => (
                 <Item key={index}>
@@ -288,9 +336,7 @@ function RV9005({
                 <RadioButton
                   type="radio"
                   value="1"
-                  {...register(`sType2`, {
-                    required: "required",
-                  })}
+                  {...register(`sType2`)}
                   id="1"
                   onChange={() => setSType2("1")}
                 />
@@ -307,7 +353,7 @@ function RV9005({
               </Select>
             </FormGroup>
             <FormGroup>
-              <Label>지역분류</Label>
+              <Label style={{ minWidth: "70px" }}>지역분류</Label>
               <Select {...register("sJyCode")}>
                 {dataCommonDic?.sJyCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -317,9 +363,9 @@ function RV9005({
               </Select>
             </FormGroup>
           </Wrapper>
-          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.3fr 0.7fr">
-            <FormGroup style={{ justifyContent: "space-evenly" }}>
-              <Label>기간</Label>
+          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
+            <FormGroup>
+              <Label style={{ minWidth: "95px" }}>기간</Label>
               <Controller
                 control={control}
                 {...register("sDateF")}
@@ -328,14 +374,13 @@ function RV9005({
                     value={value}
                     onChange={onChange}
                     name={name}
-                    style={{ marginLeft: "0px" }}
                     readOnly={!sType1}
                   />
                 )}
               />
               <p
                 style={{
-                  width: "100%",
+                  width: "auto",
                   display: "block",
                   textAlign: "center",
                 }}
@@ -350,7 +395,6 @@ function RV9005({
                     value={value}
                     onChange={onChange}
                     name={name}
-                    style={{ marginLeft: "0px" }}
                     readOnly={!sType1}
                   />
                 )}
@@ -361,9 +405,7 @@ function RV9005({
                 <RadioButton
                   type="radio"
                   value="2"
-                  {...register(`sType2`, {
-                    required: "required",
-                  })}
+                  {...register(`sType2`)}
                   id="2"
                   onChange={() => setSType2("2")}
                 />
@@ -381,7 +423,7 @@ function RV9005({
             </FormGroup>
 
             <FormGroup>
-              <Label>수금방법</Label>
+              <Label style={{ minWidth: "70px" }}>수금방법</Label>
               <Select {...register("sSukumtype")}>
                 {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -392,7 +434,7 @@ function RV9005({
 
               <Label>조정기 압력</Label>
               <Select {...register("sRh20")}>
-                {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
+                {dataCommonDic?.sRh20?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
