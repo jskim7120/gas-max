@@ -30,6 +30,8 @@ import GR9007 from "container/contents/gr/gr9007";
 import GR9008 from "container/contents/gr/gr9008";
 import GR9009 from "container/contents/gr/gr9009";
 import RV9005 from "container/contents/rv/rv9005";
+import CC1100 from "container/contents/cc/cc1100";
+import CC1200 from "container/contents/cc/cc1200";
 
 export const getContent = (id: any, depthFullName: string) => {
   switch (id) {
@@ -99,5 +101,9 @@ export const getContent = (id: any, depthFullName: string) => {
       return <GR9009 depthFullName={depthFullName} menuId={id} />;
     case "RV9005":
       return <RV9005 depthFullName={depthFullName} menuId={id} />;
+    case "CC1100":
+      return <CC1100 depthFullName={depthFullName} menuId={id} />;
+    case "CC1200":
+      return <CC1200 depthFullName={depthFullName} menuId={id} />;
   }
 };
