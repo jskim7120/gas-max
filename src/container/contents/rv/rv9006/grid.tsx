@@ -1,14 +1,16 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 
 function Grid({
   data,
-  fields,
   columns,
+  fields,
+  style,
 }: {
   data: any;
-  fields: any;
   columns: any;
+  fields: any;
+  style?: any;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -25,7 +27,7 @@ function Grid({
     gv.setColumns(columns);
     dp.setRows(data);
     gv.setHeader({
-      height: 35,
+      height: 30,
     });
 
     gv.setOptions({
@@ -35,8 +37,12 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
-    gv.displayOptions.fitStyle = "evenFill";
+    // gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
+
+    // gv.onSelectionChanged = () => {
+    //   const itemIndex: any = gv.getCurrent().dataRow;
+    // };
 
     return () => {
       dp.clearRows();
@@ -46,7 +52,16 @@ function Grid({
   }, [data]);
 
   return (
-    <div ref={realgridElement} style={{ height: `calc(100% - 113px)` }}></div>
+    <div
+      style={
+        style
+          ? style
+          : {
+              height: `calc(100% - 77px)`,
+            }
+      }
+      ref={realgridElement}
+    ></div>
   );
 }
 

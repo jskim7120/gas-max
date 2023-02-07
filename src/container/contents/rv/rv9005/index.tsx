@@ -1,18 +1,23 @@
 import { useState, useEffect } from "react";
-import { GR9005SEARCH } from "app/path";
-import { IRV9005SEARCH } from "./model";
-import API from "app/axios";
-import { TopBar, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
+import API from "app/axios";
+import { RV9005SEARCH } from "app/path";
+import { IRV9005SEARCH } from "./model";
+import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { SearchWrapper } from "../../commonStyle";
+import { MagnifyingGlass, ResetGray, Document } from "components/allSvgIcon";
+import CustomDatePicker from "components/customDatePicker";
+import {
+  Item,
+  RadioButton,
+  RadioButtonLabel,
+} from "components/radioButton/style";
 import {
   Select,
   FormGroup,
   Wrapper,
   Label,
-  Field,
+  Input,
 } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
@@ -54,22 +59,20 @@ function RV9005({
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
-  const [dataChk, setDataChk] = useState(true);
+  const [sType1, setSType1] = useState(false);
+  const [sType2, setSType2] = useState("0");
+
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "GR",
-    functionName: "GR9004",
+    groupId: "RV",
+    functionName: "RV9005",
   });
 
-  const { register, handleSubmit, reset, getValues, control } =
-    useForm<IRV9005SEARCH>({
-      mode: "onSubmit",
-    });
+  const { register, handleSubmit, reset, control } = useForm<IRV9005SEARCH>({
+    mode: "onSubmit",
+  });
 
   useEffect(() => {
     if (dataCommonDic) {
-      console.log("dataCommonDic::::", dataCommonDic);
       resetSearchForm();
     }
   }, [dataCommonDic]);
@@ -102,10 +105,13 @@ function RV9005({
 
       if (data) {
         setData(data);
+      } else {
+        setData([]);
       }
       setLoading(false);
     } catch (err) {
       setLoading(false);
+      setData([]);
       console.log("RV9005 data search fetch error =======>", err);
     }
   };
@@ -158,14 +164,12 @@ function RV9005({
 
   return (
     <>
-      <TopBar>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <p style={{ marginRight: "20px" }}>{depthFullName}</p>
-          <p>
-            <b>영업소</b>
-          </p>
+      <SearchWrapper style={{ height: "35px", marginTop: "5px" }}>
+        <div style={{ display: "flex", alignItems: "baseline" }}>
+          <p>{depthFullName}</p>
+          <p className="big">영업소</p>
 
-          <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
+          <Select {...register("areaCode")}>
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -184,8 +188,8 @@ function RV9005({
       </SearchWrapper>
       <SearchWrapper>
         <div style={{ width: "80%" }}>
-          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
-            <FormGroup style={{ justifyContent: "start" }}>
+          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.1fr 0.6fr">
+            <FormGroup>
               <Item>
                 <RadioButton
                   type="radio"
@@ -251,9 +255,7 @@ function RV9005({
                 <RadioButton
                   type="radio"
                   value="0"
-                  {...register(`sType2`, {
-                    required: "required",
-                  })}
+                  {...register(`sType2`)}
                   id="0"
                   onChange={() => setSType2("0")}
                 />
@@ -288,42 +290,35 @@ function RV9005({
                     <>
                       <Loader
                         color="white"
-                        size={13}
-                        borderWidth="2px"
+                        size={16}
                         style={{ marginRight: "10px" }}
+                        borderWidth="2px"
                       />
                     </>
                   )
                 }
-                style={{ marginRight: "10px" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ marginRight: "10px" }}
-                type="button"
+                style={{ marginLeft: "5px" }}
                 color={ButtonColor.LIGHT}
                 onClick={resetSearchForm}
               />
             </FormGroup>
           </Wrapper>
-          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
+          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.1fr 0.6fr">
             <FormGroup>
               {radioOptions.map((option, index) => (
                 <Item key={index}>
                   <RadioButton
                     type="radio"
                     value={option.id}
-                    {...register(`sType1`, {
-                      required: "required",
-                    })}
+                    {...register(`sType1`)}
                     id={option.id}
                     onChange={() => setSType1(true)}
                   />
-                  <RadioButtonLabel
-                    htmlFor={`${option.label}`}
-                    style={{ width: "max-content" }}
-                  >
+                  <RadioButtonLabel htmlFor={`${option.label}`}>
                     {option.label}
                   </RadioButtonLabel>
                 </Item>
@@ -361,7 +356,7 @@ function RV9005({
               </Select>
             </FormGroup>
           </Wrapper>
-          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
+          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.1fr 0.6fr">
             <FormGroup>
               <Label style={{ minWidth: "95px" }}>기간</Label>
               <Controller
@@ -441,7 +436,7 @@ function RV9005({
               <p>mmH20</p>
             </FormGroup>
             <FormGroup>
-              <Label>정렬순서</Label>
+              <Label style={{ minWidth: "90px" }}>정렬순서</Label>
               <Select {...register("sSort")}>
                 {dataCommonDic?.sSort?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
