@@ -1,24 +1,18 @@
 import { useState, useEffect } from "react";
-import { RV9005SEARCH } from "app/path";
+import { GR9005SEARCH } from "app/path";
 import { IRV9005SEARCH } from "./model";
 import API from "app/axios";
-import { SearchWrapper, WrapperContent } from "../../commonStyle";
+import { TopBar, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { MagnifyingGlass, ResetGray, Document } from "components/allSvgIcon";
-import CustomDatePicker from "components/customDatePicker";
-import {
-  Item,
-  RadioButton,
-  RadioButtonLabel,
-} from "components/radioButton/style";
+import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
+import { SearchWrapper } from "../../commonStyle";
 import {
   Select,
   FormGroup,
   Wrapper,
   Label,
   Field,
-  Input,
 } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
@@ -60,12 +54,12 @@ function RV9005({
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [sType1, setSType1] = useState(false);
-  const [sType2, setSType2] = useState("0");
-
+  const [selected, setSelected] = useState<any>({});
+  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [dataChk, setDataChk] = useState(true);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "RV",
-    functionName: "RV9005",
+    groupId: "GR",
+    functionName: "GR9004",
   });
 
   const { register, handleSubmit, reset, getValues, control } =
@@ -164,12 +158,14 @@ function RV9005({
 
   return (
     <>
-      <SearchWrapper style={{ height: "35px", marginTop: "5px" }}>
-        <div style={{ display: "flex", alignItems: "baseline" }}>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
+      <TopBar>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p style={{ marginRight: "20px" }}>{depthFullName}</p>
+          <p>
+            <b>영업소</b>
+          </p>
 
-          <Select {...register("areaCode")}>
+          <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -292,18 +288,20 @@ function RV9005({
                     <>
                       <Loader
                         color="white"
-                        size={16}
-                        style={{ marginRight: "10px" }}
+                        size={13}
                         borderWidth="2px"
+                        style={{ marginRight: "10px" }}
                       />
                     </>
                   )
                 }
+                style={{ marginRight: "10px" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ marginLeft: "5px" }}
+                style={{ marginRight: "10px" }}
+                type="button"
                 color={ButtonColor.LIGHT}
                 onClick={resetSearchForm}
               />

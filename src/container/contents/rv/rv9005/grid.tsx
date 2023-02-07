@@ -5,10 +5,16 @@ function Grid({
   data,
   fields,
   columns,
+  setSelected,
+  selectedRowIndex,
+  setSelectedRowIndex,
 }: {
   data: any;
   fields: any;
   columns: any;
+  setSelected: Function;
+  selectedRowIndex: number | null;
+  setSelectedRowIndex: Function;
 }) {
   let container: HTMLDivElement;
   let dp: any;

@@ -10,10 +10,11 @@ export interface IJNOSAUP {
   swDriverNo: string;
   swDriverType: string;
   swGubun: string;
+  swGubunName: string;
   swHp: string;
-  swIndate: string;
-  swJdate1: string;
-  swJdate2: string;
+  swIndate: any;
+  swJdate1: any;
+  swJdate2: any;
   swJuminno: string;
   swName: string;
   swPaydate: string;
@@ -27,6 +28,6 @@ export interface IJNOSAUP {
   eyeSwCode: string;
   swDepartment: string;
   swStampFile: string | null;
-  swOutDate: string;
+  swOutDate: any;
   sgKumack: any;
 }
