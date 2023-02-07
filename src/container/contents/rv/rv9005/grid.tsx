@@ -5,16 +5,10 @@ function Grid({
   data,
   fields,
   columns,
-  setSelected,
-  selectedRowIndex,
-  setSelectedRowIndex,
 }: {
   data: any;
   fields: any;
   columns: any;
-  setSelected: Function;
-  selectedRowIndex: number | null;
-  setSelectedRowIndex: Function;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -33,7 +27,7 @@ function Grid({
     gv.setHeader({
       height: 35,
     });
-    gv.setFooter({ visible: false });
+
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
@@ -44,16 +38,6 @@ function Grid({
     gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
 
-    gv.setCurrent({
-      dataRow: selectedRowIndex,
-    });
-
-    gv.onSelectionChanged = () => {
-      const itemIndex: any = gv.getCurrent().dataRow;
-      setSelected(data[itemIndex]);
-      setSelectedRowIndex(itemIndex);
-    };
-
     return () => {
       dp.clearRows();
       gv.destroy();
@@ -61,7 +45,9 @@ function Grid({
     };
   }, [data]);
 
-  return <div ref={realgridElement} style={{ height: "inherit" }}></div>;
+  return (
+    <div ref={realgridElement} style={{ height: `calc(100% - 113px)` }}></div>
+  );
 }
 
 export default Grid;

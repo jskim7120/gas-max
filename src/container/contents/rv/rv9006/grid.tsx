@@ -37,12 +37,8 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
-    // gv.displayOptions.fitStyle = "evenFill";
-    gv.setEditOptions({ editable: false });
 
-    // gv.onSelectionChanged = () => {
-    //   const itemIndex: any = gv.getCurrent().dataRow;
-    // };
+    gv.setEditOptions({ editable: false });
 
     return () => {
       dp.clearRows();

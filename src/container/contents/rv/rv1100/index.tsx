@@ -135,9 +135,9 @@ function RV1100({
       </SearchWrapper>
       <SearchWrapper>
         <div style={{ width: "70%" }}>
-          <Wrapper grid col={4} fields="1fr 0.5fr 0.6fr 1fr">
+          <Wrapper grid col={4} fields="0.7fr 0.5fr 0.6fr 1fr">
             <FormGroup>
-              <Label style={{ minWidth: "auto" }}>검침년월</Label>
+              <Label style={{ minWidth: "90px" }}>검침년월</Label>
               <Controller
                 control={control}
                 {...register("sGjGumym")}
@@ -150,8 +150,8 @@ function RV1100({
                   />
                 )}
               />
-              <Label style={{ minWidth: "auto" }}>회차</Label>
-              <Select {...register("sGjSno")} style={{ width: "100%" }}>
+              <Label style={{ minWidth: "41px" }}>회차</Label>
+              <Select {...register("sGjSno")} style={{ marginLeft: "0" }}>
                 {dataCommonDic?.sGjSno?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -231,13 +231,13 @@ function RV1100({
             </Field>
           </Wrapper>
 
-          <Wrapper grid col={4} fields="1fr 0.5fr 0.6fr 1fr">
+          <Wrapper grid col={4} fields="0.7fr 0.5fr 0.6fr 1fr">
             <FormGroup>
               <Input
                 label="건물명"
                 register={register("sCuName")}
-                labelStyle={{ minWidth: "62px" }}
-                fullWidth
+                labelStyle={{ minWidth: "90px" }}
+                inputSize={InputSize.i200}
               />
             </FormGroup>
             <FormGroup>

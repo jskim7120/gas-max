@@ -70,8 +70,7 @@ function Footer({ data }: { data: any }) {
           label="잔 량"
           register={register("gjJankg")}
           labelStyle={{ minWidth: "68px" }}
-          inputSize={InputSize.i150}
-          textAlign="right"
+          inputSize={InputSize.i120}
         />
       );
     if (data.gjJanType === "1")
@@ -82,13 +81,8 @@ function Footer({ data }: { data: any }) {
             register={register("gjT1Per")}
             labelStyle={{ minWidth: "68px" }}
             inputSize={InputSize.i50}
-            textAlign="right"
           />
-          <Input
-            register={register("gjT1Kg")}
-            inputSize={InputSize.i70}
-            textAlign="right"
-          />
+          <Input register={register("gjT1Kg")} inputSize={InputSize.i60} />
           <p>{data?.gjEyeTank1Dt}</p>
         </Field>
       );
@@ -98,29 +92,13 @@ function Footer({ data }: { data: any }) {
           <Label style={{ minWidth: "68px" }}>잔 량</Label>
           <Field>
             <Field flex>
-              <Input
-                register={register("gjT1Per")}
-                inputSize={InputSize.i50}
-                textAlign="right"
-              />
-              <Input
-                register={register("gjT1Kg")}
-                inputSize={InputSize.i50}
-                textAlign="right"
-              />
+              <Input register={register("gjT1Per")} inputSize={InputSize.i50} />
+              <Input register={register("gjT1Kg")} inputSize={InputSize.i60} />
               <p>{data?.gjEyeTank1Dt}</p>
             </Field>
             <Field flex>
-              <Input
-                register={register("gjT2Per")}
-                inputSize={InputSize.i50}
-                textAlign="right"
-              />
-              <Input
-                register={register("gjT2Kg")}
-                inputSize={InputSize.i50}
-                textAlign="right"
-              />
+              <Input register={register("gjT2Per")} inputSize={InputSize.i50} />
+              <Input register={register("gjT2Kg")} inputSize={InputSize.i60} />
               <p>{data?.gjEyeTank2Dt}</p>
             </Field>
           </Field>

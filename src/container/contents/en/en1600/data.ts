@@ -22,7 +22,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "swGubun",
+    fieldName: "swGubunName",
     dataType: ValueType.TEXT,
   },
   {
@@ -89,8 +89,8 @@ export const columns = [
     },
   },
   {
-    name: "swGubun",
-    fieldName: "swGubun",
+    name: "swGubunName",
+    fieldName: "swGubunName",
     type: "data",
     width: "120",
     header: {

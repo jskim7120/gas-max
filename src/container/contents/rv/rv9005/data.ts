@@ -38,7 +38,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gJDanga",
+    fieldName: "gjDanga",
     dataType: ValueType.TEXT,
   },
   {
@@ -64,7 +64,7 @@ export const fields = [
   },
 
   {
-    fieldName: "gjDangKum",
+    fieldName: "gjDangkum",
     dataType: ValueType.TEXT,
   },
   {
@@ -80,7 +80,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjJiroDate",
+    fieldName: "gjJirodate",
     dataType: ValueType.TEXT,
   },
 ];
@@ -93,6 +93,11 @@ export const columns = [
     width: "20",
     header: {
       text: "순번",
+    },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("cuCno", "count");
+      },
     },
   },
   {
@@ -118,6 +123,7 @@ export const columns = [
     fieldName: "viewCuName",
     type: "data",
     width: "40",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -136,8 +142,9 @@ export const columns = [
     fieldName: "gjJungum",
     type: "data",
     width: "20",
+    styleName: "rg-right-column",
     header: {
-      text: "전월",
+      text: "전월검침",
     },
   },
   {
@@ -145,8 +152,9 @@ export const columns = [
     fieldName: "gjGum",
     type: "data",
     width: "20",
+    styleName: "rg-right-column",
     header: {
-      text: "당월",
+      text: "당월검침",
     },
   },
   {
@@ -154,8 +162,9 @@ export const columns = [
     fieldName: "gjJankg",
     type: "data",
     width: "20",
+    styleName: "rg-right-column",
     header: {
-      text: "사용량",
+      text: "잔량",
     },
   },
   {
@@ -163,15 +172,17 @@ export const columns = [
     fieldName: "gjGage",
     type: "data",
     width: "20",
+    styleName: "rg-right-column",
     header: {
-      text: "단가",
+      text: "사용량",
     },
   },
   {
-    name: "gJDanga",
-    fieldName: "gJDanga",
+    name: "gjDanga",
+    fieldName: "gjDanga",
     type: "data",
     width: "20",
+    styleName: "rg-right-column",
     header: {
       text: "단가",
     },
@@ -181,6 +192,7 @@ export const columns = [
     fieldName: "gjKumack",
     type: "data",
     width: "20",
+    styleName: "rg-right-column",
     header: {
       text: "사용금액",
     },
@@ -191,8 +203,9 @@ export const columns = [
     fieldName: "maintCost",
     type: "data",
     width: "20",
+    styleName: "rg-right-column",
     header: {
-      text: "영업소",
+      text: "관리비",
     },
   },
   {
@@ -200,8 +213,9 @@ export const columns = [
     fieldName: "gjDc",
     type: "data",
     width: "20",
+    styleName: "rg-right-column",
     header: {
-      text: "영업소",
+      text: "할인액",
     },
   },
   {
@@ -209,8 +223,9 @@ export const columns = [
     fieldName: "gjPerkum",
     type: "data",
     width: "20",
+    styleName: "rg-right-column",
     header: {
-      text: "영업소",
+      text: "연체료",
     },
   },
   {
@@ -218,17 +233,19 @@ export const columns = [
     fieldName: "gjMisu",
     type: "data",
     width: "20",
+    styleName: "rg-right-column",
     header: {
-      text: "영업소",
+      text: "전월미수",
     },
   },
   {
-    name: "gjDangKum",
-    fieldName: "gjDangKum",
+    name: "gjDangkum",
+    fieldName: "gjDangkum",
     type: "data",
     width: "20",
+    styleName: "rg-right-column",
     header: {
-      text: "영업소",
+      text: "당월금액",
     },
   },
   {
@@ -236,8 +253,9 @@ export const columns = [
     fieldName: "gjTotal",
     type: "data",
     width: "20",
+    styleName: "rg-right-column",
     header: {
-      text: "선택",
+      text: "청구금액",
     },
   },
   {
@@ -245,8 +263,9 @@ export const columns = [
     fieldName: "gjMisujan",
     type: "data",
     width: "20",
+    styleName: "rg-right-column",
     header: {
-      text: "청구",
+      text: "미수잔액",
     },
   },
   {
@@ -255,16 +274,16 @@ export const columns = [
     type: "data",
     width: "20",
     header: {
-      text: "납부마감일",
+      text: "사용기간",
     },
   },
   {
-    name: "gjJiroDate",
-    fieldName: "gjJiroDate",
+    name: "gjJirodate",
+    fieldName: "gjJirodate",
     type: "data",
     width: "20",
     header: {
-      text: "지로출력일",
+      text: "지로발행",
     },
   },
 ];

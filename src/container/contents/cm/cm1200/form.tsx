@@ -42,7 +42,6 @@ import {
   formatDate,
   formatDateByRemoveDash,
   formatDateToStringWithoutDash,
-  formatDateToStringWithDash,
 } from "helpers/dateFormat";
 import { formatCurrencyRemoveComma } from "helpers/currency";
 
@@ -73,24 +72,6 @@ const Form = React.forwardRef(
   ) => {
     const [addr, setAddress] = useState<string>("");
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-
-    // CustomDatePickers
-    {
-      /*
-    const [cuFinishDate, setCuFinishDate] = useState("");
-    const [cuCircuitDate, setCuCircuitDate] = useState("");
-    const [cuScheduleDate, setCuScheduleDate] = useState("");
-    const [tankFirstDate1, setTankFirstDate1] = useState("");
-    const [tankFirstDate2, setTankFirstDate2] = useState("");
-    const [tankOutsideDate1, setTankOutsideDate1] = useState("");
-    const [tankOutsideDate2, setTankOutsideDate2] = useState("");
-    const [tankInsideDate1, setTankInsideDate1] = useState("");
-    const [tankInsideDate2, setTankInsideDate2] = useState("");
-    const [gasifyCheckDate1, setGasifyCheckDate1] = useState("");
-    const [gasifyCheckDate2, setGasifyCheckDate2] = useState("");
-    
-    */
-    }
 
     const [chkCuZipCode, setChkCuZipCode] = useState(false);
     const [chkCuRh20, setChkCuRh20] = useState(false);
@@ -353,53 +334,81 @@ const Form = React.forwardRef(
       formValues.cuAptnameYn = formValues.cuAptnameYn ? "Y" : "N";
 
       formValues.cuFinishDate =
-        typeof formValues.cuFinishDate === "object"
-          ? formatDateToStringWithDash(formValues.cuFinishDate)
-          : formValues.cuFinishDate;
+        typeof formValues.cuFinishDate === "string"
+          ? formatDateByRemoveDash(formValues.cuFinishDate)
+          : formValues.cuFinishDate instanceof Date
+          ? formatDateToStringWithoutDash(formValues.cuFinishDate)
+          : "";
+
       formValues.cuCircuitDate =
-        typeof formValues.cuCircuitDate === "object"
-          ? formatDateToStringWithDash(formValues.cuCircuitDate)
-          : formValues.cuCircuitDate;
+        typeof formValues.cuCircuitDate === "string"
+          ? formatDateByRemoveDash(formValues.cuCircuitDate)
+          : formValues.cuCircuitDate instanceof Date
+          ? formatDateToStringWithoutDash(formValues.cuCircuitDate)
+          : "";
 
       formValues.cuScheduleDate =
-        typeof formValues.cuScheduleDate === "object"
-          ? formatDateToStringWithDash(formValues.cuScheduleDate)
-          : formValues.cuScheduleDate;
+        typeof formValues.cuScheduleDate === "string"
+          ? formatDateByRemoveDash(formValues.cuScheduleDate)
+          : formValues.cuScheduleDate instanceof Date
+          ? formatDateToStringWithoutDash(formValues.cuScheduleDate)
+          : "";
 
       formValues.gasifyCheckDate1 =
-        typeof formValues.gasifyCheckDate1 === "object"
-          ? formatDateToStringWithDash(formValues.gasifyCheckDate1)
-          : formValues.gasifyCheckDate1;
-      formValues.gasifyCheckDate2 =
-        typeof formValues.gasifyCheckDate2 === "object"
-          ? formatDateToStringWithDash(formValues.gasifyCheckDate2)
-          : formValues.gasifyCheckDate2;
-      formValues.tankFirstDate1 =
-        typeof formValues.tankFirstDate1 === "object"
-          ? formatDateToStringWithDash(formValues.tankFirstDate1)
+        typeof formValues.gasifyCheckDate1 === "string"
+          ? formatDateByRemoveDash(formValues.gasifyCheckDate1)
+          : formValues.gasifyCheckDate1 instanceof Date
+          ? formatDateToStringWithoutDash(formValues.gasifyCheckDate1)
           : "";
+
+      formValues.gasifyCheckDate2 =
+        typeof formValues.gasifyCheckDate2 === "string"
+          ? formatDateByRemoveDash(formValues.gasifyCheckDate2)
+          : formValues.gasifyCheckDate2 instanceof Date
+          ? formatDateToStringWithoutDash(formValues.gasifyCheckDate2)
+          : "";
+
+      formValues.tankFirstDate1 =
+        typeof formValues.tankFirstDate1 === "string"
+          ? formatDateByRemoveDash(formValues.tankFirstDate1)
+          : formValues.tankFirstDate1 instanceof Date
+          ? formatDateToStringWithoutDash(formValues.tankFirstDate1)
+          : "";
+
       formValues.tankFirstDate2 =
-        typeof formValues.tankFirstDate2 === "object"
-          ? formatDateToStringWithDash(formValues.tankFirstDate2)
-          : formValues.tankFirstDate2;
+        typeof formValues.tankFirstDate2 === "string"
+          ? formatDateByRemoveDash(formValues.tankFirstDate2)
+          : formValues.tankFirstDate2 instanceof Date
+          ? formatDateToStringWithoutDash(formValues.tankFirstDate2)
+          : "";
 
       formValues.tankInsideDate1 =
-        typeof formValues.tankInsideDate1 === "object"
-          ? formatDateToStringWithDash(formValues.tankInsideDate1)
-          : formValues.tankInsideDate1;
+        typeof formValues.tankInsideDate1 === "string"
+          ? formatDateByRemoveDash(formValues.tankInsideDate1)
+          : formValues.tankInsideDate1 instanceof Date
+          ? formatDateToStringWithoutDash(formValues.tankInsideDate1)
+          : "";
+
       formValues.tankInsideDate2 =
-        typeof formValues.tankInsideDate2 === "object"
-          ? formatDateToStringWithDash(formValues.tankInsideDate2)
-          : formValues.tankInsideDate2;
+        typeof formValues.tankInsideDate2 === "string"
+          ? formatDateByRemoveDash(formValues.tankInsideDate2)
+          : formValues.tankInsideDate2 instanceof Date
+          ? formatDateToStringWithoutDash(formValues.tankInsideDate2)
+          : "";
 
       formValues.tankOutsideDate1 =
-        typeof formValues.tankOutsideDate1 === "object"
-          ? formatDateToStringWithDash(formValues.tankOutsideDate1)
-          : formValues.tankOutsideDate1;
+        typeof formValues.tankOutsideDate1 === "string"
+          ? formatDateByRemoveDash(formValues.tankOutsideDate1)
+          : formValues.tankOutsideDate1 instanceof Date
+          ? formatDateToStringWithoutDash(formValues.tankOutsideDate1)
+          : "";
+
       formValues.tankOutsideDate2 =
-        typeof formValues.tankOutsideDate2 === "object"
-          ? formatDateToStringWithDash(formValues.tankOutsideDate2)
-          : formValues.tankOutsideDate2;
+        typeof formValues.tankOutsideDate2 === "string"
+          ? formatDateByRemoveDash(formValues.tankOutsideDate2)
+          : formValues.tankOutsideDate2 instanceof Date
+          ? formatDateToStringWithoutDash(formValues.tankOutsideDate2)
+          : "";
 
       formValues.cuRdangaAmt =
         formValues.cuRdangaType !== "1" ? 0 : Number(formValues.cuRdangaAmt);
