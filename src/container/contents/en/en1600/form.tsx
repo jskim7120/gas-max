@@ -17,7 +17,11 @@ import CheckBox from "components/checkbox";
 import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { SearchIcon, IconInfo } from "components/allSvgIcon";
-import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
+import {
+  formatDate,
+  formatDateByRemoveDash,
+  formatDateToStringWithoutDash,
+} from "helpers/dateFormat";
 import { convertBase64 } from "helpers/convertBase64";
 import CustomDatePicker from "components/customDatePicker";
 import { ImageWrapper } from "../../commonStyle";
@@ -51,10 +55,6 @@ const Form = React.forwardRef(
       name: string;
     }>();
     const [image64, setImage64] = useState<any>(null);
-    const [swIndate, setSwIndate] = useState("");
-    const [swJdate1, setSwJdate1] = useState("");
-    const [swJdate2, setSwJdate2] = useState("");
-    const [swOutDate, setSwOutDate] = useState("");
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
@@ -123,14 +123,13 @@ const Form = React.forwardRef(
             swWorkOut: selected.swWorkOut === "Y",
             cuSeEmail: selected.cuSeEmail ? selected.cuSeEmail.trim() : "",
             mailKind: selected.mailKind ? selected.mailKind.trim() : "",
+            swIndate: selected?.swIndate ? formatDate(selected.swIndate) : "",
+            swJdate1: selected?.swJdate1 ? formatDate(selected.swJdate1) : "",
+            swJdate2: selected?.swJdate2 ? formatDate(selected.swJdate2) : "",
+            swOutDate: selected?.swOutDate
+              ? formatDate(selected.swOutDate)
+              : "",
           });
-
-          setSwIndate(selected.swIndate ? formatDate(selected.swIndate) : "");
-          setSwJdate1(selected.swJdate1 ? formatDate(selected.swJdate1) : "");
-          setSwJdate2(selected.swJdate2 ? formatDate(selected.swJdate2) : "");
-          setSwOutDate(
-            selected.swOutDate ? formatDate(selected.swOutDate) : ""
-          );
 
           selected.swStampFile
             ? setImage64(selected.swStampFile)
@@ -178,10 +177,31 @@ const Form = React.forwardRef(
         formValues.cuSeEmail &&
         `${formValues.cuSeEmail.trim()}@${formValues.mailKind}`;
 
-      formValues.swIndate = swIndate ? formatDateByRemoveDash(swIndate) : "";
-      formValues.swJdate1 = swJdate1 ? formatDateByRemoveDash(swJdate1) : "";
-      formValues.swJdate2 = swJdate2 ? formatDateByRemoveDash(swJdate2) : "";
-      formValues.swOutDate = swOutDate ? formatDateByRemoveDash(swOutDate) : "";
+      formValues.swIndate =
+        typeof formValues.swIndate === "string"
+          ? formatDateByRemoveDash(formValues.swIndate)
+          : formValues.swIndate instanceof Date
+          ? formatDateToStringWithoutDash(formValues.swIndate)
+          : "";
+      formValues.swJdate1 =
+        typeof formValues.swJdate1 === "string"
+          ? formatDateByRemoveDash(formValues.swJdate1)
+          : formValues.swJdate1 instanceof Date
+          ? formatDateToStringWithoutDash(formValues.swJdate1)
+          : "";
+      formValues.swJdate2 =
+        typeof formValues.swJdate2 === "string"
+          ? formatDateByRemoveDash(formValues.swJdate2)
+          : formValues.swJdate2 instanceof Date
+          ? formatDateToStringWithoutDash(formValues.swJdate2)
+          : "";
+      formValues.swOutDate =
+        typeof formValues.swOutDate === "string"
+          ? formatDateByRemoveDash(formValues.swOutDate)
+          : formValues.swOutDate instanceof Date
+          ? formatDateToStringWithoutDash(formValues.swOutDate)
+          : "";
+      formValues.swGubun = formValues.swGubunName?.charAt(0);
 
       formValues.swStampFile = image64 && image64;
 
@@ -287,7 +307,7 @@ const Form = React.forwardRef(
           <Field style={{ marginRight: "52px" }}>
             <FormGroup>
               <Label>업무구분</Label>
-              <Select {...register("swGubun")}>
+              <Select {...register("swGubunName")}>
                 {dataCommonDic?.swGubun?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
                     {obj.codeName}
