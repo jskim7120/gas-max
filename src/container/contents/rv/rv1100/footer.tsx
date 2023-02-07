@@ -70,7 +70,7 @@ function Footer({ data }: { data: any }) {
           label="잔 량"
           register={register("gjJankg")}
           labelStyle={{ minWidth: "68px" }}
-          inputSize={InputSize.i150}
+          inputSize={InputSize.i120}
         />
       );
     if (data.gjJanType === "1")
@@ -82,7 +82,7 @@ function Footer({ data }: { data: any }) {
             labelStyle={{ minWidth: "68px" }}
             inputSize={InputSize.i50}
           />
-          <Input register={register("gjT1Kg")} inputSize={InputSize.i70} />
+          <Input register={register("gjT1Kg")} inputSize={InputSize.i60} />
           <p>{data?.gjEyeTank1Dt}</p>
         </Field>
       );
@@ -93,12 +93,12 @@ function Footer({ data }: { data: any }) {
           <Field>
             <Field flex>
               <Input register={register("gjT1Per")} inputSize={InputSize.i50} />
-              <Input register={register("gjT1Kg")} inputSize={InputSize.i50} />
+              <Input register={register("gjT1Kg")} inputSize={InputSize.i60} />
               <p>{data?.gjEyeTank1Dt}</p>
             </Field>
             <Field flex>
               <Input register={register("gjT2Per")} inputSize={InputSize.i50} />
-              <Input register={register("gjT2Kg")} inputSize={InputSize.i50} />
+              <Input register={register("gjT2Kg")} inputSize={InputSize.i60} />
               <p>{data?.gjEyeTank2Dt}</p>
             </Field>
           </Field>
@@ -132,24 +132,28 @@ function Footer({ data }: { data: any }) {
                 register={register("gjGum")}
                 labelStyle={{ minWidth: "66px" }}
                 inputSize={InputSize.i120}
+                textAlign="right"
               />
               <Input
                 label="㎥ 단가"
                 register={register("gjDanga")}
                 labelStyle={{ minWidth: "76px" }}
                 inputSize={InputSize.i120}
+                textAlign="right"
               />
               <Input
                 label="사용료"
                 register={register("gjKumack")}
                 labelStyle={{ minWidth: "52px" }}
                 inputSize={InputSize.i120}
+                textAlign="right"
               />
               <Input
                 label="당월금액"
                 register={register("gjTotal")}
                 labelStyle={{ minWidth: "89px" }}
                 inputSize={InputSize.i120}
+                textAlign="right"
               />
             </Wrapper>
             <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
@@ -172,6 +176,7 @@ function Footer({ data }: { data: any }) {
                 register={register("gjJungum")}
                 labelStyle={{ minWidth: "66px" }}
                 inputSize={InputSize.i120}
+                textAlign="right"
               />
               <FormGroup style={{ gap: "10px" }}>
                 <CheckBox
@@ -181,6 +186,7 @@ function Footer({ data }: { data: any }) {
                 <Input
                   register={register("gjBaGageKum")}
                   inputSize={InputSize.i120}
+                  textAlign="right"
                 />
               </FormGroup>
               <Input
@@ -188,12 +194,14 @@ function Footer({ data }: { data: any }) {
                 register={register("gjPerkum")}
                 labelStyle={{ minWidth: "52px" }}
                 inputSize={InputSize.i120}
+                textAlign="right"
               />
               <Input
                 label="전미수"
                 register={register("gjMisu")}
                 labelStyle={{ minWidth: "89px" }}
                 inputSize={InputSize.i120}
+                textAlign="right"
               />
             </Wrapper>
             <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
@@ -214,18 +222,21 @@ function Footer({ data }: { data: any }) {
                 register={register("gjGage")}
                 labelStyle={{ minWidth: "66px" }}
                 inputSize={InputSize.i120}
+                textAlign="right"
               />
               <Input
                 label="관리비"
                 register={register("maintCost")}
                 labelStyle={{ minWidth: "76px" }}
                 inputSize={InputSize.i120}
+                textAlign="right"
               />
               <Input
                 label="할인율"
                 register={register("gjDc")}
                 labelStyle={{ minWidth: "52px" }}
                 inputSize={InputSize.i120}
+                textAlign="right"
               />
               <FormGroup style={{ gap: "10px" }}>
                 <CheckBox
@@ -235,6 +246,7 @@ function Footer({ data }: { data: any }) {
                 <Input
                   register={register("gjJmisuAmt")}
                   inputSize={InputSize.i120}
+                  textAlign="right"
                 />
               </FormGroup>
             </Wrapper>

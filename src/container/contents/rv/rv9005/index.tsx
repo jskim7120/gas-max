@@ -101,10 +101,12 @@ function RV9005({
   const fetchData = async (params: any) => {
     try {
       setLoading(true);
-      const { data } = await API.get(RV9005SEARCH, { params: params });
+      const { data: dataRV9005 } = await API.get(RV9005SEARCH, {
+        params: params,
+      });
 
-      if (data) {
-        setData(data);
+      if (dataRV9005) {
+        setData(dataRV9005);
       } else {
         setData([]);
       }
@@ -188,7 +190,7 @@ function RV9005({
       </SearchWrapper>
       <SearchWrapper>
         <div style={{ width: "80%" }}>
-          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.1fr 0.6fr">
+          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
             <FormGroup>
               <Item>
                 <RadioButton
@@ -263,7 +265,11 @@ function RV9005({
                   거래처 담당사원
                 </RadioButtonLabel>
               </Item>
-              <Select {...register("sSwCode")} disabled={sType2 !== "0"}>
+              <Select
+                {...register("sSwCode")}
+                disabled={sType2 !== "0"}
+                width={InputSize.i120}
+              >
                 {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -276,7 +282,7 @@ function RV9005({
               label="건물명"
               register={register("sCuName")}
               labelStyle={{ minWidth: "70px" }}
-              inputSize={InputSize.i100}
+              inputSize={InputSize.i120}
             />
             <FormGroup>
               <Button
@@ -303,11 +309,14 @@ function RV9005({
                 icon={<ResetGray />}
                 style={{ marginLeft: "5px" }}
                 color={ButtonColor.LIGHT}
-                onClick={resetSearchForm}
+                onClick={() => {
+                  resetSearchForm();
+                  setData([]);
+                }}
               />
             </FormGroup>
           </Wrapper>
-          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.1fr 0.6fr">
+          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
             <FormGroup>
               {radioOptions.map((option, index) => (
                 <Item key={index}>
@@ -337,7 +346,11 @@ function RV9005({
                   체 적 검침사원
                 </RadioButtonLabel>
               </Item>
-              <Select {...register("sCuSwCode")} disabled={sType2 !== "1"}>
+              <Select
+                {...register("sCuSwCode")}
+                disabled={sType2 !== "1"}
+                width={InputSize.i120}
+              >
                 {dataCommonDic?.sCuSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -347,7 +360,7 @@ function RV9005({
             </FormGroup>
             <FormGroup>
               <Label style={{ minWidth: "70px" }}>지역분류</Label>
-              <Select {...register("sJyCode")}>
+              <Select {...register("sJyCode")} width={InputSize.i120}>
                 {dataCommonDic?.sJyCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -356,7 +369,7 @@ function RV9005({
               </Select>
             </FormGroup>
           </Wrapper>
-          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.1fr 0.6fr">
+          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
             <FormGroup>
               <Label style={{ minWidth: "95px" }}>기간</Label>
               <Controller
@@ -406,7 +419,11 @@ function RV9005({
                   관리책임자 분류
                 </RadioButtonLabel>
               </Item>
-              <Select {...register("sCuCustgubun")} disabled={sType2 !== "2"}>
+              <Select
+                {...register("sCuCustgubun")}
+                disabled={sType2 !== "2"}
+                width={InputSize.i120}
+              >
                 {dataCommonDic?.sCuCustgubun?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -417,7 +434,7 @@ function RV9005({
 
             <FormGroup>
               <Label style={{ minWidth: "70px" }}>수금방법</Label>
-              <Select {...register("sSukumtype")}>
+              <Select {...register("sSukumtype")} width={InputSize.i120}>
                 {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

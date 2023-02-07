@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
+import { ISEARCH } from "./model";
 import { RV9006SEARCH } from "app/path";
-import { useForm, Controller } from "react-hook-form";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import Grid from "./grid";
@@ -15,7 +16,6 @@ import {
   FormGroup,
 } from "components/form/style";
 import { fields, columns } from "./data";
-import { ISEARCH } from "./model";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { Document, MagnifyingGlass, ResetGray } from "components/allSvgIcon";
@@ -24,7 +24,6 @@ import {
   RadioButton,
   RadioButtonLabel,
 } from "components/radioButton/style";
-
 import {
   formatDateByRemoveDash,
   formatOnlyYearMonthDateByRemoveDash,
@@ -63,77 +62,82 @@ function RV9006({
 
   useEffect(() => {
     if (dataCommonDic) {
-      //console.log("dataCommonDic::", dataCommonDic);
-      resetSearch();
+      resetSearchForm();
     }
   }, [dataCommonDic]);
 
-  const resetSearch = () => {
+  const resetSearchForm = () => {
     reset({
       areaCode: dataCommonDic?.areaCode[0].code,
       sType1: dataCommonDic?.sType1[0].code,
       sGjGumymF: dataCommonDic?.sGjGumymF[0].code,
       sGjGumymT: dataCommonDic?.sGjGumymT[0].code,
       sGjSnoF: dataCommonDic?.sGjSnoF[0].code,
-      sGjSnoT: dataCommonDic?.sGjSnoF[0].code,
+      sGjSnoT: dataCommonDic?.sGjSnoT[0].code,
       sDateF: dataCommonDic?.sDateF[0].code,
       sDateT: dataCommonDic?.sDateT[0].code,
       sSwCode: dataCommonDic?.sSwCode[0].code,
       sJyCode: dataCommonDic?.sJyCode[0].code,
+      sRh20: dataCommonDic?.sRh20[0].code,
+      sOrder: dataCommonDic?.sOrder[0].code,
     });
   };
 
-  const submit = async (params: any) => {
-    params.sGjGumymF =
-      typeof params.sGjGumymF === "string"
-        ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumymF)
-        : params.sGjGumymF instanceof Date
-        ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumymF)
-        : "";
-
-    params.sGjGumymT =
-      typeof params.sGjGumymT === "string"
-        ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumymT)
-        : params.sGjGumymT instanceof Date
-        ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumymT)
-        : "";
-
-    params.sDateF =
-      typeof params.sDateF === "string"
-        ? formatDateByRemoveDash(params.sDateF)
-        : formatDateToStringWithoutDash(params.sDateF);
-
-    params.sDateT =
-      typeof params.sDateT === "string"
-        ? formatDateByRemoveDash(params.sDateT)
-        : formatDateToStringWithoutDash(params.sDateT);
-
-    if (!sType1) {
-      delete params.sDateF;
-      delete params.sDateT;
-    } else {
-      delete params.sGjGumymF;
-      delete params.sGjGumymT;
-      delete params.sGjSnoF;
-      delete params.sGjSnoT;
-    }
-
-    fetchData(params);
-  };
-
-  const fetchData = async (params: ISEARCH) => {
+  const fetchData = async (params: any) => {
     try {
       setLoading(true);
-      const { data } = await API.get(RV9006SEARCH, { params: params });
+      const { data: dataRV9006 } = await API.get(RV9006SEARCH, {
+        params: params,
+      });
 
-      if (data.length > 0) {
-        setData(data);
+      if (dataRV9006) {
+        setData(dataRV9006);
       } else {
         setData([]);
       }
 
       setLoading(false);
-    } catch (err) {}
+    } catch (err) {
+      setLoading(false);
+      setData([]);
+    }
+  };
+
+  const submit = async (params: any) => {
+    if (sType1) {
+      delete params.sGjGumymF;
+      delete params.sGjGumymT;
+      delete params.sGjSnoF;
+      delete params.sGjSnoT;
+
+      params.sDateF =
+        typeof params.sDateF === "string"
+          ? formatDateByRemoveDash(params.sDateF)
+          : formatDateToStringWithoutDash(params.sDateF);
+
+      params.sDateT =
+        typeof params.sDateT === "string"
+          ? formatDateByRemoveDash(params.sDateT)
+          : formatDateToStringWithoutDash(params.sDateT);
+    } else {
+      delete params.sDateF;
+      delete params.sDateT;
+      params.sGjGumymF =
+        typeof params.sGjGumymF === "string"
+          ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumymF)
+          : params.sGjGumymF instanceof Date
+          ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumymF)
+          : "";
+
+      params.sGjGumymT =
+        typeof params.sGjGumymT === "string"
+          ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumymT)
+          : params.sGjGumymT instanceof Date
+          ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumymT)
+          : "";
+    }
+    console.log("params::::", params);
+    fetchData(params);
   };
 
   return (
@@ -162,30 +166,19 @@ function RV9006({
       </SearchWrapper>
       <SearchWrapper>
         <Field flex style={{ width: "70%" }}>
-          <Field flex style={{ flexDirection: "column" }}>
-            {radioOptions.map((option, index) => (
-              <Item key={index}>
-                <RadioButton
-                  type="radio"
-                  value={option.id}
-                  {...register(`sType1`, {
-                    required: "required",
-                  })}
-                  id={option.id}
-                  onChange={() => setSType1((prev) => !prev)}
-                />
-                <RadioButtonLabel
-                  htmlFor={`${option.label}`}
-                  style={{ width: "max-content" }}
-                >
-                  {option.label}
-                </RadioButtonLabel>
-              </Item>
-            ))}
-          </Field>
           <Field>
-            <Wrapper grid col={4} fields="1.2fr 1fr 1fr 1fr">
+            <Wrapper grid col={4} fields="1.5fr 1fr 1fr 1fr">
               <FormGroup>
+                <Item>
+                  <RadioButton
+                    type="radio"
+                    value="0"
+                    {...register(`sType1`)}
+                    id="0"
+                    onChange={() => setSType1(false)}
+                  />
+                  <RadioButtonLabel htmlFor={``}>검침년월</RadioButtonLabel>
+                </Item>
                 <Controller
                   control={control}
                   {...register("sGjGumymF")}
@@ -229,7 +222,7 @@ function RV9006({
                   disabled={sType1}
                   style={{ marginLeft: "0" }}
                 >
-                  {dataCommonDic?.sGjSnoF?.map((obj: any, idx: number) => (
+                  {dataCommonDic?.sGjSnoT?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
@@ -250,7 +243,7 @@ function RV9006({
               <FormGroup>
                 <Label>조정기 압력</Label>
                 <Select {...register("sRh20")} style={{ width: "100%" }}>
-                  {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
+                  {dataCommonDic?.sRh20?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
@@ -284,12 +277,25 @@ function RV9006({
                   icon={<ResetGray />}
                   style={{ marginLeft: "5px" }}
                   color={ButtonColor.LIGHT}
-                  onClick={resetSearch}
+                  onClick={() => {
+                    resetSearchForm();
+                    setData([]);
+                  }}
                 />
               </FormGroup>
             </Wrapper>
-            <Wrapper grid col={4} fields="1.2fr 1fr 1fr 1fr">
-              <FormGroup style={{ justifyContent: "space-evenly" }}>
+            <Wrapper grid col={4} fields="1.5fr 1fr 1fr 1fr">
+              <FormGroup>
+                <Item>
+                  <RadioButton
+                    type="radio"
+                    value="1"
+                    {...register(`sType1`)}
+                    id="1"
+                    onChange={() => setSType1(true)}
+                  />
+                  <RadioButtonLabel htmlFor={``}>검침일자</RadioButtonLabel>
+                </Item>
                 <Controller
                   control={control}
                   {...register("sDateF")}
@@ -305,7 +311,7 @@ function RV9006({
                 />
                 <p
                   style={{
-                    width: "100%",
+                    width: "auto",
                     display: "block",
                     textAlign: "center",
                   }}
@@ -340,7 +346,7 @@ function RV9006({
               <FormGroup>
                 <Label>그룹종류</Label>
                 <Select {...register("sOrder")} style={{ width: "100%" }}>
-                  {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
+                  {dataCommonDic?.sOrder?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
