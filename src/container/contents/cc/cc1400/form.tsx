@@ -11,7 +11,7 @@ import {
   Label,
   DividerGray,
 } from "components/form/style";
-import { ICC1500FORM } from "./model";
+import { ICC1400FORM } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { formatDate, formatDateToStringWithoutDash } from "helpers/dateFormat";
 import CustomDatePicker from "components/customDatePicker";
@@ -20,44 +20,42 @@ import API from "app/axios";
 import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
 
 interface IForm {
-  data65: any;
-  setData65: Function;
-  // selected: any;
+  selected: any;
   fetchData: any;
   setData: any;
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
-  dataCommonDic: any;
 }
 
 const Form = React.forwardRef(
   (
     {
-      data65,
-      setData65,
-      // selected,
+      selected,
       fetchData,
       setData,
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
-      dataCommonDic,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
+    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
+      groupId: "EN",
+      functionName: "EN1200",
+    });
+
     const { register, handleSubmit, control, reset, getValues } =
-      useForm<ICC1500FORM>({ mode: "onChange" });
+      useForm<ICC1400FORM>({ mode: "onChange" });
 
     useEffect(() => {
-      if (data65 !== undefined && JSON.stringify(data65) !== "{}") {
-        console.log("datdada65::", data65);
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         resetForm("reset");
       }
       setIsAddBtnClicked(false);
-    }, [data65]);
+    }, [selected]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
@@ -66,13 +64,44 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = async (type: string) => {
-      // if (data65 !== undefined && JSON.stringify(data65) !== "{}") {
-      let newData: any = {};
-      if (type === "clear") {
-      } else if (type === "reset") {
-        reset(data65);
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+        let newData: any = {};
+        if (type === "clear") {
+          document.getElementById("saupSsno")?.focus();
+          const path = EN120011;
+          try {
+            const response: any = await API.get(path, {
+              params: { areaCode: selected.areaCode },
+            });
+            if (response.status === 200) {
+              for (const [key, value] of Object.entries(selected)) {
+                newData[key] = null;
+              }
+              newData.saupSno = response.data.tempCode;
+              newData.areaCode = selected.areaCode;
+              reset(newData);
+            } else {
+              toast.error(response.response.data?.message, {
+                autoClose: 500,
+              });
+            }
+          } catch (err: any) {
+            console.log("areaCode select error", err);
+          }
+        } else if (type === "reset") {
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = value;
+          }
+
+          reset({
+            ...newData,
+            saupStampQu: selected?.saupStampQu === "Y",
+            saupStampEs: selected?.saupStampEs === "Y",
+            saupStampSe: selected?.saupStampSe === "Y",
+            saupDate: selected?.saupDate ? formatDate(selected.saupDate) : "",
+          });
+        }
       }
-      // }
     };
     const crud = async (type: string | null) => {
       if (type === "delete") {
@@ -99,9 +128,19 @@ const Form = React.forwardRef(
       }
     };
 
-    const submit = async (data: ICC1500FORM) => {
+    const submit = async (data: ICC1400FORM) => {
+      //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? EN1200INSERT : EN1200UPDATE;
       const formValues = getValues();
+
+      //formValues.saupStampQu = formValues.saupStampQu ? "Y" : "N";
+      //formValues.saupDate = formValues.saupDate
+      //  ? formatDateToStringWithoutDash(formValues.saupDate)
+      //  : "";
+      //formValues.saupEdiEmail =
+      //  formValues.saupEdiEmail && formValues.saupEdiEmail.trim();
+
+      //formValues.saupStampImg = image64 && image64;
 
       try {
         const response: any = await API.post(path, formValues);
@@ -160,7 +199,7 @@ const Form = React.forwardRef(
               <Label>일자 </Label>
               <Controller
                 control={control}
-                {...register("cjDate")}
+                {...register("sgDate")}
                 render={({ field: { onChange, value, name } }) => (
                   <CustomDatePicker
                     value={value}
@@ -172,77 +211,28 @@ const Form = React.forwardRef(
               />
             </FormGroup>
             <FormGroup>
-              <Label>차량</Label>
-              <Select {...register("cjCaCode")} width={InputSize.i130}>
-                {dataCommonDic?.cjCaCode?.map((obj: any, idx: number) => (
+              <Label>사원</Label>
+              <Select {...register("sgSwCode")} width={InputSize.i130}>
+                {dataCommonDic?.sgSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
               </Select>
             </FormGroup>
-            <FormGroup>
-              <Label>정비명</Label>
-              <Select {...register("cjCcCode")} width={InputSize.i130}>
-                {dataCommonDic?.cjCcCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
+            <Input
+              label="가불합계"
+              register={register("gabulSum")}
+              inputSize={InputSize.i130}
+            />
             <br />
 
             <Input
               label="금액"
-              register={register("cjKumack")}
+              register={register("sgKumack")}
               inputSize={InputSize.i130}
             />
-            <FormGroup>
-              <Label>사원</Label>
-              <Select {...register("cjSwCode")} width={InputSize.i130}>
-                {dataCommonDic?.cjSwCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <Input label="비고" register={register("cjBigo")} fullWidth />
-            <br />
-            <br />
-            <Input
-              label="주유량"
-              register={register("cjOilL")}
-              inputSize={InputSize.i130}
-            />
-            <Input
-              label="단가"
-              register={register("cjOilDanga")}
-              inputSize={InputSize.i130}
-            />
-            <Input
-              label="주유금액"
-              register={register("cjKumackOil")}
-              inputSize={InputSize.i130}
-            />
-            <br />
-            <Input
-              label="누적주행"
-              register={register("cjCarKg")}
-              inputSize={InputSize.i130}
-            />
-            <FormGroup>
-              <Label>사원</Label>
-              <Select {...register("cjSwCodeOil")} width={InputSize.i130}>
-                {dataCommonDic?.cjCaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <Input label="비고" register={register("cjBigoOil")} fullWidth />
+            <Input label="비고" register={register("sgBigo")} fullWidth />
           </div>
           <div>
             <p
@@ -257,6 +247,7 @@ const Form = React.forwardRef(
               <br />
               매월 급여 공제시에는 반제처리 합니다.
             </p>
+
             <DividerGray />
             <Input
               label="기간별 합계"

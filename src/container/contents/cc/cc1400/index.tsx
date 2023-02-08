@@ -1,106 +1,130 @@
-import { useState, useEffect } from "react";
-import { CC1200SEARCH } from "app/path";
-import { ICC1200SEARCH } from "./model";
-import API from "app/axios";
-import CheckBox from "components/checkbox";
-import { TopBar, WrapperContent } from "../../commonStyle";
+import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { SearchWrapper } from "../../commonStyle";
+import API from "app/axios";
+import {
+  SearchWrapper,
+  MainWrapper,
+  RightSide,
+  LeftSide,
+} from "../../commonStyle";
+import { ICC1400SEARCH } from "./model";
+import CustomDatePicker from "components/customDatePicker";
+import {
+  MagnifyingGlass,
+  ResetGray,
+  Document,
+  Plus,
+  Trash,
+  Update,
+} from "components/allSvgIcon";
+import {
+  Item,
+  RadioButton,
+  RadioButtonLabel,
+} from "components/radioButton/style";
 import {
   Select,
   FormGroup,
   Wrapper,
   Label,
+  Input,
   Field,
 } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
-import CustomDatePicker from "components/customDatePicker";
+import { ButtonColor, InputSize } from "components/componentsType";
 import Grid from "../grid";
-import { columns, fields } from "./data";
+import { fields, columns } from "./data";
+import Form from "./form";
+import { CC1400SEARCH } from "app/path";
+import {
+  formatDateToStringWithoutDash,
+  formatDateByRemoveDash,
+} from "helpers/dateFormat";
 
-function CC1200({
+function CC1400({
   depthFullName,
   menuId,
 }: {
   depthFullName: string;
   menuId: string;
 }) {
-  const [loading, setLoading] = useState(false);
+  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+
   const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>({});
+  const [loading, setLoading] = useState(false);
+  const [selected, setSelected] = useState();
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
-  const [dataChk, setDataChk] = useState(true);
+
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CC",
-    functionName: "CC1200",
+    functionName: "CC1400",
   });
 
-  console.log("CC1200:", dataCommonDic);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    getValues,
-    control,
-  } = useForm<ICC1200SEARCH>({
+  useEffect(() => {
+    if (dataCommonDic) {
+      console.log("dataCommonDic:::", dataCommonDic);
+      resetSearchForm();
+    }
+  }, [dataCommonDic]);
+
+  const { register, handleSubmit, reset, control } = useForm<ICC1400SEARCH>({
     mode: "onSubmit",
   });
 
-  const resetForm = () => {
-    if (dataCommonDic !== undefined) {
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-      });
-    }
-  };
-
-  useEffect(() => {
+  const resetSearchForm = () => {
     reset({
       areaCode: dataCommonDic?.areaCode[0].code,
+      sDateF: dataCommonDic?.sDateF[0].code,
+      sDateT: dataCommonDic?.sDateT[0].code,
+      sSwCode: dataCommonDic?.sSwCode[0].code,
     });
-  }, [dataCommonDic]);
+  };
+
+  const submit = (params: any) => {
+    params.sDateF =
+      typeof params.sDateF === "string"
+        ? formatDateByRemoveDash(params.sDateF)
+        : formatDateToStringWithoutDash(params.sDateF);
+
+    params.sDateT =
+      typeof params.sDateT === "string"
+        ? formatDateByRemoveDash(params.sDateT)
+        : formatDateToStringWithoutDash(params.sDateT);
+
+    fetchData(params);
+  };
 
   const fetchData = async (params: any) => {
     try {
       setLoading(true);
-      const { data } = await API.get(CC1200SEARCH, { params: params });
-      console.log("data irev:", data);
-      if (data) {
-        setData(data);
-        setLoading(false);
-        setSelectedRowIndex(0);
+      const { data: dataCC1500 } = await API.get(CC1400SEARCH, {
+        params: params,
+      });
+
+      console.log("fetch data:::::", dataCC1500);
+      if (dataCC1500) {
+        setData(dataCC1500);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (err) {
-      console.log("GR9003 data search fetch error =======>", err);
+      setLoading(false);
+      setData([]);
+      console.log("RV9005 data search fetch error =======>", err);
     }
-  };
-
-  const cancel = () => {
-    resetForm();
-    setDataChk(true);
-    setData([]);
-  };
-
-  const submit = (data: ICC1200SEARCH) => {
-    console.log("IISEARCH:", data);
-    fetchData(data);
   };
 
   return (
     <>
-      <TopBar>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <p style={{ marginRight: "20px" }}>{depthFullName}</p>
-          <p>
-            <b>영업소</b>
-          </p>
+      <SearchWrapper style={{ height: "35px", marginTop: "5px" }}>
+        <div style={{ display: "flex", alignItems: "baseline" }}>
+          <p>{depthFullName}</p>
+          <p className="big">영업소</p>
 
-          <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
+          <Select {...register("areaCode")}>
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -108,105 +132,136 @@ function CC1200({
             ))}
           </Select>
         </div>
-      </TopBar>
-      <WrapperContent style={{ height: `calc(100% - 76px)` }}>
-        <form onSubmit={handleSubmit(submit)}>
-          <SearchWrapper style={{ alignItems: "baseline" }}>
-            <div>
-              <Wrapper grid col={2} fields="1fr 1.5fr">
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>기간</Label>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("sDateF")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
-                  <Label style={{ minWidth: "auto" }}>~</Label>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("sDateT")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
-                </FormGroup>
-                <Field>
-                  <FormGroup>
-                    &nbsp;&nbsp;
-                    <CheckBox register={{ ...register("something") }} />
-                    &nbsp; &nbsp; &nbsp;
-                    <Label>사용자등록 자료만 보기</Label>
-                  </FormGroup>
-                </Field>
-              </Wrapper>
-            </div>
+        <div className="buttons">
+          <Button
+            text="등록"
+            icon={<Plus />}
+            style={{ marginRight: "5px" }}
+            onClick={() => {}}
+          />
+          <Button
+            text="삭제"
+            icon={<Trash />}
+            style={{ marginRight: "5px" }}
+            onClick={() => {}}
+          />
+          <Button
+            text="저장"
+            icon={<Update />}
+            style={{ marginRight: "5px" }}
+            color={ButtonColor.SECONDARY}
+            onClick={() => {}}
+          />
+          <Button
+            text="취소"
+            icon={<ResetGray />}
+            color={ButtonColor.LIGHT}
+            onClick={() => {}}
+          />
+        </div>
+      </SearchWrapper>
+      <MainWrapper>
+        <LeftSide>
+          <SearchWrapper style={{ height: "35px" }}>
+            <FormGroup>
+              <Label style={{ minWidth: "auto" }}>기간</Label>
+              <Controller
+                control={control}
+                {...register("sDateF")}
+                render={({ field: { onChange, value, name } }) => (
+                  <CustomDatePicker
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                  />
+                )}
+              />
+              <p
+                style={{
+                  width: "auto",
+                  display: "block",
+                  textAlign: "center",
+                }}
+              >
+                ~
+              </p>
+              <Controller
+                control={control}
+                {...register("sDateT")}
+                render={({ field: { onChange, value, name } }) => (
+                  <CustomDatePicker
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                  />
+                )}
+              />
 
-            <div
-              className="button-wrapper"
-              style={{ flexDirection: "row", gap: "0px" }}
-            >
+              <Label>차량</Label>
+              <Select {...register("sSwCode")} width={InputSize.i120}>
+                {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+
               <Button
                 text="검색"
                 icon={!loading && <MagnifyingGlass />}
-                color={ButtonColor.DANGER}
-                type="submit"
+                type="button"
+                color={ButtonColor.SECONDARY}
+                onClick={handleSubmit(submit)}
+                style={{ marginLeft: "30px" }}
                 loader={
                   loading && (
                     <>
                       <Loader
                         color="white"
-                        size={13}
-                        borderWidth="2px"
+                        size={16}
                         style={{ marginRight: "10px" }}
+                        borderWidth="2px"
                       />
                     </>
                   )
                 }
-                style={{ marginRight: "10px" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ marginRight: "10px" }}
-                type="button"
+                style={{ marginLeft: "5px" }}
                 color={ButtonColor.LIGHT}
-                onClick={cancel}
+                onClick={() => {
+                  resetSearchForm();
+                  setData([]);
+                }}
               />
-              <Button
-                text="엑셀"
-                icon={<ExcelIcon width="19px" height="19px" />}
-                color={ButtonColor.LIGHT}
-                type="button"
-              />
-            </div>
+            </FormGroup>
           </SearchWrapper>
-        </form>
-
-        <Grid
-          data={data.length > 0 && data}
-          columns={columns}
-          fields={fields}
-          setSelected={setSelected}
-          selectedRowIndex={selectedRowIndex}
-          setSelectedRowIndex={setSelectedRowIndex}
-        />
-      </WrapperContent>
+          <Grid
+            data={data}
+            fields={fields}
+            columns={columns}
+            setSelected={setSelected}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            style={{ height: `calc(100% - 38px)` }}
+          />
+        </LeftSide>
+        <RightSide>
+          <Form
+            selected={selected}
+            ref={formRef}
+            fetchData={fetchData}
+            setData={setData}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            setSelected={setSelected}
+          />
+        </RightSide>
+      </MainWrapper>
     </>
   );
 }
 
-export default CC1200;
+export default CC1400;

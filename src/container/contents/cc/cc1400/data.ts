@@ -6,27 +6,23 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "acjDate",
+    fieldName: "sgDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "acjJno",
+    fieldName: "sgSwCode",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "acjAccName",
+    fieldName: "sgSwName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "acjBigo",
+    fieldName: "sgBigo",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "acjKumackCh",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "acjKumackDa",
+    fieldName: "sgKumack",
     dataType: ValueType.TEXT,
   },
 ];
@@ -36,63 +32,61 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "20",
+    width: "50",
     header: {
       text: "영업소",
     },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("areaCode", "count");
+      },
+    },
   },
   {
-    name: "acjDate",
-    fieldName: "acjDate",
+    name: "sgDate",
+    fieldName: "sgDate",
     type: "data",
-    width: "30",
+    width: "80",
     header: {
       text: "일자",
     },
   },
+
   {
-    name: "acjJno",
-    fieldName: "acjJno",
+    name: "sgSwCode",
+    fieldName: "sgSwCode",
     type: "data",
-    width: "60",
+    width: "50",
     header: {
-      text: "전표번호",
+      text: "코드",
     },
   },
   {
-    name: "acjAccName",
-    fieldName: "acjAccName",
+    name: "sgSwName",
+    fieldName: "sgSwName",
     type: "data",
-    width: "30",
+    width: "100",
     header: {
-      text: "계정과목",
+      text: "사원",
     },
   },
   {
-    name: "acjBigo",
-    fieldName: "acjBigo",
+    name: "sgBigo",
+    fieldName: "sgBigo",
     type: "data",
-    width: "60",
+    width: "200",
     header: {
-      text: "적요",
+      text: "비고",
     },
   },
   {
-    name: "acjKumackCh",
-    fieldName: "acjKumackCh",
+    name: "sgKumack",
+    fieldName: "sgKumack",
     type: "data",
-    width: "30",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
-      text: "차변",
-    },
-  },
-  {
-    name: "acjKumackDa",
-    fieldName: "acjKumackDa",
-    type: "data",
-    width: "30",
-    header: {
-      text: "대변",
+      text: "금액",
     },
   },
 ];

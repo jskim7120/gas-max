@@ -13,31 +13,18 @@ import CustomDatePicker from "components/customDatePicker";
 import {
   MagnifyingGlass,
   ResetGray,
-  Document,
   Plus,
   Trash,
   Update,
 } from "components/allSvgIcon";
-import {
-  Item,
-  RadioButton,
-  RadioButtonLabel,
-} from "components/radioButton/style";
-import {
-  Select,
-  FormGroup,
-  Wrapper,
-  Label,
-  Input,
-  Field,
-} from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import Grid from "../grid";
 import { fields, columns } from "./data";
 import Form from "./form";
-import { CC1500SEARCH } from "app/path";
+import { CC1500SEARCH, CC150065 } from "app/path";
 import {
   formatDateToStringWithoutDash,
   formatDateByRemoveDash,
@@ -53,8 +40,9 @@ function CC1500({
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
 
   const [data, setData] = useState([]);
+  const [data65, setData65] = useState({});
   const [loading, setLoading] = useState(false);
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -64,7 +52,7 @@ function CC1500({
 
   useEffect(() => {
     if (dataCommonDic) {
-      console.log("dataCommonDic:::", dataCommonDic);
+      //console.log("dataCommonDic:::", dataCommonDic);
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
         sDateF: dataCommonDic?.sDateF[0].code,
@@ -74,13 +62,24 @@ function CC1500({
     }
   }, [dataCommonDic]);
 
+  useEffect(() => {
+    if (selected && Object.keys(selected).length > 0) {
+      //console.log("selected::::", Object.keys(selected).length, selected);
+
+      fetchData65({
+        areaCode: selected?.areaCode,
+        cjCaCode: selected?.cjCaCode,
+        cjDate: selected?.cjDate,
+        cjSno: selected?.cjSno,
+      });
+    }
+  }, [selected]);
+
   const { register, handleSubmit, reset, control } = useForm<ICC1500SEARCH>({
     mode: "onSubmit",
   });
 
   const submit = (params: any) => {
-    console.log("submit:::", params);
-
     params.sDateF =
       typeof params.sDateF === "string"
         ? formatDateByRemoveDash(params.sDateF)
@@ -101,7 +100,6 @@ function CC1500({
         params: params,
       });
 
-      console.log("fetch data:::::", dataCC1500);
       if (dataCC1500) {
         setData(dataCC1500);
       } else {
@@ -111,7 +109,30 @@ function CC1500({
     } catch (err) {
       setLoading(false);
       setData([]);
-      console.log("RV9005 data search fetch error =======>", err);
+      console.log("CC1500 data search fetch error =======>", err);
+    }
+  };
+
+  const fetchData65 = async (params: any) => {
+    try {
+      const { data: dataCC150065 } = await API.get(CC150065, {
+        params: params,
+      });
+
+      //console.log("65 data:::", dataCC150065);
+
+      if (dataCC150065) {
+        setData65({
+          ...dataCC150065[0],
+          areaCode: selected.areaCode,
+          cjDate: selected.cjDate,
+        });
+      } else {
+        setData65([]);
+      }
+    } catch (err) {
+      setData65([]);
+      console.log("CC1500 65 fetch error =======>", err);
     }
   };
 
@@ -248,13 +269,16 @@ function CC1500({
         </LeftSide>
         <RightSide>
           <Form
-            selected={selected}
+            data65={data65}
+            setData65={setData65}
             ref={formRef}
             fetchData={fetchData}
             setData={setData}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            // selected={selected}
             setSelected={setSelected}
+            dataCommonDic={dataCommonDic}
           />
         </RightSide>
       </MainWrapper>

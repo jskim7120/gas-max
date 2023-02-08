@@ -22,15 +22,21 @@ export interface ICC1500 {
 export interface ICC1500FORM {
   areaCode: string;
   cjDate: string;
-  cjCarCode: string; //
-  cjCcCode: string;
-  cjKumack: number;
-  cjSwCode: string;
+  totGabul: string; //
+
   cjBigo: string;
-  cjOilL: string; //
-  cjOilDanga: string; //
-  cjKumackOil: string; //
-  cjCarKg: string; //
-  cjSwCodeOil: string; //
-  cjBigoOil: string; //
+  cjBigoOil: string;
+  cjCaCode: string;
+  cjCaName: string;
+  cjCarKg: number;
+  cjCcCode: string;
+  cjCcName: string;
+  cjKumack: number;
+  cjKumackOil: number;
+  cjOilDanga: number;
+  cjOilL: number;
+  cjOilType: string;
+  cjSwCode: string;
+  cjSwCodeOil: string;
+  cjSwName: string;
 }
