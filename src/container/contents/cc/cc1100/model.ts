@@ -3,4 +3,14 @@ export interface ICC1100SEARCH {
   codeGu: String;
   sDateF: String;
   sDateT: String;
+  cbareaCode: String;
+  acjDate: String;
+  acjType: String;
+  acjGb: String;
+  cashBank: String;
+  acjAccName: String;
+  acjAcsName: String;
+  acjSwCode: String;
+  acjKumack: String;
+  acjBigo: String;
 }

@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CC1100SEARCH } from "app/path";
 import { ICC1100SEARCH } from "./model";
 import API from "app/axios";
-import { TopBar, WrapperContent } from "../../commonStyle";
+import { MainWrapper, TopBar, RightSide } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
+import Form from "./form";
+import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { SearchWrapper } from "../../commonStyle";
 import {
   Select,
@@ -29,6 +30,7 @@ function CC1100({
   depthFullName: string;
   menuId: string;
 }) {
+  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
@@ -118,87 +120,86 @@ function CC1100({
           </Select>
         </div>
       </TopBar>
-      <WrapperContent style={{ height: `calc(100% - 76px)` }}>
-        <form onSubmit={handleSubmit(submit)}>
-          <SearchWrapper style={{ alignItems: "baseline" }}>
-            <div>
-              <Wrapper grid col={2} fields="1fr 1.5fr">
-                <FormGroup>
-                  <Input
-                    label="충전소"
-                    register={register("codeGu")}
-                    labelStyle={{ minWidth: "70px" }}
-                    inputSize={InputSize.i100}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>기간</Label>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("sDateF")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
-                  <Label style={{ minWidth: "auto" }}>~</Label>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("sDateT")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
-                </FormGroup>
-              </Wrapper>
-            </div>
-
-            <div
-              className="button-wrapper"
-              style={{ flexDirection: "row", gap: "0px" }}
-            >
-              <Button
-                text="검색"
-                icon={!loading && <MagnifyingGlass />}
-                color={ButtonColor.DANGER}
-                type="submit"
-                loader={
-                  loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={13}
-                        borderWidth="2px"
-                        style={{ marginRight: "10px" }}
+      <form onSubmit={handleSubmit(submit)}>
+        <SearchWrapper style={{ alignItems: "baseline" }}>
+          <div>
+            <Wrapper grid col={2} fields="1fr 1.5fr">
+              <FormGroup>
+                <Input
+                  label="충전소"
+                  register={register("codeGu")}
+                  labelStyle={{ minWidth: "70px" }}
+                  inputSize={InputSize.i100}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label style={{ minWidth: "auto" }}>기간</Label>
+                <Field style={{ minWidth: "120px" }}>
+                  <Controller
+                    control={control}
+                    {...register("sDateF")}
+                    render={({ field: { onChange, value, name } }) => (
+                      <CustomDatePicker
+                        value={value}
+                        onChange={onChange}
+                        name={name}
                       />
-                    </>
-                  )
-                }
-                style={{ marginRight: "10px" }}
-              />
-              <Button
-                text="취소"
-                icon={<ResetGray />}
-                style={{ marginRight: "10px" }}
-                type="button"
-                color={ButtonColor.LIGHT}
-                onClick={cancel}
-              />
-            </div>
-          </SearchWrapper>
-        </form>
+                    )}
+                  />
+                </Field>
+                <Label style={{ minWidth: "auto" }}>~</Label>
+                <Field style={{ minWidth: "120px" }}>
+                  <Controller
+                    control={control}
+                    {...register("sDateT")}
+                    render={({ field: { onChange, value, name } }) => (
+                      <CustomDatePicker
+                        value={value}
+                        onChange={onChange}
+                        name={name}
+                      />
+                    )}
+                  />
+                </Field>
+              </FormGroup>
+            </Wrapper>
+          </div>
 
+          <div
+            className="button-wrapper"
+            style={{ flexDirection: "row", gap: "0px" }}
+          >
+            <Button
+              text="검색"
+              icon={!loading && <MagnifyingGlass />}
+              color={ButtonColor.DANGER}
+              type="submit"
+              loader={
+                loading && (
+                  <>
+                    <Loader
+                      color="white"
+                      size={13}
+                      borderWidth="2px"
+                      style={{ marginRight: "10px" }}
+                    />
+                  </>
+                )
+              }
+              style={{ marginRight: "10px" }}
+            />
+            <Button
+              text="취소"
+              icon={<ResetGray />}
+              style={{ marginRight: "10px" }}
+              type="button"
+              color={ButtonColor.LIGHT}
+              onClick={cancel}
+            />
+          </div>
+        </SearchWrapper>
+      </form>
+      <MainWrapper style={{ height: `calc(100% - 76px)` }}>
         <Grid
           data={data.length > 0 && data}
           columns={columns}
@@ -207,7 +208,18 @@ function CC1100({
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
         />
-      </WrapperContent>
+        <RightSide>
+          <Form
+            selected={selected}
+            ref={formRef}
+            fetchData={fetchData}
+            setData={setData}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            setSelected={setSelected}
+          />
+        </RightSide>
+      </MainWrapper>
     </>
   );
 }

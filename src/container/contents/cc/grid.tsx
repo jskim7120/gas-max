@@ -61,7 +61,9 @@ function Grid({
     };
   }, [data]);
 
-  return <div ref={realgridElement} style={{ height: "inherit" }}></div>;
+  return (
+    <div ref={realgridElement} style={{ height: "500px", flexGrow: "1" }}></div>
+  );
 }
 
 export default Grid;
