@@ -153,6 +153,8 @@ export const CC110065 = "/app/CC1100/65";
 export const CC1200SEARCH = "/app/CC1200/search";
 export const CC120065 = "/app/CC1200/65";
 
+export const CC1500SEARCH = "/app/CC1500/search";
+
 export const RV9006SEARCH = "/app/RV9006/search";
 export const RV9005SEARCH = "/app/RV9005/search";
 

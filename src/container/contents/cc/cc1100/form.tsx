@@ -4,11 +4,16 @@ import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { EN1400DELETE, EN140011 } from "app/path";
+import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
+import {
+  Item,
+  RadioButton,
+  RadioButtonLabel,
+} from "components/radioButton/style";
 import {
   Input,
   Select,
-  Field,
   FormGroup,
   Wrapper,
   Divider,
@@ -170,6 +175,100 @@ const Form = React.forwardRef(
               )}
             />
           </FormGroup>
+        </Wrapper>
+        <Wrapper>
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>영 업 소</Label>
+            <Select {...register("acjType")} onChange={handleSelectCode}>
+              {dataCommonDic?.acjType?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        </Wrapper>
+        <Wrapper>
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>구 분</Label>
+            {[
+              { name: "현금 수입", value: "0" },
+              { name: "예금 수입", value: "1" },
+            ].map((option, index) => {
+              return (
+                <Item key={index}>
+                  <RadioButton
+                    type="radio"
+                    value={option.value}
+                    {...register("acjGb")}
+                    id={option.value}
+                  />
+                  <RadioButtonLabel htmlFor={`${option.value}`}>
+                    {option.name}
+                  </RadioButtonLabel>
+                </Item>
+              );
+            })}
+          </FormGroup>
+        </Wrapper>
+        <Wrapper>
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>통장계좌</Label>
+            <Select {...register("cashBank")} onChange={handleSelectCode}>
+              {dataCommonDic?.bankNo?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        </Wrapper>
+        <Divider />
+        <Wrapper>
+          <Input
+            label="계정과목"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("acjAccName")}
+            inputSize={InputSize.i250}
+          />
+        </Wrapper>
+        <Wrapper>
+          <Input
+            label="항 목"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("acjAcsName")}
+            inputSize={InputSize.i250}
+          />
+        </Wrapper>
+        <Wrapper>
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>사 원</Label>
+            <Select {...register("acjSwCode")} onChange={handleSelectCode}>
+              {dataCommonDic?.acjSwCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        </Wrapper>
+        <br />
+        <br />
+        <Wrapper>
+          <Input
+            label="금 액"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("acjKumack")}
+            inputSize={InputSize.i250}
+          />
+        </Wrapper>
+        <Wrapper>
+          <Input
+            label="적 요"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("acjBigo")}
+            inputSize={InputSize.i250}
+          />
         </Wrapper>
       </form>
     );
