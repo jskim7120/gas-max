@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import API from "app/axios";
 import {
   SearchWrapper,
   MainWrapper,
@@ -36,6 +37,11 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import Grid from "../grid";
 import { fields, columns } from "./data";
 import Form from "./form";
+import { CC1500SEARCH } from "app/path";
+import {
+  formatDateToStringWithoutDash,
+  formatDateByRemoveDash,
+} from "helpers/dateFormat";
 
 function CC1500({
   depthFullName,
@@ -44,19 +50,70 @@ function CC1500({
   depthFullName: string;
   menuId: string;
 }) {
+  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState();
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CC",
     functionName: "CC1500",
   });
 
-  console.log("dataCommonDic:::", dataCommonDic);
+  useEffect(() => {
+    if (dataCommonDic) {
+      console.log("dataCommonDic:::", dataCommonDic);
+      reset({
+        areaCode: dataCommonDic?.areaCode[0].code,
+        sDateF: dataCommonDic?.sDateF[0].code,
+        sDateT: dataCommonDic?.sDateT[0].code,
+        cjCaCode: dataCommonDic?.sCaCode[0].code,
+      });
+    }
+  }, [dataCommonDic]);
 
   const { register, handleSubmit, reset, control } = useForm<ICC1500SEARCH>({
     mode: "onSubmit",
   });
+
+  const submit = (params: any) => {
+    console.log("submit:::", params);
+
+    params.sDateF =
+      typeof params.sDateF === "string"
+        ? formatDateByRemoveDash(params.sDateF)
+        : formatDateToStringWithoutDash(params.sDateF);
+
+    params.sDateT =
+      typeof params.sDateT === "string"
+        ? formatDateByRemoveDash(params.sDateT)
+        : formatDateToStringWithoutDash(params.sDateT);
+
+    fetchData(params);
+  };
+
+  const fetchData = async (params: any) => {
+    try {
+      setLoading(true);
+      const { data: dataCC1500 } = await API.get(CC1500SEARCH, {
+        params: params,
+      });
+
+      console.log("fetch data:::::", dataCC1500);
+      if (dataCC1500) {
+        setData(dataCC1500);
+      } else {
+        setData([]);
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      setData([]);
+      console.log("RV9005 data search fetch error =======>", err);
+    }
+  };
 
   return (
     <>
@@ -103,7 +160,82 @@ function CC1500({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
-          <SearchWrapper style={{ height: "35px" }}>dvfd</SearchWrapper>
+          <SearchWrapper style={{ height: "35px" }}>
+            <FormGroup>
+              <Label style={{ minWidth: "auto" }}>기간</Label>
+              <Controller
+                control={control}
+                {...register("sDateF")}
+                render={({ field: { onChange, value, name } }) => (
+                  <CustomDatePicker
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                  />
+                )}
+              />
+              <p
+                style={{
+                  width: "auto",
+                  display: "block",
+                  textAlign: "center",
+                }}
+              >
+                ~
+              </p>
+              <Controller
+                control={control}
+                {...register("sDateT")}
+                render={({ field: { onChange, value, name } }) => (
+                  <CustomDatePicker
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                  />
+                )}
+              />
+
+              <Label>차량</Label>
+              <Select {...register("cjCaCode")} width={InputSize.i120}>
+                {dataCommonDic?.sCaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+
+              <Button
+                text="검색"
+                icon={!loading && <MagnifyingGlass />}
+                type="button"
+                color={ButtonColor.SECONDARY}
+                onClick={handleSubmit(submit)}
+                style={{ marginLeft: "30px" }}
+                loader={
+                  loading && (
+                    <>
+                      <Loader
+                        color="white"
+                        size={16}
+                        style={{ marginRight: "10px" }}
+                        borderWidth="2px"
+                      />
+                    </>
+                  )
+                }
+              />
+              <Button
+                text="취소"
+                icon={<ResetGray />}
+                style={{ marginLeft: "5px" }}
+                color={ButtonColor.LIGHT}
+                onClick={() => {
+                  //resetSearchForm();
+                  //setData([]);
+                }}
+              />
+            </FormGroup>
+          </SearchWrapper>
           <Grid
             data={data}
             fields={fields}
@@ -115,7 +247,15 @@ function CC1500({
           />
         </LeftSide>
         <RightSide>
-          <Form />
+          <Form
+            selected={selected}
+            ref={formRef}
+            fetchData={fetchData}
+            setData={setData}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            setSelected={setSelected}
+          />
         </RightSide>
       </MainWrapper>
     </>
