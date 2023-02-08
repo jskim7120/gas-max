@@ -8,6 +8,7 @@ function Grid({
   setSelected,
   selectedRowIndex,
   setSelectedRowIndex,
+  style,
 }: {
   data: any;
   fields: any;
@@ -15,6 +16,7 @@ function Grid({
   setSelected: Function;
   selectedRowIndex: number | null;
   setSelectedRowIndex: Function;
+  style?: any;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -33,7 +35,6 @@ function Grid({
     gv.setHeader({
       height: 35,
     });
-    gv.setFooter({ visible: false });
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
@@ -41,7 +42,7 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
-    gv.displayOptions.fitStyle = "evenFill";
+    //gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
 
     gv.setCurrent({
@@ -61,7 +62,7 @@ function Grid({
     };
   }, [data]);
 
-  return <div ref={realgridElement} style={{ height: "inherit" }}></div>;
+  return <div ref={realgridElement} style={style}></div>;
 }
 
 export default Grid;
