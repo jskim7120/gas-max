@@ -40,7 +40,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "20",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -49,7 +49,7 @@ export const columns = [
     name: "acjDate",
     fieldName: "acjDate",
     type: "data",
-    width: "30",
+    width: "80",
     header: {
       text: "일자",
     },
@@ -58,7 +58,7 @@ export const columns = [
     name: "acjAcsName",
     fieldName: "acjAcsName",
     type: "data",
-    width: "60",
+    width: "80",
     header: {
       text: "항목",
     },
@@ -67,7 +67,7 @@ export const columns = [
     name: "acjBigo",
     fieldName: "acjBigo",
     type: "data",
-    width: "30",
+    width: "80",
     header: {
       text: "적요",
     },
@@ -76,7 +76,7 @@ export const columns = [
     name: "acjSwName",
     fieldName: "acjSwName",
     type: "data",
-    width: "60",
+    width: "130",
     header: {
       text: "사원",
     },
@@ -85,7 +85,7 @@ export const columns = [
     name: "acjKumackIn",
     fieldName: "acjKumackIn",
     type: "data",
-    width: "30",
+    width: "80",
     header: {
       text: "입금",
     },
@@ -94,7 +94,7 @@ export const columns = [
     name: "acjKumackOut",
     fieldName: "acjKumackOut",
     type: "data",
-    width: "30",
+    width: "80",
     header: {
       text: "출금",
     },
@@ -103,7 +103,7 @@ export const columns = [
     name: "acjKumackJan",
     fieldName: "acjKumackJan",
     type: "data",
-    width: "30",
+    width: "80",
     header: {
       text: "잔액",
     },
