@@ -1,7 +1,7 @@
 import React from "react";
 import { CustomTable } from "./style";
 
-function Table({ data }: { data: any }) {
+function Table({ data, style }: { data: any; style?: any }) {
   const total = (
     item1: any,
     item2: any,
@@ -36,7 +36,7 @@ function Table({ data }: { data: any }) {
     return sum;
   };
   return (
-    <CustomTable>
+    <CustomTable style={style}>
       <tr>
         <th className="orange" colSpan={2}>
           구분

@@ -2,26 +2,21 @@ import React, { useState, useEffect } from "react";
 import { CM9002SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import API from "app/axios";
-import { TopBar, WrapperContent } from "../../commonStyle";
+import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
-import { SearchWrapper } from "../../commonStyle";
-import {
-  Select,
-  FormGroup,
-  Wrapper,
-  Label,
-  Field,
-} from "components/form/style";
+import { Select, FormGroup, Label, Field } from "components/form/style";
 import {
   formatDateToStringWithoutDash,
   formatDateByRemoveDash,
 } from "helpers/dateFormat";
 import Loader from "components/loader";
 import Button from "components/button/button";
-import { ButtonColor, InputSize, FieldKind } from "components/componentsType";
+import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
+
+import { columns, fields, layout } from "./data";
 
 import Grid from "./grid";
 
@@ -102,97 +97,72 @@ function GR9002({
 
   return (
     <>
-      <TopBar>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <p style={{ marginRight: "20px" }}>{depthFullName}</p>
-          <p>
-            <b>재고입고처</b>
-          </p>
-
-          <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
+      <SearchWrapper className="h35 mt5">
+        <Field flex>
+          <p>{depthFullName}</p>
+          <p className="big">재고입고처</p>
+          <Select {...register("areaCode")}>
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
             ))}
           </Select>
-        </div>
-      </TopBar>
+        </Field>
+      </SearchWrapper>
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
-          <SearchWrapper style={{ padding: "3px 0" }}>
-            <div style={{ marginLeft: "25px" }}>
-              <Wrapper style={{ gap: "20px" }}>
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>충전소</Label>
-                  <Select
-                    {...register("bcBuCode")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i150}
-                    // onChange={(e) => setReportKind(e.target.value)}
-                  >
-                    {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
+          <SearchWrapper className="h35">
+            <FormGroup>
+              <Label style={{ minWidth: "auto" }}>충전소</Label>
+              <Select
+                {...register("bcBuCode")}
+                width={InputSize.i150}
+                // onChange={(e) => setReportKind(e.target.value)}
+              >
+                {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
 
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>기간</Label>
-                  <Controller
-                    control={control}
-                    {...register("sDate")}
-                    render={({ field: { onChange, value } }) => (
-                      <CustomDatePicker value={value} onChange={onChange} />
-                    )}
-                  />
-                  <Controller
-                    control={control}
-                    {...register("eDate")}
-                    render={({ field: { onChange, value } }) => (
-                      <CustomDatePicker value={value} onChange={onChange} />
-                    )}
-                  />
-                </FormGroup>
+              <Label style={{ minWidth: "70px" }}>기간</Label>
+              <Controller
+                control={control}
+                {...register("sDate")}
+                render={({ field: { onChange, value } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
+              />
+              <Controller
+                control={control}
+                {...register("eDate")}
+                render={({ field: { onChange, value } }) => (
+                  <CustomDatePicker value={value} onChange={onChange} />
+                )}
+              />
 
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>수송기사</Label>
-                  <Select
-                    {...register("bcCsawon")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i110}
-                  >
-                    {dataCommonDic?.bcCsawon?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
+              <Label style={{ minWidth: "80px" }}>수송기사</Label>
+              <Select {...register("bcCsawon")} width={InputSize.i110}>
+                {dataCommonDic?.bcCsawon?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
 
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>수송방법</Label>
-                  <Select
-                    {...register("bcCtype")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i110}
-                  >
-                    {dataCommonDic?.bcCtype?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-              </Wrapper>
-            </div>
+              <Label style={{ minWidth: "80px" }}>수송방법</Label>
+              <Select {...register("bcCtype")} width={InputSize.i110}>
+                {dataCommonDic?.bcCtype?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
 
-            <div
-              className="button-wrapper"
-              style={{ flexDirection: "row", gap: "0px", marginRight: "10px" }}
-            >
+            <div className="buttons">
               <Button
                 text="검색"
                 icon={!loading && <MagnifyingGlass />}
@@ -210,11 +180,11 @@ function GR9002({
                     </>
                   )
                 }
-                style={{ marginRight: "10px" }}
+                style={{ marginRight: "5px" }}
               />
               <Button
                 text="취소"
-                icon={<ResetGray color="#707070" />}
+                icon={<ResetGray />}
                 type="button"
                 color={ButtonColor.LIGHT}
                 onClick={cancel}
@@ -223,7 +193,7 @@ function GR9002({
           </SearchWrapper>
         </form>
 
-        <Grid data={data ? data : []} />
+        <Grid data={data} />
       </WrapperContent>
     </>
   );

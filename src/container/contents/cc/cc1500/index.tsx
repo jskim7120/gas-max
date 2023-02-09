@@ -17,7 +17,7 @@ import {
   Trash,
   Update,
 } from "components/allSvgIcon";
-import { Select, FormGroup, Label } from "components/form/style";
+import { Select, FormGroup, Label, Field } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -53,12 +53,7 @@ function CC1500({
   useEffect(() => {
     if (dataCommonDic) {
       //console.log("dataCommonDic:::", dataCommonDic);
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-        sDateF: dataCommonDic?.sDateF[0].code,
-        sDateT: dataCommonDic?.sDateT[0].code,
-        cjCaCode: dataCommonDic?.sCaCode[0].code,
-      });
+      resetSearchForm();
     }
   }, [dataCommonDic]);
 
@@ -74,6 +69,15 @@ function CC1500({
       });
     }
   }, [selected]);
+
+  const resetSearchForm = () => {
+    reset({
+      areaCode: dataCommonDic?.areaCode[0].code,
+      sDateF: dataCommonDic?.sDateF[0].code,
+      sDateT: dataCommonDic?.sDateT[0].code,
+      cjCaCode: dataCommonDic?.sCaCode[0].code,
+    });
+  };
 
   const { register, handleSubmit, reset, control } = useForm<ICC1500SEARCH>({
     mode: "onSubmit",
@@ -138,8 +142,8 @@ function CC1500({
 
   return (
     <>
-      <SearchWrapper style={{ height: "35px", marginTop: "5px" }}>
-        <div style={{ display: "flex", alignItems: "baseline" }}>
+      <SearchWrapper className="h35 mt5">
+        <Field flex>
           <p>{depthFullName}</p>
           <p className="big">영업소</p>
 
@@ -150,7 +154,7 @@ function CC1500({
               </option>
             ))}
           </Select>
-        </div>
+        </Field>
         <div className="buttons">
           <Button
             text="등록"
@@ -181,7 +185,7 @@ function CC1500({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
-          <SearchWrapper style={{ height: "35px" }}>
+          <SearchWrapper className="h35">
             <FormGroup>
               <Label style={{ minWidth: "auto" }}>기간</Label>
               <Controller
@@ -251,8 +255,8 @@ function CC1500({
                 style={{ marginLeft: "5px" }}
                 color={ButtonColor.LIGHT}
                 onClick={() => {
-                  //resetSearchForm();
-                  //setData([]);
+                  resetSearchForm();
+                  setData([]);
                 }}
               />
             </FormGroup>

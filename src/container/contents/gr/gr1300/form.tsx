@@ -112,6 +112,7 @@ function Form({
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        width: "900px",
       }}
     >
       <form>

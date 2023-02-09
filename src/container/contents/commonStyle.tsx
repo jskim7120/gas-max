@@ -108,7 +108,7 @@ export const MainWrapper = styled.div`
 
 export const WrapperContent = styled.div`
   gap: 0px;
-  height: calc(100% - 14px);
+  height: calc(100% - 17px);
   width: 100%;
 `;
 

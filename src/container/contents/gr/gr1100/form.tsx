@@ -17,7 +17,7 @@ import {
   RadioButton,
   RadioButtonLabel,
 } from "components/radioButton/style";
-import { ISANGPUM } from "./model";
+import { ISANGPUM, IForm } from "./model";
 import {
   Input,
   Select,
@@ -29,16 +29,6 @@ import {
 import { InputSize } from "components/componentsType";
 import { currencyMask } from "helpers/currency";
 import TableData from "./table/index";
-
-interface IForm {
-  selected: any;
-  fetchData: any;
-  tData: any;
-  setData: any;
-  selectedRowIndex: number;
-  setSelected: any;
-  setSelectedRowIndex: any;
-}
 
 const radioOptions = [
   {
@@ -249,7 +239,7 @@ const Form = React.forwardRef(
           style={{ marginBottom: "6px", marginTop: "7px" }}
         />
         <Divider />
-        <Wrapper grid>
+        <Wrapper grid col={2}>
           <Input
             label="매입처코드"
             register={register("buCode")}
@@ -257,12 +247,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.i80}
             readOnly
           />
-          <FormGroup
-            style={{
-              alignItems: "center",
-              width: "347px",
-            }}
-          >
+          <FormGroup>
             <Label>매입처 구분</Label>
             {radioOptions.map((option, index) => (
               <Item key={index}>
@@ -280,7 +265,7 @@ const Form = React.forwardRef(
           </FormGroup>
         </Wrapper>
 
-        <Wrapper grid>
+        <Wrapper grid col={2}>
           <Input
             label="매입처명"
             register={register("buName")}
@@ -298,7 +283,7 @@ const Form = React.forwardRef(
           </FormGroup>
         </Wrapper>
 
-        <Wrapper grid>
+        <Wrapper grid col={2}>
           <Input
             label="대표전화"
             register={register("buTel")}
@@ -311,7 +296,7 @@ const Form = React.forwardRef(
           />
         </Wrapper>
 
-        <Wrapper grid>
+        <Wrapper grid col={2}>
           <Input
             label="비고"
             register={register("buBigo")}
@@ -319,7 +304,7 @@ const Form = React.forwardRef(
           />
         </Wrapper>
         <Divider />
-        <Wrapper grid>
+        <Wrapper grid col={2}>
           <Controller
             control={control}
             {...register("buNo")}
@@ -354,7 +339,7 @@ const Form = React.forwardRef(
             maxLength="4"
           />
         </Wrapper>
-        <Wrapper grid>
+        <Wrapper grid col={2}>
           <Input
             label="상호"
             register={register("buSangho")}
@@ -376,10 +361,11 @@ const Form = React.forwardRef(
           <DaumAddress setAddress={setAddress} />
           <Input register={register("buAddr1")} inputSize={InputSize.i290} />
         </Wrapper>
-        <Wrapper style={{ paddingLeft: "109px" }}>
+        <Wrapper>
+          <Label></Label>
           <Input register={register("buAddr2")} inputSize={InputSize.i290} />
         </Wrapper>
-        <Wrapper grid>
+        <Wrapper grid col={2}>
           <Input
             label="업태"
             register={register("buUptae")}
@@ -391,7 +377,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.i130}
           />
         </Wrapper>
-        <Wrapper grid>
+        <Wrapper grid col={2}>
           <Input
             label="담당자명"
             register={register("buDamdang")}
@@ -421,7 +407,7 @@ const Form = React.forwardRef(
           </FormGroup>
         </Wrapper>
         <Divider />
-        <Wrapper grid>
+        <Wrapper grid col={2}>
           <Input
             label="결재은행"
             register={register("buBank")}
@@ -433,7 +419,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.i130}
           />
         </Wrapper>
-        <Wrapper grid>
+        <Wrapper grid col={2}>
           <Input
             label="예금주"
             register={register("buBankju")}

@@ -616,6 +616,7 @@ function Form({
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        width: "900px",
       }}
     >
       <form>
@@ -629,7 +630,7 @@ function Form({
             borderBottom: "1px solid #707070",
           }}
         >
-          <Field flex style={{ alignItems: "center" }}>
+          <FormGroup>
             <PersonInfoText text="가스매입등록" />
             <p
               style={{
@@ -649,7 +650,7 @@ function Form({
                 </option>
               ))}
             </Select>
-          </Field>
+          </FormGroup>
           <Field flex>
             <Button
               type="button"

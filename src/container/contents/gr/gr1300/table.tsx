@@ -1,9 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { number } from "yup";
 import { CustomTable } from "../gr1200/style";
 
-function Table({ data }: { data: any }) {
+function Table({ data, style }: { data: any; style?: any }) {
   let defaultBbSum = 0;
   let defaultBbVat = 0;
   let defaultBbTotal = 0;
@@ -39,7 +38,7 @@ function Table({ data }: { data: any }) {
     defaultBbCredit = defaultBbCredit + item.bbCredit;
   }
   return (
-    <CustomTable>
+    <CustomTable style={style}>
       <tr>
         <th className="orange" rowSpan={2}>
           합 계

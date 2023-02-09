@@ -3,22 +3,29 @@ import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
+import { ButtonColor } from "components/componentsType";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
 import API from "app/axios";
+import { GR1300SEARCH, GR130065 } from "app/path";
 import { ISEARCH } from "./model";
-import { MainWrapper, LeftSide, RightSide, TopBar } from "../../commonStyle";
-import { Select, Field, Label } from "components/form/style";
-import { ButtonColor } from "components/componentsType";
-import Grid from "./grid";
+import {
+  MainWrapper,
+  LeftSide,
+  RightSide,
+  SearchWrapper,
+} from "../../commonStyle";
+import { Select, Field, Label, FormGroup } from "components/form/style";
+import Grid from "../grid";
 import { columns, fields } from "./data";
 import Form from "./form";
-import { GR1300SEARCH, GR130065 } from "app/path";
+import Table from "./table";
 import Loader from "components/loader";
 import {
   formatDateToStringWithoutDash,
   formatDateByRemoveDash,
 } from "helpers/dateFormat";
-import Table from "./table";
+
+const minWidth = "900px";
 
 function GR1300({
   depthFullName,
@@ -116,44 +123,44 @@ function GR1300({
 
   return (
     <>
-      <TopBar style={{ justifyContent: "start" }}>
-        <p>{depthFullName}</p>
-        <p className="big">영업소</p>
-        <Select {...register("areaCode")}>
-          {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
-      </TopBar>
+      <SearchWrapper className="h35 mt5">
+        <Field flex>
+          <p>{depthFullName}</p>
+          <p className="big">영업소</p>
+          <Select {...register("areaCode")}>
+            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </Field>
+      </SearchWrapper>
       <MainWrapper>
         <LeftSide>
-          <form onSubmit={handleSubmit(submit)}>
-            <TopBar style={{ marginTop: "0" }}>
-              <Field flex style={{ alignItems: "center" }}>
-                <Label style={{ minWidth: "auto", padding: "3px 0px" }}>
-                  지급기간
-                </Label>
+          <form onSubmit={handleSubmit(submit)} style={{ minWidth: minWidth }}>
+            <SearchWrapper className="h35">
+              <FormGroup>
+                <Label style={{ minWidth: "auto" }}>지급기간</Label>
                 <Controller
                   control={control}
                   {...register("sDate")}
-                  render={({ field: { onChange, value } }) => (
+                  render={({ field: { onChange, value, name } }) => (
                     <CustomDatePicker
                       value={value}
                       onChange={onChange}
-                      style={{ marginLeft: "15px" }}
+                      name={name}
                     />
                   )}
                 />
                 <Controller
                   control={control}
                   {...register("eDate")}
-                  render={({ field: { onChange, value } }) => (
+                  render={({ field: { onChange, value, name } }) => (
                     <CustomDatePicker
                       value={value}
                       onChange={onChange}
-                      style={{ margin: "5px 0 0 0" }}
+                      name={name}
                     />
                   )}
                 />
@@ -166,8 +173,8 @@ function GR1300({
                     </option>
                   ))}
                 </Select>
-              </Field>
-              <Field flex>
+              </FormGroup>
+              <div className="buttons">
                 <Button
                   text="검색"
                   icon={!loading && <MagnifyingGlassBig width="15px" />}
@@ -187,18 +194,19 @@ function GR1300({
                     )
                   }
                 />
-              </Field>
-            </TopBar>
+              </div>
+            </SearchWrapper>
           </form>
           <Grid
-            data={data ? data : []}
+            data={data}
             fields={fields}
             columns={columns}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            style={{ height: "calc(100% - 82px)", minWidth: minWidth }}
           />
-          <Table data={data} />
+          <Table data={data} style={{ minWidth: minWidth }} />
         </LeftSide>
         <RightSide>
           <Form

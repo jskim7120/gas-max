@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "app/store";
 import {
   openModal,
@@ -9,8 +9,8 @@ import {
   addDeleteMenuId,
   setIsDelete,
 } from "app/state/modal/modalSlice";
-import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { GR1100SEARCH } from "app/path";
+import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import Button from "components/button/button";
 import { Input, Select, Field, FormGroup, Label } from "components/form/style";
 import {
@@ -22,17 +22,18 @@ import {
   ExcelIcon,
 } from "components/allSvgIcon";
 import Form from "./form";
-import Grid from "./grid";
 import { columns, fields } from "./data";
-import { MainWrapper, RightSide, LeftSide, TopBar } from "../../commonStyle";
+import { ISEARCH } from "./model";
+import Grid from "../grid";
+import {
+  MainWrapper,
+  RightSide,
+  LeftSide,
+  SearchWrapper,
+} from "../../commonStyle";
 import Loader from "components/loader";
 
-interface ISEARCH {
-  areaCode: string;
-  sBuGubun: string;
-  sBuName: string;
-  sBuStae: string;
-}
+const minWidth = "763px";
 
 function GR1100({
   depthFullName,
@@ -108,17 +109,10 @@ function GR1100({
 
   return (
     <>
-      <TopBar>
+      <SearchWrapper className="h35 mt5">
         <Field flex>
           <p>{depthFullName}</p>
-          <p
-            className="big"
-            style={{
-              marginLeft: "29px",
-            }}
-          >
-            영업소
-          </p>
+          <p className="big">영업소</p>
           <Select {...register("areaCode")}>
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
@@ -164,60 +158,44 @@ function GR1100({
             }}
           />
         </div>
-      </TopBar>
+      </SearchWrapper>
       <MainWrapper>
         <LeftSide>
-          <form onSubmit={handleSubmit(submit)}>
-            <TopBar style={{ marginTop: "0", alignItems: "center" }}>
-              <Field flex>
-                <FormGroup>
-                  <Label
-                    style={{
-                      minWidth: "auto",
-                      padding: "3px 0 3px 12px",
-                    }}
-                  >
-                    구분
-                  </Label>
-                  <Select {...register("sBuGubun")}>
-                    {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
+          <form onSubmit={handleSubmit(submit)} style={{ minWidth: minWidth }}>
+            <SearchWrapper className="h35">
+              <FormGroup>
+                <Label
+                  style={{
+                    minWidth: "auto",
+                  }}
+                >
+                  구분
+                </Label>
+                <Select {...register("sBuGubun")}>
+                  {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
 
                 <Input
                   label="매입처명"
-                  labelStyle={{
-                    minWidth: "auto",
-                    marginLeft: "15px",
-                    padding: "3px 0 3px 12px",
-                  }}
                   register={register("sBuName")}
                   inputSize={InputSize.i100}
                 />
 
-                <FormGroup>
-                  <Label
-                    style={{
-                      minWidth: "auto",
-                      padding: "3px 0 3px 12px",
-                    }}
-                  >
-                    거래상태
-                  </Label>
-                  <Select {...register("sBuStae")}>
-                    {dataCommonDic?.sBuStae?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-              </Field>
-              <Field flex>
+                <Label>거래상태</Label>
+                <Select {...register("sBuStae")}>
+                  {dataCommonDic?.sBuStae?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+
+              <div className="buttons">
                 <Button
                   text="검색"
                   icon={!loading && <MagnifyingGlassBig />}
@@ -244,18 +222,19 @@ function GR1100({
                   kind={ButtonType.ROUND}
                   color={ButtonColor.SECONDARY}
                   type="button"
-                  style={{ marginRight: "5px", height: "26px" }}
+                  style={{ height: "26px" }}
                 />
-              </Field>
-            </TopBar>
+              </div>
+            </SearchWrapper>
           </form>
           <Grid
-            data={data ? data : []}
+            data={data}
             fields={fields}
             columns={columns}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            style={{ height: `calc(100% - 38px)`, minWidth: minWidth }}
           />
         </LeftSide>
         <RightSide>

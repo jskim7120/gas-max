@@ -10,10 +10,15 @@ import {
 } from "components/allSvgIcon";
 import API from "app/axios";
 import { ISEARCH } from "./model";
-import { MainWrapper, LeftSide, RightSide, TopBar } from "../../commonStyle";
-import { Select, Field, Label } from "components/form/style";
+import {
+  MainWrapper,
+  LeftSide,
+  RightSide,
+  SearchWrapper,
+} from "../../commonStyle";
+import { Select, Field, Label, FormGroup } from "components/form/style";
 import { ButtonColor } from "components/componentsType";
-import GridLeft from "./gridLeft";
+import GridLeft from "../grid";
 import Form from "./form";
 import { GR1200SEARCH, GR120065 } from "app/path";
 import Loader from "components/loader";
@@ -22,7 +27,9 @@ import {
   formatDateByRemoveDash,
 } from "helpers/dateFormat";
 import Table from "./table";
+import { fields, columns, layout } from "./data";
 
+const minWidth = "900px";
 function GR1200({
   depthFullName,
   menuId,
@@ -123,54 +130,44 @@ function GR1200({
 
   return (
     <>
-      <TopBar style={{ justifyContent: "start" }}>
-        <p>{depthFullName}</p>
-        <p className="big">영업소</p>
-        <Select {...register("areaCode")}>
-          {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
-      </TopBar>
+      <SearchWrapper className="h35 mt5">
+        <Field flex>
+          <p>{depthFullName}</p>
+          <p className="big">영업소</p>
+          <Select {...register("areaCode")}>
+            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </Field>
+      </SearchWrapper>
       <MainWrapper>
-        <LeftSide style={{ width: "50%" }}>
-          <form onSubmit={handleSubmit(submit)}>
-            <div
-              style={{
-                backgroundColor: "#dbdbdb",
-                height: "35px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "0 6px 0 15px",
-                borderBottom: "1px solid #707070",
-              }}
-            >
-              <Field flex style={{ alignItems: "center" }}>
-                <Label style={{ minWidth: "auto", padding: "3px 0px" }}>
-                  기간
-                </Label>
+        <LeftSide>
+          <form onSubmit={handleSubmit(submit)} style={{ minWidth: minWidth }}>
+            <SearchWrapper className="h35">
+              <FormGroup>
+                <Label style={{ minWidth: "auto" }}>기간</Label>
                 <Controller
                   control={control}
                   {...register("sDate")}
-                  render={({ field: { onChange, value } }) => (
+                  render={({ field: { onChange, value, name } }) => (
                     <CustomDatePicker
                       value={value}
                       onChange={onChange}
-                      style={{ marginLeft: "15px" }}
+                      name={name}
                     />
                   )}
                 />
                 <Controller
                   control={control}
                   {...register("eDate")}
-                  render={({ field: { onChange, value } }) => (
+                  render={({ field: { onChange, value, name } }) => (
                     <CustomDatePicker
                       value={value}
                       onChange={onChange}
-                      style={{ margin: "5px 0 0 0" }}
+                      name={name}
                     />
                   )}
                 />
@@ -183,8 +180,8 @@ function GR1200({
                     </option>
                   ))}
                 </Select>
-              </Field>
-              <Field flex>
+              </FormGroup>
+              <div className="buttons">
                 <Button
                   text="검색"
                   icon={!loading && <MagnifyingGlassBig width="15px" />}
@@ -215,18 +212,21 @@ function GR1200({
                   icon={<ExcelIcon width="18px" />}
                   color={ButtonColor.LIGHT}
                 />
-              </Field>
-            </div>
+              </div>
+            </SearchWrapper>
           </form>
           <GridLeft
             data={data}
+            fields={fields}
+            columns={columns}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            style={{ height: `calc(100% - 196px)`, minWidth: minWidth }}
           />
-          <Table data={data2} />
+          <Table data={data2} style={{ minWidth: minWidth }} />
         </LeftSide>
-        <RightSide style={{ width: "50%" }}>
+        <RightSide>
           <Form
             dataCommonDic={dataCommonDic}
             selected={selected}
