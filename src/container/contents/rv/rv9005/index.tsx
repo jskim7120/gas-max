@@ -18,6 +18,7 @@ import {
   Wrapper,
   Label,
   Input,
+  Field,
 } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
@@ -166,8 +167,8 @@ function RV9005({
 
   return (
     <>
-      <SearchWrapper style={{ height: "35px", marginTop: "5px" }}>
-        <div style={{ display: "flex", alignItems: "baseline" }}>
+      <SearchWrapper className="h35 mt5">
+        <Field flex>
           <p>{depthFullName}</p>
           <p className="big">영업소</p>
 
@@ -178,7 +179,7 @@ function RV9005({
               </option>
             ))}
           </Select>
-        </div>
+        </Field>
         <div className="buttons">
           <Button
             text="출력"

@@ -24,6 +24,7 @@ import {
   formatDateToStringWithoutDash,
   formatDateByRemoveDash,
 } from "helpers/dateFormat";
+import CustomTopPart from "container/contents/customTopPart";
 
 const minWidth = "900px";
 
@@ -123,19 +124,11 @@ function GR1300({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
-      </SearchWrapper>
+      <CustomTopPart
+        depthFullName={depthFullName}
+        register={register}
+        dataCommonDic={dataCommonDic}
+      />
       <MainWrapper>
         <LeftSide>
           <form onSubmit={handleSubmit(submit)} style={{ minWidth: minWidth }}>

@@ -6,13 +6,14 @@ import API from "app/axios";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { Select, FormGroup, Label, Field } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import Grid from "./grid";
 import { columns, fields } from "./data";
+import CustomTopPart from "container/contents/customTopPart";
 
 function GR9005({
   depthFullName,
@@ -25,20 +26,12 @@ function GR9005({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
-  const [dataChk, setDataChk] = useState(true);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
     functionName: "GR9005",
   });
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    getValues,
-    control,
-  } = useForm<IGR9005SEARCH>({
+  const { register, handleSubmit, reset, control } = useForm<IGR9005SEARCH>({
     mode: "onSubmit",
   });
 
@@ -75,7 +68,6 @@ function GR9005({
 
   const cancel = () => {
     resetForm();
-    setDataChk(true);
     setData([]);
   };
 
@@ -86,19 +78,11 @@ function GR9005({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
-      </SearchWrapper>
+      <CustomTopPart
+        depthFullName={depthFullName}
+        register={register}
+        dataCommonDic={dataCommonDic}
+      />
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper className="h35">

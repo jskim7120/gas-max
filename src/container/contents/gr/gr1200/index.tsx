@@ -28,6 +28,7 @@ import {
 } from "helpers/dateFormat";
 import Table from "./table";
 import { fields, columns, layout } from "./data";
+import CustomTopPart from "container/contents/customTopPart";
 
 const minWidth = "900px";
 function GR1200({
@@ -130,19 +131,11 @@ function GR1200({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
-      </SearchWrapper>
+      <CustomTopPart
+        depthFullName={depthFullName}
+        register={register}
+        dataCommonDic={dataCommonDic}
+      />
       <MainWrapper>
         <LeftSide>
           <form onSubmit={handleSubmit(submit)} style={{ minWidth: minWidth }}>

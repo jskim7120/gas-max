@@ -19,7 +19,8 @@ import { MagnifyingGlass } from "components/allSvgIcon";
 import Form from "./form";
 import CustomDatePicker from "components/customDatePicker";
 import { FormGroup, Select, Label, Field, Input } from "components/form/style";
-import { ButtonColor, FieldKind, InputSize } from "components/componentsType";
+import { ButtonColor, InputSize } from "components/componentsType";
+import CustomTopPart from "container/contents/customTopPart";
 
 function GR1500({
   depthFullName,
@@ -96,23 +97,11 @@ function GR1500({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-          <Select
-            {...register("areaCode")}
-            name="areaCode"
-            kind={FieldKind.BORDER}
-          >
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
-      </SearchWrapper>
+      <CustomTopPart
+        depthFullName={depthFullName}
+        register={register}
+        dataCommonDic={dataCommonDic}
+      />
       <MainWrapper>
         <LeftSide>
           <form
@@ -123,11 +112,7 @@ function GR1500({
               <Field flex>
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>구분</Label>
-                  <Select
-                    width={InputSize.i130}
-                    {...register("sBuGubun")}
-                    kind={FieldKind.BORDER}
-                  >
+                  <Select width={InputSize.i130} {...register("sBuGubun")}>
                     {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -144,11 +129,7 @@ function GR1500({
                 </FormGroup>
                 <FormGroup>
                   <Label>거래상태</Label>
-                  <Select
-                    width={InputSize.i130}
-                    {...register("sBuStae")}
-                    kind={FieldKind.BORDER}
-                  >
+                  <Select width={InputSize.i130} {...register("sBuStae")}>
                     {dataCommonDic?.sBuStae?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -202,11 +183,7 @@ function GR1500({
               <Field flex>
                 <p>{depthFullName}</p>
                 <p className="big">영업소</p>
-                <Select
-                  {...register("areaCode1")}
-                  name="areaCode1"
-                  kind={FieldKind.BORDER}
-                >
+                <Select {...register("areaCode1")} name="areaCode1">
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

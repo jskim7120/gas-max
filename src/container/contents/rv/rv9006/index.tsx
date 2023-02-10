@@ -142,7 +142,7 @@ function RV9006({
 
   return (
     <>
-      <SearchWrapper style={{ height: "35px", marginTop: "5px" }}>
+      <SearchWrapper className="h35 mt5">
         <div style={{ display: "flex", alignItems: "baseline" }}>
           <p>{depthFullName}</p>
           <p className="big">영업소</p>

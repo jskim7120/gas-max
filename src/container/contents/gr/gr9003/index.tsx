@@ -13,6 +13,7 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import Grid from "./grid";
 import { columns, fields } from "./data";
+import CustomTopPart from "container/contents/customTopPart";
 
 function GR9003({
   depthFullName,
@@ -78,19 +79,11 @@ function GR9003({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
-      </SearchWrapper>
+      <CustomTopPart
+        depthFullName={depthFullName}
+        register={register}
+        dataCommonDic={dataCommonDic}
+      />
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper className="h35">

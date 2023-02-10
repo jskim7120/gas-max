@@ -104,8 +104,8 @@ function RV1100({
 
   return (
     <>
-      <SearchWrapper style={{ height: "35px", marginTop: "5px" }}>
-        <div style={{ display: "flex", alignItems: "baseline" }}>
+      <SearchWrapper className="h35 mt5">
+        <Field flex>
           <p>{depthFullName}</p>
           <p className="big">영업소</p>
 
@@ -116,7 +116,7 @@ function RV1100({
               </option>
             ))}
           </Select>
-        </div>
+        </Field>
         <div className="buttons">
           <Button
             text="지로 출력"

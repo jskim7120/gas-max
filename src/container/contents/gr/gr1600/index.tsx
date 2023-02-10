@@ -18,6 +18,7 @@ import Grid from "../grid";
 import { ISEARCH } from "./model";
 import { fields, columns } from "./data";
 import Loader from "components/loader";
+import CustomTopPart from "container/contents/customTopPart";
 
 let values1: any;
 let labels1: any;
@@ -96,19 +97,11 @@ function GR1600({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
-      </SearchWrapper>
+      <CustomTopPart
+        depthFullName={depthFullName}
+        register={register}
+        dataCommonDic={dataCommonDic}
+      />
       <MainWrapper>
         <LeftSide>
           <form onSubmit={handleSubmit(submit)} style={{ minWidth: minWidth }}>

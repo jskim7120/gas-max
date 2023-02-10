@@ -1,34 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CM9005SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import API from "app/axios";
-import { TopBar, WrapperContent } from "../../commonStyle";
-import { useForm, Controller } from "react-hook-form";
+import { WrapperContent, SearchWrapper } from "../../commonStyle";
+import { useForm } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import {
-  Reset,
-  MagnifyingGlass,
-  ExcelIcon,
-  ResetGray,
-} from "components/allSvgIcon";
-import { SearchWrapper } from "../../commonStyle";
-import {
-  Select,
-  FormGroup,
-  Wrapper,
-  Label,
-  Field,
-} from "components/form/style";
+import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
+import { Select, FormGroup, Wrapper, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
-import {
-  ButtonColor,
-  ButtonType,
-  InputSize,
-  FieldKind,
-} from "components/componentsType";
-
+import { ButtonColor } from "components/componentsType";
 import Grid from "./grid";
+import CustomTopPart from "../../customTopPart";
 
 function CM9005({
   depthFullName,
@@ -44,14 +27,7 @@ function CM9005({
     functionName: "CM9005",
   });
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    getValues,
-    control,
-  } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
   useEffect(() => {
@@ -104,22 +80,11 @@ function CM9005({
 
   return (
     <>
-      <TopBar>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <p style={{ marginRight: "20px" }}>{depthFullName}</p>
-          <p>
-            <b>영업소</b>
-          </p>
-
-          <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </div>
-      </TopBar>
+      <CustomTopPart
+        depthFullName={depthFullName}
+        register={register}
+        dataCommonDic={dataCommonDic}
+      />
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper>
@@ -129,7 +94,6 @@ function CM9005({
                   <Label style={{ minWidth: "auto" }}>사용가스구분</Label>
                   <Select
                     {...register("cuJpGubun")}
-                    kind={FieldKind.BORDER}
                     style={{ width: "100%" }}
                     // onChange={(e) => setReportKind(e.target.value)}
                   >
@@ -143,11 +107,7 @@ function CM9005({
 
                 <FormGroup>
                   <Label>가스품목</Label>
-                  <Select
-                    {...register("cuJpCode")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
+                  <Select {...register("cuJpCode")} style={{ width: "100%" }}>
                     {dataCommonDic?.cuJpCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -158,11 +118,7 @@ function CM9005({
 
                 <FormGroup>
                   <Label>거래구분</Label>
-                  <Select
-                    {...register("cuType")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
+                  <Select {...register("cuType")} style={{ width: "100%" }}>
                     {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -173,11 +129,7 @@ function CM9005({
 
                 <FormGroup>
                   <Label>지역분류</Label>
-                  <Select
-                    {...register("cuJyCode")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
+                  <Select {...register("cuJyCode")} style={{ width: "100%" }}>
                     {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -188,11 +140,7 @@ function CM9005({
 
                 <FormGroup>
                   <Label>담당사원</Label>
-                  <Select
-                    {...register("swCode")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
+                  <Select {...register("swCode")} style={{ width: "100%" }}>
                     {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -202,11 +150,7 @@ function CM9005({
                 </FormGroup>
                 <FormGroup>
                   <Label>거래상태</Label>
-                  <Select
-                    {...register("cuStae")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
+                  <Select {...register("cuStae")} style={{ width: "100%" }}>
                     {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -258,7 +202,7 @@ function CM9005({
           </SearchWrapper>
         </form>
 
-        <Grid data={data ? data : []} />
+        <Grid data={data} />
       </WrapperContent>
     </>
   );
