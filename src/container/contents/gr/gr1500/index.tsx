@@ -5,7 +5,6 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { GR1500SEARCH1, GR1500SEARCH2 } from "app/path";
 import {
   SearchWrapper,
-  // TopBar,
   MainWrapper,
   LeftSide,
   RightSide,
@@ -14,7 +13,7 @@ import { IGR1500SEARCH } from "./model";
 import Button from "components/button/button";
 import { columns, fields } from "./data";
 import { columnsSecond, fieldsSecond } from "./secondData";
-import Grid from "./grid";
+import Grid from "../grid";
 import Loader from "components/loader";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import Form from "./form";
@@ -57,7 +56,7 @@ function GR1500({
     try {
       setLoading1(true);
       const { data } = await API.get(GR1500SEARCH1, { params: params });
-      //console.log("data irev:", data);
+
       if (data) {
         setData(data);
         setLoading1(false);
@@ -72,7 +71,7 @@ function GR1500({
     try {
       setLoading2(true);
       const { data } = await API.get(GR1500SEARCH2, { params: params });
-      //console.log("data irev:", data);
+
       if (data) {
         setDataSecond(data);
         setLoading2(false);
@@ -84,12 +83,10 @@ function GR1500({
   };
 
   const submitSearch1 = (data: IGR1500SEARCH) => {
-    //console.log("IISEARCH:", data);
     fetchDataSearch1(data);
   };
 
   const submitSearch2 = (data: IGR1500SEARCH) => {
-    //console.log("IISEARCH:", data);
     fetchDataSearch2(data);
   };
 
@@ -118,8 +115,11 @@ function GR1500({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
-          <form onSubmit={handleSubmit(submitSearch1)}>
-            <SearchWrapper className="h35" style={{ minWidth: "925px" }}>
+          <form
+            onSubmit={handleSubmit(submitSearch1)}
+            style={{ minWidth: "925px" }}
+          >
+            <SearchWrapper className="h35">
               <Field flex>
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>구분</Label>
@@ -188,60 +188,61 @@ function GR1500({
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            style={{ height: "43%", minWidth: "925px" }}
           />
 
-          <SearchWrapper
-            className="h35"
-            style={{ minWidth: "925px", borderTop: "2px solid #707070" }}
+          <form
+            onSubmit={handleSubmit(submitSearch2)}
+            style={{ minWidth: "925px" }}
           >
-            <Field flex>
-              <p>{depthFullName}</p>
-              <p className="big">영업소</p>
-              <Select
-                {...register("areaCode1")}
-                name="areaCode1"
-                kind={FieldKind.BORDER}
-              >
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </Field>
-          </SearchWrapper>
-
-          <form onSubmit={handleSubmit(submitSearch2)}>
-            <SearchWrapper style={{ minWidth: "925px" }} className="h35">
+            <SearchWrapper
+              className="h35"
+              style={{ borderTop: "2px solid #707070" }}
+            >
+              <Field flex>
+                <p>{depthFullName}</p>
+                <p className="big">영업소</p>
+                <Select
+                  {...register("areaCode1")}
+                  name="areaCode1"
+                  kind={FieldKind.BORDER}
+                >
+                  {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </Field>
+            </SearchWrapper>
+            <SearchWrapper className="h35">
               <Field flex>
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>지급기간</Label>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("sDate")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("eDate")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
+
+                  <Controller
+                    control={control}
+                    {...register("sDate")}
+                    render={({ field: { onChange, value, name } }) => (
+                      <CustomDatePicker
+                        value={value}
+                        onChange={onChange}
+                        name={name}
+                      />
+                    )}
+                  />
+
+                  <Controller
+                    control={control}
+                    {...register("eDate")}
+                    render={({ field: { onChange, value, name } }) => (
+                      <CustomDatePicker
+                        value={value}
+                        onChange={onChange}
+                        name={name}
+                      />
+                    )}
+                  />
                 </FormGroup>
 
                 <Input
@@ -281,9 +282,10 @@ function GR1500({
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            style={{ height: "43%", minWidth: "925px" }}
           />
         </LeftSide>
-        <RightSide style={{ width: "350px" }}>
+        <RightSide>
           <Form
             selected={selected}
             ref={formRef}

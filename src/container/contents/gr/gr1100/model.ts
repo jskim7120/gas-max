@@ -1,3 +1,20 @@
+export interface ISEARCH {
+  areaCode: string;
+  sBuGubun: string;
+  sBuName: string;
+  sBuStae: string;
+}
+
+export interface IForm {
+  selected: any;
+  fetchData: any;
+  tData: any;
+  setData: any;
+  selectedRowIndex: number;
+  setSelected: any;
+  setSelectedRowIndex: any;
+}
+
 export interface ISANGPUM {
   areaCode: string;
   buAddr1: string;

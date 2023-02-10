@@ -27,7 +27,7 @@ function Grid({ data }: { data: any }) {
     gv.setHeader({
       height: 35,
     });
-    gv.setFooter({ visible: false });
+
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
@@ -48,7 +48,7 @@ function Grid({ data }: { data: any }) {
     <div
       style={{
         width: "100%",
-        height: `calc(100% - 37px)`,
+        height: `calc(100% - 38px)`,
       }}
       ref={realgridElement}
     ></div>

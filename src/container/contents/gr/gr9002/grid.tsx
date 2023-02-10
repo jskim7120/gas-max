@@ -1,17 +1,12 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { columns1, fields1, layout } from "./data";
+import { columns, fields, layout } from "./data";
 
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
-let fields: any = [];
-let columns: any = [];
 
 function Grid({ data }: { data: any }) {
-  fields = fields1;
-  columns = columns1;
-
   const realgridElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,7 +22,7 @@ function Grid({ data }: { data: any }) {
     gv.setHeader({
       height: 35,
     });
-    gv.setFooter({ visible: false });
+
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
@@ -48,8 +43,7 @@ function Grid({ data }: { data: any }) {
   return (
     <div
       style={{
-        width: "100%",
-        height: `calc(100% - 37px)`,
+        height: `calc(100% - 38px)`,
       }}
       ref={realgridElement}
     ></div>

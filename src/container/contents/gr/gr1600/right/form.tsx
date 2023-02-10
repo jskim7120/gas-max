@@ -107,7 +107,7 @@ function Form({
   };
 
   return (
-    <div style={{ padding: "0px 10px" }}>
+    <div style={{ padding: "10px", width: "900px" }}>
       <form>
         <Wrapper grid>
           <Input

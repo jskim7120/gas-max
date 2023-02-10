@@ -2,21 +2,14 @@ import { useState, useEffect } from "react";
 import { GR9003SEARCH } from "app/path";
 import { IGR9003SEARCH } from "./model";
 import API from "app/axios";
-import { TopBar, WrapperContent } from "../../commonStyle";
+import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { SearchWrapper } from "../../commonStyle";
-import {
-  Select,
-  FormGroup,
-  Wrapper,
-  Label,
-  Field,
-} from "components/form/style";
+import { Select, FormGroup, Label, Field } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
-import { ButtonColor, InputSize, FieldKind } from "components/componentsType";
+import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import Grid from "./grid";
 import { columns, fields } from "./data";
@@ -32,23 +25,15 @@ function GR9003({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
-  const [dataChk, setDataChk] = useState(true);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
     functionName: "GR9003",
   });
 
-  console.log("GR9002:", dataCommonDic);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    getValues,
-    control,
-  } = useForm<IGR9003SEARCH>({
-    mode: "onSubmit",
-  });
+  const { register, handleSubmit, reset, getValues, control } =
+    useForm<IGR9003SEARCH>({
+      mode: "onSubmit",
+    });
 
   const resetForm = () => {
     if (dataCommonDic !== undefined) {
@@ -83,7 +68,6 @@ function GR9003({
 
   const cancel = () => {
     resetForm();
-    setDataChk(true);
     setData([]);
   };
 
@@ -94,77 +78,57 @@ function GR9003({
 
   return (
     <>
-      <TopBar>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <p style={{ marginRight: "20px" }}>{depthFullName}</p>
-          <p>
-            <b>영업소</b>
-          </p>
-
-          <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
+      <SearchWrapper className="h35 mt5">
+        <Field flex>
+          <p>{depthFullName}</p>
+          <p className="big">영업소</p>
+          <Select {...register("areaCode")}>
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
             ))}
           </Select>
-        </div>
-      </TopBar>
-      <WrapperContent style={{ height: `calc(100% - 76px)` }}>
+        </Field>
+      </SearchWrapper>
+      <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
-          <SearchWrapper style={{ alignItems: "baseline" }}>
-            <div>
-              <Wrapper grid col={2} fields="1fr 1.5fr">
-                <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>충전소</Label>
-                  <Select
-                    width={InputSize.i130}
-                    {...register("bcBuCode")}
-                    kind={FieldKind.BORDER}
-                  >
-                    {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>기간</Label>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("sDate")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("eDate")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
-                </FormGroup>
-              </Wrapper>
-            </div>
+          <SearchWrapper className="h35">
+            <FormGroup>
+              <Label style={{ minWidth: "auto" }}>충전소</Label>
+              <Select width={InputSize.i130} {...register("bcBuCode")}>
+                {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+              <Label style={{ minWidth: "80px" }}>기간</Label>
+              <Controller
+                control={control}
+                {...register("sDate")}
+                render={({ field: { onChange, value, name } }) => (
+                  <CustomDatePicker
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                  />
+                )}
+              />
+              <Controller
+                control={control}
+                {...register("eDate")}
+                render={({ field: { onChange, value, name } }) => (
+                  <CustomDatePicker
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                  />
+                )}
+              />
+            </FormGroup>
 
-            <div
-              className="button-wrapper"
-              style={{ flexDirection: "row", gap: "0px" }}
-            >
+            <div className="buttons">
               <Button
                 text="검색"
                 icon={!loading && <MagnifyingGlass />}
@@ -182,12 +146,12 @@ function GR9003({
                     </>
                   )
                 }
-                style={{ marginRight: "10px" }}
+                style={{ marginRight: "5px" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ marginRight: "10px" }}
+                style={{ marginRight: "5px" }}
                 type="button"
                 color={ButtonColor.LIGHT}
                 onClick={cancel}

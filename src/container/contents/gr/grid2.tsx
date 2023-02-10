@@ -1,8 +1,17 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { fields, columns } from "./data";
 
-function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
+function Grid({
+  data,
+  fields,
+  columns,
+  style,
+}: {
+  data: any;
+  fields: any;
+  columns: any;
+  style?: any;
+}) {
   let container: HTMLDivElement;
   let dp: any;
   let gv: any;
@@ -20,7 +29,7 @@ function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
     gv.setHeader({
       height: 35,
     });
-    gv.setFooter({ visible: false });
+
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
@@ -33,7 +42,6 @@ function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
-      setSelected(data[itemIndex]);
     };
 
     return () => {
@@ -43,7 +51,7 @@ function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
     };
   }, [data]);
 
-  return <div ref={realgridElement} style={{ height: "500px" }}></div>;
+  return <div ref={realgridElement} style={style}></div>;
 }
 
 export default Grid;

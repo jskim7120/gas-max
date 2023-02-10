@@ -1,19 +1,42 @@
 export interface ICC1500SEARCH {
   areaCode: String;
-  //   sDateF: String;
-  //   sDateT: String;
-  //   sGjGumymF: String;
-  //   sGjGumymT: String;
-  //   sGjSnoF: String;
-  //   sGjSnoT: String;
-  //   sType1: String;
-  //   sSwCode: String;
-  //   sCuName: String;
-  //   sCuSwCode: String;
-  //   sJyCode: String;
-  //   sCuCustgubun: String;
-  //   sSukumtype: String;
-  //   sRh20: String;
-  //   sType2: String;
-  //   sSort: string;
+  sDateF: string;
+  sDateT: string;
+  cjCaCode: string;
+}
+
+export interface ICC1500 {
+  areaCode: string;
+  cjBigo: string;
+  cjCaCode: string;
+  cjCaName: string;
+  cjCcCode: string;
+  cjCcName: string;
+  cjDate: string;
+  cjKumack: number;
+  cjSno: string;
+  cjSwCode: string;
+  cjSwName: string;
+}
+
+export interface ICC1500FORM {
+  areaCode: string;
+  cjDate: string;
+  totGabul: string; //
+
+  cjBigo: string;
+  cjBigoOil: string;
+  cjCaCode: string;
+  cjCaName: string;
+  cjCarKg: number;
+  cjCcCode: string;
+  cjCcName: string;
+  cjKumack: number;
+  cjKumackOil: number;
+  cjOilDanga: number;
+  cjOilL: number;
+  cjOilType: string;
+  cjSwCode: string;
+  cjSwCodeOil: string;
+  cjSwName: string;
 }
