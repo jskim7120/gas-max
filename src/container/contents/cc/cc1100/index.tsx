@@ -133,102 +133,103 @@ function CC1100({
       <MainWrapper>
         <LeftSide>
           <SearchWrapper style={{ alignItems: "baseline" }}>
-            <div>
-              <Wrapper grid col={2} fields="1fr 1.5fr">
-                <FormGroup>
-                  {[
-                    { name: "현금", value: "0" },
-                    { name: "예금", value: "1" },
-                  ].map((option, index) => {
-                    return (
-                      <Item key={index}>
-                        <RadioButton
-                          type="radio"
-                          value={option.value}
-                          {...register("codeGu")}
-                          id={option.value}
-                          onChange={() => setCodeGu((prev) => !prev)}
-                        />
-                        <RadioButtonLabel htmlFor={`${option.value}`}>
-                          {option.name}
-                        </RadioButtonLabel>
-                      </Item>
-                    );
-                  })}
-                  {codeGu}
-                  <Input
-                    readOnly={!codeGu}
-                    register={register("codeGu")}
-                    labelStyle={{ minWidth: "70px" }}
-                    inputSize={InputSize.i100}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>기간</Label>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("sDateF")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
+            <form onSubmit={handleSubmit(submit)}>
+              <div>
+                <Wrapper grid col={2} fields="1fr 1.5fr">
+                  <FormGroup>
+                    {[
+                      { name: "현금", value: "0" },
+                      { name: "예금", value: "1" },
+                    ].map((option, index) => {
+                      return (
+                        <Item key={index}>
+                          <RadioButton
+                            type="radio"
+                            value={option.value}
+                            {...register("codeGu")}
+                            id={option.value}
+                            onChange={() => setCodeGu((prev) => !prev)}
+                          />
+                          <RadioButtonLabel htmlFor={`${option.value}`}>
+                            {option.name}
+                          </RadioButtonLabel>
+                        </Item>
+                      );
+                    })}
+                    {codeGu}
+                    <Input
+                      readOnly={!codeGu}
+                      register={register("codeGu")}
+                      labelStyle={{ minWidth: "70px" }}
+                      inputSize={InputSize.i100}
                     />
-                  </Field>
-                  <Label style={{ minWidth: "auto" }}>~</Label>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("sDateT")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
-                </FormGroup>
-              </Wrapper>
-            </div>
-
-            <div
-              className="button-wrapper"
-              style={{ flexDirection: "row", gap: "0px" }}
-            >
-              <Button
-                text="검색"
-                icon={!loading && <MagnifyingGlass />}
-                color={ButtonColor.DANGER}
-                type="button"
-                onClick={handleSubmit(submit)}
-                loader={
-                  loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={13}
-                        borderWidth="2px"
-                        style={{ marginRight: "10px" }}
+                  </FormGroup>
+                  <FormGroup>
+                    <Label style={{ minWidth: "auto" }}>기간</Label>
+                    <Field style={{ minWidth: "120px" }}>
+                      <Controller
+                        control={control}
+                        {...register("sDateF")}
+                        render={({ field: { onChange, value, name } }) => (
+                          <CustomDatePicker
+                            value={value}
+                            onChange={onChange}
+                            name={name}
+                          />
+                        )}
                       />
-                    </>
-                  )
-                }
-                style={{ marginRight: "10px" }}
-              />
-              <Button
-                text="취소"
-                icon={<ResetGray />}
-                style={{ marginRight: "10px" }}
-                type="button"
-                color={ButtonColor.LIGHT}
-                onClick={cancel}
-              />
-            </div>
+                    </Field>
+                    <Label style={{ minWidth: "auto" }}>~</Label>
+                    <Field style={{ minWidth: "120px" }}>
+                      <Controller
+                        control={control}
+                        {...register("sDateT")}
+                        render={({ field: { onChange, value, name } }) => (
+                          <CustomDatePicker
+                            value={value}
+                            onChange={onChange}
+                            name={name}
+                          />
+                        )}
+                      />
+                    </Field>
+                  </FormGroup>
+                </Wrapper>
+              </div>
+
+              <div
+                className="button-wrapper"
+                style={{ flexDirection: "row", gap: "0px" }}
+              >
+                <Button
+                  text="검색"
+                  icon={!loading && <MagnifyingGlass />}
+                  color={ButtonColor.DANGER}
+                  type="button"
+                  loader={
+                    loading && (
+                      <>
+                        <Loader
+                          color="white"
+                          size={13}
+                          borderWidth="2px"
+                          style={{ marginRight: "10px" }}
+                        />
+                      </>
+                    )
+                  }
+                  style={{ marginRight: "10px" }}
+                />
+                <Button
+                  text="취소"
+                  icon={<ResetGray />}
+                  style={{ marginRight: "10px" }}
+                  type="button"
+                  color={ButtonColor.LIGHT}
+                  onClick={cancel}
+                />
+              </div>
+            </form>
           </SearchWrapper>
           <Grid
             data={data}
