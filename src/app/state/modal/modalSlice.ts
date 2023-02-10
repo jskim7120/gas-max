@@ -39,6 +39,14 @@ export interface initialStateType {
     jbuBpDanga: number | undefined;
     bpCode: string | undefined;
   };
+  cc1100: {
+    acjType: string | undefined;
+    accCode: string | undefined;
+    accName: string | undefined;
+    acsCode: string | undefined;
+    acsName: string | undefined;
+  };
+
   isDelete: {
     menuId: string;
     isDelete: boolean;
@@ -80,6 +88,13 @@ const initialState: initialStateType = {
     jbuVatKind: undefined,
     jbuBpDanga: undefined,
     bpCode: undefined,
+  },
+  cc1100: {
+    acjType: undefined,
+    accCode: undefined,
+    accName: undefined,
+    acsCode: undefined,
+    acsName: undefined,
   },
   isDelete: {
     menuId: "",
@@ -138,7 +153,13 @@ const modalSlice = createSlice({
       state.gr1300.jbuBpDanga = action.payload.jbuBpDanga;
       state.gr1300.bpCode = action.payload.bpCode;
     },
-
+    addCC1100: (state, action) => {
+      state.cc1100.acjType = action.payload.acjType;
+      state.cc1100.accCode = action.payload.accCode;
+      state.cc1100.accName = action.payload.accName;
+      state.cc1100.acsCode = action.payload.acsCode;
+      state.cc1100.acsName = action.payload.acsName;
+    },
     addDeleteMenuId: (state, action) => {
       state.isDelete.menuId = action.payload.menuId;
     },
@@ -154,6 +175,7 @@ export const {
   addCM1105,
   addGR1200,
   addGR1300,
+  addCC1100,
   addDeleteMenuId,
   setIsDelete,
 } = modalSlice.actions;

@@ -11,6 +11,7 @@ import GR1200Modal from "./customModals/gr1200Modal";
 import GR1300Modal from "./customModals/gr1300Modal";
 import AccountModal from "./customModals/accountModal";
 import DelModal from "./customModals/delModal";
+import CC1100Modal from "./customModals/cc1100Modal";
 
 const PopupArea = styled.section`
   position: fixed;
@@ -36,6 +37,7 @@ const PopupContiner = styled.div<{ type: string }>`
       props.type === "cm1105Modal" ||
       props.type === "cm1106Modal" ||
       props.type === "gr1200Modal" ||
+      props.type === "cc1100Modal" ||
       props.type === "gr1300Modal") &&
     `
       top: 50%;
@@ -90,6 +92,7 @@ function Popup() {
             {type === "gr1200Modal" && <GR1200Modal />}
             {type === "gr1300Modal" && <GR1300Modal />}
             {type === "delModal" && <DelModal />}
+            {type === "cc1100Modal" && <CC1100Modal />}
           </Suspense>
         </PopupContiner>
       </PopupArea>
