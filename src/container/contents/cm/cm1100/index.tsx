@@ -25,9 +25,9 @@ import {
   FormGroup,
   Wrapper,
   Label,
+  Field,
 } from "components/form/style";
-import { TopBar, WrapperContent } from "../../commonStyle";
-import { SearchWrapper } from "../../commonStyle";
+import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import API from "app/axios";
 import Grid from "./grid";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -113,19 +113,19 @@ function CM1100Page({
 
   return (
     <>
-      <TopBar>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <p style={{ marginRight: "20px" }}>{depthFullName}</p>
+      <SearchWrapper className="h35 mt5">
+        <Field flex>
+          <p>{depthFullName}</p>
           <p className="big">영업소</p>
 
-          <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
+          <Select {...register("areaCode")}>
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
             ))}
           </Select>
-        </div>
+        </Field>
         <div className="buttons">
           <Button
             text="등록"
@@ -164,7 +164,7 @@ function CM1100Page({
           />
           <Button text="삭제" icon={<Trash />} type="button" />
         </div>
-      </TopBar>
+      </SearchWrapper>
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper>

@@ -5,7 +5,7 @@ import API from "app/axios";
 import CheckBox from "components/checkbox";
 import {
   MainWrapper,
-  TopBar,
+  SearchWrapper,
   WrapperContent,
   RightSide,
   LeftSide,
@@ -13,7 +13,6 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { SearchWrapper } from "../../commonStyle";
 import {
   Select,
   FormGroup,
@@ -29,6 +28,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Grid from "../grid";
 import { columns, fields } from "./data";
 import { formatDateToStringWithoutDash } from "helpers/dateFormat";
+import CustomTopPart from "container/contents/customTopPart";
 
 function CC1200({
   depthFullName,
@@ -110,22 +110,11 @@ function CC1200({
 
   return (
     <>
-      <TopBar>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <p style={{ marginRight: "20px" }}>{depthFullName}</p>
-          <p>
-            <b>영업소</b>
-          </p>
-
-          <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </div>
-      </TopBar>
+      <CustomTopPart
+        depthFullName={depthFullName}
+        register={register}
+        dataCommonDic={dataCommonDic}
+      />
       <MainWrapper>
         <LeftSide>
           <SearchWrapper style={{ alignItems: "baseline" }}>

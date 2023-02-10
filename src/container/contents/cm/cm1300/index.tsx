@@ -21,7 +21,7 @@ import {
 } from "app/state/modal/modalSlice";
 import Form from "./form";
 import { ButtonColor, FieldKind, ButtonType } from "components/componentsType";
-import { MainWrapper, TopBar } from "../../commonStyle";
+import { MainWrapper, SearchWrapper } from "../../commonStyle";
 import { CM1300SEARCH } from "app/path";
 import {
   Grid1Container,
@@ -188,28 +188,19 @@ function CM1300({
 
   return (
     <>
-      <TopBar>
-        <p>{depthFullName}</p>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            position: "absolute",
-            left: "245px",
-            gap: "7px",
-            fontSize: "14px",
-            fontWeight: "bold",
-          }}
-        >
+      <SearchWrapper className="h35 mt5">
+        <Field flex>
+          <p>{depthFullName}</p>
           <p className="big">영업소</p>
-          <Select name="areaCode" kind={FieldKind.BORDER}>
+          <Select name="areaCode">
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
             ))}
           </Select>
-        </div>
+        </Field>
+
         <div className="buttons m_left">
           <Button
             text="건물등록"
@@ -246,7 +237,7 @@ function CM1300({
           />
           <BorderRight />
         </div>
-      </TopBar>
+      </SearchWrapper>
       <MainWrapper>
         <Grid1Container>
           <form

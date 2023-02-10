@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import {
   ICM1200SEARCH,
   ICM120065USERINFO,
@@ -10,7 +11,7 @@ import GridLeft from "./gridLeft";
 import GridBottom from "./gridBottom";
 import Form from "./form";
 import {
-  TopBar,
+  SearchWrapper,
   LeftSide,
   RightSide,
   MainWrapper,
@@ -34,7 +35,6 @@ import {
 import { Field, FormGroup, Input, Label, Select } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { PersonInfoText, BuildingInfoText } from "components/text";
-
 import Loader from "components/loader";
 import {
   openModal,
@@ -47,8 +47,6 @@ import { useDispatch, useSelector } from "app/store";
 import { CM120065, CM1200SEARCH } from "app/path";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
-import { SearchWrapper } from "../../commonStyle";
-import { toast } from "react-toastify";
 
 function CM1200({
   depthFullName,
@@ -211,15 +209,14 @@ function CM1200({
 
   return (
     <>
-      <TopBar>
-        <div className="title-and-areacode">
-          <p style={{ marginRight: "20px" }}>{depthFullName}</p>
+      <SearchWrapper className="h35 mt5">
+        <Field flex>
+          <p>{depthFullName}</p>
           <p className="big">영업소</p>
 
           <Select
             width={InputSize.i120}
             {...register("areaCode")}
-            style={{ marginLeft: "5px" }}
             onChange={(e: any) => setAreaCode(e.target.value)}
           >
             {dataCommonDic?.areaCode?.map((option: any, index: number) => {
@@ -230,7 +227,7 @@ function CM1200({
               );
             })}
           </Select>
-        </div>
+        </Field>
         <div className="buttons">
           <Button
             text="건물등록"
@@ -268,7 +265,7 @@ function CM1200({
             }}
           />
         </div>
-      </TopBar>
+      </SearchWrapper>
       <MainWrapper>
         <LeftSide width="30%">
           <SearchWrapper style={{ borderBottom: "2px solid #707070" }}>
