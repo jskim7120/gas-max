@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { ICM1100SEARCH } from "./model";
 import { useForm } from "react-hook-form";
@@ -25,13 +25,10 @@ import {
   FormGroup,
   Wrapper,
   Label,
-  Field,
 } from "components/form/style";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import API from "app/axios";
 import Grid from "./grid";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "./validation";
 import { columns, fields } from "./data";
 import CM1100Footer from "./footer";
 import { CM1100SEARCH } from "app/path";
@@ -53,29 +50,14 @@ function CM1100Page({
     functionName: "CM1100",
   });
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    getValues,
-  } = useForm<ICM1100SEARCH>({
+  const { register, handleSubmit, reset } = useForm<ICM1100SEARCH>({
     mode: "onSubmit",
-    resolver: yupResolver(schema),
   });
 
   useEffect(() => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-      cuType: dataCommonDic?.cuType[0].code,
-      cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
-      swCode: dataCommonDic?.swCode[0].code,
-      cuEtOption: dataCommonDic?.cuEtOption[0].code,
-      cuJyCode: dataCommonDic?.cuJyCode[0].code,
-      cuGong: dataCommonDic?.cuGong[0].code,
-      cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
-      cuStae: dataCommonDic?.cuStae[0].code,
-    });
+    if (dataCommonDic) {
+      resetSearchForm();
+    }
   }, [dataCommonDic]);
 
   const submit = async (data: ICM1100SEARCH) => {
@@ -89,10 +71,13 @@ function CM1100Page({
 
       if (data) {
         setData(data);
-        setLoading(false);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (err) {
       setLoading(false);
+      setData([]);
       console.log("CM1100 data search fetch error =======>", err);
     }
   };
@@ -111,10 +96,24 @@ function CM1100Page({
     } catch (err: any) {}
   };
 
+  const resetSearchForm = () => {
+    reset({
+      areaCode: dataCommonDic?.areaCode[0].code,
+      cuType: dataCommonDic?.cuType[0].code,
+      cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
+      swCode: dataCommonDic?.swCode[0].code,
+      cuEtOption: dataCommonDic?.cuEtOption[0].code,
+      cuJyCode: dataCommonDic?.cuJyCode[0].code,
+      cuGong: dataCommonDic?.cuGong[0].code,
+      cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
+      cuStae: dataCommonDic?.cuStae[0].code,
+    });
+  };
+
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <Field flex>
+        <FormGroup>
           <p>{depthFullName}</p>
           <p className="big">영업소</p>
 
@@ -125,7 +124,7 @@ function CM1100Page({
               </option>
             ))}
           </Select>
-        </Field>
+        </FormGroup>
         <div className="buttons">
           <Button
             text="등록"
@@ -148,17 +147,7 @@ function CM1100Page({
             style={{ marginRight: "5px" }}
             type="button"
             onClick={() => {
-              reset({
-                areaCode: dataCommonDic?.areaCode[0].code,
-                cuType: dataCommonDic?.cuType[0].code,
-                cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
-                swCode: dataCommonDic?.swCode[0].code,
-                cuEtOption: dataCommonDic?.cuEtOption[0].code,
-                cuJyCode: dataCommonDic?.cuJyCode[0].code,
-                cuGong: dataCommonDic?.cuGong[0].code,
-                cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
-                cuStae: dataCommonDic?.cuStae[0].code,
-              });
+              resetSearchForm();
               setData([]);
             }}
           />
@@ -174,6 +163,7 @@ function CM1100Page({
                   label="거래처명"
                   register={register("cuName")}
                   kind={FieldKind.BORDER}
+                  minWidth={InputSize.i100}
                 />
                 <Input
                   label="전화"
