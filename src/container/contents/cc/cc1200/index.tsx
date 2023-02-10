@@ -8,6 +8,7 @@ import {
   TopBar,
   WrapperContent,
   RightSide,
+  LeftSide,
 } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -27,6 +28,7 @@ import { ButtonColor } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import Grid from "../grid";
 import { columns, fields } from "./data";
+import { formatDateToStringWithoutDash } from "helpers/dateFormat";
 
 function CC1200({
   depthFullName,
@@ -94,6 +96,14 @@ function CC1200({
   };
 
   const submit = (data: ICC1200SEARCH) => {
+    data.sDateF = formatDateToStringWithoutDash(data.sDateF);
+    data.sDateT = formatDateToStringWithoutDash(data.sDateT);
+    if (data.userChk == "true") {
+      data.userChk = "Y";
+    } else {
+      data.userChk = "N";
+    }
+
     console.log("IISEARCH:", data);
     fetchData(data);
   };
@@ -116,8 +126,8 @@ function CC1200({
           </Select>
         </div>
       </TopBar>
-      <WrapperContent style={{ height: `calc(100% - 76px)` }}>
-        <form onSubmit={handleSubmit(submit)}>
+      <MainWrapper>
+        <LeftSide>
           <SearchWrapper style={{ alignItems: "baseline" }}>
             <div>
               <Wrapper grid col={2} fields="1fr 1.5fr">
@@ -154,7 +164,7 @@ function CC1200({
                 <Field>
                   <FormGroup>
                     &nbsp;&nbsp;
-                    <CheckBox register={{ ...register("something") }} />
+                    <CheckBox register={{ ...register("userChk") }} />
                     &nbsp; &nbsp; &nbsp;
                     <Label>사용자등록 자료만 보기</Label>
                   </FormGroup>
@@ -171,6 +181,7 @@ function CC1200({
                 icon={!loading && <MagnifyingGlass />}
                 color={ButtonColor.DANGER}
                 type="submit"
+                onClick={handleSubmit(submit)}
                 loader={
                   loading && (
                     <>
@@ -193,25 +204,18 @@ function CC1200({
                 color={ButtonColor.LIGHT}
                 onClick={cancel}
               />
-              <Button
-                text="엑셀"
-                icon={<ExcelIcon width="19px" height="19px" />}
-                color={ButtonColor.LIGHT}
-                type="button"
-              />
             </div>
           </SearchWrapper>
-        </form>
-      </WrapperContent>
-      <MainWrapper>
-        <Grid
-          data={data.length > 0 && data}
-          columns={columns}
-          fields={fields}
-          setSelected={setSelected}
-          selectedRowIndex={selectedRowIndex}
-          setSelectedRowIndex={setSelectedRowIndex}
-        />
+          <Grid
+            data={data}
+            fields={fields}
+            columns={columns}
+            setSelected={setSelected}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            style={{ height: `calc(100% - 38px)` }}
+          />
+        </LeftSide>
         <RightSide>
           <Form
             selected={selected}

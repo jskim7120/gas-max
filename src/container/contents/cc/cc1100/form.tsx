@@ -178,7 +178,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>영 업 소</Label>
+            <Label style={{ minWidth: "80px" }}>입출 구분</Label>
             <Select {...register("acjType")} onChange={handleSelectCode}>
               {dataCommonDic?.acjType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

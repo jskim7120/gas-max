@@ -3,19 +3,23 @@ import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { EN1400INSERT, EN1400UPDATE, EN1400DELETE, EN140011 } from "app/path";
+import { EN1400DELETE, EN140011 } from "app/path";
+import { InputSize } from "components/componentsType";
+import CustomDatePicker from "components/customDatePicker";
+import {
+  Item,
+  RadioButton,
+  RadioButtonLabel,
+} from "components/radioButton/style";
 import {
   Input,
   Select,
-  Field,
   FormGroup,
   Wrapper,
   Divider,
   Label,
 } from "components/form/style";
 import { ICC1200SEARCH } from "./model";
-import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
-import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
@@ -25,7 +29,26 @@ interface IForm {
   setSelected: any;
   setSelectedRowIndex: any;
 }
-
+const radioOptions = [
+  {
+    label: "입 금",
+    id: "0",
+  },
+  {
+    label: "차변 대체",
+    id: "1",
+  },
+];
+const radioOptionsSecond = [
+  {
+    label: "출 금",
+    id: "0",
+  },
+  {
+    label: "대변 대체",
+    id: "1",
+  },
+];
 const Form = React.forwardRef(
   (
     {
@@ -41,9 +64,10 @@ const Form = React.forwardRef(
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "CC",
-      functionName: "CC1200",
+      functionName: "CC1100",
     });
-
+    const [radioChecked, setRadioChecked] = useState(0);
+    const [radioCheckedSecond, setRadioCheckedSecond] = useState(0);
     const { register, handleSubmit, reset, getValues, control } =
       useForm<ICC1200SEARCH>({ mode: "onChange" });
 
@@ -115,41 +139,7 @@ const Form = React.forwardRef(
       }
 
       if (type === null) {
-        handleSubmit(submit)();
-      }
-    };
-
-    const submit = async (data: ICC1200SEARCH) => {
-      //form aldaagui uyd ajillana
-      const path = isAddBtnClicked ? EN1400INSERT : EN1400UPDATE;
-      const formValues = getValues();
-
-      try {
-        const response: any = await API.post(path, formValues);
-        if (response.status === 200) {
-          if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
-          } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
-          }
-          setSelected(formValues);
-          setIsAddBtnClicked(false);
-          toast.success("저장이 성공하였습니다", {
-            autoClose: 500,
-          });
-        } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
-        }
-      } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
+        // handleSubmit(submit)();
       }
     };
 
@@ -179,37 +169,54 @@ const Form = React.forwardRef(
 
     return (
       <form
-        onSubmit={handleSubmit(submit)}
+        // onSubmit={handleSubmit(submit)}
         style={{ width: "380px", padding: "0px 10px" }}
       >
         <Wrapper>
-          <Input
-            label="영 업 소"
-            labelStyle={{ minWidth: "80px" }}
-            register={register("cbareaCode")}
-            inputSize={InputSize.i80}
-            maxLength="3"
-            readOnly={isAddBtnClicked}
-          />
-        </Wrapper>
-        <Divider />
-        <Wrapper>
-          <Input
-            label="일 자"
-            labelStyle={{ minWidth: "80px" }}
-            register={register("acjDate")}
-            inputSize={InputSize.i250}
-            maxLength="20"
-          />
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>영 업 소</Label>
+            <Select {...register("cbareaCode")} onChange={handleSelectCode}>
+              {dataCommonDic?.cbareaCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </Wrapper>
         <Wrapper>
-          <Input
-            label="차 변"
-            labelStyle={{ minWidth: "80px" }}
-            register={register("chGubun")}
-            inputSize={InputSize.i250}
-            maxLength="10"
-          />
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>일 자</Label>
+            <Controller
+              control={control}
+              {...register("acjDate")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
+            />
+          </FormGroup>
+        </Wrapper>
+        <Wrapper>
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>차 변</Label>
+            {radioOptions.map((option, index) => (
+              <Item key={index}>
+                <RadioButton
+                  type="radio"
+                  value={option.id}
+                  {...register(`chGubun`)}
+                  id={option.id}
+                  checked={radioChecked === index}
+                  onClick={(e: any) => {
+                    setRadioChecked(parseInt(e.target.value));
+                  }}
+                />
+                <RadioButtonLabel htmlFor={`${option.label}`}>
+                  {option.label}
+                </RadioButtonLabel>
+              </Item>
+            ))}
+          </FormGroup>
         </Wrapper>
         <Wrapper>
           <Input
@@ -217,29 +224,55 @@ const Form = React.forwardRef(
             labelStyle={{ minWidth: "80px" }}
             register={register("acjAccCodeCh")}
             inputSize={InputSize.i250}
-            maxLength="10"
+          />
+        </Wrapper>
+        <Wrapper>
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>차 변</Label>
+            {radioOptionsSecond.map((option, index) => (
+              <Item key={index}>
+                <RadioButton
+                  type="radio"
+                  value={option.id}
+                  {...register(`chGubun`)}
+                  id={option.id}
+                  checked={radioChecked === index}
+                  onClick={(e: any) => {
+                    setRadioCheckedSecond(parseInt(e.target.value));
+                  }}
+                />
+                <RadioButtonLabel htmlFor={`${option.label}`}>
+                  {option.label}
+                </RadioButtonLabel>
+              </Item>
+            ))}
+          </FormGroup>
+        </Wrapper>
+        <Wrapper>
+          <Input
+            label="계정과목"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("acjAccCodeDa")}
+            inputSize={InputSize.i250}
           />
         </Wrapper>
         <Divider />
+
         <Wrapper>
-          <Field flex>
-            <p>대 변</p>
-            <Controller
-              control={control}
-              {...register("daGubun")}
-              render={({ field: { onChange, name } }) => (
-                <Input
-                  label="판매단가"
-                  labelStyle={{ minWidth: "80px" }}
-                  onChange={onChange}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i130}
-                  name={name}
-                />
-              )}
-            />
-          </Field>
+          <Input
+            label="적 요"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("acjBigo")}
+            inputSize={InputSize.i250}
+          />
+        </Wrapper>
+        <Wrapper>
+          <Input
+            label="금 액"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("acjKumack")}
+            inputSize={InputSize.i250}
+          />
         </Wrapper>
       </form>
     );
