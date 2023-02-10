@@ -54,13 +54,11 @@ function CM9002({
     functionName: "CM9002",
   });
 
-  console.log("CM9002:", dataCommonDic);
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
-    getValues,
+
     control,
   } = useForm<ICM9002SEARCH>({
     mode: "onSubmit",
@@ -85,21 +83,16 @@ function CM9002({
   };
 
   useEffect(() => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-      //   reportKind: dataCommonDic?.reportKind[0].code,
-      //   cuType: dataCommonDic?.cuType[0].code,
-      //   cuJyCode: dataCommonDic?.cuJyCode[0].code,
-      //   swCode: dataCommonDic?.swCode[0].code,
-      //   cuCutype: dataCommonDic?.cuCutype[0].code,
-    });
+    if (dataCommonDic) {
+      resetForm();
+    }
   }, [dataCommonDic]);
 
   const fetchData = async (params: any) => {
     try {
       setLoading(true);
       const { data } = await API.get(CM9002SEARCH, { params: params });
-      console.log("data irev:", data);
+
       if (data) {
         setData(data);
         setLoading(false);
