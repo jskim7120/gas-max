@@ -323,7 +323,11 @@ function Form() {
           <div>
             <Button
               text="검색"
-              icon={<MagnifyingGlassBig width="17.188" height="17.141" />}
+              icon={
+                !loading && (
+                  <MagnifyingGlassBig width="17.188" height="17.141" />
+                )
+              }
               kind={ButtonType.ROUND}
               type="submit"
               style={{ height: "26px" }}
