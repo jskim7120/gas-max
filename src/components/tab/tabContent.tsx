@@ -37,7 +37,11 @@ import CC1100 from "container/contents/cc/cc1100";
 import CC1400 from "container/contents/cc/cc1400";
 import CC1500 from "container/contents/cc/cc1500";
 
-export const getContent = (id: any, depthFullName: string) => {
+export const getContent = (
+  id: any,
+  depthFullName: string,
+  areaCode: string
+) => {
   switch (id) {
     case "HOME":
       return <div>Home</div>;
@@ -62,58 +66,112 @@ export const getContent = (id: any, depthFullName: string) => {
     case "EN2000":
       return <EN2000 depthFullName={depthFullName} menuId={id} />;
     case "CM1100":
-      return <CM1100 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <CM1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "CM1200":
-      return <CM1200 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <CM1200 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "CM9002":
-      return <CM9002 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <CM9002 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "CM1300":
-      return <CM1300 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <CM1300 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "CM9003":
-      return <CM9003 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <CM9003 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "CM9004":
-      return <CM9004 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <CM9004 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "CM9005":
-      return <CM9005 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <CM9005 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "CM9006":
-      return <CM9006 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <CM9006 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "GR1100":
-      return <GR1100 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <GR1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "GR1500":
-      return <GR1500 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <GR1500 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "GR1200":
-      return <GR1200 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <GR1200 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "GR1300":
-      return <GR1300 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <GR1300 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "GR1600":
-      return <GR1600 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <GR1600 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "GR9002":
-      return <GR9002 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <GR9002 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "GR9003":
-      return <GR9003 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <GR9003 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "GR9004":
-      return <GR9004 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <GR9004 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "GR9005":
-      return <GR9005 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <GR9005 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "GR9006":
-      return <GR9006 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <GR9006 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "GR9007":
-      return <GR9007 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <GR9007 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "GR9008":
-      return <GR9008 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <GR9008 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "GR9009":
-      return <GR9009 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <GR9009 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "RV1100":
-      return <RV1100 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <RV1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "RV9005":
-      return <RV9005 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <RV9005 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "RV9006":
-      return <RV9006 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <RV9006 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "CC1100":
-      return <CC1100 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <CC1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "CC1400":
-      return <CC1400 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <CC1400 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "CC1500":
-      return <CC1500 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <CC1500 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
   }
 };

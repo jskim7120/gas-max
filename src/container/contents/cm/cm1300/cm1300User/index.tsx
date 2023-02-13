@@ -25,10 +25,12 @@ function FormCM1300User({
   depthFullName,
   menuId,
   selectedUser,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
   selectedUser: any;
+  areaCode: string;
 }) {
   const { register, handleSubmit } = useForm({ mode: "onSubmit" });
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
@@ -124,6 +126,7 @@ function FormCM1300User({
       <PersonInfoText text="사용자" style={{ padding: "10px" }} />
 
       <Grid
+        areaCode={areaCode}
         data={data}
         setSelected={setSelected}
         selectedRowIndex={selectedRowIndex}

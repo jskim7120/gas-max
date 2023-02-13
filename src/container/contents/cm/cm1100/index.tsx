@@ -3,7 +3,7 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { ICM1100SEARCH } from "./model";
 import { useForm } from "react-hook-form";
 import { openModal, addCM1105 } from "app/state/modal/modalSlice";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import Button from "components/button/button";
 import {
   ButtonColor,
@@ -33,13 +33,16 @@ import { columns, fields } from "./data";
 import CM1100Footer from "./footer";
 import { CM1100SEARCH } from "app/path";
 import Loader from "components/loader";
+import { CustomAreaCodePart } from "container/contents/customTopPart";
 
 function CM1100Page({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const dispatch = useDispatch();
   const [data, setData] = useState<any>([]);
@@ -113,18 +116,13 @@ function CM1100Page({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <FormGroup>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
+        <CustomAreaCodePart
+          areaCode={areaCode}
+          dataCommonDic={dataCommonDic}
+          depthFullName={depthFullName}
+          register={register}
+        />
 
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </FormGroup>
         <div className="buttons">
           <Button
             text="등록"
@@ -365,6 +363,7 @@ function CM1100Page({
           fields={fields}
           setSelected={setSelected}
           openPopup={handleOpenPopup}
+          areaCode={areaCode}
         />
 
         <CM1100Footer />

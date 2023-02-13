@@ -28,9 +28,11 @@ import CustomTopPart from "container/contents/customTopPart";
 
 function CC1100({
   depthFullName,
+  areaCode,
   menuId,
 }: {
   depthFullName: string;
+  areaCode: string;
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
@@ -98,6 +100,7 @@ function CC1100({
         depthFullName={depthFullName}
         register={register}
         dataCommonDic={dataCommonDic}
+        areaCode={areaCode}
       />
       <MainWrapper>
         <LeftSide>

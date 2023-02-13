@@ -17,9 +17,11 @@ import Grid from "./grid";
 function CM9004({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -86,6 +88,7 @@ function CM9004({
         depthFullName={depthFullName}
         register={register}
         dataCommonDic={dataCommonDic}
+        areaCode={areaCode}
       />
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>

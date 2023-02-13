@@ -30,6 +30,7 @@ import {
   formatDateToStringWithoutDashOnlyYearMonth,
   formatDateToStringWithoutDash,
 } from "helpers/dateFormat";
+import { CustomAreaCodePart } from "container/contents/customTopPart";
 
 const radioOptions = [
   {
@@ -44,9 +45,11 @@ const radioOptions = [
 function RV9006({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -143,18 +146,12 @@ function RV9006({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <div style={{ display: "flex", alignItems: "baseline" }}>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </div>
+        <CustomAreaCodePart
+          areaCode={areaCode}
+          dataCommonDic={dataCommonDic}
+          depthFullName={depthFullName}
+          register={register}
+        />
         <div className="buttons">
           <Button
             text="출력"

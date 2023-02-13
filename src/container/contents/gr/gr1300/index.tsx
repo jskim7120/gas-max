@@ -31,9 +31,11 @@ const minWidth = "900px";
 function GR1300({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
@@ -128,6 +130,7 @@ function GR1300({
         depthFullName={depthFullName}
         register={register}
         dataCommonDic={dataCommonDic}
+        areaCode={areaCode}
       />
       <MainWrapper>
         <LeftSide>

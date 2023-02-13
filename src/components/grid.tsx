@@ -10,6 +10,7 @@ function Grid({
   columns,
   style,
   evenFill,
+  areaCode,
 }: {
   data: any;
   setSelected: Function;
@@ -19,6 +20,7 @@ function Grid({
   columns: any;
   style?: any;
   evenFill?: boolean;
+  areaCode: string;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -42,9 +44,15 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
+
     if (evenFill) {
       gv.displayOptions.fitStyle = "evenFill";
     }
+
+    if (areaCode !== "00") {
+      gv.removeColumn("areaCode");
+    }
+
     gv.setEditOptions({ editable: false });
 
     gv.displayOptions.useFocusClass = true;

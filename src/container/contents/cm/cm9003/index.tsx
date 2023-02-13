@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { CM9003SEARCH } from "app/path";
-import { ISEARCH } from "./model";
 import API from "app/axios";
+import { ISEARCH } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import Loader from "components/loader";
 import Button from "components/button/button";
@@ -23,9 +23,11 @@ import CustomTopPart from "../../customTopPart";
 function CM9003({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
@@ -95,6 +97,7 @@ function CM9003({
         depthFullName={depthFullName}
         register={register}
         dataCommonDic={dataCommonDic}
+        areaCode={areaCode}
       />
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>

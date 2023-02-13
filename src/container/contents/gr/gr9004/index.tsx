@@ -23,13 +23,16 @@ import { ButtonColor, InputSize, FieldKind } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 
 import Grid from "./grid";
+import CustomTopPart from "container/contents/customTopPart";
 
 function GR9004({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -98,19 +101,13 @@ function GR9004({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">재고입고처</p>
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
-      </SearchWrapper>
+      <CustomTopPart
+        areaCode={areaCode}
+        depthFullName={depthFullName}
+        register={register}
+        dataCommonDic={dataCommonDic}
+        bigText="재고입고처"
+      />
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper className="h35">

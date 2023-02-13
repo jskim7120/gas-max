@@ -33,13 +33,16 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import FormCM1300User from "./cm1300User";
 import GridTop from "components/grid";
 import { BuildingInfoText } from "components/text";
+import { CustomAreaCodePart } from "container/contents/customTopPart";
 
 function CM1300({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const { register, handleSubmit } = useForm({ mode: "onSubmit" });
 
@@ -50,6 +53,7 @@ function CM1300({
   const [selected, setSelected] = useState({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [loading, setLoading] = useState(false);
+
   const { isDelete } = useSelector((state) => state.modal);
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -134,56 +138,6 @@ function CM1300({
 
   return (
     <>
-      {/* <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-          <Select name="areaCode">
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
-
-        <div className="buttons m_left">
-          <Button
-            text="건물등록"
-            icon={<Plus />}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(true);
-              formRef.current.resetForm("clear");
-            }}
-          />
-          <Button
-            text="삭제"
-            icon={<Trash />}
-            onClick={() => {
-              dispatch(openModal({ type: "delModal" }));
-              dispatch(addDeleteMenuId({ menuId: menuId }));
-            }}
-          />
-          <Button
-            text="저장"
-            icon={<Update />}
-            color={ButtonColor.SECONDARY}
-            onClick={() => {
-              formRef.current.crud(null);
-            }}
-          />
-          <Button
-            text="취소"
-            icon={<Reset />}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
-              formRef.current.resetForm("reset");
-            }}
-            style={{ padding: "0 3px" }}
-          />
-          <BorderRight />
-        </div>
-      </SearchWrapper> */}
       <MainWrapper
         style={{
           marginTop: "5px",
@@ -193,17 +147,12 @@ function CM1300({
       >
         <LeftSide>
           <SearchWrapper className="h35">
-            <FormGroup>
-              <p>{depthFullName}</p>
-              <p className="big">영업소</p>
-              <Select name="areaCode">
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
+            <CustomAreaCodePart
+              areaCode={areaCode}
+              dataCommonDic={dataCommonDic}
+              depthFullName={depthFullName}
+              register={register}
+            />
 
             <div className="buttons">
               <Button
@@ -285,6 +234,7 @@ function CM1300({
           </SearchWrapper>
 
           <GridTop
+            areaCode={areaCode}
             data={data}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
@@ -312,6 +262,7 @@ function CM1300({
             menuId={menuId}
             depthFullName={depthFullName}
             selectedUser={selected}
+            areaCode={areaCode}
           />
         </RightSide>
       </MainWrapper>

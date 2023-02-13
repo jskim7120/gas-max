@@ -16,7 +16,6 @@ import {
   RightSide,
   MainWrapper,
   FormSectionTitle,
-  FormSeaction,
 } from "../../commonStyle";
 import Button from "components/button/button";
 import {
@@ -48,13 +47,15 @@ import { CM120065, CM1200SEARCH } from "app/path";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
 import { fields, columns } from "./data";
-
+import { CustomAreaCodePart } from "../../customTopPart";
 function CM1200({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
@@ -79,7 +80,7 @@ function CM1200({
   );
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [dataChk, setDataChk] = useState(true);
-  const [areaCode, setAreaCode] = useState("");
+
   const [isBuildingSelected, setBuildingSelected] = useState(false);
 
   useEffect(() => {
@@ -87,7 +88,6 @@ function CM1200({
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
       });
-      setAreaCode(dataCommonDic?.areaCode[0].code);
     }
   }, [dataCommonDic]);
 
@@ -211,24 +211,12 @@ function CM1200({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-
-          <Select
-            width={InputSize.i120}
-            {...register("areaCode")}
-            onChange={(e: any) => setAreaCode(e.target.value)}
-          >
-            {dataCommonDic?.areaCode?.map((option: any, index: number) => {
-              return (
-                <option key={index} value={option.code}>
-                  {option.codeName}
-                </option>
-              );
-            })}
-          </Select>
-        </Field>
+        <CustomAreaCodePart
+          areaCode={areaCode}
+          dataCommonDic={dataCommonDic}
+          depthFullName={depthFullName}
+          register={register}
+        />
         <div className="buttons">
           <Button
             text="건물등록"
@@ -317,6 +305,7 @@ function CM1200({
           </SearchWrapper>
 
           <GridLeft
+            areaCode={areaCode}
             data={data}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
@@ -326,61 +315,58 @@ function CM1200({
             style={{ height: `calc(100% - 48px)` }}
           />
         </LeftSide>
-        <RightSide>
-          <FormSeaction topBorder={false}>
-            <FormSectionTitle>
-              <BuildingInfoText text="건물 정보" />
-            </FormSectionTitle>
+        <RightSide style={{ padding: "0 10px" }}>
+          <FormSectionTitle>
+            <BuildingInfoText text="건물 정보" />
+          </FormSectionTitle>
 
-            <Form
-              ref={formRef}
-              dataCommonDic={dataCommonDic}
-              fetchData={fetchData}
-              setData={setData}
-              selectedRowIndex={selectedRowIndex}
-              setSelectedRowIndex={setSelectedRowIndex}
-              selected={selected}
-              setSelected={setSelected}
-              selectedSupplyTab={selectedSupplyTab}
-              areaCode={areaCode}
+          <Form
+            ref={formRef}
+            dataCommonDic={dataCommonDic}
+            fetchData={fetchData}
+            setData={setData}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            selected={selected}
+            setSelected={setSelected}
+            selectedSupplyTab={selectedSupplyTab}
+            areaCode={areaCode}
+          />
+
+          <FormSectionTitle>
+            <PersonInfoText
+              text="사용자 정보"
+              textStyle={{
+                color: "#1b8c8e",
+                fontWeight: "bold",
+                marginLeft: "1.2px",
+              }}
             />
-          </FormSeaction>
-          <FormSeaction topBorder={true}>
-            <FormSectionTitle>
-              <PersonInfoText
-                text="사용자 정보"
-                textStyle={{
-                  color: "#1b8c8e",
-                  fontWeight: "bold",
-                  marginLeft: "1.2px",
-                }}
+            <div className="buttons">
+              <Button
+                text="사용자 추가"
+                icon={<Plus />}
+                style={{ marginRight: "5px" }}
+                onClick={openPopupCM1105Insert}
               />
-              <div className="buttons">
-                <Button
-                  text="사용자 추가"
-                  icon={<Plus />}
-                  style={{ marginRight: "5px" }}
-                  onClick={openPopupCM1105Insert}
-                />
-                <Button
-                  text="사용자 수정"
-                  icon={<Update />}
-                  style={{ marginRight: "5px" }}
-                  onClick={openPopupCM1105Update}
-                />
-                <Button
-                  text="삭제"
-                  icon={<Trash />}
-                  style={{ marginRight: "5px" }}
-                />
-              </div>
-            </FormSectionTitle>
-            <GridBottom
-              selectedUserInfo={selectedUserInfo}
-              areaCode={selected?.areaCode}
-              setBuildingSelected={setBuildingSelected}
-            />
-          </FormSeaction>
+              <Button
+                text="사용자 수정"
+                icon={<Update />}
+                style={{ marginRight: "5px" }}
+                onClick={openPopupCM1105Update}
+              />
+              <Button
+                text="삭제"
+                icon={<Trash />}
+                style={{ marginRight: "5px" }}
+              />
+            </div>
+          </FormSectionTitle>
+          <GridBottom
+            selectedUserInfo={selectedUserInfo}
+            areaCode={selected?.areaCode}
+            setBuildingSelected={setBuildingSelected}
+          />
         </RightSide>
       </MainWrapper>
     </>

@@ -20,6 +20,7 @@ interface IAuthError {
 export interface initialStateType {
   loading: boolean;
   token: string | null;
+  areaCode: string;
   error: any | null;
   message: string;
 }
@@ -27,6 +28,7 @@ export interface initialStateType {
 const initialState: initialStateType = {
   loading: false,
   token: null,
+  areaCode: "",
   error: null,
   message: "",
 };
@@ -47,11 +49,16 @@ const AuthSlice = createSlice({
       state.token = null;
       localStorage.removeItem("token");
     },
+
     setToken: (state, action: PayloadAction<{ token: string | null }>) => {
       state.token = action.payload.token;
+    },
+
+    setAreaCode: (state, action: PayloadAction<{ areaCode: string }>) => {
+      state.areaCode = action.payload.areaCode;
     },
   },
 });
 
-export const { logout, setToken } = AuthSlice.actions;
+export const { logout, setToken, setAreaCode } = AuthSlice.actions;
 export default AuthSlice.reducer;

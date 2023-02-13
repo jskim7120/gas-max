@@ -24,9 +24,11 @@ import CustomTopPart from "../../customTopPart";
 function CM9003({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
@@ -101,6 +103,7 @@ function CM9003({
         depthFullName={depthFullName}
         register={register}
         dataCommonDic={dataCommonDic}
+        areaCode={areaCode}
       />
       <WrapperContent style={{ height: `calc(100% - 76px)` }}>
         <form onSubmit={handleSubmit(submit)}>

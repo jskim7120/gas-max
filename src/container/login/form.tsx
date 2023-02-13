@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch, useSelector } from "app/store";
+import { useDispatch } from "app/store";
 import { LoginSchema } from "./validation";
 import { ILoginFormProps } from "./type";
-import { Input, Select, Field } from "components/form/style";
+import { Input, Field } from "components/form/style";
 import { ButtonType } from "components/componentsType";
 import Button from "components/button/button";
-import {
-  ButtonColor,
-  ButtonSize,
-  ButtonTextColor,
-} from "components/componentsType";
+import { ButtonColor } from "components/componentsType";
 import { useLoginMutation } from "app/api/auth";
-import { setToken } from "app/state/auth/authSlice";
+import { setToken, setAreaCode } from "app/state/auth/authSlice";
 import Loader from "components/loader";
+import jwt from "jwt-decode";
 
 interface RequestError {
   data: any;
@@ -45,8 +42,11 @@ function Login() {
     }
   }, [isError]);
 
-  if (isSuccess && data !== undefined) {
+  if (isSuccess && data !== undefined && data.accessToken) {
+    const { area_code }: { area_code: string } = jwt(data.accessToken);
+
     dispatch(setToken({ token: data.accessToken }));
+    dispatch(setAreaCode({ areaCode: area_code }));
     localStorage.setItem("token", data.accessToken);
     navigate("/");
   }

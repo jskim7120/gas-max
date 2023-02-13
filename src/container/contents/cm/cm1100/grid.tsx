@@ -15,6 +15,7 @@ function Grid({
   setSelected,
   openPopup,
   cm1105PopUp,
+  areaCode,
 }: {
   data: any;
   columns: any;
@@ -22,6 +23,7 @@ function Grid({
   setSelected?: any;
   openPopup?: any;
   cm1105PopUp?: any;
+  areaCode: string;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
@@ -47,9 +49,14 @@ function Grid({
     gv.displayOptions._selectionStyle = "singleRow";
     gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
-    // gv.setCurrent({
-    //   dataRow: selectedRowIndex,
-    // });
+    gv.displayOptions.useFocusClass = true;
+    gv.setCurrent({
+      dataRow: selectedRowIndex,
+    });
+
+    if (areaCode !== "00") {
+      gv.removeColumn("areaCode");
+    }
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;

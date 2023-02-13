@@ -2,7 +2,6 @@
 import React, { useEffect, useImperativeHandle, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
-import CreatableSelect from "react-select/creatable";
 // COMPONENTS
 import DaumAddress from "components/daum";
 import CheckBox from "components/checkbox";
@@ -144,15 +143,15 @@ const Form = React.forwardRef(
       crud,
     }));
 
-    const checkAreaCode = () => {
-      if (areaCode === "undefined" || areaCode === "00") {
-        toast.warning("areaCode can't be 00.", {
-          autoClose: 500,
-        });
-        return false;
-      }
-      return true;
-    };
+    // const checkAreaCode = () => {
+    //   if (!areaCode) {
+    //     toast.warning("areaCode can't be 00.", {
+    //       autoClose: 500,
+    //     });
+    //     return false;
+    //   }
+    //   return true;
+    // };
 
     const fetchCodes = async (areaCode: string) => {
       try {
@@ -179,9 +178,9 @@ const Form = React.forwardRef(
 
     const resetForm = async (type: string) => {
       if (type === "clear") {
-        if (!checkAreaCode()) {
-          return null;
-        }
+        // if (!checkAreaCode()) {
+        //   return null;
+        // }
         const data = await fetchCodes(areaCode);
         if (data && data?.tempCuCode[0]) {
           reset({ ...emptyObj, cuCode: data?.tempCuCode[0]?.tempCuCode });

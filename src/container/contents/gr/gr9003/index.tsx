@@ -18,9 +18,11 @@ import CustomTopPart from "container/contents/customTopPart";
 function GR9003({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -83,6 +85,7 @@ function GR9003({
         depthFullName={depthFullName}
         register={register}
         dataCommonDic={dataCommonDic}
+        areaCode={areaCode}
       />
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>

@@ -33,13 +33,16 @@ import {
   formatDateToStringWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
 import Footer from "./footer";
+import { CustomAreaCodePart } from "container/contents/customTopPart";
 
 function RV1100({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
@@ -105,18 +108,12 @@ function RV1100({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
+        <CustomAreaCodePart
+          areaCode={areaCode}
+          dataCommonDic={dataCommonDic}
+          depthFullName={depthFullName}
+          register={register}
+        />
         <div className="buttons">
           <Button
             text="지로 출력"

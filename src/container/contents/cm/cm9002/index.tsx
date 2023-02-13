@@ -22,21 +22,15 @@ import CustomDatePicker from "components/customDatePicker";
 import Grid from "./grid";
 import { columns, fields } from "./data";
 import CustomTopPart from "../../customTopPart";
-// import {
-//   Plus,
-//   Trash,
-//   Update,
-//   Reset,
-//   MagnifyingGlassBig,
-//   ExcelIcon,
-// } from "components/allSvgIcon";
 
 function CM9002({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -106,6 +100,7 @@ function CM9002({
   return (
     <>
       <CustomTopPart
+        areaCode={areaCode}
         depthFullName={depthFullName}
         register={register}
         dataCommonDic={dataCommonDic}

@@ -29,9 +29,11 @@ const minWidth = "822px";
 function GR1600({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
@@ -101,6 +103,7 @@ function GR1600({
         depthFullName={depthFullName}
         register={register}
         dataCommonDic={dataCommonDic}
+        areaCode={areaCode}
       />
       <MainWrapper>
         <LeftSide>

@@ -33,9 +33,11 @@ import CustomTopPart from "container/contents/customTopPart";
 const minWidth = "900px";
 function GR1200({
   depthFullName,
+  areaCode,
   menuId,
 }: {
   depthFullName: string;
+  areaCode: string;
   menuId: string;
 }) {
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -135,6 +137,7 @@ function GR1200({
         depthFullName={depthFullName}
         register={register}
         dataCommonDic={dataCommonDic}
+        areaCode={areaCode}
       />
       <MainWrapper>
         <LeftSide>
