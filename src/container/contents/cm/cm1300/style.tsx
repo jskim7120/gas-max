@@ -12,9 +12,7 @@ export const Grid2Container = styled.div`
   border-left: 1px solid #707070;
   padding-top: 6px;
 `;
-export const Table1Wrapper = styled.div`
-  height: 45%;
-`;
+
 export const Detail1Wrapper = styled.div`
   .addr2 {
     font-size: 12px;
