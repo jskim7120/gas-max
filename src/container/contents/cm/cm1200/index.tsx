@@ -7,7 +7,7 @@ import {
   ICM120065SUPPLYTYPE,
   ISEARCH,
 } from "./model";
-import GridLeft from "./gridLeft";
+import GridLeft from "components/grid";
 import GridBottom from "./gridBottom";
 import Form from "./form";
 import {
@@ -47,6 +47,7 @@ import { useDispatch, useSelector } from "app/store";
 import { CM120065, CM1200SEARCH } from "app/path";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
+import { fields, columns } from "./data";
 
 function CM1200({
   depthFullName,
@@ -267,8 +268,8 @@ function CM1200({
         </div>
       </SearchWrapper>
       <MainWrapper>
-        <LeftSide width="30%">
-          <SearchWrapper style={{ borderBottom: "2px solid #707070" }}>
+        <LeftSide>
+          <SearchWrapper>
             <form
               onSubmit={handleSubmit(submit)}
               style={{ padding: "5px 0px" }}
@@ -316,13 +317,16 @@ function CM1200({
           </SearchWrapper>
 
           <GridLeft
-            data={data ? data : []}
+            data={data}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            fields={fields}
+            columns={columns}
+            style={{ height: `calc(100% - 48px)` }}
           />
         </LeftSide>
-        <RightSide width="70%">
+        <RightSide>
           <FormSeaction topBorder={false}>
             <FormSectionTitle>
               <BuildingInfoText text="건물 정보" />

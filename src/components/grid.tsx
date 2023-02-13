@@ -1,22 +1,28 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { fields, columns } from "./data";
-
-let container: HTMLDivElement;
-let dp: any;
-let gv: any;
 
 function Grid({
   data,
   setSelected,
   selectedRowIndex,
   setSelectedRowIndex,
+  fields,
+  columns,
+  style,
+  evenFill,
 }: {
   data: any;
   setSelected: Function;
   selectedRowIndex: Number;
   setSelectedRowIndex: Function;
+  fields: any;
+  columns: any;
+  style?: any;
+  evenFill?: boolean;
 }) {
+  let container: HTMLDivElement;
+  let dp: any;
+  let gv: any;
   const realgridElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,7 +34,7 @@ function Grid({
     dp.setFields(fields);
     gv.setColumns(columns);
     dp.setRows(data);
-    gv.setHeader({ height: 35, heightFill: "fixed" });
+    gv.setHeader({ height: 35 });
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
@@ -36,7 +42,9 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
-    // gv.displayOptions.fitStyle = "evenFill";
+    if (evenFill) {
+      gv.displayOptions.fitStyle = "evenFill";
+    }
     gv.setEditOptions({ editable: false });
 
     gv.displayOptions.useFocusClass = true;
@@ -44,11 +52,13 @@ function Grid({
       dataRow: selectedRowIndex,
     });
 
-    gv.onSelectionChanged = () => {
-      const itemIndex: any = gv.getCurrent().dataRow;
-      setSelected(data[itemIndex]);
-      setSelectedRowIndex(itemIndex);
-    };
+    if (setSelected) {
+      gv.onSelectionChanged = () => {
+        const itemIndex: any = gv.getCurrent().dataRow;
+        setSelected(data[itemIndex]);
+        setSelectedRowIndex(itemIndex);
+      };
+    }
 
     return () => {
       dp.clearRows();
@@ -57,9 +67,7 @@ function Grid({
     };
   }, [data]);
 
-  return (
-    <div style={{ width: "100%", height: "93%" }} ref={realgridElement}></div>
-  );
+  return <div style={style} ref={realgridElement}></div>;
 }
 
 export default Grid;
