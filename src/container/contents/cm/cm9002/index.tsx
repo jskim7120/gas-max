@@ -19,7 +19,7 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "./grid";
+import Grid from "components/grid";
 import { columns, fields } from "./data";
 import CustomTopPart from "../../customTopPart";
 
@@ -34,8 +34,8 @@ function CM9002({
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  // const [selected, setSelected] = useState<any>({});
+  // const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [dataChk, setDataChk] = useState(true);
   const [reportKind, setReportKind] = useState("");
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -48,7 +48,8 @@ function CM9002({
   });
 
   const resetForm = () => {
-    if (dataCommonDic !== undefined) {
+    if (dataCommonDic) {
+      console.log("fa:::", dataCommonDic);
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
         reportKind: dataCommonDic?.reportKind[0].code,
@@ -78,10 +79,14 @@ function CM9002({
 
       if (data) {
         setData(data);
-        setLoading(false);
-        setSelectedRowIndex(0);
+        // setSelectedRowIndex(0);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (err) {
+      setData([]);
+      setLoading(false);
       console.log("CM9003 data search fetch error =======>", err);
     }
   };
@@ -317,12 +322,15 @@ function CM9002({
         </form>
 
         <Grid
+          areaCode={areaCode}
           data={data}
           columns={columns}
           fields={fields}
-          setSelected={setSelected}
-          selectedRowIndex={selectedRowIndex}
-          setSelectedRowIndex={setSelectedRowIndex}
+          // setSelected={setSelected}
+          // selectedRowIndex={selectedRowIndex}
+          // setSelectedRowIndex={setSelectedRowIndex}
+          style={{ height: `calc(100% - 15px)` }}
+          evenFill
         />
       </WrapperContent>
     </>

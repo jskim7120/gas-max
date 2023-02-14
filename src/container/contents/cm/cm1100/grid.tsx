@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "app/store";
+import { useDispatch } from "app/store";
 import React, { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { addCM1105 } from "app/state/modal/modalSlice";
@@ -55,7 +55,7 @@ function Grid({
     });
 
     if (areaCode !== "00") {
-      gv.removeColumn("areaCode");
+      // gv.removeColumn("areaCode");
     }
 
     gv.onSelectionChanged = () => {

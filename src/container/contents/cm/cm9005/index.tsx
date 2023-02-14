@@ -10,8 +10,9 @@ import { Select, FormGroup, Wrapper, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import Grid from "./grid";
+import Grid from "components/grid";
 import CustomTopPart from "../../customTopPart";
+import { columns, fields } from "./data";
 
 function CM9005({
   depthFullName,
@@ -29,7 +30,7 @@ function CM9005({
     functionName: "CM9005",
   });
 
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
   useEffect(() => {
@@ -50,9 +51,13 @@ function CM9005({
 
       if (data) {
         setData(data);
-        setLoading(false);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (err) {
+      setData([]);
+      setLoading(false);
       console.log("CM9005 data search fetch error =======>", err);
     }
   };
@@ -205,7 +210,13 @@ function CM9005({
           </SearchWrapper>
         </form>
 
-        <Grid data={data} />
+        <Grid
+          areaCode={areaCode}
+          data={data}
+          fields={fields}
+          columns={columns}
+          style={{ height: `calc(100% - 38px)` }}
+        />
       </WrapperContent>
     </>
   );
