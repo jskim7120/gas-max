@@ -3,7 +3,7 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { ICM1100SEARCH } from "./model";
 import { useForm } from "react-hook-form";
 import { openModal, addCM1105 } from "app/state/modal/modalSlice";
-import { useDispatch, useSelector } from "app/store";
+import { useDispatch } from "app/store";
 import Button from "components/button/button";
 import {
   ButtonColor,
@@ -34,6 +34,7 @@ import CM1100Footer from "./footer";
 import { CM1100SEARCH } from "app/path";
 import Loader from "components/loader";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
+import { addInfo } from "app/state/modal/footerSlice";
 
 function CM1100Page({
   depthFullName,
@@ -60,8 +61,14 @@ function CM1100Page({
   useEffect(() => {
     if (dataCommonDic) {
       resetSearchForm();
+      resetFooter(dataCommonDic.footDetail[0]);
     }
   }, [dataCommonDic]);
+
+  console.log(
+    "dataCommonDicdataCommonDicdataCommonDicdataCommonDicdataCommonDic:",
+    dataCommonDic
+  );
 
   const submit = async (data: ICM1100SEARCH) => {
     fetchData(data);
@@ -111,6 +118,10 @@ function CM1100Page({
       cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
       cuStae: dataCommonDic?.cuStae[0].code,
     });
+  };
+
+  const resetFooter = (footDetail: any) => {
+    dispatch(addInfo({ info: footDetail }));
   };
 
   return (
@@ -358,7 +369,7 @@ function CM1100Page({
         </form>
 
         <Grid
-          data={data.length > 0 && data}
+          data={data}
           columns={columns}
           fields={fields}
           setSelected={setSelected}

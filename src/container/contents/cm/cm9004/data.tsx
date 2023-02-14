@@ -1,6 +1,6 @@
 import { ValueType } from "realgrid";
 
-export const fields1 = [
+export const fields = [
   {
     fieldName: "areaCode",
     dataType: ValueType.TEXT,
@@ -87,7 +87,7 @@ export const fields1 = [
   },
 ];
 
-export const columns1 = [
+export const columns = [
   {
     name: "areaCode",
     fieldName: "areaCode",

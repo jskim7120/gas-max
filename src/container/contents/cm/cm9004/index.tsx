@@ -12,7 +12,8 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import CustomTopPart from "../../customTopPart";
-import Grid from "./grid";
+import Grid from "components/grid";
+import { columns, fields } from "./data";
 
 function CM9004({
   depthFullName,
@@ -53,9 +54,12 @@ function CM9004({
 
       if (data) {
         setData(data);
-        setLoading(false);
+      } else {
+        setData([]);
       }
     } catch (err) {
+      setData([]);
+      setLoading(false);
       console.log("CM9004 data search fetch error =======>", err);
     }
   };
@@ -215,7 +219,14 @@ function CM9004({
           </SearchWrapper>
         </form>
 
-        <Grid data={data} />
+        <Grid
+          areaCode={areaCode}
+          data={data}
+          fields={fields}
+          columns={columns}
+          style={{ height: `calc(100% - 38px)` }}
+          evenFill
+        />
       </WrapperContent>
     </>
   );

@@ -8,7 +8,7 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "./grid";
+import Grid from "components/grid";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import {
@@ -19,6 +19,13 @@ import {
   Field,
 } from "components/form/style";
 import CustomTopPart from "../../customTopPart";
+import { columns0, fields0 } from "./data/data0";
+import { columns1, fields1 } from "./data/data1";
+import { columns2, fields2 } from "./data/data2";
+import { columns3, fields3 } from "./data/data3";
+import { columns4, fields4 } from "./data/data4";
+import { columns5, fields5 } from "./data/data5";
+import { columns6, fields6 } from "./data/data6";
 
 function CM9003({
   depthFullName,
@@ -57,11 +64,12 @@ function CM9003({
     try {
       setLoading(true);
       const { data } = await API.get(CM9003SEARCH, { params: paramTemp });
-
       if (data) {
         setData(data);
-        setLoading(false);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (err) {
       setData([]);
       setLoading(false);
@@ -227,7 +235,76 @@ function CM9003({
           </SearchWrapper>
         </form>
 
-        <Grid data={data} reportKind={reportKind} />
+        {reportKind === "0" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields0}
+            columns={columns0}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
+        {reportKind === "1" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields1}
+            columns={columns1}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
+        {reportKind === "2" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields2}
+            columns={columns2}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
+        {reportKind === "3" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields3}
+            columns={columns3}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
+        {reportKind === "4" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields4}
+            columns={columns4}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
+        {reportKind === "5" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields5}
+            columns={columns5}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
+        {reportKind === "6" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields6}
+            columns={columns6}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
       </WrapperContent>
     </>
   );

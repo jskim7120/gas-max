@@ -9,7 +9,7 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CheckBox from "components/checkbox";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "./grid";
+import Grid from "components/grid";
 import {
   Select,
   FormGroup,
@@ -20,6 +20,9 @@ import {
 import { ResetGray, MagnifyingGlass, ExcelIcon } from "components/allSvgIcon";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import CustomTopPart from "../../customTopPart";
+
+import { columns0, fields0 } from "./data/data0";
+import { columns1, fields1 } from "./data/data1";
 
 function CM9003({
   depthFullName,
@@ -61,8 +64,10 @@ function CM9003({
       const { data } = await API.get(CM9006SEARCH, { params: paramTemp });
       if (data) {
         setData(data);
-        setLoading(false);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (err) {
       setData([]);
       setLoading(false);
@@ -288,8 +293,26 @@ function CM9003({
             </div>
           </SearchWrapper>
         </form>
-
-        <Grid data={data} reportKind={reportKind} />
+        {reportKind === "0" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields0}
+            columns={columns0}
+            style={{ height: `calc(100% - 15px)` }}
+            evenFill
+          />
+        )}
+        {reportKind === "1" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields1}
+            columns={columns1}
+            style={{ height: `calc(100% - 15px)` }}
+            evenFill
+          />
+        )}
       </WrapperContent>
     </>
   );
