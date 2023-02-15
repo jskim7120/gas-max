@@ -151,11 +151,11 @@ function Form({
     someFunc();
   }, [bclInqtyLPG]);
 
-  useEffect(() => {
-    if (deleteData65Detail) {
-      console.log("deleteData65Detail:::: uurchlugduv:", deleteData65Detail);
-    }
-  }, [deleteData65Detail]);
+  // useEffect(() => {
+  //   if (deleteData65Detail) {
+  //     console.log("deleteData65Detail:::: uurchlugduv:", deleteData65Detail);
+  //   }
+  // }, [deleteData65Detail]);
 
   const someFunc = () => {
     if (data65Detail) {
@@ -632,6 +632,7 @@ function Form({
       }
     } catch (err) {}
   };
+
   return (
     <div
       style={{

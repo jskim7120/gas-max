@@ -86,7 +86,8 @@ function Grid({
     };
 
     gv.onCellButtonClicked = function (grid: any, index: any, column: any) {
-      if (data2) {
+      if (Object.keys(data2).length > 0) {
+        console.log(data2);
         dispatch(
           addGR1200({
             index: index.dataRow,
