@@ -57,10 +57,12 @@ function Form({
   dataCommonDic,
   selected,
   areaCode,
+  fetchData,
 }: {
   dataCommonDic: any;
   selected: any;
   areaCode: string;
+  fetchData: Function;
 }) {
   const [tabId, setTabId] = useState(0);
   const [isAddBtnClicked, setAddBtnClicked] = useState(false);
@@ -151,11 +153,11 @@ function Form({
     someFunc();
   }, [bclInqtyLPG]);
 
-  useEffect(() => {
-    if (deleteData65Detail) {
-      console.log("deleteData65Detail:::: uurchlugduv:", deleteData65Detail);
-    }
-  }, [deleteData65Detail]);
+  // useEffect(() => {
+  //   if (deleteData65Detail) {
+  //     console.log("deleteData65Detail:::: uurchlugduv:", deleteData65Detail);
+  //   }
+  // }, [deleteData65Detail]);
 
   const someFunc = () => {
     if (data65Detail) {
@@ -629,9 +631,14 @@ function Form({
             );
           }
         }
+        fetchData();
+        //fetchData65();
+        setRowIndex(null);
+        setDeleteData65Detail([]);
       }
     } catch (err) {}
   };
+
   return (
     <div
       style={{
