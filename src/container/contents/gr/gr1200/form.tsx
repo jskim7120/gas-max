@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { toast } from "react-toastify";
 import Button from "components/button/button";
 import CustomDatePicker from "components/customDatePicker";
 import PlainTab from "components/plainTab";
@@ -22,16 +23,14 @@ import { ResetGray, Update, Plus, Trash } from "components/allSvgIcon";
 import { InputSize, ButtonColor } from "components/componentsType";
 import { IDATA65 } from "./model";
 import TabGrid from "./tabs/grid";
-import { openModal, addGR1200 } from "app/state/modal/modalSlice";
 import { useDispatch, useSelector } from "app/store";
 import FooterInfo from "./footer";
-import { toast } from "react-toastify";
 import { CircleBtn } from "./style";
 import { PersonInfoText } from "components/text";
 import {
-  formatDateToStringWithoutDash,
   formatDateByRemoveDash,
   formatDate,
+  formatDateToString,
 } from "helpers/dateFormat";
 import {
   GR120065,
@@ -39,9 +38,9 @@ import {
   GR1200BUYUPDATE,
   GR1200BLUPDATE,
   GR1200BLINSERT,
+  GR1200BLDELETE,
 } from "app/path";
 import API from "app/axios";
-import { clear } from "console";
 
 const radioOptions = [
   {
@@ -56,16 +55,12 @@ const radioOptions = [
 
 function Form({
   dataCommonDic,
-  // data,
-  // data65Detail,
-  // setData65Detail,
   selected,
+  areaCode,
 }: {
   dataCommonDic: any;
-  // data: any;
-  // data65Detail: any;
-  // setData65Detail: Function;
   selected: any;
+  areaCode: string;
 }) {
   const [tabId, setTabId] = useState(0);
   const [isAddBtnClicked, setAddBtnClicked] = useState(false);
@@ -74,6 +69,7 @@ function Form({
 
   const [data65, setData65] = useState<any>({});
   const [data65Detail, setData65Detail] = useState<any[]>([]);
+  const [deleteData65Detail, setDeleteData65Detail] = useState<any[]>([]);
   const [bclInqtyLPG, setBclInqtyLPG] = useState(false);
 
   const [pin, setPin] = useState(0);
@@ -100,6 +96,7 @@ function Form({
               bclJpCode: stateGR1200.jpCode,
               bclSvyn: stateGR1200.jpSvyn,
               bclGubun: stateGR1200.jpGubun,
+              isProductNameSelected: stateGR1200.isProductNameSelected,
               bclKg: stateGR1200.jpKg,
             };
           } else return object;
@@ -154,20 +151,11 @@ function Form({
     someFunc();
   }, [bclInqtyLPG]);
 
-  /*
-  const openPopup = () => {
-    if (data) {
-      dispatch(
-        addGR1200({
-          areaCode: data.areaCode,
-          bcBuCode: data.bcBuCode,
-          bcChitType: data.bcChitType ? data.bcChitType : "0",
-        })
-      );
-      dispatch(openModal({ type: "gr1200Modal" }));
+  useEffect(() => {
+    if (deleteData65Detail) {
+      console.log("deleteData65Detail:::: uurchlugduv:", deleteData65Detail);
     }
-  };
-  */
+  }, [deleteData65Detail]);
 
   const someFunc = () => {
     if (data65Detail) {
@@ -452,9 +440,13 @@ function Form({
 
   const deleteRow = () => {
     if (rowIndex !== null) {
-      setData65Detail((prev: any) =>
-        prev.filter((item: any, idx: number) => idx !== rowIndex)
-      );
+      data65Detail.map((obj, idx) => {
+        if (!("isNew" in obj) && idx === rowIndex) {
+          setDeleteData65Detail((prev) => [...prev, obj]);
+        }
+      });
+      setData65Detail((prev) => prev.filter((obj, idx) => idx !== rowIndex));
+      setRowIndex(null);
     } else {
       toast.warning(`please select a row.`, {
         autoClose: 500,
@@ -483,14 +475,62 @@ function Form({
         setData65({});
         setData65Detail([]);
       }
+      setDeleteData65Detail([]);
     } catch (err) {
+      setData65({});
+      setData65Detail([]);
+      setDeleteData65Detail([]);
       console.log("GR1200 65 DATA fetch error =======>", err);
     }
   };
 
-  const handleInsert = async () => {
+  const clear = () => {
+    reset({
+      areaCode: areaCode,
+      bcDate: formatDateToString(new Date()),
+      bcBuCode: dataCommonDic?.bcBuCode[0].code,
+      bcCtype: dataCommonDic?.bcCtype[0].code,
+      bcJunno: "",
+      bcDateno: "",
+      bcCsawon: dataCommonDic?.bcCsawon[0].code,
+      bcCarno: dataCommonDic?.bcCarno[0].code,
+    });
+    document.getElementById("bcJunno")?.focus();
+    setData65Detail([
+      {
+        bclAmt: null,
+        bclChungbok: null,
+        bclChungdae: null,
+        bclCost: null,
+        bclGubun: "1",
+        bclInc: "",
+        bclInmigum: null,
+        bclInqty: null,
+        bclJpCode: "",
+        bclJpName: "",
+        bclOutc: null,
+        bclOutmigum: "",
+        bclOutqty: null,
+        bclSvyn: "",
+        bclTongdel: null,
+        isNew: true,
+      },
+    ]);
+  };
+
+  const crud = async (type: string | null) => {
+    if (type === "delete") {
+    }
+
+    if (type === null) {
+      handleSubmit(submit)();
+    }
+  };
+
+  const submit = async (data: any) => {
     const formValues = getValues();
-    console.log("formValues:", formValues);
+
+    formValues.bcDate = formatDateByRemoveDash(formValues.bcDate);
 
     let path: string;
 
@@ -501,114 +541,97 @@ function Form({
     }
 
     try {
-      if (data65Detail?.length > 0) {
-        const res: any = await Promise.all(
-          data65Detail.map((item: any) => {
-            if (item.isNew) {
-              API.post(GR1200BLINSERT, {
-                ...item,
-                areaCode: formValues.areaCode,
-                bcBuCode: formValues.bcBuCode,
-                bcSno: data65.bcSno,
-                //bclJpSno: data65.bcSno,
-                bcDate: formatDateByRemoveDash(formValues.bcDate),
-              });
-            }
-          })
-        );
+      const res = await API.post(path, {
+        ...formValues,
+        bcChitType: "0",
+      });
 
-        console.log("res::::::::", res.returnValue);
+      if (res.status === 200) {
+        const bcSno = res?.data?.returnValue;
+        if (isAddBtnClicked) {
+          if (bcSno && bcSno !== "" && data65Detail?.length > 0) {
+            await Promise.all(
+              data65Detail.map((item: any) => {
+                if ("isEdited" in item && "isProductNameSelected" in item) {
+                  API.post(GR1200BLINSERT, {
+                    inserted: [
+                      {
+                        ...item,
+                        areaCode: areaCode,
+                        bcDate: formValues.bcDate,
+                        bcBuCode: data65.bcBuCode,
+                        bcSno: bcSno,
+                      },
+                    ],
+                  });
+                }
+              })
+            );
+          }
+        } else {
+          if (data65Detail?.length > 0) {
+            await Promise.all(
+              data65Detail.map((item: any) => {
+                //insert
+                if (
+                  "isNew" in item &&
+                  "isEdited" in item &&
+                  "isProductNameSelected" in item
+                ) {
+                  API.post(GR1200BLINSERT, {
+                    inserted: [
+                      {
+                        ...item,
+                        areaCode: areaCode,
+                        bcDate: formValues.bcDate,
+                        bcBuCode: data65.bcBuCode,
+                        bcSno: data65.bcSno,
+                      },
+                    ],
+                  });
+                }
+                //update
+                if (
+                  !("isNew" in item) &&
+                  ("isEdited" in item || "isProductNameSelected" in item)
+                ) {
+                  API.post(GR1200BLUPDATE, {
+                    updated: [
+                      {
+                        ...item,
+                        areaCode: data65?.areaCode,
+                        bcDate: data65?.bcDate,
+                        bcBuCode: data65?.bcBuCode,
+                        bcSno: data65?.bcSno,
+                      },
+                    ],
+                  });
+                }
+              })
+            );
+          }
+          if (deleteData65Detail?.length > 0) {
+            await Promise.all(
+              deleteData65Detail.map((item: any) => {
+                //delete
+                API.post(GR1200BLDELETE, {
+                  deleted: [
+                    {
+                      areaCode: data65?.areaCode,
+                      bcDate: data65?.bcDate,
+                      bcBuCode: data65?.bcBuCode,
+                      bcSno: data65?.bcSno,
+                      bclJpSno: item.bclJpSno,
+                    },
+                  ],
+                });
+              })
+            );
+          }
+        }
       }
     } catch (err) {}
-
-    // try {
-    //   const response: any = await API.post(GR1200BUYUPDATE, formValues);
-    //   console.log("response::::", response);
-
-    //   if (response.status === 200) {
-    //     toast.success("삭제하였습니다", {
-    //       autoClose: 500,
-    //     });
-    //   } else {
-    //     toast.error(response?.response?.message, {
-    //       autoClose: 500,
-    //     });
-    //   }
-    // } catch (err) {
-    //   toast.error("Couldn't delete", {
-    //     autoClose: 500,
-    //   });
-    // }
-
-    // {
-    //   "areaCode": "string",
-    //   "bcBcost": 0,
-    //   "bcBdanga": 0,
-    //   "bcBigo": "string",
-    //   "bcBin": 0,
-    //   "bcBjan": 0,
-    //   "bcBkum": 0,
-    //   "bcBuCode": "string",
-    //   "bcBuName": "string",
-    //   "bcCaCode": "string",
-    //   "bcCarno": "string",
-    //   "bcChitType": "string",
-    //   "bcCsawon": "string",
-    //   "bcCtype": "string",
-    //   "bcDate": "string",
-    //   "bcDateno": "string",
-    //   "bcDc": 0,
-    //   "bcGcost": 0,
-    //   "bcGin": 0,
-    //   "bcGkum": 0,
-    //   "bcInkum": 0,
-    //   "bcJunno": "string",
-    //   "bcMemo": "string",
-    //   "bcMisu": 0,
-    //   "bcOutkum": 0,
-    //   "bcPapNo": "string",
-    //   "bcPcost": 0,
-    //   "bcPdanga": 0,
-    //   "bcPin": 0,
-    //   "bcPjan": 0,
-    //   "bcPkum": 0,
-    //   "bcSno": "string",
-    //   "bcSupplyAmt": 0,
-    //   "bcSupplyType": "string",
-    //   "bcVatAmt": 0,
-    //   "opt": 0
-    // }
   };
-
-  const clear = () => {
-    console.log("===============>");
-    reset({
-      areaCode: "",
-      bcDate: "",
-      bcBuCode: "",
-      bcCtype: "",
-      bcJunno: "",
-      bcDateno: "",
-      bcCsawon: "",
-      bcCarno: "",
-
-      // bcCtype: data65.bcCtype,
-      // bcCaCode: data65.bcCaCode,
-      // bcPjan: data65.bcPjan,
-      // bcBjan: data65.bcBjan,
-      // bcPdanga: data65.bcPdanga,
-      // bcBdanga: data65.bcBdanga,
-      // bcPcost: data65.bcPcost,
-      // bcBcost: data65.bcBcost,
-      // bcTotal: data65.bcTotal,
-      // bcJTotal: data65.bcJTotal,
-      // bcSumTotal: data65.bcSumTotal,
-      // bcSumKum: data65.bcSumKum,
-      // bcSumCost: data65.bcSumCost,
-      // bcSum: data65.bcSum,
-    });
-  };
-
   return (
     <div
       style={{
@@ -669,6 +692,7 @@ function Form({
               style={{ marginRight: "5px" }}
               onClick={() => {
                 setAddBtnClicked(false);
+                crud("delete");
               }}
             />
             <Button
@@ -679,7 +703,7 @@ function Form({
               color={ButtonColor.SUCCESS}
               onClick={() => {
                 setAddBtnClicked(false);
-                handleInsert();
+                crud(null);
               }}
             />
             <Button

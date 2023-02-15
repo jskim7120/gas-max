@@ -23,6 +23,7 @@ export interface initialStateType {
     jpKg: number | undefined;
     jpName: string | undefined;
     jpSvyn: string | undefined;
+    isProductNameSelected: string | undefined;
   };
   gr1300: {
     index: number | undefined;
@@ -74,6 +75,7 @@ const initialState: initialStateType = {
     jpKg: undefined,
     jpName: undefined,
     jpSvyn: undefined,
+    isProductNameSelected: undefined,
   },
   gr1300: {
     index: undefined,
@@ -136,6 +138,7 @@ const modalSlice = createSlice({
       state.gr1200.jpKg = action.payload.jpKg;
       state.gr1200.jpName = action.payload.jpName;
       state.gr1200.jpSvyn = action.payload.jpSvyn;
+      state.gr1200.isProductNameSelected = action.payload.isProductNameSelected;
     },
 
     addGR1300: (state, action) => {

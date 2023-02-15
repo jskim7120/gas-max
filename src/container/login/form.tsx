@@ -47,6 +47,7 @@ function Login() {
 
     dispatch(setToken({ token: data.accessToken }));
     dispatch(setAreaCode({ areaCode: area_code }));
+    localStorage.setItem("areaCode", area_code);
     localStorage.setItem("token", data.accessToken);
     navigate("/");
   }

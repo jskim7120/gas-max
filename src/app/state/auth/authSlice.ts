@@ -1,5 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import API, { baseURL } from "app/axios";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IAuth {
   username: string;
@@ -48,6 +47,7 @@ const AuthSlice = createSlice({
     logout: (state) => {
       state.token = null;
       localStorage.removeItem("token");
+      localStorage.removeItem("areaCode");
     },
 
     setToken: (state, action: PayloadAction<{ token: string | null }>) => {

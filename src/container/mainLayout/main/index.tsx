@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "app/store";
+import { useSelector } from "app/store";
 import { Main, Sidebar, UnOrderedList } from "./style";
 import Tab from "components/tab";
 
@@ -21,7 +20,6 @@ import {
 } from "components/allSvgIcon";
 
 function MainContainer() {
-  const dispatch = useDispatch();
   const { isOpen } = useSelector((state) => state.sidebar);
 
   return (

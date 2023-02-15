@@ -11,16 +11,18 @@ import Login from "container/login";
 import ProtectedRoute from "routers/ProtectedRoute";
 import API from "app/axios";
 import { getMenu } from "app/state/menu/menuSlice";
-import { setToken } from "app/state/auth/authSlice";
+import { setToken, setAreaCode } from "app/state/auth/authSlice";
 import { store } from "app/store";
 
 function App() {
   const token = localStorage.getItem("token");
+  const areaCode = localStorage.getItem("areaCode");
 
   if (token) {
     API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     store.dispatch(getMenu());
     store.dispatch(setToken({ token: token }));
+    areaCode && store.dispatch(setAreaCode({ areaCode: areaCode }));
   }
 
   const routes = [
