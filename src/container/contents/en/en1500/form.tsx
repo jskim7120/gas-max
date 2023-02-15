@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { EN1500UPDATE } from "app/path";
 import { InputSize } from "components/componentsType";
+import Button from "components/button/button";
+import { ButtonColor } from "components/componentsType";
 import {
   Select,
   Field,
@@ -264,7 +266,7 @@ const Form = (
       onSubmit={handleSubmit(submit)}
       style={{ width: "820px", padding: "0px 10px" }}
     >
-      <Wrapper grid>
+      <Wrapper grid style={{ marginBottom: "7px" }}>
         <Field className="field">
           <FormGroup>
             <Input label="코드" register={register("areaCode")} maxLength="2" />
@@ -281,83 +283,66 @@ const Form = (
         </Field>
       </Wrapper>
       <Divider />
-      <VolReading>
-        <div className="title">체적검침 환경</div>
+      <VolReading style={{ height: "115px" }}>
+        <div className="title">LPG 판매단가 설정</div>
         <div className="volReadCnt">
-          <Wrapper className="volWrapper">
-            <Field>
-              <FormGroup>
-                <Label>연체료 적용방법</Label>
-                <Select {...register("jnPerMeth")}>
-                  {dataCommonDic?.jnPerMeth?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-            </Field>
-            <p>
-              <IconInfo />
-              <span>검침 등록시 미납금액에 대하여 연체료를 부과</span>
-            </p>
-          </Wrapper>
-
           <Wrapper className="volWrapper">
             <Field className="field">
               <FormGroup>
-                <Input
-                  label="표준기화율"
-                  register={register("jnKgdanga")}
-                  textAlign="right"
-                  className="vapInput"
+                <Controller
+                  control={control}
+                  {...register("jnPer")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <Input
+                      label="kg 공급단가"
+                      value={value}
+                      onChange={onChange}
+                      mask={[/\d/, /\d/, /\d/]}
+                      textAlign="right"
+                      inputSize={InputSize.i85}
+                      name={name}
+                    />
+                  )}
+                />
+                <Button
+                  text="㎥ 단가 환산"
+                  style={{
+                    marginLeft: "10px",
+                    background: "#666666",
+                    width: "130px",
+                    height: "30px",
+                  }}
+                  onClick={() => {
+                    // formRef.current.update();
+                  }}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Controller
+                  control={control}
+                  {...register("jnPer")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <Input
+                      label="지역 표준기화율"
+                      value={value}
+                      onChange={onChange}
+                      mask={[/\d/, /\d/, /\d/]}
+                      textAlign="right"
+                      inputSize={InputSize.i85}
+                      name={name}
+                    />
+                  )}
                 />
               </FormGroup>
             </Field>
-            <p>
-              <IconInfo />
-              <span>검침오차에서 사용량 (㎥-Kg) 변환시 적용</span>
-            </p>
           </Wrapper>
-
-          <Wrapper className="volWrapper">
-            <Field>
-              <FormGroup>
-                <Label>체적사용료 계산</Label>
-                <Select {...register("jnChekum")}>
-                  {dataCommonDic?.jnChekum?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-            </Field>
-            <p>
-              <IconInfo />
-              <span>당월합계금액의 1원단위 계산방법</span>
-            </p>
-          </Wrapper>
-
-          <Wrapper className="volWrapper">
-            <Field>
-              <FormGroup>
-                <Label>지로출력 조건</Label>
-
-                <Select {...register("jnJiroPrint")}>
-                  {dataCommonDic?.jnJiroPrint?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-            </Field>
-            <p>
-              <IconInfo />
-              <span>지로 청구서 출력시 범위 지정</span>
-            </p>
-          </Wrapper>
+          <p className="lpgDesc">
+            <IconInfo />
+            <span>
+              kg단가는 중량,체적공급단가 및 루베단가를 MP단가로 적용시
+              기초금액으로 자동계산 됩니다.
+            </span>
+          </p>
         </div>
       </VolReading>
       <Container>
@@ -482,6 +467,68 @@ const Form = (
           </p>
         </BasicItems>
       </Container>
+      <VolReading>
+        <div className="title">체적검침 환경</div>
+        <div className="volReadCnt">
+          <Wrapper className="volWrapper">
+            <Field>
+              <FormGroup>
+                <Label>연체료 적용방법</Label>
+                <Select {...register("jnPerMeth")}>
+                  {dataCommonDic?.jnPerMeth?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+            </Field>
+            <p>
+              <IconInfo />
+              <span>검침 등록시 미납금액에 대하여 연체료를 부과</span>
+            </p>
+          </Wrapper>
+
+          <Wrapper className="volWrapper">
+            <Field>
+              <FormGroup>
+                <Label>체적사용료 계산</Label>
+                <Select {...register("jnChekum")}>
+                  {dataCommonDic?.jnChekum?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+            </Field>
+            <p>
+              <IconInfo />
+              <span>당월합계금액의 1원단위 계산방법</span>
+            </p>
+          </Wrapper>
+
+          <Wrapper className="volWrapper">
+            <Field>
+              <FormGroup>
+                <Label>지로출력 조건</Label>
+
+                <Select {...register("jnJiroPrint")}>
+                  {dataCommonDic?.jnJiroPrint?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+            </Field>
+            <p>
+              <IconInfo />
+              <span>지로 청구서 출력시 범위 지정</span>
+            </p>
+          </Wrapper>
+        </div>
+      </VolReading>
     </form>
   );
 };
