@@ -106,6 +106,7 @@ function Grid({
             return {
               ...object,
               [index.fieldName]: newValue,
+              isEdited: true,
             };
           } else return object;
         })

@@ -16,9 +16,9 @@ import {
   RightSide,
   SearchWrapper,
 } from "../../commonStyle";
-import { Select, Field, Label, FormGroup } from "components/form/style";
+import { Select, Label, FormGroup } from "components/form/style";
 import { ButtonColor } from "components/componentsType";
-import GridLeft from "../grid";
+import GridLeft from "components/grid";
 import Form from "./form";
 import { GR1200SEARCH, GR120065 } from "app/path";
 import Loader from "components/loader";
@@ -31,6 +31,7 @@ import { fields, columns, layout } from "./data";
 import CustomTopPart from "container/contents/customTopPart";
 
 const minWidth = "900px";
+
 function GR1200({
   depthFullName,
   areaCode,
@@ -59,9 +60,9 @@ function GR1200({
   });
 
   useEffect(() => {
-    if (dataCommonDic !== undefined && dataCommonDic) {
+    if (dataCommonDic) {
       reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
+        areaCode: areaCode,
         sBcBuCode: dataCommonDic?.sBcBuCode[0].code,
         sDate: dataCommonDic?.sDate[0].code,
         eDate: dataCommonDic?.eDate[0].code,
@@ -212,6 +213,7 @@ function GR1200({
             </SearchWrapper>
           </form>
           <GridLeft
+            areaCode={areaCode}
             data={data}
             fields={fields}
             columns={columns}
@@ -219,6 +221,7 @@ function GR1200({
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: `calc(100% - 196px)`, minWidth: minWidth }}
+            layout={layout}
           />
           <Table data={data2} style={{ minWidth: minWidth }} />
         </LeftSide>
@@ -226,6 +229,7 @@ function GR1200({
           <Form
             dataCommonDic={dataCommonDic}
             selected={selected}
+            areaCode={areaCode}
             // data={data65}
             // setData65Detail={setData65Detail}
             // data65Detail={data65Detail}

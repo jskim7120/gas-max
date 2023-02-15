@@ -11,6 +11,7 @@ function Grid({
   setSelectedRowIndex,
   style,
   evenFill,
+  layout,
 }: {
   areaCode: string;
   data: any;
@@ -21,6 +22,7 @@ function Grid({
   setSelectedRowIndex?: Function;
   style?: any;
   evenFill?: boolean;
+  layout?: any;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -35,6 +37,9 @@ function Grid({
     gv.setDataSource(dp);
     dp.setFields(fields);
     gv.setColumns(columns);
+    if (layout) {
+      gv.setColumnLayout(layout);
+    }
     dp.setRows(data);
     gv.setHeader({ height: 35 });
     gv.setOptions({

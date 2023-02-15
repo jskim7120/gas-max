@@ -93,6 +93,7 @@ function GR1200Modal() {
                 jpKg: selected?.jpKg ?? undefined,
                 jpName: selected?.jpName ?? undefined,
                 jpSvyn: selected?.jpSvyn ?? undefined,
+                isProductNameSelected: true,
               })
             );
 
