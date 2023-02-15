@@ -84,7 +84,7 @@ const Form = React.forwardRef(
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         let newData: any = {};
         if (type === "clear") {
-          document.getElementById("saupSsno")?.focus();
+          document.getElementsByName("saupSsno")[0]?.focus();
           const path = EN120011;
           try {
             const response: any = await API.get(path, {
