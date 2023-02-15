@@ -284,11 +284,16 @@ const Form = React.forwardRef(
             register={register("swCode")}
             maxLength="2"
             readOnly={isAddBtnClicked}
+            inputSize={InputSize.i200}
           />
 
           <FormGroup>
             <Label>영업소</Label>
-            <Select {...register("areaCode")} onChange={handleSelectCode}>
+            <Select
+              {...register("areaCode")}
+              onChange={handleSelectCode}
+              width={InputSize.i200}
+            >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -299,15 +304,23 @@ const Form = React.forwardRef(
         </Wrapper>
         <Divider />
         <Wrapper>
-          <Input label="사원명" register={register("swName")} />
-          <Input label="부서명" register={register("swDepartment")} />
+          <Input
+            label="사원명"
+            register={register("swName")}
+            inputSize={InputSize.i200}
+          />
+          <Input
+            label="부서명"
+            register={register("swDepartment")}
+            inputSize={InputSize.i200}
+          />
         </Wrapper>
 
         <Wrapper>
-          <Field style={{ marginRight: "52px" }}>
+          <Field>
             <FormGroup>
               <Label>업무구분</Label>
-              <Select {...register("swGubunName")}>
+              <Select {...register("swGubunName")} width={InputSize.i200}>
                 {dataCommonDic?.swGubun?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
                     {obj.codeName}
@@ -317,7 +330,7 @@ const Form = React.forwardRef(
             </FormGroup>
           </Field>
 
-          <Field style={{ marginLeft: "72px" }}>
+          <Field>
             <Controller
               control={control}
               {...register("swJuminno")}
@@ -343,6 +356,7 @@ const Form = React.forwardRef(
                     /\d/,
                   ]}
                   name={name}
+                  inputSize={InputSize.i200}
                 />
               )}
             />
@@ -350,7 +364,12 @@ const Form = React.forwardRef(
         </Wrapper>
 
         <Wrapper>
-          <Input label="전화번호" register={register("swTel")} maxLength="14" />
+          <Input
+            label="전화번호"
+            register={register("swTel")}
+            maxLength="14"
+            inputSize={InputSize.i200}
+          />
 
           <Controller
             control={control}
@@ -375,6 +394,7 @@ const Form = React.forwardRef(
                   /\d/,
                   /\d/,
                 ]}
+                inputSize={InputSize.i200}
               />
             )}
           />
@@ -385,6 +405,7 @@ const Form = React.forwardRef(
             label="이메일"
             register={register("cuSeEmail")}
             maxLength="50"
+            inputSize={InputSize.i200}
           />
           @
           <Select {...register("mailKind")} style={{ marginLeft: "3px" }}>
@@ -397,7 +418,12 @@ const Form = React.forwardRef(
         </Wrapper>
 
         <Wrapper style={{ alignItems: "center" }}>
-          <Input label="주소" register={register("swZipcode")} maxLength="6" />
+          <Input
+            label="주소"
+            register={register("swZipcode")}
+            maxLength="6"
+            inputSize={InputSize.i200}
+          />
           <DaumAddress setAddress={setAddress} />
           <Input register={register("swAddr1")} fullWidth maxLength="40" />
         </Wrapper>
@@ -416,6 +442,7 @@ const Form = React.forwardRef(
             label="매핑코드"
             register={register("eyeSwCode")}
             maxLength="10"
+            inputSize={InputSize.i200}
           />
           <p
             style={{
@@ -443,7 +470,7 @@ const Form = React.forwardRef(
                 label="서명화일"
                 register={register("swStampFile")}
                 value={image?.name}
-                inputSize={InputSize.i180}
+                inputSize={InputSize.i200}
                 maxLength="80"
               />
 
@@ -483,14 +510,18 @@ const Form = React.forwardRef(
                   control={control}
                   {...register("swIndate")}
                   render={({ field: { onChange, onBlur, value, ref } }) => (
-                    <CustomDatePicker value={value} onChange={onChange} />
+                    <CustomDatePicker
+                      value={value}
+                      onChange={onChange}
+                      style={{ width: "200px" }}
+                    />
                   )}
                 />
               </Field>
               <Field style={{ width: "100%" }}>
                 <FormGroup>
                   <Label>급여방식</Label>
-                  <Select {...register("swPaytype")}>
+                  <Select {...register("swPaytype")} width={InputSize.i110}>
                     {dataCommonDic?.swPaytype?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code1}>
                         {obj.codeName}
@@ -514,7 +545,7 @@ const Form = React.forwardRef(
                       mask={currencyMask}
                       name={name}
                       textAlign="right"
-                      inputSize={InputSize.i120}
+                      inputSize={InputSize.i200}
                     />
                   )}
                 />
@@ -532,7 +563,7 @@ const Form = React.forwardRef(
                       onChange={onChange}
                       mask={[/\d/, /\d/]}
                       name={name}
-                      inputSize={InputSize.i40}
+                      inputSize={InputSize.i110}
                     />
                   )}
                 />
@@ -547,12 +578,13 @@ const Form = React.forwardRef(
             label="면허종류"
             register={register("swDriverType")}
             maxLength="15"
+            inputSize={InputSize.i200}
           />
           <Input
             label="면허번호"
             register={register("swDriverNo")}
             maxLength="17"
-            inputSize={InputSize.i175}
+            inputSize={InputSize.i110}
           />
         </Wrapper>
 
@@ -589,8 +621,8 @@ const Form = React.forwardRef(
           />
         </Wrapper>
         <Divider />
-        <Wrapper grid col={2}>
-          <Field>
+        <Wrapper>
+          <Field style={{ width: "325px" }}>
             <FormGroup style={{ alignItems: "center" }}>
               <Label>퇴사여부</Label>
               <CheckBox register={{ ...register("swWorkOut") }} />
@@ -647,6 +679,7 @@ const Form = React.forwardRef(
                   mask={currencyMask}
                   name={name}
                   textAlign="right"
+                  inputSize={InputSize.i200}
                 />
               )}
             />

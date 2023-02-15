@@ -201,8 +201,12 @@ const Form = React.forwardRef(
           />
 
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>영업소</Label>
-            <Select {...register("areaCode")} onChange={handleSelectCode}>
+            <Label style={{ minWidth: "83px" }}>영업소</Label>
+            <Select
+              {...register("areaCode")}
+              onChange={handleSelectCode}
+              width={InputSize.i130}
+            >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -218,6 +222,7 @@ const Form = React.forwardRef(
             labelStyle={{ minWidth: "50px" }}
             register={register("jyName")}
             maxLength="4"
+            inputSize={InputSize.i300}
           />
         </Wrapper>
 
@@ -226,8 +231,8 @@ const Form = React.forwardRef(
             label="비고"
             labelStyle={{ minWidth: "50px" }}
             register={register("jyBigo")}
-            fullWidth
             maxLength="4"
+            inputSize={InputSize.i300}
           />
         </Wrapper>
       </form>

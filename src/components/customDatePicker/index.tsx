@@ -1,8 +1,11 @@
 import MaskedInput from "react-text-mask";
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import styled from "styled-components";
 import { formatDateToString } from "helpers/dateFormat";
 import CalendarIcon from "assets/image/calendar.png";
+
+import ko from "date-fns/locale/ko";
+registerLocale("ko", ko);
 
 function CustomDatePicker({
   style,
@@ -23,10 +26,11 @@ function CustomDatePicker({
     <DatePicker
       readOnly={readOnly}
       onChange={onChange}
-      showMonthDropdown
+      // showMonthDropdown
       showYearDropdown
       showMonthYearPicker={showYearDropdown && showYearDropdown}
       dateFormat="yyyy-MM-dd"
+      locale="ko"
       customInput={
         <InputWrapper style={style}>
           <MaskedInput
