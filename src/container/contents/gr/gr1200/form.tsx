@@ -36,6 +36,7 @@ import {
   GR120065,
   GR1200BUYINSERT,
   GR1200BUYUPDATE,
+  GR1200BUYDELETE,
   GR1200BLUPDATE,
   GR1200BLINSERT,
   GR1200BLDELETE,
@@ -152,12 +153,6 @@ function Form({
   useEffect(() => {
     someFunc();
   }, [bclInqtyLPG]);
-
-  // useEffect(() => {
-  //   if (deleteData65Detail) {
-  //     console.log("deleteData65Detail:::: uurchlugduv:", deleteData65Detail);
-  //   }
-  // }, [deleteData65Detail]);
 
   const someFunc = () => {
     if (data65Detail) {
@@ -522,6 +517,23 @@ function Form({
 
   const crud = async (type: string | null) => {
     if (type === "delete") {
+      if (Object.keys(data65).length > 0) {
+        const res: any = await API.post(GR1200BUYDELETE, {
+          areaCode: data65.areaCode,
+          bcBuCode: data65.bcBuCode,
+          bcDate: data65.bcDate,
+          bcSno: data65.bcSno,
+        });
+
+        if (res.status === 200) {
+          toast.success("삭제하였습니다", {
+            autoClose: 500,
+          });
+        } else {
+          //toast.error(res?.data?.message, { autoClose: 500 });
+        }
+        fetchData();
+      }
     }
 
     if (type === null) {
@@ -531,6 +543,7 @@ function Form({
 
   const submit = async (data: any) => {
     const formValues = getValues();
+    console.log("formValues:::::", formValues);
 
     formValues.bcDate = formatDateByRemoveDash(formValues.bcDate);
 
@@ -545,7 +558,7 @@ function Form({
     try {
       const res = await API.post(path, {
         ...formValues,
-        bcChitType: "0",
+        bcChitType: tabId,
       });
 
       if (res.status === 200) {
@@ -569,6 +582,9 @@ function Form({
                 }
               })
             );
+            toast.success("저장이 성공하였습니다", {
+              autoClose: 500,
+            });
           }
         } else {
           if (data65Detail?.length > 0) {

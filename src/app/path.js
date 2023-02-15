@@ -114,6 +114,7 @@ export const GR120012 = "/app/GR1200/12";
 export const GR120011 = "/app/GR1200/11";
 export const GR1200BUYINSERT = "/app/GR1200/BUY/insert";
 export const GR1200BUYUPDATE = "/app/GR1200/BUY/update";
+export const GR1200BUYDELETE = "/app/GR1200/BUY/delete";
 export const GR1200BLINSERT = "/app/GR1200/BL/insert";
 export const GR1200BLUPDATE = "/app/GR1200/BL/update";
 export const GR1200BLDELETE = "/app/GR1200/BL/delete";
