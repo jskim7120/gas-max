@@ -57,10 +57,12 @@ function Form({
   dataCommonDic,
   selected,
   areaCode,
+  fetchData,
 }: {
   dataCommonDic: any;
   selected: any;
   areaCode: string;
+  fetchData: Function;
 }) {
   const [tabId, setTabId] = useState(0);
   const [isAddBtnClicked, setAddBtnClicked] = useState(false);
@@ -629,6 +631,10 @@ function Form({
             );
           }
         }
+        fetchData();
+        //fetchData65();
+        setRowIndex(null);
+        setDeleteData65Detail([]);
       }
     } catch (err) {}
   };
