@@ -306,14 +306,18 @@ const Form = React.forwardRef(
           <Input
             label="코드"
             register={register("caCode")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i150}
             maxLength="2"
             readOnly={isAddBtnClicked}
           />
 
           <FormGroup>
             <Label>영업소</Label>
-            <Select {...register("areaCode")} onChange={handleSelectCode}>
+            <Select
+              {...register("areaCode")}
+              onChange={handleSelectCode}
+              width={InputSize.i150}
+            >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -333,7 +337,7 @@ const Form = React.forwardRef(
 
           <FormGroup>
             <Label>담당사원</Label>
-            <Select {...register("caSwCode")}>
+            <Select {...register("caSwCode")} width={InputSize.i150}>
               {empChargeData?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -351,7 +355,7 @@ const Form = React.forwardRef(
 
           <FormGroup>
             <Label>재고사용유무</Label>
-            <Select {...register("caJaegoyn")}>
+            <Select {...register("caJaegoyn")} width={InputSize.i150}>
               {dataCommonDic?.caJaegoyn?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -365,11 +369,11 @@ const Form = React.forwardRef(
             label="매핑코드"
             register={register("eyeCarCode")}
             maxLength="10"
-            inputSize={InputSize.i140}
+            inputSize={InputSize.i150}
           />
           <InfoText text="탱크잔량 원격검침 시스템의 매핑할 차량코드를 지정." />
         </Wrapper>
-        <Wrapper>
+        <Wrapper grid col={2}>
           <Field flex style={{ alignItems: "center" }}>
             <Label>안전검사일</Label>
 
@@ -377,15 +381,19 @@ const Form = React.forwardRef(
               control={control}
               {...register("caSafeDate")}
               render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "150px" }}
+                />
               )}
             />
           </Field>
-          <Field style={{ width: "100%" }}>
+          <Field>
             <Input
               label="충전기한"
               register={register("caChargeDate")}
-              inputSize={InputSize.i100}
+              inputSize={InputSize.i150}
               maxLength="8"
             />
           </Field>
@@ -395,13 +403,13 @@ const Form = React.forwardRef(
           <Input
             label="차량종류"
             register={register("caType")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i150}
             maxLength="20"
           />
           <Input
             label="연식"
             register={register("caYear")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i150}
             maxLength="6"
           />
         </Wrapper>
@@ -410,7 +418,7 @@ const Form = React.forwardRef(
           <Input
             label="차량소유자"
             register={register("caManager")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i150}
             maxLength="20"
           />
 
@@ -420,7 +428,11 @@ const Form = React.forwardRef(
               control={control}
               {...register("caInDate")}
               render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "150px" }}
+                />
               )}
             />
           </Field>
@@ -438,7 +450,11 @@ const Form = React.forwardRef(
               control={control}
               {...register("caRentDate")}
               render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "150px" }}
+                />
               )}
             />
           </Field>
@@ -452,7 +468,11 @@ const Form = React.forwardRef(
               control={control}
               {...register("caJdate1")}
               render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "150px" }}
+                />
               )}
             />
           </Field>
@@ -463,7 +483,11 @@ const Form = React.forwardRef(
               control={control}
               {...register("caJdate2")}
               render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "145px" }}
+                />
               )}
             />
           </Field>
@@ -473,8 +497,7 @@ const Form = React.forwardRef(
           <Input
             label="메모"
             register={register("caBigo")}
-            inputSize={InputSize.i100}
-            fullWidth
+            style={{ width: "465px" }}
             maxLength="40"
           />
         </Wrapper>
@@ -491,7 +514,7 @@ const Form = React.forwardRef(
                   onChange={onChange}
                   mask={currencyMask}
                   textAlign="right"
-                  inputSize={InputSize.i100}
+                  inputSize={InputSize.i150}
                   name={name}
                 />
               )}
@@ -503,7 +526,7 @@ const Form = React.forwardRef(
             <Input
               label="감가 기간"
               register={register("caDiscountM")}
-              inputSize={InputSize.i100}
+              inputSize={InputSize.i150}
               maxLength="10"
             />
             <p>월</p>
@@ -522,7 +545,7 @@ const Form = React.forwardRef(
                   onChange={onChange}
                   mask={currencyMask}
                   textAlign="right"
-                  inputSize={InputSize.i100}
+                  inputSize={InputSize.i150}
                   name={name}
                 />
               )}
@@ -540,7 +563,7 @@ const Form = React.forwardRef(
                   onChange={onChange}
                   mask={currencyMask}
                   textAlign="right"
-                  inputSize={InputSize.i100}
+                  inputSize={InputSize.i150}
                   name={name}
                 />
               )}
@@ -553,7 +576,7 @@ const Form = React.forwardRef(
           <Input
             label="보험회사"
             register={register("caBco")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i150}
             maxLength="20"
           />
         </Wrapper>
@@ -562,13 +585,13 @@ const Form = React.forwardRef(
           <Input
             label="계약지점"
             register={register("caBjijum")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i150}
             maxLength="20"
           />
           <Input
             label="담당자"
             register={register("caBdamdang")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i150}
             maxLength="10"
           />
         </Wrapper>
@@ -577,7 +600,7 @@ const Form = React.forwardRef(
           <Input
             label="전화번호"
             register={register("caBtel")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i150}
             maxLength="14"
           />
 
@@ -590,7 +613,7 @@ const Form = React.forwardRef(
                 value={value}
                 name={name}
                 onChange={onChange}
-                inputSize={InputSize.i130}
+                inputSize={InputSize.i150}
                 mask={[
                   /\d/,
                   /\d/,
@@ -615,7 +638,7 @@ const Form = React.forwardRef(
           <Input
             label="피보험자"
             register={register("caBman")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i150}
             maxLength="10"
           />
           <Input
@@ -657,7 +680,11 @@ const Form = React.forwardRef(
               control={control}
               {...register("caBsdate")}
               render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "150px" }}
+                />
               )}
             />
           </Field>
@@ -667,7 +694,11 @@ const Form = React.forwardRef(
               control={control}
               {...register("caBldate")}
               render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "150px" }}
+                />
               )}
             />
           </Field>
@@ -685,7 +716,7 @@ const Form = React.forwardRef(
                   onChange={onChange}
                   mask={currencyMask}
                   textAlign="right"
-                  inputSize={InputSize.i100}
+                  inputSize={InputSize.i150}
                   name={name}
                 />
               )}

@@ -250,13 +250,17 @@ const Form = React.forwardRef(
               <Input
                 label="코드"
                 register={register("saupSno")}
-                inputSize={InputSize.i40}
+                inputSize={InputSize.i150}
                 readOnly={isAddBtnClicked}
               />
 
               <FormGroup>
                 <Label>영업소</Label>
-                <Select {...register("areaCode")} onChange={handleSelectCode}>
+                <Select
+                  {...register("areaCode")}
+                  onChange={handleSelectCode}
+                  width={InputSize.i175}
+                >
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -276,7 +280,7 @@ const Form = React.forwardRef(
                     value={value}
                     name={name}
                     onChange={onChange}
-                    inputSize={InputSize.i110}
+                    inputSize={InputSize.i150}
                     mask={[
                       /\d/,
                       /\d/,
@@ -297,7 +301,7 @@ const Form = React.forwardRef(
               <Input
                 label="종사업자번호"
                 register={register("saupRCode")}
-                inputSize={InputSize.i60}
+                inputSize={InputSize.i175}
                 maxLength="4"
               />
             </Wrapper>
@@ -305,13 +309,13 @@ const Form = React.forwardRef(
               <Input
                 label="상호"
                 register={register("saupSangho")}
-                inputSize={InputSize.i200}
+                inputSize={InputSize.i150}
                 maxLength="50"
               />
               <Input
                 label="대표"
                 register={register("saupSajang")}
-                inputSize={InputSize.i200}
+                inputSize={InputSize.i175}
                 maxLength="20"
               />
             </Wrapper>
@@ -320,34 +324,34 @@ const Form = React.forwardRef(
                 label="주소"
                 register={register("saupZipcode")}
                 maxLength="6"
-                inputSize={InputSize.i70}
+                inputSize={InputSize.i150}
               />
               <DaumAddress setAddress={setAddress} />
               <Input
                 register={register("saupAddr1")}
                 maxLength="40"
-                inputSize={InputSize.i367}
+                style={{ width: "383px" }}
               />
             </Wrapper>
             <Wrapper>
               <Input
                 label=""
                 register={register("saupAddr2")}
-                inputSize={InputSize.i468}
                 maxLength="40"
+                style={{ width: "565px" }}
               />
             </Wrapper>
-            <Wrapper>
+            <Wrapper grid col={2}>
               <Input
                 label="업태"
                 register={register("saupUptae")}
-                inputSize={InputSize.i200}
+                inputSize={InputSize.i250}
                 maxLength="50"
               />
               <Input
                 label="종목"
                 register={register("saupJongmok")}
-                inputSize={InputSize.i200}
+                inputSize={InputSize.i175}
                 maxLength="50"
               />
             </Wrapper>
@@ -471,12 +475,12 @@ const Form = React.forwardRef(
               <Input
                 label="메모"
                 register={register("saupBigo")}
-                inputSize={InputSize.i468}
                 maxLength="50"
+                style={{ width: "394px" }}
               />
             </Wrapper>
             <Divider />
-            <Wrapper>
+            <Wrapper grid col={2}>
               <Input
                 label="아이디"
                 register={register("saupEdiId")}
@@ -488,15 +492,15 @@ const Form = React.forwardRef(
                 register={register("saupEdiPass")}
                 type="password"
                 maxLength="20"
-                inputSize={InputSize.i120}
+                inputSize={InputSize.i175}
               />
             </Wrapper>
-            <Wrapper>
+            <Wrapper grid col={2}>
               <Input
                 label="담당자명"
                 register={register("saupEdiSawon")}
                 maxLength="14"
-                inputSize={InputSize.i130}
+                inputSize={InputSize.i200}
               />
 
               <Controller
@@ -508,7 +512,7 @@ const Form = React.forwardRef(
                     value={value}
                     name={name}
                     onChange={onChange}
-                    inputSize={InputSize.i120}
+                    inputSize={InputSize.i175}
                     mask={[
                       /\d/,
                       /\d/,
@@ -533,7 +537,7 @@ const Form = React.forwardRef(
                 label="이메일"
                 register={register("saupEdiEmail")}
                 maxLength="35"
-                inputSize={InputSize.i175}
+                inputSize={InputSize.i200}
               />
               <p style={{ margin: "0 1px" }}>@</p>
               <Select {...register("saupEdiId")}>
@@ -548,11 +552,11 @@ const Form = React.forwardRef(
               <Input
                 label="공인인증서"
                 register={register("saupEdiSawon")}
-                inputSize={InputSize.i250}
+                inputSize={InputSize.i200}
               />
               <button
                 style={{
-                  width: "110px",
+                  width: "128px",
                   height: "30px",
                   fontSize: "15px",
                   background: "#666666",
@@ -560,6 +564,7 @@ const Form = React.forwardRef(
                   border: "1px solid #707070",
                   color: "#fff",
                   position: "relative",
+                  marginLeft: "17px",
                 }}
               >
                 <SearchIcon />
