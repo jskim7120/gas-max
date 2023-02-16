@@ -379,7 +379,27 @@ function Form({
             borderBottom: "1px solid #707070",
           }}
         >
-          <PersonInfoText text="매입전표 등록" />
+          <FormGroup>
+            <PersonInfoText text="매입전표 등록" />
+            <p
+              style={{
+                marginLeft: "27px",
+                marginRight: "7px",
+                fontSize: "14px",
+                fontWeight: "bold",
+              }}
+            >
+              영업소
+            </p>
+
+            <Select {...register("areaCode")}>
+              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
           <FormGroup>
             <Button
               type="button"
