@@ -119,9 +119,16 @@ export const GR1200BLINSERT = "/app/GR1200/BL/insert";
 export const GR1200BLUPDATE = "/app/GR1200/BL/update";
 export const GR1200BLDELETE = "/app/GR1200/BL/delete";
 
-export const GR130065 = "/app/GR1300/65";
 export const GR1300SEARCH = "app/GR1300/search";
+export const GR130065 = "/app/GR1300/65";
 export const GR130012 = "/app/GR1300/12";
+export const GR130011 = "/app/GR1300/11";
+export const GR1300BUYINSERT = "/app/GR1300/BUY/insert";
+export const GR1300BUYUPDATE = "/app/GR1300/BUY/update";
+export const GR1300BUYDELETE = "/app/GR1300/BUY/delete";
+export const GR1300BLINSERT = "/app/GR1300/BL/insert";
+export const GR1300BLUPDATE = "/app/GR1300/BL/update";
+export const GR1300BLDELETE = "/app/GR1300/BL/delete";
 
 export const GR1600SEARCH = "/app/GR1600/search";
 export const GR1600TAB2 = "/app/GR1600/tab2";
