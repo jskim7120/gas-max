@@ -13,25 +13,19 @@ function Grid({
   setData,
   data2,
   tabId,
-  // openPopup,
   setRowIndex,
   register,
   setBclInqtyLPG,
-  reset,
-  someFunc,
-  anotherFunc,
+  calcTab1FooterChange,
 }: {
   data: any;
   setData: Function;
   data2: any;
   tabId: number;
-  // openPopup: Function;
   setRowIndex: Function;
   register: Function;
   setBclInqtyLPG: Function;
-  reset: Function;
-  someFunc: Function;
-  anotherFunc: Function;
+  calcTab1FooterChange: Function;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
@@ -126,7 +120,9 @@ function Grid({
     <>
       <div
         style={{
-          height: `220px`,
+          height: `180px`,
+          borderBottom: "1px solid #CCC",
+          marginBottom: "2px",
         }}
         ref={realgridElement}
       ></div>
@@ -134,9 +130,7 @@ function Grid({
         <Tab1Footer
           data={data2}
           register={register}
-          reset={reset}
-          someFunc={someFunc}
-          anotherFunc={anotherFunc}
+          calcTab1FooterChange={calcTab1FooterChange}
         />
       )}
       {tabId === 1 && <Tab2Footer />}

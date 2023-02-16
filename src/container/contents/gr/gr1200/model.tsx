@@ -100,10 +100,10 @@ export interface IDATA65 {
   bcSumKum: number;
   bcSumP: number;
   bcSumTotal: number;
-  bcSupplyAmt: string;
+  bcSupplyAmt: number;
   bcSupplyType: string;
   bcTotal: number;
-  bcVatAmt: string;
+  bcVatAmt: number;
 
   // =====detail tab1
 

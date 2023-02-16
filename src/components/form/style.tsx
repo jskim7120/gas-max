@@ -277,6 +277,10 @@ export const InputForm = styled.input<{
     height: 22px;
     margin: 2px;
   }
+
+  &.h27 {
+    height: 27px;
+  }
 `;
 
 export const ErrorText = styled.p`
@@ -484,6 +488,10 @@ export const Select = styled.select<{
   font-size: 15px;
   border: 1px solid #e6e5e5;
   background: aliceblue;
+
+  &.h27 {
+    height: 27px;
+  }
 
   &:hover,
   &:focus {
