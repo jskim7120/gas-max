@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "app/store";
 import API from "app/axios";
 import { GR130012 } from "app/path";
@@ -54,8 +54,8 @@ function GR1300Modal() {
     >
       <CTable2>
         <tr>
-          <th>구분</th>
-          <th>총입고량</th>
+          <th>코드</th>
+          <th>품명</th>
         </tr>
         {data?.map((item, idx) => (
           <tr

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { number } from "yup";
 
 export interface initialStateType {
   modalIsOpen: boolean;
@@ -39,6 +38,7 @@ export interface initialStateType {
     jbuVatKind: string | undefined;
     jbuBpDanga: number | undefined;
     bpCode: string | undefined;
+    isProductNameSelected: string | undefined;
   };
   cc1100: {
     acjType: string | undefined;
@@ -90,6 +90,7 @@ const initialState: initialStateType = {
     jbuVatKind: undefined,
     jbuBpDanga: undefined,
     bpCode: undefined,
+    isProductNameSelected: undefined,
   },
   cc1100: {
     acjType: undefined,
@@ -155,6 +156,8 @@ const modalSlice = createSlice({
       state.gr1300.jbuVatKind = action.payload.jbuVatKind;
       state.gr1300.jbuBpDanga = action.payload.jbuBpDanga;
       state.gr1300.bpCode = action.payload.bpCode;
+
+      state.gr1300.isProductNameSelected = action.payload.isProductNameSelected;
     },
     addCC1100: (state, action) => {
       state.cc1100.acjType = action.payload.acjType;
