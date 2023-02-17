@@ -31,6 +31,7 @@ import {
   formatDateByRemoveDash,
   formatDate,
   formatDateToString,
+  formatDateToStringWithoutDash,
 } from "helpers/dateFormat";
 import {
   GR120065,
@@ -576,7 +577,12 @@ function Form({
   const submit = async (data: any) => {
     const formValues = getValues();
 
-    formValues.bcDate = formatDateByRemoveDash(formValues.bcDate);
+    //formValues.bcDate = formatDateByRemoveDash(formValues.bcDate);
+
+    formValues.bcDate =
+      typeof formValues.bcDate === "string"
+        ? formatDateByRemoveDash(formValues.bcDate)
+        : formatDateToStringWithoutDash(formValues.bcDate);
 
     let path: string;
 
@@ -783,13 +789,18 @@ function Form({
                   value={value}
                   onChange={onChange}
                   name={name}
+                  readOnly={!isAddBtnClicked}
                 />
               )}
             />
           </Field>
           <FormGroup>
             <Label>매입처</Label>
-            <Select {...register("bcBuCode")} width={InputSize.i100}>
+            <Select
+              {...register("bcBuCode")}
+              width={InputSize.i100}
+              disabled={!isAddBtnClicked}
+            >
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}

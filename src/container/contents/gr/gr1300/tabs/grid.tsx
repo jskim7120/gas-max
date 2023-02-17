@@ -73,14 +73,23 @@ function Grid({
     };
 
     gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
+      console.log(index.fieldName, index.fieldName === "bblQty");
       setData((prev: any) =>
         prev.map((object: any, idx: number) => {
           if (idx === index.dataRow) {
-            return {
-              ...object,
-              [index.fieldName]: newValue,
-              isEdited: true,
-            };
+            if (index.fieldName === "bblQty") {
+              return {
+                ...object,
+                [index.fieldName]: newValue,
+                bblKumack: newValue * object.bblDanga,
+                isEdited: true,
+              };
+            } else {
+              return {
+                ...object,
+                [index.fieldName]: newValue,
+              };
+            }
           } else return object;
         })
       );
@@ -98,8 +107,7 @@ function Grid({
     <>
       <div
         style={{
-          height: `180px`,
-          borderBottom: "1px solid #CCC",
+          height: `200px`,
           marginBottom: "2px",
         }}
         ref={realgridElement}

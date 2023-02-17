@@ -18,14 +18,14 @@ function FooterInfo({
       <Field flex style={{ alignItems: "center" }}>
         <Field flex style={{ width: "80%" }}>
           <CTitle>메모</CTitle>
-          <CTextArea {...register("bcMemo")} />
+          <CTextArea {...register("bbMemo")} />
         </Field>
 
         <Field style={{ width: "20%" }}>
           <Field flex style={{ alignItems: "center" }}>
             <CLabel>공급액</CLabel>
             <Input
-              register={register("bcSupplyAmt")}
+              register={register("bbSum")}
               style={{
                 margin: "2px 5px",
                 background: `rgba(104,103,103,0.35)`,
@@ -37,7 +37,7 @@ function FooterInfo({
           <Field flex style={{ alignItems: "center" }}>
             <CLabel>세액</CLabel>
             <Input
-              register={register("bcVatAmt")}
+              register={register("bbVat")}
               style={{
                 margin: "2px 5px",
                 background: `rgba(104,103,103,0.35)`,
@@ -49,7 +49,7 @@ function FooterInfo({
           <Field flex style={{ alignItems: "center" }}>
             <CLabel>합계금액</CLabel>
             <Input
-              register={register("bcInkum")}
+              register={register("bbTotal")}
               style={{
                 margin: "2px 5px",
                 background: `rgba(104,103,103,0.35)`,
@@ -72,20 +72,20 @@ function FooterInfo({
         </tr>
         <tr>
           <td>
-            <Input register={register("bcInkum1")} readOnly className="h27" />
+            <Input register={register("bbTotal")} readOnly className="h27" />
           </td>
           <td>
-            <Select {...register("bcSupplyType")} className="h27">
+            <Select {...register("bbSupplyType")} className="h27">
               <option value="A">외상</option>
               <option value="0">현금</option>
             </Select>
           </td>
           <td>
             <Input
-              register={register("bcOutkum")}
+              register={register("bbOutkum")}
               onChange={(e: any) => {
                 setBcOutkum(e.target.value);
-                calcTab1FooterChange(e.target.value, "bcOutkum");
+                calcTab1FooterChange(e.target.value, "bbOutkum");
               }}
               value={bcOutkum}
               className="h27"
@@ -93,20 +93,20 @@ function FooterInfo({
           </td>
           <td>
             <Input
-              register={register("bcDc")}
+              register={register("bbDc")}
               onChange={(e: any) => {
                 setBcDc(e.target.value);
-                calcTab1FooterChange(e.target.value, "bcDc");
+                calcTab1FooterChange(e.target.value, "bbDc");
               }}
               value={bcDc}
               className="h27"
             />
           </td>
           <td>
-            <Input register={register("bcMisu")} className="h27" />
+            <Input register={register("bbMisu")} className="h27" />
           </td>
           <td>
-            <Input register={register("bcBigo")} className="h27" />
+            <Input register={register("bbBigo")} className="h27" />
           </td>
         </tr>
       </CTable>

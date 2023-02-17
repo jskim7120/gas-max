@@ -15,7 +15,7 @@ import {
 } from "components/form/style";
 import { ResetGray, Update, Plus, Trash } from "components/allSvgIcon";
 import { InputSize, ButtonColor } from "components/componentsType";
-import { IDATA65 } from "./model";
+import { IGR1300 } from "./model";
 import TabGrid from "./tabs/grid";
 import { useSelector } from "app/store";
 import FooterInfo from "./footer";
@@ -25,6 +25,7 @@ import {
   formatDateByRemoveDash,
   formatDate,
   formatDateToString,
+  formatDateToStringWithoutDash,
 } from "helpers/dateFormat";
 import {
   GR130065,
@@ -56,58 +57,50 @@ function Form({
   const [deleteData65, setDeleteData65] = useState<any[]>([]);
   const [bclInqtyLPG, setBclInqtyLPG] = useState(false);
 
-  const stateGR1200 = useSelector((state: any) => state.modal.gr1200);
+  const stateGR1300 = useSelector((state: any) => state.modal.gr1300);
 
   const { register, handleSubmit, reset, control, getValues } =
-    useForm<IDATA65>({
+    useForm<IGR1300>({
       mode: "onSubmit",
     });
 
   useEffect(() => {
-    if (stateGR1200.index !== undefined && stateGR1200.jpName) {
+    if (stateGR1300.index !== undefined && stateGR1300.bpName) {
       setData65((prev: any) =>
         prev.map((object: any, idx: number) => {
-          if (idx === stateGR1200.index) {
+          if (idx === stateGR1300.index) {
             return {
               ...object,
-              bclJpName: stateGR1200.jpName,
-              bclJpCode: stateGR1200.jpCode,
-              bclSvyn: stateGR1200.jpSvyn,
-              bclGubun: stateGR1200.jpGubun,
-              isProductNameSelected: stateGR1200.isProductNameSelected,
-              bclKg: stateGR1200.jpKg,
+              bblBpCode: stateGR1300.bpCode,
+              bblBpName: stateGR1300.bpName,
+              bblDanga: stateGR1300.jbuBpDanga,
+              bblVatType: stateGR1300.jbuVatKind,
+              bblType: stateGR1300.bpType,
+              isProductNameSelected: stateGR1300.isProductNameSelected,
             };
           } else return object;
         })
       );
     }
-  }, [stateGR1200]);
+  }, [stateGR1300]);
 
   useEffect(() => {
     if (selected) {
       fetchData65();
-    }
-  }, [selected]);
-
-  useEffect(() => {
-    if (data65) {
       reset({
-        // areaCode: data65.areaCode,
-        // bcDate: data65.bcDate ? formatDate(data65.bcDate) : "",
-        // bcDateno: data65.bcDateno,
-        // bcBuCode: data65.bcBuCode,
-        // bcJunno: data65.bcJunno,
-        // bcCtype: data65.bcCtype,
-        // bcCsawon: data65.bcCsawon,
-        // bcCarno: data65.bcCarno,
-        // bcCaCode: data65.bcCaCode,
+        areaCode: selected.areaCode,
+        bbDate: selected.bbDate,
+        bbBuCode: selected.bbBuCode,
+        bbSno: selected.bbSno,
+        bbDc: selected.bbDc,
+        bbOutkum: selected.bbOutkum,
       });
 
-      setTabId(parseInt(data65?.bcChitType));
+      setTabId(parseInt(selected.bbType));
+      setAddBtnClicked(false);
+      setRowIndex(null);
     }
-    setAddBtnClicked(false);
-    setRowIndex(null);
-  }, [data65]);
+  }, [selected]);
 
   useEffect(() => {
     calcTab1GridChange();
@@ -117,30 +110,56 @@ function Form({
     calcTab1GridChange();
   }, [bclInqtyLPG]);
 
-  const calcTab1GridChange = () => {};
+  const calcTab1GridChange = () => {
+    if (Object.keys(data65).length > 0) {
+      let bbTotal = 0;
+      data65.forEach((obj: any) => (bbTotal += obj.bblKumack ?? 0));
 
-  const calcTab1FooterChange = (num: any, name: string) => {};
+      const bbSum = Math.round(bbTotal / 1.1);
+      const bbVat = bbTotal - bbSum;
+
+      reset((formValues) => ({
+        ...formValues,
+        bbTotal: bbTotal,
+        bbSum: bbSum,
+        bbVat: bbVat,
+      }));
+    }
+  };
+
+  const calcTab1FooterChange = (num: any, name: string) => {
+    if (name === "bbOutkum") {
+      const { bbTotal, bbDc } = getValues();
+      const bbMisu = bbTotal - bbDc - num;
+
+      reset((formValues) => ({
+        ...formValues,
+        bbMisu: bbMisu,
+      }));
+    }
+    if (name === "bbDc") {
+      const { bbTotal, bbOutkum } = getValues();
+      const bbMisu = bbTotal - bbOutkum - num;
+
+      reset((formValues) => ({
+        ...formValues,
+        bbMisu: bbMisu,
+      }));
+    }
+  };
 
   const addRow = () => {
     if (data65 !== undefined) {
       setData65((prev: any) => [
         ...prev,
         {
-          bclAmt: null,
-          bclChungbok: null,
-          bclChungdae: null,
-          bclCost: null,
-          bclGubun: "1",
-          bclInc: "",
-          bclInmigum: null,
-          bclInqty: null,
-          bclJpCode: "",
-          bclJpName: "",
-          bclOutc: null,
-          bclOutmigum: "",
-          bclOutqty: null,
-          bclSvyn: "",
-          bclTongdel: null,
+          bblBpCode: null,
+          bblBpName: null,
+          bblType: null,
+          bblQty: null,
+          bblDanga: null,
+          bblVatType: null,
+          bblKumack: null,
           isNew: true,
         },
       ]);
@@ -196,25 +215,18 @@ function Form({
       areaCode: areaCode,
       bbDate: formatDateToString(new Date()),
       bbBuCode: dataCommonDic?.bbBuCode[0].code,
+      bbSno: "",
     });
-    // document.getElementById("bcJunno")?.focus();
+    document.getElementById("bbSno")?.focus();
     setData65([
       {
-        bclAmt: null,
-        bclChungbok: null,
-        bclChungdae: null,
-        bclCost: null,
-        bclGubun: "1",
-        bclInc: "",
-        bclInmigum: null,
-        bclInqty: null,
-        bclJpCode: "",
-        bclJpName: "",
-        bclOutc: null,
-        bclOutmigum: "",
-        bclOutqty: null,
-        bclSvyn: "",
-        bclTongdel: null,
+        bblBpCode: "",
+        bblBpName: "",
+        bblType: "",
+        bblQty: "",
+        bblDanga: "",
+        bblVatType: "",
+        bblKumack: "",
         isNew: true,
       },
     ]);
@@ -222,14 +234,13 @@ function Form({
 
   const crud = async (type: string | null) => {
     if (type === "delete") {
-      if (Object.keys(data65).length > 0) {
+      if (selected) {
         const res: any = await API.post(GR1300BUYDELETE, {
-          areaCode: data65.areaCode,
-          bcBuCode: data65.bcBuCode,
-          bcDate: data65.bcDate,
-          bcSno: data65.bcSno,
+          areaCode: selected.areaCode,
+          bbBuCode: selected.bbBuCode,
+          bbDate: formatDateByRemoveDash(selected.bbDate),
+          bbSno: selected.bbSno,
         });
-
         if (res.status === 200) {
           toast.success("삭제하였습니다", {
             autoClose: 500,
@@ -249,7 +260,10 @@ function Form({
   const submit = async (data: any) => {
     const formValues = getValues();
 
-    formValues.bbDate = formatDateByRemoveDash(formValues.bbDate);
+    formValues.bbDate =
+      typeof formValues.bbDate === "string"
+        ? formatDateByRemoveDash(formValues.bbDate)
+        : formatDateToStringWithoutDash(formValues.bbDate);
 
     let path: string;
 
@@ -262,14 +276,13 @@ function Form({
     try {
       const res = await API.post(path, {
         ...formValues,
-        bcChitType: tabId,
-        bcSno: data65.bcSno,
+        bbType: tabId,
       });
 
       if (res.status === 200) {
-        const bcSno = res?.data?.returnValue;
+        const bbSno = res?.data?.returnValue;
         if (isAddBtnClicked) {
-          if (bcSno && bcSno !== "" && data65?.length > 0) {
+          if (bbSno && bbSno !== "" && data65?.length > 0) {
             await Promise.all(
               data65.map((item: any) => {
                 if ("isEdited" in item && "isProductNameSelected" in item) {
@@ -278,9 +291,9 @@ function Form({
                       {
                         ...item,
                         areaCode: areaCode,
+                        bbBuCode: formValues.bbBuCode,
                         bbDate: formValues.bbDate,
-                        sBuCode: data65.sBuCode,
-                        bcSno: bcSno,
+                        bbSno: bbSno,
                       },
                     ],
                   });
@@ -305,10 +318,10 @@ function Form({
                     inserted: [
                       {
                         ...item,
-                        areaCode: areaCode,
+                        areaCode: selected.areaCode,
+                        bbBuCode: selected.bbBuCode,
                         bbDate: formValues.bbDate,
-                        bbBuCode: data65.bbBuCode,
-                        bcSno: data65.bcSno,
+                        bbSno: selected.bbSno,
                       },
                     ],
                   });
@@ -322,10 +335,10 @@ function Form({
                     updated: [
                       {
                         ...item,
-                        areaCode: data65?.areaCode,
-                        bcDate: data65?.bcDate,
-                        bcBuCode: data65?.bcBuCode,
-                        bcSno: data65?.bcSno,
+                        areaCode: selected.areaCode,
+                        bbBuCode: selected.bbBuCode,
+                        bbDate: formValues.bbDate,
+                        bbSno: selected.bbSno,
                       },
                     ],
                   });
@@ -340,11 +353,11 @@ function Form({
                 API.post(GR1300BLDELETE, {
                   deleted: [
                     {
-                      areaCode: data65?.areaCode,
-                      bcDate: data65?.bcDate,
-                      bcBuCode: data65?.bcBuCode,
-                      bcSno: data65?.bcSno,
-                      bclJpSno: item.bclJpSno,
+                      ...item,
+                      areaCode: selected.areaCode,
+                      bbBuCode: selected.bbBuCode,
+                      bbDate: formValues.bbDate,
+                      bbSno: selected.bbSno,
                     },
                   ],
                 });
@@ -353,7 +366,7 @@ function Form({
           }
         }
         fetchData();
-        //fetchData65();
+        //     //fetchData65();
         setRowIndex(null);
         setDeleteData65([]);
       }
@@ -454,6 +467,7 @@ function Form({
                   value={value}
                   onChange={onChange}
                   name={name}
+                  readOnly={!isAddBtnClicked}
                 />
               )}
             />
@@ -462,8 +476,12 @@ function Form({
         <Wrapper>
           <FormGroup>
             <Label>매입처</Label>
-            <Select {...register("bbBuCode")} width={InputSize.i100}>
-              {dataCommonDic?.sBuCode?.map((obj: any, idx: number) => (
+            <Select
+              {...register("bbBuCode")}
+              width={InputSize.i100}
+              disabled={!isAddBtnClicked}
+            >
+              {dataCommonDic?.bbBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -474,6 +492,7 @@ function Form({
             label="매입 회차"
             register={register("bbSno")}
             inputSize={InputSize.i50}
+            readOnly={!isAddBtnClicked}
           />
         </Wrapper>
 
@@ -483,7 +502,7 @@ function Form({
             onClick={(id) => {
               isAddBtnClicked
                 ? setTabId(id)
-                : setTabId(parseInt(data65?.bcChitType));
+                : setTabId(parseInt(selected?.bbType));
             }}
             tabId={tabId}
           />

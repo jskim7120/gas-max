@@ -86,14 +86,12 @@ function GR1300Modal() {
             dispatch(
               addGR1300({
                 ...state,
-                jbuDangaType: selected?.jbuDangaType ?? undefined,
-                bpName: selected?.bpName ?? undefined,
-                bpType: selected?.bpType ?? undefined,
-                jbuChangedate: selected?.jbuChangedate ?? undefined,
-                bpDanwi: selected?.bpDanwi ?? undefined,
-                jbuVatKind: selected?.jbuVatKind ?? undefined,
-                jbuBpDanga: selected?.jbuBpDanga ?? undefined,
+                isProductNameSelected: true,
                 bpCode: selected?.bpCode ?? undefined,
+                bpName: selected?.bpName ?? undefined,
+                jbuBpDanga: selected?.jbuBpDanga ?? undefined,
+                jbuVatKind: selected?.jbuVatKind ?? undefined,
+                bpType: selected?.bpType ?? undefined,
               })
             );
 

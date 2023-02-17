@@ -62,6 +62,7 @@ export const columns = [
     header: {
       text: "규격",
     },
+    editable: false,
   },
   {
     name: "bblQty",
@@ -92,6 +93,7 @@ export const columns = [
     header: {
       text: "VAT",
     },
+    editable: false,
   },
   {
     name: "bblKumack",
@@ -102,5 +104,6 @@ export const columns = [
     header: {
       text: "금액",
     },
+    editable: false,
   },
 ];
