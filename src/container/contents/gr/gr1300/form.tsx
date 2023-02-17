@@ -38,6 +38,8 @@ import {
 } from "app/path";
 import API from "app/axios";
 
+let data65Orig: any = {};
+
 function Form({
   dataCommonDic,
   selected,
@@ -197,14 +199,16 @@ function Form({
       });
 
       if (data) {
-        console.log("data65:::", data);
         setData65(data);
+        data65Orig = JSON.parse(JSON.stringify(data));
       } else {
         setData65({});
+        data65Orig = {};
       }
       setDeleteData65([]);
     } catch (err) {
       setData65({});
+      data65Orig = {};
       setDeleteData65([]);
       console.log("GR1200 65 DATA fetch error =======>", err);
     }
@@ -451,6 +455,9 @@ function Form({
               icon={<ResetGray />}
               onClick={() => {
                 setAddBtnClicked(false);
+                setData65(data65Orig);
+                reset(selected);
+                setRowIndex(null);
               }}
               color={ButtonColor.LIGHT}
             />

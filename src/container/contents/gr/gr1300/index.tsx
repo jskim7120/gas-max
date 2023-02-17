@@ -81,8 +81,6 @@ function GR1300({
       setLoading(true);
       const res = await API.get(GR1300SEARCH, { params: params });
       if (res.status === 200) {
-        console.log("resr::", res);
-
         setData(res?.data);
         setSelected(res?.data[0]);
       }
