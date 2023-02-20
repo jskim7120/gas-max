@@ -2,19 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { InfoBox } from "./style";
 import { IRV1100 } from "./model";
-import { RV110065 } from "app/path";
+import { RV110065, RV1100INSERT } from "app/path";
 import API from "app/axios";
 import CustomDatePicker from "components/customDatePicker";
 import CheckBox from "components/checkbox";
 import { Wrapper, FormGroup, Label, Field, Input } from "components/form/style";
-import { formatDate } from "helpers/dateFormat";
+import {
+  formatDate,
+  formatDateByRemoveDash,
+  formatDateToStringWithDash,
+  formatDateToStringWithoutDash,
+  formatOnlyYearMonthDateByRemoveDash,
+  formatDateToStringWithoutDashOnlyYearMonth,
+} from "helpers/dateFormat";
 import { InputSize, ButtonColor, ButtonType } from "components/componentsType";
 import Button from "components/button/button";
 import Grid from "./grid";
 import { fields, columns } from "./data/dataBottom";
 import PinImg from "assets/image/pin.png";
 
-function Footer({ data }: { data: any }) {
+function Footer({ data, dataCommonDic }: { data: any; dataCommonDic: any }) {
   const [data65, setData65] = useState([]);
   const { register, control, reset, handleSubmit } = useForm<IRV1100>({
     mode: "onSubmit",
@@ -24,13 +31,13 @@ function Footer({ data }: { data: any }) {
     if (data !== undefined) {
       console.log("data", data);
       reset({
-        gjDate: formatDate(data.gjDate),
+        gjDate: data.gjDate,
         gjGum: data.gjGum,
         gjDanga: data.gjDanga,
         gjKumack: data.gjKumack,
         gjTotal: data.gjTotal,
         gjBigo: data.gjBigo,
-        gjSdate: formatDate(data.gjSdate),
+        gjSdate: data.gjSdate,
         gjJungum: data.gjJungum,
         gjBaGageYn: data.gjBaGageYn === "Y",
         gjBaGageKum: data.gjBaGageKum,
@@ -106,6 +113,50 @@ function Footer({ data }: { data: any }) {
       );
 
     return null;
+  };
+
+  const submit = async (params: any) => {
+    params.areaCode = data?.areaCode;
+    params.gjCuCode = data?.gjCuCode;
+    params.gjJanType = data?.gjJanType;
+    params.gjGumym = dataCommonDic?.sGjGumym[0].code;
+    params.gjGumym =
+      typeof params.gjGumym === "string"
+        ? formatOnlyYearMonthDateByRemoveDash(params.gjGumym)
+        : params.gjGumym instanceof Date
+        ? formatDateToStringWithoutDashOnlyYearMonth(params.gjGumym)
+        : "";
+    params.gjSno = dataCommonDic?.sGjSno[1].code;
+    params.gjPerDate = dataCommonDic?.sGjPerDate[0].code;
+    params.gjPerDate =
+      typeof params.gjPerDate === "string"
+        ? formatDateByRemoveDash(params.gjPerDate)
+        : params.gjPerDate instanceof Date
+        ? formatDateToStringWithDash(params.gjPerDate)
+        : "";
+
+    params.gjSdate =
+      typeof params.gjSdate === "string"
+        ? formatDateByRemoveDash(params.gjSdate)
+        : params.gjSdate instanceof Date
+        ? formatDateToStringWithoutDash(params.gjSdate)
+        : "";
+
+    params.gjDate =
+      typeof params.gjDate === "string"
+        ? formatDateByRemoveDash(params.gjDate)
+        : params.gjDate instanceof Date
+        ? formatDateToStringWithoutDash(params.gjDate)
+        : "";
+
+    params.gjGum = Number(params.gjGum);
+    params.gjBigo = Number(params.gjBigo);
+
+    try {
+      const { data: dataInserted } = await API.post(RV1100INSERT, params);
+      setData65(data65);
+    } catch (err) {}
+    // }
   };
   return (
     <div>
@@ -279,6 +330,7 @@ function Footer({ data }: { data: any }) {
                 color: "#fff",
               }}
               kind={ButtonType.ROUND}
+              onClick={handleSubmit(submit)}
             />
             <Button
               text="취소"

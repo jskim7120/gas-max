@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useDispatch } from "app/store";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import Button from "components/button/button";
+import { openModal } from "app/state/modal/modalSlice";
 import {
   Document,
   Settings2,
   MagnifyingGlass,
   Users,
   Reset,
+  Trash,
 } from "components/allSvgIcon";
 import { ButtonColor, InputSize } from "components/componentsType";
 import {
@@ -21,8 +24,8 @@ import {
 } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
 import API from "app/axios";
-import { RV1100SEARCH } from "app/path";
-import { ISEARCH, IRV1100 } from "./model";
+import { RV1100SEARCH, RV1100SEARCH62, RV1100INSERT } from "app/path";
+import { ISEARCH } from "./model";
 import CheckBox from "components/checkbox";
 import Grid from "./grid";
 import { fields, columns } from "./data/dataTop";
@@ -44,6 +47,7 @@ function RV1100({
   menuId: string;
   areaCode: string;
 }) {
+  const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
   const [loading, setLoading] = useState(false);
@@ -51,8 +55,6 @@ function RV1100({
     groupId: "RV",
     functionName: "RV1100",
   });
-
-  //console.log("dataCommonDic::::::::::", dataCommonDic);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -89,19 +91,51 @@ function RV1100({
     fetchData(params);
   };
 
+  const submit2 = async (params: any) => {
+    console.log(typeof params.sGjGumym, params.sGjGumym);
+
+    params.sGjGumym =
+      typeof params.sGjGumym === "string"
+        ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumym)
+        : params.sGjGumym instanceof Date
+        ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumym)
+        : "";
+    params.sGjPerDate = formatDateByRemoveDash(params.sGjPerDate);
+    params.sGjDate = formatDateByRemoveDash(params.sGjDate);
+
+    search2(params);
+  };
+
   const fetchData = async (params: ISEARCH) => {
     try {
       setLoading(true);
       const { data } = await API.get(RV1100SEARCH, { params: params });
       console.log("data::::::", data);
 
-      if (data.length > 0) {
-        setData(data);
+      if (data.mainData.length > 0) {
+        setData(data.mainData);
       } else {
         setData([]);
       }
 
       setLoading(false);
+    } catch (err) {}
+  };
+
+  const openPopupEN1500 = async () => {
+    dispatch(openModal({ type: "en1500Modal" }));
+  };
+
+  const search2 = async (params: ISEARCH) => {
+    try {
+      const { data } = await API.get(RV1100SEARCH62, { params: params });
+      console.log("data111::::::", data);
+
+      if (data.mainData.length > 0) {
+        setData(data.mainData);
+      } else {
+        setData([]);
+      }
     } catch (err) {}
   };
 
@@ -127,6 +161,7 @@ function RV1100({
             type="button"
             color={ButtonColor.LIGHT}
             style={{ marginLeft: "7px" }}
+            onClick={openPopupEN1500}
           />
         </div>
       </SearchWrapper>
@@ -217,10 +252,18 @@ function RV1100({
                 type="button"
                 color={ButtonColor.LIGHT}
                 style={{ marginLeft: "6px" }}
+                onClick={handleSubmit(submit2)}
               />
               <Button
                 text="전체 미검침"
                 icon={<Users />}
+                type="button"
+                color={ButtonColor.LIGHT}
+                style={{ marginLeft: "6px" }}
+              />
+              <Button
+                text="삭제"
+                icon={<Trash />}
                 type="button"
                 color={ButtonColor.LIGHT}
                 style={{ marginLeft: "6px" }}
@@ -291,7 +334,7 @@ function RV1100({
           data={data}
           setSelected={setSelected}
         />
-        <Footer data={selected} />
+        <Footer data={selected} dataCommonDic={dataCommonDic} />
       </WrapperContent>
     </>
   );

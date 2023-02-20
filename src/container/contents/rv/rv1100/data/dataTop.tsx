@@ -27,7 +27,7 @@ export const fields = [
   },
   {
     fieldName: "gjGum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjGage",
