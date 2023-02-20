@@ -60,6 +60,7 @@ function CM1100Page({
 
   useEffect(() => {
     if (dataCommonDic) {
+      console.log("dataCommonDic::::", dataCommonDic);
       resetSearchForm();
       resetFooter(dataCommonDic.footDetail[0]);
     }
