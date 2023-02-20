@@ -1,22 +1,25 @@
 import { useEffect, useRef } from "react";
-import { GridView, LocalDataProvider } from "realgrid";
-import { fields1, columns1 } from "./data1";
 import { useDispatch } from "app/store";
+import { GridView, LocalDataProvider } from "realgrid";
+import { fields, columns } from "./data";
 import { addGR1300, openModal } from "app/state/modal/modalSlice";
-// import { fields2, columns2, layout2 } from "./data2";
 
 function Grid({
-  data65,
+  data,
+  setData,
+  data2,
   tabId,
-  openPopup,
   setRowIndex,
-  selected,
+  setBclInqtyLPG,
+  calcTab1FooterChange,
 }: {
-  data65: any;
+  data: any;
+  setData: Function;
+  data2: any;
   tabId: number;
-  openPopup: Function;
   setRowIndex: Function;
-  selected: any;
+  setBclInqtyLPG: Function;
+  calcTab1FooterChange: Function;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
@@ -32,10 +35,11 @@ function Grid({
 
     gv.setDataSource(dp);
 
-    dp.setFields(fields1);
-    gv.setColumns(columns1);
-    dp.setRows(data65);
+    dp.setFields(fields);
+    gv.setColumns(columns);
     gv.columnByName("bblBpName").buttonVisibility = "always";
+
+    dp.setRows(data);
 
     gv.setFooter({ visible: false });
     gv.setOptions({
@@ -55,17 +59,42 @@ function Grid({
     };
 
     gv.onCellButtonClicked = function (grid: any, index: any, column: any) {
-      if (selected) {
+      if (Object.keys(data2).length > 0) {
         dispatch(
           addGR1300({
             index: index.dataRow,
-            areaCode: selected?.areaCode,
-            bbBuCode: selected?.bbBuCode,
-            bbType: selected?.bbType ? selected?.bbType : "0", //daraa n "0"-iig hasah
+            areaCode: data2?.areaCode,
+            bbBuCode: data2?.bbBuCode,
+            bbType: data2?.bbType,
           })
         );
         dispatch(openModal({ type: "gr1300Modal" }));
       }
+    };
+
+    gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
+      console.log(index.fieldName, index.fieldName === "bblQty");
+      setData((prev: any) =>
+        prev.map((object: any, idx: number) => {
+          if (idx === index.dataRow) {
+            if (index.fieldName === "bblQty") {
+              return {
+                ...object,
+                [index.fieldName]: newValue,
+                bblKumack: newValue * object.bblDanga,
+                isEdited: true,
+              };
+            } else {
+              return {
+                ...object,
+                [index.fieldName]: newValue,
+              };
+            }
+          } else return object;
+        })
+      );
+      setBclInqtyLPG((prev: boolean) => !prev);
+      gv.cancel();
     };
 
     return () => {
@@ -73,12 +102,13 @@ function Grid({
       gv.destroy();
       dp.destroy();
     };
-  }, [data65, tabId]);
+  }, [data, tabId]);
   return (
     <>
       <div
         style={{
-          height: `220px`,
+          height: `200px`,
+          marginBottom: "2px",
         }}
         ref={realgridElement}
       ></div>

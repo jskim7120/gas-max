@@ -23,7 +23,7 @@ import { ResetGray, Update, Plus, Trash } from "components/allSvgIcon";
 import { InputSize, ButtonColor } from "components/componentsType";
 import { IDATA65 } from "./model";
 import TabGrid from "./tabs/grid";
-import { useDispatch, useSelector } from "app/store";
+import { useSelector } from "app/store";
 import FooterInfo from "./footer";
 import { CircleBtn } from "./style";
 import { PersonInfoText } from "components/text";
@@ -31,6 +31,7 @@ import {
   formatDateByRemoveDash,
   formatDate,
   formatDateToString,
+  formatDateToStringWithoutDash,
 } from "helpers/dateFormat";
 import {
   GR120065,
@@ -81,7 +82,6 @@ function Form({
   const [sumB, setSumB] = useState(0);
 
   const stateGR1200 = useSelector((state: any) => state.modal.gr1200);
-  const dispatch = useDispatch();
 
   const { register, handleSubmit, reset, control, getValues } =
     useForm<IDATA65>({
@@ -139,22 +139,31 @@ function Form({
         bcSumKum: data65.bcSumKum,
         bcSumCost: data65.bcSumCost,
         bcSum: data65.bcSum,
+        bcSupplyAmt: data65.bcSupplyAmt,
+        bcVatAmt: data65.bcVatAmt,
+        bcInkum: data65.bcInkum,
+        bcMemo: data65.bcMemo,
+        bcInkum1: data65.bcInkum1,
+        bcSupplyType: data65.bcSupplyType,
+        bcOutkum: data65.bcOutkum,
+        bcDc: data65.bcDc,
       });
 
       setTabId(parseInt(data65?.bcChitType));
     }
     setAddBtnClicked(false);
+    setRowIndex(null);
   }, [data65]);
 
   useEffect(() => {
-    someFunc();
+    calcTab1GridChange();
   }, [data65Detail]);
 
   useEffect(() => {
-    someFunc();
+    calcTab1GridChange();
   }, [bclInqtyLPG]);
 
-  const someFunc = () => {
+  const calcTab1GridChange = () => {
     if (data65Detail) {
       let bcPin = 0;
       let bcBin = 0;
@@ -232,6 +241,8 @@ function Form({
       bcSumCost = +bcPcost + +bcBcost + +data65?.bcGcost;
       bcSum = bcPsum + +bcBsum + +data65?.bcGsum;
 
+      const bcSupplyAmt = Math.round(bcSum / 1.1);
+      const bcVatAmt = bcSum - bcSupplyAmt;
       reset((formValues) => ({
         ...formValues,
         bcPin: isNaN(bcPin) ? 0 : bcPin,
@@ -248,11 +259,14 @@ function Form({
         bcSumKum: bcSumKum,
         bcSumCost: bcSumCost,
         bcSum: bcSum,
+        bcInkum: bcSum,
+        bcSupplyAmt: bcSupplyAmt,
+        bcVatAmt: bcVatAmt,
       }));
     }
   };
 
-  const anotherFunc = (num: any, name: string) => {
+  const calcTab1FooterChange = (num: any, name: string) => {
     if (name === "bcPjan") {
       const { bcPdanga, bcPcost, bcBjan, bcSumB, bcBkum, bcBsum } = getValues();
       let bcSumP: number = 0;
@@ -406,6 +420,25 @@ function Form({
         bcSum: bcSum,
       }));
     }
+
+    if (name === "bcOutkum") {
+      const { bcInkum1, bcDc } = getValues();
+      const bcMisu = +bcInkum1 - bcDc - parseInt(num === "" ? 0 : num);
+
+      reset((formValues) => ({
+        ...formValues,
+        bcMisu: bcMisu,
+      }));
+    }
+    if (name === "bcDc") {
+      const { bcInkum1, bcOutkum } = getValues();
+      const bcMisu = +bcInkum1 - bcOutkum - parseInt(num === "" ? 0 : num);
+
+      reset((formValues) => ({
+        ...formValues,
+        bcMisu: bcMisu,
+      }));
+    }
   };
 
   const addRow = () => {
@@ -543,9 +576,13 @@ function Form({
 
   const submit = async (data: any) => {
     const formValues = getValues();
-    console.log("formValues:::::", formValues);
 
-    formValues.bcDate = formatDateByRemoveDash(formValues.bcDate);
+    //formValues.bcDate = formatDateByRemoveDash(formValues.bcDate);
+
+    formValues.bcDate =
+      typeof formValues.bcDate === "string"
+        ? formatDateByRemoveDash(formValues.bcDate)
+        : formatDateToStringWithoutDash(formValues.bcDate);
 
     let path: string;
 
@@ -559,6 +596,7 @@ function Form({
       const res = await API.post(path, {
         ...formValues,
         bcChitType: tabId,
+        bcSno: data65.bcSno,
       });
 
       if (res.status === 200) {
@@ -751,13 +789,18 @@ function Form({
                   value={value}
                   onChange={onChange}
                   name={name}
+                  readOnly={!isAddBtnClicked}
                 />
               )}
             />
           </Field>
           <FormGroup>
             <Label>매입처</Label>
-            <Select {...register("bcBuCode")} width={InputSize.i100}>
+            <Select
+              {...register("bcBuCode")}
+              width={InputSize.i100}
+              disabled={!isAddBtnClicked}
+            >
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -871,17 +914,18 @@ function Form({
             setData={setData65Detail}
             data2={data65}
             tabId={tabId ? tabId : 0}
-            //openPopup={openPopup}
             setRowIndex={setRowIndex}
             register={register}
             setBclInqtyLPG={setBclInqtyLPG}
-            reset={reset}
-            someFunc={someFunc}
-            anotherFunc={anotherFunc}
+            calcTab1FooterChange={calcTab1FooterChange}
           />
         </TabContentWrapper>
       </form>
-      <FooterInfo data={data65} register={register} />
+      <FooterInfo
+        data={data65}
+        register={register}
+        calcTab1FooterChange={calcTab1FooterChange}
+      />
     </div>
   );
 }

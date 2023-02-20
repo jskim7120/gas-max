@@ -84,12 +84,12 @@ function Table({ data, style }: { data: any; style?: any }) {
       </tr>
       <tr>
         <th className="orange-light">벌크</th>
-        <td>{data?.bVIn}</td>
-        <td>{data?.bVJan}</td>
-        <td>{data?.bVSum}</td>
-        <td>{data?.bVKum}</td>
-        <td>{data?.bVCost}</td>
-        <td>{data?.sumBv}</td>
+        <td className="right">{data?.bVIn}</td>
+        <td className="right">{data?.bVJan}</td>
+        <td className="right">{data?.bVSum}</td>
+        <td className="right">{data?.bVKum}</td>
+        <td className="right">{data?.bVCost}</td>
+        <td className="right">{data?.sumBv}</td>
       </tr>
       <tr>
         <th className="orange-light" colSpan={2}>

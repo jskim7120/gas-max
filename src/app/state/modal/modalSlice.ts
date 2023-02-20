@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { number } from "yup";
 
 export interface initialStateType {
   modalIsOpen: boolean;
@@ -31,14 +30,11 @@ export interface initialStateType {
     bbBuCode: string;
     bbType: string;
 
-    jbuDangaType: string | undefined;
     bpName: string | undefined;
-    bpType: string | undefined;
-    jbuChangedate: string | undefined;
-    bpDanwi: string | undefined;
-    jbuVatKind: string | undefined;
-    jbuBpDanga: number | undefined;
     bpCode: string | undefined;
+    jbuBpDanga: string | undefined;
+    jbuVatKind: string | undefined;
+    isProductNameSelected: string | undefined;
   };
   cc1100: {
     acjType: string | undefined;
@@ -82,14 +78,12 @@ const initialState: initialStateType = {
     areaCode: "",
     bbBuCode: "",
     bbType: "",
-    jbuDangaType: undefined,
+
     bpName: undefined,
-    bpType: undefined,
-    jbuChangedate: undefined,
-    bpDanwi: undefined,
-    jbuVatKind: undefined,
-    jbuBpDanga: undefined,
     bpCode: undefined,
+    jbuBpDanga: undefined,
+    jbuVatKind: undefined,
+    isProductNameSelected: undefined,
   },
   cc1100: {
     acjType: undefined,
@@ -147,14 +141,11 @@ const modalSlice = createSlice({
       state.gr1300.bbBuCode = action.payload.bbBuCode;
       state.gr1300.bbType = action.payload.bbType;
 
-      state.gr1300.jbuDangaType = action.payload.jbuDangaType;
       state.gr1300.bpName = action.payload.bpName;
-      state.gr1300.bpType = action.payload.bpType;
-      state.gr1300.jbuChangedate = action.payload.jbuChangedate;
-      state.gr1300.bpDanwi = action.payload.bpDanwi;
+      state.gr1300.bpCode = action.payload.bpCode;
       state.gr1300.jbuVatKind = action.payload.jbuVatKind;
       state.gr1300.jbuBpDanga = action.payload.jbuBpDanga;
-      state.gr1300.bpCode = action.payload.bpCode;
+      state.gr1300.isProductNameSelected = action.payload.isProductNameSelected;
     },
     addCC1100: (state, action) => {
       state.cc1100.acjType = action.payload.acjType;

@@ -65,11 +65,6 @@ function CM1100Page({
     }
   }, [dataCommonDic]);
 
-  console.log(
-    "dataCommonDicdataCommonDicdataCommonDicdataCommonDicdataCommonDic:",
-    dataCommonDic
-  );
-
   const submit = async (data: ICM1100SEARCH) => {
     fetchData(data);
   };
@@ -77,10 +72,12 @@ function CM1100Page({
   const fetchData = async (params: any) => {
     try {
       setLoading(true);
-      const { data } = await API.get(CM1100SEARCH, { params: params });
+      const { data: dataSearch } = await API.get(CM1100SEARCH, {
+        params: params,
+      });
 
-      if (data) {
-        setData(data);
+      if (dataSearch) {
+        setData(dataSearch);
       } else {
         setData([]);
       }

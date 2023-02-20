@@ -1,5 +1,5 @@
 import { ValueType } from "realgrid";
-export const fields1 = [
+export const fields = [
   {
     fieldName: "bblBpCode",
     dataType: ValueType.TEXT,
@@ -30,7 +30,7 @@ export const fields1 = [
   },
 ];
 
-export const columns1 = [
+export const columns = [
   {
     name: "bblBpCode",
     fieldName: "bblBpCode",
@@ -62,6 +62,7 @@ export const columns1 = [
     header: {
       text: "규격",
     },
+    editable: false,
   },
   {
     name: "bblQty",
@@ -92,6 +93,7 @@ export const columns1 = [
     header: {
       text: "VAT",
     },
+    editable: false,
   },
   {
     name: "bblKumack",
@@ -102,5 +104,6 @@ export const columns1 = [
     header: {
       text: "금액",
     },
+    editable: false,
   },
 ];
