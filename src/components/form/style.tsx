@@ -329,6 +329,10 @@ export const FormGroup = styled.div<{
   p {
     font-family: "NotoSansKRRegular";
     font-size: 15px;
+
+    &.blue {
+      color: #0a2afb;
+    }
   }
 `;
 

@@ -36,6 +36,12 @@ import RV9006 from "container/contents/rv/rv9006";
 import CC1100 from "container/contents/cc/cc1100";
 import CC1400 from "container/contents/cc/cc1400";
 import CC1500 from "container/contents/cc/cc1500";
+import CC1600 from "container/contents/cc/cc1600";
+import CC1700 from "container/contents/cc/cc1700";
+import CC9006 from "container/contents/cc/cc9006";
+import CC9007 from "container/contents/cc/cc9007";
+import CC9008 from "container/contents/cc/cc9008";
+import CC9009 from "container/contents/cc/cc9009";
 
 export const getContent = (
   id: any,
@@ -172,6 +178,30 @@ export const getContent = (
     case "CC1500":
       return (
         <CC1500 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "CC1600":
+      return (
+        <CC1600 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "CC1700":
+      return (
+        <CC1700 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "CC9006":
+      return (
+        <CC9006 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "CC9007":
+      return (
+        <CC9007 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "CC9008":
+      return (
+        <CC9008 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "CC9009":
+      return (
+        <CC9009 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
       );
   }
 };
