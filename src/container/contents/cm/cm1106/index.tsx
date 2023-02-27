@@ -60,8 +60,8 @@ function FormCM1106() {
 
   useEffect(() => {
     if (selected) {
-      console.log("selected:::::", selected);
       formRef.current.setIsAddBtnClicked(false);
+      reset({ jcCuCode: selected?.jcCuCode, jcCuName: selected?.jcCuName });
     }
   }, [selected]);
 
@@ -72,11 +72,14 @@ function FormCM1106() {
       });
       if (data1106) {
         setData(data1106);
+        setSelected(data1106[0]);
       } else {
         setData([]);
+        setSelected({});
       }
     } catch (error) {
       setData([]);
+      setSelected({});
       console.log("CM1106 fetch data error:", error);
     }
   };
@@ -168,12 +171,12 @@ function FormCM1106() {
           <div style={{ width: "60%", display: "flex" }}>
             <FFormGroup>
               <LLabel style={{}}>거래처코드</LLabel>
-              <IInput name="jcCuCode" value={selected?.jcCuCode} />
+              <IInput {...register("jcCuCode")} />
             </FFormGroup>
 
             <FFormGroup>
               <LLabel style={{}}>거래처명</LLabel>
-              <IInput name="jcCuName" value={selected?.jcCuName} />
+              <IInput {...register("jcCuName")} />
             </FFormGroup>
 
             <button
