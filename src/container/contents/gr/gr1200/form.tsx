@@ -43,6 +43,7 @@ import {
   GR1200BLDELETE,
 } from "app/path";
 import API from "app/axios";
+import { useGetAdditionalDictionaryQuery } from "app/api/commonDictionary";
 
 const radioOptions = [
   {
@@ -74,7 +75,10 @@ function Form({
   const [data65, setData65] = useState<any>({});
   const [data65Detail, setData65Detail] = useState<any[]>([]);
   const [deleteData65Detail, setDeleteData65Detail] = useState<any[]>([]);
+  const [bcBuCode, setBcBuCode] = useState("");
   const [bclInqtyLPG, setBclInqtyLPG] = useState(false);
+
+  const [areaCode2, setAreaCode2] = useState("");
 
   const [pin, setPin] = useState(0);
   const [bin, setBin] = useState(0);
@@ -83,11 +87,22 @@ function Form({
 
   const stateGR1200 = useSelector((state: any) => state.modal.gr1200);
 
+  const { data: dataAdditionalDic } = useGetAdditionalDictionaryQuery({
+    groupId: "GR",
+    functionName: "GR1200",
+    areaCode: areaCode2,
+  });
+
   const { register, handleSubmit, reset, control, getValues } =
     useForm<IDATA65>({
       mode: "onSubmit",
     });
 
+  useEffect(() => {
+    if (dataCommonDic) {
+      setAreaCode2(dataCommonDic.areaCode[0].code);
+    }
+  }, [dataCommonDic]);
   useEffect(() => {
     if (stateGR1200.index !== undefined && stateGR1200.jpName) {
       setData65Detail((prev: any) =>
@@ -111,6 +126,7 @@ function Form({
   useEffect(() => {
     if (selected) {
       fetchData65();
+      setAreaCode2(selected?.areaCode);
     }
   }, [selected]);
 
@@ -462,6 +478,7 @@ function Form({
           bclSvyn: "",
           bclTongdel: null,
           isNew: true,
+          tabId: tabId,
         },
       ]);
       setRowIndex(null);
@@ -727,7 +744,11 @@ function Form({
               영업소
             </p>
 
-            <Select {...register("areaCode")}>
+            <Select
+              {...register("areaCode")}
+              onChange={(e) => setAreaCode2(e.target.value)}
+              value={areaCode2}
+            >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -800,8 +821,10 @@ function Form({
               {...register("bcBuCode")}
               width={InputSize.i100}
               disabled={!isAddBtnClicked}
+              onChange={(e) => setBcBuCode(e.target.value)}
+              value={bcBuCode}
             >
-              {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
+              {dataAdditionalDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -813,7 +836,7 @@ function Form({
           <FormGroup>
             <Label>수송방법</Label>
             <Select {...register("bcCtype")} width={InputSize.i100}>
-              {dataCommonDic?.bcCtype?.map((obj: any, idx: number) => (
+              {dataAdditionalDic?.bcCtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -830,16 +853,15 @@ function Form({
         <Wrapper grid>
           <FormGroup>
             <Label>수송기사</Label>
-
             <EditableSelect
-              list={dataCommonDic?.bcCsawon}
+              list={dataAdditionalDic?.bcCsawon}
               register={register("bcCsawon")}
             />
           </FormGroup>
           <FormGroup>
             <Label>수송차량</Label>
             <Select {...register("bcCarno")} width={InputSize.i100}>
-              {dataCommonDic?.bcCarno?.map((obj: any, idx: number) => (
+              {dataAdditionalDic?.bcCarno?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -875,7 +897,7 @@ function Form({
               width={InputSize.i100}
               disabled={radioChecked === 0}
             >
-              {dataCommonDic?.bcCarno1?.map((obj: any, idx: number) => (
+              {dataAdditionalDic?.bcCarno1?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -910,6 +932,7 @@ function Form({
           }}
         >
           <TabGrid
+            getValues={getValues}
             data={data65Detail}
             setData={setData65Detail}
             data2={data65}

@@ -18,7 +18,13 @@ export const commonDictionaryApi = createApi({
       query: ({ groupId, functionName }) =>
         `/app/common/dictionary/${groupId}/${functionName}`,
     }),
+
+    getAdditionalDictionary: build.query<any, any>({
+      query: ({ groupId, functionName, areaCode }) =>
+        `/app/common/dictionary/${groupId}/${functionName}/${areaCode}`,
+    }),
   }),
 });
 
-export const { useGetCommonDictionaryQuery } = commonDictionaryApi;
+export const { useGetCommonDictionaryQuery, useGetAdditionalDictionaryQuery } =
+  commonDictionaryApi;
