@@ -195,9 +195,9 @@ function GR1200({
         </LeftSide>
         <RightSide>
           <Form
+            areaCode={areaCode}
             dataCommonDic={dataCommonDic}
             selected={selected}
-            areaCode={areaCode}
             fetchData={handleSubmit(submit)}
           />
         </RightSide>

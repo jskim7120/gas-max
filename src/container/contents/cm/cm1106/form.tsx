@@ -11,13 +11,13 @@ import { MagnifyingGlass } from "components/allSvgIcon";
 import { SearchBtn } from "components/daum";
 import { useForm, Controller } from "react-hook-form";
 import { FieldKind, InputSize } from "components/componentsType";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import Button from "components/button/button";
 import { ICM1106 } from "./model";
 import { CM1106INSERT, CM1106UPDATE, CM1106DELETE } from "app/path";
 import { currencyMask } from "helpers/currency";
 import { toast } from "react-toastify";
 import API from "app/axios";
+import { formatCurrencyRemoveComma } from "helpers/currency";
 
 const FORMCM1106 = React.forwardRef(
   (
@@ -28,6 +28,7 @@ const FORMCM1106 = React.forwardRef(
       selectedRowIndex,
       setSelectedRowIndex,
       setSelected,
+      dataCommonDic,
     }: {
       selected: any;
       fetchData: Function;
@@ -35,24 +36,14 @@ const FORMCM1106 = React.forwardRef(
       selectedRowIndex: any;
       setSelectedRowIndex: Function;
       setSelected: Function;
+      dataCommonDic: any;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
-    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-      groupId: "CM",
-      functionName: "CM1106",
-    });
-
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-      getValues,
-      control,
-    } = useForm<ICM1106>();
+    const { register, handleSubmit, reset, getValues, control } =
+      useForm<ICM1106>();
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       resetForm,
@@ -81,6 +72,7 @@ const FORMCM1106 = React.forwardRef(
         }
       }
     };
+
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const path = CM1106DELETE;
@@ -110,6 +102,9 @@ const FORMCM1106 = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? CM1106INSERT : CM1106UPDATE;
       const formValues = getValues();
+
+      formValues.jcJdcAmt = formatCurrencyRemoveComma(formValues.jcJdcAmt);
+      formValues.jcJpDanga = formatCurrencyRemoveComma(formValues.jcJpDanga);
 
       try {
         const response: any = await API.post(path, formValues);
@@ -208,13 +203,6 @@ const FORMCM1106 = React.forwardRef(
         </FormGroup>
 
         <Field flex>
-          {/* <Input
-            label="할인액"
-            register={register("jcJdcAmt")}
-            kind={FieldKind.BORDER}
-            textAlign="right"
-            formatNumber="comDecNumber"
-          /> */}
           <Controller
             control={control}
             {...register("jcJdcAmt")}
@@ -233,13 +221,6 @@ const FORMCM1106 = React.forwardRef(
           <p>원</p>
         </Field>
         <Field flex>
-          {/* <Input
-            label="할인율"
-            register={register("jcJdcPer")}
-            kind={FieldKind.BORDER}
-            maxLength="3"
-            textAlign="right"
-          /> */}
           <Controller
             control={control}
             {...register("jcJdcPer")}
@@ -258,13 +239,6 @@ const FORMCM1106 = React.forwardRef(
           <p>%</p>
         </Field>
         <Field flex>
-          {/* <Input
-            label="적용단가"
-            register={register("jcJpDanga")}
-            kind={FieldKind.BORDER}
-            textAlign="right"
-            formatNumber="comDecNumber"
-          /> */}
           <Controller
             control={control}
             {...register("jcJpDanga")}
