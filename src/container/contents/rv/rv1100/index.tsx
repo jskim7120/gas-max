@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { toast } from "react-toastify";
 import { useDispatch } from "app/store";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import Button from "components/button/button";
@@ -24,7 +25,7 @@ import {
 } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
 import API from "app/axios";
-import { RV1100SEARCH, RV1100SEARCH62, RV1100INSERT } from "app/path";
+import { RV1100SEARCH, RV1100SEARCH62, RV1100DELETE } from "app/path";
 import { ISEARCH } from "./model";
 import CheckBox from "components/checkbox";
 import Grid from "./grid";
@@ -32,6 +33,7 @@ import { fields, columns } from "./data/dataTop";
 import Loader from "components/loader";
 import {
   formatDateByRemoveDash,
+  formatDateToStringWithoutDash,
   formatOnlyYearMonthDateByRemoveDash,
   formatDateToStringWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
@@ -50,7 +52,11 @@ function RV1100({
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
+  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [gjGumym, setGjGumym] = useState<string>();
+  const [gjSno, setGjSno] = useState<string>();
+  const [gjPerDate, setGjPerDate] = useState<string>();
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "RV",
     functionName: "RV1100",
@@ -77,8 +83,6 @@ function RV1100({
   });
 
   const submit = async (params: any) => {
-    console.log(typeof params.sGjGumym, params.sGjGumym);
-
     params.sGjGumym =
       typeof params.sGjGumym === "string"
         ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumym)
@@ -92,8 +96,6 @@ function RV1100({
   };
 
   const submit2 = async (params: any) => {
-    console.log(typeof params.sGjGumym, params.sGjGumym);
-
     params.sGjGumym =
       typeof params.sGjGumym === "string"
         ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumym)
@@ -110,7 +112,6 @@ function RV1100({
     try {
       setLoading(true);
       const { data } = await API.get(RV1100SEARCH, { params: params });
-      console.log("data::::::", data);
 
       if (data.mainData.length > 0) {
         setData(data.mainData);
@@ -129,7 +130,6 @@ function RV1100({
   const search2 = async (params: ISEARCH) => {
     try {
       const { data } = await API.get(RV1100SEARCH62, { params: params });
-      console.log("data111::::::", data);
 
       if (data.mainData.length > 0) {
         setData(data.mainData);
@@ -137,6 +137,72 @@ function RV1100({
         setData([]);
       }
     } catch (err) {}
+  };
+
+  const deleteRow = async (params: ISEARCH) => {
+    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      let newData: any = {};
+      for (const [key, value] of Object.entries(selected)) {
+        newData[key] = value;
+      }
+      if (gjGumym) {
+        newData.gjGumym = gjGumym;
+      } else {
+        newData.gjGumym = dataCommonDic?.sGjGumym[0].code;
+        newData.gjGumym = formatOnlyYearMonthDateByRemoveDash(newData.gjGumym);
+      }
+      if (gjSno) {
+        newData.gjSno = gjSno;
+      } else {
+        newData.gjSno = dataCommonDic?.sGjSno[0].code;
+      }
+      if (gjPerDate) {
+        newData.gjPerDate = gjPerDate;
+      } else {
+        newData.gjPerDate = dataCommonDic?.sGjPerDate[0].code;
+        newData.gjPerDate = formatDateByRemoveDash(newData.gjPerDate);
+      }
+      newData.gjDate = formatDateByRemoveDash(newData.gjDate);
+      newData.gjLdate = formatDateByRemoveDash(newData.gjLdate);
+      newData.gjSdate = formatDateByRemoveDash(newData.gjSdate);
+
+      try {
+        const response: any = await API.post(RV1100DELETE, newData);
+
+        if (response.status === 200) {
+          toast.success("삭제하였습니다", {
+            autoClose: 500,
+          });
+          params.sGjDate = formatDateByRemoveDash(params.sGjDate);
+          params.sGjGumym = formatOnlyYearMonthDateByRemoveDash(
+            params.sGjGumym
+          );
+          params.sGjPerDate = formatDateByRemoveDash(params.sGjPerDate);
+          await fetchData(params);
+        } else {
+          toast.error(response?.response?.message, {
+            autoClose: 500,
+          });
+        }
+      } catch (err) {
+        toast.error("Couldn't delete", {
+          autoClose: 500,
+        });
+      }
+    }
+  };
+
+  const gjPerDateChanged = (value: any) => {
+    value = value instanceof Date ? formatDateToStringWithoutDash(value) : null;
+    setGjPerDate(value);
+  };
+
+  const gjGumymChanged = (value: any) => {
+    value =
+      value instanceof Date
+        ? formatDateToStringWithoutDashOnlyYearMonth(value)
+        : null;
+    setGjGumym(value);
   };
 
   return (
@@ -176,14 +242,18 @@ function RV1100({
                 render={({ field: { onChange, value, name } }) => (
                   <CustomDatePicker
                     value={value}
-                    onChange={onChange}
+                    onChange={(e: any) => gjGumymChanged(e)}
                     name={name}
                     showYearDropdown
                   />
                 )}
               />
               <Label style={{ minWidth: "41px" }}>회차</Label>
-              <Select {...register("sGjSno")} style={{ marginLeft: "0" }}>
+              <Select
+                {...register("sGjSno")}
+                style={{ marginLeft: "0" }}
+                onChange={(e: any) => setGjSno(e.target.value)}
+              >
                 {dataCommonDic?.sGjSno?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -219,7 +289,7 @@ function RV1100({
                 render={({ field: { onChange, value, name } }) => (
                   <CustomDatePicker
                     value={value}
-                    onChange={onChange}
+                    onChange={gjPerDateChanged}
                     name={name}
                   />
                 )}
@@ -267,6 +337,7 @@ function RV1100({
                 type="button"
                 color={ButtonColor.LIGHT}
                 style={{ marginLeft: "6px" }}
+                onClick={handleSubmit(deleteRow)}
               />
             </Field>
           </Wrapper>
@@ -333,8 +404,17 @@ function RV1100({
           columns={columns}
           data={data}
           setSelected={setSelected}
+          setSelectedRowIndex={setSelectedRowIndex}
         />
-        <Footer data={selected} dataCommonDic={dataCommonDic} />
+        <Footer
+          data={selected}
+          dataCommonDic={dataCommonDic}
+          gjGumym={gjGumym}
+          gjSno={gjSno}
+          gjPerDate={gjPerDate}
+          selectedRowIndex={selectedRowIndex}
+          setSelectedRowIndex={setSelectedRowIndex}
+        />
       </WrapperContent>
     </>
   );

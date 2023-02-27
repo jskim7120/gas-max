@@ -6,12 +6,14 @@ function Grid({
   columns,
   fields,
   setSelected,
+  setSelectedRowIndex,
   style,
 }: {
   data: any;
   columns: any;
   fields: any;
   setSelected?: Function;
+  setSelectedRowIndex?: any;
   style?: any;
 }) {
   let container: HTMLDivElement;
@@ -45,6 +47,7 @@ function Grid({
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected && setSelected(data[itemIndex]);
+      setSelectedRowIndex(itemIndex);
     };
 
     return () => {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { toast } from "react-toastify";
 import { InfoBox } from "./style";
 import { IRV1100 } from "./model";
 import { RV110065, RV1100INSERT } from "app/path";
@@ -21,7 +22,23 @@ import Grid from "./grid";
 import { fields, columns } from "./data/dataBottom";
 import PinImg from "assets/image/pin.png";
 
-function Footer({ data, dataCommonDic }: { data: any; dataCommonDic: any }) {
+function Footer({
+  data,
+  dataCommonDic,
+  gjGumym,
+  gjSno,
+  gjPerDate,
+  selectedRowIndex,
+  setSelectedRowIndex,
+}: {
+  data: any;
+  dataCommonDic: any;
+  gjGumym: any;
+  gjSno: any;
+  gjPerDate: any;
+  selectedRowIndex: any;
+  setSelectedRowIndex?: any;
+}) {
   const [data65, setData65] = useState([]);
   const { register, control, reset, handleSubmit } = useForm<IRV1100>({
     mode: "onSubmit",
@@ -29,7 +46,6 @@ function Footer({ data, dataCommonDic }: { data: any; dataCommonDic: any }) {
 
   useEffect(() => {
     if (data !== undefined) {
-      console.log("data", data);
       reset({
         gjDate: data.gjDate,
         gjGum: data.gjGum,
@@ -119,21 +135,20 @@ function Footer({ data, dataCommonDic }: { data: any; dataCommonDic: any }) {
     params.areaCode = data?.areaCode;
     params.gjCuCode = data?.gjCuCode;
     params.gjJanType = data?.gjJanType;
-    params.gjGumym = dataCommonDic?.sGjGumym[0].code;
-    params.gjGumym =
-      typeof params.gjGumym === "string"
-        ? formatOnlyYearMonthDateByRemoveDash(params.gjGumym)
-        : params.gjGumym instanceof Date
-        ? formatDateToStringWithoutDashOnlyYearMonth(params.gjGumym)
-        : "";
-    params.gjSno = dataCommonDic?.sGjSno[1].code;
-    params.gjPerDate = dataCommonDic?.sGjPerDate[0].code;
-    params.gjPerDate =
-      typeof params.gjPerDate === "string"
-        ? formatDateByRemoveDash(params.gjPerDate)
-        : params.gjPerDate instanceof Date
-        ? formatDateToStringWithDash(params.gjPerDate)
-        : "";
+    gjGumym
+      ? (params.gjGumym = gjGumym)
+      : (params.gjGumym = formatOnlyYearMonthDateByRemoveDash(
+          dataCommonDic?.sGjGumym[0].code
+        ));
+    gjSno
+      ? (params.gjSno = gjSno)
+      : (params.gjSno = dataCommonDic?.sGjSno[0].code);
+
+    gjPerDate
+      ? (params.gjPerDate = gjPerDate)
+      : (params.gjPerDate = formatDateByRemoveDash(
+          dataCommonDic?.sGjPerDate[0].code
+        ));
 
     params.gjSdate =
       typeof params.gjSdate === "string"
@@ -153,7 +168,17 @@ function Footer({ data, dataCommonDic }: { data: any; dataCommonDic: any }) {
     params.gjBigo = Number(params.gjBigo);
 
     try {
-      const { data: dataInserted } = await API.post(RV1100INSERT, params);
+      const response: any = await API.post(RV1100INSERT, params);
+      if (response.status === 200) {
+        toast.success("저장이 성공하였습니다", {
+          autoClose: 500,
+        });
+        setSelectedRowIndex(selectedRowIndex + 1);
+      } else {
+        toast.error(response?.response?.message, {
+          autoClose: 500,
+        });
+      }
       setData65(data65);
     } catch (err) {}
     // }

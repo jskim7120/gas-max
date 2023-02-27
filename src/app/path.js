@@ -157,6 +157,7 @@ export const GR900965 = "/app/GR9009/65";
 export const RV1100SEARCH = "/app/RV1100/search";
 export const RV1100SEARCH62 = "/app/RV1100/search62";
 export const RV1100INSERT = "/app/RV1100/insert";
+export const RV1100DELETE = "/app/RV1100/delete";
 export const RV110065 = "/app/RV1100/65";
 
 export const CC1100SEARCH = "/app/CC1100/search";
