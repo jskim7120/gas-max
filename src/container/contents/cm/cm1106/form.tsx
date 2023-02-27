@@ -17,6 +17,7 @@ import { CM1106INSERT, CM1106UPDATE, CM1106DELETE } from "app/path";
 import { currencyMask } from "helpers/currency";
 import { toast } from "react-toastify";
 import API from "app/axios";
+import { formatCurrencyRemoveComma } from "helpers/currency";
 
 const FORMCM1106 = React.forwardRef(
   (
@@ -102,7 +103,8 @@ const FORMCM1106 = React.forwardRef(
       const path = isAddBtnClicked ? CM1106INSERT : CM1106UPDATE;
       const formValues = getValues();
 
-      console.log("formValues::::", formValues);
+      formValues.jcJdcAmt = formatCurrencyRemoveComma(formValues.jcJdcAmt);
+      formValues.jcJpDanga = formatCurrencyRemoveComma(formValues.jcJpDanga);
 
       try {
         const response: any = await API.post(path, formValues);
