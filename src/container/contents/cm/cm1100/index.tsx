@@ -3,7 +3,7 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { ICM1100SEARCH } from "./model";
 import { useForm } from "react-hook-form";
 import { openModal, addCM1105 } from "app/state/modal/modalSlice";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import Button from "components/button/button";
 import {
   ButtonColor,
@@ -34,7 +34,7 @@ import CM1100Footer from "./footer";
 import { CM1100SEARCH } from "app/path";
 import Loader from "components/loader";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
-import { addInfo } from "app/state/modal/footerSlice";
+import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 function CM1100Page({
   depthFullName,
@@ -46,6 +46,10 @@ function CM1100Page({
   areaCode: string;
 }) {
   const dispatch = useDispatch();
+
+  const { areaCode: areaCodeFooter, cuCode: cuCodeFooter } = useSelector(
+    (state) => state.modal.cm1105
+  );
   const [data, setData] = useState<any>([]);
   const [selected, setSelected] = useState<any>({});
   const [loading, setLoading] = useState(false);
@@ -61,9 +65,14 @@ function CM1100Page({
   useEffect(() => {
     if (dataCommonDic) {
       resetSearchForm();
-      resetFooter(dataCommonDic.footDetail[0]);
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (areaCodeFooter && cuCodeFooter) {
+      setFooterDetail(areaCodeFooter, cuCodeFooter, dispatch);
+    }
+  }, [areaCodeFooter, cuCodeFooter]);
 
   const submit = async (data: ICM1100SEARCH) => {
     fetchData(data);
@@ -115,10 +124,6 @@ function CM1100Page({
       cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
       cuStae: dataCommonDic?.cuStae[0].code,
     });
-  };
-
-  const resetFooter = (footDetail: any) => {
-    dispatch(addInfo({ info: footDetail }));
   };
 
   return (
