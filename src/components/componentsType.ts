@@ -5,6 +5,7 @@ export enum ButtonColor {
   SUCCESS = "success",
   LIGHT = "light",
   DANGER = "danger",
+  PURPLE = "purple",
 }
 
 export enum ButtonSize {

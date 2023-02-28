@@ -1,3 +1,4 @@
+import AR1100 from "container/contents/ar/ar1100";
 import EN1100 from "container/contents/en/en1100";
 import EN1200 from "container/contents/en/en1200";
 import EN1300 from "container/contents/en/en1300";
@@ -51,6 +52,10 @@ export const getContent = (
   switch (id) {
     case "HOME":
       return <div>Home</div>;
+    case "AR1100":
+      return (
+        <AR1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "EN1100":
       return <EN1100 depthFullName={depthFullName} menuId={id} />;
     case "EN1200":
