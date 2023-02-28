@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "app/store";
 import { openModal } from "app/state/modal/modalSlice";
 import { addSearchText, removeSearchText } from "app/state/modal/footerSlice";
+import API from "app/axios";
+import { FOOTHISTORY } from "app/path";
 import { FooterContainer } from "./style";
 import { SearchIcon } from "components/allSvgIcon";
 import { getCuType, getCuStae, getCircleBadge } from "./helper";
@@ -13,8 +15,36 @@ import YIMG from "assets/image/yellowBtn.png";
 
 function Footer() {
   const dispatch = useDispatch();
-  const { info } = useSelector((state) => state.footer);
+
+  const [info, setInfo] = useState<any>({});
   const [searchText, setSearchText] = useState("");
+
+  const infoState = useSelector((state) => state.footer.info);
+
+  useEffect(() => {
+    fetchLatestFooterData();
+  }, []);
+
+  useEffect(() => {
+    if (infoState) {
+      console.log(infoState);
+      setInfo(infoState);
+    }
+  }, [infoState]);
+
+  const fetchLatestFooterData = async () => {
+    try {
+      const { data } = await API.get(FOOTHISTORY);
+      if (data) {
+        setInfo(data[0]);
+      } else {
+        setInfo({});
+      }
+    } catch (err) {
+      setInfo({});
+      console.log("fetch foothistory error:::", err);
+    }
+  };
 
   return (
     <FooterContainer>

@@ -176,4 +176,5 @@ export const RV9006SEARCH = "/app/RV9006/search";
 export const RV9005SEARCH = "/app/RV9005/search";
 
 export const FOOT61 = "/app/CM1100/foot61";
+export const FOOTHISTORY = "/app/common/history";
 export const FOOTER = "/app/CM1100/footer";
