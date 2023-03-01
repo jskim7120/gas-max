@@ -348,7 +348,7 @@ function AR1100({
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
           style={{
-            height: `calc(100% - 400px)`,
+            height: `calc(100% - 368px)`,
             borderBottom: "1px solid #707070",
             marginBottom: "3px",
           }}
