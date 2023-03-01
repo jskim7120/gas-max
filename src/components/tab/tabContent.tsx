@@ -34,6 +34,7 @@ import RV9005 from "container/contents/rv/rv9005";
 import RV9006 from "container/contents/rv/rv9006";
 
 import CC1100 from "container/contents/cc/cc1100";
+import CC1200 from "container/contents/cc/cc1200";
 import CC1400 from "container/contents/cc/cc1400";
 import CC1500 from "container/contents/cc/cc1500";
 
@@ -111,6 +112,8 @@ export const getContent = (id: any, depthFullName: string) => {
       return <RV9006 depthFullName={depthFullName} menuId={id} />;
     case "CC1100":
       return <CC1100 depthFullName={depthFullName} menuId={id} />;
+    case "CC1200":
+      return <CC1200 depthFullName={depthFullName} menuId={id} />;
     case "CC1400":
       return <CC1400 depthFullName={depthFullName} menuId={id} />;
     case "CC1500":

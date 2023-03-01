@@ -60,18 +60,18 @@ function CC1200({
     mode: "onSubmit",
   });
 
-  const resetForm = () => {
-    if (dataCommonDic !== undefined) {
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-      });
-    }
+  const resetSearchForm = () => {
+    reset({
+      areaCode: dataCommonDic?.areaCode[0].code,
+      sDateT: dataCommonDic?.sDateT[0].code,
+      sDateF: dataCommonDic?.sDateF[0].code,
+    });
   };
 
   useEffect(() => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-    });
+    if (dataCommonDic) {
+      resetSearchForm();
+    }
   }, [dataCommonDic]);
 
   const fetchData = async (params: any) => {
@@ -90,15 +90,13 @@ function CC1200({
   };
 
   const cancel = () => {
-    resetForm();
+    resetSearchForm();
     setDataChk(true);
     setData([]);
   };
 
   const submit = (data: ICC1200SEARCH) => {
-    data.sDateF = formatDateToStringWithoutDash(data.sDateF);
-    data.sDateT = formatDateToStringWithoutDash(data.sDateT);
-    if (data.userChk == "true") {
+    if (data.userChk === "true") {
       data.userChk = "Y";
     } else {
       data.userChk = "N";
@@ -132,34 +130,32 @@ function CC1200({
             <div>
               <Wrapper grid col={2} fields="1fr 1.5fr">
                 <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>기간</Label>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("sDateF")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
-                  <Label style={{ minWidth: "auto" }}>~</Label>
-                  <Field style={{ minWidth: "120px" }}>
-                    <Controller
-                      control={control}
-                      {...register("sDateT")}
-                      render={({ field: { onChange, value, name } }) => (
-                        <CustomDatePicker
-                          value={value}
-                          onChange={onChange}
-                          name={name}
-                        />
-                      )}
-                    />
-                  </Field>
+                  <Label style={{ minWidth: "80px" }}>기간</Label>
+
+                  <Controller
+                    control={control}
+                    {...register("sDateF")}
+                    render={({ field: { onChange, value, name } }) => (
+                      <CustomDatePicker
+                        value={value}
+                        onChange={onChange}
+                        name={name}
+                      />
+                    )}
+                  />
+                  <p>~</p>
+
+                  <Controller
+                    control={control}
+                    {...register("sDateT")}
+                    render={({ field: { onChange, value, name } }) => (
+                      <CustomDatePicker
+                        value={value}
+                        onChange={onChange}
+                        name={name}
+                      />
+                    )}
+                  />
                 </FormGroup>
                 <Field>
                   <FormGroup>

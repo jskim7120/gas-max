@@ -55,7 +55,6 @@ function CC1100({
 
   const resetSearchForm = () => {
     reset({
-      codeGu: "0",
       areaCode: dataCommonDic?.areaCode[0].code,
       sDateT: dataCommonDic?.sDateT[0].code,
       sDateF: dataCommonDic?.sDateF[0].code,
@@ -86,7 +85,7 @@ function CC1100({
 
   const submit = (data: ICC1100SEARCH) => {
     if (codeGu) {
-      data.codeGu = "1";
+      data.codeGu = "0";
     }
     fetchData(data);
   };

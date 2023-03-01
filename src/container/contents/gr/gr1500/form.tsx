@@ -219,13 +219,13 @@ const Form = React.forwardRef(
             <Input
               label="매입처코드"
               register={register("bjBuCode")}
-              inputSize={InputSize.i80}
+              inputSize={InputSize.i180}
             />
           </Wrapper>
           <Wrapper>
             <FormGroup>
               <Label>매입처명</Label>
-              <Select {...register("bjBuName")} width={InputSize.i200}>
+              <Select {...register("bjBuName")} width={InputSize.i180}>
                 {dataCommonDic?.bjBuName?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -244,28 +244,28 @@ const Form = React.forwardRef(
             <Input
               textAlign="center"
               register={register("buBankno")}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i120}
             />
           </Wrapper>
           <Wrapper>
             <Input
               label="예금주"
               register={register("buBankju")}
-              inputSize={InputSize.i200}
+              inputSize={InputSize.i180}
             />
           </Wrapper>
           <Wrapper>
             <Input
               label="비고"
               register={register("buBigo")}
-              inputSize={InputSize.i200}
+              inputSize={InputSize.i180}
             />
           </Wrapper>
           <Wrapper>
             <Input
               label="담당자명"
               register={register("buDamdang")}
-              inputSize={InputSize.i200}
+              inputSize={InputSize.i180}
             />
           </Wrapper>
           <Wrapper>
@@ -273,11 +273,13 @@ const Form = React.forwardRef(
               textAlign="right"
               label="미지급액"
               register={register("buMisu")}
-              inputSize={InputSize.i200}
+              inputSize={InputSize.i180}
               mask={currencyMask}
             />
           </Wrapper>
+
           <DividerGR />
+
           <Field flex style={{ alignItems: "center" }}>
             <Label>지급일자</Label>
             <Controller
@@ -293,7 +295,7 @@ const Form = React.forwardRef(
               label="지 급 액"
               textAlign="right"
               register={register("bjOutkum")}
-              inputSize={InputSize.i200}
+              inputSize={InputSize.i180}
               mask={currencyMask}
             />
           </Wrapper>
@@ -302,14 +304,14 @@ const Form = React.forwardRef(
               textAlign="right"
               label="D / C"
               register={register("bjDc")}
-              inputSize={InputSize.i200}
+              inputSize={InputSize.i180}
               mask={currencyMask}
             />
           </Wrapper>
           <Wrapper>
             <FormGroup>
               <Label>지급방법</Label>
-              <Select {...register("bjOuttype")} width={InputSize.i200}>
+              <Select {...register("bjOuttype")} width={InputSize.i180}>
                 {dataCommonDic?.bjOuttype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -321,7 +323,7 @@ const Form = React.forwardRef(
           <Wrapper>
             <FormGroup>
               <Label>출금통장</Label>
-              <Select {...register("bjAcbCode")} width={InputSize.i200}>
+              <Select {...register("bjAcbCode")} width={InputSize.i180}>
                 {dataCommonDic?.bjAcbCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -334,7 +336,7 @@ const Form = React.forwardRef(
             <Input
               label="비 고"
               register={register("bjBigo")}
-              inputSize={InputSize.i200}
+              inputSize={InputSize.i180}
             />
           </Wrapper>
         </form>
