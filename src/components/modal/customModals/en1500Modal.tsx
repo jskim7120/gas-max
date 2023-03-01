@@ -276,7 +276,7 @@ const EN1500Modal = (
     <form
       //   onSubmit={handleSubmit(submit)}
       style={{
-        width: "870px",
+        width: "940px",
         // padding: "11px 35px",
         background: "#fff",
         height: "817px",
