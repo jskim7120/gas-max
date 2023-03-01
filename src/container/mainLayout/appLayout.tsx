@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector, useDispatch } from "app/store";
 import { Container, TopSide, TopLeftWrapper, Icons } from "./style";
 import { HeaderBtn, Settings, User } from "components/allSvgIcon";

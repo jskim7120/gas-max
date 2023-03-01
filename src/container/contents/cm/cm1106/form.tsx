@@ -231,7 +231,7 @@ const FORMCM1106 = React.forwardRef(
                 onChange={onChange}
                 mask={[/\d/, /\d/, /\d/]}
                 name={name}
-                inputSize={InputSize.i40}
+                inputSize={InputSize.i130}
               />
             )}
           />

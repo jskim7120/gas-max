@@ -57,6 +57,11 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
       attributes.color = "#FFF";
       attributes.lineColor = "#FFF";
     }
+    if (color === ButtonColor.PURPLE) {
+      attributes.bg = "#3440E6";
+      attributes.color = "#FFF";
+      attributes.lineColor = "#FFF";
+    }
   } else if (kind === ButtonType.LOGIN) {
     attributes = {
       borderRad: "4px",

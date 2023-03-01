@@ -1011,21 +1011,6 @@ const Form = React.forwardRef(
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <Field>
               <FormGroup>
-                {/*
-
-                <Select {...register("tankMakeCo1")} fullWidth>
-
-                  {dataCommonDic?.tankMakeCo1?.map(
-                    (obj: any, index: number) => (
-                      <option key={index} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    )
-                  )}
-
-
-                */}
-
                 <EditableSelect
                   list={dataCommonDic?.tankMakeCo1}
                   register={register("tankMakeCo1")}
@@ -1096,19 +1081,6 @@ const Form = React.forwardRef(
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <Field>
               <FormGroup>
-                {/*
-                <Select {...register("tankMakeCo2")} fullWidth>
-
-                  {dataCommonDic?.tankMakeCo2?.map(
-                    (obj: any, index: number) => (
-                      <option key={index} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    )
-                  )}
-
-                </Select>
-                */}
                 <EditableSelect
                   list={dataCommonDic?.tankMakeCo2}
                   register={register("tankMakeCo2")}
@@ -1335,16 +1307,6 @@ const Form = React.forwardRef(
 
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <FormGroup>
-              {/*
-              <Select {...register("gasifyCo1")} fullWidth>
-
-                {dataCommonDic?.gasifyCo1?.map((obj: any, idx: number) => {
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>;
-                })}
-   </Select>
-              */}
               <EditableSelect
                 list={dataCommonDic?.gasifyCo1}
                 register={register("gasifyCo1")}
@@ -1391,17 +1353,6 @@ const Form = React.forwardRef(
           </FormGroup>
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <FormGroup>
-              {/*
-              <Select {...register("gasifyCo2")} fullWidth>
-
-                {dataCommonDic?.gasifyCo2?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-
-              </Select>
-              */}
               <EditableSelect
                 list={dataCommonDic?.gasifyCo2}
                 register={register("gasifyCo2")}

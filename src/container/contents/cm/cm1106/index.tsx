@@ -20,9 +20,9 @@ import { columns, fields } from "./data";
 const LLabel = styled.label`
   background: rgba(104, 103, 103, 0.35);
   width: 94px;
-  font-size: 12px;
+  font-size: 14px;
   text-align: right;
-  padding: 3px 10px 0 0;
+  padding: 2px 10px 0 0;
 `;
 const IInput = styled.input`
   border: 1px solid #bbbbbb;

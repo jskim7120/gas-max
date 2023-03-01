@@ -3,7 +3,6 @@ import { ToastContainer, toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "app/store";
 import { LoginSchema } from "./validation";
 import { ILoginFormProps } from "./type";
 import { Input, Field } from "components/form/style";
@@ -11,7 +10,6 @@ import { ButtonType } from "components/componentsType";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { useLoginMutation } from "app/api/auth";
-import { setToken, setAreaCode } from "app/state/auth/authSlice";
 import Loader from "components/loader";
 import jwt from "jwt-decode";
 
@@ -24,14 +22,11 @@ function Login() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
-    getValues,
   } = useForm<ILoginFormProps>({
     resolver: yupResolver(LoginSchema),
   });
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [login, { data, isLoading, isError, isSuccess, error }] =
     useLoginMutation();
@@ -44,18 +39,12 @@ function Login() {
 
   if (isSuccess && data !== undefined && data.accessToken) {
     const { area_code }: { area_code: string } = jwt(data.accessToken);
-
-    dispatch(setToken({ token: data.accessToken }));
-    dispatch(setAreaCode({ areaCode: area_code }));
     localStorage.setItem("areaCode", area_code);
     localStorage.setItem("token", data.accessToken);
     navigate("/");
   }
 
   const submit = (data: ILoginFormProps) => {
-    //   dispatch(
-    //     login({ username: data.username, password: data.password })
-    //   ).finally(() => navigate("/"));
     login({ username: data.username, password: data.password });
   };
 
