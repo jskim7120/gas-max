@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const VolReading = styled.div`
-  width: 800px;
+  width: 870px;
   height: 150px;
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
@@ -58,7 +58,7 @@ export const VolReading = styled.div`
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 800px;
+  width: 870px;
   margin-top: 11px;
   .title {
     height: 31px;
@@ -71,16 +71,16 @@ export const Container = styled.div`
   }
 `;
 export const RubeUnit = styled.div`
-  width: 370px;
+  width: 490px;
   height: 415px;
   border-radius: 8px;
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
   input {
-    width: 67px;
+    width: 70px;
   }
   table {
-    width: 240px;
+    width: 463px;
     margin: 0 auto;
     tr {
       td {
@@ -92,7 +92,7 @@ export const RubeUnit = styled.div`
       }
     }
     input {
-      height: 20px;
+      height: 30px;
     }
   }
   .rubeDesc {

@@ -29,7 +29,8 @@ export interface IJNOTRY2 {
   jnPerMeth: string;
   jnChekum: string;
   jnJiroPrint: string;
-  jnKgdanga: string;
+  jnKgdanga: number;
+  jnKgdangaMp: number;
   jnCost280: any;
   jnCost600: any;
   jnCost1000: any;
@@ -86,4 +87,20 @@ export interface IJNOTRY2 {
   jnMark3: string;
   jnMark4: string;
   jnMark5: string;
+
+  tempJn280Mp: number;
+  tempJn600Mp: number;
+  tempJn1000Mp: number;
+  tempJn1500Mp: number;
+  tempJn2000Mp: number;
+  tempJn2500Mp: number;
+  tempJn7000Mp: number;
+
+  tempJnKgdanga280: number;
+  tempJnKgdanga600: number;
+  tempJnKgdanga1000: number;
+  tempJnKgdanga1500: number;
+  tempJnKgdanga2000: number;
+  tempJnKgdanga2500: number;
+  tempJnKgdanga7000: number;
 }

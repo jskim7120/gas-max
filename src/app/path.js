@@ -29,6 +29,7 @@ export const EN1500LIST = "/app/EN1500/list";
 export const EN1500INSERT = "/app/EN1500/insert";
 export const EN1500UPDATE = "/app/EN1500/update";
 export const EN1500DELETE = "/app/EN1500/delete";
+export const EN150065 = "/app/EN1500/65";
 
 export const EN1600LIST = "/app/EN1600/list";
 export const EN1600INSERT = "/app/EN1600/insert";
@@ -167,6 +168,7 @@ export const CC110080 = "/app/CC1100/80";
 
 export const CC1200SEARCH = "/app/CC1200/search";
 export const CC120065 = "/app/CC1200/65";
+export const CC120080 = "/app/CC1200/80";
 
 export const CC1400SEARCH = "/app/CC1400/search";
 

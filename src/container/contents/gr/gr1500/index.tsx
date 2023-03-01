@@ -13,7 +13,7 @@ import { IGR1500SEARCH } from "./model";
 import Button from "components/button/button";
 import { columns, fields } from "./data";
 import { columnsSecond, fieldsSecond } from "./secondData";
-import Grid from "../grid";
+import Grid from "components/grid";
 import Loader from "components/loader";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import Form from "./form";
@@ -166,12 +166,14 @@ function GR1500({
           </form>
 
           <Grid
+            areaCode={areaCode}
             data={data.length > 0 && data}
             columns={columns}
             fields={fields}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            evenFill
             style={{ height: "43%", minWidth: "925px" }}
           />
 
@@ -256,12 +258,14 @@ function GR1500({
           </form>
 
           <Grid
+            areaCode={areaCode}
             data={dataSecond.length > 0 && dataSecond}
             columns={columnsSecond}
             fields={fieldsSecond}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            evenFill
             style={{ height: "43%", minWidth: "925px" }}
           />
         </LeftSide>

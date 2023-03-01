@@ -76,11 +76,6 @@ export const columns = [
     header: {
       text: "년월 회차",
     },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("gjGumymsno", "count");
-      },
-    },
   },
   {
     name: "gjDate",
