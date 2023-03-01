@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "app/store";
+import { useDispatch } from "app/store";
 import React, { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { addCM1105 } from "app/state/modal/modalSlice";
@@ -15,6 +15,7 @@ function Grid({
   setSelected,
   openPopup,
   cm1105PopUp,
+  areaCode,
 }: {
   data: any;
   columns: any;
@@ -22,6 +23,7 @@ function Grid({
   setSelected?: any;
   openPopup?: any;
   cm1105PopUp?: any;
+  areaCode: string;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
@@ -47,9 +49,14 @@ function Grid({
     gv.displayOptions._selectionStyle = "singleRow";
     gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
-    // gv.setCurrent({
-    //   dataRow: selectedRowIndex,
-    // });
+    gv.displayOptions.useFocusClass = true;
+    gv.setCurrent({
+      dataRow: selectedRowIndex,
+    });
+
+    if (areaCode !== "00") {
+      // gv.removeColumn("areaCode");
+    }
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
@@ -77,7 +84,7 @@ function Grid({
     <div
       style={{
         width: "100%",
-        height: `448px`,
+        height: `calc(100% - 271px)`,
       }}
       ref={realgridElement}
     ></div>

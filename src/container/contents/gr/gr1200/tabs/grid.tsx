@@ -13,25 +13,21 @@ function Grid({
   setData,
   data2,
   tabId,
-  // openPopup,
   setRowIndex,
   register,
   setBclInqtyLPG,
-  reset,
-  someFunc,
-  anotherFunc,
+  calcTab1FooterChange,
+  getValues,
 }: {
   data: any;
   setData: Function;
   data2: any;
   tabId: number;
-  // openPopup: Function;
   setRowIndex: Function;
   register: Function;
   setBclInqtyLPG: Function;
-  reset: Function;
-  someFunc: Function;
-  anotherFunc: Function;
+  calcTab1FooterChange: Function;
+  getValues: any;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
@@ -52,6 +48,7 @@ function Grid({
       gv.setColumns(columns1);
       gv.setColumnLayout(layout1);
       gv.columnByName("bclJpName").buttonVisibility = "always";
+      dp.setRows(data);
     }
 
     if (tabId === 1) {
@@ -59,14 +56,14 @@ function Grid({
       gv.setColumns(columns2);
       gv.setColumnLayout(layout2);
       gv.columnByName("bclJpName").buttonVisibility = "always";
+      dp.setRows(data);
     }
 
     if (tabId === 2) {
       dp.setFields(fields3);
       gv.setColumns(columns3);
+      dp.setRows(data);
     }
-
-    dp.setRows(data);
 
     gv.setFooter({ visible: false });
     gv.setOptions({
@@ -86,13 +83,13 @@ function Grid({
     };
 
     gv.onCellButtonClicked = function (grid: any, index: any, column: any) {
-      if (data2) {
+      if (Object.keys(data2).length > 0) {
         dispatch(
           addGR1200({
             index: index.dataRow,
-            areaCode: data2?.areaCode,
-            bcBuCode: data2?.bcBuCode,
-            bcChitType: data2?.bcChitType ? data2?.bcChitType : "0", //daraa n "0"-iig hasah
+            areaCode: data2?.areaCode ? data2.areaCode : getValues("areaCode"),
+            bcBuCode: data2?.bcBuCode ? data2.bcBuCode : getValues("bcBuCode"),
+            bcChitType: data2?.bcChitType ? data2?.bcChitType : tabId, //daraa n "0"-iig hasah
           })
         );
         dispatch(openModal({ type: "gr1200Modal" }));
@@ -106,6 +103,7 @@ function Grid({
             return {
               ...object,
               [index.fieldName]: newValue,
+              isEdited: true,
             };
           } else return object;
         })
@@ -119,12 +117,14 @@ function Grid({
       gv.destroy();
       dp.destroy();
     };
-  }, [data, tabId]);
+  }, [tabId, data]);
   return (
     <>
       <div
         style={{
-          height: `220px`,
+          height: `180px`,
+          borderBottom: "1px solid #CCC",
+          marginBottom: "2px",
         }}
         ref={realgridElement}
       ></div>
@@ -132,9 +132,7 @@ function Grid({
         <Tab1Footer
           data={data2}
           register={register}
-          reset={reset}
-          someFunc={someFunc}
-          anotherFunc={anotherFunc}
+          calcTab1FooterChange={calcTab1FooterChange}
         />
       )}
       {tabId === 1 && <Tab2Footer />}

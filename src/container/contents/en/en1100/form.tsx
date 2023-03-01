@@ -179,28 +179,25 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form
-        onSubmit={handleSubmit(submit)}
-        style={{ minWidth: "814px", padding: "0px 10px" }}
-      >
-        <Wrapper grid>
+      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
+        <Wrapper grid col={3}>
           <Input
             label="코드"
             register={register("areaCode")}
             readOnly={isAddBtnClicked}
-            inputSize={InputSize.i40}
+            inputSize={InputSize.i150}
           />
           <Input
             label="영업소명"
             register={register("areaName")}
             maxLength="20"
-            inputSize={InputSize.i180}
+            inputSize={InputSize.i150}
           />
         </Wrapper>
 
         <Divider />
 
-        <Wrapper>
+        <Wrapper grid col={3}>
           <Controller
             control={control}
             {...register("jnSsno")}
@@ -224,20 +221,20 @@ const Form = React.forwardRef(
                   /\d/,
                 ]}
                 name={name}
-                inputSize={InputSize.i120}
+                inputSize={InputSize.i150}
               />
             )}
           />
           <Input
             label="상호"
-            labelStyle={{ minWidth: "50px" }}
+            // labelStyle={{ minWidth: "50px" }}
             register={register("jnSangho")}
             maxLength="26"
-            inputSize={InputSize.i180}
+            inputSize={InputSize.i150}
           />
           <Input
             label="대표"
-            labelStyle={{ minWidth: "50px" }}
+            // labelStyle={{ minWidth: "50px" }}
             register={register("jnSajang")}
             maxLength="14"
             inputSize={InputSize.i90}
@@ -249,71 +246,72 @@ const Form = React.forwardRef(
             label="주소"
             register={register("jnZipcode")}
             maxLength="6"
-            inputSize={InputSize.i70}
+            inputSize={InputSize.i150}
+            style={{ marginRight: "7px" }}
           />
           <DaumAddress setAddress={setAddress} />
           <Input
             register={register("jnAddr1")}
             maxLength="40"
-            inputSize={InputSize.i367}
+            style={{ width: "453px", marginLeft: "6px" }}
           />
         </Wrapper>
 
-        <Wrapper>
+        <Wrapper grid col={3}>
           <Input
             label=""
             register={register("jnAddr2")}
-            inputSize={InputSize.i468}
             maxLength="40"
+            style={{ width: "642px" }}
           />
         </Wrapper>
 
-        <Wrapper grid col={2}>
+        <Wrapper grid col={3}>
           <Input
             label="업태"
             register={register("jnUptae")}
-            inputSize={InputSize.i180}
+            inputSize={InputSize.i150}
             maxLength="50"
           />
           <Input
             label="종목"
-            labelStyle={{ minWidth: "75px" }}
+            // labelStyle={{ minWidth: "75px" }}
             register={register("jnJongmok")}
-            inputSize={InputSize.i180}
+            inputSize={InputSize.i150}
             maxLength="50"
           />
         </Wrapper>
 
-        <Wrapper>
+        <Wrapper grid col={3}>
           <Input
             label="대표전화"
             register={register("jnTel1")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i150}
             maxLength="14"
           />
           <Input
             label="대표전화2"
-            labelStyle={{ minWidth: "80px" }}
+            // labelStyle={{ minWidth: "80px" }}
             register={register("jnTel2")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i150}
             maxLength="14"
           />
 
           <Input
             label="팩스"
-            labelStyle={{ minWidth: "80px" }}
+            // labelStyle={{ minWidth: "80px" }}
             register={register("jnFax")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i90}
             maxLength="14"
           />
         </Wrapper>
         <Divider />
 
-        <Wrapper grid>
+        <Wrapper grid col={3}>
           <Input
             label="안전관리 총괄자"
             register={register("jnAnname1")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i150}
             maxLength="10"
           />
 
@@ -347,11 +345,11 @@ const Form = React.forwardRef(
           />
         </Wrapper>
 
-        <Wrapper grid>
+        <Wrapper grid col={3}>
           <Input
             label="안전관리 책임자"
             register={register("jnAnname2")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i150}
             maxLength="10"
           />
 
@@ -389,7 +387,7 @@ const Form = React.forwardRef(
         <Wrapper grid col={2} style={{ gridTemplateColumns: " 2fr 4fr" }}>
           <FormGroup>
             <Label>세금계산서 양식</Label>
-            <Select {...register("jnSekum")}>
+            <Select {...register("jnSekum")} width={InputSize.i150}>
               {dataCommonDic?.jnSekum?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -398,7 +396,7 @@ const Form = React.forwardRef(
             </Select>
           </FormGroup>
 
-          <Wrapper grid col={3}>
+          <Wrapper grid col={3} style={{ marginLeft: "12px" }}>
             <FormGroup>
               <CheckBox
                 register={{ ...register("jnSegongYn") }}
@@ -406,7 +404,7 @@ const Form = React.forwardRef(
               />
             </FormGroup>
 
-            <FormGroup>
+            <FormGroup style={{ marginLeft: "10px" }}>
               <CheckBox
                 register={{ ...register("jnVatSumyn") }}
                 title="Vat 별도 단가계산"
@@ -425,7 +423,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <FormGroup>
             <Label>거래명세표 양식</Label>
-            <Select {...register("jnJangbu")}>
+            <Select {...register("jnJangbu")} width={InputSize.i150}>
               {dataCommonDic?.jnJangbu?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -455,7 +453,7 @@ const Form = React.forwardRef(
         <Wrapper grid col={3}>
           <FormGroup>
             <Label>가상 계좌 서비스</Label>
-            <Select {...register("jnVirtualAcc")} width={InputSize.i175}>
+            <Select {...register("jnVirtualAcc")} width={InputSize.i150}>
               {dataCommonDic?.jnVirtualAcc?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -465,10 +463,8 @@ const Form = React.forwardRef(
           </FormGroup>
 
           <FormGroup>
-            <Label style={{ minWidth: "85px", marginLeft: "5px" }}>
-              계좌 자동이체
-            </Label>
-            <Select {...register("jnBankCms")} width={InputSize.i175}>
+            <Label style={{ marginLeft: "5px" }}>계좌 자동이체</Label>
+            <Select {...register("jnBankCms")} style={{ width: "165px" }}>
               {dataCommonDic?.jnBankCms?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -478,8 +474,8 @@ const Form = React.forwardRef(
           </FormGroup>
 
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>카드 자동이체</Label>
-            <Select {...register("jnCardCms")} width={InputSize.i110}>
+            <Label>카드 자동이체</Label>
+            <Select {...register("jnCardCms")} width={InputSize.i90}>
               {dataCommonDic?.jnCardCms?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}

@@ -1,18 +1,23 @@
 import styled from "styled-components";
 
 export const VolReading = styled.div`
-  width: 800px;
-  height: 194px;
+  width: 870px;
+  height: 150px;
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
   border-radius: 8px;
-  margin-top: 13px;
+  margin-top: 10px;
   .volReadCnt {
     padding: 0 17px;
     .vapInput {
       input {
         min-width: 259px;
       }
+    }
+    .lpgDesc {
+      position: unset;
+      margin-left: 34px;
+      margin-top: 7px;
     }
   }
   .title {
@@ -45,12 +50,16 @@ export const VolReading = styled.div`
     width: 99%;
     align-items: center;
   }
+  .field {
+    display: flex;
+    gap: 40px;
+  }
 `;
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 800px;
-  margin-top: 24px;
+  width: 870px;
+  margin-top: 11px;
   .title {
     height: 31px;
     background: rgba(101, 84, 255, 0.37);
@@ -62,16 +71,16 @@ export const Container = styled.div`
   }
 `;
 export const RubeUnit = styled.div`
-  width: 370px;
+  width: 490px;
   height: 415px;
   border-radius: 8px;
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
   input {
-    width: 67px;
+    width: 70px;
   }
   table {
-    width: 240px;
+    width: 463px;
     margin: 0 auto;
     tr {
       td {
@@ -83,7 +92,7 @@ export const RubeUnit = styled.div`
       }
     }
     input {
-      height: 20px;
+      height: 30px;
     }
   }
   .rubeDesc {

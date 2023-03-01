@@ -2,7 +2,6 @@
 import React, { useEffect, useImperativeHandle, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
-import CreatableSelect from "react-select/creatable";
 // COMPONENTS
 import DaumAddress from "components/daum";
 import CheckBox from "components/checkbox";
@@ -144,15 +143,15 @@ const Form = React.forwardRef(
       crud,
     }));
 
-    const checkAreaCode = () => {
-      if (areaCode === "undefined" || areaCode === "00") {
-        toast.warning("areaCode can't be 00.", {
-          autoClose: 500,
-        });
-        return false;
-      }
-      return true;
-    };
+    // const checkAreaCode = () => {
+    //   if (!areaCode) {
+    //     toast.warning("areaCode can't be 00.", {
+    //       autoClose: 500,
+    //     });
+    //     return false;
+    //   }
+    //   return true;
+    // };
 
     const fetchCodes = async (areaCode: string) => {
       try {
@@ -179,9 +178,9 @@ const Form = React.forwardRef(
 
     const resetForm = async (type: string) => {
       if (type === "clear") {
-        if (!checkAreaCode()) {
-          return null;
-        }
+        // if (!checkAreaCode()) {
+        //   return null;
+        // }
         const data = await fetchCodes(areaCode);
         if (data && data?.tempCuCode[0]) {
           reset({ ...emptyObj, cuCode: data?.tempCuCode[0]?.tempCuCode });
@@ -1012,21 +1011,6 @@ const Form = React.forwardRef(
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <Field>
               <FormGroup>
-                {/*
-
-                <Select {...register("tankMakeCo1")} fullWidth>
-
-                  {dataCommonDic?.tankMakeCo1?.map(
-                    (obj: any, index: number) => (
-                      <option key={index} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    )
-                  )}
-
-
-                */}
-
                 <EditableSelect
                   list={dataCommonDic?.tankMakeCo1}
                   register={register("tankMakeCo1")}
@@ -1097,19 +1081,6 @@ const Form = React.forwardRef(
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <Field>
               <FormGroup>
-                {/*
-                <Select {...register("tankMakeCo2")} fullWidth>
-
-                  {dataCommonDic?.tankMakeCo2?.map(
-                    (obj: any, index: number) => (
-                      <option key={index} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    )
-                  )}
-
-                </Select>
-                */}
                 <EditableSelect
                   list={dataCommonDic?.tankMakeCo2}
                   register={register("tankMakeCo2")}
@@ -1336,16 +1307,6 @@ const Form = React.forwardRef(
 
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <FormGroup>
-              {/*
-              <Select {...register("gasifyCo1")} fullWidth>
-
-                {dataCommonDic?.gasifyCo1?.map((obj: any, idx: number) => {
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>;
-                })}
-   </Select>
-              */}
               <EditableSelect
                 list={dataCommonDic?.gasifyCo1}
                 register={register("gasifyCo1")}
@@ -1392,17 +1353,6 @@ const Form = React.forwardRef(
           </FormGroup>
           <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
             <FormGroup>
-              {/*
-              <Select {...register("gasifyCo2")} fullWidth>
-
-                {dataCommonDic?.gasifyCo2?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-
-              </Select>
-              */}
               <EditableSelect
                 list={dataCommonDic?.gasifyCo2}
                 register={register("gasifyCo2")}

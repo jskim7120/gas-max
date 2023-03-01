@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "app/store";
 import API from "app/axios";
 import { GR130012 } from "app/path";
@@ -54,8 +54,8 @@ function GR1300Modal() {
     >
       <CTable2>
         <tr>
-          <th>구분</th>
-          <th>총입고량</th>
+          <th>코드</th>
+          <th>품명</th>
         </tr>
         {data?.map((item, idx) => (
           <tr
@@ -86,14 +86,12 @@ function GR1300Modal() {
             dispatch(
               addGR1300({
                 ...state,
-                jbuDangaType: selected?.jbuDangaType ?? undefined,
-                bpName: selected?.bpName ?? undefined,
-                bpType: selected?.bpType ?? undefined,
-                jbuChangedate: selected?.jbuChangedate ?? undefined,
-                bpDanwi: selected?.bpDanwi ?? undefined,
-                jbuVatKind: selected?.jbuVatKind ?? undefined,
-                jbuBpDanga: selected?.jbuBpDanga ?? undefined,
+                isProductNameSelected: true,
                 bpCode: selected?.bpCode ?? undefined,
+                bpName: selected?.bpName ?? undefined,
+                jbuBpDanga: selected?.jbuBpDanga ?? undefined,
+                jbuVatKind: selected?.jbuVatKind ?? undefined,
+                bpType: selected?.bpType ?? undefined,
               })
             );
 

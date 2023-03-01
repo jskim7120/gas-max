@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import {
   Input,
@@ -11,7 +10,6 @@ import {
   Label,
 } from "components/form/style";
 import { ICM1300User } from "./model";
-import { schema } from "../validation";
 import { InputSize } from "components/componentsType";
 import API from "app/axios";
 import {
@@ -52,7 +50,6 @@ const Form = React.forwardRef(
       getValues,
     } = useForm<ICM1300User>({
       mode: "onChange",
-      resolver: yupResolver(schema),
     });
 
     useEffect(() => {

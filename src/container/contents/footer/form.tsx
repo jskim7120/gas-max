@@ -11,6 +11,7 @@ import {
 } from "components/allSvgIcon";
 import { Select } from "components/form/style";
 import { FOOT61, FOOTER } from "app/path";
+import Loader from "components/loader";
 import API from "app/axios";
 import Grid from "./grid";
 import { closeModal } from "app/state/modal/modalSlice";
@@ -166,6 +167,7 @@ function Form() {
   const [sCuAddr, setSCuAddr] = useState("");
   const [sCuTel, setSCuTel] = useState("");
   const [sCuName, setSCuName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const searchState = useSelector((state) => state.footer.search);
 
@@ -218,12 +220,15 @@ function Form() {
 
   const fetchData = async (params: ISEARCH) => {
     try {
+      setLoading(true);
       const { data: SEARCHDATA } = await API.get(FOOTER, {
         params: params,
       });
 
       setData(SEARCHDATA);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log("FOOTER DATA fetch error =======>", error);
     }
   };
@@ -318,10 +323,26 @@ function Form() {
           <div>
             <Button
               text="검색"
-              icon={<MagnifyingGlassBig width="17.188" height="17.141" />}
+              icon={
+                !loading && (
+                  <MagnifyingGlassBig width="17.188" height="17.141" />
+                )
+              }
               kind={ButtonType.ROUND}
               type="submit"
               style={{ height: "26px" }}
+              loader={
+                loading && (
+                  <>
+                    <Loader
+                      color="white"
+                      size={19}
+                      style={{ marginRight: "10px" }}
+                      borderWidth="3px"
+                    />
+                  </>
+                )
+              }
             />
           </div>
         </div>

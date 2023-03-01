@@ -2,13 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
+import { CC1500SEARCH, CC150065 } from "app/path";
 import {
   SearchWrapper,
   MainWrapper,
   RightSide,
   LeftSide,
 } from "../../commonStyle";
-import { ICC1500SEARCH } from "./model";
 import CustomDatePicker from "components/customDatePicker";
 import {
   MagnifyingGlass,
@@ -17,24 +17,27 @@ import {
   Trash,
   Update,
 } from "components/allSvgIcon";
-import { Select, FormGroup, Label, Field } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import Grid from "../grid";
 import { fields, columns } from "./data";
+import { ICC1500SEARCH } from "./model";
 import Form from "./form";
-import { CC1500SEARCH, CC150065 } from "app/path";
 import {
   formatDateToStringWithoutDash,
   formatDateByRemoveDash,
 } from "helpers/dateFormat";
+import { CustomAreaCodePart } from "container/contents/customTopPart";
 
 function CC1500({
   depthFullName,
+  areaCode,
   menuId,
 }: {
   depthFullName: string;
+  areaCode: string;
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
@@ -143,18 +146,12 @@ function CC1500({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
+        <CustomAreaCodePart
+          areaCode={areaCode}
+          depthFullName={depthFullName}
+          register={register}
+          dataCommonDic={dataCommonDic}
+        />
         <div className="buttons">
           <Button
             text="등록"

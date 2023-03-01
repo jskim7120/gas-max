@@ -16,11 +16,11 @@ import {
   RightSide,
   SearchWrapper,
 } from "../../commonStyle";
-import { Select, Field, Label, FormGroup } from "components/form/style";
+import { Select, Label, FormGroup } from "components/form/style";
 import { ButtonColor } from "components/componentsType";
-import GridLeft from "../grid";
+import GridLeft from "components/grid";
 import Form from "./form";
-import { GR1200SEARCH, GR120065 } from "app/path";
+import { GR1200SEARCH } from "app/path";
 import Loader from "components/loader";
 import {
   formatDateToStringWithoutDash,
@@ -28,13 +28,17 @@ import {
 } from "helpers/dateFormat";
 import Table from "./table";
 import { fields, columns, layout } from "./data";
+import CustomTopPart from "container/contents/customTopPart";
 
 const minWidth = "900px";
+
 function GR1200({
   depthFullName,
+  areaCode,
   menuId,
 }: {
   depthFullName: string;
+  areaCode: string;
   menuId: string;
 }) {
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -45,8 +49,6 @@ function GR1200({
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [data2, setData2] = useState({});
-  // const [data65, setData65] = useState({});
-  // const [data65Detail, setData65Detail] = useState<any[]>();
 
   const [selected, setSelected] = useState<any>();
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
@@ -56,21 +58,15 @@ function GR1200({
   });
 
   useEffect(() => {
-    if (dataCommonDic !== undefined && dataCommonDic) {
+    if (dataCommonDic) {
       reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
+        areaCode: areaCode,
         sBcBuCode: dataCommonDic?.sBcBuCode[0].code,
         sDate: dataCommonDic?.sDate[0].code,
         eDate: dataCommonDic?.eDate[0].code,
       });
     }
   }, [dataCommonDic]);
-
-  // useEffect(() => {
-  //   if (selected) {
-  //     fetchData65();
-  //   }
-  // }, [selected]);
 
   const fetchData = async (params: any) => {
     try {
@@ -100,49 +96,18 @@ function GR1200({
     }
   };
 
-  // const fetchData65 = async () => {
-  //   try {
-  //     const { data } = await API.get(GR120065, {
-  //       params: {
-  //         areaCode: selected?.areaCode,
-  //         bcDate: formatDateByRemoveDash(selected?.bcDate),
-  //         sBcBuCode: selected?.bcBuCode,
-  //         bcSno: selected?.bcSno,
-  //         bcChitType: selected?.bcChitType,
-  //       },
-  //     });
-
-  //     if (data) {
-  //       setData65(data?.mainData[0]);
-  //       setData65Detail([...data?.detailData]);
-  //     } else {
-  //       setData65({});
-  //       setData65Detail([]);
-  //     }
-  //   } catch (err) {
-  //     console.log("GR1200 65 DATA fetch error =======>", err);
-  //   }
-  // };
-
   const submit = async (data: any) => {
     fetchData(data);
   };
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
-      </SearchWrapper>
+      <CustomTopPart
+        depthFullName={depthFullName}
+        register={register}
+        dataCommonDic={dataCommonDic}
+        areaCode={areaCode}
+      />
       <MainWrapper>
         <LeftSide>
           <form onSubmit={handleSubmit(submit)} style={{ minWidth: minWidth }}>
@@ -216,6 +181,7 @@ function GR1200({
             </SearchWrapper>
           </form>
           <GridLeft
+            areaCode={areaCode}
             data={data}
             fields={fields}
             columns={columns}
@@ -223,16 +189,16 @@ function GR1200({
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: `calc(100% - 196px)`, minWidth: minWidth }}
+            layout={layout}
           />
           <Table data={data2} style={{ minWidth: minWidth }} />
         </LeftSide>
         <RightSide>
           <Form
+            areaCode={areaCode}
             dataCommonDic={dataCommonDic}
             selected={selected}
-            // data={data65}
-            // setData65Detail={setData65Detail}
-            // data65Detail={data65Detail}
+            fetchData={handleSubmit(submit)}
           />
         </RightSide>
       </MainWrapper>

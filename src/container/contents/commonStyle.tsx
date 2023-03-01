@@ -1,50 +1,5 @@
 import styled from "styled-components";
 
-export const TopBar = styled.div`
-  background-color: #dbdbdb;
-  height: 35px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 6px 0 15px;
-  border-bottom: 3px solid #707070;
-  margin-top: 4px;
-
-  .m_left {
-    margin-right: 23.85%;
-    align-items: center;
-    gap: 8px;
-  }
-  .b_right {
-    width: 5px;
-    height: 35px;
-    background: #707070;
-  }
-
-  p {
-    color: #0a0a0a;
-    font-family: "SegoeUI";
-    font-size: 14px;
-
-    &.big {
-      font-family: "NotoSansKRRegular";
-      font-size: 14px;
-      font-weight: bold;
-      margin: 0 10px 0 15px;
-    }
-  }
-
-  div.buttons {
-    display: flex;
-    alignitems: center;
-  }
-
-  .title-and-areacode {
-    display: flex;
-    align-items: center;
-  }
-`;
-
 export const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -102,13 +57,14 @@ export const SearchWrapper = styled.div`
 export const MainWrapper = styled.div`
   display: flex;
   gap: 0;
-  height: calc(100% - 14px);
+  height: calc(100% - 17px);
   width: 100%;
 `;
 
 export const WrapperContent = styled.div`
   gap: 0px;
   height: calc(100% - 17px);
+
   width: 100%;
 `;
 

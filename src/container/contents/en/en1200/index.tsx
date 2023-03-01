@@ -14,7 +14,7 @@ import { EN1200LIST } from "app/path";
 import Form from "./form";
 import Grid from "../grid";
 import { columns, fields } from "./data";
-import { MainWrapper, TopBar, RightSide } from "../../commonStyle";
+import { MainWrapper, SearchWrapper, RightSide } from "../../commonStyle";
 
 function EN1200({
   depthFullName,
@@ -69,7 +69,7 @@ function EN1200({
 
   return (
     <>
-      <TopBar>
+      <SearchWrapper className="h35 mt5">
         <p>{depthFullName}</p>
         <div className="buttons">
           <Button
@@ -108,7 +108,7 @@ function EN1200({
             }}
           />
         </div>
-      </TopBar>
+      </SearchWrapper>
       <MainWrapper>
         <Grid
           style={{ minWidth: "162px" }}

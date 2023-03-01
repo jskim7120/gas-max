@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import {
   Input,
@@ -17,7 +16,7 @@ import { CheckBoxContainer } from "./style";
 import CheckBox from "components/checkbox";
 import { ICM1300 } from "./model";
 import DaumAddress from "components/daum";
-import { schema } from "./validation";
+
 import {
   CM1300INSERT,
   CM1300UPDATE,
@@ -32,7 +31,6 @@ import {
   RadioButton,
   RadioButtonLabel,
 } from "components/radioButton/style";
-import { createNoSubstitutionTemplateLiteral } from "typescript";
 
 interface IForm {
   selected: any;
@@ -100,7 +98,7 @@ const Form = React.forwardRef(
       reset,
       formState: { errors },
       getValues,
-    } = useForm<ICM1300>({ mode: "onChange", resolver: yupResolver(schema) });
+    } = useForm<ICM1300>({ mode: "onChange" });
 
     useEffect(() => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {

@@ -225,24 +225,24 @@ const Form = React.forwardRef(
         </FormGroup>
 
         <Divider />
+
+        <Input
+          label="계정과목"
+          labelStyle={{ minWidth: "80px" }}
+          register={register("acjAccName")}
+          inputSize={InputSize.i200}
+        />
         <FormGroup>
           <Input
-            label="계정과목"
+            label="항 목"
             labelStyle={{ minWidth: "80px" }}
-            register={register("acjAccName")}
-            inputSize={InputSize.i200}
+            register={register("acjAcsName")}
+            inputSize={InputSize.i250}
           />
           <SearchBtn type="button" onClick={handleSearchBtnClick}>
             <MagnifyingGlass />
           </SearchBtn>
         </FormGroup>
-
-        <Input
-          label="항 목"
-          labelStyle={{ minWidth: "80px" }}
-          register={register("acjAcsName")}
-          inputSize={InputSize.i250}
-        />
 
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>사 원</Label>

@@ -15,7 +15,7 @@ export const fields = [
   },
   {
     fieldName: "gjGum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjGage",
@@ -75,11 +75,6 @@ export const columns = [
     width: "100",
     header: {
       text: "년월 회차",
-    },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("gjGumymsno", "count");
-      },
     },
   },
   {

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { ICM1100SEARCH } from "./model";
 import { useForm } from "react-hook-form";
 import { openModal, addCM1105 } from "app/state/modal/modalSlice";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import Button from "components/button/button";
 import {
   ButtonColor,
@@ -26,25 +26,30 @@ import {
   Wrapper,
   Label,
 } from "components/form/style";
-import { TopBar, WrapperContent } from "../../commonStyle";
-import { SearchWrapper } from "../../commonStyle";
+import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import API from "app/axios";
 import Grid from "./grid";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "./validation";
 import { columns, fields } from "./data";
 import CM1100Footer from "./footer";
 import { CM1100SEARCH } from "app/path";
 import Loader from "components/loader";
+import { CustomAreaCodePart } from "container/contents/customTopPart";
+import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 function CM1100Page({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const dispatch = useDispatch();
+
+  const { areaCode: areaCodeFooter, cuCode: cuCodeFooter } = useSelector(
+    (state) => state.modal.cm1105
+  );
   const [data, setData] = useState<any>([]);
   const [selected, setSelected] = useState<any>({});
   const [loading, setLoading] = useState(false);
@@ -53,30 +58,21 @@ function CM1100Page({
     functionName: "CM1100",
   });
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    getValues,
-  } = useForm<ICM1100SEARCH>({
+  const { register, handleSubmit, reset } = useForm<ICM1100SEARCH>({
     mode: "onSubmit",
-    resolver: yupResolver(schema),
   });
 
   useEffect(() => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-      cuType: dataCommonDic?.cuType[0].code,
-      cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
-      swCode: dataCommonDic?.swCode[0].code,
-      cuEtOption: dataCommonDic?.cuEtOption[0].code,
-      cuJyCode: dataCommonDic?.cuJyCode[0].code,
-      cuGong: dataCommonDic?.cuGong[0].code,
-      cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
-      cuStae: dataCommonDic?.cuStae[0].code,
-    });
+    if (dataCommonDic) {
+      resetSearchForm();
+    }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (areaCodeFooter && cuCodeFooter) {
+      setFooterDetail(areaCodeFooter, cuCodeFooter, dispatch);
+    }
+  }, [areaCodeFooter, cuCodeFooter]);
 
   const submit = async (data: ICM1100SEARCH) => {
     fetchData(data);
@@ -85,14 +81,19 @@ function CM1100Page({
   const fetchData = async (params: any) => {
     try {
       setLoading(true);
-      const { data } = await API.get(CM1100SEARCH, { params: params });
+      const { data: dataSearch } = await API.get(CM1100SEARCH, {
+        params: params,
+      });
 
-      if (data) {
-        setData(data);
-        setLoading(false);
+      if (dataSearch) {
+        setData(dataSearch);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (err) {
       setLoading(false);
+      setData([]);
       console.log("CM1100 data search fetch error =======>", err);
     }
   };
@@ -111,21 +112,30 @@ function CM1100Page({
     } catch (err: any) {}
   };
 
+  const resetSearchForm = () => {
+    reset({
+      areaCode: dataCommonDic?.areaCode[0].code,
+      cuType: dataCommonDic?.cuType[0].code,
+      cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
+      swCode: dataCommonDic?.swCode[0].code,
+      cuEtOption: dataCommonDic?.cuEtOption[0].code,
+      cuJyCode: dataCommonDic?.cuJyCode[0].code,
+      cuGong: dataCommonDic?.cuGong[0].code,
+      cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
+      cuStae: dataCommonDic?.cuStae[0].code,
+    });
+  };
+
   return (
     <>
-      <TopBar>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <p style={{ marginRight: "20px" }}>{depthFullName}</p>
-          <p className="big">영업소</p>
+      <SearchWrapper className="h35 mt5">
+        <CustomAreaCodePart
+          areaCode={areaCode}
+          dataCommonDic={dataCommonDic}
+          depthFullName={depthFullName}
+          register={register}
+        />
 
-          <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </div>
         <div className="buttons">
           <Button
             text="등록"
@@ -148,23 +158,13 @@ function CM1100Page({
             style={{ marginRight: "5px" }}
             type="button"
             onClick={() => {
-              reset({
-                areaCode: dataCommonDic?.areaCode[0].code,
-                cuType: dataCommonDic?.cuType[0].code,
-                cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
-                swCode: dataCommonDic?.swCode[0].code,
-                cuEtOption: dataCommonDic?.cuEtOption[0].code,
-                cuJyCode: dataCommonDic?.cuJyCode[0].code,
-                cuGong: dataCommonDic?.cuGong[0].code,
-                cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
-                cuStae: dataCommonDic?.cuStae[0].code,
-              });
+              resetSearchForm();
               setData([]);
             }}
           />
           <Button text="삭제" icon={<Trash />} type="button" />
         </div>
-      </TopBar>
+      </SearchWrapper>
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper>
@@ -174,6 +174,7 @@ function CM1100Page({
                   label="거래처명"
                   register={register("cuName")}
                   kind={FieldKind.BORDER}
+                  minWidth={InputSize.i100}
                 />
                 <Input
                   label="전화"
@@ -370,11 +371,12 @@ function CM1100Page({
         </form>
 
         <Grid
-          data={data.length > 0 && data}
+          data={data}
           columns={columns}
           fields={fields}
           setSelected={setSelected}
           openPopup={handleOpenPopup}
+          areaCode={areaCode}
         />
 
         <CM1100Footer />

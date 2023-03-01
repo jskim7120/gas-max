@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { GridView, LocalDataProvider } from "realgrid";
 import { useForm } from "react-hook-form";
 import API from "app/axios";
 import Button from "components/button/button";
@@ -9,7 +8,6 @@ import {
   Trash,
   Update,
   Reset,
-  UserCm1300Icon,
   MagnifyingGlassBig,
 } from "components/allSvgIcon";
 import { columns, fields } from "./data";
@@ -21,43 +19,33 @@ import {
 } from "app/state/modal/modalSlice";
 import Form from "./form";
 import { ButtonColor, FieldKind, ButtonType } from "components/componentsType";
-import { MainWrapper, TopBar } from "../../commonStyle";
+import {
+  MainWrapper,
+  SearchWrapper,
+  LeftSide,
+  RightSide,
+} from "../../commonStyle";
 import { CM1300SEARCH } from "app/path";
-import {
-  Grid1Container,
-  Grid2Container,
-  Table1Wrapper,
-  Detail1Wrapper,
-  FormTitle,
-  UpdateButtonsContainer,
-  BorderRight,
-  Detail2Wrapper,
-} from "./style";
-import {
-  Field,
-  FormGroup,
-  Input,
-  Select,
-  Divider,
-} from "components/form/style";
-import HomeIconSvg from "assets/image/home-icon.svg";
+import { Detail1Wrapper } from "./style";
+import { Field, FormGroup, Input, Select } from "components/form/style";
 import { useDispatch, useSelector } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import FormCM1300User from "./cm1300User";
-
-let container: HTMLDivElement;
-let dp: any;
-let gv: any;
+import GridTop from "components/grid";
+import { BuildingInfoText } from "components/text";
+import { CustomAreaCodePart } from "container/contents/customTopPart";
 
 function CM1300({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const { register, handleSubmit } = useForm({ mode: "onSubmit" });
-  const realgridElement = useRef<HTMLDivElement>(null);
+
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
 
@@ -65,51 +53,13 @@ function CM1300({
   const [selected, setSelected] = useState({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [loading, setLoading] = useState(false);
+
   const { isDelete } = useSelector((state) => state.modal);
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
     functionName: "CM1300",
   });
-
-  useEffect(() => {
-    container = realgridElement.current as HTMLDivElement;
-    dp = new LocalDataProvider(true);
-    gv = new GridView(container);
-
-    gv.setDataSource(dp);
-    dp.setFields(fields);
-    gv.setColumns(columns);
-    dp.setRows(data);
-    gv.setHeader({
-      height: 35,
-    });
-    gv.setFooter({ visible: false });
-    gv.setOptions({
-      indicator: { visible: true },
-      checkBar: { visible: false },
-      stateBar: { visible: false },
-    });
-    gv.sortingOptions.enabled = true;
-    gv.displayOptions._selectionStyle = "singleRow";
-    gv.setEditOptions({ editable: false });
-
-    gv.setCurrent({
-      dataRow: selectedRowIndex,
-    });
-
-    gv.onSelectionChanged = () => {
-      const itemIndex: any = gv.getCurrent().dataRow;
-      setSelected(data[itemIndex]);
-      setSelectedRowIndex(itemIndex);
-    };
-
-    return () => {
-      dp.clearRows();
-      gv.destroy();
-      dp.destroy();
-    };
-  }, [data]);
 
   useEffect(() => {
     if (isDelete.menuId === menuId && isDelete.isDelete) {
@@ -188,117 +138,112 @@ function CM1300({
 
   return (
     <>
-      <TopBar>
-        <p>{depthFullName}</p>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            position: "absolute",
-            left: "245px",
-            gap: "7px",
-            fontSize: "14px",
-            fontWeight: "bold",
-          }}
-        >
-          <p className="big">영업소</p>
-          <Select name="areaCode" kind={FieldKind.BORDER}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </div>
-        <div className="buttons m_left">
-          <Button
-            text="건물등록"
-            icon={<Plus />}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(true);
-              formRef.current.resetForm("clear");
-            }}
-          />
-          <Button
-            text="삭제"
-            icon={<Trash />}
-            onClick={() => {
-              dispatch(openModal({ type: "delModal" }));
-              dispatch(addDeleteMenuId({ menuId: menuId }));
-            }}
-          />
-          <Button
-            text="저장"
-            icon={<Update />}
-            color={ButtonColor.SECONDARY}
-            onClick={() => {
-              formRef.current.crud(null);
-            }}
-          />
-          <Button
-            text="취소"
-            icon={<Reset />}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
-              formRef.current.resetForm("reset");
-            }}
-            style={{ padding: "0 3px" }}
-          />
-          <BorderRight />
-        </div>
-      </TopBar>
-      <MainWrapper>
-        <Grid1Container>
-          <form
-            onSubmit={handleSubmit(onSearchSubmit)}
-            style={{
-              background: "#dbdbdb",
-              borderBottom: "3px solid #707070",
-              height: "40px",
-            }}
-          >
-            <Field>
-              <FormGroup>
-                <FormTitle onClick={fetchListData}>
-                  <img src={HomeIconSvg} />
-                  <p>건물</p>
-                </FormTitle>
-                <Input
-                  label="코드"
-                  register={register("searchInput1", {
-                    required: false,
-                  })}
-                  kind={FieldKind.BORDER}
-                />
-                <Input
-                  label="건물명"
-                  register={register("searchInput2", {
-                    required: false,
-                  })}
-                  kind={FieldKind.BORDER}
-                />
-                <Button
-                  text="검색"
-                  icon={!loading && <MagnifyingGlassBig />}
-                  kind={ButtonType.ROUND}
-                  type="submit"
-                  loader={
-                    loading && (
-                      <>
-                        <Loader
-                          color="white"
-                          size={21}
-                          style={{ marginRight: "10px" }}
-                        />
-                      </>
-                    )
-                  }
-                />
-              </FormGroup>
-            </Field>
-          </form>
+      <MainWrapper
+        style={{
+          marginTop: "5px",
+          height: `calc(100% + 18px)`,
+          border: "1px solid blue",
+        }}
+      >
+        <LeftSide>
+          <SearchWrapper className="h35">
+            <CustomAreaCodePart
+              areaCode={areaCode}
+              dataCommonDic={dataCommonDic}
+              depthFullName={depthFullName}
+              register={register}
+            />
 
-          <Table1Wrapper ref={realgridElement}></Table1Wrapper>
+            <div className="buttons">
+              <Button
+                text="건물등록"
+                icon={<Plus />}
+                onClick={() => {
+                  formRef.current.setIsAddBtnClicked(true);
+                  formRef.current.resetForm("clear");
+                }}
+                style={{ marginRight: "5px" }}
+              />
+              <Button
+                text="삭제"
+                icon={<Trash />}
+                onClick={() => {
+                  dispatch(openModal({ type: "delModal" }));
+                  dispatch(addDeleteMenuId({ menuId: menuId }));
+                }}
+                style={{ marginRight: "5px" }}
+              />
+              <Button
+                text="저장"
+                icon={<Update />}
+                color={ButtonColor.SECONDARY}
+                onClick={() => {
+                  formRef.current.crud(null);
+                }}
+                style={{ marginRight: "5px" }}
+              />
+              <Button
+                text="취소"
+                icon={<Reset />}
+                onClick={() => {
+                  formRef.current.setIsAddBtnClicked(false);
+                  formRef.current.resetForm("reset");
+                }}
+              />
+            </div>
+          </SearchWrapper>
+          <SearchWrapper>
+            <form onSubmit={handleSubmit(onSearchSubmit)}>
+              <Field>
+                <FormGroup>
+                  <BuildingInfoText text="건물" />
+                  <Input
+                    label="코드"
+                    register={register("searchInput1", {
+                      required: false,
+                    })}
+                    kind={FieldKind.BORDER}
+                  />
+                  <Input
+                    label="건물명"
+                    register={register("searchInput2", {
+                      required: false,
+                    })}
+                    kind={FieldKind.BORDER}
+                  />
+                  <Button
+                    text="검색"
+                    icon={!loading && <MagnifyingGlassBig />}
+                    kind={ButtonType.ROUND}
+                    type="submit"
+                    loader={
+                      loading && (
+                        <>
+                          <Loader
+                            color="white"
+                            size={21}
+                            style={{ marginRight: "10px" }}
+                          />
+                        </>
+                      )
+                    }
+                  />
+                </FormGroup>
+              </Field>
+            </form>
+          </SearchWrapper>
+
+          <GridTop
+            areaCode={areaCode}
+            data={data}
+            setSelected={setSelected}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            fields={fields}
+            columns={columns}
+            style={{ height: `45%` }}
+          />
+
           <Detail1Wrapper>
             <Form
               selected={selected}
@@ -311,26 +256,15 @@ function CM1300({
               setSelected={setSelected}
             />
           </Detail1Wrapper>
-        </Grid1Container>
-        <Grid2Container>
-          <form>
-            <Field>
-              <FormGroup>
-                <FormTitle>
-                  <UserCm1300Icon />
-                  <p>사용자</p>
-                </FormTitle>
-              </FormGroup>
-            </Field>
-          </form>
-          <Detail2Wrapper>
-            <FormCM1300User
-              menuId={menuId}
-              depthFullName={depthFullName}
-              selectedUser={selected}
-            />
-          </Detail2Wrapper>
-        </Grid2Container>
+        </LeftSide>
+        <RightSide>
+          <FormCM1300User
+            menuId={menuId}
+            depthFullName={depthFullName}
+            selectedUser={selected}
+            areaCode={areaCode}
+          />
+        </RightSide>
       </MainWrapper>
     </>
   );

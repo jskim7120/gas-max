@@ -1,5 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import API, { baseURL } from "app/axios";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IAuth {
   username: string;
@@ -20,6 +19,7 @@ interface IAuthError {
 export interface initialStateType {
   loading: boolean;
   token: string | null;
+  areaCode: string;
   error: any | null;
   message: string;
 }
@@ -27,6 +27,7 @@ export interface initialStateType {
 const initialState: initialStateType = {
   loading: false,
   token: null,
+  areaCode: "",
   error: null,
   message: "",
 };
@@ -46,12 +47,18 @@ const AuthSlice = createSlice({
     logout: (state) => {
       state.token = null;
       localStorage.removeItem("token");
+      localStorage.removeItem("areaCode");
     },
+
     setToken: (state, action: PayloadAction<{ token: string | null }>) => {
       state.token = action.payload.token;
+    },
+
+    setAreaCode: (state, action: PayloadAction<{ areaCode: string }>) => {
+      state.areaCode = action.payload.areaCode;
     },
   },
 });
 
-export const { logout, setToken } = AuthSlice.actions;
+export const { logout, setToken, setAreaCode } = AuthSlice.actions;
 export default AuthSlice.reducer;

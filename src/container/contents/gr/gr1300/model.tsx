@@ -6,7 +6,7 @@ export interface ISEARCH {
 }
 export interface IGR1300 {
   areaCode: string;
-  bbDate: number;
+  bbDate: string;
   bbTypeName: string;
   bbBuName: string;
   bbBpName: string;
@@ -22,19 +22,29 @@ export interface IGR1300 {
   bbBuCode: string;
   bbSno: string;
   bbMemo: string;
+  bbMisu: number;
+  bbBigo: string;
 }
 
 // -------------------------------------------
 
 export interface IDATA65 {
-  //======Main
-  areaCode: string;
-  bbBuCode: string;
-  sBuCode: string;
-  bbDate: string;
-  bbSno: string;
-  bpCode: string;
-  bpName: string;
-  bpType: string;
-  qty: string;
+  bblBpCode: string;
+  bblBpName: string;
+  bblBpSno: string;
+  bblDanga: number;
+  bblKumack: number;
+  bblQty: number;
+  bblType: string;
+  bblVatType: string;
 }
+
+//12--o irj bgaa data type
+// bpCode: "111";
+// bpDanwi: null;
+// bpName: "";
+// bpType: null;
+// jbuBpDanga: 0;
+// jbuChangedate: "20221130";
+// jbuDangaType: "0";
+// jbuVatKind: "0";

@@ -6,12 +6,14 @@ function Grid({
   columns,
   fields,
   setSelected,
+  setSelectedRowIndex,
   style,
 }: {
   data: any;
   columns: any;
   fields: any;
   setSelected?: Function;
+  setSelectedRowIndex?: any;
   style?: any;
 }) {
   let container: HTMLDivElement;
@@ -36,6 +38,7 @@ function Grid({
       indicator: { visible: true },
       checkBar: { visible: false },
       stateBar: { visible: false },
+      footer: { visible: false },
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
@@ -45,6 +48,7 @@ function Grid({
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected && setSelected(data[itemIndex]);
+      setSelectedRowIndex(itemIndex);
     };
 
     return () => {

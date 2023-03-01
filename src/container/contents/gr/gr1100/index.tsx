@@ -32,14 +32,17 @@ import {
   SearchWrapper,
 } from "../../commonStyle";
 import Loader from "components/loader";
+import { CustomAreaCodePart } from "container/contents/customTopPart";
 
 const minWidth = "763px";
 
 function GR1100({
   depthFullName,
+  areaCode,
   menuId,
 }: {
   depthFullName: string;
+  areaCode: string;
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
@@ -110,17 +113,13 @@ function GR1100({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
+        <CustomAreaCodePart
+          areaCode={areaCode}
+          dataCommonDic={dataCommonDic}
+          depthFullName={depthFullName}
+          register={register}
+        />
+
         <div className="buttons">
           <Button
             text="등록"

@@ -6,15 +6,11 @@ import { InputSize } from "components/componentsType";
 function Tab1Footer({
   data,
   register,
-  reset,
-  someFunc,
-  anotherFunc,
+  calcTab1FooterChange,
 }: {
   data: any;
   register: Function;
-  reset: Function;
-  someFunc: Function;
-  anotherFunc: Function;
+  calcTab1FooterChange: Function;
 }) {
   const [bcPdanga, setBcPdanga] = useState<string | undefined>(undefined);
   const [bcBdanga, setBcBdanga] = useState<string | undefined>(undefined);
@@ -40,105 +36,97 @@ function Tab1Footer({
         <tr>
           <th className="light-gray ">프로판</th>
           <td>
-            {data.bcPin}
-            <Input register={register("bcPin")} readOnly />
+            <Input register={register("bcPin")} className="h27" readOnly />
           </td>
           <td>
-            {data.bcPjan}
             <Input
               register={register("bcPjan")}
               onChange={(e: any) => {
                 setBcPjan(e.target.value);
-                anotherFunc(e.target.value, "bcPjan");
+                calcTab1FooterChange(e.target.value, "bcPjan");
               }}
               value={bcPjan}
+              className="h27"
             />
           </td>
           <td>
-            {data.bcSumP}
-            <Input register={register("bcSumP")} readOnly />
+            <Input register={register("bcSumP")} className="h27" readOnly />
           </td>
           <td>
-            {data.bcPdanga}
             <Input
               register={register("bcPdanga")}
               onChange={(e: any) => {
                 setBcPdanga(e.target.value);
-                anotherFunc(e.target.value, "bcPdanga");
+                calcTab1FooterChange(e.target.value, "bcPdanga");
               }}
               value={bcPdanga}
+              className="h27"
             />
           </td>
           <td>
-            {data?.bcPkum}
-            <Input register={register("bcPkum")} readOnly />
+            <Input register={register("bcPkum")} className="h27" readOnly />
           </td>
           <td>
-            {data?.bcPcost}
             <Input
               register={register("bcPcost")}
               onChange={(e: any) => {
                 setBcPcost(e.target.value);
-                anotherFunc(e.target.value, "bcPcost");
+                calcTab1FooterChange(e.target.value, "bcPcost");
               }}
               value={bcPcost}
+              className="h27"
             />
           </td>
           <td>
-            {data?.bcPsum}
-            <Input register={register("bcPsum")} readOnly />
+            <Input register={register("bcPsum")} className="h27" readOnly />
           </td>
         </tr>
         <tr>
           <th className="light-gray ">부탄</th>
           <td>
-            {data?.bcBin}
-            <Input register={register("bcBin")} readOnly />
+            <Input register={register("bcBin")} className="h27" readOnly />
           </td>
           <td>
-            {data.bcBjan}
             <Input
               register={register("bcBjan")}
               onChange={(e: any) => {
                 setBcBjan(e.target.value);
-                anotherFunc(e.target.value, "bcBjan");
+                calcTab1FooterChange(e.target.value, "bcBjan");
               }}
               value={bcBjan}
+              className="h27"
             />
           </td>
           <td>
-            {data?.bcSumB}
-            <Input register={register("bcSumB")} readOnly />
+            <Input register={register("bcSumB")} className="h27" readOnly />
           </td>
           <td>
-            {data?.bcBdanga}
             <Input
               register={register("bcBdanga")}
               onChange={(e: any) => {
                 setBcBdanga(e.target.value);
-                anotherFunc(e.target.value, "bcBdanga");
+                calcTab1FooterChange(e.target.value, "bcBdanga");
               }}
               value={bcBdanga}
+              className="h27"
             />
           </td>
           <td>
-            {data?.bcBkum}
-            <Input register={register("bcBkum")} readOnly />
+            <Input register={register("bcBkum")} className="h27" readOnly />
           </td>
           <td>
-            {data?.bcBcost}
             <Input
               register={register("bcBcost")}
               onChange={(e: any) => {
                 setBcBcost(e.target.value);
-                anotherFunc(e.target.value, "bcBcost");
+                calcTab1FooterChange(e.target.value, "bcBcost");
               }}
               value={bcBcost}
+              className="h27"
             />
           </td>
           <td>
-            {data?.bcBsum}
-            <Input register={register("bcBsum")} readOnly />
+            <Input register={register("bcBsum")} className="h27" readOnly />
           </td>
         </tr>
         <tr>
@@ -149,36 +137,30 @@ function Tab1Footer({
           <td></td>
           <td>{data?.bcGkum}</td>
           <td>
-            <Input register={register("bcGcost")} />
+            <Input register={register("bcGcost")} className="h27" />
           </td>
           <td>{data?.bcGsum}</td>
         </tr>
         <tr>
           <th>합계</th>
           <td>
-            {data?.bcTotal}
-            <Input register={register("bcTotal")} readOnly />
+            <Input register={register("bcTotal")} className="h27" readOnly />
           </td>
           <td>
-            {data?.bcJTotal}
-            <Input register={register("bcJTotal")} readOnly />
+            <Input register={register("bcJTotal")} className="h27" readOnly />
           </td>
           <td>
-            {data?.bcSumTotal}
-            <Input register={register("bcSumTotal")} readOnly />
+            <Input register={register("bcSumTotal")} className="h27" readOnly />
           </td>
           <td></td>
           <td>
-            {data?.bcSumKum}
-            <Input register={register("bcSumKum")} readOnly />
+            <Input register={register("bcSumKum")} className="h27" readOnly />
           </td>
           <td>
-            {data?.bcSumCost}
-            <Input register={register("bcSumCost")} readOnly />
+            <Input register={register("bcSumCost")} className="h27" readOnly />
           </td>
           <td>
-            {data?.bcSum}
-            <Input register={register("bcSum")} readOnly />
+            <Input register={register("bcSum")} className="h27" readOnly />
           </td>
         </tr>
       </CTable2>

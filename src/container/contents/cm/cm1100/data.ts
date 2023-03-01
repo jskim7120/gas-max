@@ -6,6 +6,10 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
+    name: "cuTypeColor",
+    fieldName: "cuTypeColor",
+  },
+  {
     fieldName: "cuTypeName",
     dataType: ValueType.TEXT,
   },
@@ -42,6 +46,10 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
+    fieldName: "cuHdateColor",
+    dataType: ValueType.TEXT,
+  },
+  {
     fieldName: "cuHdate10",
     dataType: ValueType.TEXT,
   },
@@ -49,6 +57,7 @@ export const fields = [
     fieldName: "cuCutypeName",
     dataType: ValueType.TEXT,
   },
+  { fieldName: "cuStaeColor", dataType: ValueType.TEXT },
   {
     fieldName: "cuStaeName",
     dataType: ValueType.TEXT,
@@ -77,6 +86,10 @@ export const columns = [
     width: "120",
     header: {
       text: "구분",
+    },
+    renderer: {
+      type: "html",
+      callback: renderCuTypeColor,
     },
   },
   {
@@ -163,6 +176,10 @@ export const columns = [
     header: {
       text: "최종점검일",
     },
+    renderer: {
+      type: "html",
+      callback: renderHdateColor,
+    },
   },
   {
     name: "cuCutypeName",
@@ -181,5 +198,24 @@ export const columns = [
     header: {
       text: "상태",
     },
+    renderer: {
+      type: "html",
+      callback: renderCuStaeColor,
+    },
   },
 ];
+
+function renderCuTypeColor(grid: any, cell: any, w: any, h: any) {
+  const color = grid.getValue(cell.item.index, "cuTypeColor");
+  return `<span style="color:${color}">${cell.value}</span>`;
+}
+
+function renderHdateColor(grid: any, cell: any, w: any, h: any) {
+  const color = grid.getValue(cell.item.index, "cuHdateColor");
+  return `<span style="color:${color}">${cell.value}</span>`;
+}
+
+function renderCuStaeColor(grid: any, cell: any, w: any, h: any) {
+  const color = grid.getValue(cell.item.index, "cuStaeColor");
+  return `<span style="color:${color}">${cell.value}</span>`;
+}

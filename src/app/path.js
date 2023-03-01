@@ -28,6 +28,7 @@ export const EN1500LIST = "/app/EN1500/list";
 export const EN1500INSERT = "/app/EN1500/insert";
 export const EN1500UPDATE = "/app/EN1500/update";
 export const EN1500DELETE = "/app/EN1500/delete";
+export const EN150065 = "/app/EN1500/65";
 
 export const EN1600LIST = "/app/EN1600/list";
 export const EN1600INSERT = "/app/EN1600/insert";
@@ -114,12 +115,21 @@ export const GR120012 = "/app/GR1200/12";
 export const GR120011 = "/app/GR1200/11";
 export const GR1200BUYINSERT = "/app/GR1200/BUY/insert";
 export const GR1200BUYUPDATE = "/app/GR1200/BUY/update";
+export const GR1200BUYDELETE = "/app/GR1200/BUY/delete";
 export const GR1200BLINSERT = "/app/GR1200/BL/insert";
 export const GR1200BLUPDATE = "/app/GR1200/BL/update";
+export const GR1200BLDELETE = "/app/GR1200/BL/delete";
 
-export const GR130065 = "/app/GR1300/65";
 export const GR1300SEARCH = "app/GR1300/search";
+export const GR130065 = "/app/GR1300/65";
 export const GR130012 = "/app/GR1300/12";
+export const GR130011 = "/app/GR1300/11";
+export const GR1300BUYINSERT = "/app/GR1300/BUY/insert";
+export const GR1300BUYUPDATE = "/app/GR1300/BUY/update";
+export const GR1300BUYDELETE = "/app/GR1300/BUY/delete";
+export const GR1300BLINSERT = "/app/GR1300/BL/insert";
+export const GR1300BLUPDATE = "/app/GR1300/BL/update";
+export const GR1300BLDELETE = "/app/GR1300/BL/delete";
 
 export const GR1600SEARCH = "/app/GR1600/search";
 export const GR1600TAB2 = "/app/GR1600/tab2";
@@ -146,6 +156,9 @@ export const GR9009SEARCH = "/app/GR9009/search";
 export const GR900965 = "/app/GR9009/65";
 
 export const RV1100SEARCH = "/app/RV1100/search";
+export const RV1100SEARCH62 = "/app/RV1100/search62";
+export const RV1100INSERT = "/app/RV1100/insert";
+export const RV1100DELETE = "/app/RV1100/delete";
 export const RV110065 = "/app/RV1100/65";
 
 export const CC1100SEARCH = "/app/CC1100/search";
@@ -165,4 +178,6 @@ export const RV9006SEARCH = "/app/RV9006/search";
 export const RV9005SEARCH = "/app/RV9005/search";
 
 export const FOOT61 = "/app/CM1100/foot61";
+export const FOOTHISTORY = "/app/common/history";
+export const FOOTDETAIL = "/app/common/footDetail";
 export const FOOTER = "/app/CM1100/footer";

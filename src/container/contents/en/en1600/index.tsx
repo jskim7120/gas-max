@@ -13,7 +13,7 @@ import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import Form from "./form";
 import Grid from "../grid";
 import { columns, fields } from "./data";
-import { MainWrapper, RightSide, TopBar } from "../../commonStyle";
+import { MainWrapper, RightSide, SearchWrapper } from "../../commonStyle";
 
 function EN1600({
   depthFullName,
@@ -66,7 +66,7 @@ function EN1600({
   if (!data) return <p>...Loading</p>;
   return (
     <>
-      <TopBar>
+      <SearchWrapper className="h35 mt5">
         <p>{depthFullName}</p>
         <div className="buttons">
           <Button
@@ -105,7 +105,7 @@ function EN1600({
             }}
           />
         </div>
-      </TopBar>
+      </SearchWrapper>
       <MainWrapper>
         <Grid
           data={data}

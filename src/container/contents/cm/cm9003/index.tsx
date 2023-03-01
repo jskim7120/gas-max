@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { CM9003SEARCH } from "app/path";
-import { ISEARCH } from "./model";
 import API from "app/axios";
+import { ISEARCH } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import Loader from "components/loader";
 import Button from "components/button/button";
-import { ButtonColor, InputSize, FieldKind } from "components/componentsType";
+import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "./grid";
+import Grid from "components/grid";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { TopBar, WrapperContent } from "../../commonStyle";
-import { SearchWrapper } from "../../commonStyle";
+import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import {
   Select,
   FormGroup,
@@ -19,13 +18,23 @@ import {
   Label,
   Field,
 } from "components/form/style";
+import CustomTopPart from "../../customTopPart";
+import { columns0, fields0 } from "./data/data0";
+import { columns1, fields1 } from "./data/data1";
+import { columns2, fields2 } from "./data/data2";
+import { columns3, fields3 } from "./data/data3";
+import { columns4, fields4 } from "./data/data4";
+import { columns5, fields5 } from "./data/data5";
+import { columns6, fields6 } from "./data/data6";
 
 function CM9003({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
@@ -55,11 +64,12 @@ function CM9003({
     try {
       setLoading(true);
       const { data } = await API.get(CM9003SEARCH, { params: paramTemp });
-
       if (data) {
         setData(data);
-        setLoading(false);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (err) {
       setData([]);
       setLoading(false);
@@ -91,26 +101,12 @@ function CM9003({
 
   return (
     <>
-      <TopBar>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <p style={{ marginRight: "20px" }}>{depthFullName}</p>
-          <p>
-            <b>영업소</b>
-          </p>
-
-          <Select
-            {...register("areaCode")}
-            style={{ marginLeft: "5px" }}
-            width={InputSize.i130}
-          >
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </div>
-      </TopBar>
+      <CustomTopPart
+        depthFullName={depthFullName}
+        register={register}
+        dataCommonDic={dataCommonDic}
+        areaCode={areaCode}
+      />
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper style={{ alignItems: "baseline" }}>
@@ -120,7 +116,6 @@ function CM9003({
                   <Label style={{ minWidth: "90px" }}>보고서종류</Label>
                   <Select
                     {...register("reportKind")}
-                    kind={FieldKind.BORDER}
                     width={InputSize.i130}
                     onChange={(e) => setReportKind(e.target.value)}
                   >
@@ -134,11 +129,7 @@ function CM9003({
 
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>거래구분</Label>
-                  <Select
-                    {...register("cuType")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("cuType")} width={InputSize.i130}>
                     {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -167,11 +158,7 @@ function CM9003({
 
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>지역분류</Label>
-                  <Select
-                    {...register("cuJyCode")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("cuJyCode")} width={InputSize.i130}>
                     {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -182,11 +169,7 @@ function CM9003({
 
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>담당사원</Label>
-                  <Select
-                    {...register("swCode")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("swCode")} width={InputSize.i130}>
                     {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -197,11 +180,7 @@ function CM9003({
 
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>소비자형태</Label>
-                  <Select
-                    {...register("cuCutype")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("cuCutype")} width={InputSize.i130}>
                     {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -256,7 +235,76 @@ function CM9003({
           </SearchWrapper>
         </form>
 
-        <Grid data={data ? data : []} reportKind={reportKind} />
+        {reportKind === "0" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields0}
+            columns={columns0}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
+        {reportKind === "1" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields1}
+            columns={columns1}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
+        {reportKind === "2" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields2}
+            columns={columns2}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
+        {reportKind === "3" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields3}
+            columns={columns3}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
+        {reportKind === "4" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields4}
+            columns={columns4}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
+        {reportKind === "5" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields5}
+            columns={columns5}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
+        {reportKind === "6" && (
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields6}
+            columns={columns6}
+            style={{ height: `calc(100% - 38px)` }}
+            evenFill
+          />
+        )}
       </WrapperContent>
     </>
   );

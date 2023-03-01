@@ -123,6 +123,7 @@ interface IInputProps {
   onChange?: any;
   readOnly?: boolean;
   mask?: any;
+  minWidth?: InputSize;
 }
 
 export const Input = ({
@@ -147,6 +148,7 @@ export const Input = ({
   onChange,
   readOnly,
   mask,
+  minWidth,
 }: IInputProps) => {
   return (
     <InputWrapper fullWidth={fullWidth}>
@@ -156,6 +158,7 @@ export const Input = ({
         fullWidth={fullWidth}
         kind={kind}
         textAlign={textAlign}
+        minWidth={minWidth && minWidth}
       >
         {label !== undefined && (
           <Label
@@ -195,6 +198,7 @@ export const Input = ({
             textAlign={textAlign && textAlign}
             readOnly={readOnly}
             onChange={onChange}
+            minWidth={minWidth && minWidth}
           />
         )}
       </FormGroup>
@@ -212,10 +216,13 @@ const InputCommonProp = css<{
   fullWidth?: boolean;
   kind?: FieldKind;
   textAlign?: string;
+  minWidth?: InputSize;
 }>`
   height: 30px;
   width: ${(props) =>
     props.inputSize ? getInputSize(props.inputSize) : "100%"};
+  min-width: ${(props) =>
+    props.minWidth ? getInputSize(props.minWidth) : "auto"};
   flex: ${(props) => props.fullWidth && "1"};
   text-align: ${(props) => (props.textAlign ? props.textAlign : "left")};
   border: ${(props) =>
@@ -253,6 +260,7 @@ export const InputForm = styled.input<{
   kind?: FieldKind;
   textAlign?: string;
   readOnly?: boolean;
+  minWidth?: InputSize;
 }>`
   ${InputCommonProp};
 
@@ -269,6 +277,10 @@ export const InputForm = styled.input<{
     height: 22px;
     margin: 2px;
   }
+
+  &.h27 {
+    height: 27px;
+  }
 `;
 
 export const ErrorText = styled.p`
@@ -284,6 +296,7 @@ export const FormGroup = styled.div<{
   fullWidth?: boolean;
   kind?: FieldKind;
   textAlign?: string;
+  minWidth?: InputSize;
 }>`
   display: flex;
   align-items: center;
@@ -316,6 +329,10 @@ export const FormGroup = styled.div<{
   p {
     font-family: "NotoSansKRRegular";
     font-size: 15px;
+
+    &.blue {
+      color: #0a2afb;
+    }
   }
 `;
 
@@ -475,6 +492,10 @@ export const Select = styled.select<{
   font-size: 15px;
   border: 1px solid #e6e5e5;
   background: aliceblue;
+
+  &.h27 {
+    height: 27px;
+  }
 
   &:hover,
   &:focus {

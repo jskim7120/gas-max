@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CM9002SEARCH } from "app/path";
 import { ICM9002SEARCH } from "./model";
 import API from "app/axios";
-import { TopBar, WrapperContent } from "../../commonStyle";
+import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import CheckBox from "components/checkbox";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { SearchWrapper } from "../../commonStyle";
 import {
   Input,
   Select,
@@ -18,35 +17,25 @@ import {
 } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
-import {
-  ButtonColor,
-  ButtonType,
-  InputSize,
-  FieldKind,
-} from "components/componentsType";
+import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "./grid";
+import Grid from "components/grid";
 import { columns, fields } from "./data";
-// import {
-//   Plus,
-//   Trash,
-//   Update,
-//   Reset,
-//   MagnifyingGlassBig,
-//   ExcelIcon,
-// } from "components/allSvgIcon";
+import CustomTopPart from "../../customTopPart";
 
 function CM9002({
   depthFullName,
   menuId,
+  areaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  areaCode: string;
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  // const [selected, setSelected] = useState<any>({});
+  // const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [dataChk, setDataChk] = useState(true);
   const [reportKind, setReportKind] = useState("");
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -54,18 +43,13 @@ function CM9002({
     functionName: "CM9002",
   });
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-
-    control,
-  } = useForm<ICM9002SEARCH>({
+  const { register, handleSubmit, reset, control } = useForm<ICM9002SEARCH>({
     mode: "onSubmit",
   });
 
   const resetForm = () => {
-    if (dataCommonDic !== undefined) {
+    if (dataCommonDic) {
+      console.log("fa:::", dataCommonDic);
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
         reportKind: dataCommonDic?.reportKind[0].code,
@@ -95,10 +79,14 @@ function CM9002({
 
       if (data) {
         setData(data);
-        setLoading(false);
-        setSelectedRowIndex(0);
+        // setSelectedRowIndex(0);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (err) {
+      setData([]);
+      setLoading(false);
       console.log("CM9003 data search fetch error =======>", err);
     }
   };
@@ -116,22 +104,12 @@ function CM9002({
 
   return (
     <>
-      <TopBar>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <p style={{ marginRight: "20px" }}>{depthFullName}</p>
-          <p>
-            <b>영업소</b>
-          </p>
-
-          <Select {...register("areaCode")} style={{ marginLeft: "5px" }}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </div>
-      </TopBar>
+      <CustomTopPart
+        areaCode={areaCode}
+        depthFullName={depthFullName}
+        register={register}
+        dataCommonDic={dataCommonDic}
+      />
       <WrapperContent style={{ height: `calc(100% - 76px)` }}>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper style={{ alignItems: "baseline" }}>
@@ -142,7 +120,6 @@ function CM9002({
                   <Select
                     width={InputSize.i130}
                     {...register("reportKind")}
-                    kind={FieldKind.BORDER}
                     onChange={(e) => setReportKind(e.target.value)}
                   >
                     {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
@@ -155,11 +132,7 @@ function CM9002({
 
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>거래구분</Label>
-                  <Select
-                    {...register("cuType")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("cuType")} width={InputSize.i130}>
                     {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -170,11 +143,7 @@ function CM9002({
 
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>지역분류</Label>
-                  <Select
-                    {...register("cuJyCode")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("cuJyCode")} width={InputSize.i130}>
                     {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -185,11 +154,7 @@ function CM9002({
 
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>담당사원</Label>
-                  <Select
-                    {...register("swCode")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("swCode")} width={InputSize.i130}>
                     {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -200,11 +165,7 @@ function CM9002({
 
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>관리책임자</Label>
-                  <Select
-                    {...register("cuCustgubun")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("cuCustgubun")} width={InputSize.i130}>
                     {dataCommonDic?.cuCustgubun?.map(
                       (obj: any, idx: number) => (
                         <option key={idx} value={obj.code}>
@@ -216,11 +177,7 @@ function CM9002({
                 </FormGroup>
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>검사대상</Label>
-                  <Select
-                    {...register("cuGumsa")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("cuGumsa")} width={InputSize.i130}>
                     {dataCommonDic?.cuGumsa?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -232,11 +189,7 @@ function CM9002({
               <Wrapper grid col={6} fields="1fr 1fr 1fr 1.3fr 1fr 1fr">
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>미수구</Label>
-                  <Select
-                    {...register("cuMisu")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("cuMisu")} width={InputSize.i130}>
                     {dataCommonDic?.cuMisu?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -246,11 +199,7 @@ function CM9002({
                 </FormGroup>
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>소비자형태</Label>
-                  <Select
-                    {...register("cuCutype")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("cuCutype")} width={InputSize.i130}>
                     {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -260,11 +209,7 @@ function CM9002({
                 </FormGroup>
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>거래상태</Label>
-                  <Select
-                    {...register("cuStae")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("cuStae")} width={InputSize.i130}>
                     {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -304,7 +249,6 @@ function CM9002({
                       <CustomDatePicker
                         value={value}
                         onChange={onChange}
-                        style={{ margin: "5px 0 0 0" }}
                         readOnly={!dataChk}
                       />
                     )}
@@ -312,11 +256,7 @@ function CM9002({
                 </Field>
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>수금방법</Label>
-                  <Select
-                    {...register("cuSukumtype")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("cuSukumtype")} width={InputSize.i130}>
                     {dataCommonDic?.cuSukumtype?.map(
                       (obj: any, idx: number) => (
                         <option key={idx} value={obj.code}>
@@ -328,11 +268,7 @@ function CM9002({
                 </FormGroup>
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>장부구분</Label>
-                  <Select
-                    {...register("cuJangbu")}
-                    kind={FieldKind.BORDER}
-                    width={InputSize.i130}
-                  >
+                  <Select {...register("cuJangbu")} width={InputSize.i130}>
                     {dataCommonDic?.cuJangbu?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -386,12 +322,15 @@ function CM9002({
         </form>
 
         <Grid
-          data={data.length > 0 && data}
+          areaCode={areaCode}
+          data={data}
           columns={columns}
           fields={fields}
-          setSelected={setSelected}
-          selectedRowIndex={selectedRowIndex}
-          setSelectedRowIndex={setSelectedRowIndex}
+          // setSelected={setSelected}
+          // selectedRowIndex={selectedRowIndex}
+          // setSelectedRowIndex={setSelectedRowIndex}
+          style={{ height: `calc(100% - 15px)` }}
+          evenFill
         />
       </WrapperContent>
     </>

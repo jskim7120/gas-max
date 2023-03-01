@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import VerticalTab from "components/verticalTab";
 import { TabContentWrapper } from "components/verticalTab/style";
 import API from "app/axios";
@@ -7,7 +7,7 @@ import { CM110065 } from "app/path";
 import getTabContent from "./getTabContent";
 
 function CM1100Footer() {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [tabId, setTabId] = useState(0);
   const cm1105 = useSelector((state) => state.modal.cm1105);
 
@@ -22,9 +22,13 @@ function CM1100Footer() {
       const { data } = await API.get(CM110065, {
         params: { cuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
       });
-
-      setData(data);
+      if (data) {
+        setData(data);
+      } else {
+        setData([]);
+      }
     } catch (err) {
+      setData([]);
       console.log("CM1100 data search fetch error =======>", err);
     }
   };

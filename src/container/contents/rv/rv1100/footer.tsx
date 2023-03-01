@@ -1,20 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { toast } from "react-toastify";
 import { InfoBox } from "./style";
 import { IRV1100 } from "./model";
-import { RV110065 } from "app/path";
+import { RV110065, RV1100INSERT } from "app/path";
 import API from "app/axios";
 import CustomDatePicker from "components/customDatePicker";
 import CheckBox from "components/checkbox";
 import { Wrapper, FormGroup, Label, Field, Input } from "components/form/style";
-import { formatDate } from "helpers/dateFormat";
+import {
+  formatDate,
+  formatDateByRemoveDash,
+  formatDateToStringWithDash,
+  formatDateToStringWithoutDash,
+  formatOnlyYearMonthDateByRemoveDash,
+  formatDateToStringWithoutDashOnlyYearMonth,
+} from "helpers/dateFormat";
 import { InputSize, ButtonColor, ButtonType } from "components/componentsType";
 import Button from "components/button/button";
 import Grid from "./grid";
 import { fields, columns } from "./data/dataBottom";
 import PinImg from "assets/image/pin.png";
 
-function Footer({ data }: { data: any }) {
+function Footer({
+  data,
+  dataCommonDic,
+  gjGumym,
+  gjSno,
+  gjPerDate,
+  selectedRowIndex,
+  setSelectedRowIndex,
+}: {
+  data: any;
+  dataCommonDic: any;
+  gjGumym: any;
+  gjSno: any;
+  gjPerDate: any;
+  selectedRowIndex: any;
+  setSelectedRowIndex?: any;
+}) {
   const [data65, setData65] = useState([]);
   const { register, control, reset, handleSubmit } = useForm<IRV1100>({
     mode: "onSubmit",
@@ -22,15 +46,14 @@ function Footer({ data }: { data: any }) {
 
   useEffect(() => {
     if (data !== undefined) {
-      console.log("data", data);
       reset({
-        gjDate: formatDate(data.gjDate),
+        gjDate: data.gjDate,
         gjGum: data.gjGum,
         gjDanga: data.gjDanga,
         gjKumack: data.gjKumack,
         gjTotal: data.gjTotal,
         gjBigo: data.gjBigo,
-        gjSdate: formatDate(data.gjSdate),
+        gjSdate: data.gjSdate,
         gjJungum: data.gjJungum,
         gjBaGageYn: data.gjBaGageYn === "Y",
         gjBaGageKum: data.gjBaGageKum,
@@ -106,6 +129,59 @@ function Footer({ data }: { data: any }) {
       );
 
     return null;
+  };
+
+  const submit = async (params: any) => {
+    params.areaCode = data?.areaCode;
+    params.gjCuCode = data?.gjCuCode;
+    params.gjJanType = data?.gjJanType;
+    gjGumym
+      ? (params.gjGumym = gjGumym)
+      : (params.gjGumym = formatOnlyYearMonthDateByRemoveDash(
+          dataCommonDic?.sGjGumym[0].code
+        ));
+    gjSno
+      ? (params.gjSno = gjSno)
+      : (params.gjSno = dataCommonDic?.sGjSno[0].code);
+
+    gjPerDate
+      ? (params.gjPerDate = gjPerDate)
+      : (params.gjPerDate = formatDateByRemoveDash(
+          dataCommonDic?.sGjPerDate[0].code
+        ));
+
+    params.gjSdate =
+      typeof params.gjSdate === "string"
+        ? formatDateByRemoveDash(params.gjSdate)
+        : params.gjSdate instanceof Date
+        ? formatDateToStringWithoutDash(params.gjSdate)
+        : "";
+
+    params.gjDate =
+      typeof params.gjDate === "string"
+        ? formatDateByRemoveDash(params.gjDate)
+        : params.gjDate instanceof Date
+        ? formatDateToStringWithoutDash(params.gjDate)
+        : "";
+
+    params.gjGum = Number(params.gjGum);
+    params.gjBigo = Number(params.gjBigo);
+
+    try {
+      const response: any = await API.post(RV1100INSERT, params);
+      if (response.status === 200) {
+        toast.success("저장이 성공하였습니다", {
+          autoClose: 500,
+        });
+        setSelectedRowIndex(selectedRowIndex + 1);
+      } else {
+        toast.error(response?.response?.message, {
+          autoClose: 500,
+        });
+      }
+      setData65(data65);
+    } catch (err) {}
+    // }
   };
   return (
     <div>
@@ -279,6 +355,7 @@ function Footer({ data }: { data: any }) {
                 color: "#fff",
               }}
               kind={ButtonType.ROUND}
+              onClick={handleSubmit(submit)}
             />
             <Button
               text="취소"

@@ -3,10 +3,8 @@ import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
 import API from "app/axios";
-import { GR1300SEARCH, GR130065 } from "app/path";
 import { ISEARCH } from "./model";
 import {
   MainWrapper,
@@ -14,24 +12,29 @@ import {
   RightSide,
   SearchWrapper,
 } from "../../commonStyle";
-import { Select, Field, Label, FormGroup } from "components/form/style";
-import Grid from "../grid";
-import { columns, fields } from "./data";
+import { Select, Label, FormGroup } from "components/form/style";
+import { ButtonColor } from "components/componentsType";
+import GridLeft from "components/grid";
 import Form from "./form";
-import Table from "./table";
+import { GR1300SEARCH } from "app/path";
 import Loader from "components/loader";
 import {
   formatDateToStringWithoutDash,
   formatDateByRemoveDash,
 } from "helpers/dateFormat";
+import Table from "./table";
+import { fields, columns } from "./data";
+import CustomTopPart from "container/contents/customTopPart";
 
 const minWidth = "900px";
 
 function GR1300({
   depthFullName,
+  areaCode,
   menuId,
 }: {
   depthFullName: string;
+  areaCode: string;
   menuId: string;
 }) {
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -41,7 +44,7 @@ function GR1300({
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [data65, setData65] = useState({});
+  // const [data2, setData2] = useState({});
 
   const [selected, setSelected] = useState<any>();
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
@@ -51,21 +54,15 @@ function GR1300({
   });
 
   useEffect(() => {
-    if (dataCommonDic !== undefined && dataCommonDic) {
+    if (dataCommonDic) {
       reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
+        areaCode: areaCode,
         sBuCode: dataCommonDic?.sBuCode[0].code,
         sDate: dataCommonDic?.sDate[0].code,
         eDate: dataCommonDic?.eDate[0].code,
       });
     }
   }, [dataCommonDic]);
-
-  useEffect(() => {
-    if (selected) {
-      fetchData65();
-    }
-  }, [selected]);
 
   const fetchData = async (params: any) => {
     try {
@@ -85,35 +82,12 @@ function GR1300({
       const res = await API.get(GR1300SEARCH, { params: params });
       if (res.status === 200) {
         setData(res?.data);
-        // setData2(res?.data?.totalData[0]);
-        setSelected(res?.data?.[0]);
+        setSelected(res?.data[0]);
       }
       setLoading(false);
     } catch (err) {
       setLoading(false);
       console.log("GR1300 DATA fetch error =======>", err);
-    }
-  };
-
-  const fetchData65 = async () => {
-    try {
-      const { data } = await API.get(GR130065, {
-        params: {
-          areaCode: selected?.areaCode,
-          bbBuCode: selected?.bbBuCode,
-          bbDate: selected?.bbDate,
-          bbSno: selected?.bbSno,
-          // bcChitType: "0",
-        },
-      });
-
-      if (data) {
-        setData65(data);
-      } else {
-        setData65({});
-      }
-    } catch (err) {
-      console.log("GR1300 65 DATA fetch error =======>", err);
     }
   };
 
@@ -123,19 +97,12 @@ function GR1300({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <Field flex>
-          <p>{depthFullName}</p>
-          <p className="big">영업소</p>
-          <Select {...register("areaCode")}>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
-      </SearchWrapper>
+      <CustomTopPart
+        depthFullName={depthFullName}
+        register={register}
+        dataCommonDic={dataCommonDic}
+        areaCode={areaCode}
+      />
       <MainWrapper>
         <LeftSide>
           <form onSubmit={handleSubmit(submit)} style={{ minWidth: minWidth }}>
@@ -197,23 +164,24 @@ function GR1300({
               </div>
             </SearchWrapper>
           </form>
-          <Grid
+          <GridLeft
+            areaCode={areaCode}
             data={data}
             fields={fields}
             columns={columns}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
-            style={{ height: "calc(100% - 82px)", minWidth: minWidth }}
+            style={{ height: `calc(100% - 82px)`, minWidth: minWidth }}
           />
           <Table data={data} style={{ minWidth: minWidth }} />
         </LeftSide>
         <RightSide>
           <Form
             dataCommonDic={dataCommonDic}
-            data65={data65}
-            setData65={setData65}
             selected={selected}
+            areaCode={areaCode}
+            fetchData={handleSubmit(submit)}
           />
         </RightSide>
       </MainWrapper>

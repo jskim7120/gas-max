@@ -1,24 +1,21 @@
-import React from "react";
-import {
-  Input,
-  Select,
-  Field,
-  ErrorText,
-  FormGroup,
-  Wrapper,
-  Divider,
-  Label,
-  TextArea,
-} from "components/form/style";
-import PlainTab from "components/plainTab";
-import { TabContentWrapper } from "components/plainTab/style";
-
+import { useState } from "react";
+import { Input, Field, Select } from "components/form/style";
 import { CTitle, CTextArea, CLabel, TabLikeHeader, CTable } from "./style";
 
-function FooterInfo({ data, register }: { data: any; register: any }) {
+function FooterInfo({
+  data,
+  register,
+  calcTab1FooterChange,
+}: {
+  data: any;
+  register: any;
+  calcTab1FooterChange: Function;
+}) {
+  const [bcOutkum, setBcOutkum] = useState<string | undefined>(undefined);
+  const [bcDc, setBcDc] = useState<string | undefined>(undefined);
   return (
     <div>
-      <Field flex style={{ marginBottom: "20px", alignItems: "center" }}>
+      <Field flex style={{ alignItems: "center" }}>
         <Field flex style={{ width: "80%" }}>
           <CTitle>메모</CTitle>
           <CTextArea {...register("bcMemo")} />
@@ -74,12 +71,43 @@ function FooterInfo({ data, register }: { data: any; register: any }) {
           <th>비고</th>
         </tr>
         <tr>
-          <td>{data?.bcInkum1}</td>
-          <td>{data?.bcSupplyType}</td>
-          <td>{data?.bcOutkum}</td>
-          <td>{data?.bcDc}</td>
-          <td>{data?.bcMisu}</td>
-          <td>{data?.bcBigo}</td>
+          <td>
+            <Input register={register("bcInkum1")} readOnly className="h27" />
+          </td>
+          <td>
+            <Select {...register("bcSupplyType")} className="h27">
+              <option value="A">외상</option>
+              <option value="0">현금</option>
+            </Select>
+          </td>
+          <td>
+            <Input
+              register={register("bcOutkum")}
+              onChange={(e: any) => {
+                setBcOutkum(e.target.value);
+                calcTab1FooterChange(e.target.value, "bcOutkum");
+              }}
+              value={bcOutkum}
+              className="h27"
+            />
+          </td>
+          <td>
+            <Input
+              register={register("bcDc")}
+              onChange={(e: any) => {
+                setBcDc(e.target.value);
+                calcTab1FooterChange(e.target.value, "bcDc");
+              }}
+              value={bcDc}
+              className="h27"
+            />
+          </td>
+          <td>
+            <Input register={register("bcMisu")} className="h27" />
+          </td>
+          <td>
+            <Input register={register("bcBigo")} className="h27" />
+          </td>
         </tr>
       </CTable>
     </div>

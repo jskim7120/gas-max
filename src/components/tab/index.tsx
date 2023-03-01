@@ -76,6 +76,7 @@ let activeTabId: any;
 const Tab = (props: TabProps): JSX.Element => {
   const dispatch = useDispatch();
   let tabState = useSelector((state) => state.tab);
+  const areaCode = useSelector((state) => state.auth.areaCode);
   const { isOpen } = useSelector((state) => state.sidebar);
 
   useEffect(() => {
@@ -151,7 +152,7 @@ const Tab = (props: TabProps): JSX.Element => {
             visibility: tab.menuId === activeTabId ? "visible" : "hidden",
           }}
         >
-          {getContent(tab.menuId, tab.depthFullName)}
+          {getContent(tab.menuId, tab.depthFullName, areaCode)}
         </TabContentWrapper>
       ))}
       <ToastContainer />

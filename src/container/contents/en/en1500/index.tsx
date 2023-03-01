@@ -7,7 +7,7 @@ import { Update, Reset } from "components/allSvgIcon";
 import Form from "./form";
 import Grid from "../grid";
 import { columns, fields } from "./data";
-import { MainWrapper, RightSide, TopBar } from "../../commonStyle";
+import { MainWrapper, RightSide, SearchWrapper } from "../../commonStyle";
 
 function EN1500({
   depthFullName,
@@ -19,7 +19,7 @@ function EN1500({
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
 
   const [data, setData] = useState([]);
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
   useEffect(() => {
@@ -28,21 +28,25 @@ function EN1500({
 
   const fetchData = async () => {
     try {
-      const { data } = await API.get(EN1500LIST);
-      if (data) {
-        setData(data);
-        setSelected(data[0]);
-        setSelectedRowIndex(0);
+      const { data: data1500 } = await API.get(EN1500LIST);
+      if (data1500) {
+        setData(data1500);
+        setSelected(data1500[0]);
+      } else {
+        setData([]);
+        setSelected({});
       }
+      setSelectedRowIndex(0);
     } catch (err) {
+      setData([]);
+      setSelected({});
       console.log("JNOTRY DATA fetch error =======>", err);
     }
   };
 
-  if (!data) return <p>...Loading</p>;
   return (
     <>
-      <TopBar>
+      <SearchWrapper className="h35 mt5">
         <p>{depthFullName}</p>
         <div className="buttons">
           <Button
@@ -63,7 +67,7 @@ function EN1500({
             }}
           />
         </div>
-      </TopBar>
+      </SearchWrapper>
       <MainWrapper>
         <Grid
           data={data}
