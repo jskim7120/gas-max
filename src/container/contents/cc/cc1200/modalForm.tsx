@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "app/store";
 import API from "app/axios";
-import { CC110080 } from "app/path";
+import { CC120080 } from "app/path";
 
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { addCC1100, closeModal } from "app/state/modal/modalSlice";
 
-function CC1100Modal() {
+function CC1200Modal() {
   const [data, setData] = useState<any[]>();
   const [selected, setSelected] = useState<any>(null);
 
@@ -17,14 +17,13 @@ function CC1100Modal() {
 
   useEffect(() => {
     if (state) {
-      console.log(state);
       fetchData();
     }
   }, []);
 
   const fetchData = async () => {
     try {
-      const res = await API.get(CC110080, {
+      const res = await API.get(CC120080, {
         params: {
           acjType: state.acjType,
         },
@@ -100,4 +99,4 @@ function CC1100Modal() {
   );
 }
 
-export default CC1100Modal;
+export default CC1200Modal;

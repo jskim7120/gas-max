@@ -111,6 +111,7 @@ const Form = React.forwardRef(
           reset({
             ...newData,
           });
+          setAcjType(selected.acjType);
         }
       }
     };

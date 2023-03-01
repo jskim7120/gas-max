@@ -6,6 +6,9 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { EN1400DELETE, EN140011 } from "app/path";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
+import { SearchBtn } from "components/daum";
+import { MagnifyingGlass } from "components/allSvgIcon";
+import { useDispatch, useSelector } from "app/store";
 import {
   Item,
   RadioButton,
@@ -20,6 +23,7 @@ import {
   Label,
 } from "components/form/style";
 import { ICC1200SEARCH } from "./model";
+import { addCC1100, openModal } from "app/state/modal/modalSlice";
 
 interface IForm {
   selected: any;
@@ -61,13 +65,15 @@ const Form = React.forwardRef(
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
+    const dispatch = useDispatch();
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "CC",
-      functionName: "CC1100",
+      functionName: "CC1200",
     });
     const [radioChecked, setRadioChecked] = useState(0);
     const [radioCheckedSecond, setRadioCheckedSecond] = useState(0);
+    const [acjType, setAcjType] = useState("");
     const { register, handleSubmit, reset, getValues, control } =
       useForm<ICC1200SEARCH>({ mode: "onChange" });
 
@@ -116,6 +122,7 @@ const Form = React.forwardRef(
           reset({
             ...newData,
           });
+          setAcjType(selected.acjType);
         }
       }
     };
@@ -143,28 +150,15 @@ const Form = React.forwardRef(
       }
     };
 
-    const handleSelectCode = async (event: any) => {
-      let newData: any = {};
-      const path = EN140011;
-      try {
-        const response: any = await API.get(path, {
-          params: { areaCode: event.target.value },
-        });
-        if (response.status === 200) {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
-          newData.bpCode = response.data.tempCode;
-          newData.areaCode = event.target.value;
-          reset(newData);
-        } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
-        }
-      } catch (err: any) {
-        console.log("areaCode select error", err);
-      }
+    const handleSelectCode = async (event: any) => {};
+
+    const handleSearchBtnClick = () => {
+      dispatch(
+        addCC1100({
+          acjType: acjType,
+        })
+      );
+      dispatch(openModal({ type: "cc1100Modal" }));
     };
 
     return (
@@ -249,13 +243,19 @@ const Form = React.forwardRef(
           </FormGroup>
         </Wrapper>
         <Wrapper>
-          <Input
-            label="계정과목"
-            labelStyle={{ minWidth: "80px" }}
-            register={register("acjAccCodeDa")}
-            inputSize={InputSize.i250}
-          />
+          <FormGroup>
+            <Input
+              label="계정과목"
+              labelStyle={{ minWidth: "80px" }}
+              register={register("acjAccCodeDa")}
+              inputSize={InputSize.i250}
+            />
+            <SearchBtn type="button" onClick={handleSearchBtnClick}>
+              <MagnifyingGlass />
+            </SearchBtn>
+          </FormGroup>
         </Wrapper>
+
         <Divider />
 
         <Wrapper>
