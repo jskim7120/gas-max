@@ -1,4 +1,5 @@
-//EN
+export const AR1100SEARCH = "/app/AR1100/search";
+export const AR1100SELECT = "/app/AR1100/select";
 
 export const EN1100LIST = "/app/EN1100/list";
 export const EN1100INSERT = "/app/EN1100/insert";

@@ -6,8 +6,8 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    name: "cuTypeColor",
     fieldName: "cuTypeColor",
+    dataType: ValueType.TEXT,
   },
   {
     fieldName: "cuTypeName",
