@@ -1,5 +1,4 @@
 import { ValueType } from "realgrid";
-import BAR from "assets/image/Barcode.png";
 
 export const fields3 = [
   {
@@ -58,6 +57,7 @@ export const columns3 = [
     name: "bclJpCode",
     fieldName: "bclJpCode",
     button: "action",
+    buttonVisibility: "always",
     width: "150",
     type: "data",
     header: {

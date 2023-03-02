@@ -134,7 +134,13 @@ const Form = React.forwardRef(
               newData[key] = null;
             }
           }
-          reset({ ...newData, buCode: data });
+          reset({
+            ...newData,
+            buCode: data,
+            buGubun: radioOptions[0].id,
+            buStae: dataCommonDic?.buStae[0].code,
+          });
+          document.getElementById("buName")?.focus();
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -256,6 +262,7 @@ const Form = React.forwardRef(
                   value={option.id}
                   {...register(`buGubun`)}
                   id={option.id}
+                  //checked={option.id === "0"}
                 />
                 <RadioButtonLabel htmlFor={`${option.label}`}>
                   {option.label}

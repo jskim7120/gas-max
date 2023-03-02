@@ -66,6 +66,7 @@ export const columns1 = [
     name: "bclJpName",
     fieldName: "bclJpName",
     button: "action",
+    buttonVisibility: "always",
     width: "150",
     type: "data",
     header: {

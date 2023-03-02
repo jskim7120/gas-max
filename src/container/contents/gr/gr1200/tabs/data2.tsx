@@ -1,5 +1,5 @@
 import { ValueType } from "realgrid";
-import BAR from "assets/image/Barcode.png";
+
 export const fields2 = [
   {
     fieldName: "bclJpCode",
@@ -11,7 +11,7 @@ export const fields2 = [
   },
   {
     fieldName: "bclInqty",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclInc",
@@ -23,15 +23,15 @@ export const fields2 = [
   },
   {
     fieldName: "bclOutqty",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclInmigum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclOutmigum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclChungbok",
@@ -74,6 +74,7 @@ export const columns2 = [
     name: "bclJpName",
     fieldName: "bclJpName",
     button: "action",
+    buttonVisibility: "always",
     width: "150",
     type: "data",
     header: {
@@ -88,6 +89,10 @@ export const columns2 = [
     type: "data",
     header: {
       text: "입고",
+    },
+    footer: {
+      numberFormat: "#.0",
+      expression: "sum",
     },
   },
   {
@@ -116,6 +121,10 @@ export const columns2 = [
     header: {
       text: "출고",
     },
+    footer: {
+      numberFormat: "#.0",
+      expression: "sum",
+    },
   },
   {
     name: "bclInmigum",
@@ -125,6 +134,10 @@ export const columns2 = [
     header: {
       text: "입고",
     },
+    footer: {
+      numberFormat: "#.0",
+      expression: "sum",
+    },
   },
   {
     name: "bclOutmigum",
@@ -133,6 +146,10 @@ export const columns2 = [
     type: "data",
     header: {
       text: "출고",
+    },
+    footer: {
+      numberFormat: "#.0",
+      expression: "sum",
     },
   },
   {
