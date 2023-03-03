@@ -89,8 +89,18 @@ function RV1100({
         : params.sGjGumym instanceof Date
         ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumym)
         : "";
-    params.sGjPerDate = formatDateByRemoveDash(params.sGjPerDate);
-    params.sGjDate = formatDateByRemoveDash(params.sGjDate);
+    params.sGjPerDate =
+      typeof params.sGjPerDate === "string"
+        ? formatDateByRemoveDash(params.sGjPerDate)
+        : params.sGjPerDate instanceof Date
+        ? formatDateToStringWithoutDash(params.sGjPerDate)
+        : "";
+    params.sGjDate =
+      typeof params.sGjDate === "string"
+        ? formatDateByRemoveDash(params.sGjDate)
+        : params.sGjDate instanceof Date
+        ? formatDateToStringWithoutDash(params.sGjDate)
+        : "";
 
     fetchData(params);
   };
@@ -102,8 +112,18 @@ function RV1100({
         : params.sGjGumym instanceof Date
         ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumym)
         : "";
-    params.sGjPerDate = formatDateByRemoveDash(params.sGjPerDate);
-    params.sGjDate = formatDateByRemoveDash(params.sGjDate);
+    params.sGjPerDate =
+      typeof params.sGjPerDate === "string"
+        ? formatDateByRemoveDash(params.sGjPerDate)
+        : params.sGjPerDate instanceof Date
+        ? formatDateToStringWithoutDash(params.sGjPerDate)
+        : "";
+    params.sGjDate =
+      typeof params.sGjDate === "string"
+        ? formatDateByRemoveDash(params.sGjDate)
+        : params.sGjDate instanceof Date
+        ? formatDateToStringWithoutDash(params.sGjDate)
+        : "";
 
     search2(params);
   };
@@ -242,7 +262,8 @@ function RV1100({
                 render={({ field: { onChange, value, name } }) => (
                   <CustomDatePicker
                     value={value}
-                    onChange={(e: any) => gjGumymChanged(e)}
+                    // onChange={(e: any) => gjGumymChanged(e)}
+                    onChange={onChange}
                     name={name}
                     showYearDropdown
                   />
@@ -289,7 +310,8 @@ function RV1100({
                 render={({ field: { onChange, value, name } }) => (
                   <CustomDatePicker
                     value={value}
-                    onChange={gjPerDateChanged}
+                    // onChange={gjPerDateChanged}
+                    onChange={onChange}
                     name={name}
                   />
                 )}

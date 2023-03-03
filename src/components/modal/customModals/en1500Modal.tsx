@@ -155,6 +155,8 @@ const EN1500Modal = (
           )}
         />
       ),
+      unitPrice: <Input register={register("tempJn280Mp")} textAlign="right" />,
+      rate: <Input register={register("tempJnKgdanga280")} textAlign="right" />,
     },
     {
       title: "600 mmH2O",
@@ -174,6 +176,8 @@ const EN1500Modal = (
           )}
         />
       ),
+      unitPrice: <Input register={register("tempJn600Mp")} textAlign="right" />,
+      rate: <Input register={register("tempJnKgdanga600")} textAlign="right" />,
     },
     {
       title: "1000 mmH2O",
@@ -192,6 +196,12 @@ const EN1500Modal = (
             />
           )}
         />
+      ),
+      unitPrice: (
+        <Input register={register("tempJn1000Mp")} textAlign="right" />
+      ),
+      rate: (
+        <Input register={register("tempJnKgdanga1000")} textAlign="right" />
       ),
     },
     {
@@ -212,6 +222,12 @@ const EN1500Modal = (
           )}
         />
       ),
+      unitPrice: (
+        <Input register={register("tempJn1500Mp")} textAlign="right" />
+      ),
+      rate: (
+        <Input register={register("tempJnKgdanga1500")} textAlign="right" />
+      ),
     },
     {
       title: "2000 mmH2O",
@@ -230,6 +246,12 @@ const EN1500Modal = (
             />
           )}
         />
+      ),
+      unitPrice: (
+        <Input register={register("tempJn2000Mp")} textAlign="right" />
+      ),
+      rate: (
+        <Input register={register("tempJnKgdanga2000")} textAlign="right" />
       ),
     },
     {
@@ -250,6 +272,12 @@ const EN1500Modal = (
           )}
         />
       ),
+      unitPrice: (
+        <Input register={register("tempJn2500Mp")} textAlign="right" />
+      ),
+      rate: (
+        <Input register={register("tempJnKgdanga2500")} textAlign="right" />
+      ),
     },
     {
       title: "7000 mmH2O",
@@ -268,6 +296,12 @@ const EN1500Modal = (
             />
           )}
         />
+      ),
+      unitPrice: (
+        <Input register={register("tempJn7000Mp")} textAlign="right" />
+      ),
+      rate: (
+        <Input register={register("tempJnKgdanga7000")} textAlign="right" />
       ),
     },
   ];
@@ -412,7 +446,12 @@ const EN1500Modal = (
           <RubeUnit>
             <div className="title">압력별 환경 루베단가 설정</div>
             <Table
-              tableHeader={["조정기압력", "루베(㎥ ) 단가"]}
+              tableHeader={[
+                "조정기압력",
+                "루베(㎥ ) 단가",
+                "㎥단가 환산",
+                "기화율",
+              ]}
               tableData={data1500}
               onClick={(item) => {}}
             />
