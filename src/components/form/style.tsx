@@ -281,6 +281,11 @@ export const InputForm = styled.input<{
   &.h27 {
     height: 27px;
   }
+
+  &:read-only {
+    border: none;
+    background: transparent;
+  }
 `;
 
 export const ErrorText = styled.p`

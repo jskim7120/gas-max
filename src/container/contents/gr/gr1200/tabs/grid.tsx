@@ -4,7 +4,6 @@ import { fields1, columns1, layout1 } from "./data1";
 import { fields2, columns2, layout2 } from "./data2";
 import { fields3, columns3 } from "./data3";
 import Tab1Footer from "./tab1Footer";
-import Tab2Footer from "./tab2Footer";
 import { useDispatch } from "app/store";
 import { addGR1200, openModal } from "app/state/modal/modalSlice";
 
@@ -47,25 +46,23 @@ function Grid({
       dp.setFields(fields1);
       gv.setColumns(columns1);
       gv.setColumnLayout(layout1);
-      gv.columnByName("bclJpName").buttonVisibility = "always";
-      dp.setRows(data);
+      gv.setFooter({ visible: false });
     }
 
     if (tabId === 1) {
       dp.setFields(fields2);
       gv.setColumns(columns2);
       gv.setColumnLayout(layout2);
-      gv.columnByName("bclJpName").buttonVisibility = "always";
-      dp.setRows(data);
     }
 
     if (tabId === 2) {
       dp.setFields(fields3);
       gv.setColumns(columns3);
-      dp.setRows(data);
+      gv.setFooter({ visible: false });
     }
 
-    gv.setFooter({ visible: false });
+    dp.setRows(data);
+
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
@@ -122,7 +119,7 @@ function Grid({
     <>
       <div
         style={{
-          height: `180px`,
+          height: `${tabId === 0 ? "180px" : "360px"}`,
           borderBottom: "1px solid #CCC",
           marginBottom: "2px",
         }}
@@ -135,7 +132,6 @@ function Grid({
           calcTab1FooterChange={calcTab1FooterChange}
         />
       )}
-      {tabId === 1 && <Tab2Footer />}
     </>
   );
 }
