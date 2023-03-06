@@ -45,6 +45,8 @@ import {
 import API from "app/axios";
 import { useGetAdditionalDictionaryQuery } from "app/api/commonDictionary";
 
+let clone: any[];
+
 const radioOptions = [
   {
     label: "창고",
@@ -103,6 +105,27 @@ function Form({
       setAreaCode2(dataCommonDic.areaCode[0].code);
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (dataAdditionalDic) {
+      reset((formValues) => ({
+        ...formValues,
+        bcBuCode: dataAdditionalDic?.bcBuCode
+          ? dataAdditionalDic?.bcBuCode[0].code
+          : "",
+        bcCtype: dataAdditionalDic?.bcCtype
+          ? dataAdditionalDic.bcCtype[0].code
+          : "",
+        bcCarno: dataAdditionalDic?.bcCarno
+          ? dataAdditionalDic.bcCarno[0].code
+          : "",
+        bcCarno1: dataAdditionalDic?.bcCarno1
+          ? dataAdditionalDic.bcCarno1[0].code
+          : "",
+      }));
+    }
+  }, [dataAdditionalDic]);
+
   useEffect(() => {
     if (stateGR1200.index !== undefined && stateGR1200.jpName) {
       setData65Detail((prev: any) =>
@@ -177,7 +200,40 @@ function Form({
 
   useEffect(() => {
     calcTab1GridChange();
+    clone = structuredClone(data65Detail);
   }, [bclInqtyLPG]);
+
+  useEffect(() => {
+    if (isAddBtnClicked === true) {
+      if (clone.length > 0) {
+        if (clone[0].tabId !== tabId) {
+          setData65Detail([
+            {
+              bclAmt: null,
+              bclChungbok: null,
+              bclChungdae: null,
+              bclCost: null,
+              bclGubun: "1",
+              bclInc: "",
+              bclInmigum: null,
+              bclInqty: null,
+              bclJpCode: "",
+              bclJpName: "",
+              bclOutc: null,
+              bclOutmigum: "",
+              bclOutqty: null,
+              bclSvyn: "",
+              bclTongdel: null,
+              isNew: true,
+              tabId: tabId,
+            },
+          ]);
+        } else {
+          setData65Detail(clone);
+        }
+      }
+    }
+  }, [tabId]);
 
   const calcTab1GridChange = () => {
     if (data65Detail) {
@@ -493,6 +549,8 @@ function Form({
         }
       });
       setData65Detail((prev) => prev.filter((obj, idx) => idx !== rowIndex));
+      clone = clone.filter((item, idx) => idx !== rowIndex);
+
       setRowIndex(null);
     } else {
       toast.warning(`please select a row.`, {
@@ -560,6 +618,7 @@ function Form({
         bclOutqty: null,
         bclSvyn: "",
         bclTongdel: null,
+        tabId: 0,
         isNew: true,
       },
     ]);
@@ -765,6 +824,7 @@ function Form({
               onClick={() => {
                 setAddBtnClicked(true);
                 clear();
+                setTabId(0);
               }}
             />
             <Button

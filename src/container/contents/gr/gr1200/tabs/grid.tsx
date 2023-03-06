@@ -80,32 +80,88 @@ function Grid({
     };
 
     gv.onCellButtonClicked = function (grid: any, index: any, column: any) {
-      if (Object.keys(data2).length > 0) {
-        dispatch(
-          addGR1200({
-            index: index.dataRow,
-            areaCode: data2?.areaCode ? data2.areaCode : getValues("areaCode"),
-            bcBuCode: data2?.bcBuCode ? data2.bcBuCode : getValues("bcBuCode"),
-            bcChitType: data2?.bcChitType ? data2?.bcChitType : tabId, //daraa n "0"-iig hasah
-          })
-        );
-        dispatch(openModal({ type: "gr1200Modal" }));
-      }
+      // console.log("getValues areaCode:::", getValues("areaCode"));
+      // console.log("getValues bcBuCode:::", getValues("bcBuCode"));
+
+      dispatch(
+        addGR1200({
+          index: index.dataRow,
+          areaCode: getValues("areaCode"),
+          bcBuCode: getValues("bcBuCode"),
+          bcChitType: tabId, //daraa n "0"-iig hasah
+        })
+      );
+      dispatch(openModal({ type: "gr1200Modal" }));
     };
 
     gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
-      setData((prev: any) =>
-        prev.map((object: any, idx: number) => {
-          if (idx === index.dataRow) {
-            return {
-              ...object,
-              [index.fieldName]: newValue,
-              isEdited: true,
-            };
-          } else return object;
-        })
-      );
-      setBclInqtyLPG((prev: boolean) => !prev);
+      if (tabId === 0) {
+        setData((prev: any) =>
+          prev.map((object: any, idx: number) => {
+            if (idx === index.dataRow) {
+              if (index.fieldName === "bclInqty") {
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                  isEdited: true,
+                };
+              } else {
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                };
+              }
+            } else return object;
+          })
+        );
+        setBclInqtyLPG((prev: boolean) => !prev);
+      }
+      if (tabId === 1) {
+        setData((prev: any) =>
+          prev.map((object: any, idx: number) => {
+            if (idx === index.dataRow) {
+              if (index.fieldName === "bclInqty" && object.bclCost !== null) {
+                const bclVatType = object.bclVatType ? object.bclVatType : 0;
+                const bclAmt = object.bclCost * newValue + bclVatType;
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                  bclAmt: bclAmt,
+                };
+              }
+              if (index.fieldName === "bclCost" && object.bclInqty !== null) {
+                const bclVatType = object.bclVatType ? object.bclVatType : 0;
+
+                const bclAmt = object.bclInqty * newValue + bclVatType;
+                console.log("hfdhdfhjfdj:", bclVatType);
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                  bclAmt: bclAmt,
+                };
+              }
+
+              if (
+                index.fieldName === "bclVatType" &&
+                object.bclInqty !== null &&
+                object.bclVatType !== null
+              ) {
+                const bclAmt = object.bclInqty * object.bclCost + newValue;
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                  bclAmt: bclAmt,
+                };
+              }
+              return {
+                ...object,
+                [index.fieldName]: newValue,
+              };
+            } else return object;
+          })
+        );
+      }
+
       gv.cancel();
     };
 
