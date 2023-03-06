@@ -30,6 +30,7 @@ export const EN1500INSERT = "/app/EN1500/insert";
 export const EN1500UPDATE = "/app/EN1500/update";
 export const EN1500DELETE = "/app/EN1500/delete";
 export const EN150065 = "/app/EN1500/65";
+export const EN150062 = "/app/EN1500/62";
 
 export const EN1600LIST = "/app/EN1600/list";
 export const EN1600INSERT = "/app/EN1600/insert";

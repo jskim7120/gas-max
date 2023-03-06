@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "app/store";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import Button from "components/button/button";
-import { openModal } from "app/state/modal/modalSlice";
+import { openModal, rv1100Popup } from "app/state/modal/modalSlice";
 import {
   Document,
   Settings2,
@@ -143,8 +143,9 @@ function RV1100({
     } catch (err) {}
   };
 
-  const openPopupEN1500 = async () => {
+  const openPopupEN1500 = async (selected: any) => {
     dispatch(openModal({ type: "en1500Modal" }));
+    dispatch(rv1100Popup({ areaCode: selected.areaCode }));
   };
 
   const search2 = async (params: ISEARCH) => {
@@ -247,7 +248,9 @@ function RV1100({
             type="button"
             color={ButtonColor.LIGHT}
             style={{ marginLeft: "7px" }}
-            onClick={openPopupEN1500}
+            onClick={() => {
+              openPopupEN1500(selected);
+            }}
           />
         </div>
       </SearchWrapper>

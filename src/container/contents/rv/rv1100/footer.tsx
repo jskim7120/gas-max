@@ -78,12 +78,14 @@ function Footer({
   }, [data]);
 
   const fetchData65 = async () => {
-    try {
-      const { data: data65 } = await API.get(RV110065, {
-        params: { areaCode: data?.areaCode, gjCuCode: data?.gjCuCode },
-      });
-      setData65(data65);
-    } catch (err) {}
+    if (data.gjCuCode && data.areaCode) {
+      try {
+        const { data: data65 } = await API.get(RV110065, {
+          params: { areaCode: data?.areaCode, gjCuCode: data?.gjCuCode },
+        });
+        setData65(data65);
+      } catch (err) {}
+    }
   };
 
   const getGjJanType = () => {
