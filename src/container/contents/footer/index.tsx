@@ -102,39 +102,39 @@ function Footer() {
           <p>거래처명, -전화, +주소, *코드</p>
         </form>
         <div className="address-part">
-          <div className="cuType">{getCuType(info.cuType)}</div>
+          <div className="cuType">{getCuType(info?.cuType)}</div>
           <div>
             <div style={{ display: "flex" }}>
-              <div className="text big w-85">{info.cuCode}</div>
+              <div className="text big w-85">{info?.cuCode}</div>
               <div className="text big w-200">
-                <b>{info.cuViewName}</b>
+                <b>{info?.cuViewName}</b>
               </div>
             </div>
             <div style={{ display: "flex" }}>
-              <div className="text small w-70">{info.cuTel}</div>
-              <div className="text small w-90">{info.cuHp}</div>
-              <div className="text small  w-120">{info.cuTel2}</div>
+              <div className="text small w-70">{info?.cuTel}</div>
+              <div className="text small w-90">{info?.cuHp}</div>
+              <div className="text small  w-120">{info?.cuTel2}</div>
             </div>
-            <div className="text small w-320">{info.cuAddr1n2}</div>
+            <div className="text small w-320">{info?.cuAddr1n2}</div>
           </div>
         </div>
         <div className="badge-part">
           <div>
             <div className="badge-container">
               <div className="cuStae">
-                <b>{getCuStae(info.cuStae)}</b>
+                <b>{getCuStae(info?.cuStae)}</b>
               </div>
               <div className="circle-badge">
-                {getCircleBadge("tTransYn", info.tTransYn)}
+                {getCircleBadge("tTransYn", info?.tTransYn)}
               </div>
               <div className="circle-badge">
-                {getCircleBadge("jTransYn", info.jTransYn)}
+                {getCircleBadge("jTransYn", info?.jTransYn)}
               </div>
               <div className="circle-badge">
-                {getCircleBadge("mTransYn", info.mTransYn)}
+                {getCircleBadge("mTransYn", info?.mTransYn)}
               </div>
               <div className="circle-badge">
-                {getCircleBadge("barcodeYn", info.barcodeYn)}
+                {getCircleBadge("barcodeYn", info?.barcodeYn)}
               </div>
             </div>
             <div className="rectangle-badge-wrapper">
@@ -143,7 +143,7 @@ function Footer() {
                 color={BadgeColor.brownDark}
                 title="담당사원"
               />
-              <span>{info.cuSwName}</span>
+              <span>{info?.cuSwName}</span>
             </div>
             <div className="rectangle-badge-wrapper">
               <Badge
@@ -151,7 +151,7 @@ function Footer() {
                 color={BadgeColor.purpleDark}
                 title="수금방법"
               />
-              <span>{info.cuSukumtypeName}</span>
+              <span>{info?.cuSukumtypeName}</span>
             </div>
           </div>
           <div>
@@ -161,7 +161,7 @@ function Footer() {
                 color={BadgeColor.brownLight}
                 title="계약일"
               />
-              <span>{info.cuGongdate}</span>
+              <span>{info?.cuGongdate}</span>
             </div>
             <div className="rectangle-badge-wrapper">
               <Badge
@@ -169,7 +169,7 @@ function Footer() {
                 color={BadgeColor.goldenBrown}
                 title="점검일"
               />
-              <span>{info.cuHdate}</span>
+              <span>{info?.cuHdate}</span>
             </div>
             <div className="rectangle-badge-wrapper">
               <Badge
@@ -177,7 +177,7 @@ function Footer() {
                 color={BadgeColor.greenLight}
                 title="예정일"
               />
-              <span>{info.cuHdateT}</span>
+              <span>{info?.cuHdateT}</span>
             </div>
           </div>
           <div>
@@ -187,7 +187,7 @@ function Footer() {
                 color={BadgeColor.greenMedium}
                 title="보증금"
               />
-              <span style={{ textAlign: "right" }}>{info.cuTongkum}</span>
+              <span style={{ textAlign: "right" }}>{info?.cuTongkum}</span>
             </div>
             <div className="rectangle-badge-wrapper">
               <Badge
@@ -195,7 +195,7 @@ function Footer() {
                 color={BadgeColor.greenDark}
                 title="중량"
               />
-              <span style={{ textAlign: "right" }}>{info.cuJmisu}</span>
+              <span style={{ textAlign: "right" }}>{info?.cuJmisu}</span>
             </div>
             <div className="rectangle-badge-wrapper">
               <Badge
@@ -203,7 +203,7 @@ function Footer() {
                 color={BadgeColor.purpleLight}
                 title="체적"
               />
-              <span style={{ textAlign: "right" }}>{info.cuCmisu}</span>
+              <span style={{ textAlign: "right" }}>{info?.cuCmisu}</span>
             </div>
           </div>
         </div>
