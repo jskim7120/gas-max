@@ -283,8 +283,8 @@ export const InputForm = styled.input<{
   }
 
   &:read-only {
-    border: none;
-    background: transparent;
+    // border: none;
+    // background: transparent;
   }
 `;
 
