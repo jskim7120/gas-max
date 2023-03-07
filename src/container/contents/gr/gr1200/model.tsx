@@ -81,7 +81,7 @@ export interface IDATA65 {
   bcGkum: number;
   bcGsum: string;
   bcInkum: number;
-  bcInkum1: string;
+  bcInkum1: number;
   bcJTotal: number;
   bcJunno: string;
   bcMemo: string;
@@ -154,3 +154,55 @@ export interface IDATA65 {
   // bclVatTypeName: null;
   // queryType: "DETAIL_DATA";
 }
+
+export const emptyObjTab1: any = {
+  bclJpCode: null,
+  bclJpName: null,
+  bclInqty: null,
+  bclInc: null,
+  bclOutc: null,
+  bclOutqty: null,
+  bclInmigum: null,
+  bclOutmigum: null,
+  bclChungbok: null,
+  bclChungdae: null,
+  bclTongdel: null,
+  bclSvyn: null,
+  bclJpSno: null,
+};
+
+export const emptyObjTab2: any = {
+  bclJpCode: null,
+  bclJpName: null,
+  bclInqty: null,
+  bclInc: null,
+  bclOutc: null,
+  bclOutqty: null,
+  bclInmigum: null,
+  bclOutmigum: null,
+  bclChungbok: null,
+  bclChungdae: null,
+  bclTongdel: null,
+  bclCost: 0,
+  bclVatType: 0,
+  bclAmt: 0,
+  bclJpSno: null,
+};
+
+export const emptyObjTab3: any = {
+  bclGubunName: null,
+  bclJpCode: null,
+  bclJpName: null,
+  bclUnit: null,
+  bclSpecific: null,
+  bclBulkKg: null,
+  bclBulkL: null,
+  bclCost: 0,
+  bclVatType: null,
+  bclAmt: 0,
+
+  //
+  // bclGubun: null,
+  // bclJpSno: "01",
+  // bclVatType: "0",
+};

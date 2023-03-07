@@ -1,3 +1,4 @@
+import { emptyObj } from "container/contents/cm/cm1105/model";
 import { ValueType } from "realgrid";
 
 export const fields2 = [
@@ -206,7 +207,6 @@ export const columns2 = [
       text: "금액",
     },
     footer: {
-      numberFormat: "#.0",
       expression: "sum",
     },
   },

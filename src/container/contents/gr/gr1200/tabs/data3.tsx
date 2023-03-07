@@ -34,7 +34,7 @@ export const fields3 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bclVatTypeName",
+    fieldName: "bclVatType",
     dataType: ValueType.TEXT,
   },
   {
@@ -119,8 +119,8 @@ export const columns3 = [
     },
   },
   {
-    name: "bclVatTypeName",
-    fieldName: "bclVatTypeName",
+    name: "bclVatType",
+    fieldName: "bclVatType",
     width: "60",
     type: "data",
     header: {
