@@ -179,12 +179,12 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
+      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 12px" }}>
         <Wrapper grid col={3}>
           <Input
             label="코드"
             register={register("areaCode")}
-            readOnly={isAddBtnClicked}
+            readOnly={true}
             inputSize={InputSize.i150}
           />
           <Input
@@ -490,7 +490,7 @@ const Form = React.forwardRef(
             tabHeader={[
               "지로 양식",
               "고객안내문",
-              "입금계좌  안내",
+              "입금계좌 안내",
               "결재 라인",
             ]}
             onClick={(id) => setTabId(id)}
