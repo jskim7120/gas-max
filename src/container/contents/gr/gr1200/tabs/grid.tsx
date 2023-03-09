@@ -140,6 +140,7 @@ function Grid({
                 return {
                   ...object,
                   [index.fieldName]: newValue,
+                  isEdited: true,
                   bclAmt: bclAmt,
                 };
               }
