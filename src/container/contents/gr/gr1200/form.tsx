@@ -24,7 +24,7 @@ import { InputSize, ButtonColor } from "components/componentsType";
 import { IDATA65 } from "./model";
 import TabGrid from "./tabs/grid";
 import { useSelector } from "app/store";
-import FooterInfo from "./footer";
+import CommonFooterInfo from "./commonFooter";
 import { CircleBtn } from "./style";
 import { PersonInfoText } from "components/text";
 import {
@@ -44,12 +44,8 @@ import {
 } from "app/path";
 import API from "app/axios";
 import { useGetAdditionalDictionaryQuery } from "app/api/commonDictionary";
-import { emptyObjTab1, emptyObjTab2 } from "./model";
-import {
-  calcTab1FooterChange,
-  calcTab1GridChange,
-  calcFooterTab2,
-} from "./calculationHelper";
+import { emptyObjTab1, emptyObjTab2, emptyObjTab3 } from "./model";
+import { calcTab1GridChange, calcFooterTab2Tab3 } from "./calculationHelper";
 
 let clone: any[];
 
@@ -86,10 +82,7 @@ function Form({
   const [bcBuCode, setBcBuCode] = useState("");
   const [bclInqtyLPG, setBclInqtyLPG] = useState(false);
 
-  const [tab2Calculation, setTab2Calculation] = useState(false);
-
   const [areaCode2, setAreaCode2] = useState("");
-
   const [pin, setPin] = useState(0);
   const [bin, setBin] = useState(0);
   const [sumP, setSumP] = useState(0);
@@ -178,13 +171,16 @@ function Form({
         bcCarno: data65.bcCarno,
         bcCaCode: data65.bcCaCode,
         //---------------
+        bcPin: data65.bcPin,
+        bcBin: data65.bcBin,
+        bcGin: data65.bcGin,
+        bcTotal: data65.bcTotal,
         bcPjan: data65.bcPjan,
         bcBjan: data65.bcBjan,
         bcPdanga: data65.bcPdanga,
         bcBdanga: data65.bcBdanga,
         bcPcost: data65.bcPcost,
         bcBcost: data65.bcBcost,
-        bcTotal: data65.bcTotal,
         bcJTotal: data65.bcJTotal,
         bcSumTotal: data65.bcSumTotal,
         bcSumKum: data65.bcSumKum,
@@ -202,14 +198,6 @@ function Form({
     }
   }, [data65]);
 
-  // useEffect(() => {
-  //   if (data65) {
-  //     // console.log("end bn shuu", data65?.bcChitType);
-  //     // data65?.bcChitType === "0" && calcTab1GridChange();
-  //     // data65?.bcChitType === "1" && calcFooter();
-  //   }
-  // }, [data65Detail]);
-
   useEffect(() => {
     tabId === 0 &&
       calcTab1GridChange(
@@ -222,14 +210,16 @@ function Form({
         data65,
         reset
       );
-    tabId === 1 && calcFooterTab2(data65Detail, getValues, reset);
+    tabId === 1 && calcFooterTab2Tab3(data65Detail, getValues, reset);
     clone = structuredClone(data65Detail);
   }, [bclInqtyLPG]);
 
   useEffect(() => {
+    console.log("isAddBtnClicked::", isAddBtnClicked);
     if (isAddBtnClicked === true) {
       if (clone.length > 0) {
         if (clone[0].tabId !== tabId) {
+          console.log("tabID:::::", tabId);
           tabId === 0 &&
             setData65Detail([
               {
@@ -246,6 +236,14 @@ function Form({
                 tabId: tabId,
               },
             ]);
+          tabId === 2 &&
+            setData65Detail([
+              {
+                ...emptyObjTab3,
+                isNew: true,
+                tabId: tabId,
+              },
+            ]);
         } else {
           setData65Detail(clone);
         }
@@ -253,325 +251,12 @@ function Form({
     }
   }, [tabId]);
 
-  // const calcTab1GridChange = () => {
-  //   if (data65Detail) {
-  //     let bcPin = 0;
-  //     let bcBin = 0;
-  //     let bcSumP = 0;
-  //     let bcSumB = 0;
-  //     let bcPkum = 0;
-  //     let bcBkum = 0;
-  //     let bcPsum = 0;
-  //     let bcBsum = 0;
-
-  //     let bcTotal = 0;
-  //     let bcJTotal = 0;
-  //     let bcSumTotal = 0;
-  //     let bcSumKum = 0;
-  //     let bcSumCost = 0;
-  //     let bcSum = 0;
-
-  //     data65Detail.forEach((obj: any) => {
-  //       if (obj.bclGubun === "0") {
-  //         bcPin += (obj.bclInqty ?? 0) * obj.bclKg;
-  //         if (obj.bclSvyn === "N") {
-  //           bcSumP += (obj.bclInqty ?? 0) * obj.bclKg;
-  //         }
-  //       }
-
-  //       if (obj.bclGubun === "1") {
-  //         bcBin += (obj.bclInqty ?? 0) * obj.bclKg;
-
-  //         if (obj.bclSvyn === "N") {
-  //           bcSumB += (obj.bclInqty ?? 0) * obj.bclKg;
-  //         }
-  //       }
-  //     });
-
-  //     setPin(bcPin);
-  //     setBin(bcBin);
-  //     setSumP(bcSumP);
-  //     setSumB(bcSumB);
-
-  //     const { bcPjan, bcBjan, bcPdanga, bcBdanga, bcPcost, bcBcost } =
-  //       getValues();
-
-  //     if (bcPjan) {
-  //       bcSumP -= bcPjan;
-  //     }
-  //     if (bcBjan) {
-  //       bcSumB -= bcBjan;
-  //     }
-  //     if (bcPdanga) {
-  //       bcPkum = bcSumP * bcPdanga;
-  //     }
-  //     if (bcBdanga) {
-  //       bcBkum = bcSumB * bcBdanga;
-  //     }
-
-  //     if (bcPcost) {
-  //       bcPsum = bcPkum + +bcPcost;
-  //     } else {
-  //       bcPsum = bcPkum;
-  //     }
-
-  //     if (bcBcost) {
-  //       bcBsum = bcBkum + +bcBcost;
-  //     } else {
-  //       bcBsum = bcBkum;
-  //     }
-
-  //     bcTotal =
-  //       (isNaN(bcPin) ? 0 : +bcPin) +
-  //       (isNaN(bcBin) ? 0 : +bcBin) +
-  //       +data65?.bcGin;
-  //     bcJTotal = +bcPjan + +bcBjan;
-  //     bcSumTotal = bcSumP + +bcSumB;
-  //     bcSumKum = bcPkum + +bcBkum + +data65?.bcGkum;
-  //     bcSumCost = +bcPcost + +bcBcost + +data65?.bcGcost;
-  //     bcSum = bcPsum + +bcBsum + +data65?.bcGsum;
-
-  //     const bcSupplyAmt = Math.round(bcSum / 1.1);
-  //     const bcVatAmt = bcSum - bcSupplyAmt;
-  //     reset((formValues) => ({
-  //       ...formValues,
-  //       bcPin: isNaN(bcPin) ? 0 : bcPin,
-  //       bcBin: isNaN(bcBin) ? 0 : bcBin,
-  //       bcSumP: bcSumP,
-  //       bcSumB: bcSumB,
-  //       bcPkum: bcPkum,
-  //       bcBkum: bcBkum,
-  //       bcPsum: bcPsum,
-  //       bcBsum: bcBsum,
-  //       bcTotal: bcTotal,
-  //       bcJTotal: bcJTotal,
-  //       bcSumTotal: bcSumTotal,
-  //       bcSumKum: bcSumKum,
-  //       bcSumCost: bcSumCost,
-  //       bcSum: bcSum,
-  //       bcInkum: bcSum,
-  //       bcSupplyAmt: bcSupplyAmt,
-  //       bcVatAmt: bcVatAmt,
-  //     }));
-  //   }
-  // };
-
-  // const calcTab1FooterChange = (num: any, name: string) => {
-  //   if (name === "bcPjan") {
-  //     const { bcPdanga, bcPcost, bcBjan, bcSumB, bcBkum, bcBsum } = getValues();
-  //     let bcSumP: number = 0;
-  //     let bcPkum: number = 0;
-  //     let bcPsum: number = 0;
-  //     let bcJTotal: number = 0;
-  //     let bcSumTotal: number = 0;
-  //     let bcSumKum: number = 0;
-  //     let bcSum: number = 0;
-
-  //     bcSumP = sumP - parseInt(num === "" ? 0 : num);
-
-  //     if (bcPdanga) {
-  //       bcPkum = bcSumP * bcPdanga;
-  //     }
-
-  //     if (bcPcost) {
-  //       bcPsum = bcPkum + +bcPcost;
-  //     } else {
-  //       bcPsum = bcPkum;
-  //     }
-
-  //     bcJTotal = parseInt(num === "" ? 0 : num) + +bcBjan;
-  //     bcSumTotal = bcSumP + +bcSumB;
-  //     bcSumKum = bcPkum + +bcBkum;
-  //     bcSum = bcPsum + bcBsum;
-
-  //     reset((formValues) => ({
-  //       ...formValues,
-  //       bcSumP: bcSumP,
-  //       bcPkum: bcPkum,
-  //       bcPsum: bcPsum,
-  //       bcJTotal: bcJTotal,
-  //       bcSumTotal: bcSumTotal,
-  //       bcSumKum: bcSumKum,
-  //       bcSum: bcSum,
-  //     }));
-  //   }
-
-  //   if (name === "bcBjan") {
-  //     const { bcBdanga, bcBcost, bcPjan, bcSumP, bcPkum, bcPsum } = getValues();
-  //     let bcSumB: number = 0;
-  //     let bcBkum: number = 0;
-  //     let bcBsum: number = 0;
-  //     let bcJTotal: number = 0;
-  //     let bcSumTotal: number = 0;
-  //     let bcSumKum: number = 0;
-  //     let bcSum: number = 0;
-
-  //     bcSumB = sumB - parseInt(num === "" ? 0 : num);
-
-  //     if (bcBdanga) {
-  //       bcBkum = bcSumB * bcBdanga;
-  //     }
-
-  //     if (bcBcost) {
-  //       bcBsum = bcBkum + +bcBcost;
-  //     } else {
-  //       bcBsum = bcBkum;
-  //     }
-
-  //     bcJTotal = parseInt(num === "" ? 0 : num) + +bcPjan;
-  //     bcSumTotal = bcSumB + +bcSumP;
-  //     bcSumKum = bcBkum + +bcPkum;
-  //     bcSum = bcBsum + bcPsum;
-
-  //     reset((formValues) => ({
-  //       ...formValues,
-  //       bcSumB: bcSumB,
-  //       bcBkum: bcBkum,
-  //       bcBsum: bcBsum,
-  //       bcJTotal: bcJTotal,
-  //       bcSumTotal: bcSumTotal,
-  //       bcSumKum: bcSumKum,
-  //       bcSum: bcSum,
-  //     }));
-  //   }
-
-  //   if (name === "bcPdanga") {
-  //     let bcPsum: number;
-  //     const { bcSumP, bcPcost, bcBkum, bcBsum } = getValues();
-  //     const bcPkum = bcSumP * parseInt(num === "" ? 0 : num);
-
-  //     if (bcPcost) {
-  //       bcPsum = bcPkum + +bcPcost;
-  //     } else {
-  //       bcPsum = bcPkum;
-  //     }
-  //     const bcSumKum = bcPkum + bcBkum;
-  //     const bcSum = bcPsum + bcBsum;
-
-  //     reset((formValues) => ({
-  //       ...formValues,
-  //       bcPkum: bcPkum,
-  //       bcPsum: bcPsum,
-  //       bcSumKum: bcSumKum,
-  //       bcSum: bcSum,
-  //     }));
-  //   }
-
-  //   if (name === "bcBdanga") {
-  //     let bcBsum: number;
-  //     const { bcSumB, bcBcost, bcPkum, bcPsum } = getValues();
-  //     const bcBkum = bcSumB * parseInt(num === "" ? 0 : num);
-
-  //     if (bcBcost) {
-  //       bcBsum = bcBkum + +bcBcost;
-  //     } else {
-  //       bcBsum = bcBkum;
-  //     }
-  //     const bcSumKum = bcBkum + bcPkum;
-  //     const bcSum = bcBsum + bcPsum;
-
-  //     reset((formValues) => ({
-  //       ...formValues,
-  //       bcBkum: bcBkum,
-  //       bcBsum: bcBsum,
-  //       bcSumKum: bcSumKum,
-  //       bcSum: bcSum,
-  //     }));
-  //   }
-
-  //   if (name === "bcPcost") {
-  //     const { bcPkum, bcBcost, bcBsum } = getValues();
-  //     let bcSumCost: number = 0;
-  //     let bcSum: number = 0;
-  //     const bcPsum = bcPkum + parseInt(num === "" ? 0 : num);
-  //     bcSumCost = parseInt(num === "" ? 0 : num) + +bcBcost + +data65?.bcGcost;
-  //     bcSum = bcPsum + +bcBsum;
-
-  //     reset((formValues) => ({
-  //       ...formValues,
-  //       bcPsum: bcPsum,
-  //       bcSumCost: bcSumCost,
-  //       bcSum: bcSum,
-  //     }));
-  //   }
-
-  //   if (name === "bcBcost") {
-  //     const { bcBkum, bcPcost, bcPsum } = getValues();
-  //     let bcSumCost: number = 0;
-  //     let bcSum: number = 0;
-  //     const bcBsum = bcBkum + parseInt(num === "" ? 0 : num);
-  //     bcSumCost = parseInt(num === "" ? 0 : num) + +bcPcost + +data65?.bcGcost;
-  //     bcSum = +bcBsum + +bcPsum;
-
-  //     reset((formValues) => ({
-  //       ...formValues,
-  //       bcBsum: bcBsum,
-  //       bcSumCost: bcSumCost,
-  //       bcSum: bcSum,
-  //     }));
-  //   }
-
-  //   if (name === "bcOutkum") {
-  //     const { bcInkum1, bcDc } = getValues();
-  //     const bcMisu = +bcInkum1 - bcDc - parseInt(num === "" ? 0 : num);
-
-  //     reset((formValues) => ({
-  //       ...formValues,
-  //       bcMisu: bcMisu,
-  //     }));
-  //   }
-
-  //   if (name === "bcDc") {
-  //     const { bcInkum1, bcOutkum } = getValues();
-  //     const bcMisu = +bcInkum1 - bcOutkum - parseInt(num === "" ? 0 : num);
-
-  //     reset((formValues) => ({
-  //       ...formValues,
-  //       bcMisu: bcMisu,
-  //     }));
-  //   }
-  // };
-
-  // const calcFooter = () => {
-  //   let sum = 0;
-  //   data65Detail.forEach((item) => (sum += +item.bclAmt));
-  //   const { bcDc, bcOutkum } = getValues();
-
-  //   const bcSupplyAmt = Math.round(sum / 1.1);
-  //   const bcVatAmt = sum - bcSupplyAmt;
-  //   const bcMisu = sum - +bcDc - +bcOutkum;
-
-  //   reset((formValues) => ({
-  //     ...formValues,
-  //     bcInkum: sum,
-  //     bcInkum1: sum,
-  //     bcSupplyAmt: bcSupplyAmt,
-  //     bcVatAmt: bcVatAmt,
-  //     bcMisu: bcMisu,
-  //   }));
-  // };
-
   const addRow = () => {
     if (data65Detail !== undefined) {
       tabId === 0 &&
         setData65Detail((prev: any) => [
           ...prev,
           {
-            // bclAmt: null,
-            // bclChungbok: null,
-            // bclChungdae: null,
-            // bclCost: null,
-            // bclGubun: null,
-            // bclInc: "",
-            // bclInmigum: null,
-            // bclInqty: null,
-            // bclJpCode: "",
-            // bclJpName: "",
-            // bclOutc: null,
-            // bclOutmigum: "",
-            // bclOutqty: null,
-            // bclSvyn: "",
-            // bclTongdel: null,
             ...emptyObjTab1,
             isNew: true,
             tabId: tabId,
@@ -581,22 +266,16 @@ function Form({
         setData65Detail((prev: any) => [
           ...prev,
           {
-            // bclAmt: null,
-            // bclChungbok: null,
-            // bclChungdae: null,
-            // bclCost: null,
-            // bclGubun: null,
-            // bclInc: "",
-            // bclInmigum: null,
-            // bclInqty: null,
-            // bclJpCode: "",
-            // bclJpName: "",
-            // bclOutc: null,
-            // bclOutmigum: "",
-            // bclOutqty: null,
-            // bclSvyn: "",
-            // bclTongdel: null,
             ...emptyObjTab2,
+            isNew: true,
+            tabId: tabId,
+          },
+        ]);
+      tabId === 2 &&
+        setData65Detail((prev: any) => [
+          ...prev,
+          {
+            ...emptyObjTab3,
             isNew: true,
             tabId: tabId,
           },
@@ -653,41 +332,7 @@ function Form({
     }
   };
 
-  const clear = () => {
-    reset({
-      areaCode: areaCode,
-      bcDate: formatDateToString(new Date()),
-      bcBuCode: dataCommonDic?.bcBuCode[0].code,
-      bcCtype: dataCommonDic?.bcCtype[0].code,
-      bcJunno: "",
-      bcDateno: "",
-      bcCsawon: dataCommonDic?.bcCsawon[0].code,
-      bcCarno: dataCommonDic?.bcCarno[0].code,
-    });
-    document.getElementById("bcJunno")?.focus();
-    setData65Detail([
-      {
-        // bclAmt: null,
-        // bclChungbok: null,
-        // bclChungdae: null,
-        // bclCost: null,
-        // bclGubun: "1",
-        // bclInc: "",
-        // bclInmigum: null,
-        // bclInqty: null,
-        // bclJpCode: "",
-        // bclJpName: "",
-        // bclOutc: null,
-        // bclOutmigum: "",
-        // bclOutqty: null,
-        // bclSvyn: "",
-        // bclTongdel: null,
-        ...emptyObjTab1,
-        tabId: 0,
-        isNew: true,
-      },
-    ]);
-  };
+  const clear = () => {};
 
   const crud = async (type: string | null) => {
     if (type === "delete") {
@@ -748,7 +393,11 @@ function Form({
           if (bcSno && bcSno !== "" && data65Detail?.length > 0) {
             await Promise.all(
               data65Detail.map((item: any) => {
-                if ("isEdited" in item && "isProductNameSelected" in item) {
+                if (
+                  "isNew" in item &&
+                  "isEdited" in item &&
+                  "isProductNameSelected" in item
+                ) {
                   API.post(GR1200BLINSERT, {
                     inserted: [
                       {
@@ -836,6 +485,237 @@ function Form({
     } catch (err) {}
   };
 
+  const handleClickOnAddBtn = () => {
+    setAddBtnClicked(true);
+    setTabId(0);
+    reset({
+      areaCode: areaCode,
+      bcDate: formatDateToString(new Date()),
+      bcBuCode: dataCommonDic?.bcBuCode[0].code,
+      bcCtype: dataCommonDic?.bcCtype[0].code,
+      bcJunno: "",
+      bcDateno: "",
+      bcCsawon: dataCommonDic?.bcCsawon[0].code,
+      bcCarno: dataCommonDic?.bcCarno[0].code,
+      bcPin: 0,
+      bcBin: 0,
+      bcGin: 0,
+      bcTotal: 0,
+      bcPjan: 0,
+      bcBjan: 0,
+      bcJTotal: 0,
+      bcSumP: 0,
+      bcSumB: 0,
+      bcSumTotal: 0,
+      bcPdanga: 0,
+      bcBdanga: 0,
+      bcPkum: 0,
+      bcBkum: 0,
+      bcGkum: 0,
+      bcSumKum: 0,
+      bcPcost: 0,
+      bcBcost: 0,
+      bcGcost: 0,
+      bcSumCost: 0,
+      bcPsum: 0,
+      bcBsum: 0,
+      bcGsum: 0,
+      bcSum: 0,
+      bcSupplyAmt: 0,
+      bcVatAmt: 0,
+      bcInkum: 0,
+      bcInkum1: 0,
+      bcOutkum: 0,
+      bcDc: 0,
+      bcMisu: 0,
+    });
+
+    setData65Detail([
+      {
+        ...emptyObjTab1,
+        tabId: 0,
+        isNew: true,
+      },
+    ]);
+    document.getElementById("bcJunno")?.focus();
+  };
+
+  const calcOnFieldChange = (num: any, name: string) => {
+    if (name === "bcPjan") {
+      const { bcPdanga, bcPcost, bcBjan, bcSumB, bcBkum, bcBsum } = getValues();
+      let bcSumP: number = 0;
+      let bcPkum: number = 0;
+      let bcPsum: number = 0;
+      let bcJTotal: number = 0;
+      let bcSumTotal: number = 0;
+      let bcSumKum: number = 0;
+      let bcSum: number = 0;
+
+      bcSumP = sumP - parseInt(num === "" ? 0 : num);
+
+      if (bcPdanga) {
+        bcPkum = bcSumP * bcPdanga;
+      }
+
+      if (bcPcost) {
+        bcPsum = bcPkum + +bcPcost;
+      } else {
+        bcPsum = bcPkum;
+      }
+
+      bcJTotal = parseInt(num === "" ? 0 : num) + +bcBjan;
+      bcSumTotal = bcSumP + +bcSumB;
+      bcSumKum = bcPkum + +bcBkum;
+      bcSum = bcPsum + bcBsum;
+
+      reset((formValues: any) => ({
+        ...formValues,
+        bcSumP: bcSumP,
+        bcPkum: bcPkum,
+        bcPsum: bcPsum,
+        bcJTotal: bcJTotal,
+        bcSumTotal: bcSumTotal,
+        bcSumKum: bcSumKum,
+        bcSum: bcSum,
+      }));
+    }
+
+    if (name === "bcBjan") {
+      const { bcBdanga, bcBcost, bcPjan, bcSumP, bcPkum, bcPsum } = getValues();
+      let bcSumB: number = 0;
+      let bcBkum: number = 0;
+      let bcBsum: number = 0;
+      let bcJTotal: number = 0;
+      let bcSumTotal: number = 0;
+      let bcSumKum: number = 0;
+      let bcSum: number = 0;
+
+      bcSumB = sumB - parseInt(num === "" ? 0 : num);
+
+      if (bcBdanga) {
+        bcBkum = bcSumB * bcBdanga;
+      }
+
+      if (bcBcost) {
+        bcBsum = bcBkum + +bcBcost;
+      } else {
+        bcBsum = bcBkum;
+      }
+
+      bcJTotal = parseInt(num === "" ? 0 : num) + +bcPjan;
+      bcSumTotal = bcSumB + +bcSumP;
+      bcSumKum = bcBkum + +bcPkum;
+      bcSum = bcBsum + bcPsum;
+
+      reset((formValues: any) => ({
+        ...formValues,
+        bcSumB: bcSumB,
+        bcBkum: bcBkum,
+        bcBsum: bcBsum,
+        bcJTotal: bcJTotal,
+        bcSumTotal: bcSumTotal,
+        bcSumKum: bcSumKum,
+        bcSum: bcSum,
+      }));
+    }
+
+    if (name === "bcPdanga") {
+      let bcPsum: number;
+      const { bcSumP, bcPcost, bcBkum, bcBsum } = getValues();
+      const bcPkum = bcSumP * parseInt(num === "" ? 0 : num);
+
+      if (bcPcost) {
+        bcPsum = bcPkum + +bcPcost;
+      } else {
+        bcPsum = bcPkum;
+      }
+      const bcSumKum = bcPkum + bcBkum;
+      const bcSum = bcPsum + bcBsum;
+
+      reset((formValues: any) => ({
+        ...formValues,
+        bcPkum: bcPkum,
+        bcPsum: bcPsum,
+        bcSumKum: bcSumKum,
+        bcSum: bcSum,
+      }));
+    }
+
+    if (name === "bcBdanga") {
+      let bcBsum: number;
+      const { bcSumB, bcBcost, bcPkum, bcPsum } = getValues();
+      const bcBkum = bcSumB * parseInt(num === "" ? 0 : num);
+
+      if (bcBcost) {
+        bcBsum = bcBkum + +bcBcost;
+      } else {
+        bcBsum = bcBkum;
+      }
+      const bcSumKum = bcBkum + bcPkum;
+      const bcSum = bcBsum + bcPsum;
+
+      reset((formValues: any) => ({
+        ...formValues,
+        bcBkum: bcBkum,
+        bcBsum: bcBsum,
+        bcSumKum: bcSumKum,
+        bcSum: bcSum,
+      }));
+    }
+
+    if (name === "bcPcost") {
+      const { bcPkum, bcBcost, bcBsum } = getValues();
+      let bcSumCost: number = 0;
+      let bcSum: number = 0;
+      const bcPsum = bcPkum + parseInt(num === "" ? 0 : num);
+      bcSumCost = parseInt(num === "" ? 0 : num) + +bcBcost + +data65?.bcGcost;
+      bcSum = bcPsum + +bcBsum;
+
+      reset((formValues: any) => ({
+        ...formValues,
+        bcPsum: bcPsum,
+        bcSumCost: bcSumCost,
+        bcSum: bcSum,
+      }));
+    }
+
+    if (name === "bcBcost") {
+      const { bcBkum, bcPcost, bcPsum } = getValues();
+      let bcSumCost: number = 0;
+      let bcSum: number = 0;
+      const bcBsum = bcBkum + parseInt(num === "" ? 0 : num);
+      bcSumCost = parseInt(num === "" ? 0 : num) + +bcPcost + +data65?.bcGcost;
+      bcSum = +bcBsum + +bcPsum;
+
+      reset((formValues: any) => ({
+        ...formValues,
+        bcBsum: bcBsum,
+        bcSumCost: bcSumCost,
+        bcSum: bcSum,
+      }));
+    }
+
+    if (name === "bcOutkum") {
+      const { bcInkum1, bcDc } = getValues();
+      const bcMisu = +bcInkum1 - bcDc - parseInt(num === "" ? 0 : num);
+
+      reset((formValues: any) => ({
+        ...formValues,
+        bcMisu: bcMisu,
+      }));
+    }
+
+    if (name === "bcDc") {
+      const { bcInkum1, bcOutkum } = getValues();
+      const bcMisu = +bcInkum1 - bcOutkum - parseInt(num === "" ? 0 : num);
+
+      reset((formValues: any) => ({
+        ...formValues,
+        bcMisu: bcMisu,
+      }));
+    }
+  };
+
   return (
     <div
       style={{
@@ -888,11 +768,7 @@ function Form({
               text="등록"
               icon={<Plus />}
               style={{ marginRight: "5px" }}
-              onClick={() => {
-                setAddBtnClicked(true);
-                clear();
-                setTabId(0);
-              }}
+              onClick={handleClickOnAddBtn}
             />
             <Button
               type="button"
@@ -1067,15 +943,13 @@ function Form({
             setRowIndex={setRowIndex}
             register={register}
             setBclInqtyLPG={setBclInqtyLPG}
-            calcTab1FooterChange={calcTab1FooterChange}
-            setTab2Calculation={setTab2Calculation}
+            calcOnFieldChange={calcOnFieldChange}
           />
         </TabContentWrapper>
       </form>
-      <FooterInfo
-        data={data65}
+      <CommonFooterInfo
         register={register}
-        calcTab1FooterChange={calcTab1FooterChange}
+        calcOnFieldChange={calcOnFieldChange}
       />
     </div>
   );

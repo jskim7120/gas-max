@@ -76,10 +76,10 @@ export interface IDATA65 {
   bcDate: string;
   bcDateno: string;
   bcDc: number;
-  bcGcost: string;
+  bcGcost: number;
   bcGin: number;
   bcGkum: number;
-  bcGsum: string;
+  bcGsum: number;
   bcInkum: number;
   bcInkum1: number;
   bcJTotal: number;

@@ -15,9 +15,8 @@ function Grid({
   setRowIndex,
   register,
   setBclInqtyLPG,
-  calcTab1FooterChange,
+  calcOnFieldChange,
   getValues,
-  setTab2Calculation,
 }: {
   data: any;
   setData: Function;
@@ -26,9 +25,8 @@ function Grid({
   setRowIndex: Function;
   register: Function;
   setBclInqtyLPG: Function;
-  calcTab1FooterChange: Function;
+  calcOnFieldChange: Function;
   getValues: any;
-  setTab2Calculation?: Function;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
@@ -82,15 +80,12 @@ function Grid({
     };
 
     gv.onCellButtonClicked = function (grid: any, index: any, column: any) {
-      // console.log("getValues areaCode:::", getValues("areaCode"));
-      // console.log("getValues bcBuCode:::", getValues("bcBuCode"));
-
       dispatch(
         addGR1200({
           index: index.dataRow,
           areaCode: getValues("areaCode"),
           bcBuCode: getValues("bcBuCode"),
-          bcChitType: tabId, //daraa n "0"-iig hasah
+          bcChitType: tabId,
         })
       );
       dispatch(openModal({ type: "gr1200Modal" }));
@@ -192,7 +187,7 @@ function Grid({
         <Tab1Footer
           data={data2}
           register={register}
-          calcTab1FooterChange={calcTab1FooterChange}
+          calcOnFieldChange={calcOnFieldChange}
         />
       )}
     </>
