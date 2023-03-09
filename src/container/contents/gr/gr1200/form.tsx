@@ -955,7 +955,6 @@ function Form({
             register={register}
             setBclInqtyLPG={setBclInqtyLPG}
             calcOnFieldChange={calcOnFieldChange}
-            control={control}
           />
         </TabContentWrapper>
       </form>
