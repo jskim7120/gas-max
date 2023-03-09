@@ -177,23 +177,34 @@ function Form({
         bcTotal: data65.bcTotal,
         bcPjan: data65.bcPjan,
         bcBjan: data65.bcBjan,
+        bcJTotal: data65.bcJTotal,
+        bcSumP: data65.bcSumP,
+        bcSumB: data65.bcSumB,
+        bcSumTotal: data65.bcSumTotal,
         bcPdanga: data65.bcPdanga,
         bcBdanga: data65.bcBdanga,
+        bcPkum: data65.bcPkum,
+        bcBkum: data65.bcBkum,
+        bcGkum: data65.bcGkum,
+        bcSumKum: data65.bcSumKum,
         bcPcost: data65.bcPcost,
         bcBcost: data65.bcBcost,
-        bcJTotal: data65.bcJTotal,
-        bcSumTotal: data65.bcSumTotal,
-        bcSumKum: data65.bcSumKum,
+        bcGcost: data65.bcGcost,
         bcSumCost: data65.bcSumCost,
+        bcPsum: data65.bcPsum,
+        bcBsum: data65.bcBsum,
+        bcGsum: data65.bcGsum,
         bcSum: data65.bcSum,
+        bcMemo: data65.bcMemo,
         bcSupplyAmt: data65.bcSupplyAmt,
         bcVatAmt: data65.bcVatAmt,
         bcInkum: data65.bcInkum,
-        bcMemo: data65.bcMemo,
         bcInkum1: data65.bcInkum1,
         bcSupplyType: data65.bcSupplyType,
         bcOutkum: data65.bcOutkum,
         bcDc: data65.bcDc,
+        bcMisu: data65.bcMisu,
+        bcBigo: data65.bcBigo,
       });
     }
   }, [data65]);
@@ -944,6 +955,7 @@ function Form({
             register={register}
             setBclInqtyLPG={setBclInqtyLPG}
             calcOnFieldChange={calcOnFieldChange}
+            control={control}
           />
         </TabContentWrapper>
       </form>
