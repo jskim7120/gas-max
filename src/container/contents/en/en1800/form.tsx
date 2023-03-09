@@ -196,7 +196,7 @@ const Form = React.forwardRef(
             labelStyle={{ minWidth: "50px" }}
             register={register("jyCode")}
             maxLength="2"
-            readOnly={isAddBtnClicked}
+            readOnly
             inputSize={InputSize.i80}
           />
 
@@ -206,6 +206,7 @@ const Form = React.forwardRef(
               {...register("areaCode")}
               onChange={handleSelectCode}
               width={InputSize.i130}
+              disabled
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

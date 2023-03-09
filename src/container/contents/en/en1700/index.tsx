@@ -116,6 +116,7 @@ function EN1700({
           setSelected={setSelected}
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
+          formRef={formRef}
         />
         <RightSide>
           <Form

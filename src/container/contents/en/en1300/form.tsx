@@ -97,6 +97,12 @@ const Form = React.forwardRef(
               }
               newData.jpCode = response.data.tempCode;
               newData.areaCode = selected.areaCode;
+              newData.jpGasType = response.data.jpGasType;
+              newData.jpGasuse = response.data.jpGasuse;
+              newData.jpGubun = response.data.jpGubun;
+              newData.jpJaegoYn = response.data.jpJaegoYn;
+              newData.jpKgDanwi = response.data.jpKgDanwi;
+              newData.jpKind = response.data.jpKind;
               reset(newData);
             } else {
               toast.error(response.response.data?.message, {
@@ -160,6 +166,7 @@ const Form = React.forwardRef(
       formValues.jpBaedal = formValues.jpBaedal
         ? formatCurrencyRemoveComma(formValues.jpBaedal)
         : "";
+
       try {
         const response: any = await API.post(path, formValues);
 
@@ -226,6 +233,7 @@ const Form = React.forwardRef(
               width={InputSize.i130}
               {...register("areaCode")}
               onChange={handleSelectCode}
+              disabled
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -241,7 +249,7 @@ const Form = React.forwardRef(
             register={register("jpCode")}
             maxLength="4"
             inputSize={InputSize.i130}
-            readOnly={isAddBtnClicked}
+            readOnly
           />
         </Wrapper>
         <Divider />
@@ -285,7 +293,7 @@ const Form = React.forwardRef(
                 onChange={onChange}
                 mask={[/\d/, /\d/, /\d/, /\d/, /\d/]}
                 textAlign="right"
-                style={{ width: "63px" }}
+                inputSize={InputSize.i130}
               />
             )}
           />
@@ -463,15 +471,18 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper>
           <FormGroup style={{ alignItems: "center" }}>
-            <Label>재고사용 유무</Label>
+            <Label>재고사용 유무--</Label>
             {radioOptions.map((option, index) => (
               <Item key={index}>
                 <RadioButton
                   type="radio"
                   value={option.id}
-                  {...register(`jpJaegoYn`, {
-                    required: "required",
-                  })}
+                  {...register(
+                    `jpJaegoYn`
+                    // , {
+                    //   // required: "required",
+                    // }
+                  )}
                   id={option.id}
                   // onChange={() => console.log(option.label)}
                 />

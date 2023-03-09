@@ -115,6 +115,7 @@ function EN1300({
           setSelected={setSelected}
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
+          formRef={formRef}
         />
         <RightSide>
           <Form

@@ -283,7 +283,7 @@ const Form = React.forwardRef(
             label="코드"
             register={register("swCode")}
             maxLength="2"
-            readOnly={isAddBtnClicked}
+            readOnly
             inputSize={InputSize.i200}
           />
 
@@ -293,6 +293,7 @@ const Form = React.forwardRef(
               {...register("areaCode")}
               onChange={handleSelectCode}
               width={InputSize.i200}
+              disabled
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -425,15 +426,19 @@ const Form = React.forwardRef(
             inputSize={InputSize.i200}
           />
           <DaumAddress setAddress={setAddress} />
-          <Input register={register("swAddr1")} fullWidth maxLength="40" />
+          <Input
+            register={register("swAddr1")}
+            maxLength="40"
+            style={{ width: "294px" }}
+          />
         </Wrapper>
 
         <Wrapper>
           <Input
             label=""
             register={register("swAddr2")}
-            fullWidth
             maxLength="40"
+            style={{ width: "526px" }}
           />
         </Wrapper>
 
@@ -464,7 +469,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Divider />
         <Wrapper>
-          <div>
+          <div style={{ width: "600px" }}>
             <Wrapper grid col={3} style={{ alignItems: "center" }}>
               <Input
                 label="서명화일"
@@ -503,8 +508,8 @@ const Form = React.forwardRef(
               </button>
             </Wrapper>
 
-            <Wrapper style={{ width: "600px" }}>
-              <Field flex style={{ alignItems: "center" }}>
+            <Wrapper>
+              <FormGroup>
                 <Label>입사일</Label>
                 <Controller
                   control={control}
@@ -517,23 +522,22 @@ const Form = React.forwardRef(
                     />
                   )}
                 />
-              </Field>
-              <Field style={{ width: "100%" }}>
-                <FormGroup>
-                  <Label>급여방식</Label>
-                  <Select {...register("swPaytype")} width={InputSize.i110}>
-                    {dataCommonDic?.swPaytype?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code1}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-              </Field>
+              </FormGroup>
+
+              <FormGroup>
+                <Label style={{ minWidth: "90px" }}>급여방식</Label>
+                <Select {...register("swPaytype")} width={InputSize.i110}>
+                  {dataCommonDic?.swPaytype?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code1}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
             </Wrapper>
 
             <Wrapper grid>
-              <Field flex>
+              <FormGroup>
                 <Controller
                   control={control}
                   {...register("swPaykum")}
@@ -551,8 +555,8 @@ const Form = React.forwardRef(
                 />
 
                 <p>원</p>
-              </Field>
-              <Field style={{ marginLeft: "-15px" }}>
+              </FormGroup>
+              <FormGroup>
                 <Controller
                   control={control}
                   {...register("swPaydate")}
@@ -560,6 +564,7 @@ const Form = React.forwardRef(
                     <Input
                       label="급여일"
                       value={value}
+                      labelStyle={{ minWidth: "76px" }}
                       onChange={onChange}
                       mask={[/\d/, /\d/]}
                       name={name}
@@ -567,7 +572,7 @@ const Form = React.forwardRef(
                     />
                   )}
                 />
-              </Field>
+              </FormGroup>
             </Wrapper>
           </div>
           <ImageWrapper>{image64 && <img src={image64} />}</ImageWrapper>
@@ -582,6 +587,7 @@ const Form = React.forwardRef(
           />
           <Input
             label="면허번호"
+            labelStyle={{ minWidth: "90px" }}
             register={register("swDriverNo")}
             maxLength="17"
             inputSize={InputSize.i110}
@@ -616,8 +622,8 @@ const Form = React.forwardRef(
           <Input
             label="메모"
             register={register("swBigo")}
-            fullWidth
             maxLength="40"
+            style={{ width: "526px" }}
           />
         </Wrapper>
         <Divider />
