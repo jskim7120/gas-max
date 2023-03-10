@@ -22,10 +22,7 @@ import GridLeft from "components/grid";
 import Form from "./form";
 import { GR1200SEARCH } from "app/path";
 import Loader from "components/loader";
-import {
-  formatDateToStringWithoutDash,
-  formatDateByRemoveDash,
-} from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import Table from "./table";
 import { fields, columns, layout } from "./data";
 import CustomTopPart from "container/contents/customTopPart";
@@ -71,16 +68,18 @@ function GR1200({
   const fetchData = async (params: any) => {
     try {
       if (params.sDate !== undefined) {
-        params.sDate =
-          typeof params.sDate === "string"
-            ? formatDateByRemoveDash(params.sDate)
-            : formatDateToStringWithoutDash(params.sDate);
+        // params.sDate =
+        //   typeof params.sDate === "string"
+        //     ? formatDateByRemoveDash(params.sDate)
+        //     : formatDateToStringWithoutDash(params.sDate);
+        params.sDate = DateWithoutDash(params.sDate);
       }
       if (params.eDate !== undefined) {
-        params.eDate =
-          typeof params.eDate === "string"
-            ? formatDateByRemoveDash(params.eDate)
-            : formatDateToStringWithoutDash(params.eDate);
+        // params.eDate =
+        //   typeof params.eDate === "string"
+        //     ? formatDateByRemoveDash(params.eDate)
+        //     : formatDateToStringWithoutDash(params.eDate);
+        params.eDate = DateWithoutDash(params.eDate);
       }
       setLoading(true);
       const res = await API.get(GR1200SEARCH, { params: params });

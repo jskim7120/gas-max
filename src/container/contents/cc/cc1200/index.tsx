@@ -27,7 +27,6 @@ import { ButtonColor } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import Grid from "../grid";
 import { columns, fields } from "./data";
-import { formatDateToStringWithoutDash } from "helpers/dateFormat";
 import CustomTopPart from "container/contents/customTopPart";
 
 function CC1200({

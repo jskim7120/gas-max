@@ -24,10 +24,6 @@ import Grid from "../grid";
 import { fields, columns } from "./data";
 import { ICC1700SEARCH } from "./model";
 import Form from "./form";
-import {
-  formatDateToStringWithoutDash,
-  formatDateByRemoveDash,
-} from "helpers/dateFormat";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
 
 function CC1700({
