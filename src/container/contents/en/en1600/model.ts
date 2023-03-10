@@ -7,8 +7,8 @@ export interface IJNOSAUP {
   swCaCode: string;
   swCaName: string;
   swCode: string;
-  swDriverNo: string;
-  swDriverType: string;
+  swDriverno: string;
+  swDrivertype: string;
   swGubun: string;
   swGubunName: string;
   swHp: string;

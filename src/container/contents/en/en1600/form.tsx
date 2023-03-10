@@ -583,14 +583,14 @@ const Form = React.forwardRef(
         <Wrapper>
           <Input
             label="면허종류"
-            register={register("swDriverType")}
+            register={register("swDrivertype")}
             maxLength="15"
             inputSize={InputSize.i200}
           />
           <Input
             label="면허번호"
             labelStyle={{ minWidth: "90px" }}
-            register={register("swDriverNo")}
+            register={register("swDriverno")}
             maxLength="17"
             inputSize={InputSize.i110}
           />
