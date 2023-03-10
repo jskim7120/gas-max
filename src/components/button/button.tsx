@@ -29,38 +29,47 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
       attributes.color = "#FFF";
       attributes.bgHover = "#1EC5DF";
       attributes.lineColor = "#fff";
+      attributes.disabledBg = `rgba(23, 162, 184, 0.5)`;
     }
     if (color === ButtonColor.SECONDARY) {
-      attributes.bg = "linear-gradient(#FFB300, #E67F09)";
+      // attributes.bg = "linear-gradient(#FFB300, #E67F09)";
+      attributes.bg = "#FFB300";
       attributes.color = "#FFF";
-      attributes.bgHover =
-        "linear-gradient(#F5D998 5%, #F4D38E 10%, #F3CD85 15%, #F2C77B 20%, #F1C171 25%, #F0BC69 30%, #E67F09 100%)";
+      // attributes.bgHover =
+      //   "linear-gradient(#F5D998 5%, #F4D38E 10%, #F3CD85 15%, #F2C77B 20%, #F1C171 25%, #F0BC69 30%, #E67F09 100%)";
+      attributes.bgHover = "#F0BC69";
       attributes.lineColor = "#fff";
+      attributes.disabledBg = `rgba(207, 207, 207, 1)`;
     }
     if (color === ButtonColor.WARNING) {
       attributes.bg = "linear-gradient(#FF4E00, #7A1710)";
       attributes.color = "#FFF";
       attributes.lineColor = "#fff";
+      attributes.disabledBg = `red`;
     }
     if (color === ButtonColor.SUCCESS) {
       attributes.bg = "linear-gradient(#96E165, #19953A)";
       attributes.color = "#FFF";
       attributes.lineColor = "#fff";
+      attributes.disabledBg = `red`;
     }
     if (color === ButtonColor.LIGHT) {
       attributes.bg = "linear-gradient(#FFFFFF, #CFCFCF)";
       attributes.color = "#0A0A0A";
       attributes.lineColor = "#707070";
+      attributes.disabledBg = `red`;
     }
     if (color === ButtonColor.DANGER) {
       attributes.bg = "#FF6600";
       attributes.color = "#FFF";
       attributes.lineColor = "#FFF";
+      attributes.disabledBg = `red`;
     }
     if (color === ButtonColor.PURPLE) {
       attributes.bg = "#3440E6";
       attributes.color = "#FFF";
       attributes.lineColor = "#FFF";
+      attributes.disabledBg = `red`;
     }
   } else if (kind === ButtonType.LOGIN) {
     attributes = {
@@ -161,16 +170,20 @@ const ButtonComponent = styled.button<{
       border-radius: ${BtnAttribute(props.kind, props.color).borderRad};
       color: ${BtnAttribute(props.kind, props.color).color};
       padding: ${BtnAttribute(props.kind, props.color).padding};
+
       &:hover {
         background: ${BtnAttribute(props.kind, props.color).bgHover};
       }
       &:focus {
         //background-color: #5284ce;
       }
+
       &:disabled {
-        background-color: #5284ce;
+        background-color: ${BtnAttribute(props.kind, props.color)
+          .disabledBg} !important;
         cursor: default;
       }
+
       line-height: 14px;
     `;
   }}
