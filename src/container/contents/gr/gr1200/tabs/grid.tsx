@@ -15,7 +15,7 @@ function Grid({
   setRowIndex,
   register,
   setBclInqtyLPG,
-  calcTab1FooterChange,
+  calcOnFieldChange,
   getValues,
 }: {
   data: any;
@@ -25,7 +25,7 @@ function Grid({
   setRowIndex: Function;
   register: Function;
   setBclInqtyLPG: Function;
-  calcTab1FooterChange: Function;
+  calcOnFieldChange: Function;
   getValues: any;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
@@ -80,15 +80,12 @@ function Grid({
     };
 
     gv.onCellButtonClicked = function (grid: any, index: any, column: any) {
-      // console.log("getValues areaCode:::", getValues("areaCode"));
-      // console.log("getValues bcBuCode:::", getValues("bcBuCode"));
-
       dispatch(
         addGR1200({
           index: index.dataRow,
           areaCode: getValues("areaCode"),
           bcBuCode: getValues("bcBuCode"),
-          bcChitType: tabId, //daraa n "0"-iig hasah
+          bcChitType: tabId,
         })
       );
       dispatch(openModal({ type: "gr1200Modal" }));
@@ -121,38 +118,42 @@ function Grid({
           prev.map((object: any, idx: number) => {
             if (idx === index.dataRow) {
               if (index.fieldName === "bclInqty" && object.bclCost !== null) {
-                const bclVatType = object.bclVatType ? object.bclVatType : 0;
-                const bclAmt = object.bclCost * newValue + bclVatType;
+                // const bclVatType = object.bclVatType ? object.bclVatType : 0;
+                const bclAmt = object.bclCost * newValue; // + bclVatType;
+
                 return {
                   ...object,
                   [index.fieldName]: newValue,
+                  isEdited: true,
                   bclAmt: bclAmt,
                 };
               }
               if (index.fieldName === "bclCost" && object.bclInqty !== null) {
-                const bclVatType = object.bclVatType ? object.bclVatType : 0;
+                // const bclVatType = object.bclVatType ? object.bclVatType : 0;
+                const bclAmt = object.bclInqty * newValue; //+ bclVatType;
 
-                const bclAmt = object.bclInqty * newValue + bclVatType;
-                console.log("hfdhdfhjfdj:", bclVatType);
                 return {
                   ...object,
                   [index.fieldName]: newValue,
+                  isEdited: true,
                   bclAmt: bclAmt,
                 };
               }
 
-              if (
-                index.fieldName === "bclVatType" &&
-                object.bclInqty !== null &&
-                object.bclVatType !== null
-              ) {
-                const bclAmt = object.bclInqty * object.bclCost + newValue;
-                return {
-                  ...object,
-                  [index.fieldName]: newValue,
-                  bclAmt: bclAmt,
-                };
-              }
+              // if (
+              //   index.fieldName === "bclVatType" &&
+              //   object.bclInqty !== null &&
+              //   object.bclVatType !== null
+              // ) {
+              //   const bclAmt = object.bclInqty * object.bclCost + newValue;
+
+              //   return {
+              //     ...object,
+              //     [index.fieldName]: newValue,
+              //     bclAmt: bclAmt,
+              //   };
+              // }
+
               return {
                 ...object,
                 [index.fieldName]: newValue,
@@ -160,6 +161,7 @@ function Grid({
             } else return object;
           })
         );
+        setBclInqtyLPG((prev: boolean) => !prev);
       }
 
       gv.cancel();
@@ -185,7 +187,7 @@ function Grid({
         <Tab1Footer
           data={data2}
           register={register}
-          calcTab1FooterChange={calcTab1FooterChange}
+          calcOnFieldChange={calcOnFieldChange}
         />
       )}
     </>

@@ -114,6 +114,7 @@ function EN1900({
           setSelected={setSelected}
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
+          formRef={formRef}
         />
         <RightSide>
           <Form

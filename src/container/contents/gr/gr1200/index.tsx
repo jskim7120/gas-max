@@ -88,6 +88,10 @@ function GR1200({
         setData(res?.data?.realgridData);
         setData2(res?.data?.totalData[0]);
         setSelected(res?.data?.realgridData[0]);
+      } else {
+        setData([]);
+        setData2([]);
+        setSelected({});
       }
       setLoading(false);
     } catch (err) {

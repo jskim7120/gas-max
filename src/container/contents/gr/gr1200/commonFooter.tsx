@@ -2,14 +2,12 @@ import { useState } from "react";
 import { Input, Field, Select } from "components/form/style";
 import { CTitle, CTextArea, CLabel, TabLikeHeader, CTable } from "./style";
 
-function FooterInfo({
-  data,
+function CommonFooterInfo({
   register,
-  calcTab1FooterChange,
+  calcOnFieldChange,
 }: {
-  data: any;
   register: any;
-  calcTab1FooterChange: Function;
+  calcOnFieldChange: Function;
 }) {
   const [bcOutkum, setBcOutkum] = useState<string | undefined>(undefined);
   const [bcDc, setBcDc] = useState<string | undefined>(undefined);
@@ -85,7 +83,7 @@ function FooterInfo({
               register={register("bcOutkum")}
               onChange={(e: any) => {
                 setBcOutkum(e.target.value);
-                calcTab1FooterChange(e.target.value, "bcOutkum");
+                calcOnFieldChange(e.target.value, "bcOutkum");
               }}
               value={bcOutkum}
               className="h27"
@@ -96,7 +94,7 @@ function FooterInfo({
               register={register("bcDc")}
               onChange={(e: any) => {
                 setBcDc(e.target.value);
-                calcTab1FooterChange(e.target.value, "bcDc");
+                calcOnFieldChange(e.target.value, "bcDc");
               }}
               value={bcDc}
               className="h27"
@@ -114,4 +112,4 @@ function FooterInfo({
   );
 }
 
-export default FooterInfo;
+export default CommonFooterInfo;

@@ -164,7 +164,7 @@ const Form = React.forwardRef(
             label="코드"
             register={register("ccCode")}
             maxLength="2"
-            readOnly={isAddBtnClicked}
+            readOnly
             inputSize={InputSize.i80}
           />
         </Wrapper>

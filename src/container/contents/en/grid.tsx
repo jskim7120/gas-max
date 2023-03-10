@@ -10,6 +10,7 @@ function Grid({
   selectedRowIndex,
   setSelectedRowIndex,
   style,
+  formRef,
 }: {
   data: any;
   fields: any;
@@ -18,6 +19,7 @@ function Grid({
   selectedRowIndex: number | null;
   setSelectedRowIndex: Function;
   style?: any;
+  formRef?: any;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -55,6 +57,7 @@ function Grid({
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected(data[itemIndex]);
       setSelectedRowIndex(itemIndex);
+      formRef.current.setIsAddBtnClicked(false);
     };
 
     return () => {

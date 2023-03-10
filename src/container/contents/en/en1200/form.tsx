@@ -15,7 +15,7 @@ import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { SearchIcon, IconHome, IconReceipt } from "components/allSvgIcon";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { formatDate, formatDateToStringWithoutDash } from "helpers/dateFormat";
+import { DateWithDash, DateWithoutDash } from "helpers/dateFormat";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { convertBase64 } from "helpers/convertBase64";
@@ -115,7 +115,8 @@ const Form = React.forwardRef(
             saupStampQu: selected?.saupStampQu === "Y",
             saupStampEs: selected?.saupStampEs === "Y",
             saupStampSe: selected?.saupStampSe === "Y",
-            saupDate: selected?.saupDate ? formatDate(selected.saupDate) : "",
+            // saupDate: selected?.saupDate ? formatDate(selected.saupDate) : "",
+            saupDate: DateWithDash(selected?.saupDate),
           });
 
           selected.saupStampImg
@@ -157,9 +158,10 @@ const Form = React.forwardRef(
       formValues.saupStampQu = formValues.saupStampQu ? "Y" : "N";
       formValues.saupStampEs = formValues.saupStampEs ? "Y" : "N";
       formValues.saupStampSe = formValues.saupStampSe ? "Y" : "N";
-      formValues.saupDate = formValues.saupDate
-        ? formatDateToStringWithoutDash(formValues.saupDate)
-        : "";
+      // formValues.saupDate = formValues.saupDate
+      //   ? formatDateToStringWithoutDash(formValues.saupDate)
+      //   : "";
+      formValues.saupDate = DateWithoutDash(formValues.saupDate);
       formValues.saupEdiEmail =
         formValues.saupEdiEmail && formValues.saupEdiEmail.trim();
 
@@ -251,7 +253,7 @@ const Form = React.forwardRef(
                 label="코드"
                 register={register("saupSno")}
                 inputSize={InputSize.i150}
-                readOnly={isAddBtnClicked}
+                readOnly
               />
 
               <FormGroup>
@@ -260,6 +262,7 @@ const Form = React.forwardRef(
                   {...register("areaCode")}
                   onChange={handleSelectCode}
                   width={InputSize.i175}
+                  disabled
                 >
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>

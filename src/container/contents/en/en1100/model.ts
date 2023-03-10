@@ -64,10 +64,10 @@ export interface IJNOTRY {
   jnBank3: string;
   jnBank4: string;
 
-  jnBankNo1: string;
-  jnBankNo2: string;
-  jnBankNo3: string;
-  jnBankNo4: string;
+  jnBankno1: string;
+  jnBankno2: string;
+  jnBankno3: string;
+  jnBankno4: string;
 
   jnMark1: string;
   jnMark2: string;

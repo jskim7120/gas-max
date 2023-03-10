@@ -194,7 +194,8 @@ const Form = React.forwardRef(
             <Select
               {...register("areaCode")}
               onChange={handleSelectCode}
-              width={InputSize.i130}
+              width={InputSize.i150}
+              disabled
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -209,9 +210,9 @@ const Form = React.forwardRef(
             label="부품코드"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpCode")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i150}
             maxLength="3"
-            readOnly={isAddBtnClicked}
+            readOnly
           />
         </Wrapper>
         <Divider />
@@ -220,7 +221,7 @@ const Form = React.forwardRef(
             label="부품명"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpName")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i150}
             maxLength="20"
           />
         </Wrapper>
@@ -229,7 +230,7 @@ const Form = React.forwardRef(
             label="규격"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpType")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i150}
             maxLength="10"
           />
         </Wrapper>
@@ -238,7 +239,7 @@ const Form = React.forwardRef(
             label="단위"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpDanwi")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i150}
             maxLength="10"
           />
         </Wrapper>
@@ -256,7 +257,7 @@ const Form = React.forwardRef(
                   onChange={onChange}
                   mask={currencyMask}
                   textAlign="right"
-                  inputSize={InputSize.i250}
+                  inputSize={InputSize.i150}
                   name={name}
                 />
               )}
@@ -277,7 +278,7 @@ const Form = React.forwardRef(
                   onChange={onChange}
                   mask={currencyMask}
                   textAlign="right"
-                  inputSize={InputSize.i250}
+                  inputSize={InputSize.i150}
                   name={name}
                 />
               )}

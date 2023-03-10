@@ -150,3 +150,6 @@ export const PaymentLineCnt = styled.div`
     height: 45px;
   }
 `;
+export const PaymentLineCnt1 = styled.div``;
+export const PaymentLineCnt2 = styled.div``;
+export const PaymentLineCnt3 = styled.div``;

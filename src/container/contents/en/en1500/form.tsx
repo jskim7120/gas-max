@@ -386,7 +386,12 @@ const Form = (
       <Wrapper grid style={{ marginBottom: "7px" }}>
         <Field className="field">
           <FormGroup>
-            <Input label="코드" register={register("areaCode")} maxLength="2" />
+            <Input
+              label="코드"
+              register={register("areaCode")}
+              maxLength="2"
+              readOnly
+            />
           </FormGroup>
         </Field>
         <Field>
@@ -395,6 +400,7 @@ const Form = (
               label="영업소명"
               register={register("areaName")}
               maxLength="20"
+              readOnly
             />
           </FormGroup>
         </Field>
