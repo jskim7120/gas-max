@@ -98,6 +98,7 @@ function EN2000({
             setSelected={setSelected}
             isAddBtnClicked={isAddBtnClicked}
             setIsAddBtnClicked={setIsAddBtnClicked}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
           />
         </RightSide>
       </MainWrapper>

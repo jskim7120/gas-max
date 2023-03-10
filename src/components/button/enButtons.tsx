@@ -31,6 +31,7 @@ function ENButtons({
           setIsAddBtnClicked(true);
           setIsCancelBtnDisabled(false);
           formRef.current.resetForm("clear");
+          formRef.current?.setImage64 && formRef.current?.setImage64("");
         }}
       />
       <Button
