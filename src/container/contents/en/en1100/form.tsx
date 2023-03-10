@@ -198,6 +198,7 @@ const Form = React.forwardRef(
             register={register("areaName")}
             maxLength="20"
             inputSize={InputSize.i150}
+            readOnly={!isAddBtnClicked}
           />
         </Wrapper>
 

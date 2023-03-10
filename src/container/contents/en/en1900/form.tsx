@@ -171,7 +171,7 @@ const Form = React.forwardRef(
         });
         if (response.status === 200) {
           for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
+            newData[key] = null;
           }
           newData.gubunCode = response.data.tempCode;
           newData.areaCode = event.target.value;
@@ -207,7 +207,7 @@ const Form = React.forwardRef(
               {...register("areaCode")}
               onChange={handleSelectCode}
               width={InputSize.i130}
-              disabled
+              disabled={!isAddBtnClicked}
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
