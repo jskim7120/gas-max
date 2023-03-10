@@ -223,11 +223,13 @@ const Form = React.forwardRef(
           params: { areaCode: event.target.value },
         });
         if (response.status === 200) {
+          console.log(response.data);
           for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
+            newData[key] = null;
           }
           newData.saupSno = response.data.tempCode;
           newData.areaCode = event.target.value;
+
           reset(newData);
         } else {
           toast.error(response.response.data?.message, {

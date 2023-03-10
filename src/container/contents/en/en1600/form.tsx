@@ -85,6 +85,7 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
+      setImage64,
     }));
 
     const resetForm = async (type: string) => {

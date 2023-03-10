@@ -27,4 +27,5 @@ export interface IJNOSAUP {
   saupStampSe: string;
   saupUptae: string;
   saupZipcode: string;
+  saupNo: string;
 }
