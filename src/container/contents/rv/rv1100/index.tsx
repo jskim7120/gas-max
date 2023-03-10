@@ -32,10 +32,8 @@ import Grid from "./grid";
 import { fields, columns } from "./data/dataTop";
 import Loader from "components/loader";
 import {
-  formatDateByRemoveDash,
-  formatDateToStringWithoutDash,
-  formatOnlyYearMonthDateByRemoveDash,
-  formatDateToStringWithoutDashOnlyYearMonth,
+  DateWithoutDash,
+  DateWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
 import Footer from "./footer";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
@@ -83,47 +81,54 @@ function RV1100({
   });
 
   const submit = async (params: any) => {
-    params.sGjGumym =
-      typeof params.sGjGumym === "string"
-        ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumym)
-        : params.sGjGumym instanceof Date
-        ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumym)
-        : "";
-    params.sGjPerDate =
-      typeof params.sGjPerDate === "string"
-        ? formatDateByRemoveDash(params.sGjPerDate)
-        : params.sGjPerDate instanceof Date
-        ? formatDateToStringWithoutDash(params.sGjPerDate)
-        : "";
-    params.sGjDate =
-      typeof params.sGjDate === "string"
-        ? formatDateByRemoveDash(params.sGjDate)
-        : params.sGjDate instanceof Date
-        ? formatDateToStringWithoutDash(params.sGjDate)
-        : "";
+    // params.sGjGumym =
+    //   typeof params.sGjGumym === "string"
+    //     ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumym)
+    //     : params.sGjGumym instanceof Date
+    //     ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumym)
+    //     : "";
+    params.sGjGumym = DateWithoutDashOnlyYearMonth(params.sGjGumym);
+    // params.sGjPerDate =
+    //   typeof params.sGjPerDate === "string"
+    //     ? formatDateByRemoveDash(params.sGjPerDate)
+    //     : params.sGjPerDate instanceof Date
+    //     ? formatDateToStringWithoutDash(params.sGjPerDate)
+    //     : "";
+    params.sGjPerDate = DateWithoutDash(params.sGjPerDate);
+
+    // params.sGjDate =
+    //   typeof params.sGjDate === "string"
+    //     ? formatDateByRemoveDash(params.sGjDate)
+    //     : params.sGjDate instanceof Date
+    //     ? formatDateToStringWithoutDash(params.sGjDate)
+    //     : "";
+    params.sGjDate = DateWithoutDash(params.sGjDate);
 
     fetchData(params);
   };
 
   const submit2 = async (params: any) => {
-    params.sGjGumym =
-      typeof params.sGjGumym === "string"
-        ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumym)
-        : params.sGjGumym instanceof Date
-        ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumym)
-        : "";
-    params.sGjPerDate =
-      typeof params.sGjPerDate === "string"
-        ? formatDateByRemoveDash(params.sGjPerDate)
-        : params.sGjPerDate instanceof Date
-        ? formatDateToStringWithoutDash(params.sGjPerDate)
-        : "";
-    params.sGjDate =
-      typeof params.sGjDate === "string"
-        ? formatDateByRemoveDash(params.sGjDate)
-        : params.sGjDate instanceof Date
-        ? formatDateToStringWithoutDash(params.sGjDate)
-        : "";
+    // params.sGjGumym =
+    //   typeof params.sGjGumym === "string"
+    //     ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumym)
+    //     : params.sGjGumym instanceof Date
+    //     ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumym)
+    //     : "";
+    params.sGjGumym = DateWithoutDashOnlyYearMonth(params.sGjGumym);
+    // params.sGjPerDate =
+    //   typeof params.sGjPerDate === "string"
+    //     ? formatDateByRemoveDash(params.sGjPerDate)
+    //     : params.sGjPerDate instanceof Date
+    //     ? formatDateToStringWithoutDash(params.sGjPerDate)
+    //     : "";
+    params.sGjPerDate = DateWithoutDash(params.sGjPerDate);
+    // params.sGjDate =
+    //   typeof params.sGjDate === "string"
+    //     ? formatDateByRemoveDash(params.sGjDate)
+    //     : params.sGjDate instanceof Date
+    //     ? formatDateToStringWithoutDash(params.sGjDate)
+    //     : "";
+    params.sGjDate = DateWithoutDash(params.sGjDate);
 
     search2(params);
   };
@@ -170,7 +175,7 @@ function RV1100({
         newData.gjGumym = gjGumym;
       } else {
         newData.gjGumym = dataCommonDic?.sGjGumym[0].code;
-        newData.gjGumym = formatOnlyYearMonthDateByRemoveDash(newData.gjGumym);
+        newData.gjGumym = DateWithoutDashOnlyYearMonth(newData.gjGumym);
       }
       if (gjSno) {
         newData.gjSno = gjSno;
@@ -181,11 +186,11 @@ function RV1100({
         newData.gjPerDate = gjPerDate;
       } else {
         newData.gjPerDate = dataCommonDic?.sGjPerDate[0].code;
-        newData.gjPerDate = formatDateByRemoveDash(newData.gjPerDate);
+        newData.gjPerDate = DateWithoutDash(newData.gjPerDate);
       }
-      newData.gjDate = formatDateByRemoveDash(newData.gjDate);
-      newData.gjLdate = formatDateByRemoveDash(newData.gjLdate);
-      newData.gjSdate = formatDateByRemoveDash(newData.gjSdate);
+      newData.gjDate = DateWithoutDash(newData.gjDate);
+      newData.gjLdate = DateWithoutDash(newData.gjLdate);
+      newData.gjSdate = DateWithoutDash(newData.gjSdate);
 
       try {
         const response: any = await API.post(RV1100DELETE, newData);
@@ -194,11 +199,9 @@ function RV1100({
           toast.success("삭제하였습니다", {
             autoClose: 500,
           });
-          params.sGjDate = formatDateByRemoveDash(params.sGjDate);
-          params.sGjGumym = formatOnlyYearMonthDateByRemoveDash(
-            params.sGjGumym
-          );
-          params.sGjPerDate = formatDateByRemoveDash(params.sGjPerDate);
+          params.sGjDate = DateWithoutDash(params.sGjDate);
+          params.sGjGumym = DateWithoutDashOnlyYearMonth(params.sGjGumym);
+          params.sGjPerDate = DateWithoutDash(params.sGjPerDate);
           await fetchData(params);
         } else {
           toast.error(response?.response?.message, {
@@ -214,15 +217,12 @@ function RV1100({
   };
 
   const gjPerDateChanged = (value: any) => {
-    value = value instanceof Date ? formatDateToStringWithoutDash(value) : null;
+    value = value instanceof Date ? DateWithoutDashOnlyYearMonth(value) : null;
     setGjPerDate(value);
   };
 
   const gjGumymChanged = (value: any) => {
-    value =
-      value instanceof Date
-        ? formatDateToStringWithoutDashOnlyYearMonth(value)
-        : null;
+    value = value instanceof Date ? DateWithoutDashOnlyYearMonth(value) : null;
     setGjGumym(value);
   };
 

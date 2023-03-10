@@ -37,11 +37,7 @@ import {
   CM1200UPDATE,
   CM1200INSERTSEQ,
 } from "app/path";
-import {
-  formatDate,
-  formatDateByRemoveDash,
-  formatDateToStringWithoutDash,
-} from "helpers/dateFormat";
+import { DateWithDash, DateWithoutDash } from "helpers/dateFormat";
 import { formatCurrencyRemoveComma } from "helpers/currency";
 
 const Form = React.forwardRef(
@@ -200,40 +196,50 @@ const Form = React.forwardRef(
           cuAptnameYn: tempData?.cuAptnameYn === "Y",
           cuBaGageYn: tempData?.cuBaGageYn === "Y",
 
-          cuFinishDate: selected?.cuFinishDate
-            ? formatDate(selected.cuFinishDate)
-            : "",
-          cuCircuitDate: selected?.cuCircuitDate
-            ? formatDate(selected.cuCircuitDate)
-            : "",
-          cuScheduleDate: selected?.cuScheduleDate
-            ? formatDate(selected.cuScheduleDate)
-            : "",
-          tankFirstDate1: selected?.tankFirstDate1
-            ? formatDate(selected.tankFirstDate1)
-            : "",
-          tankFirstDate2: selected?.tankFirstDate2
-            ? formatDate(selected.tankFirstDate2)
-            : "",
-          tankOutsideDate1: selected?.tankOutsideDate1
-            ? formatDate(selected.tankOutsideDate1)
-            : "",
-          tankOutsideDate2: selected?.tankOutsideDate2
-            ? formatDate(selected.tankOutsideDate2)
-            : "",
-          tankInsideDate1: selected?.tankInsideDate1
-            ? formatDate(selected.tankInsideDate1)
-            : "",
-
-          tankInsideDate2: selected?.tankInsideDate2
-            ? formatDate(selected.tankInsideDate2)
-            : "",
-          gasifyCheckDate1: selected?.gasifyCheckDate1
-            ? formatDate(selected.gasifyCheckDate1)
-            : "",
-          gasifyCheckDate2: selected?.gasifyCheckDate2
-            ? formatDate(selected.gasifyCheckDate2)
-            : "",
+          // cuFinishDate: selected?.cuFinishDate
+          //   ? formatDate(selected.cuFinishDate)
+          //   : "",
+          cuFinishDate: DateWithDash(selected.cuFinishDate),
+          // cuCircuitDate: selected?.cuCircuitDate
+          //   ? formatDate(selected.cuCircuitDate)
+          //   : "",
+          cuCircuitDate: DateWithDash(selected.cuCircuitDate),
+          // cuScheduleDate: selected?.cuScheduleDate
+          //   ? formatDate(selected.cuScheduleDate)
+          //   : "",
+          cuScheduleDate: DateWithDash(selected.cuScheduleDate),
+          // tankFirstDate1: selected?.tankFirstDate1
+          //   ? formatDate(selected.tankFirstDate1)
+          //   : "",
+          tankFirstDate1: DateWithDash(selected.tankFirstDate1),
+          // tankFirstDate2: selected?.tankFirstDate2
+          //   ? formatDate(selected.tankFirstDate2)
+          //   : "",
+          tankFirstDate2: DateWithDash(selected.tankFirstDate2),
+          // tankOutsideDate1: selected?.tankOutsideDate1
+          //   ? formatDate(selected.tankOutsideDate1)
+          //   : "",
+          tankOutsideDate1: DateWithDash(selected.tankOutsideDate1),
+          // tankOutsideDate2: selected?.tankOutsideDate2
+          //   ? formatDate(selected.tankOutsideDate2)
+          //   : "",
+          tankOutsideDate2: DateWithDash(selected.tankOutsideDate2),
+          // tankInsideDate1: selected?.tankInsideDate1
+          //   ? formatDate(selected.tankInsideDate1)
+          //   : "",
+          tankInsideDate1: DateWithDash(selected.tankInsideDate1),
+          // tankInsideDate2: selected?.tankInsideDate2
+          //   ? formatDate(selected.tankInsideDate2)
+          //   : "",
+          tankInsideDate2: DateWithDash(selected.tankInsideDate2),
+          // gasifyCheckDate1: selected?.gasifyCheckDate1
+          //   ? formatDate(selected.gasifyCheckDate1)
+          //   : "",
+          gasifyCheckDate1: DateWithDash(selected.gasifyCheckDate1),
+          // gasifyCheckDate2: selected?.gasifyCheckDate2
+          //   ? formatDate(selected.gasifyCheckDate2)
+          //   : "",
+          gasifyCheckDate2: DateWithDash(selected.gasifyCheckDate2),
         });
         return;
       }
@@ -332,82 +338,111 @@ const Form = React.forwardRef(
 
       formValues.cuAptnameYn = formValues.cuAptnameYn ? "Y" : "N";
 
-      formValues.cuFinishDate =
-        typeof formValues.cuFinishDate === "string"
-          ? formatDateByRemoveDash(formValues.cuFinishDate)
-          : formValues.cuFinishDate instanceof Date
-          ? formatDateToStringWithoutDash(formValues.cuFinishDate)
-          : "";
+      // formValues.cuFinishDate =
+      //   typeof formValues.cuFinishDate === "string"
+      //     ? formatDateByRemoveDash(formValues.cuFinishDate)
+      //     : formValues.cuFinishDate instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.cuFinishDate)
+      //     : "";
 
-      formValues.cuCircuitDate =
-        typeof formValues.cuCircuitDate === "string"
-          ? formatDateByRemoveDash(formValues.cuCircuitDate)
-          : formValues.cuCircuitDate instanceof Date
-          ? formatDateToStringWithoutDash(formValues.cuCircuitDate)
-          : "";
+      formValues.cuFinishDate = DateWithoutDash(formValues.cuFinishDate);
 
-      formValues.cuScheduleDate =
-        typeof formValues.cuScheduleDate === "string"
-          ? formatDateByRemoveDash(formValues.cuScheduleDate)
-          : formValues.cuScheduleDate instanceof Date
-          ? formatDateToStringWithoutDash(formValues.cuScheduleDate)
-          : "";
+      // formValues.cuCircuitDate =
+      //   typeof formValues.cuCircuitDate === "string"
+      //     ? formatDateByRemoveDash(formValues.cuCircuitDate)
+      //     : formValues.cuCircuitDate instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.cuCircuitDate)
+      //     : "";
 
-      formValues.gasifyCheckDate1 =
-        typeof formValues.gasifyCheckDate1 === "string"
-          ? formatDateByRemoveDash(formValues.gasifyCheckDate1)
-          : formValues.gasifyCheckDate1 instanceof Date
-          ? formatDateToStringWithoutDash(formValues.gasifyCheckDate1)
-          : "";
+      formValues.cuCircuitDate = DateWithoutDash(formValues.cuCircuitDate);
 
-      formValues.gasifyCheckDate2 =
-        typeof formValues.gasifyCheckDate2 === "string"
-          ? formatDateByRemoveDash(formValues.gasifyCheckDate2)
-          : formValues.gasifyCheckDate2 instanceof Date
-          ? formatDateToStringWithoutDash(formValues.gasifyCheckDate2)
-          : "";
+      // formValues.cuScheduleDate =
+      //   typeof formValues.cuScheduleDate === "string"
+      //     ? formatDateByRemoveDash(formValues.cuScheduleDate)
+      //     : formValues.cuScheduleDate instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.cuScheduleDate)
+      //     : "";
 
-      formValues.tankFirstDate1 =
-        typeof formValues.tankFirstDate1 === "string"
-          ? formatDateByRemoveDash(formValues.tankFirstDate1)
-          : formValues.tankFirstDate1 instanceof Date
-          ? formatDateToStringWithoutDash(formValues.tankFirstDate1)
-          : "";
+      formValues.cuScheduleDate = DateWithoutDash(formValues.cuScheduleDate);
 
-      formValues.tankFirstDate2 =
-        typeof formValues.tankFirstDate2 === "string"
-          ? formatDateByRemoveDash(formValues.tankFirstDate2)
-          : formValues.tankFirstDate2 instanceof Date
-          ? formatDateToStringWithoutDash(formValues.tankFirstDate2)
-          : "";
+      // formValues.gasifyCheckDate1 =
+      //   typeof formValues.gasifyCheckDate1 === "string"
+      //     ? formatDateByRemoveDash(formValues.gasifyCheckDate1)
+      //     : formValues.gasifyCheckDate1 instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.gasifyCheckDate1)
+      //     : "";
 
-      formValues.tankInsideDate1 =
-        typeof formValues.tankInsideDate1 === "string"
-          ? formatDateByRemoveDash(formValues.tankInsideDate1)
-          : formValues.tankInsideDate1 instanceof Date
-          ? formatDateToStringWithoutDash(formValues.tankInsideDate1)
-          : "";
+      formValues.gasifyCheckDate1 = DateWithoutDash(
+        formValues.gasifyCheckDate1
+      );
 
-      formValues.tankInsideDate2 =
-        typeof formValues.tankInsideDate2 === "string"
-          ? formatDateByRemoveDash(formValues.tankInsideDate2)
-          : formValues.tankInsideDate2 instanceof Date
-          ? formatDateToStringWithoutDash(formValues.tankInsideDate2)
-          : "";
+      // formValues.gasifyCheckDate2 =
+      //   typeof formValues.gasifyCheckDate2 === "string"
+      //     ? formatDateByRemoveDash(formValues.gasifyCheckDate2)
+      //     : formValues.gasifyCheckDate2 instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.gasifyCheckDate2)
+      //     : "";
 
-      formValues.tankOutsideDate1 =
-        typeof formValues.tankOutsideDate1 === "string"
-          ? formatDateByRemoveDash(formValues.tankOutsideDate1)
-          : formValues.tankOutsideDate1 instanceof Date
-          ? formatDateToStringWithoutDash(formValues.tankOutsideDate1)
-          : "";
+      formValues.gasifyCheckDate2 = DateWithoutDash(
+        formValues.gasifyCheckDate2
+      );
 
-      formValues.tankOutsideDate2 =
-        typeof formValues.tankOutsideDate2 === "string"
-          ? formatDateByRemoveDash(formValues.tankOutsideDate2)
-          : formValues.tankOutsideDate2 instanceof Date
-          ? formatDateToStringWithoutDash(formValues.tankOutsideDate2)
-          : "";
+      // formValues.tankFirstDate1 =
+      //   typeof formValues.tankFirstDate1 === "string"
+      //     ? formatDateByRemoveDash(formValues.tankFirstDate1)
+      //     : formValues.tankFirstDate1 instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.tankFirstDate1)
+      //     : "";
+
+      formValues.tankFirstDate1 = DateWithoutDash(formValues.tankFirstDate1);
+
+      // formValues.tankFirstDate2 =
+      //   typeof formValues.tankFirstDate2 === "string"
+      //     ? formatDateByRemoveDash(formValues.tankFirstDate2)
+      //     : formValues.tankFirstDate2 instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.tankFirstDate2)
+      //     : "";
+
+      formValues.tankFirstDate2 = DateWithoutDash(formValues.tankFirstDate2);
+
+      // formValues.tankInsideDate1 =
+      //   typeof formValues.tankInsideDate1 === "string"
+      //     ? formatDateByRemoveDash(formValues.tankInsideDate1)
+      //     : formValues.tankInsideDate1 instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.tankInsideDate1)
+      //     : "";
+      formValues.tankInsideDate1 = DateWithoutDash(formValues.tankInsideDate1);
+
+      // formValues.tankInsideDate2 =
+      //   typeof formValues.tankInsideDate2 === "string"
+      //     ? formatDateByRemoveDash(formValues.tankInsideDate2)
+      //     : formValues.tankInsideDate2 instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.tankInsideDate2)
+      //     : "";
+
+      formValues.tankInsideDate2 = DateWithoutDash(formValues.tankInsideDate2);
+
+      // formValues.tankOutsideDate1 =
+      //   typeof formValues.tankOutsideDate1 === "string"
+      //     ? formatDateByRemoveDash(formValues.tankOutsideDate1)
+      //     : formValues.tankOutsideDate1 instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.tankOutsideDate1)
+      //     : "";
+
+      formValues.tankOutsideDate1 = DateWithoutDash(
+        formValues.tankOutsideDate1
+      );
+
+      // formValues.tankOutsideDate2 =
+      //   typeof formValues.tankOutsideDate2 === "string"
+      //     ? formatDateByRemoveDash(formValues.tankOutsideDate2)
+      //     : formValues.tankOutsideDate2 instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.tankOutsideDate2)
+      //     : "";
+
+      formValues.tankOutsideDate2 = DateWithoutDash(
+        formValues.tankOutsideDate2
+      );
 
       formValues.cuRdangaAmt =
         formValues.cuRdangaType !== "1" ? 0 : Number(formValues.cuRdangaAmt);
@@ -422,6 +457,7 @@ const Form = React.forwardRef(
         delete formValues.gasifyMakeDate2;
       }
       try {
+        console.log("cufinish::::", formValues);
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {

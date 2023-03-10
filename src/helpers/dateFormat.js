@@ -22,7 +22,7 @@ export function DateWithoutDash(date) {
 
 export function DateWithDash(date) {
   if (date === null || date === undefined || date === "") {
-    return null;
+    return "";
   }
   if (date instanceof Date) {
     return (
@@ -48,7 +48,7 @@ export function DateWithDash(date) {
 
 export function DateWithoutDashOnlyYearMonth(date) {
   if (date === null || date === undefined || date === "") {
-    return null;
+    return "";
   }
   if (date instanceof Date) {
     return (
@@ -70,7 +70,7 @@ export function DateWithoutDashOnlyYearMonth(date) {
 }
 export function DateWithDashOnlyYearMonth(date) {
   if (date === null || date === undefined || date === "") {
-    return null;
+    return "";
   }
   if (date instanceof Date) {
     return (
