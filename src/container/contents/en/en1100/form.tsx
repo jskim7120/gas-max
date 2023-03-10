@@ -28,6 +28,8 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
@@ -39,10 +41,11 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [tabId, setTabId] = useState(0);
     const [addr, setAddress] = useState<string>("");
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -73,7 +76,6 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {

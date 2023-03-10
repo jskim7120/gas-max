@@ -554,7 +554,7 @@ const Form = React.forwardRef(
             <Wrapper style={{ alignItems: "center" }}>
               <Input
                 label="공인인증서"
-                register={register("saupEdiSawon")}
+                register={register("saupCert")}
                 inputSize={InputSize.i200}
               />
               <button

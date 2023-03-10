@@ -29,6 +29,8 @@ function EN1100({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState();
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isCancelBtnDisable, setIsCancelBtnDisable] = useState<boolean>(true);
   const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
@@ -56,7 +58,7 @@ function EN1100({
 
   function deleteRowGrid() {
     try {
-      formRef.current.setIsAddBtnClicked(false);
+      setIsAddBtnClicked(false);
       formRef.current.crud("delete");
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
@@ -75,7 +77,8 @@ function EN1100({
             icon={<Plus />}
             style={{ marginRight: "5px" }}
             onClick={() => {
-              formRef.current.setIsAddBtnClicked(true);
+              setIsAddBtnClicked(true);
+              setIsCancelBtnDisable(false);
               formRef.current.resetForm("clear");
             }}
           />
@@ -87,6 +90,7 @@ function EN1100({
               dispatch(openModal({ type: "delModal" }));
               dispatch(addDeleteMenuId({ menuId: menuId }));
             }}
+            disabled={isAddBtnClicked}
           />
           <Button
             text="저장"
@@ -101,9 +105,10 @@ function EN1100({
             text="취소"
             icon={<Reset />}
             onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
+              setIsAddBtnClicked(false);
               formRef.current.resetForm("reset");
             }}
+            disabled={isCancelBtnDisable}
           />
         </div>
       </SearchWrapper>
@@ -128,6 +133,8 @@ function EN1100({
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
+            isAddBtnClicked={isAddBtnClicked}
+            setIsAddBtnClicked={setIsAddBtnClicked}
           />
         </RightSide>
       </MainWrapper>
