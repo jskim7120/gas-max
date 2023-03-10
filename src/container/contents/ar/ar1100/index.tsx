@@ -27,10 +27,7 @@ import { IAR1100SEARCH } from "./model";
 import Grid from "components/grid";
 import API from "app/axios";
 import { AR1100SEARCH, AR1100SELECT } from "app/path";
-import {
-  formatDateByRemoveDash,
-  formatDateToStringWithoutDash,
-} from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import { fields, columns } from "./data";
@@ -137,10 +134,11 @@ function AR1100({
   };
 
   const submit = async (params: IAR1100SEARCH) => {
-    params.sDate =
-      typeof params.sDate === "string"
-        ? formatDateByRemoveDash(params.sDate)
-        : formatDateToStringWithoutDash(params.sDate);
+    // params.sDate =
+    //   typeof params.sDate === "string"
+    //     ? formatDateByRemoveDash(params.sDate)
+    //     : formatDateToStringWithoutDash(params.sDate);
+    params.sDate = DateWithoutDash(params.sDate);
 
     fetchData(params);
   };

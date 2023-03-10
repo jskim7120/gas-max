@@ -1,7 +1,7 @@
 import MaskedInput from "react-text-mask";
 import DatePicker, { registerLocale } from "react-datepicker";
 import styled from "styled-components";
-import { formatDateToString } from "helpers/dateFormat";
+import { DateWithDash } from "helpers/dateFormat";
 import CalendarIcon from "assets/image/calendar.png";
 
 import ko from "date-fns/locale/ko";
@@ -35,13 +35,7 @@ function CustomDatePicker({
         <InputWrapper style={style}>
           <MaskedInput
             mask={[/\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, "-", /\d/, /\d/]}
-            value={
-              typeof value === "string"
-                ? value
-                : value instanceof Date
-                ? formatDateToString(value)
-                : ""
-            }
+            value={DateWithDash(value)}
             className="customMaskInput"
             name={name && name}
           />

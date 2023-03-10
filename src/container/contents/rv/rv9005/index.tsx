@@ -26,8 +26,7 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import Grid from "./grid";
 import { columns, fields } from "./data";
 import {
-  formatDateToStringWithoutDash,
-  formatDateByRemoveDash,
+  DateWithoutDash,
   formatOnlyYearMonthDateByRemoveDash,
   formatDateToStringWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
@@ -128,14 +127,16 @@ function RV9005({
       delete params.sGjGumymT;
       delete params.sGjSnoF;
       delete params.sGjSnoT;
-      params.sDateF =
-        typeof params.sDateF === "string"
-          ? formatDateByRemoveDash(params.sDateF)
-          : formatDateToStringWithoutDash(params.sDateF);
-      params.sDateT =
-        typeof params.sDateT === "string"
-          ? formatDateByRemoveDash(params.sDateT)
-          : formatDateToStringWithoutDash(params.sDateT);
+      // params.sDateF =
+      //   typeof params.sDateF === "string"
+      //     ? formatDateByRemoveDash(params.sDateF)
+      //     : formatDateToStringWithoutDash(params.sDateF);
+      params.sDateF = DateWithoutDash(params.sDateF);
+      // params.sDateT =
+      //   typeof params.sDateT === "string"
+      //     ? formatDateByRemoveDash(params.sDateT)
+      //     : formatDateToStringWithoutDash(params.sDateT);
+      params.sDateT = DateWithoutDash(params.sDateT);
     } else {
       delete params.sDateF;
       delete params.sDateT;

@@ -25,10 +25,9 @@ import {
   RadioButtonLabel,
 } from "components/radioButton/style";
 import {
-  formatDateByRemoveDash,
+  DateWithoutDash,
   formatOnlyYearMonthDateByRemoveDash,
   formatDateToStringWithoutDashOnlyYearMonth,
-  formatDateToStringWithoutDash,
 } from "helpers/dateFormat";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
 
@@ -113,15 +112,17 @@ function RV9006({
       delete params.sGjSnoF;
       delete params.sGjSnoT;
 
-      params.sDateF =
-        typeof params.sDateF === "string"
-          ? formatDateByRemoveDash(params.sDateF)
-          : formatDateToStringWithoutDash(params.sDateF);
+      // params.sDateF =
+      //   typeof params.sDateF === "string"
+      //     ? formatDateByRemoveDash(params.sDateF)
+      //     : formatDateToStringWithoutDash(params.sDateF);
+      params.sDateF = DateWithoutDash(params.sDateF);
 
-      params.sDateT =
-        typeof params.sDateT === "string"
-          ? formatDateByRemoveDash(params.sDateT)
-          : formatDateToStringWithoutDash(params.sDateT);
+      // params.sDateT =
+      //   typeof params.sDateT === "string"
+      //     ? formatDateByRemoveDash(params.sDateT)
+      //     : formatDateToStringWithoutDash(params.sDateT);
+      params.sDateT = DateWithoutDash(params.sDateT);
     } else {
       delete params.sDateF;
       delete params.sDateT;

@@ -9,12 +9,8 @@ import CustomDatePicker from "components/customDatePicker";
 import CheckBox from "components/checkbox";
 import { Wrapper, FormGroup, Label, Field, Input } from "components/form/style";
 import {
-  formatDate,
-  formatDateByRemoveDash,
-  formatDateToStringWithDash,
-  formatDateToStringWithoutDash,
+  DateWithoutDash,
   formatOnlyYearMonthDateByRemoveDash,
-  formatDateToStringWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
 import { InputSize, ButtonColor, ButtonType } from "components/componentsType";
 import Button from "components/button/button";
@@ -148,23 +144,26 @@ function Footer({
 
     gjPerDate
       ? (params.gjPerDate = gjPerDate)
-      : (params.gjPerDate = formatDateByRemoveDash(
-          dataCommonDic?.sGjPerDate[0].code
-        ));
+      : // : (params.gjPerDate = formatDateByRemoveDash(
+        //     dataCommonDic?.sGjPerDate[0].code
+        //   ));
+        (params.gjPerDate = DateWithoutDash(dataCommonDic?.sGjPerDate[0].code));
 
-    params.gjSdate =
-      typeof params.gjSdate === "string"
-        ? formatDateByRemoveDash(params.gjSdate)
-        : params.gjSdate instanceof Date
-        ? formatDateToStringWithoutDash(params.gjSdate)
-        : "";
+    // params.gjSdate =
+    //   typeof params.gjSdate === "string"
+    //     ? formatDateByRemoveDash(params.gjSdate)
+    //     : params.gjSdate instanceof Date
+    //     ? formatDateToStringWithoutDash(params.gjSdate)
+    //     : "";
+    params.gjSdate = DateWithoutDash(params.gjSdate);
 
-    params.gjDate =
-      typeof params.gjDate === "string"
-        ? formatDateByRemoveDash(params.gjDate)
-        : params.gjDate instanceof Date
-        ? formatDateToStringWithoutDash(params.gjDate)
-        : "";
+    // params.gjDate =
+    //   typeof params.gjDate === "string"
+    //     ? formatDateByRemoveDash(params.gjDate)
+    //     : params.gjDate instanceof Date
+    //     ? formatDateToStringWithoutDash(params.gjDate)
+    //     : "";
+    params.gjDate = DateWithoutDash(params.gjDate);
 
     params.gjGum = Number(params.gjGum);
     params.gjBigo = Number(params.gjBigo);
