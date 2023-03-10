@@ -33,6 +33,7 @@ interface IForm {
   setSelectedRowIndex: any;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
+  setIsCancelBtnDisabled: Function;
 }
 
 const Form = React.forwardRef(
@@ -46,6 +47,7 @@ const Form = React.forwardRef(
       setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
+      setIsCancelBtnDisabled,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -175,6 +177,8 @@ const Form = React.forwardRef(
           if (isAddBtnClicked) {
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
+            setIsAddBtnClicked(false);
+            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -185,7 +189,6 @@ const Form = React.forwardRef(
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
-          setIsAddBtnClicked(false);
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,
@@ -264,7 +267,7 @@ const Form = React.forwardRef(
                   {...register("areaCode")}
                   onChange={handleSelectCode}
                   width={InputSize.i175}
-                  disabled
+                  disabled={!isAddBtnClicked}
                 >
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
