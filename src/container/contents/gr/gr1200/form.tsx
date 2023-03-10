@@ -27,12 +27,7 @@ import { useSelector } from "app/store";
 import CommonFooterInfo from "./commonFooter";
 import { CircleBtn } from "./style";
 import { PersonInfoText } from "components/text";
-import {
-  formatDateByRemoveDash,
-  formatDate,
-  formatDateToString,
-  formatDateToStringWithoutDash,
-} from "helpers/dateFormat";
+import { DateWithDash, DateWithoutDash } from "helpers/dateFormat";
 import {
   GR120065,
   GR1200BUYINSERT,
@@ -162,7 +157,8 @@ function Form({
 
       reset({
         areaCode: data65.areaCode,
-        bcDate: data65.bcDate ? formatDate(data65.bcDate) : "",
+        // bcDate: data65.bcDate ? formatDate(data65.bcDate) : "",
+        bcDate: data65.bcDate ? DateWithDash(data65.bcDate) : "",
         bcDateno: data65.bcDateno,
         bcBuCode: data65.bcBuCode,
         bcJunno: data65.bcJunno,
@@ -318,7 +314,9 @@ function Form({
       const { data } = await API.get(GR120065, {
         params: {
           areaCode: selected?.areaCode,
-          bcDate: formatDateByRemoveDash(selected?.bcDate),
+          // bcDate: formatDateByRemoveDash(selected?.bcDate),
+          bcDate: DateWithoutDash(selected?.bcDate),
+
           sBcBuCode: selected?.bcBuCode,
           bcSno: selected?.bcSno,
           bcChitType: selected?.bcChitType,
@@ -374,12 +372,11 @@ function Form({
   const submit = async (data: any) => {
     const formValues = getValues();
 
-    //formValues.bcDate = formatDateByRemoveDash(formValues.bcDate);
-
-    formValues.bcDate =
-      typeof formValues.bcDate === "string"
-        ? formatDateByRemoveDash(formValues.bcDate)
-        : formatDateToStringWithoutDash(formValues.bcDate);
+    // formValues.bcDate =
+    //   typeof formValues.bcDate === "string"
+    //     ? formatDateByRemoveDash(formValues.bcDate)
+    //     : formatDateToStringWithoutDash(formValues.bcDate);
+    formValues.bcDate = DateWithoutDash(formValues.bcDate);
 
     let path: string;
 
@@ -501,7 +498,8 @@ function Form({
     setTabId(0);
     reset({
       areaCode: areaCode,
-      bcDate: formatDateToString(new Date()),
+      // bcDate: formatDateToString(new Date()),
+      bcDate: DateWithDash(new Date()),
       bcBuCode: dataCommonDic?.bcBuCode[0].code,
       bcCtype: dataCommonDic?.bcCtype[0].code,
       bcJunno: "",
