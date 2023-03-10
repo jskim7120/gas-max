@@ -31,6 +31,8 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
@@ -42,10 +44,11 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [addr, setAddress] = useState<string>("");
     const [image, setImage] = useState<{
       name: string;
@@ -80,7 +83,6 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {
@@ -114,18 +116,6 @@ const Form = React.forwardRef(
             newData[key] = value;
           }
 
-          // reset({
-          //   ...newData,
-          //   swWorkOut: selected.swWorkOut === "Y",
-          //   cuSeEmail: selected.cuSeEmail ? selected.cuSeEmail.trim() : "",
-          //   mailKind: selected.mailKind ? selected.mailKind.trim() : "",
-          //   swIndate: selected?.swIndate ? formatDate(selected.swIndate) : "",
-          //   swJdate1: selected?.swJdate1 ? formatDate(selected.swJdate1) : "",
-          //   swJdate2: selected?.swJdate2 ? formatDate(selected.swJdate2) : "",
-          //   swOutDate: selected?.swOutDate
-          //     ? formatDate(selected.swOutDate)
-          //     : "",
-          // });
           reset({
             ...newData,
             swWorkOut: selected.swWorkOut === "Y",
@@ -593,14 +583,14 @@ const Form = React.forwardRef(
         <Wrapper>
           <Input
             label="면허종류"
-            register={register("swDriverType")}
+            register={register("swDrivertype")}
             maxLength="15"
             inputSize={InputSize.i200}
           />
           <Input
             label="면허번호"
             labelStyle={{ minWidth: "90px" }}
-            register={register("swDriverNo")}
+            register={register("swDriverno")}
             maxLength="17"
             inputSize={InputSize.i110}
           />

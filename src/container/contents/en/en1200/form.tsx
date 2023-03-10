@@ -31,6 +31,8 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
@@ -42,10 +44,11 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [addr, setAddress] = useState<string>("");
     const [image, setImage] = useState<{ name: string }>();
     const [image64, setImage64] = useState<any>(null);
@@ -77,7 +80,6 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {
@@ -554,7 +556,7 @@ const Form = React.forwardRef(
             <Wrapper style={{ alignItems: "center" }}>
               <Input
                 label="공인인증서"
-                register={register("saupEdiSawon")}
+                register={register("saupCert")}
                 inputSize={InputSize.i200}
               />
               <button
