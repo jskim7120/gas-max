@@ -1,11 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import API from "app/axios";
 import { useDispatch, useSelector } from "app/store";
-import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
-import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import {
-  openModal,
   closeModal,
   addDeleteMenuId,
   setIsDelete,
@@ -15,6 +11,7 @@ import Form from "./form";
 import Grid from "../grid";
 import { columns, fields } from "./data";
 import { MainWrapper, RightSide, SearchWrapper } from "../../commonStyle";
+import ENButtons from "components/button/enButtons";
 
 function EN1100({
   depthFullName,
@@ -30,7 +27,7 @@ function EN1100({
   const [selected, setSelected] = useState();
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isCancelBtnDisable, setIsCancelBtnDisable] = useState<boolean>(true);
+  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
@@ -71,46 +68,15 @@ function EN1100({
     <>
       <SearchWrapper className="h35 mt5">
         <p>{depthFullName}</p>
-        <div className="buttons">
-          <Button
-            text="등록"
-            icon={<Plus />}
-            style={{ marginRight: "5px" }}
-            onClick={() => {
-              setIsAddBtnClicked(true);
-              setIsCancelBtnDisable(false);
-              formRef.current.resetForm("clear");
-            }}
-          />
-          <Button
-            text="삭제"
-            icon={<Trash />}
-            style={{ marginRight: "5px" }}
-            onClick={() => {
-              dispatch(openModal({ type: "delModal" }));
-              dispatch(addDeleteMenuId({ menuId: menuId }));
-            }}
-            disabled={isAddBtnClicked}
-          />
-          <Button
-            text="저장"
-            icon={<Update />}
-            style={{ marginRight: "5px" }}
-            color={ButtonColor.SECONDARY}
-            onClick={() => {
-              formRef.current.crud(null);
-            }}
-          />
-          <Button
-            text="취소"
-            icon={<Reset />}
-            onClick={() => {
-              setIsAddBtnClicked(false);
-              formRef.current.resetForm("reset");
-            }}
-            disabled={isCancelBtnDisable}
-          />
-        </div>
+        <ENButtons
+          menuId={menuId}
+          formRef={formRef}
+          dispatch={dispatch}
+          isAddBtnClicked={isAddBtnClicked}
+          setIsAddBtnClicked={setIsAddBtnClicked}
+          isCancelBtnDisabled={isCancelBtnDisabled}
+          setIsCancelBtnDisabled={setIsCancelBtnDisabled}
+        />
       </SearchWrapper>
       <MainWrapper>
         <Grid

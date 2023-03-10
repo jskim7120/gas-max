@@ -39,6 +39,8 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
 }
 
 const radioOptions = [
@@ -73,17 +75,11 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-    // const [caSafeDate, setCaSafeDate] = useState("");
-    // const [caInDate, setCaInDate] = useState("");
-    // const [caRentDate, setCaRentDate] = useState("");
-    // const [caJdate1, setCaJdate1] = useState("");
-    // const [caJdate2, setCaJdate2] = useState("");
-    // const [caBsdate, setCaBsdate] = useState("");
-    // const [caBldate, setCaBldate] = useState("");
     const [empChargeData, setEmpChargeData] = useState([]);
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -105,7 +101,6 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {
@@ -151,17 +146,6 @@ const Form = React.forwardRef(
             caBsdate: DateWithDash(selected.caBsdate),
             caBldate: DateWithDash(selected.caBldate),
           });
-          // setCaSafeDate(
-          //   selected.caSafeDate ? formatDate(selected.caSafeDate) : ""
-          // );
-          // setCaInDate(selected.caInDate ? formatDate(selected.caInDate) : "");
-          // setCaRentDate(
-          //   selected.caRentDate ? formatDate(selected.caRentDate) : ""
-          // );
-          // setCaJdate1(selected.caJdate1 ? formatDate(selected.caJdate1) : "");
-          // setCaJdate2(selected.caJdate2 ? formatDate(selected.caJdate2) : "");
-          // setCaBsdate(selected.caBsdate ? formatDate(selected.caBsdate) : "");
-          // setCaBldate(selected.caBldate ? formatDate(selected.caBldate) : "");
         }
       }
     };
