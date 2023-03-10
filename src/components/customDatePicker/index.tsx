@@ -35,7 +35,7 @@ function CustomDatePicker({
         <InputWrapper style={style}>
           <MaskedInput
             mask={[/\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, "-", /\d/, /\d/]}
-            value={DateWithDash(value)}
+            value={value}
             className="customMaskInput"
             name={name && name}
           />
