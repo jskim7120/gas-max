@@ -53,6 +53,9 @@ const Form = React.forwardRef(
       setSelectedRowIndex,
       selectedSupplyTab,
       areaCode,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
+      setIsCancelBtnDisabled,
     }: {
       selected: any;
       dataCommonDic: any;
@@ -63,11 +66,14 @@ const Form = React.forwardRef(
       setSelectedRowIndex: any;
       selectedSupplyTab: any;
       areaCode: string;
+      isAddBtnClicked: boolean;
+      setIsAddBtnClicked: Function;
+      setIsCancelBtnDisabled: Function;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
+    console.log("fucking areacode:", areaCode);
     const [addr, setAddress] = useState<string>("");
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
     const [chkCuZipCode, setChkCuZipCode] = useState(false);
     const [chkCuRh20, setChkCuRh20] = useState(false);
@@ -137,19 +143,8 @@ const Form = React.forwardRef(
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       resetForm,
-      setIsAddBtnClicked,
       crud,
     }));
-
-    // const checkAreaCode = () => {
-    //   if (!areaCode) {
-    //     toast.warning("areaCode can't be 00.", {
-    //       autoClose: 500,
-    //     });
-    //     return false;
-    //   }
-    //   return true;
-    // };
 
     const fetchCodes = async (areaCode: string) => {
       try {
@@ -459,7 +454,6 @@ const Form = React.forwardRef(
         delete formValues.gasifyMakeDate2;
       }
       try {
-        console.log("cufinish::::", formValues);
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {
@@ -518,12 +512,13 @@ const Form = React.forwardRef(
             <FormGroup>
               {/* cuRdanga  */}
               <Input
-                type="hidden"
                 name="cuRdanga"
                 register={register("cuRdanga")}
                 inputSize={InputSize.xs}
+                value={selected.cuRdanga}
+                readOnly
               />
-              <p>{selected.cuRdanga} 원</p>
+              <p>원</p>
             </FormGroup>
           </Field>
         );
@@ -540,10 +535,7 @@ const Form = React.forwardRef(
                 inputSize={InputSize.xs}
               />
               <p>원</p>
-              <CSelect
-                {...register("cuRdangaSign")}
-                style={{ minWidth: "15%" }}
-              >
+              <CSelect {...register("cuRdangaSign")} width={InputSize.i50}>
                 {dataCommonDic?.cuRdangaSign.map((obj: any, index: number) => (
                   <option key={index} value={obj.code}>
                     {obj.codeName}
@@ -595,22 +587,28 @@ const Form = React.forwardRef(
       <form onSubmit={handleSubmit(submit)}>
         {/* 1-1 Wrapper */}
         <Divider />
-        <Wrapper grid col={5} style={{ alignItems: "baseline" }}>
+        <Wrapper style={{ alignItems: "baseline" }}>
           <Field>
             <Input
               label="건물코드"
               register={register("cuCode")}
-              inputSize={InputSize.i50}
+              inputSize={InputSize.i60}
               readOnly={true}
             />
           </Field>
           <Field>
-            <Input label="건물명" register={register("cuName")} />
+            <Input
+              label="건물명"
+              register={register("cuName")}
+              labelStyle={{ minWidth: "78px" }}
+              style={{ width: "198px" }}
+            />
           </Field>
-          <Field style={{ justifySelf: "center" }}>
+          <Field style={{ marginLeft: "20px" }}>
             <CheckBox
               title="건물명 지로 출력 안함."
               register={register("cuAptnameYn")}
+              gap="15px"
               rtl
             />
           </Field>
@@ -627,9 +625,9 @@ const Form = React.forwardRef(
             </Label>
             <Input
               register={register("cuZipcode")}
-              inputSize={InputSize.xs}
+              inputSize={InputSize.i60}
               readOnly={!chkCuZipCode}
-              style={{ marginRight: "0px" }}
+              style={{ marginRight: "3px" }}
             />
             <DaumAddress setAddress={setAddress} disabled={!chkCuZipCode} />
           </FormGroup>
@@ -641,8 +639,7 @@ const Form = React.forwardRef(
           />
           <Input
             register={register("cuAddr2")}
-            inputSize={InputSize.md}
-            style={{ marginLeft: "5px" }}
+            style={{ marginLeft: "5px", width: "225px" }}
           />
         </Wrapper>
         {/* 1-3 Wrapper */}
@@ -659,11 +656,11 @@ const Form = React.forwardRef(
           </FormGroup>
 
           <FormGroup>
-            <Label>지역분류</Label>
+            <Label style={{ minWidth: "80px" }}>지역분류</Label>
             <CSelect
               {...register("cuJyCode")}
               width={InputSize.i120}
-              style={{ marginRight: "0px" }}
+              style={{ marginRight: "3px" }}
             >
               {dataCommonDic?.cuJyCode?.map((obj: any, index: number) => (
                 <option key={index} value={obj.code}>
@@ -680,7 +677,7 @@ const Form = React.forwardRef(
           </FormGroup>
 
           <FormGroup>
-            <Label>관리자분류</Label>
+            <Label style={{ minWidth: "80px" }}>관리자분류</Label>
             <CSelect {...register("cuCustgubun")} width={InputSize.i120}>
               {dataCommonDic?.cuCustgubun?.map((obj: any, index: number) => (
                 <option key={index} value={obj.code}>
@@ -690,14 +687,14 @@ const Form = React.forwardRef(
             </CSelect>
           </FormGroup>
         </Wrapper>
-        <Divider />
+
         <div style={{ marginTop: "5px" }}>
           <PlainTab
             tabHeader={["지로 양식", "고객안내문", "입금계좌 안내"]}
             onClick={(id) => setTabId(id)}
             tabId={tabId}
           />
-          <TabContentWrapper>
+          <TabContentWrapper style={{ minHeight: "200px" }}>
             {getTabContent(
               tabId,
               register,

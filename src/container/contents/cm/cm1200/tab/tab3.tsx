@@ -35,7 +35,7 @@ function Tab3({
         <FormGroup>
           <Label>용기시설</Label>
         </FormGroup>
-        <Wrapper grid col={3}>
+        <Wrapper>
           <Field style={{ padding: "0px 5px" }}>
             <FormGroup>
               {[
@@ -60,7 +60,7 @@ function Tab3({
           </Field>
           <Field style={{ padding: "0px 5px" }}>
             <FormGroup>
-              <Label align="center">용기수량</Label>
+              <Label>용기수량</Label>
               <CSelect {...register("cuCylinderName")} width={InputSize.i120}>
                 {dataCommonDic?.cuCylinderName?.map(
                   (obj: any, index: number) => (
@@ -78,7 +78,7 @@ function Tab3({
               <p>개</p>
             </FormGroup>
           </Field>
-          <Field>
+          <Field style={{ paddingLeft: "38px" }}>
             <FormGroup>
               <Label>발신기코드 / 절체고객코드</Label>
               <Input

@@ -90,7 +90,7 @@ function tab2({
         <FormGroup>
           <Label style={{ minWidth: "70px" }}>벌크 시설</Label>
         </FormGroup>
-        <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr">
+        <Wrapper>
           <Label align={"center"}>제조사</Label>
           <Label align={"center"}>용량(kg)</Label>
           <Label align={"center"}>제조번호</Label>
@@ -107,20 +107,24 @@ function tab2({
         <FormGroup>
           <Label style={{ minWidth: "70px" }}>{`1)`}</Label>
         </FormGroup>
-        <Wrapper grid col={9} fields="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr">
+        <Wrapper>
           <Field>
             <FormGroup>
               <EditableSelect
                 list={dataCommonDic?.tankMakeCo1}
                 register={register("tankMakeCo1")}
                 textAlign={"left"}
-                style={{ width: "134px", marginRight: "5px" }}
+                style={{ width: "125px", marginRight: "5px" }}
               />
             </FormGroup>
           </Field>
           <Field>
             <FormGroup>
-              <CSelect {...register("tankVol1")} fullWidth textAlign="right">
+              <CSelect
+                {...register("tankVol1")}
+                width={InputSize.i80}
+                textAlign="right"
+              >
                 {dataCommonDic?.tankVol1?.map((obj: any, index: number) => (
                   <option key={index} value={obj.code}>
                     {obj.codeName}
@@ -203,20 +207,24 @@ function tab2({
         <FormGroup>
           <Label style={{ minWidth: "70px" }}>{`2)`}</Label>
         </FormGroup>
-        <Wrapper grid col={9} fields="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr">
+        <Wrapper>
           <Field>
             <FormGroup>
               <EditableSelect
                 list={dataCommonDic?.tankMakeCo2}
                 register={register("tankMakeCo2")}
                 textAlign={"left"}
-                style={{ width: "134px", marginRight: "5px" }}
+                style={{ width: "125px", marginRight: "5px" }}
               />
             </FormGroup>
           </Field>
           <Field>
             <FormGroup>
-              <CSelect {...register("tankVol2")} fullWidth textAlign="right">
+              <CSelect
+                {...register("tankVol2")}
+                width={InputSize.i80}
+                textAlign="right"
+              >
                 {dataCommonDic?.tankVol2?.map((obj: any, index: number) => (
                   <option key={index} value={obj.code}>
                     {obj.codeName}
@@ -293,70 +301,6 @@ function tab2({
           </Field>
         </Wrapper>
       </Field>
-      {/* 3-2-4 Wrapper */}
-      {/* <Field flex>
-        <FormGroup>
-          <Label></Label>
-        </FormGroup>
-        <Wrapper grid col={3}>
-          <Field>
-            <FormGroup>
-              <Label>Max레벨 / 발신기코드 / 탱크고객코드</Label>
-            </FormGroup>
-          </Field>
-          <Field>
-            <FormGroup>
-              <p>{`1)`}</p>
-              <Input
-                register={register("tankMax1")}
-                maxLength="3"
-                textAlign="right"
-                inputSize={InputSize.i40}
-                placeholder=""
-              />
-              <p>%</p>
-              <Input
-                register={register("tankTransmCd1")}
-                placeholder=""
-                inputSize={InputSize.sm}
-              />
-              <Input
-                register={register("tankCuCd1")}
-                placeholder=""
-                inputSize={InputSize.sm}
-              />
-              <SearchBtn type="button" onClick={() => console.log("cuZipCode")}>
-                <MagnifyingGlass />
-              </SearchBtn>
-            </FormGroup>
-          </Field>
-          <Field>
-            <FormGroup>
-              <p>{`2)`}</p>
-              <Input
-                register={register("tankMax2")}
-                placeholder=""
-                inputSize={InputSize.sm}
-                textAlign="right"
-              />
-              <p>%</p>
-              <Input
-                register={register("tankTransmCd2")}
-                placeholder=""
-                inputSize={InputSize.sm}
-              />
-              <Input
-                register={register("tankCuCd2")}
-                placeholder=""
-                inputSize={InputSize.sm}
-              />
-              <SearchBtn type="button" onClick={() => console.log("cuZipCode")}>
-                <MagnifyingGlass />
-              </SearchBtn>
-            </FormGroup>
-          </Field>
-        </Wrapper>
-      </Field> */}
     </div>
   );
 }
