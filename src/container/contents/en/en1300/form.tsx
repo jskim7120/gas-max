@@ -130,6 +130,12 @@ const Form = React.forwardRef(
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
+        delete formValues.jpIndanga;
+        delete formValues.jpOutdanga;
+        delete formValues.jpIntong;
+        delete formValues.jpBaedal;
+        delete formValues.jpOuttong;
+
         try {
           const response = await API.post(EN1300DELETE, formValues);
           if (response.status === 200) {
