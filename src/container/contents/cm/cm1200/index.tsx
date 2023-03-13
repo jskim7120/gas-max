@@ -88,6 +88,7 @@ function CM1200({
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
       });
+      fetchData({ areaCode: dataCommonDic?.areaCode[0].code });
     }
   }, [dataCommonDic]);
 
