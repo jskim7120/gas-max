@@ -45,6 +45,8 @@ import CC9007 from "container/contents/cc/cc9007";
 import CC9008 from "container/contents/cc/cc9008";
 import CC9009 from "container/contents/cc/cc9009";
 
+import PT1100 from "container/contents/pt/pt1100";
+
 export const getContent = (
   id: any,
   depthFullName: string,
@@ -212,6 +214,11 @@ export const getContent = (
     case "CC9009":
       return (
         <CC9009 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+
+    case "PT1100":
+      return (
+        <PT1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
       );
   }
 };

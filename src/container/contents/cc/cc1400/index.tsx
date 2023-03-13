@@ -13,24 +13,11 @@ import CustomDatePicker from "components/customDatePicker";
 import {
   MagnifyingGlass,
   ResetGray,
-  Document,
   Plus,
   Trash,
   Update,
 } from "components/allSvgIcon";
-import {
-  Item,
-  RadioButton,
-  RadioButtonLabel,
-} from "components/radioButton/style";
-import {
-  Select,
-  FormGroup,
-  Wrapper,
-  Label,
-  Input,
-  Field,
-} from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -82,6 +69,7 @@ function CC1400({
       sDateF: dataCommonDic?.sDateF[0].code,
       sDateT: dataCommonDic?.sDateT[0].code,
       sSwCode: dataCommonDic?.sSwCode[0].code,
+      sgSwCode: dataCommonDic?.sgSwCode[0].code,
     });
   };
 
