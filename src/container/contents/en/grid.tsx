@@ -10,7 +10,8 @@ function Grid({
   selectedRowIndex,
   setSelectedRowIndex,
   style,
-  formRef,
+  setIsCancelBtnDisabled,
+  setIsAddBtnClicked,
 }: {
   data: any;
   fields: any;
@@ -19,7 +20,8 @@ function Grid({
   selectedRowIndex: number | null;
   setSelectedRowIndex: Function;
   style?: any;
-  formRef?: any;
+  setIsCancelBtnDisabled?: Function;
+  setIsAddBtnClicked?: Function;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -57,7 +59,9 @@ function Grid({
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected(data[itemIndex]);
       setSelectedRowIndex(itemIndex);
-      formRef.current.setIsAddBtnClicked(false);
+
+      setIsCancelBtnDisabled && setIsCancelBtnDisabled(true);
+      setIsAddBtnClicked && setIsAddBtnClicked(false);
     };
 
     return () => {

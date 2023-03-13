@@ -264,6 +264,7 @@ const Form = React.forwardRef(
           newData.caCode = response.data.tempCode;
           newData.areaCode = event.target.value;
           reset(newData);
+          document.getElementById("caName")?.focus();
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,

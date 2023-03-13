@@ -221,6 +221,7 @@ const Form = React.forwardRef(
           newData.jpKgDanwi = response.data.jpKgDanwi;
           newData.jpKind = response.data.jpKind;
           reset(newData);
+          document.getElementById("jpName")?.focus();
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,

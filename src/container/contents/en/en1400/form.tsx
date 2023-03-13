@@ -178,6 +178,7 @@ const Form = React.forwardRef(
           newData.bpCode = response.data.tempCode;
           newData.areaCode = event.target.value;
           reset(newData);
+          document.getElementById("bpName")?.focus();
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,

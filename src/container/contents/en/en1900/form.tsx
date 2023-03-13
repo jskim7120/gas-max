@@ -176,6 +176,7 @@ const Form = React.forwardRef(
           newData.gubunCode = response.data.tempCode;
           newData.areaCode = event.target.value;
           reset(newData);
+          document.getElementById("gubunName")?.focus();
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,
