@@ -53,12 +53,14 @@ const Form = (
     functionName: "EN1500",
   });
   const [unitPriceData, setUnitPriceData] = useState<any>([]);
+  const [jnMpdanga, setJnMpdanga] = useState<number>(selected.jnMpdanga);
   const [jnKgdanga, setJnKgdanga] = useState<number>(selected.jnKgdanga);
   const [jnKgdangaMp, setJnKgdangaMp] = useState<number>(selected.jnKgdangaMp);
 
   useEffect(() => {
     if (selected !== undefined && JSON.stringify(selected) !== "{}") {
       reset(selected);
+      setJnMpdanga(selected.jnMpdanga);
       setJnKgdanga(selected.jnKgdanga);
       setJnKgdangaMp(selected.jnKgdangaMp);
     }
@@ -102,6 +104,7 @@ const Form = (
         newData.tempJnKgdanga2500 = unitPriceData.tempJnKgdanga2500;
         newData.tempJnKgdanga7000 = unitPriceData.tempJnKgdanga7000;
 
+        newData.jnMpdanga = jnMpdanga;
         newData.jnKgdanga = jnKgdanga;
         newData.jnKgdangaMp = jnKgdangaMp;
       }
@@ -132,6 +135,9 @@ const Form = (
     if (typeof formValues.jnCost7000 === "string") {
       formValues.jnCost7000 = Number(formValues.jnCost7000.replaceAll(",", ""));
     }
+    if (typeof formValues.jnMpdanga === "string") {
+      formValues.jnMpdanga = Number(formValues.jnMpdanga);
+    }
     if (typeof formValues.jnKgdanga === "string") {
       formValues.jnKgdanga = Number(formValues.jnKgdanga);
     }
@@ -145,6 +151,7 @@ const Form = (
     updateParams.areaCode = formValues.areaCode;
     updateParams.areaName = formValues.areaName;
     updateParams.jnPerMeth = formValues.jnPerMeth;
+    updateParams.jnMpdanga = formValues.jnMpdanga;
     updateParams.jnKgdangaMp = formValues.jnKgdangaMp;
     updateParams.jnKgdanga = formValues.jnKgdanga * 10000;
     updateParams.jnChekum = formValues.jnChekum;
@@ -359,6 +366,7 @@ const Form = (
   const calcUnitPrice = async () => {
     let params: any = {};
     params.areaCode = selected.areaCode;
+    params.jnMpdanga = jnMpdanga;
     params.jnKgdanga = jnKgdanga;
     params.jnKgdangaMp = jnKgdangaMp;
     try {
@@ -386,12 +394,7 @@ const Form = (
       <Wrapper grid style={{ marginBottom: "7px" }}>
         <Field className="field">
           <FormGroup>
-            <Input
-              label="코드"
-              register={register("areaCode")}
-              maxLength="2"
-              readOnly
-            />
+            <Input label="코드" register={register("areaCode")} maxLength="2" />
           </FormGroup>
         </Field>
         <Field>
@@ -400,7 +403,6 @@ const Form = (
               label="영업소명"
               register={register("areaName")}
               maxLength="20"
-              readOnly
             />
           </FormGroup>
         </Field>
@@ -413,6 +415,15 @@ const Form = (
             <Field className="field">
               <FormGroup>
                 <Input
+                  label="MP  단가(kg)"
+                  register={register("jnMpdanga")}
+                  inputSize={InputSize.i85}
+                  textAlign="right"
+                  onChange={(e: any) => {
+                    setJnMpdanga(e.target.value);
+                  }}
+                />
+                <Input
                   label="kg 공급단가"
                   register={register("jnKgdangaMp")}
                   inputSize={InputSize.i85}
@@ -420,17 +431,6 @@ const Form = (
                   onChange={(e: any) => {
                     setJnKgdangaMp(e.target.value);
                   }}
-                />
-                <Button
-                  text="㎥ 단가 환산"
-                  style={{
-                    marginLeft: "10px",
-                    background: "#666666",
-                    width: "130px",
-                    height: "30px",
-                  }}
-                  onClick={calcUnitPrice}
-                  type="button"
                 />
               </FormGroup>
               <FormGroup>
@@ -443,14 +443,25 @@ const Form = (
                     setJnKgdanga(e.target.value);
                   }}
                 />
+                <Button
+                  text="㎥ 표준단가 계산"
+                  style={{
+                    marginLeft: "10px",
+                    background: "#666666",
+                    width: "130px",
+                    height: "30px",
+                  }}
+                  onClick={calcUnitPrice}
+                  type="button"
+                />
               </FormGroup>
             </Field>
           </Wrapper>
           <p className="lpgDesc">
             <IconInfo />
             <span>
-              kg단가는 중량,체적공급단가 및 루베단가를 MP단가로 적용시
-              기초금액으로 자동계산 됩니다.
+              거래처의 루베단가를 kg단가로 적용시 압력별 ㎥ 표준단가 계산하여
+              적용
             </span>
           </p>
         </div>
@@ -470,7 +481,7 @@ const Form = (
           />
           <p className="rubeDesc">
             <IconInfo />
-            <span>체적 환경단가 적용 거래처에만 적용.</span>
+            <span>체적 환경단가 적용 거래처에 적용됩니다.</span>
           </p>
         </RubeUnit>
         <BasicItems>
@@ -578,13 +589,29 @@ const Form = (
           </div>
           <p className="basicDesc">
             <IconInfo />
-            <span>신규 거래처 등록시 자동적용 항목.</span>
+            <span>신규 거래처 등록시 자동적용 항목입니다.</span>
           </p>
         </BasicItems>
       </Container>
       <VolReading>
         <div className="title">체적검침 환경</div>
         <div className="volReadCnt">
+          <Wrapper className="volWrapper">
+            <Field>
+              <FormGroup>
+                <Input
+                  label="루베단가 계산"
+                  register={register("jnMpdangaType")}
+                  style={{ width: "259px" }}
+                  textAlign="right"
+                />
+              </FormGroup>
+            </Field>
+            <p>
+              <IconInfo />
+              <span>할인단가 적용시 루베단가 소수미만 계산</span>
+            </p>
+          </Wrapper>
           <Wrapper className="volWrapper">
             <Field>
               <FormGroup>
