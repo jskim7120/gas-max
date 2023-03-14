@@ -30,7 +30,7 @@ import {
   CM1200UPDATE,
   CM1200INSERTSEQ,
 } from "app/path";
-import { DateWithDash, DateWithoutDash } from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import { formatCurrencyRemoveComma } from "helpers/currency";
 import getTabContent from "./getTabContent";
 import { useDispatch } from "app/store";
@@ -244,17 +244,17 @@ const Form = React.forwardRef(
           cuAptnameYn: tempData?.cuAptnameYn === "Y",
           cuBaGageYn: tempData?.cuBaGageYn === "Y",
 
-          cuFinishDate: DateWithDash(selected.cuFinishDate),
-          cuCircuitDate: DateWithDash(selected.cuCircuitDate),
-          cuScheduleDate: DateWithDash(selected.cuScheduleDate),
-          tankFirstDate1: DateWithDash(selectedSupplyTab.tankFirstDate1),
-          tankFirstDate2: DateWithDash(selectedSupplyTab.tankFirstDate2),
-          tankOutsideDate1: DateWithDash(selectedSupplyTab.tankOutsideDate1),
-          tankOutsideDate2: DateWithDash(selectedSupplyTab.tankOutsideDate2),
-          tankInsideDate1: DateWithDash(selectedSupplyTab.tankInsideDate1),
-          tankInsideDate2: DateWithDash(selectedSupplyTab.tankInsideDate2),
-          gasifyCheckDate1: DateWithDash(selectedSupplyTab.gasifyCheckDate1),
-          gasifyCheckDate2: DateWithDash(selectedSupplyTab.gasifyCheckDate2),
+          // cuFinishDate: DateWithDash(selected.cuFinishDate),
+          // cuCircuitDate: DateWithDash(selected.cuCircuitDate),
+          // cuScheduleDate: DateWithDash(selected.cuScheduleDate),
+          // tankFirstDate1: DateWithDash(selectedSupplyTab.tankFirstDate1),
+          // tankFirstDate2: DateWithDash(selectedSupplyTab.tankFirstDate2),
+          // tankOutsideDate1: DateWithDash(selectedSupplyTab.tankOutsideDate1),
+          // tankOutsideDate2: DateWithDash(selectedSupplyTab.tankOutsideDate2),
+          // tankInsideDate1: DateWithDash(selectedSupplyTab.tankInsideDate1),
+          // tankInsideDate2: DateWithDash(selectedSupplyTab.tankInsideDate2),
+          // gasifyCheckDate1: DateWithDash(selectedSupplyTab.gasifyCheckDate1),
+          // gasifyCheckDate2: DateWithDash(selectedSupplyTab.gasifyCheckDate2),
         });
         return;
       }
