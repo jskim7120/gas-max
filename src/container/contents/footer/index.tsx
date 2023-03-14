@@ -27,7 +27,6 @@ function Footer() {
 
   useEffect(() => {
     if (infoState) {
-      console.log(infoState);
       setInfo(infoState);
     }
   }, [infoState]);

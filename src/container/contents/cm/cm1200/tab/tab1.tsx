@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Controller } from "react-hook-form";
 import {
-  Field,
   FormGroup,
   Input,
   Label,
   Select as CSelect,
-  Divider,
   Wrapper,
 } from "components/form/style";
 import { InputSize } from "components/componentsType";
@@ -65,7 +63,7 @@ function Tab1({
   setChkCuCno: Function;
 }) {
   return (
-    <div>
+    <div className="tab1">
       <Wrapper grid col={3} fields="0.7fr 0.8fr 1.5fr">
         <div style={{ display: "flex", flexDirection: "column" }}>
           <FormGroup>

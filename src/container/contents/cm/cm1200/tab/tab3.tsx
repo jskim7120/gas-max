@@ -29,8 +29,7 @@ function Tab3({
   control: any;
 }) {
   return (
-    <div>
-      {/* 3-3-1 Wrapper */}
+    <div className="tab3">
       <Field flex>
         <FormGroup>
           <Label>용기시설</Label>
@@ -99,7 +98,7 @@ function Tab3({
           </Field>
         </Wrapper>
       </Field>
-      {/* 3-4-1 Wrapper */}
+
       <Field flex>
         <FormGroup>
           <Label>기화기</Label>
@@ -116,7 +115,6 @@ function Tab3({
         </Wrapper>
       </Field>
 
-      {/* 3-4-2 Wrapper */}
       <Field flex>
         <FormGroup>
           <Label>{`1)`}</Label>
@@ -143,7 +141,19 @@ function Tab3({
             <Input register={register("gasifySno1")} />
           </Field>
           <Field>
-            <Input maxLength="7" register={register("gasifyMakeDate1")} />
+            {/* <Input maxLength="7" register={register("gasifyMakeDate1")} /> */}
+            <Controller
+              control={control}
+              {...register("gasifyMakeDate1")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  showYearDropdown
+                />
+              )}
+            />
           </Field>
           <Field>
             <Input register={register("gasifyPower1")} />
@@ -163,7 +173,7 @@ function Tab3({
           </Field>
         </Wrapper>
       </Field>
-      {/* 3-4-3 Wrapper */}
+
       <Field flex>
         <FormGroup>
           <Label>{`2)`}</Label>
@@ -190,7 +200,19 @@ function Tab3({
             <Input register={register("gasifySno2")} />
           </Field>
           <Field>
-            <Input maxLength="7" register={register("gasifyMakeDate2")} />
+            {/* <Input maxLength="7" register={register("gasifyMakeDate2")} /> */}
+            <Controller
+              control={control}
+              {...register("gasifyMakeDate2")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  showYearDropdown
+                />
+              )}
+            />
           </Field>
           <Field>
             <Input register={register("gasifyPower2")} />

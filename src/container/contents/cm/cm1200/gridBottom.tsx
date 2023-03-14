@@ -41,7 +41,7 @@ function GridTable({
     });
     gv.setColumnLayout([
       "cuCode",
-      "cuUsernam",
+      "cuUsername",
       "cuTel",
       "cuAnkum",
       "cuCdc",

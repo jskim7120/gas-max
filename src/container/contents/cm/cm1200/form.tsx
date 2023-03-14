@@ -1,21 +1,16 @@
-// REACT
 import React, { useEffect, useImperativeHandle, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-// COMPONENTS
+import GridBottom from "./gridBottom";
 import DaumAddress from "components/daum";
 import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
-import CustomDatePicker from "components/customDatePicker";
 import { SearchBtn } from "components/daum";
-import EditableSelect from "components/editableSelect";
 import { MagnifyingGlass } from "components/allSvgIcon";
-import { currencyMask } from "helpers/currency";
-import {
-  Item,
-  RadioButton,
-  RadioButtonLabel,
-} from "components/radioButton/style";
+import { PersonInfoText, BuildingInfoText } from "components/text";
+import Button from "components/button/button";
+import { Plus, Trash, Update } from "components/allSvgIcon";
+import { FormSectionTitle } from "../../commonStyle";
 import {
   Field,
   FormGroup,
@@ -27,8 +22,6 @@ import {
 } from "components/form/style";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
-
-//API
 import { ICM1200SEARCH, emptyObj } from "./model";
 import API from "app/axios";
 import {
@@ -40,6 +33,9 @@ import {
 import { DateWithDash, DateWithoutDash } from "helpers/dateFormat";
 import { formatCurrencyRemoveComma } from "helpers/currency";
 import getTabContent from "./getTabContent";
+import { useDispatch } from "app/store";
+import { CM120065 } from "app/path";
+import { openModal, addCM1105 } from "app/state/modal/modalSlice";
 
 const Form = React.forwardRef(
   (
@@ -51,11 +47,10 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
-      selectedSupplyTab,
       areaCode,
+      setAreaCode,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      setIsCancelBtnDisabled,
     }: {
       selected: any;
       dataCommonDic: any;
@@ -64,22 +59,24 @@ const Form = React.forwardRef(
       selectedRowIndex: number;
       setSelected: any;
       setSelectedRowIndex: any;
-      selectedSupplyTab: any;
       areaCode: string;
+      setAreaCode: Function;
       isAddBtnClicked: boolean;
       setIsAddBtnClicked: Function;
-      setIsCancelBtnDisabled: Function;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    console.log("fucking areacode:", areaCode);
+    const dispatch = useDispatch();
+    const [selectedUserInfo, setSelectedUserInfo] = useState<any[]>([]);
+    const [selectedSupplyTab, setSelectedSupplyTab] = useState<any>({});
+    const [isBuildingSelected, setBuildingSelected] = useState(false);
+    const [tabId, setTabId] = useState<number>(0);
     const [addr, setAddress] = useState<string>("");
 
     const [chkCuZipCode, setChkCuZipCode] = useState(false);
     const [chkCuRh20, setChkCuRh20] = useState(false);
     const [chkCuRdanga, setChkCuRdanga] = useState(false);
     const [chkCuAnKum, setChkCuAnKum] = useState(false);
-    //const [ckCuSisulKum, setCkCuSisulKum] = useState(false);
     const [chkCuMeterKum, setChkCuMeterKum] = useState(false);
     const [chkCuPer, setChkCuPer] = useState(false);
     const [chkCuCdc, setChkCuCdc] = useState(false);
@@ -87,11 +84,10 @@ const Form = React.forwardRef(
     const [chkCuGumTurm, setChkCuGumTurm] = useState(false);
     const [chkCuGumdate, setChkCuGumdate] = useState(false);
     const [chkCuCno, setChkCuCno] = useState(false);
-    const [newTankMakeCo1, setNewTankMakeCo1] = useState("");
 
-    const [tabId, setTabId] = useState<number>(0);
-
-    let tankMakeCo1: Array<any> = [];
+    const [cuCustgubunDic, setCuCustgubunDic] = useState([]);
+    const [cuJyCodeDic, setCuJyCodeDic] = useState([]);
+    const [cuSwCodeDic, setCuSwCodeDic] = useState([]);
 
     const { handleSubmit, reset, register, getValues, control, watch } =
       useForm<ICM1200SEARCH>({
@@ -99,10 +95,48 @@ const Form = React.forwardRef(
       });
 
     useEffect(() => {
-      if (JSON.stringify(selected) !== "{}") {
-        resetForm("reset");
+      if (dataCommonDic) {
+        console.log("dataCommonDic:::", dataCommonDic);
+        setCuCustgubunDic(dataCommonDic?.cuCustgubun);
+        setCuJyCodeDic(dataCommonDic?.cuJyCode);
+        setCuSwCodeDic(dataCommonDic?.cuSwCode);
+
+        reset({
+          cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
+          cuJyCode: dataCommonDic?.cuJyCode[0].code,
+          cuSwCode: dataCommonDic?.cuSwCode[0].code,
+          cuRh2o: dataCommonDic?.cuRh20[0].code,
+          cuRdangaType: dataCommonDic?.cuRdangaType[0].code,
+          cuRdangaSign: dataCommonDic?.cuRdangaSign[0].code,
+          cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
+          cuGumTurm: dataCommonDic?.cuGumTurm[0].code,
+          tankMakeCo1: dataCommonDic?.tankMakeCo1[0].code,
+          tankMakeCo2: dataCommonDic?.tankMakeCo2[0].code,
+          tankVol1: dataCommonDic?.tankVol1[0].code,
+          tankVol2: dataCommonDic?.tankVol2[0].code,
+          gasifyCo1: dataCommonDic?.gasifyCo1[0].code,
+          gasifyCo2: dataCommonDic?.gasifyCo2[0].code,
+        });
+      }
+    }, [dataCommonDic]);
+
+    useEffect(() => {
+      if (selected && selected.cuCode && selected.areaCode) {
+        setAreaCode(selected.areaCode);
+
+        fetchAdditionalData({
+          areaCode: selected.areaCode,
+          cuCode: selected.cuCode,
+        });
+        setBuildingSelected(false);
       }
     }, [selected]);
+
+    useEffect(() => {
+      if (selectedSupplyTab) {
+        resetForm("reset");
+      }
+    }, [selectedSupplyTab]);
 
     useEffect(() => {
       if (addr) {
@@ -114,37 +148,57 @@ const Form = React.forwardRef(
       }
     }, [addr]);
 
-    useEffect(() => {
-      reset({
-        cuJyCode: dataCommonDic?.cuJyCode[0].code,
-        cuSwCode: dataCommonDic?.cuSwCode[0].code,
-        cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
-
-        cuRh2o: dataCommonDic?.cuRh20[0].code,
-        cuRdangaType: dataCommonDic?.cuRdangaType[0].code,
-        cuRdangaSign: dataCommonDic?.cuRdangaSign[0].code,
-
-        cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
-        cuGumTurm: dataCommonDic?.cuGumTurm[0].code,
-
-        tankMakeCo1: dataCommonDic?.tankMakeCo1[0].code,
-        tankMakeCo2: dataCommonDic?.tankMakeCo2[0].code,
-        tankVol1: dataCommonDic?.tankVol1[0].code,
-        tankVol2: dataCommonDic?.tankVol2[0].code,
-
-        gasifyCo1: dataCommonDic?.gasifyCo1[0].code,
-        gasifyCo2: dataCommonDic?.gasifyCo2[0].code,
-      });
-
-      dataCommonDic?.tankMakeCo1?.map((obj: any) => {
-        tankMakeCo1.push({ value: obj.code, label: obj.codeName });
-      });
-    }, [dataCommonDic]);
-
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       resetForm,
       crud,
     }));
+
+    const fetchAdditionalData = async ({
+      areaCode,
+      cuCode,
+    }: {
+      areaCode: string;
+      cuCode: string;
+    }) => {
+      try {
+        const { data } = await API.get(CM120065, {
+          params: { cuCode: cuCode, areaCode: areaCode },
+        });
+
+        console.log("additional data:::", data);
+
+        if (data) {
+          if (data?.userInfo) {
+            setSelectedUserInfo(data.userInfo);
+          } else {
+            setSelectedUserInfo([]);
+          }
+
+          if (data?.supplyTab) {
+            setSelectedSupplyTab(data?.supplyTab[0]);
+          } else {
+            setSelectedSupplyTab({});
+          }
+
+          if (data?.cuCustgubun) {
+            setCuCustgubunDic(data.cuCustgubun);
+          }
+
+          if (data?.cuJyCode) {
+            setCuJyCodeDic(data.cuJyCode);
+          }
+
+          if (data?.cuSwCode) {
+            setCuSwCodeDic(data.cuSwCode);
+          }
+        } else {
+          setSelectedUserInfo([]);
+          setSelectedSupplyTab({});
+        }
+      } catch (err) {
+        console.log("CM120065 data fetch error =======>", err);
+      }
+    };
 
     const fetchCodes = async (areaCode: string) => {
       try {
@@ -171,9 +225,6 @@ const Form = React.forwardRef(
 
     const resetForm = async (type: string) => {
       if (type === "clear") {
-        // if (!checkAreaCode()) {
-        //   return null;
-        // }
         const data = await fetchCodes(areaCode);
         if (data && data?.tempCuCode[0]) {
           reset({ ...emptyObj, cuCode: data?.tempCuCode[0]?.tempCuCode });
@@ -193,52 +244,46 @@ const Form = React.forwardRef(
           cuAptnameYn: tempData?.cuAptnameYn === "Y",
           cuBaGageYn: tempData?.cuBaGageYn === "Y",
 
-          // cuFinishDate: selected?.cuFinishDate
-          //   ? formatDate(selected.cuFinishDate)
-          //   : "",
           cuFinishDate: DateWithDash(selected.cuFinishDate),
-          // cuCircuitDate: selected?.cuCircuitDate
-          //   ? formatDate(selected.cuCircuitDate)
-          //   : "",
           cuCircuitDate: DateWithDash(selected.cuCircuitDate),
-          // cuScheduleDate: selected?.cuScheduleDate
-          //   ? formatDate(selected.cuScheduleDate)
-          //   : "",
           cuScheduleDate: DateWithDash(selected.cuScheduleDate),
-          // tankFirstDate1: selected?.tankFirstDate1
-          //   ? formatDate(selected.tankFirstDate1)
-          //   : "",
-          tankFirstDate1: DateWithDash(selected.tankFirstDate1),
-          // tankFirstDate2: selected?.tankFirstDate2
-          //   ? formatDate(selected.tankFirstDate2)
-          //   : "",
-          tankFirstDate2: DateWithDash(selected.tankFirstDate2),
-          // tankOutsideDate1: selected?.tankOutsideDate1
-          //   ? formatDate(selected.tankOutsideDate1)
-          //   : "",
-          tankOutsideDate1: DateWithDash(selected.tankOutsideDate1),
-          // tankOutsideDate2: selected?.tankOutsideDate2
-          //   ? formatDate(selected.tankOutsideDate2)
-          //   : "",
-          tankOutsideDate2: DateWithDash(selected.tankOutsideDate2),
-          // tankInsideDate1: selected?.tankInsideDate1
-          //   ? formatDate(selected.tankInsideDate1)
-          //   : "",
-          tankInsideDate1: DateWithDash(selected.tankInsideDate1),
-          // tankInsideDate2: selected?.tankInsideDate2
-          //   ? formatDate(selected.tankInsideDate2)
-          //   : "",
-          tankInsideDate2: DateWithDash(selected.tankInsideDate2),
-          // gasifyCheckDate1: selected?.gasifyCheckDate1
-          //   ? formatDate(selected.gasifyCheckDate1)
-          //   : "",
-          gasifyCheckDate1: DateWithDash(selected.gasifyCheckDate1),
-          // gasifyCheckDate2: selected?.gasifyCheckDate2
-          //   ? formatDate(selected.gasifyCheckDate2)
-          //   : "",
-          gasifyCheckDate2: DateWithDash(selected.gasifyCheckDate2),
+          tankFirstDate1: DateWithDash(selectedSupplyTab.tankFirstDate1),
+          tankFirstDate2: DateWithDash(selectedSupplyTab.tankFirstDate2),
+          tankOutsideDate1: DateWithDash(selectedSupplyTab.tankOutsideDate1),
+          tankOutsideDate2: DateWithDash(selectedSupplyTab.tankOutsideDate2),
+          tankInsideDate1: DateWithDash(selectedSupplyTab.tankInsideDate1),
+          tankInsideDate2: DateWithDash(selectedSupplyTab.tankInsideDate2),
+          gasifyCheckDate1: DateWithDash(selectedSupplyTab.gasifyCheckDate1),
+          gasifyCheckDate2: DateWithDash(selectedSupplyTab.gasifyCheckDate2),
         });
         return;
+      }
+    };
+
+    const openPopupCM1105Insert = () => {
+      if (selected) {
+        dispatch(
+          addCM1105({
+            cuCode: selected?.cuCode ? selected?.cuCode : "",
+            areaCode: selected?.areaCode,
+            status: "INSERT",
+          })
+        );
+
+        dispatch(openModal({ type: "cm1105Modal" }));
+      } else {
+        toast.warning("no data", {
+          autoClose: 500,
+        });
+      }
+    };
+    const openPopupCM1105Update = () => {
+      if (isBuildingSelected === true) {
+        dispatch(openModal({ type: "cm1105Modal" }));
+      } else {
+        toast.warning("please select building row", {
+          autoClose: 500,
+        });
       }
     };
 
@@ -331,112 +376,26 @@ const Form = React.forwardRef(
         delete formValues.cuCno;
       }
 
-      formValues.tankMakeCo1 = newTankMakeCo1;
-
       formValues.cuAptnameYn = formValues.cuAptnameYn ? "Y" : "N";
 
-      // formValues.cuFinishDate =
-      //   typeof formValues.cuFinishDate === "string"
-      //     ? formatDateByRemoveDash(formValues.cuFinishDate)
-      //     : formValues.cuFinishDate instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.cuFinishDate)
-      //     : "";
-
       formValues.cuFinishDate = DateWithoutDash(formValues.cuFinishDate);
-
-      // formValues.cuCircuitDate =
-      //   typeof formValues.cuCircuitDate === "string"
-      //     ? formatDateByRemoveDash(formValues.cuCircuitDate)
-      //     : formValues.cuCircuitDate instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.cuCircuitDate)
-      //     : "";
-
       formValues.cuCircuitDate = DateWithoutDash(formValues.cuCircuitDate);
-
-      // formValues.cuScheduleDate =
-      //   typeof formValues.cuScheduleDate === "string"
-      //     ? formatDateByRemoveDash(formValues.cuScheduleDate)
-      //     : formValues.cuScheduleDate instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.cuScheduleDate)
-      //     : "";
-
       formValues.cuScheduleDate = DateWithoutDash(formValues.cuScheduleDate);
-
-      // formValues.gasifyCheckDate1 =
-      //   typeof formValues.gasifyCheckDate1 === "string"
-      //     ? formatDateByRemoveDash(formValues.gasifyCheckDate1)
-      //     : formValues.gasifyCheckDate1 instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.gasifyCheckDate1)
-      //     : "";
-
       formValues.gasifyCheckDate1 = DateWithoutDash(
         formValues.gasifyCheckDate1
       );
-
-      // formValues.gasifyCheckDate2 =
-      //   typeof formValues.gasifyCheckDate2 === "string"
-      //     ? formatDateByRemoveDash(formValues.gasifyCheckDate2)
-      //     : formValues.gasifyCheckDate2 instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.gasifyCheckDate2)
-      //     : "";
-
       formValues.gasifyCheckDate2 = DateWithoutDash(
         formValues.gasifyCheckDate2
       );
-
-      // formValues.tankFirstDate1 =
-      //   typeof formValues.tankFirstDate1 === "string"
-      //     ? formatDateByRemoveDash(formValues.tankFirstDate1)
-      //     : formValues.tankFirstDate1 instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.tankFirstDate1)
-      //     : "";
-
       formValues.tankFirstDate1 = DateWithoutDash(formValues.tankFirstDate1);
-
-      // formValues.tankFirstDate2 =
-      //   typeof formValues.tankFirstDate2 === "string"
-      //     ? formatDateByRemoveDash(formValues.tankFirstDate2)
-      //     : formValues.tankFirstDate2 instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.tankFirstDate2)
-      //     : "";
-
       formValues.tankFirstDate2 = DateWithoutDash(formValues.tankFirstDate2);
-
-      // formValues.tankInsideDate1 =
-      //   typeof formValues.tankInsideDate1 === "string"
-      //     ? formatDateByRemoveDash(formValues.tankInsideDate1)
-      //     : formValues.tankInsideDate1 instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.tankInsideDate1)
-      //     : "";
       formValues.tankInsideDate1 = DateWithoutDash(formValues.tankInsideDate1);
-
-      // formValues.tankInsideDate2 =
-      //   typeof formValues.tankInsideDate2 === "string"
-      //     ? formatDateByRemoveDash(formValues.tankInsideDate2)
-      //     : formValues.tankInsideDate2 instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.tankInsideDate2)
-      //     : "";
-
       formValues.tankInsideDate2 = DateWithoutDash(formValues.tankInsideDate2);
-
-      // formValues.tankOutsideDate1 =
-      //   typeof formValues.tankOutsideDate1 === "string"
-      //     ? formatDateByRemoveDash(formValues.tankOutsideDate1)
-      //     : formValues.tankOutsideDate1 instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.tankOutsideDate1)
-      //     : "";
-
       formValues.tankOutsideDate1 = DateWithoutDash(
         formValues.tankOutsideDate1
       );
-
-      // formValues.tankOutsideDate2 =
-      //   typeof formValues.tankOutsideDate2 === "string"
-      //     ? formatDateByRemoveDash(formValues.tankOutsideDate2)
-      //     : formValues.tankOutsideDate2 instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.tankOutsideDate2)
-      //     : "";
-
+      formValues.gasifyMakeDate1 = DateWithoutDash(formValues.gasifyMakeDate1);
+      formValues.gasifyMakeDate2 = DateWithoutDash(formValues.gasifyMakeDate2);
       formValues.tankOutsideDate2 = DateWithoutDash(
         formValues.tankOutsideDate2
       );
@@ -577,154 +536,188 @@ const Form = React.forwardRef(
       }
     };
 
-    const onOptionsChanged = (newOption: any, s: any) => {
-      //console.log("newOptions:", newOption.label);
-      //console.log("=======s:", s);
-      //setNewTankMakeCo1(newOption.label);
-    };
-
     return (
-      <form onSubmit={handleSubmit(submit)}>
-        {/* 1-1 Wrapper */}
-        <Divider />
-        <Wrapper style={{ alignItems: "baseline" }}>
-          <Field>
-            <Input
-              label="건물코드"
-              register={register("cuCode")}
-              inputSize={InputSize.i60}
-              readOnly={true}
-            />
-          </Field>
-          <Field>
-            <Input
-              label="건물명"
-              register={register("cuName")}
-              labelStyle={{ minWidth: "78px" }}
-              style={{ width: "198px" }}
-            />
-          </Field>
-          <Field style={{ marginLeft: "20px" }}>
-            <CheckBox
-              title="건물명 지로 출력 안함."
-              register={register("cuAptnameYn")}
-              gap="15px"
-              rtl
-            />
-          </Field>
-        </Wrapper>
-        {/* 1-2 Wrapper */}
-        <Wrapper col={3}>
-          <FormGroup>
-            <Label className="lable-check">
-              <CheckBox
-                title="주소"
-                checked={chkCuZipCode}
-                onChange={(e: any) => setChkCuZipCode(e.target.checked)}
+      <>
+        <FormSectionTitle>
+          <BuildingInfoText text="건물 정보" />
+        </FormSectionTitle>
+
+        <form onSubmit={handleSubmit(submit)}>
+          {/* 1-1 Wrapper */}
+          <Divider />
+          <Wrapper style={{ alignItems: "baseline" }}>
+            <Field>
+              <Input
+                label="건물코드"
+                register={register("cuCode")}
+                inputSize={InputSize.i60}
+                readOnly={true}
               />
-            </Label>
+            </Field>
+            <Field>
+              <Input
+                label="건물명"
+                register={register("cuName")}
+                labelStyle={{ minWidth: "78px" }}
+                style={{ width: "198px" }}
+              />
+            </Field>
+            <Field style={{ marginLeft: "20px" }}>
+              <CheckBox
+                title="건물명 지로 출력 안함."
+                register={register("cuAptnameYn")}
+                gap="15px"
+                rtl
+              />
+            </Field>
+          </Wrapper>
+          {/* 1-2 Wrapper */}
+          <Wrapper col={3}>
+            <FormGroup>
+              <Label className="lable-check">
+                <CheckBox
+                  title="주소"
+                  checked={chkCuZipCode}
+                  onChange={(e: any) => setChkCuZipCode(e.target.checked)}
+                />
+              </Label>
+              <Input
+                register={register("cuZipcode")}
+                inputSize={InputSize.i60}
+                readOnly={!chkCuZipCode}
+                style={{ marginRight: "3px" }}
+              />
+              <DaumAddress setAddress={setAddress} disabled={!chkCuZipCode} />
+            </FormGroup>
+
             <Input
-              register={register("cuZipcode")}
-              inputSize={InputSize.i60}
-              readOnly={!chkCuZipCode}
-              style={{ marginRight: "3px" }}
+              register={register("cuAddr1")}
+              inputSize={InputSize.md}
+              style={{ marginRight: "0px" }}
             />
-            <DaumAddress setAddress={setAddress} disabled={!chkCuZipCode} />
-          </FormGroup>
+            <Input
+              register={register("cuAddr2")}
+              style={{ marginLeft: "5px", width: "225px" }}
+            />
+          </Wrapper>
+          {/* 1-3 Wrapper */}
+          <Wrapper grid col={5}>
+            <FormGroup>
+              <Label>담당사원</Label>
+              <CSelect {...register("cuSwCode")} width={InputSize.i120}>
+                {cuSwCodeDic?.map((obj: any, index: number) => (
+                  <option key={index} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </CSelect>
+            </FormGroup>
 
-          <Input
-            register={register("cuAddr1")}
-            inputSize={InputSize.md}
-            style={{ marginRight: "0px" }}
+            <FormGroup>
+              <Label style={{ minWidth: "80px" }}>지역분류</Label>
+              <CSelect
+                {...register("cuJyCode")}
+                width={InputSize.i120}
+                style={{ marginRight: "3px" }}
+              >
+                {cuJyCodeDic?.map((obj: any, index: number) => (
+                  <option key={index} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </CSelect>
+              <SearchBtn
+                type="button"
+                onClick={() => console.log("cuZipCode BTN")}
+              >
+                <MagnifyingGlass />
+              </SearchBtn>
+            </FormGroup>
+
+            <FormGroup>
+              <Label style={{ minWidth: "80px" }}>관리자분류</Label>
+              <CSelect {...register("cuCustgubun")} width={InputSize.i120}>
+                {cuCustgubunDic?.map((obj: any, index: number) => (
+                  <option key={index} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </CSelect>
+            </FormGroup>
+          </Wrapper>
+
+          <div style={{ marginTop: "5px" }}>
+            <PlainTab
+              tabHeader={["지로 양식", "고객안내문", "입금계좌 안내"]}
+              onClick={(id) => setTabId(id)}
+              tabId={tabId}
+            />
+            <TabContentWrapper style={{ minHeight: "200px" }}>
+              {getTabContent(
+                tabId,
+                register,
+                dataCommonDic,
+                renderRdangaCalc,
+                chkCuRh20,
+                setChkCuRh20,
+                chkCuRdanga,
+                setChkCuRdanga,
+                chkCuAnKum,
+                setChkCuAnKum,
+                chkCuMeterKum,
+                setChkCuMeterKum,
+                control,
+                chkCuPer,
+                setChkCuPer,
+                chkCuCdc,
+                setChkCuCdc,
+                chkCuSukumtype,
+                setChkCuSukumtype,
+                chkCuGumTurm,
+                setChkCuGumTurm,
+                chkCuGumdate,
+                setChkCuGumdate,
+                chkCuCno,
+                setChkCuCno
+              )}
+            </TabContentWrapper>
+          </div>
+        </form>
+        <FormSectionTitle>
+          <PersonInfoText
+            text="사용자 정보"
+            textStyle={{
+              color: "#1b8c8e",
+              fontWeight: "bold",
+              marginLeft: "1.2px",
+            }}
           />
-          <Input
-            register={register("cuAddr2")}
-            style={{ marginLeft: "5px", width: "225px" }}
-          />
-        </Wrapper>
-        {/* 1-3 Wrapper */}
-        <Wrapper grid col={5}>
-          <FormGroup>
-            <Label>담당사원</Label>
-            <CSelect {...register("cuSwCode")} width={InputSize.i120}>
-              {dataCommonDic?.cuSwCode?.map((obj: any, index: number) => (
-                <option key={index} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </CSelect>
-          </FormGroup>
-
-          <FormGroup>
-            <Label style={{ minWidth: "80px" }}>지역분류</Label>
-            <CSelect
-              {...register("cuJyCode")}
-              width={InputSize.i120}
-              style={{ marginRight: "3px" }}
-            >
-              {dataCommonDic?.cuJyCode?.map((obj: any, index: number) => (
-                <option key={index} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </CSelect>
-            <SearchBtn
-              type="button"
-              onClick={() => console.log("cuZipCode BTN")}
-            >
-              <MagnifyingGlass />
-            </SearchBtn>
-          </FormGroup>
-
-          <FormGroup>
-            <Label style={{ minWidth: "80px" }}>관리자분류</Label>
-            <CSelect {...register("cuCustgubun")} width={InputSize.i120}>
-              {dataCommonDic?.cuCustgubun?.map((obj: any, index: number) => (
-                <option key={index} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </CSelect>
-          </FormGroup>
-        </Wrapper>
-
-        <div style={{ marginTop: "5px" }}>
-          <PlainTab
-            tabHeader={["지로 양식", "고객안내문", "입금계좌 안내"]}
-            onClick={(id) => setTabId(id)}
-            tabId={tabId}
-          />
-          <TabContentWrapper style={{ minHeight: "200px" }}>
-            {getTabContent(
-              tabId,
-              register,
-              dataCommonDic,
-              renderRdangaCalc,
-              chkCuRh20,
-              setChkCuRh20,
-              chkCuRdanga,
-              setChkCuRdanga,
-              chkCuAnKum,
-              setChkCuAnKum,
-              chkCuMeterKum,
-              setChkCuMeterKum,
-              control,
-              chkCuPer,
-              setChkCuPer,
-              chkCuCdc,
-              setChkCuCdc,
-              chkCuSukumtype,
-              setChkCuSukumtype,
-              chkCuGumTurm,
-              setChkCuGumTurm,
-              chkCuGumdate,
-              setChkCuGumdate,
-              chkCuCno,
-              setChkCuCno
-            )}
-          </TabContentWrapper>
-        </div>
-      </form>
+          <div className="buttons">
+            <Button
+              text="사용자 추가"
+              icon={<Plus />}
+              style={{ marginRight: "5px" }}
+              onClick={openPopupCM1105Insert}
+            />
+            <Button
+              text="사용자 수정"
+              icon={<Update />}
+              style={{ marginRight: "5px" }}
+              onClick={openPopupCM1105Update}
+            />
+            <Button
+              text="삭제"
+              icon={<Trash />}
+              style={{ marginRight: "5px" }}
+            />
+          </div>
+        </FormSectionTitle>
+        <GridBottom
+          selectedUserInfo={selectedUserInfo}
+          areaCode={selected?.areaCode}
+          setBuildingSelected={setBuildingSelected}
+        />
+      </>
     );
   }
 );
