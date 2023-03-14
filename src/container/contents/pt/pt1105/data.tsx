@@ -1,6 +1,6 @@
 import { ValueType } from "realgrid";
 
-export const fieldsSecond = [
+export const fields = [
   {
     fieldName: "mjDate",
     dataType: ValueType.TEXT,
@@ -11,19 +11,15 @@ export const fieldsSecond = [
   },
   {
     fieldName: "mjMisujan",
-    dataType: ValueType.NUMBER,
+    dataType: ValueType.TEXT,
   },
   {
     fieldName: "mjSwName",
     dataType: ValueType.TEXT,
   },
-  {
-    fieldName: "pjBigo",
-    dataType: ValueType.TEXT,
-  },
 ];
 
-export const columnsSecond = [
+export const columns = [
   {
     name: "mjDate",
     fieldName: "mjDate",
@@ -37,16 +33,16 @@ export const columnsSecond = [
     name: "mjBigo",
     fieldName: "mjBigo",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
-      text: "적요",
+      text: "비고",
     },
   },
   {
     name: "mjMisujan",
     fieldName: "mjMisujan",
     type: "data",
-    width: "120",
+    width: "80",
     header: {
       text: "미수잔액",
     },
@@ -55,18 +51,9 @@ export const columnsSecond = [
     name: "mjSwName",
     fieldName: "mjSwName",
     type: "data",
-    width: "150",
+    width: "80",
     header: {
-      text: "배달사원",
-    },
-  },
-  {
-    name: "pjBigo",
-    fieldName: "pjBigo",
-    type: "data",
-    width: "100",
-    header: {
-      text: "비고",
+      text: "사원",
     },
   },
 ];

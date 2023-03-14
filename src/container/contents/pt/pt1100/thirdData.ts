@@ -15,7 +15,7 @@ export const fieldsThird = [
   },
   {
     fieldName: "msCuName",
-    dataType: ValueType.NUMBER,
+    dataType: ValueType.TEXT,
   },
   {
     fieldName: "msKumack",
@@ -26,20 +26,16 @@ export const fieldsThird = [
     dataType: ValueType.NUMBER,
   },
   {
-    fieldName: "msDc",
-    dataType: ValueType.NUMBER,
-  },
-  {
     fieldName: "msSwName",
-    dataType: ValueType.NUMBER,
+    dataType: ValueType.TEXT,
   },
   {
-    fieldName: "msSukumTypeName",
-    dataType: ValueType.NUMBER,
+    fieldName: "msSukumtype",
+    dataType: ValueType.TEXT,
   },
   {
     fieldName: "msBigo",
-    dataType: ValueType.NUMBER,
+    dataType: ValueType.TEXT,
   },
 ];
 
@@ -108,8 +104,8 @@ export const columnsThird = [
     },
   },
   {
-    name: "msSukumTypeName",
-    fieldName: "msSukumTypeName",
+    name: "msSukumtype",
+    fieldName: "msSukumtype",
     type: "data",
     width: "100",
     header: {

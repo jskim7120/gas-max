@@ -2,13 +2,21 @@ import { useState, useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { PT1100SEARCH, GR1500SEARCH2 } from "app/path";
+import { useDispatch } from "app/store";
+import { openModal, ptAreaCode } from "app/state/modal/modalSlice";
+import {
+  PT1100SEARCH,
+  GR1500SEARCH2,
+  PT1100SEARCH62,
+  PT110065,
+} from "app/path";
 import {
   SearchWrapper,
   MainWrapper,
   LeftSide,
   RightSide,
 } from "../../commonStyle";
+import { PersonInfoText } from "components/text";
 import { IPT1100SEARCH } from "./model";
 import { IPT1100THIRD } from "./thirdModel";
 import Button from "components/button/button";
@@ -17,7 +25,17 @@ import { columnsSecond, fieldsSecond } from "./secondData";
 import { columnsThird, fieldsThird } from "./thirdData";
 import Grid from "components/grid";
 import Loader from "components/loader";
-import { MagnifyingGlass } from "components/allSvgIcon";
+import {
+  formatDateByRemoveDash,
+  formatDateToStringWithoutDash,
+} from "helpers/dateFormat";
+import {
+  MagnifyingGlass,
+  Plus,
+  Trash,
+  Update,
+  Reset,
+} from "components/allSvgIcon";
 import CheckBox from "components/checkbox";
 import Form from "./form";
 import CustomDatePicker from "components/customDatePicker";
@@ -41,12 +59,18 @@ function PT1100({
   const [dataSecond, setDataSecond] = useState([]);
   const [dataThird, setDataThird] = useState([]);
   const [selected, setSelected] = useState<any>({});
+  const [data65, setData65] = useState([]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const dispatch = useDispatch();
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "PT",
     functionName: "PT1100",
   });
+
+  useEffect(() => {
+    fetch65Data(selected);
+  }, [selected]);
 
   useEffect(() => {
     if (dataCommonDic !== undefined && dataCommonDic) {
@@ -55,6 +79,20 @@ function PT1100({
       });
     }
   }, [dataCommonDic]);
+
+  const fetch65Data = async (params: any) => {
+    try {
+      const { data } = await API.get(PT110065, {
+        params: { areaCode: params.areaCode, cuCode: params.cuCode },
+      });
+
+      if (data) {
+        setData65(data);
+      }
+    } catch (err) {
+      console.log("PT110065 data search fetch error =======>", err);
+    }
+  };
 
   const fetchDataSearch1 = async (params: any) => {
     try {
@@ -72,9 +110,21 @@ function PT1100({
   };
 
   const fetchDataSearch2 = async (params: any) => {
+    params.sMsdateF =
+      typeof params.sMsdateF === "string"
+        ? formatDateByRemoveDash(params.sMsdateF)
+        : params.sMsdateF instanceof Date
+        ? formatDateToStringWithoutDash(params.sMsdateF)
+        : "";
+    params.sMsdateT =
+      typeof params.sMsdateT === "string"
+        ? formatDateByRemoveDash(params.sMsdateT)
+        : params.sMsdateT instanceof Date
+        ? formatDateToStringWithoutDash(params.sMsdateT)
+        : "";
     try {
       setLoading2(true);
-      const { data } = await API.get(PT1100SEARCH, { params: params });
+      const { data } = await API.get(PT1100SEARCH62, { params: params });
 
       if (data) {
         setDataSecond(data);
@@ -82,22 +132,7 @@ function PT1100({
         setSelectedRowIndex(0);
       }
     } catch (err) {
-      console.log("PT1100 data search fetch error =======>", err);
-    }
-  };
-
-  const fetchDataSearch3 = async (params: any) => {
-    try {
-      setLoading2(true);
-      const { data } = await API.get(GR1500SEARCH2, { params: params });
-
-      if (data) {
-        setDataThird(data);
-        setLoading2(false);
-        setSelectedRowIndex(0);
-      }
-    } catch (err) {
-      console.log("PT1100 data search fetch error =======>", err);
+      console.log("PT110062 data search fetch error =======>", err);
     }
   };
 
@@ -118,6 +153,17 @@ function PT1100({
     mode: "onSubmit",
   });
 
+  const openPopupPT1105 = async () => {
+    dispatch(openModal({ type: "pt1105Modal" }));
+    dispatch(
+      ptAreaCode({
+        areaCode: selected.areaCode,
+        cuCode: selected.cuCode,
+        cuName: selected.cuName,
+      })
+    );
+  };
+
   return (
     <>
       <CustomTopPart
@@ -126,6 +172,31 @@ function PT1100({
         dataCommonDic={dataCommonDic}
         areaCode={areaCode}
       />
+      <div
+        className="buttons"
+        style={{
+          display: "flex",
+          gap: "5px",
+          position: "absolute",
+          right: "13px",
+          top: "88px",
+        }}
+      >
+        <Button text="선택 수금" icon={<Plus />} onClick={openPopupPT1105} />
+        <Button text="수금" icon={<Trash />} onClick={() => {}} />
+        <Button
+          text="저장"
+          icon={<Update />}
+          color={ButtonColor.SECONDARY}
+          onClick={() => {}}
+        />
+        <Button
+          text="취소"
+          icon={<Reset />}
+          onClick={() => {}}
+          style={{ padding: "0 3px" }}
+        />
+      </div>
       <MainWrapper>
         <LeftSide>
           <form
@@ -134,7 +205,8 @@ function PT1100({
           >
             <SearchWrapper className="h35">
               <Field flex>
-                <FormGroup>
+                <PersonInfoText text="미수현황" />
+                <FormGroup style={{ marginLeft: "7px" }}>
                   <Input
                     label="거래처"
                     register={register("sCuName")}
@@ -186,7 +258,7 @@ function PT1100({
           />
           <Grid
             areaCode={areaCode}
-            data={dataSecond.length > 0 && dataSecond}
+            data={data65.length > 0 && data65}
             columns={columnsSecond}
             fields={fieldsSecond}
             setSelected={setSelected}
@@ -206,7 +278,18 @@ function PT1100({
               <div className="buttons">
                 <Controller
                   control={control}
-                  {...register("areaCode")}
+                  {...register("sMsdateF")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <CustomDatePicker
+                      value={value}
+                      onChange={onChange}
+                      name={name}
+                    />
+                  )}
+                />
+                <Controller
+                  control={control}
+                  {...register("sMsdateT")}
                   render={({ field: { onChange, value, name } }) => (
                     <CustomDatePicker
                       value={value}
@@ -241,7 +324,7 @@ function PT1100({
             areaCode={areaCode}
             data={dataSecond.length > 0 && dataSecond}
             columns={columnsThird}
-            fields={fieldsSecond}
+            fields={fieldsThird}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
