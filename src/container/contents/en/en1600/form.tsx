@@ -17,7 +17,7 @@ import CheckBox from "components/checkbox";
 import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { SearchIcon, IconInfo } from "components/allSvgIcon";
-import { DateWithDash, DateWithoutDash } from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import { convertBase64 } from "helpers/convertBase64";
 import CustomDatePicker from "components/customDatePicker";
 import { ImageWrapper } from "../../commonStyle";
@@ -124,12 +124,12 @@ const Form = React.forwardRef(
             swWorkOut: selected.swWorkOut === "Y",
             cuSeEmail: selected.cuSeEmail ? selected.cuSeEmail.trim() : "",
             mailKind: selected.mailKind ? selected.mailKind.trim() : "",
-            swIndate: selected?.swIndate ? DateWithDash(selected.swIndate) : "",
-            swJdate1: selected?.swJdate1 ? DateWithDash(selected.swJdate1) : "",
-            swJdate2: selected?.swJdate2 ? DateWithDash(selected.swJdate2) : "",
-            swOutDate: selected?.swOutDate
-              ? DateWithDash(selected.swOutDate)
-              : "",
+            // swIndate: selected?.swIndate ? DateWithDash(selected.swIndate) : "",
+            // swJdate1: selected?.swJdate1 ? DateWithDash(selected.swJdate1) : "",
+            // swJdate2: selected?.swJdate2 ? DateWithDash(selected.swJdate2) : "",
+            // swOutDate: selected?.swOutDate
+            //   ? DateWithDash(selected.swOutDate)
+            //   : "",
           });
 
           selected.swStampFile

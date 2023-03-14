@@ -24,6 +24,10 @@ export function DateWithDash(date) {
   if (date === null || date === undefined || date === "") {
     return "";
   }
+
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  const withoutDashRegex = /^\d{8}$/;
+
   if (date instanceof Date) {
     return (
       date.getFullYear() +
@@ -34,16 +38,16 @@ export function DateWithDash(date) {
       "-" +
       (date.getDate() < 10 ? "0" + date.getDate() : date.getDate())
     );
+  } else if (regex.test(date)) {
+    return date;
+  } else if (withoutDashRegex.test(date)) {
+    const year = date.substring(0, 4);
+    const month = date.substring(4, 6);
+    const day = date.substring(6, 8);
+    return `${year}-${month}-${day}`;
+  } else {
+    return "";
   }
-  if (typeof date === "string") {
-    const year = date?.substring(0, 4);
-    const month = date?.substring(4, 6);
-    const day = date?.substring(6, 8);
-
-    const newDate = `${year}-${month}-${day}`;
-    return newDate;
-  }
-  return "";
 }
 
 export function DateWithoutDashOnlyYearMonth(date) {
