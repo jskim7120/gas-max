@@ -13,7 +13,6 @@ import {
 } from "components/form/style";
 import { ICC1400FORM } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { DateWithDash } from "helpers/dateFormat";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import API from "app/axios";
@@ -99,7 +98,7 @@ const Form = React.forwardRef(
             saupStampEs: selected?.saupStampEs === "Y",
             saupStampSe: selected?.saupStampSe === "Y",
             // saupDate: selected?.saupDate ? formatDate(selected.saupDate) : "",
-            saupDate: selected?.saupDate ? DateWithDash(selected.saupDate) : "",
+            // saupDate: selected?.saupDate ? DateWithDash(selected.saupDate) : "",
           });
         }
       }

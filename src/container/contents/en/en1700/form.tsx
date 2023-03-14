@@ -21,7 +21,7 @@ import {
 } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { ICAR } from "./model";
-import { DateWithDash, DateWithoutDash } from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { InfoText } from "components/text";
@@ -140,13 +140,13 @@ const Form = React.forwardRef(
             ...newData,
             caBkYn: selected?.caBkYn === "Y",
             caRentYn: selected?.caRentYn === "Y",
-            caSafeDate: DateWithDash(selected.caSafeDate),
-            caInDate: DateWithDash(selected.caInDate),
-            caRentDate: DateWithDash(selected.caRentDate),
-            caJdate1: DateWithDash(selected.caJdate1),
-            caJdate2: DateWithDash(selected.caJdate2),
-            caBsdate: DateWithDash(selected.caBsdate),
-            caBldate: DateWithDash(selected.caBldate),
+            // caSafeDate: DateWithDash(selected.caSafeDate),
+            // caInDate: DateWithDash(selected.caInDate),
+            // caRentDate: DateWithDash(selected.caRentDate),
+            // caJdate1: DateWithDash(selected.caJdate1),
+            // caJdate2: DateWithDash(selected.caJdate2),
+            // caBsdate: DateWithDash(selected.caBsdate),
+            // caBldate: DateWithDash(selected.caBldate),
           });
         }
       }

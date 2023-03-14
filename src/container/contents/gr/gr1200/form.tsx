@@ -157,8 +157,7 @@ function Form({
 
       reset({
         areaCode: data65.areaCode,
-        // bcDate: data65.bcDate ? formatDate(data65.bcDate) : "",
-        bcDate: data65.bcDate ? DateWithDash(data65.bcDate) : "",
+        bcDate: DateWithDash(data65.bcDate),
         bcDateno: data65.bcDateno,
         bcBuCode: data65.bcBuCode,
         bcJunno: data65.bcJunno,
@@ -498,7 +497,7 @@ function Form({
     setTabId(0);
     reset({
       areaCode: areaCode,
-      // bcDate: formatDateToString(new Date()),
+
       bcDate: DateWithDash(new Date()),
       bcBuCode: dataCommonDic?.bcBuCode[0].code,
       bcCtype: dataCommonDic?.bcCtype[0].code,

@@ -15,7 +15,7 @@ import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { SearchIcon, IconHome, IconReceipt } from "components/allSvgIcon";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { DateWithDash, DateWithoutDash } from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { convertBase64 } from "helpers/convertBase64";
@@ -120,7 +120,7 @@ const Form = React.forwardRef(
             saupStampEs: selected?.saupStampEs === "Y",
             saupStampSe: selected?.saupStampSe === "Y",
             // saupDate: selected?.saupDate ? formatDate(selected.saupDate) : "",
-            saupDate: DateWithDash(selected?.saupDate),
+            // saupDate: DateWithDash(selected?.saupDate),
           });
 
           selected.saupStampImg

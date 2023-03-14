@@ -21,7 +21,7 @@ import { useSelector } from "app/store";
 import FooterInfo from "./footer";
 import { CircleBtn } from "./style";
 import { PersonInfoText } from "components/text";
-import { DateWithDash, DateWithoutDash } from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import {
   GR130065,
   GR1300BUYINSERT,
@@ -214,7 +214,7 @@ function Form({
     reset({
       areaCode: areaCode,
       // bbDate: formatDateToString(new Date()),
-      bbDate: DateWithDash(new Date()),
+      // bbDate: DateWithDash(new Date()),
       bbBuCode: dataCommonDic?.bbBuCode[0].code,
       bbSno: "",
     });
