@@ -55,6 +55,7 @@ const EN1500Modal = (
   });
   const [en1500PopupData, setEn1500PopupData] = useState<any>([]);
   const [unitPriceData, setUnitPriceData] = useState<any>([]);
+  const [jnMpdanga, setJnMpdanga] = useState<number>();
   const [jnKgdanga, setJnKgdanga] = useState<number>();
   const [jnKgdangaMp, setJnKgdangaMp] = useState<number>();
 
@@ -66,6 +67,7 @@ const EN1500Modal = (
 
   useEffect(() => {
     reset(en1500PopupData);
+    setJnMpdanga(en1500PopupData.jnMpdanga);
     setJnKgdanga(en1500PopupData.jnKgdanga);
     setJnKgdangaMp(en1500PopupData.jnKgdangaMp);
   }, [en1500PopupData]);
@@ -125,6 +127,7 @@ const EN1500Modal = (
         newData.tempJnKgdanga2500 = unitPriceData.tempJnKgdanga2500;
         newData.tempJnKgdanga7000 = unitPriceData.tempJnKgdanga7000;
 
+        newData.jnMpdanga = jnMpdanga;
         newData.jnKgdanga = jnKgdanga;
         newData.jnKgdangaMp = jnKgdangaMp;
       }
@@ -156,6 +159,9 @@ const EN1500Modal = (
     if (typeof formValues.jnCost7000 === "string") {
       formValues.jnCost7000 = Number(formValues.jnCost7000.replaceAll(",", ""));
     }
+    if (typeof formValues.jnMpdanga === "string") {
+      formValues.jnMpdanga = Number(formValues.jnMpdanga);
+    }
     if (typeof formValues.jnKgdanga === "string") {
       formValues.jnKgdanga = Number(formValues.jnKgdanga);
     }
@@ -169,6 +175,7 @@ const EN1500Modal = (
     updateParams.areaCode = formValues.areaCode;
     updateParams.areaName = formValues.areaName;
     updateParams.jnPerMeth = formValues.jnPerMeth;
+    updateParams.jnMpdanga = formValues.jnMpdanga;
     updateParams.jnKgdangaMp = formValues.jnKgdangaMp;
     updateParams.jnKgdanga = formValues.jnKgdanga * 10000;
     updateParams.jnChekum = formValues.jnChekum;
@@ -202,6 +209,7 @@ const EN1500Modal = (
   const calcUnitPrice = async () => {
     let params: any = {};
     params.areaCode = en1500PopupData.areaCode;
+    params.jnMpdanga = jnMpdanga;
     params.jnKgdanga = jnKgdanga;
     params.jnKgdangaMp = jnKgdangaMp;
     try {
@@ -396,7 +404,7 @@ const EN1500Modal = (
       style={{
         width: "940px",
         background: "#fff",
-        height: "817px",
+        height: "850px",
       }}
     >
       <div
@@ -471,6 +479,15 @@ const EN1500Modal = (
               <Field className="field">
                 <FormGroup>
                   <Input
+                    label="MP  단가(kg)"
+                    register={register("jnMpdanga")}
+                    inputSize={InputSize.i85}
+                    textAlign="right"
+                    onChange={(e: any) => {
+                      setJnMpdanga(e.target.value);
+                    }}
+                  />
+                  <Input
                     label="kg 공급단가"
                     register={register("jnKgdangaMp")}
                     inputSize={InputSize.i85}
@@ -507,8 +524,8 @@ const EN1500Modal = (
             <p className="lpgDesc">
               <IconInfo />
               <span>
-                kg단가는 중량,체적공급단가 및 루베단가를 MP단가로 적용시
-                기초금액으로 자동계산 됩니다.
+                거래처의 루베단가를 kg단가로 적용시 압력별 ㎥ 표준단가 계산하여
+                적용
               </span>
             </p>
           </div>
@@ -528,7 +545,7 @@ const EN1500Modal = (
             />
             <p className="rubeDesc">
               <IconInfo />
-              <span>체적 환경단가 적용 거래처에만 적용.</span>
+              <span>체적 환경단가 적용 거래처에 적용됩니다.</span>
             </p>
           </RubeUnit>
           <BasicItems>
@@ -638,13 +655,29 @@ const EN1500Modal = (
             </div>
             <p className="basicDesc">
               <IconInfo />
-              <span>신규 거래처 등록시 자동적용 항목.</span>
+              <span>신규 거래처 등록시 자동적용 항목입니다.</span>
             </p>
           </BasicItems>
         </Container>
         <VolReading>
           <div className="title">체적검침 환경</div>
           <div className="volReadCnt">
+            <Wrapper className="volWrapper">
+              <Field>
+                <FormGroup>
+                  <Input
+                    label="루베단가 계산"
+                    register={register("jnMpdangaType")}
+                    style={{ width: "259px" }}
+                    textAlign="right"
+                  />
+                </FormGroup>
+              </Field>
+              <p>
+                <IconInfo />
+                <span>할인단가 적용시 루베단가 소수미만 계산</span>
+              </p>
+            </Wrapper>
             <Wrapper className="volWrapper">
               <Field>
                 <FormGroup>
