@@ -25,9 +25,9 @@ import {
   Divider,
   Wrapper,
 } from "components/form/style";
-// FORM
-import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "./validation";
+import PlainTab from "components/plainTab";
+import { TabContentWrapper } from "components/plainTab/style";
+
 //API
 import { ICM1200SEARCH, emptyObj } from "./model";
 import API from "app/axios";
@@ -39,6 +39,7 @@ import {
 } from "app/path";
 import { DateWithDash, DateWithoutDash } from "helpers/dateFormat";
 import { formatCurrencyRemoveComma } from "helpers/currency";
+import getTabContent from "./getTabContent";
 
 const Form = React.forwardRef(
   (
@@ -52,6 +53,9 @@ const Form = React.forwardRef(
       setSelectedRowIndex,
       selectedSupplyTab,
       areaCode,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
+      setIsCancelBtnDisabled,
     }: {
       selected: any;
       dataCommonDic: any;
@@ -62,11 +66,14 @@ const Form = React.forwardRef(
       setSelectedRowIndex: any;
       selectedSupplyTab: any;
       areaCode: string;
+      isAddBtnClicked: boolean;
+      setIsAddBtnClicked: Function;
+      setIsCancelBtnDisabled: Function;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
+    console.log("fucking areacode:", areaCode);
     const [addr, setAddress] = useState<string>("");
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
     const [chkCuZipCode, setChkCuZipCode] = useState(false);
     const [chkCuRh20, setChkCuRh20] = useState(false);
@@ -82,12 +89,13 @@ const Form = React.forwardRef(
     const [chkCuCno, setChkCuCno] = useState(false);
     const [newTankMakeCo1, setNewTankMakeCo1] = useState("");
 
+    const [tabId, setTabId] = useState<number>(0);
+
     let tankMakeCo1: Array<any> = [];
 
     const { handleSubmit, reset, register, getValues, control, watch } =
       useForm<ICM1200SEARCH>({
         mode: "onChange",
-        resolver: yupResolver(schema),
       });
 
     useEffect(() => {
@@ -135,19 +143,8 @@ const Form = React.forwardRef(
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       resetForm,
-      setIsAddBtnClicked,
       crud,
     }));
-
-    // const checkAreaCode = () => {
-    //   if (!areaCode) {
-    //     toast.warning("areaCode can't be 00.", {
-    //       autoClose: 500,
-    //     });
-    //     return false;
-    //   }
-    //   return true;
-    // };
 
     const fetchCodes = async (areaCode: string) => {
       try {
@@ -457,7 +454,6 @@ const Form = React.forwardRef(
         delete formValues.gasifyMakeDate2;
       }
       try {
-        console.log("cufinish::::", formValues);
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {
@@ -516,12 +512,13 @@ const Form = React.forwardRef(
             <FormGroup>
               {/* cuRdanga  */}
               <Input
-                type="hidden"
                 name="cuRdanga"
                 register={register("cuRdanga")}
                 inputSize={InputSize.xs}
+                value={selected.cuRdanga}
+                readOnly
               />
-              <p>{selected.cuRdanga} 원</p>
+              <p>원</p>
             </FormGroup>
           </Field>
         );
@@ -538,10 +535,7 @@ const Form = React.forwardRef(
                 inputSize={InputSize.xs}
               />
               <p>원</p>
-              <CSelect
-                {...register("cuRdangaSign")}
-                style={{ minWidth: "15%" }}
-              >
+              <CSelect {...register("cuRdangaSign")} width={InputSize.i50}>
                 {dataCommonDic?.cuRdangaSign.map((obj: any, index: number) => (
                   <option key={index} value={obj.code}>
                     {obj.codeName}
@@ -593,22 +587,28 @@ const Form = React.forwardRef(
       <form onSubmit={handleSubmit(submit)}>
         {/* 1-1 Wrapper */}
         <Divider />
-        <Wrapper grid col={5} style={{ alignItems: "baseline" }}>
+        <Wrapper style={{ alignItems: "baseline" }}>
           <Field>
             <Input
               label="건물코드"
               register={register("cuCode")}
-              inputSize={InputSize.i50}
+              inputSize={InputSize.i60}
               readOnly={true}
             />
           </Field>
           <Field>
-            <Input label="건물명" register={register("cuName")} />
+            <Input
+              label="건물명"
+              register={register("cuName")}
+              labelStyle={{ minWidth: "78px" }}
+              style={{ width: "198px" }}
+            />
           </Field>
-          <Field style={{ justifySelf: "center" }}>
+          <Field style={{ marginLeft: "20px" }}>
             <CheckBox
               title="건물명 지로 출력 안함."
               register={register("cuAptnameYn")}
+              gap="15px"
               rtl
             />
           </Field>
@@ -625,9 +625,9 @@ const Form = React.forwardRef(
             </Label>
             <Input
               register={register("cuZipcode")}
-              inputSize={InputSize.xs}
+              inputSize={InputSize.i60}
               readOnly={!chkCuZipCode}
-              style={{ marginRight: "0px" }}
+              style={{ marginRight: "3px" }}
             />
             <DaumAddress setAddress={setAddress} disabled={!chkCuZipCode} />
           </FormGroup>
@@ -639,8 +639,7 @@ const Form = React.forwardRef(
           />
           <Input
             register={register("cuAddr2")}
-            inputSize={InputSize.md}
-            style={{ marginLeft: "5px" }}
+            style={{ marginLeft: "5px", width: "225px" }}
           />
         </Wrapper>
         {/* 1-3 Wrapper */}
@@ -657,11 +656,11 @@ const Form = React.forwardRef(
           </FormGroup>
 
           <FormGroup>
-            <Label>지역분류</Label>
+            <Label style={{ minWidth: "80px" }}>지역분류</Label>
             <CSelect
               {...register("cuJyCode")}
               width={InputSize.i120}
-              style={{ marginRight: "0px" }}
+              style={{ marginRight: "3px" }}
             >
               {dataCommonDic?.cuJyCode?.map((obj: any, index: number) => (
                 <option key={index} value={obj.code}>
@@ -678,7 +677,7 @@ const Form = React.forwardRef(
           </FormGroup>
 
           <FormGroup>
-            <Label>관리자분류</Label>
+            <Label style={{ minWidth: "80px" }}>관리자분류</Label>
             <CSelect {...register("cuCustgubun")} width={InputSize.i120}>
               {dataCommonDic?.cuCustgubun?.map((obj: any, index: number) => (
                 <option key={index} value={obj.code}>
@@ -688,747 +687,43 @@ const Form = React.forwardRef(
             </CSelect>
           </FormGroup>
         </Wrapper>
-        <Divider />
-        {/* 2-1 Wrapper */}
-        <Wrapper grid col={3} fields="1fr 1fr 2fr">
-          <FormGroup>
-            <Label className="lable-check">
-              <CheckBox
-                title="조정기"
-                checked={chkCuRh20}
-                onChange={(e: any) => setChkCuRh20(e.target.checked)}
-              />
-            </Label>
-            <CSelect
-              disabled={!chkCuRh20}
-              {...register("cuRh2o")}
-              width={InputSize.i120}
-            >
-              {dataCommonDic?.cuRh20?.map((obj: any, index: number) => (
-                <option key={index} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </CSelect>
-            <p>mmH20</p>
-          </FormGroup>
 
-          <FormGroup>
-            <Label className="lable-check">
-              <CheckBox
-                title="루베단가"
-                checked={chkCuRdanga}
-                onChange={(e: any) => setChkCuRdanga(e.target.checked)}
-              />
-            </Label>
-            <CSelect
-              disabled={!chkCuRdanga}
-              {...register("cuRdangaType")}
-              width={InputSize.i120}
-            >
-              {dataCommonDic?.cuRdangaType.map((obj: any, index: number) => (
-                <option key={index} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </CSelect>
-          </FormGroup>
-
-          {renderRdangaCalc()}
-        </Wrapper>
-        {/* 2-2 Wrapper */}
-        <Wrapper grid col={3} fields="1fr 1fr 2fr">
-          <FormGroup>
-            <Label className="lable-check">
-              <CheckBox
-                title="관리비"
-                checked={chkCuAnKum}
-                onChange={(e: any) => setChkCuAnKum(e.target.checked)}
-              />
-            </Label>
-
-            <Controller
-              control={control}
-              {...register("cuAnkum")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i120}
-                  readOnly={!chkCuAnKum}
-                />
-              )}
-            />
-            <p>원</p>
-          </FormGroup>
-
-          <FormGroup>
-            <Label className="lable-check">
-              <CheckBox
-                title="계량기"
-                checked={chkCuMeterKum}
-                onChange={(e: any) => setChkCuMeterKum(e.target.checked)}
-              />
-            </Label>
-
-            <Controller
-              control={control}
-              {...register("cuMeterkum")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i120}
-                  readOnly={!chkCuMeterKum}
-                />
-              )}
-            />
-            <p>원</p>
-          </FormGroup>
-
-          <FormGroup style={{ gap: "7px" }}>
-            <Label style={{ minWidth: "auto" }}>기본사용료</Label>
-            <Label className="lable-check" style={{ minWidth: "98px" }}>
-              <CheckBox title="적용" register={{ ...register("cuBaGageYn") }} />
-            </Label>
-
-            <Input
-              register={register("cuBaGageM3")}
-              textAlign="right"
-              inputSize={InputSize.i50}
-            />
-            <p>m3이하 일때</p>
-            <Controller
-              control={control}
-              {...register("cuBaGageKum")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i120}
-                />
-              )}
-            />
-            <p>원 적용</p>
-          </FormGroup>
-        </Wrapper>
-
-        <Wrapper grid col={3} fields="1fr 1fr 2fr">
-          <FormGroup>
-            <Label className="lable-check">
-              <CheckBox
-                title="연체율"
-                //register={register("chkCuPer")}
-                checked={chkCuPer}
-                onChange={(e: any) => setChkCuPer(e.target.checked)}
-              />
-            </Label>
-
-            <Controller
-              control={control}
-              {...register("cuPer")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  mask={[/\d/, /\d/, /\d/]}
-                  readOnly={!chkCuPer}
-                  inputSize={InputSize.i50}
-                  textAlign="right"
-                />
-              )}
-            />
-            <p>{`%`}</p>
-          </FormGroup>
-
-          <FormGroup>
-            <Label className="lable-check">
-              <CheckBox
-                title="할인율"
-                checked={chkCuCdc}
-                onChange={(e: any) => setChkCuCdc(e.target.checked)}
-              />
-            </Label>
-
-            <Controller
-              control={control}
-              {...register("cuCdc")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  mask={[/\d/, /\d/, /\d/]}
-                  readOnly={!chkCuCdc}
-                  inputSize={InputSize.i50}
-                  textAlign="right"
-                />
-              )}
-            />
-            <p>{`%`}</p>
-          </FormGroup>
-
-          <FormGroup>
-            <Label className="lable-check">
-              <CheckBox
-                title="수금방법"
-                checked={chkCuSukumtype}
-                onChange={(e: any) => setChkCuSukumtype(e.target.checked)}
-              />
-            </Label>
-            <CSelect
-              disabled={!chkCuSukumtype}
-              {...register("cuSukumtype")}
-              width={InputSize.i120}
-            >
-              {dataCommonDic?.cuSukumtype?.map((obj: any, index: number) => (
-                <option key={index} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </CSelect>
-          </FormGroup>
-        </Wrapper>
-        {/* 2-4 Wrapper */}
-        <Wrapper grid col={3} fields="1fr 1fr 2fr">
-          <FormGroup>
-            <Label className="lable-check">
-              <CheckBox
-                title="검침주기"
-                //register={register("chkCuGumTurm")}
-                checked={chkCuGumTurm}
-                onChange={(e: any) => setChkCuGumTurm(e.target.checked)}
-              />
-            </Label>
-            <CSelect
-              disabled={!chkCuGumTurm}
-              {...register("cuGumTurm")}
-              width={InputSize.i175}
-            >
-              {dataCommonDic?.cuGumTurm?.map((obj: any, index: number) => (
-                <option key={index} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </CSelect>
-          </FormGroup>
-
-          <FormGroup>
-            <Label className="lable-check">
-              <CheckBox
-                title="검침일"
-                checked={chkCuGumdate}
-                onChange={(e: any) => setChkCuGumdate(e.target.checked)}
-              />
-            </Label>
-
-            <Controller
-              control={control}
-              {...register("cuGumdate")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  mask={[/\d/, /\d/]}
-                  inputSize={InputSize.i40}
-                  readOnly={!chkCuGumdate}
-                />
-              )}
-            />
-            <p>일</p>
-          </FormGroup>
-
-          <FormGroup>
-            <Label className="lable-check">
-              <CheckBox
-                title="순 번"
-                checked={chkCuCno}
-                onChange={(e: any) => setChkCuCno(e.target.checked)}
-              />
-            </Label>
-            <Input
-              register={register("cuCno")}
-              inputSize={InputSize.i120}
-              readOnly={!chkCuCno}
-            />
-          </FormGroup>
-        </Wrapper>
-        <Divider />
-        {/* 3-1-1 Wrapper */}
-        <Wrapper grid col={4}>
-          <FormGroup>
-            <Label>공급시설구분</Label>
-            {[
-              { name: "벌크공급", value: "Y" },
-              { name: "용기공급", value: "N" },
-            ].map((option, index) => {
-              return (
-                <Item key={index}>
-                  <RadioButton
-                    type="radio"
-                    value={option.value}
-                    {...register("cuTankYn")}
-                    id={option.value}
-                  />
-                  <RadioButtonLabel htmlFor={`${option.value}`}>
-                    {option.name}
-                  </RadioButtonLabel>
-                </Item>
-              );
-            })}
-          </FormGroup>
-          <Field flex style={{ alignItems: "center" }}>
-            <Label>완성검사일</Label>
-            <Controller
-              control={control}
-              {...register("cuFinishDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                />
-              )}
-            />
-          </Field>
-          <Field flex style={{ alignItems: "center" }}>
-            <Label>정기검사일</Label>
-            <Controller
-              control={control}
-              {...register("cuCircuitDate")}
-              render={({ field: { onChange, value } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
-              )}
-            />
-          </Field>
-          <Field flex style={{ alignItems: "center" }}>
-            <Label>검사예정일</Label>
-            <Controller
-              control={control}
-              {...register("cuScheduleDate")}
-              render={({ field: { onChange, value } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
-              )}
-            />
-          </Field>
-        </Wrapper>
-        {/* 3-2-1 Wrapper */}
-        <Field flex>
-          <FormGroup>
-            <Label>벌크 시설</Label>
-          </FormGroup>
-          <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
-            <Label align={"center"}>제조사</Label>
-            <Label align={"center"}>용량(kg)</Label>
-            <Label align={"center"}>제조번호</Label>
-            <Label align={"center"}>제작년월</Label>
-            <Label align={"center"}>대여처</Label>
-            <Label align={"center"}>최초검사</Label>
-            <Label align={"center"}>외관검사</Label>
-            <Label align={"center"}>개방검사</Label>
-          </Wrapper>
-        </Field>
-        {/* 3-2-2 Wrapper */}
-        <Field flex>
-          <FormGroup>
-            <Label>{`1)`}</Label>
-          </FormGroup>
-          <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
-            <Field>
-              <FormGroup>
-                <EditableSelect
-                  list={dataCommonDic?.tankMakeCo1}
-                  register={register("tankMakeCo1")}
-                  textAlign={"left"}
-                />
-              </FormGroup>
-            </Field>
-            <Field>
-              <FormGroup>
-                <CSelect {...register("tankVol1")} fullWidth textAlign="right">
-                  {dataCommonDic?.tankVol1?.map((obj: any, index: number) => (
-                    <option key={index} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </CSelect>
-              </FormGroup>
-            </Field>
-            <Field>
-              <FormGroup>
-                <Input register={register("tankMakeSno1")} />
-              </FormGroup>
-            </Field>
-            <Field>
-              <FormGroup>
-                <Input maxLength="7" register={register("tankMakeDate1")} />
-              </FormGroup>
-            </Field>
-            <Field>
-              <FormGroup>
-                <Input register={register("tankRcv1")} />
-              </FormGroup>
-            </Field>
-            <Field>
-              <Controller
-                control={control}
-                {...register("tankFirstDate1")}
-                render={({ field: { onChange, value } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
-            <Field>
-              <Controller
-                control={control}
-                {...register("tankOutsideDate1")}
-                render={({ field: { onChange, value } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
-            <Field>
-              <Controller
-                control={control}
-                {...register("tankInsideDate1")}
-                render={({ field: { onChange, value } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
-          </Wrapper>
-        </Field>
-        {/* 3-2-3 Wrapper */}
-        <Field flex>
-          <FormGroup>
-            <Label>{`2)`}</Label>
-          </FormGroup>
-          <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
-            <Field>
-              <FormGroup>
-                <EditableSelect
-                  list={dataCommonDic?.tankMakeCo2}
-                  register={register("tankMakeCo2")}
-                  textAlign={"left"}
-                />
-              </FormGroup>
-            </Field>
-            <Field>
-              <FormGroup>
-                <CSelect {...register("tankVol2")} fullWidth textAlign="right">
-                  {dataCommonDic?.tankVol2?.map((obj: any, index: number) => (
-                    <option key={index} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </CSelect>
-              </FormGroup>
-            </Field>
-            <Field>
-              <FormGroup>
-                <Input register={register("tankMakeSno2")} />
-              </FormGroup>
-            </Field>
-            <Field>
-              <FormGroup>
-                <Input register={register("tankMakeDate2")} />
-              </FormGroup>
-            </Field>
-            <Field>
-              <FormGroup>
-                <Input register={register("tankRcv2")} />
-              </FormGroup>
-            </Field>
-            <Field>
-              <Controller
-                control={control}
-                {...register("tankFirstDate2")}
-                render={({ field: { onChange, value } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
-            <Field>
-              <Controller
-                control={control}
-                {...register("tankOutsideDate2")}
-                render={({ field: { onChange, value } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
-            <Field>
-              <Controller
-                control={control}
-                {...register("tankInsideDate2")}
-                render={({ field: { onChange, value } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
-          </Wrapper>
-        </Field>
-        {/* 3-2-4 Wrapper */}
-        <Field flex>
-          <FormGroup>
-            <Label></Label>
-          </FormGroup>
-          <Wrapper grid col={3}>
-            <Field>
-              <FormGroup>
-                <Label>Max레벨 / 발신기코드 / 탱크고객코드</Label>
-              </FormGroup>
-            </Field>
-            <Field>
-              <FormGroup>
-                <p>{`1)`}</p>
-                <Input
-                  register={register("tankMax1")}
-                  maxLength="3"
-                  textAlign="right"
-                  inputSize={InputSize.i40}
-                  placeholder=""
-                />
-                <p>%</p>
-                <Input
-                  register={register("tankTransmCd1")}
-                  placeholder=""
-                  inputSize={InputSize.sm}
-                />
-                <Input
-                  register={register("tankCuCd1")}
-                  placeholder=""
-                  inputSize={InputSize.sm}
-                />
-                <SearchBtn
-                  type="button"
-                  onClick={() => console.log("cuZipCode")}
-                >
-                  <MagnifyingGlass />
-                </SearchBtn>
-              </FormGroup>
-            </Field>
-            <Field>
-              <FormGroup>
-                <p>{`2)`}</p>
-                <Input
-                  register={register("tankMax2")}
-                  placeholder=""
-                  inputSize={InputSize.sm}
-                  textAlign="right"
-                />
-                <p>%</p>
-                <Input
-                  register={register("tankTransmCd2")}
-                  placeholder=""
-                  inputSize={InputSize.sm}
-                />
-                <Input
-                  register={register("tankCuCd2")}
-                  placeholder=""
-                  inputSize={InputSize.sm}
-                />
-                <SearchBtn
-                  type="button"
-                  onClick={() => console.log("cuZipCode")}
-                >
-                  <MagnifyingGlass />
-                </SearchBtn>
-              </FormGroup>
-            </Field>
-          </Wrapper>
-        </Field>
-        {/* 3-3-1 Wrapper */}
-        <Field flex>
-          <FormGroup>
-            <Label>용기시설</Label>
-          </FormGroup>
-          <Wrapper grid col={3}>
-            <Field style={{ padding: "0px 5px" }}>
-              <FormGroup>
-                {[
-                  { name: "일반", value: "Y" },
-                  { name: "싸이폰", value: "N" },
-                ].map((option, index) => {
-                  return (
-                    <Item key={index}>
-                      <RadioButton
-                        type="radio"
-                        value={index}
-                        {...register("cuCylinderType")}
-                        id={option.value}
-                      />
-                      <RadioButtonLabel htmlFor={``}>
-                        {option.name}
-                      </RadioButtonLabel>
-                    </Item>
-                  );
-                })}
-              </FormGroup>
-            </Field>
-            <Field style={{ padding: "0px 5px" }}>
-              <FormGroup>
-                <Label align="center">용기수량</Label>
-                <CSelect {...register("cuCylinderName")} width={InputSize.i120}>
-                  {dataCommonDic?.cuCylinderName?.map(
-                    (obj: any, index: number) => (
-                      <option key={index} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    )
-                  )}
-                </CSelect>
-                <p>x</p>
-                <Input
-                  register={register("cuCylinderQty")}
-                  inputSize={InputSize.xs}
-                />
-                <p>개</p>
-              </FormGroup>
-            </Field>
-            <Field>
-              <FormGroup>
-                <Label>발신기코드 / 절체고객코드</Label>
-                <Input
-                  register={register("cuTransmCd")}
-                  inputSize={InputSize.sm}
-                />
-                <Input
-                  register={register("cuTransmCuCd")}
-                  inputSize={InputSize.sm}
-                />
-                <SearchBtn
-                  type="button"
-                  onClick={() => console.log("cuTransmCuCd")}
-                >
-                  <MagnifyingGlass />
-                </SearchBtn>
-              </FormGroup>
-            </Field>
-          </Wrapper>
-        </Field>
-        {/* 3-4-1 Wrapper */}
-        <Field flex>
-          <FormGroup>
-            <Label>기화기</Label>
-          </FormGroup>
-          <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
-            <Label align={"center"}>제조사</Label>
-            <Label align={"center"}>용량(kg)</Label>
-            <Label align={"center"}>제조번호</Label>
-            <Label align={"center"}>제작년월</Label>
-            <Label align={"center"}>전원</Label>
-            <Label align={"center"}>장치검사</Label>
-            <FormGroup>{` `}</FormGroup>
-            <FormGroup>{` `}</FormGroup>
-          </Wrapper>
-        </Field>
-
-        {/* 3-4-2 Wrapper */}
-        <Field flex>
-          <FormGroup>
-            <Label>{`1)`}</Label>
-          </FormGroup>
-
-          <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
-            <FormGroup>
-              <EditableSelect
-                list={dataCommonDic?.gasifyCo1}
-                register={register("gasifyCo1")}
-                textAlign={"left"}
-              />
-            </FormGroup>
-            <FormGroup>
-              <CSelect {...register("gasifyVol1")} fullWidth>
-                {dataCommonDic?.gasifyVol1?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </CSelect>
-            </FormGroup>
-            <Field>
-              <Input register={register("gasifySno1")} />
-            </Field>
-            <Field>
-              <Input maxLength="7" register={register("gasifyMakeDate1")} />
-            </Field>
-            <Field>
-              <Input register={register("gasifyPower1")} />
-            </Field>
-            <Field>
-              <Controller
-                control={control}
-                {...register("gasifyCheckDate1")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                  />
-                )}
-              />
-            </Field>
-          </Wrapper>
-        </Field>
-        {/* 3-4-3 Wrapper */}
-        <Field flex>
-          <FormGroup>
-            <Label>{`2)`}</Label>
-          </FormGroup>
-          <Wrapper grid col={8} fields="1fr 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.7fr">
-            <FormGroup>
-              <EditableSelect
-                list={dataCommonDic?.gasifyCo2}
-                register={register("gasifyCo2")}
-                textAlign={"left"}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <CSelect {...register("gasifyVol2")} fullWidth>
-                {dataCommonDic?.gasifyVol2?.map((obj: any, index: number) => (
-                  <option key={index} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </CSelect>
-            </FormGroup>
-            <Field>
-              <Input register={register("gasifySno2")} />
-            </Field>
-            <Field>
-              <Input maxLength="7" register={register("gasifyMakeDate2")} />
-            </Field>
-            <Field>
-              <Input register={register("gasifyPower2")} />
-            </Field>
-            <Field>
-              <Controller
-                control={control}
-                {...register("gasifyCheckDate2")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                  />
-                )}
-              />
-            </Field>
-          </Wrapper>
-        </Field>
+        <div style={{ marginTop: "5px" }}>
+          <PlainTab
+            tabHeader={["지로 양식", "고객안내문", "입금계좌 안내"]}
+            onClick={(id) => setTabId(id)}
+            tabId={tabId}
+          />
+          <TabContentWrapper style={{ minHeight: "200px" }}>
+            {getTabContent(
+              tabId,
+              register,
+              dataCommonDic,
+              renderRdangaCalc,
+              chkCuRh20,
+              setChkCuRh20,
+              chkCuRdanga,
+              setChkCuRdanga,
+              chkCuAnKum,
+              setChkCuAnKum,
+              chkCuMeterKum,
+              setChkCuMeterKum,
+              control,
+              chkCuPer,
+              setChkCuPer,
+              chkCuCdc,
+              setChkCuCdc,
+              chkCuSukumtype,
+              setChkCuSukumtype,
+              chkCuGumTurm,
+              setChkCuGumTurm,
+              chkCuGumdate,
+              setChkCuGumdate,
+              chkCuCno,
+              setChkCuCno
+            )}
+          </TabContentWrapper>
+        </div>
       </form>
     );
   }

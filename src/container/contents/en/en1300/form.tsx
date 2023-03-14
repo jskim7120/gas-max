@@ -130,6 +130,12 @@ const Form = React.forwardRef(
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
+        delete formValues.jpIndanga;
+        delete formValues.jpOutdanga;
+        delete formValues.jpIntong;
+        delete formValues.jpBaedal;
+        delete formValues.jpOuttong;
+
         try {
           const response = await API.post(EN1300DELETE, formValues);
           if (response.status === 200) {
@@ -210,11 +216,18 @@ const Form = React.forwardRef(
         });
         if (response.status === 200) {
           for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
+            newData[key] = null;
           }
           newData.jpCode = response.data.tempCode;
           newData.areaCode = event.target.value;
+          newData.jpGasType = response.data.jpGasType;
+          newData.jpGasuse = response.data.jpGasuse;
+          newData.jpGubun = response.data.jpGubun;
+          newData.jpJaegoYn = response.data.jpJaegoYn;
+          newData.jpKgDanwi = response.data.jpKgDanwi;
+          newData.jpKind = response.data.jpKind;
           reset(newData);
+          document.getElementById("jpName")?.focus();
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,
@@ -237,7 +250,7 @@ const Form = React.forwardRef(
               width={InputSize.i130}
               {...register("areaCode")}
               onChange={handleSelectCode}
-              disabled
+              disabled={!isAddBtnClicked}
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

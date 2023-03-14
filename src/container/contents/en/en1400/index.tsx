@@ -92,7 +92,8 @@ function EN1400({
           setSelected={setSelected}
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
-          formRef={formRef}
+          setIsCancelBtnDisabled={setIsCancelBtnDisabled}
+          setIsAddBtnClicked={setIsAddBtnClicked}
         />
         <RightSide>
           <Form

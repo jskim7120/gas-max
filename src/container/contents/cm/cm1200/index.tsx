@@ -47,15 +47,17 @@ import { CM120065, CM1200SEARCH } from "app/path";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
 import { fields, columns } from "./data";
-import { CustomAreaCodePart } from "../../customTopPart";
+// import { CustomAreaCodePart } from "../../customTopPart";
+import FourButtons from "components/button/fourButtons";
+
 function CM1200({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
@@ -78,6 +80,11 @@ function CM1200({
   const [selectedSupplyTab, setSelectedSupplyTab] = useState(
     {} as ICM120065SUPPLYTYPE
   );
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
+
+  const [areaCode, setAreaCode] = useState("");
+
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [dataChk, setDataChk] = useState(true);
 
@@ -85,9 +92,8 @@ function CM1200({
 
   useEffect(() => {
     if (dataCommonDic) {
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-      });
+      setAreaCode(dataCommonDic?.areaCode[0].code);
+      fetchData({ areaCode: dataCommonDic?.areaCode[0].code });
     }
   }, [dataCommonDic]);
 
@@ -98,6 +104,7 @@ function CM1200({
         cuCode: selected.cuCode,
       });
       setBuildingSelected(false);
+      setAreaCode(selected.areaCode);
     }
   }, [selected]);
 
@@ -113,7 +120,7 @@ function CM1200({
 
   function deleteRowGrid() {
     try {
-      formRef.current.setIsAddBtnClicked(false);
+      setIsAddBtnClicked(false);
       formRef.current.crud("delete");
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
@@ -208,52 +215,56 @@ function CM1200({
     }
   };
 
+  const onClickAdd = () => {
+    setIsAddBtnClicked(true);
+    setIsCancelBtnDisabled(false);
+    formRef.current.resetForm("clear");
+  };
+
+  const onClickDelete = () => {
+    dispatch(openModal({ type: "delModal" }));
+    dispatch(addDeleteMenuId({ menuId: menuId }));
+  };
+  const onClickUpdate = () => {
+    formRef.current.crud(null);
+  };
+
+  const onClickReset = () => {
+    setIsAddBtnClicked(false);
+    formRef.current.resetForm("reset");
+  };
+
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomAreaCodePart
-          areaCode={areaCode}
-          dataCommonDic={dataCommonDic}
-          depthFullName={depthFullName}
-          register={register}
+        <FormGroup>
+          <p>{depthFullName}</p>
+          {ownAreaCode === "00" && (
+            <>
+              <p className="big">영업소</p>
+              <Select
+                {...register("areaCode")}
+                value={areaCode}
+                onChange={(e) => setAreaCode(e.target.value)}
+              >
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+        </FormGroup>
+
+        <FourButtons
+          onClickAdd={onClickAdd}
+          onClickDelete={onClickDelete}
+          onClickUpdate={onClickUpdate}
+          onClickReset={onClickReset}
+          isAddBtnClicked={isAddBtnClicked}
+          isCancelBtnDisabled={isCancelBtnDisabled}
         />
-        <div className="buttons">
-          <Button
-            text="건물등록"
-            icon={<Plus />}
-            style={{ marginRight: "5px" }}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(true);
-              formRef.current.resetForm("clear");
-            }}
-          />
-          <Button
-            text="삭제"
-            icon={<Trash />}
-            style={{ marginRight: "5px" }}
-            onClick={() => {
-              dispatch(openModal({ type: "delModal" }));
-              dispatch(addDeleteMenuId({ menuId: menuId }));
-            }}
-          />
-          <Button
-            text="저장"
-            icon={<Update />}
-            style={{ marginRight: "5px" }}
-            color={ButtonColor.SECONDARY}
-            onClick={() => {
-              formRef.current.crud(null);
-            }}
-          />
-          <Button
-            text="취소"
-            icon={<Reset />}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
-              formRef.current.resetForm("reset");
-            }}
-          />
-        </div>
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
@@ -305,11 +316,13 @@ function CM1200({
           </SearchWrapper>
 
           <GridLeft
-            areaCode={areaCode}
+            areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
+            setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
             style={{ height: `calc(100% - 48px)` }}
@@ -330,7 +343,10 @@ function CM1200({
             selected={selected}
             setSelected={setSelected}
             selectedSupplyTab={selectedSupplyTab}
-            areaCode={areaCode}
+            areaCode={ownAreaCode === "00" ? areaCode : ownAreaCode}
+            isAddBtnClicked={isAddBtnClicked}
+            setIsAddBtnClicked={setIsAddBtnClicked}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
           />
 
           <FormSectionTitle>

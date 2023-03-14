@@ -231,6 +231,7 @@ const Form = React.forwardRef(
           newData.areaCode = event.target.value;
 
           reset(newData);
+          console.log(document.getElementsByName("saupSsno")[0].focus());
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,
