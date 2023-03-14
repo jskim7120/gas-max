@@ -1,14 +1,13 @@
 export interface IPT1105 {
-  mjDate: string;
-  mjMisujan: number;
-  cuChkamt: string;
-  msDc: string;
-  msKumack: string;
-  msJanack: string;
-  msSukumtype: number;
-  mjSwCode: string;
-  mjBigo: string;
-
   sCuName: string;
   sCuCode: string;
+  msDate: string;
+  cuJmisu: number;
+  msDc: number;
+  cuChkamt: any;
+  msKumack: number;
+  msJanack: number;
+  msSukumtype: string;
+  msSwCode: string;
+  msBigo: string;
 }

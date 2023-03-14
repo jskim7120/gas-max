@@ -46,6 +46,7 @@ function Grid({
       indicator: { visible: true },
       checkBar: { visible: false },
       stateBar: { visible: false },
+      footer: { visible: false },
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";

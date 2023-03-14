@@ -2,6 +2,10 @@ import { ValueType } from "realgrid";
 
 export const fields = [
   {
+    fieldName: "cuChkamt",
+    dataType: ValueType.TEXT,
+  },
+  {
     fieldName: "mjDate",
     dataType: ValueType.TEXT,
   },
@@ -20,6 +24,21 @@ export const fields = [
 ];
 
 export const columns = [
+  {
+    name: "cuChkamt",
+    fieldName: "cuChkamt",
+    type: "data",
+    width: "80",
+    header: {
+      text: "선택",
+    },
+
+    renderer: {
+      type: "check",
+      trueValues: "Y",
+      falseValues: "N",
+    },
+  },
   {
     name: "mjDate",
     fieldName: "mjDate",

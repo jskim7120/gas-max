@@ -13,12 +13,6 @@ import { useForm, Controller } from "react-hook-form";
 import { FieldKind, InputSize } from "components/componentsType";
 import Button from "components/button/button";
 import { IPT1105 } from "./model";
-import {
-  CM1106INSERT,
-  CM1106UPDATE,
-  CM1106DELETE,
-  PT1105SEARCH,
-} from "app/path";
 import CustomDatePicker from "components/customDatePicker";
 import { currencyMask } from "helpers/currency";
 import { toast } from "react-toastify";
@@ -138,24 +132,29 @@ const FORMCM1105 = React.forwardRef(
     return (
       <form
         // onSubmit={handleSubmit(submit)}
-        style={{ width: "25%", margin: "30px 30px 0 0" }}
+        style={{ margin: "30px 30px 0 0" }}
       >
         <Field flex style={{ alignItems: "center" }}>
           <Label>수금일자</Label>
           <Controller
             control={control}
-            {...register("mjBigo")}
+            {...register("msBigo")}
             render={({ field: { onChange, value, name } }) => (
-              <CustomDatePicker value={value} onChange={onChange} name={name} />
+              <CustomDatePicker
+                style={{ width: "175px" }}
+                value={value}
+                onChange={onChange}
+                name={name}
+              />
             )}
           />
         </Field>
         <Field>
           <Input
             label="미수금액"
-            register={register("mjMisujan")}
+            register={register("cuJmisu")}
             kind={FieldKind.BORDER}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i175}
           />
         </Field>
         <Field>
@@ -163,7 +162,7 @@ const FORMCM1105 = React.forwardRef(
             label="선태금액"
             register={register("cuChkamt")}
             kind={FieldKind.BORDER}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i175}
           />
         </Field>
         <DividerGray />
@@ -174,7 +173,7 @@ const FORMCM1105 = React.forwardRef(
               label="D    /    C"
               register={register("msDc")}
               kind={FieldKind.BORDER}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i175}
             />
           </Field>
         </FormGroup>
@@ -185,7 +184,7 @@ const FORMCM1105 = React.forwardRef(
               label="수  금  액"
               register={register("msKumack")}
               kind={FieldKind.BORDER}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i175}
             />
           </Field>
         </FormGroup>
@@ -195,7 +194,7 @@ const FORMCM1105 = React.forwardRef(
               label="수금 후 잔액"
               register={register("msJanack")}
               kind={FieldKind.BORDER}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i175}
             />
           </Field>
         </FormGroup>
@@ -205,7 +204,7 @@ const FORMCM1105 = React.forwardRef(
           <Select
             {...register("msSukumtype")}
             kind={FieldKind.BORDER}
-            width={InputSize.i130}
+            style={{ width: "175px" }}
           >
             {dataCommonDic?.msSukumtype?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
@@ -217,9 +216,9 @@ const FORMCM1105 = React.forwardRef(
         <FormGroup>
           <Label>사원</Label>
           <Select
-            {...register("mjSwCode")}
+            {...register("msSwCode")}
             kind={FieldKind.BORDER}
-            width={InputSize.i130}
+            width={InputSize.i175}
           >
             {dataCommonDic?.msSwCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
@@ -232,9 +231,9 @@ const FORMCM1105 = React.forwardRef(
         <Field>
           <Input
             label="비고"
-            register={register("mjBigo")}
+            register={register("msBigo")}
             kind={FieldKind.BORDER}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i175}
             textAlign="right"
           />
         </Field>

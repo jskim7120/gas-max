@@ -254,7 +254,7 @@ function PT1100({
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
-            style={{ height: "43%", minWidth: "925px" }}
+            style={{ height: "45%", minWidth: "925px" }}
           />
           <Grid
             areaCode={areaCode}
@@ -264,18 +264,15 @@ function PT1100({
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
-            style={{ height: "14%", minWidth: "925px" }}
+            style={{ height: "12%", minWidth: "925px", marginTop: "17px" }}
           />
           <form
             onSubmit={handleSubmit(submitSearch2)}
             style={{ minWidth: "925px" }}
           >
-            <SearchWrapper
-              className="h35"
-              style={{ borderTop: "2px solid #707070" }}
-            ></SearchWrapper>
             <SearchWrapper className="h35">
               <div className="buttons">
+                <PersonInfoText text="수금현황" />
                 <Controller
                   control={control}
                   {...register("sMsdateF")}
