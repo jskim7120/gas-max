@@ -243,18 +243,6 @@ const Form = React.forwardRef(
           ...tempData,
           cuAptnameYn: tempData?.cuAptnameYn === "Y",
           cuBaGageYn: tempData?.cuBaGageYn === "Y",
-
-          // cuFinishDate: DateWithDash(selected.cuFinishDate),
-          // cuCircuitDate: DateWithDash(selected.cuCircuitDate),
-          // cuScheduleDate: DateWithDash(selected.cuScheduleDate),
-          // tankFirstDate1: DateWithDash(selectedSupplyTab.tankFirstDate1),
-          // tankFirstDate2: DateWithDash(selectedSupplyTab.tankFirstDate2),
-          // tankOutsideDate1: DateWithDash(selectedSupplyTab.tankOutsideDate1),
-          // tankOutsideDate2: DateWithDash(selectedSupplyTab.tankOutsideDate2),
-          // tankInsideDate1: DateWithDash(selectedSupplyTab.tankInsideDate1),
-          // tankInsideDate2: DateWithDash(selectedSupplyTab.tankInsideDate2),
-          // gasifyCheckDate1: DateWithDash(selectedSupplyTab.gasifyCheckDate1),
-          // gasifyCheckDate2: DateWithDash(selectedSupplyTab.gasifyCheckDate2),
         });
         return;
       }
@@ -648,11 +636,13 @@ const Form = React.forwardRef(
 
           <div style={{ marginTop: "5px" }}>
             <PlainTab
-              tabHeader={["지로 양식", "고객안내문", "입금계좌 안내"]}
+              tabHeader={["건물기초", "벌크 시설", "용기 시설"]}
               onClick={(id) => setTabId(id)}
               tabId={tabId}
             />
-            <TabContentWrapper style={{ minHeight: "200px" }}>
+            <TabContentWrapper
+              style={{ minHeight: "200px", width: "1240px", padding: "10px" }}
+            >
               {getTabContent(
                 tabId,
                 register,

@@ -19,6 +19,7 @@ import CustomDatePicker from "components/customDatePicker";
 import EditableSelect from "components/editableSelect";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
+import Table from "components/table";
 
 function Tab2({
   register,
@@ -29,11 +30,217 @@ function Tab2({
   dataCommonDic: any;
   control: any;
 }) {
+  const tableData = [
+    {
+      1: `1)`,
+      2: (
+        <EditableSelect
+          list={dataCommonDic?.tankMakeCo1}
+          register={register("tankMakeCo1")}
+          textAlign={"left"}
+          style={{ width: "110px", margin: "0 3px" }}
+        />
+      ),
+      3: (
+        <CSelect
+          {...register("tankVol1")}
+          width={InputSize.i80}
+          textAlign="right"
+          style={{ margin: "0 3px" }}
+        >
+          {dataCommonDic?.tankVol1?.map((obj: any, index: number) => (
+            <option key={index} value={obj.code}>
+              {obj.codeName}
+            </option>
+          ))}
+        </CSelect>
+      ),
+      4: (
+        <Input register={register("tankMakeSno1")} inputSize={InputSize.i110} />
+      ),
+      5: (
+        <Input
+          maxLength="7"
+          register={register("tankMakeDate1")}
+          inputSize={InputSize.i110}
+        />
+      ),
+      6: <Input register={register("tankRcv1")} inputSize={InputSize.i110} />,
+      7: (
+        <Controller
+          control={control}
+          {...register("tankFirstDate1")}
+          render={({ field: { onChange, value, name } }) => (
+            <CustomDatePicker
+              value={value}
+              onChange={onChange}
+              name={name}
+              style={{ width: "110px" }}
+            />
+          )}
+        />
+      ),
+      8: (
+        <Controller
+          control={control}
+          {...register("tankOutsideDate1")}
+          render={({ field: { onChange, value, name } }) => (
+            <CustomDatePicker
+              value={value}
+              onChange={onChange}
+              name={name}
+              style={{ width: "110px" }}
+            />
+          )}
+        />
+      ),
+      9: (
+        <Controller
+          control={control}
+          {...register("tankInsideDate1")}
+          render={({ field: { onChange, value, name } }) => (
+            <CustomDatePicker
+              value={value}
+              onChange={onChange}
+              name={name}
+              style={{ width: "110px" }}
+            />
+          )}
+        />
+      ),
+      10: (
+        <FormGroup style={{ marginLeft: "10px" }}>
+          <Input
+            register={register("tankMax1")}
+            maxLength="3"
+            textAlign="right"
+            inputSize={InputSize.i40}
+            placeholder=""
+          />
+          <p>%</p>
+          <Input
+            register={register("tankTransmCd1")}
+            placeholder=""
+            inputSize={InputSize.i60}
+          />
+          <Input
+            register={register("tankCuCd1")}
+            placeholder=""
+            inputSize={InputSize.i60}
+          />
+          <SearchBtn type="button" onClick={() => console.log("cuZipCode")}>
+            <MagnifyingGlass />
+          </SearchBtn>
+        </FormGroup>
+      ),
+    },
+    {
+      1: `2)`,
+      2: (
+        <EditableSelect
+          list={dataCommonDic?.tankMakeCo2}
+          register={register("tankMakeCo2")}
+          textAlign={"left"}
+          style={{ width: "110px", margin: "0 3px" }}
+        />
+      ),
+      3: (
+        <CSelect
+          {...register("tankVol2")}
+          width={InputSize.i80}
+          textAlign="right"
+          style={{ margin: "0 3px" }}
+        >
+          {dataCommonDic?.tankVol2?.map((obj: any, index: number) => (
+            <option key={index} value={obj.code}>
+              {obj.codeName}
+            </option>
+          ))}
+        </CSelect>
+      ),
+      4: (
+        <Input register={register("tankMakeSno2")} inputSize={InputSize.i110} />
+      ),
+      5: (
+        <Input
+          register={register("tankMakeDate2")}
+          inputSize={InputSize.i110}
+        />
+      ),
+      6: <Input register={register("tankRcv2")} inputSize={InputSize.i110} />,
+      7: (
+        <Controller
+          control={control}
+          {...register("tankFirstDate2")}
+          render={({ field: { onChange, value, name } }) => (
+            <CustomDatePicker
+              value={value}
+              onChange={onChange}
+              name={name}
+              style={{ width: "110px" }}
+            />
+          )}
+        />
+      ),
+      8: (
+        <Controller
+          control={control}
+          {...register("tankOutsideDate2")}
+          render={({ field: { onChange, value, name } }) => (
+            <CustomDatePicker
+              value={value}
+              onChange={onChange}
+              name={name}
+              style={{ width: "110px" }}
+            />
+          )}
+        />
+      ),
+      9: (
+        <Controller
+          control={control}
+          {...register("tankInsideDate2")}
+          render={({ field: { onChange, value, name } }) => (
+            <CustomDatePicker
+              value={value}
+              onChange={onChange}
+              name={name}
+              style={{ width: "110px" }}
+            />
+          )}
+        />
+      ),
+      10: (
+        <FormGroup style={{ marginLeft: "10px" }}>
+          <Input
+            register={register("tankMax2")}
+            placeholder=""
+            inputSize={InputSize.i40}
+            textAlign="right"
+          />
+          <p>%</p>
+          <Input
+            register={register("tankTransmCd2")}
+            placeholder=""
+            inputSize={InputSize.i60}
+          />
+          <Input
+            register={register("tankCuCd2")}
+            placeholder=""
+            inputSize={InputSize.i60}
+          />
+          <SearchBtn type="button" onClick={() => console.log("cuZipCode")}>
+            <MagnifyingGlass />
+          </SearchBtn>
+        </FormGroup>
+      ),
+    },
+  ];
   return (
     <div className="tab2">
-      <Wrapper grid col={4}>
+      <Wrapper style={{ marginBottom: "5px" }}>
         <FormGroup>
-          <Label>공급시설구분</Label>
+          <Label style={{ minWidth: "94px" }}>공급시설구분</Label>
           {[
             { name: "벌크공급", value: "Y" },
             { name: "용기공급", value: "N" },
@@ -59,7 +266,12 @@ function Tab2({
             control={control}
             {...register("cuFinishDate")}
             render={({ field: { onChange, value, name } }) => (
-              <CustomDatePicker value={value} onChange={onChange} name={name} />
+              <CustomDatePicker
+                value={value}
+                onChange={onChange}
+                name={name}
+                style={{ width: "110px" }}
+              />
             )}
           />
         </FormGroup>
@@ -69,7 +281,12 @@ function Tab2({
             control={control}
             {...register("cuCircuitDate")}
             render={({ field: { onChange, value, name } }) => (
-              <CustomDatePicker value={value} onChange={onChange} name={name} />
+              <CustomDatePicker
+                value={value}
+                onChange={onChange}
+                name={name}
+                style={{ width: "110px" }}
+              />
             )}
           />
         </FormGroup>
@@ -79,205 +296,35 @@ function Tab2({
             control={control}
             {...register("cuScheduleDate")}
             render={({ field: { onChange, value, name } }) => (
-              <CustomDatePicker value={value} onChange={onChange} name={name} />
+              <CustomDatePicker
+                value={value}
+                onChange={onChange}
+                name={name}
+                style={{ width: "110px" }}
+              />
             )}
           />
         </FormGroup>
       </Wrapper>
 
-      <FormGroup>
-        <Label style={{ minWidth: "70px" }}>벌크 시설</Label>
-        <Wrapper>
-          <Label align={"center"}>제조사</Label>
-          <Label align={"center"}>용량(kg)</Label>
-          <Label align={"center"}>제조번호</Label>
-          <Label align={"center"}>제작년월</Label>
-          <Label align={"center"}>대여처</Label>
-          <Label align={"center"}>최초검사</Label>
-          <Label align={"center"}>외관검사</Label>
-          <Label align={"center"}>개방검사</Label>
-          <Label align={"center"}>Max레벨 / 발신기코드 / 탱크고객코드</Label>
-        </Wrapper>
-      </FormGroup>
-
-      <FormGroup>
-        <Label style={{ minWidth: "70px" }}>{`1)`}</Label>
-        <EditableSelect
-          list={dataCommonDic?.tankMakeCo1}
-          register={register("tankMakeCo1")}
-          textAlign={"left"}
-          style={{ width: "125px", marginRight: "5px" }}
-        />
-        <CSelect
-          {...register("tankVol1")}
-          width={InputSize.i80}
-          textAlign="right"
-        >
-          {dataCommonDic?.tankVol1?.map((obj: any, index: number) => (
-            <option key={index} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))}
-        </CSelect>
-        <Input register={register("tankMakeSno1")} />
-        <Input maxLength="7" register={register("tankMakeDate1")} />
-        <Input register={register("tankRcv1")} />
-        <Controller
-          control={control}
-          {...register("tankFirstDate1")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker value={value} onChange={onChange} name={name} />
-          )}
-        />
-        <Controller
-          control={control}
-          {...register("tankOutsideDate1")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker value={value} onChange={onChange} name={name} />
-          )}
-        />
-        <Controller
-          control={control}
-          {...register("tankInsideDate1")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker value={value} onChange={onChange} name={name} />
-          )}
-        />
-        <FormGroup>
-          <Input
-            register={register("tankMax1")}
-            maxLength="3"
-            textAlign="right"
-            inputSize={InputSize.i40}
-            placeholder=""
-          />
-          <p>%</p>
-          <Input
-            register={register("tankTransmCd1")}
-            placeholder=""
-            inputSize={InputSize.sm}
-          />
-          <Input
-            register={register("tankCuCd1")}
-            placeholder=""
-            inputSize={InputSize.sm}
-          />
-          <SearchBtn type="button" onClick={() => console.log("cuZipCode")}>
-            <MagnifyingGlass />
-          </SearchBtn>
-        </FormGroup>
-      </FormGroup>
-
-      <FormGroup>
-        <FormGroup>
-          <Label style={{ minWidth: "70px" }}>{`2)`}</Label>
-        </FormGroup>
-        <Wrapper>
-          <Field>
-            <FormGroup>
-              <EditableSelect
-                list={dataCommonDic?.tankMakeCo2}
-                register={register("tankMakeCo2")}
-                textAlign={"left"}
-                style={{ width: "125px", marginRight: "5px" }}
-              />
-            </FormGroup>
-          </Field>
-          <Field>
-            <FormGroup>
-              <CSelect
-                {...register("tankVol2")}
-                width={InputSize.i80}
-                textAlign="right"
-              >
-                {dataCommonDic?.tankVol2?.map((obj: any, index: number) => (
-                  <option key={index} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </CSelect>
-            </FormGroup>
-          </Field>
-          <Field>
-            <FormGroup>
-              <Input register={register("tankMakeSno2")} />
-            </FormGroup>
-          </Field>
-          <Field>
-            <FormGroup>
-              <Input register={register("tankMakeDate2")} />
-            </FormGroup>
-          </Field>
-          <Field>
-            <FormGroup>
-              <Input register={register("tankRcv2")} />
-            </FormGroup>
-          </Field>
-          <Field>
-            <Controller
-              control={control}
-              {...register("tankFirstDate2")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                />
-              )}
-            />
-          </Field>
-          <Field>
-            <Controller
-              control={control}
-              {...register("tankOutsideDate2")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                />
-              )}
-            />
-          </Field>
-          <Field>
-            <Controller
-              control={control}
-              {...register("tankInsideDate2")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                />
-              )}
-            />
-          </Field>
-          <Field>
-            <FormGroup>
-              <Input
-                register={register("tankMax2")}
-                placeholder=""
-                inputSize={InputSize.i40}
-                textAlign="right"
-              />
-              <p>%</p>
-              <Input
-                register={register("tankTransmCd2")}
-                placeholder=""
-                inputSize={InputSize.sm}
-              />
-              <Input
-                register={register("tankCuCd2")}
-                placeholder=""
-                inputSize={InputSize.sm}
-              />
-              <SearchBtn type="button" onClick={() => console.log("cuZipCode")}>
-                <MagnifyingGlass />
-              </SearchBtn>
-            </FormGroup>
-          </Field>
-        </Wrapper>
-      </FormGroup>
+      <Table
+        className="no-space"
+        tableHeader={[
+          "벌크 시설",
+          "제조사",
+          "용량(kg)",
+          "제조번호",
+          "제작년월",
+          "대여처",
+          "최초검사",
+          "외관검사",
+          "개방검사",
+          "Max레벨 / 발신기코드 / 탱크고객코드",
+        ]}
+        style={{ overflowX: "visible" }}
+        tableData={tableData}
+        onClick={(item) => console.log("table", item)}
+      />
     </div>
   );
 }
