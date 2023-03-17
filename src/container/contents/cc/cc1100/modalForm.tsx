@@ -77,7 +77,7 @@ function CC1100Modal() {
       >
         <Button
           type="button"
-          text="choose"
+          text="선택(Enter)"
           color={ButtonColor.SUCCESS}
           onClick={() => {
             dispatch(
@@ -95,7 +95,7 @@ function CC1100Modal() {
         />
         <Button
           type="button"
-          text="esc"
+          text="취소(Esc)"
           color={ButtonColor.LIGHT}
           onClick={() => {
             dispatch(closeModal());

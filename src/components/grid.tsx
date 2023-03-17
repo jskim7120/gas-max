@@ -15,7 +15,7 @@ function Grid({
   setIsCancelBtnDisabled,
   setIsAddBtnClicked,
 }: {
-  areaCode: string;
+  areaCode?: string;
   data: any;
   fields: any;
   columns: any;
