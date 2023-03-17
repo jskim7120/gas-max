@@ -35,6 +35,8 @@ interface IForm {
   setSelected: any;
   setSelectedRowIndex: any;
   dataCommonDic: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
@@ -47,12 +49,13 @@ const Form = React.forwardRef(
       setSelected,
       setSelectedRowIndex,
       dataCommonDic,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
     const dispatch = useDispatch();
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [isCancelBtnDisabled, setIsCancelBtnDisabled] =
       useState<boolean>(true);
     const [acjType, setAcjType] = useState("");
@@ -157,30 +160,8 @@ const Form = React.forwardRef(
       dispatch(openModal({ type: "cc1100Modal" }));
     };
 
-    const onClickAdd = () => {
-      setIsAddBtnClicked(true);
-      setIsCancelBtnDisabled(false);
-      formRef.current.resetForm("clear");
-    };
-
-    const onClickDelete = () => {
-      dispatch(openModal({ type: "delModal" }));
-      // dispatch(addDeleteMenuId({ menuId: menuId }));
-    };
-    const onClickUpdate = () => {
-      formRef.current.crud(null);
-    };
-
-    const onClickReset = () => {
-      setIsAddBtnClicked(false);
-      formRef.current.resetForm("reset");
-    };
-
     return (
-      <form
-        // onSubmit={handleSubmit(submit)}
-        style={{ width: "380px", padding: "10px" }}
-      >
+      <form style={{ width: "380px", padding: "10px" }}>
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>영 업 소</Label>
           <Select
