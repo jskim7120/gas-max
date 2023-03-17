@@ -183,6 +183,11 @@ export const PT110065 = "/app/PT1100/65";
 export const PT1100SEARCH62 = "/app/PT1100/search62";
 export const PT1105SEARCH = "/app/PT1105/search";
 
+export const PT1200SEARCH = "/app/PT1200/search";
+export const PT120065 = "/app/PT1200/65";
+export const PT1200SEARCH62 = "/app/PT1200/search62";
+export const PT1205SEARCH = "/app/PT1205/search";
+
 export const FOOT61 = "/app/CM1100/foot61";
 export const FOOTHISTORY = "/app/common/history";
 export const FOOTDETAIL = "/app/common/footDetail";
