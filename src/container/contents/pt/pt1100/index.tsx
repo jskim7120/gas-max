@@ -25,10 +25,7 @@ import { columnsSecond, fieldsSecond } from "./secondData";
 import { columnsThird, fieldsThird } from "./thirdData";
 import Grid from "components/grid";
 import Loader from "components/loader";
-import {
-  formatDateByRemoveDash,
-  formatDateToStringWithoutDash,
-} from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import {
   MagnifyingGlass,
   Plus,
@@ -110,18 +107,8 @@ function PT1100({
   };
 
   const fetchDataSearch2 = async (params: any) => {
-    params.sMsdateF =
-      typeof params.sMsdateF === "string"
-        ? formatDateByRemoveDash(params.sMsdateF)
-        : params.sMsdateF instanceof Date
-        ? formatDateToStringWithoutDash(params.sMsdateF)
-        : "";
-    params.sMsdateT =
-      typeof params.sMsdateT === "string"
-        ? formatDateByRemoveDash(params.sMsdateT)
-        : params.sMsdateT instanceof Date
-        ? formatDateToStringWithoutDash(params.sMsdateT)
-        : "";
+    params.sMsdateF = DateWithoutDash(params.sMsdateF);
+    params.sMsdateT = DateWithoutDash(params.sMsdateT);
     try {
       setLoading2(true);
       const { data } = await API.get(PT1100SEARCH62, { params: params });
