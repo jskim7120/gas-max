@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { useDispatch } from "app/store";
-import { openModal, ptAreaCode } from "app/state/modal/modalSlice";
+import { openModal, pt1205Popup } from "app/state/modal/modalSlice";
 import { PT1200SEARCH, PT1200SEARCH62, PT120065 } from "app/path";
 import {
   SearchWrapper,
@@ -135,10 +135,16 @@ function PT1200({
     mode: "onSubmit",
   });
 
-  const openPopupPT1105 = async () => {
-    dispatch(openModal({ type: "pt1105Modal" }));
+  const openPopupPT1205 = async () => {
+    console.log(
+      selected.areaCode,
+      "WHAAT modal",
+      selected.cuCode,
+      selected.cuName
+    );
+    dispatch(openModal({ type: "pt1205Modal" }));
     dispatch(
-      ptAreaCode({
+      pt1205Popup({
         areaCode: selected.areaCode,
         cuCode: selected.cuCode,
         cuName: selected.cuName,
@@ -164,7 +170,7 @@ function PT1200({
           top: "88px",
         }}
       >
-        <Button text="선택 수금" icon={<Plus />} onClick={openPopupPT1105} />
+        <Button text="선택 수금" icon={<Plus />} onClick={openPopupPT1205} />
         <Button text="수금" icon={<Trash />} onClick={() => {}} />
         <Button
           text="저장"

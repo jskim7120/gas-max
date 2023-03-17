@@ -2,73 +2,154 @@ import { ValueType } from "realgrid";
 
 export const fields = [
   {
-    fieldName: "cuChkamt",
+    fieldName: "gjGumymsno",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "mjDate",
+    fieldName: "gjDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "mjBigo",
+    fieldName: "gjJungum",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "mjMisujan",
+    fieldName: "gjGum",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "mjSwName",
+    fieldName: "gjGage",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjMisu",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjPerkum",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjTotal",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjJirodate",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjMisujan",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjSwName",
     dataType: ValueType.TEXT,
   },
 ];
 
 export const columns = [
   {
-    name: "cuChkamt",
-    fieldName: "cuChkamt",
+    name: "gjGumymsno",
+    fieldName: "gjGumymsno",
     type: "data",
     width: "80",
     header: {
-      text: "선택",
-    },
-
-    renderer: {
-      type: "check",
-      trueValues: "Y",
-      falseValues: "N",
+      text: "회차",
     },
   },
   {
-    name: "mjDate",
-    fieldName: "mjDate",
+    name: "gjDate",
+    fieldName: "gjDate",
     type: "data",
     width: "80",
     header: {
-      text: "일자",
+      text: "검침일",
     },
   },
   {
-    name: "mjBigo",
-    fieldName: "mjBigo",
+    name: "gjJungum",
+    fieldName: "gjJungum",
     type: "data",
     width: "80",
     header: {
-      text: "비고",
+      text: "전검침",
     },
   },
   {
-    name: "mjMisujan",
-    fieldName: "mjMisujan",
+    name: "gjGum",
+    fieldName: "gjGum",
     type: "data",
     width: "80",
     header: {
-      text: "미수잔액",
+      text: "당검침",
     },
   },
   {
-    name: "mjSwName",
-    fieldName: "mjSwName",
+    name: "gjGage",
+    fieldName: "gjGage",
+    type: "data",
+    width: "80",
+    header: {
+      text: "사용량",
+    },
+  },
+  {
+    name: "gjDangkum",
+    fieldName: "gjGage",
+    type: "data",
+    width: "80",
+    header: {
+      text: "당월금액",
+    },
+  },
+  {
+    name: "gjMisu",
+    fieldName: "gjMisu",
+    type: "data",
+    width: "80",
+    header: {
+      text: "미수금액",
+    },
+  },
+  {
+    name: "gjPerkum",
+    fieldName: "gjPerkum",
+    type: "data",
+    width: "80",
+    header: {
+      text: "연체료",
+    },
+  },
+  {
+    name: "gjTotal",
+    fieldName: "gjTotal",
+    type: "data",
+    width: "80",
+    header: {
+      text: "합계",
+    },
+  },
+  {
+    name: "gjJirodate",
+    fieldName: "gjJirodate",
+    type: "data",
+    width: "80",
+    header: {
+      text: "지로발행일",
+    },
+  },
+  {
+    name: "gjMisujan",
+    fieldName: "gjMisujan",
+    type: "data",
+    width: "80",
+    header: {
+      text: "미수액",
+    },
+  },
+  {
+    name: "gjSwName",
+    fieldName: "gjSwName",
     type: "data",
     width: "80",
     header: {

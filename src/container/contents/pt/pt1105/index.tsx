@@ -26,7 +26,7 @@ const ModalWrapper = styled.div`
   width: 800px;
   height: 610px;
   height: auto;
-  background: ;
+  background: #fff;
 `;
 function FormIP1105() {
   const [loading, setLoading] = useState(false);
