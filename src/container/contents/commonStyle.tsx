@@ -17,7 +17,8 @@ export const SearchWrapper = styled.div`
 
   div.buttons {
     display: flex;
-    alignitems: center;
+    align-items: center;
+    gap: 2px;
   }
 
   .m_left {

@@ -6,20 +6,13 @@ import CheckBox from "components/checkbox";
 import {
   MainWrapper,
   SearchWrapper,
-  WrapperContent,
   RightSide,
   LeftSide,
 } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import {
-  Select,
-  FormGroup,
-  Wrapper,
-  Label,
-  Field,
-} from "components/form/style";
+import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
+import { FormGroup, Wrapper, Label, Field } from "components/form/style";
 import Form from "./form";
 import Loader from "components/loader";
 import Button from "components/button/button";
