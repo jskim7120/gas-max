@@ -60,7 +60,7 @@ function Grid({
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
-      //   setSelected(data[itemIndex]);
+      setSelected(data[itemIndex]);
       dispatch(
         addCM1105({
           cuCode: data[itemIndex].cuCode,

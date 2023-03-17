@@ -25,7 +25,7 @@ export const fieldsSelected = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuUsernam",
+    fieldName: "cuUsername",
     dataType: ValueType.TEXT,
   },
   {
@@ -75,7 +75,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "60",
 
     header: {
       text: "영업소",
@@ -90,7 +90,7 @@ export const columns = [
     name: "cuCode",
     fieldName: "cuCode",
     type: "data",
-    width: "80",
+    width: "60",
 
     header: {
       text: "코드",
@@ -100,7 +100,7 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "283",
+    width: "180",
     alignText: "left",
     styles: {
       textAlignment: "near",
@@ -113,7 +113,7 @@ export const columns = [
     name: "cuCount",
     fieldName: "cuCount",
     type: "data",
-    width: "80",
+    width: "60",
 
     header: {
       text: "세대",
@@ -133,8 +133,8 @@ export const columnsSelected = [
     },
   },
   {
-    name: "cuUsernam",
-    fieldName: "cuUsernam",
+    name: "cuUsername",
+    fieldName: "cuUsername",
     type: "data",
     width: "150",
 

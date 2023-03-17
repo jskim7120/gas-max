@@ -29,6 +29,9 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
+  setIsCancelBtnDisabled: Function;
 }
 
 const radioOptions = [
@@ -51,11 +54,12 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
+      setIsCancelBtnDisabled,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1300",
@@ -78,7 +82,6 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {
@@ -97,6 +100,12 @@ const Form = React.forwardRef(
               }
               newData.jpCode = response.data.tempCode;
               newData.areaCode = selected.areaCode;
+              newData.jpGasType = response.data.jpGasType;
+              newData.jpGasuse = response.data.jpGasuse;
+              newData.jpGubun = response.data.jpGubun;
+              newData.jpJaegoYn = response.data.jpJaegoYn;
+              newData.jpKgDanwi = response.data.jpKgDanwi;
+              newData.jpKind = response.data.jpKind;
               reset(newData);
             } else {
               toast.error(response.response.data?.message, {
@@ -121,6 +130,12 @@ const Form = React.forwardRef(
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
+        delete formValues.jpIndanga;
+        delete formValues.jpOutdanga;
+        delete formValues.jpIntong;
+        delete formValues.jpBaedal;
+        delete formValues.jpOuttong;
+
         try {
           const response = await API.post(EN1300DELETE, formValues);
           if (response.status === 200) {
@@ -160,6 +175,7 @@ const Form = React.forwardRef(
       formValues.jpBaedal = formValues.jpBaedal
         ? formatCurrencyRemoveComma(formValues.jpBaedal)
         : "";
+
       try {
         const response: any = await API.post(path, formValues);
 
@@ -167,6 +183,8 @@ const Form = React.forwardRef(
           if (isAddBtnClicked) {
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
+            setIsAddBtnClicked(false);
+            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -177,7 +195,6 @@ const Form = React.forwardRef(
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
-          setIsAddBtnClicked(false);
         } else {
           toast.error(response?.message, {
             autoClose: 500,
@@ -199,11 +216,18 @@ const Form = React.forwardRef(
         });
         if (response.status === 200) {
           for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
+            newData[key] = null;
           }
           newData.jpCode = response.data.tempCode;
           newData.areaCode = event.target.value;
+          newData.jpGasType = response.data.jpGasType;
+          newData.jpGasuse = response.data.jpGasuse;
+          newData.jpGubun = response.data.jpGubun;
+          newData.jpJaegoYn = response.data.jpJaegoYn;
+          newData.jpKgDanwi = response.data.jpKgDanwi;
+          newData.jpKind = response.data.jpKind;
           reset(newData);
+          document.getElementById("jpName")?.focus();
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,
@@ -226,6 +250,7 @@ const Form = React.forwardRef(
               width={InputSize.i130}
               {...register("areaCode")}
               onChange={handleSelectCode}
+              disabled={!isAddBtnClicked}
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -241,7 +266,7 @@ const Form = React.forwardRef(
             register={register("jpCode")}
             maxLength="4"
             inputSize={InputSize.i130}
-            readOnly={isAddBtnClicked}
+            readOnly
           />
         </Wrapper>
         <Divider />
@@ -285,7 +310,7 @@ const Form = React.forwardRef(
                 onChange={onChange}
                 mask={[/\d/, /\d/, /\d/, /\d/, /\d/]}
                 textAlign="right"
-                style={{ width: "63px" }}
+                inputSize={InputSize.i130}
               />
             )}
           />
@@ -463,15 +488,18 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper>
           <FormGroup style={{ alignItems: "center" }}>
-            <Label>재고사용 유무</Label>
+            <Label>재고사용 유무--</Label>
             {radioOptions.map((option, index) => (
               <Item key={index}>
                 <RadioButton
                   type="radio"
                   value={option.id}
-                  {...register(`jpJaegoYn`, {
-                    required: "required",
-                  })}
+                  {...register(
+                    `jpJaegoYn`
+                    // , {
+                    //   // required: "required",
+                    // }
+                  )}
                   id={option.id}
                   // onChange={() => console.log(option.label)}
                 />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "app/store";
 import API from "app/axios";
 import { CC110080 } from "app/path";
+import { CTable2 } from "container/contents/gr/gr1200/style";
 
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
@@ -52,21 +53,26 @@ function CC1100Modal() {
         justifyContent: "space-between",
       }}
     >
-      <table>
-        <th></th>
+      <CTable2>
+        <tr>
+          <th>구분</th>
+          <th>총입고량</th>
+        </tr>
         {data?.map((item) => (
           <tr onClick={() => setSelected(item)}>
             <td>{item.accCode}</td>
             <td>{item.accName}</td>
           </tr>
         ))}
-      </table>
+      </CTable2>
 
       <div
         style={{
           width: "100%",
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
+          marginTop: "10px",
+          gap: "10px",
         }}
       >
         <Button

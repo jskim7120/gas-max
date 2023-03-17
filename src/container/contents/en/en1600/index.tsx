@@ -2,18 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import API from "app/axios";
 import { useDispatch, useSelector } from "app/store";
 import {
-  openModal,
   closeModal,
   addDeleteMenuId,
   setIsDelete,
 } from "app/state/modal/modalSlice";
-import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
-import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import Form from "./form";
 import Grid from "../grid";
 import { columns, fields } from "./data";
 import { MainWrapper, RightSide, SearchWrapper } from "../../commonStyle";
+import ENButtons from "components/button/enButtons";
 
 function EN1600({
   depthFullName,
@@ -28,6 +25,8 @@ function EN1600({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
@@ -55,7 +54,7 @@ function EN1600({
 
   function deleteRowGrid() {
     try {
-      formRef.current.setIsAddBtnClicked(false);
+      setIsAddBtnClicked(false);
       formRef.current.crud("delete");
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
@@ -68,43 +67,15 @@ function EN1600({
     <>
       <SearchWrapper className="h35 mt5">
         <p>{depthFullName}</p>
-        <div className="buttons">
-          <Button
-            text="등록"
-            icon={<Plus />}
-            style={{ marginRight: "5px" }}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(true);
-              formRef.current.resetForm("clear");
-            }}
-          />
-          <Button
-            text="삭제"
-            icon={<Trash />}
-            style={{ marginRight: "5px" }}
-            onClick={() => {
-              dispatch(openModal({ type: "delModal" }));
-              dispatch(addDeleteMenuId({ menuId: menuId }));
-            }}
-          />
-          <Button
-            text="저장"
-            icon={<Update />}
-            style={{ marginRight: "5px" }}
-            color={ButtonColor.SECONDARY}
-            onClick={() => {
-              formRef.current.crud(null);
-            }}
-          />
-          <Button
-            text="취소"
-            icon={<Reset />}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
-              formRef.current.resetForm("reset");
-            }}
-          />
-        </div>
+        <ENButtons
+          menuId={menuId}
+          formRef={formRef}
+          dispatch={dispatch}
+          isAddBtnClicked={isAddBtnClicked}
+          setIsAddBtnClicked={setIsAddBtnClicked}
+          isCancelBtnDisabled={isCancelBtnDisabled}
+          setIsCancelBtnDisabled={setIsCancelBtnDisabled}
+        />
       </SearchWrapper>
       <MainWrapper>
         <Grid
@@ -114,6 +85,8 @@ function EN1600({
           setSelected={setSelected}
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
+          setIsCancelBtnDisabled={setIsCancelBtnDisabled}
+          setIsAddBtnClicked={setIsAddBtnClicked}
         />
         <RightSide>
           <Form
@@ -124,6 +97,9 @@ function EN1600({
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
+            isAddBtnClicked={isAddBtnClicked}
+            setIsAddBtnClicked={setIsAddBtnClicked}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
           />
         </RightSide>
       </MainWrapper>

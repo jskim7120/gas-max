@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { TabLikeHeader, CTable2 } from "../style";
 import { Input } from "components/form/style";
-import { InputSize } from "components/componentsType";
 
 function Tab1Footer({
   data,
   register,
-  calcTab1FooterChange,
+  calcOnFieldChange,
 }: {
   data: any;
   register: Function;
-  calcTab1FooterChange: Function;
+  calcOnFieldChange: Function;
 }) {
   const [bcPdanga, setBcPdanga] = useState<string | undefined>(undefined);
   const [bcBdanga, setBcBdanga] = useState<string | undefined>(undefined);
@@ -43,7 +42,7 @@ function Tab1Footer({
               register={register("bcPjan")}
               onChange={(e: any) => {
                 setBcPjan(e.target.value);
-                calcTab1FooterChange(e.target.value, "bcPjan");
+                calcOnFieldChange(e.target.value, "bcPjan");
               }}
               value={bcPjan}
               className="h27"
@@ -57,7 +56,7 @@ function Tab1Footer({
               register={register("bcPdanga")}
               onChange={(e: any) => {
                 setBcPdanga(e.target.value);
-                calcTab1FooterChange(e.target.value, "bcPdanga");
+                calcOnFieldChange(e.target.value, "bcPdanga");
               }}
               value={bcPdanga}
               className="h27"
@@ -71,7 +70,7 @@ function Tab1Footer({
               register={register("bcPcost")}
               onChange={(e: any) => {
                 setBcPcost(e.target.value);
-                calcTab1FooterChange(e.target.value, "bcPcost");
+                calcOnFieldChange(e.target.value, "bcPcost");
               }}
               value={bcPcost}
               className="h27"
@@ -91,7 +90,7 @@ function Tab1Footer({
               register={register("bcBjan")}
               onChange={(e: any) => {
                 setBcBjan(e.target.value);
-                calcTab1FooterChange(e.target.value, "bcBjan");
+                calcOnFieldChange(e.target.value, "bcBjan");
               }}
               value={bcBjan}
               className="h27"
@@ -105,7 +104,7 @@ function Tab1Footer({
               register={register("bcBdanga")}
               onChange={(e: any) => {
                 setBcBdanga(e.target.value);
-                calcTab1FooterChange(e.target.value, "bcBdanga");
+                calcOnFieldChange(e.target.value, "bcBdanga");
               }}
               value={bcBdanga}
               className="h27"
@@ -119,7 +118,7 @@ function Tab1Footer({
               register={register("bcBcost")}
               onChange={(e: any) => {
                 setBcBcost(e.target.value);
-                calcTab1FooterChange(e.target.value, "bcBcost");
+                calcOnFieldChange(e.target.value, "bcBcost");
               }}
               value={bcBcost}
               className="h27"

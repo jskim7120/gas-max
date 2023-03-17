@@ -31,10 +31,12 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
       attributes.lineColor = "#fff";
     }
     if (color === ButtonColor.SECONDARY) {
-      attributes.bg = "linear-gradient(#FFB300, #E67F09)";
+      // attributes.bg = "linear-gradient(#FFB300, #E67F09)";
+      attributes.bg = "#FFB300";
       attributes.color = "#FFF";
-      attributes.bgHover =
-        "linear-gradient(#F5D998 5%, #F4D38E 10%, #F3CD85 15%, #F2C77B 20%, #F1C171 25%, #F0BC69 30%, #E67F09 100%)";
+      // attributes.bgHover =
+      // "linear-gradient(#F5D998 5%, #F4D38E 10%, #F3CD85 15%, #F2C77B 20%, #F1C171 25%, #F0BC69 30%, #E67F09 100%)";
+      attributes.bgHover = "#F0BC69";
       attributes.lineColor = "#fff";
     }
     if (color === ButtonColor.WARNING) {
@@ -161,16 +163,19 @@ const ButtonComponent = styled.button<{
       border-radius: ${BtnAttribute(props.kind, props.color).borderRad};
       color: ${BtnAttribute(props.kind, props.color).color};
       padding: ${BtnAttribute(props.kind, props.color).padding};
+
       &:hover {
         background: ${BtnAttribute(props.kind, props.color).bgHover};
       }
       &:focus {
         //background-color: #5284ce;
       }
+
       &:disabled {
-        background-color: #5284ce;
+        opacity: 0.5;
         cursor: default;
       }
+
       line-height: 14px;
     `;
   }}

@@ -9,31 +9,21 @@ function Table({ data, style }: { data: any; style?: any }) {
     item4: any,
     item5: any
   ) => {
-    if (
-      item1 === undefined &&
-      item2 === undefined &&
-      item2 === undefined &&
-      item3 === undefined &&
-      item4 === undefined &&
-      item5 === undefined
-    ) {
-      return null;
-    }
+    item1 = item1 ? +item1 : 0;
+    item2 = item2 ? +item2 : 0;
+    item3 = item3 ? +item3 : 0;
+    item4 = item4 ? +item4 : 0;
+    item5 = item5 ? +item5 : 0;
 
     let sum: number = 0;
-    sum = item1
-      ? Number(item1)
-      : 0 + item2
-      ? Number(item2)
-      : 0 + item3
-      ? Number(item3)
-      : 0 + item4
-      ? Number(item4)
-      : 0 + item5
-      ? Number(item5)
-      : 0;
+    sum = item1 + item2 + item3 + item4 + item5;
 
-    return sum;
+    return Number(sum).toLocaleString("en-US");
+  };
+
+  const show = (field: any) => {
+    if (Object.keys(data).length === 0) return null;
+    return Number(field).toLocaleString("en-US");
   };
   return (
     <CustomTable style={style}>
@@ -53,21 +43,21 @@ function Table({ data, style }: { data: any; style?: any }) {
           프로판
         </th>
         <th className="orange-light">용기</th>
-        <td className="right">{data?.pCIn}</td>
-        <td className="right">{data?.pCJan}</td>
-        <td className="right">{data?.pCSum}</td>
-        <td className="right">{data?.pCKum}</td>
-        <td className="right">{data?.pCCost}</td>
-        <td className="right">{data?.sumPc}</td>
+        <td className="right">{show(data?.pCIn)}</td>
+        <td className="right">{show(data?.pCJan)}</td>
+        <td className="right">{show(data?.pCSum)}</td>
+        <td className="right">{show(data?.pCKum)}</td>
+        <td className="right">{show(data?.pCCost)}</td>
+        <td className="right">{show(data?.sumPc)}</td>
       </tr>
       <tr>
         <th className="orange-light">벌크</th>
-        <td className="right">{data?.pVIn}</td>
-        <td className="right">{data?.pVJan}</td>
-        <td className="right">{data?.pVSum}</td>
-        <td className="right">{data?.pVKum}</td>
-        <td className="right">{data?.pVCost}</td>
-        <td className="right">{data?.sumPv}</td>
+        <td className="right">{show(data?.pVIn)}</td>
+        <td className="right">{show(data?.pVJan)}</td>
+        <td className="right">{show(data?.pVSum)}</td>
+        <td className="right">{show(data?.pVKum)}</td>
+        <td className="right">{show(data?.pVCost)}</td>
+        <td className="right">{show(data?.sumPv)}</td>
       </tr>
 
       <tr>
@@ -75,32 +65,32 @@ function Table({ data, style }: { data: any; style?: any }) {
           부탄
         </th>
         <th className="orange-light">용기</th>
-        <td className="right">{data?.bCIn}</td>
-        <td className="right">{data?.bCJan}</td>
-        <td className="right">{data?.bCSum}</td>
-        <td className="right">{data?.bCKum}</td>
-        <td className="right">{data?.bCCost}</td>
-        <td className="right">{data?.sumBc}</td>
+        <td className="right">{show(data?.bCIn)}</td>
+        <td className="right">{show(data?.bCJan)}</td>
+        <td className="right">{show(data?.bCSum)}</td>
+        <td className="right">{show(data?.bCKum)}</td>
+        <td className="right">{show(data?.bCCost)}</td>
+        <td className="right">{show(data?.sumBc)}</td>
       </tr>
       <tr>
         <th className="orange-light">벌크</th>
-        <td className="right">{data?.bVIn}</td>
-        <td className="right">{data?.bVJan}</td>
-        <td className="right">{data?.bVSum}</td>
-        <td className="right">{data?.bVKum}</td>
-        <td className="right">{data?.bVCost}</td>
-        <td className="right">{data?.sumBv}</td>
+        <td className="right">{show(data?.bVIn)}</td>
+        <td className="right">{show(data?.bVJan)}</td>
+        <td className="right">{show(data?.bVSum)}</td>
+        <td className="right">{show(data?.bVKum)}</td>
+        <td className="right">{show(data?.bVCost)}</td>
+        <td className="right">{show(data?.sumBv)}</td>
       </tr>
       <tr>
         <th className="orange-light" colSpan={2}>
           기타
         </th>
-        <td className="right">{data?.gIn}</td>
-        <td className="right">{data?.gJan}</td>
-        <td className="right">{data?.gSum}</td>
-        <td className="right">{data?.gKum}</td>
-        <td className="right">{data?.gCost}</td>
-        <td className="right">{data?.sumG}</td>
+        <td className="right">{show(data?.gIn)}</td>
+        <td className="right">{show(data?.gJan)}</td>
+        <td className="right">{show(data?.gSum)}</td>
+        <td className="right">{show(data?.gKum)}</td>
+        <td className="right">{show(data?.gCost)}</td>
+        <td className="right">{show(data?.sumG)}</td>
       </tr>
 
       <tr>

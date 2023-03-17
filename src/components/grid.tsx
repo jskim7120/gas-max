@@ -12,6 +12,8 @@ function Grid({
   style,
   evenFill,
   layout,
+  setIsCancelBtnDisabled,
+  setIsAddBtnClicked,
 }: {
   areaCode: string;
   data: any;
@@ -23,6 +25,8 @@ function Grid({
   style?: any;
   evenFill?: boolean;
   layout?: any;
+  setIsCancelBtnDisabled?: Function;
+  setIsAddBtnClicked?: Function;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -66,13 +70,16 @@ function Grid({
       dataRow: selectedRowIndex,
     });
 
-    if (setSelected) {
-      gv.onSelectionChanged = () => {
-        const itemIndex: any = gv.getCurrent().dataRow;
-        setSelected(data[itemIndex]);
-        setSelectedRowIndex && setSelectedRowIndex(itemIndex);
-      };
-    }
+    // if (setSelected) {
+    gv.onSelectionChanged = () => {
+      const itemIndex: any = gv.getCurrent().dataRow;
+      setSelected && setSelected(data[itemIndex]);
+      setSelectedRowIndex && setSelectedRowIndex(itemIndex);
+
+      setIsCancelBtnDisabled && setIsCancelBtnDisabled(true);
+      setIsAddBtnClicked && setIsAddBtnClicked(false);
+    };
+    // }
 
     return () => {
       dp.clearRows();

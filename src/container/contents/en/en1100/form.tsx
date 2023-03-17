@@ -28,6 +28,9 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
+  setIsCancelBtnDisabled: Function;
 }
 
 const Form = React.forwardRef(
@@ -39,10 +42,12 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
+      setIsCancelBtnDisabled,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [tabId, setTabId] = useState(0);
     const [addr, setAddress] = useState<string>("");
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -73,7 +78,6 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {
@@ -159,6 +163,8 @@ const Form = React.forwardRef(
           if (isAddBtnClicked) {
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
+            setIsAddBtnClicked(false);
+            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -166,7 +172,7 @@ const Form = React.forwardRef(
             });
           }
           setSelected(formValues);
-          setIsAddBtnClicked(false);
+
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
@@ -179,12 +185,12 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 10px" }}>
+      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 12px" }}>
         <Wrapper grid col={3}>
           <Input
             label="코드"
             register={register("areaCode")}
-            readOnly={isAddBtnClicked}
+            readOnly={true}
             inputSize={InputSize.i150}
           />
           <Input
@@ -192,6 +198,7 @@ const Form = React.forwardRef(
             register={register("areaName")}
             maxLength="20"
             inputSize={InputSize.i150}
+            readOnly={!isAddBtnClicked}
           />
         </Wrapper>
 
@@ -490,7 +497,7 @@ const Form = React.forwardRef(
             tabHeader={[
               "지로 양식",
               "고객안내문",
-              "입금계좌  안내",
+              "입금계좌 안내",
               "결재 라인",
             ]}
             onClick={(id) => setTabId(id)}

@@ -1,29 +1,34 @@
 import React from "react";
 import Table from "components/table";
 import { Input, Select, Field } from "components/form/style";
-import { PaymentLineCnt } from "../../commonStyle";
+import {
+  PaymentLineCnt,
+  PaymentLineCnt1,
+  PaymentLineCnt2,
+  PaymentLineCnt3,
+} from "../../commonStyle";
 import { InputSize } from "components/componentsType";
 
 function getTabContent(id: number, register: any, jnJiro: any) {
   const data1 = [
     {
       1: "양식 1",
-      2: (
+      jnJiroSNo: (
         <Input
           register={register("jnJiroSNo")}
           textAlign="center"
           maxLength="6"
         />
       ),
-      3: (
+      jnJirono: (
         <Input
           register={register("jnJirono")}
           textAlign="center"
           maxLength="7"
         />
       ),
-      4: <Input register={register("jnJiroBigo")} maxLength="7" />,
-      5: (
+      jnJiroBigo: <Input register={register("jnJiroBigo")} maxLength="7" />,
+      jnJiro: (
         <Field>
           <Select width={InputSize.i250} {...register("jnJiro")}>
             {jnJiro?.map((obj: any, idx: number) => (
@@ -37,22 +42,24 @@ function getTabContent(id: number, register: any, jnJiro: any) {
     },
     {
       1: "양식 2",
-      2: (
+      jnJiroSNo02: (
         <Input
           register={register("jnJiroSNo02")}
           textAlign="center"
           maxLength="6"
         />
       ),
-      3: (
+      jnJirono02: (
         <Input
           register={register("jnJirono02")}
           textAlign="center"
           maxLength="7"
         />
       ),
-      4: <Input register={register("jnJiroBigo02")} maxLength="20" />,
-      5: (
+      jnJiroBigo02: (
+        <Input register={register("jnJiroBigo02")} maxLength="20" />
+      ),
+      jnJiro2: (
         <Field>
           <Select width={InputSize.i250} {...register("jnJiro2")}>
             {jnJiro?.map((obj: any, idx: number) => (
@@ -66,22 +73,24 @@ function getTabContent(id: number, register: any, jnJiro: any) {
     },
     {
       1: "양식 3",
-      2: (
+      jnJiroSNo03: (
         <Input
           register={register("jnJiroSNo03")}
           textAlign="center"
           maxLength="6"
         />
       ),
-      3: (
+      jnJirono03: (
         <Input
           register={register("jnJirono03")}
           textAlign="center"
           maxLength="7"
         />
       ),
-      4: <Input register={register("jnJiroBigo03")} maxLength="20" />,
-      5: (
+      jnJiroBigo03: (
+        <Input register={register("jnJiroBigo03")} maxLength="20" />
+      ),
+      jnJiro3: (
         <Field>
           <Select width={InputSize.i250} {...register("jnJiro3")}>
             {jnJiro?.map((obj: any, idx: number) => (
@@ -95,22 +104,24 @@ function getTabContent(id: number, register: any, jnJiro: any) {
     },
     {
       1: "양식 4",
-      2: (
+      jnJiroSNo04: (
         <Input
           register={register("jnJiroSNo04")}
           textAlign="center"
           maxLength="6"
         />
       ),
-      3: (
+      jnJirono04: (
         <Input
           register={register("jnJirono04")}
           textAlign="center"
           maxLength="7"
         />
       ),
-      4: <Input register={register("jnJiroBigo04")} maxLength="20" />,
-      5: (
+      jnJiroBigo04: (
+        <Input register={register("jnJiroBigo04")} maxLength="20" />
+      ),
+      jnJiro4: (
         <Field>
           <Select width={InputSize.i250} {...register("jnJiro4")}>
             {jnJiro?.map((obj: any, idx: number) => (
@@ -166,9 +177,9 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           maxLength="15"
         />
       ),
-      jnBankNo1: (
+      jnBankno1: (
         <Input
-          register={register("jnBankNo1")}
+          register={register("jnBankno1")}
           inputSize={InputSize.md290}
           maxLength="20"
         />
@@ -182,9 +193,9 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           maxLength="15"
         />
       ),
-      jnBankNo2: (
+      jnBankno2: (
         <Input
-          register={register("jnBankNo2")}
+          register={register("jnBankno2")}
           inputSize={InputSize.md290}
           maxLength="20"
         />
@@ -198,9 +209,9 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           maxLength="15"
         />
       ),
-      jnBankNo3: (
+      jnBankno3: (
         <Input
-          register={register("jnBankNo3")}
+          register={register("jnBankno3")}
           inputSize={InputSize.md290}
           maxLength="20"
         />
@@ -214,9 +225,9 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           maxLength="15"
         />
       ),
-      jnBankNo4: (
+      jnBankno4: (
         <Input
-          register={register("jnBankNo4")}
+          register={register("jnBankno4")}
           inputSize={InputSize.md290}
           maxLength="20"
         />
@@ -267,33 +278,39 @@ function getTabContent(id: number, register: any, jnJiro: any) {
   switch (id) {
     case 0:
       return (
-        <Table
-          tableHeader={[
-            "지로 양식",
-            "승인번호",
-            "지로번호",
-            "상호(구분명)",
-            "용지 형식",
-          ]}
-          tableData={data1}
-          onClick={(item) => console.log("table", item)}
-        />
+        <PaymentLineCnt1>
+          <Table
+            tableHeader={[
+              "지로 양식",
+              "승인번호",
+              "지로번호",
+              "상호(구분명)",
+              "용지 형식",
+            ]}
+            tableData={data1}
+            onClick={(item) => console.log("table", item)}
+          />
+        </PaymentLineCnt1>
       );
     case 1:
       return (
-        <Table
-          tableHeader={["내용"]}
-          tableData={data2}
-          onClick={(item) => console.log("table", item)}
-        />
+        <PaymentLineCnt2>
+          <Table
+            tableHeader={["내용"]}
+            tableData={data2}
+            onClick={(item) => console.log("table", item)}
+          />
+        </PaymentLineCnt2>
       );
     case 2:
       return (
-        <Table
-          tableHeader={["은행명", "계좌번호"]}
-          tableData={data3}
-          onClick={(item) => console.log("table", item)}
-        />
+        <PaymentLineCnt3>
+          <Table
+            tableHeader={["은행명", "계좌번호"]}
+            tableData={data3}
+            onClick={(item) => console.log("table", item)}
+          />
+        </PaymentLineCnt3>
       );
     case 3:
       return (

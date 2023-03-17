@@ -26,7 +26,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "caBldate",
+    fieldName: "caBldateT",
     dataType: ValueType.TEXT,
   },
   {
@@ -101,10 +101,10 @@ export const columns = [
   },
 
   {
-    name: "caBldate",
-    fieldName: "caBldate",
+    name: "caBldateT",
+    fieldName: "caBldateT",
     type: "data",
-    width: "100",
+    width: "120",
     header: {
       text: "검사기간",
     },

@@ -6,10 +6,12 @@ function EditableSelect({
   list = [],
   register,
   textAlign,
+  style,
 }: {
   list: Array<any>;
   register: any;
   textAlign?: any;
+  style?: any;
 }) {
   const [text, setText] = useState("");
   const [suggestion, setSuggestion] = useState<Array<any>>([]);
@@ -80,7 +82,7 @@ function EditableSelect({
   };
 
   return (
-    <Editable ref={divRef} textAlign={textAlign && textAlign}>
+    <Editable ref={divRef} textAlign={textAlign && textAlign} style={style}>
       <input
         autoComplete="off"
         {...register}

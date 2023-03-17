@@ -10,10 +10,7 @@ import { Plus, Update, Reset, WhiteClose } from "components/allSvgIcon";
 import { ICM1105SEARCH, emptyObj } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { currencyMask } from "helpers/currency";
-import {
-  formatDateByRemoveDash,
-  formatDateToStringWithoutDash,
-} from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import { closeModal } from "app/state/modal/modalSlice";
 import {
   Input,
@@ -292,26 +289,29 @@ function FormCM1105() {
     formValues.cuSmsYn = formValues.cuSmsYn ? "Y" : "N";
     formValues.cuCashpayYn = formValues.cuCashpayYn ? "Y" : "N";
 
-    formValues.cuHdate =
-      typeof formValues.cuHdate === "string"
-        ? formatDateByRemoveDash(formValues.cuHdate)
-        : (formValues.cuHdate as any) instanceof Date
-        ? formatDateToStringWithoutDash(formValues.cuHdate)
-        : "";
+    // formValues.cuHdate =
+    //   typeof formValues.cuHdate === "string"
+    //     ? formatDateByRemoveDash(formValues.cuHdate)
+    //     : (formValues.cuHdate as any) instanceof Date
+    //     ? formatDateToStringWithoutDash(formValues.cuHdate)
+    //     : "";
+    formValues.cuHdate = DateWithoutDash(formValues.cuHdate);
 
-    formValues.cuExtendDate =
-      typeof formValues.cuExtendDate === "string"
-        ? formatDateByRemoveDash(formValues.cuExtendDate)
-        : (formValues.cuExtendDate as any) instanceof Date
-        ? formatDateToStringWithoutDash(formValues.cuExtendDate)
-        : "";
+    // formValues.cuExtendDate =
+    //   typeof formValues.cuExtendDate === "string"
+    //     ? formatDateByRemoveDash(formValues.cuExtendDate)
+    //     : (formValues.cuExtendDate as any) instanceof Date
+    //     ? formatDateToStringWithoutDash(formValues.cuExtendDate)
+    //     : "";
+    formValues.cuExtendDate = DateWithoutDash(formValues.cuExtendDate);
 
-    formValues.cuGongdate =
-      typeof formValues.cuGongdate === "string"
-        ? formatDateByRemoveDash(formValues.cuGongdate)
-        : (formValues.cuGongdate as any) instanceof Date
-        ? formatDateToStringWithoutDash(formValues.cuGongdate)
-        : "";
+    // formValues.cuGongdate =
+    //   typeof formValues.cuGongdate === "string"
+    //     ? formatDateByRemoveDash(formValues.cuGongdate)
+    //     : (formValues.cuGongdate as any) instanceof Date
+    //     ? formatDateToStringWithoutDash(formValues.cuGongdate)
+    //     : "";
+    formValues.cuGongdate = DateWithoutDash(formValues.cuGongdate);
 
     if (formValues.cuGongdate === "") {
       delete formValues.cuGongdate;

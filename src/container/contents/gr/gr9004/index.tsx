@@ -13,10 +13,7 @@ import {
   Label,
   Field,
 } from "components/form/style";
-import {
-  formatDateToStringWithoutDash,
-  formatDateByRemoveDash,
-} from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize, FieldKind } from "components/componentsType";
@@ -56,16 +53,18 @@ function GR9004({
   const fetchData = async (params: any) => {
     try {
       if (params.sDate !== undefined) {
-        params.sDate =
-          typeof params.sDate === "string"
-            ? formatDateByRemoveDash(params.sDate)
-            : formatDateToStringWithoutDash(params.sDate);
+        // params.sDate =
+        //   typeof params.sDate === "string"
+        //     ? formatDateByRemoveDash(params.sDate)
+        //     : formatDateToStringWithoutDash(params.sDate);
+        params.sDate = DateWithoutDash(params.sDate);
       }
       if (params.eDate !== undefined) {
-        params.eDate =
-          typeof params.eDate === "string"
-            ? formatDateByRemoveDash(params.eDate)
-            : formatDateToStringWithoutDash(params.eDate);
+        // params.eDate =
+        //   typeof params.eDate === "string"
+        //     ? formatDateByRemoveDash(params.eDate)
+        //     : formatDateToStringWithoutDash(params.eDate);
+        params.eDate = DateWithoutDash(params.eDate);
       }
       setLoading(true);
       const { data } = await API.get(GR9004SEARCH, { params: params });

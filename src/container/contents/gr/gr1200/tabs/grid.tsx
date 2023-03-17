@@ -15,7 +15,7 @@ function Grid({
   setRowIndex,
   register,
   setBclInqtyLPG,
-  calcTab1FooterChange,
+  calcOnFieldChange,
   getValues,
 }: {
   data: any;
@@ -25,7 +25,7 @@ function Grid({
   setRowIndex: Function;
   register: Function;
   setBclInqtyLPG: Function;
-  calcTab1FooterChange: Function;
+  calcOnFieldChange: Function;
   getValues: any;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
@@ -80,32 +80,90 @@ function Grid({
     };
 
     gv.onCellButtonClicked = function (grid: any, index: any, column: any) {
-      if (Object.keys(data2).length > 0) {
-        dispatch(
-          addGR1200({
-            index: index.dataRow,
-            areaCode: data2?.areaCode ? data2.areaCode : getValues("areaCode"),
-            bcBuCode: data2?.bcBuCode ? data2.bcBuCode : getValues("bcBuCode"),
-            bcChitType: data2?.bcChitType ? data2?.bcChitType : tabId, //daraa n "0"-iig hasah
-          })
-        );
-        dispatch(openModal({ type: "gr1200Modal" }));
-      }
+      dispatch(
+        addGR1200({
+          index: index.dataRow,
+          areaCode: getValues("areaCode"),
+          bcBuCode: getValues("bcBuCode"),
+          bcChitType: tabId,
+        })
+      );
+      dispatch(openModal({ type: "gr1200Modal" }));
     };
 
     gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
-      setData((prev: any) =>
-        prev.map((object: any, idx: number) => {
-          if (idx === index.dataRow) {
-            return {
-              ...object,
-              [index.fieldName]: newValue,
-              isEdited: true,
-            };
-          } else return object;
-        })
-      );
-      setBclInqtyLPG((prev: boolean) => !prev);
+      if (tabId === 0) {
+        setData((prev: any) =>
+          prev.map((object: any, idx: number) => {
+            if (idx === index.dataRow) {
+              if (index.fieldName === "bclInqty") {
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                  isEdited: true,
+                };
+              } else {
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                };
+              }
+            } else return object;
+          })
+        );
+        setBclInqtyLPG((prev: boolean) => !prev);
+      }
+      if (tabId === 1) {
+        setData((prev: any) =>
+          prev.map((object: any, idx: number) => {
+            if (idx === index.dataRow) {
+              if (index.fieldName === "bclInqty" && object.bclCost !== null) {
+                // const bclVatType = object.bclVatType ? object.bclVatType : 0;
+                const bclAmt = object.bclCost * newValue; // + bclVatType;
+
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                  isEdited: true,
+                  bclAmt: bclAmt,
+                };
+              }
+              if (index.fieldName === "bclCost" && object.bclInqty !== null) {
+                // const bclVatType = object.bclVatType ? object.bclVatType : 0;
+                const bclAmt = object.bclInqty * newValue; //+ bclVatType;
+
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                  isEdited: true,
+                  bclAmt: bclAmt,
+                };
+              }
+
+              // if (
+              //   index.fieldName === "bclVatType" &&
+              //   object.bclInqty !== null &&
+              //   object.bclVatType !== null
+              // ) {
+              //   const bclAmt = object.bclInqty * object.bclCost + newValue;
+
+              //   return {
+              //     ...object,
+              //     [index.fieldName]: newValue,
+              //     bclAmt: bclAmt,
+              //   };
+              // }
+
+              return {
+                ...object,
+                [index.fieldName]: newValue,
+              };
+            } else return object;
+          })
+        );
+        setBclInqtyLPG((prev: boolean) => !prev);
+      }
+
       gv.cancel();
     };
 
@@ -129,7 +187,7 @@ function Grid({
         <Tab1Footer
           data={data2}
           register={register}
-          calcTab1FooterChange={calcTab1FooterChange}
+          calcOnFieldChange={calcOnFieldChange}
         />
       )}
     </>

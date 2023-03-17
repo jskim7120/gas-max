@@ -14,7 +14,6 @@ import {
 import {
   Plus,
   Trash,
-  Update,
   Reset,
   MagnifyingGlassBig,
   ExcelIcon,
@@ -112,6 +111,18 @@ function CM1100Page({
     } catch (err: any) {}
   };
 
+  const handleOpenPopup2 = async () => {
+    if (selected) {
+      dispatch(
+        addCM1105({
+          cuCode: selected.cuCode,
+          areaCode: selected.areaCode,
+        })
+      );
+      dispatch(openModal({ type: "cm1105Modal" }));
+    }
+  };
+
   const resetSearchForm = () => {
     reset({
       areaCode: dataCommonDic?.areaCode[0].code,
@@ -157,10 +168,7 @@ function CM1100Page({
             icon={<Reset />}
             style={{ marginRight: "5px" }}
             type="button"
-            onClick={() => {
-              resetSearchForm();
-              setData([]);
-            }}
+            onClick={handleOpenPopup2}
           />
           <Button text="삭제" icon={<Trash />} type="button" />
         </div>

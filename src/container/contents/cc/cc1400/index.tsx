@@ -25,10 +25,7 @@ import Grid from "../grid";
 import { fields, columns } from "./data";
 import Form from "./form";
 import { CC1400SEARCH } from "app/path";
-import {
-  formatDateToStringWithoutDash,
-  formatDateByRemoveDash,
-} from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
 
 function CC1400({
@@ -74,15 +71,17 @@ function CC1400({
   };
 
   const submit = (params: any) => {
-    params.sDateF =
-      typeof params.sDateF === "string"
-        ? formatDateByRemoveDash(params.sDateF)
-        : formatDateToStringWithoutDash(params.sDateF);
+    // params.sDateF =
+    //   typeof params.sDateF === "string"
+    //     ? formatDateByRemoveDash(params.sDateF)
+    //     : formatDateToStringWithoutDash(params.sDateF);
+    params.sDateF = DateWithoutDash(params.sDateF);
 
-    params.sDateT =
-      typeof params.sDateT === "string"
-        ? formatDateByRemoveDash(params.sDateT)
-        : formatDateToStringWithoutDash(params.sDateT);
+    // params.sDateT =
+    //   typeof params.sDateT === "string"
+    //     ? formatDateByRemoveDash(params.sDateT)
+    //     : formatDateToStringWithoutDash(params.sDateT);
+    params.sDateT = DateWithoutDash(params.sDateT);
 
     fetchData(params);
   };

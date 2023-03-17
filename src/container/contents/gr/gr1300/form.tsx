@@ -21,12 +21,7 @@ import { useSelector } from "app/store";
 import FooterInfo from "./footer";
 import { CircleBtn } from "./style";
 import { PersonInfoText } from "components/text";
-import {
-  formatDateByRemoveDash,
-  formatDate,
-  formatDateToString,
-  formatDateToStringWithoutDash,
-} from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import {
   GR130065,
   GR1300BUYINSERT,
@@ -193,7 +188,8 @@ function Form({
         params: {
           areaCode: selected?.areaCode,
           bbBuCode: selected?.bbBuCode,
-          bbDate: formatDateByRemoveDash(selected?.bbDate),
+          // bbDate: formatDateByRemoveDash(selected?.bbDate),
+          bbDate: DateWithoutDash(selected?.bbDate),
           bbSno: selected?.bbSno,
         },
       });
@@ -217,7 +213,8 @@ function Form({
   const clear = () => {
     reset({
       areaCode: areaCode,
-      bbDate: formatDateToString(new Date()),
+      // bbDate: formatDateToString(new Date()),
+      // bbDate: DateWithDash(new Date()),
       bbBuCode: dataCommonDic?.bbBuCode[0].code,
       bbSno: "",
     });
@@ -242,7 +239,8 @@ function Form({
         const res: any = await API.post(GR1300BUYDELETE, {
           areaCode: selected.areaCode,
           bbBuCode: selected.bbBuCode,
-          bbDate: formatDateByRemoveDash(selected.bbDate),
+          // bbDate: formatDateByRemoveDash(selected.bbDate),
+          bbDate: DateWithoutDash(selected.bbDate),
           bbSno: selected.bbSno,
         });
         if (res.status === 200) {
@@ -264,10 +262,11 @@ function Form({
   const submit = async (data: any) => {
     const formValues = getValues();
 
-    formValues.bbDate =
-      typeof formValues.bbDate === "string"
-        ? formatDateByRemoveDash(formValues.bbDate)
-        : formatDateToStringWithoutDash(formValues.bbDate);
+    // formValues.bbDate =
+    //   typeof formValues.bbDate === "string"
+    //     ? formatDateByRemoveDash(formValues.bbDate)
+    //     : formatDateToStringWithoutDash(formValues.bbDate);
+    formValues.bbDate = DateWithoutDash(formValues.bbDate);
 
     let path: string;
 

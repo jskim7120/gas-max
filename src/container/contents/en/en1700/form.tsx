@@ -21,7 +21,7 @@ import {
 } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { ICAR } from "./model";
-import { formatDate, formatDateByRemoveDash } from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { InfoText } from "components/text";
@@ -39,6 +39,9 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
+  setIsCancelBtnDisabled: Function;
 }
 
 const radioOptions = [
@@ -73,17 +76,12 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
+      setIsCancelBtnDisabled,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-    const [caSafeDate, setCaSafeDate] = useState("");
-    const [caInDate, setCaInDate] = useState("");
-    const [caRentDate, setCaRentDate] = useState("");
-    const [caJdate1, setCaJdate1] = useState("");
-    const [caJdate2, setCaJdate2] = useState("");
-    const [caBsdate, setCaBsdate] = useState("");
-    const [caBldate, setCaBldate] = useState("");
     const [empChargeData, setEmpChargeData] = useState([]);
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -105,7 +103,6 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {
@@ -143,21 +140,18 @@ const Form = React.forwardRef(
             ...newData,
             caBkYn: selected?.caBkYn === "Y",
             caRentYn: selected?.caRentYn === "Y",
+            // caSafeDate: DateWithDash(selected.caSafeDate),
+            // caInDate: DateWithDash(selected.caInDate),
+            // caRentDate: DateWithDash(selected.caRentDate),
+            // caJdate1: DateWithDash(selected.caJdate1),
+            // caJdate2: DateWithDash(selected.caJdate2),
+            // caBsdate: DateWithDash(selected.caBsdate),
+            // caBldate: DateWithDash(selected.caBldate),
           });
-          setCaSafeDate(
-            selected.caSafeDate ? formatDate(selected.caSafeDate) : ""
-          );
-          setCaInDate(selected.caInDate ? formatDate(selected.caInDate) : "");
-          setCaRentDate(
-            selected.caRentDate ? formatDate(selected.caRentDate) : ""
-          );
-          setCaJdate1(selected.caJdate1 ? formatDate(selected.caJdate1) : "");
-          setCaJdate2(selected.caJdate2 ? formatDate(selected.caJdate2) : "");
-          setCaBsdate(selected.caBsdate ? formatDate(selected.caBsdate) : "");
-          setCaBldate(selected.caBldate ? formatDate(selected.caBldate) : "");
         }
       }
     };
+
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
@@ -190,17 +184,26 @@ const Form = React.forwardRef(
       formValues.caBkYn = formValues.caBkYn ? "Y" : "N";
       formValues.caRentYn = formValues.caRentYn ? "Y" : "N";
 
-      formValues.caSafeDate = caSafeDate
-        ? formatDateByRemoveDash(caSafeDate)
-        : "";
-      formValues.caInDate = caInDate ? formatDateByRemoveDash(caInDate) : "";
-      formValues.caRentDate = caRentDate
-        ? formatDateByRemoveDash(caRentDate)
-        : "";
-      formValues.caJdate1 = caJdate1 ? formatDateByRemoveDash(caJdate1) : "";
-      formValues.caJdate2 = caJdate2 ? formatDateByRemoveDash(caJdate2) : "";
-      formValues.caBsdate = caBsdate ? formatDateByRemoveDash(caBsdate) : "";
-      formValues.caBldate = caBsdate ? formatDateByRemoveDash(caBldate) : "";
+      // formValues.caSafeDate = caSafeDate
+      //   ? formatDateByRemoveDash(caSafeDate)
+      //   : "";
+      // formValues.caInDate = caInDate ? formatDateByRemoveDash(caInDate) : "";
+      // formValues.caRentDate = caRentDate
+      //   ? formatDateByRemoveDash(caRentDate)
+      //   : "";
+      // formValues.caJdate1 = caJdate1 ? formatDateByRemoveDash(caJdate1) : "";
+      // formValues.caJdate2 = caJdate2 ? formatDateByRemoveDash(caJdate2) : "";
+      // formValues.caBsdate = caBsdate ? formatDateByRemoveDash(caBsdate) : "";
+      // formValues.caBldate = caBsdate ? formatDateByRemoveDash(caBldate) : "";
+
+      formValues.caSafeDate = DateWithoutDash(formValues.caSafeDate);
+      formValues.caInDate = DateWithoutDash(formValues.caInDate);
+      formValues.caRentDate = DateWithoutDash(formValues.caRentDate);
+      formValues.caJdate1 = DateWithoutDash(formValues.caJdate1);
+      formValues.caJdate2 = DateWithoutDash(formValues.caJdate2);
+      formValues.caBsdate = DateWithoutDash(formValues.caBsdate);
+      formValues.caBldate = DateWithoutDash(formValues.caBldate);
+      console.log(formValues);
       // --------------------------
       formValues.caAmt = formValues.caAmt
         ? formatCurrencyRemoveComma(formValues.caAmt)
@@ -208,15 +211,13 @@ const Form = React.forwardRef(
       formValues.caMAmt = formValues.caMAmt
         ? formatCurrencyRemoveComma(formValues.caMAmt)
         : "";
-      formValues.caDiscountM = formValues.caDiscountM
-        ? formatCurrencyRemoveComma(formValues.caDiscountM)
-        : "";
+
       formValues.caDiscountAmt = formValues.caDiscountAmt
         ? formatCurrencyRemoveComma(formValues.caDiscountAmt)
         : "";
       formValues.caInsuranceAmt = formValues.caInsuranceAmt
         ? formatCurrencyRemoveComma(formValues.caInsuranceAmt)
-        : "";
+        : 0;
 
       try {
         const response: any = await API.post(path, formValues);
@@ -224,6 +225,8 @@ const Form = React.forwardRef(
           if (isAddBtnClicked) {
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
+            setIsAddBtnClicked(false);
+            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -234,7 +237,6 @@ const Form = React.forwardRef(
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
-          setIsAddBtnClicked(false);
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,
@@ -256,13 +258,13 @@ const Form = React.forwardRef(
           params: { areaCode: event.target.value },
         });
         if (response.status === 200) {
-          console.log("works", response);
           for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
+            newData[key] = null;
           }
           newData.caCode = response.data.tempCode;
           newData.areaCode = event.target.value;
           reset(newData);
+          document.getElementById("caName")?.focus();
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,
@@ -308,7 +310,7 @@ const Form = React.forwardRef(
             register={register("caCode")}
             inputSize={InputSize.i150}
             maxLength="2"
-            readOnly={isAddBtnClicked}
+            readOnly
           />
 
           <FormGroup>
@@ -317,6 +319,7 @@ const Form = React.forwardRef(
               {...register("areaCode")}
               onChange={handleSelectCode}
               width={InputSize.i150}
+              disabled={!isAddBtnClicked}
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -346,7 +349,6 @@ const Form = React.forwardRef(
             </Select>
           </FormGroup>
         </Wrapper>
-
         <Wrapper grid col={2}>
           <FormGroup style={{ alignItems: "center" }}>
             <Label>벌크로리차량유무</Label>
@@ -413,7 +415,6 @@ const Form = React.forwardRef(
             maxLength="6"
           />
         </Wrapper>
-
         <Wrapper grid col={2}>
           <Input
             label="차량소유자"
@@ -437,7 +438,6 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
-
         <Wrapper grid col={2}>
           <FormGroup style={{ alignItems: "center" }}>
             <Label>리스/렌트 유무</Label>
@@ -459,7 +459,6 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
-
         <Wrapper style={{ width: "630px" }}>
           <Field flex style={{ alignItems: "center" }}>
             <Label>정기검사일</Label>
@@ -492,7 +491,6 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
-
         <Wrapper>
           <Input
             label="메모"
@@ -529,10 +527,10 @@ const Form = React.forwardRef(
               inputSize={InputSize.i150}
               maxLength="10"
             />
+
             <p>월</p>
           </Field>
         </Wrapper>
-
         <Wrapper grid col={2}>
           <Field flex>
             <Controller
@@ -580,7 +578,6 @@ const Form = React.forwardRef(
             maxLength="20"
           />
         </Wrapper>
-
         <Wrapper grid col={2}>
           <Input
             label="계약지점"
@@ -595,7 +592,6 @@ const Form = React.forwardRef(
             maxLength="10"
           />
         </Wrapper>
-
         <Wrapper grid col={2}>
           <Input
             label="전화번호"
@@ -633,7 +629,6 @@ const Form = React.forwardRef(
             )}
           />
         </Wrapper>
-
         <Wrapper grid col={2}>
           <Input
             label="피보험자"
@@ -644,11 +639,10 @@ const Form = React.forwardRef(
           <Input
             label="증권번호"
             register={register("caBno")}
-            inputSize={InputSize.i180}
+            inputSize={InputSize.i150}
             maxLength="20"
           />
         </Wrapper>
-
         <Wrapper>
           <Field>
             <FormGroup>
@@ -658,9 +652,12 @@ const Form = React.forwardRef(
                   <RadioButton
                     type="radio"
                     value={option.id}
-                    {...register(`caBage`, {
-                      required: "required",
-                    })}
+                    {...register(
+                      `caBage`
+                      // , {
+                      //   required: "required",
+                      // }
+                    )}
                     id={option.id}
                     // onChange={() => console.log(option.label)}
                   />
@@ -672,7 +669,6 @@ const Form = React.forwardRef(
             </FormGroup>
           </Field>
         </Wrapper>
-
         <Wrapper style={{ width: "630px" }}>
           <Field flex style={{ alignItems: "center" }}>
             <Label>보험기간</Label>
@@ -703,7 +699,6 @@ const Form = React.forwardRef(
             />
           </Field>
         </Wrapper>
-
         <Wrapper>
           <Field flex>
             <Controller

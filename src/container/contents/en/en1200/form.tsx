@@ -15,7 +15,7 @@ import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { SearchIcon, IconHome, IconReceipt } from "components/allSvgIcon";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { formatDate, formatDateToStringWithoutDash } from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { convertBase64 } from "helpers/convertBase64";
@@ -31,6 +31,9 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
+  setIsCancelBtnDisabled: Function;
 }
 
 const Form = React.forwardRef(
@@ -42,10 +45,12 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
+      setIsCancelBtnDisabled,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [addr, setAddress] = useState<string>("");
     const [image, setImage] = useState<{ name: string }>();
     const [image64, setImage64] = useState<any>(null);
@@ -77,7 +82,6 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {
@@ -115,7 +119,8 @@ const Form = React.forwardRef(
             saupStampQu: selected?.saupStampQu === "Y",
             saupStampEs: selected?.saupStampEs === "Y",
             saupStampSe: selected?.saupStampSe === "Y",
-            saupDate: selected?.saupDate ? formatDate(selected.saupDate) : "",
+            // saupDate: selected?.saupDate ? formatDate(selected.saupDate) : "",
+            // saupDate: DateWithDash(selected?.saupDate),
           });
 
           selected.saupStampImg
@@ -157,9 +162,10 @@ const Form = React.forwardRef(
       formValues.saupStampQu = formValues.saupStampQu ? "Y" : "N";
       formValues.saupStampEs = formValues.saupStampEs ? "Y" : "N";
       formValues.saupStampSe = formValues.saupStampSe ? "Y" : "N";
-      formValues.saupDate = formValues.saupDate
-        ? formatDateToStringWithoutDash(formValues.saupDate)
-        : "";
+      // formValues.saupDate = formValues.saupDate
+      //   ? formatDateToStringWithoutDash(formValues.saupDate)
+      //   : "";
+      formValues.saupDate = DateWithoutDash(formValues.saupDate);
       formValues.saupEdiEmail =
         formValues.saupEdiEmail && formValues.saupEdiEmail.trim();
 
@@ -171,6 +177,8 @@ const Form = React.forwardRef(
           if (isAddBtnClicked) {
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
+            setIsAddBtnClicked(false);
+            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -181,7 +189,6 @@ const Form = React.forwardRef(
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
-          setIsAddBtnClicked(false);
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,
@@ -216,12 +223,15 @@ const Form = React.forwardRef(
           params: { areaCode: event.target.value },
         });
         if (response.status === 200) {
+          console.log(response.data);
           for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
+            newData[key] = null;
           }
           newData.saupSno = response.data.tempCode;
           newData.areaCode = event.target.value;
+
           reset(newData);
+          console.log(document.getElementsByName("saupSsno")[0].focus());
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,
@@ -251,7 +261,7 @@ const Form = React.forwardRef(
                 label="코드"
                 register={register("saupSno")}
                 inputSize={InputSize.i150}
-                readOnly={isAddBtnClicked}
+                readOnly
               />
 
               <FormGroup>
@@ -260,6 +270,7 @@ const Form = React.forwardRef(
                   {...register("areaCode")}
                   onChange={handleSelectCode}
                   width={InputSize.i175}
+                  disabled={!isAddBtnClicked}
                 >
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -551,7 +562,7 @@ const Form = React.forwardRef(
             <Wrapper style={{ alignItems: "center" }}>
               <Input
                 label="공인인증서"
-                register={register("saupEdiSawon")}
+                register={register("saupCert")}
                 inputSize={InputSize.i200}
               />
               <button

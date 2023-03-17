@@ -40,7 +40,16 @@ const Table = styled.table`
       }
     }
     tr.active {
-      background: #ffffe1;
+      // background: #ffffe1;
+    }
+  }
+
+  &.no-space {
+    td {
+      padding: 0;
+    }
+    th {
+      width: auto;
     }
   }
 `;

@@ -31,6 +31,8 @@ export interface IJNOTRY2 {
   jnJiroPrint: string;
   jnKgdanga: number;
   jnKgdangaMp: number;
+  jnMpdanga: number;
+  jnMpdangaType: any;
   jnCost280: any;
   jnCost600: any;
   jnCost1000: any;

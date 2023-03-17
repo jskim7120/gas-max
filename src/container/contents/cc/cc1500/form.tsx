@@ -13,7 +13,6 @@ import {
 } from "components/form/style";
 import { ICC1500FORM } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { formatDate, formatDateToStringWithoutDash } from "helpers/dateFormat";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import API from "app/axios";

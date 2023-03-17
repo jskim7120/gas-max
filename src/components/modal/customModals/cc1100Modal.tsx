@@ -5,6 +5,7 @@ const ModalWrapper = styled.div`
   width: 254px;
   height: 387px;
   background: #fff;
+  overflow-y: auto;
 `;
 
 function CC1100Modal() {

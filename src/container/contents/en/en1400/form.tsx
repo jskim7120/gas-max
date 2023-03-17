@@ -24,6 +24,9 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
+  setIsCancelBtnDisabled: Function;
 }
 
 const Form = React.forwardRef(
@@ -35,10 +38,12 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
+      setIsCancelBtnDisabled,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1400",
@@ -56,7 +61,6 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {
@@ -136,6 +140,8 @@ const Form = React.forwardRef(
           if (isAddBtnClicked) {
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
+            setIsAddBtnClicked(false);
+            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -143,7 +149,6 @@ const Form = React.forwardRef(
             });
           }
           setSelected(formValues);
-          setIsAddBtnClicked(false);
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
@@ -168,11 +173,12 @@ const Form = React.forwardRef(
         });
         if (response.status === 200) {
           for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
+            newData[key] = null;
           }
           newData.bpCode = response.data.tempCode;
           newData.areaCode = event.target.value;
           reset(newData);
+          document.getElementById("bpName")?.focus();
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,
@@ -194,7 +200,8 @@ const Form = React.forwardRef(
             <Select
               {...register("areaCode")}
               onChange={handleSelectCode}
-              width={InputSize.i130}
+              width={InputSize.i150}
+              disabled={!isAddBtnClicked}
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -209,9 +216,9 @@ const Form = React.forwardRef(
             label="부품코드"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpCode")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i150}
             maxLength="3"
-            readOnly={isAddBtnClicked}
+            readOnly
           />
         </Wrapper>
         <Divider />
@@ -220,7 +227,7 @@ const Form = React.forwardRef(
             label="부품명"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpName")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i150}
             maxLength="20"
           />
         </Wrapper>
@@ -229,7 +236,7 @@ const Form = React.forwardRef(
             label="규격"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpType")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i150}
             maxLength="10"
           />
         </Wrapper>
@@ -238,7 +245,7 @@ const Form = React.forwardRef(
             label="단위"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpDanwi")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i150}
             maxLength="10"
           />
         </Wrapper>
@@ -256,7 +263,7 @@ const Form = React.forwardRef(
                   onChange={onChange}
                   mask={currencyMask}
                   textAlign="right"
-                  inputSize={InputSize.i250}
+                  inputSize={InputSize.i150}
                   name={name}
                 />
               )}
@@ -277,7 +284,7 @@ const Form = React.forwardRef(
                   onChange={onChange}
                   mask={currencyMask}
                   textAlign="right"
-                  inputSize={InputSize.i250}
+                  inputSize={InputSize.i150}
                   name={name}
                 />
               )}

@@ -58,14 +58,14 @@ function EN1500({
             }}
             color={ButtonColor.SECONDARY}
           />
-          <Button
+          {/* <Button
             text="취소"
             icon={<Reset />}
             onClick={() => {
               // formRef.current.setIsAddBtnClicked(false);
               formRef.current.resetForm("reset");
             }}
-          />
+          /> */}
         </div>
       </SearchWrapper>
       <MainWrapper>

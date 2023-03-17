@@ -17,11 +17,7 @@ import CheckBox from "components/checkbox";
 import { IJNOSAUP } from "./model";
 import DaumAddress from "components/daum";
 import { SearchIcon, IconInfo } from "components/allSvgIcon";
-import {
-  formatDate,
-  formatDateByRemoveDash,
-  formatDateToStringWithoutDash,
-} from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 import { convertBase64 } from "helpers/convertBase64";
 import CustomDatePicker from "components/customDatePicker";
 import { ImageWrapper } from "../../commonStyle";
@@ -35,6 +31,9 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
+  setIsCancelBtnDisabled: Function;
 }
 
 const Form = React.forwardRef(
@@ -46,10 +45,12 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
+      setIsCancelBtnDisabled,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [addr, setAddress] = useState<string>("");
     const [image, setImage] = useState<{
       name: string;
@@ -84,7 +85,7 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
+      setImage64,
     }));
 
     const resetForm = async (type: string) => {
@@ -123,12 +124,12 @@ const Form = React.forwardRef(
             swWorkOut: selected.swWorkOut === "Y",
             cuSeEmail: selected.cuSeEmail ? selected.cuSeEmail.trim() : "",
             mailKind: selected.mailKind ? selected.mailKind.trim() : "",
-            swIndate: selected?.swIndate ? formatDate(selected.swIndate) : "",
-            swJdate1: selected?.swJdate1 ? formatDate(selected.swJdate1) : "",
-            swJdate2: selected?.swJdate2 ? formatDate(selected.swJdate2) : "",
-            swOutDate: selected?.swOutDate
-              ? formatDate(selected.swOutDate)
-              : "",
+            // swIndate: selected?.swIndate ? DateWithDash(selected.swIndate) : "",
+            // swJdate1: selected?.swJdate1 ? DateWithDash(selected.swJdate1) : "",
+            // swJdate2: selected?.swJdate2 ? DateWithDash(selected.swJdate2) : "",
+            // swOutDate: selected?.swOutDate
+            //   ? DateWithDash(selected.swOutDate)
+            //   : "",
           });
 
           selected.swStampFile
@@ -177,30 +178,34 @@ const Form = React.forwardRef(
         formValues.cuSeEmail &&
         `${formValues.cuSeEmail.trim()}@${formValues.mailKind}`;
 
-      formValues.swIndate =
-        typeof formValues.swIndate === "string"
-          ? formatDateByRemoveDash(formValues.swIndate)
-          : formValues.swIndate instanceof Date
-          ? formatDateToStringWithoutDash(formValues.swIndate)
-          : "";
-      formValues.swJdate1 =
-        typeof formValues.swJdate1 === "string"
-          ? formatDateByRemoveDash(formValues.swJdate1)
-          : formValues.swJdate1 instanceof Date
-          ? formatDateToStringWithoutDash(formValues.swJdate1)
-          : "";
-      formValues.swJdate2 =
-        typeof formValues.swJdate2 === "string"
-          ? formatDateByRemoveDash(formValues.swJdate2)
-          : formValues.swJdate2 instanceof Date
-          ? formatDateToStringWithoutDash(formValues.swJdate2)
-          : "";
-      formValues.swOutDate =
-        typeof formValues.swOutDate === "string"
-          ? formatDateByRemoveDash(formValues.swOutDate)
-          : formValues.swOutDate instanceof Date
-          ? formatDateToStringWithoutDash(formValues.swOutDate)
-          : "";
+      // formValues.swIndate =
+      //   typeof formValues.swIndate === "string"
+      //     ? formatDateByRemoveDash(formValues.swIndate)
+      //     : formValues.swIndate instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.swIndate)
+      //     : "";
+      formValues.swIndate = DateWithoutDash(formValues.swIndate);
+      // formValues.swJdate1 =
+      //   typeof formValues.swJdate1 === "string"
+      //     ? formatDateByRemoveDash(formValues.swJdate1)
+      //     : formValues.swJdate1 instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.swJdate1)
+      //     : "";
+      formValues.swJdate1 = DateWithoutDash(formValues.swJdate1);
+      // formValues.swJdate2 =
+      //   typeof formValues.swJdate2 === "string"
+      //     ? formatDateByRemoveDash(formValues.swJdate2)
+      //     : formValues.swJdate2 instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.swJdate2)
+      //     : "";
+      formValues.swJdate2 = DateWithoutDash(formValues.swJdate2);
+      // formValues.swOutDate =
+      //   typeof formValues.swOutDate === "string"
+      //     ? formatDateByRemoveDash(formValues.swOutDate)
+      //     : formValues.swOutDate instanceof Date
+      //     ? formatDateToStringWithoutDash(formValues.swOutDate)
+      //     : "";
+      formValues.swOutDate = DateWithoutDash(formValues.swOutDate);
       formValues.swGubun = formValues.swGubunName?.charAt(0);
 
       formValues.swStampFile = image64 && image64;
@@ -212,6 +217,8 @@ const Form = React.forwardRef(
           if (isAddBtnClicked) {
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
+            setIsAddBtnClicked(false);
+            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -222,7 +229,6 @@ const Form = React.forwardRef(
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
-          setIsAddBtnClicked(false);
         } else {
           toast.error(response?.message, {
             autoClose: 500,
@@ -258,11 +264,12 @@ const Form = React.forwardRef(
         });
         if (response.status === 200) {
           for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
+            newData[key] = null;
           }
           newData.swCode = response.data.tempCode;
           newData.areaCode = event.target.value;
           reset(newData);
+          document.getElementById("swName")?.focus();
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,
@@ -283,7 +290,7 @@ const Form = React.forwardRef(
             label="코드"
             register={register("swCode")}
             maxLength="2"
-            readOnly={isAddBtnClicked}
+            readOnly
             inputSize={InputSize.i200}
           />
 
@@ -293,6 +300,7 @@ const Form = React.forwardRef(
               {...register("areaCode")}
               onChange={handleSelectCode}
               width={InputSize.i200}
+              disabled={!isAddBtnClicked}
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -425,15 +433,19 @@ const Form = React.forwardRef(
             inputSize={InputSize.i200}
           />
           <DaumAddress setAddress={setAddress} />
-          <Input register={register("swAddr1")} fullWidth maxLength="40" />
+          <Input
+            register={register("swAddr1")}
+            maxLength="40"
+            style={{ width: "294px" }}
+          />
         </Wrapper>
 
         <Wrapper>
           <Input
             label=""
             register={register("swAddr2")}
-            fullWidth
             maxLength="40"
+            style={{ width: "526px" }}
           />
         </Wrapper>
 
@@ -464,7 +476,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Divider />
         <Wrapper>
-          <div>
+          <div style={{ width: "600px" }}>
             <Wrapper grid col={3} style={{ alignItems: "center" }}>
               <Input
                 label="서명화일"
@@ -503,8 +515,8 @@ const Form = React.forwardRef(
               </button>
             </Wrapper>
 
-            <Wrapper style={{ width: "600px" }}>
-              <Field flex style={{ alignItems: "center" }}>
+            <Wrapper>
+              <FormGroup>
                 <Label>입사일</Label>
                 <Controller
                   control={control}
@@ -517,23 +529,22 @@ const Form = React.forwardRef(
                     />
                   )}
                 />
-              </Field>
-              <Field style={{ width: "100%" }}>
-                <FormGroup>
-                  <Label>급여방식</Label>
-                  <Select {...register("swPaytype")} width={InputSize.i110}>
-                    {dataCommonDic?.swPaytype?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code1}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-              </Field>
+              </FormGroup>
+
+              <FormGroup>
+                <Label style={{ minWidth: "90px" }}>급여방식</Label>
+                <Select {...register("swPaytype")} width={InputSize.i110}>
+                  {dataCommonDic?.swPaytype?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code1}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
             </Wrapper>
 
             <Wrapper grid>
-              <Field flex>
+              <FormGroup>
                 <Controller
                   control={control}
                   {...register("swPaykum")}
@@ -551,8 +562,8 @@ const Form = React.forwardRef(
                 />
 
                 <p>원</p>
-              </Field>
-              <Field style={{ marginLeft: "-15px" }}>
+              </FormGroup>
+              <FormGroup>
                 <Controller
                   control={control}
                   {...register("swPaydate")}
@@ -560,6 +571,7 @@ const Form = React.forwardRef(
                     <Input
                       label="급여일"
                       value={value}
+                      labelStyle={{ minWidth: "76px" }}
                       onChange={onChange}
                       mask={[/\d/, /\d/]}
                       name={name}
@@ -567,7 +579,7 @@ const Form = React.forwardRef(
                     />
                   )}
                 />
-              </Field>
+              </FormGroup>
             </Wrapper>
           </div>
           <ImageWrapper>{image64 && <img src={image64} />}</ImageWrapper>
@@ -576,13 +588,14 @@ const Form = React.forwardRef(
         <Wrapper>
           <Input
             label="면허종류"
-            register={register("swDriverType")}
+            register={register("swDrivertype")}
             maxLength="15"
             inputSize={InputSize.i200}
           />
           <Input
             label="면허번호"
-            register={register("swDriverNo")}
+            labelStyle={{ minWidth: "90px" }}
+            register={register("swDriverno")}
             maxLength="17"
             inputSize={InputSize.i110}
           />
@@ -616,8 +629,8 @@ const Form = React.forwardRef(
           <Input
             label="메모"
             register={register("swBigo")}
-            fullWidth
             maxLength="40"
+            style={{ width: "526px" }}
           />
         </Wrapper>
         <Divider />

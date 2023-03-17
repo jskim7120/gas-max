@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const VolReading = styled.div`
   width: 870px;
-  height: 150px;
+  height: 186px;
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
   border-radius: 8px;

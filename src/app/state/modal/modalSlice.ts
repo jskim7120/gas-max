@@ -48,6 +48,9 @@ export interface initialStateType {
     menuId: string;
     isDelete: boolean;
   };
+  rv1100: {
+    areaCode: string | undefined;
+  };
   pt1105: {
     areaCode: string | undefined;
     cuCode: string | undefined;
@@ -100,6 +103,9 @@ const initialState: initialStateType = {
   isDelete: {
     menuId: "",
     isDelete: false,
+  },
+  rv1100: {
+    areaCode: undefined,
   },
   pt1105: {
     areaCode: "",
@@ -170,6 +176,9 @@ const modalSlice = createSlice({
     setIsDelete: (state, action) => {
       state.isDelete.isDelete = action.payload.isDelete;
     },
+    rv1100Popup: (state, actions) => {
+      state.rv1100.areaCode = actions.payload.areaCode;
+    },
     ptAreaCode: (state, action) => {
       state.pt1105.areaCode = action.payload.areaCode;
       state.pt1105.cuCode = action.payload.cuCode;
@@ -187,6 +196,7 @@ export const {
   addCC1100,
   addDeleteMenuId,
   setIsDelete,
+  rv1100Popup,
   ptAreaCode,
 } = modalSlice.actions;
 
