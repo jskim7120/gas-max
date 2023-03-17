@@ -13,7 +13,7 @@ import AccountModal from "./customModals/accountModal";
 import DelModal from "./customModals/delModal";
 import CC1100Modal from "./customModals/cc1100Modal";
 import EN1500Modal from "./customModals/en1500Modal";
-
+import PT1105Modal from "./../../container/contents/pt/pt1105";
 const PopupArea = styled.section`
   position: fixed;
   width: 100%;
@@ -40,7 +40,8 @@ const PopupContiner = styled.div<{ type: string }>`
       props.type === "gr1200Modal" ||
       props.type === "cc1100Modal" ||
       props.type === "gr1300Modal" ||
-      props.type === "en1500Modal") &&
+      props.type === "en1500Modal" ||
+      props.type === "pt1105Modal") &&
     `
       top: 50%;
       left: 50%;  
@@ -96,6 +97,7 @@ function Popup() {
             {type === "delModal" && <DelModal />}
             {type === "cc1100Modal" && <CC1100Modal />}
             {type === "en1500Modal" && <EN1500Modal />}
+            {type === "pt1105Modal" && <PT1105Modal />}
           </Suspense>
         </PopupContiner>
       </PopupArea>

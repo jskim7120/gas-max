@@ -179,6 +179,16 @@ export const CC150065 = "/app/CC1500/65";
 export const RV9006SEARCH = "/app/RV9006/search";
 export const RV9005SEARCH = "/app/RV9005/search";
 
+export const PT1100SEARCH = "/app/PT1100/search";
+export const PT110065 = "/app/PT1100/65";
+export const PT1100SEARCH62 = "/app/PT1100/search62";
+export const PT1105SEARCH = "/app/PT1105/search";
+
+export const PT1200SEARCH = "/app/PT1200/search";
+export const PT120065 = "/app/PT1200/65";
+export const PT1200SEARCH62 = "/app/PT1200/search62";
+export const PT1205SEARCH = "/app/PT1205/search";
+
 export const FOOT61 = "/app/CM1100/foot61";
 export const FOOTHISTORY = "/app/common/history";
 export const FOOTDETAIL = "/app/common/footDetail";
