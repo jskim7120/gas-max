@@ -23,173 +23,183 @@ function Tab1({
   control: any;
 }) {
   return (
-    <Field className="outer-border">
-      <Wrapper grid col={4} fields="1fr 2fr 1.5fr 1.5fr">
-        <FormGroup>
-          <Label>공급 받는자</Label>
-          <Select {...register("cuNoType")} width={InputSize.i110}>
-            {dataCommonDic?.cuNoType?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </FormGroup>
+    <Field>
+      <FormGroup>
+        <Label>공급 받는자</Label>
+        <Select {...register("cuNoType")} width={InputSize.i110}>
+          {dataCommonDic?.cuNoType?.map((obj: any, idx: number) => (
+            <option key={idx} value={obj.code}>
+              {obj.codeName}
+            </option>
+          ))}
+        </Select>
 
-        <Input register={register("cuNo")} />
+        <Input register={register("cuNo")} inputSize={InputSize.i200} />
 
         <Input
           label="종사업장"
+          labelStyle={{ minWidth: "107px" }}
           register={register("cuRCode")}
           maxLength="4"
           inputSize={InputSize.i50}
         />
 
-        <FormGroup>
-          <Label>과세구분</Label>
-          <Select {...register("cuBilltype")} width={InputSize.i130}>
-            {dataCommonDic?.cuBilltype?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </FormGroup>
-      </Wrapper>
+        <Label>과세구분</Label>
+        <Select {...register("cuBilltype")} width={InputSize.i130}>
+          {dataCommonDic?.cuBilltype?.map((obj: any, idx: number) => (
+            <option key={idx} value={obj.code}>
+              {obj.codeName}
+            </option>
+          ))}
+        </Select>
+      </FormGroup>
 
-      <Wrapper grid col={4}>
-        <Input label="상호" register={register("cuSangho")} />
-        <div></div>
+      <FormGroup>
+        <Input
+          label="상호"
+          register={register("cuSangho")}
+          inputSize={InputSize.i110}
+        />
         <Input
           label="대표"
+          labelStyle={{ marginLeft: "10px", minWidth: "40px" }}
           register={register("cuSajang")}
           className="cm1105Label"
+          inputSize={InputSize.i150}
         />
-      </Wrapper>
+      </FormGroup>
 
-      <Wrapper grid col={2}>
+      <FormGroup>
         <Field flex style={{ alignItems: "center" }}>
           <Input
             label="주소"
             register={register("cuSzipcode")}
-            inputSize={InputSize.i100}
+            inputSize={InputSize.i110}
           />
           <DaumAddress setAddress={setAddress} />
-          <Input register={register("cuSaddr1")} inputSize={InputSize.i400} />
+          <Input register={register("cuSaddr1")} style={{ width: "284px" }} />
         </Field>
+        <Input register={register("cuSaddr2")} style={{ marginLeft: "0px" }} />
+      </FormGroup>
+
+      <FormGroup>
         <Input
-          register={register("cuSaddr2")}
-          fullWidth
-          style={{ marginLeft: "0px" }}
+          label="업태"
+          register={register("cuUptae")}
+          inputSize={InputSize.i150}
         />
-      </Wrapper>
+        <Input
+          label="종목"
+          register={register("cuJongmok")}
+          inputSize={InputSize.i150}
+        />
+      </FormGroup>
 
-      <Wrapper grid col={2}>
-        <Input label="업태" register={register("cuUptae")} />
-        <Input label="종목" register={register("cuJongmok")} />
-      </Wrapper>
+      <FormGroup>
+        <Input
+          label="담당자"
+          register={register("cuSeSawon")}
+          inputSize={InputSize.i150}
+        />
+        <Input
+          label="부서명"
+          register={register("cuDepartment")}
+          inputSize={InputSize.i150}
+        />
+        <Input
+          label="이메일"
+          register={register("cuSeEmail")}
+          inputSize={InputSize.i150}
+        />
+        @
+        <Select {...register("emailKind")} width={InputSize.i150}>
+          {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
+            <option key={idx} value={obj.code1}>
+              {obj.codeName}
+            </option>
+          ))}
+        </Select>
+      </FormGroup>
 
-      <Wrapper grid col={4}>
-        <Input label="담당자" register={register("cuSeSawon")} />
-        <Input label="부서명" register={register("cuDepartment")} />
-        <Input label="이메일" register={register("cuSeEmail")} />
-        <Field>
-          @
-          <Select {...register("emailKind")} width={InputSize.i140}>
-            {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code1}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
-      </Wrapper>
-
-      <Wrapper grid col={4}>
-        <Input label="담당자" register={register("cuSeSawon2")} />
-        <Input label="부서명" register={register("cuDepartment2")} />
-        <Input label="이메일" register={register("cuSeEmail2")} />
-        <Field>
-          @
-          <Select {...register("emailKind2")} width={InputSize.i140}>
-            {dataCommonDic?.emailKind2?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code1}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </Field>
-      </Wrapper>
-
-      <Wrapper grid col={2}>
-        <Field
-          flex
-          style={{
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginRight: "50px",
-          }}
-        >
-          <Field>
-            <FormGroup>
-              <Label>SMS전송 유무</Label>
-              <CheckBox register={{ ...register("cuSeSmsYn") }} />
-            </FormGroup>
-          </Field>
-          <CheckBox
-            title="거래명세표 첨부발행 유무"
-            register={{ ...register("cuSeListYn") }}
-          />
-        </Field>
-        <Field>
-          <FormGroup>
-            <Label>팩스 번호</Label>
-            <CheckBox register={{ ...register("cuSeFaxYn") }} />
-          </FormGroup>
-        </Field>
-      </Wrapper>
+      <FormGroup>
+        <Input
+          label="담당자"
+          register={register("cuSeSawon2")}
+          inputSize={InputSize.i150}
+        />
+        <Input
+          label="부서명"
+          register={register("cuDepartment2")}
+          inputSize={InputSize.i150}
+        />
+        <Input
+          label="이메일"
+          register={register("cuSeEmail2")}
+          inputSize={InputSize.i150}
+        />
+        @
+        <Select {...register("emailKind2")} width={InputSize.i150}>
+          {dataCommonDic?.emailKind2?.map((obj: any, idx: number) => (
+            <option key={idx} value={obj.code1}>
+              {obj.codeName}
+            </option>
+          ))}
+        </Select>
+      </FormGroup>
 
       <Wrapper grid col={4}>
         <FormGroup>
-          <Label>공급사업자</Label>
-          <Select {...register("cuGongsano")} width={InputSize.i250}>
-            {dataCommonDic?.cuGongsano?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
+          <Label>SMS전송 유무</Label>
+          <CheckBox register={{ ...register("cuSeSmsYn") }} />
         </FormGroup>
-
-        <div></div>
-        <Field flex style={{ alignItems: "center" }}>
-          <FormGroup>
-            <Label>계산서 발행주기</Label>
-            <Select {...register("cuSekumMm")} width={InputSize.i130}>
-              {dataCommonDic?.cuSekumNm?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-
-          <Controller
-            control={control}
-            {...register("cuSekumDate")}
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                value={value}
-                onChange={onChange}
-                name={name}
-                mask={[/\d/, /\d/]}
-                inputSize={InputSize.i40}
-              />
-            )}
-          />
-          <p>일</p>
-        </Field>
+        <FormGroup>
+          <Label>거래명세표 첨부발행 유무</Label>
+          <CheckBox register={{ ...register("cuSeListYn") }} />
+        </FormGroup>
+        <FormGroup>
+          <Label>팩스 번호</Label>
+          <CheckBox register={{ ...register("cuSeFaxYn") }} />
+        </FormGroup>
       </Wrapper>
+
+      <FormGroup>
+        <Label>공급사업자</Label>
+        <Select {...register("cuGongsano")} width={InputSize.i150}>
+          {dataCommonDic?.cuGongsano?.map((obj: any, idx: number) => (
+            <option key={idx} value={obj.code}>
+              {obj.codeName}
+            </option>
+          ))}
+        </Select>
+
+        <Label>계산서 발행주기</Label>
+        <Select
+          {...register("cuSekumMm")}
+          width={InputSize.i150}
+          style={{ marginRight: "0px" }}
+        >
+          {dataCommonDic?.cuSekumNm?.map((obj: any, idx: number) => (
+            <option key={idx} value={obj.code}>
+              {obj.codeName}
+            </option>
+          ))}
+        </Select>
+
+        <Controller
+          control={control}
+          {...register("cuSekumDate")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              name={name}
+              mask={[/\d/, /\d/]}
+              inputSize={InputSize.i40}
+            />
+          )}
+        />
+        <p>일</p>
+      </FormGroup>
     </Field>
   );
 }

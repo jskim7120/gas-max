@@ -15,10 +15,11 @@ import Form from "./form";
 import { ButtonColor } from "components/componentsType";
 import { useDispatch, useSelector } from "app/store";
 import { CM130065 } from "app/path";
-import { Divider } from "components/form/style";
+import { Divider, FormGroup } from "components/form/style";
 import { SearchWrapper } from "container/contents/commonStyle";
 import { PersonInfoText } from "components/text";
 import Grid from "components/grid";
+import FourButtons from "components/button/fourButtons";
 
 function FormCM1300User({
   depthFullName,
@@ -38,6 +39,8 @@ function FormCM1300User({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
   const { isDelete } = useSelector((state) => state.modal);
 
@@ -48,27 +51,33 @@ function FormCM1300User({
   }, [isDelete.isDelete]);
 
   useEffect(() => {
-    if (Object.keys(selectedUser).length > 0) {
+    if (Object.keys(selectedUser)?.length > 0) {
       fetchSearchData(selectedUser);
     }
   }, [selectedUser]);
 
   const fetchSearchData = async (selectedUser: any) => {
     try {
-      const { data } = await API.get(CM130065, {
+      const { data: data65 } = await API.get(CM130065, {
         params: {
           areaCode: selectedUser.areaCode,
           aptCode: selectedUser.aptCode,
         },
       });
-      if (data.userCustomer) {
-        setData(data.userCustomer);
-        setSelected(data[0]);
+      if (data65) {
+        if (data65?.userCustomer) {
+          setData(data65.userCustomer);
+          setSelected(data65[0]);
+        } else {
+          setData([]);
+          setSelected({});
+        }
         setSelectedRowIndex(0);
-      } else {
-        setData([]);
       }
     } catch (err) {
+      setData([]);
+      setSelected({});
+      setSelectedRowIndex(0);
       console.log("CM1300 data search fetch error =======>", err);
     }
   };
@@ -83,68 +92,66 @@ function FormCM1300User({
     } catch (error) {}
   }
 
-  if (!data) return <p>...Loading</p>;
+  const onClickAdd = () => {
+    setIsAddBtnClicked(true);
+    formRef.current.resetForm("clear");
+  };
+
+  const onClickDelete = () => {
+    // dispatch(openModal({ type: "delModal" }));
+    // dispatch(addDeleteMenuId({ menuId: menuId }));};
+  };
+
+  const onClickUpdate = () => {
+    formRef.current.crud(null);
+  };
+
+  const onClickReset = () => {
+    setIsAddBtnClicked(false);
+    formRef.current.resetForm("reset");
+  };
 
   return (
     <>
       <SearchWrapper className="h35">
-        <Button
-          text="사용자 추가"
-          icon={<Plus />}
-          onClick={() => {
-            formRef.current.setIsAddBtnClicked(true);
-            formRef.current.resetForm("clear");
-          }}
-        />
-        <Button
-          text="삭제"
-          icon={<Trash />}
-          onClick={() => {
-            // dispatch(openModal({ type: "delModal" }));
-            // dispatch(addDeleteMenuId({ menuId: menuId }));
-          }}
-        />
-        <Button
-          text="저장"
-          icon={<Update />}
-          color={ButtonColor.SECONDARY}
-          onClick={() => {
-            formRef.current.crud(null);
-          }}
-        />
-        <Button
-          text="취소"
-          icon={<Reset />}
-          onClick={() => {
-            formRef.current.setIsAddBtnClicked(false);
-            formRef.current.resetForm("reset");
-          }}
-          style={{ padding: "0 3px" }}
+        <div></div>
+        <FourButtons
+          onClickAdd={onClickAdd}
+          onClickDelete={onClickDelete}
+          onClickUpdate={onClickUpdate}
+          onClickReset={onClickReset}
+          isAddBtnClicked={isAddBtnClicked}
+          isCancelBtnDisabled={isCancelBtnDisabled}
         />
       </SearchWrapper>
-      <PersonInfoText text="사용자" style={{ padding: "10px" }} />
 
-      <Grid
-        areaCode={areaCode}
-        data={data}
-        setSelected={setSelected}
-        selectedRowIndex={selectedRowIndex}
-        setSelectedRowIndex={setSelectedRowIndex}
-        fields={fields}
-        columns={columns}
-        style={{ height: `500px` }}
-      />
-      <Divider />
-      <Form
-        userData={data}
-        selected={selected}
-        ref={formRef}
-        fetchData={fetchSearchData}
-        setData={setData}
-        selectedRowIndex={selectedRowIndex}
-        setSelectedRowIndex={setSelectedRowIndex}
-        setSelected={setSelected}
-      />
+      <div style={{ display: "flex" }}>
+        <div style={{ width: "50%", flexGrow: 1 }}>
+          <PersonInfoText text="사용자" style={{ padding: "10px" }} />
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            setSelected={setSelected}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            fields={fields}
+            columns={columns}
+            style={{ height: `282px` }}
+          />
+        </div>
+        <div style={{ width: "1px", background: "#707070" }}></div>
+
+        <Form
+          userData={data}
+          selected={selected}
+          ref={formRef}
+          fetchData={fetchSearchData}
+          setData={setData}
+          selectedRowIndex={selectedRowIndex}
+          setSelectedRowIndex={setSelectedRowIndex}
+          setSelected={setSelected}
+        />
+      </div>
     </>
   );
 }

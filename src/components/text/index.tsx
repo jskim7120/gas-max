@@ -2,6 +2,7 @@ import styled from "styled-components";
 import IconInfo from "assets/image/Icon-info.png";
 import PersonIconSvg from "assets/image/person-info.svg";
 import BuildingIconSvg from "assets/image/building-info.svg";
+import { IconInfo as IconInfoComp } from "components/allSvgIcon";
 
 const InfoDiv = styled.div`
   display: flex;

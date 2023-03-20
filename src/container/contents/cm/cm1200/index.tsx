@@ -89,6 +89,7 @@ function CM1200({
   }
 
   const fetchData = async (params: any) => {
+    console.log(params);
     if (!dataChk) {
       delete params.dataChk;
       delete params.sCuName;

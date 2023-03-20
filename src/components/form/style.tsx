@@ -401,7 +401,7 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
   }
 
   .gray-title {
-    width: 85px;
+    width: 65px;
     background: #e8ecf1;
     display: flex;
     align-items: center;
@@ -560,4 +560,76 @@ export const Input2 = styled.input<{ inputSize?: InputSize }>`
     border: 1px solid #e6e5e5;
     background: #fffacd;
   }
+`;
+
+interface IInputLoginProps {
+  type?: string;
+  label?: string;
+  register?: any;
+  errors?: any;
+  inputSize?: InputSize;
+  fullWidth?: boolean;
+  value?: string | number;
+  placeholder?: string;
+  style?: any;
+  className?: string;
+  kind?: FieldKind;
+  textAlign?: string;
+}
+
+export const InputLogin = ({
+  type,
+  label,
+  register,
+  errors,
+  inputSize,
+  fullWidth,
+  value,
+  placeholder,
+  style,
+  className,
+  kind,
+  textAlign,
+}: IInputLoginProps) => {
+  return (
+    <InputWrapper fullWidth={fullWidth}>
+      <FormGroup
+        className={className && className}
+        inputSize={inputSize}
+        fullWidth={fullWidth}
+        kind={kind}
+        textAlign={textAlign}
+      >
+        {label !== undefined && (
+          <Label className={className && className}>{label}</Label>
+        )}
+        <InputForm
+          id={register?.name}
+          type={type ? type : "text"}
+          inputSize={inputSize && inputSize}
+          fullWidth={fullWidth && fullWidth}
+          {...register}
+          value={value && value}
+          placeholder={placeholder}
+          style={style}
+          className={className}
+          kind={kind && kind}
+          textAlign={textAlign && textAlign}
+        />
+      </FormGroup>
+      <ErrorText>{errors && errors}</ErrorText>
+    </InputWrapper>
+  );
+};
+
+export const BottomStyleDiv = styled.div<{ bottomSize?: InputSize }>`
+  bottom: ${(props) =>
+    props.bottomSize ? getInputSize(props.bottomSize) : "80px"};
+  position: absolute;
+  padding: 10px;
+`;
+
+export const ParagraphBorderBotton = styled.div`
+  border-bottom : 1px solid
+  width: 100%;
 `;

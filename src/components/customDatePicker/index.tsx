@@ -82,7 +82,7 @@ const InputWrapper = styled.div`
   .calendarImageWrapper {
     position: absolute;
     right: 0px;
-    top: 0px;
+    top: 2px;
     height: 100%;
     width: 20px;
     padding-left: 3px;

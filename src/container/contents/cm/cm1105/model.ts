@@ -8,7 +8,7 @@ export interface ICM1105SEARCH {
   areaName: string;
   cuAddr1: string;
   cuAddr2: string;
-  cuAnkum: number | string; //2nd tab
+  cuAnkum: number | null; //2nd tab
   cuBarcode: string;
   cuBigo1: string;
   cuBigo2: string;
@@ -239,7 +239,7 @@ export const emptyObj = {
   areaName: "",
   cuAddr1: "",
   cuAddr2: "",
-  cuAnkum: "", // 2nd tab
+  cuAnkum: null, // 2nd tab
   cuBarcode: "",
   cuBigo1: "",
   cuBigo2: "",

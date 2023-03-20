@@ -16,12 +16,14 @@ import {
   FormGroup,
   Divider,
   Label,
+  BottomStyleDiv,
 } from "components/form/style";
 import { IPTFORMMODEL } from "./formModel";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { useDispatch, useSelector } from "app/store";
 import { addCC1100, openModal } from "app/state/modal/modalSlice";
+import { InfoText } from "components/text";
 
 interface IForm {
   selected: any;
@@ -204,8 +206,8 @@ const Form = React.forwardRef(
         <br />
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>수금방법</Label>
-          <Select {...register("msSukumType")} onChange={handleSelectCode}>
-            {dataCommonDic?.msSukumType?.map((obj: any, idx: number) => (
+          <Select {...register("msSukumtype")} onChange={handleSelectCode}>
+            {dataCommonDic?.msSukumtype?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -229,7 +231,11 @@ const Form = React.forwardRef(
           inputSize={InputSize.i250}
         />
 
-        <div>
+        <BottomStyleDiv bottomSize={InputSize.i85}>
+          <InfoText
+            text={"수금처리는 선입선출 방식으로 자동 처리됨"}
+            style={{ borderBottom: "1px solid" }}
+          />
           <Input
             label="미수금 총계"
             labelStyle={{ minWidth: "80px" }}
@@ -248,7 +254,7 @@ const Form = React.forwardRef(
             register={register("msBigo")}
             inputSize={InputSize.i250}
           />
-        </div>
+        </BottomStyleDiv>
       </form>
     );
   }

@@ -202,48 +202,32 @@ const Form = React.forwardRef(
       <form
         onSubmit={handleSubmit(submit)}
         style={{
-          padding: "15px 50px 10px",
-          height: "auto",
+          padding: "30px 40px 10px 0",
         }}
       >
-        <Wrapper grid col={1} style={{ gap: "3px" }}>
-          <div style={{ display: "flex" }}>
-            <Input
-              label="거래처코드"
-              register={register("cuCode1")}
-              errors={errors["cuCode1"]?.message}
-              inputSize={InputSize.xs}
-              readOnly
-            />
-            <Input
-              register={register("cuCode2")}
-              errors={errors["cuCode2"]?.message}
-              inputSize={InputSize.xs}
-              readOnly
-            />
-          </div>
-          <Field>
-            <FormGroup>
-              <Label>건물명</Label>
-              <Input inputSize={InputSize.i130} register={register("cuName")} />
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["cuName"]?.message}</ErrorText>
-            </div>
-          </Field>
-          <Field>
-            <FormGroup>
-              <Label>사용자명</Label>
-              <Input
-                inputSize={InputSize.i130}
-                register={register("cuUsername")}
-              />
-            </FormGroup>
-            <div>
-              <ErrorText>{errors["cuUsername"]?.message}</ErrorText>
-            </div>
-          </Field>
-        </Wrapper>
+        <FormGroup>
+          <Input
+            label="거래처코드"
+            register={register("cuCode1")}
+            errors={errors["cuCode1"]?.message}
+            inputSize={InputSize.i60}
+            readOnly
+          />
+          <Input
+            register={register("cuCode2")}
+            errors={errors["cuCode2"]?.message}
+            inputSize={InputSize.i80}
+            readOnly
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label>건물명</Label>
+          <Input register={register("cuName")} style={{ width: "146px" }} />
+        </FormGroup>
+        <FormGroup>
+          <Label>사용자명</Label>
+          <Input register={register("cuUsername")} style={{ width: "146px" }} />
+        </FormGroup>
       </form>
     );
   }

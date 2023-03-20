@@ -6,7 +6,7 @@ export interface IPTFORMMODEL {
   msDc: String;
   msKumack: String;
   msJanack: String;
-  msSukumType: String;
+  msSukumtype: String;
   msSwCode: String;
   msBigo: String;
 }

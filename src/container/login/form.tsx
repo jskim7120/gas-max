@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginSchema } from "./validation";
 import { ILoginFormProps } from "./type";
-import { Input, Field } from "components/form/style";
+import { Field, InputLogin } from "components/form/style";
 import { ButtonType } from "components/componentsType";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
@@ -51,7 +51,7 @@ function Login() {
   return (
     <form onSubmit={handleSubmit(submit)}>
       <Field style={{ marginBottom: "8px" }}>
-        <Input
+        <InputLogin
           register={register("username")}
           errors={errors["username"]?.message}
           placeholder="아이디"
@@ -60,7 +60,7 @@ function Login() {
         />
       </Field>
       <Field>
-        <Input
+        <InputLogin
           register={register("password")}
           errors={errors["password"]?.message}
           type="password"

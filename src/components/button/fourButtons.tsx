@@ -10,6 +10,10 @@ function FourButtons({
   onClickReset,
   isAddBtnClicked,
   isCancelBtnDisabled,
+  btn1Name,
+  btn2Name,
+  btn3Name,
+  btn4Name,
 }: {
   onClickAdd: any;
   onClickDelete: any;
@@ -17,31 +21,35 @@ function FourButtons({
   onClickReset: any;
   isAddBtnClicked: any;
   isCancelBtnDisabled: any;
+  btn1Name?: string;
+  btn2Name?: string;
+  btn3Name?: string;
+  btn4Name?: string;
 }) {
   return (
     <div className="buttons">
       <Button
-        text="등록"
+        text={btn1Name ? btn1Name : "등록"}
         icon={<Plus />}
         style={{ marginRight: "5px" }}
         onClick={onClickAdd}
       />
       <Button
-        text="삭제"
+        text={btn2Name ? btn2Name : "삭제"}
         icon={<Trash />}
         style={{ marginRight: "5px" }}
         onClick={onClickDelete}
         disabled={isAddBtnClicked}
       />
       <Button
-        text="저장"
+        text={btn3Name ? btn3Name : "저장"}
         icon={<Update />}
         style={{ marginRight: "5px" }}
         color={ButtonColor.SECONDARY}
         onClick={onClickUpdate}
       />
       <Button
-        text="취소"
+        text={btn4Name ? btn4Name : "취소"}
         icon={<Reset />}
         onClick={onClickReset}
         disabled={isCancelBtnDisabled}
