@@ -33,7 +33,7 @@ export interface ICM1200SEARCH {
   cuRdangaAmt: number | undefined;
   cuRdangaSign: string;
   cuRdangaType: string;
-  cuRh2o: string;
+  cuRh2O: string;
   cuScheduleDate: string;
   // cuSisulkum: number;
   cuSukumtype: string;
@@ -171,7 +171,7 @@ export const emptyObj = {
   cuRdangaAmt: undefined,
   cuRdangaSign: "",
   cuRdangaType: "",
-  cuRh2o: "",
+  cuRh2O: "",
   cuScheduleDate: "",
   // cuSisulkum:"",
   cuSukumtype: "",

@@ -89,6 +89,7 @@ function CM1200({
   }
 
   const fetchData = async (params: any) => {
+    console.log(params);
     if (!dataChk) {
       delete params.dataChk;
       delete params.sCuName;
@@ -225,7 +226,7 @@ function CM1200({
             setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
-            style={{ height: `calc(100% - 48px)`, width: "409px" }}
+            style={{ height: `calc(100% - 48px)`, minWidth: "409px" }}
           />
         </LeftSide>
         <RightSide style={{ padding: "0 10px" }}>

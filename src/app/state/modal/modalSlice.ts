@@ -51,6 +51,16 @@ export interface initialStateType {
   rv1100: {
     areaCode: string | undefined;
   };
+  pt1105: {
+    areaCode: string | undefined;
+    cuCode: string | undefined;
+    cuName: string | undefined;
+  };
+  pt1205: {
+    areaCode: string | undefined;
+    cuCode: string | undefined;
+    cuName: string | undefined;
+  };
 }
 
 const initialState: initialStateType = {
@@ -101,6 +111,16 @@ const initialState: initialStateType = {
   },
   rv1100: {
     areaCode: undefined,
+  },
+  pt1105: {
+    areaCode: "",
+    cuCode: "",
+    cuName: "",
+  },
+  pt1205: {
+    areaCode: "",
+    cuCode: "",
+    cuName: "",
   },
 };
 
@@ -169,6 +189,16 @@ const modalSlice = createSlice({
     rv1100Popup: (state, actions) => {
       state.rv1100.areaCode = actions.payload.areaCode;
     },
+    ptAreaCode: (state, action) => {
+      state.pt1105.areaCode = action.payload.areaCode;
+      state.pt1105.cuCode = action.payload.cuCode;
+      state.pt1105.cuName = action.payload.cuName;
+    },
+    pt1205Popup: (state, action) => {
+      state.pt1205.areaCode = action.payload.areaCode;
+      state.pt1205.cuCode = action.payload.cuCode;
+      state.pt1205.cuName = action.payload.cuName;
+    },
   },
 });
 
@@ -182,6 +212,8 @@ export const {
   addDeleteMenuId,
   setIsDelete,
   rv1100Popup,
+  ptAreaCode,
+  pt1205Popup,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

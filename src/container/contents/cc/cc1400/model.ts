@@ -3,6 +3,7 @@ export interface ICC1400SEARCH {
   sDateF: string;
   sDateT: string;
   sSwCode: string;
+  sgSwCode: string;
 }
 
 export interface ICC1400 {

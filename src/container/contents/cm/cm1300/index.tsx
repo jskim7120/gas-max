@@ -3,13 +3,7 @@ import { useForm } from "react-hook-form";
 import API from "app/axios";
 import Button from "components/button/button";
 import Loader from "components/loader";
-import {
-  Plus,
-  Trash,
-  Update,
-  Reset,
-  MagnifyingGlassBig,
-} from "components/allSvgIcon";
+import { MagnifyingGlassBig } from "components/allSvgIcon";
 import { columns, fields } from "./data";
 import {
   openModal,
@@ -18,7 +12,7 @@ import {
   setIsDelete,
 } from "app/state/modal/modalSlice";
 import Form from "./form";
-import { ButtonColor, FieldKind, ButtonType } from "components/componentsType";
+import { ButtonType, InputSize } from "components/componentsType";
 import {
   MainWrapper,
   SearchWrapper,
@@ -27,32 +21,39 @@ import {
 } from "../../commonStyle";
 import { CM1300SEARCH } from "app/path";
 import { Detail1Wrapper } from "./style";
-import { Field, FormGroup, Input, Select } from "components/form/style";
+import { Divider, Field, FormGroup, Input } from "components/form/style";
 import { useDispatch, useSelector } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import FormCM1300User from "./cm1300User";
-import GridTop from "components/grid";
+import GridLeft from "components/grid";
 import { BuildingInfoText } from "components/text";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
+import { ISEARCH } from "./model";
+import FourButtons from "components/button/fourButtons";
 
 function CM1300({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
-  const { register, handleSubmit } = useForm({ mode: "onSubmit" });
+  const { register, handleSubmit, reset } = useForm<ISEARCH>({
+    mode: "onSubmit",
+  });
 
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
 
+  const [areaCode, setAreaCode] = useState("");
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [selectedRowIndex, setSelectedRowIndex] = useState<number>(0);
   const [loading, setLoading] = useState(false);
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
   const { isDelete } = useSelector((state) => state.modal);
 
@@ -62,65 +63,45 @@ function CM1300({
   });
 
   useEffect(() => {
+    if (dataCommonDic) {
+      reset({ areaCode: dataCommonDic.areaCode[0].code });
+      fetchData({ areaCode: dataCommonDic.areaCode[0].code });
+    }
+  }, [dataCommonDic]);
+
+  useEffect(() => {
     if (isDelete.menuId === menuId && isDelete.isDelete) {
       deleteRowGrid();
     }
   }, [isDelete.isDelete]);
 
-  const onSearchSubmit = async (data: any, para: any) => {
-    fetchSearchData(data);
+  const submit = async (data: ISEARCH) => {
+    fetchData(data);
   };
 
-  const fetchSearchData = async (params: any) => {
+  const fetchData = async (params: any) => {
     try {
-      let data: any;
       setLoading(true);
-      if (params.searchInput1) {
-        const { data } = await API.get(CM1300SEARCH, {
-          params: { aptCode: params.searchInput1 },
-        });
-        if (data?.length > 0) {
-          setData(data);
-          setLoading(false);
-        } else if (params.searchInput2) {
-          const { data } = await API.get(CM1300SEARCH, {
-            params: { aptName: params.searchInput2 },
-          });
-          if (data?.length > 0) {
-            setData(data);
-            setLoading(false);
-          }
-        }
-      } else if (params.searchInput2) {
-        const { data } = await API.get(CM1300SEARCH, {
-          params: { aptName: params.searchInput2 },
-        });
-        if (data) {
-          setData(data);
-          setLoading(false);
-        }
+      const { data: dataSearch } = await API.get(CM1300SEARCH, {
+        params: params,
+      });
+
+      if (dataSearch) {
+        console.log("dataSearch:::", dataSearch);
+        setData(dataSearch);
+        setSelected(dataSearch[0]);
       } else {
-        fetchListData();
+        setData([]);
+        setSelected({});
       }
-      if (data) {
-        setData(data);
-        setLoading(false);
-      }
+      setSelectedRowIndex(0);
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
+      setData([]);
+      setSelected({});
+      setSelectedRowIndex(0);
       console.log("CM1300 data search fetch error =======>", err);
-    }
-  };
-
-  const fetchListData = async () => {
-    try {
-      setLoading(true);
-      const { data } = await API.get(CM1300SEARCH);
-      if (data) {
-        setData(data);
-        setLoading(false);
-      }
-    } catch (err) {
-      console.log("CM1300 data list fetch error =======>", err);
     }
   };
 
@@ -134,82 +115,68 @@ function CM1300({
     } catch (error) {}
   }
 
-  if (!data) return <p>...Loading</p>;
+  const onClickAdd = () => {
+    setIsAddBtnClicked(true);
+    setIsCancelBtnDisabled(false);
+    formRef.current.resetForm("clear");
+  };
+
+  const onClickDelete = () => {
+    dispatch(openModal({ type: "delModal" }));
+    dispatch(addDeleteMenuId({ menuId: menuId }));
+  };
+  const onClickUpdate = () => {
+    formRef.current.crud(null);
+  };
+
+  const onClickReset = () => {
+    setIsAddBtnClicked(false);
+    formRef.current.resetForm("reset");
+  };
 
   return (
     <>
+      <SearchWrapper className="h35 mt5">
+        <CustomAreaCodePart
+          areaCode={ownAreaCode}
+          dataCommonDic={dataCommonDic}
+          depthFullName={depthFullName}
+          register={register}
+        />
+
+        <FourButtons
+          btn1Name="건물등록"
+          onClickAdd={onClickAdd}
+          onClickDelete={onClickDelete}
+          onClickUpdate={onClickUpdate}
+          onClickReset={onClickReset}
+          isAddBtnClicked={isAddBtnClicked}
+          isCancelBtnDisabled={isCancelBtnDisabled}
+        />
+      </SearchWrapper>
+
       <MainWrapper
         style={{
-          marginTop: "5px",
-          height: `calc(100% + 18px)`,
-          border: "1px solid blue",
+          height: "calc(100% + 18px)",
         }}
       >
         <LeftSide>
-          <SearchWrapper className="h35">
-            <CustomAreaCodePart
-              areaCode={areaCode}
-              dataCommonDic={dataCommonDic}
-              depthFullName={depthFullName}
-              register={register}
-            />
-
-            <div className="buttons">
-              <Button
-                text="건물등록"
-                icon={<Plus />}
-                onClick={() => {
-                  formRef.current.setIsAddBtnClicked(true);
-                  formRef.current.resetForm("clear");
-                }}
-                style={{ marginRight: "5px" }}
-              />
-              <Button
-                text="삭제"
-                icon={<Trash />}
-                onClick={() => {
-                  dispatch(openModal({ type: "delModal" }));
-                  dispatch(addDeleteMenuId({ menuId: menuId }));
-                }}
-                style={{ marginRight: "5px" }}
-              />
-              <Button
-                text="저장"
-                icon={<Update />}
-                color={ButtonColor.SECONDARY}
-                onClick={() => {
-                  formRef.current.crud(null);
-                }}
-                style={{ marginRight: "5px" }}
-              />
-              <Button
-                text="취소"
-                icon={<Reset />}
-                onClick={() => {
-                  formRef.current.setIsAddBtnClicked(false);
-                  formRef.current.resetForm("reset");
-                }}
-              />
-            </div>
-          </SearchWrapper>
           <SearchWrapper>
-            <form onSubmit={handleSubmit(onSearchSubmit)}>
+            <form onSubmit={handleSubmit(submit)}>
               <Field>
                 <FormGroup>
                   <BuildingInfoText text="건물" />
                   <Input
                     label="코드"
-                    register={register("searchInput1", {
-                      required: false,
-                    })}
-                    kind={FieldKind.BORDER}
+                    labelStyle={{ minWidth: "70px" }}
+                    register={register("aptCode")}
+                    inputSize={InputSize.i80}
                   />
                   <Input
                     label="건물명"
-                    register={register("searchInput2", {
-                      required: false,
-                    })}
-                    kind={FieldKind.BORDER}
+                    labelStyle={{ minWidth: "80px" }}
+                    register={register("aptName")}
+                    inputSize={InputSize.i120}
                   />
                   <Button
                     text="검색"
@@ -232,37 +199,39 @@ function CM1300({
               </Field>
             </form>
           </SearchWrapper>
-
-          <GridTop
-            areaCode={areaCode}
+          <GridLeft
+            areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
+            setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
-            style={{ height: `45%` }}
+            style={{ height: `calc(100% - 73px)` }}
           />
-
+        </LeftSide>
+        <RightSide style={{ width: "1000px" }}>
           <Detail1Wrapper>
             <Form
               selected={selected}
               ref={formRef}
-              fetchData={fetchListData}
+              fetchData={fetchData}
               menuId={menuId}
               setData={setData}
               selectedRowIndex={selectedRowIndex}
               setSelectedRowIndex={setSelectedRowIndex}
               setSelected={setSelected}
+              setAreaCode={setAreaCode}
             />
           </Detail1Wrapper>
-        </LeftSide>
-        <RightSide>
+          <Divider style={{ border: "1px solid #707070" }} />
           <FormCM1300User
             menuId={menuId}
             depthFullName={depthFullName}
             selectedUser={selected}
-            areaCode={areaCode}
+            areaCode={ownAreaCode}
           />
         </RightSide>
       </MainWrapper>

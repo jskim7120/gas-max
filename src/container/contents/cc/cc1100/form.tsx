@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
+import React, { useImperativeHandle, useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -21,7 +21,11 @@ import { ICC1100SEARCH } from "./model";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { useDispatch, useSelector } from "app/store";
-import { addCC1100, openModal } from "app/state/modal/modalSlice";
+import {
+  addCC1100,
+  openModal,
+  addDeleteMenuId,
+} from "app/state/modal/modalSlice";
 
 interface IForm {
   selected: any;
@@ -31,6 +35,8 @@ interface IForm {
   setSelected: any;
   setSelectedRowIndex: any;
   dataCommonDic: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
@@ -43,11 +49,15 @@ const Form = React.forwardRef(
       setSelected,
       setSelectedRowIndex,
       dataCommonDic,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
+    const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
     const dispatch = useDispatch();
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
+    const [isCancelBtnDisabled, setIsCancelBtnDisabled] =
+      useState<boolean>(true);
     const [acjType, setAcjType] = useState("");
 
     const stateCC1100 = useSelector((state: any) => state.modal.cc1100);
@@ -151,13 +161,14 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form
-        // onSubmit={handleSubmit(submit)}
-        style={{ width: "380px", padding: "10px" }}
-      >
+      <form style={{ width: "380px", padding: "10px" }}>
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>영 업 소</Label>
-          <Select {...register("cbareaCode")} onChange={handleSelectCode}>
+          <Select
+            width={InputSize.i200}
+            {...register("cbareaCode")}
+            onChange={handleSelectCode}
+          >
             {dataCommonDic?.cbareaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -172,7 +183,11 @@ const Form = React.forwardRef(
             control={control}
             {...register("acjDate")}
             render={({ field: { onChange, onBlur, value, ref } }) => (
-              <CustomDatePicker value={value} onChange={onChange} />
+              <CustomDatePicker
+                style={{ width: "200px" }}
+                value={value}
+                onChange={onChange}
+              />
             )}
           />
         </FormGroup>
@@ -182,6 +197,7 @@ const Form = React.forwardRef(
           <Select
             {...register("acjType")}
             onChange={(e) => setAcjType(e.target.value)}
+            width={InputSize.i200}
           >
             {dataCommonDic?.acjType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
@@ -198,7 +214,7 @@ const Form = React.forwardRef(
             { name: "예금 수입", value: "1" },
           ].map((option, index) => {
             return (
-              <Item key={index}>
+              <Item key={index} style={{ marginLeft: "3px" }}>
                 <RadioButton
                   type="radio"
                   value={option.value}
@@ -215,7 +231,11 @@ const Form = React.forwardRef(
 
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>통장계좌</Label>
-          <Select {...register("cashBank")} onChange={handleSelectCode}>
+          <Select
+            {...register("cashBank")}
+            onChange={handleSelectCode}
+            width={InputSize.i200}
+          >
             {dataCommonDic?.bankNo?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -237,7 +257,7 @@ const Form = React.forwardRef(
             label="항 목"
             labelStyle={{ minWidth: "80px" }}
             register={register("acjAcsName")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i175}
           />
           <SearchBtn type="button" onClick={handleSearchBtnClick}>
             <MagnifyingGlass />
@@ -246,7 +266,11 @@ const Form = React.forwardRef(
 
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>사 원</Label>
-          <Select {...register("acjSwCode")} onChange={handleSelectCode}>
+          <Select
+            {...register("acjSwCode")}
+            onChange={handleSelectCode}
+            width={InputSize.i200}
+          >
             {dataCommonDic?.acjSwCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -262,14 +286,14 @@ const Form = React.forwardRef(
           label="금 액"
           labelStyle={{ minWidth: "80px" }}
           register={register("acjKumack")}
-          inputSize={InputSize.i250}
+          inputSize={InputSize.i200}
         />
 
         <Input
           label="적 요"
           labelStyle={{ minWidth: "80px" }}
           register={register("acjBigo")}
-          inputSize={InputSize.i250}
+          inputSize={InputSize.i200}
         />
       </form>
     );

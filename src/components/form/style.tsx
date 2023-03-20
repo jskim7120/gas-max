@@ -401,7 +401,7 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
   }
 
   .gray-title {
-    width: 85px;
+    width: 65px;
     background: #e8ecf1;
     display: flex;
     align-items: center;
@@ -621,3 +621,15 @@ export const InputLogin = ({
     </InputWrapper>
   );
 };
+
+export const BottomStyleDiv = styled.div<{ bottomSize?: InputSize }>`
+  bottom: ${(props) =>
+    props.bottomSize ? getInputSize(props.bottomSize) : "80px"};
+  position: absolute;
+  padding: 10px;
+`;
+
+export const ParagraphBorderBotton = styled.div`
+  border-bottom : 1px solid
+  width: 100%;
+`;

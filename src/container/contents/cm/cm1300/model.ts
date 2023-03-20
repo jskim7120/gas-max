@@ -39,3 +39,9 @@ export interface ICM1300 {
   chkAptGumdate: boolean;
   chkAptSukumtype: boolean;
 }
+
+export interface ISEARCH {
+  areaCode: string;
+  aptCode: string;
+  aptName: string;
+}

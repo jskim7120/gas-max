@@ -6,13 +6,14 @@ interface ITable {
   tableData: any;
   onClick?: (arg: any) => any;
   style?: any;
+  className?: any;
 }
 
-function Table({ tableHeader, tableData, onClick, style }: ITable) {
+function Table({ tableHeader, tableData, onClick, style, className }: ITable) {
   const [clickedRowIndex, setClickedRowIndex] = useState(0);
 
   return (
-    <AppTable style={style}>
+    <AppTable style={style} className={className && className}>
       <thead>
         <tr>
           {tableHeader?.map((header: string, idx: number) => (
