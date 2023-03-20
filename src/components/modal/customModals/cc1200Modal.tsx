@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Form from "container/contents/cc/cc1100/modalForm";
+import Form from "container/contents/cc/cc1200/modalForm";
 const ModalWrapper = styled.div`
   width: 254px;
   height: 387px;
@@ -8,7 +8,7 @@ const ModalWrapper = styled.div`
   overflow-y: auto;
 `;
 
-function CC1100Modal() {
+function CC1200Modal() {
   return (
     <ModalWrapper>
       <Form />
@@ -16,4 +16,4 @@ function CC1100Modal() {
   );
 }
 
-export default CC1100Modal;
+export default CC1200Modal;

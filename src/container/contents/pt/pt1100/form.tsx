@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useEffect, useState, useRef } from "react";
+import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -16,16 +16,14 @@ import {
   FormGroup,
   Divider,
   Label,
+  BottomStyleDiv,
 } from "components/form/style";
-import { ICC1100SEARCH } from "./model";
+import { IPTFORMMODEL } from "./formModel";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { useDispatch, useSelector } from "app/store";
-import {
-  addCC1100,
-  openModal,
-  addDeleteMenuId,
-} from "app/state/modal/modalSlice";
+import { addCC1100, openModal } from "app/state/modal/modalSlice";
+import { InfoText } from "components/text";
 
 interface IForm {
   selected: any;
@@ -35,8 +33,6 @@ interface IForm {
   setSelected: any;
   setSelectedRowIndex: any;
   dataCommonDic: any;
-  isAddBtnClicked: boolean;
-  setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
@@ -49,21 +45,16 @@ const Form = React.forwardRef(
       setSelected,
       setSelectedRowIndex,
       dataCommonDic,
-      isAddBtnClicked,
-      setIsAddBtnClicked,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
     const dispatch = useDispatch();
-    const [isCancelBtnDisabled, setIsCancelBtnDisabled] =
-      useState<boolean>(true);
-    const [acjType, setAcjType] = useState("");
+    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
     const stateCC1100 = useSelector((state: any) => state.modal.cc1100);
 
     const { register, handleSubmit, reset, getValues, control } =
-      useForm<ICC1100SEARCH>({ mode: "onChange" });
+      useForm<IPTFORMMODEL>({ mode: "onChange" });
 
     useEffect(() => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
@@ -71,16 +62,7 @@ const Form = React.forwardRef(
       }
     }, [selected]);
 
-    useEffect(() => {
-      if (stateCC1100 && stateCC1100.accCode) {
-        reset((formValues) => ({
-          ...formValues,
-          acjAccName: stateCC1100.accName,
-          acjAcsName: stateCC1100.acsName,
-          acjSwCode: stateCC1100.acsCode,
-        }));
-      }
-    }, [stateCC1100]);
+    useEffect(() => {}, [stateCC1100]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
@@ -89,6 +71,7 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = async (type: string) => {
+      console.log(dataCommonDic);
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         let newData: any = {};
         if (type === "clear") {
@@ -121,7 +104,6 @@ const Form = React.forwardRef(
           reset({
             ...newData,
           });
-          setAcjType(selected.acjType);
         }
       }
     };
@@ -152,149 +134,127 @@ const Form = React.forwardRef(
     const handleSelectCode = async (event: any) => {};
 
     const handleSearchBtnClick = () => {
-      dispatch(
-        addCC1100({
-          acjType: acjType,
-        })
-      );
+      dispatch(addCC1100({}));
       dispatch(openModal({ type: "cc1100Modal" }));
     };
 
     return (
-      <form style={{ width: "380px", padding: "10px" }}>
-        <FormGroup>
-          <Label style={{ minWidth: "80px" }}>영 업 소</Label>
-          <Select
-            width={InputSize.i200}
-            {...register("cbareaCode")}
-            onChange={handleSelectCode}
-          >
-            {dataCommonDic?.cbareaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </FormGroup>
-
+      <form
+        // onSubmit={handleSubmit(submit)}
+        style={{ width: "410px", padding: "10px" }}
+      >
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>일 자</Label>
           <Controller
             control={control}
-            {...register("acjDate")}
+            {...register("msDate")}
             render={({ field: { onChange, onBlur, value, ref } }) => (
               <CustomDatePicker
-                style={{ width: "200px" }}
-                value={value}
+                value={value == null ? new Date() : value}
                 onChange={onChange}
               />
             )}
           />
         </FormGroup>
+        <br></br>
+        <div style={{ borderStyle: "groove", alignItems: "center" }}>
+          <FormGroup>
+            <Input
+              label="거 래 처"
+              labelStyle={{ minWidth: "80px" }}
+              register={register("cuName")}
+              inputSize={InputSize.i250}
+            />
+            <SearchBtn type="button" onClick={handleSearchBtnClick}>
+              <MagnifyingGlass />
+            </SearchBtn>
+          </FormGroup>
 
-        <FormGroup>
-          <Label style={{ minWidth: "80px" }}>입출 구분</Label>
-          <Select
-            {...register("acjType")}
-            onChange={(e) => setAcjType(e.target.value)}
-            width={InputSize.i200}
-          >
-            {dataCommonDic?.acjType?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </FormGroup>
-
-        <FormGroup>
-          <Label style={{ minWidth: "80px" }}>구 분</Label>
-          {[
-            { name: "현금 수입", value: "0" },
-            { name: "예금 수입", value: "1" },
-          ].map((option, index) => {
-            return (
-              <Item key={index} style={{ marginLeft: "3px" }}>
-                <RadioButton
-                  type="radio"
-                  value={option.value}
-                  {...register("acjGb")}
-                  id={option.value}
-                />
-                <RadioButtonLabel htmlFor={`${option.value}`}>
-                  {option.name}
-                </RadioButtonLabel>
-              </Item>
-            );
-          })}
-        </FormGroup>
-
-        <FormGroup>
-          <Label style={{ minWidth: "80px" }}>통장계좌</Label>
-          <Select
-            {...register("cashBank")}
-            onChange={handleSelectCode}
-            width={InputSize.i200}
-          >
-            {dataCommonDic?.bankNo?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </FormGroup>
-
-        <Divider />
-
-        <Input
-          label="계정과목"
-          labelStyle={{ minWidth: "80px" }}
-          register={register("acjAccName")}
-          inputSize={InputSize.i200}
-        />
-        <FormGroup>
           <Input
-            label="항 목"
+            label=""
             labelStyle={{ minWidth: "80px" }}
-            register={register("acjAcsName")}
-            inputSize={InputSize.i175}
+            register={register("cuCode")}
+            inputSize={InputSize.i250}
           />
-          <SearchBtn type="button" onClick={handleSearchBtnClick}>
-            <MagnifyingGlass />
-          </SearchBtn>
+          <Input
+            label="미수금액"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("cuJmisu")}
+            inputSize={InputSize.i250}
+          />
+        </div>
+        <br />
+        <Input
+          label="D / C"
+          labelStyle={{ minWidth: "80px" }}
+          register={register("msDc")}
+          inputSize={InputSize.i250}
+        />
+        <Input
+          label="수 금 액"
+          labelStyle={{ minWidth: "80px" }}
+          register={register("msKumack")}
+          inputSize={InputSize.i250}
+        />
+        <br />
+        <Input
+          label="수금 후 잔액"
+          labelStyle={{ minWidth: "80px" }}
+          register={register("msJanack")}
+          inputSize={InputSize.i250}
+        />
+        <br />
+        <FormGroup>
+          <Label style={{ minWidth: "80px" }}>수금방법</Label>
+          <Select {...register("msSukumtype")} onChange={handleSelectCode}>
+            {dataCommonDic?.msSukumtype?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
         </FormGroup>
-
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>사 원</Label>
-          <Select
-            {...register("acjSwCode")}
-            onChange={handleSelectCode}
-            width={InputSize.i200}
-          >
-            {dataCommonDic?.acjSwCode?.map((obj: any, idx: number) => (
+          <Select {...register("msSwCode")} onChange={handleSelectCode}>
+            {dataCommonDic?.msSwCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
             ))}
           </Select>
         </FormGroup>
-
-        <br />
-        <br />
-
         <Input
-          label="금 액"
+          label="비 고"
           labelStyle={{ minWidth: "80px" }}
-          register={register("acjKumack")}
-          inputSize={InputSize.i200}
+          register={register("msBigo")}
+          inputSize={InputSize.i250}
         />
 
-        <Input
-          label="적 요"
-          labelStyle={{ minWidth: "80px" }}
-          register={register("acjBigo")}
-          inputSize={InputSize.i200}
-        />
+        <BottomStyleDiv bottomSize={InputSize.i85}>
+          <InfoText
+            text={"수금처리는 선입선출 방식으로 자동 처리됨"}
+            style={{ borderBottom: "1px solid" }}
+          />
+          <Input
+            label="미수금 총계"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("msBigo")}
+            inputSize={InputSize.i250}
+          />
+          <Input
+            label="수금 총계"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("msBigo")}
+            inputSize={InputSize.i250}
+          />
+          <Input
+            label="D/C 총계"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("msBigo")}
+            inputSize={InputSize.i250}
+          />
+        </BottomStyleDiv>
       </form>
     );
   }

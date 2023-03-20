@@ -158,7 +158,7 @@ const Form = React.forwardRef(
           acjType: acjType,
         })
       );
-      dispatch(openModal({ type: "cc1100Modal" }));
+      dispatch(openModal({ type: "cc1200Modal" }));
     };
 
     return (
@@ -169,7 +169,11 @@ const Form = React.forwardRef(
         <Wrapper>
           <FormGroup>
             <Label style={{ minWidth: "80px" }}>영 업 소</Label>
-            <Select {...register("cbareaCode")} onChange={handleSelectCode}>
+            <Select
+              {...register("cbareaCode")}
+              onChange={handleSelectCode}
+              width={InputSize.i200}
+            >
               {dataCommonDic?.cbareaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -185,7 +189,11 @@ const Form = React.forwardRef(
               control={control}
               {...register("acjDate")}
               render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "200px" }}
+                />
               )}
             />
           </FormGroup>
@@ -217,7 +225,7 @@ const Form = React.forwardRef(
             label="계정과목"
             labelStyle={{ minWidth: "80px" }}
             register={register("acjAccCodeCh")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i200}
           />
         </Wrapper>
         <Wrapper>
@@ -248,7 +256,7 @@ const Form = React.forwardRef(
               label="계정과목"
               labelStyle={{ minWidth: "80px" }}
               register={register("acjAccCodeDa")}
-              inputSize={InputSize.i250}
+              style={{ width: "172px" }}
             />
             <SearchBtn type="button" onClick={handleSearchBtnClick}>
               <MagnifyingGlass />
@@ -263,7 +271,7 @@ const Form = React.forwardRef(
             label="적 요"
             labelStyle={{ minWidth: "80px" }}
             register={register("acjBigo")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i200}
           />
         </Wrapper>
         <Wrapper>
@@ -271,7 +279,7 @@ const Form = React.forwardRef(
             label="금 액"
             labelStyle={{ minWidth: "80px" }}
             register={register("acjKumack")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i200}
           />
         </Wrapper>
       </form>

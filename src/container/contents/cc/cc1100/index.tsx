@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useDispatch } from "app/store";
 import { CC1100SEARCH } from "app/path";
 import { ICC1100SEARCH } from "./model";
+import GridLeft from "components/grid";
 import API from "app/axios";
 import {
   MainWrapper,
@@ -9,6 +11,7 @@ import {
   RightSide,
   LeftSide,
 } from "../../commonStyle";
+import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import Form from "./form";
 import {
@@ -25,6 +28,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Grid from "../grid";
 import { columns, fields } from "./data";
 import CustomTopPart from "container/contents/customTopPart";
+import FourButtons from "components/button/fourButtons";
 
 function CC1100({
   depthFullName,
@@ -36,10 +40,13 @@ function CC1100({
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const [codeGu, setCodeGu] = useState<boolean>(false);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CC",
@@ -81,6 +88,25 @@ function CC1100({
     }
   };
 
+  const onClickAdd = () => {
+    setIsAddBtnClicked(true);
+    setIsCancelBtnDisabled(false);
+    formRef.current.resetForm("clear");
+  };
+
+  const onClickDelete = () => {
+    dispatch(openModal({ type: "delModal" }));
+    dispatch(addDeleteMenuId({ menuId: menuId }));
+  };
+  const onClickUpdate = () => {
+    formRef.current.crud(null);
+  };
+
+  const onClickReset = () => {
+    setIsAddBtnClicked(false);
+    formRef.current.resetForm("reset");
+  };
+
   const cancel = () => {
     resetSearchForm();
     setData([]);
@@ -101,6 +127,29 @@ function CC1100({
         dataCommonDic={dataCommonDic}
         areaCode={areaCode}
       />
+      <SearchWrapper
+        className="h35 mt5"
+        style={{
+          display: "flex",
+          position: "absolute",
+          top: "87px",
+          right: "19px",
+          background: "none",
+          padding: "0",
+          border: "none",
+          height: "auto",
+          marginTop: "2px",
+        }}
+      >
+        <FourButtons
+          onClickAdd={onClickAdd}
+          onClickDelete={onClickDelete}
+          onClickUpdate={onClickUpdate}
+          onClickReset={onClickReset}
+          isAddBtnClicked={isAddBtnClicked}
+          isCancelBtnDisabled={isCancelBtnDisabled}
+        />
+      </SearchWrapper>
       <MainWrapper>
         <LeftSide>
           <form onSubmit={handleSubmit(submit)}>
@@ -191,14 +240,15 @@ function CC1100({
               </div>
             </SearchWrapper>
           </form>
-
-          <Grid
+          <GridLeft
             data={data}
-            fields={fields}
-            columns={columns}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
+            setIsAddBtnClicked={setIsAddBtnClicked}
+            fields={fields}
+            columns={columns}
             style={{ height: `calc(100% - 38px)` }}
           />
         </LeftSide>
@@ -212,6 +262,8 @@ function CC1100({
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
+            isAddBtnClicked={isAddBtnClicked}
+            setIsAddBtnClicked={setIsAddBtnClicked}
           />
         </RightSide>
       </MainWrapper>
