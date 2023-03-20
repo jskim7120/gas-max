@@ -561,3 +561,63 @@ export const Input2 = styled.input<{ inputSize?: InputSize }>`
     background: #fffacd;
   }
 `;
+
+interface IInputLoginProps {
+  type?: string;
+  label?: string;
+  register?: any;
+  errors?: any;
+  inputSize?: InputSize;
+  fullWidth?: boolean;
+  value?: string | number;
+  placeholder?: string;
+  style?: any;
+  className?: string;
+  kind?: FieldKind;
+  textAlign?: string;
+}
+
+export const InputLogin = ({
+  type,
+  label,
+  register,
+  errors,
+  inputSize,
+  fullWidth,
+  value,
+  placeholder,
+  style,
+  className,
+  kind,
+  textAlign,
+}: IInputLoginProps) => {
+  return (
+    <InputWrapper fullWidth={fullWidth}>
+      <FormGroup
+        className={className && className}
+        inputSize={inputSize}
+        fullWidth={fullWidth}
+        kind={kind}
+        textAlign={textAlign}
+      >
+        {label !== undefined && (
+          <Label className={className && className}>{label}</Label>
+        )}
+        <InputForm
+          id={register?.name}
+          type={type ? type : "text"}
+          inputSize={inputSize && inputSize}
+          fullWidth={fullWidth && fullWidth}
+          {...register}
+          value={value && value}
+          placeholder={placeholder}
+          style={style}
+          className={className}
+          kind={kind && kind}
+          textAlign={textAlign && textAlign}
+        />
+      </FormGroup>
+      <ErrorText>{errors && errors}</ErrorText>
+    </InputWrapper>
+  );
+};
