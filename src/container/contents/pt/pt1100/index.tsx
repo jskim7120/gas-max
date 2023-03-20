@@ -70,6 +70,7 @@ function PT1100({
   }, [selected]);
 
   useEffect(() => {
+    console.log(dataCommonDic, "PZ");
     if (dataCommonDic !== undefined && dataCommonDic) {
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,

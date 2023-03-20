@@ -561,3 +561,15 @@ export const Input2 = styled.input<{ inputSize?: InputSize }>`
     background: #fffacd;
   }
 `;
+
+export const BottomStyleDiv = styled.div<{ bottomSize?: InputSize }>`
+  bottom: ${(props) =>
+    props.bottomSize ? getInputSize(props.bottomSize) : "80px"};
+  position: absolute;
+  padding: 10px;
+`;
+
+export const ParagraphBorderBotton = styled.div`
+  border-bottom : 1px solid
+  width: 100%;
+`;

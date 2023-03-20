@@ -65,6 +65,7 @@ function PT1200({
   }, [selected]);
 
   useEffect(() => {
+    console.log("my data common dictionary", dataCommonDic);
     if (dataCommonDic !== undefined && dataCommonDic) {
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
