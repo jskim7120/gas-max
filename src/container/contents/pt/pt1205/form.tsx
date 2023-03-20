@@ -78,7 +78,7 @@ const FORMPT1205 = React.forwardRef(
           <Label>수금일자</Label>
           <Controller
             control={control}
-            {...register("msBigo")}
+            {...register("msDate")}
             render={({ field: { onChange, value, name } }) => (
               <CustomDatePicker
                 style={{ width: "175px" }}
@@ -89,23 +89,24 @@ const FORMPT1205 = React.forwardRef(
             )}
           />
         </Field>
-        <Field>
-          <Input
-            label="미수금액"
-            register={register("cuJmisu")}
-            kind={FieldKind.BORDER}
-            inputSize={InputSize.i175}
-          />
-        </Field>
-        <Field>
-          <Input
-            label="선태금액"
-            register={register("cuChkamt")}
-            kind={FieldKind.BORDER}
-            inputSize={InputSize.i175}
-          />
-        </Field>
-        <DividerGray />
+        <div style={{ borderStyle: "groove", alignItems: "center" }}>
+          <Field>
+            <Input
+              label="미수금액"
+              register={register("cuJmisu")}
+              kind={FieldKind.BORDER}
+              inputSize={InputSize.i175}
+            />
+          </Field>
+          <Field>
+            <Input
+              label="선태금액"
+              register={register("cuChkamt")}
+              kind={FieldKind.BORDER}
+              inputSize={InputSize.i175}
+            />
+          </Field>
+        </div>
 
         <FormGroup>
           <Field>

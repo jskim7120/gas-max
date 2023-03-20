@@ -56,6 +56,11 @@ export interface initialStateType {
     cuCode: string | undefined;
     cuName: string | undefined;
   };
+  pt1205: {
+    areaCode: string | undefined;
+    cuCode: string | undefined;
+    cuName: string | undefined;
+  };
 }
 
 const initialState: initialStateType = {
@@ -108,6 +113,11 @@ const initialState: initialStateType = {
     areaCode: undefined,
   },
   pt1105: {
+    areaCode: "",
+    cuCode: "",
+    cuName: "",
+  },
+  pt1205: {
     areaCode: "",
     cuCode: "",
     cuName: "",
@@ -184,6 +194,11 @@ const modalSlice = createSlice({
       state.pt1105.cuCode = action.payload.cuCode;
       state.pt1105.cuName = action.payload.cuName;
     },
+    pt1205Popup: (state, action) => {
+      state.pt1205.areaCode = action.payload.areaCode;
+      state.pt1205.cuCode = action.payload.cuCode;
+      state.pt1205.cuName = action.payload.cuName;
+    },
   },
 });
 
@@ -198,6 +213,7 @@ export const {
   setIsDelete,
   rv1100Popup,
   ptAreaCode,
+  pt1205Popup,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;
