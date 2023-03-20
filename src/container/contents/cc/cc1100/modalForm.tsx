@@ -55,13 +55,13 @@ function CC1100Modal() {
     >
       <CTable2>
         <tr>
-          <th>구분</th>
-          <th>총입고량</th>
+          <th style={{ textAlign: "left" }}>계정과목</th>
+          <th style={{ textAlign: "left" }}>항목명</th>
         </tr>
         {data?.map((item) => (
           <tr onClick={() => setSelected(item)}>
-            <td>{item.accCode}</td>
             <td>{item.accName}</td>
+            <td>{item.acsName}</td>
           </tr>
         ))}
       </CTable2>

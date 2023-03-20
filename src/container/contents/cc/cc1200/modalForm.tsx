@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "app/store";
 import API from "app/axios";
-import { CC120080 } from "app/path";
+import { CC110080 } from "app/path";
+import { CTable2 } from "container/contents/gr/gr1200/style";
 
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
@@ -23,7 +24,7 @@ function CC1200Modal() {
 
   const fetchData = async () => {
     try {
-      const res = await API.get(CC120080, {
+      const res = await API.get(CC110080, {
         params: {
           acjType: state.acjType,
         },
@@ -36,7 +37,7 @@ function CC1200Modal() {
       }
     } catch (err) {
       setData([]);
-      console.log("error fetching cc1100 Modal data");
+      console.log("error fetching cc1200 Modal data");
     }
   };
 
@@ -51,26 +52,31 @@ function CC1200Modal() {
         justifyContent: "space-between",
       }}
     >
-      <table>
-        <th></th>
+      <CTable2>
+        <tr>
+          <th style={{ width: "22%" }}>코드</th>
+          <th style={{ textAlign: "left" }}>계정과목</th>
+        </tr>
         {data?.map((item) => (
           <tr onClick={() => setSelected(item)}>
-            <td>{item.accCode}</td>
+            <td style={{ textAlign: "center" }}>{item.accCode}</td>
             <td>{item.accName}</td>
           </tr>
         ))}
-      </table>
+      </CTable2>
 
       <div
         style={{
           width: "100%",
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
+          marginTop: "10px",
+          gap: "10px",
         }}
       >
         <Button
           type="button"
-          text="choose"
+          text="선택(Enter)"
           color={ButtonColor.SUCCESS}
           onClick={() => {
             dispatch(
@@ -78,8 +84,7 @@ function CC1200Modal() {
                 ...state,
                 accCode: selected?.accCode ?? undefined,
                 accName: selected?.accName ?? undefined,
-                acsCode: selected?.acsCode ?? undefined,
-                acsName: selected?.acsName ?? undefined,
+                accGubun: selected?.accGubun ?? undefined,
               })
             );
 
@@ -88,7 +93,7 @@ function CC1200Modal() {
         />
         <Button
           type="button"
-          text="esc"
+          text="취소(Esc)"
           color={ButtonColor.LIGHT}
           onClick={() => {
             dispatch(closeModal());
