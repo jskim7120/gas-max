@@ -5,23 +5,20 @@ import API from "app/axios";
 import { EN1400DELETE, EN140011 } from "app/path";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import {
-  Item,
-  RadioButton,
-  RadioButtonLabel,
-} from "components/radioButton/style";
+
 import {
   Input,
   Select,
   FormGroup,
-  Divider,
   Label,
+  BottomStyleDiv,
 } from "components/form/style";
 import { IPTFORMMODEL } from "./formModel";
 import { SearchBtn } from "components/daum";
-import { MagnifyingGlass } from "components/allSvgIcon";
+import { MagnifyingGlass, IconInfo } from "components/allSvgIcon";
 import { useDispatch, useSelector } from "app/store";
 import { addCC1100, openModal } from "app/state/modal/modalSlice";
+import { InfoText } from "components/text";
 
 interface IForm {
   selected: any;
@@ -139,116 +136,128 @@ const Form = React.forwardRef(
     return (
       <form
         // onSubmit={handleSubmit(submit)}
-        style={{ width: "410px", padding: "10px" }}
+        style={{ width: "410px" }}
       >
-        <FormGroup>
-          <Label style={{ minWidth: "80px" }}>일 자</Label>
-          <Controller
-            control={control}
-            {...register("msDate")}
-            render={({ field: { onChange, onBlur, value, ref } }) => (
-              <CustomDatePicker
-                value={value == null ? new Date() : value}
-                onChange={onChange}
-              />
-            )}
-          />
-        </FormGroup>
-        <br></br>
-        <div style={{ borderStyle: "groove", alignItems: "center" }}>
+        <div style={{ padding: "10px" }}>
           <FormGroup>
+            <Label style={{ minWidth: "80px" }}>일 자</Label>
+            <Controller
+              control={control}
+              {...register("gsDate")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker
+                  value={value == null ? new Date() : value}
+                  onChange={onChange}
+                />
+              )}
+            />
+          </FormGroup>
+          <br></br>
+          <div style={{ borderStyle: "groove", alignItems: "center" }}>
+            <FormGroup>
+              <Input
+                label="거 래 처"
+                labelStyle={{ minWidth: "80px" }}
+                register={register("cuCode")}
+                inputSize={InputSize.i250}
+              />
+              <SearchBtn type="button" onClick={handleSearchBtnClick}>
+                <MagnifyingGlass />
+              </SearchBtn>
+            </FormGroup>
+
             <Input
-              label="거 래 처"
+              label="건물명"
               labelStyle={{ minWidth: "80px" }}
               register={register("cuName")}
               inputSize={InputSize.i250}
             />
-            <SearchBtn type="button" onClick={handleSearchBtnClick}>
-              <MagnifyingGlass />
-            </SearchBtn>
-          </FormGroup>
-
+            <Input
+              label="사용자명"
+              labelStyle={{ minWidth: "80px" }}
+              register={register("cuUsername")}
+              inputSize={InputSize.i250}
+            />
+            <Input
+              label="미수금액"
+              labelStyle={{ minWidth: "80px" }}
+              register={register("cuCmisu")}
+              inputSize={InputSize.i250}
+            />
+          </div>
+          <br />
           <Input
-            label=""
+            label="D / C"
             labelStyle={{ minWidth: "80px" }}
-            register={register("cuCode")}
+            register={register("gsDc")}
             inputSize={InputSize.i250}
           />
           <Input
-            label="미수금액"
+            label="수 금 액"
             labelStyle={{ minWidth: "80px" }}
-            register={register("cuJmisu")}
+            register={register("gsKumack")}
+            inputSize={InputSize.i250}
+          />
+          <br />
+          <Input
+            label="수금 후 잔액"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("gsJanack")}
+            inputSize={InputSize.i250}
+          />
+          <br />
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>수금방법</Label>
+            <Select {...register("gsSukumType")} onChange={handleSelectCode}>
+              {dataCommonDic?.gsSukumtype?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>사 원</Label>
+            <Select {...register("gsSwCode")} onChange={handleSelectCode}>
+              {dataCommonDic?.gsSwCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <Input
+            label="비 고"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("gsBigo")}
             inputSize={InputSize.i250}
           />
         </div>
-        <br />
-        <Input
-          label="D / C"
-          labelStyle={{ minWidth: "80px" }}
-          register={register("msDc")}
-          inputSize={InputSize.i250}
-        />
-        <Input
-          label="수 금 액"
-          labelStyle={{ minWidth: "80px" }}
-          register={register("msKumack")}
-          inputSize={InputSize.i250}
-        />
-        <br />
-        <Input
-          label="수금 후 잔액"
-          labelStyle={{ minWidth: "80px" }}
-          register={register("msJanack")}
-          inputSize={InputSize.i250}
-        />
-        <br />
-        <FormGroup>
-          <Label style={{ minWidth: "80px" }}>수금방법</Label>
-          <Select {...register("msSukumType")} onChange={handleSelectCode}>
-            {dataCommonDic?.msSukumType?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </FormGroup>
-        <FormGroup>
-          <Label style={{ minWidth: "80px" }}>사 원</Label>
-          <Select {...register("msSwCode")} onChange={handleSelectCode}>
-            {dataCommonDic?.msSwCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </FormGroup>
-        <Input
-          label="비 고"
-          labelStyle={{ minWidth: "80px" }}
-          register={register("msBigo")}
-          inputSize={InputSize.i250}
-        />
 
-        <div>
+        <BottomStyleDiv bottomSize={InputSize.i85}>
+          <InfoText
+            text={"수금처리는 선입선출 방식으로 자동 처리됨"}
+            style={{ borderBottom: "1px solid" }}
+          />
           <Input
             label="미수금 총계"
             labelStyle={{ minWidth: "80px" }}
-            register={register("msBigo")}
+            register={register("totMisukum")}
             inputSize={InputSize.i250}
           />
           <Input
             label="수금 총계"
             labelStyle={{ minWidth: "80px" }}
-            register={register("msBigo")}
+            register={register("totSukum")}
             inputSize={InputSize.i250}
           />
           <Input
             label="D/C 총계"
             labelStyle={{ minWidth: "80px" }}
-            register={register("msBigo")}
+            register={register("totDc")}
             inputSize={InputSize.i250}
           />
-        </div>
+        </BottomStyleDiv>
       </form>
     );
   }
