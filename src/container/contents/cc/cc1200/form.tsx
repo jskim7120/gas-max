@@ -32,6 +32,8 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
 }
 const radioOptions = [
   {
@@ -62,11 +64,12 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "CC",
       functionName: "CC1200",
@@ -93,7 +96,7 @@ const Form = React.forwardRef(
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         let newData: any = {};
         if (type === "clear") {
-          document.getElementById("bpName")?.focus();
+          document.getElementById("acjDate")?.focus();
           const path = EN140011;
 
           try {
@@ -164,7 +167,7 @@ const Form = React.forwardRef(
     return (
       <form
         // onSubmit={handleSubmit(submit)}
-        style={{ width: "380px", padding: "0px 10px" }}
+        style={{ width: "380px", padding: "20px 10px" }}
       >
         <Wrapper>
           <FormGroup>
@@ -173,6 +176,7 @@ const Form = React.forwardRef(
               {...register("cbareaCode")}
               onChange={handleSelectCode}
               width={InputSize.i200}
+              disabled={isAddBtnClicked}
             >
               {dataCommonDic?.cbareaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

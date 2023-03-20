@@ -25,6 +25,8 @@ interface IForm {
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
@@ -36,11 +38,11 @@ const Form = React.forwardRef(
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1200",
@@ -66,7 +68,7 @@ const Form = React.forwardRef(
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         let newData: any = {};
         if (type === "clear") {
-          document.getElementById("saupSsno")?.focus();
+          document.getElementById("sgDate")?.focus();
           const path = EN120011;
           try {
             const response: any = await API.get(path, {
@@ -174,7 +176,7 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ width: "410px", padding: "0px 10px" }}
+        style={{ width: "410px", padding: "20px 10px" }}
       >
         <div
           style={{
@@ -187,7 +189,11 @@ const Form = React.forwardRef(
           <div>
             <FormGroup>
               <Label>영업소</Label>
-              <Select {...register("areaCode")}>
+              <Select
+                {...register("areaCode")}
+                width={InputSize.i200}
+                disabled={isAddBtnClicked}
+              >
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -206,13 +212,14 @@ const Form = React.forwardRef(
                     onChange={onChange}
                     name={name}
                     showYearDropdown
+                    style={{ width: "200px" }}
                   />
                 )}
               />
             </FormGroup>
             <FormGroup>
               <Label>사원</Label>
-              <Select {...register("sgSwCode")} width={InputSize.i130}>
+              <Select {...register("sgSwCode")} width={InputSize.i200}>
                 {dataCommonDic?.sgSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -223,36 +230,47 @@ const Form = React.forwardRef(
             <Input
               label="가불합계"
               register={register("gabulSum")}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i200}
             />
             <br />
 
             <Input
               label="금액"
               register={register("sgKumack")}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i200}
             />
-            <Input label="비고" register={register("sgBigo")} fullWidth />
+            <Input
+              label="비고"
+              register={register("sgBigo")}
+              inputSize={InputSize.i200}
+            />
           </div>
           <div>
-            <p
+            <div
               style={{
                 color: "#00BEFF",
                 fontSize: "15px",
                 width: "90%",
-                padding: "20px",
+                paddingLeft: "20px",
+                paddingBottom: "5px",
               }}
             >
-              ☞ 가불 반제 처리는 '- '금액으로 입력하며
-              <br />
-              매월 급여 공제시에는 반제처리 합니다.
-            </p>
-
+              <p>☞ 가불 반제 처리는 '- '금액으로 입력하며</p>
+              <p
+                style={{
+                  paddingLeft: "20px",
+                }}
+              >
+                {" "}
+                매월 급여 공제시에는 반제처리 합니다.
+              </p>
+            </div>
             <DividerGray />
             <Input
               label="기간별 합계"
               register={register("totGabul")}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i200}
+              style={{ marginTop: "10px" }}
             />
           </div>
         </div>

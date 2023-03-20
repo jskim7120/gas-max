@@ -1,13 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useDispatch } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
+import GridLeft from "components/grid";
 import {
   SearchWrapper,
   MainWrapper,
   RightSide,
   LeftSide,
 } from "../../commonStyle";
+import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import { ICC1400SEARCH } from "./model";
 import CustomDatePicker from "components/customDatePicker";
 import {
@@ -27,6 +30,7 @@ import Form from "./form";
 import { CC1400SEARCH } from "app/path";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
+import FourButtons from "components/button/fourButtons";
 
 function CC1400({
   depthFullName,
@@ -38,11 +42,13 @@ function CC1400({
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-
+  const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState();
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CC",
@@ -89,13 +95,13 @@ function CC1400({
   const fetchData = async (params: any) => {
     try {
       setLoading(true);
-      const { data: dataCC1500 } = await API.get(CC1400SEARCH, {
+      const { data: dataCC1400 } = await API.get(CC1400SEARCH, {
         params: params,
       });
 
-      console.log("fetch data:::::", dataCC1500);
-      if (dataCC1500) {
-        setData(dataCC1500);
+      console.log("fetch data:::::", dataCC1400);
+      if (dataCC1400) {
+        setData(dataCC1400);
       } else {
         setData([]);
       }
@@ -103,8 +109,27 @@ function CC1400({
     } catch (err) {
       setLoading(false);
       setData([]);
-      console.log("RV9005 data search fetch error =======>", err);
+      console.log("CC1400 data search fetch error =======>", err);
     }
+  };
+
+  const onClickAdd = () => {
+    setIsAddBtnClicked(true);
+    setIsCancelBtnDisabled(false);
+    formRef.current.resetForm("clear");
+  };
+
+  const onClickDelete = () => {
+    dispatch(openModal({ type: "delModal" }));
+    dispatch(addDeleteMenuId({ menuId: menuId }));
+  };
+  const onClickUpdate = () => {
+    formRef.current.crud(null);
+  };
+
+  const onClickReset = () => {
+    setIsAddBtnClicked(false);
+    formRef.current.resetForm("reset");
   };
 
   return (
@@ -116,6 +141,29 @@ function CC1400({
           register={register}
           dataCommonDic={dataCommonDic}
         />
+        <SearchWrapper
+          className="h35 mt5"
+          style={{
+            display: "flex",
+            position: "absolute",
+            top: "87px",
+            right: "19px",
+            background: "none",
+            padding: "0",
+            border: "none",
+            height: "auto",
+            marginTop: "2px",
+          }}
+        >
+          <FourButtons
+            onClickAdd={onClickAdd}
+            onClickDelete={onClickDelete}
+            onClickUpdate={onClickUpdate}
+            onClickReset={onClickReset}
+            isAddBtnClicked={isAddBtnClicked}
+            isCancelBtnDisabled={isCancelBtnDisabled}
+          />
+        </SearchWrapper>
         <div className="buttons">
           <Button
             text="등록"
@@ -222,12 +270,15 @@ function CC1400({
               />
             </FormGroup>
           </SearchWrapper>
-          <Grid
+          <GridLeft
+            areaCode="00"
             data={data}
             fields={fields}
             columns={columns}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
+            setIsAddBtnClicked={setIsAddBtnClicked}
             setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: `calc(100% - 38px)` }}
           />
@@ -241,6 +292,8 @@ function CC1400({
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
+            isAddBtnClicked={isAddBtnClicked}
+            setIsAddBtnClicked={setIsAddBtnClicked}
           />
         </RightSide>
       </MainWrapper>

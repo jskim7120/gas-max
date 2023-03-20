@@ -24,10 +24,13 @@ interface IForm {
   // selected: any;
   fetchData: any;
   setData: any;
+  selected: any;
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
   dataCommonDic: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
@@ -38,25 +41,25 @@ const Form = React.forwardRef(
       // selected,
       fetchData,
       setData,
+      selected,
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
       dataCommonDic,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-
     const { register, handleSubmit, control, reset, getValues } =
       useForm<ICC1500FORM>({ mode: "onChange" });
 
     useEffect(() => {
-      if (data65 !== undefined && JSON.stringify(data65) !== "{}") {
-        console.log("datdada65::", data65);
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         resetForm("reset");
       }
       setIsAddBtnClicked(false);
-    }, [data65]);
+    }, [selected]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
@@ -69,7 +72,7 @@ const Form = React.forwardRef(
       let newData: any = {};
       if (type === "clear") {
       } else if (type === "reset") {
-        reset(data65);
+        reset(selected);
       }
       // }
     };
@@ -147,7 +150,11 @@ const Form = React.forwardRef(
           <div>
             <FormGroup>
               <Label>영업소</Label>
-              <Select {...register("areaCode")}>
+              <Select
+                {...register("areaCode")}
+                width={InputSize.i150}
+                disabled={isAddBtnClicked}
+              >
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -162,6 +169,7 @@ const Form = React.forwardRef(
                 {...register("cjDate")}
                 render={({ field: { onChange, value, name } }) => (
                   <CustomDatePicker
+                    style={{ width: "150px" }}
                     value={value}
                     onChange={onChange}
                     name={name}
@@ -172,7 +180,7 @@ const Form = React.forwardRef(
             </FormGroup>
             <FormGroup>
               <Label>차량</Label>
-              <Select {...register("cjCaCode")} width={InputSize.i130}>
+              <Select {...register("cjCaCode")} width={InputSize.i150}>
                 {dataCommonDic?.cjCaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -182,7 +190,7 @@ const Form = React.forwardRef(
             </FormGroup>
             <FormGroup>
               <Label>정비명</Label>
-              <Select {...register("cjCcCode")} width={InputSize.i130}>
+              <Select {...register("cjCcCode")} width={InputSize.i150}>
                 {dataCommonDic?.cjCcCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -195,11 +203,11 @@ const Form = React.forwardRef(
             <Input
               label="금액"
               register={register("cjKumack")}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i150}
             />
             <FormGroup>
               <Label>사원</Label>
-              <Select {...register("cjSwCode")} width={InputSize.i130}>
+              <Select {...register("cjSwCode")} width={InputSize.i150}>
                 {dataCommonDic?.cjSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -207,33 +215,37 @@ const Form = React.forwardRef(
                 ))}
               </Select>
             </FormGroup>
-            <Input label="비고" register={register("cjBigo")} fullWidth />
+            <Input
+              label="비고"
+              register={register("cjBigo")}
+              inputSize={InputSize.i150}
+            />
             <br />
             <br />
             <Input
               label="주유량"
               register={register("cjOilL")}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i150}
             />
             <Input
               label="단가"
               register={register("cjOilDanga")}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i150}
             />
             <Input
               label="주유금액"
               register={register("cjKumackOil")}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i150}
             />
             <br />
             <Input
               label="누적주행"
               register={register("cjCarKg")}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i150}
             />
             <FormGroup>
               <Label>사원</Label>
-              <Select {...register("cjSwCodeOil")} width={InputSize.i130}>
+              <Select {...register("cjSwCodeOil")} width={InputSize.i150}>
                 {dataCommonDic?.cjCaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -241,7 +253,11 @@ const Form = React.forwardRef(
                 ))}
               </Select>
             </FormGroup>
-            <Input label="비고" register={register("cjBigoOil")} fullWidth />
+            <Input
+              label="비고"
+              register={register("cjBigoOil")}
+              inputSize={InputSize.i150}
+            />
           </div>
           <div>
             <p
@@ -260,7 +276,7 @@ const Form = React.forwardRef(
             <Input
               label="기간별 합계"
               register={register("totGabul")}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i150}
             />
           </div>
         </div>
