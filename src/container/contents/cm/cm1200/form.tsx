@@ -105,7 +105,7 @@ const Form = React.forwardRef(
           cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
           cuJyCode: dataCommonDic?.cuJyCode[0].code,
           cuSwCode: dataCommonDic?.cuSwCode[0].code,
-          cuRh2o: dataCommonDic?.cuRh20[0].code,
+          cuRh2O: dataCommonDic?.cuRh20[0].code,
           cuRdangaType: dataCommonDic?.cuRdangaType[0].code,
           cuRdangaSign: dataCommonDic?.cuRdangaSign[0].code,
           cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
@@ -318,7 +318,7 @@ const Form = React.forwardRef(
         delete formValues.cuAddr2;
       }
       if (!chkCuRh20) {
-        delete formValues.cuRh2o;
+        delete formValues.cuRh2O;
       }
       if (!chkCuRdanga) {
         //talbaruudiig nyagtal
@@ -602,7 +602,7 @@ const Form = React.forwardRef(
             </FormGroup>
 
             <FormGroup>
-              <Label style={{ minWidth: "80px" }}>지역분류</Label>
+              <Label style={{ minWidth: "94px" }}>지역분류</Label>
               <CSelect
                 {...register("cuJyCode")}
                 width={InputSize.i120}
@@ -614,16 +614,10 @@ const Form = React.forwardRef(
                   </option>
                 ))}
               </CSelect>
-              <SearchBtn
-                type="button"
-                onClick={() => console.log("cuZipCode BTN")}
-              >
-                <MagnifyingGlass />
-              </SearchBtn>
             </FormGroup>
 
             <FormGroup>
-              <Label style={{ minWidth: "80px" }}>관리자분류</Label>
+              <Label style={{ minWidth: "70px" }}>관리자분류</Label>
               <CSelect {...register("cuCustgubun")} width={InputSize.i120}>
                 {cuCustgubunDic?.map((obj: any, index: number) => (
                   <option key={index} value={obj.code}>

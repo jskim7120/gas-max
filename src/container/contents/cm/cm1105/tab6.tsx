@@ -2,6 +2,7 @@ import { Input, Field, Wrapper, FormGroup, Label } from "components/form/style";
 import CheckBox from "components/checkbox";
 import CustomDatePicker from "components/customDatePicker";
 import { Controller } from "react-hook-form";
+import { InputSize } from "components/componentsType";
 
 function Tab6({ register, control }: { register: Function; control: any }) {
   return (
@@ -31,18 +32,24 @@ function Tab6({ register, control }: { register: Function; control: any }) {
             </Field>
             <Input
               label="수신자 번호"
+              labelStyle={{ minWidth: "80px" }}
               register={register("cuSmsHp")}
-              fullWidth
+              inputSize={InputSize.i130}
             />
 
             <Field flex style={{ alignItems: "center" }}>
-              <Label>신청일자</Label>
+              <Label style={{ minWidth: "80px" }}>신청일자</Label>
 
               <Controller
                 control={control}
                 {...register("cuSmsDate")}
-                render={({ field: { onChange, onBlur, value, ref } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
+                render={({ field: { onChange, value, name } }) => (
+                  <CustomDatePicker
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    style={{ width: "130px" }}
+                  />
                 )}
               />
             </Field>
@@ -69,7 +76,7 @@ function Tab6({ register, control }: { register: Function; control: any }) {
             영수증
           </p>
         </Field>
-        <div>
+        <Field>
           <Wrapper grid>
             <Field>
               <FormGroup>
@@ -78,16 +85,26 @@ function Tab6({ register, control }: { register: Function; control: any }) {
                 <CheckBox register={{ ...register("cuCashpayYn") }} />
               </FormGroup>
             </Field>
-            <Input label="발행 번호" register={register("cuCashpayNo")} />
+            <Input
+              label="발행 번호"
+              labelStyle={{ minWidth: "80px" }}
+              register={register("cuCashpayNo")}
+              inputSize={InputSize.i130}
+            />
 
             <Field flex style={{ alignItems: "center" }}>
-              <Label>신청일자</Label>
+              <Label style={{ minWidth: "80px" }}>신청일자</Label>
 
               <Controller
                 control={control}
                 {...register("cuCashpayDate")}
-                render={({ field: { onChange, onBlur, value, ref } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
+                render={({ field: { onChange, value, name } }) => (
+                  <CustomDatePicker
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    style={{ width: "130px" }}
+                  />
                 )}
               />
             </Field>
@@ -100,7 +117,7 @@ function Tab6({ register, control }: { register: Function; control: any }) {
               fullWidth
             />
           </Wrapper>
-        </div>
+        </Field>
       </Field>
     </Field>
   );

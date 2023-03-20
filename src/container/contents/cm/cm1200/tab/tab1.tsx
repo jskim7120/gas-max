@@ -76,7 +76,7 @@ function Tab1({
             </Label>
             <CSelect
               disabled={!chkCuRh20}
-              {...register("cuRh2o")}
+              {...register("cuRh2O")}
               width={InputSize.i120}
             >
               {dataCommonDic?.cuRh20?.map((obj: any, index: number) => (

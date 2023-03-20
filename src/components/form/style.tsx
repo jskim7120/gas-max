@@ -401,7 +401,7 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
   }
 
   .gray-title {
-    width: 85px;
+    width: 65px;
     background: #e8ecf1;
     display: flex;
     align-items: center;

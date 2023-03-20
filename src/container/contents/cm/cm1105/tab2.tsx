@@ -49,36 +49,32 @@ function Tab2({
           </p>
         </Field>
         <Field>
-          <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <FormGroup>
-              <Label>조정기압력</Label>
-              <Select {...register("cuRh2o")}>
-                {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-              <p>mmH20</p>
-            </FormGroup>
+          <FormGroup>
+            <Label>조정기압력</Label>
+            <Select {...register("cuRh2o")} width={InputSize.i130}>
+              {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+            <p>mmH20</p>
 
-            <FormGroup>
-              <Label>루베단가</Label>
-              <Select
-                {...register("cuRdangaType")}
-                width={InputSize.i100}
-                onChange={(e: any) => {
-                  console.log(e.target.value);
-                  setCuRdangaType(e.target.value);
-                }}
-              >
-                {dataCommonDic?.cuRdangaType?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
+            <Label style={{ minWidth: "80px" }}>루베단가</Label>
+            <Select
+              {...register("cuRdangaType")}
+              width={InputSize.i130}
+              onChange={(e: any) => {
+                console.log(e.target.value);
+                setCuRdangaType(e.target.value);
+              }}
+            >
+              {dataCommonDic?.cuRdangaType?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
             {cuRdangaType === "1" ? (
               <Field flex style={{ alignItems: "center" }}>
@@ -124,170 +120,164 @@ function Tab2({
                 style={{ border: "1px solid #e6e5e5" }}
               />
             )}
-          </Wrapper>
+          </FormGroup>
 
-          <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <Field flex>
-              <Controller
-                control={control}
-                {...register("cuPer")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    label="연체율"
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={[/\d/, /\d/, /\d/]}
-                    inputSize={InputSize.i50}
-                    textAlign="right"
-                  />
-                )}
-              />
+          <FormGroup>
+            <Controller
+              control={control}
+              {...register("cuPer")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="연체율"
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  mask={[/\d/, /\d/, /\d/]}
+                  inputSize={InputSize.i130}
+                  textAlign="right"
+                />
+              )}
+            />
 
-              <p style={{ marginLeft: "2px" }}>%</p>
-            </Field>
-            <Field flex>
-              <Controller
-                control={control}
-                {...register("cuCdc")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    label="할인율"
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={[/\d/, /\d/, /\d/]}
-                    inputSize={InputSize.i50}
-                    textAlign="right"
-                  />
-                )}
-              />
-              <p style={{ marginLeft: "2px" }}>%</p>
-            </Field>
+            <p style={{ marginLeft: "2px" }}>%</p>
+
+            <Controller
+              control={control}
+              {...register("cuCdc")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="할인율"
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  mask={[/\d/, /\d/, /\d/]}
+                  inputSize={InputSize.i130}
+                  textAlign="right"
+                />
+              )}
+            />
+            <p style={{ marginLeft: "2px" }}>%</p>
+
             <Input
               label="순번"
               register={register("cuCno")}
-              inputSize={InputSize.sm}
+              inputSize={InputSize.i110}
             />
-          </Wrapper>
+          </FormGroup>
 
-          <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <Field flex style={{ width: "260px" }}>
-              <Controller
-                control={control}
-                {...register("cuAnkum")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    label="관리비"
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={currencyMask}
-                    textAlign="right"
-                    inputSize={InputSize.i130}
-                  />
-                )}
-              />
-              <p style={{ marginLeft: "2px" }}>원</p>
-            </Field>
-            <Field flex style={{ width: "259px" }}>
-              <Controller
-                control={control}
-                {...register("cuSisulkum")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    label="시설비"
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={currencyMask}
-                    textAlign="right"
-                    inputSize={InputSize.i130}
-                  />
-                )}
-              />
-              <p style={{ marginLeft: "2px" }}>원</p>
-            </Field>
-            <Field flex>
-              <Controller
-                control={control}
-                {...register("cuMeterkum")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    label="계량기교체비"
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={currencyMask}
-                    textAlign="right"
-                    inputSize={InputSize.i130}
-                  />
-                )}
-              />
-              <p>원</p>
-            </Field>
-          </Wrapper>
-
-          <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <FormGroup>
-              <Label>검침주기</Label>
-              <Select {...register("cuGumTurm")} width={InputSize.i130}>
-                {dataCommonDic?.cuGumTurm?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <Field flex style={{ alignItems: "center" }}>
-              <Controller
-                control={control}
-                {...register("cuGumdate")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    label="검침일"
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={[/\d/, /\d/]}
-                    inputSize={InputSize.i40}
-                  />
-                )}
-              />
-              <p>일</p>
-            </Field>
-            <FormGroup style={{ gap: "11px" }}>
-              <Label style={{ minWidth: "80px" }}>기본사용료</Label>
-              <Label className="lable-check" style={{ minWidth: "auto" }}>
-                <CheckBox
-                  title="적용"
-                  register={{ ...register("cuBaGageYn") }}
+          <FormGroup>
+            <Controller
+              control={control}
+              {...register("cuAnkum")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="관리비"
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i130}
                 />
-              </Label>
+              )}
+            />
+            <p style={{ marginLeft: "2px" }}>원</p>
 
-              <Input
-                register={register("cuBaGageM3")}
-                textAlign="right"
-                inputSize={InputSize.i50}
-              />
-              <p>m3이하 일때</p>
-              <Controller
-                control={control}
-                {...register("cuBaGageKum")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={currencyMask}
-                    textAlign="right"
-                    inputSize={InputSize.i120}
-                  />
-                )}
-              />
-              <p>원 적용</p>
-            </FormGroup>
-          </Wrapper>
+            <Controller
+              control={control}
+              {...register("cuSisulkum")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="시설비"
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i130}
+                />
+              )}
+            />
+            <p style={{ marginLeft: "2px" }}>원</p>
+
+            <Controller
+              control={control}
+              {...register("cuMeterkum")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="계량기교체비"
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i110}
+                />
+              )}
+            />
+            <p>원</p>
+          </FormGroup>
+
+          <FormGroup>
+            <Label>검침주기</Label>
+            <Select {...register("cuGumTurm")} width={InputSize.i130}>
+              {dataCommonDic?.cuGumTurm?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+
+            <Controller
+              control={control}
+              {...register("cuGumdate")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="검침일"
+                  labelStyle={{ marginLeft: "16px" }}
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  mask={[/\d/, /\d/]}
+                  inputSize={InputSize.i130}
+                />
+              )}
+            />
+            <p>일</p>
+
+            <Label>기본사용료</Label>
+            <Label
+              className="lable-check"
+              style={{
+                minWidth: "auto",
+                marginLeft: "3px",
+              }}
+            >
+              <CheckBox title="적용" register={{ ...register("cuBaGageYn") }} />
+            </Label>
+
+            <Input
+              register={register("cuBaGageM3")}
+              textAlign="right"
+              inputSize={InputSize.i50}
+            />
+            <p>m3이하 일때</p>
+            <Controller
+              control={control}
+              {...register("cuBaGageKum")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i80}
+                />
+              )}
+            />
+            <p>원 적용</p>
+          </FormGroup>
         </Field>
       </Field>
 
@@ -306,124 +296,126 @@ function Tab2({
           </p>
         </Field>
         <Field>
-          <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <FormGroup>
-              <Label>계량기 제조사</Label>
-              <Select {...register("cuMeterCo")} width={InputSize.i100}>
-                {dataCommonDic?.cuMeterCo?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
+          <FormGroup>
+            <Label>계량기 제조사</Label>
+            <Select {...register("cuMeterCo")} width={InputSize.i130}>
+              {dataCommonDic?.cuMeterCo?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-            <FormGroup>
-              <Label>계량기유형</Label>
-              <Select {...register("cuMeterFeture")}>
-                {dataCommonDic?.cuMeterFeture?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
+            <Label style={{ width: "136px" }}>계량기유형</Label>
+            <Select {...register("cuMeterFeture")} width={InputSize.i130}>
+              {dataCommonDic?.cuMeterFeture?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-            <Field flex style={{ alignItems: "center" }}>
-              <FormGroup>
-                <Label>계량기정보</Label>
-                <Select {...register("cuMeterLr")} width={InputSize.i100}>
-                  {dataCommonDic?.cuMeterLr?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+            <Label style={{ minWidth: "135px" }}>계량기정보</Label>
+            <Select {...register("cuMeterLr")} width={InputSize.i80}>
+              {dataCommonDic?.cuMeterLr?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <Select {...register("cuMeterType")}>
-                {dataCommonDic?.cuMeterType?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
+            <Select {...register("cuMeterType")}>
+              {dataCommonDic?.cuMeterType?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <Field flex>
-                <Input
-                  register={register("cuMeterM3")}
-                  inputSize={InputSize.xs}
-                  textAlign="right"
+            <Input
+              register={register("cuMeterM3")}
+              inputSize={InputSize.xs}
+              textAlign="right"
+            />
+            <p>㎥/h</p>
+          </FormGroup>
+          <FormGroup>
+            <Input
+              label="계량기번호"
+              register={register("cuMeterNo")}
+              inputSize={InputSize.i130}
+            />
+
+            <Label style={{ width: "136px" }}>유효기간</Label>
+
+            <Controller
+              control={control}
+              {...register("cuMeterTurm")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "130px" }}
                 />
-                <p>㎥/h</p>
-              </Field>
-            </Field>
-          </Wrapper>
-          <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <Input label="계량기번호" register={register("cuMeterNo")} />
-            <Field flex style={{ alignItems: "center" }}>
-              <Label>유효기간</Label>
+              )}
+            />
 
-              <Controller
-                control={control}
-                {...register("cuMeterTurm")}
-                render={({ field: { onChange, onBlur, value, ref } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
-            <Field flex style={{ alignItems: "center" }}>
-              <FormGroup style={{ alignItems: "center" }}>
-                <Label>설치장소</Label>
-                <Select {...register("cuMeterPlace")}>
-                  {dataCommonDic?.cuMeterPlace?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-                <p style={{ margin: "0 6px" }}>바코드번호</p>
-              </FormGroup>
+            <Label style={{ minWidth: "135px" }}>설치장소</Label>
+            <Select {...register("cuMeterPlace")} width={InputSize.i80}>
+              {dataCommonDic?.cuMeterPlace?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+            <p style={{ margin: "0 3px 0 52px" }}>바코드번호</p>
 
-              <Input register={register("cuBarcode")} />
-            </Field>
-          </Wrapper>
-          <Wrapper grid fields={"1fr 1fr 2fr"}>
-            <Field flex style={{ alignItems: "center" }}>
-              <Label>교체일자</Label>
+            <Input
+              register={register("cuBarcode")}
+              inputSize={InputSize.i100}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>교체일자</Label>
 
-              <Controller
-                control={control}
-                {...register("cuMeterDt")}
-                render={({ field: { onChange, onBlur, value, ref } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
-            <Field flex style={{ alignItems: "center" }}>
-              <Label>교체예정일</Label>
+            <Controller
+              control={control}
+              {...register("cuMeterDt")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "130px" }}
+                />
+              )}
+            />
 
-              <Controller
-                control={control}
-                {...register("cuMdate")}
-                render={({ field: { onChange, onBlur, value, ref } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
-            <Field flex style={{ alignItems: "center" }}>
-              <Input
-                label="발신기코드"
-                register={register("cuMTransmCd")}
-                inputSize={InputSize.i60}
-              />
-              <p style={{ margin: "0 6px" }}>원격검침 고객코드</p>
-              <Input register={register("blabla")} inputSize={InputSize.i150} />
-              <SearchBtn type="button" onClick={() => alert("dsdsds")}>
-                <MagnifyingGlass />
-              </SearchBtn>
-            </Field>
-          </Wrapper>
+            <Label style={{ width: "136px" }}>교체예정일</Label>
+
+            <Controller
+              control={control}
+              {...register("cuMdate")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "130px" }}
+                />
+              )}
+            />
+
+            <Input
+              label="발신기코드"
+              labelStyle={{ minWidth: "135px" }}
+              register={register("cuMTransmCd")}
+              inputSize={InputSize.i80}
+            />
+            <p style={{ margin: "0 3px 0 6px" }}>원격검침 고객코드</p>
+            <Input register={register("blabla")} inputSize={InputSize.i100} />
+            <SearchBtn type="button" onClick={() => alert("dsdsds")}>
+              <MagnifyingGlass />
+            </SearchBtn>
+          </FormGroup>
         </Field>
       </Field>
     </div>

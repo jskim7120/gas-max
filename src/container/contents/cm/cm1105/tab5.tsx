@@ -1,3 +1,4 @@
+import { InputSize } from "components/componentsType";
 import { Input, Field, Wrapper, Label } from "components/form/style";
 
 function Tab5({ register }: { register: Function }) {
@@ -19,27 +20,67 @@ function Tab5({ register }: { register: Function }) {
         </Field>
         <Field>
           <Wrapper grid>
-            <Input label="CMS구분" register={register("cmsGubun")} />
-            <Input label="예금주" register={register("CMSdepositor")} />
-            <Input label="관리코드" register={register("managerNo")} />
+            <Input
+              label="CMS구분"
+              register={register("cmsGubun")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              label="예금주"
+              register={register("CMSdepositor")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              label="관리코드"
+              register={register("managerNo")}
+              inputSize={InputSize.i130}
+            />
           </Wrapper>
 
           <Wrapper grid>
-            <Input label="은행/카드" register={register("CMSbankName")} />
-            <Input label="계좌/카드번호" register={register("CMSacctno")} />
-            <Input label="전화번호" register={register("tel")} />
+            <Input
+              label="은행/카드"
+              register={register("CMSbankName")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              label="계좌/카드번호"
+              register={register("CMSacctno")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              label="전화번호"
+              register={register("tel")}
+              inputSize={InputSize.i130}
+            />
           </Wrapper>
 
           <Wrapper grid>
-            <Input label="승인일자" register={register("appdt")} />
-            <Input label="약정일" register={register("monthday")} />
-            <Input label="납부자상태" register={register("stateName")} />
+            <Input
+              label="승인일자"
+              register={register("appdt")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              label="약정일"
+              register={register("monthday")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              label="납부자상태"
+              register={register("stateName")}
+              inputSize={InputSize.i130}
+            />
           </Wrapper>
 
           <Wrapper grid col={2} fields="2fr 1fr">
             <Input label="비고" register={register("bigo")} />
 
-            <Input label="등록일시" register={register("CMSregDate")} />
+            <Input
+              label="등록일시"
+              register={register("CMSregDate")}
+              inputSize={InputSize.i130}
+            />
           </Wrapper>
         </Field>
       </Field>
@@ -63,17 +104,17 @@ function Tab5({ register }: { register: Function }) {
             <Input
               label="은행명"
               register={register("VIRbankName")}
-              fullWidth
+              inputSize={InputSize.i130}
             />
             <Input
               label="예금주"
               register={register("VIRdepositor")}
-              fullWidth
+              inputSize={InputSize.i130}
             />
             <Input
               label="관리코드"
               register={register("managerCode")}
-              fullWidth
+              inputSize={InputSize.i130}
             />
           </Wrapper>
 
@@ -81,14 +122,14 @@ function Tab5({ register }: { register: Function }) {
             <Input
               label="계좌번호"
               register={register("VIRacctno")}
-              fullWidth
+              inputSize={InputSize.i130}
             />
             <Label style={{ width: "105px" }}></Label>
 
             <Input
               label="등록일시"
               register={register("VIRregDate")}
-              fullWidth
+              inputSize={InputSize.i130}
             />
           </Wrapper>
         </Field>

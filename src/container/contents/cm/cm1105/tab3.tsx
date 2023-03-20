@@ -57,109 +57,161 @@ function Tab3({
         <Field className="gray-title">
           <p>법정검사</p>
         </Field>
-        <Wrapper grid col={4}>
-          <FormGroup style={{ width: "269px" }}>
-            <Label style={{ minWidth: "auto" }}>시설구분</Label>
-            {radioOptions.map((option, index) => (
-              <Item key={index}>
-                <RadioButton
-                  type="radio"
-                  value={option.id}
-                  {...register(`cuTankYn`)}
-                  id={option.id}
-                />
-                <RadioButtonLabel htmlFor={`${option.label}`}>
-                  {option.label}
-                </RadioButtonLabel>
-              </Item>
-            ))}
-          </FormGroup>
+        <FormGroup>
+          <Label style={{ minWidth: "100px", marginRight: "15px" }}>
+            시설구분
+          </Label>
+          {radioOptions.map((option, index) => (
+            <Item key={index}>
+              <RadioButton
+                type="radio"
+                value={option.id}
+                {...register(`cuTankYn`)}
+                id={option.id}
+              />
+              <RadioButtonLabel htmlFor={`${option.label}`}>
+                {option.label}
+              </RadioButtonLabel>
+            </Item>
+          ))}
 
-          <Field flex style={{ alignItems: "center" }}>
-            <Label>완성검사일</Label>
-            <Controller
-              control={control}
-              {...register("cuFinishDate")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
-              )}
-            />
-          </Field>
+          <Label style={{ minWidth: "100px" }}>완성검사일</Label>
+          <Controller
+            control={control}
+            {...register("cuFinishDate")}
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <CustomDatePicker value={value} onChange={onChange} />
+            )}
+          />
 
-          <Field flex style={{ alignItems: "center" }}>
-            <Label>정기검사일</Label>
-            <Controller
-              control={control}
-              {...register("cuCircuitDate")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
-              )}
-            />
-          </Field>
+          <Label style={{ minWidth: "100px" }}>정기검사일</Label>
+          <Controller
+            control={control}
+            {...register("cuCircuitDate")}
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <CustomDatePicker value={value} onChange={onChange} />
+            )}
+          />
 
-          <Field flex style={{ alignItems: "center" }}>
-            <Label>검사 예정일</Label>
-            <Controller
-              control={control}
-              {...register("cuScheduleDate")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
-              )}
-            />
-          </Field>
-        </Wrapper>
+          <Label style={{ minWidth: "100px" }}>검사 예정일</Label>
+          <Controller
+            control={control}
+            {...register("cuScheduleDate")}
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <CustomDatePicker value={value} onChange={onChange} />
+            )}
+          />
+        </FormGroup>
       </Field>
       <DividerDark />
       <Field flex>
         <Field className="gray-title">
           <p>탱크</p>
         </Field>
-        <Field style={{ width: "100%" }}>
-          <Wrapper
-            grid
-            col={11}
-            fields="1fr 1fr 1.1fr 1.1fr 1fr 1.5fr 1.5fr 1.5fr 1fr 1.1fr 1.1fr"
-          >
-            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+        <Field>
+          <FormGroup>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "86px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
               제조사
             </Label>
-            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "86px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
               용량(kg)
             </Label>
-            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "86px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
               제조번호
             </Label>
-            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "86px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
               제작년월
             </Label>
-            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "86px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
               대여처
             </Label>
-            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "121px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
               최초검사
             </Label>
-            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "121px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
               외관검사
             </Label>
-            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "120px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
               개방검사
             </Label>
-            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "65px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
               게이지
             </Label>
-            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "75px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
               발신기코드
             </Label>
-            <Label style={{ textAlign: "center", minWidth: "auto" }}>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "90px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
               잔량고객코드
             </Label>
-          </Wrapper>
+          </FormGroup>
 
-          <Wrapper
-            grid
-            col={11}
-            fields="1fr 1fr 1fr 1fr 1fr 1.5fr 1.5fr 1.5fr 1fr 1fr 1fr"
-          >
+          <FormGroup>
             <Input
               register={register("tankMakeCo1")}
               inputSize={InputSize.i80}
@@ -186,71 +238,57 @@ function Tab3({
             />
             <Input register={register("tankRcv1")} inputSize={InputSize.i80} />
 
-            <Field>
-              <Controller
-                control={control}
-                {...register("tankFirstDate1")}
-                render={({ field: { onChange, onBlur, value, ref } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
+            <Controller
+              control={control}
+              {...register("tankFirstDate1")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
+            />
 
-            <Field>
-              <Controller
-                control={control}
-                {...register("tankOutsideDate1")}
-                render={({ field: { onChange, onBlur, value, ref } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
+            <Controller
+              control={control}
+              {...register("tankOutsideDate1")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
+            />
 
-            <Field>
-              <Controller
-                control={control}
-                {...register("tankInsideDate1")}
-                render={({ field: { onChange, onBlur, value, ref } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
-            <Field flex>
-              <Controller
-                control={control}
-                {...register("tankMax1")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={[/\d/, /\d/, /\d/]}
-                    inputSize={InputSize.i50}
-                  />
-                )}
-              />
-              <p style={{ marginLeft: "2px" }}>%</p>
-            </Field>
+            <Controller
+              control={control}
+              {...register("tankInsideDate1")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
+            />
+
+            <Controller
+              control={control}
+              {...register("tankMax1")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  mask={[/\d/, /\d/, /\d/]}
+                  inputSize={InputSize.i50}
+                />
+              )}
+            />
+            <p style={{ marginLeft: "2px" }}>%</p>
+
             <Input
               register={register("tankTransmCd1")}
               inputSize={InputSize.i60}
             />
-            <Field flex style={{ alignItems: "center" }}>
-              <Input
-                register={register("tankCuCd1")}
-                inputSize={InputSize.i60}
-              />
-              <SearchBtn type="button" onClick={() => alert("dsdsds")}>
-                <MagnifyingGlass />
-              </SearchBtn>
-            </Field>
-          </Wrapper>
 
-          <Wrapper
-            grid
-            col={11}
-            fields="1fr 1fr 1fr 1fr 1fr 1.5fr 1.5fr 1.5fr 1fr 1fr 1fr"
-          >
+            <Input register={register("tankCuCd1")} inputSize={InputSize.i60} />
+            <SearchBtn type="button" onClick={() => alert("dsdsds")}>
+              <MagnifyingGlass />
+            </SearchBtn>
+          </FormGroup>
+
+          <FormGroup>
             <Input
               register={register("tankMakeCo2")}
               inputSize={InputSize.i80}
@@ -277,67 +315,55 @@ function Tab3({
             />
             <Input register={register("tankRcv2")} inputSize={InputSize.i80} />
 
-            <Field>
-              <Controller
-                control={control}
-                {...register("tankFirstDate2")}
-                render={({ field: { onChange, onBlur, value, ref } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
+            <Controller
+              control={control}
+              {...register("tankFirstDate2")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
+            />
 
-            <Field>
-              <Controller
-                control={control}
-                {...register("tankOutsideDate2")}
-                render={({ field: { onChange, onBlur, value, ref } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
+            <Controller
+              control={control}
+              {...register("tankOutsideDate2")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
+            />
 
-            <Field>
-              <Controller
-                control={control}
-                {...register("tankInsideDate2")}
-                render={({ field: { onChange, onBlur, value, ref } }) => (
-                  <CustomDatePicker value={value} onChange={onChange} />
-                )}
-              />
-            </Field>
-            <Field flex>
-              <Controller
-                control={control}
-                {...register("tankMax2")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={[/\d/, /\d/, /\d/]}
-                    inputSize={InputSize.i50}
-                  />
-                )}
-              />
-              <p style={{ marginLeft: "2px" }}>%</p>
-            </Field>
+            <Controller
+              control={control}
+              {...register("tankInsideDate2")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
+            />
+
+            <Controller
+              control={control}
+              {...register("tankMax2")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  mask={[/\d/, /\d/, /\d/]}
+                  inputSize={InputSize.i50}
+                />
+              )}
+            />
+            <p style={{ marginLeft: "2px" }}>%</p>
 
             <Input
               register={register("tankTransmCd2")}
               inputSize={InputSize.i60}
             />
 
-            <Field flex style={{ alignItems: "center" }}>
-              <Input
-                register={register("tankCuCd2")}
-                inputSize={InputSize.i60}
-              />
-              <SearchBtn type="button" onClick={() => alert("dsdsds")}>
-                <MagnifyingGlass />
-              </SearchBtn>
-            </Field>
-          </Wrapper>
+            <Input register={register("tankCuCd2")} inputSize={InputSize.i60} />
+            <SearchBtn type="button" onClick={() => alert("dsdsds")}>
+              <MagnifyingGlass />
+            </SearchBtn>
+          </FormGroup>
         </Field>
       </Field>
       <DividerDark />
@@ -346,107 +372,184 @@ function Tab3({
           <p>용기</p>
         </Field>
 
-        <Wrapper grid col={3}>
-          <FormGroup>
-            <Label>용기구분</Label>
-            {radioOptions2.map((option, index) => (
-              <Item key={index}>
-                <RadioButton
-                  type="radio"
-                  value={option.id}
-                  {...register(`cuCylinderType`)}
-                  id={option.id}
-                />
-                <RadioButtonLabel htmlFor={`${option.label}`}>
-                  {option.label}
-                </RadioButtonLabel>
-              </Item>
+        <FormGroup>
+          <Label style={{ minWidth: "100px", marginRight: "15px" }}>
+            용기구분
+          </Label>
+          {radioOptions2.map((option, index) => (
+            <Item key={index}>
+              <RadioButton
+                type="radio"
+                value={option.id}
+                {...register(`cuCylinderType`)}
+                id={option.id}
+              />
+              <RadioButtonLabel htmlFor={`${option.label}`}>
+                {option.label}
+              </RadioButtonLabel>
+            </Item>
+          ))}
+
+          <Label style={{ minWidth: "100px" }}>용기수량</Label>
+          <Select {...register("cuCylinderName")}>
+            {dataCommonDic?.cuCylinderName?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code1}>
+                {obj.codeName}
+              </option>
             ))}
-          </FormGroup>
+          </Select>
 
-          <Field flex style={{ alignItems: "center" }}>
-            <FormGroup>
-              <Label>용기수량</Label>
-              <Select {...register("cuCylinderName")}>
-                {dataCommonDic?.cuCylinderName?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <p>×</p>
-            <Input
-              register={register("cuCylinderQty")}
-              inputSize={InputSize.xs}
-              textAlign="right"
-            />
-            <p>개</p>
-          </Field>
+          <p>×</p>
+          <Input
+            register={register("cuCylinderQty")}
+            inputSize={InputSize.i60}
+            textAlign="right"
+          />
+          <p>개</p>
 
-          <Field flex style={{ alignItems: "center", justifyContent: "end" }}>
-            <Input
-              register={register("cuTransmCd")}
-              inputSize={InputSize.i60}
-            />
+          <Input register={register("cuTransmCd")} inputSize={InputSize.i60} />
 
-            <Input
-              register={register("cuTransmCuCd")}
-              inputSize={InputSize.i60}
-              style={{ marginLeft: "20px" }}
-            />
-            <SearchBtn type="button" onClick={() => alert("dsdsds")}>
-              <MagnifyingGlass />
-            </SearchBtn>
-          </Field>
-        </Wrapper>
+          <Input
+            register={register("cuTransmCuCd")}
+            inputSize={InputSize.i60}
+          />
+          <SearchBtn type="button" onClick={() => alert("dsdsds")}>
+            <MagnifyingGlass />
+          </SearchBtn>
+        </FormGroup>
       </Field>
       <DividerDark />
       <Field flex>
         <Field className="gray-title">
           <p>기화기</p>
         </Field>
-        <Field style={{ width: "100%" }}>
-          <Wrapper grid col={8}>
-            <Label style={{ textAlign: "center" }}>제조사</Label>
-            <Label style={{ textAlign: "center" }}>용량(k)</Label>
-            <Label style={{ textAlign: "center" }}>제조번호</Label>
-            <Label style={{ textAlign: "center" }}>제작년월</Label>
-            <Label style={{ textAlign: "center" }}>전원</Label>
-            <Label style={{ textAlign: "center" }}>장치검사</Label>
-          </Wrapper>
+        <Field>
+          <FormGroup>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "136px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
+              제조사
+            </Label>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "136px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
+              용량(k)
+            </Label>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "136px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
+              제조번호
+            </Label>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "136px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
+              제작년월
+            </Label>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "136px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
+              전원
+            </Label>
+            <Label
+              style={{
+                textAlign: "center",
+                minWidth: "136px",
+                padding: "3px 0px 0px 0px",
+              }}
+            >
+              장치검사
+            </Label>
+          </FormGroup>
 
-          <Wrapper grid col={8}>
-            <Input register={register("gasifyCo1")} />
-            <Input register={register("gasifyVol1")} />
-            <Input register={register("gasifySno1")} />
-            <Input register={register("gasifyMakeDate1")} />
-            <Input register={register("gasifyPower1")} />
+          <FormGroup>
+            <Input
+              register={register("gasifyCo1")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              register={register("gasifyVol1")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              register={register("gasifySno1")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              register={register("gasifyMakeDate1")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              register={register("gasifyPower1")}
+              inputSize={InputSize.i130}
+            />
 
             <Controller
               control={control}
               {...register("gasifyCheckDate1")}
               render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "130px" }}
+                />
               )}
             />
-          </Wrapper>
+          </FormGroup>
 
-          <Wrapper grid col={8}>
-            <Input register={register("gasifyCo2")} />
-            <Input register={register("gasifyVol2")} />
-            <Input register={register("gasifySno2")} />
-            <Input register={register("gasifyMakeDate2")} />
-            <Input register={register("gasifyPower2")} />
+          <FormGroup>
+            <Input
+              register={register("gasifyCo2")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              register={register("gasifyVol2")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              register={register("gasifySno2")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              register={register("gasifyMakeDate2")}
+              inputSize={InputSize.i130}
+            />
+            <Input
+              register={register("gasifyPower2")}
+              inputSize={InputSize.i130}
+            />
 
             <Controller
               control={control}
               {...register("gasifyCheckDate2")}
               render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "130px" }}
+                />
               )}
             />
-          </Wrapper>
+          </FormGroup>
         </Field>
       </Field>
     </Field>

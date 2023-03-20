@@ -33,7 +33,7 @@ export const columns = [
     name: "cuCode",
     fieldName: "cuCode",
     type: "data",
-    width: "80",
+    width: "100",
     header: {
       text: "거래처코드",
     },
@@ -42,7 +42,7 @@ export const columns = [
     name: "cuUsername",
     fieldName: "cuUsername",
     type: "data",
-    width: "80",
+    width: "100",
     styleName: "rg-left-column",
     header: {
       text: "사용자명",
@@ -52,7 +52,7 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "80",
+    width: "170",
     header: {
       text: "건물명",
     },
