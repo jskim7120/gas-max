@@ -271,7 +271,7 @@ function CC1500({
                 text="검색"
                 icon={!loading && <MagnifyingGlass />}
                 type="button"
-                color={ButtonColor.SECONDARY}
+                color={ButtonColor.DANGER}
                 onClick={handleSubmit(submit)}
                 style={{ marginLeft: "30px" }}
                 loader={

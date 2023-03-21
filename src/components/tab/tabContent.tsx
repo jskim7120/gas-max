@@ -38,6 +38,7 @@ import CC1100 from "container/contents/cc/cc1100";
 import CC1200 from "container/contents/cc/cc1200";
 import CC1400 from "container/contents/cc/cc1400";
 import CC1500 from "container/contents/cc/cc1500";
+import CC1505 from "container/contents/cc/cc1505";
 import CC1600 from "container/contents/cc/cc1600";
 import CC1700 from "container/contents/cc/cc1700";
 import CC9006 from "container/contents/cc/cc9006";
@@ -199,6 +200,10 @@ export const getContent = (
     case "CC1500":
       return (
         <CC1500 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "CC1505":
+      return (
+        <CC1505 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
       );
     case "CC1600":
       return (

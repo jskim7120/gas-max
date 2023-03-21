@@ -32,6 +32,8 @@ interface IForm {
   setSelected: any;
   setSelectedRowIndex: any;
   dataCommonDic: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
@@ -39,18 +41,17 @@ const Form = React.forwardRef(
     {
       data65,
       setData65,
-      // selected,
       fetchData,
       setData,
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
       dataCommonDic,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-
     const { register, handleSubmit, control, reset, getValues } =
       useForm<ICC1600FORM>({ mode: "onChange" });
 
@@ -75,7 +76,7 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ width: "410px", padding: "0px 10px" }}
+        style={{ width: "410px", padding: "10px 10px" }}
       >
         <FormGroup></FormGroup>
         <FormGroup>

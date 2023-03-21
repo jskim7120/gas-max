@@ -83,7 +83,7 @@ function CC1100({
     } catch (err) {
       setLoading(false);
       setData([]);
-      console.log("CC1200 data search fetch error =======>", err);
+      console.log("CC1100 data search fetch error =======>", err);
     }
   };
 
