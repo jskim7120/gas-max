@@ -13,17 +13,17 @@ export const Grid2Container = styled.div`
   padding-top: 6px;
 `;
 
-export const Detail1Wrapper = styled.div`
-  .addr2 {
-    font-size: 12px;
-    font-weight: 400;
-  }
-  .form_control {
-    label {
-      width: auto;
-    }
-  }
-`;
+// export const Detail1Wrapper = styled.div`
+//   .addr2 {
+//     font-size: 12px;
+//     font-weight: 400;
+//   }
+//   .form_control {
+//     label {
+//       width: auto;
+//     }
+//   }
+// `;
 export const Detail2Wrapper = styled.div`
   margin-top: 9px;
   .buttons {

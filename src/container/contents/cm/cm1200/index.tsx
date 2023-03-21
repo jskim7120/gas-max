@@ -75,6 +75,7 @@ function CM1200({
   }, [isDelete.isDelete]);
 
   const submit = async (data: any) => {
+    console.log("data????", data);
     fetchData(data);
   };
 
@@ -89,7 +90,6 @@ function CM1200({
   }
 
   const fetchData = async (params: any) => {
-    console.log(params);
     if (!dataChk) {
       delete params.dataChk;
       delete params.sCuName;
@@ -97,7 +97,12 @@ function CM1200({
 
     try {
       setLoading(true);
-      const { data } = await API.get(CM1200SEARCH, { params: params });
+      const { data } = await API.get(CM1200SEARCH, {
+        params: {
+          ...params,
+          areaCode: params?.areaCode ? params.areaCode : areaCode,
+        },
+      });
 
       if (data) {
         setData(data);
@@ -144,7 +149,6 @@ function CM1200({
             <>
               <p className="big">영업소</p>
               <Select
-                {...register("areaCode")}
                 value={areaCode}
                 onChange={(e) => setAreaCode(e.target.value)}
               >
