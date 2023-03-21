@@ -92,7 +92,7 @@ const Form = React.forwardRef(
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         let newData: any = {};
         if (type === "clear") {
-          document.getElementById("bpName")?.focus();
+          document.getElementById("acjDate")?.focus();
           const path = EN140011;
 
           try {
@@ -168,6 +168,7 @@ const Form = React.forwardRef(
             width={InputSize.i200}
             {...register("cbareaCode")}
             onChange={handleSelectCode}
+            disabled={isAddBtnClicked}
           >
             {dataCommonDic?.cbareaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>

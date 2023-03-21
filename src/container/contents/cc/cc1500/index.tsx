@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useDispatch } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
+import GridLeft from "components/grid";
 import { CC1500SEARCH, CC150065 } from "app/path";
 import {
   SearchWrapper,
@@ -9,6 +11,7 @@ import {
   RightSide,
   LeftSide,
 } from "../../commonStyle";
+import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import CustomDatePicker from "components/customDatePicker";
 import {
   MagnifyingGlass,
@@ -21,12 +24,12 @@ import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import Grid from "../grid";
 import { fields, columns } from "./data";
 import { ICC1500SEARCH } from "./model";
 import Form from "./form";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
+import FourButtons from "components/button/fourButtons";
 
 function CC1500({
   depthFullName,
@@ -38,12 +41,14 @@ function CC1500({
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-
+  const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [data65, setData65] = useState({});
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CC",
@@ -52,15 +57,12 @@ function CC1500({
 
   useEffect(() => {
     if (dataCommonDic) {
-      //console.log("dataCommonDic:::", dataCommonDic);
       resetSearchForm();
     }
   }, [dataCommonDic]);
 
   useEffect(() => {
     if (selected && Object.keys(selected).length > 0) {
-      //console.log("selected::::", Object.keys(selected).length, selected);
-
       fetchData65({
         areaCode: selected?.areaCode,
         cjCaCode: selected?.cjCaCode,
@@ -125,8 +127,6 @@ function CC1500({
         params: params,
       });
 
-      //console.log("65 data:::", dataCC150065);
-
       if (dataCC150065) {
         setData65({
           ...dataCC150065[0],
@@ -142,6 +142,25 @@ function CC1500({
     }
   };
 
+  const onClickAdd = () => {
+    setIsAddBtnClicked(true);
+    setIsCancelBtnDisabled(false);
+    formRef.current.resetForm("clear");
+  };
+
+  const onClickDelete = () => {
+    dispatch(openModal({ type: "delModal" }));
+    dispatch(addDeleteMenuId({ menuId: menuId }));
+  };
+  const onClickUpdate = () => {
+    formRef.current.crud(null);
+  };
+
+  const onClickReset = () => {
+    setIsAddBtnClicked(false);
+    formRef.current.resetForm("reset");
+  };
+
   return (
     <>
       <SearchWrapper className="h35 mt5">
@@ -151,6 +170,29 @@ function CC1500({
           register={register}
           dataCommonDic={dataCommonDic}
         />
+        <SearchWrapper
+          className="h35 mt5"
+          style={{
+            display: "flex",
+            position: "absolute",
+            top: "87px",
+            right: "19px",
+            background: "none",
+            padding: "0",
+            border: "none",
+            height: "auto",
+            marginTop: "2px",
+          }}
+        >
+          <FourButtons
+            onClickAdd={onClickAdd}
+            onClickDelete={onClickDelete}
+            onClickUpdate={onClickUpdate}
+            onClickReset={onClickReset}
+            isAddBtnClicked={isAddBtnClicked}
+            isCancelBtnDisabled={isCancelBtnDisabled}
+          />
+        </SearchWrapper>
         <div className="buttons">
           <Button
             text="등록"
@@ -229,7 +271,7 @@ function CC1500({
                 text="검색"
                 icon={!loading && <MagnifyingGlass />}
                 type="button"
-                color={ButtonColor.SECONDARY}
+                color={ButtonColor.DANGER}
                 onClick={handleSubmit(submit)}
                 style={{ marginLeft: "30px" }}
                 loader={
@@ -257,12 +299,15 @@ function CC1500({
               />
             </FormGroup>
           </SearchWrapper>
-          <Grid
+          <GridLeft
+            areaCode="00"
             data={data}
             fields={fields}
             columns={columns}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
+            setIsAddBtnClicked={setIsAddBtnClicked}
             setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: `calc(100% - 38px)` }}
           />
@@ -274,11 +319,13 @@ function CC1500({
             ref={formRef}
             fetchData={fetchData}
             setData={setData}
+            selected={selected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
-            // selected={selected}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
+            isAddBtnClicked={isAddBtnClicked}
+            setIsAddBtnClicked={setIsAddBtnClicked}
           />
         </RightSide>
       </MainWrapper>

@@ -25,7 +25,6 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "../grid";
 import { columns, fields } from "./data";
 import CustomTopPart from "container/contents/customTopPart";
 import FourButtons from "components/button/fourButtons";
@@ -84,7 +83,7 @@ function CC1100({
     } catch (err) {
       setLoading(false);
       setData([]);
-      console.log("CC1200 data search fetch error =======>", err);
+      console.log("CC1100 data search fetch error =======>", err);
     }
   };
 
@@ -241,6 +240,7 @@ function CC1100({
             </SearchWrapper>
           </form>
           <GridLeft
+            areaCode="00"
             data={data}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
