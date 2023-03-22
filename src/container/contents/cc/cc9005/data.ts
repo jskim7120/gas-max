@@ -6,11 +6,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "acbCode",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "acbAccCodeName",
+    fieldName: "accName",
     dataType: ValueType.TEXT,
   },
   {
@@ -22,7 +18,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "acbBigo",
+    fieldName: "bankKumack",
     dataType: ValueType.TEXT,
   },
 ];
@@ -32,34 +28,25 @@ export const columns = [
     name: "acbAreaCode",
     fieldName: "acbAreaCode",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "영업소",
     },
   },
   {
-    name: "acbCode",
-    fieldName: "acbCode",
+    name: "accName",
+    fieldName: "accName",
     type: "data",
-    width: "50",
+    width: "150",
     header: {
-      text: "코드",
-    },
-  },
-  {
-    name: "acbAccCodeName",
-    fieldName: "acbAccCodeName",
-    type: "data",
-    width: "100",
-    header: {
-      text: "구분",
+      text: "계정과목",
     },
   },
   {
     name: "acbName",
     fieldName: "acbName",
     type: "data",
-    width: "100",
+    width: "210",
     header: {
       text: "은행명",
     },
@@ -68,18 +55,18 @@ export const columns = [
     name: "acbBankno",
     fieldName: "acbBankno",
     type: "data",
-    width: "150",
+    width: "300",
     header: {
       text: "계좌번호",
     },
   },
   {
-    name: "acbBigo",
-    fieldName: "acbBigo",
+    name: "bankKumack",
+    fieldName: "bankKumack",
     type: "data",
-    width: "150",
+    width: "130",
     header: {
-      text: "적용",
+      text: "잔액",
     },
   },
 ];

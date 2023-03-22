@@ -599,12 +599,16 @@ const Form = (
           <Wrapper className="volWrapper">
             <Field>
               <FormGroup>
-                <Input
-                  label="루베단가 계산"
-                  register={register("jnMpdangaType")}
-                  style={{ width: "259px" }}
-                  textAlign="right"
-                />
+                <Label>루베단가 계산</Label>
+                <Select {...register("jnMpdangaType")}>
+                  {dataCommonDic?.jnMpdangaType?.map(
+                    (obj: any, idx: number) => (
+                      <option key={idx} value={obj.code}>
+                        {obj.codeName}
+                      </option>
+                    )
+                  )}
+                </Select>
               </FormGroup>
             </Field>
             <p>

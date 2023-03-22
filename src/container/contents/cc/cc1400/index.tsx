@@ -229,7 +229,7 @@ function CC1400({
                 )}
               />
 
-              <Label>차량</Label>
+              <Label>사원</Label>
               <Select {...register("sSwCode")} width={InputSize.i120}>
                 {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -242,7 +242,7 @@ function CC1400({
                 text="검색"
                 icon={!loading && <MagnifyingGlass />}
                 type="button"
-                color={ButtonColor.SECONDARY}
+                color={ButtonColor.DANGER}
                 onClick={handleSubmit(submit)}
                 style={{ marginLeft: "30px" }}
                 loader={

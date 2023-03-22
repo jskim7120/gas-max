@@ -81,7 +81,10 @@ function GR9009({
 
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
-          <SearchWrapper className="h35">
+          <SearchWrapper
+            className="h35"
+            style={{ justifyContent: "flex-start", gap: "250px" }}
+          >
             <FormGroup>
               <Label style={{ minWidth: "auto" }}>영업소</Label>
               <Select width={InputSize.i130} {...register("areaCode")}>
@@ -117,7 +120,7 @@ function GR9009({
                 )}
               />
 
-              <Label style={{ minWidth: "auto" }}>차량</Label>
+              <Label style={{ minWidth: "70px" }}>차량</Label>
               <Select width={InputSize.i130} {...register("carCode")}>
                 {dataCommonDic?.carCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -163,7 +166,6 @@ function GR9009({
           columns={columns}
           fields={fields}
           style={{ height: `calc(100% - 35px)` }}
-          evenFill
         />
       </WrapperContent>
     </>

@@ -38,12 +38,18 @@ import CC1100 from "container/contents/cc/cc1100";
 import CC1200 from "container/contents/cc/cc1200";
 import CC1400 from "container/contents/cc/cc1400";
 import CC1500 from "container/contents/cc/cc1500";
+import CC1505 from "container/contents/cc/cc1505";
 import CC1600 from "container/contents/cc/cc1600";
 import CC1700 from "container/contents/cc/cc1700";
 import CC9006 from "container/contents/cc/cc9006";
 import CC9007 from "container/contents/cc/cc9007";
 import CC9008 from "container/contents/cc/cc9008";
 import CC9009 from "container/contents/cc/cc9009";
+import CC9001 from "container/contents/cc/cc9001";
+import CC9002 from "container/contents/cc/cc9002";
+import CC9003 from "container/contents/cc/cc9003";
+import CC9004 from "container/contents/cc/cc9004";
+import CC9005 from "container/contents/cc/cc9005";
 
 import PT1100 from "container/contents/pt/pt1100";
 import PT1200 from "container/contents/pt/pt1200";
@@ -200,6 +206,10 @@ export const getContent = (
       return (
         <CC1500 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
       );
+    case "CC1505":
+      return (
+        <CC1505 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
     case "CC1600":
       return (
         <CC1600 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
@@ -223,6 +233,26 @@ export const getContent = (
     case "CC9009":
       return (
         <CC9009 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "CC9001":
+      return (
+        <CC9001 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "CC9002":
+      return (
+        <CC9002 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "CC9003":
+      return (
+        <CC9003 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "CC9004":
+      return (
+        <CC9004 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "CC9005":
+      return (
+        <CC9005 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
       );
 
     case "PT1100":

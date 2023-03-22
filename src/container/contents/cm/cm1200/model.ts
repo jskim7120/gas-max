@@ -1,5 +1,5 @@
 export interface ISEARCH {
-  areaCode: string;
+  // areaCode: string;
   sCuName: string;
   dataChk: string;
 }

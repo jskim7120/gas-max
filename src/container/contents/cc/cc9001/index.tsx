@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "app/store";
 import { CC1100SEARCH } from "app/path";
-import { ICC1100SEARCH } from "./model";
+import { ICC9001SEARCH } from "./model";
 import GridLeft from "components/grid";
 import API from "app/axios";
 import {
@@ -11,14 +11,7 @@ import {
   RightSide,
   LeftSide,
 } from "../../commonStyle";
-import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import Form from "./form";
-import {
-  Item,
-  RadioButton,
-  RadioButtonLabel,
-} from "components/radioButton/style";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label, Input } from "components/form/style";
 import Loader from "components/loader";
@@ -26,10 +19,8 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import { columns, fields } from "./data";
-import CustomTopPart from "container/contents/customTopPart";
-import FourButtons from "components/button/fourButtons";
 
-function CC1100({
+function CC9001({
   depthFullName,
   areaCode,
   menuId,
@@ -44,15 +35,12 @@ function CC1100({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
-  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
-  const [codeGu, setCodeGu] = useState<boolean>(false);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CC",
-    functionName: "CC1100",
+    functionName: "CC9001",
   });
 
-  const { register, handleSubmit, reset, control } = useForm<ICC1100SEARCH>({
+  const { register, handleSubmit, reset, control } = useForm<ICC9001SEARCH>({
     mode: "onSubmit",
   });
 
@@ -70,119 +58,36 @@ function CC1100({
     });
   };
 
-  const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data } = await API.get(CC1100SEARCH, { params: params });
-      if (data) {
-        setData(data);
-      } else {
-        setData([]);
-      }
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      setData([]);
-      console.log("CC1100 data search fetch error =======>", err);
-    }
-  };
-
-  const onClickAdd = () => {
-    setIsAddBtnClicked(true);
-    setIsCancelBtnDisabled(false);
-    formRef.current.resetForm("clear");
-  };
-
-  const onClickDelete = () => {
-    dispatch(openModal({ type: "delModal" }));
-    dispatch(addDeleteMenuId({ menuId: menuId }));
-  };
-  const onClickUpdate = () => {
-    formRef.current.crud(null);
-  };
-
-  const onClickReset = () => {
-    setIsAddBtnClicked(false);
-    formRef.current.resetForm("reset");
-  };
+  const fetchData = async (params: any) => {};
 
   const cancel = () => {
     resetSearchForm();
     setData([]);
   };
 
-  const submit = (data: ICC1100SEARCH) => {
-    if (codeGu) {
-      data.codeGu = "0";
-    }
-    fetchData(data);
-  };
+  const submit = (data: ICC9001SEARCH) => {};
 
   return (
     <>
-      <CustomTopPart
-        depthFullName={depthFullName}
-        register={register}
-        dataCommonDic={dataCommonDic}
-        areaCode={areaCode}
-      />
-      <SearchWrapper
-        className="h35 mt5"
-        style={{
-          display: "flex",
-          position: "absolute",
-          top: "87px",
-          right: "19px",
-          background: "none",
-          padding: "0",
-          border: "none",
-          height: "auto",
-          marginTop: "2px",
-        }}
-      >
-        <FourButtons
-          onClickAdd={onClickAdd}
-          onClickDelete={onClickDelete}
-          onClickUpdate={onClickUpdate}
-          onClickReset={onClickReset}
-          isAddBtnClicked={isAddBtnClicked}
-          isCancelBtnDisabled={isCancelBtnDisabled}
-        />
+      <SearchWrapper className="h35 mt5">
+        <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
-        <LeftSide>
+        <LeftSide style={{ border: "none" }}>
           <form onSubmit={handleSubmit(submit)}>
             <SearchWrapper className="h35" style={{ justifyContent: "start" }}>
               <FormGroup>
-                {[
-                  { name: "현금", value: "0" },
-                  { name: "예금", value: "1" },
-                ].map((option, index) => {
-                  return (
-                    <Item key={index}>
-                      <RadioButton
-                        type="radio"
-                        value={option.value}
-                        {...register("codeGu")}
-                        id={option.value}
-                        onChange={() => setCodeGu((prev) => !prev)}
-                      />
-                      <RadioButtonLabel htmlFor={`${option.value}`}>
-                        {option.name}
-                      </RadioButtonLabel>
-                    </Item>
-                  );
-                })}
-                {codeGu}
-                <Input
-                  readOnly={!codeGu}
-                  register={register("codeGu")}
-                  labelStyle={{ minWidth: "70px" }}
-                  inputSize={InputSize.i100}
-                />
-
-                <Label style={{ minWidth: "80px" }}>기간</Label>
-
+                <Label style={{ minWidth: "62px" }}>계정과목</Label>
+                <Select {...register("acjAccCode")} width={InputSize.i120}>
+                  {dataCommonDic?.acjAccCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+              <FormGroup>
+                <Label style={{ minWidth: "60px" }}>기간</Label>
                 <Controller
                   control={control}
                   {...register("sDateF")}
@@ -245,30 +150,14 @@ function CC1100({
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
-            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
-            setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
             style={{ height: `calc(100% - 38px)` }}
           />
         </LeftSide>
-        <RightSide>
-          <Form
-            selected={selected}
-            ref={formRef}
-            fetchData={fetchData}
-            setData={setData}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
-            setSelected={setSelected}
-            dataCommonDic={dataCommonDic}
-            isAddBtnClicked={isAddBtnClicked}
-            setIsAddBtnClicked={setIsAddBtnClicked}
-          />
-        </RightSide>
       </MainWrapper>
     </>
   );
 }
 
-export default CC1100;
+export default CC9001;

@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import API from "app/axios";
 import {
   SearchWrapper,
   MainWrapper,
@@ -10,14 +9,13 @@ import {
   LeftSide,
 } from "../../commonStyle";
 import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
-import GridLeft from "components/grid";
 import { fields, columns } from "./data";
-import { ICC1600SEARCH } from "./model";
+import { ICC1505SEARCH } from "./model";
+import GridLeft from "components/grid";
 import Form from "./form";
-import { CustomAreaCodePart } from "container/contents/customTopPart";
 import FourButtons from "components/button/fourButtons";
 
-function CC1600({
+function CC1505({
   depthFullName,
   areaCode,
   menuId,
@@ -29,7 +27,6 @@ function CC1600({
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
-  const [data65, setData65] = useState({});
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
@@ -38,7 +35,7 @@ function CC1600({
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CC",
-    functionName: "CC1600",
+    functionName: "CC1505",
   });
 
   useEffect(() => {
@@ -50,15 +47,11 @@ function CC1600({
 
   const resetSearchForm = () => {};
 
-  const { register, handleSubmit, reset, control } = useForm<ICC1600SEARCH>({
+  const { register, handleSubmit, reset, control } = useForm<ICC1505SEARCH>({
     mode: "onSubmit",
   });
 
-  const submit = (params: any) => {};
-
   const fetchData = async (params: any) => {};
-
-  const fetchData65 = async (params: any) => {};
 
   const onClickAdd = () => {
     setIsAddBtnClicked(true);
@@ -82,12 +75,7 @@ function CC1600({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomAreaCodePart
-          areaCode={areaCode}
-          depthFullName={depthFullName}
-          register={register}
-          dataCommonDic={dataCommonDic}
-        />
+        <p>{depthFullName}</p>
         <SearchWrapper
           className="h35 mt5"
           style={{
@@ -129,11 +117,10 @@ function CC1600({
         </LeftSide>
         <RightSide>
           <Form
-            data65={data65}
-            setData65={setData65}
             ref={formRef}
             fetchData={fetchData}
             setData={setData}
+            selected={selected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
@@ -147,4 +134,4 @@ function CC1600({
   );
 }
 
-export default CC1600;
+export default CC1505;
