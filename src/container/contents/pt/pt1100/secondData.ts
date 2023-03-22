@@ -50,6 +50,7 @@ export const columnsSecond = [
     header: {
       text: "미수잔액",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "mjSwName",

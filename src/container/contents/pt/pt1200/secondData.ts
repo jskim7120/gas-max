@@ -78,6 +78,7 @@ export const columnsSecond = [
     header: {
       text: "전검침",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjGum",
@@ -87,6 +88,7 @@ export const columnsSecond = [
     header: {
       text: "당검침",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjGage",
@@ -96,6 +98,7 @@ export const columnsSecond = [
     header: {
       text: "사용량",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjDangkum",
@@ -105,6 +108,7 @@ export const columnsSecond = [
     header: {
       text: "당월금액",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjMisu",
@@ -114,6 +118,7 @@ export const columnsSecond = [
     header: {
       text: "전미수",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjPerkum",
@@ -123,6 +128,7 @@ export const columnsSecond = [
     header: {
       text: "연체료",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjTotal",
@@ -132,6 +138,7 @@ export const columnsSecond = [
     header: {
       text: "당월합계",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjJirodate",
@@ -150,6 +157,7 @@ export const columnsSecond = [
     header: {
       text: "미수잔액",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjSwName",

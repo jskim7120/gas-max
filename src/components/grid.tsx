@@ -1,3 +1,4 @@
+import { is } from "immer/dist/internal";
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 
@@ -14,6 +15,9 @@ function Grid({
   layout,
   setIsCancelBtnDisabled,
   setIsAddBtnClicked,
+  isEditable = false,
+  calc,
+  isSortable = true,
 }: {
   areaCode?: string;
   data: any;
@@ -27,6 +31,9 @@ function Grid({
   layout?: any;
   setIsCancelBtnDisabled?: Function;
   setIsAddBtnClicked?: Function;
+  isEditable?: boolean;
+  calc?: Function;
+  isSortable?: boolean;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -52,7 +59,7 @@ function Grid({
       stateBar: { visible: false },
       footer: { visible: false },
     });
-    gv.sortingOptions.enabled = true;
+    gv.sortingOptions.enabled = isSortable;
     gv.displayOptions._selectionStyle = "singleRow";
 
     if (evenFill) {
@@ -63,23 +70,52 @@ function Grid({
       gv.removeColumn("areaCode");
     }
 
-    gv.setEditOptions({ editable: false });
+    const options = {
+      edit: {
+        editable: isEditable,
+      },
+    };
+    gv.setOptions(options);
 
     gv.displayOptions.useFocusClass = true;
     gv.setCurrent({
       dataRow: selectedRowIndex,
     });
 
+    gv.onCellClicked = (grid: GridView, itemIndex: any, column: any) => {
+      if (
+        itemIndex.column === "cuChkamt" ||
+        (itemIndex.column === "guChkamt" && itemIndex.cellType !== "header")
+      ) {
+        // Get the new value of the checkbox
+        const newValue = !grid.getValue(
+          gv.getCurrent().dataRow,
+          itemIndex.column
+        );
+        // Set the new value of the checkbox
+        gv.setValue(gv.getCurrent().dataRow, itemIndex.column, newValue);
+        if (gv.getCurrent().dataRow !== undefined) {
+          calc && calc(gv.getCurrent().dataRow, newValue ? "Y" : "N");
+        }
+      }
+    };
+
     // if (setSelected) {
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
+
       setSelected && setSelected(data[itemIndex]);
       setSelectedRowIndex && setSelectedRowIndex(itemIndex);
 
       setIsCancelBtnDisabled && setIsCancelBtnDisabled(true);
       setIsAddBtnClicked && setIsAddBtnClicked(false);
     };
-    // }
+    gv.setCheckBar({ exclusive: true });
+    // gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
+    //   calc && calc(index.dataRow, newValue);
+    //   gv.commit(false);
+    //   // gv.cancel();
+    // };
 
     return () => {
       dp.clearRows();

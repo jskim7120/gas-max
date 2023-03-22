@@ -60,6 +60,7 @@ export interface initialStateType {
     areaCode: string | undefined;
     cuCode: string | undefined;
     cuName: string | undefined;
+    cuCmisu: number | undefined;
   };
 }
 
@@ -121,6 +122,7 @@ const initialState: initialStateType = {
     areaCode: "",
     cuCode: "",
     cuName: "",
+    cuCmisu: 0,
   },
 };
 
@@ -198,6 +200,7 @@ const modalSlice = createSlice({
       state.pt1205.areaCode = action.payload.areaCode;
       state.pt1205.cuCode = action.payload.cuCode;
       state.pt1205.cuName = action.payload.cuName;
+      state.pt1205.cuCmisu = action.payload.cuCmisu;
     },
   },
 });

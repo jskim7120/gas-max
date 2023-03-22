@@ -2,6 +2,10 @@ import { ValueType } from "realgrid";
 
 export const fields = [
   {
+    fieldName: "guChkamt",
+    dataType: ValueType.BOOLEAN,
+  },
+  {
     fieldName: "gjGumymsno",
     dataType: ValueType.TEXT,
   },
@@ -49,6 +53,24 @@ export const fields = [
 
 export const columns = [
   {
+    name: "guChkamt",
+    fieldName: "guChkamt",
+    width: "40",
+    header: {
+      text: "선택",
+    },
+    type: "Boolean",
+    defaultValue: true,
+    renderer: {
+      type: "check",
+      editable: true,
+    },
+    editor: {
+      type: "check",
+      editable: false,
+    },
+  },
+  {
     name: "gjGumymsno",
     fieldName: "gjGumymsno",
     type: "data",
@@ -92,6 +114,7 @@ export const columns = [
     header: {
       text: "사용량",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjDangkum",
@@ -101,6 +124,7 @@ export const columns = [
     header: {
       text: "당월금액",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjMisu",
@@ -110,6 +134,7 @@ export const columns = [
     header: {
       text: "미수금액",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjPerkum",
@@ -119,6 +144,7 @@ export const columns = [
     header: {
       text: "연체료",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjTotal",
@@ -128,6 +154,7 @@ export const columns = [
     header: {
       text: "합계",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjJirodate",
@@ -137,6 +164,7 @@ export const columns = [
     header: {
       text: "지로발행일",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjMisujan",

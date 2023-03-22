@@ -18,7 +18,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuJmisu",
+    fieldName: "cuCmisu",
     dataType: ValueType.TEXT,
   },
   {
@@ -73,13 +73,14 @@ export const columns = [
     },
   },
   {
-    name: "cuJmisu",
-    fieldName: "cuJmisu",
+    name: "cuCmisu",
+    fieldName: "cuCmisu",
     type: "data",
     width: "100",
     header: {
       text: "미수금액",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "cuSwName",
