@@ -1,47 +1,48 @@
 export interface ICM1300 {
-  areaCode: string;
-  aptCode: string;
-  aptName: string;
-  aptTypeName: string;
-  aptF: number;
-  aptS: number;
-  aptSum: number;
-  swName: string;
-  aptType: string;
-  aptZipcode: string;
+  apt4F: string;
+  apt4Ho: string;
   aptAddr1: string;
   aptAddr2: string;
-  apt4ho: string;
-  apt4f: string;
+  aptAnkum: number;
   aptBf: string;
-  aptSwCode: string;
-  aptJyCode: string;
+  aptCode: string;
   aptCustgubun: string;
-  aptGubun: string;
-  aptRh2o: string;
-  aptRdangaType: string;
-  aptAnkum: string;
-  aptSisulkum: string;
-  aptRdangaSign: string;
-  aptMeterkum: string;
-  aptPer: string;
+  aptF: number;
   aptGumdate: string;
+  aptJyCode: number;
+  aptMeterkum: number;
+  aptName: string;
+  aptPer: number;
+  aptRdanga: number;
+  aptRdangaAmt: number;
+  aptRdangaSign: string;
+  aptRdangaType: string;
+  aptRh2O: string;
+  aptS: number;
+  aptSisulkum: number;
   aptSukumtype: string;
+  aptSum: string;
+  aptSwCode: string;
+  aptType: string;
+  aptTypeName: string;
+  aptZipcode: string;
+  areaCode: string;
+  // --------------
 
   //
-  chkAptZipCode: boolean;
-  chkAptRh2o: boolean;
-  chkAptRdangaType: boolean;
-  chkAptAnkum: boolean;
-  chkAptSisulkum: boolean;
-  chkAptMeterkum: boolean;
-  chkAptPer: boolean;
-  chkAptGumdate: boolean;
-  chkAptSukumtype: boolean;
+  // chkAptZipCode: boolean;
+  // chkAptRh2o: boolean;
+  // chkAptRdangaType: boolean;
+  // chkAptAnkum: boolean;
+  // chkAptSisulkum: boolean;
+  // chkAptMeterkum: boolean;
+  // chkAptPer: boolean;
+  // chkAptGumdate: boolean;
+  // chkAptSukumtype: boolean;
 }
 
 export interface ISEARCH {
-  areaCode: string;
+  // areaCode: string;
   aptCode: string;
   aptName: string;
 }

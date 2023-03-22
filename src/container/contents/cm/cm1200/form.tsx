@@ -96,7 +96,6 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (dataCommonDic) {
-        console.log("dataCommonDic:::", dataCommonDic);
         setCuCustgubunDic(dataCommonDic?.cuCustgubun);
         setCuJyCodeDic(dataCommonDic?.cuJyCode);
         setCuSwCodeDic(dataCommonDic?.cuSwCode);
@@ -164,8 +163,6 @@ const Form = React.forwardRef(
         const { data } = await API.get(CM120065, {
           params: { cuCode: cuCode, areaCode: areaCode },
         });
-
-        console.log("additional data:::", data);
 
         if (data) {
           if (data?.userInfo) {

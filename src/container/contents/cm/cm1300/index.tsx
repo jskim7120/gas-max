@@ -19,15 +19,19 @@ import {
   LeftSide,
   RightSide,
 } from "../../commonStyle";
-import { CM1300SEARCH } from "app/path";
-import { Detail1Wrapper } from "./style";
-import { Divider, Field, FormGroup, Input } from "components/form/style";
+import { CM1300SEARCH, CM130065 } from "app/path";
+import {
+  Divider,
+  Field,
+  FormGroup,
+  Input,
+  Select,
+} from "components/form/style";
 import { useDispatch, useSelector } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import FormCM1300User from "./cm1300User";
 import GridLeft from "components/grid";
 import { BuildingInfoText } from "components/text";
-import { CustomAreaCodePart } from "container/contents/customTopPart";
 import { ISEARCH } from "./model";
 import FourButtons from "components/button/fourButtons";
 
@@ -40,20 +44,27 @@ function CM1300({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const { register, handleSubmit, reset } = useForm<ISEARCH>({
+  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+
+  const { register, handleSubmit } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
 
   const [areaCode, setAreaCode] = useState("");
   const [data, setData] = useState([]);
-  const [selected, setSelected] = useState({});
+  const [data65, setData65] = useState([]);
+  const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState<number>(0);
+  const [selected65, setSelected65] = useState<any>({});
+  const [selectedRowIndex65, setSelectedRowIndex65] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
+  const [aptGubun, setAptGubun] = useState<any>([]);
+  const [aptJyCode, setAptJyCode] = useState<any>([]);
+  const [aptSwCode, setAptSwCode] = useState<any>([]);
 
   const { isDelete } = useSelector((state) => state.modal);
 
@@ -64,7 +75,6 @@ function CM1300({
 
   useEffect(() => {
     if (dataCommonDic) {
-      reset({ areaCode: dataCommonDic.areaCode[0].code });
       fetchData({ areaCode: dataCommonDic.areaCode[0].code });
     }
   }, [dataCommonDic]);
@@ -75,8 +85,15 @@ function CM1300({
     }
   }, [isDelete.isDelete]);
 
+  useEffect(() => {
+    if (selected && JSON.stringify(selected) !== "{}") {
+      setAreaCode(selected?.areaCode);
+      fetchData65();
+    }
+  }, [selected]);
+
   const submit = async (data: ISEARCH) => {
-    fetchData(data);
+    fetchData({ ...data, areaCode: areaCode });
   };
 
   const fetchData = async (params: any) => {
@@ -87,7 +104,6 @@ function CM1300({
       });
 
       if (dataSearch) {
-        console.log("dataSearch:::", dataSearch);
         setData(dataSearch);
         setSelected(dataSearch[0]);
       } else {
@@ -104,10 +120,58 @@ function CM1300({
       console.log("CM1300 data search fetch error =======>", err);
     }
   };
+  const fetchData65 = async () => {
+    try {
+      const { data: data65 } = await API.get(CM130065, {
+        params: {
+          areaCode: selected?.areaCode,
+          aptCode: selected?.aptCode,
+        },
+      });
+
+      if (data65) {
+        if (data65?.userCustomer && data65?.userCustomer?.length > 0) {
+          setData65(data65.userCustomer);
+          setSelected65(data65.userCustomer[0]);
+        } else {
+          setData65([]);
+          setSelected65({});
+        }
+
+        setSelectedRowIndex65(0);
+
+        if (data65?.aptGubun) {
+          setAptGubun(data65?.aptGubun);
+        } else {
+          setAptGubun([]);
+        }
+
+        if (data65?.aptJyCode) {
+          setAptJyCode(data65?.aptJyCode);
+        } else {
+          setAptJyCode([]);
+        }
+
+        if (data65?.aptSwCode) {
+          setAptSwCode(data65?.aptSwCode);
+        } else {
+          setAptSwCode([]);
+        }
+      }
+    } catch (err) {
+      setData65([]);
+      setSelected65({});
+      setAptSwCode([]);
+      setAptJyCode([]);
+      setAptGubun([]);
+
+      console.log("CM1300 data search fetch error =======>", err);
+    }
+  };
 
   function deleteRowGrid() {
     try {
-      formRef.current.setIsAddBtnClicked(false);
+      setIsAddBtnClicked(false);
       formRef.current.crud("delete");
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
@@ -137,12 +201,24 @@ function CM1300({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomAreaCodePart
-          areaCode={ownAreaCode}
-          dataCommonDic={dataCommonDic}
-          depthFullName={depthFullName}
-          register={register}
-        />
+        <FormGroup>
+          <p>{depthFullName}</p>
+          {ownAreaCode === "00" && (
+            <>
+              <p className="big">영업소</p>
+              <Select
+                value={areaCode}
+                onChange={(e) => setAreaCode(e.target.value)}
+              >
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+        </FormGroup>
 
         <FourButtons
           btn1Name="건물등록"
@@ -213,25 +289,34 @@ function CM1300({
           />
         </LeftSide>
         <RightSide style={{ width: "1000px" }}>
-          <Detail1Wrapper>
-            <Form
-              selected={selected}
-              ref={formRef}
-              fetchData={fetchData}
-              menuId={menuId}
-              setData={setData}
-              selectedRowIndex={selectedRowIndex}
-              setSelectedRowIndex={setSelectedRowIndex}
-              setSelected={setSelected}
-              setAreaCode={setAreaCode}
-            />
-          </Detail1Wrapper>
+          <Form
+            areaCode={areaCode}
+            dataCommonDic={dataCommonDic}
+            selected={selected}
+            ref={formRef}
+            fetchData={fetchData}
+            setData={setData}
+            selectedRowIndex={selectedRowIndex}
+            setSelectedRowIndex={setSelectedRowIndex}
+            setSelected={setSelected}
+            isAddBtnClicked={isAddBtnClicked}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
+            setIsAddBtnClicked={setIsAddBtnClicked}
+            aptGubun={aptGubun}
+            aptJyCode={aptJyCode}
+            aptSwCode={aptSwCode}
+          />
+
           <Divider style={{ border: "1px solid #707070" }} />
           <FormCM1300User
-            menuId={menuId}
-            depthFullName={depthFullName}
-            selectedUser={selected}
-            areaCode={ownAreaCode}
+            data={data65}
+            setData={setData65}
+            selected={selected65}
+            setSelected={setSelected65}
+            selectedRowIndex={selectedRowIndex65}
+            setSelectedRowIndex={setSelectedRowIndex65}
+            ownAreaCode={ownAreaCode}
+            fetchData={fetchData65}
           />
         </RightSide>
       </MainWrapper>
