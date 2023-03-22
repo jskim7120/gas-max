@@ -99,10 +99,7 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [addr, setAddress] = useState<string>("");
-    const [aptCuRdangaType, setAptCuRdangaType] = useState("");
-    const [sign, setSign] = useState("");
-    const [number1, setNumber1] = useState(0);
-    const [number2, setNumber2] = useState(0);
+
     const [chkAptZipCode, setChkAptZipCode] = useState(false);
     const [chkAptRh2o, setChkAptRh2o] = useState(false);
     const [chkAptRdangaType, setChkAptRdangaType] = useState(false);
@@ -112,6 +109,12 @@ const Form = React.forwardRef(
     const [chkAptPer, setChkAptPer] = useState(false);
     const [chkAptGumdate, setChkAptGumdate] = useState(false);
     const [chkAptSukumtype, setChkAptSukumtype] = useState(false);
+
+    const [totalValue, setTotalValue] = useState<string>("");
+    const [aptRdangaType, setAptRdangaType] = useState<string>("");
+    const [aptRdanga, setAptRdanga] = useState<string>("");
+    const [aptRdangaSign, setAptRdangaSign] = useState<string>("");
+    const [aptRdangaAmt, setAptRdangaAmt] = useState<string>("");
 
     const { register, handleSubmit, reset, getValues } = useForm<ICM1300>({
       mode: "onChange",
@@ -192,6 +195,12 @@ const Form = React.forwardRef(
         setChkAptPer(false);
         setChkAptGumdate(false);
         setChkAptSukumtype(false);
+
+        setAptRdangaType(selected?.aptRdangaType);
+        setAptRdanga(selected?.aptRdanga);
+        setAptRdangaSign(selected?.aptRdangaSign);
+        setAptRdangaAmt(selected?.aptRdangaAmt);
+        setTotalValue("");
       }
     };
     const crud = async (type: string | null) => {
@@ -235,7 +244,22 @@ const Form = React.forwardRef(
       formValues.aptAnkum = +formValues.aptAnkum;
       formValues.aptPer = +formValues.aptPer;
       formValues.aptSisulkum = +formValues.aptSisulkum;
-      formValues.aptRdanga = +formValues.aptRdanga;
+
+      if (aptRdangaType !== "") {
+        formValues.aptRdangaType = aptRdangaType;
+      }
+
+      if (aptRdanga !== "") {
+        formValues.aptRdanga = +aptRdanga;
+      }
+
+      // if (aptRdangaSign !== "") {
+      formValues.aptRdangaSign = aptRdangaSign;
+      // }
+
+      if (aptRdangaAmt !== "") {
+        formValues.aptRdangaAmt = +aptRdangaAmt;
+      }
 
       if (!chkAptZipCode) {
         delete formValues.aptZipcode;
@@ -294,6 +318,108 @@ const Form = React.forwardRef(
         toast.error(err?.message, {
           autoClose: 500,
         });
+      }
+    };
+
+    const customEval = (t1: any, sign: any, t2: any) => {
+      let tot = 0;
+      let retVal = "";
+      if (sign === null || sign === undefined) {
+        retVal = ``;
+      } else if (sign !== "X") {
+        tot = eval(`${+t1} ${sign} ${+t2}`);
+        retVal = `원 = ${tot}원`;
+      } else {
+        tot = eval(`${+t1} * ${t2} / 100`);
+        retVal = `% = ${tot}원`;
+      }
+      return retVal;
+    };
+
+    const calcRdanga = (type: string, cur: any) => {
+      let retSt = "";
+      if (type === "aptRdanga") {
+        retSt = customEval(cur, aptRdangaSign, aptRdangaAmt);
+      }
+
+      if (type === "aptRdangaSign") {
+        retSt = customEval(aptRdanga, cur, aptRdangaAmt);
+      }
+
+      if (type === "aptRdangaAmt") {
+        retSt = customEval(aptRdanga, aptRdangaSign, cur);
+      }
+
+      if (type === "aptRdangaType" && cur === "1") {
+        retSt = customEval(aptRdanga, aptRdangaSign, aptRdangaAmt);
+      }
+
+      setTotalValue(retSt);
+    };
+
+    const showRdanga = () => {
+      if (aptRdangaType === "0") {
+        return (
+          <FormGroup className="0">
+            <Input
+              readOnly
+              inputSize={InputSize.i60}
+              value={aptRdanga}
+              onChange={(e: any) => setAptRdanga(e.target.value)}
+            />
+            <p>원</p>
+          </FormGroup>
+        );
+      }
+      if (aptRdangaType === "1") {
+        return (
+          <FormGroup className="1">
+            <Input
+              inputSize={InputSize.i60}
+              value={aptRdanga}
+              onChange={(e: any) => {
+                setAptRdanga(e.target.value);
+                calcRdanga("aptRdanga", e.target.value);
+              }}
+            />
+            <p>원</p>
+            <Select
+              width={InputSize.i50}
+              value={aptRdangaSign}
+              onChange={(e: any) => {
+                setAptRdangaSign(e.target.value);
+                calcRdanga("aptRdangaSign", e.target.value);
+              }}
+            >
+              {dataCommonDic?.aptRdangaSign.map((obj: any, index: number) => (
+                <option key={index} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+            <Input
+              inputSize={InputSize.i60}
+              textAlign="right"
+              value={aptRdangaAmt}
+              onChange={(e: any) => {
+                setAptRdangaAmt(e.target.value);
+                calcRdanga("aptRdangaAmt", e.target.value);
+              }}
+            />
+            <p>{totalValue}</p>
+          </FormGroup>
+        );
+      }
+      if (aptRdangaType === "2") {
+        return (
+          <FormGroup className="2">
+            <Input
+              inputSize={InputSize.i60}
+              value={aptRdanga}
+              onChange={(e: any) => setAptRdanga(e.target.value)}
+            />
+          </FormGroup>
+        );
       }
     };
 
@@ -456,14 +582,12 @@ const Form = React.forwardRef(
           />
 
           <Select
-            disabled={!chkAptRdangaType ? true : false}
-            {...register("aptRdangaType")}
+            disabled={!chkAptRdangaType}
             width={InputSize.i120}
-            onChange={(e: any) => {
-              setAptCuRdangaType(e.target.value);
-              setSign("");
-              setNumber1(0);
-              setNumber2(0);
+            value={aptRdangaType}
+            onChange={(e) => {
+              setAptRdangaType(e.target.value);
+              calcRdanga("aptRdangaType", e.target.value);
             }}
           >
             {dataCommonDic?.aptRdangaType.map((option: any, index: number) => {
@@ -474,61 +598,8 @@ const Form = React.forwardRef(
               );
             })}
           </Select>
-          {aptCuRdangaType === "1" ? (
-            <Field flex style={{ alignItems: "center" }}>
-              <Input2
-                name="percentage"
-                id="number1"
-                type="text"
-                onChange={(e: any) => setNumber1(Number(e.target.value))}
-                readOnly={!chkAptRdangaType}
-              />
-              <Select
-                {...register("aptRdangaSign")}
-                onChange={(e: any) => {
-                  setSign(e.target.value);
-                }}
-                style={{ minWidth: "30px", border: "1px solid #e6e5e5" }}
-              >
-                <option value="+">+</option>
-                <option value="*">*</option>
-                <option value="-">-</option>
-              </Select>
 
-              <Input2
-                name="percentage"
-                id="number2"
-                type="text"
-                onChange={(e: any) => setNumber2(Number(e.target.value))}
-                readOnly={!chkAptRdangaType}
-              />
-
-              <p>
-                {sign === "*" && "%"}
-                {sign === "-" && "원"}
-                {sign === "+" && "원"}
-              </p>
-              <p style={{ margin: "0 15px" }}>=</p>
-              <p>
-                {sign !== "*"
-                  ? sign === "+"
-                    ? number1 + number2
-                    : sign === "-"
-                    ? number1 - number2
-                    : null
-                  : (number1 * number2) / 100}
-              </p>
-              <span style={{ marginLeft: "3px" }}>원</span>
-            </Field>
-          ) : (
-            <Input
-              register={register("aptRdangaType")}
-              inputSize={InputSize.sm}
-              textAlign="right"
-              style={{ border: "1px solid #e6e5e5" }}
-              readOnly={!chkAptRdangaType}
-            />
-          )}
+          {showRdanga()}
         </FormGroup>
         <FormGroup>
           <CheckBox

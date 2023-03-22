@@ -142,7 +142,7 @@ const modalSlice = createSlice({
     addCM1105: (state, action) => {
       state.cm1105.cuCode = action.payload.cuCode;
       state.cm1105.areaCode = action.payload.areaCode;
-      state.cm1105.status = action.payload.status ?? "";
+      state.cm1105.status = action.payload.status;
     },
 
     addGR1200: (state, action) => {
