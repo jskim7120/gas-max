@@ -94,7 +94,10 @@ function GR9006({
 
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
-          <SearchWrapper className="h35">
+          <SearchWrapper
+            className="h35"
+            style={{ justifyContent: "flex-start" }}
+          >
             <FormGroup>
               <Label style={{ minWidth: "auto" }}>영업소</Label>
               <Select width={InputSize.i130} {...register("areaCode")}>
@@ -129,20 +132,18 @@ function GR9006({
                   />
                 )}
               />
-
-              {radioOptions.map((option, index) => (
-                <Item key={index}>
-                  <RadioButton
-                    type="radio"
-                    value={option.id}
-                    {...register(`sChk1`)}
-                    id={option.id}
-                  />
-                  <RadioButtonLabel htmlFor={`${option.label}`}>
-                    {option.label}
-                  </RadioButtonLabel>
-                </Item>
-              ))}
+              <Field style={{ width: "227px", marginLeft: "30px" }}>
+                <FormGroup>
+                  <CheckBox register={{ ...register("sChk1") }} />
+                  <Label>통장 입출금 자료조회 안함</Label>
+                </FormGroup>
+              </Field>
+              <Field style={{ width: "227px" }}>
+                <FormGroup>
+                  <CheckBox register={{ ...register("sChk1") }} />
+                  <Label>전체 영업소 현금 조회</Label>
+                </FormGroup>
+              </Field>
             </FormGroup>
 
             <div className="buttons">
@@ -174,15 +175,6 @@ function GR9006({
             </div>
           </SearchWrapper>
         </form>
-
-        <Grid
-          areaCode={areaCode}
-          data={data}
-          columns={columns}
-          fields={fields}
-          style={{ height: `calc(100% - 35px)` }}
-          evenFill
-        />
       </WrapperContent>
     </>
   );

@@ -11,10 +11,9 @@ import {
   Label,
   DividerGray,
 } from "components/form/style";
-import { ICC1700FORM } from "./model";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import CustomDatePicker from "components/customDatePicker";
+import { ICC9005FORM } from "./model";
 import { InputSize } from "components/componentsType";
+import CustomDatePicker from "components/customDatePicker";
 import API from "app/axios";
 import {
   Item,
@@ -25,6 +24,7 @@ import {
 interface IForm {
   data65: any;
   setData65: Function;
+  // selected: any;
   fetchData: any;
   setData: any;
   selectedRowIndex: number;
@@ -52,7 +52,7 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const { register, handleSubmit, control, reset, getValues } =
-      useForm<ICC1700FORM>({ mode: "onChange" });
+      useForm<ICC9005FORM>({ mode: "onChange" });
 
     useEffect(() => {
       if (data65 !== undefined && JSON.stringify(data65) !== "{}") {
@@ -70,16 +70,16 @@ const Form = React.forwardRef(
     const resetForm = async (type: string) => {};
     const crud = async (type: string | null) => {};
 
-    const submit = async (data: ICC1700FORM) => {};
+    const submit = async (data: ICC9005FORM) => {};
 
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ width: "370px", padding: "20px 10px" }}
+        style={{ width: "410px", padding: "10px 10px" }}
       >
         <FormGroup>
-          <Label>영 업 소</Label>
-          <Select {...register("acbAreaCode")} width={InputSize.i130}>
+          <Label>영업소</Label>
+          <Select {...register("acbAreaCode")} width={InputSize.i200}>
             {dataCommonDic?.acbAreaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -87,47 +87,49 @@ const Form = React.forwardRef(
             ))}
           </Select>
         </FormGroup>
-        <Input
-          label="코 드"
-          register={register("acbCode")}
-          inputSize={InputSize.i130}
-        />
         <FormGroup>
-          <Label>구 분</Label>
-          {[
-            { name: "보통예금", value: "0" },
-            { name: "정기적금", value: "1" },
-          ].map((option, index) => {
-            return (
-              <Item key={index}>
-                <RadioButton
-                  type="radio"
-                  value={option.value}
-                  {...register("acbAccCode")}
-                  id={option.value}
-                />
-                <RadioButtonLabel htmlFor={`${option.value}`}>
-                  {option.name}
-                </RadioButtonLabel>
-              </Item>
-            );
-          })}
+          <Label>일자</Label>
+          <Controller
+            control={control}
+            {...register("baseDate")}
+            render={({ field: { onChange, value, name } }) => (
+              <CustomDatePicker
+                style={{ width: "200px" }}
+                value={value}
+                onChange={onChange}
+                name={name}
+                showYearDropdown
+              />
+            )}
+          />
         </FormGroup>
         <Input
-          label="은 행 명"
-          register={register("acbName")}
-          inputSize={InputSize.i130}
+          label="일자"
+          register={register("accName")}
+          inputSize={InputSize.i200}
         />
-        <Input
-          label="계좌번호"
-          register={register("acbBankno")}
-          inputSize={InputSize.i130}
-        />
-        <Input
-          label="적 요"
-          register={register("acbBigo")}
-          inputSize={InputSize.i130}
-        />
+        <FormGroup>
+          <Input
+            label="은행명"
+            register={register("bankCode")}
+            inputSize={InputSize.i40}
+          />
+          <Input register={register("acbName")} inputSize={InputSize.i150} />
+        </FormGroup>
+        <FormGroup>
+          <Input
+            label="계좌번호"
+            register={register("acbBankno")}
+            inputSize={InputSize.i200}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Input
+            label="잔액"
+            register={register("bankKumack")}
+            inputSize={InputSize.i200}
+          />
+        </FormGroup>
       </form>
     );
   }

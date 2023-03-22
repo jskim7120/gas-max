@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useDispatch } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
 import {
@@ -8,6 +9,7 @@ import {
   RightSide,
   LeftSide,
 } from "../../commonStyle";
+import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import CustomDatePicker from "components/customDatePicker";
 import {
   MagnifyingGlass,
@@ -20,11 +22,12 @@ import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import Grid from "../grid";
+import GridLeft from "components/grid";
 import { fields, columns } from "./data";
 import { ICC1700SEARCH } from "./model";
 import Form from "./form";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
+import FourButtons from "components/button/fourButtons";
 
 function CC1700({
   depthFullName,
@@ -36,12 +39,14 @@ function CC1700({
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-
+  const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [data65, setData65] = useState({});
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CC",
@@ -67,6 +72,25 @@ function CC1700({
 
   const fetchData65 = async (params: any) => {};
 
+  const onClickAdd = () => {
+    setIsAddBtnClicked(true);
+    setIsCancelBtnDisabled(false);
+    formRef.current.resetForm("clear");
+  };
+
+  const onClickDelete = () => {
+    dispatch(openModal({ type: "delModal" }));
+    dispatch(addDeleteMenuId({ menuId: menuId }));
+  };
+  const onClickUpdate = () => {
+    formRef.current.crud(null);
+  };
+
+  const onClickReset = () => {
+    setIsAddBtnClicked(false);
+    formRef.current.resetForm("reset");
+  };
+
   return (
     <>
       <SearchWrapper className="h35 mt5">
@@ -76,44 +100,43 @@ function CC1700({
           register={register}
           dataCommonDic={dataCommonDic}
         />
-        <div className="buttons">
-          <Button
-            text="등록"
-            icon={<Plus />}
-            style={{ marginRight: "5px" }}
-            onClick={() => {}}
+        <SearchWrapper
+          className="h35 mt5"
+          style={{
+            display: "flex",
+            position: "absolute",
+            top: "87px",
+            right: "19px",
+            background: "none",
+            padding: "0",
+            border: "none",
+            height: "auto",
+            marginTop: "2px",
+          }}
+        >
+          <FourButtons
+            onClickAdd={onClickAdd}
+            onClickDelete={onClickDelete}
+            onClickUpdate={onClickUpdate}
+            onClickReset={onClickReset}
+            isAddBtnClicked={isAddBtnClicked}
+            isCancelBtnDisabled={isCancelBtnDisabled}
           />
-          <Button
-            text="삭제"
-            icon={<Trash />}
-            style={{ marginRight: "5px" }}
-            onClick={() => {}}
-          />
-          <Button
-            text="저장"
-            icon={<Update />}
-            style={{ marginRight: "5px" }}
-            color={ButtonColor.SECONDARY}
-            onClick={() => {}}
-          />
-          <Button
-            text="취소"
-            icon={<ResetGray />}
-            color={ButtonColor.LIGHT}
-            onClick={() => {}}
-          />
-        </div>
+        </SearchWrapper>
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
-          <Grid
+          <GridLeft
+            areaCode={areaCode}
             data={data}
-            fields={fields}
-            columns={columns}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
-            style={{ height: `100%` }}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
+            setIsAddBtnClicked={setIsAddBtnClicked}
+            fields={fields}
+            columns={columns}
+            style={{ height: `calc(100% - 38px)` }}
           />
         </LeftSide>
         <RightSide>
@@ -125,9 +148,10 @@ function CC1700({
             setData={setData}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
-            // selected={selected}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
+            isAddBtnClicked={isAddBtnClicked}
+            setIsAddBtnClicked={setIsAddBtnClicked}
           />
         </RightSide>
       </MainWrapper>
