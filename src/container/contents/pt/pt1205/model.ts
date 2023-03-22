@@ -2,7 +2,7 @@ export interface IPT1205 {
   sCuName: string;
   sCuCode: string;
   gsDate: string;
-  gjMisu: number;
+  cuCmisu: number;
   gsDc: number;
   guChkamt: any;
   gsKumack: number;

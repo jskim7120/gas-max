@@ -3,7 +3,7 @@ import { ValueType } from "realgrid";
 export const fields = [
   {
     fieldName: "cuChkamt",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.BOOLEAN,
   },
   {
     fieldName: "mjDate",
@@ -27,23 +27,26 @@ export const columns = [
   {
     name: "cuChkamt",
     fieldName: "cuChkamt",
-    type: "data",
-    width: "80",
+    width: "40",
     header: {
       text: "선택",
     },
-
+    type: "Boolean",
+    defaultValue: true,
     renderer: {
       type: "check",
-      trueValues: "Y",
-      falseValues: "N",
+      editable: true,
+    },
+    editor: {
+      type: "check",
+      editable: false,
     },
   },
   {
     name: "mjDate",
     fieldName: "mjDate",
     type: "data",
-    width: "80",
+    width: "110",
     header: {
       text: "일자",
     },
@@ -52,7 +55,7 @@ export const columns = [
     name: "mjBigo",
     fieldName: "mjBigo",
     type: "data",
-    width: "80",
+    width: "150",
     header: {
       text: "비고",
     },
@@ -61,7 +64,7 @@ export const columns = [
     name: "mjMisujan",
     fieldName: "mjMisujan",
     type: "data",
-    width: "80",
+    width: "120",
     header: {
       text: "미수잔액",
     },
@@ -70,7 +73,7 @@ export const columns = [
     name: "mjSwName",
     fieldName: "mjSwName",
     type: "data",
-    width: "80",
+    width: "150",
     header: {
       text: "사원",
     },

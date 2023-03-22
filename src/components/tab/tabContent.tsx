@@ -257,7 +257,11 @@ export const getContent = (
 
     case "PT1100":
       return (
-        <PT1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <PT1100
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "PT1200":
       return (

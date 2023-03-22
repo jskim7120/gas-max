@@ -136,7 +136,7 @@ const Form = React.forwardRef(
     return (
       <form
         // onSubmit={handleSubmit(submit)}
-        style={{ width: "410px" }}
+        style={{ width: "320px" }}
       >
         <div style={{ padding: "10px" }}>
           <FormGroup>
@@ -159,7 +159,7 @@ const Form = React.forwardRef(
                 label="거 래 처"
                 labelStyle={{ minWidth: "80px" }}
                 register={register("cuCode")}
-                inputSize={InputSize.i250}
+                inputSize={InputSize.i140}
               />
               <SearchBtn type="button" onClick={handleSearchBtnClick}>
                 <MagnifyingGlass />
@@ -170,19 +170,20 @@ const Form = React.forwardRef(
               label="건물명"
               labelStyle={{ minWidth: "80px" }}
               register={register("cuName")}
-              inputSize={InputSize.i250}
+              inputSize={InputSize.i140}
             />
             <Input
               label="사용자명"
               labelStyle={{ minWidth: "80px" }}
               register={register("cuUsername")}
-              inputSize={InputSize.i250}
+              inputSize={InputSize.i140}
             />
             <Input
               label="미수금액"
               labelStyle={{ minWidth: "80px" }}
               register={register("cuCmisu")}
-              inputSize={InputSize.i250}
+              inputSize={InputSize.i140}
+              textAlign={"right"}
             />
           </div>
           <br />
@@ -190,25 +191,32 @@ const Form = React.forwardRef(
             label="D / C"
             labelStyle={{ minWidth: "80px" }}
             register={register("gsDc")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i140}
+            textAlign={"right"}
           />
           <Input
             label="수 금 액"
             labelStyle={{ minWidth: "80px" }}
             register={register("gsKumack")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i140}
+            textAlign={"right"}
           />
           <br />
           <Input
             label="수금 후 잔액"
             labelStyle={{ minWidth: "80px" }}
             register={register("gsJanack")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i140}
+            textAlign={"right"}
           />
           <br />
           <FormGroup>
             <Label style={{ minWidth: "80px" }}>수금방법</Label>
-            <Select {...register("gsSukumType")} onChange={handleSelectCode}>
+            <Select
+              {...register("gsSukumType")}
+              onChange={handleSelectCode}
+              width={InputSize.i140}
+            >
               {dataCommonDic?.gsSukumtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -218,7 +226,11 @@ const Form = React.forwardRef(
           </FormGroup>
           <FormGroup>
             <Label style={{ minWidth: "80px" }}>사 원</Label>
-            <Select {...register("gsSwCode")} onChange={handleSelectCode}>
+            <Select
+              {...register("gsSwCode")}
+              onChange={handleSelectCode}
+              width={InputSize.i140}
+            >
               {dataCommonDic?.gsSwCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -230,11 +242,11 @@ const Form = React.forwardRef(
             label="비 고"
             labelStyle={{ minWidth: "80px" }}
             register={register("gsBigo")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i140}
           />
         </div>
 
-        <BottomStyleDiv bottomSize={InputSize.i85}>
+        <BottomStyleDiv bottomSize={InputSize.i80}>
           <InfoText
             text={"수금처리는 선입선출 방식으로 자동 처리됨"}
             style={{ borderBottom: "1px solid" }}
@@ -243,19 +255,19 @@ const Form = React.forwardRef(
             label="미수금 총계"
             labelStyle={{ minWidth: "80px" }}
             register={register("totMisukum")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i140}
           />
           <Input
             label="수금 총계"
             labelStyle={{ minWidth: "80px" }}
             register={register("totSukum")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i140}
           />
           <Input
             label="D/C 총계"
             labelStyle={{ minWidth: "80px" }}
             register={register("totDc")}
-            inputSize={InputSize.i250}
+            inputSize={InputSize.i140}
           />
         </BottomStyleDiv>
       </form>

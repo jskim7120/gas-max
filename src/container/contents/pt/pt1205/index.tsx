@@ -21,7 +21,7 @@ import styled from "styled-components";
 import { SearchWrapper } from "container/contents/commonStyle";
 import { columns, fields } from "./data";
 const ModalWrapper = styled.div`
-  width: 1400px;
+  width: 1450px;
   height: 810px;
   height: auto;
   align-items: center;
@@ -33,9 +33,11 @@ function FormIP1205() {
   const ptAreaCode = useSelector((state) => state.modal.pt1205.areaCode);
   const ptScuCode = useSelector((state) => state.modal.pt1205.cuCode);
   const ptScuName = useSelector((state) => state.modal.pt1205.cuName);
-  const [data, setData] = useState([]);
+  const ptCuCmisu = useSelector((state) => state.modal.pt1205.cuCmisu);
+  const [data, setData] = useState<any>([]);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [totalGuAmount, setTotalGuAmount] = useState(0);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const { register, handleSubmit, reset, getValues } = useForm<IPT1205>();
 
@@ -62,6 +64,18 @@ function FormIP1205() {
       sCuName: ptScuName,
     });
   };
+  const calc = (i: number, s: string) => {
+    console.log("triggering add minus", data[i].gjMisujan);
+    if (i !== undefined && s !== undefined) {
+      if (s === "Y") {
+        setTotalGuAmount((prev) => prev + data[i].gjMisujan);
+      } else if (s === "N") {
+        setTotalGuAmount((prev) => prev - data[i].gjMisujan);
+      } else {
+        setTotalGuAmount((prev) => prev - 0);
+      }
+    }
+  };
 
   const fetchSearchData = async (params: any) => {
     console.log(params, "trigger data");
@@ -82,7 +96,6 @@ function FormIP1205() {
     }
   };
   const firstFetchData = async () => {
-    console.log("Trigering data", ptScuCode, ptAreaCode);
     try {
       setLoading(true);
       const { data } = await API.get(PT1205SEARCH, {
@@ -104,7 +117,7 @@ function FormIP1205() {
     console.log("When trigger modal", data);
     fetchSearchData(data);
   };
-
+  console.log(totalGuAmount, "is amount");
   return (
     <ModalWrapper>
       <form onSubmit={handleSubmit(onSearchSubmit)}>
@@ -189,6 +202,9 @@ function FormIP1205() {
               borderRight: "1px solid #000",
               margin: "10px",
             }}
+            isEditable={false}
+            calc={calc}
+            isSortable={false}
           />
           <Form
             selected={selected}
@@ -198,6 +214,8 @@ function FormIP1205() {
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
+            totalGuAmount={totalGuAmount}
+            cuCmisu={ptCuCmisu}
           />
         </div>
       </form>

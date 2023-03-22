@@ -6,8 +6,6 @@ import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import {
-  Plus,
-  Trash,
   Update,
   Reset,
   WhiteClose,
@@ -23,7 +21,7 @@ import styled from "styled-components";
 import { SearchWrapper } from "container/contents/commonStyle";
 import { columns, fields } from "./data";
 const ModalWrapper = styled.div`
-  width: 800px;
+  width: 1000px;
   height: 610px;
   height: auto;
   background: #fff;
@@ -34,11 +32,12 @@ function FormIP1105() {
   const ptAreaCode = useSelector((state) => state.modal.pt1105.areaCode);
   const ptScuCode = useSelector((state) => state.modal.pt1105.cuCode);
   const ptScuName = useSelector((state) => state.modal.pt1105.cuName);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const { register, handleSubmit, reset, getValues } = useForm<IPT1105>();
+  const [totalGuAmount, setTotalGuAmount] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -62,6 +61,18 @@ function FormIP1105() {
       sCuCode: ptScuCode,
       sCuName: ptScuName,
     });
+  };
+
+  const calc = (i: number, s: string) => {
+    if (i !== undefined && s !== undefined) {
+      if (s === "Y") {
+        setTotalGuAmount((prev) => prev + data[i].mjMisujan);
+      } else if (s === "N") {
+        setTotalGuAmount((prev) => prev - data[i].mjMisujan);
+      } else {
+        setTotalGuAmount((prev) => prev - 0);
+      }
+    }
   };
 
   const fetchSearchData = async (params: any) => {
@@ -104,7 +115,6 @@ function FormIP1105() {
       fetchSearchData(data);
     }
   };
-
   return (
     <ModalWrapper>
       <form onSubmit={handleSubmit(onSearchSubmit)}>
@@ -184,11 +194,15 @@ function FormIP1105() {
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             style={{
-              height: "500px",
-              width: "56%",
+              height: "600px",
+              width: "90%",
               borderRight: "1px solid #000",
-              margin: "10px",
+              margin: "8px",
+              padding: "5px",
             }}
+            isEditable={false}
+            calc={calc}
+            isSortable={false}
           />
           <Form
             selected={selected}
@@ -198,6 +212,7 @@ function FormIP1105() {
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
+            guCheckAMount={totalGuAmount}
           />
         </div>
       </form>
