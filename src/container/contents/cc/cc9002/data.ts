@@ -6,35 +6,35 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cjDate",
+    fieldName: "acjDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cjCaCode",
+    fieldName: "acjAccCode",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cjCaName",
+    fieldName: "acjAccName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cjCcCode",
+    fieldName: "acjMemo",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cjCcName",
+    fieldName: "acjSwName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cjKumack",
+    fieldName: "acjKumackCh",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cjSwName",
+    fieldName: "acjKumackDa",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cjBigo",
+    fieldName: "acjKumackSum",
     dataType: ValueType.TEXT,
   },
 ];
@@ -44,23 +44,23 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "90",
+    width: "80",
     header: {
       text: "영업소",
     },
   },
   {
-    name: "cjDate",
-    fieldName: "cjDate",
+    name: "acjDate",
+    fieldName: "acjDate",
     type: "data",
-    width: "90",
+    width: "80",
     header: {
       text: "일자",
     },
   },
   {
-    name: "cjCaCode",
-    fieldName: "cjCaCode",
+    name: "acjAccCode",
+    fieldName: "acjAccCode",
     type: "data",
     width: "70",
     header: {
@@ -68,57 +68,57 @@ export const columns = [
     },
   },
   {
-    name: "cjCaName",
-    fieldName: "cjCaName",
+    name: "acjAccName",
+    fieldName: "acjAccName",
     type: "data",
-    width: "170",
+    width: "150",
     header: {
-      text: "차량",
+      text: "계정과목",
     },
   },
   {
-    name: "cjCcCode",
-    fieldName: "cjCcCode",
+    name: "acjMemo",
+    fieldName: "acjMemo",
     type: "data",
-    width: "70",
+    width: "300",
     header: {
-      text: "코드",
+      text: "항목(적요)",
     },
   },
   {
-    name: "cjCcName",
-    fieldName: "cjCcName",
+    name: "acjSwName",
+    fieldName: "acjSwName",
     type: "data",
-    width: "190",
-    header: {
-      text: "정비명",
-    },
-  },
-  {
-    name: "cjKumack",
-    fieldName: "cjKumack",
-    type: "data",
-    width: "110",
-    header: {
-      text: "금액",
-    },
-  },
-  {
-    name: "cjSwName",
-    fieldName: "cjSwName",
-    type: "data",
-    width: "110",
+    width: "80",
     header: {
       text: "사원",
     },
   },
   {
-    name: "cjBigo",
-    fieldName: "cjBigo",
+    name: "acjKumackCh",
+    fieldName: "acjKumackCh",
     type: "data",
-    width: "230",
+    width: "80",
     header: {
-      text: "비고",
+      text: "차변",
+    },
+  },
+  {
+    name: "acjKumackDa",
+    fieldName: "acjKumackDa",
+    type: "data",
+    width: "80",
+    header: {
+      text: "대변",
+    },
+  },
+  {
+    name: "acjKumackSum",
+    fieldName: "acjKumackSum",
+    type: "data",
+    width: "80",
+    header: {
+      text: "잔액",
     },
   },
 ];

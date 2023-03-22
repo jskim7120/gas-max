@@ -6,27 +6,23 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "sgDate",
+    fieldName: "acjDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "sgSwName",
+    fieldName: "acjAcsName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "sgBigo",
+    fieldName: "acjKumackCh",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "sgKumack",
+    fieldName: "acjKumackDa",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "sgKumackB",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "sgJanack",
+    fieldName: "acjKumackJan",
     dataType: ValueType.TEXT,
   },
 ];
@@ -36,61 +32,52 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "90",
+    width: "80",
     header: {
       text: "영업소",
     },
   },
   {
-    name: "sgDate",
-    fieldName: "sgDate",
+    name: "acjDate",
+    fieldName: "acjDate",
     type: "data",
-    width: "90",
+    width: "110",
     header: {
       text: "일자",
     },
   },
   {
-    name: "sgSwName",
-    fieldName: "sgSwName",
+    name: "acjAcsName",
+    fieldName: "acjAcsName",
     type: "data",
-    width: "90",
+    width: "290",
     header: {
-      text: "사원",
+      text: "항목",
     },
   },
   {
-    name: "sgBigo",
-    fieldName: "sgBigo",
+    name: "acjKumackCh",
+    fieldName: "acjKumackCh",
     type: "data",
-    width: "260",
+    width: "130",
     header: {
-      text: "비고",
+      text: "차변",
     },
   },
   {
-    name: "sgKumack",
-    fieldName: "sgKumack",
+    name: "acjKumackDa",
+    fieldName: "acjKumackDa",
     type: "data",
-    width: "90",
+    width: "130",
     header: {
-      text: "가불금액",
+      text: "대변",
     },
   },
   {
-    name: "sgKumackB",
-    fieldName: "sgKumackB",
+    name: "acjKumackJan",
+    fieldName: "acjKumackJan",
     type: "data",
-    width: "90",
-    header: {
-      text: "반제금액",
-    },
-  },
-  {
-    name: "sgJanack",
-    fieldName: "sgJanack",
-    type: "data",
-    width: "90",
+    width: "130",
     header: {
       text: "잔액",
     },

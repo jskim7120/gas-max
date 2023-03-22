@@ -12,12 +12,20 @@ import {
 import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import GridLeft from "components/grid";
 import { fields, columns } from "./data";
-import { ICC1600SEARCH } from "./model";
+import { ICC9005SEARCH } from "./model";
 import Form from "./form";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
-import FourButtons from "components/button/fourButtons";
+import {
+  MagnifyingGlass,
+  ResetGray,
+  Plus,
+  Trash,
+  Update,
+} from "components/allSvgIcon";
+import Button from "components/button/button";
+import { ButtonColor, InputSize } from "components/componentsType";
 
-function CC1600({
+function CC9005({
   depthFullName,
   areaCode,
   menuId,
@@ -38,7 +46,7 @@ function CC1600({
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CC",
-    functionName: "CC1600",
+    functionName: "CC9005",
   });
 
   useEffect(() => {
@@ -50,7 +58,7 @@ function CC1600({
 
   const resetSearchForm = () => {};
 
-  const { register, handleSubmit, reset, control } = useForm<ICC1600SEARCH>({
+  const { register, handleSubmit, reset, control } = useForm<ICC9005SEARCH>({
     mode: "onSubmit",
   });
 
@@ -59,12 +67,6 @@ function CC1600({
   const fetchData = async (params: any) => {};
 
   const fetchData65 = async (params: any) => {};
-
-  const onClickAdd = () => {
-    setIsAddBtnClicked(true);
-    setIsCancelBtnDisabled(false);
-    formRef.current.resetForm("clear");
-  };
 
   const onClickDelete = () => {
     dispatch(openModal({ type: "delModal" }));
@@ -102,14 +104,27 @@ function CC1600({
             marginTop: "2px",
           }}
         >
-          <FourButtons
-            onClickAdd={onClickAdd}
-            onClickDelete={onClickDelete}
-            onClickUpdate={onClickUpdate}
-            onClickReset={onClickReset}
-            isAddBtnClicked={isAddBtnClicked}
-            isCancelBtnDisabled={isCancelBtnDisabled}
-          />
+          <div className="buttons">
+            <Button
+              text="삭제"
+              icon={<Trash />}
+              style={{ marginRight: "5px" }}
+              onClick={onClickDelete}
+            />
+            <Button
+              text="저장"
+              icon={<Update />}
+              style={{ marginRight: "5px" }}
+              color={ButtonColor.SECONDARY}
+              onClick={onClickUpdate}
+            />
+            <Button
+              text="취소"
+              icon={<ResetGray />}
+              color={ButtonColor.LIGHT}
+              onClick={onClickReset}
+            />
+          </div>
         </SearchWrapper>
       </SearchWrapper>
       <MainWrapper>
@@ -147,4 +162,4 @@ function CC1600({
   );
 }
 
-export default CC1600;
+export default CC9005;
