@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { ICM1100SEARCH } from "./model";
 import { useForm } from "react-hook-form";
-import { openModal, addCM1105 } from "app/state/modal/modalSlice";
+import { toast } from "react-toastify";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { useDispatch, useSelector } from "app/store";
+import API from "app/axios";
+import { CM1100SEARCH, CM110065 } from "app/path";
+import { ICM1100SEARCH } from "./model";
+import { openModal, addCM1105 } from "app/state/modal/modalSlice";
 import Button from "components/button/button";
-import {
-  ButtonColor,
-  ButtonType,
-  InputSize,
-  FieldKind,
-} from "components/componentsType";
+import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import {
   Plus,
   Trash,
@@ -18,39 +16,33 @@ import {
   MagnifyingGlassBig,
   ExcelIcon,
 } from "components/allSvgIcon";
-import {
-  Input,
-  Select,
-  FormGroup,
-  Wrapper,
-  Label,
-} from "components/form/style";
+import { Input, Select, FormGroup, Label } from "components/form/style";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
-import API from "app/axios";
 import Grid from "./grid";
 import { columns, fields } from "./data";
 import CM1100Footer from "./footer";
-import { CM1100SEARCH } from "app/path";
 import Loader from "components/loader";
-import { CustomAreaCodePart } from "container/contents/customTopPart";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 function CM1100Page({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const dispatch = useDispatch();
 
   const { areaCode: areaCodeFooter, cuCode: cuCodeFooter } = useSelector(
     (state) => state.modal.cm1105
   );
+
   const [data, setData] = useState<any>([]);
+  const [data65, setData65] = useState<any>([]);
   const [selected, setSelected] = useState<any>({});
+  const [areaCode, setAreaCode] = useState("");
   const [loading, setLoading] = useState(false);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
@@ -73,6 +65,12 @@ function CM1100Page({
     }
   }, [areaCodeFooter, cuCodeFooter]);
 
+  useEffect(() => {
+    if (Object.keys(selected).length > 0) {
+      setAreaCode(selected.areaCode);
+    }
+  }, [selected]);
+
   const submit = async (data: ICM1100SEARCH) => {
     fetchData(data);
   };
@@ -81,51 +79,86 @@ function CM1100Page({
     try {
       setLoading(true);
       const { data: dataSearch } = await API.get(CM1100SEARCH, {
-        params: params,
+        params: { ...params, areaCode: areaCode },
       });
 
-      if (dataSearch) {
+      if (dataSearch?.length > 0) {
         setData(dataSearch);
+        setSelected(dataSearch[0]);
       } else {
         setData([]);
+        setSelected({});
       }
       setLoading(false);
     } catch (err) {
       setLoading(false);
       setData([]);
+      setSelected({});
       console.log("CM1100 data search fetch error =======>", err);
     }
   };
 
-  const handleOpenPopup = async (index: number) => {
-    try {
-      setSelected(data[index]);
+  // useEffect(() => {
+  //   if (cm1105.areaCode && cm1105.cuCode) {
+  //     fetchData();
+  //   }
+  // }, [cm1105.areaCode, cm1105.cuCode]);
 
-      dispatch(
-        addCM1105({
-          cuCode: data[index].cuCode,
-          areaCode: data[index].areaCode,
-        })
-      );
-      dispatch(openModal({ type: "cm1105Modal" }));
-    } catch (err: any) {}
+  const fetchData65 = async () => {
+    try {
+      const { data } = await API.get(CM110065, {
+        params: { cuCode: selected.cuCode, areaCode: selected.areaCode },
+      });
+      if (data) {
+        setData(data);
+      } else {
+        setData([]);
+      }
+    } catch (err) {
+      setData([]);
+      console.log("CM1100 data search fetch error =======>", err);
+    }
   };
 
-  const handleOpenPopup2 = async () => {
-    if (selected) {
-      dispatch(
-        addCM1105({
+  const onClickUpdate = async () => {
+    if (Object.keys(selected).length > 0) {
+      if (areaCode !== "") {
+        openPopup({
           cuCode: selected.cuCode,
-          areaCode: selected.areaCode,
-        })
-      );
-      dispatch(openModal({ type: "cm1105Modal" }));
+          areaCode: areaCode,
+          status: "UPDATE",
+        });
+      }
+    } else {
+      toast.warning("please select row from grid", {
+        autoClose: 500,
+      });
     }
+  };
+
+  const onClickAdd = () => {
+    if (Object.keys(selected).length > 0 && areaCode !== "") {
+      openPopup({
+        cuCode: selected.cuCode,
+        areaCode: areaCode,
+        status: "INSERT",
+      });
+    } else {
+      openPopup({
+        cuCode: "",
+        areaCode: areaCode,
+        status: "INSERT",
+      });
+    }
+  };
+
+  const openPopup = (params: any) => {
+    dispatch(addCM1105(params));
+    dispatch(openModal({ type: "cm1105Modal" }));
   };
 
   const resetSearchForm = () => {
     reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
       cuType: dataCommonDic?.cuType[0].code,
       cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
       swCode: dataCommonDic?.swCode[0].code,
@@ -135,17 +168,30 @@ function CM1100Page({
       cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
       cuStae: dataCommonDic?.cuStae[0].code,
     });
+    setAreaCode(dataCommonDic?.areaCode[0].code);
   };
 
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomAreaCodePart
-          areaCode={areaCode}
-          dataCommonDic={dataCommonDic}
-          depthFullName={depthFullName}
-          register={register}
-        />
+        <FormGroup>
+          <p>{depthFullName}</p>
+          {ownAreaCode === "00" && (
+            <>
+              <p className="big">영업소</p>
+              <Select
+                value={areaCode}
+                onChange={(e) => setAreaCode(e.target.value)}
+              >
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+        </FormGroup>
 
         <div className="buttons">
           <Button
@@ -153,22 +199,14 @@ function CM1100Page({
             icon={<Plus />}
             style={{ marginRight: "5px" }}
             type="button"
-            onClick={() => {
-              dispatch(
-                addCM1105({
-                  cuCode: "",
-                  areaCode: "",
-                })
-              );
-              dispatch(openModal({ type: "cm1105Modal" }));
-            }}
+            onClick={onClickAdd}
           />
           <Button
             text="수정"
             icon={<Reset />}
             style={{ marginRight: "5px" }}
             type="button"
-            onClick={handleOpenPopup2}
+            onClick={onClickUpdate}
           />
           <Button text="삭제" icon={<Trash />} type="button" />
         </div>
@@ -176,177 +214,124 @@ function CM1100Page({
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper>
-            <div style={{ width: "90%" }}>
-              <Wrapper grid col={5}>
+            <div>
+              <FormGroup>
                 <Input
                   label="거래처명"
                   register={register("cuName")}
-                  kind={FieldKind.BORDER}
-                  minWidth={InputSize.i100}
+                  inputSize={InputSize.i150}
                 />
                 <Input
                   label="전화"
                   register={register("cuTel")}
-                  kind={FieldKind.BORDER}
+                  inputSize={InputSize.i150}
                 />
                 <Input
                   label="주소/비고"
                   register={register("cuAddr")}
-                  kind={FieldKind.BORDER}
+                  inputSize={InputSize.i150}
                 />
                 <Input
                   label="대표,계약자명,계약번호"
                   register={register("cuGongname")}
-                  kind={FieldKind.BORDER}
                   labelStyle={{
                     minWidth: "160px",
                   }}
+                  inputSize={InputSize.i150}
                 />
-              </Wrapper>
+              </FormGroup>
 
-              <Wrapper grid col={5}>
-                <FormGroup>
-                  <Label>거래구분</Label>
-                  <Select
-                    {...register("cuType")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
-                    {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
+              <FormGroup>
+                <Label>거래구분</Label>
+                <Select {...register("cuType")} width={InputSize.i150}>
+                  {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
 
-                <FormGroup>
-                  <Label>담당사원</Label>
-                  <Select
-                    {...register("swCode")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
-                    {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
+                <Label>담당사원</Label>
+                <Select {...register("swCode")} width={InputSize.i150}>
+                  {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
 
-                <FormGroup>
-                  <Label>지역분류</Label>
-                  <Select
-                    {...register("cuJyCode")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
-                    {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
+                <Label>지역분류</Label>
+                <Select {...register("cuJyCode")} width={InputSize.i150}>
+                  {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
 
-                <FormGroup>
-                  <Label
-                    style={{
-                      minWidth: "160px",
-                    }}
-                  >
-                    관리자
-                  </Label>
-                  <Select
-                    {...register("cuCustgubun")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
-                    {dataCommonDic?.cuCustgubun?.map(
-                      (obj: any, idx: number) => (
-                        <option key={idx} value={obj.code}>
-                          {obj.codeName}
-                        </option>
-                      )
-                    )}
-                  </Select>
-                </FormGroup>
+                <Label
+                  style={{
+                    minWidth: "160px",
+                  }}
+                >
+                  관리자
+                </Label>
+                <Select {...register("cuCustgubun")} width={InputSize.i150}>
+                  {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
 
-                <FormGroup>
-                  <Label>거래상태</Label>
-                  <Select
-                    {...register("cuStae")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
-                    {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-              </Wrapper>
+                <Label>거래상태</Label>
+                <Select {...register("cuStae")} width={InputSize.i150}>
+                  {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
 
-              <Wrapper grid col={5}>
-                <FormGroup>
-                  <Label>수금방법</Label>
-                  <Select
-                    {...register("cuSukumtype")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
-                    {dataCommonDic?.cuSukumtype?.map(
-                      (obj: any, idx: number) => (
-                        <option key={idx} value={obj.code}>
-                          {obj.codeName}
-                        </option>
-                      )
-                    )}
-                  </Select>
-                </FormGroup>
+              <FormGroup>
+                <Label>수금방법</Label>
+                <Select {...register("cuSukumtype")} width={InputSize.i150}>
+                  {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
 
-                <FormGroup>
-                  <Label>기타분류</Label>
-                  <Select
-                    {...register("cuEtOption")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
-                    {dataCommonDic?.cuEtOption?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
+                <Label>기타분류</Label>
+                <Select {...register("cuEtOption")} width={InputSize.i150}>
+                  {dataCommonDic?.cuEtOption?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
 
-                <FormGroup>
-                  <Label>공급사업자</Label>
-                  <Select
-                    {...register("cuGong")}
-                    kind={FieldKind.BORDER}
-                    style={{ width: "100%" }}
-                  >
-                    {dataCommonDic?.cuGong?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
+                <Label>공급사업자</Label>
+                <Select {...register("cuGong")} width={InputSize.i150}>
+                  {dataCommonDic?.cuGong?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
 
                 <Input
                   label="미수금액"
                   register={register("cuMisu")}
-                  kind={FieldKind.BORDER}
                   textAlign="right"
                   labelStyle={{
                     minWidth: "160px",
                   }}
+                  inputSize={InputSize.i150}
                 />
-              </Wrapper>
+              </FormGroup>
             </div>
             <div className="button-wrapper">
               <Button
@@ -383,11 +368,11 @@ function CM1100Page({
           columns={columns}
           fields={fields}
           setSelected={setSelected}
-          openPopup={handleOpenPopup}
-          areaCode={areaCode}
+          openPopup={onClickUpdate}
+          areaCode={ownAreaCode}
         />
 
-        <CM1100Footer />
+        <CM1100Footer data={data65} />
       </WrapperContent>
     </>
   );

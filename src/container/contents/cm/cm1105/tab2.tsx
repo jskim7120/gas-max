@@ -51,7 +51,7 @@ function Tab2({
         <Field>
           <FormGroup>
             <Label>조정기압력</Label>
-            <Select {...register("cuRh2o")} width={InputSize.i130}>
+            <Select {...register("cuRh2O")} width={InputSize.i130}>
               {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}

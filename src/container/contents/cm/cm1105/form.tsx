@@ -239,14 +239,14 @@ function FormCM1105() {
 
   const fetchData = async () => {
     try {
-      const { data } = await API.get(CM1105SEARCH, {
+      const { data: dataS } = await API.get(CM1105SEARCH, {
         params: {
           cuCode: cm1105.cuCode,
           areaCode: cm1105.areaCode,
         },
       });
 
-      setData(data);
+      setData(dataS);
     } catch (error) {
       console.log("Error fetching CM1105 data:", error);
     }
@@ -422,6 +422,7 @@ function FormCM1105() {
             label="거래처코드"
             register={register("cuCode")}
             inputSize={InputSize.i120}
+            readOnly
           />
           <Input
             label="거래처명(건물명)"

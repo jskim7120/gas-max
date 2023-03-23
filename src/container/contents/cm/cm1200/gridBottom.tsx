@@ -64,6 +64,7 @@ function GridTable({
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
+
       dispatch(
         addCM1105({
           cuCode: selectedUserInfo[itemIndex].cuCode,
