@@ -62,6 +62,9 @@ function CM1300({
   const [loading, setLoading] = useState(false);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
+  const [isAddBtnClicked2, setIsAddBtnClicked2] = useState<boolean>(false);
+  const [isCancelBtnDisabled2, setIsCancelBtnDisabled2] =
+    useState<boolean>(true);
   const [aptGubun, setAptGubun] = useState<any>([]);
   const [aptJyCode, setAptJyCode] = useState<any>([]);
   const [aptSwCode, setAptSwCode] = useState<any>([]);
@@ -183,6 +186,8 @@ function CM1300({
     setIsAddBtnClicked(true);
     setIsCancelBtnDisabled(false);
     formRef.current.resetForm("clear");
+    setData65([]);
+    setSelected65({});
   };
 
   const onClickDelete = () => {
@@ -283,6 +288,8 @@ function CM1300({
             setSelectedRowIndex={setSelectedRowIndex}
             setIsCancelBtnDisabled={setIsCancelBtnDisabled}
             setIsAddBtnClicked={setIsAddBtnClicked}
+            setIsCancelBtnDisabled2={setIsCancelBtnDisabled2}
+            setIsAddBtnClicked2={setIsAddBtnClicked2}
             fields={fields}
             columns={columns}
             style={{ height: `calc(100% - 73px)` }}
@@ -317,6 +324,12 @@ function CM1300({
             setSelectedRowIndex={setSelectedRowIndex65}
             ownAreaCode={ownAreaCode}
             fetchData={fetchData65}
+            aptCode={selected?.aptCode}
+            areaCode={areaCode}
+            isAddBtnClicked={isAddBtnClicked2}
+            setIsAddBtnClicked={setIsAddBtnClicked2}
+            isCancelBtnDisabled={isCancelBtnDisabled2}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled2}
           />
         </RightSide>
       </MainWrapper>

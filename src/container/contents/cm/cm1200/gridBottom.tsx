@@ -5,13 +5,13 @@ import { addCM1105 } from "app/state/modal/modalSlice";
 import { fieldsSelected, columnsSelected } from "./data";
 
 function GridTable({
-  selectedUserInfo,
+  data,
   areaCode,
-  setBuildingSelected,
+  setSelectedUserInfo,
 }: {
-  selectedUserInfo: any;
+  data: any;
   areaCode: string | undefined;
-  setBuildingSelected: Function;
+  setSelectedUserInfo: Function;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -28,7 +28,7 @@ function GridTable({
     gv.setDataSource(dp);
     dp.setFields(fieldsSelected);
     gv.setColumns(columnsSelected);
-    dp.setRows(selectedUserInfo);
+    dp.setRows(data);
     gv.setHeader({
       height: 35,
     });
@@ -65,13 +65,7 @@ function GridTable({
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
 
-      dispatch(
-        addCM1105({
-          cuCode: selectedUserInfo[itemIndex].cuCode,
-          areaCode: areaCode,
-        })
-      );
-      setBuildingSelected(true);
+      setSelectedUserInfo(data[itemIndex]);
     };
 
     return () => {
@@ -79,7 +73,7 @@ function GridTable({
       gv.destroy();
       dp.destroy();
     };
-  }, [selectedUserInfo]);
+  }, [data]);
 
   return (
     <div

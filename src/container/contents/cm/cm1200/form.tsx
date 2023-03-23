@@ -5,8 +5,6 @@ import GridBottom from "./gridBottom";
 import DaumAddress from "components/daum";
 import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
-import { SearchBtn } from "components/daum";
-import { MagnifyingGlass } from "components/allSvgIcon";
 import { PersonInfoText, BuildingInfoText } from "components/text";
 import Button from "components/button/button";
 import { Plus, Trash, Update } from "components/allSvgIcon";
@@ -48,6 +46,7 @@ const Form = React.forwardRef(
       setSelected,
       setSelectedRowIndex,
       areaCode,
+      ownAreaCode,
       setAreaCode,
       isAddBtnClicked,
       setIsAddBtnClicked,
@@ -60,6 +59,7 @@ const Form = React.forwardRef(
       setSelected: any;
       setSelectedRowIndex: any;
       areaCode: string;
+      ownAreaCode: string;
       setAreaCode: Function;
       isAddBtnClicked: boolean;
       setIsAddBtnClicked: Function;
@@ -67,9 +67,10 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
-    const [selectedUserInfo, setSelectedUserInfo] = useState<any[]>([]);
+    const [userInfo, setUserInfo] = useState<any[]>([]);
     const [selectedSupplyTab, setSelectedSupplyTab] = useState<any>({});
-    const [isBuildingSelected, setBuildingSelected] = useState(false);
+    const [selectedUserInfo, setSelectedUserInfo] = useState<any>({});
+
     const [tabId, setTabId] = useState<number>(0);
     const [addr, setAddress] = useState<string>("");
 
@@ -119,6 +120,8 @@ const Form = React.forwardRef(
       }
     }, [dataCommonDic]);
 
+    console.log("selectedUserInfo:", selectedUserInfo);
+
     useEffect(() => {
       if (selected && selected.cuCode && selected.areaCode) {
         setAreaCode(selected.areaCode);
@@ -127,7 +130,6 @@ const Form = React.forwardRef(
           areaCode: selected.areaCode,
           cuCode: selected.cuCode,
         });
-        setBuildingSelected(false);
       }
     }, [selected]);
 
@@ -150,6 +152,7 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       resetForm,
       crud,
+      setUserInfo,
     }));
 
     const fetchAdditionalData = async ({
@@ -166,9 +169,9 @@ const Form = React.forwardRef(
 
         if (data) {
           if (data?.userInfo) {
-            setSelectedUserInfo(data.userInfo);
+            setUserInfo(data.userInfo);
           } else {
-            setSelectedUserInfo([]);
+            setUserInfo([]);
           }
 
           if (data?.supplyTab) {
@@ -189,7 +192,7 @@ const Form = React.forwardRef(
             setCuSwCodeDic(data.cuSwCode);
           }
         } else {
-          setSelectedUserInfo([]);
+          setUserInfo([]);
           setSelectedSupplyTab({});
         }
       } catch (err) {
@@ -226,14 +229,9 @@ const Form = React.forwardRef(
         if (data && data?.tempCuCode[0]) {
           reset({ ...emptyObj, cuCode: data?.tempCuCode[0]?.tempCuCode });
         }
-        return;
       }
 
-      if (
-        type === "reset" &&
-        selected !== undefined &&
-        JSON.stringify(selected) !== "{}"
-      ) {
+      if (type === "reset" && Object.keys(selected).length > 0) {
         let tempData: any = { ...selected, ...selectedSupplyTab };
 
         reset({
@@ -241,40 +239,46 @@ const Form = React.forwardRef(
           cuAptnameYn: tempData?.cuAptnameYn === "Y",
           cuBaGageYn: tempData?.cuBaGageYn === "Y",
         });
-        return;
       }
+      setChkCuZipCode(false);
+      setChkCuRh20(false);
+      setChkCuRdanga(false);
+      setChkCuAnKum(false);
+      setChkCuMeterKum(false);
+      setChkCuPer(false);
+      setChkCuCdc(false);
+      setChkCuSukumtype(false);
+      setChkCuGumTurm(false);
+      setChkCuGumdate(false);
+      setChkCuCno(false);
     };
 
     const openPopupCM1105Insert = () => {
-      if (selected) {
-        dispatch(
-          addCM1105({
-            cuCode: selected?.cuCode ? selected?.cuCode : "",
-            areaCode: selected?.areaCode,
-            status: "INSERT",
-          })
-        );
-
-        dispatch(openModal({ type: "cm1105Modal" }));
+      if (Object.keys(selected).length > 0) {
+        openPopup({
+          cuCode: selected?.cuCode,
+          areaCode: selected?.areaCode,
+          status: "INSERT",
+        });
       } else {
-        toast.warning("no data", {
+        toast.warning("no selected data", {
           autoClose: 500,
         });
       }
     };
     const openPopupCM1105Update = () => {
-      if (isBuildingSelected === true) {
-        dispatch(
-          addCM1105({
-            status: "UPDATE",
-          })
-        );
-        dispatch(openModal({ type: "cm1105Modal" }));
-      } else {
-        toast.warning("please select building row", {
-          autoClose: 500,
+      if (Object.keys(selectedUserInfo).length > 0) {
+        openPopup({
+          cuCode: selectedUserInfo.cuCode,
+          areaCode: areaCode,
+          status: "UPDATE",
         });
       }
+    };
+
+    const openPopup = (params: any) => {
+      dispatch(addCM1105(params));
+      dispatch(openModal({ type: "cm1105Modal" }));
     };
 
     const crud = async (type: string | null) => {
@@ -312,6 +316,7 @@ const Form = React.forwardRef(
 
     const submit = async (data: ICM1200SEARCH) => {
       const formValues: any = getValues();
+
       formValues.areaCode = isAddBtnClicked ? areaCode : selected.areaCode;
 
       if (!chkCuZipCode) {
@@ -699,9 +704,9 @@ const Form = React.forwardRef(
           </div>
         </FormSectionTitle>
         <GridBottom
-          selectedUserInfo={selectedUserInfo}
-          areaCode={areaCode}
-          setBuildingSelected={setBuildingSelected}
+          data={userInfo}
+          areaCode={ownAreaCode}
+          setSelectedUserInfo={setSelectedUserInfo}
         />
       </>
     );

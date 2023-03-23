@@ -270,7 +270,10 @@ function Tab1({
             </Label>
 
             <Input
-              register={register("cuBaGageM3")}
+              type="number"
+              register={register("cuBaGageM3", {
+                valueAsNumber: true,
+              })}
               textAlign="right"
               inputSize={InputSize.i80}
               style={{ marginLeft: "0px" }}
@@ -278,9 +281,12 @@ function Tab1({
             <p>m3이하 일때</p>
             <Controller
               control={control}
-              {...register("cuBaGageKum")}
+              {...register("cuBaGageKum", {
+                valueAsNumber: true,
+              })}
               render={({ field: { onChange, value, name } }) => (
                 <Input
+                  type="number"
                   value={value}
                   onChange={onChange}
                   name={name}

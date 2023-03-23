@@ -59,10 +59,18 @@ function Tab2({
         <Input register={register("tankMakeSno1")} inputSize={InputSize.i110} />
       ),
       5: (
-        <Input
-          maxLength="7"
-          register={register("tankMakeDate1")}
-          inputSize={InputSize.i110}
+        <Controller
+          control={control}
+          {...register("tankMakeDate1")}
+          render={({ field: { onChange, value, name } }) => (
+            <CustomDatePicker
+              value={value}
+              onChange={onChange}
+              name={name}
+              showYearDropdown
+              style={{ width: "110px" }}
+            />
+          )}
         />
       ),
       6: <Input register={register("tankRcv1")} inputSize={InputSize.i110} />,
@@ -162,9 +170,18 @@ function Tab2({
         <Input register={register("tankMakeSno2")} inputSize={InputSize.i110} />
       ),
       5: (
-        <Input
-          register={register("tankMakeDate2")}
-          inputSize={InputSize.i110}
+        <Controller
+          control={control}
+          {...register("tankMakeDate2")}
+          render={({ field: { onChange, value, name } }) => (
+            <CustomDatePicker
+              value={value}
+              onChange={onChange}
+              name={name}
+              showYearDropdown
+              style={{ width: "110px" }}
+            />
+          )}
         />
       ),
       6: <Input register={register("tankRcv2")} inputSize={InputSize.i110} />,

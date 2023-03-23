@@ -1,14 +1,14 @@
 export interface ICM1105SEARCH {
-  cuBaGageKum: number | string;
-  cuBaGageM3: number | string;
+  cuBaGageKum: number | undefined;
+  cuBaGageM3: number | undefined;
   cuBaGageYn: string;
 
   //-----------
-  areaCode: string;
+  // areaCode: string;
   areaName: string;
   cuAddr1: string;
   cuAddr2: string;
-  cuAnkum: number | null; //2nd tab
+  cuAnkum: number | undefined; //2nd tab
   cuBarcode: string;
   cuBigo1: string;
   cuBigo2: string;
@@ -22,9 +22,9 @@ export interface ICM1105SEARCH {
   cuCashpayMemo: string;
   cuCashpayNo: string;
   cuCashpayYn: string;
-  cuCdc: number | null; // 2nd tab
+  cuCdc: number | undefined; // 2nd tab
   cuCircuitDate: string;
-  cuCmisu: number | null; //top
+  cuCmisu: number | undefined; //top
   cuCno: string;
   cuCode: string;
   cuCustgubun: string;
@@ -32,7 +32,7 @@ export interface ICM1105SEARCH {
   cuCutype: string;
   cuCutypeName: string;
   cuCylinderName: string;
-  cuCylinderQty: string;
+  cuCylinderQty: number | undefined;
   cuCylinderType: string;
   cuDepartment: string;
   cuDepartment2: string;
@@ -53,9 +53,9 @@ export interface ICM1105SEARCH {
   cuHdate: string;
   cuHp: string;
   cuJangbuYn: string;
-  cuJdc: string; //top
-  //cuJdcName: number | null;
-  cuJmisu: number | null; //top
+  cuJdc: number | undefined; //top
+  //cuJdcName: number | undefined;
+  cuJmisu: number | undefined; //top
   cuJongmok: string;
   cuJuminno: string;
   cuJyCode: string;
@@ -69,23 +69,23 @@ export interface ICM1105SEARCH {
   cuMeterFetureName: string;
   cuMeterLr: string;
   cuMeterLrName: string;
-  cuMeterM3: number | null; //2nd tab
+  cuMeterM3: number | undefined; //2nd tab
   cuMeterNo: string;
   cuMeterPalceName: string;
   cuMeterPlace: string;
   cuMeterTurm: string;
   cuMeterType: string;
-  cuMeterkum: number | null; //2nd tab
+  cuMeterkum: number | undefined; //2nd tab
   cuName: string;
   cuNo: string;
   cuNoType: string;
   cuNoTypeName: string;
   cuPdate: string;
-  cuPer: number | null;
+  cuPer: number | undefined;
   cuPipelineYn: string;
   cuPipelineYnNamm: string;
   cuRCode: string;
-  cuRdanga: number | null;
+  cuRdanga: number | undefined;
   cuRdangaSign: string;
   cuRdangaType: string;
   cuRequestType: string;
@@ -112,7 +112,7 @@ export interface ICM1105SEARCH {
   cuSekumMmName: string;
   cuSekumyn: string;
   cuSisuldate: string;
-  cuSisulkum: number | null;
+  cuSisulkum: number | undefined;
   cuSisulyn: string;
   cuSmsDate: string;
   cuSmsHp: string;
@@ -131,7 +131,7 @@ export interface ICM1105SEARCH {
   cuTel22: string;
   cuTel23: string;
   cuTel24: string;
-  cuTongkum: number | null;
+  cuTongkum: number | undefined;
   cuTransmCd: string;
   cuTransmCuCd: string;
   cuType: string;
@@ -166,7 +166,7 @@ export interface ICM1105SEARCH {
   gasifySno2: string;
   gasifyVol1: string;
   gasifyVol2: string;
-  seq: number | null;
+  seq: number | undefined;
   tankCuCd1: string;
   tankCuCd2: string;
   tankFirstDate1: string;
@@ -179,8 +179,8 @@ export interface ICM1105SEARCH {
   tankMakeDate2: string;
   tankMakeSno1: string;
   tankMakeSno2: string;
-  tankMax1: string;
-  tankMax2: string;
+  tankMax1: number | undefined;
+  tankMax2: number | undefined;
   tankOutsideDate1: string;
   tankOutsideDate2: string;
   tankRcv1: string;
@@ -189,9 +189,9 @@ export interface ICM1105SEARCH {
   tankSno2: string;
   tankTransmCd1: string;
   tankTransmCd2: string;
-  tankVol1: string;
-  tankVol2: string;
-  percentage: number | null;
+  tankVol1: number | undefined;
+  tankVol2: number | undefined;
+  percentage: number | undefined;
   //cms: ICMS;
   //virtualAccount: IVIRTUALACCOUNT;
   CMSacctno: string; //davhtsaj bn
@@ -231,15 +231,15 @@ interface IVIRTUALACCOUNT {
 }
 
 export const emptyObj = {
-  cuBaGageKum: "",
-  cuBaGageM3: "",
+  cuBaGageKum: undefined,
+  cuBaGageM3: undefined,
   cuBaGageYn: "",
   //--------------------
-  areaCode: "",
+  // areaCode: "",
   areaName: "",
   cuAddr1: "",
   cuAddr2: "",
-  cuAnkum: null, // 2nd tab
+  cuAnkum: undefined, // 2nd tab
   cuBarcode: "",
   cuBigo1: "",
   cuBigo2: "",
@@ -253,9 +253,9 @@ export const emptyObj = {
   cuCashpayMemo: "",
   cuCashpayNo: "",
   cuCashpayYn: "",
-  cuCdc: null, // 2nd tab
+  cuCdc: undefined, // 2nd tab
   cuCircuitDate: "",
-  cuCmisu: null, //top
+  cuCmisu: undefined, //top
   cuCno: "",
   //cuCode: "",
   cuCustgubun: "",
@@ -263,7 +263,7 @@ export const emptyObj = {
   cuCutype: "",
   cuCutypeName: "",
   cuCylinderName: "",
-  cuCylinderQty: "",
+  cuCylinderQty: undefined,
   cuCylinderType: "",
   cuDepartment: "",
   cuDepartment2: "",
@@ -284,9 +284,9 @@ export const emptyObj = {
   cuHdate: "",
   cuHp: "",
   cuJangbuYn: "",
-  cuJdc: "",
+  cuJdc: undefined,
   //cuJdcName: "",
-  cuJmisu: null,
+  cuJmisu: undefined,
   cuJongmok: "",
   cuJuminno: "",
   cuJyCode: "",
@@ -300,23 +300,23 @@ export const emptyObj = {
   cuMeterFetureName: "",
   cuMeterLr: "",
   cuMeterLrName: "",
-  cuMeterM3: null,
+  cuMeterM3: undefined,
   cuMeterNo: "",
   cuMeterPalceName: "",
   cuMeterPlace: "",
   cuMeterTurm: "",
   cuMeterType: "",
-  cuMeterkum: null,
+  cuMeterkum: undefined,
   cuName: "",
   cuNo: "",
   cuNoType: "",
   cuNoTypeName: "",
   cuPdate: "",
-  cuPer: null,
+  cuPer: undefined,
   cuPipelineYn: "",
   cuPipelineYnNamm: "",
   cuRCode: "",
-  cuRdanga: null,
+  cuRdanga: undefined,
   cuRdangaSign: "",
   cuRdangaType: "",
   cuRequestType: "",
@@ -343,7 +343,7 @@ export const emptyObj = {
   cuSekumMmName: "",
   cuSekumyn: "",
   cuSisuldate: "",
-  cuSisulkum: null,
+  cuSisulkum: undefined,
   cuSisulyn: "",
   cuSmsDate: "",
   cuSmsHp: "",
@@ -362,7 +362,7 @@ export const emptyObj = {
   cuTel22: "",
   cuTel23: "",
   cuTel24: "",
-  cuTongkum: null,
+  cuTongkum: undefined,
   cuTransmCd: "",
   cuTransmCuCd: "",
   cuType: "",
@@ -396,7 +396,7 @@ export const emptyObj = {
   gasifySno2: "",
   gasifyVol1: "",
   gasifyVol2: "",
-  seq: null,
+  seq: undefined,
   tankCuCd1: "",
   tankCuCd2: "",
   tankFirstDate1: "",
@@ -409,8 +409,8 @@ export const emptyObj = {
   tankMakeDate2: "",
   tankMakeSno1: "",
   tankMakeSno2: "",
-  tankMax1: "",
-  tankMax2: "",
+  tankMax1: undefined,
+  tankMax2: undefined,
   tankOutsideDate1: "",
   tankOutsideDate2: "",
   tankRcv1: "",
@@ -419,9 +419,9 @@ export const emptyObj = {
   tankSno2: "",
   tankTransmCd1: "",
   tankTransmCd2: "",
-  tankVol1: "",
-  tankVol2: "",
-  percentage: null,
+  tankVol1: undefined,
+  tankVol2: undefined,
+  percentage: undefined,
   CMSacctno: "", //davhtsaj bn
   appdt: "",
   CMSbankName: "", //davhtsaj bn
