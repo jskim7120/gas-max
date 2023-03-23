@@ -58,7 +58,6 @@ function CC1100({
 
   useEffect(() => {
     if (dataCommonDic) {
-      console.log("dataCommonDic===>", dataCommonDic);
       resetSearchForm();
     }
   }, [dataCommonDic]);
