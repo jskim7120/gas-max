@@ -264,6 +264,11 @@ const Form = React.forwardRef(
     };
     const openPopupCM1105Update = () => {
       if (isBuildingSelected === true) {
+        dispatch(
+          addCM1105({
+            status: "UPDATE",
+          })
+        );
         dispatch(openModal({ type: "cm1105Modal" }));
       } else {
         toast.warning("please select building row", {
@@ -695,7 +700,7 @@ const Form = React.forwardRef(
         </FormSectionTitle>
         <GridBottom
           selectedUserInfo={selectedUserInfo}
-          areaCode={selected?.areaCode}
+          areaCode={areaCode}
           setBuildingSelected={setBuildingSelected}
         />
       </>

@@ -13,7 +13,6 @@ import {
 } from "../../commonStyle";
 import { PersonInfoText } from "components/text";
 import { IPT1200SEARCH } from "./model";
-import { IPT1200THIRD } from "./thirdModel";
 import Button from "components/button/button";
 import { columns, fields } from "./data";
 import { columnsSecond, fieldsSecond } from "./secondData";
@@ -50,7 +49,12 @@ function PT1200({
   const [data, setData] = useState([]);
   const [dataSecond, setDataSecond] = useState([]);
   const [dataThird, setDataThird] = useState([]);
+  const [secondGridSelected, setSecondGridSelected] = useState<any>({});
   const [selected, setSelected] = useState<any>({});
+  const [totMisukum, setTotMisukun] = useState(0);
+  const [totSukum, setTotSukum] = useState(0);
+  const [totDc, setTotDc] = useState(0);
+  const [sCheck, setSCheck] = useState(false);
   const [data65, setData65] = useState([]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const dispatch = useDispatch();
@@ -61,17 +65,36 @@ function PT1200({
   });
 
   useEffect(() => {
+    if (dataCommonDic) {
+      fetchDataSearch1({
+        areaCode: dataCommonDic.areaCode[0].code,
+        sCheck: "N",
+        sCuName: "",
+      });
+      resetSearchForm();
+    }
+  }, [dataCommonDic]);
+  useEffect(() => {
     fetch65Data(selected);
   }, [selected]);
 
   useEffect(() => {
-    console.log("my data common dictionary", dataCommonDic);
-    if (dataCommonDic !== undefined && dataCommonDic) {
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-      });
+    if (!sCheck) {
+      resetCuName();
     }
-  }, [dataCommonDic]);
+    fetchDataSearch1({
+      areaCode: getValues("areaCode"),
+      sCheck: sCheck,
+      sCuName: getValues("sCuName"),
+    });
+  }, [sCheck]);
+
+  const calcTotal = async (fieldName: string, data: []) => {
+    let total = 0;
+    data.forEach((obj: any) => (total += obj[fieldName] ?? 0));
+    console.log("Im summing all of them ==", total, "fieldName", fieldName);
+    return total;
+  };
 
   const fetch65Data = async (params: any) => {
     try {
@@ -86,16 +109,33 @@ function PT1200({
       console.log("PT120065 data search fetch error =======>", err);
     }
   };
-
+  const resetSearchForm = () => {
+    reset({
+      areaCode: dataCommonDic?.areaCode[0].code,
+      sGsdateF: dataCommonDic?.sGsdateF[0].code,
+      sGsdateT: dataCommonDic?.sGsdateT[0].code,
+    });
+  };
+  const resetCuName = () => {
+    reset((formValues) => ({
+      ...formValues,
+      sCuName: "",
+    }));
+  };
   const fetchDataSearch1 = async (params: any) => {
     try {
       setLoading1(true);
+      if (params.sCheck) {
+        params.sCheck = "Y";
+      } else {
+        params.sCheck = "N";
+      }
       const { data } = await API.get(PT1200SEARCH, { params: params });
-
       if (data) {
         setData(data);
         setLoading1(false);
         setSelectedRowIndex(0);
+        setTotMisukun(await calcTotal("cuCmisu", data));
       }
     } catch (err) {
       console.log("PT1200 data search fetch error =======>", err);
@@ -113,6 +153,8 @@ function PT1200({
         setDataSecond(data);
         setLoading2(false);
         setSelectedRowIndex(0);
+        setTotSukum(await calcTotal("gsKumack", data));
+        setTotDc(await calcTotal("gsDc", data));
       }
     } catch (err) {
       console.log("PT110062 data search fetch error =======>", err);
@@ -132,23 +174,19 @@ function PT1200({
     fetchDataSearch2(data);
   };
 
-  const { register, handleSubmit, control, reset } = useForm<IPT1200SEARCH>({
-    mode: "onSubmit",
-  });
+  const { register, handleSubmit, control, reset, getValues } =
+    useForm<IPT1200SEARCH>({
+      mode: "onSubmit",
+    });
 
   const openPopupPT1205 = async () => {
-    console.log(
-      selected.areaCode,
-      "WHAAT modal",
-      selected.cuCode,
-      selected.cuName
-    );
     dispatch(openModal({ type: "pt1205Modal" }));
     dispatch(
       pt1205Popup({
         areaCode: selected.areaCode,
         cuCode: selected.cuCode,
         cuName: selected.cuName,
+        cuCmisu: selected.cuCmisu,
       })
     );
   };
@@ -172,7 +210,7 @@ function PT1200({
         }}
       >
         <Button text="선택 수금" icon={<Plus />} onClick={openPopupPT1205} />
-        <Button text="수금" icon={<Trash />} onClick={() => {}} />
+        <Button text="수금" icon={<Plus />} onClick={() => {}} />
         <Button
           text="저장"
           icon={<Update />}
@@ -208,30 +246,10 @@ function PT1200({
                     title="조건검색"
                     rtl
                     style={{ width: "80px" }}
+                    onChange={(e: any) => setSCheck(e.target.checked)}
                   />
                 </FormGroup>
               </Field>
-
-              <div className="buttons">
-                <Button
-                  text="검색"
-                  icon={!loading1 && <MagnifyingGlass />}
-                  color={ButtonColor.DANGER}
-                  type="submit"
-                  loader={
-                    loading1 && (
-                      <>
-                        <Loader
-                          color="white"
-                          size={13}
-                          borderWidth="2px"
-                          style={{ marginRight: "10px" }}
-                        />
-                      </>
-                    )
-                  }
-                />
-              </div>
             </SearchWrapper>
           </form>
 
@@ -259,12 +277,9 @@ function PT1200({
             onSubmit={handleSubmit(submitSearch2)}
             style={{ minWidth: "925px" }}
           >
-            <SearchWrapper
-              className="h35"
-              style={{ borderTop: "2px solid #707070" }}
-            ></SearchWrapper>
             <SearchWrapper className="h35">
               <div className="buttons">
+                <PersonInfoText text="수금현황" />
                 <Controller
                   control={control}
                   {...register("sGsdateF")}
@@ -306,6 +321,9 @@ function PT1200({
                   }
                 />
               </div>
+              <div className="buttons">
+                <Button text="수금취소" icon={<Trash />} />
+              </div>
             </SearchWrapper>
           </form>
 
@@ -314,7 +332,7 @@ function PT1200({
             data={dataSecond.length > 0 && dataSecond}
             columns={columnsThird}
             fields={fieldsThird}
-            setSelected={setSelected}
+            setSelected={setSecondGridSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: "43%", minWidth: "925px" }}
@@ -331,6 +349,9 @@ function PT1200({
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
+            totMisukum={totMisukum}
+            totSukum={totSukum}
+            totDc={totDc}
           />
         </RightSide>
       </MainWrapper>

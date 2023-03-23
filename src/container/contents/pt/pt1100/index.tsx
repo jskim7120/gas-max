@@ -4,12 +4,7 @@ import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { useDispatch } from "app/store";
 import { openModal, ptAreaCode } from "app/state/modal/modalSlice";
-import {
-  PT1100SEARCH,
-  GR1500SEARCH2,
-  PT1100SEARCH62,
-  PT110065,
-} from "app/path";
+import { PT1100SEARCH, PT1100SEARCH62, PT110065 } from "app/path";
 import {
   SearchWrapper,
   MainWrapper,
@@ -18,7 +13,6 @@ import {
 } from "../../commonStyle";
 import { PersonInfoText } from "components/text";
 import { IPT1100SEARCH } from "./model";
-import { IPT1100THIRD } from "./thirdModel";
 import Button from "components/button/button";
 import { columns, fields } from "./data";
 import { columnsSecond, fieldsSecond } from "./secondData";
@@ -29,9 +23,9 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import {
   MagnifyingGlass,
   Plus,
-  Trash,
   Update,
   Reset,
+  Trash,
 } from "components/allSvgIcon";
 import CheckBox from "components/checkbox";
 import Form from "./form";
@@ -43,20 +37,24 @@ import CustomTopPart from "container/contents/customTopPart";
 function PT1100({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const [loading1, setLoading1] = useState(false);
   const [loading2, setLoading2] = useState(false);
   const [data, setData] = useState([]);
   const [dataSecond, setDataSecond] = useState([]);
-  const [dataThird, setDataThird] = useState([]);
   const [selected, setSelected] = useState<any>({});
+  const [secondGridSelected, setSecondGridSelected] = useState<any>({});
   const [data65, setData65] = useState([]);
+  const [totMisukum, setTotMisukun] = useState(0);
+  const [totSukum, setTotSukum] = useState(0);
+  const [totDc, setTotDc] = useState(0);
+  const [sCheck, setSCheck] = useState(false);
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const dispatch = useDispatch();
 
@@ -66,17 +64,29 @@ function PT1100({
   });
 
   useEffect(() => {
+    if (dataCommonDic) {
+      fetchDataSearch1({
+        areaCode: dataCommonDic.areaCode[0].code,
+        sCheck: "N",
+        sCuName: "",
+      });
+      resetSearchForm();
+    }
+  }, [dataCommonDic]);
+  useEffect(() => {
     fetch65Data(selected);
   }, [selected]);
 
   useEffect(() => {
-    console.log(dataCommonDic, "PZ");
-    if (dataCommonDic !== undefined && dataCommonDic) {
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-      });
+    if (!sCheck) {
+      resetCuName();
     }
-  }, [dataCommonDic]);
+    fetchDataSearch1({
+      areaCode: getValues("areaCode"),
+      sCheck: sCheck,
+      sCuName: getValues("sCuName"),
+    });
+  }, [sCheck]);
 
   const fetch65Data = async (params: any) => {
     try {
@@ -95,16 +105,28 @@ function PT1100({
   const fetchDataSearch1 = async (params: any) => {
     try {
       setLoading1(true);
+      if (params.sCheck) {
+        params.sCheck = "Y";
+      } else {
+        params.sCheck = "N";
+      }
       const { data } = await API.get(PT1100SEARCH, { params: params });
-
       if (data) {
         setData(data);
         setLoading1(false);
         setSelectedRowIndex(0);
+        setTotMisukun(await calcTotal("cuJmisu", data));
       }
     } catch (err) {
       console.log("PT1100 data search fetch error =======>", err);
     }
+  };
+
+  const calcTotal = async (fieldName: string, data: []) => {
+    let total = 0;
+    data.forEach((obj: any) => (total += obj[fieldName] ?? 0));
+    console.log("Im summing all of them ==", total, "fieldName", fieldName);
+    return total;
   };
 
   const fetchDataSearch2 = async (params: any) => {
@@ -118,28 +140,22 @@ function PT1100({
         setDataSecond(data);
         setLoading2(false);
         setSelectedRowIndex(0);
+        setTotSukum(await calcTotal("msKumack", data));
+        setTotDc(await calcTotal("msDc", data));
       }
     } catch (err) {
       console.log("PT110062 data search fetch error =======>", err);
     }
   };
 
-  const submitSearch1 = (data: IPT1100SEARCH) => {
-    if (data.sCheck) {
-      data.sCheck = "Y";
-    } else {
-      data.sCheck = "N";
-    }
-    fetchDataSearch1(data);
-  };
-
   const submitSearch2 = (data: IPT1100SEARCH) => {
     fetchDataSearch2(data);
   };
 
-  const { register, handleSubmit, control, reset } = useForm<IPT1100SEARCH>({
-    mode: "onSubmit",
-  });
+  const { register, handleSubmit, control, reset, getValues } =
+    useForm<IPT1100SEARCH>({
+      mode: "onSubmit",
+    });
 
   const openPopupPT1105 = async () => {
     dispatch(openModal({ type: "pt1105Modal" }));
@@ -152,13 +168,28 @@ function PT1100({
     );
   };
 
+  const resetCuName = () => {
+    reset((formValues) => ({
+      ...formValues,
+      sCuName: "",
+    }));
+  };
+
+  const resetSearchForm = () => {
+    reset({
+      areaCode: dataCommonDic?.areaCode[0].code,
+      sMsdateF: dataCommonDic?.sMsdateF[0].code,
+      sMsdateT: dataCommonDic?.sMsdateT[0].code,
+    });
+  };
+
   return (
     <>
       <CustomTopPart
         depthFullName={depthFullName}
         register={register}
         dataCommonDic={dataCommonDic}
-        areaCode={areaCode}
+        areaCode={ownAreaCode}
       />
       <div
         className="buttons"
@@ -171,7 +202,7 @@ function PT1100({
         }}
       >
         <Button text="선택 수금" icon={<Plus />} onClick={openPopupPT1105} />
-        <Button text="수금" icon={<Trash />} onClick={() => {}} />
+        <Button text="수금" icon={<Plus />} onClick={() => {}} />
         <Button
           text="저장"
           icon={<Update />}
@@ -187,10 +218,7 @@ function PT1100({
       </div>
       <MainWrapper>
         <LeftSide>
-          <form
-            onSubmit={handleSubmit(submitSearch1)}
-            style={{ minWidth: "925px" }}
-          >
+          <form style={{ minWidth: "1000px" }}>
             <SearchWrapper className="h35">
               <Field flex>
                 <PersonInfoText text="미수현황" />
@@ -207,35 +235,15 @@ function PT1100({
                     title="조건검색"
                     rtl
                     style={{ width: "80px" }}
+                    onChange={(e: any) => setSCheck(e.target.checked)}
                   />
                 </FormGroup>
               </Field>
-
-              <div className="buttons">
-                <Button
-                  text="검색"
-                  icon={!loading1 && <MagnifyingGlass />}
-                  color={ButtonColor.DANGER}
-                  type="submit"
-                  loader={
-                    loading1 && (
-                      <>
-                        <Loader
-                          color="white"
-                          size={13}
-                          borderWidth="2px"
-                          style={{ marginRight: "10px" }}
-                        />
-                      </>
-                    )
-                  }
-                />
-              </div>
             </SearchWrapper>
           </form>
 
           <Grid
-            areaCode={areaCode}
+            areaCode={ownAreaCode}
             data={data.length > 0 && data}
             columns={columns}
             fields={fields}
@@ -245,7 +253,7 @@ function PT1100({
             style={{ height: "45%", minWidth: "925px" }}
           />
           <Grid
-            areaCode={areaCode}
+            areaCode={ownAreaCode}
             data={data65.length > 0 && data65}
             columns={columnsSecond}
             fields={fieldsSecond}
@@ -302,15 +310,18 @@ function PT1100({
                   }
                 />
               </div>
+              <div className="buttons">
+                <Button text="수금취소" icon={<Trash />} />
+              </div>
             </SearchWrapper>
           </form>
 
           <Grid
-            areaCode={areaCode}
+            areaCode={ownAreaCode}
             data={dataSecond.length > 0 && dataSecond}
             columns={columnsThird}
             fields={fieldsThird}
-            setSelected={setSelected}
+            setSelected={setSecondGridSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: "43%", minWidth: "925px" }}
@@ -327,6 +338,9 @@ function PT1100({
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
+            totMisukum={totMisukum}
+            totSukum={totSukum}
+            totDc={totDc}
           />
         </RightSide>
       </MainWrapper>

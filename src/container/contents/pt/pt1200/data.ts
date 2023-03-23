@@ -18,7 +18,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuJmisu",
+    fieldName: "cuCmisu",
     dataType: ValueType.TEXT,
   },
   {
@@ -27,10 +27,6 @@ export const fields = [
   },
   {
     fieldName: "suDate",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuJangbuYn",
     dataType: ValueType.TEXT,
   },
 ];
@@ -73,12 +69,23 @@ export const columns = [
     },
   },
   {
-    name: "cuJmisu",
-    fieldName: "cuJmisu",
+    name: "cuCmisu",
+    fieldName: "cuCmisu",
     type: "data",
     width: "100",
     header: {
       text: "미수금액",
+    },
+    styleName: "rg-right-column",
+  },
+
+  {
+    name: "suDate",
+    fieldName: "suDate",
+    type: "data",
+    width: "80",
+    header: {
+      text: "최종검침일",
     },
   },
   {
@@ -88,24 +95,6 @@ export const columns = [
     width: "100",
     header: {
       text: "담당사원",
-    },
-  },
-  {
-    name: "suDate",
-    fieldName: "suDate",
-    type: "data",
-    width: "80",
-    header: {
-      text: "최종수금일",
-    },
-  },
-  {
-    name: "cuJangbuYn",
-    fieldName: "cuJangbuYn",
-    type: "data",
-    width: "60",
-    header: {
-      text: "장부Y/N",
     },
   },
 ];

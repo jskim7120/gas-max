@@ -14,6 +14,8 @@ const FORMPT1205 = React.forwardRef(
       setSelectedRowIndex,
       setSelected,
       dataCommonDic,
+      totalGuAmount,
+      cuCmisu,
     }: {
       selected: any;
       setData: Function;
@@ -21,6 +23,8 @@ const FORMPT1205 = React.forwardRef(
       setSelectedRowIndex: Function;
       setSelected: Function;
       dataCommonDic: any;
+      totalGuAmount: number;
+      cuCmisu?: number;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -51,7 +55,6 @@ const FORMPT1205 = React.forwardRef(
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
           }
-          console.log("WTTTGF ", newData);
           reset(newData);
         }
       }
@@ -80,9 +83,11 @@ const FORMPT1205 = React.forwardRef(
           <Field>
             <Input
               label="미수금액"
-              register={register("gjMisu")}
+              register={register("cuCmisu")}
               kind={FieldKind.BORDER}
               inputSize={InputSize.i175}
+              value={cuCmisu}
+              textAlign={"right"}
             />
           </Field>
           <Field>
@@ -91,6 +96,8 @@ const FORMPT1205 = React.forwardRef(
               register={register("guChkamt")}
               kind={FieldKind.BORDER}
               inputSize={InputSize.i175}
+              value={totalGuAmount}
+              textAlign={"right"}
             />
           </Field>
         </div>
@@ -102,6 +109,8 @@ const FORMPT1205 = React.forwardRef(
               register={register("gsDc")}
               kind={FieldKind.BORDER}
               inputSize={InputSize.i175}
+              value={0}
+              textAlign={"right"}
             />
           </Field>
         </FormGroup>
@@ -109,10 +118,12 @@ const FORMPT1205 = React.forwardRef(
         <FormGroup>
           <Field>
             <Input
-              label="수  금  액"
+              label="수 금 액"
               register={register("gsKumack")}
               kind={FieldKind.BORDER}
               inputSize={InputSize.i175}
+              value={totalGuAmount}
+              textAlign={"right"}
             />
           </Field>
         </FormGroup>
@@ -124,6 +135,8 @@ const FORMPT1205 = React.forwardRef(
               register={register("gsJanack")}
               kind={FieldKind.BORDER}
               inputSize={InputSize.i175}
+              value={cuCmisu && cuCmisu - totalGuAmount}
+              textAlign={"right"}
             />
           </Field>
         </FormGroup>

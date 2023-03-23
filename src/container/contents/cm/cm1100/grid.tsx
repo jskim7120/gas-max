@@ -1,7 +1,5 @@
-import { useDispatch } from "app/store";
 import React, { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { addCM1105 } from "app/state/modal/modalSlice";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -26,7 +24,7 @@ function Grid({
   areaCode: string;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
+
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
     dp = new LocalDataProvider(true);
@@ -55,24 +53,18 @@ function Grid({
     });
 
     if (areaCode !== "00") {
-      // gv.removeColumn("areaCode");
+      gv.removeColumn("areaCode");
     }
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected(data[itemIndex]);
-      dispatch(
-        addCM1105({
-          cuCode: data[itemIndex].cuCode,
-          areaCode: data[itemIndex].areaCode,
-        })
-      );
     };
 
     gv.onCellDblClicked = function (grid: any, e: any) {
-      const itemIndex: any = e.dataRow;
-      openPopup && openPopup(itemIndex);
+      openPopup && openPopup();
     };
+
     return () => {
       dp.clearRows();
       gv.destroy();

@@ -90,7 +90,7 @@ export interface ICM1105SEARCH {
   cuRdangaType: string;
   cuRequestType: string;
   cuRequestTypeName: string;
-  cuRh2o: string;
+  cuRh2O: string;
   cuRoundType: string;
   cuRoundTypeName: string;
   cuSaddr1: string;

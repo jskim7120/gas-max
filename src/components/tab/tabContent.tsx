@@ -88,7 +88,11 @@ export const getContent = (
       return <EN2000 depthFullName={depthFullName} menuId={id} />;
     case "CM1100":
       return (
-        <CM1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CM1100
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CM1200":
       return (
@@ -257,7 +261,11 @@ export const getContent = (
 
     case "PT1100":
       return (
-        <PT1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <PT1100
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "PT1200":
       return (
