@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { columns, fields } from "./data";
 import Button from "components/button/button";
-import { ButtonColor, ButtonType } from "components/componentsType";
+import { ButtonType } from "components/componentsType";
 import { Notebook, Edit2, WhiteCloseCircle } from "components/allSvgIcon";
 import { useDispatch } from "app/store";
 import { openModal } from "app/state/modal/modalSlice";
@@ -17,8 +17,10 @@ function Tab1({ data }: { data: any }) {
   const realgridElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (data !== undefined) {
+    if (Object.keys(data).length > 0 && data?.tab1) {
       setGridData(data.tab1);
+    } else {
+      setGridData([]);
     }
   }, [data?.tab1]);
 
@@ -46,8 +48,6 @@ function Tab1({ data }: { data: any }) {
     gv.displayOptions._selectionStyle = "singleRow";
     gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
-
-    // gv.setCurrent({});
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;

@@ -40,7 +40,7 @@ function CM1100Page({
   );
 
   const [data, setData] = useState<any>([]);
-  const [data65, setData65] = useState<any>([]);
+  const [data65, setData65] = useState<any>({});
   const [selected, setSelected] = useState<any>({});
   const [areaCode, setAreaCode] = useState("");
   const [loading, setLoading] = useState(false);
@@ -68,6 +68,7 @@ function CM1100Page({
   useEffect(() => {
     if (Object.keys(selected).length > 0) {
       setAreaCode(selected.areaCode);
+      fetchData65();
     }
   }, [selected]);
 
@@ -98,24 +99,18 @@ function CM1100Page({
     }
   };
 
-  // useEffect(() => {
-  //   if (cm1105.areaCode && cm1105.cuCode) {
-  //     fetchData();
-  //   }
-  // }, [cm1105.areaCode, cm1105.cuCode]);
-
   const fetchData65 = async () => {
     try {
-      const { data } = await API.get(CM110065, {
+      const { data: dataS65 } = await API.get(CM110065, {
         params: { cuCode: selected.cuCode, areaCode: selected.areaCode },
       });
-      if (data) {
-        setData(data);
+      if (Object.keys(dataS65).length > 0) {
+        setData65(dataS65);
       } else {
-        setData([]);
+        setData65({});
       }
     } catch (err) {
-      setData([]);
+      setData65({});
       console.log("CM1100 data search fetch error =======>", err);
     }
   };

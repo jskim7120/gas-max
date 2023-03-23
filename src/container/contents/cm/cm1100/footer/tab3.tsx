@@ -6,15 +6,9 @@ import { TabTable } from "./style";
 import { ICM110065 } from "./model";
 
 function Tab2({ data }: { data: any }) {
-  const submit = async (data: ICM110065) => {};
+  // const submit = async (data: ICM110065) => {};
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    getValues,
-  } = useForm<ICM110065>();
+  const { register, handleSubmit, reset, getValues } = useForm<ICM110065>();
 
   useEffect(() => {
     if (
@@ -50,16 +44,8 @@ function Tab2({ data }: { data: any }) {
               비고
             </th>
             <td rowSpan={2}>
-              <Input
-                register={register("cuBigo1")}
-                errors={errors["cuBigo1"]?.message}
-                className="small"
-              />
-              <Input
-                register={register("cuBigo2")}
-                errors={errors["cuBigo2"]?.message}
-                className="small"
-              />
+              <Input register={register("cuBigo1")} className="small" />
+              <Input register={register("cuBigo2")} className="small" />
             </td>
             <th className="blue" rowSpan={2}>
               메모
@@ -105,94 +91,70 @@ function Tab2({ data }: { data: any }) {
           </tr>
           <tr>
             <td>
-              <Input
-                register={register("bankName")}
-                errors={errors["bankName"]?.message}
-                className="small"
-              />
+              <Input register={register("bankName")} className="small" />
             </td>
             <td>
-              <Input
-                register={register("acctNo")}
-                errors={errors["acctNo"]?.message}
-                className="small"
-              />
+              <Input register={register("acctNo")} className="small" />
             </td>
             <td>
-              <Input
-                register={register("depositor")}
-                errors={errors["depositor"]?.message}
-                className="small"
-              />
+              <Input register={register("depositor")} className="small" />
             </td>
             <td>
               <Input
                 register={register("cmsGubun")}
-                errors={errors["cmsGubun"]?.message}
                 className="small jccenter"
-                inputSize={InputSize.sm}
+                inputSize={InputSize.i100}
               />
             </td>
             <td>
               <Input
                 register={register("cmsBanknm")}
-                errors={errors["cmsBanknm"]?.message}
                 className="small jccenter"
-                inputSize={InputSize.sm}
+                inputSize={InputSize.i100}
               />
             </td>
             <td>
               <Input
                 register={register("cmsAcctno")}
-                errors={errors["cmsAcctno"]?.message}
                 className="small jccenter"
-                inputSize={InputSize.sm}
+                inputSize={InputSize.i100}
               />
             </td>
             <td>
               <Input
                 register={register("cmsDepositor")}
-                errors={errors["cmsDepositor"]?.message}
                 className="small jccenter"
-                inputSize={InputSize.sm}
+                inputSize={InputSize.i100}
               />
             </td>
             <td>
               <Input
                 register={register("cmsAppdt")}
-                errors={errors["cmsAppdt"]?.message}
                 className="small jccenter"
-                inputSize={InputSize.sm}
+                inputSize={InputSize.i100}
               />
             </td>
             <td>
               <Input
                 register={register("cmsState")}
-                errors={errors["cmsState"]?.message}
                 className="small jccenter"
-                inputSize={InputSize.sm}
+                inputSize={InputSize.i100}
               />
             </td>
             <td>
-              <Input
-                register={register("cuRh2o")}
-                errors={errors["cuRh2o"]?.message}
-                className="small"
-              />
+              <Input register={register("cuRh2o")} className="small" />
             </td>
             <td>
               <div style={{ display: "flex" }}>
                 <Input
                   register={register("cuRdangaTypeName")}
-                  errors={errors["cuRdangaTypeName"]?.message}
                   className="small"
-                  inputSize={InputSize.sm}
+                  inputSize={InputSize.i100}
                 />
                 <Input
                   register={register("cuRdanga")}
-                  errors={errors["cuRdanga"]?.message}
                   className="small"
-                  inputSize={InputSize.sm}
+                  inputSize={InputSize.i100}
                 />
               </div>
             </td>
