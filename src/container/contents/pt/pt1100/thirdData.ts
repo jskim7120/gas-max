@@ -84,6 +84,7 @@ export const columnsThird = [
     header: {
       text: "수금액",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "msDc",
@@ -93,6 +94,7 @@ export const columnsThird = [
     header: {
       text: "D/C",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "msSwName",

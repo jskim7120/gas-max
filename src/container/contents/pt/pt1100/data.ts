@@ -58,7 +58,7 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "120",
+    width: "180",
     header: {
       text: "거래처",
     },
@@ -80,6 +80,7 @@ export const columns = [
     header: {
       text: "미수금액",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "cuSwName",
