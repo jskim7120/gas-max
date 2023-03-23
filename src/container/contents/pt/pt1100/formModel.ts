@@ -9,4 +9,7 @@ export interface IPTFORMMODEL {
   msSukumtype: String;
   msSwCode: String;
   msBigo: String;
+  totMisukum: number;
+  totSukum: number;
+  totDc: number;
 }
