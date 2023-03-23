@@ -55,6 +55,7 @@ export const columns = [
     fieldName: "sgSwName",
     type: "data",
     width: "90",
+    styleName: "rg-left-column",
     header: {
       text: "사원",
     },
@@ -73,6 +74,7 @@ export const columns = [
     fieldName: "sgKumack",
     type: "data",
     width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "가불금액",
     },
@@ -82,6 +84,7 @@ export const columns = [
     fieldName: "sgKumackB",
     type: "data",
     width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "반제금액",
     },
@@ -91,6 +94,7 @@ export const columns = [
     fieldName: "sgJanack",
     type: "data",
     width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "잔액",
     },

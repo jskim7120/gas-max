@@ -56,6 +56,7 @@ export const columns = [
     fieldName: "acsAccCode",
     type: "data",
     width: "50",
+    styleName: "rg-left-column",
     header: {
       text: "코드",
     },
@@ -65,6 +66,7 @@ export const columns = [
     fieldName: "acsAccName",
     type: "data",
     width: "80",
+    styleName: "rg-left-column",
     header: {
       text: "계정과목",
     },

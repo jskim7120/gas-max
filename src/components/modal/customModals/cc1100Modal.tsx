@@ -2,10 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Form from "container/contents/cc/cc1100/modalForm";
 const ModalWrapper = styled.div`
-  width: 254px;
-  height: 387px;
+  width: 305px;
   background: #fff;
-  overflow-y: auto;
 `;
 
 function CC1100Modal() {

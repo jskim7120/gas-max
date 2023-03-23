@@ -128,6 +128,7 @@ const Form = React.forwardRef(
             label="잔액"
             register={register("bankKumack")}
             inputSize={InputSize.i200}
+            textAlign="right"
           />
         </FormGroup>
       </form>

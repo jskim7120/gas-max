@@ -87,6 +87,7 @@ const FORMPT1205 = React.forwardRef(
               kind={FieldKind.BORDER}
               inputSize={InputSize.i175}
               value={cuCmisu}
+              textAlign={"right"}
             />
           </Field>
           <Field>
@@ -96,6 +97,7 @@ const FORMPT1205 = React.forwardRef(
               kind={FieldKind.BORDER}
               inputSize={InputSize.i175}
               value={totalGuAmount}
+              textAlign={"right"}
             />
           </Field>
         </div>
@@ -108,6 +110,7 @@ const FORMPT1205 = React.forwardRef(
               kind={FieldKind.BORDER}
               inputSize={InputSize.i175}
               value={0}
+              textAlign={"right"}
             />
           </Field>
         </FormGroup>
@@ -120,6 +123,7 @@ const FORMPT1205 = React.forwardRef(
               kind={FieldKind.BORDER}
               inputSize={InputSize.i175}
               value={totalGuAmount}
+              textAlign={"right"}
             />
           </Field>
         </FormGroup>
@@ -132,6 +136,7 @@ const FORMPT1205 = React.forwardRef(
               kind={FieldKind.BORDER}
               inputSize={InputSize.i175}
               value={cuCmisu && cuCmisu - totalGuAmount}
+              textAlign={"right"}
             />
           </Field>
         </FormGroup>

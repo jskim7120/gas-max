@@ -49,7 +49,11 @@ function PT1100({
   const [data, setData] = useState([]);
   const [dataSecond, setDataSecond] = useState([]);
   const [selected, setSelected] = useState<any>({});
+  const [secondGridSelected, setSecondGridSelected] = useState<any>({});
   const [data65, setData65] = useState([]);
+  const [totMisukum, setTotMisukun] = useState(0);
+  const [totSukum, setTotSukum] = useState(0);
+  const [totDc, setTotDc] = useState(0);
   const [sCheck, setSCheck] = useState(false);
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const dispatch = useDispatch();
@@ -74,9 +78,12 @@ function PT1100({
   }, [selected]);
 
   useEffect(() => {
+    if (!sCheck) {
+      resetCuName();
+    }
     fetchDataSearch1({
       areaCode: getValues("areaCode"),
-      sCheck: getValues("sCheck"),
+      sCheck: sCheck,
       sCuName: getValues("sCuName"),
     });
   }, [sCheck]);
@@ -99,19 +106,27 @@ function PT1100({
     try {
       setLoading1(true);
       if (params.sCheck) {
-        params.sCheck = "N";
-      } else {
         params.sCheck = "Y";
+      } else {
+        params.sCheck = "N";
       }
       const { data } = await API.get(PT1100SEARCH, { params: params });
       if (data) {
         setData(data);
         setLoading1(false);
         setSelectedRowIndex(0);
+        setTotMisukun(await calcTotal("cuJmisu", data));
       }
     } catch (err) {
       console.log("PT1100 data search fetch error =======>", err);
     }
+  };
+
+  const calcTotal = async (fieldName: string, data: []) => {
+    let total = 0;
+    data.forEach((obj: any) => (total += obj[fieldName] ?? 0));
+    console.log("Im summing all of them ==", total, "fieldName", fieldName);
+    return total;
   };
 
   const fetchDataSearch2 = async (params: any) => {
@@ -125,6 +140,8 @@ function PT1100({
         setDataSecond(data);
         setLoading2(false);
         setSelectedRowIndex(0);
+        setTotSukum(await calcTotal("msKumack", data));
+        setTotDc(await calcTotal("msDc", data));
       }
     } catch (err) {
       console.log("PT110062 data search fetch error =======>", err);
@@ -149,6 +166,13 @@ function PT1100({
         cuName: selected.cuName,
       })
     );
+  };
+
+  const resetCuName = () => {
+    reset((formValues) => ({
+      ...formValues,
+      sCuName: "",
+    }));
   };
 
   const resetSearchForm = () => {
@@ -297,7 +321,7 @@ function PT1100({
             data={dataSecond.length > 0 && dataSecond}
             columns={columnsThird}
             fields={fieldsThird}
-            setSelected={setSelected}
+            setSelected={setSecondGridSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: "43%", minWidth: "925px" }}
@@ -314,6 +338,9 @@ function PT1100({
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
+            totMisukum={totMisukum}
+            totSukum={totSukum}
+            totDc={totDc}
           />
         </RightSide>
       </MainWrapper>

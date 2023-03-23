@@ -30,6 +30,7 @@ export const columns = [
     fieldName: "accName",
     type: "data",
     width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "계정과목",
     },

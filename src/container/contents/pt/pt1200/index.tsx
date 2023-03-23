@@ -49,7 +49,11 @@ function PT1200({
   const [data, setData] = useState([]);
   const [dataSecond, setDataSecond] = useState([]);
   const [dataThird, setDataThird] = useState([]);
+  const [secondGridSelected, setSecondGridSelected] = useState<any>({});
   const [selected, setSelected] = useState<any>({});
+  const [totMisukum, setTotMisukun] = useState(0);
+  const [totSukum, setTotSukum] = useState(0);
+  const [totDc, setTotDc] = useState(0);
   const [sCheck, setSCheck] = useState(false);
   const [data65, setData65] = useState([]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
@@ -75,12 +79,22 @@ function PT1200({
   }, [selected]);
 
   useEffect(() => {
+    if (!sCheck) {
+      resetCuName();
+    }
     fetchDataSearch1({
       areaCode: getValues("areaCode"),
-      sCheck: getValues("sCheck"),
+      sCheck: sCheck,
       sCuName: getValues("sCuName"),
     });
   }, [sCheck]);
+
+  const calcTotal = async (fieldName: string, data: []) => {
+    let total = 0;
+    data.forEach((obj: any) => (total += obj[fieldName] ?? 0));
+    console.log("Im summing all of them ==", total, "fieldName", fieldName);
+    return total;
+  };
 
   const fetch65Data = async (params: any) => {
     try {
@@ -102,21 +116,26 @@ function PT1200({
       sGsdateT: dataCommonDic?.sGsdateT[0].code,
     });
   };
+  const resetCuName = () => {
+    reset((formValues) => ({
+      ...formValues,
+      sCuName: "",
+    }));
+  };
   const fetchDataSearch1 = async (params: any) => {
     try {
       setLoading1(true);
       if (params.sCheck) {
-        params.sCheck = "N";
-      } else {
         params.sCheck = "Y";
+      } else {
+        params.sCheck = "N";
       }
-
       const { data } = await API.get(PT1200SEARCH, { params: params });
-
       if (data) {
         setData(data);
         setLoading1(false);
         setSelectedRowIndex(0);
+        setTotMisukun(await calcTotal("cuCmisu", data));
       }
     } catch (err) {
       console.log("PT1200 data search fetch error =======>", err);
@@ -134,6 +153,8 @@ function PT1200({
         setDataSecond(data);
         setLoading2(false);
         setSelectedRowIndex(0);
+        setTotSukum(await calcTotal("gsKumack", data));
+        setTotDc(await calcTotal("gsDc", data));
       }
     } catch (err) {
       console.log("PT110062 data search fetch error =======>", err);
@@ -311,7 +332,7 @@ function PT1200({
             data={dataSecond.length > 0 && dataSecond}
             columns={columnsThird}
             fields={fieldsThird}
-            setSelected={setSelected}
+            setSelected={setSecondGridSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: "43%", minWidth: "925px" }}
@@ -328,6 +349,9 @@ function PT1200({
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
+            totMisukum={totMisukum}
+            totSukum={totSukum}
+            totDc={totDc}
           />
         </RightSide>
       </MainWrapper>

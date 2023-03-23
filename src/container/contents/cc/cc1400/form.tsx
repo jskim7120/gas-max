@@ -231,6 +231,7 @@ const Form = React.forwardRef(
               label="가불합계"
               register={register("gabulSum")}
               inputSize={InputSize.i200}
+              textAlign="right"
             />
             <br />
 
@@ -238,6 +239,7 @@ const Form = React.forwardRef(
               label="금액"
               register={register("sgKumack")}
               inputSize={InputSize.i200}
+              textAlign="right"
             />
             <Input
               label="비고"
@@ -271,6 +273,7 @@ const Form = React.forwardRef(
               register={register("totGabul")}
               inputSize={InputSize.i200}
               style={{ marginTop: "10px" }}
+              textAlign="right"
             />
           </div>
         </div>

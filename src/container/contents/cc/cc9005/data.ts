@@ -56,6 +56,7 @@ export const columns = [
     fieldName: "acbBankno",
     type: "data",
     width: "300",
+    styleName: "rg-left-column",
     header: {
       text: "계좌번호",
     },
@@ -65,6 +66,7 @@ export const columns = [
     fieldName: "bankKumack",
     type: "data",
     width: "130",
+    styleName: "rg-right-column",
     header: {
       text: "잔액",
     },

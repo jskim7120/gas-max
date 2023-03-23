@@ -51,6 +51,7 @@ export const columns = [
     fieldName: "acjAcsName",
     type: "data",
     width: "290",
+    styleName: "rg-left-column",
     header: {
       text: "항목",
     },
@@ -60,6 +61,7 @@ export const columns = [
     fieldName: "acjKumackCh",
     type: "data",
     width: "130",
+    styleName: "rg-right-column",
     header: {
       text: "차변",
     },
@@ -69,6 +71,7 @@ export const columns = [
     fieldName: "acjKumackDa",
     type: "data",
     width: "130",
+    styleName: "rg-right-column",
     header: {
       text: "대변",
     },
@@ -78,6 +81,7 @@ export const columns = [
     fieldName: "acjKumackJan",
     type: "data",
     width: "130",
+    styleName: "rg-right-column",
     header: {
       text: "잔액",
     },
