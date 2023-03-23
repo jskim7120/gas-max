@@ -90,16 +90,18 @@ const FORMCM1105 = React.forwardRef(
             register={register("cuJmisu")}
             kind={FieldKind.BORDER}
             inputSize={InputSize.i175}
+            textAlign={"right"}
           />
         </Field>
         <Field>
           <Input
-            label="선태금액"
+            label="선택금액"
             register={register("cuChkamt")}
             kind={FieldKind.BORDER}
             inputSize={InputSize.i175}
             value={guCheckAMount}
             readOnly={true}
+            textAlign={"right"}
           />
         </Field>
         <DividerGray />

@@ -34,6 +34,9 @@ interface IForm {
   setSelected: any;
   setSelectedRowIndex: any;
   dataCommonDic: any;
+  totMisukum?: number;
+  totSukum?: number;
+  totDc?: number;
 }
 
 const Form = React.forwardRef(
@@ -46,6 +49,9 @@ const Form = React.forwardRef(
       setSelected,
       setSelectedRowIndex,
       dataCommonDic,
+      totMisukum,
+      totSukum,
+      totDc,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -167,7 +173,7 @@ const Form = React.forwardRef(
               register={register("cuName")}
               inputSize={InputSize.i140}
             />
-            <SearchBtn type="button" onClick={handleSearchBtnClick}>
+            <SearchBtn type="button">
               <MagnifyingGlass />
             </SearchBtn>
           </FormGroup>
@@ -250,20 +256,26 @@ const Form = React.forwardRef(
           <Input
             label="미수금 총계"
             labelStyle={{ minWidth: "80px" }}
-            register={register("msBigo")}
+            register={register("totMisukum")}
             inputSize={InputSize.i140}
+            value={totMisukum}
+            textAlign={"right"}
           />
           <Input
             label="수금 총계"
             labelStyle={{ minWidth: "80px" }}
-            register={register("msBigo")}
+            register={register("totSukum")}
             inputSize={InputSize.i140}
+            value={totSukum}
+            textAlign={"right"}
           />
           <Input
             label="D/C 총계"
             labelStyle={{ minWidth: "80px" }}
-            register={register("msBigo")}
+            register={register("totDc")}
             inputSize={InputSize.i140}
+            value={totDc}
+            textAlign={"right"}
           />
         </BottomStyleDiv>
       </form>
