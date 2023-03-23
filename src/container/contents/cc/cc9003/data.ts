@@ -37,6 +37,7 @@ export const columns = [
     fieldName: "sumChaTot",
     type: "data",
     width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "합계",
     },
@@ -46,6 +47,7 @@ export const columns = [
     fieldName: "sumCha",
     type: "data",
     width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "대체",
     },
@@ -55,6 +57,7 @@ export const columns = [
     fieldName: "sumInkum",
     type: "data",
     width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "현금",
     },
@@ -64,6 +67,7 @@ export const columns = [
     fieldName: "accName",
     type: "data",
     width: "240",
+    styleName: "rg-left-column",
     header: {
       text: "계정과목",
     },
@@ -73,6 +77,7 @@ export const columns = [
     fieldName: "sumOutkum",
     type: "data",
     width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "현금",
     },
@@ -82,6 +87,7 @@ export const columns = [
     fieldName: "sumDae",
     type: "data",
     width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "대체",
     },
@@ -91,6 +97,7 @@ export const columns = [
     fieldName: "sumDaeTot",
     type: "data",
     width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "합계",
     },

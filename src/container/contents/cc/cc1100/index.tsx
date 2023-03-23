@@ -58,6 +58,7 @@ function CC1100({
 
   useEffect(() => {
     if (dataCommonDic) {
+      console.log("dataCommonDic===>", dataCommonDic);
       resetSearchForm();
     }
   }, [dataCommonDic]);
@@ -67,6 +68,7 @@ function CC1100({
       areaCode: dataCommonDic?.areaCode[0].code,
       sDateT: dataCommonDic?.sDateT[0].code,
       sDateF: dataCommonDic?.sDateF[0].code,
+      codeGu: "0",
     });
   };
 
@@ -113,6 +115,8 @@ function CC1100({
 
   const submit = (data: ICC1100SEARCH) => {
     if (codeGu) {
+      data.codeGu = "1";
+    } else {
       data.codeGu = "0";
     }
     fetchData(data);
@@ -173,10 +177,9 @@ function CC1100({
                     </Item>
                   );
                 })}
-                {codeGu}
                 <Input
                   readOnly={!codeGu}
-                  register={register("codeGu")}
+                  register={register("bankCd")}
                   labelStyle={{ minWidth: "70px" }}
                   inputSize={InputSize.i100}
                 />

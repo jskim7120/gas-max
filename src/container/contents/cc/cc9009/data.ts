@@ -75,6 +75,7 @@ export const columns = [
     fieldName: "cjCaName",
     type: "data",
     width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "차량명",
     },
@@ -102,6 +103,7 @@ export const columns = [
     fieldName: "cjOilL",
     type: "data",
     width: "130",
+    styleName: "rg-right-column",
     header: {
       text: "주유량(L)",
     },
@@ -111,6 +113,7 @@ export const columns = [
     fieldName: "cjOilDanga",
     type: "data",
     width: "130",
+    styleName: "rg-right-column",
     header: {
       text: "단가",
     },
@@ -120,6 +123,7 @@ export const columns = [
     fieldName: "cjKumack",
     type: "data",
     width: "130",
+    styleName: "rg-right-column",
     header: {
       text: "금액",
     },
@@ -129,6 +133,7 @@ export const columns = [
     fieldName: "cjCarKg",
     type: "data",
     width: "130",
+    styleName: "rg-right-column",
     header: {
       text: "주행적산(km)",
     },
@@ -138,6 +143,7 @@ export const columns = [
     fieldName: "cjCarDr",
     type: "data",
     width: "130",
+    styleName: "rg-right-column",
     header: {
       text: "주행(km)",
     },
@@ -147,6 +153,7 @@ export const columns = [
     fieldName: "cjCarEff",
     type: "data",
     width: "130",
+    styleName: "rg-right-column",
     header: {
       text: "연비(km/L)",
     },
@@ -156,6 +163,7 @@ export const columns = [
     fieldName: "cjBigo",
     type: "data",
     width: "350",
+    styleName: "rg-left-column",
     header: {
       text: "비고",
     },

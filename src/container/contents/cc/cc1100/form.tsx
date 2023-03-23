@@ -288,6 +288,7 @@ const Form = React.forwardRef(
           labelStyle={{ minWidth: "80px" }}
           register={register("acjKumack")}
           inputSize={InputSize.i200}
+          textAlign="right"
         />
 
         <Input
@@ -296,6 +297,18 @@ const Form = React.forwardRef(
           register={register("acjBigo")}
           inputSize={InputSize.i200}
         />
+
+        <div
+          style={{
+            color: "#00BEFF",
+            fontSize: "15px",
+            position: "absolute",
+            bottom: "88px",
+            right: "115px",
+          }}
+        >
+          <p>☞ 입출금 전표는 자동 분계 처리 됩니다.</p>
+        </div>
       </form>
     );
   }

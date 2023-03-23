@@ -75,6 +75,7 @@ export const columns = [
     fieldName: "sgBigo",
     type: "data",
     width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "비고",
     },

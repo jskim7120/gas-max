@@ -29,6 +29,7 @@ export const columns = [
     fieldName: "accName",
     type: "data",
     width: "250",
+    styleName: "rg-left-column",
     header: {
       text: " 계정과목",
     },
@@ -38,6 +39,7 @@ export const columns = [
     fieldName: "toCha",
     type: "data",
     width: "120",
+    styleName: "rg-right-column",
     header: {
       text: "금액",
     },
@@ -47,6 +49,7 @@ export const columns = [
     fieldName: "toDae",
     type: "data",
     width: "120",
+    styleName: "rg-right-column",
     header: {
       text: "",
     },
@@ -56,6 +59,7 @@ export const columns = [
     fieldName: "befCha",
     type: "data",
     width: "120",
+    styleName: "rg-right-column",
     header: {
       text: "금액",
     },
@@ -65,6 +69,7 @@ export const columns = [
     fieldName: "befDae",
     type: "data",
     width: "120",
+    styleName: "rg-right-column",
     header: {
       text: "",
     },

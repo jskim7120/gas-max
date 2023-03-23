@@ -14,4 +14,5 @@ export interface ICC1100SEARCH {
   acjKumack: String;
   acjBigo: String;
   bankNo: String;
+  bankCd: String;
 }

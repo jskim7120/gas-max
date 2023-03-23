@@ -204,6 +204,7 @@ const Form = React.forwardRef(
               label="금액"
               register={register("cjKumack")}
               inputSize={InputSize.i150}
+              textAlign="right"
             />
             <FormGroup>
               <Label>사원</Label>
@@ -226,22 +227,26 @@ const Form = React.forwardRef(
               label="주유량"
               register={register("cjOilL")}
               inputSize={InputSize.i150}
+              textAlign="right"
             />
             <Input
               label="단가"
               register={register("cjOilDanga")}
               inputSize={InputSize.i150}
+              textAlign="right"
             />
             <Input
               label="주유금액"
               register={register("cjKumackOil")}
               inputSize={InputSize.i150}
+              textAlign="right"
             />
             <br />
             <Input
               label="누적주행"
               register={register("cjCarKg")}
               inputSize={InputSize.i150}
+              textAlign="right"
             />
             <FormGroup>
               <Label>사원</Label>
@@ -277,6 +282,7 @@ const Form = React.forwardRef(
               label="기간별 합계"
               register={register("totGabul")}
               inputSize={InputSize.i150}
+              textAlign="right"
             />
           </div>
         </div>

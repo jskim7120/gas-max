@@ -58,7 +58,8 @@ export const columns = [
     name: "acjAcsName",
     fieldName: "acjAcsName",
     type: "data",
-    width: "80",
+    width: "130",
+    styleName: "rg-left-column",
     header: {
       text: "항목",
     },
@@ -67,7 +68,8 @@ export const columns = [
     name: "acjBigo",
     fieldName: "acjBigo",
     type: "data",
-    width: "80",
+    width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "적요",
     },
@@ -76,7 +78,7 @@ export const columns = [
     name: "acjSwName",
     fieldName: "acjSwName",
     type: "data",
-    width: "130",
+    width: "100",
     header: {
       text: "사원",
     },
@@ -85,7 +87,8 @@ export const columns = [
     name: "acjKumackIn",
     fieldName: "acjKumackIn",
     type: "data",
-    width: "80",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "입금",
     },
@@ -94,7 +97,8 @@ export const columns = [
     name: "acjKumackOut",
     fieldName: "acjKumackOut",
     type: "data",
-    width: "80",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "출금",
     },
@@ -103,7 +107,8 @@ export const columns = [
     name: "acjKumackJan",
     fieldName: "acjKumackJan",
     type: "data",
-    width: "80",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "잔액",
     },

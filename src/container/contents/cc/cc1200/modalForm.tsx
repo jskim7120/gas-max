@@ -44,27 +44,36 @@ function CC1200Modal() {
   return (
     <div
       style={{
-        height: "100%",
-        width: "100%",
-        padding: "10px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
+        padding: "7px",
       }}
     >
-      <CTable2>
-        <tr>
-          <th style={{ width: "22%" }}>코드</th>
-          <th style={{ textAlign: "left" }}>계정과목</th>
-        </tr>
-        {data?.map((item) => (
-          <tr onClick={() => setSelected(item)}>
-            <td style={{ textAlign: "center" }}>{item.accCode}</td>
-            <td>{item.accName}</td>
+      <div
+        style={{
+          fontSize: "14px",
+          padding: "0px 2px 6px",
+        }}
+      >
+        계정과목 선택
+      </div>
+      <div
+        style={{
+          height: "376px",
+          overflowY: "auto",
+        }}
+      >
+        <CTable2>
+          <tr>
+            <th style={{ width: "22%" }}>코드</th>
+            <th style={{ textAlign: "left" }}>계정과목</th>
           </tr>
-        ))}
-      </CTable2>
-
+          {data?.map((item) => (
+            <tr onClick={() => setSelected(item)}>
+              <td style={{ textAlign: "center" }}>{item.accCode}</td>
+              <td>{item.accName}</td>
+            </tr>
+          ))}
+        </CTable2>
+      </div>
       <div
         style={{
           width: "100%",

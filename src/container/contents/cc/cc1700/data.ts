@@ -60,6 +60,7 @@ export const columns = [
     fieldName: "acbName",
     type: "data",
     width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "은행명",
     },
@@ -69,6 +70,7 @@ export const columns = [
     fieldName: "acbBankno",
     type: "data",
     width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "계좌번호",
     },
@@ -78,6 +80,7 @@ export const columns = [
     fieldName: "acbBigo",
     type: "data",
     width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "적용",
     },

@@ -45,34 +45,43 @@ function CC1100Modal() {
   return (
     <div
       style={{
-        height: "100%",
-        width: "100%",
-        padding: "10px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
+        padding: "7px",
       }}
     >
-      <CTable2>
-        <tr>
-          <th style={{ textAlign: "left" }}>계정과목</th>
-          <th style={{ textAlign: "left" }}>항목명</th>
-        </tr>
-        {data?.map((item) => (
-          <tr onClick={() => setSelected(item)}>
-            <td>{item.accName}</td>
-            <td>{item.acsName}</td>
+      <div
+        style={{
+          fontSize: "14px",
+          padding: "0px 2px 6px",
+        }}
+      >
+        항목선택
+      </div>
+      <div
+        style={{
+          height: "376px",
+          overflowY: "auto",
+        }}
+      >
+        <CTable2>
+          <tr>
+            <th style={{ textAlign: "left" }}>계정과목</th>
+            <th style={{ textAlign: "left" }}>항목명</th>
           </tr>
-        ))}
-      </CTable2>
-
+          {data?.map((item) => (
+            <tr onClick={() => setSelected(item)}>
+              <td>{item.accName}</td>
+              <td>{item.acsName}</td>
+            </tr>
+          ))}
+        </CTable2>
+      </div>
       <div
         style={{
           width: "100%",
           display: "flex",
           justifyContent: "center",
-          marginTop: "10px",
-          gap: "10px",
+          marginTop: "7px",
+          gap: "33px",
         }}
       >
         <Button

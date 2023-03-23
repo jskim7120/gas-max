@@ -234,7 +234,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>차 변</Label>
+            <Label style={{ minWidth: "80px" }}>대변</Label>
             {radioOptionsSecond.map((option, index) => (
               <Item key={index}>
                 <RadioButton

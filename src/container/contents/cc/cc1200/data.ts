@@ -63,7 +63,8 @@ export const columns = [
     name: "acjAccName",
     fieldName: "acjAccName",
     type: "data",
-    width: "150",
+    width: "170",
+    styleName: "rg-left-column",
     header: {
       text: "계정과목",
     },
@@ -72,7 +73,8 @@ export const columns = [
     name: "acjBigo",
     fieldName: "acjBigo",
     type: "data",
-    width: "120",
+    width: "130",
+    styleName: "rg-left-column",
     header: {
       text: "적요",
     },
@@ -82,6 +84,7 @@ export const columns = [
     fieldName: "acjKumackCh",
     type: "data",
     width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "차변",
     },
@@ -91,6 +94,7 @@ export const columns = [
     fieldName: "acjKumackDa",
     type: "data",
     width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "대변",
     },

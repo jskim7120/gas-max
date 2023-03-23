@@ -97,13 +97,15 @@ export const CTable2 = styled.table`
 
     td,
     th {
-      height: 22px;
+      height: 25px;
       font-family: "NotoSansKRRegular";
-      font-size: 12px;
+      font-size: 14px;
       border-left: 1px solid #707070;
     }
 
     th {
+      position: sticky;
+      top: 0;
       background-color: #d4d0d0;
       border-bottom: 1px solid #707070;
 

@@ -58,7 +58,7 @@ export const columns = [
     name: "cjDate",
     fieldName: "cjDate",
     type: "data",
-    width: "80",
+    width: "100",
     header: {
       text: "일자",
     },
@@ -77,8 +77,7 @@ export const columns = [
     name: "cjCaName",
     fieldName: "cjCaName",
     type: "data",
-    width: "80",
-    styleName: "rg-left-column",
+    width: "150",
     header: {
       text: "차량명",
     },
@@ -88,7 +87,6 @@ export const columns = [
     fieldName: "cjCcCode",
     type: "data",
     width: "50",
-    styleName: "rg-left-column",
     header: {
       text: "코드",
     },
@@ -98,7 +96,6 @@ export const columns = [
     fieldName: "cjCcName",
     type: "data",
     width: "100",
-    styleName: "rg-left-column",
     header: {
       text: "정비명",
     },
@@ -108,7 +105,6 @@ export const columns = [
     fieldName: "cjKumack",
     type: "data",
     width: "80",
-    styleName: "rg-right-column",
     header: {
       text: "금액",
     },
@@ -127,6 +123,7 @@ export const columns = [
     fieldName: "cjBigo",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "비고",
     },
