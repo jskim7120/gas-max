@@ -4,10 +4,10 @@ export interface IPT1105 {
   msDate: string;
   cuJmisu: number;
   msDc: number;
-  cuChkamt: any;
+  cuChkamt: number;
   msKumack: number;
   msJanack: number;
   msSukumtype: string;
   msSwCode: string;
-  msBigo: string;
+  msBigo: number;
 }
