@@ -76,9 +76,8 @@ const Form = React.forwardRef(
         onSubmit={handleSubmit(submit)}
         style={{ width: "410px", padding: "10px 10px" }}
       >
-        <FormGroup></FormGroup>
         <FormGroup>
-          <Label>구 분</Label>
+          <Label style={{ marginRight: "2px" }}>구 분</Label>
           {[
             { name: "수입", value: "0" },
             { name: "지출", value: "1" },

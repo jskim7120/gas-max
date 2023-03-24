@@ -15,6 +15,7 @@ import { ICC1400FORM } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
+import { currencyMask } from "helpers/currency";
 import API from "app/axios";
 import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
 
@@ -211,7 +212,6 @@ const Form = React.forwardRef(
                     value={value}
                     onChange={onChange}
                     name={name}
-                    showYearDropdown
                     style={{ width: "200px" }}
                   />
                 )}
@@ -240,6 +240,7 @@ const Form = React.forwardRef(
               register={register("sgKumack")}
               inputSize={InputSize.i200}
               textAlign="right"
+              mask={currencyMask}
             />
             <Input
               label="비고"

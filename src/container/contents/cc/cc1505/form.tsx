@@ -67,8 +67,9 @@ const Form = React.forwardRef(
           <Input
             label="코 드"
             register={register("accCode")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i40}
           />
+          <Input register={register("accCode")} style={{ width: "84px" }} />
         </FormGroup>
         <Input
           label="계정과목"
