@@ -257,7 +257,7 @@ function Tab2({
             </Label>
 
             <Input
-              register={register("cuBaGageM3")}
+              register={register("cuBaGageM3", { valueAsNumber: true })}
               textAlign="right"
               inputSize={InputSize.i50}
             />
@@ -333,7 +333,7 @@ function Tab2({
             </Select>
 
             <Input
-              register={register("cuMeterM3")}
+              register={register("cuMeterM3", { valueAsNumber: true })}
               inputSize={InputSize.xs}
               textAlign="right"
             />

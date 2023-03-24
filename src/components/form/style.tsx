@@ -180,6 +180,7 @@ export const Input = ({
             readOnly={readOnly}
             className="maskedInput"
             maxLength={maxLength}
+            type={type ? type : "text"}
           />
         ) : (
           <InputForm

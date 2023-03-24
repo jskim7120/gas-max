@@ -75,7 +75,6 @@ function CM1200({
   }, [isDelete.isDelete]);
 
   const submit = async (data: any) => {
-    console.log("data????", data);
     fetchData(data);
   };
 
@@ -125,6 +124,7 @@ function CM1200({
     setIsAddBtnClicked(true);
     setIsCancelBtnDisabled(false);
     formRef.current.resetForm("clear");
+    formRef.current.setUserInfo([]);
   };
 
   const onClickDelete = () => {
@@ -139,6 +139,8 @@ function CM1200({
     setIsAddBtnClicked(false);
     formRef.current.resetForm("reset");
   };
+
+  console.log("selec11 ", selected);
 
   return (
     <>
@@ -243,7 +245,8 @@ function CM1200({
             setSelectedRowIndex={setSelectedRowIndex}
             selected={selected}
             setSelected={setSelected}
-            areaCode={ownAreaCode === "00" ? areaCode : ownAreaCode}
+            areaCode={areaCode}
+            ownAreaCode={ownAreaCode}
             setAreaCode={setAreaCode}
             isAddBtnClicked={isAddBtnClicked}
             setIsAddBtnClicked={setIsAddBtnClicked}

@@ -46,3 +46,34 @@ export interface ISEARCH {
   aptCode: string;
   aptName: string;
 }
+
+export const emptyObj: any = {
+  apt4F: null,
+  apt4Ho: null,
+  aptAddr1: null,
+  aptAddr2: null,
+  aptAnkum: null,
+  aptBf: null,
+  aptCode: null,
+  aptCustgubun: null,
+  aptF: null,
+  aptGumdate: null,
+  aptJyCode: null,
+  aptMeterkum: null,
+  aptName: null,
+  aptPer: null,
+  aptRdanga: null,
+  aptRdangaAmt: null,
+  aptRdangaSign: null,
+  aptRdangaType: null,
+  aptRh2O: null,
+  aptS: null,
+  aptSisulkum: null,
+  aptSukumtype: null,
+  aptSum: null,
+  aptSwCode: null,
+  aptType: null,
+  aptTypeName: null,
+  aptZipcode: null,
+  areaCode: null,
+};

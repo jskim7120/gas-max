@@ -8,7 +8,7 @@ import {
   CM1300CUSTOMERINSERT,
   CM1300CUSTOMERUPDATE,
 } from "app/path";
-import { ICM1300User } from "./model";
+import { ICM1300User, emptyObj } from "./model";
 import { columns, fields } from "./data";
 import {
   openModal,
@@ -34,6 +34,12 @@ function FormCM1300User({
   selectedRowIndex,
   setSelectedRowIndex,
   fetchData,
+  aptCode,
+  areaCode,
+  isAddBtnClicked,
+  setIsAddBtnClicked,
+  isCancelBtnDisabled,
+  setIsCancelBtnDisabled,
 }: {
   data: Array<any>;
   setData: Function;
@@ -43,11 +49,17 @@ function FormCM1300User({
   selectedRowIndex: number;
   setSelectedRowIndex: Function;
   fetchData: Function;
+  aptCode: string;
+  areaCode: string;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
+  isCancelBtnDisabled: boolean;
+  setIsCancelBtnDisabled: Function;
 }) {
   const dispatch = useDispatch();
 
-  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
+  // const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  // const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const { isDelete } = useSelector((state) => state.modal);
 
   const { register, handleSubmit, reset, getValues } = useForm<ICM1300User>({
@@ -93,14 +105,15 @@ function FormCM1300User({
   };
 
   const onClickReset = () => {
+    setIsAddBtnClicked(true);
     setIsAddBtnClicked(false);
     resetForm("reset");
   };
 
-  const fetchCodes = async (areaCode: string, cuCodeHead: string) => {
+  const fetchCodes = async (areaC: string, aptC: string) => {
     try {
       const response: any = await API.get(CM1300INSERTSEQ2, {
-        params: { aptCode: cuCodeHead, areaCode: areaCode },
+        params: { aptCode: aptC, areaCode: areaC },
       });
       if (response.status === 200 && response.data[0].tempAptCode) {
         return response.data;
@@ -118,24 +131,26 @@ function FormCM1300User({
   };
 
   const resetForm = async (type: string) => {
-    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-      if (type === "clear") {
-        let newData: any = {};
-        let cuCodeHead = selected.cuCode.split("-")[0];
+    if (type === "clear") {
+      if (areaCode !== "" && aptCode !== "") {
+        // let newData: any = {};
 
-        const dataC = await fetchCodes(selected.areaCode, cuCodeHead);
+        const dataC = await fetchCodes(areaCode, aptCode);
         if (dataC) {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
+          // for (const [key] of Object.entries(selected)) {
+          //   newData[key] = null;
+          // }
 
           reset({
-            ...newData,
+            ...emptyObj,
             cuCode1: dataC[0]?.tempAptCode?.split("-")[0],
             cuCode2: dataC[0]?.tempAptCode?.split("-")[1],
           });
         }
-      } else if (type === "reset") {
+      }
+    }
+    if (type === "reset") {
+      if (selected !== undefined && Object.keys(selected).length > 0) {
         reset({
           ...selected,
           cuCode1: selected?.cuCode?.split("-")[0],
@@ -174,7 +189,7 @@ function FormCM1300User({
     const path = isAddBtnClicked ? CM1300CUSTOMERINSERT : CM1300CUSTOMERUPDATE;
     const formValues = getValues();
     formValues.cuCode = formValues.cuCode1 + "-" + formValues.cuCode2;
-    formValues.areaCode = selected.areaCode;
+    formValues.areaCode = areaCode;
 
     try {
       const response: any = await API.post(path, formValues);

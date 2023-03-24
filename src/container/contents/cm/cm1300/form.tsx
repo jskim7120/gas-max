@@ -12,7 +12,7 @@ import {
   Input2,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
-import { ICM1300 } from "./model";
+import { ICM1300, emptyObj } from "./model";
 import DaumAddress from "components/daum";
 import {
   CM1300INSERT,
@@ -164,21 +164,20 @@ const Form = React.forwardRef(
     };
 
     const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
-        if (type === "clear") {
-          const data = await fetchCodes(areaCode);
-          if (data) {
-            for (const [key, value] of Object.entries(selected)) {
-              newData[key] = null;
-            }
-            reset({
-              ...newData,
-              aptCode: data?.tempAptCode[0]?.tempAptCode,
-              aptType: radioOptions[0].id,
-            });
-          }
-        } else if (type === "reset") {
+      if (type === "clear" && areaCode !== "") {
+        const dataS = await fetchCodes(areaCode);
+        if (dataS?.tempAptCode) {
+          reset({
+            ...emptyObj,
+            aptCode: dataS?.tempAptCode[0]?.tempAptCode,
+            aptType: radioOptions[0].id,
+            areaCode: areaCode,
+          });
+        }
+      }
+
+      if (type === "reset") {
+        if (selected !== undefined && Object.keys(selected).length > 0) {
           reset({
             ...selected,
             apt4F: selected?.apt4F === "Y",
@@ -186,22 +185,22 @@ const Form = React.forwardRef(
             aptBf: selected?.aptBf === "Y",
           });
         }
-        setChkAptZipCode(false);
-        setChkAptRh2o(false);
-        setChkAptRdangaType(false);
-        setChkAptAnkum(false);
-        setChkAptSisulkum(false);
-        setChkAptMeterkum(false);
-        setChkAptPer(false);
-        setChkAptGumdate(false);
-        setChkAptSukumtype(false);
-
-        setAptRdangaType(selected?.aptRdangaType);
-        setAptRdanga(selected?.aptRdanga);
-        setAptRdangaSign(selected?.aptRdangaSign);
-        setAptRdangaAmt(selected?.aptRdangaAmt);
-        setTotalValue("");
       }
+      setChkAptZipCode(false);
+      setChkAptRh2o(false);
+      setChkAptRdangaType(false);
+      setChkAptAnkum(false);
+      setChkAptSisulkum(false);
+      setChkAptMeterkum(false);
+      setChkAptPer(false);
+      setChkAptGumdate(false);
+      setChkAptSukumtype(false);
+
+      setAptRdangaType(selected?.aptRdangaType);
+      setAptRdanga(selected?.aptRdanga);
+      setAptRdangaSign(selected?.aptRdangaSign);
+      setAptRdangaAmt(selected?.aptRdangaAmt);
+      setTotalValue("");
     };
     const crud = async (type: string | null) => {
       if (type === "delete") {

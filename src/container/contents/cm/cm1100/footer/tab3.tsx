@@ -13,7 +13,7 @@ function Tab2({ data }: { data: any }) {
   useEffect(() => {
     if (
       data !== undefined &&
-      (data?.tab31.length > 0 || data?.tab32.length > 0)
+      (data?.tab31?.length > 0 || data?.tab32?.length > 0)
     ) {
       reset({
         cuBigo1: data.tab31[0].cuBigo1,

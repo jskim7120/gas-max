@@ -9,7 +9,7 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import { Plus, Update, Reset, WhiteClose } from "components/allSvgIcon";
 import { ICM1105SEARCH, emptyObj } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { currencyMask } from "helpers/currency";
+import { currencyMask, removeCommas } from "helpers/currency";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { closeModal } from "app/state/modal/modalSlice";
 import {
@@ -30,6 +30,7 @@ import { CM1105SEARCH, CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
 
 function FormCM1105() {
   const [data, setData] = useState<any>(null);
+  const [areaCode, setAreaCode] = useState("");
   const [addr, setAddress] = useState<string>("");
   const [addr2, setAddress2] = useState<string>("");
   const [tabId, setTabId] = useState(0);
@@ -57,6 +58,8 @@ function FormCM1105() {
     } else if (cm1105.areaCode && cm1105.cuCode) {
       fetchData();
     }
+    // reset({ areaCode: cm1105.areaCode });
+    setAreaCode(cm1105.areaCode);
   }, [cm1105.areaCode, cm1105.cuCode, cm1105.status]);
 
   useEffect(() => {
@@ -261,7 +264,6 @@ function FormCM1105() {
         reset({
           ...emptyObj,
           cuCode: res.data[0].cuCode,
-          areaCode: areaCode ?? "",
         });
       } else {
         toast.error("couldn't get CuCode", {
@@ -281,6 +283,7 @@ function FormCM1105() {
     const path = isAddBtnClicked ? CM1105INSERT : CM1105UPDATE;
     const formValues: any = getValues();
 
+    formValues.areaCode = areaCode;
     formValues.cuSekumyn = formValues.cuSekumyn ? "Y" : "N";
     formValues.cuJangbuYn = formValues.cuJangbuYn ? "Y" : "N";
     formValues.cuSeSmsYn = formValues.cuSeSmsYn ? "Y" : "N";
@@ -289,29 +292,24 @@ function FormCM1105() {
     formValues.cuSmsYn = formValues.cuSmsYn ? "Y" : "N";
     formValues.cuCashpayYn = formValues.cuCashpayYn ? "Y" : "N";
 
-    // formValues.cuHdate =
-    //   typeof formValues.cuHdate === "string"
-    //     ? formatDateByRemoveDash(formValues.cuHdate)
-    //     : (formValues.cuHdate as any) instanceof Date
-    //     ? formatDateToStringWithoutDash(formValues.cuHdate)
-    //     : "";
     formValues.cuHdate = DateWithoutDash(formValues.cuHdate);
-
-    // formValues.cuExtendDate =
-    //   typeof formValues.cuExtendDate === "string"
-    //     ? formatDateByRemoveDash(formValues.cuExtendDate)
-    //     : (formValues.cuExtendDate as any) instanceof Date
-    //     ? formatDateToStringWithoutDash(formValues.cuExtendDate)
-    //     : "";
     formValues.cuExtendDate = DateWithoutDash(formValues.cuExtendDate);
-
-    // formValues.cuGongdate =
-    //   typeof formValues.cuGongdate === "string"
-    //     ? formatDateByRemoveDash(formValues.cuGongdate)
-    //     : (formValues.cuGongdate as any) instanceof Date
-    //     ? formatDateToStringWithoutDash(formValues.cuGongdate)
-    //     : "";
     formValues.cuGongdate = DateWithoutDash(formValues.cuGongdate);
+
+    console.log(formValues);
+
+    formValues.cuTongkum = removeCommas(formValues.cuTongkum, "number");
+    formValues.cuJmisu = removeCommas(formValues.cuJmisu, "number");
+    formValues.cuCmisu = removeCommas(formValues.cuCmisu, "number");
+    formValues.cuAnkum = removeCommas(formValues.cuAnkum, "number");
+    formValues.cuSisulkum = removeCommas(formValues.cuSisulkum, "number");
+    formValues.cuMeterkum = removeCommas(formValues.cuMeterkum, "number");
+    formValues.cuPer = removeCommas(formValues.cuPer, "number");
+    formValues.cuCdc = removeCommas(formValues.cuCdc, "number");
+    formValues.cuSvKumack = removeCommas(formValues.cuSvKumack, "number");
+    formValues.cuBaGageKum = removeCommas(formValues.cuBaGageKum, "number");
+    formValues.tankMax1 = removeCommas(formValues.tankMax1, "number");
+    formValues.tankMax2 = removeCommas(formValues.tankMax2, "number");
 
     if (formValues.cuGongdate === "") {
       delete formValues.cuGongdate;
@@ -337,9 +335,9 @@ function FormCM1105() {
       delete formValues.gasifyCheckDate1;
     }
 
-    if (formValues.cuCmisu) {
-      formValues.cuCmisu = parseInt(formValues.cuCmisu);
-    }
+    // if (formValues.cuCmisu) {
+    //   formValues.cuCmisu = parseInt(formValues.cuCmisu);
+    // }
 
     try {
       const response: any = await API.post(path, formValues);
@@ -367,7 +365,10 @@ function FormCM1105() {
           <p>거래처 정보</p>
           <FormGroup>
             <Label>영업소</Label>
-            <Select {...register("areaCode")}>
+            <Select
+              value={areaCode}
+              onChange={(e) => setAreaCode(e.target.value)}
+            >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -648,7 +649,10 @@ function FormCM1105() {
 
             <FormGroup>
               <Label>품목 단가</Label>
-              <Select {...register("cuJdc")} width={InputSize.i150}>
+              <Select
+                {...register("cuJdc", { valueAsNumber: true })}
+                width={InputSize.i150}
+              >
                 {dataCommonDic?.cuJdc?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -718,29 +722,53 @@ function FormCM1105() {
           >
             <FormGroup style={{ justifyContent: "center" }}>
               <label>용기보증금</label>
-              <Input
-                register={register("cuTongkum")}
-                inputSize={InputSize.i140}
-                mask={currencyMask}
-                textAlign="right"
+              <Controller
+                control={control}
+                {...register("cuTongkum")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    inputSize={InputSize.i140}
+                    mask={currencyMask}
+                    textAlign="right"
+                  />
+                )}
               />
             </FormGroup>
             <FormGroup style={{ justifyContent: "center" }}>
               <label>중량미수</label>
-              <Input
-                register={register("cuJmisu")}
-                inputSize={InputSize.i140}
-                mask={currencyMask}
-                textAlign="right"
+              <Controller
+                control={control}
+                {...register("cuJmisu")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    inputSize={InputSize.i140}
+                    mask={currencyMask}
+                    textAlign="right"
+                  />
+                )}
               />
             </FormGroup>
             <FormGroup style={{ justifyContent: "center" }}>
               <label>체적미수</label>
-              <Input
-                register={register("cuCmisu")}
-                inputSize={InputSize.i140}
-                mask={currencyMask}
-                textAlign="right"
+              <Controller
+                control={control}
+                {...register("cuCmisu")}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                    inputSize={InputSize.i140}
+                    mask={currencyMask}
+                    textAlign="right"
+                  />
+                )}
               />
             </FormGroup>
           </Field>

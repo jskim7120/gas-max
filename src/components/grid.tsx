@@ -15,6 +15,8 @@ function Grid({
   layout,
   setIsCancelBtnDisabled,
   setIsAddBtnClicked,
+  setIsCancelBtnDisabled2,
+  setIsAddBtnClicked2,
   isEditable = false,
   calc,
   isSortable = true,
@@ -31,6 +33,8 @@ function Grid({
   layout?: any;
   setIsCancelBtnDisabled?: Function;
   setIsAddBtnClicked?: Function;
+  setIsCancelBtnDisabled2?: Function;
+  setIsAddBtnClicked2?: Function;
   isEditable?: boolean;
   calc?: Function;
   isSortable?: boolean;
@@ -109,6 +113,9 @@ function Grid({
 
       setIsCancelBtnDisabled && setIsCancelBtnDisabled(true);
       setIsAddBtnClicked && setIsAddBtnClicked(false);
+
+      setIsCancelBtnDisabled2 && setIsCancelBtnDisabled2(true);
+      setIsAddBtnClicked2 && setIsAddBtnClicked2(false);
     };
     gv.setCheckBar({ exclusive: true });
     // gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
