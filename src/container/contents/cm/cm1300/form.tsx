@@ -26,6 +26,7 @@ import {
   RadioButton,
   RadioButtonLabel,
 } from "components/radioButton/style";
+import useRdanga from "app/hook/calcRdanga";
 
 const radioOptions = [
   {
@@ -110,11 +111,11 @@ const Form = React.forwardRef(
     const [chkAptGumdate, setChkAptGumdate] = useState(false);
     const [chkAptSukumtype, setChkAptSukumtype] = useState(false);
 
-    const [totalValue, setTotalValue] = useState<string>("");
-    const [aptRdangaType, setAptRdangaType] = useState<string>("");
-    const [aptRdanga, setAptRdanga] = useState<string>("");
-    const [aptRdangaSign, setAptRdangaSign] = useState<string>("");
-    const [aptRdangaAmt, setAptRdangaAmt] = useState<string>("");
+    // const [totalValue, setTotalValue] = useState<string>("");
+    // const [aptRdangaType, setAptRdangaType] = useState<string>("");
+    // const [aptRdanga, setAptRdanga] = useState<string>("");
+    // const [aptRdangaSign, setAptRdangaSign] = useState<string>("");
+    // const [aptRdangaAmt, setAptRdangaAmt] = useState<string>("");
 
     const { register, handleSubmit, reset, getValues } = useForm<ICM1300>({
       mode: "onChange",
@@ -139,6 +140,20 @@ const Form = React.forwardRef(
       crud,
       resetForm,
     }));
+
+    const {
+      rdangaType,
+      setRdangaType,
+      rdanga,
+      setRdanga,
+      rdangaSign,
+      setRdangaSign,
+      rdangaAmt,
+      setRdangaAmt,
+      totalValue,
+      setTotalValue,
+      calcRdanga,
+    } = useRdanga();
 
     const fetchCodes = async (areaCode: string) => {
       try {
@@ -196,10 +211,10 @@ const Form = React.forwardRef(
       setChkAptGumdate(false);
       setChkAptSukumtype(false);
 
-      setAptRdangaType(selected?.aptRdangaType);
-      setAptRdanga(selected?.aptRdanga);
-      setAptRdangaSign(selected?.aptRdangaSign);
-      setAptRdangaAmt(selected?.aptRdangaAmt);
+      setRdangaType(selected?.aptRdangaType);
+      setRdanga(selected?.aptRdanga);
+      setRdangaSign(selected?.aptRdangaSign);
+      setRdangaAmt(selected?.aptRdangaAmt);
       setTotalValue("");
     };
     const crud = async (type: string | null) => {
@@ -244,20 +259,14 @@ const Form = React.forwardRef(
       formValues.aptPer = +formValues.aptPer;
       formValues.aptSisulkum = +formValues.aptSisulkum;
 
-      if (aptRdangaType !== "") {
-        formValues.aptRdangaType = aptRdangaType;
-      }
-
-      if (aptRdanga !== "") {
-        formValues.aptRdanga = +aptRdanga;
-      }
-
-      // if (aptRdangaSign !== "") {
-      formValues.aptRdangaSign = aptRdangaSign;
-      // }
-
-      if (aptRdangaAmt !== "") {
-        formValues.aptRdangaAmt = +aptRdangaAmt;
+      if (chkAptRdangaType) {
+        formValues.aptRdangaType = rdangaType;
+        formValues.aptRdanga = +rdanga;
+        formValues.aptRdangaSign = rdangaSign;
+        formValues.aptRdangaAmt = +rdangaAmt;
+        // formValues.totalValue = totalValue; ene talbar tsaanaasaa irehgui bgaa irvel nemeh yum
+      } else {
+        //end yu boloh n logic todorhoigui
       }
 
       if (!chkAptZipCode) {
@@ -268,10 +277,6 @@ const Form = React.forwardRef(
 
       if (!chkAptRh2o) {
         delete formValues.aptRh2O;
-      }
-
-      if (!chkAptRdangaType) {
-        //-----------------------------
       }
 
       if (!chkAptAnkum) {
@@ -320,74 +325,38 @@ const Form = React.forwardRef(
       }
     };
 
-    const customEval = (t1: any, sign: any, t2: any) => {
-      let tot = 0;
-      let retVal = "";
-      if (sign === null || sign === undefined) {
-        retVal = ``;
-      } else if (sign !== "X") {
-        tot = eval(`${+t1} ${sign} ${+t2}`);
-        retVal = `원 = ${tot}원`;
-      } else {
-        tot = eval(`${+t1} * ${t2} / 100`);
-        retVal = `% = ${tot}원`;
-      }
-      return retVal;
-    };
-
-    const calcRdanga = (type: string, cur: any) => {
-      let retSt = "";
-      if (type === "aptRdanga") {
-        retSt = customEval(cur, aptRdangaSign, aptRdangaAmt);
-      }
-
-      if (type === "aptRdangaSign") {
-        retSt = customEval(aptRdanga, cur, aptRdangaAmt);
-      }
-
-      if (type === "aptRdangaAmt") {
-        retSt = customEval(aptRdanga, aptRdangaSign, cur);
-      }
-
-      if (type === "aptRdangaType" && cur === "1") {
-        retSt = customEval(aptRdanga, aptRdangaSign, aptRdangaAmt);
-      }
-
-      setTotalValue(retSt);
-    };
-
     const showRdanga = () => {
-      if (aptRdangaType === "0") {
+      if (rdangaType === "0") {
         return (
           <FormGroup className="0">
             <Input
               readOnly
               inputSize={InputSize.i60}
-              value={aptRdanga}
-              onChange={(e: any) => setAptRdanga(e.target.value)}
+              value={rdanga}
+              onChange={(e: any) => setRdanga(e.target.value)}
             />
             <p>원</p>
           </FormGroup>
         );
       }
-      if (aptRdangaType === "1") {
+      if (rdangaType === "1") {
         return (
           <FormGroup className="1">
             <Input
               inputSize={InputSize.i60}
-              value={aptRdanga}
+              value={rdanga}
               onChange={(e: any) => {
-                setAptRdanga(e.target.value);
-                calcRdanga("aptRdanga", e.target.value);
+                setRdanga(e.target.value);
+                calcRdanga("rdanga", e.target.value);
               }}
             />
             <p>원</p>
             <Select
               width={InputSize.i50}
-              value={aptRdangaSign}
+              value={rdangaSign}
               onChange={(e: any) => {
-                setAptRdangaSign(e.target.value);
-                calcRdanga("aptRdangaSign", e.target.value);
+                setRdangaSign(e.target.value);
+                calcRdanga("rdangaSign", e.target.value);
               }}
             >
               {dataCommonDic?.aptRdangaSign.map((obj: any, index: number) => (
@@ -399,23 +368,23 @@ const Form = React.forwardRef(
             <Input
               inputSize={InputSize.i60}
               textAlign="right"
-              value={aptRdangaAmt}
+              value={rdangaAmt}
               onChange={(e: any) => {
-                setAptRdangaAmt(e.target.value);
-                calcRdanga("aptRdangaAmt", e.target.value);
+                setRdangaAmt(e.target.value);
+                calcRdanga("rdangaAmt", e.target.value);
               }}
             />
             <p>{totalValue}</p>
           </FormGroup>
         );
       }
-      if (aptRdangaType === "2") {
+      if (rdangaType === "2") {
         return (
           <FormGroup className="2">
             <Input
               inputSize={InputSize.i60}
-              value={aptRdanga}
-              onChange={(e: any) => setAptRdanga(e.target.value)}
+              value={rdanga}
+              onChange={(e: any) => setRdanga(e.target.value)}
             />
           </FormGroup>
         );
@@ -583,10 +552,10 @@ const Form = React.forwardRef(
           <Select
             disabled={!chkAptRdangaType}
             width={InputSize.i120}
-            value={aptRdangaType}
+            value={rdangaType}
             onChange={(e) => {
-              setAptRdangaType(e.target.value);
-              calcRdanga("aptRdangaType", e.target.value);
+              setRdangaType(e.target.value);
+              calcRdanga("rdangaType", e.target.value);
             }}
           >
             {dataCommonDic?.aptRdangaType.map((option: any, index: number) => {

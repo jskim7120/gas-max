@@ -34,6 +34,7 @@ import getTabContent from "./getTabContent";
 import { useDispatch } from "app/store";
 import { CM120065 } from "app/path";
 import { openModal, addCM1105 } from "app/state/modal/modalSlice";
+import useRdanga from "app/hook/calcRdanga";
 
 const Form = React.forwardRef(
   (
@@ -95,6 +96,20 @@ const Form = React.forwardRef(
         mode: "onChange",
       });
 
+    const {
+      rdangaType,
+      setRdangaType,
+      rdanga,
+      setRdanga,
+      rdangaSign,
+      setRdangaSign,
+      rdangaAmt,
+      setRdangaAmt,
+      totalValue,
+      setTotalValue,
+      calcRdanga,
+    } = useRdanga();
+
     useEffect(() => {
       if (dataCommonDic) {
         setCuCustgubunDic(dataCommonDic?.cuCustgubun);
@@ -106,8 +121,8 @@ const Form = React.forwardRef(
           cuJyCode: dataCommonDic?.cuJyCode[0].code,
           cuSwCode: dataCommonDic?.cuSwCode[0].code,
           cuRh2O: dataCommonDic?.cuRh20[0].code,
-          cuRdangaType: dataCommonDic?.cuRdangaType[0].code,
-          cuRdangaSign: dataCommonDic?.cuRdangaSign[0].code,
+          // cuRdangaType: dataCommonDic?.cuRdangaType[0].code,
+          // cuRdangaSign: dataCommonDic?.cuRdangaSign[0].code,
           cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
           cuGumTurm: dataCommonDic?.cuGumTurm[0].code,
           tankMakeCo1: dataCommonDic?.tankMakeCo1[0].code,
@@ -119,8 +134,6 @@ const Form = React.forwardRef(
         });
       }
     }, [dataCommonDic]);
-
-    console.log("selectedUserInfo:", selectedUserInfo);
 
     useEffect(() => {
       if (selected && selected.cuCode && selected.areaCode) {
@@ -239,7 +252,14 @@ const Form = React.forwardRef(
           cuAptnameYn: tempData?.cuAptnameYn === "Y",
           cuBaGageYn: tempData?.cuBaGageYn === "Y",
         });
+
+        setRdangaType(selected?.cuRdangaType);
+        setRdanga(selected?.cuRdanga);
+        setRdangaSign(selected?.cuRdangaSign);
+        setRdangaAmt(selected?.cuRdangaAmt);
+        setTotalValue("");
       }
+
       setChkCuZipCode(false);
       setChkCuRh20(false);
       setChkCuRdanga(false);
@@ -327,8 +347,15 @@ const Form = React.forwardRef(
       if (!chkCuRh20) {
         delete formValues.cuRh2O;
       }
-      if (!chkCuRdanga) {
-        //talbaruudiig nyagtal
+
+      if (chkCuRdanga) {
+        formValues.cuRdangaType = rdangaType;
+        formValues.cuRdanga = +rdanga;
+        formValues.cuRdangaSign = rdangaSign;
+        formValues.cuRdangaAmt = +rdangaAmt;
+        // formValues.totalValue = totalValue; ene talbar tsaanaasaa irehgui bgaa irvel nemeh yum
+      } else {
+        //end yu boloh n logic todorhoigui
       }
 
       if (!chkCuAnKum) {
@@ -434,100 +461,6 @@ const Form = React.forwardRef(
         toast.error(err?.message, {
           autoClose: 500,
         });
-      }
-    };
-
-    const renderRdangaCalc = () => {
-      var selectedcuRdanga = watch("cuRdanga") ?? 0;
-      var selectedRdangaType = watch("cuRdangaType");
-      var selectedRdangaSign = watch("cuRdangaSign") ?? null;
-      var selectedRdangaAmt = watch("cuRdangaAmt") ?? 0;
-      var totalValue = 0;
-
-      if (selectedRdangaSign === null) {
-        totalValue = 0;
-      } else if (selectedRdangaSign === "+") {
-        totalValue = Number(selectedcuRdanga) + Number(selectedRdangaAmt);
-      } else if (selectedRdangaSign === "-") {
-        totalValue = selectedcuRdanga - selectedRdangaAmt;
-      } else if (selectedRdangaSign === "X") {
-        if (selectedcuRdanga === 0 || selectedRdangaAmt === 0) {
-          totalValue = 0;
-        } else {
-          totalValue = selectedcuRdanga * selectedRdangaAmt;
-        }
-      } else {
-        totalValue = 0;
-      }
-
-      if (selectedRdangaType === "0") {
-        return (
-          <Field>
-            <FormGroup>
-              {/* cuRdanga  */}
-              <Input
-                name="cuRdanga"
-                register={register("cuRdanga")}
-                inputSize={InputSize.xs}
-                value={selected.cuRdanga}
-                readOnly
-              />
-              <p>원</p>
-            </FormGroup>
-          </Field>
-        );
-      }
-      if (selectedRdangaType === "1") {
-        return (
-          <Field>
-            <FormGroup>
-              {/* cuRdanga  */}
-              <Input
-                type="number"
-                name="cuRdanga"
-                register={register("cuRdanga")}
-                inputSize={InputSize.xs}
-              />
-              <p>원</p>
-              <CSelect {...register("cuRdangaSign")} width={InputSize.i50}>
-                {dataCommonDic?.cuRdangaSign.map((obj: any, index: number) => (
-                  <option key={index} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </CSelect>
-              <Input
-                type="text"
-                inputSize={InputSize.xs}
-                textAlign="right"
-                register={register("cuRdangaAmt")}
-              />
-              <p>
-                {selectedRdangaSign === "X"
-                  ? "%"
-                  : selectedRdangaSign === "+"
-                  ? "원"
-                  : "원"}
-              </p>
-              <p>=</p>
-              <p>{totalValue}원</p>
-            </FormGroup>
-          </Field>
-        );
-      }
-      if (selectedRdangaType === "2") {
-        return (
-          <Field>
-            <FormGroup>
-              <Input
-                name="cuRdanga"
-                type="number"
-                register={register("cuRdanga")}
-                inputSize={InputSize.xs}
-              />
-            </FormGroup>
-          </Field>
-        );
       }
     };
 
@@ -648,7 +581,6 @@ const Form = React.forwardRef(
                 tabId,
                 register,
                 dataCommonDic,
-                renderRdangaCalc,
                 chkCuRh20,
                 setChkCuRh20,
                 chkCuRdanga,
@@ -669,7 +601,18 @@ const Form = React.forwardRef(
                 chkCuGumdate,
                 setChkCuGumdate,
                 chkCuCno,
-                setChkCuCno
+                setChkCuCno,
+                rdangaType,
+                setRdangaType,
+                rdanga,
+                setRdanga,
+                rdangaSign,
+                setRdangaSign,
+                rdangaAmt,
+                setRdangaAmt,
+                totalValue,
+                setTotalValue,
+                calcRdanga
               )}
             </TabContentWrapper>
           </div>

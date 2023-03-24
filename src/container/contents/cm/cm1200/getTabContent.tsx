@@ -6,7 +6,6 @@ function getTabContent(
   id: number,
   register: Function,
   dataCommonDic: any,
-  renderRdangaCalc: Function,
   chkCuRh20: boolean,
   setChkCuRh20: Function,
   chkCuRdanga: boolean,
@@ -27,7 +26,18 @@ function getTabContent(
   chkCuGumdate: boolean,
   setChkCuGumdate: Function,
   chkCuCno: boolean,
-  setChkCuCno: Function
+  setChkCuCno: Function,
+  rdangaType: any,
+  setRdangaType: Function,
+  rdanga: any,
+  setRdanga: Function,
+  rdangaSign: any,
+  setRdangaSign: Function,
+  rdangaAmt: any,
+  setRdangaAmt: Function,
+  totalValue: any,
+  setTotalValue: any,
+  calcRdanga: any
 ) {
   switch (id) {
     case 0:
@@ -36,7 +46,6 @@ function getTabContent(
           register={register}
           dataCommonDic={dataCommonDic}
           control={control}
-          renderRdangaCalc={renderRdangaCalc}
           chkCuRh20={chkCuRh20}
           setChkCuRh20={setChkCuRh20}
           chkCuRdanga={chkCuRdanga}
@@ -57,6 +66,17 @@ function getTabContent(
           setChkCuGumdate={setChkCuGumdate}
           chkCuCno={chkCuCno}
           setChkCuCno={setChkCuCno}
+          rdangaType={rdangaType}
+          setRdangaType={setRdangaType}
+          rdanga={rdanga}
+          setRdanga={setRdanga}
+          rdangaSign={rdangaSign}
+          setRdangaSign={setRdangaSign}
+          rdangaAmt={rdangaAmt}
+          setRdangaAmt={setRdangaAmt}
+          totalValue={totalValue}
+          setTotalValue={setTotalValue}
+          calcRdanga={calcRdanga}
         />
       );
     case 1:

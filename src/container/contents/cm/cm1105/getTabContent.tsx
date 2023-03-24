@@ -7,15 +7,21 @@ import Tab6 from "./tab6";
 
 function getTabContent(
   id: number,
-  customerInfo: any,
   register: any,
   dataCommonDic: any,
   setAddress: any,
-  too: number,
-  setToo: Function,
-  sign: string,
-  setSign: Function,
-  control: any
+  control: any,
+  rdangaType: string,
+  setRdangaType: Function,
+  rdanga: string,
+  setRdanga: Function,
+  rdangaSign: string,
+  setRdangaSign: Function,
+  rdangaAmt: string,
+  setRdangaAmt: Function,
+  totalValue: string,
+  setTotalValue: Function,
+  calcRdanga: Function
 ) {
   switch (id) {
     case 0: {
@@ -31,14 +37,20 @@ function getTabContent(
     case 1:
       return (
         <Tab2
-          customerInfo={customerInfo}
           dataCommonDic={dataCommonDic}
           register={register}
-          too={too}
-          setToo={setToo}
-          sign={sign}
-          setSign={setSign}
           control={control}
+          rdangaType={rdangaType}
+          setRdangaType={setRdangaType}
+          rdanga={rdanga}
+          setRdanga={setRdanga}
+          rdangaSign={rdangaSign}
+          setRdangaSign={setRdangaSign}
+          rdangaAmt={rdangaAmt}
+          setRdangaAmt={setRdangaAmt}
+          totalValue={totalValue}
+          setTotalValue={setTotalValue}
+          calcRdanga={calcRdanga}
         />
       );
     case 2:
