@@ -21,3 +21,16 @@ export function formatCurrencyRemoveComma(num) {
   num = parseFloat(String(num).replaceAll(",", ""));
   return num;
 }
+
+export function removeCommas(data, returnType) {
+  const result =
+    typeof data === "string"
+      ? data.replace(/,/g, "")
+      : String(data).replace(/,/g, "");
+
+  if (returnType === "number") {
+    return +result;
+  }
+
+  return result;
+}

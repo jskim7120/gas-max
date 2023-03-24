@@ -363,7 +363,7 @@ function CM1100Page({
           columns={columns}
           fields={fields}
           setSelected={setSelected}
-          openPopup={onClickUpdate}
+          openPopup={openPopup}
           areaCode={ownAreaCode}
         />
 

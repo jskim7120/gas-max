@@ -62,7 +62,13 @@ function Grid({
     };
 
     gv.onCellDblClicked = function (grid: any, e: any) {
-      openPopup && openPopup();
+      const itemIndex: any = grid.getCurrent().dataRow;
+      openPopup &&
+        openPopup({
+          cuCode: data[itemIndex].cuCode,
+          areaCode: data[itemIndex].areaCode,
+          status: "UPDATE",
+        });
     };
 
     return () => {

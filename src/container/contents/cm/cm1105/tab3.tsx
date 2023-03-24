@@ -217,7 +217,7 @@ function Tab3({
               inputSize={InputSize.i80}
             />
             <Select
-              {...register("tankVol1")}
+              {...register("tankVol1", { valueAsNumber: true })}
               textAlign="right"
               width={InputSize.i80}
             >
@@ -309,7 +309,7 @@ function Tab3({
               inputSize={InputSize.i80}
             />
             <Select
-              {...register("tankVol2")}
+              {...register("tankVol2", { valueAsNumber: true })}
               textAlign="right"
               width={InputSize.i80}
             >
@@ -337,7 +337,6 @@ function Tab3({
               )}
             />
             <Input register={register("tankRcv2")} inputSize={InputSize.i80} />
-
             <Controller
               control={control}
               {...register("tankFirstDate2")}
@@ -349,7 +348,6 @@ function Tab3({
                 />
               )}
             />
-
             <Controller
               control={control}
               {...register("tankOutsideDate2")}
@@ -361,7 +359,6 @@ function Tab3({
                 />
               )}
             />
-
             <Controller
               control={control}
               {...register("tankInsideDate2")}
@@ -373,7 +370,6 @@ function Tab3({
                 />
               )}
             />
-
             <Controller
               control={control}
               {...register("tankMax2")}
@@ -388,12 +384,10 @@ function Tab3({
               )}
             />
             <p style={{ marginLeft: "2px" }}>%</p>
-
             <Input
               register={register("tankTransmCd2")}
               inputSize={InputSize.i60}
             />
-
             <Input register={register("tankCuCd2")} inputSize={InputSize.i60} />
             <SearchBtn type="button" onClick={() => alert("dsdsds")}>
               <MagnifyingGlass />
@@ -436,7 +430,7 @@ function Tab3({
 
           <p>×</p>
           <Input
-            register={register("cuCylinderQty")}
+            register={register("cuCylinderQty", { valueAsNumber: true })}
             inputSize={InputSize.i60}
             textAlign="right"
           />

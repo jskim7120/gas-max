@@ -9,7 +9,7 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import { Plus, Update, Reset, WhiteClose } from "components/allSvgIcon";
 import { ICM1105SEARCH, emptyObj } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import { currencyMask } from "helpers/currency";
+import { currencyMask, removeCommas } from "helpers/currency";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { closeModal } from "app/state/modal/modalSlice";
 import {
@@ -296,11 +296,20 @@ function FormCM1105() {
     formValues.cuExtendDate = DateWithoutDash(formValues.cuExtendDate);
     formValues.cuGongdate = DateWithoutDash(formValues.cuGongdate);
 
-    // formValues.cuTongkum = +formValues.cuTongkum;
+    console.log(formValues);
 
-    //formValues.cuTongkum = formValues.cuTongkum;
-    // formValues.cuJmisu = +formValues.cuJmisu;
-    // formValues.cuCmisu = +formValues.cuCmisu;
+    formValues.cuTongkum = removeCommas(formValues.cuTongkum, "number");
+    formValues.cuJmisu = removeCommas(formValues.cuJmisu, "number");
+    formValues.cuCmisu = removeCommas(formValues.cuCmisu, "number");
+    formValues.cuAnkum = removeCommas(formValues.cuAnkum, "number");
+    formValues.cuSisulkum = removeCommas(formValues.cuSisulkum, "number");
+    formValues.cuMeterkum = removeCommas(formValues.cuMeterkum, "number");
+    formValues.cuPer = removeCommas(formValues.cuPer, "number");
+    formValues.cuCdc = removeCommas(formValues.cuCdc, "number");
+    formValues.cuSvKumack = removeCommas(formValues.cuSvKumack, "number");
+    formValues.cuBaGageKum = removeCommas(formValues.cuBaGageKum, "number");
+    formValues.tankMax1 = removeCommas(formValues.tankMax1, "number");
+    formValues.tankMax2 = removeCommas(formValues.tankMax2, "number");
 
     if (formValues.cuGongdate === "") {
       delete formValues.cuGongdate;
@@ -640,7 +649,10 @@ function FormCM1105() {
 
             <FormGroup>
               <Label>품목 단가</Label>
-              <Select {...register("cuJdc")} width={InputSize.i150}>
+              <Select
+                {...register("cuJdc", { valueAsNumber: true })}
+                width={InputSize.i150}
+              >
                 {dataCommonDic?.cuJdc?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
