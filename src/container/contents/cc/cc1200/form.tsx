@@ -6,6 +6,7 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { EN1400DELETE, EN140011 } from "app/path";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
+import { currencyMask } from "helpers/currency";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { useDispatch, useSelector } from "app/store";
@@ -21,6 +22,7 @@ import {
   Wrapper,
   Divider,
   Label,
+  StcTable,
 } from "components/form/style";
 import { ICC1200SEARCH } from "./model";
 import { addCC1100, openModal } from "app/state/modal/modalSlice";
@@ -202,73 +204,90 @@ const Form = React.forwardRef(
             />
           </FormGroup>
         </Wrapper>
-        <Wrapper>
-          <FormGroup>
-            <Label style={{ minWidth: "80px" }}>차 변</Label>
-            {radioOptions.map((option, index) => (
-              <Item key={index}>
-                <RadioButton
-                  type="radio"
-                  value={option.id}
-                  {...register(`chGubun`)}
-                  id={option.id}
-                  checked={radioChecked === index}
-                  onClick={(e: any) => {
-                    setRadioChecked(parseInt(e.target.value));
-                  }}
-                />
-                <RadioButtonLabel htmlFor={`${option.label}`}>
-                  {option.label}
-                </RadioButtonLabel>
-              </Item>
-            ))}
-          </FormGroup>
-        </Wrapper>
-        <Wrapper>
-          <Input
-            label="계정과목"
-            labelStyle={{ minWidth: "80px" }}
-            register={register("acjAccCodeCh")}
-            inputSize={InputSize.i200}
-          />
-        </Wrapper>
-        <Wrapper>
-          <FormGroup>
-            <Label style={{ minWidth: "80px" }}>대변</Label>
-            {radioOptionsSecond.map((option, index) => (
-              <Item key={index}>
-                <RadioButton
-                  type="radio"
-                  value={option.id}
-                  {...register(`chGubun`)}
-                  id={option.id}
-                  checked={radioChecked === index}
-                  onClick={(e: any) => {
-                    setRadioCheckedSecond(parseInt(e.target.value));
-                  }}
-                />
-                <RadioButtonLabel htmlFor={`${option.label}`}>
-                  {option.label}
-                </RadioButtonLabel>
-              </Item>
-            ))}
-          </FormGroup>
-        </Wrapper>
-        <Wrapper>
-          <FormGroup>
+        <div
+          style={{
+            borderStyle: "groove",
+            marginTop: "8px",
+            alignItems: "center",
+            padding: "7px 0",
+          }}
+        >
+          <Wrapper>
+            <FormGroup>
+              <Label style={{ minWidth: "80px" }}>차 변</Label>
+              {radioOptions.map((option, index) => (
+                <Item key={index} style={{ marginLeft: "2px" }}>
+                  <RadioButton
+                    type="radio"
+                    value={option.id}
+                    {...register(`chGubun`)}
+                    id={option.id}
+                    checked={radioChecked === index}
+                    onClick={(e: any) => {
+                      setRadioChecked(parseInt(e.target.value));
+                    }}
+                  />
+                  <RadioButtonLabel htmlFor={`${option.label}`}>
+                    {option.label}
+                  </RadioButtonLabel>
+                </Item>
+              ))}
+            </FormGroup>
+          </Wrapper>
+          <Wrapper>
             <Input
               label="계정과목"
               labelStyle={{ minWidth: "80px" }}
-              register={register("acjAccCodeDa")}
-              style={{ width: "172px" }}
+              register={register("acjAccCodeCh")}
+              inputSize={InputSize.i200}
             />
-            <SearchBtn type="button" onClick={handleSearchBtnClick}>
-              <MagnifyingGlass />
-            </SearchBtn>
-          </FormGroup>
-        </Wrapper>
-
-        <Divider />
+          </Wrapper>
+        </div>
+        <div
+          style={{
+            borderStyle: "groove",
+            alignItems: "center",
+            marginTop: "8px",
+            marginBottom: "8px",
+            padding: "7px 0",
+          }}
+        >
+          <Wrapper>
+            <FormGroup>
+              <Label style={{ minWidth: "80px" }}>대변</Label>
+              {radioOptionsSecond.map((option, index) => (
+                <Item key={index} style={{ marginLeft: "2px" }}>
+                  <RadioButton
+                    type="radio"
+                    value={option.id}
+                    {...register(`chGubun`)}
+                    id={option.id}
+                    checked={radioChecked === index}
+                    onClick={(e: any) => {
+                      setRadioCheckedSecond(parseInt(e.target.value));
+                    }}
+                  />
+                  <RadioButtonLabel htmlFor={`${option.label}`}>
+                    {option.label}
+                  </RadioButtonLabel>
+                </Item>
+              ))}
+            </FormGroup>
+          </Wrapper>
+          <Wrapper>
+            <FormGroup>
+              <Input
+                label="계정과목"
+                labelStyle={{ minWidth: "80px" }}
+                register={register("acjAccCodeDa")}
+                style={{ width: "172px" }}
+              />
+              <SearchBtn type="button" onClick={handleSearchBtnClick}>
+                <MagnifyingGlass />
+              </SearchBtn>
+            </FormGroup>
+          </Wrapper>
+        </div>
 
         <Wrapper>
           <Input
@@ -284,8 +303,30 @@ const Form = React.forwardRef(
             labelStyle={{ minWidth: "80px" }}
             register={register("acjKumack")}
             inputSize={InputSize.i200}
+            mask={currencyMask}
+            textAlign="right"
           />
         </Wrapper>
+        <StcTable>
+          <tr>
+            <th>차변</th>
+            <th>대변</th>
+          </tr>
+          <tr>
+            <td>
+              <p>자산의 증가</p>
+              <p>부채의 감소</p>
+              <p>자본의 감소</p>
+              <p>비용의 발생</p>
+            </td>
+            <td>
+              <p>자산의 감소</p>
+              <p>부채의 증가</p>
+              <p>자본의 증가</p>
+              <p>비용의 발생</p>
+            </td>
+          </tr>
+        </StcTable>
       </form>
     );
   }

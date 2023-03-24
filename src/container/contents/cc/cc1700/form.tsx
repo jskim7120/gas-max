@@ -79,7 +79,7 @@ const Form = React.forwardRef(
       >
         <FormGroup>
           <Label>영 업 소</Label>
-          <Select {...register("acbAreaCode")} width={InputSize.i130}>
+          <Select {...register("acbAreaCode")} width={InputSize.i175}>
             {dataCommonDic?.acbAreaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -90,10 +90,10 @@ const Form = React.forwardRef(
         <Input
           label="코 드"
           register={register("acbCode")}
-          inputSize={InputSize.i130}
+          inputSize={InputSize.i175}
         />
         <FormGroup>
-          <Label>구 분</Label>
+          <Label style={{ marginRight: "3px" }}>구 분</Label>
           {[
             { name: "보통예금", value: "0" },
             { name: "정기적금", value: "1" },
@@ -116,17 +116,17 @@ const Form = React.forwardRef(
         <Input
           label="은 행 명"
           register={register("acbName")}
-          inputSize={InputSize.i130}
+          inputSize={InputSize.i175}
         />
         <Input
           label="계좌번호"
           register={register("acbBankno")}
-          inputSize={InputSize.i130}
+          inputSize={InputSize.i175}
         />
         <Input
           label="적 요"
           register={register("acbBigo")}
-          inputSize={InputSize.i130}
+          inputSize={InputSize.i175}
         />
       </form>
     );

@@ -50,7 +50,7 @@ function CC1700({
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CC",
-    functionName: "CC1600",
+    functionName: "CC1700",
   });
 
   useEffect(() => {

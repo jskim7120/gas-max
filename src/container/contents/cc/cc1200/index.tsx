@@ -42,7 +42,7 @@ function CC1200({
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
-  const [dataChk, setDataChk] = useState(true);
+  const [dataChk, setDataChk] = useState("N");
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CC",
     functionName: "CC1200",
@@ -110,12 +110,12 @@ function CC1200({
 
   const cancel = () => {
     resetSearchForm();
-    setDataChk(true);
+    setDataChk("N");
     setData([]);
   };
 
   const submit = (data: ICC1200SEARCH) => {
-    if (data.userChk === "true") {
+    if (dataChk === "Y") {
       data.userChk = "Y";
     } else {
       data.userChk = "N";
@@ -123,6 +123,14 @@ function CC1200({
 
     console.log("IISEARCH:", data);
     fetchData(data);
+  };
+
+  const handleUserChk = (event: any) => {
+    if (event.target.checked) {
+      setDataChk("Y");
+    } else {
+      setDataChk("N");
+    }
   };
 
   return (
@@ -199,7 +207,10 @@ function CC1200({
                 <Field style={{ width: "280px" }}>
                   <FormGroup>
                     &nbsp;&nbsp;
-                    <CheckBox register={{ ...register("userChk") }} />
+                    <CheckBox
+                      register={{ ...register("userChk") }}
+                      onChange={handleUserChk}
+                    />
                     &nbsp; &nbsp; &nbsp;
                     <Label>사용자등록 자료만 보기</Label>
                   </FormGroup>

@@ -633,3 +633,21 @@ export const ParagraphBorderBotton = styled.div`
   border-bottom : 1px solid
   width: 100%;
 `;
+
+export const StcTable = styled.table`
+  width: 330px;
+  height: 147px;
+  font-size: 18px;
+  position: absolute;
+  right: 0;
+  bottom: 80px;
+  border-collapse: collapse;
+  td,
+  th {
+    border: 1px solid #707070;
+    font-weight: 500;
+    p {
+      text-align: center;
+    }
+  }
+`;

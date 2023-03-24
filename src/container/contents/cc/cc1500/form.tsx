@@ -15,6 +15,7 @@ import { ICC1500FORM } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
+import { currencyMask } from "helpers/currency";
 import API from "app/axios";
 import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
 
@@ -137,7 +138,7 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ width: "410px", padding: "0px 10px" }}
+        style={{ width: "410px", padding: "10px 10px 0" }}
       >
         <div
           style={{
@@ -205,6 +206,7 @@ const Form = React.forwardRef(
               register={register("cjKumack")}
               inputSize={InputSize.i150}
               textAlign="right"
+              mask={currencyMask}
             />
             <FormGroup>
               <Label>사원</Label>
@@ -251,7 +253,7 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>사원</Label>
               <Select {...register("cjSwCodeOil")} width={InputSize.i150}>
-                {dataCommonDic?.cjCaCode?.map((obj: any, idx: number) => (
+                {dataCommonDic?.cjSwCodeOil?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>

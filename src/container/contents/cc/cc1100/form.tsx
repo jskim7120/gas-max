@@ -5,6 +5,7 @@ import API from "app/axios";
 import { EN1400DELETE, EN140011 } from "app/path";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
+import { currencyMask } from "helpers/currency";
 import {
   Item,
   RadioButton,
@@ -289,6 +290,7 @@ const Form = React.forwardRef(
           register={register("acjKumack")}
           inputSize={InputSize.i200}
           textAlign="right"
+          mask={currencyMask}
         />
 
         <Input

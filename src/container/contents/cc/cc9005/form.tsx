@@ -104,7 +104,7 @@ const Form = React.forwardRef(
           />
         </FormGroup>
         <Input
-          label="일자"
+          label="계정과목"
           register={register("accName")}
           inputSize={InputSize.i200}
         />
@@ -112,9 +112,9 @@ const Form = React.forwardRef(
           <Input
             label="은행명"
             register={register("bankCode")}
-            inputSize={InputSize.i40}
+            inputSize={InputSize.i50}
           />
-          <Input register={register("acbName")} inputSize={InputSize.i150} />
+          <Input register={register("acbName")} inputSize={InputSize.i145} />
         </FormGroup>
         <FormGroup>
           <Input
