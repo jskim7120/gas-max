@@ -14,6 +14,7 @@ function FourButtons({
   btn2Name,
   btn3Name,
   btn4Name,
+  style,
 }: {
   onClickAdd: any;
   onClickDelete: any;
@@ -25,9 +26,10 @@ function FourButtons({
   btn2Name?: string;
   btn3Name?: string;
   btn4Name?: string;
+  style?: any;
 }) {
   return (
-    <div className="buttons">
+    <div className="buttons" style={style}>
       <Button
         text={btn1Name ? btn1Name : "등록"}
         icon={<Plus />}

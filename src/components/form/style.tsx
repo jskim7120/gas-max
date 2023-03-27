@@ -175,7 +175,7 @@ export const Input = ({
             mask={mask}
             value={value}
             onChange={onChange}
-            name={name}
+            name={name && name}
             guide={false}
             readOnly={readOnly}
             className="maskedInput"
@@ -185,6 +185,7 @@ export const Input = ({
         ) : (
           <InputForm
             id={register?.name}
+            name={name && name}
             type={type ? type : "text"}
             inputSize={inputSize && inputSize}
             fullWidth={fullWidth && fullWidth}

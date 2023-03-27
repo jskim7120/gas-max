@@ -140,8 +140,6 @@ function CM1200({
     formRef.current.resetForm("reset");
   };
 
-  console.log("selec11 ", selected);
-
   return (
     <>
       <SearchWrapper className="h35 mt5">

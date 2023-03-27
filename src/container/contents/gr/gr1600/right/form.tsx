@@ -179,17 +179,17 @@ function Form({
               alignItems: "center",
               background: `rgba(104,103,103,0.09)`,
               width: "250px",
-              height: "25px",
+              height: "30px",
               borderRadius: "4px",
             }}
           >
             <span
               style={{
                 fontFamily: "NotoSansKRRegular",
-                fontSize: "10px",
+                fontSize: "15px",
                 background: "#A7A7A7",
-                height: "15px",
-                width: "50px",
+                height: "22px",
+                width: "80px",
                 color: "#fff",
                 marginLeft: "12px",
                 textAlign: "center",
@@ -202,7 +202,7 @@ function Form({
               style={{
                 marginLeft: "20px",
                 fontFamily: "NotoSansKRRegular",
-                fontSize: "12px",
+                fontSize: "15px",
                 paddingRight: "10px",
               }}
             >
