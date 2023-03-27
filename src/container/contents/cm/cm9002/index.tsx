@@ -115,7 +115,7 @@ function CM9002({
           <SearchWrapper style={{ alignItems: "baseline" }}>
             <div>
               <Wrapper grid col={6} fields="1fr 1fr 1fr 1.3fr 1fr 1fr">
-                <FormGroup>
+                <FormGroup style={{ width: "255px" }}>
                   <Label style={{ minWidth: "90px" }}>보고서종류</Label>
                   <Select
                     width={InputSize.i130}
@@ -130,7 +130,7 @@ function CM9002({
                   </Select>
                 </FormGroup>
 
-                <FormGroup>
+                <FormGroup style={{ width: "255px" }}>
                   <Label style={{ minWidth: "90px" }}>거래구분</Label>
                   <Select {...register("cuType")} width={InputSize.i130}>
                     {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
@@ -141,7 +141,7 @@ function CM9002({
                   </Select>
                 </FormGroup>
 
-                <FormGroup>
+                <FormGroup style={{ width: "255px" }}>
                   <Label style={{ minWidth: "90px" }}>지역분류</Label>
                   <Select {...register("cuJyCode")} width={InputSize.i130}>
                     {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
@@ -152,9 +152,13 @@ function CM9002({
                   </Select>
                 </FormGroup>
 
-                <FormGroup>
+                <FormGroup style={{ width: "362px" }}>
                   <Label style={{ minWidth: "90px" }}>담당사원</Label>
-                  <Select {...register("swCode")} width={InputSize.i130}>
+                  <Select
+                    {...register("swCode")}
+                    width={InputSize.i130}
+                    style={{ marginLeft: "4px" }}
+                  >
                     {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -187,7 +191,7 @@ function CM9002({
                 </FormGroup>
               </Wrapper>
               <Wrapper grid col={6} fields="1fr 1fr 1fr 1.3fr 1fr 1fr">
-                <FormGroup>
+                <FormGroup style={{ width: "255px" }}>
                   <Label style={{ minWidth: "90px" }}>미수구</Label>
                   <Select {...register("cuMisu")} width={InputSize.i130}>
                     {dataCommonDic?.cuMisu?.map((obj: any, idx: number) => (
@@ -197,7 +201,7 @@ function CM9002({
                     ))}
                   </Select>
                 </FormGroup>
-                <FormGroup>
+                <FormGroup style={{ width: "255px" }}>
                   <Label style={{ minWidth: "90px" }}>소비자형태</Label>
                   <Select {...register("cuCutype")} width={InputSize.i130}>
                     {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
@@ -207,7 +211,7 @@ function CM9002({
                     ))}
                   </Select>
                 </FormGroup>
-                <FormGroup>
+                <FormGroup style={{ width: "255px" }}>
                   <Label style={{ minWidth: "90px" }}>거래상태</Label>
                   <Select {...register("cuStae")} width={InputSize.i130}>
                     {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
@@ -221,12 +225,12 @@ function CM9002({
                   flex
                   style={{
                     alignItems: "center",
-                    marginLeft: "22px",
+                    // width: "335px",
                   }}
                 >
+                  <p style={{ width: "69px" }}>등록기간</p>
                   <CheckBox
                     register={{ ...register("dataChk") }}
-                    title="등록기간"
                     onChange={(e: any) => setDataChk(e.target.checked)}
                     checked={dataChk}
                   />
@@ -237,7 +241,7 @@ function CM9002({
                       <CustomDatePicker
                         value={value}
                         onChange={onChange}
-                        style={{ marginLeft: "15px" }}
+                        style={{ marginLeft: "8px", width: "130px" }}
                         readOnly={!dataChk}
                       />
                     )}
@@ -250,6 +254,7 @@ function CM9002({
                         value={value}
                         onChange={onChange}
                         readOnly={!dataChk}
+                        style={{ width: "130px" }}
                       />
                     )}
                   />
