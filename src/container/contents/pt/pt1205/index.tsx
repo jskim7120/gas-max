@@ -133,7 +133,7 @@ function FormIP1205() {
               label="거래처"
               register={register("sCuName")}
               //   kind={FieldKind.BORDER}
-              textAlign="right"
+              textAlign="left"
               labelStyle={{
                 minWidth: "60px",
               }}
@@ -153,7 +153,7 @@ function FormIP1205() {
             />
             <Input
               register={register("sCuCode")}
-              textAlign="right"
+              textAlign="left"
               inputSize={InputSize.i120}
             />
           </FormGroup>

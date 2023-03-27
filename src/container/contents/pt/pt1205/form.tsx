@@ -4,6 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { FieldKind, InputSize } from "components/componentsType";
 import { IPT1205 } from "./model";
 import CustomDatePicker from "components/customDatePicker";
+import { currencyMask } from "helpers/currency";
 
 const FORMPT1205 = React.forwardRef(
   (
@@ -29,10 +30,20 @@ const FORMPT1205 = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-
-    const { register, handleSubmit, reset, getValues, control } =
+    const [addedDcAmount, setAddedDcAmount] = useState(0);
+    const { register, handleSubmit, reset, getValues, control, watch } =
       useForm<IPT1205>();
 
+    let gsDcTotal = 0;
+    if (
+      watch("gsDc") === undefined ||
+      Number.isNaN(watch("gsDc")) ||
+      watch("gsDc") === null
+    ) {
+      gsDcTotal = 0;
+    } else {
+      gsDcTotal = parseFloat(String(watch("gsDc")).replaceAll(",", ""));
+    }
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       resetForm,
       //   crud,
@@ -80,66 +91,92 @@ const FORMPT1205 = React.forwardRef(
           />
         </Field>
         <div style={{ borderStyle: "groove", alignItems: "center" }}>
-          <Field>
-            <Input
-              label="미수금액"
-              register={register("cuCmisu")}
-              kind={FieldKind.BORDER}
-              inputSize={InputSize.i175}
-              value={cuCmisu}
-              textAlign={"right"}
-            />
-          </Field>
-          <Field>
-            <Input
-              label="선택금액"
-              register={register("guChkamt")}
-              kind={FieldKind.BORDER}
-              inputSize={InputSize.i175}
-              value={totalGuAmount}
-              textAlign={"right"}
-            />
-          </Field>
+          <Controller
+            control={control}
+            {...register("cuCmisu")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                labelStyle={{ minWidth: "120px" }}
+                label="미수금액"
+                value={cuCmisu}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i175}
+                name={name}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            {...register("guChkamt")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                labelStyle={{ minWidth: "120px" }}
+                label="선택금액"
+                value={totalGuAmount}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i175}
+                name={name}
+              />
+            )}
+          />
         </div>
         <br />
-        <FormGroup>
-          <Field>
+        <Controller
+          control={control}
+          {...register("gsDc")}
+          render={({ field: { onChange, value, name } }) => (
             <Input
-              label="D    /    C"
-              register={register("gsDc")}
-              kind={FieldKind.BORDER}
+              labelStyle={{ minWidth: "120px" }}
+              label="D / C"
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
               inputSize={InputSize.i175}
-              value={0}
-              textAlign={"right"}
+              name={name}
             />
-          </Field>
-        </FormGroup>
-
-        <FormGroup>
-          <Field>
+          )}
+        />
+        <Controller
+          control={control}
+          {...register("gsKumack")}
+          render={({ field: { onChange, value, name } }) => (
             <Input
+              labelStyle={{ minWidth: "120px" }}
               label="수 금 액"
-              register={register("gsKumack")}
-              kind={FieldKind.BORDER}
-              inputSize={InputSize.i175}
               value={totalGuAmount}
-              textAlign={"right"}
-            />
-          </Field>
-        </FormGroup>
-        <br />
-        <FormGroup>
-          <Field>
-            <Input
-              label="수금 후 잔액"
-              register={register("gsJanack")}
-              kind={FieldKind.BORDER}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
               inputSize={InputSize.i175}
-              value={cuCmisu && cuCmisu - totalGuAmount}
-              textAlign={"right"}
+              name={name}
             />
-          </Field>
-        </FormGroup>
+          )}
+        />
+        <br />
+        <Controller
+          control={control}
+          {...register("gsJanack")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              labelStyle={{ minWidth: "120px" }}
+              label="수금 후 잔액"
+              value={
+                cuCmisu &&
+                `${cuCmisu - (totalGuAmount + gsDcTotal ? gsDcTotal : 0)}`
+              }
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i175}
+              name={name}
+            />
+          )}
+        />
         <br />
         <FormGroup>
           <Label>수금방법</Label>
@@ -176,7 +213,7 @@ const FORMPT1205 = React.forwardRef(
             register={register("gsBigo")}
             kind={FieldKind.BORDER}
             inputSize={InputSize.i175}
-            textAlign="right"
+            textAlign="left"
           />
         </Field>
       </form>

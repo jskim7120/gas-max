@@ -15,7 +15,7 @@ export const fields = [
   },
   {
     fieldName: "mjMisujan",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "mjSwName",
@@ -68,6 +68,7 @@ export const columns = [
     header: {
       text: "미수잔액",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "mjSwName",
@@ -77,5 +78,6 @@ export const columns = [
     header: {
       text: "사원",
     },
+    styleName: "rg-left-column",
   },
 ];

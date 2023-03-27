@@ -1,14 +1,14 @@
 export interface IPTFORMMODEL {
-  msDate: String;
-  cuName: String;
-  cuCode: String;
-  cuJmisu: String;
-  msDc: String;
-  msKumack: String;
-  msJanack: String;
-  msSukumtype: String;
-  msSwCode: String;
-  msBigo: String;
+  msDate: string;
+  cuName: string;
+  cuCode: string;
+  cuJmisu: number;
+  msDc: number;
+  msKumack: number;
+  msJanack: number;
+  msSukumtype: string;
+  msSwCode: string;
+  msBigo: string;
   totMisukum: number;
   totSukum: number;
   totDc: number;

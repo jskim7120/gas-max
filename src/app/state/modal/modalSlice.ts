@@ -55,6 +55,7 @@ export interface initialStateType {
     areaCode: string | undefined;
     cuCode: string | undefined;
     cuName: string | undefined;
+    cuJmisu: number | undefined;
   };
   pt1205: {
     areaCode: string | undefined;
@@ -117,6 +118,7 @@ const initialState: initialStateType = {
     areaCode: "",
     cuCode: "",
     cuName: "",
+    cuJmisu: 0,
   },
   pt1205: {
     areaCode: "",
@@ -195,6 +197,7 @@ const modalSlice = createSlice({
       state.pt1105.areaCode = action.payload.areaCode;
       state.pt1105.cuCode = action.payload.cuCode;
       state.pt1105.cuName = action.payload.cuName;
+      state.pt1105.cuJmisu = action.payload.cuJmisu;
     },
     pt1205Popup: (state, action) => {
       state.pt1205.areaCode = action.payload.areaCode;

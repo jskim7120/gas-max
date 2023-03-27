@@ -125,7 +125,6 @@ function PT1100({
   const calcTotal = async (fieldName: string, data: []) => {
     let total = 0;
     data.forEach((obj: any) => (total += obj[fieldName] ?? 0));
-    console.log("Im summing all of them ==", total, "fieldName", fieldName);
     return total;
   };
 
@@ -164,6 +163,7 @@ function PT1100({
         areaCode: selected.areaCode,
         cuCode: selected.cuCode,
         cuName: selected.cuName,
+        cuJmisu: selected.cuJmisu,
       })
     );
   };

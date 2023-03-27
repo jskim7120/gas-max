@@ -32,6 +32,7 @@ function FormIP1105() {
   const ptAreaCode = useSelector((state) => state.modal.pt1105.areaCode);
   const ptScuCode = useSelector((state) => state.modal.pt1105.cuCode);
   const ptScuName = useSelector((state) => state.modal.pt1105.cuName);
+  const ptCuJmisu = useSelector((state) => state.modal.pt1105.cuJmisu);
   const [data, setData] = useState<any>([]);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
@@ -130,7 +131,7 @@ function FormIP1105() {
               label="거래처"
               register={register("sCuName")}
               //   kind={FieldKind.BORDER}
-              textAlign="right"
+              textAlign="left"
               labelStyle={{
                 minWidth: "60px",
               }}
@@ -150,7 +151,7 @@ function FormIP1105() {
             />
             <Input
               register={register("sCuCode")}
-              textAlign="right"
+              textAlign="left"
               inputSize={InputSize.i120}
             />
           </FormGroup>
@@ -213,6 +214,7 @@ function FormIP1105() {
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
             guCheckAMount={totalGuAmount}
+            cuJmisu={ptCuJmisu}
           />
         </div>
       </form>

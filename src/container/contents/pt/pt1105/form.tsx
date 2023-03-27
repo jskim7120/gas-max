@@ -11,6 +11,7 @@ import { useForm, Controller } from "react-hook-form";
 import { FieldKind, InputSize } from "components/componentsType";
 import { IPT1105 } from "./model";
 import CustomDatePicker from "components/customDatePicker";
+import { currencyMask } from "helpers/currency";
 
 const FORMCM1105 = React.forwardRef(
   (
@@ -22,6 +23,7 @@ const FORMCM1105 = React.forwardRef(
       setSelected,
       dataCommonDic,
       guCheckAMount,
+      cuJmisu,
     }: {
       selected: any;
       setData: Function;
@@ -30,12 +32,13 @@ const FORMCM1105 = React.forwardRef(
       setSelected: Function;
       dataCommonDic: any;
       guCheckAMount: number;
+      cuJmisu?: number;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
-    const { register, handleSubmit, reset, getValues, control } =
+    const { register, handleSubmit, reset, getValues, control, watch } =
       useForm<IPT1105>();
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
@@ -47,6 +50,18 @@ const FORMCM1105 = React.forwardRef(
     useEffect(() => {
       resetForm("reset");
     }, [selected]);
+
+    let msDcTotal = 0;
+    if (
+      watch("msDc") === undefined ||
+      Number.isNaN(watch("msDc")) ||
+      watch("msDc") === null
+    ) {
+      msDcTotal = 0;
+    } else {
+      msDcTotal = parseFloat(String(watch("msDc")).replaceAll(",", ""));
+    }
+
     const resetForm = (type: string | null) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         let newData: any = {};
@@ -64,6 +79,19 @@ const FORMCM1105 = React.forwardRef(
         }
       }
     };
+
+    console.log(
+      cuJmisu && cuJmisu - guCheckAMount + (msDcTotal ? msDcTotal : 0),
+      guCheckAMount + (msDcTotal ? msDcTotal : 0),
+      typeof msDcTotal,
+      msDcTotal ? msDcTotal : 0,
+      guCheckAMount,
+      "this is total subtruction",
+      msDcTotal,
+      guCheckAMount,
+      "expression"
+    );
+
     return (
       <form
         // onSubmit={handleSubmit(submit)}
@@ -73,7 +101,7 @@ const FORMCM1105 = React.forwardRef(
           <Label>수금일자</Label>
           <Controller
             control={control}
-            {...register("msBigo")}
+            {...register("msDate")}
             render={({ field: { onChange, value, name } }) => (
               <CustomDatePicker
                 style={{ width: "175px" }}
@@ -84,65 +112,91 @@ const FORMCM1105 = React.forwardRef(
             )}
           />
         </Field>
-        <Field>
-          <Input
-            label="미수금액"
-            register={register("cuJmisu")}
-            kind={FieldKind.BORDER}
-            inputSize={InputSize.i175}
-            textAlign={"right"}
-          />
-        </Field>
-        <Field>
-          <Input
-            label="선택금액"
-            register={register("cuChkamt")}
-            kind={FieldKind.BORDER}
-            inputSize={InputSize.i175}
-            value={guCheckAMount}
-            readOnly={true}
-            textAlign={"right"}
-          />
-        </Field>
+        <Controller
+          control={control}
+          {...register("cuJmisu")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              labelStyle={{ minWidth: "120px" }}
+              label="미수금액"
+              value={cuJmisu}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i175}
+              name={name}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          {...register("cuChkamt")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              labelStyle={{ minWidth: "120px" }}
+              label="선택금액"
+              value={guCheckAMount}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i175}
+              name={name}
+            />
+          )}
+        />
         <DividerGray />
 
-        <FormGroup>
-          <Field>
+        <Controller
+          control={control}
+          {...register("msDc")}
+          render={({ field: { onChange, value, name } }) => (
             <Input
-              label="D    /    C"
-              register={register("msDc")}
-              kind={FieldKind.BORDER}
+              labelStyle={{ minWidth: "120px" }}
+              label="D / C"
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
               inputSize={InputSize.i175}
-              value={0}
-              textAlign={"right"}
+              name={name}
             />
-          </Field>
-        </FormGroup>
-
-        <FormGroup>
-          <Field>
+          )}
+        />
+        <Controller
+          control={control}
+          {...register("msKumack")}
+          render={({ field: { onChange, value, name } }) => (
             <Input
+              labelStyle={{ minWidth: "120px" }}
               label="수 금 액"
-              register={register("msKumack")}
-              kind={FieldKind.BORDER}
-              inputSize={InputSize.i175}
               value={guCheckAMount}
-              textAlign={"right"}
-            />
-          </Field>
-        </FormGroup>
-        <FormGroup>
-          <Field>
-            <Input
-              label="수금 후 잔액"
-              register={register("msJanack")}
-              kind={FieldKind.BORDER}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
               inputSize={InputSize.i175}
-              textAlign={"right"}
-              value={selected.cuJmisu - guCheckAMount}
+              name={name}
             />
-          </Field>
-        </FormGroup>
+          )}
+        />
+        <Controller
+          control={control}
+          {...register("msJanack")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              labelStyle={{ minWidth: "120px" }}
+              label="수금 후 잔액"
+              value={
+                cuJmisu &&
+                `${cuJmisu - guCheckAMount - (msDcTotal ? msDcTotal : 0)}`
+              }
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i175}
+              name={name}
+            />
+          )}
+        />
 
         <FormGroup>
           <Label>수금방법</Label>
@@ -172,16 +226,22 @@ const FORMCM1105 = React.forwardRef(
             ))}
           </Select>
         </FormGroup>
-
-        <Field>
-          <Input
-            label="비고"
-            register={register("msBigo")}
-            kind={FieldKind.BORDER}
-            inputSize={InputSize.i175}
-            textAlign="right"
-          />
-        </Field>
+        <Controller
+          control={control}
+          {...register("msBigo")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              labelStyle={{ minWidth: "120px" }}
+              label="비고"
+              value={value}
+              onChange={onChange}
+              // mask={currencyMask}
+              textAlign="left"
+              inputSize={InputSize.i175}
+              name={name}
+            />
+          )}
+        />
       </form>
     );
   }
