@@ -19,7 +19,7 @@ export const fields = [
   },
   {
     fieldName: "cuCmisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "cuSwName",
@@ -58,6 +58,7 @@ export const columns = [
     header: {
       text: "거래처",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "cuTel",
@@ -67,6 +68,7 @@ export const columns = [
     header: {
       text: "전화번호",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "cuCmisu",

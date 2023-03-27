@@ -75,6 +75,7 @@ export const columnsThird = [
     header: {
       text: "거래처명",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "gsKumack",
@@ -104,6 +105,7 @@ export const columnsThird = [
     header: {
       text: "사원",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "gsSukumtype",
@@ -122,5 +124,6 @@ export const columnsThird = [
     header: {
       text: "비고",
     },
+    styleName: "rg-left-column",
   },
 ];
