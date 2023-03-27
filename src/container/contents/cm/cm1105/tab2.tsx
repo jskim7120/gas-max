@@ -1,17 +1,6 @@
-import { useState } from "react";
-import {
-  Input,
-  Input2,
-  Select,
-  Field,
-  Wrapper,
-  FormGroup,
-  Label,
-} from "components/form/style";
+import { Input, Select, Field, FormGroup, Label } from "components/form/style";
 import { currencyMask } from "helpers/currency";
-
 import { Controller } from "react-hook-form";
-
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { MagnifyingGlass } from "components/allSvgIcon";
@@ -19,26 +8,102 @@ import { SearchBtn } from "components/daum";
 import CheckBox from "components/checkbox";
 
 function Tab2({
-  customerInfo,
   dataCommonDic,
   register,
-  too,
-  setToo,
-  sign,
-  setSign,
   control,
+  rdangaType,
+  setRdangaType,
+  rdanga,
+  setRdanga,
+  rdangaSign,
+  setRdangaSign,
+  rdangaAmt,
+  setRdangaAmt,
+  totalValue,
+  setTotalValue,
+  calcRdanga,
 }: {
-  customerInfo: any;
   dataCommonDic: any;
   register: Function;
-  too: number;
-  setToo: Function;
-  sign: string;
-  setSign: Function;
   control: any;
+  rdangaType: string;
+  setRdangaType: Function;
+  rdanga: string;
+  setRdanga: Function;
+  rdangaSign: string;
+  setRdangaSign: Function;
+  rdangaAmt: string;
+  setRdangaAmt: Function;
+  totalValue: string;
+  setTotalValue: Function;
+  calcRdanga: Function;
 }) {
-  const [cuRdangaType, setCuRdangaType] = useState("");
-
+  const showRdanga = () => {
+    if (rdangaType === "0") {
+      return (
+        <FormGroup className="0">
+          <Input
+            readOnly
+            inputSize={InputSize.i60}
+            value={rdanga}
+            onChange={(e: any) => setRdanga(e.target.value)}
+          />
+          <p>원</p>
+        </FormGroup>
+      );
+    }
+    if (rdangaType === "1") {
+      return (
+        <FormGroup className="1">
+          <Input
+            inputSize={InputSize.i60}
+            value={rdanga}
+            onChange={(e: any) => {
+              setRdanga(e.target.value);
+              calcRdanga("rdanga", e.target.value);
+            }}
+          />
+          <p>원</p>
+          <Select
+            width={InputSize.i50}
+            value={rdangaSign}
+            onChange={(e: any) => {
+              console.log("sign yu irev:::", e.target.value);
+              setRdangaSign(e.target.value);
+              calcRdanga("rdangaSign", e.target.value);
+            }}
+          >
+            {dataCommonDic?.cuRdangaSign.map((obj: any, index: number) => (
+              <option key={index} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+          <Input
+            inputSize={InputSize.i60}
+            textAlign="right"
+            value={rdangaAmt}
+            onChange={(e: any) => {
+              setRdangaAmt(e.target.value);
+              calcRdanga("rdangaAmt", e.target.value);
+            }}
+          />
+          <p>{totalValue}</p>
+        </FormGroup>
+      );
+    }
+    if (rdangaType === "2") {
+      return (
+        <FormGroup className="2">
+          <Input
+            inputSize={InputSize.i60}
+            value={rdanga}
+            onChange={(e: any) => setRdanga(e.target.value)}
+          />
+        </FormGroup>
+      );
+    }
+  };
   return (
     <div>
       <Field flex className="outer-border ">
@@ -62,11 +127,11 @@ function Tab2({
 
             <Label style={{ minWidth: "80px" }}>루베단가</Label>
             <Select
-              {...register("cuRdangaType")}
               width={InputSize.i130}
+              value={rdangaType}
               onChange={(e: any) => {
-                console.log(e.target.value);
-                setCuRdangaType(e.target.value);
+                setRdangaType(e.target.value);
+                calcRdanga("rdangaType", e.target.value);
               }}
             >
               {dataCommonDic?.cuRdangaType?.map((obj: any, idx: number) => (
@@ -75,51 +140,7 @@ function Tab2({
                 </option>
               ))}
             </Select>
-
-            {cuRdangaType === "1" ? (
-              <Field flex style={{ alignItems: "center" }}>
-                <Input
-                  register={register("cuRdanga")}
-                  inputSize={InputSize.sm}
-                  textAlign="right"
-                  style={{ border: "1px solid #e6e5e5" }}
-                />
-                <Select
-                  {...register("cuRdangaSign")}
-                  onChange={(e: any) => setSign(e.target.value)}
-                  style={{ minWidth: "50px", border: "1px solid #e6e5e5" }}
-                >
-                  <option value="+">+</option>
-                  <option value="*">*</option>
-                  <option value="-">-</option>
-                </Select>
-
-                <Input2
-                  name="percentage"
-                  id="percentage"
-                  type="text"
-                  onChange={(e: any) => setToo(Number(e.target.value))}
-                />
-
-                <p>
-                  {sign === "*" && "%"}
-                  {sign === "+" && "원"}
-                </p>
-                <p style={{ margin: "0 5px" }}>=</p>
-                <p>
-                  {sign !== "*"
-                    ? eval(`${customerInfo?.cuRdanga} ${sign} ${too}`)
-                    : eval(`${customerInfo?.cuRdanga} ${sign} ${too}/100`)}
-                </p>
-              </Field>
-            ) : (
-              <Input
-                register={register("cuRdanga")}
-                inputSize={InputSize.sm}
-                textAlign="right"
-                style={{ border: "1px solid #e6e5e5" }}
-              />
-            )}
+            {showRdanga()}
           </FormGroup>
 
           <FormGroup>
@@ -381,9 +402,10 @@ function Tab2({
             <Controller
               control={control}
               {...register("cuMeterDt")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
+              render={({ field: { onChange, name, value } }) => (
                 <CustomDatePicker
                   value={value}
+                  name={name}
                   onChange={onChange}
                   style={{ width: "130px" }}
                 />

@@ -105,6 +105,7 @@ export const columns = [
     header: {
       text: "당검침",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjGage",
@@ -164,7 +165,6 @@ export const columns = [
     header: {
       text: "지로발행일",
     },
-    styleName: "rg-right-column",
   },
   {
     name: "gjMisujan",
@@ -174,6 +174,7 @@ export const columns = [
     header: {
       text: "미수액",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "gjSwName",
@@ -183,5 +184,6 @@ export const columns = [
     header: {
       text: "사원",
     },
+    styleName: "rg-left-column",
   },
 ];

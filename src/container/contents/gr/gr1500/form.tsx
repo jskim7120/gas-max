@@ -27,6 +27,7 @@ import {
 } from "components/form/style";
 import { InputSize, ButtonColor } from "components/componentsType";
 import { currencyMask } from "helpers/currency";
+import FourButtons from "components/button/fourButtons";
 
 interface IForm {
   selected: any;
@@ -51,7 +52,10 @@ const Form = React.forwardRef(
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
+    const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+    const [isCancelBtnDisabled, setIsCancelBtnDisabled] =
+      useState<boolean>(true);
+
     const dispatch = useDispatch();
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -171,43 +175,34 @@ const Form = React.forwardRef(
       } catch (error) {}
     }
 
+    const onClickAdd = () => {
+      setIsAddBtnClicked(true);
+      setIsCancelBtnDisabled(false);
+      //resetForm("clear");
+    };
+    const onClickDelete = () => {
+      dispatch(openModal({ type: "delModal" }));
+      dispatch(addDeleteMenuId({ menuId: menuId }));
+    };
+    const onClickReset = () => {
+      // crud(null);
+    };
+    const onClickUpdate = () => {
+      // setIsAddBtnClicked(false);
+      // resetForm("reset");
+    };
+
     return (
       <div style={{ minWidth: "350px" }}>
-        {/* <FormContainer /> */}
         <FormHeadCnt>
-          <Button
-            text="등록"
-            icon={<Plus />}
-            onClick={() => {
-              // setIsAddBtnClicked(true);
-              // resetForm("clear");
-            }}
-          />
-          <Button
-            text="삭제"
-            icon={<Trash />}
-            onClick={() => {
-              dispatch(openModal({ type: "delModal" }));
-              dispatch(addDeleteMenuId({ menuId: menuId }));
-            }}
-          />
-          <Button
-            text="저장"
-            icon={<Update />}
-            color={ButtonColor.SUCCESS}
-            onClick={() => {
-              // crud(null);
-            }}
-          />
-          <Button
-            text="취소"
-            icon={<ResetGray />}
-            color={ButtonColor.LIGHT}
-            onClick={() => {
-              // setIsAddBtnClicked(false);
-              // resetForm("reset");
-            }}
-            style={{ padding: "0 3px" }}
+          <FourButtons
+            style={{ display: "flex", alignItems: "center" }}
+            onClickAdd={onClickAdd}
+            onClickDelete={onClickDelete}
+            onClickReset={onClickReset}
+            onClickUpdate={onClickUpdate}
+            isAddBtnClicked={isAddBtnClicked}
+            isCancelBtnDisabled={isCancelBtnDisabled}
           />
         </FormHeadCnt>
         <form
@@ -219,13 +214,13 @@ const Form = React.forwardRef(
             <Input
               label="매입처코드"
               register={register("bjBuCode")}
-              inputSize={InputSize.i180}
+              inputSize={InputSize.i150}
             />
           </Wrapper>
           <Wrapper>
             <FormGroup>
               <Label>매입처명</Label>
-              <Select {...register("bjBuName")} width={InputSize.i180}>
+              <Select {...register("bjBuName")} width={InputSize.i150}>
                 {dataCommonDic?.bjBuName?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -244,28 +239,28 @@ const Form = React.forwardRef(
             <Input
               textAlign="center"
               register={register("buBankno")}
-              inputSize={InputSize.i120}
+              style={{ width: "84px" }}
             />
           </Wrapper>
           <Wrapper>
             <Input
               label="예금주"
               register={register("buBankju")}
-              inputSize={InputSize.i180}
+              inputSize={InputSize.i150}
             />
           </Wrapper>
           <Wrapper>
             <Input
               label="비고"
               register={register("buBigo")}
-              inputSize={InputSize.i180}
+              inputSize={InputSize.i150}
             />
           </Wrapper>
           <Wrapper>
             <Input
               label="담당자명"
               register={register("buDamdang")}
-              inputSize={InputSize.i180}
+              inputSize={InputSize.i150}
             />
           </Wrapper>
           <Wrapper>
@@ -273,7 +268,7 @@ const Form = React.forwardRef(
               textAlign="right"
               label="미지급액"
               register={register("buMisu")}
-              inputSize={InputSize.i180}
+              inputSize={InputSize.i150}
               mask={currencyMask}
             />
           </Wrapper>
@@ -286,7 +281,11 @@ const Form = React.forwardRef(
               control={control}
               {...register("bjDate")}
               render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "150px" }}
+                />
               )}
             />
           </Field>
@@ -295,7 +294,7 @@ const Form = React.forwardRef(
               label="지 급 액"
               textAlign="right"
               register={register("bjOutkum")}
-              inputSize={InputSize.i180}
+              inputSize={InputSize.i150}
               mask={currencyMask}
             />
           </Wrapper>
@@ -304,14 +303,14 @@ const Form = React.forwardRef(
               textAlign="right"
               label="D / C"
               register={register("bjDc")}
-              inputSize={InputSize.i180}
+              inputSize={InputSize.i150}
               mask={currencyMask}
             />
           </Wrapper>
           <Wrapper>
             <FormGroup>
               <Label>지급방법</Label>
-              <Select {...register("bjOuttype")} width={InputSize.i180}>
+              <Select {...register("bjOuttype")} width={InputSize.i150}>
                 {dataCommonDic?.bjOuttype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -323,7 +322,7 @@ const Form = React.forwardRef(
           <Wrapper>
             <FormGroup>
               <Label>출금통장</Label>
-              <Select {...register("bjAcbCode")} width={InputSize.i180}>
+              <Select {...register("bjAcbCode")} width={InputSize.i150}>
                 {dataCommonDic?.bjAcbCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -336,7 +335,7 @@ const Form = React.forwardRef(
             <Input
               label="비 고"
               register={register("bjBigo")}
-              inputSize={InputSize.i180}
+              inputSize={InputSize.i150}
             />
           </Wrapper>
         </form>

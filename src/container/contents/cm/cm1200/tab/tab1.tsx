@@ -4,7 +4,7 @@ import {
   FormGroup,
   Input,
   Label,
-  Select as CSelect,
+  Select,
   Wrapper,
 } from "components/form/style";
 import { InputSize } from "components/componentsType";
@@ -15,7 +15,6 @@ function Tab1({
   register,
   dataCommonDic,
   control,
-  renderRdangaCalc,
   chkCuRh20,
   setChkCuRh20,
   chkCuRdanga,
@@ -36,11 +35,21 @@ function Tab1({
   setChkCuGumdate,
   chkCuCno,
   setChkCuCno,
+  rdangaType,
+  setRdangaType,
+  rdanga,
+  setRdanga,
+  rdangaSign,
+  setRdangaSign,
+  rdangaAmt,
+  setRdangaAmt,
+  totalValue,
+  setTotalValue,
+  calcRdanga,
 }: {
   register: Function;
   dataCommonDic: any;
   control: any;
-  renderRdangaCalc: Function;
   chkCuRh20: boolean;
   setChkCuRh20: Function;
   chkCuRdanga: boolean;
@@ -61,7 +70,83 @@ function Tab1({
   setChkCuGumdate: Function;
   chkCuCno: boolean;
   setChkCuCno: Function;
+  rdangaType: any;
+  setRdangaType: Function;
+  rdanga: any;
+  setRdanga: Function;
+  rdangaSign: any;
+  setRdangaSign: Function;
+  rdangaAmt: any;
+  setRdangaAmt: Function;
+  totalValue: any;
+  setTotalValue: any;
+  calcRdanga: any;
 }) {
+  const showRdanga = () => {
+    if (rdangaType === "0") {
+      return (
+        <FormGroup className="0">
+          <Input
+            readOnly
+            inputSize={InputSize.i60}
+            value={rdanga}
+            onChange={(e: any) => setRdanga(e.target.value)}
+          />
+          <p>원</p>
+        </FormGroup>
+      );
+    }
+    if (rdangaType === "1") {
+      return (
+        <FormGroup className="1">
+          <Input
+            inputSize={InputSize.i60}
+            value={rdanga}
+            onChange={(e: any) => {
+              setRdanga(e.target.value);
+              calcRdanga("rdanga", e.target.value);
+            }}
+          />
+          <p>원</p>
+          <Select
+            width={InputSize.i50}
+            value={rdangaSign}
+            onChange={(e: any) => {
+              setRdangaSign(e.target.value);
+              calcRdanga("rdangaSign", e.target.value);
+            }}
+          >
+            {dataCommonDic?.cuRdangaSign.map((obj: any, index: number) => (
+              <option key={index} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+          <Input
+            inputSize={InputSize.i60}
+            textAlign="right"
+            value={rdangaAmt}
+            onChange={(e: any) => {
+              setRdangaAmt(e.target.value);
+              calcRdanga("rdangaAmt", e.target.value);
+            }}
+          />
+          <p>{totalValue}</p>
+        </FormGroup>
+      );
+    }
+    if (rdangaType === "2") {
+      return (
+        <FormGroup className="2">
+          <Input
+            inputSize={InputSize.i60}
+            value={rdanga}
+            onChange={(e: any) => setRdanga(e.target.value)}
+          />
+        </FormGroup>
+      );
+    }
+  };
   return (
     <div className="tab1">
       <Wrapper grid col={3} fields="0.7fr 0.8fr 1.5fr">
@@ -74,7 +159,7 @@ function Tab1({
                 onChange={(e: any) => setChkCuRh20(e.target.checked)}
               />
             </Label>
-            <CSelect
+            <Select
               disabled={!chkCuRh20}
               {...register("cuRh2O")}
               width={InputSize.i120}
@@ -84,7 +169,7 @@ function Tab1({
                   {obj.codeName}
                 </option>
               ))}
-            </CSelect>
+            </Select>
             <p>mmH20</p>
           </FormGroup>
           <FormGroup>
@@ -148,7 +233,7 @@ function Tab1({
                 onChange={(e: any) => setChkCuGumTurm(e.target.checked)}
               />
             </Label>
-            <CSelect
+            <Select
               disabled={!chkCuGumTurm}
               {...register("cuGumTurm")}
               width={InputSize.i175}
@@ -158,7 +243,7 @@ function Tab1({
                   {obj.codeName}
                 </option>
               ))}
-            </CSelect>
+            </Select>
           </FormGroup>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -170,9 +255,13 @@ function Tab1({
                 onChange={(e: any) => setChkCuRdanga(e.target.checked)}
               />
             </Label>
-            <CSelect
+            <Select
               disabled={!chkCuRdanga}
-              {...register("cuRdangaType")}
+              value={rdangaType}
+              onChange={(e: any) => {
+                setRdangaType(e.target.value);
+                calcRdanga("rdangaType", e.target.value);
+              }}
               width={InputSize.i120}
             >
               {dataCommonDic?.cuRdangaType.map((obj: any, index: number) => (
@@ -180,7 +269,7 @@ function Tab1({
                   {obj.codeName}
                 </option>
               ))}
-            </CSelect>
+            </Select>
           </FormGroup>
           <FormGroup>
             <Label className="lable-check">
@@ -261,7 +350,7 @@ function Tab1({
           </FormGroup>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {renderRdangaCalc()}
+          {showRdanga()}
           <FormGroup style={{ gap: "7px" }}>
             <Label style={{ minWidth: "auto" }}>기본사용료</Label>
 
@@ -281,12 +370,9 @@ function Tab1({
             <p>m3이하 일때</p>
             <Controller
               control={control}
-              {...register("cuBaGageKum", {
-                valueAsNumber: true,
-              })}
+              {...register("cuBaGageKum")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  type="number"
                   value={value}
                   onChange={onChange}
                   name={name}
@@ -306,7 +392,7 @@ function Tab1({
                 onChange={(e: any) => setChkCuSukumtype(e.target.checked)}
               />
             </Label>
-            <CSelect
+            <Select
               disabled={!chkCuSukumtype}
               {...register("cuSukumtype")}
               width={InputSize.i120}
@@ -316,7 +402,7 @@ function Tab1({
                   {obj.codeName}
                 </option>
               ))}
-            </CSelect>
+            </Select>
           </FormGroup>
           <FormGroup>
             <Label className="lable-check" style={{ minWidth: "143px" }}>

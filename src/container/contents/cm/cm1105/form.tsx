@@ -27,6 +27,7 @@ import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
 import { CM1105SEARCH, CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
+import useRdanga from "app/hook/calcRdanga";
 
 function FormCM1105() {
   const [data, setData] = useState<any>(null);
@@ -34,8 +35,6 @@ function FormCM1105() {
   const [addr, setAddress] = useState<string>("");
   const [addr2, setAddress2] = useState<string>("");
   const [tabId, setTabId] = useState(0);
-  const [sign, setSign] = useState<string>("+");
-  const [too, setToo] = useState<number>(0);
 
   const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
   const dispatch = useDispatch();
@@ -50,6 +49,20 @@ function FormCM1105() {
     useForm<ICM1105SEARCH>({
       mode: "onChange",
     });
+
+  const {
+    rdangaType,
+    setRdangaType,
+    rdanga,
+    setRdanga,
+    rdangaSign,
+    setRdangaSign,
+    rdangaAmt,
+    setRdangaAmt,
+    totalValue,
+    setTotalValue,
+    calcRdanga,
+  } = useRdanga();
 
   useEffect(() => {
     if (cm1105.status === "INSERT") {
@@ -120,125 +133,14 @@ function FormCM1105() {
             regDate: "",
           };
       reset({ ...customerInfo, ...cms, ...cuTank, ...virtualAccount });
+
+      setRdangaType(customerInfo?.cuRdangaType);
+      setRdanga(customerInfo?.cuRdanga);
+      setRdangaSign(customerInfo?.cuRdangaSign);
+      // setRdangaAmt(customerInfo?.aptRdangaAmt);
+      setTotalValue("");
     }
   };
-
-  // const resetForm = (type: string) => {
-  //   if (data !== undefined && data) {
-  //     let newDataCustomerInfo: any = {};
-  //     let newDataCms: any = {};
-  //     let newDataVirtualAccount: any = {};
-  //     let newDataCuTank: any = {};
-
-  //     const customerInfo = data?.customerInfo ? data?.customerInfo[0] : {};
-  //     const cms = data?.cms
-  //       ? data?.cms[0]
-  //       : {
-  //           acctno: "",
-  //           appdt: "",
-  //           bankName: "",
-  //           bigo: "",
-  //           cmsGubun: "",
-  //           depositor: "",
-  //           managerNo: "",
-  //           monthday: "",
-  //           regDate: "",
-  //           stateName: "",
-  //           tel: "",
-  //         };
-  //     const cuTank = data?.cuTank ? data?.cuTank[0] : {};
-  //     const virtualAccount = data?.virturalAccoount
-  //       ? data?.virturalAccoount[0]
-  //       : {
-  //           acctno: "",
-  //           bankCd: "",
-  //           bankName: "",
-  //           depositor: "",
-  //           managerCode: "",
-  //           regDate: "",
-  //         };
-
-  //     if (type === "clear") {
-  //       for (const [key, value] of Object.entries(customerInfo)) {
-  //         newDataCustomerInfo[key] = null;
-  //       }
-
-  //       for (const [key, value] of Object.entries(cms)) {
-  //         if (
-  //           key === "acctno" ||
-  //           key === "bankName" ||
-  //           key === "depositor" ||
-  //           key === "regDate"
-  //         ) {
-  //           newDataCms[`CMS${key}`] = null;
-  //         }
-  //         newDataCms[key] = null;
-  //       }
-
-  //       for (const [key, value] of Object.entries(virtualAccount)) {
-  //         if (
-  //           key === "acctno" ||
-  //           key === "bankName" ||
-  //           key === "depositor" ||
-  //           key === "regDate"
-  //         ) {
-  //           newDataVirtualAccount[`VIR${key}`] = null;
-  //         }
-  //         newDataVirtualAccount[key] = null;
-  //       }
-
-  //       for (const [key, value] of Object.entries(cuTank)) {
-  //         newDataCuTank[key] = null;
-  //       }
-
-  //       reset({
-  //         ...newDataCustomerInfo,
-  //         ...newDataCms,
-  //         ...newDataVirtualAccount,
-  //         ...newDataCuTank,
-  //       });
-  //     } else if (type === "reset") {
-  //       for (const [key, value] of Object.entries(customerInfo)) {
-  //         newDataCustomerInfo[key] = value;
-  //       }
-
-  //       for (const [key, value] of Object.entries(cms)) {
-  //         if (
-  //           key === "acctno" ||
-  //           key === "bankName" ||
-  //           key === "depositor" ||
-  //           key === "regDate"
-  //         ) {
-  //           newDataCms[`CMS${key}`] = value;
-  //         }
-  //         newDataCms[key] = value;
-  //       }
-
-  //       for (const [key, value] of Object.entries(virtualAccount)) {
-  //         if (
-  //           key === "acctno" ||
-  //           key === "bankName" ||
-  //           key === "depositor" ||
-  //           key === "regDate"
-  //         ) {
-  //           newDataVirtualAccount[`VIR${key}`] = value;
-  //         }
-  //         newDataVirtualAccount[key] = value;
-  //       }
-
-  //       for (const [key, value] of Object.entries(cuTank)) {
-  //         newDataCuTank[key] = value;
-  //       }
-
-  //       reset({
-  //         ...newDataCustomerInfo,
-  //         ...newDataCms,
-  //         ...newDataVirtualAccount,
-  //         ...newDataCuTank,
-  //       });
-  //     }
-  //   }
-  // };
 
   const fetchData = async () => {
     try {
@@ -295,8 +197,29 @@ function FormCM1105() {
     formValues.cuHdate = DateWithoutDash(formValues.cuHdate);
     formValues.cuExtendDate = DateWithoutDash(formValues.cuExtendDate);
     formValues.cuGongdate = DateWithoutDash(formValues.cuGongdate);
-
-    console.log(formValues);
+    formValues.cuPdate = DateWithoutDash(formValues.cuPdate);
+    formValues.cuSisuldate = DateWithoutDash(formValues.cuSisuldate);
+    formValues.cuGongdateT = DateWithoutDash(formValues.cuGongdateT);
+    formValues.cuCashpayDate = DateWithoutDash(formValues.cuCashpayDate);
+    formValues.cuCircuitDate = DateWithoutDash(formValues.cuCircuitDate);
+    formValues.cuFinishDate = DateWithoutDash(formValues.cuFinishDate);
+    formValues.cuMdate = DateWithoutDash(formValues.cuMdate);
+    formValues.cuMeterDt = DateWithoutDash(formValues.cuMeterDt);
+    formValues.cuMeterTurm = DateWithoutDash(formValues.cuMeterTurm);
+    formValues.cuScheduleDate = DateWithoutDash(formValues.cuScheduleDate);
+    formValues.cuSmsDate = DateWithoutDash(formValues.cuSmsDate);
+    formValues.gasifyCheckDate1 = DateWithoutDash(formValues.gasifyCheckDate1);
+    formValues.gasifyCheckDate2 = DateWithoutDash(formValues.gasifyCheckDate2);
+    formValues.gasifyMakeDate1 = DateWithoutDash(formValues.gasifyMakeDate1);
+    formValues.gasifyMakeDate2 = DateWithoutDash(formValues.gasifyMakeDate2);
+    formValues.tankFirstDate1 = DateWithoutDash(formValues.tankFirstDate1);
+    formValues.tankFirstDate2 = DateWithoutDash(formValues.tankFirstDate2);
+    formValues.tankInsideDate1 = DateWithoutDash(formValues.tankInsideDate1);
+    formValues.tankInsideDate2 = DateWithoutDash(formValues.tankInsideDate2);
+    formValues.tankMakeDate1 = DateWithoutDash(formValues.tankMakeDate1);
+    formValues.tankMakeDate2 = DateWithoutDash(formValues.tankMakeDate2);
+    formValues.tankOutsideDate1 = DateWithoutDash(formValues.tankOutsideDate1);
+    formValues.tankOutsideDate2 = DateWithoutDash(formValues.tankOutsideDate2);
 
     formValues.cuTongkum = removeCommas(formValues.cuTongkum, "number");
     formValues.cuJmisu = removeCommas(formValues.cuJmisu, "number");
@@ -310,6 +233,13 @@ function FormCM1105() {
     formValues.cuBaGageKum = removeCommas(formValues.cuBaGageKum, "number");
     formValues.tankMax1 = removeCommas(formValues.tankMax1, "number");
     formValues.tankMax2 = removeCommas(formValues.tankMax2, "number");
+
+    formValues.cuRdanga = +rdanga;
+    formValues.cuRdangaSign = rdangaSign;
+    formValues.cuRdangaType = rdangaType;
+
+    // formValues.cuRdangaAmt = +rdangaAmt; ene 2 talbar tsaanaasaa irehgui bgaa
+    // formValues.totalValue = totalValue; irvel nemeh yum
 
     if (formValues.cuGongdate === "") {
       delete formValues.cuGongdate;
@@ -334,10 +264,6 @@ function FormCM1105() {
     if (formValues.gasifyCheckDate1 === "") {
       delete formValues.gasifyCheckDate1;
     }
-
-    // if (formValues.cuCmisu) {
-    //   formValues.cuCmisu = parseInt(formValues.cuCmisu);
-    // }
 
     try {
       const response: any = await API.post(path, formValues);
@@ -790,17 +716,21 @@ function FormCM1105() {
           <TabContentWrapper style={{ padding: "15px", minHeight: "322px" }}>
             {getTabContent(
               tabId,
-              data && data?.customerInfo && data?.customerInfo[0]
-                ? data?.customerInfo[0]
-                : { cuRdanga: 0 },
               register,
               dataCommonDic,
               setAddress2,
-              too,
-              setToo,
-              sign,
-              setSign,
-              control
+              control,
+              rdangaType,
+              setRdangaType,
+              rdanga,
+              setRdanga,
+              rdangaSign,
+              setRdangaSign,
+              rdangaAmt,
+              setRdangaAmt,
+              totalValue,
+              setTotalValue,
+              calcRdanga
             )}
           </TabContentWrapper>
         </div>

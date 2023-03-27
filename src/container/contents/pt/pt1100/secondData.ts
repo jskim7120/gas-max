@@ -37,10 +37,11 @@ export const columnsSecond = [
     name: "mjBigo",
     fieldName: "mjBigo",
     type: "data",
-    width: "100",
+    width: "200",
     header: {
       text: "적요",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "mjMisujan",

@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from "app/store";
 import { addCC1100, openModal } from "app/state/modal/modalSlice";
 import { InfoText } from "components/text";
 import { RightSide } from "container/contents/commonStyle";
+import { currencyMask } from "helpers/currency";
 
 interface IForm {
   selected: any;
@@ -184,33 +185,72 @@ const Form = React.forwardRef(
             register={register("cuCode")}
             inputSize={InputSize.i140}
           />
-          <Input
-            label="미수금액"
-            labelStyle={{ minWidth: "80px" }}
-            register={register("cuJmisu")}
-            inputSize={InputSize.i140}
-            textAlign={"right"}
+          <Controller
+            control={control}
+            {...register("cuJmisu")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                labelStyle={{ minWidth: "80px" }}
+                label="미수금액"
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i140}
+                name={name}
+              />
+            )}
           />
         </div>
         <br />
-        <Input
-          label="D / C"
-          labelStyle={{ minWidth: "80px" }}
-          register={register("msDc")}
-          inputSize={InputSize.i140}
+        <Controller
+          control={control}
+          {...register("msDc")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              labelStyle={{ minWidth: "80px" }}
+              label="D / C"
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i140}
+              name={name}
+            />
+          )}
         />
-        <Input
-          label="수 금 액"
-          labelStyle={{ minWidth: "80px" }}
-          register={register("msKumack")}
-          inputSize={InputSize.i140}
+        <Controller
+          control={control}
+          {...register("msKumack")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              labelStyle={{ minWidth: "80px" }}
+              label="수 금 액"
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i140}
+              name={name}
+            />
+          )}
         />
         <br />
-        <Input
-          label="수금후잔액"
-          labelStyle={{ minWidth: "80px" }}
-          register={register("msJanack")}
-          inputSize={InputSize.i140}
+        <Controller
+          control={control}
+          {...register("msJanack")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              labelStyle={{ minWidth: "80px" }}
+              label="수금후잔액"
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i140}
+              name={name}
+            />
+          )}
         />
         <br />
         <FormGroup>
@@ -241,41 +281,74 @@ const Form = React.forwardRef(
             ))}
           </Select>
         </FormGroup>
-        <Input
-          label="비 고"
-          labelStyle={{ minWidth: "80px" }}
-          register={register("msBigo")}
-          inputSize={InputSize.i140}
-        />
 
+        <Controller
+          control={control}
+          {...register("msBigo")}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              labelStyle={{ minWidth: "80px" }}
+              label="비 고"
+              value={value}
+              onChange={onChange}
+              textAlign="right"
+              inputSize={InputSize.i140}
+              name={name}
+            />
+          )}
+        />
         <BottomStyleDiv bottomSize={InputSize.i80}>
           <InfoText
             text={"수금처리는 선입선출 방식으로 자동 처리됨"}
             style={{ borderBottom: "1px solid" }}
           />
-          <Input
-            label="미수금 총계"
-            labelStyle={{ minWidth: "80px" }}
-            register={register("totMisukum")}
-            inputSize={InputSize.i140}
-            value={totMisukum}
-            textAlign={"right"}
+          <Controller
+            control={control}
+            {...register("totMisukum")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                labelStyle={{ minWidth: "80px" }}
+                label="미수금 총계"
+                value={totMisukum}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i140}
+                name={name}
+              />
+            )}
           />
-          <Input
-            label="수금 총계"
-            labelStyle={{ minWidth: "80px" }}
-            register={register("totSukum")}
-            inputSize={InputSize.i140}
-            value={totSukum}
-            textAlign={"right"}
+          <Controller
+            control={control}
+            {...register("totSukum")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                labelStyle={{ minWidth: "80px" }}
+                label="수금 총계"
+                value={totSukum}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i140}
+                name={name}
+              />
+            )}
           />
-          <Input
-            label="D/C 총계"
-            labelStyle={{ minWidth: "80px" }}
-            register={register("totDc")}
-            inputSize={InputSize.i140}
-            value={totDc}
-            textAlign={"right"}
+          <Controller
+            control={control}
+            {...register("totDc")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                labelStyle={{ minWidth: "80px" }}
+                label="D/C 총계"
+                value={totDc}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i140}
+                name={name}
+              />
+            )}
           />
         </BottomStyleDiv>
       </form>
