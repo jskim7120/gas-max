@@ -19,7 +19,7 @@ export const fields = [
   },
   {
     fieldName: "cuCmisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "cuSwName",

@@ -52,7 +52,11 @@ const FORMCM1105 = React.forwardRef(
     }, [selected]);
 
     let msDcTotal = 0;
-    if (watch("msDc") === undefined) {
+    if (
+      watch("msDc") === undefined ||
+      Number.isNaN(watch("msDc")) ||
+      watch("msDc") === null
+    ) {
       msDcTotal = 0;
     } else {
       msDcTotal = parseFloat(String(watch("msDc")).replaceAll(",", ""));
@@ -75,6 +79,19 @@ const FORMCM1105 = React.forwardRef(
         }
       }
     };
+
+    console.log(
+      cuJmisu && cuJmisu - guCheckAMount + (msDcTotal ? msDcTotal : 0),
+      guCheckAMount + (msDcTotal ? msDcTotal : 0),
+      typeof msDcTotal,
+      msDcTotal ? msDcTotal : 0,
+      guCheckAMount,
+      "this is total subtruction",
+      msDcTotal,
+      guCheckAMount,
+      "expression"
+    );
+
     return (
       <form
         // onSubmit={handleSubmit(submit)}
@@ -168,9 +185,12 @@ const FORMCM1105 = React.forwardRef(
             <Input
               labelStyle={{ minWidth: "120px" }}
               label="수금 후 잔액"
-              value={cuJmisu && cuJmisu - (guCheckAMount + msDcTotal)}
+              value={
+                cuJmisu &&
+                `${cuJmisu - guCheckAMount - (msDcTotal ? msDcTotal : 0)}`
+              }
               onChange={onChange}
-              // mask={currencyMask}
+              mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i175}
               name={name}

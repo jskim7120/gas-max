@@ -35,10 +35,6 @@ const FORMPT1205 = React.forwardRef(
       useForm<IPT1205>();
 
     let gsDcTotal = 0;
-    console.log(typeof watch("gsDc"), "type of total");
-    console.log(watch("gsDc"), "value of total");
-    console.log(watch("gsDc") === undefined, "is nuulllll");
-    console.log(Number.isNaN(watch("gsDc")), "===");
     if (
       watch("gsDc") === undefined ||
       Number.isNaN(watch("gsDc")) ||
@@ -169,7 +165,10 @@ const FORMPT1205 = React.forwardRef(
             <Input
               labelStyle={{ minWidth: "120px" }}
               label="수금 후 잔액"
-              value={cuCmisu && `${cuCmisu - (totalGuAmount + gsDcTotal)}`}
+              value={
+                cuCmisu &&
+                `${cuCmisu - (totalGuAmount + gsDcTotal ? gsDcTotal : 0)}`
+              }
               onChange={onChange}
               mask={currencyMask}
               textAlign="right"
