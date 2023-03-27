@@ -196,19 +196,35 @@ export const getContent = (
       );
     case "CC1100":
       return (
-        <CC1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC1100
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC1200":
       return (
-        <CC1200 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC1200
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC1400":
       return (
-        <CC1400 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC1400
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC1500":
       return (
-        <CC1500 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC1500
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC1505":
       return (

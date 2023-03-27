@@ -78,6 +78,7 @@ export const columns = [
     fieldName: "cjCaName",
     type: "data",
     width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "차량명",
     },
@@ -96,6 +97,7 @@ export const columns = [
     fieldName: "cjCcName",
     type: "data",
     width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "정비명",
     },
@@ -105,6 +107,7 @@ export const columns = [
     fieldName: "cjKumack",
     type: "data",
     width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "금액",
     },

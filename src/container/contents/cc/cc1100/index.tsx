@@ -31,15 +31,16 @@ import FourButtons from "components/button/fourButtons";
 
 function CC1100({
   depthFullName,
-  areaCode,
+  ownAreaCode,
   menuId,
 }: {
   depthFullName: string;
-  areaCode: string;
+  ownAreaCode: string;
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
+  const [areaCode, setAreaCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
@@ -61,6 +62,12 @@ function CC1100({
       resetSearchForm();
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (selected && JSON.stringify(selected) !== "{}") {
+      setAreaCode(selected?.areaCode);
+    }
+  }, [selected]);
 
   const resetSearchForm = () => {
     reset({
@@ -123,12 +130,26 @@ function CC1100({
 
   return (
     <>
-      <CustomTopPart
-        depthFullName={depthFullName}
-        register={register}
-        dataCommonDic={dataCommonDic}
-        areaCode={areaCode}
-      />
+      <SearchWrapper className="h35 mt5">
+        <FormGroup>
+          <p>{depthFullName}</p>
+          {ownAreaCode === "00" && (
+            <>
+              <p className="big">영업소</p>
+              <Select
+                value={areaCode}
+                onChange={(e) => setAreaCode(e.target.value)}
+              >
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+        </FormGroup>
+      </SearchWrapper>
       <SearchWrapper
         className="h35 mt5"
         style={{
@@ -242,7 +263,7 @@ function CC1100({
             </SearchWrapper>
           </form>
           <GridLeft
-            areaCode="00"
+            areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}

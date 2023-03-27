@@ -638,7 +638,7 @@ export const ParagraphBorderBotton = styled.div`
 export const StcTable = styled.table`
   width: 330px;
   height: 147px;
-  font-size: 18px;
+  font-size: 15px;
   position: absolute;
   right: 0;
   bottom: 80px;

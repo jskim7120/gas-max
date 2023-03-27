@@ -16,8 +16,6 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { currencyMask } from "helpers/currency";
-import API from "app/axios";
-import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
 
 interface IForm {
   data65: any;
@@ -69,71 +67,29 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = async (type: string) => {
-      // if (data65 !== undefined && JSON.stringify(data65) !== "{}") {
-      let newData: any = {};
-      if (type === "clear") {
-      } else if (type === "reset") {
-        reset(selected);
-      }
-      // }
-    };
-    const crud = async (type: string | null) => {
-      if (type === "delete") {
-        const formValues = getValues();
+      if (selected !== undefined && Object.keys(selected).length > 0) {
+        let newData: any = {};
+        if (type === "clear") {
+          document.getElementById("acjDate")?.focus();
 
-        try {
-          const response = await API.post(EN1200DELETE, formValues);
-          if (response.status === 200) {
-            toast.success("삭제하였습니다", {
-              autoClose: 500,
-            });
-
-            await fetchData();
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = null;
           }
-        } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
+          newData.areaCode = selected.areaCode;
+          reset(newData);
+        } else if (type === "reset") {
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = value;
+          }
+          reset({
+            ...newData,
           });
         }
       }
-
-      if (type === null) {
-        handleSubmit(submit)();
-      }
     };
+    const crud = async (type: string | null) => {};
 
-    const submit = async (data: ICC1500FORM) => {
-      const path = isAddBtnClicked ? EN1200INSERT : EN1200UPDATE;
-      const formValues = getValues();
-
-      try {
-        const response: any = await API.post(path, formValues);
-        if (response.status === 200) {
-          if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
-          } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
-          }
-          setSelected(formValues);
-          toast.success("저장이 성공하였습니다", {
-            autoClose: 500,
-          });
-          setIsAddBtnClicked(false);
-        } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
-        }
-      } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
-      }
-    };
+    const submit = async (data: ICC1500FORM) => {};
 
     return (
       <form
@@ -154,7 +110,7 @@ const Form = React.forwardRef(
               <Select
                 {...register("areaCode")}
                 width={InputSize.i150}
-                disabled={isAddBtnClicked}
+                disabled={!isAddBtnClicked}
               >
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -173,8 +129,6 @@ const Form = React.forwardRef(
                     style={{ width: "150px" }}
                     value={value}
                     onChange={onChange}
-                    name={name}
-                    showYearDropdown
                   />
                 )}
               />

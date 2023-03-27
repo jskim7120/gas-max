@@ -34,18 +34,19 @@ import FourButtons from "components/button/fourButtons";
 
 function CC1400({
   depthFullName,
-  areaCode,
+  ownAreaCode,
   menuId,
 }: {
   depthFullName: string;
-  areaCode: string;
+  ownAreaCode: string;
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
+  const [areaCode, setAreaCode] = useState("");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
@@ -61,6 +62,12 @@ function CC1400({
       resetSearchForm();
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (selected && JSON.stringify(selected) !== "{}") {
+      setAreaCode(selected?.areaCode);
+    }
+  }, [selected]);
 
   const { register, handleSubmit, reset, control } = useForm<ICC1400SEARCH>({
     mode: "onSubmit",
@@ -135,12 +142,24 @@ function CC1400({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomAreaCodePart
-          areaCode={areaCode}
-          depthFullName={depthFullName}
-          register={register}
-          dataCommonDic={dataCommonDic}
-        />
+        <FormGroup>
+          <p>{depthFullName}</p>
+          {ownAreaCode === "00" && (
+            <>
+              <p className="big">영업소</p>
+              <Select
+                value={areaCode}
+                onChange={(e) => setAreaCode(e.target.value)}
+              >
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+        </FormGroup>
         <SearchWrapper
           className="h35 mt5"
           style={{
@@ -271,7 +290,7 @@ function CC1400({
             </FormGroup>
           </SearchWrapper>
           <GridLeft
-            areaCode="00"
+            areaCode={ownAreaCode}
             data={data}
             fields={fields}
             columns={columns}

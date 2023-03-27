@@ -66,113 +66,37 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && Object.keys(selected).length > 0) {
         let newData: any = {};
         if (type === "clear") {
           document.getElementById("sgDate")?.focus();
-          const path = EN120011;
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.saupSno = response.data.tempCode;
-              newData.areaCode = selected.areaCode;
-              reset(newData);
-            } else {
-              toast.error(response.response.data?.message, {
-                autoClose: 500,
-              });
-            }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
-          }
-        } else if (type === "reset") {
+
           for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
+            newData[key] = null;
           }
+          newData.areaCode = selected.areaCode;
+          reset(newData);
+        } else if (type === "reset") {
+          if (selected !== undefined && Object.keys(selected).length > 0) {
+            for (const [key, value] of Object.entries(selected)) {
+              newData[key] = value;
+            }
 
-          reset({
-            ...newData,
-            saupStampQu: selected?.saupStampQu === "Y",
-            saupStampEs: selected?.saupStampEs === "Y",
-            saupStampSe: selected?.saupStampSe === "Y",
-            // saupDate: selected?.saupDate ? formatDate(selected.saupDate) : "",
-            // saupDate: selected?.saupDate ? DateWithDash(selected.saupDate) : "",
-          });
-        }
-      }
-    };
-    const crud = async (type: string | null) => {
-      if (type === "delete") {
-        const formValues = getValues();
-
-        try {
-          const response = await API.post(EN1200DELETE, formValues);
-          if (response.status === 200) {
-            toast.success("삭제하였습니다", {
-              autoClose: 500,
-            });
-
-            await fetchData();
-          }
-        } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
-        }
-      }
-
-      if (type === null) {
-        handleSubmit(submit)();
-      }
-    };
-
-    const submit = async (data: ICC1400FORM) => {
-      //form aldaagui uyd ajillana
-      const path = isAddBtnClicked ? EN1200INSERT : EN1200UPDATE;
-      const formValues = getValues();
-
-      //formValues.saupStampQu = formValues.saupStampQu ? "Y" : "N";
-      //formValues.saupDate = formValues.saupDate
-      //  ? formatDateToStringWithoutDash(formValues.saupDate)
-      //  : "";
-      //formValues.saupEdiEmail =
-      //  formValues.saupEdiEmail && formValues.saupEdiEmail.trim();
-
-      //formValues.saupStampImg = image64 && image64;
-
-      try {
-        const response: any = await API.post(path, formValues);
-        if (response.status === 200) {
-          if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
-          } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
+            reset({
+              ...newData,
+              saupStampQu: selected?.saupStampQu === "Y",
+              saupStampEs: selected?.saupStampEs === "Y",
+              saupStampSe: selected?.saupStampSe === "Y",
+              // saupDate: selected?.saupDate ? formatDate(selected.saupDate) : "",
+              // saupDate: selected?.saupDate ? DateWithDash(selected.saupDate) : "",
             });
           }
-          setSelected(formValues);
-          toast.success("저장이 성공하였습니다", {
-            autoClose: 500,
-          });
-          setIsAddBtnClicked(false);
-        } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
         }
-      } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
       }
     };
+    const crud = async (type: string | null) => {};
+
+    const submit = async (data: ICC1400FORM) => {};
 
     return (
       <form

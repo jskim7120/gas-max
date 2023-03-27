@@ -15,7 +15,13 @@ import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
-import { FormGroup, Wrapper, Label, Field } from "components/form/style";
+import {
+  FormGroup,
+  Wrapper,
+  Label,
+  Field,
+  Select,
+} from "components/form/style";
 import Form from "./form";
 import Loader from "components/loader";
 import Button from "components/button/button";
@@ -28,14 +34,15 @@ import FourButtons from "components/button/fourButtons";
 function CC1200({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
+  const [areaCode, setAreaCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
@@ -73,6 +80,12 @@ function CC1200({
       resetSearchForm();
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (selected && JSON.stringify(selected) !== "{}") {
+      setAreaCode(selected?.areaCode);
+    }
+  }, [selected]);
 
   const fetchData = async (params: any) => {
     try {
@@ -135,12 +148,26 @@ function CC1200({
 
   return (
     <>
-      <CustomTopPart
-        depthFullName={depthFullName}
-        register={register}
-        dataCommonDic={dataCommonDic}
-        areaCode={areaCode}
-      />
+      <SearchWrapper className="h35 mt5">
+        <FormGroup>
+          <p>{depthFullName}</p>
+          {ownAreaCode === "00" && (
+            <>
+              <p className="big">영업소</p>
+              <Select
+                value={areaCode}
+                onChange={(e) => setAreaCode(e.target.value)}
+              >
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+        </FormGroup>
+      </SearchWrapper>
       <SearchWrapper
         className="h35 mt5"
         style={{
@@ -206,13 +233,15 @@ function CC1200({
                 </FormGroup>
                 <Field style={{ width: "280px" }}>
                   <FormGroup>
-                    &nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
                     <CheckBox
                       register={{ ...register("userChk") }}
                       onChange={handleUserChk}
                     />
-                    &nbsp; &nbsp; &nbsp;
-                    <Label>사용자등록 자료만 보기</Label>
+                    &nbsp;
+                    <Label style={{ paddingTop: "4px" }}>
+                      사용자등록 자료만 보기
+                    </Label>
                   </FormGroup>
                 </Field>
               </Wrapper>
@@ -253,7 +282,7 @@ function CC1200({
             </div>
           </SearchWrapper>
           <GridLeft
-            areaCode="00"
+            areaCode={ownAreaCode}
             data={data}
             fields={fields}
             columns={columns}

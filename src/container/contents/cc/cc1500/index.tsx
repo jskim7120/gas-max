@@ -33,15 +33,16 @@ import FourButtons from "components/button/fourButtons";
 
 function CC1500({
   depthFullName,
-  areaCode,
+  ownAreaCode,
   menuId,
 }: {
   depthFullName: string;
-  areaCode: string;
+  ownAreaCode: string;
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
+  const [areaCode, setAreaCode] = useState("");
   const [data, setData] = useState([]);
   const [data65, setData65] = useState({});
   const [loading, setLoading] = useState(false);
@@ -69,6 +70,12 @@ function CC1500({
         cjDate: selected?.cjDate,
         cjSno: selected?.cjSno,
       });
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    if (selected && JSON.stringify(selected) !== "{}") {
+      setAreaCode(selected?.areaCode);
     }
   }, [selected]);
 
@@ -164,12 +171,24 @@ function CC1500({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomAreaCodePart
-          areaCode={areaCode}
-          depthFullName={depthFullName}
-          register={register}
-          dataCommonDic={dataCommonDic}
-        />
+        <FormGroup>
+          <p>{depthFullName}</p>
+          {ownAreaCode === "00" && (
+            <>
+              <p className="big">영업소</p>
+              <Select
+                value={areaCode}
+                onChange={(e) => setAreaCode(e.target.value)}
+              >
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+        </FormGroup>
         <SearchWrapper
           className="h35 mt5"
           style={{
@@ -300,7 +319,7 @@ function CC1500({
             </FormGroup>
           </SearchWrapper>
           <GridLeft
-            areaCode="00"
+            areaCode={ownAreaCode}
             data={data}
             fields={fields}
             columns={columns}

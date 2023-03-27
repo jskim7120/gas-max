@@ -2,7 +2,6 @@ import React, { useImperativeHandle, useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
-import { EN1400DELETE, EN140011 } from "app/path";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import { currencyMask } from "helpers/currency";
@@ -90,31 +89,16 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && Object.keys(selected).length > 0) {
         let newData: any = {};
         if (type === "clear") {
           document.getElementById("acjDate")?.focus();
-          const path = EN140011;
 
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.bpCode = response.data.tempCode;
-              newData.areaCode = selected.areaCode;
-              reset(newData);
-            } else {
-              toast.error(response.response.data?.message, {
-                autoClose: 500,
-              });
-            }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
+          for (const [key, value] of Object.entries(selected)) {
+            newData[key] = null;
           }
+          newData.areaCode = selected.areaCode;
+          reset(newData);
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
@@ -126,29 +110,7 @@ const Form = React.forwardRef(
         }
       }
     };
-    const crud = async (type: string | null) => {
-      if (type === "delete") {
-        const formValues = getValues();
-
-        try {
-          const response = await API.post(EN1400DELETE, formValues);
-          if (response.status === 200) {
-            toast.success("삭제하였습니다", {
-              autoClose: 500,
-            });
-            await fetchData();
-          }
-        } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
-        }
-      }
-
-      if (type === null) {
-        // handleSubmit(submit)();
-      }
-    };
+    const crud = async (type: string | null) => {};
 
     const handleSelectCode = async (event: any) => {};
 
@@ -167,9 +129,9 @@ const Form = React.forwardRef(
           <Label style={{ minWidth: "80px" }}>영 업 소</Label>
           <Select
             width={InputSize.i200}
-            {...register("cbareaCode")}
+            {...register("areaCode")}
             onChange={handleSelectCode}
-            disabled={isAddBtnClicked}
+            disabled={!isAddBtnClicked}
           >
             {dataCommonDic?.cbareaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
