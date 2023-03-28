@@ -132,7 +132,11 @@ export const getContent = (
       );
     case "GR1100":
       return (
-        <GR1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <GR1100
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "GR1500":
       return (

@@ -12,19 +12,12 @@ import {
 import { GR1100SEARCH } from "app/path";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import Button from "components/button/button";
-import { Input, Select, Field, FormGroup, Label } from "components/form/style";
-import {
-  Plus,
-  Trash,
-  Update,
-  Reset,
-  MagnifyingGlassBig,
-  ExcelIcon,
-} from "components/allSvgIcon";
+import { Input, Select, FormGroup, Label } from "components/form/style";
+import { MagnifyingGlassBig, ExcelIcon } from "components/allSvgIcon";
 import Form from "./form";
 import { columns, fields } from "./data";
 import { ISEARCH } from "./model";
-import Grid from "../grid";
+import Grid from "components/grid";
 import {
   MainWrapper,
   RightSide,
@@ -32,26 +25,30 @@ import {
   SearchWrapper,
 } from "../../commonStyle";
 import Loader from "components/loader";
-import { CustomAreaCodePart } from "container/contents/customTopPart";
+import { AreaCodeWithFullName } from "container/contents/customTopPart";
+import FourButtons from "components/button/fourButtons";
 
 const minWidth = "763px";
 
 function GR1100({
   depthFullName,
-  areaCode,
+  ownAreaCode,
   menuId,
 }: {
   depthFullName: string;
-  areaCode: string;
+  ownAreaCode: string;
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
 
+  const [areaCode, setAreaCode] = useState("");
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>();
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
     functionName: "GR1100",
@@ -64,12 +61,14 @@ function GR1100({
   const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
-    if (dataCommonDic !== undefined && dataCommonDic) {
+    if (dataCommonDic) {
       reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
         sBuGubun: dataCommonDic?.sBuGubun[0].code,
         sBuStae: dataCommonDic?.sBuStae[0].code,
       });
+      setAreaCode(dataCommonDic?.areaCode[0].code);
+
+      fetchData({ areaCode: dataCommonDic?.areaCode[0].code });
     }
   }, [dataCommonDic]);
 
@@ -79,25 +78,28 @@ function GR1100({
     }
   }, [isDelete.isDelete]);
 
-  const fetchData = async (params: ISEARCH) => {
+  const fetchData = async (params: any) => {
     try {
       setLoading(true);
-      const { data } = await API.get(GR1100SEARCH, {
+      const { data: dataS } = await API.get(GR1100SEARCH, {
         params: params,
       });
-      if (data) {
-        setData(data);
-        setLoading(false);
-        setSelected(data[0]);
-        setSelectedRowIndex(0);
+      if (dataS) {
+        setData(dataS);
+        setSelected(dataS[0]);
+      } else {
+        setData([]);
+        setSelected({});
       }
+      setSelectedRowIndex(0);
+      setLoading(false);
     } catch (err) {
       console.log("DATA fetch error =======>", err);
     }
   };
 
   const submit = async (data: ISEARCH) => {
-    fetchData(data);
+    fetchData({ ...data, areaCode: areaCode });
   };
 
   function deleteRowGrid() {
@@ -110,53 +112,43 @@ function GR1100({
     } catch (error) {}
   }
 
+  const onClickAdd = () => {
+    setIsAddBtnClicked(true);
+    setIsCancelBtnDisabled(false);
+    formRef.current.resetForm("clear");
+  };
+
+  const onClickDelete = () => {
+    dispatch(openModal({ type: "delModal" }));
+    dispatch(addDeleteMenuId({ menuId: menuId }));
+  };
+  const onClickUpdate = () => {
+    formRef.current.crud(null);
+  };
+
+  const onClickReset = () => {
+    setIsAddBtnClicked(false);
+    formRef.current.resetForm("reset");
+  };
+
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomAreaCodePart
+        <AreaCodeWithFullName
+          ownAreaCode={ownAreaCode}
+          depthFullName={depthFullName}
+          setAreaCode={setAreaCode}
           areaCode={areaCode}
           dataCommonDic={dataCommonDic}
-          depthFullName={depthFullName}
-          register={register}
         />
-
-        <div className="buttons">
-          <Button
-            text="등록"
-            icon={<Plus />}
-            style={{ marginRight: "5px" }}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(true);
-              formRef.current.resetForm("clear");
-            }}
-          />
-          <Button
-            text="삭제"
-            icon={<Trash />}
-            style={{ marginRight: "5px" }}
-            onClick={() => {
-              dispatch(openModal({ type: "delModal" }));
-              dispatch(addDeleteMenuId({ menuId: menuId }));
-            }}
-          />
-          <Button
-            text="저장"
-            icon={<Update />}
-            style={{ marginRight: "5px" }}
-            color={ButtonColor.SECONDARY}
-            onClick={() => {
-              formRef.current.crud(null);
-            }}
-          />
-          <Button
-            text="취소"
-            icon={<Reset />}
-            onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
-              formRef.current.resetForm("reset");
-            }}
-          />
-        </div>
+        <FourButtons
+          onClickAdd={onClickAdd}
+          onClickDelete={onClickDelete}
+          onClickUpdate={onClickUpdate}
+          onClickReset={onClickReset}
+          isAddBtnClicked={isAddBtnClicked}
+          isCancelBtnDisabled={isCancelBtnDisabled}
+        />
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
@@ -226,13 +218,17 @@ function GR1100({
               </div>
             </SearchWrapper>
           </form>
+
           <Grid
+            areaCode={ownAreaCode}
             data={data}
             fields={fields}
             columns={columns}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
+            setIsAddBtnClicked={setIsAddBtnClicked}
             style={{ height: `calc(100% - 38px)`, minWidth: minWidth }}
           />
         </LeftSide>
@@ -246,6 +242,8 @@ function GR1100({
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
+            areaCode={areaCode}
+            setAreaCode={setAreaCode}
           />
         </RightSide>
       </MainWrapper>

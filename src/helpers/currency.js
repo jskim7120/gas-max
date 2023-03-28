@@ -34,3 +34,13 @@ export function removeCommas(data, returnType) {
 
   return result;
 }
+
+export function formatMoney(str) {
+  const regex = /^\d+(.\d{1,2})?$/;
+  if (!regex.test(str)) {
+    return "";
+  }
+  const number = typeof str === "number" ? str : +str;
+  const formattedNumber = number.toLocaleString({});
+  return formattedNumber;
+}
