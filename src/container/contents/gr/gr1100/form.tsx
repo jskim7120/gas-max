@@ -229,13 +229,21 @@ const Form = React.forwardRef(
       const formValues = getValues();
 
       formValues.areaCode = areaCode;
-      formValues.buMisu = +removeCommas(formValues.buMisu, "number");
-      formValues.buPdanga = +removeCommas(formValues.buPdanga, "number");
-      formValues.buPcost = +removeCommas(formValues.buPcost, "number");
-      formValues.buBdanga = +removeCommas(formValues.buBdanga, "number");
-      formValues.buBcost = +removeCommas(formValues.buBcost, "number");
-      formValues.buBldanga = +removeCommas(formValues.buBldanga, "number");
-      formValues.buBlcost = +removeCommas(formValues.buBlcost, "number");
+
+      formValues.buMisu =
+        formValues.buMisu && +removeCommas(formValues.buMisu, "number");
+      formValues.buPdanga =
+        formValues.buPdanga && +removeCommas(formValues.buPdanga, "number");
+      formValues.buPcost =
+        formValues.buPcost && +removeCommas(formValues.buPcost, "number");
+      formValues.buBdanga =
+        formValues.buBdanga && +removeCommas(formValues.buBdanga, "number");
+      formValues.buBcost =
+        formValues.buBcost && +removeCommas(formValues.buBcost, "number");
+      formValues.buBldanga =
+        formValues.buBldanga && +removeCommas(formValues.buBldanga, "number");
+      formValues.buBlcost =
+        formValues.buBlcost && +removeCommas(formValues.buBlcost, "number");
 
       try {
         const response: any = await API.post(path, formValues);
@@ -255,6 +263,7 @@ const Form = React.forwardRef(
             autoClose: 500,
           });
           setIsAddBtnClicked(false);
+          setIsCancelBtnDisabled(true);
         } else {
           toast.error(response?.message, {
             autoClose: 500,
