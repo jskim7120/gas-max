@@ -8,13 +8,15 @@ export interface ISEARCH {
 export interface IForm {
   selected: any;
   fetchData: any;
-  tData: any;
   setData: any;
   selectedRowIndex: number;
   setSelected: any;
   setSelectedRowIndex: any;
   areaCode: string;
   setAreaCode: Function;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
+  setIsCancelBtnDisabled: Function;
 }
 
 export interface ISANGPUM {

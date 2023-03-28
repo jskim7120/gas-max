@@ -29,7 +29,7 @@ import {
 import { InputSize } from "components/componentsType";
 import { currencyMask } from "helpers/currency";
 import TableData from "./table/index";
-import { removeCommas, formatMoney } from "helpers/currency";
+import { removeCommas } from "helpers/currency";
 
 const radioOptions = [
   {
@@ -51,17 +51,18 @@ const Form = React.forwardRef(
     {
       selected,
       fetchData,
-      tData,
       setData,
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
       areaCode,
       setAreaCode,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
+      setIsCancelBtnDisabled,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [addr, setAddress] = useState<string>("");
     const [tableData, setTableData] = useState(null);
     const [buPsum, setBuPsum] = useState<number>(0);
@@ -182,21 +183,14 @@ const Form = React.forwardRef(
           buGubun: radioOptions[0].id,
           buStae: dataCommonDic?.buStae[0].code,
         });
-        resetTable("clear");
+
         document.getElementById("buName")?.focus();
       }
 
       if (type === "reset" && selected && Object.keys(selected).length > 0) {
-        let newData: any = {};
-        for (const [key, value] of Object.entries(selected)) {
-          newData[key] = value;
-        }
         reset({
-          ...newData,
-          buPsum: "41111",
+          ...selected,
         });
-        console.log("selee", selected);
-        resetTable("reset");
       }
     };
     const crud = async (type: string | null) => {
@@ -204,12 +198,18 @@ const Form = React.forwardRef(
         const formValues = getValues();
 
         try {
-          const response = await API.post(GR1100DELETE, formValues);
+          const response = await API.post(GR1100DELETE, {
+            areaCode: formValues.areaCode,
+            buCode: formValues.buCode,
+          });
+
+          console.log("res", response);
           if (response.status === 200) {
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await handleSubmit(submit)();
+
+            fetchData({ areaCode: areaCode });
           }
         } catch (err) {
           toast.error("Couldn't delete", {
@@ -229,13 +229,7 @@ const Form = React.forwardRef(
       const formValues = getValues();
 
       formValues.areaCode = areaCode;
-      // if (typeof formValues.buMisu === "string")
-      //   formValues.buMisu = Number(formValues.buMisu.replaceAll(",", ""));
-
-      console.log(typeof formValues.buPdanga);
-
       formValues.buMisu = +removeCommas(formValues.buMisu, "number");
-
       formValues.buPdanga = +removeCommas(formValues.buPdanga, "number");
       formValues.buPcost = +removeCommas(formValues.buPcost, "number");
       formValues.buBdanga = +removeCommas(formValues.buBdanga, "number");
@@ -274,35 +268,20 @@ const Form = React.forwardRef(
     };
 
     const fetchTableData = async () => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      if (selected && Object.keys(selected).length > 0) {
         try {
           const { data: tableData } = await API.get(GR110065, {
             params: {
               areaCode: selected.areaCode,
             },
           });
-
-          setTableData(tableData);
+          if (tableData) {
+            console.log(tableData, typeof setTableData);
+            setTableData(tableData);
+          } else {
+            setTableData(null);
+          }
         } catch (err) {}
-      }
-    };
-
-    const resetTable = (type: string) => {
-      if (type === "reset") {
-        // setBuPdanga(selected?.buPdanga);
-        // setBuPcost(selected?.buPcost);
-        // setBuBdanga(selected?.buBdanga);
-        // setBuBcost(selected?.buBcost);
-        // setBuBldanga(selected?.buBldanga);
-        // setBuBlcost(selected?.buBlcost);
-      }
-      if (type === "clear") {
-        // setBuPdanga("");
-        // setBuPcost("");
-        // setBuBdanga("");
-        // setBuBcost("");
-        // setBuBldanga("");
-        // setBuBlcost("");
       }
     };
 
@@ -329,7 +308,6 @@ const Form = React.forwardRef(
                   value={option.id}
                   {...register(`buGubun`)}
                   id={option.id}
-                  //checked={option.id === "0"}
                 />
                 <RadioButtonLabel htmlFor={`${option.label}`}>
                   {option.label}

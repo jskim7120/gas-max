@@ -104,7 +104,7 @@ function GR1100({
 
   function deleteRowGrid() {
     try {
-      formRef.current.setIsAddBtnClicked(false);
+      setIsAddBtnClicked(false);
       formRef.current.crud("delete");
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
@@ -237,13 +237,15 @@ function GR1100({
             selected={selected}
             ref={formRef}
             fetchData={fetchData}
-            tData={data}
             setData={setData}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             areaCode={areaCode}
             setAreaCode={setAreaCode}
+            setIsAddBtnClicked={setIsAddBtnClicked}
+            isAddBtnClicked={isAddBtnClicked}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
           />
         </RightSide>
       </MainWrapper>

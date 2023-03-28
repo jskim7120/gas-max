@@ -1,189 +1,153 @@
 import { useEffect, useState } from "react";
+import { Controller } from "react-hook-form";
 import Table from "components/table";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { Update, Reset } from "components/allSvgIcon";
-import { Input2, Select, Field } from "components/form/style";
+import { Input, Select, Field } from "components/form/style";
 import { InputSize } from "components/componentsType";
 import { PersonInfoText } from "components/text";
 import { InfoText } from "components/text";
+import { currencyMask, formatMoney } from "helpers/currency";
+
+import styled from "styled-components";
+
+const CustomSpan = styled.span`
+  width: 100%;
+  display: inline-block;
+  text-align: right;
+`;
+
 function Tab1({
   register,
-  errors,
-  tabData,
+  control,
+  tableData,
   update,
   clearForm,
-  selected,
+
+  buPsum,
+  buBsum,
+  buBlsum,
 }: {
   register: any;
-  errors: any;
-  tabData: any;
+  control: any;
+  tableData: any;
   update: any;
   clearForm: any;
-  selected: any;
+
+  buPsum: number;
+  buBsum: number;
+  buBlsum: number;
 }) {
-  const [buPdanga, setBuPdanga] = useState<string>();
-  const [buPcost, setBuPcost] = useState<string>();
-
-  const [buBdanga, setBuBdanga] = useState<string>();
-  const [buBcost, setBuBcost] = useState<string>();
-
-  const [buBldanga, setBuBldanga] = useState<string>();
-  const [buBlcost, setBuBlcost] = useState<string>();
-
-  useEffect(() => {
-    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-      selected.buPdanga && setBuPdanga(selected.buPdanga);
-      selected.buPcost && setBuPcost(selected.buPcost);
-
-      selected.buBdanga && setBuBdanga(selected.buBdanga);
-      selected.buBcost && setBuBcost(selected.buBcost);
-
-      selected.buBldanga && setBuBldanga(selected.buBldanga);
-      selected.buBlcost && setBuBlcost(selected.buBlcost);
-    }
-  }, [selected]);
-
   const data0 = [
     {
       1: <p>프로판</p>,
       2: (
-        <Input2
+        <Controller
+          control={control}
           {...register("buPdanga")}
-          id="buPdanga"
-          type="text"
-          value={buPdanga}
-          inputSize={InputSize.i80}
-          style={{ textAlign: "end" }}
-          onChange={(e: any) => setBuPdanga(e.target.value)}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              fullWidth
+              name={name}
+            />
+          )}
         />
       ),
       3: (
-        <Input2
+        <Controller
+          control={control}
           {...register("buPcost")}
-          id="buPcost"
-          type="text"
-          value={buPcost}
-          inputSize={InputSize.i80}
-          style={{ textAlign: "end" }}
-          onChange={(e: any) => {
-            setBuPcost(e.target.value);
-          }}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              fullWidth
+              name={name}
+            />
+          )}
         />
       ),
-      4: (
-        <p
-          style={{
-            display: "inline-block",
-            height: "25px",
-            width: "80px",
-            textAlign: "right",
-            borderRadius: "4px",
-            border: "1px solid rgb(188,185 ,185)",
-            padding: "3px 6px",
-            background: "aliceblue",
-            margin: "5px",
-          }}
-        >
-          {Number(buPdanga && buPdanga.replace(",", "")) +
-            Number(buPcost && buPcost.replace(",", ""))}
-        </p>
-      ),
+      4: <CustomSpan> {formatMoney(buPsum)}</CustomSpan>,
     },
     {
       1: <p>부탄</p>,
       2: (
-        <Input2
+        <Controller
+          control={control}
           {...register("buBdanga")}
-          id="buBdanga"
-          type="text"
-          value={buBdanga}
-          inputSize={InputSize.i80}
-          style={{ textAlign: "end" }}
-          onChange={(e: any) => {
-            setBuBdanga(e.target.value);
-          }}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              fullWidth
+              name={name}
+            />
+          )}
         />
       ),
 
       3: (
-        <Input2
+        <Controller
+          control={control}
           {...register("buBcost")}
-          id="buBcost"
-          type="text"
-          value={buBcost}
-          inputSize={InputSize.i80}
-          style={{ textAlign: "end" }}
-          onChange={(e: any) => {
-            setBuBcost(e.target.value);
-          }}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              fullWidth
+              name={name}
+            />
+          )}
         />
       ),
-      4: (
-        <p
-          style={{
-            display: "inline-block",
-            height: "25px",
-            width: "80px",
-            borderRadius: "4px",
-            border: "1px solid rgb(188,185 ,185)",
-            textAlign: "right",
-            padding: "3px 6px",
-            background: "aliceblue",
-            margin: "5px",
-          }}
-        >
-          {Number(buBdanga && buBdanga.replace(",", "")) +
-            Number(buBcost && buBcost.replace(",", ""))}
-        </p>
-      ),
+      4: <CustomSpan>{formatMoney(buBsum)}</CustomSpan>,
     },
     {
       1: <p>벌크</p>,
       2: (
-        <Input2
+        <Controller
+          control={control}
           {...register("buBldanga")}
-          id="buBldanga"
-          type="text"
-          value={buBldanga}
-          inputSize={InputSize.i80}
-          style={{ textAlign: "end" }}
-          onChange={(e: any) => {
-            setBuBldanga(e.target.value);
-          }}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              fullWidth
+              name={name}
+            />
+          )}
         />
       ),
       3: (
-        <Input2
+        <Controller
+          control={control}
           {...register("buBlcost")}
-          id="buBlcost"
-          type="text"
-          value={buBlcost}
-          inputSize={InputSize.i80}
-          style={{ textAlign: "end" }}
-          onChange={(e: any) => {
-            setBuBlcost(e.target.value);
-          }}
+          render={({ field: { onChange, value, name } }) => (
+            <Input
+              value={value}
+              onChange={onChange}
+              mask={currencyMask}
+              textAlign="right"
+              fullWidth
+              name={name}
+            />
+          )}
         />
       ),
-      4: (
-        <p
-          style={{
-            display: "inline-block",
-            height: "25px",
-            width: "80px",
-            borderRadius: "4px",
-            border: "1px solid rgb(188,185 ,185)",
-            padding: "3px 6px",
-            textAlign: "right",
-            background: "aliceblue",
-            margin: "5px",
-          }}
-        >
-          {Number(buBldanga && buBldanga.replace(",", "")) +
-            Number(buBlcost && buBlcost.replace(",", ""))}
-        </p>
-      ),
+      4: <CustomSpan>{formatMoney(buBlsum)}</CustomSpan>,
     },
   ];
 
@@ -191,11 +155,11 @@ function Tab1({
     {
       1: (
         <Select
-          {...register("buJpCode1")}
           style={{ margin: "5px" }}
           width={InputSize.i100}
+          {...register("buJpCode1")}
         >
-          {tabData?.buJpCode1?.map((obj: any, idx: number) => (
+          {tableData?.buJpCode1?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.jpCode}>
               {obj.jpName}
             </option>
@@ -206,11 +170,11 @@ function Tab1({
     {
       2: (
         <Select
-          {...register("buJpCode2")}
           style={{ margin: "5px" }}
           width={InputSize.i100}
+          {...register("buJpCode2")}
         >
-          {tabData?.buJpCode2?.map((obj: any, idx: number) => (
+          {tableData?.buJpCode2?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.jpCode}>
               {obj.jpName}
             </option>
@@ -221,11 +185,11 @@ function Tab1({
     {
       3: (
         <Select
-          {...register("buJpCode3")}
           style={{ margin: "5px" }}
           width={InputSize.i100}
+          {...register("buJpCode3")}
         >
-          {tabData?.buJpCode3?.map((obj: any, idx: number) => (
+          {tableData?.buJpCode3?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.jpCode}>
               {obj.jpName}
             </option>
@@ -236,11 +200,11 @@ function Tab1({
     {
       4: (
         <Select
-          {...register("buJpCode4")}
           style={{ margin: "5px" }}
           width={InputSize.i100}
+          {...register("buJpCode4")}
         >
-          {tabData?.buJpCode4?.map((obj: any, idx: number) => (
+          {tableData?.buJpCode4?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.jpCode}>
               {obj.jpName}
             </option>
