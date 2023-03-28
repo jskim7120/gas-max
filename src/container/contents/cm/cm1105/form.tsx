@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "app/store";
 import API from "app/axios";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import { Plus, Update, Reset, WhiteClose } from "components/allSvgIcon";
+import { Plus, Update, WhiteClose } from "components/allSvgIcon";
 import { ICM1105SEARCH, emptyObj } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { currencyMask, removeCommas } from "helpers/currency";
@@ -321,16 +321,6 @@ function FormCM1105() {
             color={ButtonColor.SECONDARY}
             onClick={handleSubmit(submit)}
             type="button"
-          />
-          <Button
-            text="취소"
-            style={{ marginRight: "5px" }}
-            icon={<Reset />}
-            type="button"
-            onClick={() => {
-              resetFormTemp("reset");
-              setIsAddBtnClicked(false);
-            }}
           />
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
