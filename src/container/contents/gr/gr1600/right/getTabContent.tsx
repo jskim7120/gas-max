@@ -5,8 +5,11 @@ import Tab3 from "./tab3";
 function getTabContent(
   id: number,
   register: any,
-  errors: any,
-  tabData: any,
+  control: any,
+  tableData: any,
+  buPsum: number,
+  buBsum: number,
+  buBlsum: number,
   selected: any,
   values1: any,
   values2: any,
@@ -20,11 +23,13 @@ function getTabContent(
       return (
         <Tab1
           register={register}
-          errors={errors}
-          tabData={tabData}
+          control={control}
+          tableData={tableData}
           update={update}
           clearForm={clearForm}
-          selected={selected}
+          buPsum={buPsum}
+          buBsum={buBsum}
+          buBlsum={buBlsum}
         />
       );
     case 1:

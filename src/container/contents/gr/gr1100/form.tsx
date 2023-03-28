@@ -17,7 +17,7 @@ import {
   RadioButton,
   RadioButtonLabel,
 } from "components/radioButton/style";
-import { ISANGPUM, IForm } from "./model";
+import { ISANGPUM, IForm, emptyObj } from "./model";
 import {
   Input,
   Select,
@@ -29,6 +29,7 @@ import {
 import { InputSize } from "components/componentsType";
 import { currencyMask } from "helpers/currency";
 import TableData from "./table/index";
+import { removeCommas } from "helpers/currency";
 
 const radioOptions = [
   {
@@ -50,34 +51,92 @@ const Form = React.forwardRef(
     {
       selected,
       fetchData,
-      tData,
       setData,
       selectedRowIndex,
       setSelected,
       setSelectedRowIndex,
+      areaCode,
+      setAreaCode,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
+      setIsCancelBtnDisabled,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
     const [addr, setAddress] = useState<string>("");
     const [tableData, setTableData] = useState(null);
+    const [buPsum, setBuPsum] = useState<number>(0);
+    const [buBsum, setBuBsum] = useState<number>(0);
+    const [buBlsum, setBuBlsum] = useState<number>(0);
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "GR",
       functionName: "GR1100",
     });
+    const { register, handleSubmit, reset, control, getValues, watch } =
+      useForm<ISANGPUM>({
+        mode: "onChange",
+      });
+
+    const watcher = watch();
 
     useEffect(() => {
-      if (JSON.stringify(selected) !== "{}") {
-        reset({
-          ...selected,
-        });
+      if (
+        watcher?.buPdanga ||
+        watcher?.buPcost ||
+        watcher?.buBdanga ||
+        watcher?.buBcost ||
+        watcher?.buBldanga ||
+        watcher?.buBlcost
+      ) {
+        const buPdanga: number = watcher?.buPdanga
+          ? +removeCommas(watcher?.buPdanga, "number")
+          : 0;
+
+        const buPcost: number = watcher?.buPcost
+          ? +removeCommas(watcher?.buPcost, "number")
+          : 0;
+        const s1: number = buPdanga + buPcost;
+        setBuPsum(s1);
+
+        const buBdanga: number = watcher?.buBdanga
+          ? +removeCommas(watcher?.buBdanga, "number")
+          : 0;
+
+        const buBcost: number = watcher?.buBcost
+          ? +removeCommas(watcher?.buBcost, "number")
+          : 0;
+
+        const s2: number = buBdanga + buBcost;
+        setBuBsum(s2);
+
+        const buBldanga: number = watcher?.buBldanga
+          ? +removeCommas(watcher?.buBldanga, "number")
+          : 0;
+
+        const buBlcost: number = watcher?.buBlcost
+          ? +removeCommas(watcher?.buBlcost, "number")
+          : 0;
+
+        const s3: number = buBldanga + buBlcost;
+        setBuBlsum(s3);
       }
-      setIsAddBtnClicked(false);
-    }, [selected]);
+    }, [
+      watcher?.buPdanga,
+      watcher?.buPcost,
+      watcher.buBdanga,
+      watcher.buBcost,
+      watcher.buBldanga,
+      watcher.buBlcost,
+    ]);
 
     useEffect(() => {
-      fetchTableData();
+      if (selected && Object.keys(selected).length > 0) {
+        resetForm("reset");
+        setIsAddBtnClicked(false);
+        setAreaCode(selected?.areaCode);
+        fetchTableData();
+      }
     }, [selected]);
 
     useEffect(() => {
@@ -89,26 +148,17 @@ const Form = React.forwardRef(
       }
     }, [addr]);
 
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-      control,
-      getValues,
-    } = useForm<ISANGPUM>({
-      mode: "onChange",
-    });
-
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const fetchCodes = async () => {
       try {
-        const response: any = await API.get(GR1100INSERTSEQ);
+        const response: any = await API.get(GR1100INSERTSEQ, {
+          params: { areaCode: areaCode },
+        });
+
         if (response.status === 200 && response.data.buCode) {
           return response.data.buCode;
         } else {
@@ -121,34 +171,26 @@ const Form = React.forwardRef(
           autoClose: 500,
         });
       }
-      return null;
+      return "";
     };
 
     const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
-        if (type === "clear") {
-          const data = await fetchCodes();
-          if (data) {
-            for (const [key, value] of Object.entries(selected)) {
-              newData[key] = null;
-            }
-          }
-          reset({
-            ...newData,
-            buCode: data,
-            buGubun: radioOptions[0].id,
-            buStae: dataCommonDic?.buStae[0].code,
-          });
-          document.getElementById("buName")?.focus();
-        } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
-          reset({
-            ...newData,
-          });
-        }
+      if (type === "clear") {
+        const buCode = await fetchCodes();
+        reset({
+          ...emptyObj,
+          buCode: buCode,
+          buGubun: radioOptions[0].id,
+          buStae: dataCommonDic?.buStae[0].code,
+        });
+
+        document.getElementById("buName")?.focus();
+      }
+
+      if (type === "reset" && selected && Object.keys(selected).length > 0) {
+        reset({
+          ...selected,
+        });
       }
     };
     const crud = async (type: string | null) => {
@@ -156,12 +198,18 @@ const Form = React.forwardRef(
         const formValues = getValues();
 
         try {
-          const response = await API.post(GR1100DELETE, formValues);
+          const response = await API.post(GR1100DELETE, {
+            areaCode: formValues.areaCode,
+            buCode: formValues.buCode,
+          });
+
+          console.log("res", response);
           if (response.status === 200) {
-            toast.success("삭제했습니다", {
+            toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await handleSubmit(submit)();
+
+            fetchData({ areaCode: areaCode });
           }
         } catch (err) {
           toast.error("Couldn't delete", {
@@ -179,21 +227,24 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? GR1100INSERT : GR1100UPDATE;
       const formValues = getValues();
-      formValues.areaCode = selected.areaCode;
-      if (typeof formValues.buMisu === "string")
-        formValues.buMisu = Number(formValues.buMisu.replaceAll(",", ""));
-      if (typeof formValues.buBcost === "string")
-        formValues.buBcost = Number(formValues.buBcost.replaceAll(",", ""));
-      if (typeof formValues.buBdanga === "string")
-        formValues.buBdanga = Number(formValues.buBdanga.replaceAll(",", ""));
-      if (typeof formValues.buBlcost === "string")
-        formValues.buBlcost = Number(formValues.buBlcost.replaceAll(",", ""));
-      if (typeof formValues.buBldanga === "string")
-        formValues.buBldanga = Number(formValues.buBldanga.replaceAll(",", ""));
-      if (typeof formValues.buPcost === "string")
-        formValues.buPcost = Number(formValues.buPcost.replaceAll(",", ""));
-      if (typeof formValues.buPdanga === "string")
-        formValues.buPdanga = Number(formValues.buPdanga.replaceAll(",", ""));
+
+      formValues.areaCode = areaCode;
+
+      formValues.buMisu =
+        formValues.buMisu && +removeCommas(formValues.buMisu, "number");
+      formValues.buPdanga =
+        formValues.buPdanga && +removeCommas(formValues.buPdanga, "number");
+      formValues.buPcost =
+        formValues.buPcost && +removeCommas(formValues.buPcost, "number");
+      formValues.buBdanga =
+        formValues.buBdanga && +removeCommas(formValues.buBdanga, "number");
+      formValues.buBcost =
+        formValues.buBcost && +removeCommas(formValues.buBcost, "number");
+      formValues.buBldanga =
+        formValues.buBldanga && +removeCommas(formValues.buBldanga, "number");
+      formValues.buBlcost =
+        formValues.buBlcost && +removeCommas(formValues.buBlcost, "number");
+
       try {
         const response: any = await API.post(path, formValues);
 
@@ -212,6 +263,7 @@ const Form = React.forwardRef(
             autoClose: 500,
           });
           setIsAddBtnClicked(false);
+          setIsCancelBtnDisabled(true);
         } else {
           toast.error(response?.message, {
             autoClose: 500,
@@ -225,15 +277,19 @@ const Form = React.forwardRef(
     };
 
     const fetchTableData = async () => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      if (selected && Object.keys(selected).length > 0) {
         try {
           const { data: tableData } = await API.get(GR110065, {
             params: {
               areaCode: selected.areaCode,
             },
           });
-
-          setTableData(tableData);
+          if (tableData) {
+            console.log(tableData, typeof setTableData);
+            setTableData(tableData);
+          } else {
+            setTableData(null);
+          }
         } catch (err) {}
       }
     };
@@ -249,7 +305,6 @@ const Form = React.forwardRef(
           <Input
             label="매입처코드"
             register={register("buCode")}
-            errors={errors["buCode"]?.message}
             inputSize={InputSize.i80}
             readOnly
           />
@@ -262,7 +317,6 @@ const Form = React.forwardRef(
                   value={option.id}
                   {...register(`buGubun`)}
                   id={option.id}
-                  //checked={option.id === "0"}
                 />
                 <RadioButtonLabel htmlFor={`${option.label}`}>
                   {option.label}
@@ -280,7 +334,7 @@ const Form = React.forwardRef(
           />
           <FormGroup>
             <Label>거래상태</Label>
-            <Select {...register("buStae")} width={InputSize.i80}>
+            <Select {...register("buStae")} width={InputSize.i130}>
               {dataCommonDic?.buStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -299,7 +353,7 @@ const Form = React.forwardRef(
           <Input
             label="Fax 번호"
             register={register("buFax")}
-            inputSize={InputSize.i110}
+            inputSize={InputSize.i130}
           />
         </Wrapper>
 
@@ -307,7 +361,7 @@ const Form = React.forwardRef(
           <Input
             label="비고"
             register={register("buBigo")}
-            inputSize={InputSize.i290}
+            style={{ width: "493px" }}
           />
         </Wrapper>
         <Divider />
@@ -335,14 +389,14 @@ const Form = React.forwardRef(
                   /\d/,
                 ]}
                 name={name}
-                inputSize={InputSize.i110}
+                inputSize={InputSize.i150}
               />
             )}
           />
           <Input
             label="종사업장"
             register={register("buRCode")}
-            inputSize={InputSize.i70}
+            inputSize={InputSize.i130}
             maxLength="4"
           />
         </Wrapper>
@@ -350,7 +404,7 @@ const Form = React.forwardRef(
           <Input
             label="상호"
             register={register("buSangho")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i150}
           />
           <Input
             label="대표자명"
@@ -363,20 +417,20 @@ const Form = React.forwardRef(
           <Input
             label="주소"
             register={register("buZipcode")}
-            inputSize={InputSize.i70}
+            inputSize={InputSize.i80}
           />
           <DaumAddress setAddress={setAddress} />
-          <Input register={register("buAddr1")} inputSize={InputSize.i290} />
+          <Input register={register("buAddr1")} style={{ width: "381px" }} />
         </Wrapper>
         <Wrapper>
           <Label></Label>
-          <Input register={register("buAddr2")} inputSize={InputSize.i290} />
+          <Input register={register("buAddr2")} style={{ width: "493px" }} />
         </Wrapper>
         <Wrapper grid col={2}>
           <Input
             label="업태"
             register={register("buUptae")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i150}
           />
           <Input
             label="종목"
@@ -388,7 +442,7 @@ const Form = React.forwardRef(
           <Input
             label="담당자명"
             register={register("buDamdang")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i150}
           />
           <Input
             label="담당자 번호"
@@ -400,7 +454,7 @@ const Form = React.forwardRef(
           <Input
             label="이메일"
             register={register("buEmail")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i150}
           />
           <FormGroup>
             <p>@</p>
@@ -418,7 +472,7 @@ const Form = React.forwardRef(
           <Input
             label="결재은행"
             register={register("buBank")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i150}
           />
           <Input
             label="계좌번호"
@@ -430,7 +484,7 @@ const Form = React.forwardRef(
           <Input
             label="예금주"
             register={register("buBankju")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i150}
           />
           <Controller
             control={control}
@@ -450,10 +504,12 @@ const Form = React.forwardRef(
         </Wrapper>
         <Divider />
         <TableData
-          register={register}
           tableData={tableData}
-          selected={selected}
-          tData={tData}
+          control={control}
+          register={register}
+          buPsum={buPsum}
+          buBsum={buBsum}
+          buBlsum={buBlsum}
         />
       </form>
     );

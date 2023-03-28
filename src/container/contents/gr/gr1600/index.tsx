@@ -50,11 +50,12 @@ function GR1600({
   });
 
   useEffect(() => {
-    if (dataCommonDic !== undefined && dataCommonDic) {
+    if (dataCommonDic) {
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
         buGubun: dataCommonDic?.sBuGubun[0].code,
       });
+      fetchData({ areaCode: dataCommonDic?.areaCode[0].code });
 
       values1 = [];
       labels1 = [];
