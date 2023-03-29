@@ -141,10 +141,11 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (addr.length > 0) {
-        reset({
+        reset((formValues: any) => ({
+          ...formValues,
           buZipcode: addr ? addr?.split("/")[1] : "",
           buAddr1: addr ? addr?.split("/")[0] : "",
-        });
+        }));
       }
     }, [addr]);
 
@@ -184,6 +185,10 @@ const Form = React.forwardRef(
           buStae: dataCommonDic?.buStae[0].code,
         });
 
+        setBuPsum(0);
+        setBuBsum(0);
+        setBuBlsum(0);
+
         document.getElementById("buName")?.focus();
       }
 
@@ -203,7 +208,6 @@ const Form = React.forwardRef(
             buCode: formValues.buCode,
           });
 
-          console.log("res", response);
           if (response.status === 200) {
             toast.success("삭제하였습니다", {
               autoClose: 500,
@@ -249,8 +253,9 @@ const Form = React.forwardRef(
         const response: any = await API.post(path, formValues);
 
         if (response.status === 200) {
+          /*
           if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
+            //setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
           } else {
             setData((prev: any) => {
@@ -258,7 +263,10 @@ const Form = React.forwardRef(
               return [...prev];
             });
           }
-          setSelected(formValues);
+          */
+
+          fetchData({ areaCode: areaCode });
+          //setSelected(formValues);
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
@@ -285,7 +293,6 @@ const Form = React.forwardRef(
             },
           });
           if (tableData) {
-            console.log(tableData, typeof setTableData);
             setTableData(tableData);
           } else {
             setTableData(null);

@@ -173,7 +173,7 @@ export const Input = ({
         {mask ? (
           <MaskedInput
             mask={mask}
-            value={value}
+            value={value && value}
             onChange={onChange}
             name={name && name}
             guide={false}
