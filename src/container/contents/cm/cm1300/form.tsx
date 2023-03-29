@@ -21,6 +21,7 @@ import {
   CM1300INSERTSEQ,
 } from "app/path";
 import { InputSize } from "components/componentsType";
+import { currencyMask } from "helpers/currency";
 import {
   Item,
   RadioButton,
@@ -581,6 +582,7 @@ const Form = React.forwardRef(
             register={register("aptAnkum")}
             textAlign="right"
             inputSize={InputSize.i120}
+            mask={currencyMask}
             readOnly={!chkAptAnkum}
           />
           <p>{`원`}</p>
@@ -595,6 +597,7 @@ const Form = React.forwardRef(
           <Input
             register={register("aptSisulkum")}
             textAlign="right"
+            mask={currencyMask}
             readOnly={!chkAptSisulkum}
             inputSize={InputSize.i120}
           />
@@ -610,6 +613,7 @@ const Form = React.forwardRef(
           <Input
             register={register("aptMeterkum")}
             textAlign="right"
+            mask={currencyMask}
             readOnly={!chkAptMeterkum}
             inputSize={InputSize.i120}
           />

@@ -186,8 +186,6 @@ function CM1300({
     setIsAddBtnClicked(true);
     setIsCancelBtnDisabled(false);
     formRef.current.resetForm("clear");
-    setData65([]);
-    setSelected65({});
   };
 
   const onClickDelete = () => {
@@ -318,6 +316,7 @@ function CM1300({
           <FormCM1300User
             data={data65}
             setData={setData65}
+            mainSelected={selected}
             selected={selected65}
             setSelected={setSelected65}
             selectedRowIndex={selectedRowIndex65}
@@ -326,6 +325,7 @@ function CM1300({
             fetchData={fetchData65}
             aptCode={selected?.aptCode}
             areaCode={areaCode}
+            mainIsAddBtnClicked={isAddBtnClicked}
             isAddBtnClicked={isAddBtnClicked2}
             setIsAddBtnClicked={setIsAddBtnClicked2}
             isCancelBtnDisabled={isCancelBtnDisabled2}

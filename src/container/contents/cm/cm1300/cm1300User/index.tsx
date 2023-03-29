@@ -7,6 +7,7 @@ import {
   CM1300INSERTSEQ2,
   CM1300CUSTOMERINSERT,
   CM1300CUSTOMERUPDATE,
+  CM130065,
 } from "app/path";
 import { ICM1300User, emptyObj } from "./model";
 import { columns, fields } from "./data";
@@ -30,6 +31,7 @@ function FormCM1300User({
   setData,
   ownAreaCode,
   selected,
+  mainSelected,
   setSelected,
   selectedRowIndex,
   setSelectedRowIndex,
@@ -37,6 +39,7 @@ function FormCM1300User({
   aptCode,
   areaCode,
   isAddBtnClicked,
+  mainIsAddBtnClicked,
   setIsAddBtnClicked,
   isCancelBtnDisabled,
   setIsCancelBtnDisabled,
@@ -45,6 +48,7 @@ function FormCM1300User({
   setData: Function;
   ownAreaCode: string;
   selected: any;
+  mainSelected: any;
   setSelected: Function;
   selectedRowIndex: number;
   setSelectedRowIndex: Function;
@@ -52,6 +56,7 @@ function FormCM1300User({
   aptCode: string;
   areaCode: string;
   isAddBtnClicked: boolean;
+  mainIsAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
   isCancelBtnDisabled: boolean;
   setIsCancelBtnDisabled: Function;
@@ -69,9 +74,23 @@ function FormCM1300User({
   useEffect(() => {
     if (selected && JSON.stringify(selected) !== "{}") {
       resetForm("reset");
+    } else {
+      resetForm("clear");
     }
     setIsAddBtnClicked(false);
   }, [selected]);
+
+  useEffect(() => {
+    if (mainIsAddBtnClicked) {
+      setData([]);
+      resetForm("emptClear");
+      setIsAddBtnClicked(true);
+      setIsCancelBtnDisabled(false);
+    } else {
+      setIsAddBtnClicked(false);
+      fetchData65();
+    }
+  }, [mainIsAddBtnClicked]);
 
   useEffect(() => {
     if (isDelete.menuId === DELETECONSTANT && isDelete.isDelete) {
@@ -115,7 +134,7 @@ function FormCM1300User({
       const response: any = await API.get(CM1300INSERTSEQ2, {
         params: { aptCode: aptC, areaCode: areaC },
       });
-      if (response.status === 200 && response.data[0].tempAptCode) {
+      if (response.status === 200) {
         return response.data;
       } else {
         toast.error("can't get aptCode", {
@@ -130,13 +149,37 @@ function FormCM1300User({
     return null;
   };
 
+  const fetchData65 = async () => {
+    try {
+      const { data: data65 } = await API.get(CM130065, {
+        params: {
+          areaCode: mainSelected?.areaCode,
+          aptCode: mainSelected?.aptCode,
+        },
+      });
+
+      if (data65) {
+        if (data65?.userCustomer && data65?.userCustomer?.length > 0) {
+          setData(data65.userCustomer);
+          setSelected(data65.userCustomer[0]);
+        } else {
+          setData([]);
+          setSelected({});
+        }
+
+        setSelectedRowIndex(0);
+      }
+    } catch (err) {
+      console.log("CM1300 data search fetch error =======>", err);
+    }
+  };
   const resetForm = async (type: string) => {
     if (type === "clear") {
       if (areaCode !== "" && aptCode !== "") {
         // let newData: any = {};
 
         const dataC = await fetchCodes(areaCode, aptCode);
-        if (dataC) {
+        if (dataC[0]?.tempAptCode) {
           // for (const [key] of Object.entries(selected)) {
           //   newData[key] = null;
           // }
@@ -145,6 +188,10 @@ function FormCM1300User({
             ...emptyObj,
             cuCode1: dataC[0]?.tempAptCode?.split("-")[0],
             cuCode2: dataC[0]?.tempAptCode?.split("-")[1],
+          });
+        } else {
+          reset({
+            ...emptyObj,
           });
         }
       }
@@ -157,6 +204,11 @@ function FormCM1300User({
           cuCode2: selected?.cuCode?.split("-")[1],
         });
       }
+    }
+    if (type === "emptClear") {
+      reset({
+        ...emptyObj,
+      });
     }
   };
 
