@@ -554,6 +554,7 @@ const Form = React.forwardRef(
             disabled={!chkAptRdangaType}
             width={InputSize.i120}
             value={rdangaType}
+            {...register("aptRdangaType")}
             onChange={(e) => {
               setRdangaType(e.target.value);
               calcRdanga("rdangaType", e.target.value);

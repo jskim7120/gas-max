@@ -154,11 +154,12 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (addr) {
-        reset({
+        reset((formValues: any) => ({
+          ...formValues,
           cuZipcode: addr ? addr?.split("/")[1] : "",
           cuAddr1: addr ? addr?.split("/")[0].split("(")[0] : "",
           cuAddr2: addr ? `(${addr?.split("/")[0].split("(")[1]}` : "",
-        });
+        }));
       }
     }, [addr]);
 

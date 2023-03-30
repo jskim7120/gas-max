@@ -53,7 +53,7 @@ export interface ICM1105SEARCH {
   cuHdate: string;
   cuHp: string;
   cuJangbuYn: string;
-  cuJdc: number | undefined; //top
+  cuJdc: number | undefined | null; //top
   //cuJdcName: number | undefined;
   cuJmisu: number | undefined; //top
   cuJongmok: string;
@@ -284,7 +284,7 @@ export const emptyObj = {
   cuHdate: "",
   cuHp: "",
   cuJangbuYn: "",
-  cuJdc: undefined,
+  cuJdc: null,
   //cuJdcName: "",
   cuJmisu: undefined,
   cuJongmok: "",

@@ -8,12 +8,12 @@ export interface ICM1200SEARCH {
   areaCode: string;
   cuAddr1: string;
   cuAddr2: string;
-  cuAnkum: number | undefined;
+  cuAnkum: number | null | undefined;
   cuAptnameYn: string;
   cuBaGageKum: number | undefined;
   cuBaGageM3: number | undefined;
   cuBaGageYn: string;
-  cuCdc: number | undefined;
+  cuCdc: number | null | undefined;
   cuCircuitDate: string;
   cuCno: string;
   cuCode: string;
@@ -146,12 +146,12 @@ export const emptyObj = {
   areaCode: "",
   cuAddr1: "",
   cuAddr2: "",
-  cuAnkum: undefined,
+  cuAnkum: null,
   cuAptnameYn: "",
   cuBaGageKum: undefined,
   cuBaGageM3: undefined,
   cuBaGageYn: "",
-  cuCdc: undefined,
+  cuCdc: null,
   cuCircuitDate: "",
   cuCno: "",
   cuCode: "",

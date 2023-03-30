@@ -129,6 +129,7 @@ function Tab2({
             <Select
               width={InputSize.i130}
               value={rdangaType}
+              {...register("cuRdangaType")}
               onChange={(e: any) => {
                 setRdangaType(e.target.value);
                 calcRdanga("rdangaType", e.target.value);
