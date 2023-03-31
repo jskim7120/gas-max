@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Input, Field, Select } from "components/form/style";
 import { CTitle, CTextArea, CLabel, TabLikeHeader, CTable } from "./style";
+import { InputSize } from "components/componentsType";
 
 function CommonFooterInfo({
   register,
   calcOnFieldChange,
+  dataAdditionalDic,
 }: {
   register: any;
   calcOnFieldChange: Function;
+  dataAdditionalDic: any;
 }) {
   const [bcOutkum, setBcOutkum] = useState<string | undefined>(undefined);
   const [bcDc, setBcDc] = useState<string | undefined>(undefined);
@@ -73,9 +76,17 @@ function CommonFooterInfo({
             <Input register={register("bcInkum1")} readOnly className="h27" />
           </td>
           <td>
-            <Select {...register("bcSupplyType")} className="h27">
-              <option value="A">외상</option>
-              <option value="0">현금</option>
+            <Select
+              {...register("bcSupplyType")}
+              className="h27"
+              width={InputSize.i110}
+              style={{ margin: "0px 3px" }}
+            >
+              {dataAdditionalDic?.bcSupplyType?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
             </Select>
           </td>
           <td>

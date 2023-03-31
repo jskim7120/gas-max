@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Editable = styled.div<{ textAlign: string }>`
   position: relative;
   width: 157px;
-
+  margin: 0 3px;
   ul {
     position: absolute;
     top: 30px;
@@ -15,14 +15,14 @@ export const Editable = styled.div<{ textAlign: string }>`
     border: 1px solid #686868;
     background: #fff;
     font-family: "NotoSansKRRegular";
-    font-size: 12px;
+    font-size: 14px;
     z-index: 10;
     box-shadow: 2px 1px 8px 0px rgb(151 150 150);
 
     li {
-      text-align: right;
-      padding: 0 2px;
-      height: 17px;
+      text-align: left;
+      padding: 2px;
+      height: 23px;
 
       &:hover {
         background: #3297fd;
@@ -53,6 +53,7 @@ export const Editable = styled.div<{ textAlign: string }>`
     background: aliceblue;
     border: 1px solid rgb(188, 185, 185);
     padding: 0 18px 0 6px;
+    margin: 0px;
     text-align: ${(props) =>
       props.textAlign && props.textAlign === "left" && `left`};
     text-align: ${(props) =>

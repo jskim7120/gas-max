@@ -34,12 +34,14 @@ function FourButtons({
         text={btn1Name ? btn1Name : "등록"}
         icon={<Plus />}
         style={{ marginRight: "5px" }}
+        type="button"
         onClick={onClickAdd}
       />
       <Button
         text={btn2Name ? btn2Name : "삭제"}
         icon={<Trash />}
         style={{ marginRight: "5px" }}
+        type="button"
         onClick={onClickDelete}
         disabled={isAddBtnClicked}
       />
@@ -47,12 +49,14 @@ function FourButtons({
         text={btn3Name ? btn3Name : "저장"}
         icon={<Update />}
         style={{ marginRight: "5px" }}
+        type="button"
         color={ButtonColor.SECONDARY}
         onClick={onClickUpdate}
       />
       <Button
         text={btn4Name ? btn4Name : "취소"}
         icon={<Reset />}
+        type="button"
         onClick={onClickReset}
         disabled={isCancelBtnDisabled}
       />

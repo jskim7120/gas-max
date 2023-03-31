@@ -3,8 +3,8 @@ import React from "react";
 // -----------------------------------------------------------------------------------------------------------------
 export const calcTab1GridChange = (
   data65Detail: any,
-  setBin: any,
-  setPin: any,
+  //setBin: any,
+  //setPin: any,
   setSumB: any,
   setSumP: any,
   getValues: any,
@@ -45,8 +45,8 @@ export const calcTab1GridChange = (
       }
     });
 
-    setPin(bcPin);
-    setBin(bcBin);
+    //setPin(bcPin);
+    //setBin(bcBin);
     setSumP(bcSumP);
     setSumB(bcSumB);
 

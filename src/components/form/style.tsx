@@ -33,6 +33,10 @@ export const getInputSize = (size?: InputSize) => {
       return `145px`;
     case InputSize.i150:
       return `150px`;
+    case InputSize.i160:
+      return `160px`;
+    case InputSize.i170:
+      return `170px`;
     case InputSize.i175:
       return `175px`;
     case InputSize.i180:
