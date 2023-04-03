@@ -340,15 +340,6 @@ const Form = React.forwardRef(
 
       formValues.areaCode = isAddBtnClicked ? areaCode : selected.areaCode;
 
-      if (!chkCuZipCode) {
-        delete formValues.cuZipcode;
-        delete formValues.cuAddr1;
-        delete formValues.cuAddr2;
-      }
-      if (!chkCuRh20) {
-        delete formValues.cuRh2O;
-      }
-
       if (chkCuRdanga) {
         formValues.cuRdangaType = rdangaType;
         formValues.cuRdanga = +rdanga;
@@ -360,43 +351,24 @@ const Form = React.forwardRef(
       }
 
       if (!chkCuAnKum) {
-        delete formValues.cuAnkum;
+        // delete formValues.cuAnkum;
       } else {
         formValues.cuAnkum = formValues.cuAnkum
           ? formatCurrencyRemoveComma(formValues.cuAnkum)
           : "";
       }
-      // if (!ckCuSisulKum) {
-      //   delete formValues.cuSisulkum;
-      // }
 
       if (!chkCuMeterKum) {
-        delete formValues.cuMeterkum;
+        // delete formValues.cuMeterkum;
       } else {
         formValues.cuMeterkum = formValues.cuMeterkum
           ? formatCurrencyRemoveComma(formValues.cuMeterkum)
           : "";
       }
-      if (!chkCuPer) {
-        delete formValues.cuPer;
-      }
-
-      if (!chkCuCdc) {
-        delete formValues.cuCdc;
-      }
-
-      if (!chkCuSukumtype) {
-        delete formValues.cuSukumtype;
-      }
-      if (!chkCuGumTurm) {
-        delete formValues.cuGumTurm;
-      }
-      if (!chkCuGumdate) {
-        delete formValues.cuGumdate;
-      }
-
-      if (!chkCuCno) {
-        delete formValues.cuCno;
+      if (formValues.cuBaGageKum) {
+        formValues.cuBaGageKum = formatCurrencyRemoveComma(
+          formValues.cuBaGageKum
+        );
       }
 
       formValues.cuAptnameYn = formValues.cuAptnameYn ? "Y" : "N";
@@ -429,12 +401,6 @@ const Form = React.forwardRef(
 
       const path = isAddBtnClicked ? CM1200INSERT : CM1200UPDATE;
 
-      if (!isAddBtnClicked) {
-        delete formValues.gasifyCheckDate1;
-        delete formValues.gasifyCheckDate2;
-        delete formValues.gasifyMakeDate1;
-        delete formValues.gasifyMakeDate2;
-      }
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
