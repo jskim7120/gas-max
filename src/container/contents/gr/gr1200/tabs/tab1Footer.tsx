@@ -86,6 +86,7 @@ function Tab1Footer({
                 }}
                 textAlign="right"
                 mask={currencyMask}
+                className="h27"
               />
             </td>
             <td>
@@ -114,6 +115,7 @@ function Tab1Footer({
                 }}
                 mask={currencyMask}
                 textAlign="right"
+                className="h27"
               />
             </td>
             <td>
@@ -142,6 +144,7 @@ function Tab1Footer({
                 }}
                 mask={currencyMask}
                 textAlign="right"
+                className="h27"
               />
             </td>
             <td>
@@ -190,6 +193,7 @@ function Tab1Footer({
                 }}
                 mask={currencyMask}
                 textAlign="right"
+                className="h27"
               />
             </td>
             <td>
@@ -218,6 +222,7 @@ function Tab1Footer({
                 }}
                 mask={currencyMask}
                 textAlign="right"
+                className="h27"
               />
             </td>
             <td>
@@ -246,6 +251,7 @@ function Tab1Footer({
                 }}
                 mask={currencyMask}
                 textAlign="right"
+                className="h27"
               />
             </td>
             <td>
@@ -314,6 +320,7 @@ function Tab1Footer({
                 }}
                 mask={currencyMask}
                 textAlign="right"
+                className="h27"
               />
             </td>
             <td>

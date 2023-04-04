@@ -286,11 +286,6 @@ export const InputForm = styled.input<{
   &.h27 {
     height: 27px;
   }
-
-  &:read-only {
-    // border: none;
-    // background: transparent;
-  }
 `;
 
 export const ErrorText = styled.p`
@@ -335,9 +330,15 @@ export const FormGroup = styled.div<{
   .maskedInput {
     ${InputCommonProp};
   }
+
+  .maskedInput.h27 {
+    height: 25px;
+  }
+
   .maskedInput.disabled {
     border: none;
     background: transparent;
+    height: 25px;
   }
 
   .maskedInput.gray {

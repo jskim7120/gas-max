@@ -97,7 +97,7 @@ export const CTable2 = styled.table`
 
     td,
     th {
-      height: 25px;
+      // height: 25px;
       font-family: "NotoSansKRRegular";
       font-size: 14px;
       border-left: 1px solid #707070;
