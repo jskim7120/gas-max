@@ -40,7 +40,8 @@ import { emptyObjTab1, emptyObjTab2, emptyObjTab3 } from "./model";
 import { calcTab1GridChange, calcFooterTab2Tab3 } from "./calculationHelper";
 import { SearchWrapper } from "container/contents/commonStyle";
 import FourButtons from "components/button/fourButtons";
-
+import Tab1Footer from "./tabs/tab1Footer";
+import calc1 from "./helper";
 let clone: any[];
 
 const radioOptions = [
@@ -80,12 +81,24 @@ const Form = ({
   const [data65, setData65] = useState<any>({});
   const [data65Detail, setData65Detail] = useState<any[]>([]);
   const [deleteData65Detail, setDeleteData65Detail] = useState<any[]>([]);
-  //const [bcBuCode, setBcBuCode] = useState("");
+
   const [bclInqtyLPG, setBclInqtyLPG] = useState(false);
-  //const [pin, setPin] = useState(0);
-  //const [bin, setBin] = useState(0);
+
   const [sumP, setSumP] = useState(0);
   const [sumB, setSumB] = useState(0);
+
+  const [bcPjan, setBcPjan] = useState<number | undefined>(undefined);
+  const [bcBjan, setBcBjan] = useState<number | undefined>(undefined);
+  const [bcPdanga, setBcPdanga] = useState<number | undefined>(undefined);
+  const [bcBdanga, setBcBdanga] = useState<number | undefined>(undefined);
+  const [bcPcost, setBcPcost] = useState<number | undefined>(undefined);
+  const [bcBcost, setBcBcost] = useState<number | undefined>(undefined);
+  const [bcGcost, setBcGcost] = useState<number | undefined>(undefined);
+  const [bcOutkum, setBcOutkum] = useState<number | undefined>(undefined);
+  const [bcDc, setBcDc] = useState<number | undefined>(undefined);
+  const [bcSupplyType, setBcSupplyType] = useState<string | undefined>(
+    undefined
+  );
 
   const dispatch = useDispatch();
 
@@ -180,8 +193,6 @@ const Form = ({
     tabId === 0 &&
       calcTab1GridChange(
         data65Detail,
-        //setBin,
-        //setPin,
         setSumB,
         setSumP,
         getValues,
@@ -196,7 +207,6 @@ const Form = ({
     if (isAddBtnClicked === true) {
       if (clone.length > 0) {
         if (clone[0].tabId !== tabId) {
-          // console.log("tabID:::::", tabId);
           tabId === 0 &&
             setData65Detail([
               {
@@ -227,6 +237,24 @@ const Form = ({
       }
     }
   }, [tabId]);
+
+  const calcOnFieldChange = (name: string, num: number) => {
+    calc1(
+      name,
+      num,
+      reset,
+      getValues,
+      bcPjan,
+      bcBjan,
+      bcPdanga,
+      bcBdanga,
+      bcPcost,
+      bcBcost,
+      bcGcost,
+      bcOutkum,
+      bcDc
+    );
+  };
 
   const fetchData65 = async () => {
     try {
@@ -303,9 +331,17 @@ const Form = ({
       setIsAddBtnClicked(false);
       setRowIndex(null);
 
-      reset({
-        ...data65,
-      });
+      reset({ ...data65 });
+
+      setBcPjan(data65?.bcPjan);
+      setBcBjan(data65?.bcBjan);
+      setBcPdanga(data65?.bcPdanga);
+      setBcBdanga(data65?.bcBdanga);
+      setBcPcost(data65?.bcPcost);
+      setBcBcost(data65?.bcBcost);
+      setBcGcost(data65?.bcGcost);
+      setBcOutkum(data65?.bcOutkum);
+      setBcDc(data65?.bcDc);
     }
   };
 
@@ -515,182 +551,6 @@ const Form = ({
       toast.warning(`please select a row.`, {
         autoClose: 500,
       });
-    }
-  };
-
-  const calcOnFieldChange = (num: any, name: string) => {
-    if (name === "bcPjan") {
-      const { bcPdanga, bcPcost, bcBjan, bcSumB, bcBkum, bcBsum } = getValues();
-      let bcSumP: number = 0;
-      let bcPkum: number = 0;
-      let bcPsum: number = 0;
-      let bcJTotal: number = 0;
-      let bcSumTotal: number = 0;
-      let bcSumKum: number = 0;
-      let bcSum: number = 0;
-
-      bcSumP = sumP - parseInt(num === "" ? 0 : num);
-
-      if (bcPdanga) {
-        bcPkum = bcSumP * bcPdanga;
-      }
-
-      if (bcPcost) {
-        bcPsum = bcPkum + +bcPcost;
-      } else {
-        bcPsum = bcPkum;
-      }
-
-      bcJTotal = parseInt(num === "" ? 0 : num) + +bcBjan;
-      bcSumTotal = bcSumP + +bcSumB;
-      bcSumKum = bcPkum + +bcBkum;
-      bcSum = bcPsum + bcBsum;
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcSumP: bcSumP,
-        bcPkum: bcPkum,
-        bcPsum: bcPsum,
-        bcJTotal: bcJTotal,
-        bcSumTotal: bcSumTotal,
-        bcSumKum: bcSumKum,
-        bcSum: bcSum,
-      }));
-    }
-
-    if (name === "bcBjan") {
-      const { bcBdanga, bcBcost, bcPjan, bcSumP, bcPkum, bcPsum } = getValues();
-      let bcSumB: number = 0;
-      let bcBkum: number = 0;
-      let bcBsum: number = 0;
-      let bcJTotal: number = 0;
-      let bcSumTotal: number = 0;
-      let bcSumKum: number = 0;
-      let bcSum: number = 0;
-
-      bcSumB = sumB - parseInt(num === "" ? 0 : num);
-
-      if (bcBdanga) {
-        bcBkum = bcSumB * bcBdanga;
-      }
-
-      if (bcBcost) {
-        bcBsum = bcBkum + +bcBcost;
-      } else {
-        bcBsum = bcBkum;
-      }
-
-      bcJTotal = parseInt(num === "" ? 0 : num) + +bcPjan;
-      bcSumTotal = bcSumB + +bcSumP;
-      bcSumKum = bcBkum + +bcPkum;
-      bcSum = bcBsum + bcPsum;
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcSumB: bcSumB,
-        bcBkum: bcBkum,
-        bcBsum: bcBsum,
-        bcJTotal: bcJTotal,
-        bcSumTotal: bcSumTotal,
-        bcSumKum: bcSumKum,
-        bcSum: bcSum,
-      }));
-    }
-
-    if (name === "bcPdanga") {
-      let bcPsum: number;
-      const { bcSumP, bcPcost, bcBkum, bcBsum } = getValues();
-      const bcPkum = bcSumP * parseInt(num === "" ? 0 : num);
-
-      if (bcPcost) {
-        bcPsum = bcPkum + +bcPcost;
-      } else {
-        bcPsum = bcPkum;
-      }
-      const bcSumKum = bcPkum + bcBkum;
-      const bcSum = bcPsum + bcBsum;
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcPkum: bcPkum,
-        bcPsum: bcPsum,
-        bcSumKum: bcSumKum,
-        bcSum: bcSum,
-      }));
-    }
-
-    if (name === "bcBdanga") {
-      let bcBsum: number;
-      const { bcSumB, bcBcost, bcPkum, bcPsum } = getValues();
-      const bcBkum = bcSumB * parseInt(num === "" ? 0 : num);
-
-      if (bcBcost) {
-        bcBsum = bcBkum + +bcBcost;
-      } else {
-        bcBsum = bcBkum;
-      }
-      const bcSumKum = bcBkum + bcPkum;
-      const bcSum = bcBsum + bcPsum;
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcBkum: bcBkum,
-        bcBsum: bcBsum,
-        bcSumKum: bcSumKum,
-        bcSum: bcSum,
-      }));
-    }
-
-    if (name === "bcPcost") {
-      const { bcPkum, bcBcost, bcBsum } = getValues();
-      let bcSumCost: number = 0;
-      let bcSum: number = 0;
-      const bcPsum = bcPkum + parseInt(num === "" ? 0 : num);
-      bcSumCost = parseInt(num === "" ? 0 : num) + +bcBcost + +data65?.bcGcost;
-      bcSum = bcPsum + +bcBsum;
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcPsum: bcPsum,
-        bcSumCost: bcSumCost,
-        bcSum: bcSum,
-      }));
-    }
-
-    if (name === "bcBcost") {
-      const { bcBkum, bcPcost, bcPsum } = getValues();
-      let bcSumCost: number = 0;
-      let bcSum: number = 0;
-      const bcBsum = bcBkum + parseInt(num === "" ? 0 : num);
-      bcSumCost = parseInt(num === "" ? 0 : num) + +bcPcost + +data65?.bcGcost;
-      bcSum = +bcBsum + +bcPsum;
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcBsum: bcBsum,
-        bcSumCost: bcSumCost,
-        bcSum: bcSum,
-      }));
-    }
-
-    if (name === "bcOutkum") {
-      const { bcInkum1, bcDc } = getValues();
-      const bcMisu = +bcInkum1 - bcDc - parseInt(num === "" ? 0 : num);
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcMisu: bcMisu,
-      }));
-    }
-
-    if (name === "bcDc") {
-      const { bcInkum1, bcOutkum } = getValues();
-      const bcMisu = +bcInkum1 - bcOutkum - parseInt(num === "" ? 0 : num);
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcMisu: bcMisu,
-      }));
     }
   };
 
@@ -908,14 +768,42 @@ const Form = ({
             setRowIndex={setRowIndex}
             register={register}
             setBclInqtyLPG={setBclInqtyLPG}
-            calcOnFieldChange={calcOnFieldChange}
+            control={control}
           />
+          {tabId === 0 && (
+            <Tab1Footer
+              register={register}
+              control={control}
+              calcOnFieldChange={calcOnFieldChange}
+              bcPjan={bcPjan}
+              setBcPjan={setBcPjan}
+              bcBjan={bcBjan}
+              setBcBjan={setBcBjan}
+              bcPdanga={bcPdanga}
+              setBcPdanga={setBcPdanga}
+              bcBdanga={bcBdanga}
+              setBcBdanga={setBcBdanga}
+              bcPcost={bcPcost}
+              setBcPcost={setBcPcost}
+              bcBcost={bcBcost}
+              setBcBcost={setBcBcost}
+              bcGcost={bcGcost}
+              setBcGcost={setBcGcost}
+            />
+          )}
         </TabContentWrapper>
       </form>
       <CommonFooterInfo
         register={register}
-        calcOnFieldChange={calcOnFieldChange}
         dataAdditionalDic={dataAdditionalDic}
+        control={control}
+        calcOnFieldChange={calcOnFieldChange}
+        bcOutkum={bcOutkum}
+        setBcOutkum={setBcOutkum}
+        bcDc={bcDc}
+        setBcDc={setBcDc}
+        bcSupplyType={bcSupplyType}
+        setBcSupplyType={setBcSupplyType}
       />
     </div>
   );

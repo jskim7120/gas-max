@@ -147,7 +147,6 @@ export const Input = ({
   minLength,
   kind,
   textAlign,
-
   labelStyle,
   onChange,
   readOnly,
@@ -182,7 +181,7 @@ export const Input = ({
             name={name && name}
             guide={false}
             readOnly={readOnly}
-            className="maskedInput"
+            className={className ? `${className} maskedInput` : "maskedInput"}
             maxLength={maxLength}
             type={type ? type : "text"}
           />
@@ -335,6 +334,17 @@ export const FormGroup = styled.div<{
 
   .maskedInput {
     ${InputCommonProp};
+  }
+  .maskedInput.disabled {
+    border: none;
+    background: transparent;
+  }
+
+  .maskedInput.gray {
+    margin: 2px 5px;
+    background: rgba(104, 103, 103, 0.35);
+    height: 20px;
+    width: 120px;
   }
 
   p {

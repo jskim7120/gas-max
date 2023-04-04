@@ -59,11 +59,11 @@ export interface IGR1200 {
 export interface IDATA65 {
   //======Main
   areaCode: string;
-  bcBcost: number;
-  bcBdanga: number;
+  // bcBcost: number;
+  // bcBdanga: number;
   bcBigo: string;
   bcBin: number;
-  bcBjan: number;
+  // bcBjan: number
   bcBkum: number;
   bcBsum: number;
   bcBuCode: string;
@@ -76,7 +76,7 @@ export interface IDATA65 {
   bcDate: string;
   bcDateno: string;
   bcDc: number;
-  bcGcost: number;
+  // bcGcost: number
   bcGin: number;
   bcGkum: number;
   bcGsum: number;
@@ -87,10 +87,10 @@ export interface IDATA65 {
   bcMemo: string;
   bcMisu: number;
   bcOutkum: number;
-  bcPcost: number;
-  bcPdanga: number;
+  // bcPcost: number
+  // bcPdanga: number
   bcPin: number;
-  bcPjan: number;
+  // bcPjan: number
   bcPkum: number;
   bcPsum: number;
   bcSno: string;

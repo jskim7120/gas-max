@@ -2,18 +2,32 @@ import { useState } from "react";
 import { Input, Field, Select } from "components/form/style";
 import { CTitle, CTextArea, CLabel, TabLikeHeader, CTable } from "./style";
 import { InputSize } from "components/componentsType";
+import { Controller } from "react-hook-form";
+import { currencyMask } from "helpers/currency";
 
 function CommonFooterInfo({
   register,
   calcOnFieldChange,
   dataAdditionalDic,
+  control,
+  bcOutkum,
+  bcDc,
+  bcSupplyType,
+  setBcOutkum,
+  setBcDc,
+  setBcSupplyType,
 }: {
   register: any;
   calcOnFieldChange: Function;
   dataAdditionalDic: any;
+  control: any;
+  bcOutkum: any;
+  bcDc: any;
+  bcSupplyType: any;
+  setBcOutkum: Function;
+  setBcDc: Function;
+  setBcSupplyType: Function;
 }) {
-  const [bcOutkum, setBcOutkum] = useState<string | undefined>(undefined);
-  const [bcDc, setBcDc] = useState<string | undefined>(undefined);
   return (
     <div>
       <Field flex style={{ alignItems: "center" }}>
@@ -25,38 +39,56 @@ function CommonFooterInfo({
         <Field style={{ width: "20%" }}>
           <Field flex style={{ alignItems: "center" }}>
             <CLabel>공급액</CLabel>
-            <Input
-              register={register("bcSupplyAmt")}
-              style={{
-                margin: "2px 5px",
-                background: `rgba(104,103,103,0.35)`,
-                height: "20px",
-                width: "120px",
-              }}
+            <Controller
+              control={control}
+              {...register("bcSupplyAmt")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  value={value ? value : ""}
+                  onChange={onChange}
+                  name={name}
+                  mask={currencyMask}
+                  textAlign="right"
+                  className="gray"
+                  readOnly
+                />
+              )}
             />
           </Field>
           <Field flex style={{ alignItems: "center" }}>
             <CLabel>세액</CLabel>
-            <Input
-              register={register("bcVatAmt")}
-              style={{
-                margin: "2px 5px",
-                background: `rgba(104,103,103,0.35)`,
-                height: "20px",
-                width: "120px",
-              }}
+            <Controller
+              control={control}
+              {...register("bcVatAmt")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  value={value ? value : ""}
+                  onChange={onChange}
+                  name={name}
+                  mask={currencyMask}
+                  textAlign="right"
+                  className="gray"
+                  readOnly
+                />
+              )}
             />
           </Field>
           <Field flex style={{ alignItems: "center" }}>
             <CLabel>합계금액</CLabel>
-            <Input
-              register={register("bcInkum")}
-              style={{
-                margin: "2px 5px",
-                background: `rgba(104,103,103,0.35)`,
-                height: "20px",
-                width: "120px",
-              }}
+            <Controller
+              control={control}
+              {...register("bcInkum")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  value={value ? value : ""}
+                  onChange={onChange}
+                  name={name}
+                  mask={currencyMask}
+                  textAlign="right"
+                  className="gray"
+                  readOnly
+                />
+              )}
             />
           </Field>
         </Field>
@@ -73,7 +105,21 @@ function CommonFooterInfo({
         </tr>
         <tr>
           <td>
-            <Input register={register("bcInkum1")} readOnly className="h27" />
+            <Controller
+              control={control}
+              {...register("bcInkum1")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  value={value ? value : ""}
+                  onChange={onChange}
+                  name={name}
+                  mask={currencyMask}
+                  textAlign="right"
+                  className="disabled"
+                  readOnly
+                />
+              )}
+            />
           </td>
           <td>
             <Select
@@ -91,28 +137,44 @@ function CommonFooterInfo({
           </td>
           <td>
             <Input
-              register={register("bcOutkum")}
+              value={bcOutkum}
               onChange={(e: any) => {
                 setBcOutkum(e.target.value);
-                calcOnFieldChange(e.target.value, "bcOutkum");
+                calcOnFieldChange("bcOutkum", e.target.value);
               }}
-              value={bcOutkum}
+              mask={currencyMask}
+              textAlign="right"
               className="h27"
             />
           </td>
           <td>
             <Input
-              register={register("bcDc")}
+              value={bcDc}
               onChange={(e: any) => {
                 setBcDc(e.target.value);
-                calcOnFieldChange(e.target.value, "bcDc");
+                calcOnFieldChange("bcDc", e.target.value);
               }}
-              value={bcDc}
+              mask={currencyMask}
+              textAlign="right"
               className="h27"
             />
           </td>
           <td>
-            <Input register={register("bcMisu")} className="h27" />
+            <Controller
+              control={control}
+              {...register("bcMisu")}
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  value={value ? value : undefined}
+                  onChange={onChange}
+                  name={name}
+                  mask={currencyMask}
+                  textAlign="right"
+                  className="disabled"
+                  readOnly
+                />
+              )}
+            />
           </td>
           <td>
             <Input register={register("bcBigo")} className="h27" />
