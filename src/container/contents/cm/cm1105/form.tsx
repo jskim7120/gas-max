@@ -83,10 +83,11 @@ function FormCM1105() {
 
   useEffect(() => {
     if (addr.length > 0) {
-      reset({
+      reset((formValues: any) => ({
+        ...formValues,
         cuZipcode: addr ? addr?.split("/")[1] : "",
         cuAddr1: addr ? addr?.split("/")[0] : "",
-      });
+      }));
     }
   }, [addr]);
 
@@ -272,6 +273,10 @@ function FormCM1105() {
           autoClose: 500,
         });
         setIsAddBtnClicked(false);
+
+        setTimeout(() => {
+          dispatch(closeModal());
+        }, 1800);
       } else {
         toast.error(response?.response?.data?.message, {
           autoClose: 500,
@@ -547,11 +552,14 @@ function FormCM1105() {
                 ))}
               </Select>
 
-              <Input
-                label="청구 구분"
-                register={register("cuRequestType")}
-                inputSize={InputSize.i150}
-              />
+              <Label>청구 구분</Label>
+              <Select {...register("cuRequestType")} width={InputSize.i150}>
+                {dataCommonDic?.cuRequestType?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code1}>
+                    {obj.code1}
+                  </option>
+                ))}
+              </Select>
 
               <Label>수금 방법</Label>
               <Select {...register("cuSukumtype")} width={InputSize.i150}>
