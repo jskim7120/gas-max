@@ -55,7 +55,7 @@ function CM1200({
   const [areaCode, setAreaCode] = useState("");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selected, setSelected] = useState({});
+  const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
@@ -137,6 +137,7 @@ function CM1200({
 
   const onClickReset = () => {
     setIsAddBtnClicked(false);
+    setIsCancelBtnDisabled(true);
     formRef.current.resetForm("reset");
   };
 

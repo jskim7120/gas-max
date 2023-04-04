@@ -59,11 +59,11 @@ export interface IGR1200 {
 export interface IDATA65 {
   //======Main
   areaCode: string;
-  bcBcost: number;
-  bcBdanga: number;
+  // bcBcost: number;
+  // bcBdanga: number;
   bcBigo: string;
   bcBin: number;
-  bcBjan: number;
+  // bcBjan: number
   bcBkum: number;
   bcBsum: number;
   bcBuCode: string;
@@ -76,7 +76,7 @@ export interface IDATA65 {
   bcDate: string;
   bcDateno: string;
   bcDc: number;
-  bcGcost: number;
+  // bcGcost: number
   bcGin: number;
   bcGkum: number;
   bcGsum: number;
@@ -87,10 +87,10 @@ export interface IDATA65 {
   bcMemo: string;
   bcMisu: number;
   bcOutkum: number;
-  bcPcost: number;
-  bcPdanga: number;
+  // bcPcost: number
+  // bcPdanga: number
   bcPin: number;
-  bcPjan: number;
+  // bcPjan: number
   bcPkum: number;
   bcPsum: number;
   bcSno: string;
@@ -154,7 +154,43 @@ export interface IDATA65 {
   // bclVatTypeName: null;
   // queryType: "DETAIL_DATA";
 }
-
+export const emptyObj: any = {
+  bcPin: 0,
+  bcBin: 0,
+  bcGin: 0,
+  bcTotal: 0,
+  bcPjan: 0,
+  bcBjan: 0,
+  bcJTotal: 0,
+  bcSumP: 0,
+  bcSumB: 0,
+  bcSumTotal: 0,
+  bcPdanga: 0,
+  bcBdanga: 0,
+  bcPkum: 0,
+  bcBkum: 0,
+  bcGkum: 0,
+  bcSumKum: 0,
+  bcPcost: 0,
+  bcBcost: 0,
+  bcGcost: 0,
+  bcSumCost: 0,
+  bcPsum: 0,
+  bcBsum: 0,
+  bcGsum: 0,
+  bcSum: 0,
+  bcSupplyAmt: 0,
+  bcVatAmt: 0,
+  bcInkum: 0,
+  bcInkum1: 0,
+  bcOutkum: 0,
+  bcDc: 0,
+  bcMisu: 0,
+  bcBigo: "",
+  bcJunno: "",
+  bcDateno: "",
+  bcMemo: "",
+};
 export const emptyObjTab1: any = {
   bclJpCode: null,
   bclJpName: null,

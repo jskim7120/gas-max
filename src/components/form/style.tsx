@@ -33,6 +33,10 @@ export const getInputSize = (size?: InputSize) => {
       return `145px`;
     case InputSize.i150:
       return `150px`;
+    case InputSize.i160:
+      return `160px`;
+    case InputSize.i170:
+      return `170px`;
     case InputSize.i175:
       return `175px`;
     case InputSize.i180:
@@ -143,7 +147,6 @@ export const Input = ({
   minLength,
   kind,
   textAlign,
-
   labelStyle,
   onChange,
   readOnly,
@@ -178,7 +181,7 @@ export const Input = ({
             name={name && name}
             guide={false}
             readOnly={readOnly}
-            className="maskedInput"
+            className={className ? `${className} maskedInput` : "maskedInput"}
             maxLength={maxLength}
             type={type ? type : "text"}
           />
@@ -283,11 +286,6 @@ export const InputForm = styled.input<{
   &.h27 {
     height: 27px;
   }
-
-  &:read-only {
-    // border: none;
-    // background: transparent;
-  }
 `;
 
 export const ErrorText = styled.p`
@@ -331,6 +329,23 @@ export const FormGroup = styled.div<{
 
   .maskedInput {
     ${InputCommonProp};
+  }
+
+  .maskedInput.h27 {
+    height: 25px;
+  }
+
+  .maskedInput.disabled {
+    border: none;
+    background: transparent;
+    height: 25px;
+  }
+
+  .maskedInput.gray {
+    margin: 2px 5px;
+    background: rgba(104, 103, 103, 0.35);
+    height: 20px;
+    width: 120px;
   }
 
   p {

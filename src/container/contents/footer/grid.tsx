@@ -3,7 +3,7 @@ import { useDispatch } from "app/store";
 import { GridView, LocalDataProvider } from "realgrid";
 import { fields, columns } from "./data";
 import { closeModal } from "app/state/modal/modalSlice";
-import { addInfo } from "app/state/modal/footerSlice";
+import { addInfo } from "app/state/footer/footerSlice";
 
 function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
   let container: HTMLDivElement;

@@ -1,6 +1,6 @@
 import { FOOTDETAIL } from "app/path";
 import API from "app/axios";
-import { addInfo } from "app/state/modal/footerSlice";
+import { addInfo } from "app/state/footer/footerSlice";
 
 const setFooterDetail = async (
   areaCode: string,

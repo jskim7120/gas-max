@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
-import Button from "components/button/button";
 import CustomDatePicker from "components/customDatePicker";
 import PlainTab from "components/plainTab";
 import EditableSelect from "components/editableSelect";
@@ -11,19 +10,17 @@ import {
   RadioButton,
   RadioButtonLabel,
 } from "components/radioButton/style";
+import { Input, Select, FormGroup, Label } from "components/form/style";
 import {
-  Input,
-  Select,
-  Field,
-  FormGroup,
-  Wrapper,
-  Label,
-} from "components/form/style";
-import { ResetGray, Update, Plus, Trash } from "components/allSvgIcon";
-import { InputSize, ButtonColor } from "components/componentsType";
-import { IDATA65 } from "./model";
+  openModal,
+  addDeleteMenuId,
+  setIsDelete,
+  closeModal,
+} from "app/state/modal/modalSlice";
+import { InputSize } from "components/componentsType";
+import { emptyObj, IDATA65 } from "./model";
 import TabGrid from "./tabs/grid";
-import { useSelector } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import CommonFooterInfo from "./commonFooter";
 import { CircleBtn } from "./style";
 import { PersonInfoText } from "components/text";
@@ -41,7 +38,10 @@ import API from "app/axios";
 import { useGetAdditionalDictionaryQuery } from "app/api/commonDictionary";
 import { emptyObjTab1, emptyObjTab2, emptyObjTab3 } from "./model";
 import { calcTab1GridChange, calcFooterTab2Tab3 } from "./calculationHelper";
-
+import { SearchWrapper } from "container/contents/commonStyle";
+import FourButtons from "components/button/fourButtons";
+import Tab1Footer from "./tabs/tab1Footer";
+import calc1 from "./helper";
 let clone: any[];
 
 const radioOptions = [
@@ -55,35 +55,55 @@ const radioOptions = [
   },
 ];
 
-function Form({
+const Form = ({
   dataCommonDic,
   selected,
-  areaCode,
   fetchData,
+  menuId,
+  isAddBtnClicked,
+  setIsAddBtnClicked,
+  isCancelBtnDisabled,
+  setIsCancelBtnDisabled,
 }: {
   dataCommonDic: any;
   selected: any;
-  areaCode: string;
   fetchData: Function;
-}) {
+  menuId: string;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
+  isCancelBtnDisabled: boolean;
+  setIsCancelBtnDisabled: Function;
+}) => {
   const [tabId, setTabId] = useState(0);
-  const [isAddBtnClicked, setAddBtnClicked] = useState(false);
   const [rowIndex, setRowIndex] = useState<number | null>(null);
-  const [radioChecked, setRadioChecked] = useState(0);
-
+  const [radioChecked, setRadioChecked] = useState("0");
+  const [areaCode2, setAreaCode2] = useState("");
   const [data65, setData65] = useState<any>({});
   const [data65Detail, setData65Detail] = useState<any[]>([]);
   const [deleteData65Detail, setDeleteData65Detail] = useState<any[]>([]);
-  const [bcBuCode, setBcBuCode] = useState("");
+
   const [bclInqtyLPG, setBclInqtyLPG] = useState(false);
 
-  const [areaCode2, setAreaCode2] = useState("");
-  const [pin, setPin] = useState(0);
-  const [bin, setBin] = useState(0);
   const [sumP, setSumP] = useState(0);
   const [sumB, setSumB] = useState(0);
 
+  const [bcPjan, setBcPjan] = useState<number | undefined>(undefined);
+  const [bcBjan, setBcBjan] = useState<number | undefined>(undefined);
+  const [bcPdanga, setBcPdanga] = useState<number | undefined>(undefined);
+  const [bcBdanga, setBcBdanga] = useState<number | undefined>(undefined);
+  const [bcPcost, setBcPcost] = useState<number | undefined>(undefined);
+  const [bcBcost, setBcBcost] = useState<number | undefined>(undefined);
+  const [bcGcost, setBcGcost] = useState<number | undefined>(undefined);
+  const [bcOutkum, setBcOutkum] = useState<number | undefined>(undefined);
+  const [bcDc, setBcDc] = useState<number | undefined>(undefined);
+  // const [bcSupplyType, setBcSupplyType] = useState<string | undefined>(
+  //   undefined
+  // );
+
+  const dispatch = useDispatch();
+
   const stateGR1200 = useSelector((state: any) => state.modal.gr1200);
+  const { isDelete } = useSelector((state) => state.modal);
 
   const { data: dataAdditionalDic } = useGetAdditionalDictionaryQuery({
     groupId: "GR",
@@ -97,7 +117,7 @@ function Form({
     });
 
   useEffect(() => {
-    if (dataCommonDic) {
+    if (dataCommonDic?.areaCode) {
       setAreaCode2(dataCommonDic.areaCode[0].code);
     }
   }, [dataCommonDic]);
@@ -117,6 +137,12 @@ function Form({
           : "",
         bcCarno1: dataAdditionalDic?.bcCarno1
           ? dataAdditionalDic.bcCarno1[0].code
+          : "",
+        bcCsawon: dataAdditionalDic?.bcCsawon
+          ? dataAdditionalDic.bcCsawon[0].code
+          : "",
+        bcSupplyType: dataAdditionalDic?.bcSupplyType
+          ? dataAdditionalDic.bcSupplyType[0].code
           : "",
       }));
     }
@@ -143,89 +169,51 @@ function Form({
   }, [stateGR1200]);
 
   useEffect(() => {
-    if (selected) {
-      fetchData65();
+    if (Object.keys(selected)?.length > 0) {
       setAreaCode2(selected?.areaCode);
+      fetchData65();
+    } else {
+      resetForm("clear");
     }
   }, [selected]);
 
   useEffect(() => {
-    if (data65) {
-      setTabId(parseInt(data65?.bcChitType));
-      setAddBtnClicked(false);
-      setRowIndex(null);
-
-      reset({
-        areaCode: data65.areaCode,
-        bcDate: DateWithDash(data65.bcDate),
-        bcDateno: data65.bcDateno,
-        bcBuCode: data65.bcBuCode,
-        bcJunno: data65.bcJunno,
-        bcCtype: data65.bcCtype,
-        bcCsawon: data65.bcCsawon,
-        bcCarno: data65.bcCarno,
-        bcCaCode: data65.bcCaCode,
-        //---------------
-        bcPin: data65.bcPin,
-        bcBin: data65.bcBin,
-        bcGin: data65.bcGin,
-        bcTotal: data65.bcTotal,
-        bcPjan: data65.bcPjan,
-        bcBjan: data65.bcBjan,
-        bcJTotal: data65.bcJTotal,
-        bcSumP: data65.bcSumP,
-        bcSumB: data65.bcSumB,
-        bcSumTotal: data65.bcSumTotal,
-        bcPdanga: data65.bcPdanga,
-        bcBdanga: data65.bcBdanga,
-        bcPkum: data65.bcPkum,
-        bcBkum: data65.bcBkum,
-        bcGkum: data65.bcGkum,
-        bcSumKum: data65.bcSumKum,
-        bcPcost: data65.bcPcost,
-        bcBcost: data65.bcBcost,
-        bcGcost: data65.bcGcost,
-        bcSumCost: data65.bcSumCost,
-        bcPsum: data65.bcPsum,
-        bcBsum: data65.bcBsum,
-        bcGsum: data65.bcGsum,
-        bcSum: data65.bcSum,
-        bcMemo: data65.bcMemo,
-        bcSupplyAmt: data65.bcSupplyAmt,
-        bcVatAmt: data65.bcVatAmt,
-        bcInkum: data65.bcInkum,
-        bcInkum1: data65.bcInkum1,
-        bcSupplyType: data65.bcSupplyType,
-        bcOutkum: data65.bcOutkum,
-        bcDc: data65.bcDc,
-        bcMisu: data65.bcMisu,
-        bcBigo: data65.bcBigo,
-      });
+    if (Object.keys(data65)?.length) {
+      resetForm("reset");
     }
   }, [data65]);
+
+  useEffect(() => {
+    if (isDelete.menuId === menuId && isDelete.isDelete) {
+      deleteRowGrid();
+    }
+  }, [isDelete.isDelete]);
 
   useEffect(() => {
     tabId === 0 &&
       calcTab1GridChange(
         data65Detail,
-        setBin,
-        setPin,
-        setSumB,
-        setSumP,
         getValues,
         data65,
-        reset
+        reset,
+        bcPjan,
+        bcBjan,
+        bcPdanga,
+        bcBdanga,
+        bcPcost,
+        bcBcost,
+        bcGcost,
+        bcOutkum,
+        bcDc
       );
     tabId === 1 && calcFooterTab2Tab3(data65Detail, getValues, reset);
     clone = structuredClone(data65Detail);
   }, [bclInqtyLPG]);
 
   useEffect(() => {
-    console.log("isAddBtnClicked::", isAddBtnClicked);
     if (isAddBtnClicked === true) {
       if (clone.length > 0) {
         if (clone[0].tabId !== tabId) {
-          console.log("tabID:::::", tabId);
           tabId === 0 &&
             setData65Detail([
               {
@@ -256,6 +244,271 @@ function Form({
       }
     }
   }, [tabId]);
+
+  const calcOnFieldChange = (name: string, num: number) => {
+    calc1(
+      name,
+      num,
+      reset,
+      getValues,
+      bcPjan,
+      bcBjan,
+      bcPdanga,
+      bcBdanga,
+      bcPcost,
+      bcBcost,
+      bcGcost,
+      bcOutkum,
+      bcDc
+    );
+  };
+
+  const fetchData65 = async () => {
+    try {
+      const { data } = await API.get(GR120065, {
+        params: {
+          areaCode: selected?.areaCode,
+          bcDate: DateWithoutDash(selected?.bcDate),
+          sBcBuCode: selected?.bcBuCode,
+          bcSno: selected?.bcSno,
+          bcChitType: selected?.bcChitType,
+        },
+      });
+
+      if (data) {
+        data?.mainData ? setData65(data?.mainData[0]) : setData65({});
+        data?.detailData
+          ? setData65Detail([...data?.detailData])
+          : setData65Detail([]);
+      } else {
+        setData65({});
+        setData65Detail([]);
+      }
+      setDeleteData65Detail([]);
+    } catch (err) {
+      setData65({});
+      setData65Detail([]);
+      setDeleteData65Detail([]);
+      console.log("GR1200 65 DATA fetch error =======>", err);
+    }
+  };
+
+  const resetForm = async (type: string) => {
+    if (type === "clear") {
+      setTabId(0);
+      setRadioChecked(radioOptions[0].id);
+
+      reset({
+        bcBuCode: dataAdditionalDic?.bcBuCode
+          ? dataAdditionalDic?.bcBuCode[0].code
+          : "",
+        bcCtype: dataAdditionalDic?.bcCtype
+          ? dataAdditionalDic.bcCtype[0].code
+          : "",
+        bcCarno: dataAdditionalDic?.bcCarno
+          ? dataAdditionalDic.bcCarno[0].code
+          : "",
+        bcCarno1: dataAdditionalDic?.bcCarno1
+          ? dataAdditionalDic.bcCarno1[0].code
+          : "",
+        bcCsawon: dataAdditionalDic?.bcCsawon
+          ? dataAdditionalDic.bcCsawon[0].code
+          : "",
+
+        bcSupplyType: dataAdditionalDic?.bcSupplyType
+          ? dataAdditionalDic.bcSupplyType[0].code
+          : "",
+
+        bcDate: DateWithDash(new Date()),
+        ...emptyObj,
+      });
+
+      setData65Detail([
+        {
+          ...emptyObjTab1,
+          tabId: 0,
+          isNew: true,
+        },
+      ]);
+      document.getElementById("bcJunno")?.focus();
+    }
+    if (type === "reset") {
+      setTabId(parseInt(data65?.bcChitType));
+      setRadioChecked(data65?.bcCaCode);
+      setIsAddBtnClicked(false);
+      setRowIndex(null);
+
+      reset({ ...data65 });
+
+      setBcPjan(data65?.bcPjan);
+      setBcBjan(data65?.bcBjan);
+      setBcPdanga(data65?.bcPdanga);
+      setBcBdanga(data65?.bcBdanga);
+      setBcPcost(data65?.bcPcost);
+      setBcBcost(data65?.bcBcost);
+      setBcGcost(data65?.bcGcost);
+      setBcOutkum(data65?.bcOutkum);
+      setBcDc(data65?.bcDc);
+    }
+  };
+
+  const crud = async (type: string | null) => {
+    if (type === "delete") {
+      if (Object.keys(data65).length > 0) {
+        const res: any = await API.post(GR1200BUYDELETE, {
+          areaCode: data65.areaCode,
+          bcBuCode: data65.bcBuCode,
+          bcDate: data65.bcDate,
+          bcSno: data65.bcSno,
+        });
+
+        if (res.status === 200) {
+          toast.success("삭제하였습니다", {
+            autoClose: 500,
+          });
+          fetchData();
+        } else {
+          toast.error(res?.data?.message, { autoClose: 500 });
+          return null;
+        }
+      }
+      return null;
+    }
+
+    if (type === null) {
+      handleSubmit(submit)();
+    }
+  };
+
+  const submit = async (data: any) => {
+    const formValues = getValues();
+
+    let path: string;
+    let body: any = {};
+
+    if (isAddBtnClicked) {
+      path = GR1200BUYINSERT;
+      body = {
+        ...formValues,
+        bcDate: DateWithoutDash(formValues.bcDate),
+        areaCode: areaCode2,
+        bcChitType: `${tabId}`,
+        bcCaCode: radioChecked,
+        bcSno: "",
+      };
+    } else {
+      path = GR1200BUYUPDATE;
+      body = {
+        ...formValues,
+        bcDate: DateWithoutDash(formValues.bcDate),
+        bcCaCode: radioChecked,
+      };
+    }
+
+    try {
+      const res = await API.post(path, body);
+
+      // console.log("data65Detail======>::::", data65Detail);
+
+      if (res.status === 200) {
+        if (isAddBtnClicked) {
+          console.log("iishee orohgyi yum bn ", res?.data?.returnValue);
+          const bcSno = res?.data?.returnValue;
+          if (bcSno && bcSno !== "" && data65Detail?.length > 0) {
+            await Promise.all(
+              data65Detail.map((item: any) => {
+                if (
+                  "isNew" in item &&
+                  "isEdited" in item &&
+                  "isProductNameSelected" in item
+                ) {
+                  API.post(GR1200BLINSERT, {
+                    inserted: [
+                      {
+                        ...item,
+                        areaCode: areaCode2,
+                        bcDate: formValues.bcDate,
+                        bcBuCode: data65.bcBuCode,
+                        bcSno: bcSno,
+                      },
+                    ],
+                  });
+                }
+              })
+            );
+            toast.success("저장이 성공하였습니다", {
+              autoClose: 500,
+            });
+          }
+        } else {
+          if (data65Detail?.length > 0) {
+            await Promise.all(
+              data65Detail.map((item: any) => {
+                //insert
+                if (
+                  "isNew" in item &&
+                  "isEdited" in item &&
+                  "isProductNameSelected" in item
+                ) {
+                  API.post(GR1200BLINSERT, {
+                    inserted: [
+                      {
+                        ...item,
+                        areaCode: areaCode2,
+                        bcDate: formValues.bcDate,
+                        bcBuCode: data65.bcBuCode,
+                        bcSno: data65.bcSno,
+                      },
+                    ],
+                  });
+                }
+                //update
+                if (
+                  !("isNew" in item) &&
+                  ("isEdited" in item || "isProductNameSelected" in item)
+                ) {
+                  API.post(GR1200BLUPDATE, {
+                    updated: [
+                      {
+                        ...item,
+                        areaCode: data65?.areaCode,
+                        bcDate: data65?.bcDate,
+                        bcBuCode: data65?.bcBuCode,
+                        bcSno: data65?.bcSno,
+                      },
+                    ],
+                  });
+                }
+              })
+            );
+          }
+          if (deleteData65Detail?.length > 0) {
+            await Promise.all(
+              deleteData65Detail.map((item: any) => {
+                //delete
+                API.post(GR1200BLDELETE, {
+                  deleted: [
+                    {
+                      areaCode: data65?.areaCode,
+                      bcDate: data65?.bcDate,
+                      bcBuCode: data65?.bcBuCode,
+                      bcSno: data65?.bcSno,
+                      bclJpSno: item.bclJpSno,
+                    },
+                  ],
+                });
+              })
+            );
+          }
+        }
+
+        fetchData();
+        //fetchData65();
+        setRowIndex(null);
+        setDeleteData65Detail([]);
+      }
+    } catch (err) {}
+  };
 
   const addRow = () => {
     if (data65Detail !== undefined) {
@@ -308,420 +561,39 @@ function Form({
     }
   };
 
-  const fetchData65 = async () => {
+  const onClickAdd = () => {
+    setIsAddBtnClicked(true);
+    setIsCancelBtnDisabled(false);
+    resetForm("clear");
+  };
+
+  function deleteRowGrid() {
     try {
-      const { data } = await API.get(GR120065, {
-        params: {
-          areaCode: selected?.areaCode,
-          // bcDate: formatDateByRemoveDash(selected?.bcDate),
-          bcDate: DateWithoutDash(selected?.bcDate),
+      crud("delete");
+      dispatch(addDeleteMenuId({ menuId: "" }));
+      dispatch(setIsDelete({ isDelete: false }));
+      dispatch(closeModal());
+    } catch (error) {}
+  }
 
-          sBcBuCode: selected?.bcBuCode,
-          bcSno: selected?.bcSno,
-          bcChitType: selected?.bcChitType,
-        },
-      });
-
-      if (data) {
-        data?.mainData ? setData65(data?.mainData[0]) : setData65({});
-        data?.detailData
-          ? setData65Detail([...data?.detailData])
-          : setData65Detail([]);
-      } else {
-        setData65({});
-        setData65Detail([]);
-      }
-      setDeleteData65Detail([]);
-    } catch (err) {
-      setData65({});
-      setData65Detail([]);
-      setDeleteData65Detail([]);
-      console.log("GR1200 65 DATA fetch error =======>", err);
-    }
-  };
-
-  const clear = () => {};
-
-  const crud = async (type: string | null) => {
-    if (type === "delete") {
-      if (Object.keys(data65).length > 0) {
-        const res: any = await API.post(GR1200BUYDELETE, {
-          areaCode: data65.areaCode,
-          bcBuCode: data65.bcBuCode,
-          bcDate: data65.bcDate,
-          bcSno: data65.bcSno,
-        });
-
-        if (res.status === 200) {
-          toast.success("삭제하였습니다", {
-            autoClose: 500,
-          });
-        } else {
-          //toast.error(res?.data?.message, { autoClose: 500 });
-        }
-        fetchData();
-      }
-    }
-
-    if (type === null) {
-      handleSubmit(submit)();
-    }
-  };
-
-  const submit = async (data: any) => {
-    const formValues = getValues();
-
-    // formValues.bcDate =
-    //   typeof formValues.bcDate === "string"
-    //     ? formatDateByRemoveDash(formValues.bcDate)
-    //     : formatDateToStringWithoutDash(formValues.bcDate);
-    formValues.bcDate = DateWithoutDash(formValues.bcDate);
-
-    let path: string;
-
-    if (isAddBtnClicked) {
-      path = GR1200BUYINSERT;
+  const onClickDelete = () => {
+    if (Object.keys(selected).length > 0) {
+      dispatch(openModal({ type: "delModal" }));
+      dispatch(addDeleteMenuId({ menuId: menuId }));
     } else {
-      path = GR1200BUYUPDATE;
-    }
-
-    try {
-      const res = await API.post(path, {
-        ...formValues,
-        bcChitType: tabId,
-        bcSno: data65.bcSno,
+      toast.warning("no selected data to delete", {
+        autoClose: 500,
       });
-
-      console.log("data65Detail======>::::", data65Detail);
-
-      if (res.status === 200) {
-        const bcSno = res?.data?.returnValue;
-        if (isAddBtnClicked) {
-          if (bcSno && bcSno !== "" && data65Detail?.length > 0) {
-            await Promise.all(
-              data65Detail.map((item: any) => {
-                if (
-                  "isNew" in item &&
-                  "isEdited" in item &&
-                  "isProductNameSelected" in item
-                ) {
-                  API.post(GR1200BLINSERT, {
-                    inserted: [
-                      {
-                        ...item,
-                        areaCode: areaCode,
-                        bcDate: formValues.bcDate,
-                        bcBuCode: data65.bcBuCode,
-                        bcSno: bcSno,
-                      },
-                    ],
-                  });
-                }
-              })
-            );
-            toast.success("저장이 성공하였습니다", {
-              autoClose: 500,
-            });
-          }
-        } else {
-          if (data65Detail?.length > 0) {
-            await Promise.all(
-              data65Detail.map((item: any) => {
-                //insert
-                if (
-                  "isNew" in item &&
-                  "isEdited" in item &&
-                  "isProductNameSelected" in item
-                ) {
-                  API.post(GR1200BLINSERT, {
-                    inserted: [
-                      {
-                        ...item,
-                        areaCode: areaCode,
-                        bcDate: formValues.bcDate,
-                        bcBuCode: data65.bcBuCode,
-                        bcSno: data65.bcSno,
-                      },
-                    ],
-                  });
-                }
-                //update
-                if (
-                  !("isNew" in item) &&
-                  ("isEdited" in item || "isProductNameSelected" in item)
-                ) {
-                  API.post(GR1200BLUPDATE, {
-                    updated: [
-                      {
-                        ...item,
-                        areaCode: data65?.areaCode,
-                        bcDate: data65?.bcDate,
-                        bcBuCode: data65?.bcBuCode,
-                        bcSno: data65?.bcSno,
-                      },
-                    ],
-                  });
-                }
-              })
-            );
-          }
-          if (deleteData65Detail?.length > 0) {
-            await Promise.all(
-              deleteData65Detail.map((item: any) => {
-                //delete
-                API.post(GR1200BLDELETE, {
-                  deleted: [
-                    {
-                      areaCode: data65?.areaCode,
-                      bcDate: data65?.bcDate,
-                      bcBuCode: data65?.bcBuCode,
-                      bcSno: data65?.bcSno,
-                      bclJpSno: item.bclJpSno,
-                    },
-                  ],
-                });
-              })
-            );
-          }
-        }
-        fetchData();
-        //fetchData65();
-        setRowIndex(null);
-        setDeleteData65Detail([]);
-      }
-    } catch (err) {}
+    }
+  };
+  const onClickUpdate = () => {
+    crud(null);
   };
 
-  const handleClickOnAddBtn = () => {
-    setAddBtnClicked(true);
-    setTabId(0);
-    reset({
-      areaCode: areaCode,
-
-      bcDate: DateWithDash(new Date()),
-      bcBuCode: dataCommonDic?.bcBuCode[0].code,
-      bcCtype: dataCommonDic?.bcCtype[0].code,
-      bcJunno: "",
-      bcDateno: "",
-      bcCsawon: dataCommonDic?.bcCsawon[0].code,
-      bcCarno: dataCommonDic?.bcCarno[0].code,
-      bcPin: 0,
-      bcBin: 0,
-      bcGin: 0,
-      bcTotal: 0,
-      bcPjan: 0,
-      bcBjan: 0,
-      bcJTotal: 0,
-      bcSumP: 0,
-      bcSumB: 0,
-      bcSumTotal: 0,
-      bcPdanga: 0,
-      bcBdanga: 0,
-      bcPkum: 0,
-      bcBkum: 0,
-      bcGkum: 0,
-      bcSumKum: 0,
-      bcPcost: 0,
-      bcBcost: 0,
-      bcGcost: 0,
-      bcSumCost: 0,
-      bcPsum: 0,
-      bcBsum: 0,
-      bcGsum: 0,
-      bcSum: 0,
-      bcSupplyAmt: 0,
-      bcVatAmt: 0,
-      bcInkum: 0,
-      bcInkum1: 0,
-      bcOutkum: 0,
-      bcDc: 0,
-      bcMisu: 0,
-    });
-
-    setData65Detail([
-      {
-        ...emptyObjTab1,
-        tabId: 0,
-        isNew: true,
-      },
-    ]);
-    document.getElementById("bcJunno")?.focus();
-  };
-
-  const calcOnFieldChange = (num: any, name: string) => {
-    if (name === "bcPjan") {
-      const { bcPdanga, bcPcost, bcBjan, bcSumB, bcBkum, bcBsum } = getValues();
-      let bcSumP: number = 0;
-      let bcPkum: number = 0;
-      let bcPsum: number = 0;
-      let bcJTotal: number = 0;
-      let bcSumTotal: number = 0;
-      let bcSumKum: number = 0;
-      let bcSum: number = 0;
-
-      bcSumP = sumP - parseInt(num === "" ? 0 : num);
-
-      if (bcPdanga) {
-        bcPkum = bcSumP * bcPdanga;
-      }
-
-      if (bcPcost) {
-        bcPsum = bcPkum + +bcPcost;
-      } else {
-        bcPsum = bcPkum;
-      }
-
-      bcJTotal = parseInt(num === "" ? 0 : num) + +bcBjan;
-      bcSumTotal = bcSumP + +bcSumB;
-      bcSumKum = bcPkum + +bcBkum;
-      bcSum = bcPsum + bcBsum;
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcSumP: bcSumP,
-        bcPkum: bcPkum,
-        bcPsum: bcPsum,
-        bcJTotal: bcJTotal,
-        bcSumTotal: bcSumTotal,
-        bcSumKum: bcSumKum,
-        bcSum: bcSum,
-      }));
-    }
-
-    if (name === "bcBjan") {
-      const { bcBdanga, bcBcost, bcPjan, bcSumP, bcPkum, bcPsum } = getValues();
-      let bcSumB: number = 0;
-      let bcBkum: number = 0;
-      let bcBsum: number = 0;
-      let bcJTotal: number = 0;
-      let bcSumTotal: number = 0;
-      let bcSumKum: number = 0;
-      let bcSum: number = 0;
-
-      bcSumB = sumB - parseInt(num === "" ? 0 : num);
-
-      if (bcBdanga) {
-        bcBkum = bcSumB * bcBdanga;
-      }
-
-      if (bcBcost) {
-        bcBsum = bcBkum + +bcBcost;
-      } else {
-        bcBsum = bcBkum;
-      }
-
-      bcJTotal = parseInt(num === "" ? 0 : num) + +bcPjan;
-      bcSumTotal = bcSumB + +bcSumP;
-      bcSumKum = bcBkum + +bcPkum;
-      bcSum = bcBsum + bcPsum;
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcSumB: bcSumB,
-        bcBkum: bcBkum,
-        bcBsum: bcBsum,
-        bcJTotal: bcJTotal,
-        bcSumTotal: bcSumTotal,
-        bcSumKum: bcSumKum,
-        bcSum: bcSum,
-      }));
-    }
-
-    if (name === "bcPdanga") {
-      let bcPsum: number;
-      const { bcSumP, bcPcost, bcBkum, bcBsum } = getValues();
-      const bcPkum = bcSumP * parseInt(num === "" ? 0 : num);
-
-      if (bcPcost) {
-        bcPsum = bcPkum + +bcPcost;
-      } else {
-        bcPsum = bcPkum;
-      }
-      const bcSumKum = bcPkum + bcBkum;
-      const bcSum = bcPsum + bcBsum;
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcPkum: bcPkum,
-        bcPsum: bcPsum,
-        bcSumKum: bcSumKum,
-        bcSum: bcSum,
-      }));
-    }
-
-    if (name === "bcBdanga") {
-      let bcBsum: number;
-      const { bcSumB, bcBcost, bcPkum, bcPsum } = getValues();
-      const bcBkum = bcSumB * parseInt(num === "" ? 0 : num);
-
-      if (bcBcost) {
-        bcBsum = bcBkum + +bcBcost;
-      } else {
-        bcBsum = bcBkum;
-      }
-      const bcSumKum = bcBkum + bcPkum;
-      const bcSum = bcBsum + bcPsum;
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcBkum: bcBkum,
-        bcBsum: bcBsum,
-        bcSumKum: bcSumKum,
-        bcSum: bcSum,
-      }));
-    }
-
-    if (name === "bcPcost") {
-      const { bcPkum, bcBcost, bcBsum } = getValues();
-      let bcSumCost: number = 0;
-      let bcSum: number = 0;
-      const bcPsum = bcPkum + parseInt(num === "" ? 0 : num);
-      bcSumCost = parseInt(num === "" ? 0 : num) + +bcBcost + +data65?.bcGcost;
-      bcSum = bcPsum + +bcBsum;
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcPsum: bcPsum,
-        bcSumCost: bcSumCost,
-        bcSum: bcSum,
-      }));
-    }
-
-    if (name === "bcBcost") {
-      const { bcBkum, bcPcost, bcPsum } = getValues();
-      let bcSumCost: number = 0;
-      let bcSum: number = 0;
-      const bcBsum = bcBkum + parseInt(num === "" ? 0 : num);
-      bcSumCost = parseInt(num === "" ? 0 : num) + +bcPcost + +data65?.bcGcost;
-      bcSum = +bcBsum + +bcPsum;
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcBsum: bcBsum,
-        bcSumCost: bcSumCost,
-        bcSum: bcSum,
-      }));
-    }
-
-    if (name === "bcOutkum") {
-      const { bcInkum1, bcDc } = getValues();
-      const bcMisu = +bcInkum1 - bcDc - parseInt(num === "" ? 0 : num);
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcMisu: bcMisu,
-      }));
-    }
-
-    if (name === "bcDc") {
-      const { bcInkum1, bcOutkum } = getValues();
-      const bcMisu = +bcInkum1 - bcOutkum - parseInt(num === "" ? 0 : num);
-
-      reset((formValues: any) => ({
-        ...formValues,
-        bcMisu: bcMisu,
-      }));
-    }
+  const onClickReset = () => {
+    setIsAddBtnClicked(false);
+    setIsCancelBtnDisabled(true);
+    resetForm("reset");
   };
 
   return (
@@ -735,31 +607,17 @@ function Form({
       }}
     >
       <form>
-        <Field
-          flex
+        <SearchWrapper
+          className="h35"
           style={{
-            height: "35px",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "0 6px 0 15px",
+            background: "transparent",
             borderBottom: "1px solid #707070",
           }}
         >
           <FormGroup>
             <PersonInfoText text="가스매입등록" />
-            <p
-              style={{
-                marginLeft: "27px",
-                marginRight: "7px",
-                fontSize: "14px",
-                fontWeight: "bold",
-              }}
-            >
-              영업소
-            </p>
-
+            <p className="big">영업소</p>
             <Select
-              {...register("areaCode")}
               onChange={(e) => setAreaCode2(e.target.value)}
               value={areaCode2}
             >
@@ -770,152 +628,116 @@ function Form({
               ))}
             </Select>
           </FormGroup>
-          <Field flex>
-            <Button
-              type="button"
-              text="등록"
-              icon={<Plus />}
-              style={{ marginRight: "5px" }}
-              onClick={handleClickOnAddBtn}
-            />
-            <Button
-              type="button"
-              text="삭제"
-              icon={<Trash />}
-              style={{ marginRight: "5px" }}
-              onClick={() => {
-                setAddBtnClicked(false);
-                crud("delete");
-              }}
-            />
-            <Button
-              type="button"
-              text="저장"
-              icon={<Update />}
-              style={{ marginRight: "5px" }}
-              color={ButtonColor.SUCCESS}
-              onClick={() => {
-                setAddBtnClicked(false);
-                crud(null);
-              }}
-            />
-            <Button
-              type="button"
-              text="취소"
-              icon={<ResetGray />}
-              onClick={() => {
-                setAddBtnClicked(false);
-              }}
-              color={ButtonColor.LIGHT}
-            />
-          </Field>
-        </Field>
-        <Wrapper grid>
-          <Field flex style={{ alignItems: "center" }}>
-            <Label>입고일자</Label>
-            <Controller
-              control={control}
-              {...register("bcDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  readOnly={!isAddBtnClicked}
-                />
-              )}
-            />
-          </Field>
-          <FormGroup>
-            <Label>매입처</Label>
-            <Select
-              {...register("bcBuCode")}
-              width={InputSize.i100}
-              disabled={!isAddBtnClicked}
-              onChange={(e) => setBcBuCode(e.target.value)}
-              value={bcBuCode}
-            >
-              {dataAdditionalDic?.bcBuCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
-        <Wrapper grid>
-          <FormGroup>
-            <Label>수송방법</Label>
-            <Select {...register("bcCtype")} width={InputSize.i100}>
-              {dataAdditionalDic?.bcCtype?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-          <Input label="전표번호" register={register("bcJunno")} />
+
+          <FourButtons
+            onClickAdd={onClickAdd}
+            onClickDelete={onClickDelete}
+            onClickUpdate={onClickUpdate}
+            onClickReset={onClickReset}
+            isAddBtnClicked={isAddBtnClicked}
+            isCancelBtnDisabled={isCancelBtnDisabled}
+          />
+        </SearchWrapper>
+        <FormGroup>
+          <Label>입고일자</Label>
+          <Controller
+            control={control}
+            {...register("bcDate")}
+            render={({ field: { onChange, value, name } }) => (
+              <CustomDatePicker
+                style={{ width: "130px" }}
+                value={value}
+                onChange={onChange}
+                name={name}
+                readOnly={!isAddBtnClicked}
+              />
+            )}
+          />
+
+          <Label>매입처</Label>
+          <Select
+            {...register("bcBuCode")}
+            width={InputSize.i130}
+            disabled={!isAddBtnClicked}
+          >
+            {dataAdditionalDic?.bcBuCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+        <FormGroup>
+          <Label>수송방법</Label>
+          <Select {...register("bcCtype")} width={InputSize.i130}>
+            {dataAdditionalDic?.bcCtype?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+
+          <Input
+            label="전표번호"
+            register={register("bcJunno")}
+            inputSize={InputSize.i130}
+          />
           <Input
             label="충전 회차"
             register={register("bcDateno")}
             inputSize={InputSize.i50}
           />
-        </Wrapper>
-        <Wrapper grid>
-          <FormGroup>
-            <Label>수송기사</Label>
-            <EditableSelect
-              list={dataAdditionalDic?.bcCsawon}
-              register={register("bcCsawon")}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label>수송차량</Label>
-            <Select {...register("bcCarno")} width={InputSize.i100}>
-              {dataAdditionalDic?.bcCarno?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
-        <Wrapper grid>
-          <FormGroup>
-            <Label>재고 입고처</Label>
-            {radioOptions.map((option, index) => (
-              <Item key={index}>
-                <RadioButton
-                  type="radio"
-                  value={option.id}
-                  {...register(`bcCaCode`)}
-                  id={option.id}
-                  checked={radioChecked === index}
-                  onClick={(e: any) => {
-                    setRadioChecked(parseInt(e.target.value));
-                  }}
-                />
-                <RadioButtonLabel htmlFor={`${option.label}`}>
-                  {option.label}
-                </RadioButtonLabel>
-              </Item>
+        </FormGroup>
+        <FormGroup>
+          <Label>수송기사</Label>
+          <EditableSelect
+            list={dataAdditionalDic?.bcCsawon}
+            register={register("bcCsawon")}
+            style={{ width: "130px" }}
+          />
+
+          <Label>수송차량</Label>
+          <Select {...register("bcCarno")} width={InputSize.i130}>
+            {dataAdditionalDic?.bcCarno?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
             ))}
-          </FormGroup>
-          <FormGroup>
-            <Label></Label>
-            <Select
-              {...register("bcCarno1")}
-              width={InputSize.i100}
-              disabled={radioChecked === 0}
-            >
-              {dataAdditionalDic?.bcCarno1?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
+          </Select>
+        </FormGroup>
+        <FormGroup>
+          <Label>재고 입고처</Label>
+          {radioOptions.map((option, index) => (
+            <Item key={index}>
+              <RadioButton
+                type="radio"
+                value={option.id}
+                name="bcCaCode"
+                id={option.id}
+                checked={radioChecked === option.id}
+                onChange={(e: any) => {
+                  setRadioChecked(option.id);
+                }}
+              />
+              <RadioButtonLabel htmlFor={`${option.label}`}>
+                {option.label}
+              </RadioButtonLabel>
+            </Item>
+          ))}
+
+          <Label></Label>
+          <Select
+            {...register("bcCarno1")}
+            width={InputSize.i130}
+            disabled={radioChecked === radioOptions[0].id}
+          >
+            {dataAdditionalDic?.bcCarno1?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
 
         <div style={{ display: "flex", marginTop: "10px" }}>
           <PlainTab
@@ -931,7 +753,9 @@ function Form({
           <CircleBtn onClick={addRow} style={{ marginRight: "5px" }}>
             +
           </CircleBtn>
-          <CircleBtn onClick={deleteRow}>-</CircleBtn>
+          <CircleBtn onClick={deleteRow} style={{ marginRight: "14px" }}>
+            -
+          </CircleBtn>
         </div>
         <TabContentWrapper
           style={{
@@ -951,16 +775,44 @@ function Form({
             setRowIndex={setRowIndex}
             register={register}
             setBclInqtyLPG={setBclInqtyLPG}
-            calcOnFieldChange={calcOnFieldChange}
+            control={control}
           />
+          {tabId === 0 && (
+            <Tab1Footer
+              register={register}
+              control={control}
+              calcOnFieldChange={calcOnFieldChange}
+              bcPjan={bcPjan}
+              setBcPjan={setBcPjan}
+              bcBjan={bcBjan}
+              setBcBjan={setBcBjan}
+              bcPdanga={bcPdanga}
+              setBcPdanga={setBcPdanga}
+              bcBdanga={bcBdanga}
+              setBcBdanga={setBcBdanga}
+              bcPcost={bcPcost}
+              setBcPcost={setBcPcost}
+              bcBcost={bcBcost}
+              setBcBcost={setBcBcost}
+              bcGcost={bcGcost}
+              setBcGcost={setBcGcost}
+            />
+          )}
         </TabContentWrapper>
       </form>
       <CommonFooterInfo
         register={register}
+        dataAdditionalDic={dataAdditionalDic}
+        control={control}
         calcOnFieldChange={calcOnFieldChange}
+        bcOutkum={bcOutkum}
+        setBcOutkum={setBcOutkum}
+        bcDc={bcDc}
+        setBcDc={setBcDc}
+        // bcSupplyType={bcSupplyType}
+        // setBcSupplyType={setBcSupplyType}
       />
     </div>
   );
-}
-
+};
 export default Form;

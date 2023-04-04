@@ -15,8 +15,9 @@ function Grid({
   setRowIndex,
   register,
   setBclInqtyLPG,
-  calcOnFieldChange,
+  //calcOnFieldChange,
   getValues,
+  control,
 }: {
   data: any;
   setData: Function;
@@ -25,8 +26,9 @@ function Grid({
   setRowIndex: Function;
   register: Function;
   setBclInqtyLPG: Function;
-  calcOnFieldChange: Function;
+  //calcOnFieldChange: Function;
   getValues: any;
+  control: any;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
@@ -183,13 +185,6 @@ function Grid({
         }}
         ref={realgridElement}
       ></div>
-      {tabId === 0 && (
-        <Tab1Footer
-          data={data2}
-          register={register}
-          calcOnFieldChange={calcOnFieldChange}
-        />
-      )}
     </>
   );
 }

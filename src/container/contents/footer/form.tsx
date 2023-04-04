@@ -15,7 +15,7 @@ import Loader from "components/loader";
 import API from "app/axios";
 import Grid from "./grid";
 import { closeModal } from "app/state/modal/modalSlice";
-import { addInfo } from "app/state/modal/footerSlice";
+import { addInfo } from "app/state/footer/footerSlice";
 import Button from "components/button/button";
 import {
   ButtonColor,
