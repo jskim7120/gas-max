@@ -488,7 +488,7 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper>
           <FormGroup style={{ alignItems: "center" }}>
-            <Label>재고사용 유무--</Label>
+            <Label>재고사용 유무</Label>
             {radioOptions.map((option, index) => (
               <Item key={index}>
                 <RadioButton

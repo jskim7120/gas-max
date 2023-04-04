@@ -273,6 +273,10 @@ function FormCM1105() {
           autoClose: 500,
         });
         setIsAddBtnClicked(false);
+
+        setTimeout(() => {
+          dispatch(closeModal());
+        }, 1800);
       } else {
         toast.error(response?.response?.data?.message, {
           autoClose: 500,
