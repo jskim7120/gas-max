@@ -96,9 +96,9 @@ const Form = ({
   const [bcGcost, setBcGcost] = useState<number | undefined>(undefined);
   const [bcOutkum, setBcOutkum] = useState<number | undefined>(undefined);
   const [bcDc, setBcDc] = useState<number | undefined>(undefined);
-  const [bcSupplyType, setBcSupplyType] = useState<string | undefined>(
-    undefined
-  );
+  // const [bcSupplyType, setBcSupplyType] = useState<string | undefined>(
+  //   undefined
+  // );
 
   const dispatch = useDispatch();
 
@@ -193,11 +193,18 @@ const Form = ({
     tabId === 0 &&
       calcTab1GridChange(
         data65Detail,
-        setSumB,
-        setSumP,
         getValues,
         data65,
-        reset
+        reset,
+        bcPjan,
+        bcBjan,
+        bcPdanga,
+        bcBdanga,
+        bcPcost,
+        bcBcost,
+        bcGcost,
+        bcOutkum,
+        bcDc
       );
     tabId === 1 && calcFooterTab2Tab3(data65Detail, getValues, reset);
     clone = structuredClone(data65Detail);
@@ -802,8 +809,8 @@ const Form = ({
         setBcOutkum={setBcOutkum}
         bcDc={bcDc}
         setBcDc={setBcDc}
-        bcSupplyType={bcSupplyType}
-        setBcSupplyType={setBcSupplyType}
+        // bcSupplyType={bcSupplyType}
+        // setBcSupplyType={setBcSupplyType}
       />
     </div>
   );

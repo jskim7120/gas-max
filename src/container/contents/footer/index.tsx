@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "app/store";
 import { openModal } from "app/state/modal/modalSlice";
-import { addSearchText, removeSearchText } from "app/state/modal/footerSlice";
+import { addSearchText, removeSearchText } from "app/state/footer/footerSlice";
 import API from "app/axios";
 import { FOOTHISTORY } from "app/path";
 import { FooterContainer } from "./style";

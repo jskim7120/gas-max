@@ -1,32 +1,36 @@
-import React from "react";
+import { removeCommas } from "helpers/currency";
 
-// -----------------------------------------------------------------------------------------------------------------
 export const calcTab1GridChange = (
   data65Detail: any,
-  //setBin: any,
-  //setPin: any,
-  setSumB: any,
-  setSumP: any,
   getValues: any,
   data65: any,
-  reset: any
+  reset: any,
+  bcPjan: any,
+  bcBjan: any,
+  bcPdanga: any,
+  bcBdanga: any,
+  bcPcost: any,
+  bcBcost: any,
+  bcGcost: any,
+  bcOutkum: any,
+  bcDc: any
 ) => {
   if (data65Detail) {
-    let bcPin = 0;
-    let bcBin = 0;
-    let bcSumP = 0;
-    let bcSumB = 0;
-    let bcPkum = 0;
-    let bcBkum = 0;
-    let bcPsum = 0;
-    let bcBsum = 0;
+    let bcPin: number = 0;
+    let bcBin: number = 0;
+    let bcSumP: number = 0;
+    let bcSumB: number = 0;
+    let bcPkum: number = 0;
+    let bcBkum: number = 0;
+    let bcPsum: number = 0;
+    let bcBsum: number = 0;
 
-    let bcTotal = 0;
-    let bcJTotal = 0;
-    let bcSumTotal = 0;
-    let bcSumKum = 0;
-    let bcSumCost = 0;
-    let bcSum = 0;
+    let bcTotal: number = 0;
+    let bcJTotal: number = 0;
+    let bcSumTotal: number = 0;
+    let bcSumKum: number = 0;
+    let bcSumCost: number = 0;
+    let bcSum: number = 0;
 
     data65Detail.forEach((obj: any) => {
       if (obj.bclGubun === "0") {
@@ -45,55 +49,39 @@ export const calcTab1GridChange = (
       }
     });
 
-    //setPin(bcPin);
-    //setBin(bcBin);
-    setSumP(bcSumP);
-    setSumB(bcSumB);
-
-    const { bcPjan, bcBjan, bcPdanga, bcBdanga, bcPcost, bcBcost } =
-      getValues();
-
-    if (bcPjan) {
-      bcSumP -= bcPjan;
-    }
-    if (bcBjan) {
-      bcSumB -= bcBjan;
-    }
-    if (bcPdanga) {
-      bcPkum = bcSumP * bcPdanga;
-    }
-    if (bcBdanga) {
-      bcBkum = bcSumB * bcBdanga;
-    }
-
-    if (bcPcost) {
-      bcPsum = bcPkum + +bcPcost;
-    } else {
-      bcPsum = bcPkum;
-    }
-
-    if (bcBcost) {
-      bcBsum = bcBkum + +bcBcost;
-    } else {
-      bcBsum = bcBkum;
-    }
+    bcSumP = bcSumP - (bcPjan ? +removeCommas(bcPjan, "number") : 0);
+    bcSumB = bcSumB - (bcBjan ? +removeCommas(bcBjan, "number") : 0);
+    bcPkum = bcSumP * (bcPdanga ? +removeCommas(bcPdanga, "number") : 0);
+    bcBkum = bcSumB * (bcBdanga ? +removeCommas(bcBdanga, "number") : 0);
+    bcPsum = bcPkum + (bcPcost ? +removeCommas(bcPcost, "number") : 0);
+    bcBsum = bcBkum + (bcBcost ? +removeCommas(bcBcost, "number") : 0);
 
     bcTotal =
       (isNaN(bcPin) ? 0 : +bcPin) +
       (isNaN(bcBin) ? 0 : +bcBin) +
       +data65?.bcGin;
-    bcJTotal = +bcPjan + +bcBjan;
+    bcJTotal =
+      (bcPjan ? +removeCommas(bcPjan, "number") : 0) +
+      (bcBjan ? +removeCommas(bcBjan, "number") : 0);
     bcSumTotal = bcSumP + +bcSumB;
     bcSumKum = bcPkum + +bcBkum + +data65?.bcGkum;
-    bcSumCost = +bcPcost + +bcBcost + +data65?.bcGcost;
+    bcSumCost =
+      (bcPcost ? +removeCommas(bcPcost, "number") : 0) +
+      (bcBcost ? +removeCommas(bcBcost, "number") : 0) +
+      (bcGcost ? +removeCommas(bcGcost, "number") : 0);
     bcSum = bcPsum + +bcBsum + +data65?.bcGsum;
 
     const bcSupplyAmt = Math.round(bcSum / 1.1);
     const bcVatAmt = bcSum - bcSupplyAmt;
+    const bcMisu =
+      bcSum -
+      (bcDc ? +removeCommas(bcDc, "number") : 0) -
+      (bcOutkum ? +removeCommas(bcOutkum, "number") : 0);
+
     reset((formValues: any) => ({
       ...formValues,
-      bcPin: isNaN(bcPin) ? 0 : bcPin,
-      bcBin: isNaN(bcBin) ? 0 : bcBin,
+      bcPin: bcPin,
+      bcBin: bcBin,
       bcSumP: bcSumP,
       bcSumB: bcSumB,
       bcPkum: bcPkum,
@@ -107,8 +95,10 @@ export const calcTab1GridChange = (
       bcSumCost: bcSumCost,
       bcSum: bcSum,
       bcInkum: bcSum,
+      bcInkum1: bcSum,
       bcSupplyAmt: bcSupplyAmt,
       bcVatAmt: bcVatAmt,
+      bcMisu: bcMisu,
     }));
   }
 };

@@ -134,7 +134,6 @@ const Form = React.forwardRef(
       if (selected && Object.keys(selected).length > 0) {
         resetForm("reset");
         setIsAddBtnClicked(false);
-        setAreaCode(selected?.areaCode);
         fetchTableData();
       }
     }, [selected]);

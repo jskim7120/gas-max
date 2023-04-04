@@ -12,21 +12,21 @@ function CommonFooterInfo({
   control,
   bcOutkum,
   bcDc,
-  bcSupplyType,
+  // bcSupplyType,
   setBcOutkum,
   setBcDc,
-  setBcSupplyType,
-}: {
+}: // setBcSupplyType,
+{
   register: any;
   calcOnFieldChange: Function;
   dataAdditionalDic: any;
   control: any;
   bcOutkum: any;
   bcDc: any;
-  bcSupplyType: any;
+  // bcSupplyType: any;
   setBcOutkum: Function;
   setBcDc: Function;
-  setBcSupplyType: Function;
+  // setBcSupplyType: Function;
 }) {
   return (
     <div>
