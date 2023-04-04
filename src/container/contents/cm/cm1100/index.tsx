@@ -67,7 +67,6 @@ function CM1100Page({
 
   useEffect(() => {
     if (Object.keys(selected).length > 0) {
-      setAreaCode(selected.areaCode);
       fetchData65();
     }
   }, [selected]);

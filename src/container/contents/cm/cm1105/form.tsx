@@ -167,6 +167,9 @@ function FormCM1105() {
         reset({
           ...emptyObj,
           cuCode: res.data[0].cuCode,
+          cuCutype: res.data[0].cuCutype,
+          cuStae: res.data[0].cuStae,
+          cuType: res.data[0].cuType,
         });
       } else {
         toast.error("couldn't get CuCode", {
@@ -296,10 +299,7 @@ function FormCM1105() {
           <p>거래처 정보</p>
           <FormGroup>
             <Label>영업소</Label>
-            <Select
-              value={areaCode}
-              onChange={(e) => setAreaCode(e.target.value)}
-            >
+            <Select value="00" onChange={(e) => setAreaCode(e.target.value)}>
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
