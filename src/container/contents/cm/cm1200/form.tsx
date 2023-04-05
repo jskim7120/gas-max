@@ -137,8 +137,6 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (selected && selected.cuCode && selected.areaCode) {
-        setAreaCode(selected.areaCode);
-
         fetchAdditionalData({
           areaCode: selected.areaCode,
           cuCode: selected.cuCode,
@@ -238,7 +236,7 @@ const Form = React.forwardRef(
     };
 
     const resetForm = async (type: string) => {
-      if (type === "clear") {
+      if (type === "clear" && areaCode !== "") {
         const data = await fetchCodes(areaCode);
         if (data && data?.tempCuCode[0]) {
           reset({ ...emptyObj, cuCode: data?.tempCuCode[0]?.tempCuCode });
@@ -291,7 +289,7 @@ const Form = React.forwardRef(
       if (Object.keys(selectedUserInfo).length > 0) {
         openPopup({
           cuCode: selectedUserInfo.cuCode,
-          areaCode: areaCode,
+          areaCode: selected.areaCode,
           status: "UPDATE",
         });
       }
@@ -309,7 +307,7 @@ const Form = React.forwardRef(
         try {
           const response: any = await API.post(CM1200DELETE, {
             cuCode: formValues.cuCode,
-            areaCode: areaCode,
+            areaCode: selected.areaCode,
           });
 
           if (response.status === 200) {
