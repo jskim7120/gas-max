@@ -251,7 +251,7 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? CM1300INSERT : CM1300UPDATE;
       const formValues: any = getValues();
-      formValues.areaCode = areaCode;
+      formValues.areaCode = isAddBtnClicked ? areaCode : selected.areaCode;
 
       formValues.aptF = +formValues.aptF;
       formValues.aptS = +formValues.aptS;
@@ -307,7 +307,16 @@ const Form = React.forwardRef(
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
-          fetchData({ areaCode: areaCode });
+          if (isAddBtnClicked) {
+            setData((prev: any) => [formValues, ...prev]);
+            setSelectedRowIndex(0);
+          } else {
+            setData((prev: any) => {
+              prev[selectedRowIndex] = formValues;
+              return [...prev];
+            });
+          }
+          setSelected(formValues);
 
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,

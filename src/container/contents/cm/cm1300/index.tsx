@@ -78,6 +78,7 @@ function CM1300({
 
   useEffect(() => {
     if (dataCommonDic) {
+      setAreaCode(dataCommonDic?.areaCode[0].code);
       fetchData({ areaCode: dataCommonDic.areaCode[0].code });
     }
   }, [dataCommonDic]);
@@ -90,7 +91,6 @@ function CM1300({
 
   useEffect(() => {
     if (selected && JSON.stringify(selected) !== "{}") {
-      setAreaCode(selected?.areaCode);
       fetchData65();
     }
   }, [selected]);
@@ -210,7 +210,7 @@ function CM1300({
             <>
               <p className="big">영업소</p>
               <Select
-                // value={areaCode}
+                value={areaCode}
                 onChange={(e) => setAreaCode(e.target.value)}
               >
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (

@@ -99,7 +99,7 @@ function CM1200({
       const { data } = await API.get(CM1200SEARCH, {
         params: {
           ...params,
-          areaCode: params?.areaCode ? params.areaCode : areaCode,
+          areaCode: areaCode,
         },
       });
 
@@ -150,7 +150,7 @@ function CM1200({
             <>
               <p className="big">영업소</p>
               <Select
-                // value={areaCode}
+                value={areaCode}
                 onChange={(e) => setAreaCode(e.target.value)}
               >
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
