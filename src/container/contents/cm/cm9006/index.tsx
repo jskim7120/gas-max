@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useDispatch } from "app/store";
 import { CM9006SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import API from "app/axios";
@@ -20,6 +21,7 @@ import {
 import { ResetGray, MagnifyingGlass, ExcelIcon } from "components/allSvgIcon";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import CustomTopPart from "../../customTopPart";
+import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
@@ -33,6 +35,8 @@ function CM9003({
   menuId: string;
   areaCode: string;
 }) {
+  const dispatch = useDispatch();
+
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
     functionName: "CM9006",
@@ -40,12 +44,19 @@ function CM9003({
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [selected, setSelected] = useState<any>({});
   const [reportKind, setReportKind] = useState("");
   const [dataChk, setDataChk] = useState(true);
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    if (Object.keys(selected).length > 0) {
+      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
+    }
+  }, [selected]);
 
   useEffect(() => {
     resetForm();
@@ -297,6 +308,7 @@ function CM9003({
           <Grid
             areaCode={areaCode}
             data={data}
+            setSelected={setSelected}
             fields={fields0}
             columns={columns0}
             style={{ height: `calc(100% - 15px)` }}
@@ -307,6 +319,7 @@ function CM9003({
           <Grid
             areaCode={areaCode}
             data={data}
+            setSelected={setSelected}
             fields={fields1}
             columns={columns1}
             style={{ height: `calc(100% - 15px)` }}

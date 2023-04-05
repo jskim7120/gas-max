@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useDispatch } from "app/store";
 import { CM9002SEARCH } from "app/path";
 import { ICM9002SEARCH } from "./model";
 import API from "app/axios";
@@ -22,6 +23,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Grid from "components/grid";
 import { columns, fields } from "./data";
 import CustomTopPart from "../../customTopPart";
+import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 function CM9002({
   depthFullName,
@@ -32,10 +34,11 @@ function CM9002({
   menuId: string;
   areaCode: string;
 }) {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  // const [selected, setSelected] = useState<any>({});
-  // const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [selected, setSelected] = useState<any>({});
+  //const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [dataChk, setDataChk] = useState(true);
   const [reportKind, setReportKind] = useState("");
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -49,7 +52,6 @@ function CM9002({
 
   const resetForm = () => {
     if (dataCommonDic) {
-      console.log("fa:::", dataCommonDic);
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
         reportKind: dataCommonDic?.reportKind[0].code,
@@ -65,6 +67,12 @@ function CM9002({
       setReportKind(dataCommonDic?.reportKind[0].code);
     }
   };
+
+  useEffect(() => {
+    if (Object.keys(selected).length > 0) {
+      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
+    }
+  }, [selected]);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -331,7 +339,7 @@ function CM9002({
           data={data}
           columns={columns}
           fields={fields}
-          // setSelected={setSelected}
+          setSelected={setSelected}
           // selectedRowIndex={selectedRowIndex}
           // setSelectedRowIndex={setSelectedRowIndex}
           style={{ height: `calc(100% - 15px)` }}

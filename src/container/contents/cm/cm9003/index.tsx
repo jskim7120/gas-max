@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useDispatch } from "app/store";
 import { CM9003SEARCH } from "app/path";
 import API from "app/axios";
 import { ISEARCH } from "./model";
@@ -26,6 +27,7 @@ import { columns3, fields3 } from "./data/data3";
 import { columns4, fields4 } from "./data/data4";
 import { columns5, fields5 } from "./data/data5";
 import { columns6, fields6 } from "./data/data6";
+import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 function CM9003({
   depthFullName,
@@ -36,6 +38,7 @@ function CM9003({
   menuId: string;
   areaCode: string;
 }) {
+  const dispatch = useDispatch();
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
     functionName: "CM9003",
@@ -43,6 +46,7 @@ function CM9003({
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [selected, setSelected] = useState<any>({});
   const [reportKind, setReportKind] = useState("");
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
@@ -52,6 +56,12 @@ function CM9003({
   useEffect(() => {
     resetForm();
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (Object.keys(selected).length > 0) {
+      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
+    }
+  }, [selected]);
 
   const fetchData = async (params: any) => {
     let paramTemp: any = {};
@@ -239,6 +249,7 @@ function CM9003({
           <Grid
             areaCode={areaCode}
             data={data}
+            setSelected={setSelected}
             fields={fields0}
             columns={columns0}
             style={{ height: `calc(100% - 38px)` }}
@@ -249,6 +260,7 @@ function CM9003({
           <Grid
             areaCode={areaCode}
             data={data}
+            setSelected={setSelected}
             fields={fields1}
             columns={columns1}
             style={{ height: `calc(100% - 38px)` }}
@@ -259,6 +271,7 @@ function CM9003({
           <Grid
             areaCode={areaCode}
             data={data}
+            setSelected={setSelected}
             fields={fields2}
             columns={columns2}
             style={{ height: `calc(100% - 38px)` }}
@@ -269,6 +282,7 @@ function CM9003({
           <Grid
             areaCode={areaCode}
             data={data}
+            setSelected={setSelected}
             fields={fields3}
             columns={columns3}
             style={{ height: `calc(100% - 38px)` }}
@@ -279,6 +293,7 @@ function CM9003({
           <Grid
             areaCode={areaCode}
             data={data}
+            setSelected={setSelected}
             fields={fields4}
             columns={columns4}
             style={{ height: `calc(100% - 38px)` }}
@@ -289,6 +304,7 @@ function CM9003({
           <Grid
             areaCode={areaCode}
             data={data}
+            setSelected={setSelected}
             fields={fields5}
             columns={columns5}
             style={{ height: `calc(100% - 38px)` }}
@@ -299,6 +315,7 @@ function CM9003({
           <Grid
             areaCode={areaCode}
             data={data}
+            setSelected={setSelected}
             fields={fields6}
             columns={columns6}
             style={{ height: `calc(100% - 38px)` }}

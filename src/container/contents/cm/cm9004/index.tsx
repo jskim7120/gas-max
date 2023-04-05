@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "app/store";
 import { CM9004SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import API from "app/axios";
@@ -14,6 +15,7 @@ import { ButtonColor } from "components/componentsType";
 import CustomTopPart from "../../customTopPart";
 import Grid from "components/grid";
 import { columns, fields } from "./data";
+import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 function CM9004({
   depthFullName,
@@ -24,8 +26,10 @@ function CM9004({
   menuId: string;
   areaCode: string;
 }) {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [selected, setSelected] = useState<any>({});
   const [cuSekyn, setCuSekyn] = useState("N");
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
@@ -35,6 +39,13 @@ function CM9004({
   const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    if (Object.keys(selected).length > 0) {
+      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
+    }
+  }, [selected]);
+
   useEffect(() => {
     resetForm();
   }, [dataCommonDic]);
@@ -222,6 +233,7 @@ function CM9004({
         <Grid
           areaCode={areaCode}
           data={data}
+          setSelected={setSelected}
           fields={fields}
           columns={columns}
           style={{ height: `calc(100% - 38px)` }}

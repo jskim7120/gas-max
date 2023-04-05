@@ -9,6 +9,10 @@ export interface initialStateType {
     areaCode: string;
     status: string;
   };
+  cm1106: {
+    cuCode: string;
+    areaCode: string;
+  };
   gr1200: {
     index: number | undefined;
     areaCode: string;
@@ -73,6 +77,10 @@ const initialState: initialStateType = {
     cuCode: "",
     areaCode: "",
     status: "",
+  },
+  cm1106: {
+    cuCode: "",
+    areaCode: "",
   },
   gr1200: {
     index: undefined,
@@ -149,6 +157,11 @@ const modalSlice = createSlice({
       state.cm1105.status = action.payload.status;
     },
 
+    addCM1106: (state, action) => {
+      state.cm1106.cuCode = action.payload.cuCode;
+      state.cm1106.areaCode = action.payload.areaCode;
+    },
+
     addGR1200: (state, action) => {
       state.gr1200.index = action.payload.index;
       state.gr1200.areaCode = action.payload.areaCode;
@@ -212,6 +225,7 @@ export const {
   openModal,
   closeModal,
   addCM1105,
+  addCM1106,
   addGR1200,
   addGR1300,
   addCC1100,
