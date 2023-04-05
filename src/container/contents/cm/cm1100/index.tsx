@@ -207,7 +207,7 @@ function CM1100Page({
         </div>
       </SearchWrapper>
       <WrapperContent>
-        <form onSubmit={handleSubmit(submit)}>
+        <form onSubmit={handleSubmit(submit)} autoComplete="off">
           <SearchWrapper>
             <div>
               <FormGroup>

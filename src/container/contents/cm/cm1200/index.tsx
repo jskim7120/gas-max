@@ -99,7 +99,7 @@ function CM1200({
       const { data } = await API.get(CM1200SEARCH, {
         params: {
           ...params,
-          areaCode: areaCode,
+          areaCode: params?.areaCode ? params.areaCode : areaCode,
         },
       });
 
@@ -178,6 +178,7 @@ function CM1200({
             <form
               onSubmit={handleSubmit(submit)}
               style={{ padding: "5px 0px" }}
+              autoComplete="off"
             >
               <Field>
                 <FormGroup>
