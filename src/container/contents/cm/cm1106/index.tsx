@@ -65,7 +65,7 @@ function FormCM1106() {
   });
 
   useEffect(() => {
-    if (Object.keys(selected).length > 0) {
+    if (selected && Object.keys(selected)?.length > 0) {
       setIsAddBtnClicked(false);
       reset((formValues) => ({
         ...formValues,

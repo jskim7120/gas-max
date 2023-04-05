@@ -63,7 +63,7 @@ const FORMCM1106 = React.forwardRef(
       if (type === "clear") {
         reset(emptyObj);
       }
-      if (type === "reset" && Object.keys(selected).length > 0) {
+      if (type === "reset" && selected && Object.keys(selected)?.length > 0) {
         reset(selected);
       }
     };
