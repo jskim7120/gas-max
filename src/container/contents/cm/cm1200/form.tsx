@@ -35,6 +35,7 @@ import { useDispatch } from "app/store";
 import { CM120065 } from "app/path";
 import { openModal, addCM1105 } from "app/state/modal/modalSlice";
 import useRdanga from "app/hook/calcRdanga";
+import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 const Form = React.forwardRef(
   (
@@ -160,6 +161,12 @@ const Form = React.forwardRef(
         }));
       }
     }, [addr]);
+
+    useEffect(() => {
+      if (Object.keys(selectedUserInfo).length > 0) {
+        setFooterDetail(selected.areaCode, selectedUserInfo.cuCode, dispatch);
+      }
+    }, [selectedUserInfo]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       resetForm,

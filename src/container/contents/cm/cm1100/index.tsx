@@ -35,9 +35,9 @@ function CM1100Page({
 }) {
   const dispatch = useDispatch();
 
-  const { areaCode: areaCodeFooter, cuCode: cuCodeFooter } = useSelector(
-    (state) => state.modal.cm1105
-  );
+  //  const { areaCode: areaCodeFooter, cuCode: cuCodeFooter } = useSelector(
+  //    (state) => state.modal.cm1105
+  //  );
 
   const [data, setData] = useState<any>([]);
   const [data65, setData65] = useState<any>({});
@@ -59,14 +59,15 @@ function CM1100Page({
     }
   }, [dataCommonDic]);
 
-  useEffect(() => {
-    if (areaCodeFooter && cuCodeFooter) {
-      setFooterDetail(areaCodeFooter, cuCodeFooter, dispatch);
-    }
-  }, [areaCodeFooter, cuCodeFooter]);
+  //useEffect(() => {
+  //    if (areaCodeFooter && cuCodeFooter) {
+  //      setFooterDetail(areaCodeFooter, cuCodeFooter, dispatch);
+  //    }
+  //  }, [areaCodeFooter, cuCodeFooter]);
 
   useEffect(() => {
     if (Object.keys(selected).length > 0) {
+      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
       fetchData65();
     }
   }, [selected]);
