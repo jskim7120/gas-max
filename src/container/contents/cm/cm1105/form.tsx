@@ -546,8 +546,8 @@ function FormCM1105() {
               <Label>소비자 형태</Label>
               <Select {...register("cuCutype")} width={InputSize.i150}>
                 {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.code1}
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
                   </option>
                 ))}
               </Select>
