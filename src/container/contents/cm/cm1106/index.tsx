@@ -12,7 +12,7 @@ import Form from "./form";
 import { closeModal } from "app/state/modal/modalSlice";
 import { Select, FormGroup } from "components/form/style";
 import { CM1106LIST } from "app/path";
-import { ICM1106 } from "./model";
+import { ISEARCH } from "./model";
 import styled from "styled-components";
 import { SearchWrapper } from "container/contents/commonStyle";
 import { columns, fields } from "./data";
@@ -39,17 +39,23 @@ const FFormGroup = styled.div`
 function FormCM1106() {
   const cm1106 = useSelector((state) => state.modal.cm1106);
   const areaCode = useSelector((state) => state.auth.areaCode);
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-  const { register, handleSubmit, reset, getValues } = useForm<ICM1106>();
+  const { register, handleSubmit, reset, getValues } = useForm<ISEARCH>();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (cm1106.areaCode && cm1106.cuCode) {
       fetchData();
+      reset((formValues) => ({
+        ...formValues,
+        areaCode: cm1106.areaCode,
+      }));
     }
   }, [cm1106.areaCode, cm1106.cuCode]);
 
@@ -59,9 +65,13 @@ function FormCM1106() {
   });
 
   useEffect(() => {
-    if (selected) {
-      formRef.current.setIsAddBtnClicked(false);
-      reset({ jcCuCode: selected?.jcCuCode, jcCuName: selected?.jcCuName });
+    if (Object.keys(selected).length > 0) {
+      setIsAddBtnClicked(false);
+      reset((formValues) => ({
+        ...formValues,
+        jcCuCode: selected?.jcCuCode,
+        jcCuName: selected?.jcCuName,
+      }));
     }
   }, [selected]);
 
@@ -70,6 +80,7 @@ function FormCM1106() {
       const { data: data1106 } = await API.get(CM1106LIST, {
         params: { jcCuCode: cm1106.cuCode, areaCode: cm1106.areaCode },
       });
+
       if (data1106) {
         setData(data1106);
         setSelected(data1106[0]);
@@ -84,7 +95,8 @@ function FormCM1106() {
     }
   };
 
-  const submit = async (data: ICM1106) => {};
+  const submit = async (data: ISEARCH) => {};
+
   return (
     <>
       <SearchWrapper
@@ -96,7 +108,7 @@ function FormCM1106() {
             <>
               <p className="big">영업소</p>
 
-              <Select {...register("areaCode")}>
+              <Select {...register("areaCode")} disabled>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -113,8 +125,9 @@ function FormCM1106() {
             style={{ marginRight: "5px" }}
             type="button"
             onClick={() => {
-              formRef.current.setIsAddBtnClicked(true);
               formRef.current.resetForm("clear");
+              setIsCancelBtnDisabled(false);
+              setIsAddBtnClicked(true);
             }}
           />
           <Button
@@ -127,6 +140,7 @@ function FormCM1106() {
               // dispatch(addDeleteMenuId({ menuId: "CM1106" }));
               formRef.current.crud("delete");
             }}
+            disabled={isAddBtnClicked}
           />
           <Button
             text="저장"
@@ -142,10 +156,13 @@ function FormCM1106() {
             icon={<Reset />}
             type="button"
             onClick={() => {
-              formRef.current.setIsAddBtnClicked(false);
               formRef.current.resetForm("reset");
+              setIsCancelBtnDisabled(true);
+              setIsAddBtnClicked(false);
             }}
+            disabled={isCancelBtnDisabled}
           />
+
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
@@ -213,6 +230,9 @@ function FormCM1106() {
           setSelectedRowIndex={setSelectedRowIndex}
           setSelected={setSelected}
           dataCommonDic={dataCommonDic}
+          areaCode={getValues("areaCode")}
+          isAddBtnClicked={isAddBtnClicked}
+          setIsAddBtnClicked={setIsAddBtnClicked}
         />
       </div>
     </>
