@@ -23,6 +23,7 @@ import { PersonInfoText } from "components/text";
 import Grid from "components/grid";
 import FourButtons from "components/button/fourButtons";
 import { InputSize } from "components/componentsType";
+import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 const DELETECONSTANT = "CM1300USERDELETE";
 
@@ -72,7 +73,8 @@ function FormCM1300User({
   });
 
   useEffect(() => {
-    if (selected && JSON.stringify(selected) !== "{}") {
+    if (Object.keys(selected).length > 0) {
+      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
       resetForm("reset");
     } else {
       resetForm("clear");

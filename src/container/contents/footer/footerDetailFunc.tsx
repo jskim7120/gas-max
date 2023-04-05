@@ -46,7 +46,7 @@ const setFooterDetail = async (
       params: { areaCode: areaCode, sCuCode: sCuCode },
     });
 
-    if (res.data) {
+    if (res.data && res.data?.length > 0) {
       dispatch(addInfo({ info: res.data[0] }));
     } else {
       dispatch(addInfo({ info: emptyFooterObj }));
