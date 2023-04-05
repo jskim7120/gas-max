@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "app/store";
 import API from "app/axios";
 import { CM1100SEARCH, CM110065 } from "app/path";
 import { ICM1100SEARCH } from "./model";
-import { openModal, addCM1105 } from "app/state/modal/modalSlice";
+import { openModal, addCM1105, addCM1106 } from "app/state/modal/modalSlice";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import {
@@ -35,10 +35,6 @@ function CM1100Page({
 }) {
   const dispatch = useDispatch();
 
-  //  const { areaCode: areaCodeFooter, cuCode: cuCodeFooter } = useSelector(
-  //    (state) => state.modal.cm1105
-  //  );
-
   const [data, setData] = useState<any>([]);
   const [data65, setData65] = useState<any>({});
   const [selected, setSelected] = useState<any>({});
@@ -59,16 +55,13 @@ function CM1100Page({
     }
   }, [dataCommonDic]);
 
-  //useEffect(() => {
-  //    if (areaCodeFooter && cuCodeFooter) {
-  //      setFooterDetail(areaCodeFooter, cuCodeFooter, dispatch);
-  //    }
-  //  }, [areaCodeFooter, cuCodeFooter]);
-
   useEffect(() => {
     if (Object.keys(selected).length > 0) {
       setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
       fetchData65();
+      dispatch(
+        addCM1106({ areaCode: selected.areaCode, cuCode: selected.cuCode })
+      );
     }
   }, [selected]);
 

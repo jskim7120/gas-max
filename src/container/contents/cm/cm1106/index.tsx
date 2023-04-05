@@ -37,7 +37,7 @@ const FFormGroup = styled.div`
 `;
 
 function FormCM1106() {
-  const cm1105 = useSelector((state) => state.modal.cm1105);
+  const cm1106 = useSelector((state) => state.modal.cm1106);
   const areaCode = useSelector((state) => state.auth.areaCode);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
@@ -48,10 +48,10 @@ function FormCM1106() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (cm1105.areaCode && cm1105.cuCode) {
+    if (cm1106.areaCode && cm1106.cuCode) {
       fetchData();
     }
-  }, [cm1105.areaCode, cm1105.cuCode]);
+  }, [cm1106.areaCode, cm1106.cuCode]);
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
@@ -68,7 +68,7 @@ function FormCM1106() {
   const fetchData = async () => {
     try {
       const { data: data1106 } = await API.get(CM1106LIST, {
-        params: { jcCuCode: cm1105.cuCode, areaCode: cm1105.areaCode },
+        params: { jcCuCode: cm1106.cuCode, areaCode: cm1106.areaCode },
       });
       if (data1106) {
         setData(data1106);

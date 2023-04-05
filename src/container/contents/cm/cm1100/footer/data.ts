@@ -64,7 +64,7 @@ export const columns = [
     name: "jcJpName",
     fieldName: "jcJpName",
     type: "data",
-    width: "120",
+    width: "250",
     styles: {
       textAlignment: "near",
     },
@@ -76,7 +76,7 @@ export const columns = [
     name: "jcDangaName",
     fieldName: "jcDangaName",
     type: "data",
-    width: "120",
+    width: "60",
     styles: {
       textAlignment: "near",
     },
@@ -88,7 +88,7 @@ export const columns = [
     name: "jcVatName",
     fieldName: "jcVatName",
     type: "data",
-    width: "200",
+    width: "60",
     styles: {
       textAlignment: "near",
     },
@@ -100,7 +100,7 @@ export const columns = [
     name: "jcJpDanga",
     fieldName: "jcJpDanga",
     type: "data",
-    width: "250",
+    width: "60",
     styles: {
       textAlignment: "near",
     },
@@ -112,7 +112,7 @@ export const columns = [
     name: "custOut",
     fieldName: "custOut",
     type: "data",
-    width: "120",
+    width: "60",
     styles: {
       textAlignment: "near",
     },
@@ -124,7 +124,7 @@ export const columns = [
     name: "custIn",
     fieldName: "custIn",
     type: "data",
-    width: "120",
+    width: "60",
     styles: {
       textAlignment: "near",
     },
@@ -136,7 +136,7 @@ export const columns = [
     name: "jcJpDandate",
     fieldName: "jcJpDandate",
     type: "data",
-    width: "120",
+    width: "80",
     styles: {
       textAlignment: "near",
     },
@@ -148,7 +148,7 @@ export const columns = [
     name: "jcLastdate5",
     fieldName: "jcLastdate5",
     type: "data",
-    width: "120",
+    width: "80",
     styles: {
       textAlignment: "near",
     },
@@ -160,7 +160,7 @@ export const columns = [
     name: "jcCycle",
     fieldName: "jcCycle",
     type: "data",
-    width: "120",
+    width: "60",
     styles: {
       textAlignment: "near",
     },
@@ -172,7 +172,7 @@ export const columns = [
     name: "jpStateName",
     fieldName: "jpStateName",
     type: "data",
-    width: "120",
+    width: "60",
     styles: {
       textAlignment: "near",
     },

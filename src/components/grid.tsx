@@ -1,4 +1,3 @@
-import { is } from "immer/dist/internal";
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 
