@@ -299,7 +299,10 @@ function FormCM1105() {
           <p>거래처 정보</p>
           <FormGroup>
             <Label>영업소</Label>
-            <Select value="00" onChange={(e) => setAreaCode(e.target.value)}>
+            <Select
+              value={areaCode}
+              onChange={(e) => setAreaCode(e.target.value)}
+            >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -556,7 +559,7 @@ function FormCM1105() {
               <Select {...register("cuRequestType")} width={InputSize.i150}>
                 {dataCommonDic?.cuRequestType?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
-                    {obj.code1}
+                    {obj.codeName}
                   </option>
                 ))}
               </Select>
@@ -565,7 +568,7 @@ function FormCM1105() {
               <Select {...register("cuSukumtype")} width={InputSize.i150}>
                 {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
-                    {obj.code1}
+                    {obj.codeName}
                   </option>
                 ))}
               </Select>

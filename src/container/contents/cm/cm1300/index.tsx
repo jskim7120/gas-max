@@ -241,7 +241,7 @@ function CM1300({
       >
         <LeftSide>
           <SearchWrapper>
-            <form onSubmit={handleSubmit(submit)}>
+            <form onSubmit={handleSubmit(submit)} autoComplete="off">
               <Field>
                 <FormGroup>
                   <BuildingInfoText text="건물" />
