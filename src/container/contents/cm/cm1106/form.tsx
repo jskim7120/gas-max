@@ -18,6 +18,7 @@ import { currencyMask } from "helpers/currency";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { formatCurrencyRemoveComma } from "helpers/currency";
+import { emptyObj } from "./model";
 
 const FORMCM1106 = React.forwardRef(
   (
@@ -29,6 +30,9 @@ const FORMCM1106 = React.forwardRef(
       setSelectedRowIndex,
       setSelected,
       dataCommonDic,
+      areaCode,
+      isAddBtnClicked,
+      setIsAddBtnClicked,
     }: {
       selected: any;
       fetchData: Function;
@@ -37,18 +41,18 @@ const FORMCM1106 = React.forwardRef(
       setSelectedRowIndex: Function;
       setSelected: Function;
       dataCommonDic: any;
+      areaCode: string;
+      isAddBtnClicked: boolean;
+      setIsAddBtnClicked: Function;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-
     const { register, handleSubmit, reset, getValues, control } =
       useForm<ICM1106>();
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       resetForm,
       crud,
-      setIsAddBtnClicked,
     }));
 
     useEffect(() => {
@@ -56,20 +60,11 @@ const FORMCM1106 = React.forwardRef(
     }, [selected]);
 
     const resetForm = (type: string | null) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
-
-        if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          reset(newData);
-        } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
-          reset(newData);
-        }
+      if (type === "clear") {
+        reset(emptyObj);
+      }
+      if (type === "reset" && selected && Object.keys(selected)?.length > 0) {
+        reset(selected);
       }
     };
 
@@ -102,6 +97,7 @@ const FORMCM1106 = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? CM1106INSERT : CM1106UPDATE;
       const formValues = getValues();
+      isAddBtnClicked && (formValues.areaCode = areaCode);
 
       formValues.jcJdcAmt = formatCurrencyRemoveComma(formValues.jcJdcAmt);
       formValues.jcJpDanga = formatCurrencyRemoveComma(formValues.jcJpDanga);
@@ -112,6 +108,8 @@ const FORMCM1106 = React.forwardRef(
           if (isAddBtnClicked) {
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
+            setIsAddBtnClicked(true);
+            setIsAddBtnClicked(false);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -125,10 +123,14 @@ const FORMCM1106 = React.forwardRef(
             autoClose: 500,
           });
         } else {
-          toast.error(response?.response?.data?.message);
+          toast.error(response?.response?.data?.message, {
+            autoClose: 500,
+          });
         }
       } catch (err: any) {
-        toast.error(err?.message);
+        toast.error(err?.message, {
+          autoClose: 500,
+        });
       }
     };
 
@@ -230,6 +232,7 @@ const FORMCM1106 = React.forwardRef(
                 value={value}
                 onChange={onChange}
                 mask={[/\d/, /\d/, /\d/]}
+                textAlign="right"
                 name={name}
                 inputSize={InputSize.i130}
               />

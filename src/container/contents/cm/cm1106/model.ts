@@ -19,3 +19,31 @@ export interface ICM1106 {
   jcVatKind: string;
   jcVatKindName: string;
 }
+
+export interface ISEARCH {
+  areaCode: string;
+  jcCuCode: string;
+  jcCuName: string;
+}
+
+export const emptyObj = {
+  areaCode: "",
+  areaName: "",
+  custIn: "",
+  custOut: "",
+  jcBasicJaego: "",
+  jcCuCode: "",
+  jcCuName: "",
+  jcDangaType: "",
+  jcDangaTypeName: "",
+  jcJdcAmt: "",
+  jcJdcPer: "",
+  jcJpCode: "",
+  jcJpDanga: 0,
+  jcJpName: "",
+  jcJpSateName: "",
+  jcJpSpec: "",
+  jcJpState: "",
+  jcVatKind: "",
+  jcVatKindName: "",
+};

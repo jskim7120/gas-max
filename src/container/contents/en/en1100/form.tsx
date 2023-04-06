@@ -177,10 +177,12 @@ const Form = React.forwardRef(
             autoClose: 500,
           });
         } else {
-          toast.error(response?.response?.data?.message, { autoClose: 500 });
+          //  toast.error(response?.response?.data?.message, { autoClose: 500 });
+          alert(response?.response?.data?.message);
         }
       } catch (err: any) {
-        toast.error(err?.message, { autoClose: 500 });
+        // toast.error(err?.message, { autoClose: 500 });
+        alert(err?.message);
       }
     };
 
