@@ -28,7 +28,10 @@ import {
   CM1200UPDATE,
   CM1200INSERTSEQ,
 } from "app/path";
-import { DateWithoutDash } from "helpers/dateFormat";
+import {
+  DateWithoutDash,
+  DateWithoutDashOnlyYearMonth,
+} from "helpers/dateFormat";
 import { formatCurrencyRemoveComma } from "helpers/currency";
 import getTabContent from "./getTabContent";
 import { useDispatch } from "app/store";
@@ -394,10 +397,23 @@ const Form = React.forwardRef(
       formValues.tankOutsideDate1 = DateWithoutDash(
         formValues.tankOutsideDate1
       );
-      formValues.gasifyMakeDate1 = DateWithoutDash(formValues.gasifyMakeDate1);
-      formValues.gasifyMakeDate2 = DateWithoutDash(formValues.gasifyMakeDate2);
+
       formValues.tankOutsideDate2 = DateWithoutDash(
         formValues.tankOutsideDate2
+      );
+
+      formValues.tankMakeDate1 = DateWithoutDashOnlyYearMonth(
+        formValues.tankMakeDate1
+      );
+      formValues.tankMakeDate2 = DateWithoutDashOnlyYearMonth(
+        formValues.tankMakeDate2
+      );
+
+      formValues.gasifyMakeDate1 = DateWithoutDashOnlyYearMonth(
+        formValues.gasifyMakeDate1
+      );
+      formValues.gasifyMakeDate2 = DateWithoutDashOnlyYearMonth(
+        formValues.gasifyMakeDate2
       );
 
       formValues.cuRdangaAmt =

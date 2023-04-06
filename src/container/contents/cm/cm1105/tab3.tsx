@@ -240,7 +240,7 @@ function Tab3({
                   value={value}
                   onChange={onChange}
                   name={name}
-                  showYearDropdown
+                  showMonthYearPicker
                   style={{ width: "110px" }}
                 />
               )}
@@ -332,7 +332,7 @@ function Tab3({
                   onChange={onChange}
                   name={name}
                   style={{ width: "110px" }}
-                  showYearDropdown
+                  showMonthYearPicker
                 />
               )}
             />
@@ -531,7 +531,7 @@ function Tab3({
                   value={value}
                   onChange={onChange}
                   name={name}
-                  showYearDropdown
+                  showMonthYearPicker
                   style={{ width: "130px" }}
                 />
               )}
@@ -574,7 +574,7 @@ function Tab3({
                   value={value}
                   onChange={onChange}
                   name={name}
-                  showYearDropdown
+                  showMonthYearPicker
                   style={{ width: "130px" }}
                 />
               )}

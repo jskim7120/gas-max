@@ -1,7 +1,7 @@
 import MaskedInput from "react-text-mask";
 import DatePicker, { registerLocale } from "react-datepicker";
 import styled from "styled-components";
-import { DateWithDash } from "helpers/dateFormat";
+import { DateWithDash, DateWithDashOnlyYearMonth } from "helpers/dateFormat";
 import CalendarIcon from "assets/image/calendar.png";
 
 import ko from "date-fns/locale/ko";
@@ -13,29 +13,36 @@ function CustomDatePicker({
   onChange,
   readOnly,
   name,
-  showYearDropdown,
+  showMonthYearPicker,
 }: {
   style?: any;
   value: any;
   onChange: any;
   readOnly?: boolean;
   name?: string;
-  showYearDropdown?: boolean;
+  showMonthYearPicker?: boolean;
 }) {
   return (
     <DatePicker
       readOnly={readOnly}
       onChange={onChange}
-      // showMonthDropdown
+      showMonthDropdown
       showYearDropdown
-      showMonthYearPicker={showYearDropdown && showYearDropdown}
-      dateFormat="yyyy-MM-dd"
+      showMonthYearPicker={showMonthYearPicker && showMonthYearPicker}
       locale="ko"
       customInput={
         <InputWrapper style={style}>
           <MaskedInput
-            mask={[/\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, "-", /\d/, /\d/]}
-            value={DateWithDash(value)}
+            mask={
+              showMonthYearPicker
+                ? [/\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/]
+                : [/\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, "-", /\d/, /\d/]
+            }
+            value={
+              showMonthYearPicker
+                ? DateWithDashOnlyYearMonth(value)
+                : DateWithDash(value)
+            }
             className="customMaskInput"
             name={name && name}
           />

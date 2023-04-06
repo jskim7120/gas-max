@@ -67,7 +67,7 @@ function Tab2({
               value={value}
               onChange={onChange}
               name={name}
-              showYearDropdown
+              showMonthYearPicker
               style={{ width: "110px" }}
             />
           )}
@@ -178,7 +178,7 @@ function Tab2({
               value={value}
               onChange={onChange}
               name={name}
-              showYearDropdown
+              showMonthYearPicker
               style={{ width: "110px" }}
             />
           )}

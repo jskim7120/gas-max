@@ -10,7 +10,10 @@ import { Plus, Update, WhiteClose } from "components/allSvgIcon";
 import { ICM1105SEARCH, emptyObj } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { currencyMask, removeCommas } from "helpers/currency";
-import { DateWithoutDash } from "helpers/dateFormat";
+import {
+  DateWithoutDash,
+  DateWithoutDashOnlyYearMonth,
+} from "helpers/dateFormat";
 import { closeModal } from "app/state/modal/modalSlice";
 import {
   Input,
@@ -214,14 +217,22 @@ function FormCM1105() {
     formValues.cuSmsDate = DateWithoutDash(formValues.cuSmsDate);
     formValues.gasifyCheckDate1 = DateWithoutDash(formValues.gasifyCheckDate1);
     formValues.gasifyCheckDate2 = DateWithoutDash(formValues.gasifyCheckDate2);
-    formValues.gasifyMakeDate1 = DateWithoutDash(formValues.gasifyMakeDate1);
-    formValues.gasifyMakeDate2 = DateWithoutDash(formValues.gasifyMakeDate2);
+    formValues.gasifyMakeDate1 = DateWithoutDashOnlyYearMonth(
+      formValues.gasifyMakeDate1
+    );
+    formValues.gasifyMakeDate2 = DateWithoutDashOnlyYearMonth(
+      formValues.gasifyMakeDate2
+    );
     formValues.tankFirstDate1 = DateWithoutDash(formValues.tankFirstDate1);
     formValues.tankFirstDate2 = DateWithoutDash(formValues.tankFirstDate2);
     formValues.tankInsideDate1 = DateWithoutDash(formValues.tankInsideDate1);
     formValues.tankInsideDate2 = DateWithoutDash(formValues.tankInsideDate2);
-    formValues.tankMakeDate1 = DateWithoutDash(formValues.tankMakeDate1);
-    formValues.tankMakeDate2 = DateWithoutDash(formValues.tankMakeDate2);
+    formValues.tankMakeDate1 = DateWithoutDashOnlyYearMonth(
+      formValues.tankMakeDate1
+    );
+    formValues.tankMakeDate2 = DateWithoutDashOnlyYearMonth(
+      formValues.tankMakeDate2
+    );
     formValues.tankOutsideDate1 = DateWithoutDash(formValues.tankOutsideDate1);
     formValues.tankOutsideDate2 = DateWithoutDash(formValues.tankOutsideDate2);
 
