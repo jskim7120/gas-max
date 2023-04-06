@@ -4,9 +4,16 @@ import { toast } from "react-toastify";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { useDispatch, useSelector } from "app/store";
 import API from "app/axios";
-import { CM1100SEARCH, CM110065 } from "app/path";
+import { CM1100SEARCH, CM110065, CM1100DELETE } from "app/path";
 import { ICM1100SEARCH } from "./model";
-import { openModal, addCM1105, addCM1106 } from "app/state/modal/modalSlice";
+import {
+  openModal,
+  addCM1105,
+  addCM1106,
+  closeModal,
+  addDeleteMenuId,
+  setIsDelete,
+} from "app/state/modal/modalSlice";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import {
@@ -40,6 +47,7 @@ function CM1100Page({
   const [selected, setSelected] = useState<any>({});
   const [areaCode, setAreaCode] = useState("");
   const [loading, setLoading] = useState(false);
+  const { isDelete } = useSelector((state) => state.modal);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
     functionName: "CM1100",
@@ -65,8 +73,35 @@ function CM1100Page({
     }
   }, [selected]);
 
+  useEffect(() => {
+    if (isDelete.menuId === menuId && isDelete.isDelete) {
+      deleteRowGrid();
+    }
+  }, [isDelete.isDelete]);
+
   const submit = async (data: ICM1100SEARCH) => {
     fetchData(data);
+  };
+
+  const deleteRowGrid = async () => {
+    let params: any = {};
+    params.areaCode = selected?.areaCode;
+    params.cuCode = selected?.cuCode;
+    try {
+      const response: any = await API.post(CM1100DELETE, params);
+      if (response.status === 200) {
+        toast.success("삭제하였습니다", {
+          autoClose: 500,
+        });
+        await fetchData(areaCode);
+      }
+      dispatch(addDeleteMenuId({ menuId: "" }));
+      dispatch(setIsDelete({ isDelete: false }));
+    } catch (error) {
+      toast.error("Couldn't delete", {
+        autoClose: 500,
+      });
+    }
   };
 
   const fetchData = async (params: any) => {
@@ -113,7 +148,7 @@ function CM1100Page({
       if (areaCode !== "") {
         openPopup({
           cuCode: selected.cuCode,
-          areaCode: areaCode,
+          areaCode: selected.areaCode,
           status: "UPDATE",
         });
       }
@@ -137,6 +172,13 @@ function CM1100Page({
         areaCode: areaCode,
         status: "INSERT",
       });
+    }
+  };
+
+  const onClickDelete = () => {
+    if (Object.keys(selected).length > 0 && areaCode !== "") {
+      dispatch(openModal({ type: "delModal" }));
+      dispatch(addDeleteMenuId({ menuId: menuId }));
     }
   };
 
@@ -196,7 +238,12 @@ function CM1100Page({
             type="button"
             onClick={onClickUpdate}
           />
-          <Button text="삭제" icon={<Trash />} type="button" />
+          <Button
+            text="삭제"
+            icon={<Trash />}
+            type="button"
+            onClick={onClickDelete}
+          />
         </div>
       </SearchWrapper>
       <WrapperContent>

@@ -64,6 +64,7 @@ export const EN2000DELETE = "/app/EN2000/delete";
 export const EN200011 = "/app/EN2000/11";
 
 export const CM1100SEARCH = "/app/CM1100/search";
+export const CM1100DELETE = "/app/CM1100/delete";
 export const CM110065 = "/app/CM1100/65";
 
 export const CM1105SEARCH = "/app/CM1105/search";
