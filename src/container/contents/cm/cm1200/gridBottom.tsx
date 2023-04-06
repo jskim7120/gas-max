@@ -8,10 +8,14 @@ function GridTable({
   data,
   areaCode,
   setSelectedUserInfo,
+  openPopup,
+  selected,
 }: {
   data: any;
   areaCode: string | undefined;
   setSelectedUserInfo: Function;
+  openPopup?: any;
+  selected?: any;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -68,6 +72,16 @@ function GridTable({
       setSelectedUserInfo(data[itemIndex]);
     };
 
+    gv.onCellDblClicked = function (grid: any, e: any) {
+      const itemIndex: any = grid.getCurrent().dataRow;
+      openPopup &&
+        openPopup({
+          cuCode: data[itemIndex].cuCode,
+          areaCode: selected.areaCode,
+          status: "UPDATE",
+        });
+    };
+
     return () => {
       dp.clearRows();
       gv.destroy();
@@ -78,7 +92,7 @@ function GridTable({
   return (
     <div
       ref={realgridTableElement}
-      style={{ width: "100%", height: "200px" }}
+      style={{ width: "100%", height: "310px" }}
     />
   );
 }

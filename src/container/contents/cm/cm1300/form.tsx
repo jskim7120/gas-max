@@ -270,40 +270,6 @@ const Form = React.forwardRef(
         //end yu boloh n logic todorhoigui
       }
 
-      if (!chkAptZipCode) {
-        delete formValues.aptZipcode;
-        delete formValues.aptAddr1;
-        delete formValues.aptAddr2;
-      }
-
-      if (!chkAptRh2o) {
-        delete formValues.aptRh2O;
-      }
-
-      if (!chkAptAnkum) {
-        delete formValues.aptAnkum;
-      }
-
-      if (!chkAptSisulkum) {
-        delete formValues.aptSisulkum;
-      }
-
-      if (!chkAptMeterkum) {
-        delete formValues.aptMeterkum;
-      }
-
-      if (!chkAptPer) {
-        delete formValues.aptPer;
-      }
-
-      if (!chkAptGumdate) {
-        delete formValues.aptGumdate;
-      }
-
-      if (!chkAptSukumtype) {
-        delete formValues.aptSukumtype;
-      }
-
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {

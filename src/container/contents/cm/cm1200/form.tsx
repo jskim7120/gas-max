@@ -547,7 +547,7 @@ const Form = React.forwardRef(
               tabId={tabId}
             />
             <TabContentWrapper
-              style={{ minHeight: "200px", width: "1240px", padding: "10px" }}
+              style={{ minHeight: "171px", width: "1240px", padding: "10px" }}
             >
               {getTabContent(
                 tabId,
@@ -622,6 +622,8 @@ const Form = React.forwardRef(
           data={userInfo}
           areaCode={ownAreaCode}
           setSelectedUserInfo={setSelectedUserInfo}
+          openPopup={openPopup}
+          selected={selected}
         />
       </>
     );

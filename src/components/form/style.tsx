@@ -403,6 +403,7 @@ export const Label = styled.label<{
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
+    padding-top: 0px;
   }
 `;
 

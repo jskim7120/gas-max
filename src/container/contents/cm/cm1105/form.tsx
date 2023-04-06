@@ -293,7 +293,7 @@ function FormCM1105() {
   };
 
   return (
-    <form onSubmit={handleSubmit(submit)}>
+    <form onSubmit={handleSubmit(submit)} autoComplete="off">
       <ModalHeader>
         <Field flex style={{ alignItems: "center" }}>
           <p>거래처 정보</p>

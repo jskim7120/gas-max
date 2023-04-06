@@ -97,6 +97,7 @@ function CM1100Page({
       }
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
+      dispatch(closeModal());
     } catch (error) {
       toast.error("Couldn't delete", {
         autoClose: 500,
