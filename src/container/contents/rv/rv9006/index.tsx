@@ -26,8 +26,7 @@ import {
 } from "components/radioButton/style";
 import {
   DateWithoutDash,
-  formatOnlyYearMonthDateByRemoveDash,
-  formatDateToStringWithoutDashOnlyYearMonth,
+  DateWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
 
@@ -112,35 +111,16 @@ function RV9006({
       delete params.sGjSnoF;
       delete params.sGjSnoT;
 
-      // params.sDateF =
-      //   typeof params.sDateF === "string"
-      //     ? formatDateByRemoveDash(params.sDateF)
-      //     : formatDateToStringWithoutDash(params.sDateF);
       params.sDateF = DateWithoutDash(params.sDateF);
-
-      // params.sDateT =
-      //   typeof params.sDateT === "string"
-      //     ? formatDateByRemoveDash(params.sDateT)
-      //     : formatDateToStringWithoutDash(params.sDateT);
       params.sDateT = DateWithoutDash(params.sDateT);
     } else {
       delete params.sDateF;
       delete params.sDateT;
-      params.sGjGumymF =
-        typeof params.sGjGumymF === "string"
-          ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumymF)
-          : params.sGjGumymF instanceof Date
-          ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumymF)
-          : "";
 
-      params.sGjGumymT =
-        typeof params.sGjGumymT === "string"
-          ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumymT)
-          : params.sGjGumymT instanceof Date
-          ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumymT)
-          : "";
+      params.sGjGumymF = DateWithoutDashOnlyYearMonth(params.sGjGumymF);
+      params.sGjGumymT = DateWithoutDashOnlyYearMonth(params.sGjGumymT);
     }
-    console.log("params::::", params);
+
     fetchData(params);
   };
 
@@ -185,7 +165,7 @@ function RV9006({
                       value={value}
                       onChange={onChange}
                       name={name}
-                      showYearDropdown
+                      showMonthYearPicker
                       readOnly={sType1}
                     />
                   )}
@@ -210,7 +190,7 @@ function RV9006({
                       value={value}
                       onChange={onChange}
                       name={name}
-                      showYearDropdown
+                      showMonthYearPicker
                       readOnly={sType1}
                     />
                   )}

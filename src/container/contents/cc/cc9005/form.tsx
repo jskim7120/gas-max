@@ -98,7 +98,7 @@ const Form = React.forwardRef(
                 value={value}
                 onChange={onChange}
                 name={name}
-                showYearDropdown
+                showMonthYearPicker
               />
             )}
           />

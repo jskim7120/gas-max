@@ -81,55 +81,17 @@ function RV1100({
   });
 
   const submit = async (params: any) => {
-    // params.sGjGumym =
-    //   typeof params.sGjGumym === "string"
-    //     ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumym)
-    //     : params.sGjGumym instanceof Date
-    //     ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumym)
-    //     : "";
     params.sGjGumym = DateWithoutDashOnlyYearMonth(params.sGjGumym);
-    // params.sGjPerDate =
-    //   typeof params.sGjPerDate === "string"
-    //     ? formatDateByRemoveDash(params.sGjPerDate)
-    //     : params.sGjPerDate instanceof Date
-    //     ? formatDateToStringWithoutDash(params.sGjPerDate)
-    //     : "";
     params.sGjPerDate = DateWithoutDash(params.sGjPerDate);
-
-    // params.sGjDate =
-    //   typeof params.sGjDate === "string"
-    //     ? formatDateByRemoveDash(params.sGjDate)
-    //     : params.sGjDate instanceof Date
-    //     ? formatDateToStringWithoutDash(params.sGjDate)
-    //     : "";
     params.sGjDate = DateWithoutDash(params.sGjDate);
 
     fetchData(params);
   };
 
   const submit2 = async (params: any) => {
-    // params.sGjGumym =
-    //   typeof params.sGjGumym === "string"
-    //     ? formatOnlyYearMonthDateByRemoveDash(params.sGjGumym)
-    //     : params.sGjGumym instanceof Date
-    //     ? formatDateToStringWithoutDashOnlyYearMonth(params.sGjGumym)
-    //     : "";
     params.sGjGumym = DateWithoutDashOnlyYearMonth(params.sGjGumym);
-    // params.sGjPerDate =
-    //   typeof params.sGjPerDate === "string"
-    //     ? formatDateByRemoveDash(params.sGjPerDate)
-    //     : params.sGjPerDate instanceof Date
-    //     ? formatDateToStringWithoutDash(params.sGjPerDate)
-    //     : "";
     params.sGjPerDate = DateWithoutDash(params.sGjPerDate);
-    // params.sGjDate =
-    //   typeof params.sGjDate === "string"
-    //     ? formatDateByRemoveDash(params.sGjDate)
-    //     : params.sGjDate instanceof Date
-    //     ? formatDateToStringWithoutDash(params.sGjDate)
-    //     : "";
     params.sGjDate = DateWithoutDash(params.sGjDate);
-
     search2(params);
   };
 
@@ -265,10 +227,9 @@ function RV1100({
                 render={({ field: { onChange, value, name } }) => (
                   <CustomDatePicker
                     value={value}
-                    // onChange={(e: any) => gjGumymChanged(e)}
                     onChange={onChange}
                     name={name}
-                    showYearDropdown
+                    showMonthYearPicker
                   />
                 )}
               />

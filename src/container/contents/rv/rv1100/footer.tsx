@@ -10,7 +10,7 @@ import CheckBox from "components/checkbox";
 import { Wrapper, FormGroup, Label, Field, Input } from "components/form/style";
 import {
   DateWithoutDash,
-  formatOnlyYearMonthDateByRemoveDash,
+  DateWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
 import { InputSize, ButtonColor, ButtonType } from "components/componentsType";
 import Button from "components/button/button";
@@ -135,36 +135,17 @@ function Footer({
     params.gjJanType = data?.gjJanType;
     gjGumym
       ? (params.gjGumym = gjGumym)
-      : (params.gjGumym = formatOnlyYearMonthDateByRemoveDash(
-          dataCommonDic?.sGjGumym[0].code
-        ));
+      : (params.gjGumym = DateWithoutDash(dataCommonDic?.sGjGumym[0].code));
     gjSno
       ? (params.gjSno = gjSno)
       : (params.gjSno = dataCommonDic?.sGjSno[0].code);
 
     gjPerDate
       ? (params.gjPerDate = gjPerDate)
-      : // : (params.gjPerDate = formatDateByRemoveDash(
-        //     dataCommonDic?.sGjPerDate[0].code
-        //   ));
-        (params.gjPerDate = DateWithoutDash(dataCommonDic?.sGjPerDate[0].code));
+      : (params.gjPerDate = DateWithoutDash(dataCommonDic?.sGjPerDate[0].code));
 
-    // params.gjSdate =
-    //   typeof params.gjSdate === "string"
-    //     ? formatDateByRemoveDash(params.gjSdate)
-    //     : params.gjSdate instanceof Date
-    //     ? formatDateToStringWithoutDash(params.gjSdate)
-    //     : "";
     params.gjSdate = DateWithoutDash(params.gjSdate);
-
-    // params.gjDate =
-    //   typeof params.gjDate === "string"
-    //     ? formatDateByRemoveDash(params.gjDate)
-    //     : params.gjDate instanceof Date
-    //     ? formatDateToStringWithoutDash(params.gjDate)
-    //     : "";
     params.gjDate = DateWithoutDash(params.gjDate);
-
     params.gjGum = Number(params.gjGum);
     params.gjBigo = Number(params.gjBigo);
 
