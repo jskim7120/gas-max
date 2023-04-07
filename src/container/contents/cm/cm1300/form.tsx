@@ -131,10 +131,11 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (addr.length > 0) {
-        reset({
+        reset((formValues: any) => ({
+          ...formValues,
           aptZipcode: addr ? addr?.split("/")[1] : "",
           aptAddr1: addr ? addr?.split("/")[0] : "",
-        });
+        }));
       }
     }, [addr]);
 
