@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
+import { ExcelIcon } from "components/allSvgIcon";
+import Button from "components/button/button";
+import { ButtonColor, ButtonType } from "components/componentsType";
 
 let container: HTMLDivElement;
 let dp: any;
@@ -24,6 +27,23 @@ function Grid({
   areaCode: string;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
+
+  const saveToExcel = () => {
+    if (data.length !== 0) {
+      gv.exportGrid({
+        type: "excel",
+        target: "local",
+        fileName: "gridExportCM1100.xlsx",
+        progressMessage: "엑셀 Export중입니다.",
+        done: function () {
+          //내보내기 완료 후 실행되는 함수
+          alert("CM1100 grid done excel export");
+        },
+      });
+    } else {
+      alert("CM1100 grid data not found");
+    }
+  };
 
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
@@ -79,13 +99,24 @@ function Grid({
   }, [data, cm1105PopUp]);
 
   return (
-    <div
-      style={{
-        width: "100%",
-        height: `calc(100% - 271px)`,
-      }}
-      ref={realgridElement}
-    ></div>
+    <>
+      <Button
+        text="엑셀"
+        icon={<ExcelIcon />}
+        kind={ButtonType.ROUND}
+        color={ButtonColor.SECONDARY}
+        type="button"
+        onClick={saveToExcel}
+        style={{ position: "absolute", top: "179px", right: "57px" }}
+      />
+      <div
+        style={{
+          width: "100%",
+          height: `calc(100% - 271px)`,
+        }}
+        ref={realgridElement}
+      ></div>
+    </>
   );
 }
 

@@ -403,6 +403,7 @@ export const Label = styled.label<{
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
+    padding-top: 0px;
   }
 `;
 
@@ -460,7 +461,7 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
 
 export const Divider = styled.div`
   height: 2px;
-  background: #000;
+  background: rgba(0, 0, 0, 0.2);
 `;
 export const DividerGray = styled.div`
   height: 1px;

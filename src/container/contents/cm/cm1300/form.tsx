@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import {
@@ -118,9 +118,10 @@ const Form = React.forwardRef(
     // const [aptRdangaSign, setAptRdangaSign] = useState<string>("");
     // const [aptRdangaAmt, setAptRdangaAmt] = useState<string>("");
 
-    const { register, handleSubmit, reset, getValues } = useForm<ICM1300>({
-      mode: "onChange",
-    });
+    const { register, handleSubmit, reset, getValues, control } =
+      useForm<ICM1300>({
+        mode: "onChange",
+      });
 
     useEffect(() => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
@@ -268,40 +269,6 @@ const Form = React.forwardRef(
         // formValues.totalValue = totalValue; ene talbar tsaanaasaa irehgui bgaa irvel nemeh yum
       } else {
         //end yu boloh n logic todorhoigui
-      }
-
-      if (!chkAptZipCode) {
-        delete formValues.aptZipcode;
-        delete formValues.aptAddr1;
-        delete formValues.aptAddr2;
-      }
-
-      if (!chkAptRh2o) {
-        delete formValues.aptRh2O;
-      }
-
-      if (!chkAptAnkum) {
-        delete formValues.aptAnkum;
-      }
-
-      if (!chkAptSisulkum) {
-        delete formValues.aptSisulkum;
-      }
-
-      if (!chkAptMeterkum) {
-        delete formValues.aptMeterkum;
-      }
-
-      if (!chkAptPer) {
-        delete formValues.aptPer;
-      }
-
-      if (!chkAptGumdate) {
-        delete formValues.aptGumdate;
-      }
-
-      if (!chkAptSukumtype) {
-        delete formValues.aptSukumtype;
       }
 
       try {
@@ -588,13 +555,19 @@ const Form = React.forwardRef(
             onChange={(e: any) => setChkAptAnkum(e.target.checked)}
             style={someStyle}
           />
-
-          <Input
-            register={register("aptAnkum")}
-            textAlign="right"
-            inputSize={InputSize.i120}
-            mask={currencyMask}
-            readOnly={!chkAptAnkum}
+          <Controller
+            control={control}
+            {...register("aptAnkum")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i120}
+                readOnly={!chkAptAnkum}
+              />
+            )}
           />
           <p>{`원`}</p>
 
@@ -604,13 +577,19 @@ const Form = React.forwardRef(
             onChange={(e: any) => setChkAptSisulkum(e.target.checked)}
             style={someStyle2}
           />
-
-          <Input
-            register={register("aptSisulkum")}
-            textAlign="right"
-            mask={currencyMask}
-            readOnly={!chkAptSisulkum}
-            inputSize={InputSize.i120}
+          <Controller
+            control={control}
+            {...register("aptSisulkum")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i120}
+                readOnly={!chkAptSisulkum}
+              />
+            )}
           />
           <p>{`원`}</p>
 
@@ -620,13 +599,19 @@ const Form = React.forwardRef(
             onChange={(e: any) => setChkAptMeterkum(e.target.checked)}
             style={someStyle}
           />
-
-          <Input
-            register={register("aptMeterkum")}
-            textAlign="right"
-            mask={currencyMask}
-            readOnly={!chkAptMeterkum}
-            inputSize={InputSize.i120}
+          <Controller
+            control={control}
+            {...register("aptMeterkum")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i120}
+                readOnly={!chkAptMeterkum}
+              />
+            )}
           />
           <p>{`원`}</p>
         </FormGroup>

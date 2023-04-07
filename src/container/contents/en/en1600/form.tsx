@@ -62,6 +62,8 @@ const Form = React.forwardRef(
       functionName: "EN1600",
     });
 
+    console.log("dataComonDIc====>", dataCommonDic);
+
     useEffect(() => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         resetForm("reset");
@@ -535,7 +537,7 @@ const Form = React.forwardRef(
                 <Label style={{ minWidth: "90px" }}>급여방식</Label>
                 <Select {...register("swPaytype")} width={InputSize.i110}>
                   {dataCommonDic?.swPaytype?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code1}>
+                    <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
                   ))}
