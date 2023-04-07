@@ -231,7 +231,7 @@ const Form = React.forwardRef(
       const path = isAddBtnClicked ? GR1100INSERT : GR1100UPDATE;
       const formValues = getValues();
 
-      formValues.areaCode = areaCode;
+      formValues.areaCode = isAddBtnClicked ? areaCode : formValues.areaCode;
 
       formValues.buMisu =
         formValues.buMisu && +removeCommas(formValues.buMisu, "number");

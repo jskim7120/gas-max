@@ -13,21 +13,27 @@ export interface initialStateType {
     cuCode: string;
     areaCode: string;
   };
-  gr1200: {
+  gr1200Popup: {
     index: number | undefined;
     areaCode: string;
     bcBuCode: string;
-    bcChitType: string;
-
-    jpCode: string | undefined;
-    jpCost: number | undefined;
-    jpDanga: number | undefined;
-    jpGubun: string | undefined;
-    jpKg: number | undefined;
-    jpName: string | undefined;
-    jpSvyn: string | undefined;
-    isProductNameSelected: string | undefined;
+    bcChitType: number | undefined;
   };
+  gr1200: any;
+  // {
+  // index: number | undefined;
+  // areaCode: string;
+  // bcBuCode: string;
+  // bcChitType: string;
+  // jpCode: string | undefined;
+  // jpCost: number | undefined;
+  // jpDanga: number | undefined;
+  // jpGubun: string | undefined;
+  // jpKg: number | undefined;
+  // jpName: string | undefined;
+  // jpSvyn: string | undefined;
+  // isProductNameSelected: string | undefined;
+  // };
   gr1300: {
     index: number | undefined;
     areaCode: string;
@@ -82,19 +88,25 @@ const initialState: initialStateType = {
     cuCode: "",
     areaCode: "",
   },
-  gr1200: {
+  gr1200Popup: {
     index: undefined,
     areaCode: "",
     bcBuCode: "",
-    bcChitType: "",
-    jpCode: undefined,
-    jpCost: undefined,
-    jpDanga: undefined,
-    jpGubun: undefined,
-    jpKg: undefined,
-    jpName: undefined,
-    jpSvyn: undefined,
-    isProductNameSelected: undefined,
+    bcChitType: undefined,
+  },
+  gr1200: {
+    // index: undefined,
+    // areaCode: "",
+    // bcBuCode: "",
+    // bcChitType: "",
+    // jpCode: undefined,
+    // jpCost: undefined,
+    // jpDanga: undefined,
+    // jpGubun: undefined,
+    // jpKg: undefined,
+    // jpName: undefined,
+    // jpSvyn: undefined,
+    // isProductNameSelected: undefined,
   },
   gr1300: {
     index: undefined,
@@ -162,20 +174,23 @@ const modalSlice = createSlice({
       state.cm1106.areaCode = action.payload.areaCode;
     },
 
-    addGR1200: (state, action) => {
-      state.gr1200.index = action.payload.index;
-      state.gr1200.areaCode = action.payload.areaCode;
-      state.gr1200.bcBuCode = action.payload.bcBuCode;
-      state.gr1200.bcChitType = action.payload.bcChitType;
+    addGR1200Popup: (state, action) => {
+      state.gr1200Popup.index = action.payload.index;
+      state.gr1200Popup.areaCode = action.payload.areaCode;
+      state.gr1200Popup.bcBuCode = action.payload.bcBuCode;
+      state.gr1200Popup.bcChitType = action.payload.bcChitType;
+    },
 
-      state.gr1200.jpCode = action.payload.jpCode;
-      state.gr1200.jpCost = action.payload.jpCost;
-      state.gr1200.jpDanga = action.payload.jpDanga;
-      state.gr1200.jpGubun = action.payload.jpGubun;
-      state.gr1200.jpKg = action.payload.jpKg;
-      state.gr1200.jpName = action.payload.jpName;
-      state.gr1200.jpSvyn = action.payload.jpSvyn;
-      state.gr1200.isProductNameSelected = action.payload.isProductNameSelected;
+    addGR1200: (state, action) => {
+      // state.gr1200.jpCode = action.payload.jpCode;
+      // state.gr1200.jpCost = action.payload.jpCost;
+      // state.gr1200.jpDanga = action.payload.jpDanga;
+      // state.gr1200.jpGubun = action.payload.jpGubun;
+      // state.gr1200.jpKg = action.payload.jpKg;
+      // state.gr1200.jpName = action.payload.jpName;
+      // state.gr1200.jpSvyn = action.payload.jpSvyn;
+      // state.gr1200.isProductNameSelected = action.payload.isProductNameSelected;
+      state.gr1200 = { ...action.payload };
     },
 
     addGR1300: (state, action) => {
@@ -226,6 +241,7 @@ export const {
   closeModal,
   addCM1105,
   addCM1106,
+  addGR1200Popup,
   addGR1200,
   addGR1300,
   addCC1100,

@@ -116,12 +116,12 @@ const Form = React.forwardRef(
             console.log("areaCode select error", err);
           }
         } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
+          // for (const [key, value] of Object.entries(selected)) {
+          //   newData[key] = value;
+          // }
 
           reset({
-            ...newData,
+            ...selected,
             swWorkOut: selected?.swWorkOut === "Y",
           });
         }
@@ -333,6 +333,16 @@ const Form = React.forwardRef(
                 </option>
               ))}
             </Select>
+          </FormGroup>
+        </Wrapper>
+        <Wrapper>
+          <FormGroup>
+            <Input
+              label="비중(1l)"
+              register={register("jpSpecific")}
+              inputSize={InputSize.i130}
+              textAlign="right"
+            />
           </FormGroup>
         </Wrapper>
         <Wrapper>

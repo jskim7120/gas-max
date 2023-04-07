@@ -37,11 +37,14 @@ import {
 import API from "app/axios";
 import { useGetAdditionalDictionaryQuery } from "app/api/commonDictionary";
 import { emptyObjTab1, emptyObjTab2, emptyObjTab3 } from "./model";
-import { calcTab1GridChange, calcFooterTab2Tab3 } from "./calculationHelper";
+import { calcFooterTab2Tab3 } from "./tabs/tab2and3CalculationHelper";
 import { SearchWrapper } from "container/contents/commonStyle";
 import FourButtons from "components/button/fourButtons";
 import Tab1Footer from "./tabs/tab1Footer";
-import calc1 from "./helper";
+import {
+  calcByOnChange,
+  calcTab1GridChange,
+} from "./tabs/tab1CalculationHelper";
 let clone: any[];
 
 const radioOptions = [
@@ -78,14 +81,12 @@ const Form = ({
   const [rowIndex, setRowIndex] = useState<number | null>(null);
   const [radioChecked, setRadioChecked] = useState("0");
   const [areaCode2, setAreaCode2] = useState("");
+  const [bcBuCode, setBcBuCode] = useState("");
   const [data65, setData65] = useState<any>({});
   const [data65Detail, setData65Detail] = useState<any[]>([]);
   const [deleteData65Detail, setDeleteData65Detail] = useState<any[]>([]);
 
-  const [bclInqtyLPG, setBclInqtyLPG] = useState(false);
-
-  const [sumP, setSumP] = useState(0);
-  const [sumB, setSumB] = useState(0);
+  const [callCalc, setCallCalc] = useState(false);
 
   const [bcPjan, setBcPjan] = useState<number | undefined>(undefined);
   const [bcBjan, setBcBjan] = useState<number | undefined>(undefined);
@@ -96,9 +97,6 @@ const Form = ({
   const [bcGcost, setBcGcost] = useState<number | undefined>(undefined);
   const [bcOutkum, setBcOutkum] = useState<number | undefined>(undefined);
   const [bcDc, setBcDc] = useState<number | undefined>(undefined);
-  // const [bcSupplyType, setBcSupplyType] = useState<string | undefined>(
-  //   undefined
-  // );
 
   const dispatch = useDispatch();
 
@@ -118,7 +116,7 @@ const Form = ({
 
   useEffect(() => {
     if (dataCommonDic?.areaCode) {
-      setAreaCode2(dataCommonDic.areaCode[0].code);
+      setAreaCode2(dataCommonDic?.areaCode[0].code);
     }
   }, [dataCommonDic]);
 
@@ -145,26 +143,83 @@ const Form = ({
           ? dataAdditionalDic.bcSupplyType[0].code
           : "",
       }));
+
+      dataAdditionalDic?.bcBuCode &&
+        setBcBuCode(
+          dataAdditionalDic?.bcBuCode[0].code
+            ? dataAdditionalDic?.bcBuCode[0].code
+            : ""
+        );
     }
   }, [dataAdditionalDic]);
 
   useEffect(() => {
-    if (stateGR1200.index !== undefined && stateGR1200.jpName) {
-      setData65Detail((prev: any) =>
-        prev.map((object: any, idx: number) => {
-          if (idx === stateGR1200.index) {
-            return {
-              ...object,
-              bclJpName: stateGR1200?.jpName,
-              bclJpCode: stateGR1200?.jpCode,
-              bclSvyn: stateGR1200?.jpSvyn,
-              bclGubun: stateGR1200?.jpGubun,
-              isProductNameSelected: stateGR1200.isProductNameSelected,
-              bclKg: stateGR1200?.jpKg,
-            };
-          } else return object;
-        })
-      );
+    if ("index" in stateGR1200) {
+      if (tabId === 0) {
+        setData65Detail((prev: any) =>
+          prev.map((object: any, idx: number) => {
+            if (idx === stateGR1200.index) {
+              return {
+                ...object,
+                bclJpName: stateGR1200?.jpName,
+                bclJpCode: stateGR1200?.jpCode,
+                bclSvyn: stateGR1200?.jpSvyn,
+                bclGubun: stateGR1200?.jpGubun,
+                bclKg: stateGR1200?.jpKg,
+                isProductNameSelected: true,
+              };
+            } else return object;
+          })
+        );
+        setCallCalc((prev: boolean) => !prev);
+      }
+      if (tabId === 1) {
+        setData65Detail((prev: any) =>
+          prev.map((object: any, idx: number) => {
+            if (idx === stateGR1200.index) {
+              return {
+                ...object,
+                bclJpName: stateGR1200?.jpName,
+                bclJpCode: stateGR1200?.jpCode,
+                bclSvyn: stateGR1200?.jpSvyn,
+                bclGubun: stateGR1200?.jpGubun,
+                bclVatType: stateGR1200?.jpVatKind,
+                bclCost: stateGR1200?.jpDanga,
+                bclKg: stateGR1200?.jpKg,
+                jpDanga: stateGR1200?.jpDanga,
+                isProductNameSelected: true,
+              };
+            } else return object;
+          })
+        );
+        setCallCalc((prev: boolean) => !prev);
+      }
+      if (tabId === 2) {
+        setData65Detail((prev: any) =>
+          prev.map((object: any, idx: number) => {
+            if (idx === stateGR1200.index) {
+              return {
+                ...object,
+                bclJpName: stateGR1200?.jpName,
+                bclJpCode: stateGR1200?.jpCode,
+                bclSvyn: stateGR1200?.jpSvyn,
+                bclGubun: stateGR1200?.jpGubun,
+                bclVatType: stateGR1200?.jpVatKind,
+                bclCost: stateGR1200?.jpDanga,
+                bclKg: stateGR1200?.jpKg,
+                jpDanga: stateGR1200?.jpDanga,
+                bclUnit: stateGR1200?.jpUnit,
+                bclSpecific: stateGR1200?.jpSpecific,
+                bclBulkKg: stateGR1200?.jpKg ? stateGR1200?.jpKg : "",
+                bclAmt: stateGR1200?.jpKg * stateGR1200.jpDanga,
+                //bclBulkL: stateGR1200?. eniig turshij uzeh l-tei ugugdul bnu?
+                isProductNameSelected: true,
+              };
+            } else return object;
+          })
+        );
+        setCallCalc((prev: boolean) => !prev);
+      }
     }
   }, [stateGR1200]);
 
@@ -190,7 +245,7 @@ const Form = ({
   }, [isDelete.isDelete]);
 
   useEffect(() => {
-    tabId === 0 &&
+    if (tabId === 0) {
       calcTab1GridChange(
         data65Detail,
         getValues,
@@ -206,9 +261,13 @@ const Form = ({
         bcOutkum,
         bcDc
       );
-    tabId === 1 && calcFooterTab2Tab3(data65Detail, getValues, reset);
+    }
+    if (tabId === 1 || tabId === 2) {
+      calcFooterTab2Tab3(data65Detail, bcDc, bcOutkum, reset);
+    }
+
     clone = structuredClone(data65Detail);
-  }, [bclInqtyLPG]);
+  }, [callCalc]);
 
   useEffect(() => {
     if (isAddBtnClicked === true) {
@@ -246,7 +305,7 @@ const Form = ({
   }, [tabId]);
 
   const calcOnFieldChange = (name: string, num: number) => {
-    calc1(
+    calcByOnChange(
       name,
       num,
       reset,
@@ -337,6 +396,7 @@ const Form = ({
       setRadioChecked(data65?.bcCaCode);
       setIsAddBtnClicked(false);
       setRowIndex(null);
+      setBcBuCode(data65?.bcBuCode);
 
       reset({ ...data65 });
 
@@ -392,9 +452,19 @@ const Form = ({
         ...formValues,
         bcDate: DateWithoutDash(formValues.bcDate),
         areaCode: areaCode2,
+        bcBuCode: bcBuCode, //--------------dahin shalgah
         bcChitType: `${tabId}`,
         bcCaCode: radioChecked,
         bcSno: "",
+        bcPjan: bcPjan, //1-r tab deer
+        bcBjan: bcBjan,
+        bcPdanga: bcPdanga,
+        bcBdanga: bcBdanga,
+        bcPcost: bcPcost,
+        bcBcost: bcBcost,
+        bcGcost: bcGcost,
+        bcOutkum: bcOutkum,
+        bcDc: bcDc,
       };
     } else {
       path = GR1200BUYUPDATE;
@@ -402,6 +472,16 @@ const Form = ({
         ...formValues,
         bcDate: DateWithoutDash(formValues.bcDate),
         bcCaCode: radioChecked,
+        bcBuCode: bcBuCode, //----------dahin shalgah
+        bcPjan: bcPjan, //1-r tab deer
+        bcBjan: bcBjan,
+        bcPdanga: bcPdanga,
+        bcBdanga: bcBdanga,
+        bcPcost: bcPcost,
+        bcBcost: bcBcost,
+        bcGcost: bcGcost,
+        bcOutkum: bcOutkum,
+        bcDc: bcDc,
       };
     }
 
@@ -412,14 +492,13 @@ const Form = ({
 
       if (res.status === 200) {
         if (isAddBtnClicked) {
-          console.log("iishee orohgyi yum bn ", res?.data?.returnValue);
           const bcSno = res?.data?.returnValue;
           if (bcSno && bcSno !== "" && data65Detail?.length > 0) {
             await Promise.all(
               data65Detail.map((item: any) => {
                 if (
                   "isNew" in item &&
-                  "isEdited" in item &&
+                  "isInqtyEdited" in item &&
                   "isProductNameSelected" in item
                 ) {
                   API.post(GR1200BLINSERT, {
@@ -447,7 +526,7 @@ const Form = ({
                 //insert
                 if (
                   "isNew" in item &&
-                  "isEdited" in item &&
+                  "isInqtyEdited" in item &&
                   "isProductNameSelected" in item
                 ) {
                   API.post(GR1200BLINSERT, {
@@ -465,7 +544,7 @@ const Form = ({
                 //update
                 if (
                   !("isNew" in item) &&
-                  ("isEdited" in item || "isProductNameSelected" in item)
+                  ("isInqtyEdited" in item || "isProductNameSelected" in item)
                 ) {
                   API.post(GR1200BLUPDATE, {
                     updated: [
@@ -596,6 +675,8 @@ const Form = ({
     resetForm("reset");
   };
 
+  // console.log("data65Detail :::::::", data65Detail);
+
   return (
     <div
       style={{
@@ -656,9 +737,11 @@ const Form = ({
 
           <Label>매입처</Label>
           <Select
-            {...register("bcBuCode")}
+            //{...register("bcBuCode")}
+            value={bcBuCode}
             width={InputSize.i130}
             disabled={!isAddBtnClicked}
+            onChange={(e) => setBcBuCode(e.target.value)}
           >
             {dataAdditionalDic?.bcBuCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
@@ -767,15 +850,14 @@ const Form = ({
           }}
         >
           <TabGrid
-            getValues={getValues}
+            areaCode={areaCode2}
+            //bcBuCode={getValues("bcBuCode") ? getValues("bcBuCode") : ""}
+            bcBuCode={bcBuCode}
             data={data65Detail}
             setData={setData65Detail}
-            data2={data65}
             tabId={tabId ? tabId : 0}
             setRowIndex={setRowIndex}
-            register={register}
-            setBclInqtyLPG={setBclInqtyLPG}
-            control={control}
+            setCallCalc={setCallCalc}
           />
           {tabId === 0 && (
             <Tab1Footer

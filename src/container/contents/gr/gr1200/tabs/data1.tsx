@@ -163,6 +163,7 @@ export const columns1 = [
     header: {
       text: "무료 충전",
     },
+    editable: false,
   },
 ];
 

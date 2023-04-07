@@ -3,32 +3,26 @@ import { GridView, LocalDataProvider } from "realgrid";
 import { fields1, columns1, layout1 } from "./data1";
 import { fields2, columns2, layout2 } from "./data2";
 import { fields3, columns3 } from "./data3";
-import Tab1Footer from "./tab1Footer";
 import { useDispatch } from "app/store";
-import { addGR1200, openModal } from "app/state/modal/modalSlice";
+import { addGR1200Popup, openModal } from "app/state/modal/modalSlice";
+import { calcFooterTab2Tab3 } from "./tab2and3CalculationHelper";
 
 function Grid({
+  areaCode,
+  bcBuCode,
   data,
   setData,
-  data2,
   tabId,
   setRowIndex,
-  register,
-  setBclInqtyLPG,
-  //calcOnFieldChange,
-  getValues,
-  control,
+  setCallCalc,
 }: {
+  areaCode: string;
+  bcBuCode: any;
   data: any;
   setData: Function;
-  data2: any;
   tabId: number;
   setRowIndex: Function;
-  register: Function;
-  setBclInqtyLPG: Function;
-  //calcOnFieldChange: Function;
-  getValues: any;
-  control: any;
+  setCallCalc: Function;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
@@ -83,10 +77,10 @@ function Grid({
 
     gv.onCellButtonClicked = function (grid: any, index: any, column: any) {
       dispatch(
-        addGR1200({
+        addGR1200Popup({
           index: index.dataRow,
-          areaCode: getValues("areaCode"),
-          bcBuCode: getValues("bcBuCode"),
+          areaCode: areaCode,
+          bcBuCode: bcBuCode,
           bcChitType: tabId,
         })
       );
@@ -102,7 +96,7 @@ function Grid({
                 return {
                   ...object,
                   [index.fieldName]: newValue,
-                  isEdited: true,
+                  isInqtyEdited: true,
                 };
               } else {
                 return {
@@ -113,48 +107,59 @@ function Grid({
             } else return object;
           })
         );
-        setBclInqtyLPG((prev: boolean) => !prev);
+
+        if (index.fieldName === "bclInqty") {
+          setCallCalc((prev: boolean) => !prev);
+        }
       }
       if (tabId === 1) {
         setData((prev: any) =>
           prev.map((object: any, idx: number) => {
             if (idx === index.dataRow) {
-              if (index.fieldName === "bclInqty" && object.bclCost !== null) {
-                // const bclVatType = object.bclVatType ? object.bclVatType : 0;
-                const bclAmt = object.bclCost * newValue; // + bclVatType;
+              if (index.fieldName === "bclInqty") {
+                const bclAmt: number =
+                  (newValue ? +newValue : 0) *
+                    (object.bclKg ? +object.bclKg : 0) *
+                    (object.bclCost ? +object.bclCost : 0) +
+                  (object.bclVatType ? +object.bclVatType : 0);
 
                 return {
                   ...object,
                   [index.fieldName]: newValue,
-                  isEdited: true,
+                  isInqtyEdited: true,
                   bclAmt: bclAmt,
                 };
               }
-              if (index.fieldName === "bclCost" && object.bclInqty !== null) {
-                // const bclVatType = object.bclVatType ? object.bclVatType : 0;
-                const bclAmt = object.bclInqty * newValue; //+ bclVatType;
+
+              if (index.fieldName === "bclCost") {
+                const bclAmt: number =
+                  (object.bclInqty ? +object.bclInqty : 0) *
+                    (object.bclKg ? +object.bclKg : 0) *
+                    (newValue ? +newValue : 0) +
+                  (object.bclVatType ? +object.bclVatType : 0);
 
                 return {
                   ...object,
                   [index.fieldName]: newValue,
-                  isEdited: true,
+                  isCostEdited: true,
                   bclAmt: bclAmt,
                 };
               }
 
-              // if (
-              //   index.fieldName === "bclVatType" &&
-              //   object.bclInqty !== null &&
-              //   object.bclVatType !== null
-              // ) {
-              //   const bclAmt = object.bclInqty * object.bclCost + newValue;
+              if (index.fieldName === "bclVatType") {
+                const bclAmt: number =
+                  (object.bclInqty ? +object.bclInqty : 0) *
+                    (object.bclKg ? +object.bclKg : 0) *
+                    (object.bclCost ? +object.bclCost : 0) +
+                  (newValue ? +newValue : 0);
 
-              //   return {
-              //     ...object,
-              //     [index.fieldName]: newValue,
-              //     bclAmt: bclAmt,
-              //   };
-              // }
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                  isVatTypeEdited: true,
+                  bclAmt: bclAmt,
+                };
+              }
 
               return {
                 ...object,
@@ -163,7 +168,50 @@ function Grid({
             } else return object;
           })
         );
-        setBclInqtyLPG((prev: boolean) => !prev);
+
+        if (
+          index.fieldName === "bclInqty" ||
+          index.fieldName === "bclCost" ||
+          index.fieldName === "bclVatType"
+        ) {
+          setCallCalc((prev: boolean) => !prev);
+        }
+      }
+
+      if (tabId === 2) {
+        setData((prev: any) =>
+          prev.map((object: any, idx: number) => {
+            if (idx === index.dataRow) {
+              if (index.fieldName === "bclInqty") {
+                const bclAmt: number =
+                  (newValue ? +newValue : 0) *
+                    (object.bclKg ? +object.bclKg : 0) *
+                    (object.bclCost ? +object.bclCost : 0) +
+                  (object.bclVatType ? +object.bclVatType : 0);
+
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                  isInqtyEdited: true,
+                  bclAmt: bclAmt,
+                };
+              }
+
+              return {
+                ...object,
+                [index.fieldName]: newValue,
+              };
+            } else return object;
+          })
+        );
+
+        // if (
+        //   index.fieldName === "bclInqty" ||
+        //   index.fieldName === "bclCost" ||
+        //   index.fieldName === "bclVatType"
+        // ) {
+        //   setCallCalc((prev: boolean) => !prev);
+        // }
       }
 
       gv.cancel();
@@ -174,7 +222,7 @@ function Grid({
       gv.destroy();
       dp.destroy();
     };
-  }, [tabId, data]);
+  }, [tabId, data, bcBuCode, areaCode]);
   return (
     <>
       <div

@@ -21,6 +21,7 @@ export interface ISANGPUM {
   jpOuttong: any;
   jpSort: number;
   jpSpec: string;
+  jpSpecific: string;
   jpUnit: string;
   jpUnitName: string;
   jpVatKind: string;

@@ -58,7 +58,7 @@ export const columns3 = [
     fieldName: "bclJpCode",
     button: "action",
     buttonVisibility: "always",
-    width: "150",
+    width: "80",
     type: "data",
     header: {
       text: "코드",
@@ -67,7 +67,7 @@ export const columns3 = [
   {
     name: "bclJpName",
     fieldName: "bclJpName",
-    width: "60",
+    width: "100",
     type: "data",
     header: {
       text: "품명",
@@ -76,7 +76,7 @@ export const columns3 = [
   {
     name: "bclUnit",
     fieldName: "bclUnit",
-    width: "60",
+    width: "50",
     type: "data",
     header: {
       text: "단위",
@@ -85,7 +85,7 @@ export const columns3 = [
   {
     name: "bclSpecific",
     fieldName: "bclSpecific",
-    width: "60",
+    width: "80",
     type: "data",
     header: {
       text: "비중",
@@ -94,7 +94,7 @@ export const columns3 = [
   {
     name: "bclBulkKg",
     fieldName: "bclBulkKg",
-    width: "60",
+    width: "80",
     type: "data",
     header: {
       text: "매입량(kg)",
@@ -103,7 +103,7 @@ export const columns3 = [
   {
     name: "bclBulkL",
     fieldName: "bclBulkL",
-    width: "60",
+    width: "80",
     type: "data",
     header: {
       text: "매입량(ℓ)",
@@ -112,7 +112,7 @@ export const columns3 = [
   {
     name: "bclCost",
     fieldName: "bclCost",
-    width: "60",
+    width: "80",
     type: "data",
     header: {
       text: "단가",
@@ -121,7 +121,7 @@ export const columns3 = [
   {
     name: "bclVatType",
     fieldName: "bclVatType",
-    width: "60",
+    width: "80",
     type: "data",
     header: {
       text: "VAT",
@@ -130,7 +130,7 @@ export const columns3 = [
   {
     name: "bclAmt",
     fieldName: "bclAmt",
-    width: "60",
+    width: "80",
     type: "data",
     header: {
       text: "금액",

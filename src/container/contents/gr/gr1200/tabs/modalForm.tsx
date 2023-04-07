@@ -13,7 +13,7 @@ function GR1200Modal() {
 
   const dispatch = useDispatch();
 
-  const state = useSelector((state) => state.modal.gr1200);
+  const state = useSelector((state) => state.modal.gr1200Popup);
 
   useEffect(() => {
     if (state) {
@@ -85,15 +85,16 @@ function GR1200Modal() {
           onClick={() => {
             dispatch(
               addGR1200({
-                ...state,
-                jpCode: selected?.jpCode ?? undefined,
-                jpCost: selected?.jpCost ?? undefined,
-                jpDanga: selected?.jpDanga ?? undefined,
-                jpGubun: selected?.jpGubun ?? undefined,
-                jpKg: selected?.jpKg ?? undefined,
-                jpName: selected?.jpName ?? undefined,
-                jpSvyn: selected?.jpSvyn ?? undefined,
-                isProductNameSelected: true,
+                index: state.index,
+                // jpCode: selected?.jpCode ?? undefined,
+                // jpCost: selected?.jpCost ?? undefined,
+                // jpDanga: selected?.jpDanga ?? undefined,
+                // jpGubun: selected?.jpGubun ?? undefined,
+                // jpKg: selected?.jpKg ?? undefined,
+                // jpName: selected?.jpName ?? undefined,
+                // jpSvyn: selected?.jpSvyn ?? undefined,
+                // isProductNameSelected: true,
+                ...selected,
               })
             );
 
