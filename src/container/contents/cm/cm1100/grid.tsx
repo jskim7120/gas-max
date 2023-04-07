@@ -29,16 +29,20 @@ function Grid({
   const realgridElement = useRef<HTMLDivElement>(null);
 
   const saveToExcel = () => {
-    gv.exportGrid({
-      type: "excel",
-      target: "local",
-      fileName: "gridExportCM1100.xlsx",
-      progressMessage: "엑셀 Export중입니다.",
-      done: function () {
-        //내보내기 완료 후 실행되는 함수
-        alert("CM1100 grid done excel export");
-      },
-    });
+    if (data.length !== 0) {
+      gv.exportGrid({
+        type: "excel",
+        target: "local",
+        fileName: "gridExportCM1100.xlsx",
+        progressMessage: "엑셀 Export중입니다.",
+        done: function () {
+          //내보내기 완료 후 실행되는 함수
+          alert("CM1100 grid done excel export");
+        },
+      });
+    } else {
+      alert("CM1100 grid data not found");
+    }
   };
 
   useEffect(() => {
