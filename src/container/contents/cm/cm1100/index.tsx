@@ -369,11 +369,12 @@ function CM1100Page({
                 />
               </FormGroup>
             </div>
-            <div className="button-wrapper">
+            <div style={{ marginBottom: "40px", marginRight: "37px" }}>
               <Button
                 text="검색"
                 icon={!loading && <MagnifyingGlassBig />}
                 kind={ButtonType.ROUND}
+                style={{ width: "79.6px" }}
                 type="submit"
                 loader={
                   loading && (
@@ -387,13 +388,6 @@ function CM1100Page({
                     </>
                   )
                 }
-              />
-              <Button
-                text="엑셀"
-                icon={<ExcelIcon />}
-                kind={ButtonType.ROUND}
-                color={ButtonColor.SECONDARY}
-                type="button"
               />
             </div>
           </SearchWrapper>
