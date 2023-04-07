@@ -134,7 +134,7 @@ function FormCM1300User({
   const fetchCodes = async (areaC: string, aptC: string) => {
     try {
       const response: any = await API.get(CM1300INSERTSEQ2, {
-        params: { aptCode: aptC, areaCode: areaC },
+        params: { aptCode: aptC, areaCode: mainSelected?.areaCode },
       });
       if (response.status === 200) {
         return response.data;
@@ -277,18 +277,7 @@ function FormCM1300User({
 
   return (
     <>
-      <SearchWrapper className="h35">
-        <div></div>
-        <FourButtons
-          onClickAdd={onClickAdd}
-          onClickDelete={onClickDelete}
-          onClickUpdate={onClickUpdate}
-          onClickReset={onClickReset}
-          isAddBtnClicked={isAddBtnClicked}
-          isCancelBtnDisabled={isCancelBtnDisabled}
-        />
-      </SearchWrapper>
-
+      {/* <div style={{ width: "1px", background: "#707070" }}></div> */}
       <div style={{ display: "flex" }}>
         <div style={{ width: "50%", flexGrow: 1 }}>
           <PersonInfoText text="사용자" style={{ padding: "10px" }} />
@@ -300,43 +289,67 @@ function FormCM1300User({
             setSelectedRowIndex={setSelectedRowIndex}
             fields={fields}
             columns={columns}
-            style={{ height: `282px` }}
+            style={{ height: `406px` }}
           />
         </div>
         <div style={{ width: "1px", background: "#707070" }}></div>
-
-        <form
-          onSubmit={handleSubmit(submit)}
-          style={{
-            padding: "30px 40px 10px 0",
-          }}
-          autoComplete="off"
-        >
-          <FormGroup>
-            <Input
-              label="거래처코드"
-              register={register("cuCode1")}
-              inputSize={InputSize.i60}
-              readOnly
+        <div style={{ paddingTop: "7px" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <div></div>
+            <FourButtons
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "2px",
+                marginRight: "10px",
+              }}
+              onClickAdd={onClickAdd}
+              onClickDelete={onClickDelete}
+              onClickUpdate={onClickUpdate}
+              onClickReset={onClickReset}
+              isAddBtnClicked={isAddBtnClicked}
+              isCancelBtnDisabled={isCancelBtnDisabled}
             />
-            <Input
-              register={register("cuCode2")}
-              inputSize={InputSize.i80}
-              readOnly
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label>건물명</Label>
-            <Input register={register("cuName")} style={{ width: "146px" }} />
-          </FormGroup>
-          <FormGroup>
-            <Label>사용자명</Label>
-            <Input
-              register={register("cuUsername")}
-              style={{ width: "146px" }}
-            />
-          </FormGroup>
-        </form>
+          </div>
+          <form
+            onSubmit={handleSubmit(submit)}
+            style={{
+              padding: "10px 40px 10px 0",
+            }}
+            autoComplete="off"
+          >
+            <FormGroup>
+              <Input
+                label="거래처코드"
+                register={register("cuCode1")}
+                inputSize={InputSize.i60}
+                readOnly
+              />
+              <Input
+                register={register("cuCode2")}
+                inputSize={InputSize.i80}
+                readOnly
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>건물명</Label>
+              <Input register={register("cuName")} style={{ width: "146px" }} />
+            </FormGroup>
+            <FormGroup>
+              <Label>사용자명</Label>
+              <Input
+                register={register("cuUsername")}
+                style={{ width: "146px" }}
+              />
+            </FormGroup>
+          </form>
+        </div>
       </div>
     </>
   );
