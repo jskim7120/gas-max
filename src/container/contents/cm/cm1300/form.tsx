@@ -567,6 +567,7 @@ const Form = React.forwardRef(
                 textAlign="right"
                 inputSize={InputSize.i120}
                 readOnly={!chkAptAnkum}
+                name={name}
               />
             )}
           />
@@ -589,6 +590,7 @@ const Form = React.forwardRef(
                 textAlign="right"
                 inputSize={InputSize.i120}
                 readOnly={!chkAptSisulkum}
+                name={name}
               />
             )}
           />
@@ -611,6 +613,7 @@ const Form = React.forwardRef(
                 textAlign="right"
                 inputSize={InputSize.i120}
                 readOnly={!chkAptMeterkum}
+                name={name}
               />
             )}
           />

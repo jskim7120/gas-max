@@ -92,18 +92,11 @@ function Grid({
         setData((prev: any) =>
           prev.map((object: any, idx: number) => {
             if (idx === index.dataRow) {
-              if (index.fieldName === "bclInqty") {
-                return {
-                  ...object,
-                  [index.fieldName]: newValue,
-                  isInqtyEdited: true,
-                };
-              } else {
-                return {
-                  ...object,
-                  [index.fieldName]: newValue,
-                };
-              }
+              return {
+                ...object,
+                [index.fieldName]: newValue,
+                isEdited: true,
+              };
             } else return object;
           })
         );
@@ -126,8 +119,8 @@ function Grid({
                 return {
                   ...object,
                   [index.fieldName]: newValue,
-                  isInqtyEdited: true,
                   bclAmt: bclAmt,
+                  isEdited: true,
                 };
               }
 
@@ -141,8 +134,8 @@ function Grid({
                 return {
                   ...object,
                   [index.fieldName]: newValue,
-                  isCostEdited: true,
                   bclAmt: bclAmt,
+                  isEdited: true,
                 };
               }
 
@@ -156,14 +149,15 @@ function Grid({
                 return {
                   ...object,
                   [index.fieldName]: newValue,
-                  isVatTypeEdited: true,
                   bclAmt: bclAmt,
+                  isEdited: true,
                 };
               }
 
               return {
                 ...object,
                 [index.fieldName]: newValue,
+                isEdited: true,
               };
             } else return object;
           })
@@ -182,36 +176,77 @@ function Grid({
         setData((prev: any) =>
           prev.map((object: any, idx: number) => {
             if (idx === index.dataRow) {
-              if (index.fieldName === "bclInqty") {
+              if (index.fieldName === "bclBulkKg") {
+                const bclBulkL = Math.round(
+                  (newValue ? +newValue : 0) /
+                    (object.bclSpecific ? +object.bclSpecific : 0)
+                );
+
                 const bclAmt: number =
                   (newValue ? +newValue : 0) *
-                    (object.bclKg ? +object.bclKg : 0) *
                     (object.bclCost ? +object.bclCost : 0) +
                   (object.bclVatType ? +object.bclVatType : 0);
 
                 return {
                   ...object,
                   [index.fieldName]: newValue,
-                  isInqtyEdited: true,
+                  bclBulkL: bclBulkL,
                   bclAmt: bclAmt,
+                  isEdited: true,
                 };
               }
 
-              return {
-                ...object,
-                [index.fieldName]: newValue,
-              };
+              if (index.fieldName === "bclBulkL") {
+                const bclBulkKg = Math.round(
+                  (newValue ? +newValue : 0) *
+                    (object.bclSpecific ? +object.bclSpecific : 0)
+                );
+
+                const bclAmt: number =
+                  bclBulkKg * (object.bclCost ? +object.bclCost : 0) +
+                  (object.bclVatType ? +object.bclVatType : 0);
+
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                  bclBulkKg: bclBulkKg,
+                  bclAmt: bclAmt,
+                  isEdited: true,
+                };
+              }
+
+              if (index.fieldName === "bclCost") {
+                const bclAmt: number =
+                  (object.bclBulkKg ? +object.bclBulkKg : 0) *
+                    (newValue ? +newValue : 0) +
+                  (object.bclVatType ? +object.bclVatType : 0);
+
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                  bclAmt: bclAmt,
+                  isEdited: true,
+                };
+              }
+
+              if (index.fieldName === "bclVatType") {
+                const bclAmt: number =
+                  (object.bclBulkKg ? +object.bclBulkKg : 0) *
+                    (object.bclCost ? +object.bclCost : 0) +
+                  (newValue ? +newValue : 0);
+
+                return {
+                  ...object,
+                  [index.fieldName]: newValue,
+                  bclAmt: bclAmt,
+                  isEdited: true,
+                };
+              }
             } else return object;
           })
         );
 
-        // if (
-        //   index.fieldName === "bclInqty" ||
-        //   index.fieldName === "bclCost" ||
-        //   index.fieldName === "bclVatType"
-        // ) {
-        //   setCallCalc((prev: boolean) => !prev);
-        // }
+        setCallCalc((prev: boolean) => !prev);
       }
 
       gv.cancel();

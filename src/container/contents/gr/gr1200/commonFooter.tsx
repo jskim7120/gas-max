@@ -44,7 +44,7 @@ function CommonFooterInfo({
               {...register("bcSupplyAmt")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  value={value ? value : ""}
+                  value={!isNaN(value) ? value : ""}
                   onChange={onChange}
                   name={name}
                   mask={currencyMask}
@@ -62,7 +62,7 @@ function CommonFooterInfo({
               {...register("bcVatAmt")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  value={value ? value : ""}
+                  value={!isNaN(value) ? value : ""}
                   onChange={onChange}
                   name={name}
                   mask={currencyMask}
@@ -80,7 +80,7 @@ function CommonFooterInfo({
               {...register("bcInkum")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  value={value ? value : ""}
+                  value={!isNaN(value) ? value : ""}
                   onChange={onChange}
                   name={name}
                   mask={currencyMask}
@@ -110,7 +110,7 @@ function CommonFooterInfo({
               {...register("bcInkum1")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  value={value ? value : ""}
+                  value={!isNaN(value) ? value : ""}
                   onChange={onChange}
                   name={name}
                   mask={currencyMask}
@@ -165,7 +165,7 @@ function CommonFooterInfo({
               {...register("bcMisu")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  value={value ? value : undefined}
+                  value={!isNaN(value) ? value : ""}
                   onChange={onChange}
                   name={name}
                   mask={currencyMask}

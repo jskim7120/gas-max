@@ -1,4 +1,3 @@
-import { emptyObj } from "container/contents/cm/cm1105/model";
 import { ValueType } from "realgrid";
 
 export const fields2 = [
@@ -16,11 +15,11 @@ export const fields2 = [
   },
   {
     fieldName: "bclInc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclOutc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclOutqty",
@@ -36,19 +35,19 @@ export const fields2 = [
   },
   {
     fieldName: "bclChungbok",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclChungdae",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclTongdel",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclCost",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclVatType",
@@ -88,12 +87,13 @@ export const columns2 = [
     fieldName: "bclInqty",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "입고",
     },
     footer: {
-      numberFormat: "#.0",
       expression: "sum",
+      numberFormat: "#",
     },
   },
   {
@@ -101,6 +101,7 @@ export const columns2 = [
     fieldName: "bclInc",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "출고",
     },
@@ -110,6 +111,7 @@ export const columns2 = [
     fieldName: "bclOutc",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "입고",
     },
@@ -119,12 +121,13 @@ export const columns2 = [
     fieldName: "bclOutqty",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "출고",
     },
     footer: {
-      numberFormat: "#.0",
       expression: "sum",
+      numberFormat: "#",
     },
   },
   {
@@ -132,12 +135,13 @@ export const columns2 = [
     fieldName: "bclInmigum",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "입고",
     },
     footer: {
-      numberFormat: "#.0",
       expression: "sum",
+      numberFormat: "#",
     },
   },
   {
@@ -145,12 +149,13 @@ export const columns2 = [
     fieldName: "bclOutmigum",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "출고",
     },
     footer: {
-      numberFormat: "#.0",
       expression: "sum",
+      numberFormat: "#",
     },
   },
   {
@@ -158,6 +163,7 @@ export const columns2 = [
     fieldName: "bclChungbok",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "입고",
     },
@@ -167,6 +173,7 @@ export const columns2 = [
     fieldName: "bclChungdae",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "출고",
     },
@@ -176,6 +183,7 @@ export const columns2 = [
     fieldName: "bclTongdel",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "폐기",
     },
@@ -185,6 +193,7 @@ export const columns2 = [
     fieldName: "bclCost",
     width: "60",
     type: "data",
+    numberFormat: "#,##0",
     header: {
       text: "단가",
     },
@@ -194,6 +203,7 @@ export const columns2 = [
     fieldName: "bclVatType",
     width: "60",
     type: "data",
+    numberFormat: "#,##0",
     header: {
       text: "VAT",
     },
@@ -201,14 +211,17 @@ export const columns2 = [
   {
     name: "bclAmt",
     fieldName: "bclAmt",
-    width: "60",
+    width: "100",
     type: "data",
+    numberFormat: "#,##0",
     header: {
       text: "금액",
     },
     footer: {
       expression: "sum",
+      numberFormat: "#,###",
     },
+    editable: false,
   },
 ];
 

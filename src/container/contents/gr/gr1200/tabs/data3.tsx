@@ -23,23 +23,23 @@ export const fields3 = [
   },
   {
     fieldName: "bclBulkKg",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclBulkL",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclCost",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclVatType",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclAmt",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
 ];
 
@@ -52,6 +52,7 @@ export const columns3 = [
     header: {
       text: "구분",
     },
+    editable: false,
   },
   {
     name: "bclJpCode",
@@ -63,6 +64,7 @@ export const columns3 = [
     header: {
       text: "코드",
     },
+    editable: false,
   },
   {
     name: "bclJpName",
@@ -72,6 +74,7 @@ export const columns3 = [
     header: {
       text: "품명",
     },
+    editable: false,
   },
   {
     name: "bclUnit",
@@ -81,6 +84,7 @@ export const columns3 = [
     header: {
       text: "단위",
     },
+    editable: false,
   },
   {
     name: "bclSpecific",
@@ -90,12 +94,14 @@ export const columns3 = [
     header: {
       text: "비중",
     },
+    editable: false,
   },
   {
     name: "bclBulkKg",
     fieldName: "bclBulkKg",
     width: "80",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "매입량(kg)",
     },
@@ -105,6 +111,7 @@ export const columns3 = [
     fieldName: "bclBulkL",
     width: "80",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "매입량(ℓ)",
     },
@@ -114,6 +121,7 @@ export const columns3 = [
     fieldName: "bclCost",
     width: "80",
     type: "data",
+    numberFormat: "#,##0",
     header: {
       text: "단가",
     },
@@ -123,6 +131,7 @@ export const columns3 = [
     fieldName: "bclVatType",
     width: "80",
     type: "data",
+    numberFormat: "#,##0",
     header: {
       text: "VAT",
     },
@@ -132,8 +141,10 @@ export const columns3 = [
     fieldName: "bclAmt",
     width: "80",
     type: "data",
+    numberFormat: "#,##0",
     header: {
       text: "금액",
     },
+    editable: false,
   },
 ];

@@ -166,6 +166,15 @@ const Form = ({
                 bclSvyn: stateGR1200?.jpSvyn,
                 bclGubun: stateGR1200?.jpGubun,
                 bclKg: stateGR1200?.jpKg,
+                bclInqty: 0,
+                bclInc: 0,
+                bclOutc: 0,
+                bclOutqty: 0,
+                bclInmigum: 0,
+                bclOutmigum: 0,
+                bclChungbok: 0,
+                bclChungdae: 0,
+                bclTongdel: 0,
                 isProductNameSelected: true,
               };
             } else return object;
@@ -181,12 +190,19 @@ const Form = ({
                 ...object,
                 bclJpName: stateGR1200?.jpName,
                 bclJpCode: stateGR1200?.jpCode,
-                bclSvyn: stateGR1200?.jpSvyn,
-                bclGubun: stateGR1200?.jpGubun,
                 bclVatType: stateGR1200?.jpVatKind,
                 bclCost: stateGR1200?.jpDanga,
                 bclKg: stateGR1200?.jpKg,
-                jpDanga: stateGR1200?.jpDanga,
+                bclInqty: 0,
+                bclInc: 0,
+                bclOutc: 0,
+                bclOutqty: 0,
+                bclInmigum: 0,
+                bclOutmigum: 0,
+                bclChungbok: 0,
+                bclChungdae: 0,
+                bclTongdel: 0,
+                bclAmt: stateGR1200?.jpVatKind ? +stateGR1200?.jpVatKind : 0,
                 isProductNameSelected: true,
               };
             } else return object;
@@ -202,17 +218,16 @@ const Form = ({
                 ...object,
                 bclJpName: stateGR1200?.jpName,
                 bclJpCode: stateGR1200?.jpCode,
-                bclSvyn: stateGR1200?.jpSvyn,
                 bclGubun: stateGR1200?.jpGubun,
-                bclVatType: stateGR1200?.jpVatKind,
                 bclCost: stateGR1200?.jpDanga,
                 bclKg: stateGR1200?.jpKg,
                 jpDanga: stateGR1200?.jpDanga,
                 bclUnit: stateGR1200?.jpUnit,
                 bclSpecific: stateGR1200?.jpSpecific,
-                bclBulkKg: stateGR1200?.jpKg ? stateGR1200?.jpKg : "",
-                bclAmt: stateGR1200?.jpKg * stateGR1200.jpDanga,
-                //bclBulkL: stateGR1200?. eniig turshij uzeh l-tei ugugdul bnu?
+                bclBulkKg: 0,
+                bclBulkL: 0,
+                bclAmt: 0,
+                bclVatType: 0,
                 isProductNameSelected: true,
               };
             } else return object;
@@ -384,11 +399,21 @@ const Form = ({
 
       setData65Detail([
         {
-          ...emptyObjTab1,
           tabId: 0,
           isNew: true,
         },
       ]);
+
+      setBcPjan(0);
+      setBcBjan(0);
+      setBcPdanga(0);
+      setBcBdanga(0);
+      setBcPcost(0);
+      setBcBcost(0);
+      setBcGcost(0);
+      setBcOutkum(0);
+      setBcDc(0);
+
       document.getElementById("bcJunno")?.focus();
     }
     if (type === "reset") {
@@ -488,19 +513,13 @@ const Form = ({
     try {
       const res = await API.post(path, body);
 
-      // console.log("data65Detail======>::::", data65Detail);
-
       if (res.status === 200) {
         if (isAddBtnClicked) {
           const bcSno = res?.data?.returnValue;
           if (bcSno && bcSno !== "" && data65Detail?.length > 0) {
             await Promise.all(
               data65Detail.map((item: any) => {
-                if (
-                  "isNew" in item &&
-                  "isInqtyEdited" in item &&
-                  "isProductNameSelected" in item
-                ) {
+                if ("isNew" in item && "isProductNameSelected" in item) {
                   API.post(GR1200BLINSERT, {
                     inserted: [
                       {
@@ -515,6 +534,7 @@ const Form = ({
                 }
               })
             );
+
             toast.success("저장이 성공하였습니다", {
               autoClose: 500,
             });
@@ -524,11 +544,7 @@ const Form = ({
             await Promise.all(
               data65Detail.map((item: any) => {
                 //insert
-                if (
-                  "isNew" in item &&
-                  "isInqtyEdited" in item &&
-                  "isProductNameSelected" in item
-                ) {
+                if ("isNew" in item && "isProductNameSelected" in item) {
                   API.post(GR1200BLINSERT, {
                     inserted: [
                       {
@@ -544,7 +560,7 @@ const Form = ({
                 //update
                 if (
                   !("isNew" in item) &&
-                  ("isInqtyEdited" in item || "isProductNameSelected" in item)
+                  ("isEdited" in item || "isProductNameSelected" in item)
                 ) {
                   API.post(GR1200BLUPDATE, {
                     updated: [
@@ -595,7 +611,7 @@ const Form = ({
         setData65Detail((prev: any) => [
           ...prev,
           {
-            ...emptyObjTab1,
+            //...emptyObjTab1,
             isNew: true,
             tabId: tabId,
           },
@@ -604,7 +620,7 @@ const Form = ({
         setData65Detail((prev: any) => [
           ...prev,
           {
-            ...emptyObjTab2,
+            //...emptyObjTab2,
             isNew: true,
             tabId: tabId,
           },
@@ -613,7 +629,7 @@ const Form = ({
         setData65Detail((prev: any) => [
           ...prev,
           {
-            ...emptyObjTab3,
+            //...emptyObjTab3,
             isNew: true,
             tabId: tabId,
           },

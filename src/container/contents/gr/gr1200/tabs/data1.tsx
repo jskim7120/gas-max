@@ -11,39 +11,39 @@ export const fields1 = [
   },
   {
     fieldName: "bclInqty",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclInc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclOutc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclOutqty",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclInmigum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclOutmigum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclChungbok",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclChungdae",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclTongdel",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bclSvyn",
@@ -79,6 +79,7 @@ export const columns1 = [
     fieldName: "bclInqty",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "입고",
     },
@@ -88,6 +89,7 @@ export const columns1 = [
     fieldName: "bclInc",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "출고",
     },
@@ -97,6 +99,7 @@ export const columns1 = [
     fieldName: "bclOutc",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "입고",
     },
@@ -106,6 +109,7 @@ export const columns1 = [
     fieldName: "bclOutqty",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "출고",
     },
@@ -115,6 +119,7 @@ export const columns1 = [
     fieldName: "bclInmigum",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "입고",
     },
@@ -124,6 +129,7 @@ export const columns1 = [
     fieldName: "bclOutmigum",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "출고",
     },
@@ -133,6 +139,7 @@ export const columns1 = [
     fieldName: "bclChungbok",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "입고",
     },
@@ -142,6 +149,7 @@ export const columns1 = [
     fieldName: "bclChungdae",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "출고",
     },
@@ -151,6 +159,7 @@ export const columns1 = [
     fieldName: "bclTongdel",
     width: "60",
     type: "data",
+    numberFormat: "#",
     header: {
       text: "폐기",
     },

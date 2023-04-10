@@ -7,7 +7,8 @@ export const calcFooterTab2Tab3 = (
   reset: any
 ) => {
   let sum = 0;
-  data65Detail.forEach((item: any) => (sum += +item.bclAmt));
+
+  data65Detail.forEach((item: any) => (sum += item.bclAmt ? +item.bclAmt : 0));
 
   const bcSupplyAmt = Math.round(sum / 1.1);
   const bcVatAmt = sum - bcSupplyAmt;

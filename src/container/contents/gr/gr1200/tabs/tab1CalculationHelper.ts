@@ -340,10 +340,11 @@ export const calcByOnChange = (
   }
 
   if (name === "bcOutkum") {
-    const { bcSum } = getValues();
+    const { bcInkum1 } = getValues();
+
     let bcMisu: number = 0;
     bcMisu =
-      bcSum -
+      bcInkum1 -
       (num ? +removeCommas(num, "number") : 0) -
       (bcDc ? +removeCommas(bcDc, "number") : 0);
 
@@ -354,10 +355,10 @@ export const calcByOnChange = (
   }
 
   if (name === "bcDc") {
-    const { bcSum } = getValues();
+    const { bcInkum1 } = getValues();
     let bcMisu: number = 0;
     bcMisu =
-      bcSum -
+      bcInkum1 -
       (num ? +removeCommas(num, "number") : 0) -
       (bcOutkum ? +removeCommas(bcOutkum, "number") : 0);
 

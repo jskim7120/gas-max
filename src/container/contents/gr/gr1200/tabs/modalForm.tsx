@@ -80,7 +80,7 @@ function GR1200Modal() {
       >
         <Button
           type="button"
-          text="choose"
+          text="선택"
           color={ButtonColor.SUCCESS}
           onClick={() => {
             dispatch(
@@ -103,7 +103,7 @@ function GR1200Modal() {
         />
         <Button
           type="button"
-          text="esc"
+          text="취소"
           color={ButtonColor.LIGHT}
           onClick={() => {
             dispatch(closeModal());
