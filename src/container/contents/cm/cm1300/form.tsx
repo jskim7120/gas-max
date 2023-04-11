@@ -21,7 +21,7 @@ import {
   CM1300INSERTSEQ,
 } from "app/path";
 import { InputSize } from "components/componentsType";
-import { currencyMask } from "helpers/currency";
+import { currencyMask, removeCommas } from "helpers/currency";
 import {
   Item,
   RadioButton,
@@ -257,10 +257,17 @@ const Form = React.forwardRef(
 
       formValues.aptF = +formValues.aptF;
       formValues.aptS = +formValues.aptS;
-      formValues.aptMeterkum = +formValues.aptMeterkum;
-      formValues.aptAnkum = +formValues.aptAnkum;
       formValues.aptPer = +formValues.aptPer;
-      formValues.aptSisulkum = +formValues.aptSisulkum;
+
+      formValues.aptMeterkum = formValues.aptMeterkum
+        ? removeCommas(formValues.aptMeterkum)
+        : 0;
+      formValues.aptAnkum = formValues.aptAnkum
+        ? removeCommas(formValues.aptAnkum)
+        : 0;
+      formValues.aptSisulkum = formValues.aptSisulkum
+        ? removeCommas(formValues.aptSisulkum)
+        : 0;
 
       if (chkAptRdangaType) {
         formValues.aptRdangaType = rdangaType;
