@@ -36,7 +36,7 @@ import {
 } from "app/path";
 import API from "app/axios";
 import { useGetAdditionalDictionaryQuery } from "app/api/commonDictionary";
-import { emptyObjTab1, emptyObjTab2, emptyObjTab3 } from "./model";
+// import { emptyObjTab1, emptyObjTab2, emptyObjTab3 } from "./model";
 import { calcFooterTab2Tab3 } from "./tabs/tab2and3CalculationHelper";
 import { SearchWrapper } from "container/contents/commonStyle";
 import FourButtons from "components/button/fourButtons";
@@ -45,6 +45,7 @@ import {
   calcByOnChange,
   calcTab1GridChange,
 } from "./tabs/tab1CalculationHelper";
+import { removeCommas } from "helpers/currency";
 let clone: any[];
 
 const radioOptions = [
@@ -88,15 +89,15 @@ const Form = ({
 
   const [callCalc, setCallCalc] = useState(false);
 
-  const [bcPjan, setBcPjan] = useState<number | undefined>(undefined);
-  const [bcBjan, setBcBjan] = useState<number | undefined>(undefined);
-  const [bcPdanga, setBcPdanga] = useState<number | undefined>(undefined);
-  const [bcBdanga, setBcBdanga] = useState<number | undefined>(undefined);
-  const [bcPcost, setBcPcost] = useState<number | undefined>(undefined);
-  const [bcBcost, setBcBcost] = useState<number | undefined>(undefined);
-  const [bcGcost, setBcGcost] = useState<number | undefined>(undefined);
-  const [bcOutkum, setBcOutkum] = useState<number | undefined>(undefined);
-  const [bcDc, setBcDc] = useState<number | undefined>(undefined);
+  const [bcPjan, setBcPjan] = useState<number>(0);
+  const [bcBjan, setBcBjan] = useState<number>(0);
+  const [bcPdanga, setBcPdanga] = useState<number>(0);
+  const [bcBdanga, setBcBdanga] = useState<number>(0);
+  const [bcPcost, setBcPcost] = useState<number>(0);
+  const [bcBcost, setBcBcost] = useState<number>(0);
+  const [bcGcost, setBcGcost] = useState<number>(0);
+  const [bcOutkum, setBcOutkum] = useState<number>(0);
+  const [bcDc, setBcDc] = useState<number>(0);
 
   const dispatch = useDispatch();
 
@@ -291,7 +292,7 @@ const Form = ({
           tabId === 0 &&
             setData65Detail([
               {
-                ...emptyObjTab1,
+                // ...emptyObjTab1,
                 isNew: true,
                 tabId: tabId,
               },
@@ -299,7 +300,7 @@ const Form = ({
           tabId === 1 &&
             setData65Detail([
               {
-                ...emptyObjTab2,
+                // ...emptyObjTab2,
                 isNew: true,
                 tabId: tabId,
               },
@@ -307,7 +308,7 @@ const Form = ({
           tabId === 2 &&
             setData65Detail([
               {
-                ...emptyObjTab3,
+                // ...emptyObjTab3,
                 isNew: true,
                 tabId: tabId,
               },
@@ -477,19 +478,19 @@ const Form = ({
         ...formValues,
         bcDate: DateWithoutDash(formValues.bcDate),
         areaCode: areaCode2,
-        bcBuCode: bcBuCode, //--------------dahin shalgah
+        bcBuCode: bcBuCode,
         bcChitType: `${tabId}`,
         bcCaCode: radioChecked,
         bcSno: "",
-        bcPjan: bcPjan, //1-r tab deer
-        bcBjan: bcBjan,
-        bcPdanga: bcPdanga,
-        bcBdanga: bcBdanga,
-        bcPcost: bcPcost,
-        bcBcost: bcBcost,
-        bcGcost: bcGcost,
-        bcOutkum: bcOutkum,
-        bcDc: bcDc,
+        bcPjan: +removeCommas(bcPjan),
+        bcBjan: +removeCommas(bcBjan),
+        bcPdanga: +removeCommas(bcPdanga),
+        bcBdanga: +removeCommas(bcBdanga),
+        bcPcost: +removeCommas(bcPcost),
+        bcBcost: +removeCommas(bcBcost),
+        bcGcost: +removeCommas(bcGcost),
+        bcOutkum: +removeCommas(bcOutkum),
+        bcDc: +removeCommas(bcDc),
       };
     } else {
       path = GR1200BUYUPDATE;
@@ -497,16 +498,16 @@ const Form = ({
         ...formValues,
         bcDate: DateWithoutDash(formValues.bcDate),
         bcCaCode: radioChecked,
-        bcBuCode: bcBuCode, //----------dahin shalgah
-        bcPjan: bcPjan, //1-r tab deer
-        bcBjan: bcBjan,
-        bcPdanga: bcPdanga,
-        bcBdanga: bcBdanga,
-        bcPcost: bcPcost,
-        bcBcost: bcBcost,
-        bcGcost: bcGcost,
-        bcOutkum: bcOutkum,
-        bcDc: bcDc,
+        bcBuCode: bcBuCode,
+        bcPjan: +removeCommas(bcPjan),
+        bcBjan: +removeCommas(bcBjan),
+        bcPdanga: +removeCommas(bcPdanga),
+        bcBdanga: +removeCommas(bcBdanga),
+        bcPcost: +removeCommas(bcPcost),
+        bcBcost: +removeCommas(bcBcost),
+        bcGcost: +removeCommas(bcGcost),
+        bcOutkum: +removeCommas(bcOutkum),
+        bcDc: +removeCommas(bcDc),
       };
     }
 
