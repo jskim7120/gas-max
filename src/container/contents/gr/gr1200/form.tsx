@@ -264,7 +264,7 @@ const Form = ({
       calcTab1GridChange(
         data65Detail,
         getValues,
-        data65,
+        // data65,
         reset,
         bcPjan,
         bcBjan,
@@ -525,7 +525,7 @@ const Form = ({
                       {
                         ...item,
                         areaCode: areaCode2,
-                        bcDate: formValues.bcDate,
+                        bcDate: DateWithoutDash(formValues.bcDate),
                         bcBuCode: data65.bcBuCode,
                         bcSno: bcSno,
                       },
@@ -550,7 +550,7 @@ const Form = ({
                       {
                         ...item,
                         areaCode: areaCode2,
-                        bcDate: formValues.bcDate,
+                        bcDate: DateWithoutDash(formValues.bcDate),
                         bcBuCode: data65.bcBuCode,
                         bcSno: data65.bcSno,
                       },
@@ -567,7 +567,7 @@ const Form = ({
                       {
                         ...item,
                         areaCode: data65?.areaCode,
-                        bcDate: data65?.bcDate,
+                        bcDate: DateWithoutDash(data65?.bcDate),
                         bcBuCode: data65?.bcBuCode,
                         bcSno: data65?.bcSno,
                       },
@@ -585,7 +585,7 @@ const Form = ({
                   deleted: [
                     {
                       areaCode: data65?.areaCode,
-                      bcDate: data65?.bcDate,
+                      bcDate: DateWithoutDash(data65?.bcDate),
                       bcBuCode: data65?.bcBuCode,
                       bcSno: data65?.bcSno,
                       bclJpSno: item.bclJpSno,

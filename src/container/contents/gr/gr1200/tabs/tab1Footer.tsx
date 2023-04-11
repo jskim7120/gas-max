@@ -280,7 +280,7 @@ function Tab1Footer({
                 {...register("bcGin")}
                 render={({ field: { onChange, value, name } }) => (
                   <Input
-                    value={value}
+                    value={!isNaN(value) ? value : ""}
                     onChange={onChange}
                     name={name}
                     mask={currencyMask}
@@ -300,7 +300,7 @@ function Tab1Footer({
                 {...register("bcGkum")}
                 render={({ field: { onChange, value, name } }) => (
                   <Input
-                    value={value}
+                    value={!isNaN(value) ? value : ""}
                     onChange={onChange}
                     name={name}
                     mask={currencyMask}
@@ -329,7 +329,7 @@ function Tab1Footer({
                 {...register("bcGsum")}
                 render={({ field: { onChange, value, name } }) => (
                   <Input
-                    value={value}
+                    value={!isNaN(value) ? value : ""}
                     onChange={onChange}
                     name={name}
                     mask={currencyMask}
@@ -349,7 +349,7 @@ function Tab1Footer({
                 {...register("bcTotal")}
                 render={({ field: { onChange, value, name } }) => (
                   <Input
-                    value={value ? value : ""}
+                    value={!isNaN(value) ? value : ""}
                     onChange={onChange}
                     name={name}
                     mask={currencyMask}
@@ -366,7 +366,7 @@ function Tab1Footer({
                 {...register("bcJTotal")}
                 render={({ field: { onChange, value, name } }) => (
                   <Input
-                    value={value ? value : ""}
+                    value={!isNaN(value) ? value : ""}
                     onChange={onChange}
                     name={name}
                     mask={currencyMask}
@@ -383,7 +383,7 @@ function Tab1Footer({
                 {...register("bcSumTotal")}
                 render={({ field: { onChange, value, name } }) => (
                   <Input
-                    value={value ? value : ""}
+                    value={!isNaN(value) ? value : ""}
                     onChange={onChange}
                     name={name}
                     mask={currencyMask}
@@ -401,7 +401,7 @@ function Tab1Footer({
                 {...register("bcSumKum")}
                 render={({ field: { onChange, value, name } }) => (
                   <Input
-                    value={value ? value : ""}
+                    value={!isNaN(value) ? value : ""}
                     onChange={onChange}
                     name={name}
                     mask={currencyMask}
@@ -418,7 +418,7 @@ function Tab1Footer({
                 {...register("bcSumCost")}
                 render={({ field: { onChange, value, name } }) => (
                   <Input
-                    value={value ? value : ""}
+                    value={!isNaN(value) ? value : ""}
                     onChange={onChange}
                     name={name}
                     mask={currencyMask}
@@ -435,7 +435,7 @@ function Tab1Footer({
                 {...register("bcSum")}
                 render={({ field: { onChange, value, name } }) => (
                   <Input
-                    value={value ? value : ""}
+                    value={!isNaN(value) ? value : ""}
                     onChange={onChange}
                     name={name}
                     mask={currencyMask}

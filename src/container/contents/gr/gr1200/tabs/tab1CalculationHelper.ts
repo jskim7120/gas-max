@@ -372,7 +372,7 @@ export const calcByOnChange = (
 export const calcTab1GridChange = (
   data65Detail: any,
   getValues: any,
-  data65: any,
+  // data65: any,
   reset: any,
   bcPjan: any,
   bcBjan: any,
@@ -417,6 +417,7 @@ export const calcTab1GridChange = (
         }
       }
     });
+    const { bcGin, bcGkum, bcGsum } = getValues();
 
     bcSumP = bcSumP - (bcPjan ? +removeCommas(bcPjan, "number") : 0);
     bcSumB = bcSumB - (bcBjan ? +removeCommas(bcBjan, "number") : 0);
@@ -428,17 +429,17 @@ export const calcTab1GridChange = (
     bcTotal =
       (isNaN(bcPin) ? 0 : +bcPin) +
       (isNaN(bcBin) ? 0 : +bcBin) +
-      +data65?.bcGin;
+      (bcGin ? +removeCommas(bcGin, "number") : 0);
     bcJTotal =
       (bcPjan ? +removeCommas(bcPjan, "number") : 0) +
       (bcBjan ? +removeCommas(bcBjan, "number") : 0);
     bcSumTotal = bcSumP + bcSumB;
-    bcSumKum = bcPkum + bcBkum + +data65?.bcGkum;
+    bcSumKum = bcPkum + bcBkum + (bcGkum ? +removeCommas(bcGkum, "number") : 0);
     bcSumCost =
       (bcPcost ? +removeCommas(bcPcost, "number") : 0) +
       (bcBcost ? +removeCommas(bcBcost, "number") : 0) +
       (bcGcost ? +removeCommas(bcGcost, "number") : 0);
-    bcSum = bcPsum + bcBsum + +data65?.bcGsum;
+    bcSum = bcPsum + bcBsum + (bcGsum ? +removeCommas(bcGsum, "number") : 0);
 
     const bcSupplyAmt = Math.round(bcSum / 1.1);
     const bcVatAmt = bcSum - bcSupplyAmt;
