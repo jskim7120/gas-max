@@ -101,9 +101,9 @@ function Grid({
           })
         );
 
-        if (index.fieldName === "bclInqty") {
-          setCallCalc((prev: boolean) => !prev);
-        }
+        //if (index.fieldName === "bclInqty") {
+        setCallCalc((prev: boolean) => !prev);
+        //}
       }
       if (tabId === 1) {
         setData((prev: any) =>
@@ -163,13 +163,13 @@ function Grid({
           })
         );
 
-        if (
-          index.fieldName === "bclInqty" ||
-          index.fieldName === "bclCost" ||
-          index.fieldName === "bclVatType"
-        ) {
-          setCallCalc((prev: boolean) => !prev);
-        }
+        // if (
+        //index.fieldName === "bclInqty" ||
+        //index.fieldName === "bclCost" ||
+        //index.fieldName === "bclVatType"
+        //) {
+        setCallCalc((prev: boolean) => !prev);
+        //}
       }
 
       if (tabId === 2) {

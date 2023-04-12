@@ -372,7 +372,6 @@ export const calcByOnChange = (
 export const calcTab1GridChange = (
   data65Detail: any,
   getValues: any,
-  // data65: any,
   reset: any,
   bcPjan: any,
   bcBjan: any,

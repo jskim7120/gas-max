@@ -265,7 +265,6 @@ const Form = ({
       calcTab1GridChange(
         data65Detail,
         getValues,
-        // data65,
         reset,
         bcPjan,
         bcBjan,
@@ -289,30 +288,12 @@ const Form = ({
     if (isAddBtnClicked === true) {
       if (clone.length > 0) {
         if (clone[0].tabId !== tabId) {
-          tabId === 0 &&
-            setData65Detail([
-              {
-                // ...emptyObjTab1,
-                isNew: true,
-                tabId: tabId,
-              },
-            ]);
-          tabId === 1 &&
-            setData65Detail([
-              {
-                // ...emptyObjTab2,
-                isNew: true,
-                tabId: tabId,
-              },
-            ]);
-          tabId === 2 &&
-            setData65Detail([
-              {
-                // ...emptyObjTab3,
-                isNew: true,
-                tabId: tabId,
-              },
-            ]);
+          setData65Detail([
+            {
+              isNew: true,
+              tabId: tabId,
+            },
+          ]);
         } else {
           setData65Detail(clone);
         }
@@ -608,33 +589,38 @@ const Form = ({
 
   const addRow = () => {
     if (data65Detail !== undefined) {
-      tabId === 0 &&
-        setData65Detail((prev: any) => [
-          ...prev,
-          {
-            //...emptyObjTab1,
-            isNew: true,
-            tabId: tabId,
-          },
-        ]);
-      tabId === 1 &&
-        setData65Detail((prev: any) => [
-          ...prev,
-          {
-            //...emptyObjTab2,
-            isNew: true,
-            tabId: tabId,
-          },
-        ]);
-      tabId === 2 &&
-        setData65Detail((prev: any) => [
-          ...prev,
-          {
-            //...emptyObjTab3,
-            isNew: true,
-            tabId: tabId,
-          },
-        ]);
+      // tabId === 0 &&
+      //   setData65Detail((prev: any) => [
+      //     ...prev,
+      //     {
+      //       isNew: true,
+      //       tabId: tabId,
+      //     },
+      //   ]);
+      // tabId === 1 &&
+      //   setData65Detail((prev: any) => [
+      //     ...prev,
+      //     {
+      //       isNew: true,
+      //       tabId: tabId,
+      //     },
+      //   ]);
+      // tabId === 2 &&
+      //   setData65Detail((prev: any) => [
+      //     ...prev,
+      //     {
+      //       isNew: true,
+      //       tabId: tabId,
+      //     },
+      //   ]);
+
+      setData65Detail((prev: any) => [
+        ...prev,
+        {
+          isNew: true,
+          tabId: tabId,
+        },
+      ]);
       setRowIndex(null);
     }
   };
