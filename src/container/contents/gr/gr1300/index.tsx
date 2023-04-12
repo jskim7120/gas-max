@@ -27,11 +27,11 @@ const minWidth = "900px";
 
 function GR1300({
   depthFullName,
-  areaCode,
+  ownAreaCode,
   menuId,
 }: {
   depthFullName: string;
-  areaCode: string;
+  ownAreaCode: string;
   menuId: string;
 }) {
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -41,10 +41,10 @@ function GR1300({
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  // const [data2, setData2] = useState({});
-
-  const [selected, setSelected] = useState<any>();
+  const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -53,7 +53,7 @@ function GR1300({
   useEffect(() => {
     if (dataCommonDic) {
       reset({
-        areaCode: areaCode,
+        areaCode: dataCommonDic?.areaCode[0].code,
         sBuCode: dataCommonDic?.sBuCode[0].code,
         sDate: dataCommonDic?.sDate[0].code,
         eDate: dataCommonDic?.eDate[0].code,
@@ -64,27 +64,24 @@ function GR1300({
   const fetchData = async (params: any) => {
     try {
       if (params.sDate !== undefined) {
-        // params.sDate =
-        //   typeof params.sDate === "string"
-        //     ? formatDateByRemoveDash(params.sDate)
-        //     : formatDateToStringWithoutDash(params.sDate);
         params.sDate = DateWithoutDash(params.sDate);
       }
       if (params.eDate !== undefined) {
-        // params.eDate =
-        //   typeof params.eDate === "string"
-        //     ? formatDateByRemoveDash(params.eDate)
-        //     : formatDateToStringWithoutDash(params.eDate);
         params.eDate = DateWithoutDash(params.eDate);
       }
       setLoading(true);
       const res = await API.get(GR1300SEARCH, { params: params });
-      if (res.status === 200) {
-        setData(res?.data);
-        setSelected(res?.data[0]);
+      if (res?.data && res?.data?.length > 0) {
+        setData(res.data);
+        setSelected(res.data[0]);
+      } else {
+        setData([]);
+        setSelected({});
       }
       setLoading(false);
     } catch (err) {
+      setData([]);
+      setSelected({});
       setLoading(false);
       console.log("GR1300 DATA fetch error =======>", err);
     }
@@ -100,7 +97,7 @@ function GR1300({
         depthFullName={depthFullName}
         register={register}
         dataCommonDic={dataCommonDic}
-        areaCode={areaCode}
+        areaCode={ownAreaCode}
       />
       <MainWrapper>
         <LeftSide>
@@ -164,7 +161,7 @@ function GR1300({
             </SearchWrapper>
           </form>
           <GridLeft
-            areaCode={areaCode}
+            areaCode={ownAreaCode}
             data={data}
             fields={fields}
             columns={columns}
@@ -177,10 +174,14 @@ function GR1300({
         </LeftSide>
         <RightSide>
           <Form
+            menuId={menuId}
             dataCommonDic={dataCommonDic}
             selected={selected}
-            areaCode={areaCode}
             fetchData={handleSubmit(submit)}
+            isAddBtnClicked={isAddBtnClicked}
+            setIsAddBtnClicked={setIsAddBtnClicked}
+            isCancelBtnDisabled={isCancelBtnDisabled}
+            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
           />
         </RightSide>
       </MainWrapper>

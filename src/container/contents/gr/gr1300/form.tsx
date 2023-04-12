@@ -1,27 +1,32 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
-import Button from "components/button/button";
 import CustomDatePicker from "components/customDatePicker";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import {
   Input,
   Select,
-  Field,
   FormGroup,
   Wrapper,
   Label,
 } from "components/form/style";
-import { ResetGray, Update, Plus, Trash } from "components/allSvgIcon";
-import { InputSize, ButtonColor } from "components/componentsType";
+import { SearchWrapper } from "container/contents/commonStyle";
+import FourButtons from "components/button/fourButtons";
+import { InputSize } from "components/componentsType";
 import { IGR1300 } from "./model";
 import TabGrid from "./tabs/grid";
-import { useSelector } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import FooterInfo from "./footer";
 import { CircleBtn } from "./style";
 import { PersonInfoText } from "components/text";
 import { DateWithoutDash } from "helpers/dateFormat";
+import {
+  openModal,
+  addDeleteMenuId,
+  setIsDelete,
+  closeModal,
+} from "app/state/modal/modalSlice";
 import {
   GR130065,
   GR1300BUYINSERT,
@@ -38,23 +43,33 @@ let data65Orig: any = {};
 function Form({
   dataCommonDic,
   selected,
-  areaCode,
   fetchData,
+  menuId,
+  isAddBtnClicked,
+  setIsAddBtnClicked,
+  isCancelBtnDisabled,
+  setIsCancelBtnDisabled,
 }: {
   dataCommonDic: any;
   selected: any;
-  areaCode: string;
   fetchData: Function;
+  menuId: string;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
+  isCancelBtnDisabled: boolean;
+  setIsCancelBtnDisabled: Function;
 }) {
   const [tabId, setTabId] = useState(0);
-  const [isAddBtnClicked, setAddBtnClicked] = useState(false);
   const [rowIndex, setRowIndex] = useState<number | null>(null);
+  const [areaCode2, setAreaCode2] = useState("");
 
   const [data65, setData65] = useState<any>({});
   const [deleteData65, setDeleteData65] = useState<any[]>([]);
   const [bclInqtyLPG, setBclInqtyLPG] = useState(false);
 
   const stateGR1300 = useSelector((state: any) => state.modal.gr1300);
+
+  const dispatch = useDispatch();
 
   const { register, handleSubmit, reset, control, getValues } =
     useForm<IGR1300>({
@@ -81,21 +96,29 @@ function Form({
     }
   }, [stateGR1300]);
 
-  useEffect(() => {
-    if (selected) {
-      fetchData65();
-      reset({
-        areaCode: selected.areaCode,
-        bbDate: selected.bbDate,
-        bbBuCode: selected.bbBuCode,
-        bbSno: selected.bbSno,
-        bbDc: selected.bbDc,
-        bbOutkum: selected.bbOutkum,
-      });
+  // useEffect(() => {
+  //   if (selected) {
+  //     fetchData65();
+  //     reset({
+  //       areaCode: selected.areaCode,
+  //       bbDate: selected.bbDate,
+  //       bbBuCode: selected.bbBuCode,
+  //       bbSno: selected.bbSno,
+  //       bbDc: selected.bbDc,
+  //       bbOutkum: selected.bbOutkum,
+  //     });
 
-      setTabId(parseInt(selected.bbType));
-      setAddBtnClicked(false);
-      setRowIndex(null);
+  //     setTabId(parseInt(selected.bbType));
+  //     setIsAddBtnClicked(false);
+  //     setRowIndex(null);
+  //   }
+  // }, [selected]);
+  useEffect(() => {
+    if (Object.keys(selected)?.length > 0) {
+      setAreaCode2(selected?.areaCode);
+      fetchData65();
+    } else {
+      resetForm("clear");
     }
   }, [selected]);
 
@@ -188,7 +211,6 @@ function Form({
         params: {
           areaCode: selected?.areaCode,
           bbBuCode: selected?.bbBuCode,
-          // bbDate: formatDateByRemoveDash(selected?.bbDate),
           bbDate: DateWithoutDash(selected?.bbDate),
           bbSno: selected?.bbSno,
         },
@@ -210,27 +232,34 @@ function Form({
     }
   };
 
-  const clear = () => {
-    reset({
-      areaCode: areaCode,
-      // bbDate: formatDateToString(new Date()),
-      // bbDate: DateWithDash(new Date()),
-      bbBuCode: dataCommonDic?.bbBuCode[0].code,
-      bbSno: "",
-    });
-    document.getElementById("bbSno")?.focus();
-    setData65([
-      {
-        bblBpCode: "",
-        bblBpName: "",
-        bblType: "",
-        bblQty: "",
-        bblDanga: "",
-        bblVatType: "",
-        bblKumack: "",
-        isNew: true,
-      },
-    ]);
+  // const clear = () => {
+  //   reset({
+  //     areaCode: areaCode2,
+  //     // bbDate: formatDateToString(new Date()),
+  //     // bbDate: DateWithDash(new Date()),
+  //     bbBuCode: dataCommonDic?.bbBuCode[0].code,
+  //     bbSno: "",
+  //   });
+  //   document.getElementById("bbSno")?.focus();
+  //   setData65([
+  //     {
+  //       bblBpCode: "",
+  //       bblBpName: "",
+  //       bblType: "",
+  //       bblQty: "",
+  //       bblDanga: "",
+  //       bblVatType: "",
+  //       bblKumack: "",
+  //       isNew: true,
+  //     },
+  //   ]);
+  // };
+
+  const resetForm = async (type: string) => {
+    if (type === "clear") {
+    }
+    if (type === "reset") {
+    }
   };
 
   const crud = async (type: string | null) => {
@@ -293,7 +322,7 @@ function Form({
                     inserted: [
                       {
                         ...item,
-                        areaCode: areaCode,
+                        areaCode: areaCode2,
                         bbBuCode: formValues.bbBuCode,
                         bbDate: formValues.bbDate,
                         bbSno: bbSno,
@@ -376,6 +405,41 @@ function Form({
     } catch (err) {}
   };
 
+  const onClickAdd = () => {
+    setIsAddBtnClicked(true);
+    setIsCancelBtnDisabled(false);
+    resetForm("clear");
+  };
+
+  function deleteRowGrid() {
+    try {
+      crud("delete");
+      dispatch(addDeleteMenuId({ menuId: "" }));
+      dispatch(setIsDelete({ isDelete: false }));
+      dispatch(closeModal());
+    } catch (error) {}
+  }
+
+  const onClickDelete = () => {
+    if (Object.keys(selected).length > 0) {
+      dispatch(openModal({ type: "delModal" }));
+      dispatch(addDeleteMenuId({ menuId: menuId }));
+    } else {
+      toast.warning("no selected data to delete", {
+        autoClose: 500,
+      });
+    }
+  };
+  const onClickUpdate = () => {
+    crud(null);
+  };
+
+  const onClickReset = () => {
+    setIsAddBtnClicked(false);
+    setIsCancelBtnDisabled(true);
+    resetForm("reset");
+  };
+
   return (
     <div
       style={{
@@ -387,28 +451,20 @@ function Form({
       }}
     >
       <form>
-        <FormGroup
+        <SearchWrapper
+          className="h35"
           style={{
-            height: "35px",
-            justifyContent: "space-between",
-            padding: "0 6px 0 15px",
+            background: "transparent",
             borderBottom: "1px solid #707070",
           }}
         >
           <FormGroup>
             <PersonInfoText text="매입전표 등록" />
-            <p
-              style={{
-                marginLeft: "27px",
-                marginRight: "7px",
-                fontSize: "14px",
-                fontWeight: "bold",
-              }}
+            <p className="big">영업소99</p>
+            <Select
+              onChange={(e) => setAreaCode2(e.target.value)}
+              value={areaCode2}
             >
-              영업소
-            </p>
-
-            <Select {...register("areaCode")}>
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -416,7 +472,15 @@ function Form({
               ))}
             </Select>
           </FormGroup>
-          <FormGroup>
+          <FourButtons
+            onClickAdd={onClickAdd}
+            onClickDelete={onClickDelete}
+            onClickUpdate={onClickUpdate}
+            onClickReset={onClickReset}
+            isAddBtnClicked={isAddBtnClicked}
+            isCancelBtnDisabled={isCancelBtnDisabled}
+          />
+          {/* <FormGroup>
             <Button
               type="button"
               text="등록"
@@ -460,8 +524,8 @@ function Form({
               }}
               color={ButtonColor.LIGHT}
             />
-          </FormGroup>
-        </FormGroup>
+          </FormGroup> */}
+        </SearchWrapper>
         <Wrapper>
           <FormGroup>
             <Label>입고일자</Label>
