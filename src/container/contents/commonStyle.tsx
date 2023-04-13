@@ -34,11 +34,11 @@ export const SearchWrapper = styled.div`
   }
 
   &.h35 {
-    height: 35px;
+    height: 47px;
   }
 
   &.mt5 {
-    margin-top: 5px;
+    margin-top: 4px;
   }
 
   p {

@@ -14,10 +14,10 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
     attributes = {
       border: "#707070",
       borderRad: "4px",
-      fontSize: "14px",
+      fontSize: "15px",
       fontFamily: "SegoeUI",
       fontWeight: "normal",
-      height: "25px",
+      height: "30px",
       padding: "0 5px",
       lineHeight: "13px",
       lineMarginLeft: "5px",

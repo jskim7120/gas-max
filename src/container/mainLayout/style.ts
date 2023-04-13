@@ -7,7 +7,7 @@ export const Container = styled.div`
 
 export const TopSide = styled.div`
   width: 100%;
-  height: 43px;
+  height: 35px;
   border: 1px solid #707070;
   padding: 0 6px 0 14px;
   display: flex;

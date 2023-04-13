@@ -13,7 +13,7 @@ export const TabHeaderWrapper = styled.div`
   align-items: end;
   background-color: #626161;
   justify-content: space-between;
-  height: 37px;
+  height: 35px;
 
   .sideBar {
     display: flex;
@@ -103,8 +103,8 @@ export const TabBorderLine = styled.div<{
   isOpen: boolean;
 }>`
   position: absolute;
-  top: 80px;
-  left: ${(props) => (props.isOpen ? `87px` : `5px`)};
+  top: 70px;
+  left: ${(props) => (props.isOpen ? `86.5px` : `4.5px`)};
   right: 5px;
   height: 4.5px;
   background: ${(props) => (props.isHome ? `#8CB808;` : `#FC6767;`)};

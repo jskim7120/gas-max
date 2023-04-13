@@ -30,7 +30,7 @@ export const Nav = styled.nav`
       button {
         text-align: left;
         padding: 0px 12px;
-        height: 43px;
+        height: 35px;
       }
 
       a:hover,
@@ -87,13 +87,13 @@ export const MenuLine = styled.div`
   border-left: 1px solid #fff;
   height: 10px;
   position: absolute;
-  top: 17px;
+  top: 12px;
 `;
 
 export const EndLine = styled.div`
   border-right: 1px solid #fff;
   height: 10px;
   position: absolute;
-  top: 17px;
+  top: 12px;
   right: 0;
 `;
