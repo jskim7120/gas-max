@@ -9,7 +9,7 @@ export const TopSide = styled.div`
   width: 100%;
   height: 35px;
   border: 1px solid #707070;
-  padding: 0 6px 0 14px;
+  padding: 0 10px 0 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
