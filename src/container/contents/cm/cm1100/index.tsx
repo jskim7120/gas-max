@@ -204,7 +204,7 @@ function CM1100Page({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
+      <SearchWrapper className="h35 mt5" style={{ paddingRight: "100px" }}>
         <FormGroup>
           <p>{depthFullName}</p>
           {ownAreaCode === "00" && (
@@ -374,7 +374,7 @@ function CM1100Page({
                 text="검색"
                 icon={!loading && <MagnifyingGlassBig />}
                 kind={ButtonType.ROUND}
-                style={{ width: "79.6px" }}
+                style={{ width: "85px" }}
                 type="submit"
                 loader={
                   loading && (

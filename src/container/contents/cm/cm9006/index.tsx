@@ -312,7 +312,7 @@ function CM9003({
             fields={fields0}
             columns={columns0}
             style={{ height: `calc(100% - 15px)` }}
-            evenFill
+            // evenFill
           />
         )}
         {reportKind === "1" && (
@@ -323,7 +323,7 @@ function CM9003({
             fields={fields1}
             columns={columns1}
             style={{ height: `calc(100% - 15px)` }}
-            evenFill
+            // evenFill
           />
         )}
       </WrapperContent>

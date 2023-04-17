@@ -23,11 +23,11 @@ export const fields = [
   },
   {
     fieldName: "acjKumackCh",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "acjKumackDa",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
 ];
 
@@ -73,7 +73,7 @@ export const columns = [
     name: "acjBigo",
     fieldName: "acjBigo",
     type: "data",
-    width: "130",
+    width: "170",
     styleName: "rg-left-column",
     header: {
       text: "적요",
@@ -88,6 +88,7 @@ export const columns = [
     header: {
       text: "차변",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "acjKumackDa",
@@ -98,5 +99,6 @@ export const columns = [
     header: {
       text: "대변",
     },
+    numberFormat: "#,##0",
   },
 ];

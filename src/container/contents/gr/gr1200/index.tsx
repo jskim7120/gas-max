@@ -205,7 +205,7 @@ function GR1200({
             setSelectedRowIndex={setSelectedRowIndex}
             setIsAddBtnClicked={setIsAddBtnClicked}
             setIsCancelBtnDisabled2={setIsCancelBtnDisabled}
-            style={{ height: `calc(100% - 196px)`, minWidth: minWidth }}
+            style={{ height: `calc(100% - 210px)`, minWidth: minWidth }}
             layout={layout}
           />
           <Table data={data2} style={{ minWidth: minWidth }} />

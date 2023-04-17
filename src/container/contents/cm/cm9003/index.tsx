@@ -253,7 +253,7 @@ function CM9003({
             fields={fields0}
             columns={columns0}
             style={{ height: `calc(100% - 38px)` }}
-            evenFill
+            //evenFill
           />
         )}
         {reportKind === "1" && (
@@ -264,7 +264,7 @@ function CM9003({
             fields={fields1}
             columns={columns1}
             style={{ height: `calc(100% - 38px)` }}
-            evenFill
+            //evenFill
           />
         )}
         {reportKind === "2" && (
@@ -286,7 +286,7 @@ function CM9003({
             fields={fields3}
             columns={columns3}
             style={{ height: `calc(100% - 38px)` }}
-            evenFill
+            //evenFill
           />
         )}
         {reportKind === "4" && (
@@ -297,7 +297,7 @@ function CM9003({
             fields={fields4}
             columns={columns4}
             style={{ height: `calc(100% - 38px)` }}
-            evenFill
+            // evenFill
           />
         )}
         {reportKind === "5" && (
@@ -308,7 +308,7 @@ function CM9003({
             fields={fields5}
             columns={columns5}
             style={{ height: `calc(100% - 38px)` }}
-            evenFill
+            // evenFill
           />
         )}
         {reportKind === "6" && (
@@ -319,7 +319,7 @@ function CM9003({
             fields={fields6}
             columns={columns6}
             style={{ height: `calc(100% - 38px)` }}
-            evenFill
+            // evenFill
           />
         )}
       </WrapperContent>

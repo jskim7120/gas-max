@@ -80,7 +80,7 @@ function EN1100({
       </SearchWrapper>
       <MainWrapper>
         <Grid
-          style={{ minWidth: "232px" }}
+          style={{ minWidth: "100px" }}
           data={data}
           fields={fields}
           columns={columns}

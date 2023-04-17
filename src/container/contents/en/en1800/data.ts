@@ -20,7 +20,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -34,19 +34,20 @@ export const columns = [
     name: "jyCode",
     fieldName: "jyCode",
     type: "data",
-    width: "120",
+    width: "50",
     header: {
       text: "코드",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "jyName",
     fieldName: "jyName",
     type: "data",
-    width: "120",
+    width: "200",
     styleName: "rg-left-column",
     header: {
-      text: "분류명",
+      text: "지역 분류명",
     },
   },
 ];

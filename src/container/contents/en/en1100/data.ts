@@ -30,7 +30,7 @@ export const columns = [
     name: "areaName",
     fieldName: "areaName",
     type: "data",
-    width: "120",
+    width: "250",
     styleName: "rg-left-column",
     header: {
       text: "영업소명칭",

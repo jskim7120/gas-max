@@ -40,7 +40,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "영업소",
     },
@@ -54,7 +54,7 @@ export const columns = [
     name: "swName",
     fieldName: "swName",
     type: "data",
-    width: "120",
+    width: "300",
     styleName: "rg-left-column",
     header: {
       text: "사원명",
@@ -64,25 +64,27 @@ export const columns = [
     name: "swTel",
     fieldName: "swTel",
     type: "data",
-    width: "120",
+    width: "110",
     header: {
       text: "전화번호",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "swHp",
     fieldName: "swHp",
     type: "data",
-    width: "120",
+    width: "110",
     header: {
       text: "핸드폰",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "swDepartment",
     fieldName: "swDepartment",
     type: "data",
-    width: "120",
+    width: "100",
     styleName: "rg-left-column",
     header: {
       text: "부서명",
@@ -92,27 +94,30 @@ export const columns = [
     name: "swGubunName",
     fieldName: "swGubunName",
     type: "data",
-    width: "120",
+    width: "80",
     header: {
       text: "업무구분",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "swPaydate",
     fieldName: "swPaydate",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "급여일",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "swWorkOut",
     fieldName: "swWorkOut",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "퇴사",
     },
+    styleName: "rg-left-column",
   },
 ];

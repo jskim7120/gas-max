@@ -38,7 +38,7 @@ export const columns = [
     name: "saupSsno",
     fieldName: "saupSsno",
     type: "data",
-    width: "120",
+    width: "100",
     styleName: "rg-left-column",
     header: {
       text: "사업번호",
@@ -48,7 +48,7 @@ export const columns = [
     name: "saupSangho",
     fieldName: "saupSangho",
     type: "data",
-    width: "120",
+    width: "280",
     styleName: "rg-left-column",
     header: {
       text: "상호",
@@ -58,7 +58,7 @@ export const columns = [
     name: "saupSajang",
     fieldName: "saupSajang",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "대표",
     },

@@ -40,7 +40,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "영업소",
     },
@@ -49,7 +49,7 @@ export const columns = [
     name: "aptCode",
     fieldName: "aptCode",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "코드",
     },
@@ -58,7 +58,7 @@ export const columns = [
     name: "aptName",
     fieldName: "aptName",
     type: "data",
-    width: "120",
+    width: "300",
     styleName: "rg-left-column",
     header: {
       text: "건물명",
@@ -68,7 +68,7 @@ export const columns = [
     name: "aptTypeName",
     fieldName: "aptTypeName",
     type: "data",
-    width: "100",
+    width: "120",
     styleName: "rg-left-column",
     header: {
       text: "건물구조",
@@ -78,7 +78,7 @@ export const columns = [
     name: "aptF",
     fieldName: "aptF",
     type: "data",
-    width: "100",
+    width: "60",
     header: {
       text: "층수",
     },
@@ -87,7 +87,7 @@ export const columns = [
     name: "aptS",
     fieldName: "aptS",
     type: "data",
-    width: "100",
+    width: "60",
     header: {
       text: "세대",
     },
@@ -96,7 +96,7 @@ export const columns = [
     name: "aptSum",
     fieldName: "aptSum",
     type: "data",
-    width: "100",
+    width: "70",
     header: {
       text: "전체세대",
     },
@@ -105,7 +105,7 @@ export const columns = [
     name: "swName",
     fieldName: "swName",
     type: "data",
-    width: "100",
+    width: "120",
     styleName: "rg-left-column",
     header: {
       text: "담당사원",

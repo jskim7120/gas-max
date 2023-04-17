@@ -28,27 +28,28 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "영업소",
+    },
+  },
+
+  {
+    name: "buCode",
+    fieldName: "buCode",
+    type: "data",
+    width: "60",
+    header: {
+      text: "코드",
     },
   },
   {
     name: "buGubunName",
     fieldName: "buGubunName",
     type: "data",
-    width: "120",
+    width: "60",
     header: {
       text: "구분",
-    },
-  },
-  {
-    name: "buCode",
-    fieldName: "buCode",
-    type: "data",
-    width: "120",
-    header: {
-      text: "코드",
     },
   },
   {
@@ -59,12 +60,13 @@ export const columns = [
     header: {
       text: "매입처명",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "buStaeName",
     fieldName: "buStaeName",
     type: "data",
-    width: "120",
+    width: "60",
     header: {
       text: "상태",
     },

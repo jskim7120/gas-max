@@ -9,7 +9,7 @@ function CM1100Footer({ data }: { data: any }) {
   return (
     <div style={{ display: "flex", borderTop: "1px solid #707070" }}>
       <VerticalTab
-        tabHeader={["사용품목", "공급시설", "결재정보"]}
+        tabHeader={["사용 품목", "공급 시설", "결재 정보"]}
         onClick={(id) => setTabId(id)}
       />
       <TabContentWrapper>{getTabContent(tabId, data)}</TabContentWrapper>

@@ -36,7 +36,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "영업소",
     },
@@ -45,7 +45,7 @@ export const columns = [
     name: "buGubunName",
     fieldName: "buGubunName",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "구분",
     },
@@ -54,7 +54,7 @@ export const columns = [
     name: "buCode",
     fieldName: "buCode",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "코드",
     },
@@ -63,10 +63,11 @@ export const columns = [
     name: "buName",
     fieldName: "buName",
     type: "data",
-    width: "150",
+    width: "250",
     header: {
       text: "매입처명",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "buTel",
@@ -76,6 +77,7 @@ export const columns = [
     header: {
       text: "전화번호",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "buMisu",
@@ -91,7 +93,7 @@ export const columns = [
     name: "buStaeName",
     fieldName: "buStaeName",
     type: "data",
-    width: "100",
+    width: "60",
     header: {
       text: "상태",
     },

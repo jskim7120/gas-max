@@ -16,9 +16,9 @@ export const columns = [
     name: "ccCode",
     fieldName: "ccCode",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
-      text: "영업소",
+      text: "코드",
     },
     footer: {
       valueCallback: function (grid: any) {
@@ -30,10 +30,20 @@ export const columns = [
     name: "ccName",
     fieldName: "ccName",
     type: "data",
-    width: "120",
+    width: "200",
     styleName: "rg-left-column",
     header: {
-      text: "코드",
+      text: "정비명",
+    },
+  },
+  {
+    name: "ccBigo",
+    fieldName: "ccBigo",
+    type: "data",
+    width: "200",
+    styleName: "rg-left-column",
+    header: {
+      text: "비고",
     },
   },
 ];

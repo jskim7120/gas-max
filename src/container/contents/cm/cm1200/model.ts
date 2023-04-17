@@ -115,6 +115,7 @@ export interface ICM120065USERINFO {
   cuRdangaType: string;
   cuRdangaTypeName: string;
   cuStae: string;
+  cuStaeName: string;
   cuSukumtype: string;
   cuTel: string;
   cuUsernam: string;

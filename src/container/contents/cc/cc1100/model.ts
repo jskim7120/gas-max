@@ -1,18 +1,18 @@
 export interface ICC1100SEARCH {
-  areaCode: String;
-  codeGu: String;
-  sDateF: String;
-  sDateT: String;
-  cbareaCode: String;
-  acjDate: String;
-  acjType: String;
-  acjGb: String;
-  cashBank: String;
-  acjAccName: String;
-  acjAcsName: String;
-  acjSwCode: String;
-  acjKumack: String;
-  acjBigo: String;
-  bankNo: String;
-  bankCd: String;
+  areaCode: string;
+  codeGu: string;
+  sDateF: string;
+  sDateT: string;
+  cbareaCode: string;
+  acjDate: string;
+  acjType: string;
+  acjGb: string;
+  cashBank: string;
+  acjAccName: string;
+  acjAcsName: string;
+  acjSwCode: string;
+  acjKumack: string;
+  acjBigo: string;
+  bankNo: string;
+  bankCd: string;
 }

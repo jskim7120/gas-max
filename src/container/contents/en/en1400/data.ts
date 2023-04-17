@@ -37,7 +37,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -51,16 +51,17 @@ export const columns = [
     name: "bpCode",
     fieldName: "bpCode",
     type: "data",
-    width: "120",
+    width: "70",
     header: {
       text: "부품코드",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "bpName",
     fieldName: "bpName",
     type: "data",
-    width: "120",
+    width: "300",
     styleName: "rg-left-column",
     header: {
       text: "부품명",
@@ -70,16 +71,17 @@ export const columns = [
     name: "bpType",
     fieldName: "bpType",
     type: "data",
-    width: "120",
+    width: "80",
     header: {
       text: "규격",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "bpDanwi",
     fieldName: "bpDanwi",
     type: "data",
-    width: "120",
+    width: "50",
     header: {
       text: "단위",
     },

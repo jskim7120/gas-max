@@ -44,7 +44,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "영업소",
     },
@@ -53,7 +53,7 @@ export const columns = [
     name: "buGubunName",
     fieldName: "buGubunName",
     type: "data",
-    width: "100",
+    width: "60",
     header: {
       text: "구분",
     },
@@ -62,7 +62,7 @@ export const columns = [
     name: "buCode",
     fieldName: "buCode",
     type: "data",
-    width: "100",
+    width: "50",
     header: {
       text: "코드",
     },
@@ -93,6 +93,7 @@ export const columns = [
     footer: {
       expression: "sum",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "curAmt",
@@ -106,6 +107,7 @@ export const columns = [
     footer: {
       expression: "sum",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "curPay",
@@ -119,6 +121,7 @@ export const columns = [
     footer: {
       expression: "sum",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "curDc",
@@ -132,6 +135,7 @@ export const columns = [
     footer: {
       expression: "sum",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "curUnpa",
@@ -145,5 +149,7 @@ export const columns = [
     footer: {
       expression: "sum",
     },
+
+    numberFormat: "#,##0",
   },
 ];

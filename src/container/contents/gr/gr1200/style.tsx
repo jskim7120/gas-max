@@ -8,7 +8,7 @@ export const CustomTable = styled.table`
   tr {
     th,
     td {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: normal;
       height: 23px;
       border-bottom: 1px solid #707070;
@@ -99,7 +99,7 @@ export const CTable2 = styled.table`
     th {
       // height: 25px;
       font-family: "NotoSansKRRegular";
-      font-size: 14px;
+      font-size: 15px;
       border-left: 1px solid #707070;
     }
 
@@ -148,7 +148,7 @@ export const CTitle = styled.div`
   border-top: 1px solid #707070;
   border-bottom: 1px solid #707070;
   font-family: "NotoSansKRRegular";
-  font-size: 11px;
+  font-size: 14px;
 `;
 
 export const CTextArea = styled.textarea`
@@ -156,7 +156,7 @@ export const CTextArea = styled.textarea`
   margin-right: 10px;
   outline: none;
   font-family: "NotoSansKRRegular";
-  font-size: 12px;
+  font-size: 14px;
   padding: 7px;
   resize: none;
   border-top-right-radius: 5px;

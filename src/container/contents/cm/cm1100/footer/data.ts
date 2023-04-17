@@ -52,7 +52,7 @@ export const columns = [
     name: "jcJpCode",
     fieldName: "jcJpCode",
     type: "data",
-    width: "80",
+    width: "30",
     styles: {
       textAlignment: "center",
     },
@@ -64,7 +64,7 @@ export const columns = [
     name: "jcJpName",
     fieldName: "jcJpName",
     type: "data",
-    width: "250",
+    width: "100",
     styles: {
       textAlignment: "near",
     },
@@ -76,7 +76,7 @@ export const columns = [
     name: "jcDangaName",
     fieldName: "jcDangaName",
     type: "data",
-    width: "60",
+    width: "40",
     styles: {
       textAlignment: "near",
     },
@@ -84,18 +84,7 @@ export const columns = [
       text: "적용구분",
     },
   },
-  {
-    name: "jcVatName",
-    fieldName: "jcVatName",
-    type: "data",
-    width: "60",
-    styles: {
-      textAlignment: "near",
-    },
-    header: {
-      text: "Vat",
-    },
-  },
+
   {
     name: "jcJpDanga",
     fieldName: "jcJpDanga",
@@ -109,10 +98,22 @@ export const columns = [
     },
   },
   {
+    name: "jcVatName",
+    fieldName: "jcVatName",
+    type: "data",
+    width: "40",
+    styles: {
+      textAlignment: "near",
+    },
+    header: {
+      text: "Vat",
+    },
+  },
+  {
     name: "custOut",
     fieldName: "custOut",
     type: "data",
-    width: "60",
+    width: "30",
     styles: {
       textAlignment: "near",
     },
@@ -124,7 +125,7 @@ export const columns = [
     name: "custIn",
     fieldName: "custIn",
     type: "data",
-    width: "60",
+    width: "30",
     styles: {
       textAlignment: "near",
     },

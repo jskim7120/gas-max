@@ -82,6 +82,7 @@ function Tab1({ data }: { data: any }) {
           withoutLine
           style={{
             marginBottom: "7px",
+            width: "130px",
           }}
           kind={ButtonType.SQUARE_BIG}
           type="button"
@@ -94,6 +95,7 @@ function Tab1({ data }: { data: any }) {
           withoutLine
           style={{
             marginBottom: "7px",
+            width: "130px",
           }}
           kind={ButtonType.SQUARE_BIG}
           type="button"
@@ -103,7 +105,9 @@ function Tab1({ data }: { data: any }) {
           text="품목삭제"
           icon={<WhiteCloseCircle />}
           withoutLine
-          style={{}}
+          style={{
+            width: "130px",
+          }}
           kind={ButtonType.SQUARE_BIG}
           type="button"
         />

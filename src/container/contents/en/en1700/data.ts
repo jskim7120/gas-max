@@ -44,7 +44,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -58,56 +58,62 @@ export const columns = [
     name: "caCode",
     fieldName: "caCode",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "코드",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "caName",
     fieldName: "caName",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "차량번호",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "caSwName",
     fieldName: "caSwName",
     type: "data",
-    width: "120",
+    width: "200",
     header: {
       text: "담당사원",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "caType",
     fieldName: "caType",
     type: "data",
-    width: "100",
+    width: "150",
     header: {
       text: "차량종류",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "caYear",
     fieldName: "caYear",
     type: "data",
-    width: "100",
+    width: "70",
     header: {
       text: "연식",
     },
+    styleName: "rg-left-column",
   },
 
   {
     name: "caBldateT",
     fieldName: "caBldateT",
     type: "data",
-    width: "120",
+    width: "220",
     header: {
       text: "검사기간",
     },
+    styleName: "rg-left-column",
   },
 
   {

@@ -35,7 +35,7 @@ export const Nav = styled.nav`
 
       a:hover,
       button:hover {
-        // background-color: #f2f2f2;
+        background-color: #3297fd;
       }
       li {
         color: #0057aa;

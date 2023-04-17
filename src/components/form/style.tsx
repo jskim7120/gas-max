@@ -128,6 +128,8 @@ interface IInputProps {
   readOnly?: boolean;
   mask?: any;
   minWidth?: InputSize;
+  onKeyDown?: any;
+  refs?: any;
 }
 
 export const Input = ({
@@ -152,6 +154,8 @@ export const Input = ({
   readOnly,
   mask,
   minWidth,
+  onKeyDown,
+  refs,
 }: IInputProps) => {
   return (
     <InputWrapper fullWidth={fullWidth}>
@@ -184,6 +188,8 @@ export const Input = ({
             className={className ? `${className} maskedInput` : "maskedInput"}
             maxLength={maxLength}
             type={type ? type : "text"}
+            ref={refs}
+            onKeyDown={onKeyDown && onKeyDown}
           />
         ) : (
           <InputForm
@@ -204,6 +210,8 @@ export const Input = ({
             readOnly={readOnly}
             onChange={onChange}
             minWidth={minWidth && minWidth}
+            ref={refs}
+            onKeyDown={onKeyDown && onKeyDown}
           />
         )}
       </FormGroup>

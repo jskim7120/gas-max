@@ -51,7 +51,7 @@ export const columns = [
   {
     name: "areaCode",
     fieldName: "areaCode",
-    width: "80",
+    width: "60",
     type: "data",
     header: {
       text: "영업소",
@@ -69,7 +69,7 @@ export const columns = [
   {
     name: "bcChitTypeName",
     fieldName: "bcChitTypeName",
-    width: "80",
+    width: "60",
     type: "data",
     header: {
       text: "구분",
@@ -83,6 +83,7 @@ export const columns = [
     header: {
       text: "충전소명",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "bcPin",
@@ -92,6 +93,7 @@ export const columns = [
     header: {
       text: "프로판(kg)",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "bcBin",
@@ -101,6 +103,7 @@ export const columns = [
     header: {
       text: "부탄(kg)",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "bcGin",
@@ -110,16 +113,18 @@ export const columns = [
     header: {
       text: "기타(Ea)",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "bcJTotal",
     fieldName: "bcJTotal",
-    width: "90",
+    width: "70",
     type: "data",
 
     header: {
       text: "잔량",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "bcInkum",
@@ -129,11 +134,12 @@ export const columns = [
     header: {
       text: "매입금액",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "bcCtypeName",
     fieldName: "bcCtypeName",
-    width: "90",
+    width: "70",
     type: "data",
     header: {
       text: "수송방법",
@@ -142,11 +148,12 @@ export const columns = [
   {
     name: "bcDateno",
     fieldName: "bcDateno",
-    width: "90",
+    width: "70",
     type: "data",
     header: {
       text: "충전회차",
     },
+    styleName: "rg-right-column",
   },
 ];
 

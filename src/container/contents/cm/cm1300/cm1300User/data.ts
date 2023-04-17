@@ -39,22 +39,22 @@ export const columns = [
     },
   },
   {
-    name: "cuUsername",
-    fieldName: "cuUsername",
-    type: "data",
-    width: "100",
-    styleName: "rg-left-column",
-    header: {
-      text: "사용자명",
-    },
-  },
-  {
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "170",
+    width: "250",
     header: {
       text: "건물명",
+    },
+  },
+  {
+    name: "cuUsername",
+    fieldName: "cuUsername",
+    type: "data",
+    width: "150",
+    styleName: "rg-left-column",
+    header: {
+      text: "사용자명",
     },
   },
 ];

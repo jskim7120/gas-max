@@ -49,12 +49,13 @@ export const columnsSecond = [
     header: {
       text: "지급일자",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "bjBuName",
     fieldName: "bjBuName",
     type: "data",
-    width: "120",
+    width: "200",
     header: {
       text: "상호 (매입처명)",
     },
@@ -67,7 +68,7 @@ export const columnsSecond = [
     name: "bjOutkum",
     fieldName: "bjOutkum",
     type: "data",
-    width: "150",
+    width: "80",
     header: {
       text: "지급액",
     },
@@ -75,12 +76,13 @@ export const columnsSecond = [
     footer: {
       expression: "sum",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "bjDc",
     fieldName: "bjDc",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "지급 D/C",
     },
@@ -88,12 +90,13 @@ export const columnsSecond = [
     footer: {
       expression: "sum",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "bjOuttypName",
     fieldName: "bjOuttypName",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "방법",
     },

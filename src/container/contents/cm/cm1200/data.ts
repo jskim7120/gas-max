@@ -75,7 +75,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "60",
+    width: "50",
 
     header: {
       text: "영업소",
@@ -100,14 +100,14 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "180",
-    alignText: "left",
+    width: "280",
     styles: {
       textAlignment: "near",
     },
     header: {
       text: "건물명",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "cuCount",
@@ -118,6 +118,7 @@ export const columns = [
     header: {
       text: "세대",
     },
+    styleName: "rg-right-column",
   },
 ];
 
@@ -136,7 +137,7 @@ export const columnsSelected = [
     name: "cuUsername",
     fieldName: "cuUsername",
     type: "data",
-    width: "150",
+    width: "100",
 
     header: {
       text: "사용자명",
@@ -146,7 +147,7 @@ export const columnsSelected = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "90",
+    width: "150",
     header: {
       text: "전화",
     },
@@ -190,6 +191,7 @@ export const columnsSelected = [
     header: {
       text: "㎥ 단가",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "cuRdanga",
@@ -199,6 +201,7 @@ export const columnsSelected = [
     header: {
       text: "㎥ 단가",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "cuJungumdate",
@@ -213,10 +216,11 @@ export const columnsSelected = [
     name: "cuCmisu",
     fieldName: "cuCmisu",
     type: "data",
-    width: "140",
+    width: "130",
     header: {
       text: "체적미수 ",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "cuSukumtype",
@@ -235,7 +239,7 @@ export const columnsSelected = [
     width: "90",
 
     header: {
-      text: "상태 ",
+      text: "상태",
     },
   },
 ];

@@ -111,7 +111,7 @@ function Grid({
       />
       <div
         style={{
-          width: "100%",
+          //width: "100%",
           height: `calc(100% - 271px)`,
         }}
         ref={realgridElement}

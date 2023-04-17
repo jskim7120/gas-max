@@ -173,7 +173,7 @@ function GR1500({
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
-            evenFill
+            // evenFill
             style={{ height: "43%", minWidth: "925px" }}
           />
 
@@ -265,7 +265,7 @@ function GR1500({
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
-            evenFill
+            // evenFill
             style={{ height: "43%", minWidth: "925px" }}
           />
         </LeftSide>

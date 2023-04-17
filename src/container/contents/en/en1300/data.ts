@@ -53,7 +53,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -67,19 +67,20 @@ export const columns = [
     name: "jpCode",
     fieldName: "jpCode",
     type: "data",
-    width: "120",
+    width: "50",
     header: {
       text: "코드",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "jpName",
     fieldName: "jpName",
     type: "data",
-    width: "120",
+    width: "250",
     styleName: "rg-left-column",
     header: {
-      text: "품명",
+      text: "품  명",
     },
   },
 
@@ -87,7 +88,7 @@ export const columns = [
     name: "jpSpec",
     fieldName: "jpSpec",
     type: "data",
-    width: "120",
+    width: "50",
     styleName: "rg-left-column",
     header: {
       text: "규격",
@@ -97,25 +98,27 @@ export const columns = [
     name: "jpGubunName",
     fieldName: "jpGubunName",
     type: "data",
-    width: "120",
+    width: "70",
     header: {
       text: "가스구분",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "jpKg",
     fieldName: "jpKg",
     type: "data",
-    width: "120",
+    width: "60",
     header: {
-      text: "용량 ",
+      text: "용량",
     },
+    numberFormat: "#",
   },
   {
     name: "jpUnitName",
     fieldName: "jpUnitName",
     type: "data",
-    width: "120",
+    width: "50",
     header: {
       text: "단위",
     },
@@ -124,7 +127,7 @@ export const columns = [
     name: "jpOutdanga",
     fieldName: "jpOutdanga",
     type: "data",
-    width: "120",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "가스판매단가",
@@ -134,7 +137,7 @@ export const columns = [
     name: "jpOuttong",
     fieldName: "jpOuttong",
     type: "data",
-    width: "120",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "용기판매단가",
@@ -144,18 +147,21 @@ export const columns = [
     name: "jpJaegoYnName",
     fieldName: "jpJaegoYnName",
     type: "data",
-    width: "120",
+    width: "90",
     header: {
       text: "재고사용유무",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "jpSort",
     fieldName: "jpSort",
     type: "data",
-    width: "120",
+    width: "50",
     header: {
       text: "순번",
     },
+    styleName: "rg-left-column",
+    numberFormat: "#",
   },
 ];

@@ -23,15 +23,15 @@ export const fields = [
   },
   {
     fieldName: "acjKumackIn",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "acjKumackOut",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "acjKumackJan",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
 ];
 
@@ -42,7 +42,7 @@ export const columns = [
     type: "data",
     width: "50",
     header: {
-      text: "영업소",
+      text: "영 업 소",
     },
   },
   {
@@ -51,27 +51,27 @@ export const columns = [
     type: "data",
     width: "80",
     header: {
-      text: "일자",
+      text: "일 자",
     },
   },
   {
     name: "acjAcsName",
     fieldName: "acjAcsName",
     type: "data",
-    width: "130",
+    width: "80",
     styleName: "rg-left-column",
     header: {
-      text: "항목",
+      text: "항 목",
     },
   },
   {
     name: "acjBigo",
     fieldName: "acjBigo",
     type: "data",
-    width: "100",
+    width: "130",
     styleName: "rg-left-column",
     header: {
-      text: "적요",
+      text: "적 요",
     },
   },
   {
@@ -80,7 +80,7 @@ export const columns = [
     type: "data",
     width: "100",
     header: {
-      text: "사원",
+      text: "사 원",
     },
   },
   {
@@ -90,8 +90,9 @@ export const columns = [
     width: "100",
     styleName: "rg-right-column",
     header: {
-      text: "입금",
+      text: "입 금",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "acjKumackOut",
@@ -100,8 +101,9 @@ export const columns = [
     width: "100",
     styleName: "rg-right-column",
     header: {
-      text: "출금",
+      text: "출 금",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "acjKumackJan",
@@ -110,7 +112,8 @@ export const columns = [
     width: "100",
     styleName: "rg-right-column",
     header: {
-      text: "잔액",
+      text: "잔 액",
     },
+    numberFormat: "#,##0",
   },
 ];

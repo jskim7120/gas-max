@@ -58,7 +58,7 @@ export const columns1 = [
     name: "cuViewName",
     fieldName: "cuViewName",
     type: "data",
-    width: "120",
+    width: "250",
     header: {
       text: "거래처",
     },
@@ -90,7 +90,7 @@ export const columns1 = [
     name: "cuAddrn2",
     fieldName: "cuAddrn2",
     type: "data",
-    width: "120",
+    width: "350",
     header: {
       text: "주소",
     },

@@ -43,7 +43,7 @@ export const columns = [
   {
     name: "areaCode",
     fieldName: "areaCode",
-    width: "80",
+    width: "60",
     type: "data",
     header: {
       text: "영업소",
@@ -61,7 +61,7 @@ export const columns = [
   {
     name: "bbTypeName",
     fieldName: "bbTypeName",
-    width: "90",
+    width: "60",
     type: "data",
     header: {
       text: "구분",
@@ -70,7 +70,7 @@ export const columns = [
   {
     name: "bbBuName",
     fieldName: "bbBuName",
-    width: "100",
+    width: "200",
     type: "data",
     styleName: "rg-left-column",
     header: {
@@ -80,7 +80,7 @@ export const columns = [
   {
     name: "bbBpName",
     fieldName: "bbBpName",
-    width: "100",
+    width: "200",
     type: "data",
     styleName: "rg-left-column",
     header: {
