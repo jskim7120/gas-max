@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
+import React, { useImperativeHandle, useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -48,6 +48,8 @@ const Form = React.forwardRef(
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
+    // const inputRefs = useRef([]) as React.MutableRefObject<any[]>;
+
     const [tabId, setTabId] = useState(0);
     const [addr, setAddress] = useState<string>("");
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -59,6 +61,11 @@ const Form = React.forwardRef(
       useForm<IJNOTRY>({
         mode: "onChange",
       });
+    // useEffect(() => {
+    //   if (inputRefs?.current && inputRefs?.current?.length > 0) {
+    //     // inputRefs?.current[0]?.focus();
+    //   }
+    // }, []);
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
@@ -80,12 +87,28 @@ const Form = React.forwardRef(
       resetForm,
     }));
 
+    // function handleKeyDown(event: any, index: number) {
+    //   console.log(event.key);
+    //   if (event.key === "Enter") {
+    //     event.preventDefault();
+
+    //     // If the current input is not the last one, move to the next input field
+    //     if (index < inputRefs.current.length - 1) {
+    //       inputRefs.current[index + 1]?.focus();
+    //     }
+    //   }
+    // }
+
+    // function registerInputRef(ref: any, index: number) {
+    //   inputRefs.current[index] = ref;
+    // }
+
     const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         let newData: any = {};
 
         if (type === "clear") {
-          document.getElementById("areaName")?.focus();
+          // document.getElementById("areaName")?.focus();
           const path = EN110011;
           try {
             const response: any = await API.get(path, {
@@ -96,6 +119,7 @@ const Form = React.forwardRef(
                 newData[key] = null;
               }
               newData.areaCode = response.data.tempCode;
+
               reset(newData);
             } else {
               toast.error(response.response.data?.message, {
@@ -150,6 +174,7 @@ const Form = React.forwardRef(
 
     const submit = async (data: IJNOTRY) => {
       //form aldaagui uyd ajillana
+      console.log("fdhvfhjvhjfdhj");
       const path = isAddBtnClicked ? EN1100INSERT : EN1100UPDATE;
       const formValues = getValues();
 
@@ -231,6 +256,8 @@ const Form = React.forwardRef(
                 ]}
                 name={name}
                 inputSize={InputSize.i150}
+                // onKeyDown={(event: any) => handleKeyDown(event, 0)}
+                // refs={(ref: any) => registerInputRef(ref, 0)}
               />
             )}
           />
@@ -240,6 +267,10 @@ const Form = React.forwardRef(
             register={register("jnSangho")}
             maxLength="26"
             inputSize={InputSize.i150}
+            // onKeyDown={(event: any) => handleKeyDown(event, 1)}
+            // refs={(ref: any) => {
+            //   registerInputRef(ref, 1);
+            // }}
           />
           <Input
             label="대표"
@@ -247,6 +278,8 @@ const Form = React.forwardRef(
             register={register("jnSajang")}
             maxLength="14"
             inputSize={InputSize.i90}
+            // onKeyDown={(event: any) => handleKeyDown(event, 2)}
+            // refs={(ref: any) => registerInputRef(ref, 2)}
           />
         </Wrapper>
 
@@ -257,12 +290,16 @@ const Form = React.forwardRef(
             maxLength="6"
             inputSize={InputSize.i150}
             style={{ marginRight: "7px" }}
+            // onKeyDown={(event: any) => handleKeyDown(event, 3)}
+            // refs={(ref: any) => registerInputRef(ref, 3)}
           />
           <DaumAddress setAddress={setAddress} />
           <Input
             register={register("jnAddr1")}
             maxLength="40"
             style={{ width: "453px", marginLeft: "6px" }}
+            // onKeyDown={(event: any) => handleKeyDown(event, 4)}
+            // refs={(ref: any) => registerInputRef(ref, 4)}
           />
         </Wrapper>
 
@@ -272,6 +309,8 @@ const Form = React.forwardRef(
             register={register("jnAddr2")}
             maxLength="40"
             style={{ width: "642px" }}
+            // onKeyDown={(event: any) => handleKeyDown(event, 5)}
+            // refs={(ref: any) => registerInputRef(ref, 5)}
           />
         </Wrapper>
 
@@ -281,6 +320,8 @@ const Form = React.forwardRef(
             register={register("jnUptae")}
             inputSize={InputSize.i150}
             maxLength="50"
+            // onKeyDown={(event: any) => handleKeyDown(event, 6)}
+            // refs={(ref: any) => registerInputRef(ref, 6)}
           />
           <Input
             label="종목"
@@ -288,6 +329,8 @@ const Form = React.forwardRef(
             register={register("jnJongmok")}
             inputSize={InputSize.i150}
             maxLength="50"
+            // onKeyDown={(event: any) => handleKeyDown(event, 7)}
+            // refs={(ref: any) => registerInputRef(ref, 7)}
           />
         </Wrapper>
 
@@ -297,6 +340,8 @@ const Form = React.forwardRef(
             register={register("jnTel1")}
             inputSize={InputSize.i150}
             maxLength="14"
+            // onKeyDown={(event: any) => handleKeyDown(event, 8)}
+            // refs={(ref: any) => registerInputRef(ref, 8)}
           />
           <Input
             label="대표전화2"
@@ -304,6 +349,8 @@ const Form = React.forwardRef(
             register={register("jnTel2")}
             inputSize={InputSize.i150}
             maxLength="14"
+            // onKeyDown={(event: any) => handleKeyDown(event, 9)}
+            // refs={(ref: any) => registerInputRef(ref, 9)}
           />
 
           <Input
@@ -312,6 +359,8 @@ const Form = React.forwardRef(
             register={register("jnFax")}
             inputSize={InputSize.i90}
             maxLength="14"
+            // onKeyDown={(event: any) => handleKeyDown(event, 10)}
+            // refs={(ref: any) => registerInputRef(ref, 10)}
           />
         </Wrapper>
         <Divider />
@@ -322,6 +371,8 @@ const Form = React.forwardRef(
             register={register("jnAnname1")}
             inputSize={InputSize.i150}
             maxLength="10"
+            // onKeyDown={(event: any) => handleKeyDown(event, 11)}
+            // refs={(ref: any) => registerInputRef(ref, 11)}
           />
 
           <Controller
@@ -349,6 +400,8 @@ const Form = React.forwardRef(
                   /\d/,
                   /\d/,
                 ]}
+                // onKeyDown={(event: any) => handleKeyDown(event, 12)}
+                // refs={(ref: any) => registerInputRef(ref, 12)}
               />
             )}
           />
@@ -360,6 +413,8 @@ const Form = React.forwardRef(
             register={register("jnAnname2")}
             inputSize={InputSize.i150}
             maxLength="10"
+            // onKeyDown={(event: any) => handleKeyDown(event, 13)}
+            // refs={(ref: any) => registerInputRef(ref, 13)}
           />
 
           <Controller
@@ -387,6 +442,8 @@ const Form = React.forwardRef(
                   /\d/,
                   /\d/,
                 ]}
+                // onKeyDown={(event: any) => handleKeyDown(event, 14)}
+                // refs={(ref: any) => registerInputRef(ref, 14)}
               />
             )}
           />
@@ -396,7 +453,12 @@ const Form = React.forwardRef(
         <Wrapper grid col={2} style={{ gridTemplateColumns: " 2fr 4fr" }}>
           <FormGroup>
             <Label>세금계산서 양식</Label>
-            <Select {...register("jnSekum")} width={InputSize.i150}>
+            <Select
+              {...register("jnSekum")}
+              width={InputSize.i150}
+              // onKeyDown={(event: any) => handleKeyDown(event, 15)}
+              // ref={(ref: any) => registerInputRef(ref, 15)}
+            >
               {dataCommonDic?.jnSekum?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}

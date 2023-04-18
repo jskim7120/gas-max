@@ -71,7 +71,7 @@ export const columnsThird = [
     name: "gsCuName",
     fieldName: "gsCuName",
     type: "data",
-    width: "150",
+    width: "200",
     header: {
       text: "거래처명",
     },
@@ -86,6 +86,7 @@ export const columnsThird = [
       text: "수금액",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gsDc",
@@ -96,6 +97,7 @@ export const columnsThird = [
       text: "D/C",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gsSwName",
@@ -120,7 +122,7 @@ export const columnsThird = [
     name: "gsBigo",
     fieldName: "gsBigo",
     type: "data",
-    width: "100",
+    width: "150",
     header: {
       text: "비고",
     },

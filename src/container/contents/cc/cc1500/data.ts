@@ -27,7 +27,7 @@ export const fields = [
   },
   {
     fieldName: "cjKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "cjSwName",
@@ -96,7 +96,7 @@ export const columns = [
     name: "cjCcName",
     fieldName: "cjCcName",
     type: "data",
-    width: "100",
+    width: "150",
     styleName: "rg-left-column",
     header: {
       text: "정비명",
@@ -111,6 +111,7 @@ export const columns = [
     header: {
       text: "금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "cjSwName",

@@ -190,17 +190,17 @@ function CC1500({
           )}
         </FormGroup>
         <SearchWrapper
-          className="h35 mt5"
           style={{
-            display: "flex",
-            position: "absolute",
-            top: "87px",
-            right: "19px",
-            background: "none",
-            padding: "0",
-            border: "none",
-            height: "auto",
-            marginTop: "2px",
+            // display: "flex",
+            // position: "absolute",
+            // top: "87px",
+            // right: "19px",
+            // background: "none",
+            // padding: "0",
+            // border: "none",
+            // height: "auto",
+            // marginTop: "2px",
+            borderBottom: "none",
           }}
         >
           <FourButtons
@@ -212,7 +212,7 @@ function CC1500({
             isCancelBtnDisabled={isCancelBtnDisabled}
           />
         </SearchWrapper>
-        <div className="buttons">
+        {/* <div className="buttons">
           <Button
             text="등록"
             icon={<Plus />}
@@ -238,7 +238,7 @@ function CC1500({
             color={ButtonColor.LIGHT}
             onClick={() => {}}
           />
-        </div>
+        </div> */}
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>

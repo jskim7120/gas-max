@@ -89,18 +89,18 @@ function CC1600({
           dataCommonDic={dataCommonDic}
         />
         <SearchWrapper
-          className="h35 mt5"
-          style={{
-            display: "flex",
-            position: "absolute",
-            top: "87px",
-            right: "19px",
-            background: "none",
-            padding: "0",
-            border: "none",
-            height: "auto",
-            marginTop: "2px",
-          }}
+        // className="h35 mt5"
+        // style={{
+        //   display: "flex",
+        //   position: "absolute",
+        //   top: "87px",
+        //   right: "19px",
+        //   background: "none",
+        //   padding: "0",
+        //   border: "none",
+        //   height: "auto",
+        //   marginTop: "2px",
+        // }}
         >
           <FourButtons
             onClickAdd={onClickAdd}

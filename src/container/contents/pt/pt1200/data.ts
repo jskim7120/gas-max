@@ -54,7 +54,7 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "120",
+    width: "200",
     header: {
       text: "거래처",
     },
@@ -79,6 +79,7 @@ export const columns = [
       text: "미수금액",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
 
   {

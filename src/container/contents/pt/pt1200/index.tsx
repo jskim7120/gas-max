@@ -193,37 +193,37 @@ function PT1200({
 
   return (
     <>
-      <CustomTopPart
-        depthFullName={depthFullName}
-        register={register}
-        dataCommonDic={dataCommonDic}
-        areaCode={areaCode}
-      />
-      <div
-        className="buttons"
-        style={{
-          display: "flex",
-          gap: "5px",
-          position: "absolute",
-          right: "13px",
-          top: "88px",
-        }}
-      >
-        <Button text="선택 수금" icon={<Plus />} onClick={openPopupPT1205} />
-        <Button text="수금" icon={<Plus />} onClick={() => {}} />
-        <Button
-          text="저장"
-          icon={<Update />}
-          color={ButtonColor.SECONDARY}
-          onClick={() => {}}
+      <SearchWrapper className="h35 mt5">
+        <CustomTopPart
+          depthFullName={depthFullName}
+          register={register}
+          dataCommonDic={dataCommonDic}
+          areaCode={areaCode}
         />
-        <Button
-          text="취소"
-          icon={<Reset />}
-          onClick={() => {}}
-          style={{ padding: "0 3px" }}
-        />
-      </div>
+
+        <div className="buttons">
+          <Button
+            text="선택 수금"
+            icon={<Plus />}
+            onClick={openPopupPT1205}
+            style={{ marginRight: "5px" }}
+          />
+          <Button
+            text="수금"
+            icon={<Plus />}
+            onClick={() => {}}
+            style={{ marginRight: "5px" }}
+          />
+          <Button
+            text="저장"
+            icon={<Update />}
+            color={ButtonColor.SECONDARY}
+            onClick={() => {}}
+            style={{ marginRight: "5px" }}
+          />
+          <Button text="취소" icon={<Reset />} onClick={() => {}} />
+        </div>
+      </SearchWrapper>
       <MainWrapper>
         <LeftSide>
           <form

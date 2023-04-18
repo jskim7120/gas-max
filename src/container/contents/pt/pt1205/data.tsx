@@ -26,8 +26,12 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
+    fieldName: "gjDangkum",
+    dataType: ValueType.NUMBER,
+  },
+  {
     fieldName: "gjMisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjPerkum",
@@ -35,7 +39,7 @@ export const fields = [
   },
   {
     fieldName: "gjTotal",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjJirodate",
@@ -43,7 +47,7 @@ export const fields = [
   },
   {
     fieldName: "gjMisujan",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjSwName",
@@ -126,6 +130,7 @@ export const columns = [
       text: "당월금액",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjMisu",
@@ -136,6 +141,7 @@ export const columns = [
       text: "미수금액",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjPerkum",
@@ -156,6 +162,7 @@ export const columns = [
       text: "합계",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjJirodate",
@@ -175,6 +182,7 @@ export const columns = [
       text: "미수액",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjSwName",

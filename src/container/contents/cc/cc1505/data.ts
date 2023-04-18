@@ -32,7 +32,7 @@ export const columns = [
     width: "150",
     styleName: "rg-left-column",
     header: {
-      text: "계정과목",
+      text: "계정 과목",
     },
   },
   {
@@ -41,7 +41,7 @@ export const columns = [
     type: "data",
     width: "80",
     header: {
-      text: "변경가능",
+      text: "변경 가능",
     },
   },
 ];

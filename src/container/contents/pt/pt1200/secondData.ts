@@ -58,7 +58,7 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "회차",
+      text: "회 차",
     },
   },
   {
@@ -67,7 +67,7 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "검침일",
+      text: "검 침 일",
     },
   },
   {
@@ -76,9 +76,10 @@ export const columnsSecond = [
     type: "data",
     width: "120",
     header: {
-      text: "전검침",
+      text: "전 검 침",
     },
     styleName: "rg-right-column",
+    numberFormat: "#",
   },
   {
     name: "gjGum",
@@ -86,9 +87,10 @@ export const columnsSecond = [
     type: "data",
     width: "150",
     header: {
-      text: "당검침",
+      text: "당 검 침",
     },
     styleName: "rg-right-column",
+    numberFormat: "#",
   },
   {
     name: "gjGage",
@@ -96,9 +98,10 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "사용량",
+      text: "사 용 량",
     },
     styleName: "rg-right-column",
+    numberFormat: "#",
   },
   {
     name: "gjDangkum",
@@ -109,6 +112,7 @@ export const columnsSecond = [
       text: "당월금액",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjMisu",
@@ -116,9 +120,10 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "전미수",
+      text: "전 미 수",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjPerkum",
@@ -126,9 +131,10 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "연체료",
+      text: "연 체 료",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjTotal",
@@ -136,9 +142,10 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "당월합계",
+      text: "당 월 합 계",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjJirodate",
@@ -155,9 +162,10 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "미수잔액",
+      text: "미수 잔액",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjSwName",
@@ -165,7 +173,7 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "사원",
+      text: "사 원",
     },
   },
 ];

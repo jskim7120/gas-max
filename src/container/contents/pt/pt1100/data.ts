@@ -83,6 +83,7 @@ export const columns = [
       text: "미수금액",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "cuSwName",

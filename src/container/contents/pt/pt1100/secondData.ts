@@ -52,6 +52,7 @@ export const columnsSecond = [
       text: "미수잔액",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "mjSwName",
