@@ -188,8 +188,8 @@ export const Input = ({
             className={className ? `${className} maskedInput` : "maskedInput"}
             maxLength={maxLength}
             type={type ? type : "text"}
-            ref={refs}
-            onKeyDown={onKeyDown && onKeyDown}
+            // ref={refs}
+            // onKeyDown={onKeyDown && onKeyDown}
           />
         ) : (
           <InputForm
@@ -210,8 +210,8 @@ export const Input = ({
             readOnly={readOnly}
             onChange={onChange}
             minWidth={minWidth && minWidth}
-            ref={refs}
-            onKeyDown={onKeyDown && onKeyDown}
+            // ref={refs}
+            // onKeyDown={onKeyDown && onKeyDown}
           />
         )}
       </FormGroup>
