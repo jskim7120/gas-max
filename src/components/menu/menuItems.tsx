@@ -4,10 +4,9 @@ import { addTab } from "app/state/tab/tabSlice";
 import { Group, MenuLine } from "./style";
 interface IMenuItems {
   items: any;
-  depthLevel: any;
 }
 
-const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
+const MenuItems: FC<IMenuItems> = ({ items }) => {
   const dispatch = useDispatch();
   const [dropdown, setDropdown] = useState(false);
 
@@ -23,15 +22,15 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
         setDropdown(false);
       }
     };
-    const handlerTouch = (event: TouchEvent): void => {
-      if (
-        dropdown &&
-        ref.current &&
-        !ref.current.contains(event.target as HTMLLIElement)
-      ) {
-        setDropdown(false);
-      }
-    };
+    // const handlerTouch = (event: TouchEvent): void => {
+    //   if (
+    //     dropdown &&
+    //     ref.current &&
+    //     !ref.current.contains(event.target as HTMLLIElement)
+    //   ) {
+    //     setDropdown(false);
+    //   }
+    // };
     document.addEventListener("mousedown", handler);
     // document.addEventListener("touchstart", handlerTouch);
     return () => {
@@ -80,12 +79,11 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
           {items.children.map((item: any, idx: number) => {
             if (item.menuname !== "-")
               return (
-                <>
-                  <a onClick={(e) => clickOnMenu(e, item)}>{item.menuname}</a>
-                  <br />
-                </>
+                <a key={idx} onClick={(e) => clickOnMenu(e, item)}>
+                  {item.menuname}
+                </a>
               );
-            else return <Group />;
+            else return <Group key={idx} />;
           })}
         </div>
       )}

@@ -3,6 +3,7 @@ export const Nav = styled.nav`
   ul {
     display: flex;
     list-style: none;
+
     li.menu-items {
       position: relative;
       font-family: "Segoe UI", Arial, sans-serif;
@@ -17,7 +18,7 @@ export const Nav = styled.nav`
         color: white;
         border: none;
         outline: none;
-        font-size: 14x;
+        font-size: 14px;
         font-family: inherit;
         cursor: pointer;
         &:hover {
@@ -36,16 +37,18 @@ export const Nav = styled.nav`
         height: auto;
         background-color: #fff;
         border: 3px solid #c8c8c8;
-        padding: 3px 12px 8px;
+        padding: 3px 0px;
 
         a {
+          display: block;
           width: 100%;
-          height: 30px;
+
           color: #0057aa;
           font-family: "Segoe UI", Arial, sans-serif;
           font-size: 14px;
           font-weight: 400;
           cursor: pointer;
+          padding: 0 10px;
 
           &:hover {
             background-color: #3297fd;
@@ -57,87 +60,88 @@ export const Nav = styled.nav`
   }
 `;
 
-export const NavOld = styled.nav`
-  position: relative;
-  ul {
-    display: flex;
-    list-style: none;
-    li.menu-items {
-      position: relative;
-      font-family: "Segoe UI", Arial, sans-serif;
-      font-size: 14px;
-      font-weight: 400;
-      color: #fff;
-      a {
-        display: block;
-        font-size: inherit;
-        color: inherit;
-        text-decoration: none;
-      }
+// export const NavOld = styled.nav`
+//   position: relative;
+//   ul {
+//     display: flex;
+//     list-style: none;
+//     li.menu-items {
+//       position: relative;
+//       font-family: "Segoe UI", Arial, sans-serif;
+//       font-size: 14px;
+//       font-weight: 400;
+//       color: #fff;
+//       a {
+//         display: block;
+//         font-size: inherit;
+//         color: inherit;
+//         text-decoration: none;
+//       }
 
-      button {
-        color: inherit;
-        font-size: inherit;
-        border: none;
-        background-color: transparent;
-        width: 100%;
-      }
+//       button {
+//         color: inherit;
+//         font-size: inherit;
+//         border: none;
+//         background-color: transparent;
+//         width: 100%;
+//       }
 
-      a,
-      button {
-        text-align: left;
-        padding: 0px 12px;
-        height: 35px;
-      }
+//       a,
+//       button {
+//         text-align: left;
+//         padding: 0px 12px;
+//         height: 35px;
+//       }
 
-      a:hover,
-      button:hover {
-        background-color: #3297fd;
-      }
-      li {
-        color: #0057aa;
-        font-size: 12px;
-      }
-    }
+//       a:hover,
+//       button:hover {
+//         background-color: #3297fd;
+//       }
+//       li {
+//         color: #0057aa;
+//         font-size: 12px;
+//       }
+//     }
 
-    .dropdown {
-      position: absolute;
-      left: 0;
-      right: auto;
-      z-index: 9999;
-      padding: 3px 0 8px;
-      list-style: none;
-      background-color: #fff;
-      display: none;
-      li {
-        padding: 2px 1px 1px 8px;
-        width: max-content;
-        min-width: 100%;
-        a {
-          height: auto;
-          cursor: pointer;
-          padding-left: 3px;
-        }
-      }
-      border: 3px solid #c8c8c8;
-    }
+//     .dropdown {
+//       position: absolute;
+//       left: 0;
+//       right: auto;
+//       z-index: 9999;
+//       padding: 3px 0 8px;
+//       list-style: none;
+//       background-color: #fff;
+//       display: none;
+//       li {
+//         padding: 2px 1px 1px 8px;
+//         width: max-content;
+//         min-width: 100%;
+//         a {
+//           height: auto;
+//           cursor: pointer;
+//           padding-left: 3px;
+//         }
+//       }
+//       border: 3px solid #c8c8c8;
+//     }
 
-    .dropdown.show {
-      display: block;
-    }
+//     .dropdown.show {
+//       display: block;
+//     }
 
-    .dropdown.dropdown-submenu {
-      position: absolute;
-      left: 100%;
-      top: -7px;
-    }
-  }
-`;
+//     .dropdown.dropdown-submenu {
+//       position: absolute;
+//       left: 100%;
+//       top: -7px;
+//     }
+//   }
+// `;
 
 export const Group = styled.div`
-  border-top: 3px dotted #c8c8c8;
-  width: 87%;
-  margin: 6px 0 2px 5px;
+  border-top: 2px dotted #c8c8c8;
+  width: calc(100% - 14px);
+  height: 2px;
+  margin: 3px 0px 3px 7px;
 `;
 
 export const MenuLine = styled.div`
