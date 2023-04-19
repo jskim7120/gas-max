@@ -1,7 +1,6 @@
 import { FC, useState, useEffect, useRef } from "react";
 import { useDispatch } from "app/store";
 import { addTab } from "app/state/tab/tabSlice";
-import Dropdown from "./dropdown";
 import { Group, MenuLine } from "./style";
 interface IMenuItems {
   items: any;
@@ -24,7 +23,6 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
         setDropdown(false);
       }
     };
-
     const handlerTouch = (event: TouchEvent): void => {
       if (
         dropdown &&
@@ -35,30 +33,31 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
       }
     };
     document.addEventListener("mousedown", handler);
-    document.addEventListener("touchstart", handlerTouch);
+    // document.addEventListener("touchstart", handlerTouch);
     return () => {
-      // Cleanup the event listener
       document.removeEventListener("mousedown", handler);
-      document.removeEventListener("touchstart", handlerTouch);
+      // document.removeEventListener("touchstart", handlerTouch);
     };
   }, [dropdown]);
 
+  const clickOnMenu = (e: any, menu: any) => {
+    e.preventDefault();
+    dispatch(
+      addTab({
+        menuId: menu.menuid,
+        menuName: menu.menuname,
+        depthFullName: menu.depthFullname,
+      })
+    );
+    setDropdown(false);
+  };
+
   const onMouseEnter = () => {
-    window.innerWidth > 960 && setDropdown(true);
+    setDropdown(true);
   };
 
   const onMouseLeave = () => {
-    window.innerWidth > 960 && setDropdown(false);
-  };
-
-  const clickOnMenu = () => {
-    dispatch(
-      addTab({
-        menuId: items.menuid,
-        menuName: items.menuname,
-        depthFullName: items.depthFullname,
-      })
-    );
+    setDropdown(false);
   };
 
   return (
@@ -68,27 +67,27 @@ const MenuItems: FC<IMenuItems> = ({ items, depthLevel }) => {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {items.children ? (
-        <>
-          <MenuLine />
-          <button
-            type="button"
-            aria-haspopup="menu"
-            aria-expanded={dropdown ? "true" : "false"}
-            onClick={() => setDropdown((prev) => !prev)}
-          >
-            {items.menuname}
-          </button>
-          <Dropdown
-            depthLevel={depthLevel}
-            submenus={items.children}
-            dropdown={dropdown}
-          />
-        </>
-      ) : items.menuname === "-" ? (
-        <Group />
-      ) : (
-        <a onClick={clickOnMenu}> {items.menuname} </a>
+      <MenuLine />
+      <button type="button" onClick={() => setDropdown((prev) => !prev)}>
+        {items.menuname}
+      </button>
+
+      {items.children.length > 0 && (
+        <div
+          className="menu-dropdown"
+          style={{ display: dropdown ? "block" : "none" }}
+        >
+          {items.children.map((item: any, idx: number) => {
+            if (item.menuname !== "-")
+              return (
+                <>
+                  <a onClick={(e) => clickOnMenu(e, item)}>{item.menuname}</a>
+                  <br />
+                </>
+              );
+            else return <Group />;
+          })}
+        </div>
       )}
     </li>
   );
