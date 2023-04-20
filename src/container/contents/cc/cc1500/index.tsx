@@ -278,7 +278,7 @@ function CC1500({
               />
 
               <Label>차량</Label>
-              <Select {...register("cjCaCode")} width={InputSize.i120}>
+              <Select register={register("cjCaCode")} width={InputSize.i120}>
                 {dataCommonDic?.sCaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

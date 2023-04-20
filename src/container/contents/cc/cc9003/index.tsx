@@ -141,7 +141,7 @@ function CC9003({
 
               <FormGroup>
                 <Label style={{ minWidth: "95px" }}>영업소</Label>
-                <Select {...register("areaCode")} width={InputSize.i120}>
+                <Select register={register("areaCode")} width={InputSize.i120}>
                   {dataCommonDic?.acjAccCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

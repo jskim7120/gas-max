@@ -129,7 +129,7 @@ function GR1300({
                 />
 
                 <Label>매입처명</Label>
-                <Select {...register("sBuCode")}>
+                <Select register={register("sBuCode")}>
                   {dataCommonDic?.sBuCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

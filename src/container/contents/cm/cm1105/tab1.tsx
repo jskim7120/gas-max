@@ -26,7 +26,7 @@ function Tab1({
     <Field>
       <FormGroup>
         <Label>공급 받는자</Label>
-        <Select {...register("cuNoType")} width={InputSize.i110}>
+        <Select register={register("cuNoType")} width={InputSize.i110}>
           {dataCommonDic?.cuNoType?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -45,7 +45,7 @@ function Tab1({
         />
 
         <Label>과세구분</Label>
-        <Select {...register("cuBilltype")} width={InputSize.i130}>
+        <Select register={register("cuBilltype")} width={InputSize.i130}>
           {dataCommonDic?.cuBilltype?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -112,7 +112,7 @@ function Tab1({
           inputSize={InputSize.i150}
         />
         @
-        <Select {...register("emailKind")} width={InputSize.i150}>
+        <Select register={register("emailKind")} width={InputSize.i150}>
           {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code1}>
               {obj.codeName}
@@ -138,7 +138,7 @@ function Tab1({
           inputSize={InputSize.i150}
         />
         @
-        <Select {...register("emailKind2")} width={InputSize.i150}>
+        <Select register={register("emailKind2")} width={InputSize.i150}>
           {dataCommonDic?.emailKind2?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code1}>
               {obj.codeName}
@@ -164,7 +164,7 @@ function Tab1({
 
       <FormGroup>
         <Label>공급사업자</Label>
-        <Select {...register("cuGongsano")} width={InputSize.i150}>
+        <Select register={register("cuGongsano")} width={InputSize.i150}>
           {dataCommonDic?.cuGongsano?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -174,7 +174,7 @@ function Tab1({
 
         <Label>계산서 발행주기</Label>
         <Select
-          {...register("cuSekumMm")}
+          register={register("cuSekumMm")}
           width={InputSize.i150}
           style={{ marginRight: "0px" }}
         >

@@ -268,7 +268,7 @@ const Form = React.forwardRef(
               <FormGroup>
                 <Label>영업소</Label>
                 <Select
-                  {...register("areaCode")}
+                  register={register("areaCode")}
                   onChange={handleSelectCode}
                   width={InputSize.i175}
                   disabled={!isAddBtnClicked}
@@ -552,7 +552,7 @@ const Form = React.forwardRef(
                 inputSize={InputSize.i200}
               />
               <p style={{ margin: "0 1px" }}>@</p>
-              <Select {...register("saupEdiId")}>
+              <Select register={register("saupEdiId")}>
                 {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
                     {obj.codeName}

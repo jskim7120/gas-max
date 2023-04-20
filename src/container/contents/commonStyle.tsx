@@ -58,14 +58,13 @@ export const SearchWrapper = styled.div`
 export const MainWrapper = styled.div`
   display: flex;
   gap: 0;
-  height: calc(100% - 17px);
+  height: calc(100% - 14px);
   width: 100%;
 `;
 
 export const WrapperContent = styled.div`
   gap: 0px;
-  height: calc(100% - 17px);
-
+  height: calc(100% - 14px);
   width: 100%;
 `;
 

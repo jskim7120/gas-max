@@ -30,7 +30,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       jnJiroBigo: <Input register={register("jnJiroBigo")} maxLength="7" />,
       jnJiro: (
         <Field>
-          <Select width={InputSize.i250} {...register("jnJiro")}>
+          <Select width={InputSize.i250} register={register("jnJiro")}>
             {jnJiro?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
                 {obj.codeName}
@@ -61,7 +61,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       ),
       jnJiro2: (
         <Field>
-          <Select width={InputSize.i250} {...register("jnJiro2")}>
+          <Select width={InputSize.i250} register={register("jnJiro2")}>
             {jnJiro?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
                 {obj.codeName}
@@ -92,7 +92,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       ),
       jnJiro3: (
         <Field>
-          <Select width={InputSize.i250} {...register("jnJiro3")}>
+          <Select width={InputSize.i250} register={register("jnJiro3")}>
             {jnJiro?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
                 {obj.codeName}
@@ -123,7 +123,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       ),
       jnJiro4: (
         <Field>
-          <Select width={InputSize.i250} {...register("jnJiro4")}>
+          <Select width={InputSize.i250} register={register("jnJiro4")}>
             {jnJiro?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
                 {obj.codeName}

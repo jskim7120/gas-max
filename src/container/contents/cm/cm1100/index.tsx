@@ -279,7 +279,7 @@ function CM1100Page({
 
               <FormGroup>
                 <Label>거래구분</Label>
-                <Select {...register("cuType")} width={InputSize.i150}>
+                <Select register={register("cuType")} width={InputSize.i150}>
                   {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -288,7 +288,7 @@ function CM1100Page({
                 </Select>
 
                 <Label>담당사원</Label>
-                <Select {...register("swCode")} width={InputSize.i150}>
+                <Select register={register("swCode")} width={InputSize.i150}>
                   {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -297,7 +297,7 @@ function CM1100Page({
                 </Select>
 
                 <Label>지역분류</Label>
-                <Select {...register("cuJyCode")} width={InputSize.i150}>
+                <Select register={register("cuJyCode")} width={InputSize.i150}>
                   {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -312,7 +312,10 @@ function CM1100Page({
                 >
                   관리자
                 </Label>
-                <Select {...register("cuCustgubun")} width={InputSize.i150}>
+                <Select
+                  register={register("cuCustgubun")}
+                  width={InputSize.i150}
+                >
                   {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -321,7 +324,7 @@ function CM1100Page({
                 </Select>
 
                 <Label>거래상태</Label>
-                <Select {...register("cuStae")} width={InputSize.i150}>
+                <Select register={register("cuStae")} width={InputSize.i150}>
                   {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -332,7 +335,10 @@ function CM1100Page({
 
               <FormGroup>
                 <Label>수금방법</Label>
-                <Select {...register("cuSukumtype")} width={InputSize.i150}>
+                <Select
+                  register={register("cuSukumtype")}
+                  width={InputSize.i150}
+                >
                   {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -341,7 +347,10 @@ function CM1100Page({
                 </Select>
 
                 <Label>기타분류</Label>
-                <Select {...register("cuEtOption")} width={InputSize.i150}>
+                <Select
+                  register={register("cuEtOption")}
+                  width={InputSize.i150}
+                >
                   {dataCommonDic?.cuEtOption?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -350,7 +359,7 @@ function CM1100Page({
                 </Select>
 
                 <Label>공급사업자</Label>
-                <Select {...register("cuGong")} width={InputSize.i150}>
+                <Select register={register("cuGong")} width={InputSize.i150}>
                   {dataCommonDic?.cuGong?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

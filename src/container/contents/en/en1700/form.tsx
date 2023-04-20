@@ -316,7 +316,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label>영업소</Label>
             <Select
-              {...register("areaCode")}
+              register={register("areaCode")}
               onChange={handleSelectCode}
               width={InputSize.i150}
               disabled={!isAddBtnClicked}
@@ -340,7 +340,7 @@ const Form = React.forwardRef(
 
           <FormGroup>
             <Label>담당사원</Label>
-            <Select {...register("caSwCode")} width={InputSize.i150}>
+            <Select register={register("caSwCode")} width={InputSize.i150}>
               {empChargeData?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -357,7 +357,7 @@ const Form = React.forwardRef(
 
           <FormGroup>
             <Label>재고사용유무</Label>
-            <Select {...register("caJaegoyn")} width={InputSize.i150}>
+            <Select register={register("caJaegoyn")} width={InputSize.i150}>
               {dataCommonDic?.caJaegoyn?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}

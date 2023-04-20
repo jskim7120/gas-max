@@ -197,7 +197,7 @@ function RV9005({
                 )}
               />
               <Select
-                {...register("sGjSnoF")}
+                register={register("sGjSnoF")}
                 disabled={sType1}
                 style={{ marginLeft: "0" }}
               >
@@ -222,7 +222,7 @@ function RV9005({
                 )}
               />
               <Select
-                {...register("sGjSnoT")}
+                register={register("sGjSnoT")}
                 disabled={sType1}
                 style={{ marginLeft: "0" }}
               >
@@ -247,7 +247,7 @@ function RV9005({
                 </RadioButtonLabel>
               </Item>
               <Select
-                {...register("sSwCode")}
+                register={register("sSwCode")}
                 disabled={sType2 !== "0"}
                 width={InputSize.i120}
               >
@@ -328,7 +328,7 @@ function RV9005({
                 </RadioButtonLabel>
               </Item>
               <Select
-                {...register("sCuSwCode")}
+                register={register("sCuSwCode")}
                 disabled={sType2 !== "1"}
                 width={InputSize.i120}
               >
@@ -341,7 +341,7 @@ function RV9005({
             </FormGroup>
             <FormGroup>
               <Label style={{ minWidth: "70px" }}>지역분류</Label>
-              <Select {...register("sJyCode")} width={InputSize.i120}>
+              <Select register={register("sJyCode")} width={InputSize.i120}>
                 {dataCommonDic?.sJyCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -401,7 +401,7 @@ function RV9005({
                 </RadioButtonLabel>
               </Item>
               <Select
-                {...register("sCuCustgubun")}
+                register={register("sCuCustgubun")}
                 disabled={sType2 !== "2"}
                 width={InputSize.i120}
               >
@@ -415,7 +415,7 @@ function RV9005({
 
             <FormGroup>
               <Label style={{ minWidth: "70px" }}>수금방법</Label>
-              <Select {...register("sSukumtype")} width={InputSize.i120}>
+              <Select register={register("sSukumtype")} width={InputSize.i120}>
                 {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -424,7 +424,7 @@ function RV9005({
               </Select>
 
               <Label>조정기 압력</Label>
-              <Select {...register("sRh20")}>
+              <Select register={register("sRh20")}>
                 {dataCommonDic?.sRh20?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -435,7 +435,7 @@ function RV9005({
             </FormGroup>
             <FormGroup>
               <Label style={{ minWidth: "90px" }}>정렬순서</Label>
-              <Select {...register("sSort")}>
+              <Select register={register("sSort")}>
                 {dataCommonDic?.sSort?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

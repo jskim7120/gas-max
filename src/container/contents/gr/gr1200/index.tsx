@@ -153,7 +153,7 @@ function GR1200({
                 />
 
                 <Label style={{ minWidth: "80px" }}>매입처</Label>
-                <Select {...register("sBcBuCode")} width={InputSize.i160}>
+                <Select register={register("sBcBuCode")} width={InputSize.i160}>
                   {dataCommonDic?.sBcBuCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

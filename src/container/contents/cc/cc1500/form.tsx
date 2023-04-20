@@ -108,7 +108,7 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label>영업소</Label>
               <Select
-                {...register("areaCode")}
+                register={register("areaCode")}
                 width={InputSize.i150}
                 disabled={!isAddBtnClicked}
               >
@@ -135,7 +135,7 @@ const Form = React.forwardRef(
             </FormGroup>
             <FormGroup>
               <Label>차량</Label>
-              <Select {...register("cjCaCode")} width={InputSize.i150}>
+              <Select register={register("cjCaCode")} width={InputSize.i150}>
                 {dataCommonDic?.cjCaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -145,7 +145,7 @@ const Form = React.forwardRef(
             </FormGroup>
             <FormGroup>
               <Label>정비명</Label>
-              <Select {...register("cjCcCode")} width={InputSize.i150}>
+              <Select register={register("cjCcCode")} width={InputSize.i150}>
                 {dataCommonDic?.cjCcCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -164,7 +164,7 @@ const Form = React.forwardRef(
             />
             <FormGroup>
               <Label>사원</Label>
-              <Select {...register("cjSwCode")} width={InputSize.i150}>
+              <Select register={register("cjSwCode")} width={InputSize.i150}>
                 {dataCommonDic?.cjSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -206,7 +206,7 @@ const Form = React.forwardRef(
             />
             <FormGroup>
               <Label>사원</Label>
-              <Select {...register("cjSwCodeOil")} width={InputSize.i150}>
+              <Select register={register("cjSwCodeOil")} width={InputSize.i150}>
                 {dataCommonDic?.cjSwCodeOil?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

@@ -249,7 +249,7 @@ function CC1400({
               />
 
               <Label>사원</Label>
-              <Select {...register("sSwCode")} width={InputSize.i120}>
+              <Select register={register("sSwCode")} width={InputSize.i120}>
                 {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

@@ -100,7 +100,7 @@ function GR9006({
           >
             <FormGroup>
               <Label style={{ minWidth: "auto" }}>영업소</Label>
-              <Select width={InputSize.i130} {...register("areaCode")}>
+              <Select width={InputSize.i130} register={register("areaCode")}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

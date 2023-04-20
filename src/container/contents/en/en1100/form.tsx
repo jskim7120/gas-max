@@ -49,16 +49,54 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [tabId, setTabId] = useState(0);
+    const [zipcode, setZipcode] = useState("");
     const [addr, setAddress] = useState<string>("");
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1100",
     });
 
-    const { register, handleSubmit, reset, control, getValues } =
-      useForm<IJNOTRY>({
-        mode: "onChange",
-      });
+    const {
+      register,
+      handleSubmit,
+      reset,
+      control,
+      getValues,
+      setFocus,
+      watch,
+    } = useForm<IJNOTRY>({
+      mode: "onChange",
+    });
+
+    useEffect(() => {
+      function handleKeyDown(event: any) {
+        // if (event.key === "F1") {
+        //   event.preventDefault();
+        //   alert("F1");
+        //   // crud(null);
+        // }
+        // if (event.key === "F2") {
+        //   // event.stopPropagation();
+        //   event.preventDefault();
+        //   alert("F2");
+        // }
+        // if (event.key === "F3") {
+        //   alert("F3");
+        //   event.preventDefault();
+        // }
+        // if (event.key === "F4") {
+        //   alert("F4");
+        // }
+        // if (event.key === "Escape" || event.key === "Esc") {
+        //   alert("escape");
+        //   event.preventDefault();
+        // }
+      }
+      document.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }, []);
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
@@ -69,9 +107,9 @@ const Form = React.forwardRef(
     useEffect(() => {
       if (addr.length > 0) {
         reset({
-          jnZipcode: addr ? addr?.split("/")[1] : "",
           jnAddr1: addr ? addr?.split("/")[0] : "",
         });
+        setZipcode(addr ? addr?.split("/")[1] : "");
       }
     }, [addr]);
 
@@ -85,7 +123,8 @@ const Form = React.forwardRef(
         let newData: any = {};
 
         if (type === "clear") {
-          document.getElementById("areaName")?.focus();
+          // document.getElementById("areaName")?.focus();
+          setFocus("areaName");
           const path = EN110011;
           try {
             const response: any = await API.get(path, {
@@ -97,6 +136,7 @@ const Form = React.forwardRef(
               }
               newData.areaCode = response.data.tempCode;
               reset(newData);
+              setZipcode("");
             } else {
               toast.error(response.response.data?.message, {
                 autoClose: 500,
@@ -109,6 +149,8 @@ const Form = React.forwardRef(
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = value;
           }
+
+          setZipcode(selected?.jnZipcode);
 
           reset({
             ...newData,
@@ -125,7 +167,6 @@ const Form = React.forwardRef(
         const formValues = getValues();
         try {
           const response: any = await API.post(EN1100DELETE, formValues);
-
           if (response.status === 200) {
             toast.success("삭제하였습니다", {
               autoClose: 500,
@@ -186,6 +227,9 @@ const Form = React.forwardRef(
       }
     };
 
+    const ggg = () => {
+      setFocus("jnAddr2");
+    };
     return (
       <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 12px" }}>
         <Wrapper grid col={3}>
@@ -201,6 +245,7 @@ const Form = React.forwardRef(
             maxLength="20"
             inputSize={InputSize.i150}
             readOnly={!isAddBtnClicked}
+            // onKeyDown={handleKeyPress}
           />
         </Wrapper>
 
@@ -253,12 +298,18 @@ const Form = React.forwardRef(
         <Wrapper style={{ alignItems: "center" }}>
           <Input
             label="주소"
-            register={register("jnZipcode")}
+            // register={register("jnZipcode")}
             maxLength="6"
             inputSize={InputSize.i150}
             style={{ marginRight: "7px" }}
+            value={zipcode}
+            onChange={(e: any) => setZipcode(e.target.value)}
           />
-          <DaumAddress setAddress={setAddress} />
+          <DaumAddress
+            setAddress={setAddress}
+            defaultValue={zipcode}
+            onClose={ggg}
+          />
           <Input
             register={register("jnAddr1")}
             maxLength="40"
@@ -396,7 +447,7 @@ const Form = React.forwardRef(
         <Wrapper grid col={2} style={{ gridTemplateColumns: " 2fr 4fr" }}>
           <FormGroup>
             <Label>세금계산서 양식</Label>
-            <Select {...register("jnSekum")} width={InputSize.i150}>
+            <Select register={register("jnSekum")} width={InputSize.i150}>
               {dataCommonDic?.jnSekum?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -432,7 +483,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <FormGroup>
             <Label>거래명세표 양식</Label>
-            <Select {...register("jnJangbu")} width={InputSize.i150}>
+            <Select register={register("jnJangbu")} width={InputSize.i150}>
               {dataCommonDic?.jnJangbu?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -462,7 +513,7 @@ const Form = React.forwardRef(
         <Wrapper grid col={3}>
           <FormGroup>
             <Label>가상 계좌 서비스</Label>
-            <Select {...register("jnVirtualAcc")} width={InputSize.i150}>
+            <Select register={register("jnVirtualAcc")} width={InputSize.i150}>
               {dataCommonDic?.jnVirtualAcc?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -473,7 +524,7 @@ const Form = React.forwardRef(
 
           <FormGroup>
             <Label style={{ marginLeft: "5px" }}>계좌 자동이체</Label>
-            <Select {...register("jnBankCms")} style={{ width: "165px" }}>
+            <Select register={register("jnBankCms")} style={{ width: "165px" }}>
               {dataCommonDic?.jnBankCms?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}
@@ -484,7 +535,7 @@ const Form = React.forwardRef(
 
           <FormGroup>
             <Label>카드 자동이체</Label>
-            <Select {...register("jnCardCms")} width={InputSize.i90}>
+            <Select register={register("jnCardCms")} width={InputSize.i90}>
               {dataCommonDic?.jnCardCms?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code1}>
                   {obj.codeName}

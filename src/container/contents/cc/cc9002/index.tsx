@@ -112,7 +112,10 @@ function CC9002({
               </Field>
 
               <FormGroup>
-                <Select {...register("acjAccCodeF")} width={InputSize.i120}>
+                <Select
+                  register={register("acjAccCodeF")}
+                  width={InputSize.i120}
+                >
                   {dataCommonDic?.acjAccCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -121,7 +124,10 @@ function CC9002({
                 </Select>
                 <p>~</p>
 
-                <Select {...register("acjAccCodeT")} width={InputSize.i120}>
+                <Select
+                  register={register("acjAccCodeT")}
+                  width={InputSize.i120}
+                >
                   {dataCommonDic?.acjAccCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

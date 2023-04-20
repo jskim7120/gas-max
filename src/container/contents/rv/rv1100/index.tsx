@@ -235,7 +235,7 @@ function RV1100({
               />
               <Label style={{ minWidth: "41px" }}>회차</Label>
               <Select
-                {...register("sGjSno")}
+                register={register("sGjSno")}
                 style={{ marginLeft: "0" }}
                 onChange={(e: any) => setGjSno(e.target.value)}
               >
@@ -339,7 +339,7 @@ function RV1100({
             </FormGroup>
             <FormGroup>
               <Label style={{ minWidth: "80px" }}>담당사원</Label>
-              <Select {...register("sSwCode")}>
+              <Select register={register("sSwCode")}>
                 {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -349,7 +349,7 @@ function RV1100({
             </FormGroup>
             <FormGroup>
               <Label style={{ minWidth: "67px" }}>지역분류</Label>
-              <Select {...register("sJyCode")} style={{ width: "149px" }}>
+              <Select register={register("sJyCode")} style={{ width: "149px" }}>
                 {dataCommonDic?.sJyCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -361,7 +361,7 @@ function RV1100({
             <Field flex>
               <FormGroup>
                 <Label style={{ minWidth: "76px" }}>관리책임자</Label>
-                <Select {...register("sCuCustgubun")}>
+                <Select register={register("sCuCustgubun")}>
                   {dataCommonDic?.sCustgubun?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -372,7 +372,7 @@ function RV1100({
 
               <FormGroup>
                 <Label>수금방법</Label>
-                <Select {...register("sSukumtype")}>
+                <Select register={register("sSukumtype")}>
                   {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

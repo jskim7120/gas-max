@@ -202,7 +202,7 @@ function AR1100({
                 />
 
                 <Label>사원</Label>
-                <Select {...register("sSawon")} width={InputSize.i100}>
+                <Select register={register("sSawon")} width={InputSize.i100}>
                   {dataCommonDic?.sSawon?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -211,7 +211,10 @@ function AR1100({
                 </Select>
 
                 <Label>입금구분</Label>
-                <Select {...register("sInkumtype")} width={InputSize.i100}>
+                <Select
+                  register={register("sInkumtype")}
+                  width={InputSize.i100}
+                >
                   {dataCommonDic?.sInkumtype?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -220,7 +223,10 @@ function AR1100({
                 </Select>
 
                 <Label>대납구분</Label>
-                <Select {...register("sProxytype")} width={InputSize.i100}>
+                <Select
+                  register={register("sProxytype")}
+                  width={InputSize.i100}
+                >
                   {dataCommonDic?.sProxytype?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -229,7 +235,10 @@ function AR1100({
                 </Select>
 
                 <Label>등록구분</Label>
-                <Select {...register("sInserttype")} width={InputSize.i100}>
+                <Select
+                  register={register("sInserttype")}
+                  width={InputSize.i100}
+                >
                   {dataCommonDic?.sInserttype?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

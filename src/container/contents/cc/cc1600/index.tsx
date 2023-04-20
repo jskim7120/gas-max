@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
+import { CC1600SEARCH, CC160065, CC160062 } from "app/path";
 import {
   SearchWrapper,
   MainWrapper,
@@ -12,53 +12,93 @@ import {
 import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import GridLeft from "components/grid";
 import { fields, columns } from "./data";
-import { ICC1600SEARCH } from "./model";
 import Form from "./form";
-import { CustomAreaCodePart } from "container/contents/customTopPart";
 import FourButtons from "components/button/fourButtons";
 
 function CC1600({
   depthFullName,
-  areaCode,
+  ownAreaCode,
   menuId,
 }: {
   depthFullName: string;
-  areaCode: string;
+  ownAreaCode: string;
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [data65, setData65] = useState({});
-  const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
-
+  const [acsAccName, setAcsAccName] = useState([]);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CC",
     functionName: "CC1600",
   });
 
   useEffect(() => {
-    if (dataCommonDic) {
+    if (ownAreaCode) {
+      fetchData({ areaCode: ownAreaCode });
     }
-  }, [dataCommonDic]);
+  }, []);
 
-  useEffect(() => {}, [selected]);
+  useEffect(() => {
+    if (selected && Object.keys(selected).length > 0) {
+      fetchData65({
+        acsAccCode: selected.acsAccCode,
+        acsCode: selected.acsCode,
+        areaCode: ownAreaCode,
+      });
+    }
+  }, [selected]);
 
-  const resetSearchForm = () => {};
+  const fetchData = async (params: any) => {
+    try {
+      const { data: datas } = await API.get(CC1600SEARCH, { params: params });
 
-  const { register, handleSubmit, reset, control } = useForm<ICC1600SEARCH>({
-    mode: "onSubmit",
-  });
+      if (datas) {
+        setData(datas);
+        setSelected(datas[0]);
+      } else {
+        setData([]);
+        setSelected({});
+      }
+    } catch (err) {
+      setData([]);
+      setSelected({});
+      console.log("CC1600 data search fetch error =======>", err);
+    }
+  };
 
-  const submit = (params: any) => {};
+  const fetchData65 = async (params: any) => {
+    try {
+      const { data: data65 } = await API.get(CC160065, { params: params });
+      if (data65) {
+        setData65(data65[0][0]);
+        setAcsAccName(data65.acsAccName);
+      } else {
+        setData65({});
+        setAcsAccName([]);
+      }
+    } catch (err) {
+      setData65({});
+      setAcsAccName([]);
+      console.log("CC1600 data 65 fetch error =======>", err);
+    }
+  };
 
-  const fetchData = async (params: any) => {};
-
-  const fetchData65 = async (params: any) => {};
+  const fetchData62 = async (params: any) => {
+    try {
+      const { data: data62 } = await API.get(CC160062, { params: params });
+      if (data62) {
+      } else {
+      }
+    } catch (err) {
+      console.log("CC1600 data 65 fetch error =======>", err);
+    }
+  };
 
   const onClickAdd = () => {
     setIsAddBtnClicked(true);
@@ -82,40 +122,21 @@ function CC1600({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomAreaCodePart
-          areaCode={areaCode}
-          depthFullName={depthFullName}
-          register={register}
-          dataCommonDic={dataCommonDic}
+        <p>{depthFullName}</p>
+
+        <FourButtons
+          onClickAdd={onClickAdd}
+          onClickDelete={onClickDelete}
+          onClickUpdate={onClickUpdate}
+          onClickReset={onClickReset}
+          isAddBtnClicked={isAddBtnClicked}
+          isCancelBtnDisabled={isCancelBtnDisabled}
         />
-        <SearchWrapper
-        // className="h35 mt5"
-        // style={{
-        //   display: "flex",
-        //   position: "absolute",
-        //   top: "87px",
-        //   right: "19px",
-        //   background: "none",
-        //   padding: "0",
-        //   border: "none",
-        //   height: "auto",
-        //   marginTop: "2px",
-        // }}
-        >
-          <FourButtons
-            onClickAdd={onClickAdd}
-            onClickDelete={onClickDelete}
-            onClickUpdate={onClickUpdate}
-            onClickReset={onClickReset}
-            isAddBtnClicked={isAddBtnClicked}
-            isCancelBtnDisabled={isCancelBtnDisabled}
-          />
-        </SearchWrapper>
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
           <GridLeft
-            areaCode={areaCode}
+            areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
@@ -129,15 +150,16 @@ function CC1600({
         </LeftSide>
         <RightSide>
           <Form
-            data65={data65}
-            setData65={setData65}
             ref={formRef}
-            fetchData={fetchData}
-            setData={setData}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
-            setSelected={setSelected}
-            dataCommonDic={dataCommonDic}
+            data65={data65}
+            acsAccName={acsAccName}
+            //setData65={setData65}
+            //fetchData={fetchData}
+            //setData={setData}
+            //selectedRowIndex={selectedRowIndex}
+            //setSelectedRowIndex={setSelectedRowIndex}
+            //setSelected={setSelected}
+            //dataCommonDic={dataCommonDic}
             isAddBtnClicked={isAddBtnClicked}
             setIsAddBtnClicked={setIsAddBtnClicked}
           />

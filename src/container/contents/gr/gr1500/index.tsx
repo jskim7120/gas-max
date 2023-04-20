@@ -115,7 +115,10 @@ function GR1500({
               <Field flex>
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>구분</Label>
-                  <Select width={InputSize.i130} {...register("sBuGubun")}>
+                  <Select
+                    width={InputSize.i130}
+                    register={register("sBuGubun")}
+                  >
                     {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -132,7 +135,7 @@ function GR1500({
                 </FormGroup>
                 <FormGroup>
                   <Label>거래상태</Label>
-                  <Select width={InputSize.i130} {...register("sBuStae")}>
+                  <Select width={InputSize.i130} register={register("sBuStae")}>
                     {dataCommonDic?.sBuStae?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -188,7 +191,7 @@ function GR1500({
               <Field flex>
                 <p>{depthFullName}</p>
                 <p className="big">영업소</p>
-                <Select {...register("areaCode1")} name="areaCode1">
+                <Select register={register("areaCode1")} name="areaCode1">
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

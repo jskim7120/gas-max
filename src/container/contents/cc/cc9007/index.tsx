@@ -83,7 +83,7 @@ function GR9008({
           >
             <FormGroup>
               <Label style={{ minWidth: "auto" }}>영업소</Label>
-              <Select width={InputSize.i130} {...register("areaCode")}>
+              <Select width={InputSize.i130} register={register("areaCode")}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -92,7 +92,7 @@ function GR9008({
               </Select>
 
               <Label style={{ minWidth: "80px" }}>사원</Label>
-              <Select width={InputSize.i130} {...register("swCode")}>
+              <Select width={InputSize.i130} register={register("swCode")}>
                 {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

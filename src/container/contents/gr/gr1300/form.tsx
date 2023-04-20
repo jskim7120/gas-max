@@ -547,7 +547,7 @@ function Form({
           <FormGroup>
             <Label>매입처</Label>
             <Select
-              {...register("bbBuCode")}
+              register={register("bbBuCode")}
               width={InputSize.i100}
               disabled={!isAddBtnClicked}
             >

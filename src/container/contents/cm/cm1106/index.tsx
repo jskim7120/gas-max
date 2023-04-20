@@ -108,7 +108,7 @@ function FormCM1106() {
             <>
               <p className="big">영업소</p>
 
-              <Select {...register("areaCode")} disabled>
+              <Select register={register("areaCode")} disabled>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

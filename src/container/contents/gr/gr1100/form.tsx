@@ -340,7 +340,7 @@ const Form = React.forwardRef(
           />
           <FormGroup>
             <Label>거래상태</Label>
-            <Select {...register("buStae")} width={InputSize.i130}>
+            <Select register={register("buStae")} width={InputSize.i130}>
               {dataCommonDic?.buStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -464,7 +464,7 @@ const Form = React.forwardRef(
           />
           <FormGroup>
             <p>@</p>
-            <Select {...register("emailKind")} width={InputSize.i120}>
+            <Select register={register("emailKind")} width={InputSize.i120}>
               {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}

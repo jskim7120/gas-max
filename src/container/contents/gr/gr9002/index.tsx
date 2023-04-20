@@ -111,7 +111,7 @@ function GR9002({
             <FormGroup>
               <Label style={{ minWidth: "auto" }}>충전소</Label>
               <Select
-                {...register("bcBuCode")}
+                register={register("bcBuCode")}
                 width={InputSize.i150}
                 // onChange={(e) => setReportKind(e.target.value)}
               >
@@ -139,7 +139,7 @@ function GR9002({
               />
 
               <Label style={{ minWidth: "80px" }}>수송기사</Label>
-              <Select {...register("bcCsawon")} width={InputSize.i110}>
+              <Select register={register("bcCsawon")} width={InputSize.i110}>
                 {dataCommonDic?.bcCsawon?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -148,7 +148,7 @@ function GR9002({
               </Select>
 
               <Label style={{ minWidth: "80px" }}>수송방법</Label>
-              <Select {...register("bcCtype")} width={InputSize.i110}>
+              <Select register={register("bcCtype")} width={InputSize.i110}>
                 {dataCommonDic?.bcCtype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

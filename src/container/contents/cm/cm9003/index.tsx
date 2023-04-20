@@ -125,7 +125,7 @@ function CM9003({
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>보고서종류</Label>
                   <Select
-                    {...register("reportKind")}
+                    register={register("reportKind")}
                     width={InputSize.i130}
                     onChange={(e) => setReportKind(e.target.value)}
                   >
@@ -139,7 +139,7 @@ function CM9003({
 
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>거래구분</Label>
-                  <Select {...register("cuType")} width={InputSize.i130}>
+                  <Select register={register("cuType")} width={InputSize.i130}>
                     {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -168,7 +168,10 @@ function CM9003({
 
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>지역분류</Label>
-                  <Select {...register("cuJyCode")} width={InputSize.i130}>
+                  <Select
+                    register={register("cuJyCode")}
+                    width={InputSize.i130}
+                  >
                     {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -179,7 +182,7 @@ function CM9003({
 
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>담당사원</Label>
-                  <Select {...register("swCode")} width={InputSize.i130}>
+                  <Select register={register("swCode")} width={InputSize.i130}>
                     {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -190,7 +193,10 @@ function CM9003({
 
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>소비자형태</Label>
-                  <Select {...register("cuCutype")} width={InputSize.i130}>
+                  <Select
+                    register={register("cuCutype")}
+                    width={InputSize.i130}
+                  >
                     {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}

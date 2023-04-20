@@ -181,7 +181,7 @@ const FORMPT1205 = React.forwardRef(
         <FormGroup>
           <Label>수금방법</Label>
           <Select
-            {...register("gsSukumtype")}
+            register={register("gsSukumtype")}
             kind={FieldKind.BORDER}
             style={{ width: "175px" }}
           >
@@ -195,7 +195,7 @@ const FORMPT1205 = React.forwardRef(
         <FormGroup>
           <Label>사원</Label>
           <Select
-            {...register("gsSwCode")}
+            register={register("gsSwCode")}
             kind={FieldKind.BORDER}
             width={InputSize.i175}
           >

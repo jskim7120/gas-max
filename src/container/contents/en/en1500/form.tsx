@@ -491,7 +491,7 @@ const Form = (
               <FormGroup>
                 <Label>조정기압력</Label>
                 <Select
-                  {...register("jnR")}
+                  register={register("jnR")}
                   style={{ minWidth: "85px" }}
                   textAlign="left"
                 >
@@ -552,7 +552,7 @@ const Form = (
               <FormGroup>
                 <Label>수금방법</Label>
                 <Select
-                  {...register("jnSukumtype")}
+                  register={register("jnSukumtype")}
                   style={{ minWidth: "85px" }}
                 >
                   {dataCommonDic?.jnSukumtype?.map((obj: any, idx: number) => (
@@ -600,7 +600,7 @@ const Form = (
             <Field>
               <FormGroup>
                 <Label>루베단가 계산</Label>
-                <Select {...register("jnMpdangaType")}>
+                <Select register={register("jnMpdangaType")}>
                   {dataCommonDic?.jnMpdangaType?.map(
                     (obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -620,7 +620,7 @@ const Form = (
             <Field>
               <FormGroup>
                 <Label>연체료 적용방법</Label>
-                <Select {...register("jnPerMeth")}>
+                <Select register={register("jnPerMeth")}>
                   {dataCommonDic?.jnPerMeth?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -639,7 +639,7 @@ const Form = (
             <Field>
               <FormGroup>
                 <Label>체적사용료 계산</Label>
-                <Select {...register("jnChekum")}>
+                <Select register={register("jnChekum")}>
                   {dataCommonDic?.jnChekum?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -659,7 +659,7 @@ const Form = (
               <FormGroup>
                 <Label>지로출력 조건</Label>
 
-                <Select {...register("jnJiroPrint")}>
+                <Select register={register("jnJiroPrint")}>
                   {dataCommonDic?.jnJiroPrint?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

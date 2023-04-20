@@ -171,7 +171,7 @@ function RV9006({
                   )}
                 />
                 <Select
-                  {...register("sGjSnoF")}
+                  register={register("sGjSnoF")}
                   disabled={sType1}
                   style={{ marginLeft: "0" }}
                 >
@@ -196,7 +196,7 @@ function RV9006({
                   )}
                 />
                 <Select
-                  {...register("sGjSnoT")}
+                  register={register("sGjSnoT")}
                   disabled={sType1}
                   style={{ marginLeft: "0" }}
                 >
@@ -209,7 +209,10 @@ function RV9006({
               </FormGroup>
               <FormGroup>
                 <Label>담당사원</Label>
-                <Select {...register("sSwCode")} style={{ width: "100%" }}>
+                <Select
+                  register={register("sSwCode")}
+                  style={{ width: "100%" }}
+                >
                   {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -220,7 +223,7 @@ function RV9006({
 
               <FormGroup>
                 <Label>조정기 압력</Label>
-                <Select {...register("sRh20")} style={{ width: "100%" }}>
+                <Select register={register("sRh20")} style={{ width: "100%" }}>
                   {dataCommonDic?.sRh20?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -312,7 +315,10 @@ function RV9006({
               </FormGroup>
               <FormGroup>
                 <Label>지역분류</Label>
-                <Select {...register("sJyCode")} style={{ width: "100%" }}>
+                <Select
+                  register={register("sJyCode")}
+                  style={{ width: "100%" }}
+                >
                   {dataCommonDic?.sJyCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -323,7 +329,7 @@ function RV9006({
 
               <FormGroup>
                 <Label>그룹종류</Label>
-                <Select {...register("sOrder")} style={{ width: "100%" }}>
+                <Select register={register("sOrder")} style={{ width: "100%" }}>
                   {dataCommonDic?.sOrder?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

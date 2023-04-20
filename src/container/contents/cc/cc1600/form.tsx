@@ -11,7 +11,7 @@ import {
   Label,
   DividerGray,
 } from "components/form/style";
-import { ICC1600FORM } from "./model";
+import { ICC1600FORM, emptyObj } from "./model";
 import { InputSize } from "components/componentsType";
 import API from "app/axios";
 import {
@@ -22,32 +22,14 @@ import {
 
 interface IForm {
   data65: any;
-  setData65: Function;
-  // selected: any;
-  fetchData: any;
-  setData: any;
-  selectedRowIndex: number;
-  setSelected: any;
-  setSelectedRowIndex: any;
-  dataCommonDic: any;
+  acsAccName: any;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
   (
-    {
-      data65,
-      setData65,
-      fetchData,
-      setData,
-      selectedRowIndex,
-      setSelected,
-      setSelectedRowIndex,
-      dataCommonDic,
-      isAddBtnClicked,
-      setIsAddBtnClicked,
-    }: IForm,
+    { data65, acsAccName, isAddBtnClicked, setIsAddBtnClicked }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const { register, handleSubmit, control, reset, getValues } =
@@ -57,16 +39,23 @@ const Form = React.forwardRef(
       if (data65 !== undefined && JSON.stringify(data65) !== "{}") {
         resetForm("reset");
       }
-      setIsAddBtnClicked(false);
+      // setIsAddBtnClicked(false);
     }, [data65]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
+      // setIsAddBtnClicked,
     }));
 
-    const resetForm = async (type: string) => {};
+    const resetForm = async (type: string) => {
+      if (type === "clear") {
+        reset(emptyObj);
+      }
+      if (type === "reset") {
+        reset(data65);
+      }
+    };
     const crud = async (type: string | null) => {};
 
     const submit = async (data: ICC1600FORM) => {};
@@ -98,9 +87,9 @@ const Form = React.forwardRef(
           })}
         </FormGroup>
         <FormGroup>
-          <Label>계정과목</Label>
-          <Select {...register("acsAccName")} width={InputSize.i130}>
-            {dataCommonDic?.acsAccName?.map((obj: any, idx: number) => (
+          <Label>계정 과목</Label>
+          <Select register={register("acsAccName")} width={InputSize.i150}>
+            {acsAccName?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -111,7 +100,7 @@ const Form = React.forwardRef(
         <Input
           label="항 목"
           register={register("acsName")}
-          inputSize={InputSize.i130}
+          inputSize={InputSize.i150}
         />
       </form>
     );

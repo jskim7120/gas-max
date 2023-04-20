@@ -40,7 +40,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "영 업 소",
     },

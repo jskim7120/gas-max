@@ -755,7 +755,7 @@ const Form = ({
         </FormGroup>
         <FormGroup>
           <Label>수송방법</Label>
-          <Select {...register("bcCtype")} width={InputSize.i130}>
+          <Select register={register("bcCtype")} width={InputSize.i130}>
             {dataAdditionalDic?.bcCtype?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -783,7 +783,7 @@ const Form = ({
           />
 
           <Label>수송차량</Label>
-          <Select {...register("bcCarno")} width={InputSize.i130}>
+          <Select register={register("bcCarno")} width={InputSize.i130}>
             {dataAdditionalDic?.bcCarno?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -813,7 +813,7 @@ const Form = ({
 
           <Label></Label>
           <Select
-            {...register("bcCarno1")}
+            register={register("bcCarno1")}
             width={InputSize.i130}
             disabled={radioChecked === radioOptions[0].id}
           >

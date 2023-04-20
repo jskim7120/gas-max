@@ -161,7 +161,7 @@ function Tab1({
             </Label>
             <Select
               disabled={!chkCuRh20}
-              {...register("cuRh2O")}
+              register={register("cuRh2O")}
               width={InputSize.i120}
             >
               {dataCommonDic?.cuRh20?.map((obj: any, index: number) => (
@@ -235,7 +235,7 @@ function Tab1({
             </Label>
             <Select
               disabled={!chkCuGumTurm}
-              {...register("cuGumTurm")}
+              register={register("cuGumTurm")}
               width={InputSize.i175}
             >
               {dataCommonDic?.cuGumTurm?.map((obj: any, index: number) => (
@@ -394,7 +394,7 @@ function Tab1({
             </Label>
             <Select
               disabled={!chkCuSukumtype}
-              {...register("cuSukumtype")}
+              register={register("cuSukumtype")}
               width={InputSize.i120}
             >
               {dataCommonDic?.cuSukumtype?.map((obj: any, index: number) => (

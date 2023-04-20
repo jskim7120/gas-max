@@ -81,7 +81,7 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
       ),
       6: <Input register={register("pjDanga")} />,
       7: (
-        <Select {...register("pjVatDiv")} width={InputSize.i100}>
+        <Select register={register("pjVatDiv")} width={InputSize.i100}>
           {dictionary?.pjVatDiv?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -98,7 +98,7 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
   const data2 = [
     {
       1: (
-        <Select {...register("saleState")} width={InputSize.i100}>
+        <Select register={register("saleState")} width={InputSize.i100}>
           {dictionary?.saleType?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -107,7 +107,7 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
         </Select>
       ),
       2: (
-        <Select {...register("proxyType")} width={InputSize.i100}>
+        <Select register={register("proxyType")} width={InputSize.i100}>
           {dictionary?.proxyType?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -117,7 +117,7 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
       ),
       3: <Input register={register("buName")} />,
       4: (
-        <Select {...register("pjInkumtype")} width={InputSize.i100}>
+        <Select register={register("pjInkumtype")} width={InputSize.i100}>
           {dictionary?.pjInkumtype?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -129,7 +129,7 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
       6: <Input register={register("pjDc")} />,
       7: <Input register={register("pjMisukum")} />,
       8: (
-        <Select {...register("pjSwCode")} width={InputSize.i100}>
+        <Select register={register("pjSwCode")} width={InputSize.i100}>
           {dictionary?.pjSwCode?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}

@@ -256,7 +256,7 @@ const Form = React.forwardRef(
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>수금방법</Label>
           <Select
-            {...register("msSukumtype")}
+            register={register("msSukumtype")}
             onChange={handleSelectCode}
             width={InputSize.i140}
           >
@@ -270,7 +270,7 @@ const Form = React.forwardRef(
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>사원</Label>
           <Select
-            {...register("msSwCode")}
+            register={register("msSwCode")}
             onChange={handleSelectCode}
             width={InputSize.i140}
           >

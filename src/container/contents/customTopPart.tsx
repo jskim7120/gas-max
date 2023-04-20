@@ -22,7 +22,7 @@ function CustomTopPart({
           <>
             <p className="big">{bigText ? bigText : `영업소`}</p>
 
-            <Select {...register("areaCode")}>
+            <Select register={register("areaCode")}>
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -56,7 +56,7 @@ export function CustomAreaCodePart({
         <>
           <p className="big">{bigText ? bigText : `영업소`}</p>
 
-          <Select {...register("areaCode")}>
+          <Select register={register("areaCode")}>
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}

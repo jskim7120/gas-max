@@ -54,6 +54,14 @@ const CheckBoxWrapper = styled.div<{ rtl: boolean; gap?: string }>`
   input[type="checkbox"]:not(:disabled):hover:before {
     border-color: #707070;
   }
+
+  // input[type="checkbox"]:focus {
+  //   outline: none;
+  // }
+
+  input[type="checkbox"]:focus:before {
+    background: #fffacd;
+  }
 `;
 
 function CheckBox(props: {
@@ -65,6 +73,18 @@ function CheckBox(props: {
   checked?: boolean;
   style?: any;
 }) {
+  const handleKeyPress = (event: any) => {
+    if (event.key === "Enter") {
+      // event.preventDefault();
+      const element = event.target;
+      const form = element.form;
+
+      const index = Array.prototype.indexOf.call(form, element);
+      console.log(index);
+      form.elements[index + 1].focus();
+      event.preventDefault();
+    }
+  };
   return (
     <CheckBoxWrapper
       rtl={props.rtl ? props.rtl : false}
@@ -77,6 +97,7 @@ function CheckBox(props: {
           {...props.register}
           onChange={props.onChange}
           checked={props.checked && props.checked}
+          onKeyDown={handleKeyPress}
         />
         {props.title && props.title}
       </label>

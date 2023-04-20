@@ -477,7 +477,7 @@ const Form = React.forwardRef(
         </FormGroup>
         <FormGroup>
           <Label>담당사원</Label>
-          <Select {...register("aptSwCode")} width={InputSize.i120}>
+          <Select register={register("aptSwCode")} width={InputSize.i120}>
             {aptSwCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -486,7 +486,7 @@ const Form = React.forwardRef(
           </Select>
 
           <Label>지역분류</Label>
-          <Select {...register("aptJyCode")} width={InputSize.i120}>
+          <Select register={register("aptJyCode")} width={InputSize.i120}>
             {aptJyCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -495,7 +495,7 @@ const Form = React.forwardRef(
           </Select>
 
           <Label>관리자</Label>
-          <Select {...register("aptCustgubun")} width={InputSize.i120}>
+          <Select register={register("aptCustgubun")} width={InputSize.i120}>
             {aptGubun?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -514,7 +514,7 @@ const Form = React.forwardRef(
 
           <Select
             disabled={!chkAptRh2o}
-            {...register("aptRh2O")}
+            register={register("aptRh2O")}
             width={InputSize.i120}
             textAlign="right"
           >
@@ -539,7 +539,7 @@ const Form = React.forwardRef(
             disabled={!chkAptRdangaType}
             width={InputSize.i120}
             value={rdangaType}
-            {...register("aptRdangaType")}
+            register={register("aptRdangaType")}
             onChange={(e) => {
               setRdangaType(e.target.value);
               calcRdanga("rdangaType", e.target.value);
@@ -667,7 +667,7 @@ const Form = React.forwardRef(
           />
 
           <Select
-            {...register("aptSukumtype")}
+            register={register("aptSukumtype")}
             width={InputSize.i120}
             disabled={!chkAptSukumtype}
           >

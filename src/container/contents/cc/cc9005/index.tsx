@@ -90,42 +90,28 @@ function CC9005({
           register={register}
           dataCommonDic={dataCommonDic}
         />
-        <SearchWrapper
-          className="h35 mt5"
-          style={{
-            display: "flex",
-            position: "absolute",
-            top: "87px",
-            right: "19px",
-            background: "none",
-            padding: "0",
-            border: "none",
-            height: "auto",
-            marginTop: "2px",
-          }}
-        >
-          <div className="buttons">
-            <Button
-              text="삭제"
-              icon={<Trash />}
-              style={{ marginRight: "5px" }}
-              onClick={onClickDelete}
-            />
-            <Button
-              text="저장"
-              icon={<Update />}
-              style={{ marginRight: "5px" }}
-              color={ButtonColor.SECONDARY}
-              onClick={onClickUpdate}
-            />
-            <Button
-              text="취소"
-              icon={<ResetGray />}
-              color={ButtonColor.LIGHT}
-              onClick={onClickReset}
-            />
-          </div>
-        </SearchWrapper>
+
+        <div className="buttons">
+          <Button
+            text="삭제"
+            icon={<Trash />}
+            style={{ marginRight: "5px" }}
+            onClick={onClickDelete}
+          />
+          <Button
+            text="저장"
+            icon={<Update />}
+            style={{ marginRight: "5px" }}
+            color={ButtonColor.SECONDARY}
+            onClick={onClickUpdate}
+          />
+          <Button
+            text="취소"
+            icon={<ResetGray />}
+            color={ButtonColor.LIGHT}
+            onClick={onClickReset}
+          />
+        </div>
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>

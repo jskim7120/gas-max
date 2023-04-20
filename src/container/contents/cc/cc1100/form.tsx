@@ -28,6 +28,7 @@ import {
 } from "app/state/modal/modalSlice";
 
 interface IForm {
+  areaCode: string;
   selected: any;
   fetchData: any;
   setData: any;
@@ -42,6 +43,7 @@ interface IForm {
 const Form = React.forwardRef(
   (
     {
+      areaCode,
       selected,
       fetchData,
       setData,
@@ -129,7 +131,7 @@ const Form = React.forwardRef(
           <Label style={{ minWidth: "80px" }}>영 업 소</Label>
           <Select
             width={InputSize.i200}
-            {...register("areaCode")}
+            register={register("areaCode")}
             onChange={handleSelectCode}
             disabled={!isAddBtnClicked}
           >
@@ -159,7 +161,7 @@ const Form = React.forwardRef(
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>입출 구분</Label>
           <Select
-            {...register("acjType")}
+            register={register("acjType")}
             onChange={(e) => setAcjType(e.target.value)}
             width={InputSize.i200}
           >
@@ -196,7 +198,7 @@ const Form = React.forwardRef(
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>통장계좌</Label>
           <Select
-            {...register("cashBank")}
+            register={register("cashBank")}
             onChange={handleSelectCode}
             width={InputSize.i200}
           >
@@ -231,7 +233,7 @@ const Form = React.forwardRef(
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>사 원</Label>
           <Select
-            {...register("acjSwCode")}
+            register={register("acjSwCode")}
             onChange={handleSelectCode}
             width={InputSize.i200}
           >

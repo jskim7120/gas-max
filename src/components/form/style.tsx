@@ -157,6 +157,19 @@ export const Input = ({
   onKeyDown,
   refs,
 }: IInputProps) => {
+  const handleKeyPress = (event: any) => {
+    if (event.key === "Enter") {
+      // event.preventDefault();
+      const element = event.target;
+      const form = element.form;
+
+      const index = Array.prototype.indexOf.call(form, element);
+      console.log(index);
+      form.elements[index + 1].focus();
+      event.preventDefault();
+    }
+  };
+
   return (
     <InputWrapper fullWidth={fullWidth}>
       <FormGroup
@@ -189,7 +202,7 @@ export const Input = ({
             maxLength={maxLength}
             type={type ? type : "text"}
             // ref={refs}
-            // onKeyDown={onKeyDown && onKeyDown}
+            onKeyDown={handleKeyPress}
           />
         ) : (
           <InputForm
@@ -211,7 +224,7 @@ export const Input = ({
             onChange={onChange}
             minWidth={minWidth && minWidth}
             // ref={refs}
-            // onKeyDown={onKeyDown && onKeyDown}
+            onKeyDown={handleKeyPress}
           />
         )}
       </FormGroup>
@@ -509,7 +522,66 @@ export const Wrapper = styled.div<{
   align-items: ${(props) => props.grid && "center"};
 `;
 
-export const Select = styled.select<{
+export const Select = ({
+  kind,
+  width,
+  fullWidth,
+  textAlign,
+  register,
+  onChange,
+  value,
+  style,
+  children,
+  disabled,
+  name,
+  className,
+}: {
+  kind?: FieldKind;
+  width?: InputSize;
+  fullWidth?: boolean;
+  textAlign?: string;
+  register?: any;
+  onChange?: (arg: any) => void;
+  value?: any;
+  style?: any;
+  children: any;
+  disabled?: any;
+  name?: string;
+  className?: any;
+}) => {
+  const handleKeyPress = (event: any) => {
+    if (event.key === "Enter") {
+      // event.preventDefault();
+      const element = event.target;
+      const form = element.form;
+
+      const index = Array.prototype.indexOf.call(form, element);
+      console.log(index);
+      form.elements[index + 1].focus();
+      event.preventDefault();
+    }
+  };
+  return (
+    <FormSelect
+      kind={kind && kind}
+      width={width && width}
+      fullWidth={fullWidth && fullWidth}
+      textAlign={textAlign && textAlign}
+      onKeyDown={handleKeyPress}
+      onChange={onChange && onChange}
+      name={name && name}
+      {...register}
+      value={value && value}
+      style={style}
+      disabled={disabled && disabled}
+      className={className && className}
+    >
+      {children}
+    </FormSelect>
+  );
+};
+
+const FormSelect = styled.select<{
   kind?: FieldKind;
   width?: InputSize;
   fullWidth?: boolean;

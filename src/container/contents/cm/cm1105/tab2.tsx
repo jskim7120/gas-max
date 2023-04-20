@@ -68,7 +68,6 @@ function Tab2({
             width={InputSize.i50}
             value={rdangaSign}
             onChange={(e: any) => {
-              console.log("sign yu irev:::", e.target.value);
               setRdangaSign(e.target.value);
               calcRdanga("rdangaSign", e.target.value);
             }}
@@ -116,7 +115,7 @@ function Tab2({
         <Field>
           <FormGroup>
             <Label>조정기압력</Label>
-            <Select {...register("cuRh2O")} width={InputSize.i130}>
+            <Select register={register("cuRh2O")} width={InputSize.i130}>
               {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -129,7 +128,7 @@ function Tab2({
             <Select
               width={InputSize.i130}
               value={rdangaType}
-              {...register("cuRdangaType")}
+              register={register("cuRdangaType")}
               onChange={(e: any) => {
                 setRdangaType(e.target.value);
                 calcRdanga("rdangaType", e.target.value);
@@ -242,7 +241,7 @@ function Tab2({
 
           <FormGroup>
             <Label>검침주기</Label>
-            <Select {...register("cuGumTurm")} width={InputSize.i130}>
+            <Select register={register("cuGumTurm")} width={InputSize.i130}>
               {dataCommonDic?.cuGumTurm?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -320,7 +319,7 @@ function Tab2({
         <Field>
           <FormGroup>
             <Label>계량기 제조사</Label>
-            <Select {...register("cuMeterCo")} width={InputSize.i130}>
+            <Select register={register("cuMeterCo")} width={InputSize.i130}>
               {dataCommonDic?.cuMeterCo?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -329,7 +328,7 @@ function Tab2({
             </Select>
 
             <Label style={{ width: "136px" }}>계량기유형</Label>
-            <Select {...register("cuMeterFeture")} width={InputSize.i130}>
+            <Select register={register("cuMeterFeture")} width={InputSize.i130}>
               {dataCommonDic?.cuMeterFeture?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -338,7 +337,7 @@ function Tab2({
             </Select>
 
             <Label style={{ minWidth: "135px" }}>계량기정보</Label>
-            <Select {...register("cuMeterLr")} width={InputSize.i80}>
+            <Select register={register("cuMeterLr")} width={InputSize.i80}>
               {dataCommonDic?.cuMeterLr?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -346,7 +345,7 @@ function Tab2({
               ))}
             </Select>
 
-            <Select {...register("cuMeterType")}>
+            <Select register={register("cuMeterType")}>
               {dataCommonDic?.cuMeterType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -383,7 +382,7 @@ function Tab2({
             />
 
             <Label style={{ minWidth: "135px" }}>설치장소</Label>
-            <Select {...register("cuMeterPlace")} width={InputSize.i80}>
+            <Select register={register("cuMeterPlace")} width={InputSize.i80}>
               {dataCommonDic?.cuMeterPlace?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}

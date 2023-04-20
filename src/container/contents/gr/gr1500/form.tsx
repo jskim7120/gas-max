@@ -220,7 +220,7 @@ const Form = React.forwardRef(
           <Wrapper>
             <FormGroup>
               <Label>매입처명</Label>
-              <Select {...register("bjBuName")} width={InputSize.i150}>
+              <Select register={register("bjBuName")} width={InputSize.i150}>
                 {dataCommonDic?.bjBuName?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -310,7 +310,7 @@ const Form = React.forwardRef(
           <Wrapper>
             <FormGroup>
               <Label>지급방법</Label>
-              <Select {...register("bjOuttype")} width={InputSize.i150}>
+              <Select register={register("bjOuttype")} width={InputSize.i150}>
                 {dataCommonDic?.bjOuttype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -322,7 +322,7 @@ const Form = React.forwardRef(
           <Wrapper>
             <FormGroup>
               <Label>출금통장</Label>
-              <Select {...register("bjAcbCode")} width={InputSize.i150}>
+              <Select register={register("bjAcbCode")} width={InputSize.i150}>
                 {dataCommonDic?.bjAcbCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

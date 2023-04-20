@@ -299,7 +299,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label>영업소</Label>
             <Select
-              {...register("areaCode")}
+              register={register("areaCode")}
               onChange={handleSelectCode}
               width={InputSize.i200}
               disabled={!isAddBtnClicked}
@@ -330,7 +330,7 @@ const Form = React.forwardRef(
           <Field>
             <FormGroup>
               <Label>업무구분</Label>
-              <Select {...register("swGubunName")} width={InputSize.i200}>
+              <Select register={register("swGubunName")} width={InputSize.i200}>
                 {dataCommonDic?.swGubun?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
                     {obj.codeName}
@@ -418,7 +418,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.i200}
           />
           @
-          <Select {...register("mailKind")} style={{ marginLeft: "3px" }}>
+          <Select register={register("mailKind")} style={{ marginLeft: "3px" }}>
             {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.codeName}>
                 {obj.codeName}
@@ -535,7 +535,7 @@ const Form = React.forwardRef(
 
               <FormGroup>
                 <Label style={{ minWidth: "90px" }}>급여방식</Label>
-                <Select {...register("swPaytype")} width={InputSize.i110}>
+                <Select register={register("swPaytype")} width={InputSize.i110}>
                   {dataCommonDic?.swPaytype?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

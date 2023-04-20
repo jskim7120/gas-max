@@ -100,29 +100,15 @@ function CC1700({
           register={register}
           dataCommonDic={dataCommonDic}
         />
-        <SearchWrapper
-          className="h35 mt5"
-          style={{
-            display: "flex",
-            position: "absolute",
-            top: "87px",
-            right: "19px",
-            background: "none",
-            padding: "0",
-            border: "none",
-            height: "auto",
-            marginTop: "2px",
-          }}
-        >
-          <FourButtons
-            onClickAdd={onClickAdd}
-            onClickDelete={onClickDelete}
-            onClickUpdate={onClickUpdate}
-            onClickReset={onClickReset}
-            isAddBtnClicked={isAddBtnClicked}
-            isCancelBtnDisabled={isCancelBtnDisabled}
-          />
-        </SearchWrapper>
+
+        <FourButtons
+          onClickAdd={onClickAdd}
+          onClickDelete={onClickDelete}
+          onClickUpdate={onClickUpdate}
+          onClickReset={onClickReset}
+          isAddBtnClicked={isAddBtnClicked}
+          isCancelBtnDisabled={isCancelBtnDisabled}
+        />
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>

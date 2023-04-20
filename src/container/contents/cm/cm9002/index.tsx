@@ -127,7 +127,7 @@ function CM9002({
                   <Label style={{ minWidth: "90px" }}>보고서종류</Label>
                   <Select
                     width={InputSize.i130}
-                    {...register("reportKind")}
+                    register={register("reportKind")}
                     onChange={(e) => setReportKind(e.target.value)}
                   >
                     {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
@@ -140,7 +140,7 @@ function CM9002({
 
                 <FormGroup style={{ width: "255px" }}>
                   <Label style={{ minWidth: "90px" }}>거래구분</Label>
-                  <Select {...register("cuType")} width={InputSize.i130}>
+                  <Select register={register("cuType")} width={InputSize.i130}>
                     {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -151,7 +151,10 @@ function CM9002({
 
                 <FormGroup style={{ width: "255px" }}>
                   <Label style={{ minWidth: "90px" }}>지역분류</Label>
-                  <Select {...register("cuJyCode")} width={InputSize.i130}>
+                  <Select
+                    register={register("cuJyCode")}
+                    width={InputSize.i130}
+                  >
                     {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -163,7 +166,7 @@ function CM9002({
                 <FormGroup style={{ width: "362px" }}>
                   <Label style={{ minWidth: "90px" }}>담당사원</Label>
                   <Select
-                    {...register("swCode")}
+                    register={register("swCode")}
                     width={InputSize.i130}
                     style={{ marginLeft: "4px" }}
                   >
@@ -177,7 +180,10 @@ function CM9002({
 
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>관리책임자</Label>
-                  <Select {...register("cuCustgubun")} width={InputSize.i130}>
+                  <Select
+                    register={register("cuCustgubun")}
+                    width={InputSize.i130}
+                  >
                     {dataCommonDic?.cuCustgubun?.map(
                       (obj: any, idx: number) => (
                         <option key={idx} value={obj.code}>
@@ -189,7 +195,7 @@ function CM9002({
                 </FormGroup>
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>검사대상</Label>
-                  <Select {...register("cuGumsa")} width={InputSize.i130}>
+                  <Select register={register("cuGumsa")} width={InputSize.i130}>
                     {dataCommonDic?.cuGumsa?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -201,7 +207,7 @@ function CM9002({
               <Wrapper grid col={6} fields="1fr 1fr 1fr 1.3fr 1fr 1fr">
                 <FormGroup style={{ width: "255px" }}>
                   <Label style={{ minWidth: "90px" }}>미수구</Label>
-                  <Select {...register("cuMisu")} width={InputSize.i130}>
+                  <Select register={register("cuMisu")} width={InputSize.i130}>
                     {dataCommonDic?.cuMisu?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -211,7 +217,10 @@ function CM9002({
                 </FormGroup>
                 <FormGroup style={{ width: "255px" }}>
                   <Label style={{ minWidth: "90px" }}>소비자형태</Label>
-                  <Select {...register("cuCutype")} width={InputSize.i130}>
+                  <Select
+                    register={register("cuCutype")}
+                    width={InputSize.i130}
+                  >
                     {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -221,7 +230,7 @@ function CM9002({
                 </FormGroup>
                 <FormGroup style={{ width: "255px" }}>
                   <Label style={{ minWidth: "90px" }}>거래상태</Label>
-                  <Select {...register("cuStae")} width={InputSize.i130}>
+                  <Select register={register("cuStae")} width={InputSize.i130}>
                     {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -269,7 +278,10 @@ function CM9002({
                 </Field>
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>수금방법</Label>
-                  <Select {...register("cuSukumtype")} width={InputSize.i130}>
+                  <Select
+                    register={register("cuSukumtype")}
+                    width={InputSize.i130}
+                  >
                     {dataCommonDic?.cuSukumtype?.map(
                       (obj: any, idx: number) => (
                         <option key={idx} value={obj.code}>
@@ -281,7 +293,10 @@ function CM9002({
                 </FormGroup>
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>장부구분</Label>
-                  <Select {...register("cuJangbu")} width={InputSize.i130}>
+                  <Select
+                    register={register("cuJangbu")}
+                    width={InputSize.i130}
+                  >
                     {dataCommonDic?.cuJangbu?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}

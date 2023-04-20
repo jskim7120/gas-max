@@ -167,14 +167,16 @@ export const RV110065 = "/app/RV1100/65";
 export const CC1100SEARCH = "/app/CC1100/search";
 export const CC110065 = "/app/CC1100/65";
 export const CC110080 = "/app/CC1100/80";
-
 export const CC1200SEARCH = "/app/CC1200/search";
 export const CC120065 = "/app/CC1200/65";
-
 export const CC1400SEARCH = "/app/CC1400/search";
-
 export const CC1500SEARCH = "/app/CC1500/search";
 export const CC150065 = "/app/CC1500/65";
+export const CC1505SEARCH = "/app/CC1505/search";
+export const CC150565 = "/app/CC1505/65";
+export const CC1600SEARCH = "/app/CC1600/search";
+export const CC160065 = "/app/CC1600/65";
+export const CC160062 = "/app/CC1600/62";
 
 export const RV9006SEARCH = "/app/RV9006/search";
 export const RV9005SEARCH = "/app/RV9005/search";

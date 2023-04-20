@@ -113,7 +113,7 @@ function GR9004({
             <FormGroup>
               <Label style={{ minWidth: "auto" }}>충전소</Label>
               <Select
-                {...register("bcBuCode")}
+                register={register("bcBuCode")}
                 width={InputSize.i150}
                 // onChange={(e) => setReportKind(e.target.value)}
               >

@@ -205,7 +205,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label style={{ minWidth: "83px" }}>영업소</Label>
             <Select
-              {...register("areaCode")}
+              register={register("areaCode")}
               onChange={handleSelectCode}
               width={InputSize.i130}
               disabled={!isAddBtnClicked}

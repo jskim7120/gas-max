@@ -258,7 +258,7 @@ function Form() {
             <UserWhite />
             <p className="w">거래처 검색</p>
             <p className="b">영업소</p>
-            <Select {...register("areaCode")}>
+            <Select register={register("areaCode")}>
               {areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}

@@ -78,7 +78,10 @@ function CC9001({
             <SearchWrapper className="h35" style={{ justifyContent: "start" }}>
               <FormGroup>
                 <Label style={{ minWidth: "62px" }}>계정과목</Label>
-                <Select {...register("acjAccCode")} width={InputSize.i120}>
+                <Select
+                  register={register("acjAccCode")}
+                  width={InputSize.i120}
+                >
                   {dataCommonDic?.acjAccCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

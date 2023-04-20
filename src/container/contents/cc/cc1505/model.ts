@@ -5,7 +5,17 @@ export interface ICC1505SEARCH {
 export interface ICC1505 {}
 
 export interface ICC1505FORM {
-  accCode: string;
+  accCode1: string;
+  accCode2: string;
+  accCodeType: string;
+  accDelYn: string;
   accName: string;
-  accCoddType: string;
 }
+
+export const emtyObj = {
+  accCode1: "",
+  accCode2: "",
+  accCodeType: "",
+  accDelYn: "",
+  accName: "",
+};

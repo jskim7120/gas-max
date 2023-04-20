@@ -384,7 +384,7 @@ function FormCM1105() {
           <Input register={register("cuTel22")} inputSize={InputSize.i150} />
 
           <Label style={{ minWidth: "114px" }}>거래구분</Label>
-          <Select {...register("cuType")} width={InputSize.i150}>
+          <Select register={register("cuType")} width={InputSize.i150}>
             {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -481,7 +481,7 @@ function FormCM1105() {
 
           <FormGroup>
             <Label style={{ minWidth: "114px" }}>거래상태</Label>
-            <Select {...register("cuStae")} width={InputSize.i150}>
+            <Select register={register("cuStae")} width={InputSize.i150}>
               {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -529,7 +529,7 @@ function FormCM1105() {
           <Field>
             <FormGroup>
               <Label>담당 사원</Label>
-              <Select {...register("cuSwCode")} width={InputSize.i150}>
+              <Select register={register("cuSwCode")} width={InputSize.i150}>
                 {dataCommonDic?.cuSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -538,7 +538,7 @@ function FormCM1105() {
               </Select>
 
               <Label>지역 분류</Label>
-              <Select {...register("cuJyCode")} width={InputSize.i150}>
+              <Select register={register("cuJyCode")} width={InputSize.i150}>
                 {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -547,7 +547,7 @@ function FormCM1105() {
               </Select>
 
               <Label>관리자 분류</Label>
-              <Select {...register("cuCustgubun")} width={InputSize.i150}>
+              <Select register={register("cuCustgubun")} width={InputSize.i150}>
                 {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -558,7 +558,7 @@ function FormCM1105() {
 
             <FormGroup>
               <Label>소비자 형태</Label>
-              <Select {...register("cuCutype")} width={InputSize.i150}>
+              <Select register={register("cuCutype")} width={InputSize.i150}>
                 {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -567,7 +567,10 @@ function FormCM1105() {
               </Select>
 
               <Label>청구 구분</Label>
-              <Select {...register("cuRequestType")} width={InputSize.i150}>
+              <Select
+                register={register("cuRequestType")}
+                width={InputSize.i150}
+              >
                 {dataCommonDic?.cuRequestType?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
                     {obj.codeName}
@@ -576,7 +579,7 @@ function FormCM1105() {
               </Select>
 
               <Label>수금 방법</Label>
-              <Select {...register("cuSukumtype")} width={InputSize.i150}>
+              <Select register={register("cuSukumtype")} width={InputSize.i150}>
                 {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
                     {obj.codeName}
@@ -588,7 +591,7 @@ function FormCM1105() {
             <FormGroup>
               <Label>품목 단가</Label>
               <Select
-                {...register("cuJdc", { valueAsNumber: true })}
+                register={register("cuJdc", { valueAsNumber: true })}
                 width={InputSize.i150}
               >
                 {dataCommonDic?.cuJdc?.map((obj: any, idx: number) => (
@@ -599,7 +602,7 @@ function FormCM1105() {
               </Select>
 
               <Label>Vat 적용방법</Label>
-              <Select {...register("cuVatKind")} width={InputSize.i150}>
+              <Select register={register("cuVatKind")} width={InputSize.i150}>
                 {dataCommonDic?.cuVatKind?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -608,7 +611,7 @@ function FormCM1105() {
               </Select>
 
               <Label>원미만 금액계산</Label>
-              <Select {...register("cuRoundType")} width={InputSize.i150}>
+              <Select register={register("cuRoundType")} width={InputSize.i150}>
                 {dataCommonDic?.cuRoundType?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

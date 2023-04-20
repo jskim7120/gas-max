@@ -12,24 +12,27 @@ import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import { fields, columns } from "./data";
 import { ICC1505SEARCH } from "./model";
 import GridLeft from "components/grid";
+import API from "app/axios";
+import { CC1505SEARCH, CC150565 } from "app/path";
 import Form from "./form";
 import FourButtons from "components/button/fourButtons";
 
 function CC1505({
   depthFullName,
-  areaCode,
+  ownAreaCode,
   menuId,
 }: {
   depthFullName: string;
-  areaCode: string;
+  ownAreaCode: string;
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [data65, setData65] = useState<any>({});
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
@@ -39,19 +42,48 @@ function CC1505({
   });
 
   useEffect(() => {
-    if (dataCommonDic) {
+    if (ownAreaCode) {
+      fetchData({ areaCode: ownAreaCode });
     }
-  }, [dataCommonDic]);
+  }, []);
 
-  useEffect(() => {}, [selected]);
+  useEffect(() => {
+    if (selected && Object.keys(selected).length > 0) {
+      fetchData65({ accCode: selected.accCode, areaCode: ownAreaCode });
+    }
+  }, [selected]);
 
-  const resetSearchForm = () => {};
+  const fetchData = async (params: any) => {
+    try {
+      const { data: datas } = await API.get(CC1505SEARCH, { params: params });
 
-  const { register, handleSubmit, reset, control } = useForm<ICC1505SEARCH>({
-    mode: "onSubmit",
-  });
+      if (datas) {
+        setData(datas);
+        setSelected(datas[0]);
+      } else {
+        setData([]);
+        setSelected({});
+      }
+    } catch (err) {
+      setData([]);
+      setSelected({});
+      console.log("CC1505 data search fetch error =======>", err);
+    }
+  };
 
-  const fetchData = async (params: any) => {};
+  const fetchData65 = async (params: any) => {
+    try {
+      const { data: data65 } = await API.get(CC150565, { params: params });
+      if (data65) {
+        setData65(data65[0]);
+      } else {
+        setData65({});
+      }
+    } catch (err) {
+      setData65({});
+      console.log("CC1505 data 65 fetch error =======>", err);
+    }
+  };
 
   const onClickAdd = () => {
     setIsAddBtnClicked(true);
@@ -76,25 +108,20 @@ function CC1505({
     <>
       <SearchWrapper className="h35 mt5">
         <p>{depthFullName}</p>
-        <SearchWrapper
-          style={{
-            borderBottom: "none",
-          }}
-        >
-          <FourButtons
-            onClickAdd={onClickAdd}
-            onClickDelete={onClickDelete}
-            onClickUpdate={onClickUpdate}
-            onClickReset={onClickReset}
-            isAddBtnClicked={isAddBtnClicked}
-            isCancelBtnDisabled={isCancelBtnDisabled}
-          />
-        </SearchWrapper>
+
+        <FourButtons
+          onClickAdd={onClickAdd}
+          onClickDelete={onClickDelete}
+          onClickUpdate={onClickUpdate}
+          onClickReset={onClickReset}
+          isAddBtnClicked={isAddBtnClicked}
+          isCancelBtnDisabled={isCancelBtnDisabled}
+        />
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
           <GridLeft
-            areaCode={areaCode}
+            areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
@@ -103,21 +130,15 @@ function CC1505({
             setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
-            style={{ height: `calc(100% - 38px)` }}
+            style={{ height: `100%` }}
           />
         </LeftSide>
         <RightSide>
           <Form
             ref={formRef}
-            fetchData={fetchData}
-            setData={setData}
-            selected={selected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
-            setSelected={setSelected}
+            data={data65}
             dataCommonDic={dataCommonDic}
             isAddBtnClicked={isAddBtnClicked}
-            setIsAddBtnClicked={setIsAddBtnClicked}
           />
         </RightSide>
       </MainWrapper>

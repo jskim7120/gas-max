@@ -162,7 +162,7 @@ function GR1100({
                 >
                   구분
                 </Label>
-                <Select {...register("sBuGubun")} width={InputSize.i100}>
+                <Select register={register("sBuGubun")} width={InputSize.i100}>
                   {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -184,7 +184,7 @@ function GR1100({
                 >
                   거래상태
                 </Label>
-                <Select {...register("sBuStae")} width={InputSize.i100}>
+                <Select register={register("sBuStae")} width={InputSize.i100}>
                   {dataCommonDic?.sBuStae?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

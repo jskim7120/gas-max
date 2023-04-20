@@ -94,7 +94,7 @@ function Tab4({
         />
 
         <Label>계약갱신</Label>
-        <Select {...register("cuExtendType")} width={InputSize.i130}>
+        <Select register={register("cuExtendType")} width={InputSize.i130}>
           {dataCommonDic?.cuExtendType?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -119,7 +119,7 @@ function Tab4({
 
       <FormGroup>
         <Label>용기소유자</Label>
-        <Select {...register("cuUsertong")} width={InputSize.i130}>
+        <Select register={register("cuUsertong")} width={InputSize.i130}>
           {dataCommonDic?.cuUsertong?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -128,7 +128,7 @@ function Tab4({
         </Select>
 
         <Label>시설소유자</Label>
-        <Select {...register("cuUsersisul")} width={InputSize.i130}>
+        <Select register={register("cuUsersisul")} width={InputSize.i130}>
           {dataCommonDic?.cuUsersisul?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -137,7 +137,7 @@ function Tab4({
         </Select>
 
         <Label>보일러 사용</Label>
-        <Select {...register("cuBoilerYn")} width={InputSize.i130}>
+        <Select register={register("cuBoilerYn")} width={InputSize.i130}>
           {dataCommonDic?.cuBoilerYn?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -146,7 +146,7 @@ function Tab4({
         </Select>
 
         <Label>온수기 사용</Label>
-        <Select {...register("cuWaterYn")} width={InputSize.i130}>
+        <Select register={register("cuWaterYn")} width={InputSize.i130}>
           {dataCommonDic?.cuWaterYn?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -157,7 +157,7 @@ function Tab4({
 
       <FormGroup>
         <Label>배관시설</Label>
-        <Select {...register("cuPipelineYn")} width={InputSize.i130}>
+        <Select register={register("cuPipelineYn")} width={InputSize.i130}>
           {dataCommonDic?.cuPipelineYn?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -166,7 +166,7 @@ function Tab4({
         </Select>
 
         <Label>차단 장치</Label>
-        <Select {...register("cuBlockYn")} width={InputSize.i130}>
+        <Select register={register("cuBlockYn")} width={InputSize.i130}>
           {dataCommonDic?.cuBlockYn?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -175,7 +175,7 @@ function Tab4({
         </Select>
 
         <Label>시설적합유무</Label>
-        <Select {...register("cuSisulyn")} width={InputSize.i130}>
+        <Select register={register("cuSisulyn")} width={InputSize.i130}>
           {dataCommonDic?.cuSisulyn?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -184,7 +184,7 @@ function Tab4({
         </Select>
 
         <Label>검사 대상</Label>
-        <Select {...register("cuGumsa")} width={InputSize.i130}>
+        <Select register={register("cuGumsa")} width={InputSize.i130}>
           {dataCommonDic?.cuGumsa?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}

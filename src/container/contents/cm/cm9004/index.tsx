@@ -113,7 +113,7 @@ function CM9004({
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>공급사업</Label>
                   <Select
-                    {...register("cuGong")}
+                    register={register("cuGong")}
                     style={{ width: "100%" }}
                     // onChange={(e) => setReportKind(e.target.value)}
                   >
@@ -127,7 +127,10 @@ function CM9004({
 
                 <FormGroup>
                   <Label>거래구분</Label>
-                  <Select {...register("cuType")} style={{ width: "100%" }}>
+                  <Select
+                    register={register("cuType")}
+                    style={{ width: "100%" }}
+                  >
                     {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -138,7 +141,10 @@ function CM9004({
 
                 <FormGroup>
                   <Label>담당사원</Label>
-                  <Select {...register("swCode")} style={{ width: "100%" }}>
+                  <Select
+                    register={register("swCode")}
+                    style={{ width: "100%" }}
+                  >
                     {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -149,7 +155,10 @@ function CM9004({
 
                 <FormGroup>
                   <Label>지역분류</Label>
-                  <Select {...register("cuJyCode")} style={{ width: "100%" }}>
+                  <Select
+                    register={register("cuJyCode")}
+                    style={{ width: "100%" }}
+                  >
                     {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
@@ -160,7 +169,10 @@ function CM9004({
 
                 <FormGroup>
                   <Label>거래상태</Label>
-                  <Select {...register("cuStae")} style={{ width: "100%" }}>
+                  <Select
+                    register={register("cuStae")}
+                    style={{ width: "100%" }}
+                  >
                     {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}

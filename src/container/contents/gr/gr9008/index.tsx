@@ -100,7 +100,7 @@ function GR9008({
             <FormGroup>
               <Label style={{ minWidth: "auto" }}>매입처</Label>
               <Select
-                {...register("bcBuCode")}
+                register={register("bcBuCode")}
                 width={InputSize.i150}
                 // onChange={(e) => setReportKind(e.target.value)}
               >

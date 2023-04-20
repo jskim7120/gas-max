@@ -201,7 +201,7 @@ const FORMCM1105 = React.forwardRef(
         <FormGroup>
           <Label>수금방법</Label>
           <Select
-            {...register("msSukumtype")}
+            register={register("msSukumtype")}
             kind={FieldKind.BORDER}
             style={{ width: "175px" }}
           >
@@ -215,7 +215,7 @@ const FORMCM1105 = React.forwardRef(
         <FormGroup>
           <Label>사원</Label>
           <Select
-            {...register("msSwCode")}
+            register={register("msSwCode")}
             kind={FieldKind.BORDER}
             width={InputSize.i175}
           >

@@ -20,7 +20,7 @@ export const columns = [
     name: "accCode",
     fieldName: "accCode",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "코드",
     },
@@ -29,7 +29,7 @@ export const columns = [
     name: "accName",
     fieldName: "accName",
     type: "data",
-    width: "150",
+    width: "250",
     styleName: "rg-left-column",
     header: {
       text: "계정 과목",
@@ -39,7 +39,7 @@ export const columns = [
     name: "accDelYn",
     fieldName: "accDelYn",
     type: "data",
-    width: "80",
+    width: "70",
     header: {
       text: "변경 가능",
     },

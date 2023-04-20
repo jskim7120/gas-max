@@ -88,7 +88,7 @@ function GR9007({
           <SearchWrapper className="h35">
             <FormGroup>
               <Label style={{ minWidth: "auto" }}>충전소</Label>
-              <Select width={InputSize.i130} {...register("bcBuCode")}>
+              <Select width={InputSize.i130} register={register("bcBuCode")}>
                 {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}

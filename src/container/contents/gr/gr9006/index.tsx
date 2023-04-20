@@ -103,7 +103,7 @@ function GR9006({
             <FormGroup>
               <Label style={{ minWidth: "auto" }}>보고서종류</Label>
               <Select
-                {...register("reportType")}
+                register={register("reportType")}
                 width={InputSize.i150}
                 onChange={(e) => setReportType(e.target.value)}
               >
@@ -116,7 +116,7 @@ function GR9006({
 
               <Label style={{ minWidth: "80px" }}>매입처</Label>
               <Select
-                {...register("bcBuCode")}
+                register={register("bcBuCode")}
                 width={InputSize.i150}
                 // onChange={(e) => setReportKind(e.target.value)}
               >

@@ -14,10 +14,17 @@ export const SearchBtn = styled.button`
 
 interface IPostcode {
   setAddress: (arg: string) => void;
+  onClose?: any;
   disabled?: boolean;
+  defaultValue?: string;
 }
 
-const Postcode = ({ setAddress, disabled = false }: IPostcode) => {
+const Postcode = ({
+  setAddress,
+  onClose,
+  disabled = false,
+  defaultValue,
+}: IPostcode) => {
   const open = useDaumPostcodePopup(
     "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
   );
@@ -62,7 +69,11 @@ const Postcode = ({ setAddress, disabled = false }: IPostcode) => {
 
   const handleClick = () => {
     if (!disabled) {
-      open({ onComplete: handleComplete });
+      open({
+        onComplete: handleComplete,
+        onClose: onClose && onClose,
+        defaultQuery: defaultValue ? defaultValue : "",
+      });
     }
   };
 

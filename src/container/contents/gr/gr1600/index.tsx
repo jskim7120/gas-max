@@ -118,7 +118,7 @@ function GR1600({
                 >
                   구분
                 </Label>
-                <Select {...register("buGubun")}>
+                <Select register={register("buGubun")}>
                   {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}

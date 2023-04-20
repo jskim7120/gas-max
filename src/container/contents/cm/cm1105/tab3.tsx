@@ -217,7 +217,7 @@ function Tab3({
               inputSize={InputSize.i80}
             />
             <Select
-              {...register("tankVol1", { valueAsNumber: true })}
+              register={register("tankVol1", { valueAsNumber: true })}
               textAlign="right"
               width={InputSize.i80}
             >
@@ -309,7 +309,7 @@ function Tab3({
               inputSize={InputSize.i80}
             />
             <Select
-              {...register("tankVol2", { valueAsNumber: true })}
+              register={register("tankVol2", { valueAsNumber: true })}
               textAlign="right"
               width={InputSize.i80}
             >
@@ -420,7 +420,7 @@ function Tab3({
           ))}
 
           <Label style={{ minWidth: "100px" }}>용기수량</Label>
-          <Select {...register("cuCylinderName")}>
+          <Select register={register("cuCylinderName")}>
             {dataCommonDic?.cuCylinderName?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
                 {obj.codeName}

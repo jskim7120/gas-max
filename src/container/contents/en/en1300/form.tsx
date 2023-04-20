@@ -248,7 +248,7 @@ const Form = React.forwardRef(
             <Label>영업소</Label>
             <Select
               width={InputSize.i130}
-              {...register("areaCode")}
+              register={register("areaCode")}
               onChange={handleSelectCode}
               disabled={!isAddBtnClicked}
             >
@@ -289,7 +289,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <FormGroup>
             <Label>가스구분</Label>
-            <Select {...register("jpGubun")} width={InputSize.i130}>
+            <Select register={register("jpGubun")} width={InputSize.i130}>
               {dataCommonDic?.jpGubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -315,7 +315,7 @@ const Form = React.forwardRef(
             )}
           />
 
-          <Select {...register("jpKgDanwi")} style={{ minWidth: "64px" }}>
+          <Select register={register("jpKgDanwi")} style={{ minWidth: "64px" }}>
             {dataCommonDic?.jpKgDanwi?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -326,7 +326,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <FormGroup>
             <Label>단위</Label>
-            <Select {...register("jpUnit")} width={InputSize.i130}>
+            <Select register={register("jpUnit")} width={InputSize.i130}>
               {dataCommonDic?.jpUnit?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -348,7 +348,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <FormGroup>
             <Label>가스분류</Label>
-            <Select {...register("jpGasType")} width={InputSize.i130}>
+            <Select register={register("jpGasType")} width={InputSize.i130}>
               {dataCommonDic?.jpGasType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -361,7 +361,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label>품목구분</Label>
 
-            <Select {...register("jpKind")} width={InputSize.i130}>
+            <Select register={register("jpKind")} width={InputSize.i130}>
               {dataCommonDic?.jpKind?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -373,7 +373,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <FormGroup>
             <Label>용도구분</Label>
-            <Select {...register("jpGasuse")} width={InputSize.i130}>
+            <Select register={register("jpGasuse")} width={InputSize.i130}>
               {dataCommonDic?.jpGasuse?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -386,7 +386,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <FormGroup>
             <Label>Vat구분</Label>
-            <Select {...register("jpVatKind")} width={InputSize.i130}>
+            <Select register={register("jpVatKind")} width={InputSize.i130}>
               {dataCommonDic?.jpVatKind?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}

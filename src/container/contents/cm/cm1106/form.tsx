@@ -177,7 +177,7 @@ const FORMCM1106 = React.forwardRef(
         <FormGroup>
           <Label>적용구분</Label>
           <Select
-            {...register("jcDangaType")}
+            register={register("jcDangaType")}
             kind={FieldKind.BORDER}
             width={InputSize.i130}
           >
@@ -192,7 +192,7 @@ const FORMCM1106 = React.forwardRef(
         <FormGroup>
           <Label>Vat구분</Label>
           <Select
-            {...register("jcVatKind")}
+            register={register("jcVatKind")}
             kind={FieldKind.BORDER}
             width={InputSize.i130}
           >
@@ -273,7 +273,7 @@ const FORMCM1106 = React.forwardRef(
         <FormGroup>
           <Label>사용상태</Label>
           <Select
-            {...register("jcJpState")}
+            register={register("jcJpState")}
             kind={FieldKind.BORDER}
             width={InputSize.i130}
           >

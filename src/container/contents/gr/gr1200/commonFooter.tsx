@@ -123,7 +123,7 @@ function CommonFooterInfo({
           </td>
           <td>
             <Select
-              {...register("bcSupplyType")}
+              register={register("bcSupplyType")}
               className="h27"
               width={InputSize.i110}
               style={{ margin: "0px 3px" }}

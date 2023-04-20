@@ -157,7 +157,7 @@ function Tab1({
         <Select
           style={{ margin: "5px" }}
           width={InputSize.i100}
-          {...register("buJpCode1")}
+          register={register("buJpCode1")}
         >
           {tableData?.buJpCode1?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.jpCode}>
@@ -172,7 +172,7 @@ function Tab1({
         <Select
           style={{ margin: "5px" }}
           width={InputSize.i100}
-          {...register("buJpCode2")}
+          register={register("buJpCode2")}
         >
           {tableData?.buJpCode2?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.jpCode}>
@@ -187,7 +187,7 @@ function Tab1({
         <Select
           style={{ margin: "5px" }}
           width={InputSize.i100}
-          {...register("buJpCode3")}
+          register={register("buJpCode3")}
         >
           {tableData?.buJpCode3?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.jpCode}>
@@ -202,7 +202,7 @@ function Tab1({
         <Select
           style={{ margin: "5px" }}
           width={InputSize.i100}
-          {...register("buJpCode4")}
+          register={register("buJpCode4")}
         >
           {tableData?.buJpCode4?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.jpCode}>

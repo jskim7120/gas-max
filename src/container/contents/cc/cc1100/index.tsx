@@ -53,9 +53,10 @@ function CC1100({
     functionName: "CC1100",
   });
 
-  const { register, handleSubmit, reset, control } = useForm<ICC1100SEARCH>({
-    mode: "onSubmit",
-  });
+  const { register, handleSubmit, reset, control, getValues } =
+    useForm<ICC1100SEARCH>({
+      mode: "onSubmit",
+    });
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -125,6 +126,7 @@ function CC1100({
     } else {
       data.codeGu = "0";
     }
+
     fetchData(data);
   };
 
@@ -137,8 +139,9 @@ function CC1100({
             <>
               <p className="big">영업소</p>
               <Select
-                value={areaCode}
-                onChange={(e) => setAreaCode(e.target.value)}
+                // value={areaCode}
+                // onChange={(e) => setAreaCode(e.target.value)}
+                register={register("areaCode")}
               >
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -149,21 +152,7 @@ function CC1100({
             </>
           )}
         </FormGroup>
-      </SearchWrapper>
-      <SearchWrapper
-        className="h35 mt5"
-        style={{
-          display: "flex",
-          position: "absolute",
-          top: "87px",
-          right: "19px",
-          background: "none",
-          padding: "0",
-          border: "none",
-          height: "auto",
-          marginTop: "2px",
-        }}
-      >
+
         <FourButtons
           onClickAdd={onClickAdd}
           onClickDelete={onClickDelete}
@@ -277,6 +266,7 @@ function CC1100({
         </LeftSide>
         <RightSide>
           <Form
+            areaCode={getValues("areaCode")}
             selected={selected}
             ref={formRef}
             fetchData={fetchData}

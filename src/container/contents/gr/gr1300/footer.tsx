@@ -75,7 +75,7 @@ function FooterInfo({
             <Input register={register("bbTotal")} readOnly className="h27" />
           </td>
           <td>
-            <Select {...register("bbSupplyType")} className="h27">
+            <Select register={register("bbSupplyType")} className="h27">
               <option value="A">외상</option>
               <option value="0">현금</option>
             </Select>
