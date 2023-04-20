@@ -154,7 +154,7 @@ function Tab1({
           <FormGroup>
             <Label className="lable-check">
               <CheckBox
-                title="조정기"
+                title="조 정 기"
                 checked={chkCuRh20}
                 onChange={(e: any) => setChkCuRh20(e.target.checked)}
               />
@@ -175,7 +175,7 @@ function Tab1({
           <FormGroup>
             <Label className="lable-check">
               <CheckBox
-                title="관리비"
+                title="관 리 비"
                 checked={chkCuAnKum}
                 onChange={(e: any) => setChkCuAnKum(e.target.checked)}
               />
@@ -201,7 +201,7 @@ function Tab1({
           <FormGroup>
             <Label className="lable-check">
               <CheckBox
-                title="연체율"
+                title="연 체 율"
                 checked={chkCuPer}
                 onChange={(e: any) => setChkCuPer(e.target.checked)}
               />
@@ -274,7 +274,7 @@ function Tab1({
           <FormGroup>
             <Label className="lable-check">
               <CheckBox
-                title="계량기"
+                title="계 량 기"
                 checked={chkCuMeterKum}
                 onChange={(e: any) => setChkCuMeterKum(e.target.checked)}
               />
@@ -300,7 +300,7 @@ function Tab1({
           <FormGroup>
             <Label className="lable-check">
               <CheckBox
-                title="할인율"
+                title="할 인 율"
                 checked={chkCuCdc}
                 onChange={(e: any) => setChkCuCdc(e.target.checked)}
               />
@@ -326,7 +326,7 @@ function Tab1({
           <FormGroup>
             <Label className="lable-check">
               <CheckBox
-                title="검침일"
+                title="검 침 일"
                 checked={chkCuGumdate}
                 onChange={(e: any) => setChkCuGumdate(e.target.checked)}
               />
@@ -387,7 +387,7 @@ function Tab1({
           <FormGroup>
             <Label className="lable-check" style={{ minWidth: "143px" }}>
               <CheckBox
-                title="수금방법"
+                title="수금 방법"
                 checked={chkCuSukumtype}
                 onChange={(e: any) => setChkCuSukumtype(e.target.checked)}
               />

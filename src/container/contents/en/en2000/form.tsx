@@ -165,7 +165,7 @@ const Form = React.forwardRef(
       >
         <Wrapper>
           <Input
-            label="코드"
+            label="코 드"
             register={register("ccCode")}
             maxLength="2"
             readOnly
@@ -184,7 +184,7 @@ const Form = React.forwardRef(
 
         <Wrapper>
           <Input
-            label="비고"
+            label="비 고"
             register={register("ccBigo")}
             fullWidth
             maxLength="50"

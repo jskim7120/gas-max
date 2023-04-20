@@ -197,7 +197,7 @@ const Form = React.forwardRef(
       >
         <Wrapper>
           <Input
-            label="코드"
+            label="코 드"
             labelStyle={{ minWidth: "50px" }}
             register={register("jyCode")}
             maxLength="2"
@@ -206,7 +206,7 @@ const Form = React.forwardRef(
           />
 
           <FormGroup>
-            <Label style={{ minWidth: "83px" }}>영업소</Label>
+            <Label style={{ minWidth: "83px" }}>영 업 소</Label>
             <Select
               {...register("areaCode")}
               onChange={handleSelectCode}
@@ -234,7 +234,7 @@ const Form = React.forwardRef(
 
         <Wrapper>
           <Input
-            label="비고"
+            label="비 고"
             labelStyle={{ minWidth: "50px" }}
             register={register("jyBigo")}
             maxLength="4"

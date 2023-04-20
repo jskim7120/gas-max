@@ -190,7 +190,7 @@ const Form = React.forwardRef(
       <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 12px" }}>
         <Wrapper grid col={3}>
           <Input
-            label="코드"
+            label="영업소 코드"
             register={register("areaCode")}
             readOnly={true}
             inputSize={InputSize.i150}
@@ -212,7 +212,7 @@ const Form = React.forwardRef(
             {...register("jnSsno")}
             render={({ field: { onChange, value, name } }) => (
               <Input
-                label="사업자번호"
+                label="사업자 번호"
                 value={value}
                 onChange={onChange}
                 mask={[
@@ -235,14 +235,14 @@ const Form = React.forwardRef(
             )}
           />
           <Input
-            label="상호"
+            label="상 호"
             // labelStyle={{ minWidth: "50px" }}
             register={register("jnSangho")}
             maxLength="26"
             inputSize={InputSize.i150}
           />
           <Input
-            label="대표"
+            label="대 표"
             // labelStyle={{ minWidth: "50px" }}
             register={register("jnSajang")}
             maxLength="14"
@@ -252,7 +252,7 @@ const Form = React.forwardRef(
 
         <Wrapper style={{ alignItems: "center" }}>
           <Input
-            label="주소"
+            label="주 소"
             register={register("jnZipcode")}
             maxLength="6"
             inputSize={InputSize.i150}
@@ -277,13 +277,13 @@ const Form = React.forwardRef(
 
         <Wrapper grid col={3}>
           <Input
-            label="업태"
+            label="업 태"
             register={register("jnUptae")}
             inputSize={InputSize.i150}
             maxLength="50"
           />
           <Input
-            label="종목"
+            label="종 목"
             // labelStyle={{ minWidth: "75px" }}
             register={register("jnJongmok")}
             inputSize={InputSize.i150}
@@ -299,7 +299,7 @@ const Form = React.forwardRef(
             maxLength="14"
           />
           <Input
-            label="대표전화2"
+            label="대표전화 2"
             // labelStyle={{ minWidth: "80px" }}
             register={register("jnTel2")}
             inputSize={InputSize.i150}
@@ -307,7 +307,7 @@ const Form = React.forwardRef(
           />
 
           <Input
-            label="팩스"
+            label="팩 스"
             // labelStyle={{ minWidth: "80px" }}
             register={register("jnFax")}
             inputSize={InputSize.i90}
@@ -498,7 +498,7 @@ const Form = React.forwardRef(
           <PlainTab
             tabHeader={[
               "지로 양식",
-              "고객안내문",
+              "고객 안내문",
               "입금계좌 안내",
               "결재 라인",
             ]}

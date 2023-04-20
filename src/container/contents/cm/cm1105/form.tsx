@@ -493,7 +493,7 @@ function FormCM1105() {
 
         <FormGroup>
           <Input
-            label="주소"
+            label="주 소"
             register={register("cuZipcode")}
             inputSize={InputSize.i120}
           />
@@ -504,7 +504,7 @@ function FormCM1105() {
 
         <FormGroup>
           <Input
-            label="비고"
+            label="비 고"
             register={register("cuBigo1")}
             style={{ width: "432px" }}
           />
@@ -513,7 +513,7 @@ function FormCM1105() {
         <Divider />
         <Wrapper>
           <Input
-            label="메모"
+            label="메 모"
             register={register("cuMemo")}
             style={{ width: "702px" }}
           />

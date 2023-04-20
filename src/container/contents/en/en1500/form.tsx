@@ -394,7 +394,11 @@ const Form = (
       <Wrapper grid style={{ marginBottom: "7px" }}>
         <Field className="field">
           <FormGroup>
-            <Input label="코드" register={register("areaCode")} maxLength="2" />
+            <Input
+              label="코 드"
+              register={register("areaCode")}
+              maxLength="2"
+            />
           </FormGroup>
         </Field>
         <Field>
@@ -471,7 +475,7 @@ const Form = (
           <div className="title">압력별 환경 루베단가 설정</div>
           <Table
             tableHeader={[
-              "조정기압력",
+              "조정기 압력",
               "루베(㎥ ) 단가",
               "㎥단가 환산",
               "기화율",
@@ -489,7 +493,7 @@ const Form = (
           <div className="basicItemsCnt">
             <Wrapper className="volWrapper">
               <FormGroup>
-                <Label>조정기압력</Label>
+                <Label>조정기 압력</Label>
                 <Select
                   {...register("jnR")}
                   style={{ minWidth: "85px" }}
@@ -513,7 +517,7 @@ const Form = (
                   {...register("jnAnkum")}
                   render={({ field: { onChange, value, name } }) => (
                     <Input
-                      label="안전관리비"
+                      label="안전 관리비"
                       value={value}
                       onChange={onChange}
                       mask={currencyMask}
@@ -534,7 +538,7 @@ const Form = (
                   {...register("jnGumdate")}
                   render={({ field: { onChange, value, name } }) => (
                     <Input
-                      label="정기검침일"
+                      label="정기 검침일"
                       value={value}
                       onChange={onChange}
                       mask={[/\d/, /\d/]}
@@ -550,7 +554,7 @@ const Form = (
 
             <Wrapper className="volWrapper">
               <FormGroup>
-                <Label>수금방법</Label>
+                <Label>수금 방법</Label>
                 <Select
                   {...register("jnSukumtype")}
                   style={{ minWidth: "85px" }}

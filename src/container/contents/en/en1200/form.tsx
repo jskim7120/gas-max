@@ -259,14 +259,14 @@ const Form = React.forwardRef(
           <div>
             <Wrapper grid col={2}>
               <Input
-                label="코드"
+                label="코 드"
                 register={register("saupSno")}
                 inputSize={InputSize.i150}
                 readOnly
               />
 
               <FormGroup>
-                <Label>영업소</Label>
+                <Label>영 업 소</Label>
                 <Select
                   {...register("areaCode")}
                   onChange={handleSelectCode}
@@ -288,7 +288,7 @@ const Form = React.forwardRef(
                 {...register("saupSsno")}
                 render={({ field: { onChange, value, name } }) => (
                   <Input
-                    label="사업자번호"
+                    label="사업자 번호"
                     value={value}
                     name={name}
                     onChange={onChange}
@@ -319,13 +319,13 @@ const Form = React.forwardRef(
             </Wrapper>
             <Wrapper grid col={2}>
               <Input
-                label="상호"
+                label="상 호"
                 register={register("saupSangho")}
                 inputSize={InputSize.i150}
                 maxLength="50"
               />
               <Input
-                label="대표"
+                label="대 표"
                 register={register("saupSajang")}
                 inputSize={InputSize.i175}
                 maxLength="20"
@@ -333,7 +333,7 @@ const Form = React.forwardRef(
             </Wrapper>
             <Wrapper style={{ alignItems: "center" }}>
               <Input
-                label="주소"
+                label="주 소"
                 register={register("saupZipcode")}
                 maxLength="6"
                 inputSize={InputSize.i150}
@@ -355,13 +355,13 @@ const Form = React.forwardRef(
             </Wrapper>
             <Wrapper grid col={2}>
               <Input
-                label="업태"
+                label="업 태"
                 register={register("saupUptae")}
                 inputSize={InputSize.i250}
                 maxLength="50"
               />
               <Input
-                label="종목"
+                label="종 목"
                 register={register("saupJongmok")}
                 inputSize={InputSize.i175}
                 maxLength="50"
@@ -372,7 +372,7 @@ const Form = React.forwardRef(
               <div>
                 <Wrapper style={{ alignItems: "center" }}>
                   <Input
-                    label="도장이미지"
+                    label="도장 이미지"
                     register={register("saupStampImg")}
                     value={image?.name}
                     inputSize={InputSize.i250}
@@ -485,7 +485,7 @@ const Form = React.forwardRef(
             </Wrapper>
             <Wrapper>
               <Input
-                label="메모"
+                label="메 모"
                 register={register("saupBigo")}
                 maxLength="50"
                 style={{ width: "394px" }}
@@ -562,7 +562,7 @@ const Form = React.forwardRef(
             </Wrapper>
             <Wrapper style={{ alignItems: "center" }}>
               <Input
-                label="공인인증서"
+                label="공인 인증서"
                 register={register("saupCert")}
                 inputSize={InputSize.i200}
               />

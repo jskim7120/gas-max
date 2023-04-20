@@ -49,7 +49,7 @@ function Tab4({
           )}
         />
 
-        <Label>최종점검일</Label>
+        <Label>최종 점검일</Label>
         <Controller
           control={control}
           {...register("cuHdate")}
@@ -65,7 +65,7 @@ function Tab4({
       </FormGroup>
 
       <FormGroup>
-        <Label>공급계약일</Label>
+        <Label>공급 계약일</Label>
         <Controller
           control={control}
           {...register("cuGongdate")}
@@ -79,7 +79,7 @@ function Tab4({
           )}
         />
 
-        <Label>계약만료일</Label>
+        <Label>계약 만료일</Label>
         <Controller
           control={control}
           {...register("cuGongdateT")}
@@ -102,7 +102,7 @@ function Tab4({
           ))}
         </Select>
 
-        <Label>계약갱신일</Label>
+        <Label>계약 갱신일</Label>
         <Controller
           control={control}
           {...register("cuExtendDate")}

@@ -67,7 +67,7 @@ function Tab5({ register }: { register: Function }) {
               inputSize={InputSize.i130}
             />
             <Input
-              label="납부자상태"
+              label="납부자 상태"
               register={register("stateName")}
               inputSize={InputSize.i130}
             />

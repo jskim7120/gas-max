@@ -289,7 +289,7 @@ const Form = React.forwardRef(
       >
         <Wrapper>
           <Input
-            label="코드"
+            label="코 드"
             register={register("swCode")}
             maxLength="2"
             readOnly
@@ -297,7 +297,7 @@ const Form = React.forwardRef(
           />
 
           <FormGroup>
-            <Label>영업소</Label>
+            <Label>영 업 소</Label>
             <Select
               {...register("areaCode")}
               onChange={handleSelectCode}
@@ -315,12 +315,12 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper>
           <Input
-            label="사원명"
+            label="사 원 명"
             register={register("swName")}
             inputSize={InputSize.i200}
           />
           <Input
-            label="부서명"
+            label="부 서 명"
             register={register("swDepartment")}
             inputSize={InputSize.i200}
           />
@@ -429,7 +429,7 @@ const Form = React.forwardRef(
 
         <Wrapper style={{ alignItems: "center" }}>
           <Input
-            label="주소"
+            label="주 소"
             register={register("swZipcode")}
             maxLength="6"
             inputSize={InputSize.i200}
@@ -481,7 +481,7 @@ const Form = React.forwardRef(
           <div style={{ width: "600px" }}>
             <Wrapper grid col={3} style={{ alignItems: "center" }}>
               <Input
-                label="서명화일"
+                label="서명 화일"
                 register={register("swStampFile")}
                 value={image?.name}
                 inputSize={InputSize.i200}
@@ -519,7 +519,7 @@ const Form = React.forwardRef(
 
             <Wrapper>
               <FormGroup>
-                <Label>입사일</Label>
+                <Label>입 사 일</Label>
                 <Controller
                   control={control}
                   {...register("swIndate")}
@@ -552,7 +552,7 @@ const Form = React.forwardRef(
                   {...register("swPaykum")}
                   render={({ field: { onChange, value, name } }) => (
                     <Input
-                      label="급여액"
+                      label="급 여 액"
                       value={value}
                       onChange={onChange}
                       mask={currencyMask}
@@ -571,7 +571,7 @@ const Form = React.forwardRef(
                   {...register("swPaydate")}
                   render={({ field: { onChange, value, name } }) => (
                     <Input
-                      label="급여일"
+                      label="급 여 일"
                       value={value}
                       labelStyle={{ minWidth: "76px" }}
                       onChange={onChange}
@@ -629,7 +629,7 @@ const Form = React.forwardRef(
 
         <Wrapper>
           <Input
-            label="메모"
+            label="메 모"
             register={register("swBigo")}
             maxLength="40"
             style={{ width: "526px" }}
@@ -688,7 +688,7 @@ const Form = React.forwardRef(
               {...register("sgKumack")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  label="가불금액"
+                  label="가불 금액"
                   value={value}
                   onChange={onChange}
                   mask={currencyMask}

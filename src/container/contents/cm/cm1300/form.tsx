@@ -400,7 +400,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.i120}
           />
 
-          <Label style={{ marginRight: "10px" }}>건물구조</Label>
+          <Label style={{ marginRight: "10px" }}>건물 구조</Label>
           {radioOptions.map((option, index) => (
             <Item key={index}>
               <RadioButton
@@ -476,7 +476,7 @@ const Form = React.forwardRef(
           />
         </FormGroup>
         <FormGroup>
-          <Label>담당사원</Label>
+          <Label>담당 사원</Label>
           <Select {...register("aptSwCode")} width={InputSize.i120}>
             {aptSwCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
@@ -485,7 +485,7 @@ const Form = React.forwardRef(
             ))}
           </Select>
 
-          <Label>지역분류</Label>
+          <Label>지역 분류</Label>
           <Select {...register("aptJyCode")} width={InputSize.i120}>
             {aptJyCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
@@ -506,7 +506,7 @@ const Form = React.forwardRef(
         <Divider />
         <FormGroup>
           <CheckBox
-            title="조정기"
+            title="조 정 기"
             checked={chkAptRh2o}
             onChange={(e: any) => setChkAptRh2o(e.target.checked)}
             style={someStyle}
@@ -558,7 +558,7 @@ const Form = React.forwardRef(
         </FormGroup>
         <FormGroup>
           <CheckBox
-            title="관리비"
+            title="관 리 비"
             checked={chkAptAnkum}
             onChange={(e: any) => setChkAptAnkum(e.target.checked)}
             style={someStyle}
@@ -581,7 +581,7 @@ const Form = React.forwardRef(
           <p>{`원`}</p>
 
           <CheckBox
-            title="시설비"
+            title="시 설 비"
             checked={chkAptSisulkum}
             onChange={(e: any) => setChkAptSisulkum(e.target.checked)}
             style={someStyle2}
@@ -604,7 +604,7 @@ const Form = React.forwardRef(
           <p>{`원`}</p>
 
           <CheckBox
-            title="계량기"
+            title="계 량 기"
             checked={chkAptMeterkum}
             onChange={(e: any) => setChkAptMeterkum(e.target.checked)}
             style={someStyle}
@@ -628,7 +628,7 @@ const Form = React.forwardRef(
         </FormGroup>
         <FormGroup>
           <CheckBox
-            title="연체율"
+            title="연 체 율"
             checked={chkAptPer}
             onChange={(e: any) => setChkAptPer(e.target.checked)}
             style={someStyle}
@@ -644,7 +644,7 @@ const Form = React.forwardRef(
           <p>{`%`}</p>
 
           <CheckBox
-            title="검침일"
+            title="검 침 일"
             checked={chkAptGumdate}
             onChange={(e: any) => setChkAptGumdate(e.target.checked)}
             style={someStyle2}
@@ -660,7 +660,7 @@ const Form = React.forwardRef(
           <p>{`일`}</p>
 
           <CheckBox
-            title="수금방법"
+            title="수금 방법"
             checked={chkAptSukumtype}
             onChange={(e: any) => setChkAptSukumtype(e.target.checked)}
             style={someStyle}

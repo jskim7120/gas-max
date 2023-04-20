@@ -278,7 +278,7 @@ function CM1100Page({
               </FormGroup>
 
               <FormGroup>
-                <Label>거래구분</Label>
+                <Label>거래 구분</Label>
                 <Select {...register("cuType")} width={InputSize.i150}>
                   {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -287,7 +287,7 @@ function CM1100Page({
                   ))}
                 </Select>
 
-                <Label>담당사원</Label>
+                <Label>담당 사원</Label>
                 <Select {...register("swCode")} width={InputSize.i150}>
                   {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -296,7 +296,7 @@ function CM1100Page({
                   ))}
                 </Select>
 
-                <Label>지역분류</Label>
+                <Label>지역 분류</Label>
                 <Select {...register("cuJyCode")} width={InputSize.i150}>
                   {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -320,7 +320,7 @@ function CM1100Page({
                   ))}
                 </Select>
 
-                <Label>거래상태</Label>
+                <Label>거래 상태</Label>
                 <Select {...register("cuStae")} width={InputSize.i150}>
                   {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -331,7 +331,7 @@ function CM1100Page({
               </FormGroup>
 
               <FormGroup>
-                <Label>수금방법</Label>
+                <Label>수금 방법</Label>
                 <Select {...register("cuSukumtype")} width={InputSize.i150}>
                   {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -340,7 +340,7 @@ function CM1100Page({
                   ))}
                 </Select>
 
-                <Label>기타분류</Label>
+                <Label>기타 분류</Label>
                 <Select {...register("cuEtOption")} width={InputSize.i150}>
                   {dataCommonDic?.cuEtOption?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -349,7 +349,7 @@ function CM1100Page({
                   ))}
                 </Select>
 
-                <Label>공급사업자</Label>
+                <Label>공급 사업자</Label>
                 <Select {...register("cuGong")} width={InputSize.i150}>
                   {dataCommonDic?.cuGong?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>

@@ -81,7 +81,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "적용구분",
+      text: "적용 구분",
     },
   },
 
@@ -142,7 +142,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "단가적용일",
+      text: "단가 적용일",
     },
   },
   {
@@ -154,7 +154,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "최종공급일",
+      text: "최종 공급일",
     },
   },
   {
@@ -166,7 +166,7 @@ export const columns = [
       textAlignment: "near",
     },
     header: {
-      text: "공급주기",
+      text: "공급 주기",
     },
   },
   {

@@ -136,7 +136,7 @@ export const columns = [
     width: "120",
     styleName: "rg-right-column",
     header: {
-      text: "용기보증금",
+      text: "용기 보증금",
     },
   },
   {
@@ -165,7 +165,7 @@ export const columns = [
     type: "data",
     width: "120",
     header: {
-      text: "공급계약일",
+      text: "공급 계약일",
     },
   },
   {
@@ -174,7 +174,7 @@ export const columns = [
     type: "data",
     width: "120",
     header: {
-      text: "최종점검일",
+      text: "최종 점검일",
     },
     renderer: {
       type: "html",

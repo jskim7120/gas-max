@@ -115,7 +115,7 @@ function Tab2({
         </Field>
         <Field>
           <FormGroup>
-            <Label>조정기압력</Label>
+            <Label>조정기 압력</Label>
             <Select {...register("cuRh2O")} width={InputSize.i130}>
               {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -227,7 +227,7 @@ function Tab2({
               {...register("cuMeterkum")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  label="계량기교체비"
+                  label="계량기 교체비"
                   value={value}
                   onChange={onChange}
                   name={name}
@@ -328,7 +328,7 @@ function Tab2({
               ))}
             </Select>
 
-            <Label style={{ width: "136px" }}>계량기유형</Label>
+            <Label style={{ width: "136px" }}>계량기 유형</Label>
             <Select {...register("cuMeterFeture")} width={InputSize.i130}>
               {dataCommonDic?.cuMeterFeture?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -337,7 +337,7 @@ function Tab2({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "135px" }}>계량기정보</Label>
+            <Label style={{ minWidth: "135px" }}>계량기 정보</Label>
             <Select {...register("cuMeterLr")} width={InputSize.i80}>
               {dataCommonDic?.cuMeterLr?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -363,7 +363,7 @@ function Tab2({
           </FormGroup>
           <FormGroup>
             <Input
-              label="계량기번호"
+              label="계량기 번호"
               register={register("cuMeterNo")}
               inputSize={InputSize.i130}
             />
@@ -382,7 +382,7 @@ function Tab2({
               )}
             />
 
-            <Label style={{ minWidth: "135px" }}>설치장소</Label>
+            <Label style={{ minWidth: "135px" }}>설치 장소</Label>
             <Select {...register("cuMeterPlace")} width={InputSize.i80}>
               {dataCommonDic?.cuMeterPlace?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -390,7 +390,7 @@ function Tab2({
                 </option>
               ))}
             </Select>
-            <p style={{ margin: "0 3px 0 52px" }}>바코드번호</p>
+            <p style={{ margin: "0 3px 0 52px" }}>바코드 번호</p>
 
             <Input
               register={register("cuBarcode")}
@@ -413,7 +413,7 @@ function Tab2({
               )}
             />
 
-            <Label style={{ width: "136px" }}>교체예정일</Label>
+            <Label style={{ width: "136px" }}>교체 예정일</Label>
 
             <Controller
               control={control}
@@ -428,7 +428,7 @@ function Tab2({
             />
 
             <Input
-              label="발신기코드"
+              label="발신기 코드"
               labelStyle={{ minWidth: "135px" }}
               register={register("cuMTransmCd")}
               inputSize={InputSize.i80}
