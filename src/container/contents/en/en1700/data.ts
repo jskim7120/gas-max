@@ -70,7 +70,7 @@ export const columns = [
     type: "data",
     width: "100",
     header: {
-      text: "차량번호",
+      text: "차량 번호",
     },
     styleName: "rg-left-column",
   },
@@ -80,7 +80,7 @@ export const columns = [
     type: "data",
     width: "200",
     header: {
-      text: "담당사원",
+      text: "담당 사원",
     },
     styleName: "rg-left-column",
   },
@@ -90,7 +90,7 @@ export const columns = [
     type: "data",
     width: "150",
     header: {
-      text: "차량종류",
+      text: "차량 종류",
     },
     styleName: "rg-left-column",
   },
@@ -111,7 +111,7 @@ export const columns = [
     type: "data",
     width: "220",
     header: {
-      text: "검사기간",
+      text: "검사 기간",
     },
     styleName: "rg-left-column",
   },
@@ -120,9 +120,9 @@ export const columns = [
     name: "caJaegoyn",
     fieldName: "caJaegoyn",
     type: "data",
-    width: "80",
+    width: "95",
     header: {
-      text: "재고사용유",
+      text: "재고사용 유무",
     },
   },
 

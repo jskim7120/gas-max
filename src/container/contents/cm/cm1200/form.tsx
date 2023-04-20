@@ -492,7 +492,7 @@ const Form = React.forwardRef(
             <FormGroup>
               <Label className="lable-check">
                 <CheckBox
-                  title="주소"
+                  title="주 소"
                   checked={chkCuZipCode}
                   onChange={(e: any) => setChkCuZipCode(e.target.checked)}
                 />
@@ -519,7 +519,7 @@ const Form = React.forwardRef(
           {/* 1-3 Wrapper */}
           <Wrapper grid col={5}>
             <FormGroup>
-              <Label>담당사원</Label>
+              <Label>담당 사원</Label>
               <CSelect {...register("cuSwCode")} width={InputSize.i120}>
                 {cuSwCodeDic?.map((obj: any, index: number) => (
                   <option key={index} value={obj.code}>
@@ -530,7 +530,7 @@ const Form = React.forwardRef(
             </FormGroup>
 
             <FormGroup>
-              <Label style={{ minWidth: "94px" }}>지역분류</Label>
+              <Label style={{ minWidth: "94px" }}>지역 분류</Label>
               <CSelect
                 {...register("cuJyCode")}
                 width={InputSize.i120}
@@ -545,7 +545,7 @@ const Form = React.forwardRef(
             </FormGroup>
 
             <FormGroup>
-              <Label style={{ minWidth: "70px" }}>관리자분류</Label>
+              <Label style={{ minWidth: "70px" }}>관리자 분류</Label>
               <CSelect {...register("cuCustgubun")} width={InputSize.i120}>
                 {cuCustgubunDic?.map((obj: any, index: number) => (
                   <option key={index} value={obj.code}>
@@ -558,7 +558,7 @@ const Form = React.forwardRef(
 
           <div style={{ marginTop: "5px" }}>
             <PlainTab
-              tabHeader={["건물기초", "벌크 시설", "용기 시설"]}
+              tabHeader={["건물 기초", "벌크 시설", "용기 시설"]}
               onClick={(id) => setTabId(id)}
               tabId={tabId}
             />

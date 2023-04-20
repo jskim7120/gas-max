@@ -53,7 +53,7 @@ export const columns = [
     type: "data",
     width: "70",
     header: {
-      text: "부품코드",
+      text: "부품 코드",
     },
     styleName: "rg-left-column",
   },

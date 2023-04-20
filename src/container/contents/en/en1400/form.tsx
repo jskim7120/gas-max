@@ -196,7 +196,7 @@ const Form = React.forwardRef(
       >
         <Wrapper>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>영업소</Label>
+            <Label style={{ minWidth: "80px" }}>영 업 소</Label>
             <Select
               register={register("areaCode")}
               onChange={handleSelectCode}
@@ -213,7 +213,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <Input
-            label="부품코드"
+            label="부품 코드"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpCode")}
             inputSize={InputSize.i150}
@@ -224,7 +224,7 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper>
           <Input
-            label="부품명"
+            label="부 품 명"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpName")}
             inputSize={InputSize.i150}
@@ -233,7 +233,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <Input
-            label="규격"
+            label="규 격"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpType")}
             inputSize={InputSize.i150}
@@ -242,7 +242,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <Input
-            label="단위"
+            label="단 위"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpDanwi")}
             inputSize={InputSize.i150}

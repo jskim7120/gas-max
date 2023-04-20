@@ -141,7 +141,7 @@ const FORMCM1106 = React.forwardRef(
       >
         <Field flex style={{ alignItems: "center" }}>
           <Input
-            label="코드"
+            label="코 드"
             register={register("jcJpCode")}
             inputSize={InputSize.i130}
             kind={FieldKind.BORDER}
@@ -152,7 +152,7 @@ const FORMCM1106 = React.forwardRef(
         </Field>
         <Field>
           <Input
-            label="품명"
+            label="품 명"
             register={register("jcJpName")}
             kind={FieldKind.BORDER}
             inputSize={InputSize.i130}
@@ -160,7 +160,7 @@ const FORMCM1106 = React.forwardRef(
         </Field>
         <Field>
           <Input
-            label="규격"
+            label="규 격"
             register={register("jcJpSpec")}
             kind={FieldKind.BORDER}
             inputSize={InputSize.i130}

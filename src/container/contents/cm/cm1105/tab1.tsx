@@ -56,12 +56,12 @@ function Tab1({
 
       <FormGroup>
         <Input
-          label="상호"
+          label="상 호"
           register={register("cuSangho")}
           inputSize={InputSize.i110}
         />
         <Input
-          label="대표"
+          label="대 표"
           labelStyle={{ marginLeft: "10px", minWidth: "40px" }}
           register={register("cuSajang")}
           className="cm1105Label"
@@ -72,7 +72,7 @@ function Tab1({
       <FormGroup>
         <Field flex style={{ alignItems: "center" }}>
           <Input
-            label="주소"
+            label="주 소"
             register={register("cuSzipcode")}
             inputSize={InputSize.i110}
           />
@@ -84,12 +84,12 @@ function Tab1({
 
       <FormGroup>
         <Input
-          label="업태"
+          label="업 태"
           register={register("cuUptae")}
           inputSize={InputSize.i150}
         />
         <Input
-          label="종목"
+          label="종 목"
           register={register("cuJongmok")}
           inputSize={InputSize.i150}
         />
@@ -163,7 +163,7 @@ function Tab1({
       </Wrapper>
 
       <FormGroup>
-        <Label>공급사업자</Label>
+        <Label>공급 사업자</Label>
         <Select register={register("cuGongsano")} width={InputSize.i150}>
           {dataCommonDic?.cuGongsano?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>

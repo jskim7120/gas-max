@@ -22,22 +22,22 @@ import { SearchBtn } from "components/daum";
 
 const radioOptions = [
   {
-    label: "벌크공급",
+    label: "벌크 공급",
     id: "0",
   },
   {
-    label: "용기공급",
+    label: "용기 공급",
     id: "1",
   },
 ];
 
 const radioOptions2 = [
   {
-    label: "일반용기",
+    label: "일반 용기",
     id: "0",
   },
   {
-    label: "싸이폰용기",
+    label: "싸이폰 용기",
     id: "1",
   },
 ];
@@ -75,7 +75,7 @@ function Tab3({
             </Item>
           ))}
 
-          <Label style={{ minWidth: "100px" }}>완성검사일</Label>
+          <Label style={{ minWidth: "100px" }}>완성 검사일</Label>
           <Controller
             control={control}
             {...register("cuFinishDate")}
@@ -84,7 +84,7 @@ function Tab3({
             )}
           />
 
-          <Label style={{ minWidth: "100px" }}>정기검사일</Label>
+          <Label style={{ minWidth: "100px" }}>정기 검사일</Label>
           <Controller
             control={control}
             {...register("cuCircuitDate")}
@@ -506,7 +506,7 @@ function Tab3({
                 padding: "3px 0px 0px 0px",
               }}
             >
-              장치검사
+              장치 검사
             </Label>
           </FormGroup>
 

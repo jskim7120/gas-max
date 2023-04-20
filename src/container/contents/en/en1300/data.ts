@@ -80,7 +80,7 @@ export const columns = [
     width: "250",
     styleName: "rg-left-column",
     header: {
-      text: "품  명",
+      text: "품명",
     },
   },
 
@@ -100,7 +100,7 @@ export const columns = [
     type: "data",
     width: "70",
     header: {
-      text: "가스구분",
+      text: "가스 구분",
     },
     styleName: "rg-left-column",
   },
@@ -130,7 +130,7 @@ export const columns = [
     width: "100",
     styleName: "rg-right-column",
     header: {
-      text: "가스판매단가",
+      text: "가스판매 단가",
     },
   },
   {
@@ -140,16 +140,16 @@ export const columns = [
     width: "100",
     styleName: "rg-right-column",
     header: {
-      text: "용기판매단가",
+      text: "용기판매 단가",
     },
   },
   {
     name: "jpJaegoYnName",
     fieldName: "jpJaegoYnName",
     type: "data",
-    width: "90",
+    width: "92",
     header: {
-      text: "재고사용유무",
+      text: "재고사용 유무",
     },
     styleName: "rg-left-column",
   },

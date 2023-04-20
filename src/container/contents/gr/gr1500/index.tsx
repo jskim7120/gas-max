@@ -233,7 +233,7 @@ function GR1500({
                 <Input
                   register={register("sBjBuName")}
                   inputSize={InputSize.md}
-                  label="거래상태"
+                  label="매입처명"
                 />
               </Field>
 

@@ -259,8 +259,8 @@ function Tab2({
         <FormGroup>
           <Label style={{ minWidth: "94px" }}>공급시설구분</Label>
           {[
-            { name: "벌크공급", value: "Y" },
-            { name: "용기공급", value: "N" },
+            { name: "벌크 공급", value: "Y" },
+            { name: "용기 공급", value: "N" },
           ].map((option, index) => {
             return (
               <Item key={index}>
@@ -278,7 +278,7 @@ function Tab2({
           })}
         </FormGroup>
         <FormGroup>
-          <Label>완성검사일</Label>
+          <Label>완성 검사일</Label>
           <Controller
             control={control}
             {...register("cuFinishDate")}
@@ -293,7 +293,7 @@ function Tab2({
           />
         </FormGroup>
         <FormGroup>
-          <Label>정기검사일</Label>
+          <Label>정기 검사일</Label>
           <Controller
             control={control}
             {...register("cuCircuitDate")}
@@ -308,7 +308,7 @@ function Tab2({
           />
         </FormGroup>
         <FormGroup>
-          <Label>검사예정일</Label>
+          <Label>검사 예정일</Label>
           <Controller
             control={control}
             {...register("cuScheduleDate")}

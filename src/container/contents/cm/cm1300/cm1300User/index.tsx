@@ -338,7 +338,7 @@ function FormCM1300User({
               />
             </FormGroup>
             <FormGroup>
-              <Label>건물명</Label>
+              <Label>건 물 명</Label>
               <Input register={register("cuName")} style={{ width: "146px" }} />
             </FormGroup>
             <FormGroup>

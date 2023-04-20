@@ -18,7 +18,7 @@ export const columns = [
     type: "data",
     width: "80",
     header: {
-      text: "영업소코드",
+      text: "영업소 코드",
     },
     footer: {
       valueCallback: function (grid: any) {
@@ -33,7 +33,7 @@ export const columns = [
     width: "250",
     styleName: "rg-left-column",
     header: {
-      text: "영업소명칭",
+      text: "영업소 명칭",
     },
   },
 ];

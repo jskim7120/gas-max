@@ -306,7 +306,7 @@ const Form = React.forwardRef(
       >
         <Wrapper grid col={2}>
           <Input
-            label="코드"
+            label="코 드"
             register={register("caCode")}
             inputSize={InputSize.i150}
             maxLength="2"
@@ -314,7 +314,7 @@ const Form = React.forwardRef(
           />
 
           <FormGroup>
-            <Label>영업소</Label>
+            <Label>영 업 소</Label>
             <Select
               register={register("areaCode")}
               onChange={handleSelectCode}
@@ -332,14 +332,14 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper grid col={2}>
           <Input
-            label="차량번호"
+            label="차량 번호"
             register={register("caName")}
             inputSize={InputSize.i150}
             maxLength="15"
           />
 
           <FormGroup>
-            <Label>담당사원</Label>
+            <Label>담당 사원</Label>
             <Select register={register("caSwCode")} width={InputSize.i150}>
               {empChargeData?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -351,12 +351,12 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper grid col={2}>
           <FormGroup style={{ alignItems: "center" }}>
-            <Label>벌크로리차량유무</Label>
+            <Label>벌크로리 차량 유무</Label>
             <CheckBox register={{ ...register("caBkYn") }} />
           </FormGroup>
 
           <FormGroup>
-            <Label>재고사용유무</Label>
+            <Label>재고사용 유무</Label>
             <Select register={register("caJaegoyn")} width={InputSize.i150}>
               {dataCommonDic?.caJaegoyn?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -377,7 +377,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper grid col={2}>
           <Field flex style={{ alignItems: "center" }}>
-            <Label>안전검사일</Label>
+            <Label>안전 검사일</Label>
 
             <Controller
               control={control}
@@ -393,7 +393,7 @@ const Form = React.forwardRef(
           </Field>
           <Field>
             <Input
-              label="충전기한"
+              label="충전 기한"
               register={register("caChargeDate")}
               inputSize={InputSize.i150}
               maxLength="8"
@@ -403,13 +403,13 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper grid col={2}>
           <Input
-            label="차량종류"
+            label="차량 종류"
             register={register("caType")}
             inputSize={InputSize.i150}
             maxLength="20"
           />
           <Input
-            label="연식"
+            label="연 식"
             register={register("caYear")}
             inputSize={InputSize.i150}
             maxLength="6"
@@ -461,7 +461,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper style={{ width: "630px" }}>
           <Field flex style={{ alignItems: "center" }}>
-            <Label>정기검사일</Label>
+            <Label>정기 검사일</Label>
 
             <Controller
               control={control}
@@ -493,7 +493,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <Input
-            label="메모"
+            label="메 모"
             register={register("caBigo")}
             style={{ width: "465px" }}
             maxLength="40"
@@ -538,7 +538,7 @@ const Form = React.forwardRef(
               {...register("caMAmt")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  label="월리스료"
+                  label="월 리스료"
                   value={value}
                   onChange={onChange}
                   mask={currencyMask}
@@ -572,7 +572,7 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper>
           <Input
-            label="보험회사"
+            label="보험 회사"
             register={register("caBco")}
             inputSize={InputSize.i150}
             maxLength="20"
@@ -580,13 +580,13 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper grid col={2}>
           <Input
-            label="계약지점"
+            label="계약 지점"
             register={register("caBjijum")}
             inputSize={InputSize.i150}
             maxLength="20"
           />
           <Input
-            label="담당자"
+            label="담 당 자"
             register={register("caBdamdang")}
             inputSize={InputSize.i150}
             maxLength="10"
@@ -594,7 +594,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper grid col={2}>
           <Input
-            label="전화번호"
+            label="전화 번호"
             register={register("caBtel")}
             inputSize={InputSize.i150}
             maxLength="14"
@@ -605,7 +605,7 @@ const Form = React.forwardRef(
             {...register("caBhp")}
             render={({ field: { onChange, value, name } }) => (
               <Input
-                label="핸드폰"
+                label="핸 드 폰"
                 value={value}
                 name={name}
                 onChange={onChange}
@@ -631,13 +631,13 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper grid col={2}>
           <Input
-            label="피보험자"
+            label="피 보험자"
             register={register("caBman")}
             inputSize={InputSize.i150}
             maxLength="10"
           />
           <Input
-            label="증권번호"
+            label="증권 번호"
             register={register("caBno")}
             inputSize={InputSize.i150}
             maxLength="20"
@@ -646,7 +646,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <Field>
             <FormGroup>
-              <Label>연령특약</Label>
+              <Label>연령 특약</Label>
               {radioOptions.map((option, index) => (
                 <Item key={index}>
                   <RadioButton
@@ -671,7 +671,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper style={{ width: "630px" }}>
           <Field flex style={{ alignItems: "center" }}>
-            <Label>보험기간</Label>
+            <Label>보험 기간</Label>
             <Controller
               control={control}
               {...register("caBsdate")}
@@ -706,7 +706,7 @@ const Form = React.forwardRef(
               {...register("caInsuranceAmt")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  label="보험료"
+                  label="보 험 료"
                   value={value}
                   onChange={onChange}
                   mask={currencyMask}

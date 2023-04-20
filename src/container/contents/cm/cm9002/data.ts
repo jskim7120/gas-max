@@ -126,7 +126,7 @@ export const columns = [
     name: "cuSwName",
     fieldName: "cuSwName",
     type: "data",
-    width: "20",
+    width: "30",
     header: {
       text: "담당사원",
     },

@@ -245,7 +245,7 @@ const Form = React.forwardRef(
       >
         <Wrapper>
           <FormGroup>
-            <Label>영업소</Label>
+            <Label>영 업 소</Label>
             <Select
               width={InputSize.i130}
               register={register("areaCode")}
@@ -262,7 +262,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <Input
-            label="코드"
+            label="코 드"
             register={register("jpCode")}
             maxLength="4"
             inputSize={InputSize.i130}
@@ -272,7 +272,7 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper>
           <Input
-            label="품명"
+            label="품 명"
             register={register("jpName")}
             inputSize={InputSize.i130}
             maxLength="30"
@@ -280,7 +280,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <Input
-            label="규격"
+            label="규 격"
             register={register("jpSpec")}
             inputSize={InputSize.i130}
             maxLength="10"
@@ -288,7 +288,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <FormGroup>
-            <Label>가스구분</Label>
+            <Label>가스 구분</Label>
             <Select register={register("jpGubun")} width={InputSize.i130}>
               {dataCommonDic?.jpGubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -304,7 +304,7 @@ const Form = React.forwardRef(
             {...register("jpKg")}
             render={({ field: { onChange, value, name } }) => (
               <Input
-                label="용량"
+                label="용 량"
                 value={value}
                 name={name}
                 onChange={onChange}
@@ -325,7 +325,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <FormGroup>
-            <Label>단위</Label>
+            <Label>단 위</Label>
             <Select register={register("jpUnit")} width={InputSize.i130}>
               {dataCommonDic?.jpUnit?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -338,7 +338,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <FormGroup>
             <Input
-              label="비중(1l)"
+              label="비 중(1L)"
               register={register("jpSpecific")}
               inputSize={InputSize.i130}
               textAlign="right"
@@ -347,7 +347,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <FormGroup>
-            <Label>가스분류</Label>
+            <Label>가스 분류</Label>
             <Select register={register("jpGasType")} width={InputSize.i130}>
               {dataCommonDic?.jpGasType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -359,7 +359,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <FormGroup>
-            <Label>품목구분</Label>
+            <Label>품목 구분</Label>
 
             <Select register={register("jpKind")} width={InputSize.i130}>
               {dataCommonDic?.jpKind?.map((obj: any, idx: number) => (
@@ -372,7 +372,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper>
           <FormGroup>
-            <Label>용도구분</Label>
+            <Label>용도 구분</Label>
             <Select register={register("jpGasuse")} width={InputSize.i130}>
               {dataCommonDic?.jpGasuse?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -385,7 +385,7 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper>
           <FormGroup>
-            <Label>Vat구분</Label>
+            <Label>Vat 구분</Label>
             <Select register={register("jpVatKind")} width={InputSize.i130}>
               {dataCommonDic?.jpVatKind?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -402,7 +402,7 @@ const Form = React.forwardRef(
               {...register("jpOutdanga")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  label="가스판매단가"
+                  label="가스판매 단가"
                   value={value}
                   onChange={onChange}
                   mask={currencyMask}
@@ -422,7 +422,7 @@ const Form = React.forwardRef(
               {...register("jpOuttong")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  label="용기판매단가"
+                  label="용기판매 단가"
                   value={value}
                   onChange={onChange}
                   mask={currencyMask}
@@ -442,7 +442,7 @@ const Form = React.forwardRef(
               {...register("jpIndanga")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  label="가스매입원가"
+                  label="가스매입 원가"
                   value={value}
                   onChange={onChange}
                   mask={currencyMask}
@@ -462,7 +462,7 @@ const Form = React.forwardRef(
               {...register("jpIntong")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  label="용기구입단가"
+                  label="용기구입 단가"
                   value={value}
                   onChange={onChange}
                   mask={currencyMask}
@@ -482,7 +482,7 @@ const Form = React.forwardRef(
               {...register("jpBaedal")}
               render={({ field: { onChange, value, name } }) => (
                 <Input
-                  label="사원배달수수료"
+                  label="사원 배달 수수료"
                   value={value}
                   onChange={onChange}
                   mask={currencyMask}
@@ -524,7 +524,7 @@ const Form = React.forwardRef(
           <Field>
             <Input
               style={{ textAlign: "end" }}
-              label="순번(조회순서)"
+              label="순번(조회 순서)"
               register={register("jpSort")}
               inputSize={InputSize.i130}
               textAlign="right"

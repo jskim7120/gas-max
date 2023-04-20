@@ -282,9 +282,9 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           <Table
             tableHeader={[
               "지로 양식",
-              "승인번호",
-              "지로번호",
-              "상호(구분명)",
+              "승인 번호",
+              "지로 번호",
+              "상 호(구분명)",
               "용지 형식",
             ]}
             tableData={data1}
@@ -306,7 +306,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       return (
         <PaymentLineCnt3>
           <Table
-            tableHeader={["은행명", "계좌번호"]}
+            tableHeader={["은행명", "계좌 번호"]}
             tableData={data3}
             onClick={(item) => console.log("table", item)}
           />
@@ -317,7 +317,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
         <PaymentLineCnt>
           <div className="title">결재</div>
           <Table
-            tableHeader={["결재1", "결재2", "결재3", "결재4", "결재5"]}
+            tableHeader={["결재 1", "결재 2", "결재 3", "결재 4", "결재 5"]}
             tableData={data4}
             onClick={(item) => console.log("table", item)}
           />
