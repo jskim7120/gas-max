@@ -21,8 +21,10 @@ import {
   RadioButton,
   RadioButtonLabel,
 } from "components/radioButton/style";
+import { emptyObj } from "./model";
 
 interface IForm {
+  areaCode: string;
   data65: any;
   setData65: Function;
   fetchData: any;
@@ -38,6 +40,7 @@ interface IForm {
 const Form = React.forwardRef(
   (
     {
+      areaCode,
       data65,
       setData65,
       fetchData,
@@ -55,7 +58,7 @@ const Form = React.forwardRef(
       useForm<ICC1700FORM>({ mode: "onChange" });
 
     useEffect(() => {
-      if (data65 !== undefined && JSON.stringify(data65) !== "{}") {
+      if (data65 !== undefined && Object.keys(data65).length > 0) {
         resetForm("reset");
       }
       setIsAddBtnClicked(false);
@@ -67,7 +70,14 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
     }));
 
-    const resetForm = async (type: string) => {};
+    const resetForm = async (type: string) => {
+      if (type === "clear") {
+        reset({ ...emptyObj, acbAreaCode: areaCode, acbAccCode: "0" });
+      }
+      if (type === "reset") {
+        reset(data65);
+      }
+    };
     const crud = async (type: string | null) => {};
 
     const submit = async (data: ICC1700FORM) => {};
@@ -80,7 +90,7 @@ const Form = React.forwardRef(
         <FormGroup>
           <Label>영 업 소</Label>
           <Select register={register("acbAreaCode")} width={InputSize.i175}>
-            {dataCommonDic?.acbAreaCode?.map((obj: any, idx: number) => (
+            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>

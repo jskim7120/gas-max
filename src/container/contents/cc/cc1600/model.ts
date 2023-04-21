@@ -13,5 +13,5 @@ export const emptyObj = {
   acsCode: "",
   acsDelYn: "",
   acsName: "",
-  acsType: "",
+  acsType: "0",
 };

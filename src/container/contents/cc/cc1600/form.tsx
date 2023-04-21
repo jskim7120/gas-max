@@ -88,7 +88,7 @@ const Form = React.forwardRef(
         </FormGroup>
         <FormGroup>
           <Label>계정 과목</Label>
-          <Select register={register("acsAccName")} width={InputSize.i150}>
+          <Select register={register("acsAccCode")} width={InputSize.i150}>
             {acsAccName?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}

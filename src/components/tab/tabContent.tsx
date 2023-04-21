@@ -256,7 +256,11 @@ export const getContent = (
       );
     case "CC1700":
       return (
-        <CC1700 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC1700
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC9006":
       return (

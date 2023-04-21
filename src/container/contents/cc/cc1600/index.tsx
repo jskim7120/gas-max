@@ -51,6 +51,7 @@ function CC1600({
         acsCode: selected.acsCode,
         areaCode: ownAreaCode,
       });
+      // fetchData62({ acsType: selected.acsType });
     }
   }, [selected]);
 
@@ -76,7 +77,9 @@ function CC1600({
     try {
       const { data: data65 } = await API.get(CC160065, { params: params });
       if (data65) {
-        setData65(data65[0][0]);
+        // console.log("data65:", data65);
+
+        setData65(data65.data[0]);
         setAcsAccName(data65.acsAccName);
       } else {
         setData65({});
@@ -93,6 +96,7 @@ function CC1600({
     try {
       const { data: data62 } = await API.get(CC160062, { params: params });
       if (data62) {
+        // console.log("data62:", data62);
       } else {
       }
     } catch (err) {
@@ -145,7 +149,7 @@ function CC1600({
             setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
-            style={{ height: `calc(100% - 38px)` }}
+            style={{ height: "100%" }}
           />
         </LeftSide>
         <RightSide>

@@ -112,38 +112,31 @@ function GR1500({
             style={{ minWidth: "925px" }}
           >
             <SearchWrapper className="h35">
-              <Field flex>
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>구분</Label>
-                  <Select
-                    width={InputSize.i130}
-                    register={register("sBuGubun")}
-                  >
-                    {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <FormGroup>
-                  <Input
-                    label="매입처명"
-                    register={register("sBuName")}
-                    inputSize={InputSize.i140}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label>거래상태</Label>
-                  <Select width={InputSize.i130} register={register("sBuStae")}>
-                    {dataCommonDic?.sBuStae?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-              </Field>
+              <FormGroup>
+                <Label style={{ minWidth: "auto" }}>구분</Label>
+                <Select width={InputSize.i130} register={register("sBuGubun")}>
+                  {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+
+                <Input
+                  label="매입처명"
+                  register={register("sBuName")}
+                  inputSize={InputSize.i140}
+                />
+
+                <Label>거래상태</Label>
+                <Select width={InputSize.i130} register={register("sBuStae")}>
+                  {dataCommonDic?.sBuStae?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
 
               <div className="buttons">
                 <Button
@@ -188,7 +181,7 @@ function GR1500({
               className="h35"
               style={{ borderTop: "2px solid #707070" }}
             >
-              <Field flex>
+              <FormGroup>
                 <p>{depthFullName}</p>
                 <p className="big">영업소</p>
                 <Select register={register("areaCode1")} name="areaCode1">
@@ -198,44 +191,42 @@ function GR1500({
                     </option>
                   ))}
                 </Select>
-              </Field>
+              </FormGroup>
             </SearchWrapper>
             <SearchWrapper className="h35">
-              <Field flex>
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>지급기간</Label>
+              <FormGroup>
+                <Label style={{ minWidth: "auto" }}>지급기간</Label>
 
-                  <Controller
-                    control={control}
-                    {...register("sDate")}
-                    render={({ field: { onChange, value, name } }) => (
-                      <CustomDatePicker
-                        value={value}
-                        onChange={onChange}
-                        name={name}
-                      />
-                    )}
-                  />
+                <Controller
+                  control={control}
+                  {...register("sDate")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <CustomDatePicker
+                      value={value}
+                      onChange={onChange}
+                      name={name}
+                    />
+                  )}
+                />
 
-                  <Controller
-                    control={control}
-                    {...register("eDate")}
-                    render={({ field: { onChange, value, name } }) => (
-                      <CustomDatePicker
-                        value={value}
-                        onChange={onChange}
-                        name={name}
-                      />
-                    )}
-                  />
-                </FormGroup>
+                <Controller
+                  control={control}
+                  {...register("eDate")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <CustomDatePicker
+                      value={value}
+                      onChange={onChange}
+                      name={name}
+                    />
+                  )}
+                />
 
                 <Input
                   register={register("sBjBuName")}
                   inputSize={InputSize.md}
                   label="매입처명"
                 />
-              </Field>
+              </FormGroup>
 
               <div className="buttons">
                 <Button

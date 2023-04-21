@@ -47,7 +47,7 @@ export const columns = [
     name: "acsAccName",
     fieldName: "acsAccName",
     type: "data",
-    width: "80",
+    width: "120",
     styleName: "rg-left-column",
     header: {
       text: "계정 과목",
@@ -57,10 +57,11 @@ export const columns = [
     name: "acsName",
     fieldName: "acsName",
     type: "data",
-    width: "100",
+    width: "150",
     header: {
       text: "수입/지출 항목",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "acsDelYn",

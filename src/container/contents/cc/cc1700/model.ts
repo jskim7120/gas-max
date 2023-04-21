@@ -1,5 +1,5 @@
 export interface ICC1700SEARCH {
-  areaCode: String;
+  // areaCode: string;
 }
 
 export interface ICC1700 {}
@@ -12,3 +12,12 @@ export interface ICC1700FORM {
   acbBankno: string;
   acbBigo: string;
 }
+
+export const emptyObj = {
+  acbAreaCode: "",
+  acbCode: "",
+  acbAccCode: "",
+  acbName: "",
+  acbBankno: "",
+  acbBigo: "",
+};

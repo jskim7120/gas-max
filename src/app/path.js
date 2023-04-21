@@ -177,6 +177,8 @@ export const CC150565 = "/app/CC1505/65";
 export const CC1600SEARCH = "/app/CC1600/search";
 export const CC160065 = "/app/CC1600/65";
 export const CC160062 = "/app/CC1600/62";
+export const CC1700SEARCH = "/app/CC1700/search";
+export const CC170065 = "/app/CC1700/65";
 
 export const RV9006SEARCH = "/app/RV9006/search";
 export const RV9005SEARCH = "/app/RV9005/search";

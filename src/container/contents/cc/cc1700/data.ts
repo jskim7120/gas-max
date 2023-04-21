@@ -10,7 +10,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "acbAccCodeName",
+    fieldName: "acbAccCode",
     dataType: ValueType.TEXT,
   },
   {
@@ -47,10 +47,10 @@ export const columns = [
     },
   },
   {
-    name: "acbAccCodeName",
-    fieldName: "acbAccCodeName",
+    name: "acbAccCode",
+    fieldName: "acbAccCode",
     type: "data",
-    width: "100",
+    width: "150",
     header: {
       text: "구분",
     },
@@ -59,7 +59,7 @@ export const columns = [
     name: "acbName",
     fieldName: "acbName",
     type: "data",
-    width: "100",
+    width: "150",
     styleName: "rg-left-column",
     header: {
       text: "은행명",
@@ -69,7 +69,7 @@ export const columns = [
     name: "acbBankno",
     fieldName: "acbBankno",
     type: "data",
-    width: "150",
+    width: "250",
     styleName: "rg-left-column",
     header: {
       text: "계좌번호",
@@ -79,7 +79,7 @@ export const columns = [
     name: "acbBigo",
     fieldName: "acbBigo",
     type: "data",
-    width: "150",
+    width: "250",
     styleName: "rg-left-column",
     header: {
       text: "적용",

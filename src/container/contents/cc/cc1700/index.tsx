@@ -3,6 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import API from "app/axios";
+import { CC1700SEARCH, CC170065 } from "app/path";
 import {
   SearchWrapper,
   MainWrapper,
@@ -28,18 +29,20 @@ import { ICC1700SEARCH } from "./model";
 import Form from "./form";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
 import FourButtons from "components/button/fourButtons";
+import { getValue } from "@testing-library/user-event/dist/utils";
 
 function CC1700({
   depthFullName,
-  areaCode,
+  ownAreaCode,
   menuId,
 }: {
   depthFullName: string;
-  areaCode: string;
+  ownAreaCode: string;
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
+  const [areaCode, setAreaCode] = useState("");
   const [data, setData] = useState([]);
   const [data65, setData65] = useState({});
   const [loading, setLoading] = useState(false);
@@ -55,22 +58,61 @@ function CC1700({
 
   useEffect(() => {
     if (dataCommonDic) {
+      setAreaCode(dataCommonDic.areaCode[0].code);
+      fetchData({ acbAreaCode: dataCommonDic.areaCode[0].code });
     }
   }, [dataCommonDic]);
 
-  useEffect(() => {}, [selected]);
+  useEffect(() => {
+    if (selected && Object.keys(selected).length > 0) {
+      fetchData65({
+        acbAreaCode: selected.acbAreaCode,
+        acbCode: selected.acbCode,
+      });
+    }
+  }, [selected]);
 
   const resetSearchForm = () => {};
 
-  const { register, handleSubmit, reset, control } = useForm<ICC1700SEARCH>({
-    mode: "onSubmit",
-  });
+  const { register, handleSubmit, reset, control, getValues } =
+    useForm<ICC1700SEARCH>({
+      mode: "onSubmit",
+    });
 
   const submit = (params: any) => {};
 
-  const fetchData = async (params: any) => {};
+  const fetchData = async (params: any) => {
+    try {
+      const { data: datas } = await API.get(CC1700SEARCH, { params: params });
 
-  const fetchData65 = async (params: any) => {};
+      if (datas) {
+        setData(datas);
+        setSelected(datas[0]);
+      } else {
+        setData([]);
+        setSelected({});
+      }
+    } catch (err) {
+      setData([]);
+      setSelected({});
+      console.log("CC1700 data search fetch error =======>", err);
+    }
+  };
+
+  const fetchData65 = async (params: any) => {
+    try {
+      const { data: data65 } = await API.get(CC170065, { params: params });
+      if (data65 && data65?.length > 0) {
+        setData65(data65[0]);
+      } else {
+        setData65({});
+      }
+    } catch (err) {
+      setData65({});
+
+      console.log("CC1700 data 65 fetch error =======>", err);
+    }
+  };
 
   const onClickAdd = () => {
     setIsAddBtnClicked(true);
@@ -94,12 +136,24 @@ function CC1700({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomAreaCodePart
-          areaCode={areaCode}
-          depthFullName={depthFullName}
-          register={register}
-          dataCommonDic={dataCommonDic}
-        />
+        <FormGroup>
+          <p>{depthFullName}</p>
+          {ownAreaCode === "00" && (
+            <>
+              <p className="big">영업소</p>
+              <Select
+                value={areaCode}
+                onChange={(e) => setAreaCode(e.target.value)}
+              >
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+        </FormGroup>
 
         <FourButtons
           onClickAdd={onClickAdd}
@@ -113,7 +167,7 @@ function CC1700({
       <MainWrapper>
         <LeftSide>
           <GridLeft
-            areaCode={areaCode}
+            areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
@@ -122,11 +176,12 @@ function CC1700({
             setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
-            style={{ height: `calc(100% - 38px)` }}
+            style={{ height: `100%` }}
           />
         </LeftSide>
         <RightSide>
           <Form
+            areaCode={areaCode}
             data65={data65}
             setData65={setData65}
             ref={formRef}
