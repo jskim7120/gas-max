@@ -93,12 +93,12 @@ const Form = React.forwardRef(
       { mode: "onChange" }
     );
 
-    useEffect(() => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        resetForm("reset");
-        empChargeDataSelect(selected.areaCode);
-      }
-    }, [selected]);
+    // useEffect(() => {
+    //   if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+    //     resetForm("reset");
+    //     empChargeDataSelect(selected.areaCode);
+    //   }
+    // }, [selected]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,

@@ -137,8 +137,7 @@ const ButtonComponent = styled.button<{
   size?: ButtonSize;
   textColor?: ButtonTextColor;
   icon?: React.ReactNode;
-  disabled?: boolean;
-  isHover?: boolean;
+  // disabled?: boolean;
   fullWidth?: boolean;
   color: ButtonColor;
   kind: ButtonType;
@@ -159,20 +158,28 @@ const ButtonComponent = styled.button<{
       transition: all 0.3s ease;
       box-sizing: border-box;
       background: ${BtnAttribute(props.kind, props.color).bg};
+      //background: ${BtnAttribute(props.kind, props.color).bgHover};
       border: 1px solid ${BtnAttribute(props.kind, props.color).border};
       border-radius: ${BtnAttribute(props.kind, props.color).borderRad};
       color: ${BtnAttribute(props.kind, props.color).color};
       padding: ${BtnAttribute(props.kind, props.color).padding};
 
+      // &:focus {
+      //   background: ${BtnAttribute(props.kind, props.color).bg};
+      // }
+
       &:hover {
-        background: ${BtnAttribute(props.kind, props.color).bgHover};
+        background: ${BtnAttribute(props.kind, props.color).bg};
       }
-      &:focus {
-        //background-color: #5284ce;
+
+      &.active {
+        //background: ${BtnAttribute(props.kind, props.color).bg};
+        background: rgb(19 121 137);
       }
 
       &:disabled {
-        opacity: 0.5;
+        //opacity: 0.5;
+        background: #cccccc;
         cursor: default;
       }
 
@@ -200,27 +207,14 @@ function Button(
   props: IButtonProps,
   ref?: React.ForwardedRef<HTMLButtonElement>
 ): JSX.Element {
-  const [hover, setHover] = useState<boolean | undefined>(false);
-  const hoverHandler = () => {
-    setHover(true);
-  };
-  const leaveHandler = () => {
-    setHover(false);
-  };
-  const color = props.color ? props.color : ButtonColor.PRIMARY;
   return (
     <ButtonComponent
       size={props.size}
       textColor={props.textColor ? props.textColor : ButtonTextColor.BLACK}
-      onMouseEnter={hoverHandler}
-      onMouseLeave={leaveHandler}
-      isHover={hover}
       color={props.color ? props.color : ButtonColor.PRIMARY}
       fullWidth={props.fullWidth}
       disabled={props.disabled && props.disabled}
       ref={ref}
-      onMouseUp={props.onMouseUp}
-      onMouseDown={props.onMouseDown}
       kind={props.kind ? props.kind : ButtonType.FORM}
       {...props}
     >

@@ -63,12 +63,12 @@ const Form = React.forwardRef(
     const { register, handleSubmit, control, reset, getValues } =
       useForm<IJNOSAUP>({ mode: "onChange" });
 
-    useEffect(() => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        resetForm("reset");
-      }
-      setIsAddBtnClicked(false);
-    }, [selected]);
+    // useEffect(() => {
+    //   if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+    //     resetForm("reset");
+    //   }
+    //   setIsAddBtnClicked(false);
+    // }, [selected]);
 
     useEffect(() => {
       if (addr.length > 0) {

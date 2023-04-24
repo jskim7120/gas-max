@@ -64,11 +64,11 @@ const Form = React.forwardRef(
 
     console.log("dataComonDIc====>", dataCommonDic);
 
-    useEffect(() => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        resetForm("reset");
-      }
-    }, [selected]);
+    // useEffect(() => {
+    //   if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+    //     resetForm("reset");
+    //   }
+    // }, [selected]);
 
     useEffect(() => {
       if (addr.length > 0) {

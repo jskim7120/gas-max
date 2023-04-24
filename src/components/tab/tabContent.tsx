@@ -67,25 +67,79 @@ export const getContent = (
         <AR1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
       );
     case "EN1100":
-      return <EN1100 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <EN1100
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
+      );
     case "EN1200":
-      return <EN1200 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <EN1200
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
+      );
     case "EN1300":
-      return <EN1300 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <EN1300
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
+      );
     case "EN1400":
-      return <EN1400 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <EN1400
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
+      );
     case "EN1500":
       return <EN1500 depthFullName={depthFullName} menuId={id} />;
     case "EN1600":
-      return <EN1600 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <EN1600
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
+      );
     case "EN1700":
-      return <EN1700 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <EN1700
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
+      );
     case "EN1800":
-      return <EN1800 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <EN1800
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
+      );
     case "EN1900":
-      return <EN1900 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <EN1900
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
+      );
     case "EN2000":
-      return <EN2000 depthFullName={depthFullName} menuId={id} />;
+      return (
+        <EN2000
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
+      );
     case "CM1100":
       return (
         <CM1100
