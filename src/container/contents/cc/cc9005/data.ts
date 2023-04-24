@@ -39,7 +39,7 @@ export const columns = [
     type: "data",
     width: "150",
     header: {
-      text: "계정과목",
+      text: "계정 과목",
     },
   },
   {
@@ -58,7 +58,7 @@ export const columns = [
     width: "300",
     styleName: "rg-left-column",
     header: {
-      text: "계좌번호",
+      text: "계좌 번호",
     },
   },
   {

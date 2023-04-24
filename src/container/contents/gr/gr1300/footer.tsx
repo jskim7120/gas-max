@@ -65,7 +65,7 @@ function FooterInfo({
         <tr>
           <th>매입 금액</th>
           <th>지급 방법</th>
-          <th>지급금액</th>
+          <th>지급 금액</th>
           <th>D/C</th>
           <th>미지급액</th>
           <th>비고</th>

@@ -172,7 +172,7 @@ function Footer({
           <div>
             <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
               <FormGroup className="small">
-                <Label style={{ minWidth: "80px" }}>검침년월</Label>
+                <Label style={{ minWidth: "80px" }}>검침 년월</Label>
                 <Controller
                   control={control}
                   {...register("gjDate")}
@@ -186,7 +186,7 @@ function Footer({
                 />
               </FormGroup>
               <Input
-                label="당월검침"
+                label="당월 검침"
                 register={register("gjGum")}
                 labelStyle={{ minWidth: "66px" }}
                 inputSize={InputSize.i120}
@@ -207,7 +207,7 @@ function Footer({
                 textAlign="right"
               />
               <Input
-                label="당월금액"
+                label="당월 금액"
                 register={register("gjTotal")}
                 labelStyle={{ minWidth: "89px" }}
                 inputSize={InputSize.i120}
@@ -216,7 +216,7 @@ function Footer({
             </Wrapper>
             <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
               <FormGroup className="small">
-                <Label style={{ minWidth: "80px" }}>사용시작일</Label>
+                <Label style={{ minWidth: "80px" }}>사용 시작일</Label>
                 <Controller
                   control={control}
                   {...register("gjSdate")}
@@ -230,7 +230,7 @@ function Footer({
                 />
               </FormGroup>
               <Input
-                label="전월검침"
+                label="전월 검침"
                 register={register("gjJungum")}
                 labelStyle={{ minWidth: "66px" }}
                 inputSize={InputSize.i120}
@@ -299,7 +299,7 @@ function Footer({
               <FormGroup style={{ gap: "10px" }}>
                 <CheckBox
                   register={{ ...register("gjJmisuYn") }}
-                  title="중량금액"
+                  title="중량 금액"
                 />
                 <Input
                   register={register("gjJmisuAmt")}

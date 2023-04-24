@@ -129,7 +129,7 @@ const Form = React.forwardRef(
           inputSize={InputSize.i175}
         />
         <Input
-          label="계좌번호"
+          label="계좌 번호"
           register={register("acbBankno")}
           inputSize={InputSize.i175}
         />

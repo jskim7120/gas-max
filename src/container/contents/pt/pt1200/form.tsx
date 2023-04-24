@@ -168,7 +168,7 @@ const Form = React.forwardRef(
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     labelStyle={{ minWidth: "80px" }}
-                    label="비고"
+                    label="비 고"
                     value={value}
                     onChange={onChange}
                     inputSize={InputSize.i140}
@@ -186,7 +186,7 @@ const Form = React.forwardRef(
               render={({ field: { onChange, value, name } }) => (
                 <Input
                   labelStyle={{ minWidth: "80px" }}
-                  label="건물명"
+                  label="건 물 명"
                   value={value}
                   onChange={onChange}
                   inputSize={InputSize.i140}
@@ -277,7 +277,7 @@ const Form = React.forwardRef(
           />
           <br />
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>수금방법</Label>
+            <Label style={{ minWidth: "80px" }}>수금 방법</Label>
             <Select
               register={register("gsSukumType")}
               onChange={handleSelectCode}

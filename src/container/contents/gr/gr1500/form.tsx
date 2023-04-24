@@ -212,7 +212,7 @@ const Form = React.forwardRef(
         >
           <Wrapper>
             <Input
-              label="매입처코드"
+              label="매입처 코드"
               register={register("bjBuCode")}
               inputSize={InputSize.i150}
             />
@@ -232,7 +232,7 @@ const Form = React.forwardRef(
           <DividerGR />
           <Wrapper>
             <Input
-              label="결재은행"
+              label="결재 은행"
               register={register("buBank")}
               inputSize={InputSize.i60}
             />
@@ -251,7 +251,7 @@ const Form = React.forwardRef(
           </Wrapper>
           <Wrapper>
             <Input
-              label="비고"
+              label="비 고"
               register={register("buBigo")}
               inputSize={InputSize.i150}
             />
@@ -276,7 +276,7 @@ const Form = React.forwardRef(
           <DividerGR />
 
           <Field flex style={{ alignItems: "center" }}>
-            <Label>지급일자</Label>
+            <Label>지급 일자</Label>
             <Controller
               control={control}
               {...register("bjDate")}
@@ -291,7 +291,7 @@ const Form = React.forwardRef(
           </Field>
           <Wrapper>
             <Input
-              label="지 급 액"
+              label="지급액"
               textAlign="right"
               register={register("bjOutkum")}
               inputSize={InputSize.i150}
@@ -309,7 +309,7 @@ const Form = React.forwardRef(
           </Wrapper>
           <Wrapper>
             <FormGroup>
-              <Label>지급방법</Label>
+              <Label>지급 방법</Label>
               <Select register={register("bjOuttype")} width={InputSize.i150}>
                 {dataCommonDic?.bjOuttype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -321,7 +321,7 @@ const Form = React.forwardRef(
           </Wrapper>
           <Wrapper>
             <FormGroup>
-              <Label>출금통장</Label>
+              <Label>출금 통장</Label>
               <Select register={register("bjAcbCode")} width={InputSize.i150}>
                 {dataCommonDic?.bjAcbCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>

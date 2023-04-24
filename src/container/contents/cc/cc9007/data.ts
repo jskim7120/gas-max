@@ -76,7 +76,7 @@ export const columns = [
     width: "90",
     styleName: "rg-right-column",
     header: {
-      text: "가불금액",
+      text: "가불 금액",
     },
   },
   {
@@ -86,7 +86,7 @@ export const columns = [
     width: "90",
     styleName: "rg-right-column",
     header: {
-      text: "반제금액",
+      text: "반제 금액",
     },
   },
   {

@@ -101,7 +101,7 @@ function GR9006({
         <form onSubmit={handleSubmit(submit)}>
           <SearchWrapper className="h35">
             <FormGroup>
-              <Label style={{ minWidth: "auto" }}>보고서종류</Label>
+              <Label style={{ minWidth: "auto" }}>보고서 종류</Label>
               <Select
                 register={register("reportType")}
                 width={InputSize.i150}

@@ -128,7 +128,7 @@ function GR1500({
                   inputSize={InputSize.i140}
                 />
 
-                <Label>거래상태</Label>
+                <Label>거래 상태</Label>
                 <Select width={InputSize.i130} register={register("sBuStae")}>
                   {dataCommonDic?.sBuStae?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -195,7 +195,7 @@ function GR1500({
             </SearchWrapper>
             <SearchWrapper className="h35">
               <FormGroup>
-                <Label style={{ minWidth: "auto" }}>지급기간</Label>
+                <Label style={{ minWidth: "auto" }}>지급 기간</Label>
 
                 <Controller
                   control={control}

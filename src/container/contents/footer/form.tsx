@@ -48,7 +48,7 @@ const FooterWrapper = styled.div`
 
       p.b {
         color: #0a0a0a;
-        font-size: 12px;
+        font-size: 14px;
       }
 
       p.w {
@@ -119,7 +119,7 @@ const FooterWrapper = styled.div`
         overflow: hidden;
 
         p {
-          font-size: 12px;
+          font-size: 14px;
           &:first-child {
             margin-right: 10px;
           }
@@ -352,7 +352,7 @@ function Form() {
       <div className="bottom">
         <div className="bottom__upper">
           <Badge
-            title="사업정보"
+            title="사업 정보"
             color={BadgeColor.orange}
             size={BadgeSize.size3}
           />

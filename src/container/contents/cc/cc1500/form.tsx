@@ -106,7 +106,7 @@ const Form = React.forwardRef(
         >
           <div>
             <FormGroup>
-              <Label>영업소</Label>
+              <Label>영 업 소</Label>
               <Select
                 register={register("areaCode")}
                 width={InputSize.i150}
@@ -120,7 +120,7 @@ const Form = React.forwardRef(
               </Select>
             </FormGroup>
             <FormGroup>
-              <Label>일자 </Label>
+              <Label>일 자 </Label>
               <Controller
                 control={control}
                 {...register("cjDate")}
@@ -134,7 +134,7 @@ const Form = React.forwardRef(
               />
             </FormGroup>
             <FormGroup>
-              <Label>차량</Label>
+              <Label>차 량</Label>
               <Select register={register("cjCaCode")} width={InputSize.i150}>
                 {dataCommonDic?.cjCaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -144,7 +144,7 @@ const Form = React.forwardRef(
               </Select>
             </FormGroup>
             <FormGroup>
-              <Label>정비명</Label>
+              <Label>정 비 명</Label>
               <Select register={register("cjCcCode")} width={InputSize.i150}>
                 {dataCommonDic?.cjCcCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -156,14 +156,14 @@ const Form = React.forwardRef(
             <br />
 
             <Input
-              label="금액"
+              label="금 액"
               register={register("cjKumack")}
               inputSize={InputSize.i150}
               textAlign="right"
               mask={currencyMask}
             />
             <FormGroup>
-              <Label>사원</Label>
+              <Label>사 원</Label>
               <Select register={register("cjSwCode")} width={InputSize.i150}>
                 {dataCommonDic?.cjSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -173,20 +173,20 @@ const Form = React.forwardRef(
               </Select>
             </FormGroup>
             <Input
-              label="비고"
+              label="비 고"
               register={register("cjBigo")}
               inputSize={InputSize.i150}
             />
             <br />
             <br />
             <Input
-              label="주유량"
+              label="주 유 량"
               register={register("cjOilL")}
               inputSize={InputSize.i150}
               textAlign="right"
             />
             <Input
-              label="단가"
+              label="단 가"
               register={register("cjOilDanga")}
               inputSize={InputSize.i150}
               textAlign="right"
@@ -205,7 +205,7 @@ const Form = React.forwardRef(
               textAlign="right"
             />
             <FormGroup>
-              <Label>사원</Label>
+              <Label>사 원</Label>
               <Select register={register("cjSwCodeOil")} width={InputSize.i150}>
                 {dataCommonDic?.cjSwCodeOil?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -215,7 +215,7 @@ const Form = React.forwardRef(
               </Select>
             </FormGroup>
             <Input
-              label="비고"
+              label="비 고"
               register={register("cjBigoOil")}
               inputSize={InputSize.i150}
             />

@@ -171,7 +171,7 @@ function Form({
         <Wrapper grid>
           <Input label="대표전화" register={register("buTel")} />
           <Input label="Fax 번호" register={register("buFax")} />
-          <Input label="거래상태" register={register("buStaeName")} />
+          <Input label="거래 상태" register={register("buStaeName")} />
         </Wrapper>
 
         <Wrapper grid>
@@ -181,7 +181,7 @@ function Form({
         </Wrapper>
 
         <Wrapper grid>
-          <Input label="비고" register={register("buBigo")} />
+          <Input label="비 고" register={register("buBigo")} />
           <div></div>
           <div
             style={{

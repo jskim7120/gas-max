@@ -220,7 +220,7 @@ function RV1100({
         <div style={{ width: "70%" }}>
           <Wrapper grid col={4} fields="0.7fr 0.5fr 0.6fr 1fr">
             <FormGroup>
-              <Label style={{ minWidth: "90px" }}>검침년월</Label>
+              <Label style={{ minWidth: "90px" }}>검침 년월</Label>
               <Controller
                 control={control}
                 {...register("sGjGumym")}
@@ -248,7 +248,7 @@ function RV1100({
             </FormGroup>
 
             <FormGroup>
-              <Label style={{ minWidth: "80px" }}>검침일자</Label>
+              <Label style={{ minWidth: "80px" }}>검침 일자</Label>
               <Controller
                 control={control}
                 {...register("sGjDate")}
@@ -266,7 +266,7 @@ function RV1100({
             <FormGroup style={{ gap: "8px" }}>
               <CheckBox
                 register={{ ...register("sGjPerYn") }}
-                title="연체적요일"
+                title="연체 적요일"
               />
               <Controller
                 control={control}
@@ -338,7 +338,7 @@ function RV1100({
               />
             </FormGroup>
             <FormGroup>
-              <Label style={{ minWidth: "80px" }}>담당사원</Label>
+              <Label style={{ minWidth: "80px" }}>담당 사원</Label>
               <Select register={register("sSwCode")}>
                 {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -348,8 +348,8 @@ function RV1100({
               </Select>
             </FormGroup>
             <FormGroup>
-              <Label style={{ minWidth: "67px" }}>지역분류</Label>
-              <Select register={register("sJyCode")} style={{ width: "149px" }}>
+              <Label style={{ minWidth: "67px" }}>지역 분류</Label>
+              <Select register={register("sJyCode")} style={{ width: "150px" }}>
                 {dataCommonDic?.sJyCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -360,7 +360,7 @@ function RV1100({
 
             <Field flex>
               <FormGroup>
-                <Label style={{ minWidth: "76px" }}>관리책임자</Label>
+                <Label style={{ minWidth: "120px" }}>관리 책임자</Label>
                 <Select register={register("sCuCustgubun")}>
                   {dataCommonDic?.sCustgubun?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -371,7 +371,7 @@ function RV1100({
               </FormGroup>
 
               <FormGroup>
-                <Label>수금방법</Label>
+                <Label>수금 방법</Label>
                 <Select register={register("sSukumtype")}>
                   {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>

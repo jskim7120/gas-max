@@ -309,7 +309,7 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper grid col={2}>
           <Input
-            label="매입처코드"
+            label="매입처 코드"
             register={register("buCode")}
             inputSize={InputSize.i80}
             readOnly
@@ -339,7 +339,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.i150}
           />
           <FormGroup>
-            <Label>거래상태</Label>
+            <Label>거래 상태</Label>
             <Select register={register("buStae")} width={InputSize.i130}>
               {dataCommonDic?.buStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -365,7 +365,7 @@ const Form = React.forwardRef(
 
         <Wrapper grid col={2}>
           <Input
-            label="비고"
+            label="비 고"
             register={register("buBigo")}
             style={{ width: "493px" }}
           />
@@ -408,7 +408,7 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper grid col={2}>
           <Input
-            label="상호"
+            label="상 호"
             register={register("buSangho")}
             inputSize={InputSize.i150}
           />
@@ -421,7 +421,7 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper style={{ alignItems: "center" }}>
           <Input
-            label="주소"
+            label="주 소"
             register={register("buZipcode")}
             inputSize={InputSize.i80}
           />
@@ -434,12 +434,12 @@ const Form = React.forwardRef(
         </Wrapper>
         <Wrapper grid col={2}>
           <Input
-            label="업태"
+            label="업 태"
             register={register("buUptae")}
             inputSize={InputSize.i150}
           />
           <Input
-            label="종목"
+            label="종 목"
             register={register("buJongmok")}
             inputSize={InputSize.i130}
           />
@@ -476,12 +476,12 @@ const Form = React.forwardRef(
         <Divider />
         <Wrapper grid col={2}>
           <Input
-            label="결재은행"
+            label="결재 은행"
             register={register("buBank")}
             inputSize={InputSize.i150}
           />
           <Input
-            label="계좌번호"
+            label="계좌 번호"
             register={register("buBankno")}
             inputSize={InputSize.i130}
           />

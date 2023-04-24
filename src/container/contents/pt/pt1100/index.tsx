@@ -226,7 +226,7 @@ function PT1100({
           <form style={{ minWidth: "1000px" }}>
             <SearchWrapper className="h35">
               <Field flex>
-                <PersonInfoText text="미수현황" />
+                <PersonInfoText text="미수 현황" />
                 <FormGroup style={{ marginLeft: "7px" }}>
                   <Input
                     label="거래처"
@@ -237,7 +237,7 @@ function PT1100({
                 <FormGroup>
                   <CheckBox
                     register={{ ...register("sCheck") }}
-                    title="조건검색"
+                    title="조건 검색"
                     rtl
                     style={{ width: "80px" }}
                     onChange={(e: any) => setSCheck(e.target.checked)}
@@ -273,7 +273,7 @@ function PT1100({
           >
             <SearchWrapper className="h35">
               <div className="buttons">
-                <PersonInfoText text="수금현황" />
+                <PersonInfoText text="수금 현황" />
                 <Controller
                   control={control}
                   {...register("sMsdateF")}

@@ -58,7 +58,7 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "회 차",
+      text: "회차",
     },
   },
   {
@@ -67,7 +67,7 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "검 침 일",
+      text: "검침일",
     },
   },
   {
@@ -76,7 +76,7 @@ export const columnsSecond = [
     type: "data",
     width: "120",
     header: {
-      text: "전 검 침",
+      text: "전검침",
     },
     styleName: "rg-right-column",
     numberFormat: "#",
@@ -87,7 +87,7 @@ export const columnsSecond = [
     type: "data",
     width: "150",
     header: {
-      text: "당 검 침",
+      text: "당검침",
     },
     styleName: "rg-right-column",
     numberFormat: "#",
@@ -98,7 +98,7 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "사 용 량",
+      text: "사용량",
     },
     styleName: "rg-right-column",
     numberFormat: "#",
@@ -120,7 +120,7 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "전 미 수",
+      text: "전미수",
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
@@ -131,7 +131,7 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "연 체 료",
+      text: "연체료",
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
@@ -142,7 +142,7 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "당 월 합 계",
+      text: "당월 합계",
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
@@ -153,7 +153,7 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "지로발행일",
+      text: "지로 발행일",
     },
   },
   {
@@ -173,7 +173,7 @@ export const columnsSecond = [
     type: "data",
     width: "100",
     header: {
-      text: "사 원",
+      text: "사원",
     },
   },
 ];

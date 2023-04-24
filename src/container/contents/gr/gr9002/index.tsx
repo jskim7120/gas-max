@@ -138,7 +138,7 @@ function GR9002({
                 )}
               />
 
-              <Label style={{ minWidth: "80px" }}>수송기사</Label>
+              <Label style={{ minWidth: "80px" }}>수송 기사</Label>
               <Select register={register("bcCsawon")} width={InputSize.i110}>
                 {dataCommonDic?.bcCsawon?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -147,7 +147,7 @@ function GR9002({
                 ))}
               </Select>
 
-              <Label style={{ minWidth: "80px" }}>수송방법</Label>
+              <Label style={{ minWidth: "80px" }}>수송 방법</Label>
               <Select register={register("bcCtype")} width={InputSize.i110}>
                 {dataCommonDic?.bcCtype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>

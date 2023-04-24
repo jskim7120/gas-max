@@ -123,7 +123,7 @@ function CM9003({
             <div style={{ width: "80%" }}>
               <Wrapper grid col={6} style={{ justifyItems: "center" }}>
                 <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>보고서종류</Label>
+                  <Label style={{ minWidth: "90px" }}>보고서 종류</Label>
                   <Select
                     register={register("reportKind")}
                     width={InputSize.i130}
@@ -138,7 +138,7 @@ function CM9003({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>거래구분</Label>
+                  <Label style={{ minWidth: "auto" }}>거래 구분</Label>
                   <Select register={register("cuType")} width={InputSize.i130}>
                     {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -167,7 +167,7 @@ function CM9003({
                 </Field>
 
                 <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>지역분류</Label>
+                  <Label style={{ minWidth: "auto" }}>지역 분류</Label>
                   <Select
                     register={register("cuJyCode")}
                     width={InputSize.i130}
@@ -181,7 +181,7 @@ function CM9003({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>담당사원</Label>
+                  <Label style={{ minWidth: "auto" }}>담당 사원</Label>
                   <Select register={register("swCode")} width={InputSize.i130}>
                     {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -192,7 +192,7 @@ function CM9003({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>소비자형태</Label>
+                  <Label style={{ minWidth: "auto" }}>소비자 형태</Label>
                   <Select
                     register={register("cuCutype")}
                     width={InputSize.i130}

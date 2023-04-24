@@ -110,7 +110,7 @@ function CM9005({
             <div style={{ width: "80%" }}>
               <Wrapper grid col={6}>
                 <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>사용가스구분</Label>
+                  <Label style={{ minWidth: "auto" }}>사용 가스 구분</Label>
                   <Select
                     register={register("cuJpGubun")}
                     style={{ width: "100%" }}
@@ -125,7 +125,7 @@ function CM9005({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label>가스품목</Label>
+                  <Label>가스 품목</Label>
                   <Select
                     register={register("cuJpCode")}
                     style={{ width: "100%" }}
@@ -139,7 +139,7 @@ function CM9005({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label>거래구분</Label>
+                  <Label>거래 구분</Label>
                   <Select
                     register={register("cuType")}
                     style={{ width: "100%" }}
@@ -153,7 +153,7 @@ function CM9005({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label>지역분류</Label>
+                  <Label>지역 분류</Label>
                   <Select
                     register={register("cuJyCode")}
                     style={{ width: "100%" }}
@@ -167,7 +167,7 @@ function CM9005({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label>담당사원</Label>
+                  <Label>담당 사원</Label>
                   <Select
                     register={register("swCode")}
                     style={{ width: "100%" }}
@@ -180,7 +180,7 @@ function CM9005({
                   </Select>
                 </FormGroup>
                 <FormGroup>
-                  <Label>거래상태</Label>
+                  <Label>거래 상태</Label>
                   <Select
                     register={register("cuStae")}
                     style={{ width: "100%" }}

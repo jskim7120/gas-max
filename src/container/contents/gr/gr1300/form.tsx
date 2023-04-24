@@ -528,7 +528,7 @@ function Form({
         </SearchWrapper>
         <Wrapper>
           <FormGroup>
-            <Label>입고일자</Label>
+            <Label>입고 일자</Label>
             <Controller
               control={control}
               {...register("bbDate")}
@@ -548,7 +548,7 @@ function Form({
             <Label>매입처</Label>
             <Select
               register={register("bbBuCode")}
-              width={InputSize.i100}
+              width={InputSize.i120}
               disabled={!isAddBtnClicked}
             >
               {dataCommonDic?.bbBuCode?.map((obj: any, idx: number) => (
@@ -561,7 +561,7 @@ function Form({
           <Input
             label="매입 회차"
             register={register("bbSno")}
-            inputSize={InputSize.i50}
+            inputSize={InputSize.i70}
             readOnly={!isAddBtnClicked}
           />
         </Wrapper>
