@@ -723,7 +723,7 @@ const Form = ({
           />
         </SearchWrapper>
         <FormGroup>
-          <Label>입고일자</Label>
+          <Label>입고 일자</Label>
           <Controller
             control={control}
             {...register("bcDate")}
@@ -754,7 +754,7 @@ const Form = ({
           </Select>
         </FormGroup>
         <FormGroup>
-          <Label>수송방법</Label>
+          <Label>수송 방법</Label>
           <Select register={register("bcCtype")} width={InputSize.i130}>
             {dataAdditionalDic?.bcCtype?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
@@ -764,7 +764,7 @@ const Form = ({
           </Select>
 
           <Input
-            label="전표번호"
+            label="전표 번호"
             register={register("bcJunno")}
             inputSize={InputSize.i130}
           />
@@ -775,14 +775,14 @@ const Form = ({
           />
         </FormGroup>
         <FormGroup>
-          <Label>수송기사</Label>
+          <Label>수송 기사</Label>
           <EditableSelect
             list={dataAdditionalDic?.bcCsawon}
             register={register("bcCsawon")}
             style={{ width: "130px" }}
           />
 
-          <Label>수송차량</Label>
+          <Label>수송 차량</Label>
           <Select register={register("bcCarno")} width={InputSize.i130}>
             {dataAdditionalDic?.bcCarno?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>

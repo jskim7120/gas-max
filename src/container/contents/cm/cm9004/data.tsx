@@ -224,7 +224,7 @@ export const columns = [
     name: "cuSeFaxNo",
     fieldName: "cuSeFaxNo",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "FAX",
     },
@@ -243,7 +243,7 @@ export const columns = [
     name: "cuSekumDate",
     fieldName: "cuSekumDate",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "발행일",
     },
@@ -252,7 +252,7 @@ export const columns = [
     name: "cuSeListYn",
     fieldName: "cuSeListYn",
     type: "data",
-    width: "100",
+    width: "120",
     header: {
       text: "거래명세Y/N",
     },
@@ -261,7 +261,7 @@ export const columns = [
     name: "cuSmsYn",
     fieldName: "cuSmsYn",
     type: "data",
-    width: "80",
+    width: "100",
     header: {
       text: "SMS Y/N",
     },

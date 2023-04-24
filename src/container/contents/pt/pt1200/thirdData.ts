@@ -115,7 +115,7 @@ export const columnsThird = [
     type: "data",
     width: "100",
     header: {
-      text: "수금방법",
+      text: "수금 방법",
     },
   },
   {

@@ -184,7 +184,7 @@ function AR1100({
           <SearchWrapper>
             <div>
               <FormGroup>
-                <Label>판매일자</Label>
+                <Label>판매 일자</Label>
                 <Controller
                   control={control}
                   {...register("sDate")}
@@ -210,7 +210,7 @@ function AR1100({
                   ))}
                 </Select>
 
-                <Label>입금구분</Label>
+                <Label>입금 구분</Label>
                 <Select
                   register={register("sInkumtype")}
                   width={InputSize.i100}
@@ -222,7 +222,7 @@ function AR1100({
                   ))}
                 </Select>
 
-                <Label>대납구분</Label>
+                <Label>대납 구분</Label>
                 <Select
                   register={register("sProxytype")}
                   width={InputSize.i100}
@@ -234,7 +234,7 @@ function AR1100({
                   ))}
                 </Select>
 
-                <Label>등록구분</Label>
+                <Label>등록 구분</Label>
                 <Select
                   register={register("sInserttype")}
                   width={InputSize.i100}
@@ -274,7 +274,7 @@ function AR1100({
                 />
               </FormGroup>
               <FormGroup>
-                <Label>거래상태 :</Label>
+                <Label>거래 상태 :</Label>
                 <CheckBox
                   register={{ ...register("sSalestate1") }}
                   title="접수"
@@ -311,7 +311,7 @@ function AR1100({
                   rtl
                   style={{ width: "80px" }}
                 />
-                <Label>거래구분 :</Label>
+                <Label>거래 구분 :</Label>
                 <CheckBox
                   register={{ ...register("sSalesGubun1") }}
                   title="중량"

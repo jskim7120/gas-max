@@ -33,7 +33,7 @@ import { CustomAreaCodePart } from "container/contents/customTopPart";
 
 const radioOptions = [
   {
-    label: "검침일자",
+    label: "검침 일자",
     id: "1",
   },
   {
@@ -41,11 +41,11 @@ const radioOptions = [
     id: "2",
   },
   {
-    label: "등록일자",
+    label: "등록 일자",
     id: "3",
   },
   {
-    label: "수정일자",
+    label: "수정 일자",
     id: "4",
   },
 ];
@@ -181,7 +181,7 @@ function RV9005({
                   id="0"
                   onChange={() => setSType1(false)}
                 />
-                <RadioButtonLabel htmlFor={``}>검침년월</RadioButtonLabel>
+                <RadioButtonLabel htmlFor={``}>검침 년월</RadioButtonLabel>
               </Item>
               <Controller
                 control={control}
@@ -324,7 +324,7 @@ function RV9005({
                   onChange={() => setSType2("1")}
                 />
                 <RadioButtonLabel htmlFor={``} style={{ width: "105px" }}>
-                  체 적 검침사원
+                  체적 검침 사원
                 </RadioButtonLabel>
               </Item>
               <Select
@@ -340,7 +340,7 @@ function RV9005({
               </Select>
             </FormGroup>
             <FormGroup>
-              <Label style={{ minWidth: "70px" }}>지역분류</Label>
+              <Label style={{ minWidth: "70px" }}>지역 분류</Label>
               <Select register={register("sJyCode")} width={InputSize.i120}>
                 {dataCommonDic?.sJyCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -397,7 +397,7 @@ function RV9005({
                   onChange={() => setSType2("2")}
                 />
                 <RadioButtonLabel htmlFor={``} style={{ width: "105px" }}>
-                  관리책임자 분류
+                  관리 책임자 분류
                 </RadioButtonLabel>
               </Item>
               <Select
@@ -414,7 +414,7 @@ function RV9005({
             </FormGroup>
 
             <FormGroup>
-              <Label style={{ minWidth: "70px" }}>수금방법</Label>
+              <Label style={{ minWidth: "70px" }}>수금 방법</Label>
               <Select register={register("sSukumtype")} width={InputSize.i120}>
                 {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -434,7 +434,7 @@ function RV9005({
               <p>mmH20</p>
             </FormGroup>
             <FormGroup>
-              <Label style={{ minWidth: "90px" }}>정렬순서</Label>
+              <Label style={{ minWidth: "90px" }}>정렬 순서</Label>
               <Select register={register("sSort")}>
                 {dataCommonDic?.sSort?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>

@@ -77,7 +77,7 @@ function CC9001({
           <form onSubmit={handleSubmit(submit)}>
             <SearchWrapper className="h35" style={{ justifyContent: "start" }}>
               <FormGroup>
-                <Label style={{ minWidth: "62px" }}>계정과목</Label>
+                <Label style={{ minWidth: "62px" }}>계정 과목</Label>
                 <Select
                   register={register("acjAccCode")}
                   width={InputSize.i120}

@@ -127,7 +127,7 @@ function CM9003({
             <div>
               <Wrapper grid col={5} fields="1fr 1fr 1fr 1fr 1.5fr">
                 <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>보고서종류</Label>
+                  <Label style={{ minWidth: "90px" }}>보고서 종류</Label>
                   <Select
                     width={InputSize.i130}
                     register={register("reportKind")}
@@ -142,7 +142,7 @@ function CM9003({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>거래구분</Label>
+                  <Label style={{ minWidth: "90px" }}>거래 구분</Label>
                   <Select register={register("cuType")} width={InputSize.i130}>
                     {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -153,7 +153,7 @@ function CM9003({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>지역분류</Label>
+                  <Label style={{ minWidth: "90px" }}>지역 분류</Label>
                   <Select
                     register={register("cuJyCode")}
                     width={InputSize.i130}
@@ -167,7 +167,7 @@ function CM9003({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>담당사원</Label>
+                  <Label style={{ minWidth: "90px" }}>담당 사원</Label>
                   <Select register={register("swCode")} width={InputSize.i130}>
                     {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -178,7 +178,7 @@ function CM9003({
                 </FormGroup>
 
                 <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>관리책임자</Label>
+                  <Label style={{ minWidth: "90px" }}>관리 책임자</Label>
                   <Select
                     register={register("cuCustgubun")}
                     width={InputSize.i130}
@@ -196,7 +196,7 @@ function CM9003({
               <Wrapper grid col={5} fields="1fr 1fr 1fr 1fr 1.5fr">
                 <div></div>
                 <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>소비자형태</Label>
+                  <Label style={{ minWidth: "90px" }}>소비자 형태</Label>
                   <Select
                     register={register("cuCutype")}
                     width={InputSize.i130}
@@ -212,7 +212,7 @@ function CM9003({
                   </Select>
                 </FormGroup>
                 <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>거래상태</Label>
+                  <Label style={{ minWidth: "90px" }}>거래 상태</Label>
                   <Select register={register("cuStae")} width={InputSize.i130}>
                     {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -222,7 +222,7 @@ function CM9003({
                   </Select>
                 </FormGroup>
                 <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>수금방법</Label>
+                  <Label style={{ minWidth: "90px" }}>수금 방법</Label>
                   <Select
                     register={register("cuSukumtype")}
                     width={InputSize.i130}

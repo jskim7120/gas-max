@@ -31,7 +31,7 @@ export const columns = [
     width: "250",
     styleName: "rg-left-column",
     header: {
-      text: " 계정과목",
+      text: " 계정 과목",
     },
   },
   {

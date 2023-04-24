@@ -196,7 +196,7 @@ const Form = React.forwardRef(
         </FormGroup>
 
         <FormGroup>
-          <Label style={{ minWidth: "80px" }}>통장계좌</Label>
+          <Label style={{ minWidth: "80px" }}>통장 계좌</Label>
           <Select
             register={register("cashBank")}
             onChange={handleSelectCode}
@@ -213,7 +213,7 @@ const Form = React.forwardRef(
         <Divider />
 
         <Input
-          label="계정과목"
+          label="계정 과목"
           labelStyle={{ minWidth: "80px" }}
           register={register("acjAccName")}
           inputSize={InputSize.i200}

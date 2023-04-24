@@ -76,7 +76,7 @@ const FORMPT1205 = React.forwardRef(
         style={{ margin: "30px 30px 0 0", padding: "10px" }}
       >
         <Field flex style={{ alignItems: "center" }}>
-          <Label>수금일자</Label>
+          <Label>수금 일자</Label>
           <Controller
             control={control}
             {...register("gsDate")}
@@ -97,7 +97,7 @@ const FORMPT1205 = React.forwardRef(
             render={({ field: { onChange, value, name } }) => (
               <Input
                 labelStyle={{ minWidth: "120px" }}
-                label="미수금액"
+                label="미수 금액"
                 value={cuCmisu}
                 onChange={onChange}
                 mask={currencyMask}
@@ -113,7 +113,7 @@ const FORMPT1205 = React.forwardRef(
             render={({ field: { onChange, value, name } }) => (
               <Input
                 labelStyle={{ minWidth: "120px" }}
-                label="선택금액"
+                label="선택 금액"
                 value={totalGuAmount}
                 onChange={onChange}
                 mask={currencyMask}
@@ -179,7 +179,7 @@ const FORMPT1205 = React.forwardRef(
         />
         <br />
         <FormGroup>
-          <Label>수금방법</Label>
+          <Label>수금 방법</Label>
           <Select
             register={register("gsSukumtype")}
             kind={FieldKind.BORDER}
@@ -193,7 +193,7 @@ const FORMPT1205 = React.forwardRef(
           </Select>
         </FormGroup>
         <FormGroup>
-          <Label>사원</Label>
+          <Label>사 원</Label>
           <Select
             register={register("gsSwCode")}
             kind={FieldKind.BORDER}
@@ -209,7 +209,7 @@ const FORMPT1205 = React.forwardRef(
 
         <Field>
           <Input
-            label="비고"
+            label="비 고"
             register={register("gsBigo")}
             kind={FieldKind.BORDER}
             inputSize={InputSize.i175}

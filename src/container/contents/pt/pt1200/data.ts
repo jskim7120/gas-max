@@ -88,7 +88,7 @@ export const columns = [
     type: "data",
     width: "80",
     header: {
-      text: "최종검침일",
+      text: "최종 검침일",
     },
   },
   {

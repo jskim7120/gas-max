@@ -155,7 +155,7 @@ function RV9006({
                     id="0"
                     onChange={() => setSType1(false)}
                   />
-                  <RadioButtonLabel htmlFor={``}>검침년월</RadioButtonLabel>
+                  <RadioButtonLabel htmlFor={``}>검침 년월</RadioButtonLabel>
                 </Item>
                 <Controller
                   control={control}
@@ -208,7 +208,7 @@ function RV9006({
                 </Select>
               </FormGroup>
               <FormGroup>
-                <Label>담당사원</Label>
+                <Label>담당 사원</Label>
                 <Select
                   register={register("sSwCode")}
                   style={{ width: "100%" }}
@@ -275,7 +275,7 @@ function RV9006({
                     id="1"
                     onChange={() => setSType1(true)}
                   />
-                  <RadioButtonLabel htmlFor={``}>검침일자</RadioButtonLabel>
+                  <RadioButtonLabel htmlFor={``}>검침 일자</RadioButtonLabel>
                 </Item>
                 <Controller
                   control={control}
@@ -314,7 +314,7 @@ function RV9006({
                 />
               </FormGroup>
               <FormGroup>
-                <Label>지역분류</Label>
+                <Label>지역 분류</Label>
                 <Select
                   register={register("sJyCode")}
                   style={{ width: "100%" }}
@@ -328,7 +328,7 @@ function RV9006({
               </FormGroup>
 
               <FormGroup>
-                <Label>그룹종류</Label>
+                <Label>그룹 종류</Label>
                 <Select register={register("sOrder")} style={{ width: "100%" }}>
                   {dataCommonDic?.sOrder?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>

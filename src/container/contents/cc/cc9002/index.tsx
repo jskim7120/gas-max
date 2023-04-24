@@ -107,7 +107,7 @@ function CC9002({
               <Field style={{ width: "83px", marginLeft: "63px" }}>
                 <FormGroup>
                   <CheckBox register={{ ...register("userChk") }} />
-                  <Label style={{ minWidth: "64px" }}>계정과목</Label>
+                  <Label style={{ minWidth: "64px" }}>계정 과목</Label>
                 </FormGroup>
               </Field>
 

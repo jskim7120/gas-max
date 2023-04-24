@@ -140,7 +140,7 @@ function Footer() {
               <Badge
                 size={BadgeSize.size1}
                 color={BadgeColor.brownDark}
-                title="담당사원"
+                title="담당 사원"
               />
               <span>{info?.cuSwName}</span>
             </div>
@@ -148,7 +148,7 @@ function Footer() {
               <Badge
                 size={BadgeSize.size1}
                 color={BadgeColor.purpleDark}
-                title="수금방법"
+                title="수금 방법"
               />
               <span>{info?.cuSukumtypeName}</span>
             </div>

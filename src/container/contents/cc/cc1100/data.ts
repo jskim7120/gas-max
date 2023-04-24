@@ -42,7 +42,7 @@ export const columns = [
     type: "data",
     width: "60",
     header: {
-      text: "영 업 소",
+      text: "영업소",
     },
   },
   {
@@ -51,7 +51,7 @@ export const columns = [
     type: "data",
     width: "80",
     header: {
-      text: "일 자",
+      text: "일자",
     },
   },
   {
@@ -61,7 +61,7 @@ export const columns = [
     width: "80",
     styleName: "rg-left-column",
     header: {
-      text: "항 목",
+      text: "항목",
     },
   },
   {
@@ -71,7 +71,7 @@ export const columns = [
     width: "130",
     styleName: "rg-left-column",
     header: {
-      text: "적 요",
+      text: "적요",
     },
   },
   {
@@ -80,7 +80,7 @@ export const columns = [
     type: "data",
     width: "100",
     header: {
-      text: "사 원",
+      text: "사원",
     },
   },
   {
@@ -90,7 +90,7 @@ export const columns = [
     width: "100",
     styleName: "rg-right-column",
     header: {
-      text: "입 금",
+      text: "입금",
     },
     numberFormat: "#,##0",
   },
@@ -101,7 +101,7 @@ export const columns = [
     width: "100",
     styleName: "rg-right-column",
     header: {
-      text: "출 금",
+      text: "출금",
     },
     numberFormat: "#,##0",
   },
@@ -112,7 +112,7 @@ export const columns = [
     width: "100",
     styleName: "rg-right-column",
     header: {
-      text: "잔 액",
+      text: "잔액",
     },
     numberFormat: "#,##0",
   },

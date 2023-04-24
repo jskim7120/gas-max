@@ -182,7 +182,7 @@ function GR1100({
                     minWidth: "95px",
                   }}
                 >
-                  거래상태
+                  거래 상태
                 </Label>
                 <Select register={register("sBuStae")} width={InputSize.i100}>
                   {dataCommonDic?.sBuStae?.map((obj: any, idx: number) => (

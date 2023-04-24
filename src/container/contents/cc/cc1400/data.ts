@@ -32,9 +32,9 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
-      text: "영 업 소",
+      text: "영업소",
     },
     footer: {
       valueCallback: function (grid: any) {
@@ -48,7 +48,7 @@ export const columns = [
     type: "data",
     width: "80",
     header: {
-      text: "일 자",
+      text: "일자",
     },
   },
 
@@ -58,7 +58,7 @@ export const columns = [
     type: "data",
     width: "50",
     header: {
-      text: "코 드",
+      text: "코드",
     },
   },
   {
@@ -67,7 +67,7 @@ export const columns = [
     type: "data",
     width: "100",
     header: {
-      text: "사 원",
+      text: "사원",
     },
   },
   {
@@ -77,7 +77,7 @@ export const columns = [
     width: "200",
     styleName: "rg-left-column",
     header: {
-      text: "비 고",
+      text: "비고",
     },
   },
   {
@@ -87,7 +87,7 @@ export const columns = [
     width: "100",
     styleName: "rg-right-column",
     header: {
-      text: "금 액",
+      text: "금액",
     },
     numberFormat: "#,##0",
   },

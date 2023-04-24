@@ -98,7 +98,7 @@ const FORMCM1105 = React.forwardRef(
         style={{ margin: "30px 30px 0 0" }}
       >
         <Field flex style={{ alignItems: "center" }}>
-          <Label>수금일자</Label>
+          <Label>수금 일자</Label>
           <Controller
             control={control}
             {...register("msDate")}
@@ -199,7 +199,7 @@ const FORMCM1105 = React.forwardRef(
         />
 
         <FormGroup>
-          <Label>수금방법</Label>
+          <Label>수금 방법</Label>
           <Select
             register={register("msSukumtype")}
             kind={FieldKind.BORDER}
@@ -213,7 +213,7 @@ const FORMCM1105 = React.forwardRef(
           </Select>
         </FormGroup>
         <FormGroup>
-          <Label>사원</Label>
+          <Label>사 원</Label>
           <Select
             register={register("msSwCode")}
             kind={FieldKind.BORDER}
@@ -232,7 +232,7 @@ const FORMCM1105 = React.forwardRef(
           render={({ field: { onChange, value, name } }) => (
             <Input
               labelStyle={{ minWidth: "120px" }}
-              label="비고"
+              label="비 고"
               value={value}
               onChange={onChange}
               // mask={currencyMask}

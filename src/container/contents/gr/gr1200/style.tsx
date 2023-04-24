@@ -50,7 +50,7 @@ export const CTable = styled.table`
     th {
       height: 22px;
       font-family: "NotoSansKRRegular";
-      font-size: 12px;
+      font-size: 14px;
 
       border-right: 1px solid #707070;
 
@@ -99,7 +99,7 @@ export const CTable2 = styled.table`
     th {
       // height: 25px;
       font-family: "NotoSansKRRegular";
-      font-size: 15px;
+      font-size: 14px;
       border-left: 1px solid #707070;
     }
 
@@ -173,7 +173,7 @@ export const CLabel = styled.label`
   border-radius: 2px;
   text-align: center;
   font-family: "NotoSansKRRegular";
-  font-size: 11px;
+  font-size: 14px;
 `;
 
 export const CircleBtn = styled.span`

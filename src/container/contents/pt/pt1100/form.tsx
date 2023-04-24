@@ -242,7 +242,7 @@ const Form = React.forwardRef(
           render={({ field: { onChange, value, name } }) => (
             <Input
               labelStyle={{ minWidth: "80px" }}
-              label="수금후잔액"
+              label="수금 후 잔액"
               value={value}
               onChange={onChange}
               mask={currencyMask}
@@ -254,7 +254,7 @@ const Form = React.forwardRef(
         />
         <br />
         <FormGroup>
-          <Label style={{ minWidth: "80px" }}>수금방법</Label>
+          <Label style={{ minWidth: "80px" }}>수금 방법</Label>
           <Select
             register={register("msSukumtype")}
             onChange={handleSelectCode}
@@ -268,7 +268,7 @@ const Form = React.forwardRef(
           </Select>
         </FormGroup>
         <FormGroup>
-          <Label style={{ minWidth: "80px" }}>사원</Label>
+          <Label style={{ minWidth: "80px" }}>사 원</Label>
           <Select
             register={register("msSwCode")}
             onChange={handleSelectCode}

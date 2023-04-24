@@ -113,7 +113,7 @@ const Form = React.forwardRef(
         >
           <div>
             <FormGroup>
-              <Label>영업소</Label>
+              <Label>영 업 소</Label>
               <Select
                 register={register("areaCode")}
                 width={InputSize.i200}
@@ -127,7 +127,7 @@ const Form = React.forwardRef(
               </Select>
             </FormGroup>
             <FormGroup>
-              <Label>일자 </Label>
+              <Label>일 자 </Label>
               <Controller
                 control={control}
                 {...register("sgDate")}
@@ -142,7 +142,7 @@ const Form = React.forwardRef(
               />
             </FormGroup>
             <FormGroup>
-              <Label>사원</Label>
+              <Label>사 원</Label>
               <Select register={register("sgSwCode")} width={InputSize.i200}>
                 {dataCommonDic?.sgSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -152,7 +152,7 @@ const Form = React.forwardRef(
               </Select>
             </FormGroup>
             <Input
-              label="가불합계"
+              label="가불 합계"
               register={register("gabulSum")}
               inputSize={InputSize.i200}
               textAlign="right"
@@ -160,14 +160,14 @@ const Form = React.forwardRef(
             <br />
 
             <Input
-              label="금액"
+              label="금 액"
               register={register("sgKumack")}
               inputSize={InputSize.i200}
               textAlign="right"
               mask={currencyMask}
             />
             <Input
-              label="비고"
+              label="비 고"
               register={register("sgBigo")}
               inputSize={InputSize.i200}
             />
