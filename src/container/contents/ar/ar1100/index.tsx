@@ -152,22 +152,11 @@ function AR1100({
           register={register}
         />
         <div className="buttons">
-          <Button
-            text="등록"
-            icon={<Plus />}
-            style={{ marginRight: "5px" }}
-            onClick={() => {}}
-          />
-          <Button
-            text="삭제"
-            icon={<Trash />}
-            style={{ marginRight: "5px" }}
-            onClick={() => {}}
-          />
+          <Button text="등록" icon={<Plus />} onClick={() => {}} />
+          <Button text="삭제" icon={<Trash />} onClick={() => {}} />
           <Button
             text="저장"
             icon={<Update />}
-            style={{ marginRight: "5px" }}
             color={ButtonColor.SECONDARY}
             onClick={() => {}}
           />

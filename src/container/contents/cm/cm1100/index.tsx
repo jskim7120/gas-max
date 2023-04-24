@@ -228,14 +228,12 @@ function CM1100Page({
           <Button
             text="등록"
             icon={<Plus />}
-            style={{ marginRight: "5px" }}
             type="button"
             onClick={onClickAdd}
           />
           <Button
             text="수정"
             icon={<Reset />}
-            style={{ marginRight: "5px" }}
             type="button"
             onClick={onClickUpdate}
           />
