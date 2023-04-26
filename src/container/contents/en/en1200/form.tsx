@@ -120,8 +120,6 @@ const Form = React.forwardRef(
             saupStampQu: selected?.saupStampQu === "Y",
             saupStampEs: selected?.saupStampEs === "Y",
             saupStampSe: selected?.saupStampSe === "Y",
-            // saupDate: selected?.saupDate ? formatDate(selected.saupDate) : "",
-            // saupDate: DateWithDash(selected?.saupDate),
           });
 
           selected.saupStampImg
@@ -135,13 +133,17 @@ const Form = React.forwardRef(
         const formValues = getValues();
 
         try {
-          const response = await API.post(EN1200DELETE, formValues);
+          const response: any = await API.post(EN1200DELETE, formValues);
           if (response.status === 200) {
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
 
-            await fetchData();
+            await fetchData("delete");
+          } else {
+            toast.error(response?.response?.message, {
+              autoClose: 500,
+            });
           }
         } catch (err) {
           toast.error("Couldn't delete", {
@@ -163,9 +165,6 @@ const Form = React.forwardRef(
       formValues.saupStampQu = formValues.saupStampQu ? "Y" : "N";
       formValues.saupStampEs = formValues.saupStampEs ? "Y" : "N";
       formValues.saupStampSe = formValues.saupStampSe ? "Y" : "N";
-      // formValues.saupDate = formValues.saupDate
-      //   ? formatDateToStringWithoutDash(formValues.saupDate)
-      //   : "";
       formValues.saupDate = DateWithoutDash(formValues.saupDate);
       formValues.saupEdiEmail =
         formValues.saupEdiEmail && formValues.saupEdiEmail.trim();

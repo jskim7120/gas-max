@@ -21,7 +21,10 @@ import {
 } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { ICAR } from "./model";
-import { DateWithoutDash } from "helpers/dateFormat";
+import {
+  DateWithoutDash,
+  DateWithoutDashOnlyYearMonth,
+} from "helpers/dateFormat";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { InfoText } from "components/text";
@@ -125,12 +128,10 @@ const Form = React.forwardRef(
             console.log("areaCode select error", err);
           }
         } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
-          empChargeDataSelect(newData.areaCode);
+          empChargeDataSelect(selected.areaCode);
+
           reset({
-            ...newData,
+            ...selected,
             caBkYn: selected?.caBkYn === "Y",
             caRentYn: selected?.caRentYn === "Y",
           });
@@ -143,12 +144,16 @@ const Form = React.forwardRef(
         const formValues = getValues();
 
         try {
-          const response = await API.post(EN1700DELETE, formValues);
+          const response: any = await API.post(EN1700DELETE, formValues);
           if (response.status === 200) {
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await fetchData();
+            await fetchData("delete");
+          } else {
+            toast.error(response?.response?.message, {
+              autoClose: 500,
+            });
           }
         } catch (err) {
           toast.error("Couldn't delete", {
@@ -177,6 +182,7 @@ const Form = React.forwardRef(
       formValues.caJdate2 = DateWithoutDash(formValues.caJdate2);
       formValues.caBsdate = DateWithoutDash(formValues.caBsdate);
       formValues.caBldate = DateWithoutDash(formValues.caBldate);
+      formValues.caYear = DateWithoutDashOnlyYearMonth(formValues.caYear);
 
       formValues.caAmt = formValues.caAmt
         ? formatCurrencyRemoveComma(formValues.caAmt)
@@ -381,12 +387,21 @@ const Form = React.forwardRef(
             inputSize={InputSize.i150}
             maxLength="20"
           />
-          <Input
-            label="연 식"
-            register={register("caYear")}
-            inputSize={InputSize.i150}
-            maxLength="6"
-          />
+          <FormGroup>
+            <Label>연 식</Label>
+            <Controller
+              control={control}
+              {...register("caYear")}
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  style={{ width: "150px" }}
+                  showMonthYearPicker
+                />
+              )}
+            />
+          </FormGroup>
         </Wrapper>
         <Wrapper grid col={2}>
           <Input
@@ -439,11 +454,12 @@ const Form = React.forwardRef(
             <Controller
               control={control}
               {...register("caJdate1")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
+              render={({ field: { onChange, onBlur, value, name } }) => (
                 <CustomDatePicker
                   value={value}
                   onChange={onChange}
                   style={{ width: "150px" }}
+                  name={name}
                 />
               )}
             />
@@ -648,11 +664,12 @@ const Form = React.forwardRef(
             <Controller
               control={control}
               {...register("caBsdate")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
+              render={({ field: { onChange, onBlur, value, name } }) => (
                 <CustomDatePicker
                   value={value}
                   onChange={onChange}
                   style={{ width: "150px" }}
+                  name={name}
                 />
               )}
             />
@@ -662,11 +679,12 @@ const Form = React.forwardRef(
             <Controller
               control={control}
               {...register("caBldate")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
+              render={({ field: { onChange, onBlur, value, name } }) => (
                 <CustomDatePicker
                   value={value}
                   onChange={onChange}
                   style={{ width: "150px" }}
+                  name={name}
                 />
               )}
             />

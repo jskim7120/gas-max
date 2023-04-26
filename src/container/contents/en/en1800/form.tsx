@@ -101,12 +101,16 @@ const Form = React.forwardRef(
         const formValues = getValues();
 
         try {
-          const response = await API.post(EN1800DELETE, formValues);
+          const response: any = await API.post(EN1800DELETE, formValues);
           if (response.status === 200) {
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await fetchData();
+            await fetchData("delete");
+          } else {
+            toast.error(response?.response?.message, {
+              autoClose: 500,
+            });
           }
         } catch (err) {
           toast.error("Couldn't delete", {

@@ -155,7 +155,7 @@ const Form = React.forwardRef(
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await fetchData();
+            await fetchData("delete");
           } else {
             toast.error(response?.response?.message, {
               autoClose: 500,

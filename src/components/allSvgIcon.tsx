@@ -4499,7 +4499,7 @@ export const IconReceipt = ({
   );
 };
 
-export const WhiteClose = () => {
+export const WhiteClose = ({ color = "#fff" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4519,7 +4519,7 @@ export const WhiteClose = () => {
           y2="12.491"
           transform="translate(391.5 18.5)"
           fill="none"
-          stroke="#fff"
+          stroke={color}
           strokeLinecap="round"
           strokeWidth="2.5"
         />
@@ -4529,7 +4529,7 @@ export const WhiteClose = () => {
           d="M0,0,14.128,12.7"
           transform="translate(405.628 31.201) rotate(180)"
           fill="none"
-          stroke="#fff"
+          stroke={color}
           strokeLinecap="round"
           strokeWidth="2.5"
         />

@@ -29,13 +29,13 @@ const getSize = (size: BadgeSize) => {
   switch (size) {
     case BadgeSize.size1:
       return {
-        height: "15px",
-        width: "48px",
+        height: "18px",
+        width: "65px",
       };
     case BadgeSize.size2:
       return {
         height: "18px",
-        width: "35px",
+        width: "55px",
       };
     case BadgeSize.size3:
       return {
@@ -70,12 +70,12 @@ const BadgeWrapper = styled.div<{
         return `
           border-radius: 100%;          
           font-weight:600;
-          font-size: 12px;
+          font-size: 14px;
         `;
       case BadgeShape.rectangle:
         return `
           border-radius: 2px;          
-          font-size: 10px;
+          font-size: 14px;
                 
         `;
     }

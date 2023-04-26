@@ -60,7 +60,7 @@ function CreateEN(
     }
   }, [selected]);
 
-  const fetchData = async () => {
+  const fetchData = async (func: string = "") => {
     try {
       const { data: dataS } = await API.get(searchPath);
       if (dataS) {
@@ -70,7 +70,13 @@ function CreateEN(
         setData([]);
         setSelected({});
       }
-      setSelectedRowIndex(0);
+
+      if (func === "delete") {
+        const len = dataS && dataS.length > 0 ? dataS.length - 1 : 0;
+        setSelectedRowIndex(len);
+      } else {
+        setSelectedRowIndex(0);
+      }
     } catch (err) {
       setData([]);
       setSelected({});
