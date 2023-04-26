@@ -40,7 +40,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "60",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -49,7 +49,7 @@ export const columns = [
     name: "acjDate",
     fieldName: "acjDate",
     type: "data",
-    width: "80",
+    width: "90",
     header: {
       text: "일자",
     },
@@ -58,7 +58,7 @@ export const columns = [
     name: "acjAcsName",
     fieldName: "acjAcsName",
     type: "data",
-    width: "80",
+    width: "150",
     styleName: "rg-left-column",
     header: {
       text: "항목",
@@ -68,7 +68,7 @@ export const columns = [
     name: "acjBigo",
     fieldName: "acjBigo",
     type: "data",
-    width: "130",
+    width: "110",
     styleName: "rg-left-column",
     header: {
       text: "적요",
@@ -79,6 +79,7 @@ export const columns = [
     fieldName: "acjSwName",
     type: "data",
     width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "사원",
     },

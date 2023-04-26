@@ -28,7 +28,7 @@ export const columnsSecond = [
     name: "mjDate",
     fieldName: "mjDate",
     type: "data",
-    width: "80",
+    width: "90",
     header: {
       text: "일자",
     },
@@ -47,7 +47,7 @@ export const columnsSecond = [
     name: "mjMisujan",
     fieldName: "mjMisujan",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "미수잔액",
     },
@@ -58,7 +58,7 @@ export const columnsSecond = [
     name: "mjSwName",
     fieldName: "mjSwName",
     type: "data",
-    width: "150",
+    width: "100",
     header: {
       text: "배달사원",
     },
@@ -67,7 +67,7 @@ export const columnsSecond = [
     name: "pjBigo",
     fieldName: "pjBigo",
     type: "data",
-    width: "100",
+    width: "200",
     header: {
       text: "비고",
     },

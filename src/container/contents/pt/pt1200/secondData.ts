@@ -56,7 +56,7 @@ export const columnsSecond = [
     name: "gjGumymsno",
     fieldName: "gjGumymsno",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "회차",
     },
@@ -65,7 +65,7 @@ export const columnsSecond = [
     name: "gjDate",
     fieldName: "gjDate",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "검침일",
     },
@@ -74,7 +74,7 @@ export const columnsSecond = [
     name: "gjJungum",
     fieldName: "gjJungum",
     type: "data",
-    width: "120",
+    width: "80",
     header: {
       text: "전검침",
     },
@@ -85,7 +85,7 @@ export const columnsSecond = [
     name: "gjGum",
     fieldName: "gjGum",
     type: "data",
-    width: "150",
+    width: "80",
     header: {
       text: "당검침",
     },
@@ -96,7 +96,7 @@ export const columnsSecond = [
     name: "gjGage",
     fieldName: "gjGage",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "사용량",
     },
@@ -107,7 +107,7 @@ export const columnsSecond = [
     name: "gjDangkum",
     fieldName: "gjDangkum",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "당월금액",
     },
@@ -118,7 +118,7 @@ export const columnsSecond = [
     name: "gjMisu",
     fieldName: "gjMisu",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "전미수",
     },
@@ -129,7 +129,7 @@ export const columnsSecond = [
     name: "gjPerkum",
     fieldName: "gjPerkum",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "연체료",
     },
@@ -140,7 +140,7 @@ export const columnsSecond = [
     name: "gjTotal",
     fieldName: "gjTotal",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "당월 합계",
     },
@@ -151,7 +151,7 @@ export const columnsSecond = [
     name: "gjJirodate",
     fieldName: "gjJirodate",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "지로 발행일",
     },
@@ -160,7 +160,7 @@ export const columnsSecond = [
     name: "gjMisujan",
     fieldName: "gjMisujan",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "미수 잔액",
     },
@@ -175,5 +175,6 @@ export const columnsSecond = [
     header: {
       text: "사원",
     },
+    styleName: "rg-left-column",
   },
 ];

@@ -276,7 +276,7 @@ function CM9003({
             fields={fields2}
             columns={columns2}
             style={{ height: `calc(100% - 38px)` }}
-            evenFill
+            //evenFill
           />
         )}
         {reportKind === "3" && (

@@ -62,7 +62,7 @@ export const columns4 = [
     name: "cuViewName",
     fieldName: "cuViewName",
     type: "data",
-    width: "120",
+    width: "200",
     header: {
       text: "거래처",
     },
@@ -73,7 +73,7 @@ export const columns4 = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "전화번호",
     },
@@ -84,17 +84,18 @@ export const columns4 = [
     name: "cuJyNmae",
     fieldName: "cuJyNmae",
     type: "data",
-    width: "120",
+    width: "90",
     header: {
       text: "지역분류",
     },
+    styleName: "rg-left-column",
   },
 
   {
     name: "cuCutypeName",
     fieldName: "cuCutypeName",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "소비자형태",
     },
@@ -105,17 +106,18 @@ export const columns4 = [
     name: "cuGongdate",
     fieldName: "cuGongdate",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "계약일자",
     },
+    styleName: "rg-left-column",
   },
 
   {
     name: "cuGongno",
     fieldName: "cuGongno",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "계약번호",
     },
@@ -125,7 +127,7 @@ export const columns4 = [
     name: "cuSwName",
     fieldName: "cuSwName",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "담당사원",
     },

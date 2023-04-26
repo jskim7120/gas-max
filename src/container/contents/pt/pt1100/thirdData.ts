@@ -44,7 +44,7 @@ export const columnsThird = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -53,7 +53,7 @@ export const columnsThird = [
     name: "msDate",
     fieldName: "msDate",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "수금일자",
     },
@@ -62,7 +62,7 @@ export const columnsThird = [
     name: "msCuCode",
     fieldName: "msCuCode",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "거래처코드",
     },
@@ -71,7 +71,7 @@ export const columnsThird = [
     name: "msCuName",
     fieldName: "msCuName",
     type: "data",
-    width: "150",
+    width: "200",
     header: {
       text: "거래처명",
     },
@@ -101,7 +101,7 @@ export const columnsThird = [
     name: "msSwName",
     fieldName: "msSwName",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "사원",
     },
@@ -111,7 +111,7 @@ export const columnsThird = [
     name: "msSukumtype",
     fieldName: "msSukumtype",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "수금방법",
     },
@@ -120,7 +120,7 @@ export const columnsThird = [
     name: "msBigo",
     fieldName: "msBigo",
     type: "data",
-    width: "100",
+    width: "200",
     header: {
       text: "비고",
     },

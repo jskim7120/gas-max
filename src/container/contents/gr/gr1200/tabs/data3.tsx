@@ -71,6 +71,7 @@ export const columns3 = [
     fieldName: "bclJpName",
     width: "100",
     type: "data",
+    styleName: "rg-left-column",
     header: {
       text: "품명",
     },

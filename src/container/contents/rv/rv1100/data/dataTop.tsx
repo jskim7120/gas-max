@@ -120,7 +120,7 @@ export const columns = [
     name: "viewCuName",
     fieldName: "viewCuName",
     type: "data",
-    width: "150",
+    width: "200",
     styleName: "rg-left-column",
     header: {
       text: "거래처명",
@@ -130,7 +130,7 @@ export const columns = [
     name: "gjDate",
     fieldName: "gjDate",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "검침일자",
     },
@@ -139,7 +139,7 @@ export const columns = [
     name: "gjJungum",
     fieldName: "gjJungum",
     type: "data",
-    width: "90",
+    width: "80",
     styleName: "rg-right-column",
     header: {
       text: "전월",
@@ -149,7 +149,7 @@ export const columns = [
     name: "gjGum",
     fieldName: "gjGum",
     type: "data",
-    width: "90",
+    width: "80",
     styleName: "rg-right-column",
     header: {
       text: "당월",
@@ -159,7 +159,7 @@ export const columns = [
     name: "gjGage",
     fieldName: "gjGage",
     type: "data",
-    width: "90",
+    width: "80",
     styleName: "rg-right-column",
     header: {
       text: "사용량",

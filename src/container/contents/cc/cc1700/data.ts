@@ -50,7 +50,7 @@ export const columns = [
     name: "acbAccCode",
     fieldName: "acbAccCode",
     type: "data",
-    width: "150",
+    width: "80",
     header: {
       text: "구분",
     },

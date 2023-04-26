@@ -28,7 +28,7 @@ export const columns = [
     name: "acbAreaCode",
     fieldName: "acbAreaCode",
     type: "data",
-    width: "70",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -37,7 +37,7 @@ export const columns = [
     name: "accName",
     fieldName: "accName",
     type: "data",
-    width: "150",
+    width: "100",
     header: {
       text: "계정 과목",
     },
@@ -46,7 +46,8 @@ export const columns = [
     name: "acbName",
     fieldName: "acbName",
     type: "data",
-    width: "210",
+    width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "은행명",
     },
@@ -55,7 +56,7 @@ export const columns = [
     name: "acbBankno",
     fieldName: "acbBankno",
     type: "data",
-    width: "300",
+    width: "250",
     styleName: "rg-left-column",
     header: {
       text: "계좌 번호",
@@ -65,7 +66,7 @@ export const columns = [
     name: "bankKumack",
     fieldName: "bankKumack",
     type: "data",
-    width: "130",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "잔액",

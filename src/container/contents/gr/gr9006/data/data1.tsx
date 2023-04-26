@@ -48,7 +48,7 @@ export const columns1 = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "70",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -57,7 +57,7 @@ export const columns1 = [
     name: "bbDate",
     fieldName: "bbDate",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "일자",
     },
@@ -66,7 +66,7 @@ export const columns1 = [
     name: "bbBuName",
     fieldName: "bbBuName",
     type: "data",
-    width: "150",
+    width: "200",
     styleName: "rg-left-column",
     header: {
       text: "매입처명",
@@ -76,7 +76,7 @@ export const columns1 = [
     name: "bbBpName",
     fieldName: "bbBpName",
     type: "data",
-    width: "70",
+    width: "150",
     styleName: "rg-left-column",
     header: {
       text: "품명",
@@ -86,7 +86,7 @@ export const columns1 = [
     name: "bbBpType",
     fieldName: "bbBpType",
     type: "data",
-    width: "120",
+    width: "100",
     styleName: "rg-left-column",
     header: {
       text: "규격",
@@ -96,8 +96,8 @@ export const columns1 = [
     name: "bbQty",
     fieldName: "bbQty",
     type: "data",
-    width: "120",
-    styleName: "rg-left-column",
+    width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "수량",
     },
@@ -107,7 +107,7 @@ export const columns1 = [
     fieldName: "bbDanga",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "단가",
     },
@@ -117,7 +117,7 @@ export const columns1 = [
     fieldName: "bbKumack",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "금액",
     },
@@ -127,7 +127,7 @@ export const columns1 = [
     fieldName: "bbVat",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "세액",
     },
@@ -137,7 +137,7 @@ export const columns1 = [
     fieldName: "bbSum",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "합계",
     },

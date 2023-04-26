@@ -54,7 +54,7 @@ export const columns = [
     name: "sgSwName",
     fieldName: "sgSwName",
     type: "data",
-    width: "90",
+    width: "100",
     styleName: "rg-left-column",
     header: {
       text: "사원",
@@ -64,7 +64,7 @@ export const columns = [
     name: "sgBigo",
     fieldName: "sgBigo",
     type: "data",
-    width: "260",
+    width: "250",
     header: {
       text: "비고",
     },
@@ -73,7 +73,7 @@ export const columns = [
     name: "sgKumack",
     fieldName: "sgKumack",
     type: "data",
-    width: "90",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "가불 금액",
@@ -83,7 +83,7 @@ export const columns = [
     name: "sgKumackB",
     fieldName: "sgKumackB",
     type: "data",
-    width: "90",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "반제 금액",
@@ -93,7 +93,7 @@ export const columns = [
     name: "sgJanack",
     fieldName: "sgJanack",
     type: "data",
-    width: "90",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "잔액",

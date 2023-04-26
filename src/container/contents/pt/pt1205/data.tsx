@@ -177,7 +177,7 @@ export const columns = [
     name: "gjMisujan",
     fieldName: "gjMisujan",
     type: "data",
-    width: "80",
+    width: "100",
     header: {
       text: "미수액",
     },
@@ -188,7 +188,7 @@ export const columns = [
     name: "gjSwName",
     fieldName: "gjSwName",
     type: "data",
-    width: "80",
+    width: "90",
     header: {
       text: "사원",
     },

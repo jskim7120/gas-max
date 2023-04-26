@@ -73,7 +73,7 @@ export const columns = [
     name: "acjBigo",
     fieldName: "acjBigo",
     type: "data",
-    width: "170",
+    width: "120",
     styleName: "rg-left-column",
     header: {
       text: "적요",
@@ -83,7 +83,7 @@ export const columns = [
     name: "acjKumackCh",
     fieldName: "acjKumackCh",
     type: "data",
-    width: "80",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "차변",
@@ -94,7 +94,7 @@ export const columns = [
     name: "acjKumackDa",
     fieldName: "acjKumackDa",
     type: "data",
-    width: "80",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "대변",

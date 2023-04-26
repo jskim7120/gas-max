@@ -55,7 +55,7 @@ export const columns = [
     name: "mjBigo",
     fieldName: "mjBigo",
     type: "data",
-    width: "150",
+    width: "200",
     header: {
       text: "비고",
     },
@@ -64,7 +64,7 @@ export const columns = [
     name: "mjMisujan",
     fieldName: "mjMisujan",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "미수잔액",
     },
@@ -75,7 +75,7 @@ export const columns = [
     name: "mjSwName",
     fieldName: "mjSwName",
     type: "data",
-    width: "150",
+    width: "100",
     header: {
       text: "사원",
     },

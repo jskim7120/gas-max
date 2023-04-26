@@ -44,7 +44,7 @@ export const columnsThird = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -53,7 +53,7 @@ export const columnsThird = [
     name: "gsDate",
     fieldName: "gsDate",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "수금일자",
     },
@@ -62,7 +62,7 @@ export const columnsThird = [
     name: "gsCuCode",
     fieldName: "gsCuCode",
     type: "data",
-    width: "120",
+    width: "90",
     header: {
       text: "거래처코드",
     },
@@ -81,7 +81,7 @@ export const columnsThird = [
     name: "gsKumack",
     fieldName: "gsKumack",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "수금액",
     },
@@ -92,7 +92,7 @@ export const columnsThird = [
     name: "gsDc",
     fieldName: "gsDc",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "D/C",
     },
@@ -103,7 +103,7 @@ export const columnsThird = [
     name: "gsSwName",
     fieldName: "gsSwName",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "사원",
     },
@@ -113,7 +113,7 @@ export const columnsThird = [
     name: "gsSukumtype",
     fieldName: "gsSukumtype",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "수금 방법",
     },

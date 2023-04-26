@@ -56,7 +56,7 @@ export const columns = [
     name: "buName",
     fieldName: "buName",
     type: "data",
-    width: "350",
+    width: "250",
     header: {
       text: "매입처명",
     },

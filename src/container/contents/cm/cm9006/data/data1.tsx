@@ -69,7 +69,7 @@ export const columns1 = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "전화번호",
     },
@@ -79,7 +79,7 @@ export const columns1 = [
     name: "cuHp",
     fieldName: "cuHp",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "핸드폰",
     },
@@ -101,7 +101,7 @@ export const columns1 = [
     name: "cuSwName",
     fieldName: "cuSwName",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "담당사원",
     },
@@ -112,9 +112,9 @@ export const columns1 = [
     name: "tCustCode",
     fieldName: "tCustCode",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
-      text: "원격검침코드",
+      text: "원격검침 코드",
     },
   },
 ];
