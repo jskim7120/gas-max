@@ -88,8 +88,7 @@ function CC9001({
                     </option>
                   ))}
                 </Select>
-              </FormGroup>
-              <FormGroup>
+
                 <Label style={{ minWidth: "60px" }}>기간</Label>
                 <Controller
                   control={control}
@@ -117,7 +116,7 @@ function CC9001({
                 />
               </FormGroup>
 
-              <div className="buttons">
+              <div className="buttons" style={{ marginLeft: "30px" }}>
                 <Button
                   text="검색"
                   icon={!loading && <MagnifyingGlass />}
@@ -135,7 +134,6 @@ function CC9001({
                       </>
                     )
                   }
-                  style={{ margin: " 0 5px 0 30px" }}
                 />
                 <Button
                   text="취소"

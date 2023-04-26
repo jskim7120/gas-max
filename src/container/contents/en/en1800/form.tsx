@@ -48,14 +48,14 @@ const Form = React.forwardRef(
       functionName: "EN1800",
     });
 
-    useEffect(() => {
-      if (JSON.stringify(selected) !== "{}") {
-        reset({
-          ...selected,
-          swWorkOut: selected?.swWorkOut === "Y",
-        });
-      }
-    }, [selected]);
+    // useEffect(() => {
+    //   if (JSON.stringify(selected) !== "{}") {
+    //     reset({
+    //       ...selected,
+    //       swWorkOut: selected?.swWorkOut === "Y",
+    //     });
+    //   }
+    // }, [selected]);
 
     const { register, handleSubmit, reset, getValues } = useForm<ICUSTJY>({
       mode: "onChange",

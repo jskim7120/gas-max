@@ -307,10 +307,7 @@ function CM9002({
               </Wrapper>
             </div>
 
-            <div
-              className="button-wrapper"
-              style={{ flexDirection: "row", gap: "0px" }}
-            >
+            <div className="buttons">
               <Button
                 text="검색"
                 icon={!loading && <MagnifyingGlass />}
@@ -328,12 +325,12 @@ function CM9002({
                     </>
                   )
                 }
-                style={{ marginRight: "10px", minWidth: "max-content" }}
+                style={{ minWidth: "max-content" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ marginRight: "10px", minWidth: "max-content" }}
+                style={{ minWidth: "max-content" }}
                 type="button"
                 color={ButtonColor.LIGHT}
                 onClick={cancel}

@@ -30,7 +30,6 @@ interface IForm {
   setSelectedRowIndex: any;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
-  setIsCancelBtnDisabled: Function;
 }
 
 const Form = React.forwardRef(
@@ -44,7 +43,6 @@ const Form = React.forwardRef(
       setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      setIsCancelBtnDisabled,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -56,53 +54,40 @@ const Form = React.forwardRef(
       functionName: "EN1100",
     });
 
-    const {
-      register,
-      handleSubmit,
-      reset,
-      control,
-      getValues,
-      setFocus,
-      watch,
-    } = useForm<IJNOTRY>({
-      mode: "onChange",
-    });
+    const { register, handleSubmit, reset, control, getValues, setFocus } =
+      useForm<IJNOTRY>({
+        mode: "onChange",
+      });
 
-    useEffect(() => {
-      function handleKeyDown(event: any) {
-        // if (event.key === "F1") {
-        //   event.preventDefault();
-        //   alert("F1");
-        //   // crud(null);
-        // }
-        // if (event.key === "F2") {
-        //   // event.stopPropagation();
-        //   event.preventDefault();
-        //   alert("F2");
-        // }
-        // if (event.key === "F3") {
-        //   alert("F3");
-        //   event.preventDefault();
-        // }
-        // if (event.key === "F4") {
-        //   alert("F4");
-        // }
-        // if (event.key === "Escape" || event.key === "Esc") {
-        //   alert("escape");
-        //   event.preventDefault();
-        // }
-      }
-      document.addEventListener("keydown", handleKeyDown);
-      return () => {
-        document.removeEventListener("keydown", handleKeyDown);
-      };
-    }, []);
-
-    useEffect(() => {
-      if (JSON.stringify(selected) !== "{}") {
-        resetForm("reset");
-      }
-    }, [selected]);
+    // useEffect(() => {
+    //   function handleKeyDown(event: any) {
+    //     if (event.key === "F1") {
+    //       event.preventDefault();
+    //       alert("F1");
+    //       // crud(null);
+    //     }
+    //     if (event.key === "F2") {
+    //       // event.stopPropagation();
+    //       event.preventDefault();
+    //       alert("F2");
+    //     }
+    //     if (event.key === "F3") {
+    //       alert("F3");
+    //       event.preventDefault();
+    //     }
+    //     if (event.key === "F4") {
+    //       alert("F4");
+    //     }
+    //     if (event.key === "Escape" || event.key === "Esc") {
+    //       alert("escape");
+    //       event.preventDefault();
+    //     }
+    //   }
+    //   document.addEventListener("keydown", handleKeyDown);
+    //   return () => {
+    //     document.removeEventListener("keydown", handleKeyDown);
+    //   };
+    // }, []);
 
     useEffect(() => {
       if (addr.length > 0) {
@@ -123,7 +108,6 @@ const Form = React.forwardRef(
         let newData: any = {};
 
         if (type === "clear") {
-          // document.getElementById("areaName")?.focus();
           setFocus("areaName");
           const path = EN110011;
           try {
@@ -205,7 +189,6 @@ const Form = React.forwardRef(
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
-            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
