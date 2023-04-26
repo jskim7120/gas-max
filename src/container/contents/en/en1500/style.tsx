@@ -6,7 +6,7 @@ export const VolReading = styled.div`
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
   border-radius: 8px;
-  margin-top: 7px;
+  margin-top: 8px;
   .volReadCnt {
     padding: 0 17px;
     .vapInput {
@@ -59,7 +59,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: 7px;
+  margin-top: 8px;
   .title {
     height: 31px;
     background: rgba(101, 84, 255, 0.37);

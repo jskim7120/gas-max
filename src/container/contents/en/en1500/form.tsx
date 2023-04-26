@@ -391,28 +391,16 @@ const Form = (
       // onSubmit={handleSubmit(submit)}
       style={{ width: "890px", padding: "0px 10px" }}
     >
-      <Wrapper grid style={{ marginBottom: "7px" }}>
-        <Field className="field">
-          <FormGroup>
-            <Input
-              label="코 드"
-              register={register("areaCode")}
-              maxLength="2"
-            />
-          </FormGroup>
-        </Field>
-        <Field>
-          <FormGroup>
-            <Input
-              label="영업소명"
-              register={register("areaName")}
-              maxLength="20"
-            />
-          </FormGroup>
-        </Field>
-      </Wrapper>
-      <Divider />
-      <VolReading style={{ height: "115px" }}>
+      <FormGroup>
+        <Input label="코 드" register={register("areaCode")} maxLength="2" />
+        <Input
+          label="영업소명"
+          register={register("areaName")}
+          maxLength="20"
+        />
+      </FormGroup>
+
+      <VolReading style={{ height: "112px" }}>
         <div className="title">LPG 판매단가 설정</div>
         <div className="volReadCnt">
           <Wrapper className="volWrapper">
