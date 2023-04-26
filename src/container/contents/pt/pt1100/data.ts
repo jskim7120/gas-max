@@ -40,7 +40,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -49,7 +49,7 @@ export const columns = [
     name: "cuCode",
     fieldName: "cuCode",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "거래처코드",
     },
@@ -98,9 +98,9 @@ export const columns = [
     name: "suDate",
     fieldName: "suDate",
     type: "data",
-    width: "80",
+    width: "90",
     header: {
-      text: "최종수금일",
+      text: "최종 수금일",
     },
   },
   {

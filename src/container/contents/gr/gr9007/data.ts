@@ -40,7 +40,8 @@ export const columns = [
     name: "bbBuName",
     fieldName: "bbBuName",
     type: "data",
-    width: "40",
+    width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "매입처명",
     },
@@ -49,7 +50,7 @@ export const columns = [
     name: "buDate",
     fieldName: "buDate",
     type: "data",
-    width: "40",
+    width: "100",
     header: {
       text: "일자",
     },
@@ -58,7 +59,8 @@ export const columns = [
     name: "buKumack",
     fieldName: "buKumack",
     type: "data",
-    width: "30",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "매입금액",
     },
@@ -67,7 +69,8 @@ export const columns = [
     name: "buVat",
     fieldName: "buVat",
     type: "data",
-    width: "30",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "세액",
     },
@@ -76,7 +79,8 @@ export const columns = [
     name: "buSum",
     fieldName: "buSum",
     type: "data",
-    width: "30",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "합계",
     },
@@ -85,7 +89,8 @@ export const columns = [
     name: "buOutkum",
     fieldName: "buOutkum",
     type: "data",
-    width: "30",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "지금액",
     },
@@ -94,7 +99,8 @@ export const columns = [
     name: "bjDc",
     fieldName: "bjDc",
     type: "data",
-    width: "30",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "D/C",
     },
@@ -103,7 +109,8 @@ export const columns = [
     name: "bjJanack",
     fieldName: "bjJanack",
     type: "data",
-    width: "30",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "잔액",
     },

@@ -44,7 +44,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "20",
+    width: "60",
     header: {
       text: "영업소",
     },
@@ -53,7 +53,7 @@ export const columns = [
     name: "bcDate",
     fieldName: "bcDate",
     type: "data",
-    width: "30",
+    width: "100",
     header: {
       text: "일자",
     },
@@ -62,7 +62,7 @@ export const columns = [
     name: "bcBuName",
     fieldName: "bcBuName",
     type: "data",
-    width: "60",
+    width: "200",
     styleName: "rg-left-column",
     header: {
       text: "충전소명",
@@ -72,7 +72,7 @@ export const columns = [
     name: "bclJpCode",
     fieldName: "bclJpCode",
     type: "data",
-    width: "30",
+    width: "100",
     header: {
       text: "코드",
     },
@@ -81,7 +81,7 @@ export const columns = [
     name: "bclJpName",
     fieldName: "bclJpName",
     type: "data",
-    width: "60",
+    width: "200",
     styleName: "rg-left-column",
     header: {
       text: "품명",
@@ -91,7 +91,7 @@ export const columns = [
     name: "bcInqty",
     fieldName: "bcInqty",
     type: "data",
-    width: "30",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "입고수량",
@@ -101,7 +101,7 @@ export const columns = [
     name: "bcInkg",
     fieldName: "bcInkg",
     type: "data",
-    width: "30",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "입고량",
@@ -111,7 +111,7 @@ export const columns = [
     name: "bcCost",
     fieldName: "bcCost",
     type: "data",
-    width: "30",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "단가",
@@ -121,7 +121,7 @@ export const columns = [
     name: "bcAmt",
     fieldName: "bcAmt",
     type: "data",
-    width: "30",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "금액",

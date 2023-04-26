@@ -81,7 +81,7 @@ export const columns0 = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "전화번호",
     },
@@ -91,7 +91,7 @@ export const columns0 = [
     name: "cuHp",
     fieldName: "cuHp",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "핸드폰",
     },
@@ -113,7 +113,7 @@ export const columns0 = [
     name: "cuSwName",
     fieldName: "cuSwName",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "담당사원",
     },
@@ -124,37 +124,39 @@ export const columns0 = [
     name: "tankVol1",
     fieldName: "tankVol1",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "탱크용량",
     },
+    styleName: "rg-right-column",
   },
 
   {
     name: "tankCuCd1",
     fieldName: "tankCuCd1",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
-      text: "발신기번호",
+      text: "발신기 번호",
     },
   },
   {
     name: "tankVol2",
     fieldName: "tankVol2",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
-      text: "탱크용량",
+      text: "탱크 용량",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "tankCuCd2",
     fieldName: "tankCuCd2",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
-      text: "발신기번호",
+      text: "발신기 번호",
     },
   },
 ];
