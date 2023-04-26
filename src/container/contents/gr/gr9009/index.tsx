@@ -55,13 +55,17 @@ function GR9009({
   const fetchData = async (params: any) => {
     try {
       setLoading(true);
-      const { data } = await API.get(GR9009SEARCH, { params: params });
-      console.log("data irev:", data);
-      if (data) {
-        setData(data);
-        setLoading(false);
+      const { data: dats } = await API.get(GR9009SEARCH, { params: params });
+
+      if (dats) {
+        setData(dats);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (err) {
+      setData([]);
+      setLoading(false);
       console.log("GR9003 data search fetch error =======>", err);
     }
   };

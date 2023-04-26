@@ -130,7 +130,7 @@ function CM9003({
                   <Label style={{ minWidth: "90px" }}>보고서 종류</Label>
                   <Select
                     width={InputSize.i130}
-                    register={register("reportKind")}
+                    value={reportKind}
                     onChange={(e) => setReportKind(e.target.value)}
                   >
                     {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (

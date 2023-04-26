@@ -57,14 +57,16 @@ function GR9003({
   const fetchData = async (params: any) => {
     try {
       setLoading(true);
-      const { data } = await API.get(GR9003SEARCH, { params: params });
-      console.log("data irev:", data);
-      if (data) {
-        setData(data);
-        setLoading(false);
-        setSelectedRowIndex(0);
+      const { data: dataS } = await API.get(GR9003SEARCH, { params: params });
+      if (dataS) {
+        setData(dataS);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (err) {
+      setData([]);
+      setLoading(false);
       console.log("GR9003 data search fetch error =======>", err);
     }
   };
@@ -75,7 +77,6 @@ function GR9003({
   };
 
   const submit = (data: IGR9003SEARCH) => {
-    console.log("IISEARCH:", data);
     fetchData(data);
   };
 

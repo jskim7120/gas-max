@@ -572,7 +572,7 @@ function FormCM1105() {
                 width={InputSize.i150}
               >
                 {dataCommonDic?.cuRequestType?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
@@ -581,7 +581,7 @@ function FormCM1105() {
               <Label>수금 방법</Label>
               <Select register={register("cuSukumtype")} width={InputSize.i150}>
                 {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}

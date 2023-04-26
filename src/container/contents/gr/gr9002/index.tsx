@@ -46,29 +46,23 @@ function GR9002({
   useEffect(() => {
     resetForm();
   }, [dataCommonDic]);
+
   const fetchData = async (params: any) => {
     try {
-      if (params.sDate !== undefined) {
-        // params.sDate =
-        //   typeof params.sDate === "string"
-        //     ? formatDateByRemoveDash(params.sDate)
-        //     : formatDateToStringWithoutDash(params.sDate);
-        params.sDate = DateWithoutDash(params.sDate);
-      }
-      if (params.eDate !== undefined) {
-        // params.eDate =
-        //   typeof params.eDate === "string"
-        //     ? formatDateByRemoveDash(params.eDate)
-        //     : formatDateToStringWithoutDash(params.eDate);
-        params.eDate = DateWithoutDash(params.eDate);
-      }
+      params.sDate = DateWithoutDash(params.sDate);
+      params.eDate = DateWithoutDash(params.eDate);
+
       setLoading(true);
       const { data } = await API.get(CM9002SEARCH, { params: params });
+      console.log("data:", data);
       if (data) {
         setData(data);
-        setLoading(false);
+      } else {
+        setData([]);
       }
+      setLoading(false);
     } catch (err) {
+      setData([]);
       setLoading(false);
       console.log("CM9001 DATA fetch error =======>", err);
     }

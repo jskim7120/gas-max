@@ -125,7 +125,7 @@ function CM9003({
                 <FormGroup>
                   <Label style={{ minWidth: "90px" }}>보고서 종류</Label>
                   <Select
-                    register={register("reportKind")}
+                    value={reportKind}
                     width={InputSize.i130}
                     onChange={(e) => setReportKind(e.target.value)}
                   >
