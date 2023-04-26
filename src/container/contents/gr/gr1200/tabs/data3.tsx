@@ -90,6 +90,7 @@ export const columns3 = [
     name: "bclSpecific",
     fieldName: "bclSpecific",
     width: "80",
+    styleName: "rg-right-column",
     type: "data",
     header: {
       text: "비중",
@@ -100,6 +101,7 @@ export const columns3 = [
     name: "bclBulkKg",
     fieldName: "bclBulkKg",
     width: "80",
+    styleName: "rg-right-column",
     type: "data",
     numberFormat: "#",
     header: {
@@ -110,6 +112,7 @@ export const columns3 = [
     name: "bclBulkL",
     fieldName: "bclBulkL",
     width: "80",
+    styleName: "rg-right-column",
     type: "data",
     numberFormat: "#",
     header: {
@@ -120,6 +123,7 @@ export const columns3 = [
     name: "bclCost",
     fieldName: "bclCost",
     width: "80",
+    styleName: "rg-right-column",
     type: "data",
     numberFormat: "#,##0",
     header: {
@@ -130,6 +134,7 @@ export const columns3 = [
     name: "bclVatType",
     fieldName: "bclVatType",
     width: "80",
+    styleName: "rg-right-column",
     type: "data",
     numberFormat: "#,##0",
     header: {
@@ -140,6 +145,7 @@ export const columns3 = [
     name: "bclAmt",
     fieldName: "bclAmt",
     width: "80",
+    styleName: "rg-right-column",
     type: "data",
     numberFormat: "#,##0",
     header: {

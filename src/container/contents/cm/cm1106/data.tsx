@@ -53,7 +53,7 @@ export const columns = [
     name: "jcJpCode",
     fieldName: "jcJpCode",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "코드",
     },
@@ -62,7 +62,8 @@ export const columns = [
     name: "jcJpName",
     fieldName: "jcJpName",
     type: "data",
-    width: "80",
+    width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "품명",
     },
@@ -71,7 +72,7 @@ export const columns = [
     name: "jcJpSpec",
     fieldName: "jcJpSpec",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "규격",
     },
@@ -100,6 +101,7 @@ export const columns = [
     fieldName: "jcVatKindName",
     type: "data",
     width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "VAT",
     },
@@ -118,7 +120,7 @@ export const columns = [
     name: "jcJdcPer",
     fieldName: "jcJdcPer",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "할인율",
     },
@@ -130,6 +132,7 @@ export const columns = [
     fieldName: "custOut",
     type: "data",
     width: "50",
+    styleName: "rg-right-column",
     header: {
       text: "대여",
     },
@@ -139,6 +142,7 @@ export const columns = [
     fieldName: "custIn",
     type: "data",
     width: "50",
+    styleName: "rg-right-column",
     header: {
       text: "보관",
     },
@@ -147,7 +151,7 @@ export const columns = [
     name: "jcJpSateName",
     fieldName: "jcJpSateName",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "상태",
     },

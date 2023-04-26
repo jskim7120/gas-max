@@ -53,9 +53,6 @@ export const columns = [
     fieldName: "jcJpCode",
     type: "data",
     width: "30",
-    styles: {
-      textAlignment: "center",
-    },
     header: {
       text: "코드",
     },
@@ -65,9 +62,7 @@ export const columns = [
     fieldName: "jcJpName",
     type: "data",
     width: "100",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-left-column",
     header: {
       text: "품명",
     },
@@ -77,9 +72,7 @@ export const columns = [
     fieldName: "jcDangaName",
     type: "data",
     width: "40",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-left-column",
     header: {
       text: "적용 구분",
     },
@@ -89,10 +82,8 @@ export const columns = [
     name: "jcJpDanga",
     fieldName: "jcJpDanga",
     type: "data",
-    width: "60",
-    styles: {
-      textAlignment: "near",
-    },
+    width: "40",
+    styleName: "rg-right-column",
     header: {
       text: "단가",
     },
@@ -102,9 +93,7 @@ export const columns = [
     fieldName: "jcVatName",
     type: "data",
     width: "40",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-right-column",
     header: {
       text: "Vat",
     },
@@ -114,9 +103,7 @@ export const columns = [
     fieldName: "custOut",
     type: "data",
     width: "30",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-right-column",
     header: {
       text: "대여",
     },
@@ -126,9 +113,7 @@ export const columns = [
     fieldName: "custIn",
     type: "data",
     width: "30",
-    styles: {
-      textAlignment: "near",
-    },
+    styleName: "rg-right-column",
     header: {
       text: "보관",
     },
@@ -137,10 +122,7 @@ export const columns = [
     name: "jcJpDandate",
     fieldName: "jcJpDandate",
     type: "data",
-    width: "80",
-    styles: {
-      textAlignment: "near",
-    },
+    width: "40",
     header: {
       text: "단가 적용일",
     },
@@ -149,10 +131,7 @@ export const columns = [
     name: "jcLastdate5",
     fieldName: "jcLastdate5",
     type: "data",
-    width: "80",
-    styles: {
-      textAlignment: "near",
-    },
+    width: "40",
     header: {
       text: "최종 공급일",
     },
@@ -161,10 +140,7 @@ export const columns = [
     name: "jcCycle",
     fieldName: "jcCycle",
     type: "data",
-    width: "60",
-    styles: {
-      textAlignment: "near",
-    },
+    width: "30",
     header: {
       text: "공급 주기",
     },
@@ -173,10 +149,7 @@ export const columns = [
     name: "jpStateName",
     fieldName: "jpStateName",
     type: "data",
-    width: "60",
-    styles: {
-      textAlignment: "near",
-    },
+    width: "30",
     header: {
       text: "상태",
     },

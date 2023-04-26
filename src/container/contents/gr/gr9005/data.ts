@@ -63,6 +63,7 @@ export const columns = [
     fieldName: "bcBuName",
     type: "data",
     width: "60",
+    styleName: "rg-left-column",
     header: {
       text: "충전소명",
     },
@@ -81,6 +82,7 @@ export const columns = [
     fieldName: "bclJpName",
     type: "data",
     width: "60",
+    styleName: "rg-left-column",
     header: {
       text: "품명",
     },
@@ -90,6 +92,7 @@ export const columns = [
     fieldName: "bcInqty",
     type: "data",
     width: "30",
+    styleName: "rg-right-column",
     header: {
       text: "입고수량",
     },
@@ -99,6 +102,7 @@ export const columns = [
     fieldName: "bcInkg",
     type: "data",
     width: "30",
+    styleName: "rg-right-column",
     header: {
       text: "입고량",
     },
@@ -108,6 +112,7 @@ export const columns = [
     fieldName: "bcCost",
     type: "data",
     width: "30",
+    styleName: "rg-right-column",
     header: {
       text: "단가",
     },
@@ -117,6 +122,7 @@ export const columns = [
     fieldName: "bcAmt",
     type: "data",
     width: "30",
+    styleName: "rg-right-column",
     header: {
       text: "금액",
     },

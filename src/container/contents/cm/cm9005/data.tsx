@@ -70,7 +70,7 @@ export const columns = [
     name: "cuAddr",
     fieldName: "cuAddr",
     type: "data",
-    width: "300",
+    width: "400",
     styleName: "rg-left-column",
     header: {
       text: "주소",

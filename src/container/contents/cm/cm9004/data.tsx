@@ -92,7 +92,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "60",
+    width: "70",
     header: {
       text: "영업소",
     },
@@ -110,7 +110,7 @@ export const columns = [
     name: "cuViewName",
     fieldName: "cuViewName",
     type: "data",
-    width: "120",
+    width: "200",
     styleName: "rg-left-column",
     header: {
       text: "거래처",
@@ -154,7 +154,7 @@ export const columns = [
     name: "cuSajang",
     fieldName: "cuSajang",
     type: "data",
-    width: "120",
+    width: "100",
     styleName: "rg-left-column",
     header: {
       text: "대표자",
@@ -175,7 +175,7 @@ export const columns = [
     name: "cuUptae",
     fieldName: "cuUptae",
     type: "data",
-    width: "120",
+    width: "100",
     styleName: "rg-left-column",
     header: {
       text: "업태",
@@ -185,7 +185,7 @@ export const columns = [
     name: "cuJongMok",
     fieldName: "cuJongMok",
     type: "data",
-    width: "120",
+    width: "100",
     styleName: "rg-left-column",
     header: {
       text: "종목",
@@ -195,7 +195,7 @@ export const columns = [
     name: "cuSeSawon",
     fieldName: "cuSeSawon",
     type: "data",
-    width: "120",
+    width: "100",
     styleName: "rg-left-column",
     header: {
       text: "담당자",
@@ -216,6 +216,7 @@ export const columns = [
     fieldName: "cuSmsHp",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "HP",
     },
@@ -233,7 +234,7 @@ export const columns = [
     name: "cuSekumName",
     fieldName: "cuSeFaxNo",
     type: "data",
-    width: "120",
+    width: "80",
     styleName: "rg-left-column",
     header: {
       text: "발행주기",
@@ -243,7 +244,7 @@ export const columns = [
     name: "cuSekumDate",
     fieldName: "cuSekumDate",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "발행일",
     },
@@ -253,6 +254,7 @@ export const columns = [
     fieldName: "cuSeListYn",
     type: "data",
     width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "거래명세Y/N",
     },
@@ -262,6 +264,7 @@ export const columns = [
     fieldName: "cuSmsYn",
     type: "data",
     width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "SMS Y/N",
     },
@@ -271,6 +274,7 @@ export const columns = [
     fieldName: "cuSeFaxYn",
     type: "data",
     width: "80",
+    styleName: "rg-left-column",
     header: {
       text: "FAX Y/N",
     },
@@ -279,7 +283,7 @@ export const columns = [
     name: "cuGongSano",
     fieldName: "cuGongSano",
     type: "data",
-    width: "120",
+    width: "100",
     styleName: "rg-left-column",
     header: {
       text: "공급사업자",
@@ -289,7 +293,7 @@ export const columns = [
     name: "cuTypeName",
     fieldName: "cuTypeName",
     type: "data",
-    width: "120",
+    width: "80",
     styleName: "rg-left-column",
     header: {
       text: "거래구분",

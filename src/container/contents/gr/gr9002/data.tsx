@@ -127,7 +127,7 @@ export const columns = [
     fieldName: "bcInqty",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "입고",
     },
@@ -137,7 +137,7 @@ export const columns = [
     fieldName: "bcInc",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "출고",
     },
@@ -147,7 +147,7 @@ export const columns = [
     fieldName: "bcOutc",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "입고",
     },
@@ -157,7 +157,7 @@ export const columns = [
     fieldName: "bcOutqty",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "출고",
     },
@@ -167,7 +167,7 @@ export const columns = [
     fieldName: "bcInmigum",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "입고",
     },
@@ -177,7 +177,7 @@ export const columns = [
     fieldName: "bcOutmigum",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "출고",
     },
@@ -187,7 +187,7 @@ export const columns = [
     fieldName: "bcChungbox",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "보관",
     },
@@ -197,7 +197,7 @@ export const columns = [
     fieldName: "bcChungdae",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "회수",
     },
@@ -207,7 +207,7 @@ export const columns = [
     fieldName: "bcTongdel",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "폐기",
     },
@@ -217,7 +217,7 @@ export const columns = [
     fieldName: "bcPjan",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "프로판",
     },
@@ -227,7 +227,7 @@ export const columns = [
     fieldName: "bcBjan",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "부탄",
     },
@@ -237,7 +237,7 @@ export const columns = [
     fieldName: "bcPin",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "프로판",
     },
@@ -257,7 +257,7 @@ export const columns = [
     fieldName: "bcGin",
     type: "data",
     width: "120",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "기타",
     },

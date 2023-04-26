@@ -134,7 +134,8 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "120",
+    width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -143,7 +144,8 @@ export const columns = [
     name: "jpName",
     fieldName: "jpName",
     type: "data",
-    width: "100",
+    width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "품명",
     },
@@ -161,7 +163,7 @@ export const columns = [
     name: "reqty",
     fieldName: "reqty",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "회수",
     },
@@ -170,7 +172,8 @@ export const columns = [
     name: "vatDiv",
     fieldName: "vatDiv",
     type: "data",
-    width: "120",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "VAT",
     },
@@ -180,6 +183,7 @@ export const columns = [
     fieldName: "kumack",
     type: "data",
     width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "금액",
     },
@@ -189,6 +193,7 @@ export const columns = [
     fieldName: "dc",
     type: "data",
     width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "D/C",
     },
@@ -198,6 +203,7 @@ export const columns = [
     fieldName: "inkum",
     type: "data",
     width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "입금액",
     },
@@ -207,6 +213,7 @@ export const columns = [
     fieldName: "misukum",
     type: "data",
     width: "100",
+    styleName: "rg-right-column",
     header: {
       text: "미입금액",
     },
@@ -216,6 +223,7 @@ export const columns = [
     fieldName: "swName",
     type: "data",
     width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "사원",
     },
@@ -225,6 +233,7 @@ export const columns = [
     fieldName: "bigo",
     type: "data",
     width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "비고",
     },

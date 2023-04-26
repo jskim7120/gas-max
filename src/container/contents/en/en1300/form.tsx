@@ -310,7 +310,7 @@ const Form = React.forwardRef(
                 onChange={onChange}
                 mask={[/\d/, /\d/, /\d/, /\d/, /\d/]}
                 textAlign="right"
-                inputSize={InputSize.i80}
+                inputSize={InputSize.i60}
               />
             )}
           />

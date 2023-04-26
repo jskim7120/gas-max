@@ -79,6 +79,7 @@ export const columns = [
     fieldName: "aptF",
     type: "data",
     width: "60",
+    styleName: "rg-right-column",
     header: {
       text: "층수",
     },
@@ -88,6 +89,7 @@ export const columns = [
     fieldName: "aptS",
     type: "data",
     width: "60",
+    styleName: "rg-right-column",
     header: {
       text: "세대",
     },
@@ -97,6 +99,7 @@ export const columns = [
     fieldName: "aptSum",
     type: "data",
     width: "70",
+    styleName: "rg-right-column",
     header: {
       text: "전체세대",
     },

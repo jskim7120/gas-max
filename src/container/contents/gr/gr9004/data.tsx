@@ -60,7 +60,7 @@ export const columns1 = [
     name: "bcBuName",
     fieldName: "bcBuName",
     type: "data",
-    width: "120",
+    width: "200",
     styleName: "rg-left-column",
     header: {
       text: "충전소명",
@@ -89,7 +89,7 @@ export const columns1 = [
     fieldName: "bcPin",
     type: "data",
     width: "100",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "프로판",
     },
@@ -99,7 +99,7 @@ export const columns1 = [
     fieldName: "bcBin",
     type: "data",
     width: "100",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "부탄",
     },
@@ -109,7 +109,7 @@ export const columns1 = [
     fieldName: "bcPjan",
     type: "data",
     width: "100",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "프로판",
     },
@@ -119,7 +119,7 @@ export const columns1 = [
     fieldName: "bcBjan",
     type: "data",
     width: "100",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "부탄",
     },
@@ -129,7 +129,7 @@ export const columns1 = [
     fieldName: "bcPsum",
     type: "data",
     width: "100",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "프로판",
     },
@@ -139,7 +139,7 @@ export const columns1 = [
     fieldName: "bcBsum",
     type: "data",
     width: "100",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "부탄",
     },
@@ -149,7 +149,7 @@ export const columns1 = [
     fieldName: "bcSumKum",
     type: "data",
     width: "80",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "매입액",
     },
@@ -159,7 +159,7 @@ export const columns1 = [
     fieldName: "bcOutkum",
     type: "data",
     width: "80",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "지금액",
     },
@@ -169,7 +169,7 @@ export const columns1 = [
     fieldName: "bcDc",
     type: "data",
     width: "80",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "D/C",
     },
@@ -179,7 +179,7 @@ export const columns1 = [
     fieldName: "bcMisu",
     type: "data",
     width: "80",
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
     header: {
       text: "잔액",
     },

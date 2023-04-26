@@ -87,6 +87,7 @@ export const columns2 = [
     fieldName: "bclInqty",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "입고",
@@ -101,6 +102,7 @@ export const columns2 = [
     fieldName: "bclInc",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "출고",
@@ -111,6 +113,7 @@ export const columns2 = [
     fieldName: "bclOutc",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "입고",
@@ -121,6 +124,7 @@ export const columns2 = [
     fieldName: "bclOutqty",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "출고",
@@ -135,6 +139,7 @@ export const columns2 = [
     fieldName: "bclInmigum",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "입고",
@@ -149,6 +154,7 @@ export const columns2 = [
     fieldName: "bclOutmigum",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "출고",
@@ -163,6 +169,7 @@ export const columns2 = [
     fieldName: "bclChungbok",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "입고",
@@ -173,6 +180,7 @@ export const columns2 = [
     fieldName: "bclChungdae",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "출고",
@@ -183,6 +191,7 @@ export const columns2 = [
     fieldName: "bclTongdel",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "폐기",
@@ -193,6 +202,7 @@ export const columns2 = [
     fieldName: "bclCost",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#,##0",
     header: {
       text: "단가",
@@ -203,6 +213,7 @@ export const columns2 = [
     fieldName: "bclVatType",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#,##0",
     header: {
       text: "VAT",
@@ -213,6 +224,7 @@ export const columns2 = [
     fieldName: "bclAmt",
     width: "100",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#,##0",
     header: {
       text: "금액",

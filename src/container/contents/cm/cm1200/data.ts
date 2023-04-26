@@ -128,7 +128,6 @@ export const columnsSelected = [
     fieldName: "cuCode",
     type: "data",
     width: "90",
-
     header: {
       text: "코드",
     },
@@ -137,8 +136,8 @@ export const columnsSelected = [
     name: "cuUsername",
     fieldName: "cuUsername",
     type: "data",
-    width: "100",
-
+    width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "사용자명",
     },
@@ -147,7 +146,8 @@ export const columnsSelected = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "150",
+    width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "전화",
     },
@@ -216,7 +216,7 @@ export const columnsSelected = [
     name: "cuCmisu",
     fieldName: "cuCmisu",
     type: "data",
-    width: "130",
+    width: "80",
     header: {
       text: "체적미수 ",
     },
@@ -226,7 +226,7 @@ export const columnsSelected = [
     name: "cuSukumtype",
     fieldName: "cuSukumtype",
     type: "data",
-    width: "90",
+    width: "80",
 
     header: {
       text: "수금방법 ",
@@ -236,7 +236,7 @@ export const columnsSelected = [
     name: "cuStae",
     fieldName: "cuStae",
     type: "data",
-    width: "90",
+    width: "60",
 
     header: {
       text: "상태",

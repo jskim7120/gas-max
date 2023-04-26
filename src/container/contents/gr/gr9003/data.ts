@@ -77,7 +77,7 @@ export const columns = [
     name: "bcBuName",
     fieldName: "bcBuName",
     type: "data",
-    width: "40",
+    width: "90",
     header: {
       text: "충전소명",
     },
@@ -86,7 +86,7 @@ export const columns = [
     name: "bcDate",
     fieldName: "bcDate",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "일자",
     },
@@ -123,6 +123,7 @@ export const columns = [
     fieldName: "bcType",
     type: "data",
     width: "80",
+    styleName: "rg-left-column",
     header: {
       text: "수송기사/차량",
     },
@@ -141,6 +142,7 @@ export const columns = [
     fieldName: "bcPin",
     type: "data",
     width: "40",
+    styleName: "rg-right-column",
     header: {
       text: "프로판(kg)",
     },
@@ -150,6 +152,7 @@ export const columns = [
     fieldName: "bcBin",
     type: "data",
     width: "40",
+    styleName: "rg-right-column",
     header: {
       text: "부탄(kg)",
     },
@@ -158,7 +161,8 @@ export const columns = [
     name: "bcGin",
     fieldName: "bcGin",
     type: "data",
-    width: "80",
+    width: "40",
+    styleName: "rg-right-column",
     header: {
       text: "기타(EA)",
     },
@@ -167,7 +171,8 @@ export const columns = [
     name: "bcSumKum",
     fieldName: "bcSumKum",
     type: "data",
-    width: "80",
+    width: "50",
+    styleName: "rg-right-column",
     header: {
       text: "매입금액",
     },
@@ -176,7 +181,8 @@ export const columns = [
     name: "bcOutkum",
     fieldName: "bcOutkum",
     type: "data",
-    width: "40",
+    width: "50",
+    styleName: "rg-right-column",
     header: {
       text: "지급액",
     },
@@ -185,7 +191,8 @@ export const columns = [
     name: "bcDc",
     fieldName: "bcDc",
     type: "data",
-    width: "40",
+    width: "50",
+    styleName: "rg-right-column",
     header: {
       text: "D/C",
     },
@@ -194,7 +201,8 @@ export const columns = [
     name: "bcMisu",
     fieldName: "bcMisu",
     type: "data",
-    width: "40",
+    width: "50",
+    styleName: "rg-right-column",
     header: {
       text: "잔액",
     },

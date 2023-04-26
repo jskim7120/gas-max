@@ -79,6 +79,7 @@ export const columns1 = [
     fieldName: "bclInqty",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "입고",
@@ -89,6 +90,7 @@ export const columns1 = [
     fieldName: "bclInc",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "출고",
@@ -99,6 +101,7 @@ export const columns1 = [
     fieldName: "bclOutc",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "입고",
@@ -109,6 +112,7 @@ export const columns1 = [
     fieldName: "bclOutqty",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "출고",
@@ -119,6 +123,7 @@ export const columns1 = [
     fieldName: "bclInmigum",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "입고",
@@ -129,6 +134,7 @@ export const columns1 = [
     fieldName: "bclOutmigum",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "출고",
@@ -139,6 +145,7 @@ export const columns1 = [
     fieldName: "bclChungbok",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "입고",
@@ -149,6 +156,7 @@ export const columns1 = [
     fieldName: "bclChungdae",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "출고",
@@ -159,6 +167,7 @@ export const columns1 = [
     fieldName: "bclTongdel",
     width: "60",
     type: "data",
+    styleName: "rg-right-column",
     numberFormat: "#",
     header: {
       text: "폐기",
