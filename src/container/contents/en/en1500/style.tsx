@@ -6,7 +6,7 @@ export const VolReading = styled.div`
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
   border-radius: 8px;
-  margin-top: 10px;
+  margin-top: 7px;
   .volReadCnt {
     padding: 0 17px;
     .vapInput {
@@ -58,8 +58,8 @@ export const VolReading = styled.div`
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 870px;
-  margin-top: 11px;
+  width: 100%;
+  margin-top: 7px;
   .title {
     height: 31px;
     background: rgba(101, 84, 255, 0.37);
@@ -72,7 +72,7 @@ export const Container = styled.div`
 `;
 export const RubeUnit = styled.div`
   width: 490px;
-  height: 415px;
+  //height: 4px;
   border-radius: 8px;
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
@@ -101,7 +101,8 @@ export const RubeUnit = styled.div`
     line-height: 24px;
     display: flex;
     align-items: center;
-    margin-top: 14px;
+    margin-top: 10px;
+    margin-bottom: 5px;
     justify-content: center;
     span {
       margin-left: 6px;
@@ -110,7 +111,7 @@ export const RubeUnit = styled.div`
 `;
 export const BasicItems = styled.div`
   width: 370px;
-  height: 415px;
+  //height: 415px;
   border-radius: 8px;
   border: 1px solid #707070;
   box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
@@ -136,7 +137,7 @@ export const BasicItems = styled.div`
     line-height: 24px;
     display: flex;
     align-items: center;
-    margin-top: 127px;
+    margin-top: 10px;
     justify-content: center;
     span {
       margin-left: 6px;

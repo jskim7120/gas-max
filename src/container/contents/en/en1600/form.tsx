@@ -62,14 +62,6 @@ const Form = React.forwardRef(
       functionName: "EN1600",
     });
 
-    console.log("dataComonDIc====>", dataCommonDic);
-
-    // useEffect(() => {
-    //   if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-    //     resetForm("reset");
-    //   }
-    // }, [selected]);
-
     useEffect(() => {
       if (addr.length > 0) {
         reset({
@@ -126,12 +118,6 @@ const Form = React.forwardRef(
             swWorkOut: selected.swWorkOut === "Y",
             cuSeEmail: selected.cuSeEmail ? selected.cuSeEmail.trim() : "",
             mailKind: selected.mailKind ? selected.mailKind.trim() : "",
-            // swIndate: selected?.swIndate ? DateWithDash(selected.swIndate) : "",
-            // swJdate1: selected?.swJdate1 ? DateWithDash(selected.swJdate1) : "",
-            // swJdate2: selected?.swJdate2 ? DateWithDash(selected.swJdate2) : "",
-            // swOutDate: selected?.swOutDate
-            //   ? DateWithDash(selected.swOutDate)
-            //   : "",
           });
 
           selected.swStampFile
@@ -180,33 +166,9 @@ const Form = React.forwardRef(
         formValues.cuSeEmail &&
         `${formValues.cuSeEmail.trim()}@${formValues.mailKind}`;
 
-      // formValues.swIndate =
-      //   typeof formValues.swIndate === "string"
-      //     ? formatDateByRemoveDash(formValues.swIndate)
-      //     : formValues.swIndate instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.swIndate)
-      //     : "";
       formValues.swIndate = DateWithoutDash(formValues.swIndate);
-      // formValues.swJdate1 =
-      //   typeof formValues.swJdate1 === "string"
-      //     ? formatDateByRemoveDash(formValues.swJdate1)
-      //     : formValues.swJdate1 instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.swJdate1)
-      //     : "";
       formValues.swJdate1 = DateWithoutDash(formValues.swJdate1);
-      // formValues.swJdate2 =
-      //   typeof formValues.swJdate2 === "string"
-      //     ? formatDateByRemoveDash(formValues.swJdate2)
-      //     : formValues.swJdate2 instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.swJdate2)
-      //     : "";
       formValues.swJdate2 = DateWithoutDash(formValues.swJdate2);
-      // formValues.swOutDate =
-      //   typeof formValues.swOutDate === "string"
-      //     ? formatDateByRemoveDash(formValues.swOutDate)
-      //     : formValues.swOutDate instanceof Date
-      //     ? formatDateToStringWithoutDash(formValues.swOutDate)
-      //     : "";
       formValues.swOutDate = DateWithoutDash(formValues.swOutDate);
       formValues.swGubun = formValues.swGubunName?.charAt(0);
 

@@ -23,7 +23,9 @@ function CreateEN(
   searchPath: string,
   columns: any,
   fields: any,
-  Form: any
+  Form: any,
+  leftSideWidth: string,
+  rightSideWidth: string
 ) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
@@ -60,13 +62,19 @@ function CreateEN(
 
   const fetchData = async () => {
     try {
-      const { data } = await API.get(searchPath);
-      if (data) {
-        setData(data);
-        setSelected(data[0]);
-        setSelectedRowIndex(0);
+      const { data: dataS } = await API.get(searchPath);
+      if (dataS) {
+        setData(dataS);
+        setSelected(dataS[0]);
+      } else {
+        setData([]);
+        setSelected({});
       }
+      setSelectedRowIndex(0);
     } catch (err) {
+      setData([]);
+      setSelected({});
+      setSelectedRowIndex(0);
       console.log(`${menuId} DATA fetch error =======>`, err);
     }
   };
@@ -134,7 +142,7 @@ function CreateEN(
         </SearchWrapper>
         <MainWrapper>
           <Grid
-            style={{ minWidth: "100px" }}
+            style={{ width: leftSideWidth }}
             data={data}
             fields={fields}
             columns={columns}
@@ -144,7 +152,7 @@ function CreateEN(
             setIsAddBtnClicked={setIsAddBtnClicked}
           />
 
-          <RightSide style={{ width: "815px" }}>
+          <RightSide style={{ width: rightSideWidth }}>
             <Form
               selected={selected}
               ref={formRef}

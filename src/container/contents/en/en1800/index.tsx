@@ -19,10 +19,14 @@ function EN1800({
     EN1800LIST,
     columns,
     fields,
-    Form
+    Form,
+    "380px",
+    "402px"
   );
 
   return showScreen();
 }
 
 export default EN1800;
+
+//380+402=782px

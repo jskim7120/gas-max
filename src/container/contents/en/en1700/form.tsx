@@ -93,13 +93,6 @@ const Form = React.forwardRef(
       { mode: "onChange" }
     );
 
-    // useEffect(() => {
-    //   if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-    //     resetForm("reset");
-    //     empChargeDataSelect(selected.areaCode);
-    //   }
-    // }, [selected]);
-
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
@@ -140,13 +133,6 @@ const Form = React.forwardRef(
             ...newData,
             caBkYn: selected?.caBkYn === "Y",
             caRentYn: selected?.caRentYn === "Y",
-            // caSafeDate: DateWithDash(selected.caSafeDate),
-            // caInDate: DateWithDash(selected.caInDate),
-            // caRentDate: DateWithDash(selected.caRentDate),
-            // caJdate1: DateWithDash(selected.caJdate1),
-            // caJdate2: DateWithDash(selected.caJdate2),
-            // caBsdate: DateWithDash(selected.caBsdate),
-            // caBldate: DateWithDash(selected.caBldate),
           });
         }
       }
@@ -184,18 +170,6 @@ const Form = React.forwardRef(
       formValues.caBkYn = formValues.caBkYn ? "Y" : "N";
       formValues.caRentYn = formValues.caRentYn ? "Y" : "N";
 
-      // formValues.caSafeDate = caSafeDate
-      //   ? formatDateByRemoveDash(caSafeDate)
-      //   : "";
-      // formValues.caInDate = caInDate ? formatDateByRemoveDash(caInDate) : "";
-      // formValues.caRentDate = caRentDate
-      //   ? formatDateByRemoveDash(caRentDate)
-      //   : "";
-      // formValues.caJdate1 = caJdate1 ? formatDateByRemoveDash(caJdate1) : "";
-      // formValues.caJdate2 = caJdate2 ? formatDateByRemoveDash(caJdate2) : "";
-      // formValues.caBsdate = caBsdate ? formatDateByRemoveDash(caBsdate) : "";
-      // formValues.caBldate = caBsdate ? formatDateByRemoveDash(caBldate) : "";
-
       formValues.caSafeDate = DateWithoutDash(formValues.caSafeDate);
       formValues.caInDate = DateWithoutDash(formValues.caInDate);
       formValues.caRentDate = DateWithoutDash(formValues.caRentDate);
@@ -203,8 +177,7 @@ const Form = React.forwardRef(
       formValues.caJdate2 = DateWithoutDash(formValues.caJdate2);
       formValues.caBsdate = DateWithoutDash(formValues.caBsdate);
       formValues.caBldate = DateWithoutDash(formValues.caBldate);
-      console.log(formValues);
-      // --------------------------
+
       formValues.caAmt = formValues.caAmt
         ? formatCurrencyRemoveComma(formValues.caAmt)
         : "";

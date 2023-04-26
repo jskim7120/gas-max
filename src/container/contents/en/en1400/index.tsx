@@ -19,7 +19,9 @@ function EN1400({
     EN1400LIST,
     columns,
     fields,
-    Form
+    Form,
+    "870px",
+    "302px"
   );
 
   return showScreen();

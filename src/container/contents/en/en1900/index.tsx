@@ -19,10 +19,13 @@ function EN1900({
     EN1900LIST,
     columns,
     fields,
-    Form
+    Form,
+    "365px",
+    "397px"
   );
 
   return showScreen();
 }
 
 export default EN1900;
+//365+397=762px

@@ -19,10 +19,14 @@ function EN1300({
     EN1300LIST,
     columns,
     fields,
-    Form
+    Form,
+    "1000px",
+    "330px"
   );
 
   return showScreen();
 }
 
 export default EN1300;
+
+//1330px
