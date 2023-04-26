@@ -23,7 +23,7 @@ const Table = styled.table`
         border-bottom: 1px solid #000;
         border-right: 1px solid #d6d2ce;
         font-weight: 500;
-        padding: 6px 5px;
+        padding: 5px;
         width: 120px;
       }
     }

@@ -43,15 +43,6 @@ const Form = React.forwardRef(
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    // useEffect(() => {
-    //   if (JSON.stringify(selected) !== "{}") {
-    //     reset({
-    //       ...selected,
-    //       swWorkOut: selected?.swWorkOut === "Y",
-    //     });
-    //   }
-    // }, [selected]);
-
     const { register, handleSubmit, reset, getValues } = useForm<ICARJBC>({
       mode: "onChange",
     });
@@ -161,7 +152,7 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ width: "400px", padding: "0px 50px 0 10px" }}
+        style={{ width: "380px", padding: "0px 10px" }}
       >
         <Wrapper>
           <Input

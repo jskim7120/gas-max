@@ -19,10 +19,14 @@ function EN1200({
     EN1200LIST,
     columns,
     fields,
-    Form
+    Form,
+    "620px",
+    "805px"
   );
 
   return showScreen();
 }
 
 export default EN1200;
+
+//620+805=1425px

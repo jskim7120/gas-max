@@ -19,10 +19,14 @@ function EN2000({
     EN2000LIST,
     columns,
     fields,
-    Form
+    Form,
+    "510px",
+    "382px"
   );
 
   return showScreen();
 }
 
 export default EN2000;
+
+//510+382=892px

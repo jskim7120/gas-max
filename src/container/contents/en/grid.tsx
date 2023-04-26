@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { LeftSide } from "../commonStyle";
+import { LeftSideEN } from "../commonStyle";
 
 function Grid({
   data,
@@ -71,7 +71,7 @@ function Grid({
     };
   }, [data]);
 
-  return <LeftSide ref={realgridElement} style={style}></LeftSide>;
+  return <LeftSideEN ref={realgridElement} style={style}></LeftSideEN>;
 }
 
 export default Grid;

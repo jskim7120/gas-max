@@ -19,10 +19,14 @@ function EN1600({
     EN1600LIST,
     columns,
     fields,
-    Form
+    Form,
+    "940px",
+    "727px"
   );
 
   return showScreen();
 }
 
 export default EN1600;
+
+//940+727=1667px

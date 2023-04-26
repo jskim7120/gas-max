@@ -46,8 +46,7 @@ function EN1500({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <p>{depthFullName}</p>
+      <SearchWrapper className=" mt5" style={{ height: "40px" }}>
         <div className="buttons">
           <Button
             text="저장"
@@ -58,17 +57,10 @@ function EN1500({
             }}
             color={ButtonColor.SECONDARY}
           />
-          {/* <Button
-            text="취소"
-            icon={<Reset />}
-            onClick={() => {
-              // formRef.current.setIsAddBtnClicked(false);
-              formRef.current.resetForm("reset");
-            }}
-          /> */}
         </div>
+        <p>{depthFullName}</p>
       </SearchWrapper>
-      <MainWrapper>
+      <MainWrapper style={{ height: `calc(100% - 7px)` }}>
         <Grid
           data={data}
           fields={fields}
@@ -76,6 +68,7 @@ function EN1500({
           setSelected={setSelected}
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
+          style={{ minWidth: "420px" }}
         />
         <RightSide>
           <Form

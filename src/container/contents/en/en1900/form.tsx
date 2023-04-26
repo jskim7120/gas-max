@@ -47,15 +47,6 @@ const Form = React.forwardRef(
       functionName: "EN1900",
     });
 
-    // useEffect(() => {
-    //   if (JSON.stringify(selected) !== "{}") {
-    //     reset({
-    //       ...selected,
-    //       swWorkOut: selected?.swWorkOut === "Y",
-    //     });
-    //   }
-    // }, [selected]);
-
     const { register, handleSubmit, reset, getValues } = useForm<ICUSTGUBUN>({
       mode: "onChange",
     });
@@ -190,7 +181,7 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ width: "401px", padding: "0px 10px" }}
+        style={{ width: "395px", padding: "0px 10px" }}
       >
         <Wrapper>
           <Input
