@@ -44,7 +44,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "90",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -53,7 +53,7 @@ export const columns = [
     name: "cjDate",
     fieldName: "cjDate",
     type: "data",
-    width: "90",
+    width: "100",
     header: {
       text: "일자",
     },
@@ -71,7 +71,7 @@ export const columns = [
     name: "cjCaName",
     fieldName: "cjCaName",
     type: "data",
-    width: "170",
+    width: "180",
     styleName: "rg-left-column",
     header: {
       text: "차량",
@@ -90,7 +90,7 @@ export const columns = [
     name: "cjCcName",
     fieldName: "cjCcName",
     type: "data",
-    width: "190",
+    width: "200",
     styleName: "rg-left-column",
     header: {
       text: "정비명",

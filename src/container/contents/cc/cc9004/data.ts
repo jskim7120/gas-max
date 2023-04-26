@@ -38,7 +38,7 @@ export const columns = [
     name: "toCha",
     fieldName: "toCha",
     type: "data",
-    width: "120",
+    width: "90",
     styleName: "rg-right-column",
     header: {
       text: "금액",
@@ -48,7 +48,7 @@ export const columns = [
     name: "toDae",
     fieldName: "toDae",
     type: "data",
-    width: "120",
+    width: "90",
     styleName: "rg-right-column",
     header: {
       text: "",

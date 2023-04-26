@@ -149,7 +149,7 @@ export const col1 = [
     name: "buycustYn",
     fieldName: "buycustYn",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "매입퓸목",
     },
@@ -164,7 +164,7 @@ export const col1 = [
     name: "bpCode",
     fieldName: "bpCode",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "코드",
     },
@@ -174,7 +174,8 @@ export const col1 = [
     name: "bpName",
     fieldName: "bpName",
     type: "data",
-    width: "80",
+    width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "부품명",
     },
@@ -184,7 +185,8 @@ export const col1 = [
     name: "bpSpec",
     fieldName: "bpSpec",
     type: "data",
-    width: "80",
+    width: "50",
+    styleName: "rg-left-column",
     header: {
       text: "규격",
     },
@@ -194,7 +196,7 @@ export const col1 = [
     name: "bpDanwi",
     fieldName: "bpDanwi",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "단위",
     },
@@ -207,7 +209,8 @@ export const col2 = [
     name: "bpDanga",
     fieldName: "bpDanga",
     type: "data",
-    width: "80",
+    width: "70",
+    styleName: "rg-right-column",
     header: {
       text: "매입단가",
     },
@@ -231,7 +234,7 @@ export const dangaType = {
   name: "bpDangaType",
   fieldName: "bpDangaType",
   type: "data",
-  width: "80",
+  width: "60",
   header: {
     text: "단가구분",
   },
@@ -246,6 +249,7 @@ export const vatKind = {
   fieldName: "bpVatKind",
   type: "data",
   width: "80",
+  styleName: "rg-right-column",
   header: {
     text: "Vat",
   },

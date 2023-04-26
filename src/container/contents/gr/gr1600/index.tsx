@@ -118,7 +118,7 @@ function GR1600({
                 >
                   구분
                 </Label>
-                <Select register={register("buGubun")}>
+                <Select register={register("buGubun")} width={InputSize.i100}>
                   {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -129,7 +129,7 @@ function GR1600({
                 <Input
                   label="매입처명"
                   register={register("buName")}
-                  inputSize={InputSize.i100}
+                  inputSize={InputSize.i200}
                 />
               </FormGroup>
               <div className="buttons">

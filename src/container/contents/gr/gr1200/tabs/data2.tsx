@@ -77,6 +77,7 @@ export const columns2 = [
     buttonVisibility: "always",
     width: "150",
     type: "data",
+    styleName: "rg-left-column",
     header: {
       text: "품명",
     },

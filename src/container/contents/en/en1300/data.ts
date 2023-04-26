@@ -88,7 +88,7 @@ export const columns = [
     name: "jpSpec",
     fieldName: "jpSpec",
     type: "data",
-    width: "50",
+    width: "70",
     styleName: "rg-left-column",
     header: {
       text: "규격",
@@ -112,6 +112,7 @@ export const columns = [
     header: {
       text: "용량",
     },
+    styleName: "rg-right-column",
     numberFormat: "#",
   },
   {
@@ -122,6 +123,7 @@ export const columns = [
     header: {
       text: "단위",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "jpOutdanga",

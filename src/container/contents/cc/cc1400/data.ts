@@ -32,7 +32,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "60",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -65,7 +65,8 @@ export const columns = [
     name: "sgSwName",
     fieldName: "sgSwName",
     type: "data",
-    width: "100",
+    width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "사원",
     },

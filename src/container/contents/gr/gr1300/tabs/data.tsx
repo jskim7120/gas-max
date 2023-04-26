@@ -34,7 +34,7 @@ export const columns = [
   {
     name: "bblBpCode",
     fieldName: "bblBpCode",
-    width: "60",
+    width: "50",
     type: "data",
     header: {
       text: "코드",

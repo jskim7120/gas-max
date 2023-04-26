@@ -71,7 +71,7 @@ export const columns = [
     name: "bpType",
     fieldName: "bpType",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "규격",
     },
@@ -85,12 +85,13 @@ export const columns = [
     header: {
       text: "단위",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "bpIndanga",
     fieldName: "bpIndanga",
     type: "data",
-    width: "120",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "매입단가",
@@ -100,7 +101,7 @@ export const columns = [
     name: "bpOutdanga",
     fieldName: "bpOutdanga",
     type: "data",
-    width: "120",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "판매단가",

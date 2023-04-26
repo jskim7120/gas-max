@@ -84,7 +84,7 @@ export const columns = [
     name: "salestateName",
     fieldName: "salestateName",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "상태",
     },
@@ -107,7 +107,7 @@ export const columns = [
     name: "pjType",
     fieldName: "pjType",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "구분",
     },
@@ -116,7 +116,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -154,7 +154,8 @@ export const columns = [
     name: "qty",
     fieldName: "qty",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "납품",
     },
@@ -164,6 +165,7 @@ export const columns = [
     fieldName: "reqty",
     type: "data",
     width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "회수",
     },

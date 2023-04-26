@@ -161,7 +161,7 @@ export const col1 = [
     name: "buycustYn",
     fieldName: "buycustYn",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "매입퓸목",
     },
@@ -176,7 +176,7 @@ export const col1 = [
     name: "jpCode",
     fieldName: "jpCode",
     type: "data",
-    width: "80",
+    width: "60",
     header: {
       text: "코드",
     },
@@ -186,7 +186,8 @@ export const col1 = [
     name: "jpName",
     fieldName: "jpName",
     type: "data",
-    width: "80",
+    width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "품명",
     },
@@ -197,6 +198,7 @@ export const col1 = [
     fieldName: "jpSpec",
     type: "data",
     width: "80",
+    styleName: "rg-left-column",
     header: {
       text: "규격",
     },
@@ -206,7 +208,8 @@ export const col1 = [
     name: "jpKg",
     fieldName: "jpKg",
     type: "data",
-    width: "80",
+    width: "70",
+    styleName: "rg-right-column",
     header: {
       text: "용량",
     },
@@ -220,6 +223,7 @@ export const col2 = [
     fieldName: "jpDanga",
     type: "data",
     width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "매입단가",
     },
@@ -254,6 +258,7 @@ export const dangaType = {
   fieldName: "jpDangaType",
   type: "data",
   width: "80",
+  styleName: "rg-right-column",
   header: {
     text: "단가구분",
   },
@@ -268,6 +273,7 @@ export const vatKind = {
   fieldName: "jpVatKind",
   type: "data",
   width: "80",
+  styleName: "rg-right-column",
   header: {
     text: "Vat",
   },
