@@ -20,7 +20,7 @@ function EN1800({
     columns,
     fields,
     Form,
-    "380px",
+    380,
     "402px"
   );
 

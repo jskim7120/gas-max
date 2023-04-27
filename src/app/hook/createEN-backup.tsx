@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import Draggable from "react-draggable";
 import { useDispatch, useSelector } from "app/store";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
@@ -25,7 +24,7 @@ function CreateEN(
   columns: any,
   fields: any,
   Form: any,
-  leftSideWidth: number,
+  leftSideWidth: string,
   rightSideWidth: string
 ) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
@@ -40,7 +39,6 @@ function CreateEN(
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState<number>(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [linePos, setLinePos] = useState(leftSideWidth);
 
   const { isDelete } = useSelector((state) => state.modal);
 
@@ -97,10 +95,6 @@ function CreateEN(
     } catch (error) {}
   }
 
-  const handleDrag = (event: any, ui: any) => {
-    setLinePos(ui.x);
-  };
-
   const showScreen = () => {
     return (
       <>
@@ -154,7 +148,7 @@ function CreateEN(
         </SearchWrapper>
         <MainWrapper>
           <Grid
-            style={{ width: `${linePos}px` }}
+            style={{ width: leftSideWidth }}
             data={data}
             fields={fields}
             columns={columns}
@@ -164,44 +158,19 @@ function CreateEN(
             setIsAddBtnClicked={setIsAddBtnClicked}
           />
 
-          <RightSide
-            style={{
-              width: `calc(100% - ${linePos}px)`,
-            }}
-          >
-            <div style={{ width: rightSideWidth }}>
-              <Form
-                selected={selected}
-                ref={formRef}
-                fetchData={fetchData}
-                setData={setData}
-                selectedRowIndex={selectedRowIndex}
-                setSelectedRowIndex={setSelectedRowIndex}
-                setSelected={setSelected}
-                isAddBtnClicked={isAddBtnClicked}
-                setIsAddBtnClicked={setIsAddBtnClicked}
-              />
-            </div>
+          <RightSide style={{ width: rightSideWidth }}>
+            <Form
+              selected={selected}
+              ref={formRef}
+              fetchData={fetchData}
+              setData={setData}
+              selectedRowIndex={selectedRowIndex}
+              setSelectedRowIndex={setSelectedRowIndex}
+              setSelected={setSelected}
+              isAddBtnClicked={isAddBtnClicked}
+              setIsAddBtnClicked={setIsAddBtnClicked}
+            />
           </RightSide>
-
-          <Draggable
-            axis="x"
-            bounds="parent"
-            onDrag={handleDrag}
-            position={{ x: linePos, y: 0 }}
-          >
-            <div
-              style={{
-                position: "absolute",
-                top: "117px",
-                left: "5px",
-                width: "4px",
-                height: "calc(100% - 197px)",
-                backgroundColor: "#707070",
-                cursor: "col-resize",
-              }}
-            ></div>
-          </Draggable>
         </MainWrapper>
       </>
     );

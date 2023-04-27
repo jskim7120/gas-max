@@ -20,7 +20,7 @@ function EN1200({
     columns,
     fields,
     Form,
-    "620px",
+    620,
     "805px"
   );
 

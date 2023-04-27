@@ -20,7 +20,7 @@ function EN1600({
     columns,
     fields,
     Form,
-    "940px",
+    940,
     "727px"
   );
 

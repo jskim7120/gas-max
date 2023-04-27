@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import API from "app/axios";
 import { EN1500LIST } from "app/path";
+import Draggable from "react-draggable";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { Update, Reset } from "components/allSvgIcon";
@@ -21,6 +22,7 @@ function EN1500({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [linePos, setLinePos] = useState(420);
 
   useEffect(() => {
     fetchData();
@@ -42,6 +44,9 @@ function EN1500({
       setSelected({});
       console.log("JNOTRY DATA fetch error =======>", err);
     }
+  };
+  const handleDrag = (event: any, ui: any) => {
+    setLinePos(ui.x);
   };
 
   return (
@@ -68,9 +73,14 @@ function EN1500({
           setSelected={setSelected}
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
-          style={{ minWidth: "420px" }}
+          // style={{ minWidth: "420px" }}
+          style={{ width: `${linePos}px` }}
         />
-        <RightSide>
+        <RightSide
+          style={{
+            width: `calc(100% - ${linePos}px)`,
+          }}
+        >
           <Form
             selected={selected}
             ref={formRef}
@@ -81,6 +91,25 @@ function EN1500({
             setSelected={setSelected}
           />
         </RightSide>
+
+        <Draggable
+          axis="x"
+          bounds="parent"
+          onDrag={handleDrag}
+          position={{ x: linePos, y: 0 }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: "110px",
+              left: "5px",
+              width: "4px",
+              height: "calc(100% - 190px)",
+              backgroundColor: "#707070",
+              cursor: "col-resize",
+            }}
+          ></div>
+        </Draggable>
       </MainWrapper>
     </>
   );

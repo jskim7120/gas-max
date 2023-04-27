@@ -20,7 +20,7 @@ function EN2000({
     columns,
     fields,
     Form,
-    "510px",
+    510,
     "382px"
   );
 

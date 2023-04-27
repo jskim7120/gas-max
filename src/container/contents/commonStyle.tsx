@@ -76,19 +76,10 @@ export const LeftSide = styled.div<{ width?: string }>`
 
 export const LeftSideEN = styled.div<{ width?: string }>`
   overflow-x: auto;
-  border-right: 3px solid #707070;
 `;
 
 export const RightSide = styled.div<{ width?: string }>`
   overflow-x: auto;
-
-  // width: ${(props) => (props.width ? props.width : "100%")};
-  // @media only screen and (max-width: 1023px) {
-  // }
-
-  // @media screen and (max-height: 767px) {
-  //   overflow-y: scroll;
-  // }
 `;
 
 export const ImageWrapper = styled.div`

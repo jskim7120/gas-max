@@ -20,7 +20,7 @@ function EN1900({
     columns,
     fields,
     Form,
-    "365px",
+    365,
     "397px"
   );
 
