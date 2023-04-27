@@ -21,7 +21,7 @@ export const FooterContainer = styled.div`
     height: 60px;
     border-right: 1px solid #092f53;
     p {
-      font-size: 12px;
+      font-size: 14px;
       font-family: "SegoeUI";
       font-weight: 600;
     }
@@ -32,9 +32,9 @@ export const FooterContainer = styled.div`
     flex-direction: column;
 
     p {
-      font-size: 11px;
+      font-size: 14px;
       color: rgba(12, 11, 11, 0.47);
-      margin: 5px 0 0 20px;
+      margin: 3px 0 0 15px;
     }
 
     .search_wrapper {

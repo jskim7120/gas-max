@@ -5,11 +5,11 @@ import M_IMG from "assets/image/M.png";
 import B_IMG from "assets/image/Barcode.png";
 
 const Text1 = styled.div`
-  height: 21px;
-  width: 34px;
+  height: 25px;
+  width: 35px;
   border: 1px solid #7250ff;
   color: #7250ff;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
   text-align: center;
 `;
@@ -17,7 +17,7 @@ const Text1 = styled.div`
 const Text2 = styled.div`
   color: #f90606;
   font-family: "NotoSansKRRegular";
-  font-size: 16px;
+  font-size: 15px;
 `;
 
 export function getCuType(cuType: string) {
