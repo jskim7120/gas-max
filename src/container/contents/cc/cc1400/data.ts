@@ -46,7 +46,7 @@ export const columns = [
     name: "sgDate",
     fieldName: "sgDate",
     type: "data",
-    width: "80",
+    width: "90",
     header: {
       text: "일자",
     },
