@@ -65,15 +65,6 @@ const Form = React.forwardRef(
       functionName: "EN1300",
     });
 
-    // useEffect(() => {
-    //   if (JSON.stringify(selected) !== "{}") {
-    //     reset({
-    //       ...selected,
-    //       swWorkOut: selected?.swWorkOut === "Y",
-    //     });
-    //   }
-    // }, [selected]);
-
     const { register, handleSubmit, reset, getValues, control } =
       useForm<ISANGPUM>({
         mode: "onChange",
@@ -116,10 +107,6 @@ const Form = React.forwardRef(
             console.log("areaCode select error", err);
           }
         } else if (type === "reset") {
-          // for (const [key, value] of Object.entries(selected)) {
-          //   newData[key] = value;
-          // }
-
           reset({
             ...selected,
             swWorkOut: selected?.swWorkOut === "Y",

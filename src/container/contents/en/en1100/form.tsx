@@ -47,7 +47,7 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [tabId, setTabId] = useState(0);
-    const [zipcode, setZipcode] = useState("");
+    const [jnAddr1, setJnAddr1] = useState("");
     const [addr, setAddress] = useState<string>("");
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
@@ -92,9 +92,10 @@ const Form = React.forwardRef(
     useEffect(() => {
       if (addr.length > 0) {
         reset({
-          jnAddr1: addr ? addr?.split("/")[0] : "",
+          jnZipcode: addr ? addr?.split("/")[1] : "",
+          jnAddr2: "",
         });
-        setZipcode(addr ? addr?.split("/")[1] : "");
+        setJnAddr1(addr ? addr?.split("/")[0] : "");
       }
     }, [addr]);
 
@@ -119,8 +120,8 @@ const Form = React.forwardRef(
                 newData[key] = null;
               }
               newData.areaCode = response.data.tempCode;
+              setJnAddr1("");
               reset(newData);
-              setZipcode("");
             } else {
               toast.error(response.response.data?.message, {
                 autoClose: 500,
@@ -130,14 +131,9 @@ const Form = React.forwardRef(
             console.log("areaCode select error", err);
           }
         } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
-
-          setZipcode(selected?.jnZipcode);
-
+          setJnAddr1(selected?.jnAddr1 ? selected?.jnAddr1 : "");
           reset({
-            ...newData,
+            ...selected,
             jnSekumea: selected?.jnSekumea === "Y",
             jnSegongYn: selected?.jnSegongYn === "Y",
             jnVatSumyn: selected?.jnVatSumyn === "Y",
@@ -181,6 +177,7 @@ const Form = React.forwardRef(
       formValues.jnSegongYn = formValues.jnSegongYn ? "Y" : "N";
       formValues.jnVatSumyn = formValues.jnVatSumyn ? "Y" : "N";
       formValues.jnSekumea = formValues.jnSekumea ? "Y" : "N";
+      formValues.jnAddr1 = jnAddr1;
 
       try {
         const response: any = await API.post(path, formValues);
@@ -228,7 +225,6 @@ const Form = React.forwardRef(
             maxLength="20"
             inputSize={InputSize.i150}
             readOnly={!isAddBtnClicked}
-            // onKeyDown={handleKeyPress}
           />
         </Wrapper>
 
@@ -238,11 +234,12 @@ const Form = React.forwardRef(
           <Controller
             control={control}
             {...register("jnSsno")}
-            render={({ field: { onChange, value, name } }) => (
+            render={({ field: { onChange, value, name, onBlur } }) => (
               <Input
                 label="사업자 번호"
                 value={value}
                 onChange={onChange}
+                onBlur={onBlur}
                 mask={[
                   /\d/,
                   /\d/,
@@ -281,22 +278,21 @@ const Form = React.forwardRef(
         <Wrapper style={{ alignItems: "center" }}>
           <Input
             label="주 소"
-            // register={register("jnZipcode")}
-            maxLength="6"
+            register={register("jnZipcode")}
             inputSize={InputSize.i150}
-            style={{ marginRight: "7px" }}
-            value={zipcode}
-            onChange={(e: any) => setZipcode(e.target.value)}
+            readOnly
           />
           <DaumAddress
             setAddress={setAddress}
-            defaultValue={zipcode}
+            defaultValue={jnAddr1}
             onClose={ggg}
           />
           <Input
-            register={register("jnAddr1")}
+            // register={register("jnAddr1")}
             maxLength="40"
-            style={{ width: "453px", marginLeft: "6px" }}
+            style={{ width: "453px" }}
+            value={jnAddr1}
+            onChange={(e: any) => setJnAddr1(e.target.value)}
           />
         </Wrapper>
 
