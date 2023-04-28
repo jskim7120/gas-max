@@ -21,6 +21,7 @@ import CustomDatePicker from "components/customDatePicker";
 import { FormGroup, Select, Label, Field, Input } from "components/form/style";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomTopPart from "container/contents/customTopPart";
+import { getValue } from "@testing-library/user-event/dist/utils";
 
 function GR1500({
   depthFullName,
@@ -44,6 +45,8 @@ function GR1500({
     functionName: "GR1500",
   });
 
+  console.log(dataCommonDic);
+
   useEffect(() => {
     if (dataCommonDic !== undefined && dataCommonDic) {
       reset({
@@ -51,9 +54,20 @@ function GR1500({
         areaCode: dataCommonDic?.areaCode[0].code,
         sBuGubun: dataCommonDic?.sBuGubun[0].code,
         sBuStae: dataCommonDic?.sBuStae[0].code,
+        sDate: dataCommonDic?.sDate[0].code,
+        eDate: dataCommonDic?.dDate[0].code
       });
     }
   }, [dataCommonDic]);
+
+  useEffect(()=>{
+    if(selected){      
+      reset((formValues: any) => ({
+        ...formValues,
+        sBjBuName:selected ? selected.buName :""
+      }));  
+    }
+  },[selected])
 
   const fetchDataSearch1 = async (params: any) => {
     try {
@@ -62,10 +76,17 @@ function GR1500({
 
       if (data) {
         setData(data);
-        setLoading1(false);
-        setSelectedRowIndex(0);
+        setSelected(data[0]);
+        
+      }else{
+        setData([]);        
+        setSelected({});
       }
+      setSelectedRowIndex(0);
+      setLoading1(false);
     } catch (err) {
+        setData([]);        
+        setSelected({}); 
       console.log("GR1500 data search fetch error =======>", err);
     }
   };
@@ -93,7 +114,7 @@ function GR1500({
     fetchDataSearch2(data);
   };
 
-  const { register, handleSubmit, control, reset } = useForm<IGR1500SEARCH>({
+  const { register, handleSubmit, control, reset ,getValues} = useForm<IGR1500SEARCH>({
     mode: "onSubmit",
   });
 
@@ -108,7 +129,7 @@ function GR1500({
       <MainWrapper>
         <LeftSide>
           <form
-            onSubmit={handleSubmit(submitSearch1)}
+            onSubmit={handleSubmit(submitSearch1)} autoComplete="off"
             style={{ minWidth: "925px" }}
           >
             <SearchWrapper className="h35">

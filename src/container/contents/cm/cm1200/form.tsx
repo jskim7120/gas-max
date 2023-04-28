@@ -95,7 +95,7 @@ const Form = React.forwardRef(
     const [cuJyCodeDic, setCuJyCodeDic] = useState([]);
     const [cuSwCodeDic, setCuSwCodeDic] = useState([]);
 
-    const { handleSubmit, reset, register, getValues, control, watch } =
+    const { handleSubmit, reset, register, getValues, control, watch, setFocus } =
       useForm<ICM1200SEARCH>({
         mode: "onChange",
       });
@@ -247,6 +247,7 @@ const Form = React.forwardRef(
 
     const resetForm = async (type: string) => {
       if (type === "clear" && areaCode !== "") {
+        setFocus("cuName");
         const data = await fetchCodes(areaCode);
         if (data && data?.tempCuCode[0]) {
           reset({ ...emptyObj, cuCode: data?.tempCuCode[0]?.tempCuCode });

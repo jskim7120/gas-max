@@ -88,7 +88,7 @@ function CC9003({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide style={{ border: "none" }}>
-          <form onSubmit={handleSubmit(submit)}>
+          <form onSubmit={handleSubmit(submit)} autoComplete="off">
             <SearchWrapper className="h35" style={{ justifyContent: "start" }}>
               <FormGroup>
                 <Item style={{ marginRight: "5px" }}>

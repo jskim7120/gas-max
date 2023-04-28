@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
+import React, { useImperativeHandle, useEffect, useState, BaseSyntheticEvent } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "app/store";
 import { toast } from "react-toastify";
@@ -11,7 +11,7 @@ import {
   addDeleteMenuId,
   setIsDelete,
 } from "app/state/modal/modalSlice";
-import { Plus, ResetGray, Trash, Update } from "components/allSvgIcon";
+import { Plus, ResetGray, Trash, Update, MagnifyingGlass } from "components/allSvgIcon";
 import { FormHeadCnt, DividerGR } from "./style";
 import {} from "app/path";
 import { IGR1500SEARCH } from "./model";
@@ -28,6 +28,7 @@ import {
 import { InputSize, ButtonColor } from "components/componentsType";
 import { currencyMask } from "helpers/currency";
 import FourButtons from "components/button/fourButtons";
+import { SearchBtn } from "components/daum";
 
 interface IForm {
   selected: any;
@@ -56,6 +57,10 @@ const Form = React.forwardRef(
     const [isCancelBtnDisabled, setIsCancelBtnDisabled] =
       useState<boolean>(true);
 
+    const[buMisu,setBuMisu] = useState();
+    const[bjOutkum, setBjOutkum] = useState();
+    const[bjDc, setBjDc] = useState();
+    const[baNow,setBaNow] = useState();
     const dispatch = useDispatch();
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -196,7 +201,12 @@ const Form = React.forwardRef(
       <div style={{ minWidth: "350px" }}>
         <FormHeadCnt>
           <FourButtons
-            style={{ display: "flex", alignItems: "center" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "2px",
+              marginRight: "10px",
+            }}
             onClickAdd={onClickAdd}
             onClickDelete={onClickDelete}
             onClickReset={onClickReset}
@@ -210,25 +220,26 @@ const Form = React.forwardRef(
             marginTop: "20px",
           }}
         >
-          <Wrapper>
+          <FormGroup>
             <Input
               label="매입처 코드"
               register={register("bjBuCode")}
               inputSize={InputSize.i150}
             />
-          </Wrapper>
-          <Wrapper>
-            <FormGroup>
-              <Label>매입처명</Label>
-              <Select register={register("bjBuName")} width={InputSize.i150}>
-                {dataCommonDic?.bjBuName?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-          </Wrapper>
+            <SearchBtn type="button" onClick={() => { }}>
+              <MagnifyingGlass/>
+            </SearchBtn>
+          </FormGroup>
+          <FormGroup>
+            <Label>매입처명</Label>
+            <Select register={register("bjBuName")} width={InputSize.i150}>
+              {dataCommonDic?.bjBuName?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
           <DividerGR />
           <Wrapper>
             <Input
@@ -240,6 +251,7 @@ const Form = React.forwardRef(
               textAlign="center"
               register={register("buBankno")}
               style={{ width: "84px" }}
+              
             />
           </Wrapper>
           <Wrapper>
@@ -267,7 +279,9 @@ const Form = React.forwardRef(
             <Input
               textAlign="right"
               label="미지급액"
-              register={register("buMisu")}
+              //register={register("buMisu")}
+              value={buMisu}
+              onChange={(e:any)=>setBuMisu(e.target.value)}
               inputSize={InputSize.i150}
               mask={currencyMask}
             />
@@ -293,7 +307,9 @@ const Form = React.forwardRef(
             <Input
               label="지급액"
               textAlign="right"
-              register={register("bjOutkum")}
+              //register={register("bjOutkum")}
+              value={bjOutkum}
+              onChange={(e:BaseSyntheticEvent)=>setBjOutkum(e.target.value)}
               inputSize={InputSize.i150}
               mask={currencyMask}
             />
@@ -302,35 +318,45 @@ const Form = React.forwardRef(
             <Input
               textAlign="right"
               label="D / C"
-              register={register("bjDc")}
+              //register={register("bjDc")}
+              value={bjDc}
+              onChange={(e:any)=>setBjDc(e.target.value)}
               inputSize={InputSize.i150}
               mask={currencyMask}
             />
           </Wrapper>
           <Wrapper>
-            <FormGroup>
-              <Label>지급 방법</Label>
-              <Select register={register("bjOuttype")} width={InputSize.i150}>
-                {dataCommonDic?.bjOuttype?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
+            {/* // bjDc = buMisu - bjOutkum - bjDc */}
+          <Input
+              textAlign="right"
+              label="지금후 잔액"
+              // register={register("bjDc")}
+              value={baNow}
+              onChange={(e:any)=>setBaNow(e.target.value)}
+              inputSize={InputSize.i150}
+              mask={currencyMask}
+            />
           </Wrapper>
-          <Wrapper>
-            <FormGroup>
-              <Label>출금 통장</Label>
-              <Select register={register("bjAcbCode")} width={InputSize.i150}>
-                {dataCommonDic?.bjAcbCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-          </Wrapper>
+          <FormGroup>
+            <Label>지급 방법</Label>
+            <Select register={register("bjOuttype")} width={InputSize.i150}>
+              {dataCommonDic?.bjOuttype?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <FormGroup>
+            <Label>출금 통장</Label>
+            <Select register={register("bjAcbCode")} width={InputSize.i150}>
+              {dataCommonDic?.bjAcbCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
           <Wrapper>
             <Input
               label="비 고"

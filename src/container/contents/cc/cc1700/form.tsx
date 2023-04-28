@@ -84,7 +84,7 @@ const Form = React.forwardRef(
 
     return (
       <form
-        onSubmit={handleSubmit(submit)}
+        onSubmit={handleSubmit(submit)} autoComplete="off"
         style={{ width: "370px", padding: "20px 10px" }}
       >
         <FormGroup>

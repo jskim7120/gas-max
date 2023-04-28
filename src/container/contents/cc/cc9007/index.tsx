@@ -76,7 +76,7 @@ function GR9008({
       </SearchWrapper>
 
       <WrapperContent>
-        <form onSubmit={handleSubmit(submit)}>
+        <form onSubmit={handleSubmit(submit)} autoComplete="off">
           <SearchWrapper
             className="h35"
             style={{ justifyContent: "flex-start", gap: "37px" }}

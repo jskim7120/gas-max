@@ -152,7 +152,7 @@ function GR1100({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
-          <form onSubmit={handleSubmit(submit)} style={{ minWidth: minWidth }}>
+          <form onSubmit={handleSubmit(submit)} autoComplete="off" style={{ minWidth: minWidth }}>
             <SearchWrapper className="h35">
               <FormGroup>
                 <Label

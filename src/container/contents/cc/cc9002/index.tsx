@@ -75,7 +75,7 @@ function CC9002({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide style={{ border: "none" }}>
-          <form onSubmit={handleSubmit(submit)}>
+          <form onSubmit={handleSubmit(submit)} autoComplete="off">
             <SearchWrapper className="h35" style={{ justifyContent: "start" }}>
               <FormGroup>
                 <Label style={{ minWidth: "36px" }}>기간</Label>

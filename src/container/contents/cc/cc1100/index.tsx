@@ -164,7 +164,7 @@ function CC1100({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
-          <form onSubmit={handleSubmit(submit)}>
+          <form onSubmit={handleSubmit(submit)} autoComplete="off">
             <SearchWrapper className="h35" style={{ justifyContent: "start" }}>
               <FormGroup>
                 {[

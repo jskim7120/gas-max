@@ -74,7 +74,7 @@ function CC9001({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide style={{ border: "none" }}>
-          <form onSubmit={handleSubmit(submit)}>
+          <form onSubmit={handleSubmit(submit)} autoComplete="off">
             <SearchWrapper className="h35" style={{ justifyContent: "start" }}>
               <FormGroup>
                 <Label style={{ minWidth: "62px" }}>계정 과목</Label>
