@@ -50,9 +50,9 @@ function CreateEN(
   }, []);
 
   function handleKeyDown(event: any) {
-    if (event.key === "F2") {
-      // event.stopPropagation();
+    if (event.key === "F1") {
       event.preventDefault();
+      setIsAddBtnClicked(true);
       formRef.current.resetForm("clear");
     }
     if (event.key === "F4") {
@@ -60,13 +60,14 @@ function CreateEN(
       dispatch(openModal({ type: "delModal" }));
       dispatch(addDeleteMenuId({ menuId: menuId }));
     }
-    if (event.key === "PageDown") {
-      event.stopPropagation();
+    if (event.key === "F7") {
       event.preventDefault();
+      btnRef3.current.focus();
+      //btnRef3.current.classList.add("active");
       formRef.current.crud(null);
     }
 
-    if (event.key === "Escape" || event.key === "Esc") {
+    if (event.key === "F9") {
       event.preventDefault();
       formRef.current.resetForm("reset");
     }

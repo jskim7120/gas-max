@@ -299,7 +299,7 @@ const Form = React.forwardRef(
               <Label>업무구분</Label>
               <Select register={register("swGubunName")} width={InputSize.i200}>
                 {dataCommonDic?.swGubun?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
+                  <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}

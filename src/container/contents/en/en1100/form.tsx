@@ -79,7 +79,9 @@ const Form = React.forwardRef(
         let newData: any = {};
 
         if (type === "clear") {
-          setFocus("areaName");
+          //setFocus("areaName");
+          document.getElementsByName("areaName")[0]?.focus();
+
           const path = EN110011;
           try {
             const response: any = await API.get(path, {
