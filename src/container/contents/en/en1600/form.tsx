@@ -252,6 +252,7 @@ const Form = React.forwardRef(
       <form
         onSubmit={handleSubmit(submit)}
         style={{ width: "725px", padding: "0px 10px" }}
+        autoComplete="off"
       >
         <Wrapper>
           <Input
@@ -265,7 +266,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label>영 업 소</Label>
             <Select
-              register={register("areaCode")}
+              //register={register("areaCode")}
               onChange={handleSelectCode}
               width={InputSize.i200}
               disabled={!isAddBtnClicked}

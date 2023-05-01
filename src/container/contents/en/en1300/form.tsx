@@ -233,6 +233,7 @@ const Form = React.forwardRef(
       <form
         onSubmit={handleSubmit(submit)}
         style={{ padding: "0px 10px", width: "328px" }}
+        autoComplete="off"
       >
         <Wrapper>
           <FormGroup>

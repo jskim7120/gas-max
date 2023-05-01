@@ -390,6 +390,7 @@ const Form = (
     <form
       // onSubmit={handleSubmit(submit)}
       style={{ width: "890px", padding: "0px 10px" }}
+      autoComplete="off"
     >
       <FormGroup>
         <Input label="코 드" register={register("areaCode")} maxLength="2" />

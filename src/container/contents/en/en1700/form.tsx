@@ -183,7 +183,6 @@ const Form = React.forwardRef(
       formValues.caBsdate = DateWithoutDash(formValues.caBsdate);
       formValues.caBldate = DateWithoutDash(formValues.caBldate);
       formValues.caYear = DateWithoutDashOnlyYearMonth(formValues.caYear);
-
       formValues.caAmt = formValues.caAmt
         ? formatCurrencyRemoveComma(formValues.caAmt)
         : "";
@@ -282,6 +281,7 @@ const Form = React.forwardRef(
       <form
         onSubmit={handleSubmit(submit)}
         style={{ width: "650px", padding: "0px 10px" }}
+        autoComplete="off"
       >
         <Wrapper grid col={2}>
           <Input
@@ -295,7 +295,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label>영 업 소</Label>
             <Select
-              register={register("areaCode")}
+              //register={register("areaCode")}
               onChange={handleSelectCode}
               width={InputSize.i150}
               disabled={!isAddBtnClicked}
@@ -392,11 +392,12 @@ const Form = React.forwardRef(
             <Controller
               control={control}
               {...register("caYear")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
+              render={({ field: { onChange, onBlur, value, name } }) => (
                 <CustomDatePicker
                   value={value}
                   onChange={onChange}
                   style={{ width: "150px" }}
+                  name={name}
                   showMonthYearPicker
                 />
               )}
@@ -470,10 +471,11 @@ const Form = React.forwardRef(
             <Controller
               control={control}
               {...register("caJdate2")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
+              render={({ field: { onChange, onBlur, value, name } }) => (
                 <CustomDatePicker
                   value={value}
                   onChange={onChange}
+                  name={name}
                   style={{ width: "145px" }}
                 />
               )}

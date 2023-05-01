@@ -196,15 +196,16 @@ export const Input = ({
           <MaskedInput
             mask={mask}
             value={value && value}
-            onChange={onChange}
             id={name && name}
             name={name && name}
+            {...register}
             guide={false}
             readOnly={readOnly}
             className={className ? `${className} maskedInput` : "maskedInput"}
             maxLength={maxLength}
             type={type ? type : "text"}
             // ref={refs}
+            onChange={onChange}
             onKeyDown={handleKeyPress}
             // onBlur={onBlur}
           />

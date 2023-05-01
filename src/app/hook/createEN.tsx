@@ -43,10 +43,34 @@ function CreateEN(
   const [linePos, setLinePos] = useState(leftSideWidth);
 
   const { isDelete } = useSelector((state) => state.modal);
+  const activeTabId = useSelector((state) => state.tab.activeTabId);
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  function handleKeyDown(event: any) {
+    if (event.key === "F2") {
+      // event.stopPropagation();
+      event.preventDefault();
+      formRef.current.resetForm("clear");
+    }
+    if (event.key === "F4") {
+      event.preventDefault();
+      dispatch(openModal({ type: "delModal" }));
+      dispatch(addDeleteMenuId({ menuId: menuId }));
+    }
+    if (event.key === "PageDown") {
+      event.stopPropagation();
+      event.preventDefault();
+      formRef.current.crud(null);
+    }
+
+    if (event.key === "Escape" || event.key === "Esc") {
+      event.preventDefault();
+      formRef.current.resetForm("reset");
+    }
+  }
 
   useEffect(() => {
     if (isDelete.menuId === menuId && isDelete.isDelete) {
@@ -207,7 +231,7 @@ function CreateEN(
     );
   };
 
-  return { showScreen };
+  return { showScreen, handleKeyDown, activeTabId };
 }
 
 export default CreateEN;

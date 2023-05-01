@@ -59,36 +59,6 @@ const Form = React.forwardRef(
         mode: "onChange",
       });
 
-    // useEffect(() => {
-    //   function handleKeyDown(event: any) {
-    //     if (event.key === "F1") {
-    //       event.preventDefault();
-    //       alert("F1");
-    //       // crud(null);
-    //     }
-    //     if (event.key === "F2") {
-    //       // event.stopPropagation();
-    //       event.preventDefault();
-    //       alert("F2");
-    //     }
-    //     if (event.key === "F3") {
-    //       alert("F3");
-    //       event.preventDefault();
-    //     }
-    //     if (event.key === "F4") {
-    //       alert("F4");
-    //     }
-    //     if (event.key === "Escape" || event.key === "Esc") {
-    //       alert("escape");
-    //       event.preventDefault();
-    //     }
-    //   }
-    //   document.addEventListener("keydown", handleKeyDown);
-    //   return () => {
-    //     document.removeEventListener("keydown", handleKeyDown);
-    //   };
-    // }, []);
-
     useEffect(() => {
       if (addr.length > 0) {
         reset({
@@ -210,8 +180,13 @@ const Form = React.forwardRef(
     const ggg = () => {
       setFocus("jnAddr2");
     };
+
     return (
-      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 12px" }}>
+      <form
+        onSubmit={handleSubmit(submit)}
+        style={{ padding: "0px 12px" }}
+        autoComplete="off"
+      >
         <Wrapper grid col={3}>
           <Input
             label="영업소 코드"

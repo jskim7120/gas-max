@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CreateEN from "app/hook/createEN";
 import { columns, fields } from "./data";
 import { EN1800LIST } from "app/path";
@@ -13,7 +13,7 @@ function EN1800({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const { showScreen } = CreateEN(
+  const { showScreen, handleKeyDown, activeTabId } = CreateEN(
     depthFullName,
     menuId,
     EN1800LIST,
@@ -23,6 +23,17 @@ function EN1800({
     380,
     "402px"
   );
+
+  useEffect(() => {
+    if (activeTabId) {
+      if (activeTabId === menuId) {
+        document.addEventListener("keydown", handleKeyDown);
+      }
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [activeTabId]);
 
   return showScreen();
 }

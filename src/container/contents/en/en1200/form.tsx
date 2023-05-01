@@ -87,8 +87,8 @@ const Form = React.forwardRef(
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         let newData: any = {};
         if (type === "clear") {
-          //document.getElementsByName("saupSsno")[0]?.focus();
-          setFocus("saupSsno");
+          document.getElementsByName("saupSsno")[0]?.focus();
+          //setFocus("saupSsno");
           const path = EN120011;
           try {
             const response: any = await API.get(path, {
@@ -241,6 +241,7 @@ const Form = React.forwardRef(
       <form
         onSubmit={handleSubmit(submit)}
         style={{ width: "800px", padding: "0px 10px" }}
+        autoComplete="off"
       >
         <div
           style={{

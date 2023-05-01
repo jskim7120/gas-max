@@ -148,8 +148,8 @@ const Tab = (props: TabProps): JSX.Element => {
           key={idx}
           className="tab-content"
           style={{
-            display: tab.menuId === activeTabId ? "block" : "none",
             visibility: tab.menuId === activeTabId ? "visible" : "hidden",
+            display: tab.menuId === activeTabId ? "block" : "none",
           }}
         >
           {getContent(tab.menuId, tab.depthFullName, areaCode)}
