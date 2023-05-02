@@ -180,6 +180,10 @@ const Form = (
         toast.success("저장이 성공하였습니다", {
           autoClose: 500,
         });
+      } else {
+        toast.error("error", {
+          autoClose: 500,
+        });
       }
     } catch (err: any) {
       toast.error(err?.message, {

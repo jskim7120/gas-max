@@ -164,9 +164,10 @@ const ButtonComponent = styled.button<{
       color: ${BtnAttribute(props.kind, props.color).color};
       padding: ${BtnAttribute(props.kind, props.color).padding};
 
-      // &:focus {
-      //   background: ${BtnAttribute(props.kind, props.color).bg};
-      // }
+      &:focus {
+        //  background: ${BtnAttribute(props.kind, props.color).bg};
+        outline: none;
+      }
 
       &:hover {
         background: ${BtnAttribute(props.kind, props.color).bg};

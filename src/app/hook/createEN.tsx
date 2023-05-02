@@ -132,7 +132,7 @@ function CreateEN(
         <SearchWrapper className="h35 mt5">
           <div className="buttons">
             <Button
-              text="등록"
+              text="등록 (F1)"
               icon={<Plus />}
               onClick={() => {
                 btnRef1.current.classList.add("active");
@@ -144,7 +144,7 @@ function CreateEN(
               ref={btnRef1}
             />
             <Button
-              text="삭제"
+              text="삭제 (F4)"
               icon={<Trash />}
               onClick={() => {
                 dispatch(openModal({ type: "delModal" }));
@@ -154,7 +154,7 @@ function CreateEN(
               ref={btnRef2}
             />
             <Button
-              text="저장"
+              text="저장 (F7)"
               icon={<Update />}
               color={ButtonColor.SECONDARY}
               onClick={() => {
@@ -163,7 +163,7 @@ function CreateEN(
               ref={btnRef3}
             />
             <Button
-              text="취소"
+              text="취소 (F9)"
               icon={<Reset />}
               onClick={() => {
                 btnRef1.current.classList.remove("active");
