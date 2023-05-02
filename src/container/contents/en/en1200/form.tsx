@@ -54,21 +54,15 @@ const Form = React.forwardRef(
     const [addr, setAddress] = useState<string>("");
     const [image, setImage] = useState<{ name: string }>();
     const [image64, setImage64] = useState<any>(null);
+    const [saupAddr1, setSaupAddr1] = useState("");
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1200",
     });
 
-    const { register, handleSubmit, control, reset, getValues } =
+    const { register, handleSubmit, control, reset, getValues, setFocus } =
       useForm<IJNOSAUP>({ mode: "onChange" });
-
-    // useEffect(() => {
-    //   if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-    //     resetForm("reset");
-    //   }
-    //   setIsAddBtnClicked(false);
-    // }, [selected]);
 
     useEffect(() => {
       if (addr.length > 0) {
@@ -85,11 +79,16 @@ const Form = React.forwardRef(
       resetForm,
     }));
 
+    const ggg = () => {
+      setFocus("saupAddr2");
+    };
+
     const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         let newData: any = {};
         if (type === "clear") {
           document.getElementsByName("saupSsno")[0]?.focus();
+          //setFocus("saupSsno");
           const path = EN120011;
           try {
             const response: any = await API.get(path, {
@@ -101,6 +100,7 @@ const Form = React.forwardRef(
               }
               newData.saupSno = response.data.tempCode;
               newData.areaCode = selected.areaCode;
+              setSaupAddr1("");
               reset(newData);
             } else {
               toast.error(response.response.data?.message, {
@@ -111,12 +111,9 @@ const Form = React.forwardRef(
             console.log("areaCode select error", err);
           }
         } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
-
+          setSaupAddr1(selected.saupAddr1);
           reset({
-            ...newData,
+            ...selected,
             saupStampQu: selected?.saupStampQu === "Y",
             saupStampEs: selected?.saupStampEs === "Y",
             saupStampSe: selected?.saupStampSe === "Y",
@@ -223,7 +220,6 @@ const Form = React.forwardRef(
           params: { areaCode: event.target.value },
         });
         if (response.status === 200) {
-          console.log(response.data);
           for (const [key, value] of Object.entries(selected)) {
             newData[key] = null;
           }
@@ -231,7 +227,6 @@ const Form = React.forwardRef(
           newData.areaCode = event.target.value;
 
           reset(newData);
-          console.log(document.getElementsByName("saupSsno")[0].focus());
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,
@@ -246,6 +241,7 @@ const Form = React.forwardRef(
       <form
         onSubmit={handleSubmit(submit)}
         style={{ width: "800px", padding: "0px 10px" }}
+        autoComplete="off"
       >
         <div
           style={{
@@ -285,7 +281,7 @@ const Form = React.forwardRef(
               <Controller
                 control={control}
                 {...register("saupSsno")}
-                render={({ field: { onChange, value, name } }) => (
+                render={({ field: { onChange, value, name, onBlur } }) => (
                   <Input
                     label="사업자 번호"
                     value={value}
@@ -306,6 +302,7 @@ const Form = React.forwardRef(
                       /\d/,
                       /\d/,
                     ]}
+                    onBlur={onBlur}
                   />
                 )}
               />
@@ -334,14 +331,20 @@ const Form = React.forwardRef(
               <Input
                 label="주 소"
                 register={register("saupZipcode")}
-                maxLength="6"
                 inputSize={InputSize.i150}
+                readOnly
               />
-              <DaumAddress setAddress={setAddress} />
+              <DaumAddress
+                setAddress={setAddress}
+                defaultValue={saupAddr1}
+                onClose={ggg}
+              />
               <Input
-                register={register("saupAddr1")}
+                // register={register("saupAddr1")}
                 maxLength="40"
                 style={{ width: "383px" }}
+                value={saupAddr1}
+                onChange={(e: any) => setSaupAddr1(e.target.value)}
               />
             </Wrapper>
             <Wrapper>
@@ -388,6 +391,7 @@ const Form = React.forwardRef(
                       color: "#fff",
                       position: "relative",
                     }}
+                    type="button"
                   >
                     <SearchIcon />
                     &nbsp; 파일찾기
@@ -577,6 +581,7 @@ const Form = React.forwardRef(
                   position: "relative",
                   marginLeft: "17px",
                 }}
+                type="button"
               >
                 <SearchIcon />
                 &nbsp; 찾기

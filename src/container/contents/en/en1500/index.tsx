@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import { useSelector } from "app/store";
+import Draggable from "react-draggable";
 import API from "app/axios";
 import { EN1500LIST } from "app/path";
+
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { Update, Reset } from "components/allSvgIcon";
@@ -17,14 +20,38 @@ function EN1500({
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const [linePos, setLinePos] = useState(420);
+
+  const activeTabId = useSelector((state) => state.tab.activeTabId);
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    function handleKeyDown(event: any) {
+      if (event.key === "F7") {
+        event.preventDefault();
+        btnRef1.current.focus();
+        // formRef.current.crud(null);
+        formRef.current.update();
+      }
+    }
+
+    if (activeTabId) {
+      if (activeTabId === menuId) {
+        document.addEventListener("keydown", handleKeyDown);
+      }
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [activeTabId]);
 
   const fetchData = async () => {
     try {
@@ -43,19 +70,23 @@ function EN1500({
       console.log("JNOTRY DATA fetch error =======>", err);
     }
   };
+  const handleDrag = (event: any, ui: any) => {
+    setLinePos(ui.x);
+  };
 
   return (
     <>
       <SearchWrapper className=" mt5" style={{ height: "40px" }}>
         <div className="buttons">
           <Button
-            text="저장"
+            text="저장 (F7)"
             icon={<Update />}
             style={{ marginRight: "5px" }}
             onClick={() => {
               formRef.current.update();
             }}
             color={ButtonColor.SECONDARY}
+            ref={btnRef1}
           />
         </div>
         <p>{depthFullName}</p>
@@ -68,9 +99,14 @@ function EN1500({
           setSelected={setSelected}
           selectedRowIndex={selectedRowIndex}
           setSelectedRowIndex={setSelectedRowIndex}
-          style={{ minWidth: "420px" }}
+          // style={{ minWidth: "420px" }}
+          style={{ width: `${linePos}px` }}
         />
-        <RightSide>
+        <RightSide
+          style={{
+            width: `calc(100% - ${linePos}px)`,
+          }}
+        >
           <Form
             selected={selected}
             ref={formRef}
@@ -81,6 +117,25 @@ function EN1500({
             setSelected={setSelected}
           />
         </RightSide>
+
+        <Draggable
+          axis="x"
+          bounds="parent"
+          onDrag={handleDrag}
+          position={{ x: linePos, y: 0 }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: "110px",
+              left: "5px",
+              width: "4px",
+              height: "calc(100% - 190px)",
+              backgroundColor: "#707070",
+              cursor: "col-resize",
+            }}
+          ></div>
+        </Draggable>
       </MainWrapper>
     </>
   );

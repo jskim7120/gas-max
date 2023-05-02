@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Input, Field, Select } from "components/form/style";
 import { CTitle, CTextArea, CLabel, TabLikeHeader, CTable } from "./style";
+import { InputSize } from "components/componentsType";
 
 function FooterInfo({
   data,
@@ -75,7 +76,12 @@ function FooterInfo({
             <Input register={register("bbTotal")} readOnly className="h27" />
           </td>
           <td>
-            <Select register={register("bbSupplyType")} className="h27">
+            <Select
+              register={register("bbSupplyType")}
+              className="h27"
+              width={InputSize.i110}
+              style={{ margin: "0px 3px" }}
+            >
               <option value="A">외상</option>
               <option value="0">현금</option>
             </Select>

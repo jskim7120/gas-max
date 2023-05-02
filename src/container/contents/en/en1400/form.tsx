@@ -52,12 +52,6 @@ const Form = React.forwardRef(
     const { register, handleSubmit, reset, getValues, control } =
       useForm<IBUPUM>({ mode: "onChange" });
 
-    // useEffect(() => {
-    //   if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-    //     resetForm("reset");
-    //   }
-    // }, [selected]);
-
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
@@ -197,6 +191,7 @@ const Form = React.forwardRef(
       <form
         onSubmit={handleSubmit(submit)}
         style={{ width: "300px", padding: "0px 10px" }}
+        autoComplete="off"
       >
         <Wrapper>
           <FormGroup>

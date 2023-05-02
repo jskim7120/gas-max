@@ -125,6 +125,7 @@ interface IInputProps {
   textAlign?: string;
   labelStyle?: any;
   onChange?: any;
+  onBlur?: any;
   readOnly?: boolean;
   mask?: any;
   minWidth?: InputSize;
@@ -151,6 +152,7 @@ export const Input = ({
   textAlign,
   labelStyle,
   onChange,
+  onBlur,
   readOnly,
   mask,
   minWidth,
@@ -194,15 +196,18 @@ export const Input = ({
           <MaskedInput
             mask={mask}
             value={value && value}
-            onChange={onChange}
+            id={name && name}
             name={name && name}
+            {...register}
             guide={false}
             readOnly={readOnly}
             className={className ? `${className} maskedInput` : "maskedInput"}
             maxLength={maxLength}
             type={type ? type : "text"}
             // ref={refs}
+            onChange={onChange}
             onKeyDown={handleKeyPress}
+            // onBlur={onBlur}
           />
         ) : (
           <InputForm
@@ -222,6 +227,7 @@ export const Input = ({
             textAlign={textAlign && textAlign}
             readOnly={readOnly}
             onChange={onChange}
+            // onBlur={onBlur}
             minWidth={minWidth && minWidth}
             // ref={refs}
             onKeyDown={handleKeyPress}

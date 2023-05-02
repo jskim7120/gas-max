@@ -53,7 +53,7 @@ export const columns = [
     name: "cuCode",
     fieldName: "cuCode",
     type: "data",
-    width: "120",
+    width: "100",
     header: {
       text: "코드",
     },
@@ -62,7 +62,7 @@ export const columns = [
     name: "cuTypeName",
     fieldName: "cuTypeName",
     type: "data",
-    width: "100",
+    width: "60",
     header: {
       text: "구분",
     },
@@ -102,6 +102,7 @@ export const columns = [
     fieldName: "cuAddr1n2",
     type: "data",
     width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "주소",
     },
@@ -111,6 +112,7 @@ export const columns = [
     fieldName: "cuUsername",
     type: "data",
     width: "90",
+    styleName: "rg-left-column",
     header: {
       text: "성명",
     },

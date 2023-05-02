@@ -180,6 +180,10 @@ const Form = (
         toast.success("저장이 성공하였습니다", {
           autoClose: 500,
         });
+      } else {
+        toast.error("error", {
+          autoClose: 500,
+        });
       }
     } catch (err: any) {
       toast.error(err?.message, {
@@ -390,6 +394,7 @@ const Form = (
     <form
       // onSubmit={handleSubmit(submit)}
       style={{ width: "890px", padding: "0px 10px" }}
+      autoComplete="off"
     >
       <FormGroup>
         <Input label="코 드" register={register("areaCode")} maxLength="2" />

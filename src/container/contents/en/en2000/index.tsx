@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CreateEN from "app/hook/createEN";
 import { columns, fields } from "./data";
 import { EN2000LIST } from "app/path";
@@ -13,16 +13,27 @@ function EN2000({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const { showScreen } = CreateEN(
+  const { showScreen, handleKeyDown, activeTabId } = CreateEN(
     depthFullName,
     menuId,
     EN2000LIST,
     columns,
     fields,
     Form,
-    "510px",
+    510,
     "382px"
   );
+
+  useEffect(() => {
+    if (activeTabId) {
+      if (activeTabId === menuId) {
+        document.addEventListener("keydown", handleKeyDown);
+      }
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [activeTabId]);
 
   return showScreen();
 }

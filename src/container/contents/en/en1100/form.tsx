@@ -47,7 +47,7 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [tabId, setTabId] = useState(0);
-    const [zipcode, setZipcode] = useState("");
+    const [jnAddr1, setJnAddr1] = useState("");
     const [addr, setAddress] = useState<string>("");
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
@@ -59,42 +59,13 @@ const Form = React.forwardRef(
         mode: "onChange",
       });
 
-    // useEffect(() => {
-    //   function handleKeyDown(event: any) {
-    //     if (event.key === "F1") {
-    //       event.preventDefault();
-    //       alert("F1");
-    //       // crud(null);
-    //     }
-    //     if (event.key === "F2") {
-    //       // event.stopPropagation();
-    //       event.preventDefault();
-    //       alert("F2");
-    //     }
-    //     if (event.key === "F3") {
-    //       alert("F3");
-    //       event.preventDefault();
-    //     }
-    //     if (event.key === "F4") {
-    //       alert("F4");
-    //     }
-    //     if (event.key === "Escape" || event.key === "Esc") {
-    //       alert("escape");
-    //       event.preventDefault();
-    //     }
-    //   }
-    //   document.addEventListener("keydown", handleKeyDown);
-    //   return () => {
-    //     document.removeEventListener("keydown", handleKeyDown);
-    //   };
-    // }, []);
-
     useEffect(() => {
       if (addr.length > 0) {
         reset({
-          jnAddr1: addr ? addr?.split("/")[0] : "",
+          jnZipcode: addr ? addr?.split("/")[1] : "",
+          jnAddr2: "",
         });
-        setZipcode(addr ? addr?.split("/")[1] : "");
+        setJnAddr1(addr ? addr?.split("/")[0] : "");
       }
     }, [addr]);
 
@@ -108,7 +79,9 @@ const Form = React.forwardRef(
         let newData: any = {};
 
         if (type === "clear") {
-          setFocus("areaName");
+          //setFocus("areaName");
+          document.getElementsByName("areaName")[0]?.focus();
+
           const path = EN110011;
           try {
             const response: any = await API.get(path, {
@@ -119,8 +92,8 @@ const Form = React.forwardRef(
                 newData[key] = null;
               }
               newData.areaCode = response.data.tempCode;
+              setJnAddr1("");
               reset(newData);
-              setZipcode("");
             } else {
               toast.error(response.response.data?.message, {
                 autoClose: 500,
@@ -130,14 +103,9 @@ const Form = React.forwardRef(
             console.log("areaCode select error", err);
           }
         } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
-
-          setZipcode(selected?.jnZipcode);
-
+          setJnAddr1(selected?.jnAddr1 ? selected?.jnAddr1 : "");
           reset({
-            ...newData,
+            ...selected,
             jnSekumea: selected?.jnSekumea === "Y",
             jnSegongYn: selected?.jnSegongYn === "Y",
             jnVatSumyn: selected?.jnVatSumyn === "Y",
@@ -181,6 +149,7 @@ const Form = React.forwardRef(
       formValues.jnSegongYn = formValues.jnSegongYn ? "Y" : "N";
       formValues.jnVatSumyn = formValues.jnVatSumyn ? "Y" : "N";
       formValues.jnSekumea = formValues.jnSekumea ? "Y" : "N";
+      formValues.jnAddr1 = jnAddr1;
 
       try {
         const response: any = await API.post(path, formValues);
@@ -213,8 +182,13 @@ const Form = React.forwardRef(
     const ggg = () => {
       setFocus("jnAddr2");
     };
+
     return (
-      <form onSubmit={handleSubmit(submit)} style={{ padding: "0px 12px" }}>
+      <form
+        onSubmit={handleSubmit(submit)}
+        style={{ padding: "0px 12px" }}
+        autoComplete="off"
+      >
         <Wrapper grid col={3}>
           <Input
             label="영업소 코드"
@@ -228,7 +202,6 @@ const Form = React.forwardRef(
             maxLength="20"
             inputSize={InputSize.i150}
             readOnly={!isAddBtnClicked}
-            // onKeyDown={handleKeyPress}
           />
         </Wrapper>
 
@@ -238,11 +211,12 @@ const Form = React.forwardRef(
           <Controller
             control={control}
             {...register("jnSsno")}
-            render={({ field: { onChange, value, name } }) => (
+            render={({ field: { onChange, value, name, onBlur } }) => (
               <Input
                 label="사업자 번호"
                 value={value}
                 onChange={onChange}
+                onBlur={onBlur}
                 mask={[
                   /\d/,
                   /\d/,
@@ -281,22 +255,21 @@ const Form = React.forwardRef(
         <Wrapper style={{ alignItems: "center" }}>
           <Input
             label="주 소"
-            // register={register("jnZipcode")}
-            maxLength="6"
+            register={register("jnZipcode")}
             inputSize={InputSize.i150}
-            style={{ marginRight: "7px" }}
-            value={zipcode}
-            onChange={(e: any) => setZipcode(e.target.value)}
+            readOnly
           />
           <DaumAddress
             setAddress={setAddress}
-            defaultValue={zipcode}
+            defaultValue={jnAddr1}
             onClose={ggg}
           />
           <Input
-            register={register("jnAddr1")}
+            // register={register("jnAddr1")}
             maxLength="40"
-            style={{ width: "453px", marginLeft: "6px" }}
+            style={{ width: "453px" }}
+            value={jnAddr1}
+            onChange={(e: any) => setJnAddr1(e.target.value)}
           />
         </Wrapper>
 

@@ -57,7 +57,7 @@ export function DateWithoutDash(date) {
   }
 
   if (typeof date === "string") {
-    date?.replace(/-/g, "");
+    date = date?.replace(/-/g, "");
     return date;
   }
 
@@ -81,7 +81,7 @@ export function DateWithoutDashOnlyYearMonth(date) {
   }
 
   if (typeof date === "string") {
-    date?.replace(/-/g, "");
+    date = date?.replace(/-/g, "");
     return date;
   }
 

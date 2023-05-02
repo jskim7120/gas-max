@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CreateEN from "app/hook/createEN";
 import { columns, fields } from "./data";
 import { EN1200LIST } from "app/path";
@@ -13,16 +13,27 @@ function EN1200({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const { showScreen } = CreateEN(
+  const { showScreen, handleKeyDown, activeTabId } = CreateEN(
     depthFullName,
     menuId,
     EN1200LIST,
     columns,
     fields,
     Form,
-    "620px",
+    620,
     "805px"
   );
+
+  useEffect(() => {
+    if (activeTabId) {
+      if (activeTabId === menuId) {
+        document.addEventListener("keydown", handleKeyDown);
+      }
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [activeTabId]);
 
   return showScreen();
 }

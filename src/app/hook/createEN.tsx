@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import Draggable from "react-draggable";
 import { useDispatch, useSelector } from "app/store";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
@@ -24,7 +25,7 @@ function CreateEN(
   columns: any,
   fields: any,
   Form: any,
-  leftSideWidth: string,
+  leftSideWidth: number,
   rightSideWidth: string
 ) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
@@ -39,12 +40,38 @@ function CreateEN(
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState<number>(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [linePos, setLinePos] = useState(leftSideWidth);
 
   const { isDelete } = useSelector((state) => state.modal);
+  const activeTabId = useSelector((state) => state.tab.activeTabId);
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  function handleKeyDown(event: any) {
+    if (event.key === "F1") {
+      event.preventDefault();
+      setIsAddBtnClicked(true);
+      formRef.current.resetForm("clear");
+    }
+    if (event.key === "F4") {
+      event.preventDefault();
+      dispatch(openModal({ type: "delModal" }));
+      dispatch(addDeleteMenuId({ menuId: menuId }));
+    }
+    if (event.key === "F7") {
+      event.preventDefault();
+      btnRef3.current.focus();
+      //btnRef3.current.classList.add("active");
+      formRef.current.crud(null);
+    }
+
+    if (event.key === "F9") {
+      event.preventDefault();
+      formRef.current.resetForm("reset");
+    }
+  }
 
   useEffect(() => {
     if (isDelete.menuId === menuId && isDelete.isDelete) {
@@ -95,13 +122,17 @@ function CreateEN(
     } catch (error) {}
   }
 
+  const handleDrag = (event: any, ui: any) => {
+    setLinePos(ui.x);
+  };
+
   const showScreen = () => {
     return (
       <>
         <SearchWrapper className="h35 mt5">
           <div className="buttons">
             <Button
-              text="등록"
+              text="등록 (F1)"
               icon={<Plus />}
               onClick={() => {
                 btnRef1.current.classList.add("active");
@@ -113,7 +144,7 @@ function CreateEN(
               ref={btnRef1}
             />
             <Button
-              text="삭제"
+              text="삭제 (F4)"
               icon={<Trash />}
               onClick={() => {
                 dispatch(openModal({ type: "delModal" }));
@@ -123,7 +154,7 @@ function CreateEN(
               ref={btnRef2}
             />
             <Button
-              text="저장"
+              text="저장 (F7)"
               icon={<Update />}
               color={ButtonColor.SECONDARY}
               onClick={() => {
@@ -132,7 +163,7 @@ function CreateEN(
               ref={btnRef3}
             />
             <Button
-              text="취소"
+              text="취소 (F9)"
               icon={<Reset />}
               onClick={() => {
                 btnRef1.current.classList.remove("active");
@@ -148,7 +179,7 @@ function CreateEN(
         </SearchWrapper>
         <MainWrapper>
           <Grid
-            style={{ width: leftSideWidth }}
+            style={{ width: `${linePos}px` }}
             data={data}
             fields={fields}
             columns={columns}
@@ -158,25 +189,50 @@ function CreateEN(
             setIsAddBtnClicked={setIsAddBtnClicked}
           />
 
-          <RightSide style={{ width: rightSideWidth }}>
-            <Form
-              selected={selected}
-              ref={formRef}
-              fetchData={fetchData}
-              setData={setData}
-              selectedRowIndex={selectedRowIndex}
-              setSelectedRowIndex={setSelectedRowIndex}
-              setSelected={setSelected}
-              isAddBtnClicked={isAddBtnClicked}
-              setIsAddBtnClicked={setIsAddBtnClicked}
-            />
+          <RightSide
+            style={{
+              width: `calc(100% - ${linePos}px)`,
+            }}
+          >
+            <div style={{ width: rightSideWidth }}>
+              <Form
+                selected={selected}
+                ref={formRef}
+                fetchData={fetchData}
+                setData={setData}
+                selectedRowIndex={selectedRowIndex}
+                setSelectedRowIndex={setSelectedRowIndex}
+                setSelected={setSelected}
+                isAddBtnClicked={isAddBtnClicked}
+                setIsAddBtnClicked={setIsAddBtnClicked}
+              />
+            </div>
           </RightSide>
+
+          <Draggable
+            axis="x"
+            bounds="parent"
+            onDrag={handleDrag}
+            position={{ x: linePos, y: 0 }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                top: "117px",
+                left: "5px",
+                width: "4px",
+                height: "calc(100% - 197px)",
+                backgroundColor: "#707070",
+                cursor: "col-resize",
+              }}
+            ></div>
+          </Draggable>
         </MainWrapper>
       </>
     );
   };
 
-  return { showScreen };
+  return { showScreen, handleKeyDown, activeTabId };
 }
 
 export default CreateEN;
