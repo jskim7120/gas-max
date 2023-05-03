@@ -1,11 +1,22 @@
 export interface IBUPUM {
   areaCode: string;
-  areaName: string;
+  // areaName: string;
   bpCode: string;
   bpDanwi: string;
-  bpIndanga: any;
+  bpIndanga: string;
   bpJaego: number;
   bpName: string;
-  bpOutdanga: any;
+  bpOutdanga: string;
   bpType: string;
 }
+
+export const emptyObj = {
+  areaCode: "",
+  bpCode: "",
+  bpDanwi: "",
+  bpIndanga: "",
+  bpJaego: 0,
+  bpName: "",
+  bpOutdanga: "",
+  bpType: "",
+};

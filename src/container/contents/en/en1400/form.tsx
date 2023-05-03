@@ -13,49 +13,99 @@ import {
   Divider,
   Label,
 } from "components/form/style";
-import { IBUPUM } from "./model";
+import { IBUPUM, emptyObj } from "./model";
 import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
 import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
+  setSelected: any;
   fetchData: any;
   setData: any;
   selectedRowIndex: number;
-  setSelected: any;
-  setSelectedRowIndex: any;
+  setSelectedRowIndex: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
-  setIsCancelBtnDisabled: Function;
+  resetButtonCombination: Function;
 }
 
 const Form = React.forwardRef(
   (
     {
       selected,
+      setSelected,
       fetchData,
       setData,
       selectedRowIndex,
-      setSelected,
       setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      setIsCancelBtnDisabled,
+      resetButtonCombination,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
+    const [areaCode, setAreaCode] = useState("");
+
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1400",
     });
 
-    const { register, handleSubmit, reset, getValues, control } =
+    const { register, handleSubmit, reset, getValues, control, setFocus } =
       useForm<IBUPUM>({ mode: "onChange" });
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
     }));
+
+    const fetchCode11 = async (code: string) => {
+      try {
+        const response: any = await API.get(EN140011, {
+          params: { areaCode: code },
+        });
+        console.log("resposn::", response);
+        if (response.status === 200) {
+          return response?.data?.tempCode;
+        } else {
+          alert(response.response.data?.message);
+          resetButtonCombination();
+        }
+        return null;
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const codeChangeHandler = async (aCode: any) => {
+      try {
+        const tempCode = await fetchCode11(aCode);
+
+        if (tempCode !== null) {
+          setFocus("bpName");
+          emptyObj.bpCode = tempCode;
+          reset(emptyObj);
+        }
+        // const response: any = await API.get(path, {
+        //   params: { areaCode: event.target.value },
+        // });
+        // if (response.status === 200) {
+        //   for (const [key, value] of Object.entries(selected)) {
+        //     newData[key] = null;
+        //   }
+        //   newData.bpCode = response.data.tempCode;
+        //   newData.areaCode = event.target.value;
+        //   reset(newData);
+        //   document.getElementById("bpName")?.focus();
+        // } else {
+        //   toast.error(response.response.data?.message, {
+        //     autoClose: 500,
+        //   });
+        // }
+      } catch (err: any) {
+        console.log("areaCode select error", err);
+      }
+    };
 
     const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
@@ -76,9 +126,6 @@ const Form = React.forwardRef(
               newData.areaCode = selected.areaCode;
               reset(newData);
             } else {
-              // toast.error(response.response.data?.message, {
-              //   autoClose: 500,
-              // });
               alert(response.response.data?.message);
             }
           } catch (err: any) {
@@ -106,15 +153,10 @@ const Form = React.forwardRef(
             });
             await fetchData("delete");
           } else {
-            // toast.error(response?.response?.message, {
-            //   autoClose: 500,
-            // });
             alert(response?.response?.message);
           }
         } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
+          console.log(err);
         }
       }
 
@@ -141,7 +183,6 @@ const Form = React.forwardRef(
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
-            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -164,31 +205,6 @@ const Form = React.forwardRef(
       }
     };
 
-    const handleSelectCode = async (event: any) => {
-      let newData: any = {};
-      const path = EN140011;
-      try {
-        const response: any = await API.get(path, {
-          params: { areaCode: event.target.value },
-        });
-        if (response.status === 200) {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          newData.bpCode = response.data.tempCode;
-          newData.areaCode = event.target.value;
-          reset(newData);
-          document.getElementById("bpName")?.focus();
-        } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
-        }
-      } catch (err: any) {
-        console.log("areaCode select error", err);
-      }
-    };
-
     return (
       <form
         onSubmit={handleSubmit(submit)}
@@ -199,8 +215,11 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label style={{ minWidth: "80px" }}>영 업 소</Label>
             <Select
-              register={register("areaCode")}
-              onChange={handleSelectCode}
+              value={areaCode}
+              onChange={(e) => {
+                setAreaCode(e.target.value);
+                codeChangeHandler(e.target.value);
+              }}
               width={InputSize.i150}
               disabled={!isAddBtnClicked}
             >
