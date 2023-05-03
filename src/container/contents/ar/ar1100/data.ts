@@ -39,23 +39,23 @@ export const fields = [
   },
   {
     fieldName: "vatDiv",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "kumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "dc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "inkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "misukum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "swName",
@@ -179,6 +179,7 @@ export const columns = [
     header: {
       text: "VAT",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "kumack",
@@ -189,6 +190,7 @@ export const columns = [
     header: {
       text: "금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "dc",
@@ -199,6 +201,7 @@ export const columns = [
     header: {
       text: "D/C",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "inkum",
@@ -209,6 +212,7 @@ export const columns = [
     header: {
       text: "입금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "misukum",
@@ -219,6 +223,7 @@ export const columns = [
     header: {
       text: "미입금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "swName",

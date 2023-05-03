@@ -118,7 +118,7 @@ function CM9003({
         areaCode={areaCode}
       />
       <WrapperContent>
-        <form onSubmit={handleSubmit(submit)}>
+        <form onSubmit={handleSubmit(submit)} autoComplete="off">
           <SearchWrapper style={{ alignItems: "baseline" }}>
             <div style={{ width: "80%" }}>
               <Wrapper grid col={6} style={{ justifyItems: "center" }}>
