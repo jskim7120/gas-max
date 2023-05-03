@@ -285,7 +285,7 @@ export const columns = [
     name: "gjSldate",
     fieldName: "gjSldate",
     type: "data",
-    width: "150",
+    width: "180",
     header: {
       text: "사용기간",
     },

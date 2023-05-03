@@ -55,19 +55,19 @@ function GR1500({
         sBuGubun: dataCommonDic?.sBuGubun[0].code,
         sBuStae: dataCommonDic?.sBuStae[0].code,
         sDate: dataCommonDic?.sDate[0].code,
-        eDate: dataCommonDic?.dDate[0].code
+        eDate: dataCommonDic?.dDate[0].code,
       });
     }
   }, [dataCommonDic]);
 
-  useEffect(()=>{
-    if(selected){      
+  useEffect(() => {
+    if (selected) {
       reset((formValues: any) => ({
         ...formValues,
-        sBjBuName:selected ? selected.buName :""
-      }));  
+        sBjBuName: selected ? selected.buName : "",
+      }));
     }
-  },[selected])
+  }, [selected]);
 
   const fetchDataSearch1 = async (params: any) => {
     try {
@@ -77,19 +77,24 @@ function GR1500({
       if (data) {
         setData(data);
         setSelected(data[0]);
-        
-      }else{
-        setData([]);        
+      } else {
+        setData([]);
         setSelected({});
       }
       setSelectedRowIndex(0);
       setLoading1(false);
     } catch (err) {
-        setData([]);        
-        setSelected({}); 
+      setData([]);
+      setSelected({});
       console.log("GR1500 data search fetch error =======>", err);
     }
   };
+
+  useEffect(() => {
+    if (dataCommonDic) {
+      fetchDataSearch1({ areaCode: dataCommonDic.areaCode[0].code });
+    }
+  }, [dataCommonDic]);
 
   const fetchDataSearch2 = async (params: any) => {
     try {
@@ -114,9 +119,10 @@ function GR1500({
     fetchDataSearch2(data);
   };
 
-  const { register, handleSubmit, control, reset ,getValues} = useForm<IGR1500SEARCH>({
-    mode: "onSubmit",
-  });
+  const { register, handleSubmit, control, reset, getValues } =
+    useForm<IGR1500SEARCH>({
+      mode: "onSubmit",
+    });
 
   return (
     <>
@@ -129,7 +135,8 @@ function GR1500({
       <MainWrapper>
         <LeftSide>
           <form
-            onSubmit={handleSubmit(submitSearch1)} autoComplete="off"
+            onSubmit={handleSubmit(submitSearch1)}
+            autoComplete="off"
             style={{ minWidth: "925px" }}
           >
             <SearchWrapper className="h35">
@@ -185,11 +192,11 @@ function GR1500({
           <Grid
             areaCode={areaCode}
             data={data.length > 0 && data}
-            columns={columns}
-            fields={fields}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
+            fields={fields}
+            columns={columns}
             // evenFill
             style={{ height: "43%", minWidth: "925px" }}
           />
