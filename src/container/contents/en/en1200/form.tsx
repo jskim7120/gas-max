@@ -103,9 +103,10 @@ const Form = React.forwardRef(
               setSaupAddr1("");
               reset(newData);
             } else {
-              toast.error(response.response.data?.message, {
-                autoClose: 500,
-              });
+              // toast.error(response.response.data?.message, {
+              //   autoClose: 500,
+              // });
+              alert(response.response.data?.message);
             }
           } catch (err: any) {
             console.log("areaCode select error", err);
@@ -138,9 +139,10 @@ const Form = React.forwardRef(
 
             await fetchData("delete");
           } else {
-            toast.error(response?.response?.message, {
-              autoClose: 500,
-            });
+            // toast.error(response?.response?.message, {
+            //   autoClose: 500,
+            // });
+            alert(response?.response?.message);
           }
         } catch (err) {
           toast.error("Couldn't delete", {
@@ -187,9 +189,10 @@ const Form = React.forwardRef(
             autoClose: 500,
           });
         } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
+          // toast.error(response.response.data?.message, {
+          //   autoClose: 500,
+          // });
+          alert(response.response.data?.message);
         }
       } catch (err: any) {
         toast.error(err?.message, {

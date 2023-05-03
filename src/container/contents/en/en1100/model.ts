@@ -1,6 +1,6 @@
 export interface IJNOTRY {
   areaCode: number;
-  areaName: number;
+  areaName: string;
   jnSsno: string;
   jnSangho: string;
   jnSajang: string;

@@ -164,9 +164,7 @@ export const Input = ({
       // event.preventDefault();
       const element = event.target;
       const form = element.form;
-
       const index = Array.prototype.indexOf.call(form, element);
-      console.log(index);
       form.elements[index + 1].focus();
       event.preventDefault();
     }
@@ -560,9 +558,7 @@ export const Select = ({
       // event.preventDefault();
       const element = event.target;
       const form = element.form;
-
       const index = Array.prototype.indexOf.call(form, element);
-      console.log(index);
       form.elements[index + 1].focus();
       event.preventDefault();
     }

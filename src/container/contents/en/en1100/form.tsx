@@ -95,9 +95,10 @@ const Form = React.forwardRef(
               setJnAddr1("");
               reset(newData);
             } else {
-              toast.error(response.response.data?.message, {
-                autoClose: 500,
-              });
+              // toast.error(response.response.data?.message, {
+              //   autoClose: 500,
+              // });
+              alert(response.response.data?.message);
             }
           } catch (err: any) {
             console.log("areaCode select error", err);
@@ -125,9 +126,10 @@ const Form = React.forwardRef(
             });
             await fetchData("delete");
           } else {
-            toast.error(response?.response?.message, {
-              autoClose: 500,
-            });
+            // toast.error(response?.response?.message, {
+            //   autoClose: 500,
+            // });
+            alert(response?.response?.message);
           }
         } catch (err) {
           toast.error("Couldn't delete", {
@@ -164,6 +166,7 @@ const Form = React.forwardRef(
               return [...prev];
             });
           }
+
           setSelected(formValues);
 
           toast.success("저장이 성공하였습니다", {

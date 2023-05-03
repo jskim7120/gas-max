@@ -1,6 +1,5 @@
 export interface IJNOSAUP {
   areaCode: string;
-  opt: number;
   swAddr1: string;
   swAddr2: string;
   swBigo: string;
@@ -12,13 +11,13 @@ export interface IJNOSAUP {
   swGubun: string;
   swGubunName: string;
   swHp: string;
-  swIndate: any;
-  swJdate1: any;
-  swJdate2: any;
+  swIndate: string;
+  swJdate1: string;
+  swJdate2: string;
   swJuminno: string;
   swName: string;
   swPaydate: string;
-  swPaykum: any;
+  swPaykum: number;
   swPaytype: string;
   swTel: string;
   swWorkOut: string;
@@ -28,6 +27,39 @@ export interface IJNOSAUP {
   eyeSwCode: string;
   swDepartment: string;
   swStampFile: string | null;
-  swOutDate: any;
-  sgKumack: any;
+  swOutDate: string;
+  sgKumack: number;
 }
+
+export const emptyObj = {
+  areaCode: "",
+  cuSeEmail: "",
+  eyeSwCode: "",
+  mailKind: "",
+  sgKumack: 0,
+  swAddr1: "",
+  swAddr2: "",
+  swBigo: "",
+  swCode: "",
+  swDepartment: "",
+  swDriverno: "",
+  swDrivertype: "",
+  swGubun: "",
+  swGubunName: "",
+  swHp: "",
+  swIndate: "",
+  swJdate1: "",
+  swJdate2: "",
+  swJuminno: "",
+  swName: "",
+  swOutDate: "",
+  swPaydate: "",
+  swPaykum: 0,
+  swPaytype: "",
+  swStampFile: null,
+  swStampImg: "",
+  swStampImgType: "",
+  swTel: "",
+  swWorkOut: "",
+  swZipcode: "",
+};

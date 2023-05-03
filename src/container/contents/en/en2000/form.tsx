@@ -13,82 +13,87 @@ import {
 import { InfoText } from "components/text";
 import { InfoDesc } from "../../commonStyle";
 import CheckBox from "components/checkbox";
-import { ICARJBC } from "./model";
+import { ICARJBC, emptyObj } from "./model";
 import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
+  setSelected: any;
   fetchData: any;
   setData: any;
   selectedRowIndex: number;
-  setSelected: any;
-  setSelectedRowIndex: any;
+  setSelectedRowIndex: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
-  setIsCancelBtnDisabled: Function;
+  resetButtonCombination: Function;
 }
 
 const Form = React.forwardRef(
   (
     {
       selected,
+      setSelected,
       fetchData,
       setData,
       selectedRowIndex,
-      setSelected,
       setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      setIsCancelBtnDisabled,
+      resetButtonCombination,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const { register, handleSubmit, reset, getValues } = useForm<ICARJBC>({
-      mode: "onChange",
-    });
+    const { register, handleSubmit, reset, getValues, setFocus } =
+      useForm<ICARJBC>({
+        mode: "onChange",
+      });
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
     }));
 
-    const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
-
-        if (type === "clear") {
-          document.getElementById("ccName")?.focus();
-          const path = EN200011;
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.ccCode = response.data.tempCode;
-              reset(newData);
-            } else {
-              toast.error(response.response.data?.message, {
-                autoClose: 500,
-              });
-            }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
-          }
-        } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
-
-          reset({
-            ...newData,
-            swWorkOut: selected?.swWorkOut === "Y",
-          });
+    const fetchCode11 = async () => {
+      try {
+        const response: any = await API.get(EN200011);
+        if (response.status === 200) {
+          return response?.data?.tempCode;
+        } else {
+          alert(response.response.data?.message);
+          resetButtonCombination();
         }
+        return null;
+      } catch (err) {
+        console.log(err);
       }
     };
+
+    const resetForm = async (type: string) => {
+      if (type === "clear") {
+        setFocus("ccName");
+        try {
+          const tempCode = await fetchCode11();
+          if (tempCode !== null) {
+            emptyObj.ccCode = tempCode;
+            reset(emptyObj);
+          }
+        } catch (err: any) {
+          console.log("areaCode generate error:", err);
+        }
+        return;
+      }
+
+      if (type === "reset") {
+        if (selected !== undefined && Object.keys(selected).length > 0) {
+          reset({
+            ...selected,
+            ccOilYn: selected?.ccOilYn === "Y",
+          });
+        }
+        return;
+      }
+    };
+
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
@@ -101,14 +106,11 @@ const Form = React.forwardRef(
             });
             await fetchData("delete");
           } else {
-            toast.error(response?.response?.message, {
-              autoClose: 500,
-            });
+            alert(response?.response?.message);
+            return;
           }
         } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
+          console.log(err);
         }
       }
 
@@ -121,6 +123,7 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? EN2000INSERT : EN2000UPDATE;
       const formValues = getValues();
+      formValues.ccOilYn = formValues.ccOilYn ? "Y" : "N";
 
       try {
         const response: any = await API.post(path, formValues);
@@ -130,7 +133,6 @@ const Form = React.forwardRef(
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
-            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -142,14 +144,10 @@ const Form = React.forwardRef(
             autoClose: 500,
           });
         } else {
-          toast.error(response?.message, {
-            autoClose: 500,
-          });
+          alert(response?.response?.data?.message);
         }
       } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
+        console.log(err);
       }
     };
 
@@ -190,7 +188,7 @@ const Form = React.forwardRef(
         <Wrapper>
           <FormGroup>
             <Label>유류비계정 유무</Label>
-            <CheckBox title="" rtl register={{ ...register("ccOilYn") }} />
+            <CheckBox title="" rtl register={register("ccOilYn")} />
           </FormGroup>
         </Wrapper>
 

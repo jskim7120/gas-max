@@ -32,11 +32,49 @@ export interface ICAR {
   caType: string;
   caYear: string;
   eyeCarCode: string;
-
-  //bhgui talbaruud
-
-  caAmt: any;
+  caAmt: number;
   caDiscountM: number;
-  caMAmt: any;
-  caDiscountAmt: any;
+  caMAmt: number;
+  caDiscountAmt: number;
 }
+
+export const emptyObj = {
+  areaCode: "",
+  areaName: "",
+  caAmt: 0,
+  caBage: "",
+  caBageName: "",
+  caBco: "",
+  caBdamdang: "",
+  caBhp: "",
+  caBigo: "",
+  caBjijum: "",
+  caBkYn: "",
+  caBldate: "",
+  caBldateT: "",
+  caBman: "",
+  caBno: "",
+  caBsdate: "",
+  caBtel: "",
+  caChargeDate: "",
+  caCode: "",
+  caDiscountAmt: 0,
+  caDiscountM: 0,
+  caInDate: "",
+  caInsuranceAmt: 0,
+  caJaegoyn: "",
+  caJaegoynName: "",
+  caJdate1: "",
+  caJdate2: "",
+  caMAmt: 0,
+  caManager: "",
+  caName: "",
+  caRentDate: "",
+  caRentYn: "",
+  caSafeDate: "",
+  caSwCode: "",
+  caSwName: "",
+  caType: "",
+  caYear: "",
+  eyeCarCode: "",
+};

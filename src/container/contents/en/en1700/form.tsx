@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
+import React, { useImperativeHandle, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -20,7 +20,7 @@ import {
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
-import { ICAR } from "./model";
+import { ICAR, emptyObj } from "./model";
 import {
   DateWithoutDash,
   DateWithoutDashOnlyYearMonth,
@@ -28,7 +28,7 @@ import {
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { InfoText } from "components/text";
-import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
+import { currencyMask, removeCommas } from "helpers/currency";
 import {
   Item,
   RadioButton,
@@ -37,14 +37,14 @@ import {
 
 interface IForm {
   selected: any;
+  setSelected: any;
   fetchData: any;
   setData: any;
   selectedRowIndex: number;
-  setSelected: any;
-  setSelectedRowIndex: any;
+  setSelectedRowIndex: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
-  setIsCancelBtnDisabled: Function;
+  resetButtonCombination: Function;
 }
 
 const radioOptions = [
@@ -74,62 +74,94 @@ const Form = React.forwardRef(
   (
     {
       selected,
+      setSelected,
       fetchData,
       setData,
       selectedRowIndex,
-      setSelected,
       setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      setIsCancelBtnDisabled,
+      resetButtonCombination,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [empChargeData, setEmpChargeData] = useState([]);
+    const [areaCode, setAreaCode] = useState("");
+    const [caSwCode, setCaSwCode] = useState([]);
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1700",
     });
 
-    const { register, handleSubmit, reset, control, getValues } = useForm<ICAR>(
-      { mode: "onChange" }
-    );
+    const { register, handleSubmit, reset, control, getValues, setFocus } =
+      useForm<ICAR>({ mode: "onChange" });
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
     }));
 
+    const fetchCode11 = async (code: string) => {
+      try {
+        const response: any = await API.get(EN170011, {
+          params: { areaCode: code },
+        });
+        if (response.status === 200) {
+          return response?.data?.tempCode;
+        } else {
+          alert(response.response.data?.message);
+          resetButtonCombination();
+        }
+        return null;
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const fetchData65 = async (code: string) => {
+      try {
+        const res: any = await API.get(EN170065, {
+          params: { areaCode: code },
+        });
+
+        if (res.status === 200) {
+          setCaSwCode(res.data);
+        } else {
+          setCaSwCode([]);
+        }
+      } catch (err) {
+        setCaSwCode([]);
+        console.log(err);
+      }
+    };
+
+    const codeChangeHandler = async (aCode: any) => {
+      try {
+        const tempCode = await fetchCode11(aCode);
+        fetchData65(aCode);
+
+        if (tempCode !== null) {
+          setFocus("caName");
+          emptyObj.caCode = tempCode;
+          reset(emptyObj);
+        }
+      } catch (err: any) {
+        console.log("caCode generate error", err);
+      }
+    };
+
     const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
-        if (type === "clear") {
-          document.getElementById("caName")?.focus();
-          const path = EN170011;
+      if (type === "clear") {
+        await codeChangeHandler(areaCode);
+        return;
+      }
 
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.caCode = response.data.tempCode;
-              newData.areaCode = selected.areaCode;
-              reset(newData);
-            } else {
-              toast.error(response.response.data?.message, {
-                autoClose: 500,
-              });
-            }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
+      if (type === "reset") {
+        if (selected !== undefined && Object.keys(selected)?.length > 0) {
+          if (selected?.areaCode !== areaCode) {
+            fetchData65(selected.areaCode);
+            setAreaCode(selected.areaCode);
           }
-        } else if (type === "reset") {
-          empChargeDataSelect(selected.areaCode);
-
           reset({
             ...selected,
             caBkYn: selected?.caBkYn === "Y",
@@ -151,15 +183,12 @@ const Form = React.forwardRef(
             });
             await fetchData("delete");
           } else {
-            toast.error(response?.response?.message, {
-              autoClose: 500,
-            });
+            alert(response?.response?.message);
           }
         } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
+          console.log(err);
         }
+        return;
       }
 
       if (type === null) {
@@ -171,10 +200,9 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? EN1700INSERT : EN1700UPDATE;
       const formValues = getValues();
-
+      isAddBtnClicked && (formValues.areaCode = areaCode);
       formValues.caBkYn = formValues.caBkYn ? "Y" : "N";
       formValues.caRentYn = formValues.caRentYn ? "Y" : "N";
-
       formValues.caSafeDate = DateWithoutDash(formValues.caSafeDate);
       formValues.caInDate = DateWithoutDash(formValues.caInDate);
       formValues.caRentDate = DateWithoutDash(formValues.caRentDate);
@@ -183,19 +211,17 @@ const Form = React.forwardRef(
       formValues.caBsdate = DateWithoutDash(formValues.caBsdate);
       formValues.caBldate = DateWithoutDash(formValues.caBldate);
       formValues.caYear = DateWithoutDashOnlyYearMonth(formValues.caYear);
-      formValues.caAmt = formValues.caAmt
-        ? formatCurrencyRemoveComma(formValues.caAmt)
-        : "";
-      formValues.caMAmt = formValues.caMAmt
-        ? formatCurrencyRemoveComma(formValues.caMAmt)
-        : "";
 
-      formValues.caDiscountAmt = formValues.caDiscountAmt
-        ? formatCurrencyRemoveComma(formValues.caDiscountAmt)
-        : "";
-      formValues.caInsuranceAmt = formValues.caInsuranceAmt
-        ? formatCurrencyRemoveComma(formValues.caInsuranceAmt)
-        : 0;
+      formValues.caAmt = +removeCommas(formValues.caAmt, "number");
+      formValues.caMAmt = +removeCommas(formValues.caMAmt, "number");
+      formValues.caDiscountAmt = +removeCommas(
+        formValues.caDiscountAmt,
+        "number"
+      );
+      formValues.caInsuranceAmt = +removeCommas(
+        formValues.caInsuranceAmt,
+        "number"
+      );
 
       try {
         const response: any = await API.post(path, formValues);
@@ -204,7 +230,6 @@ const Form = React.forwardRef(
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
-            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -216,64 +241,10 @@ const Form = React.forwardRef(
             autoClose: 500,
           });
         } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
+          alert(response.response.data?.message);
         }
       } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
-      }
-    };
-
-    const handleSelectCode = async (event: any) => {
-      let newData: any = {};
-      const path = EN170011;
-
-      try {
-        const response: any = await API.get(path, {
-          params: { areaCode: event.target.value },
-        });
-        if (response.status === 200) {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          newData.caCode = response.data.tempCode;
-          newData.areaCode = event.target.value;
-          reset(newData);
-          document.getElementById("caName")?.focus();
-        } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
-        }
-        empChargeDataSelect(event);
-      } catch (err: any) {
-        console.log("areaCode select error", err);
-      }
-    };
-
-    const empChargeDataSelect = async (event: any) => {
-      const path2 = EN170065;
-      try {
-        if (typeof event === "string") {
-          const responseEmpCharge: any = await API.get(path2, {
-            params: { areaCode: event },
-          });
-          if (responseEmpCharge.status === 200) {
-            setEmpChargeData(responseEmpCharge.data);
-          }
-        } else {
-          const responseEmpCharge: any = await API.get(path2, {
-            params: { areaCode: event.target.value },
-          });
-          if (responseEmpCharge.status === 200) {
-            setEmpChargeData(responseEmpCharge.data);
-          }
-        }
-      } catch (err: any) {
-        console.log("areaCode select error", err);
+        console.log(err);
       }
     };
 
@@ -295,8 +266,11 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label>영 업 소</Label>
             <Select
-              //register={register("areaCode")}
-              onChange={handleSelectCode}
+              value={areaCode}
+              onChange={(e) => {
+                setAreaCode(e.target.value);
+                codeChangeHandler(e.target.value);
+              }}
               width={InputSize.i150}
               disabled={!isAddBtnClicked}
             >
@@ -320,7 +294,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label>담당 사원</Label>
             <Select register={register("caSwCode")} width={InputSize.i150}>
-              {empChargeData?.map((obj: any, idx: number) => (
+              {caSwCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -331,7 +305,7 @@ const Form = React.forwardRef(
         <Wrapper grid col={2}>
           <FormGroup style={{ alignItems: "center" }}>
             <Label>벌크로리 차량 유무</Label>
-            <CheckBox register={{ ...register("caBkYn") }} />
+            <CheckBox register={register("caBkYn")} />
           </FormGroup>
 
           <FormGroup>
@@ -430,7 +404,7 @@ const Form = React.forwardRef(
         <Wrapper grid col={2}>
           <FormGroup style={{ alignItems: "center" }}>
             <Label>리스/렌트 유무</Label>
-            <CheckBox register={{ ...register("caRentYn") }} />
+            <CheckBox register={register("caRentYn")} />
           </FormGroup>
 
           <Field flex style={{ alignItems: "center" }}>

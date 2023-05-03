@@ -169,7 +169,7 @@ const Form = (
     updateParams.jnSukumtype = formValues.jnSukumtype;
     updateParams.jnPer = formValues.jnPer;
     try {
-      const response = await API.post(EN1500UPDATE, updateParams);
+      const response: any = await API.post(EN1500UPDATE, updateParams);
       if (response.status === 200) {
         setData((prev: any) => {
           prev[selectedRowIndex] = formValues;
@@ -181,9 +181,10 @@ const Form = (
           autoClose: 500,
         });
       } else {
-        toast.error("error", {
-          autoClose: 500,
-        });
+        // toast.error("error", {
+        //   autoClose: 500,
+        // });
+        alert(response?.response?.message);
       }
     } catch (err: any) {
       toast.error(err?.message, {
@@ -380,9 +381,10 @@ const Form = (
         setUnitPriceData(response.data[0]);
       } else {
         setUnitPriceData([]);
-        toast.error(response.data?.message, {
-          autoClose: 500,
-        });
+        // toast.error(response.data?.message, {
+        //   autoClose: 500,
+        // });
+        alert(response.data?.message);
       }
     } catch (err: any) {
       setUnitPriceData([]);
