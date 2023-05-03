@@ -4,3 +4,10 @@ export interface ICARJBC {
   ccBigo: string;
   ccOilYn: string;
 }
+
+export const emptyObj = {
+  ccBigo: "",
+  ccCode: "",
+  ccName: "",
+  ccOilYn: "",
+};

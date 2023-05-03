@@ -5,3 +5,11 @@ export interface ICUSTGUBUN {
   gubunCode: string;
   gubunName: string;
 }
+
+export const emptyObj = {
+  areaCode: "",
+  areaName: "",
+  gubunBigo: "",
+  gubunCode: "",
+  gubunName: "",
+};

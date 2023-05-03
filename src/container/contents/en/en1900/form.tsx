@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
+import React, { useImperativeHandle, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -12,86 +12,95 @@ import {
   FormGroup,
   Label,
 } from "components/form/style";
-import { ICUSTGUBUN } from "./model";
+import { ICUSTGUBUN, emptyObj } from "./model";
 import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
+  setSelected: any;
   fetchData: any;
   setData: any;
   selectedRowIndex: number;
-  setSelected: any;
-  setSelectedRowIndex: any;
+  setSelectedRowIndex: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
-  setIsCancelBtnDisabled: Function;
+  resetButtonCombination: Function;
 }
 
 const Form = React.forwardRef(
   (
     {
       selected,
+      setSelected,
       fetchData,
       setData,
       selectedRowIndex,
-      setSelected,
       setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      setIsCancelBtnDisabled,
+      resetButtonCombination,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
+    const [areaCode, setAreaCode] = useState("");
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1900",
     });
 
-    const { register, handleSubmit, reset, getValues } = useForm<ICUSTGUBUN>({
-      mode: "onChange",
-    });
+    const { register, handleSubmit, reset, getValues, setFocus } =
+      useForm<ICUSTGUBUN>({
+        mode: "onChange",
+      });
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
     }));
 
+    const fetchCode11 = async (code: string) => {
+      try {
+        const response: any = await API.get(EN190011, {
+          params: { areaCode: code },
+        });
+        if (response.status === 200) {
+          return response?.data?.tempCode;
+        } else {
+          alert(response.response.data?.message);
+          resetButtonCombination();
+        }
+        return null;
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const codeChangeHandler = async (aCode: any) => {
+      try {
+        const tempCode = await fetchCode11(aCode);
+        if (tempCode !== null) {
+          setFocus("gubunName");
+          emptyObj.gubunCode = tempCode;
+          reset(emptyObj);
+        }
+      } catch (err: any) {
+        console.log("areaCode generate error:", err);
+      }
+    };
+
     const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
-
-        if (type === "clear") {
-          document.getElementById("gubunName")?.focus();
-          const path = EN190011;
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.gubunCode = response.data.tempCode;
-              newData.areaCode = selected.areaCode;
-              reset(newData);
-            } else {
-              toast.error(response.response.data?.message, {
-                autoClose: 500,
-              });
-            }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
-          }
-        } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
-
+      if (type === "clear") {
+        await codeChangeHandler(areaCode);
+        return;
+      }
+      if (type === "reset") {
+        if (selected !== undefined && Object.keys(selected)?.length > 0) {
+          setAreaCode(selected.areaCode);
           reset({
-            ...newData,
-            swWorkOut: selected?.swWorkOut === "Y",
+            ...selected,
           });
         }
+        return;
       }
     };
     const crud = async (type: string | null) => {
@@ -106,14 +115,10 @@ const Form = React.forwardRef(
             });
             await fetchData("delete");
           } else {
-            toast.error(response?.response?.message, {
-              autoClose: 500,
-            });
+            alert(response?.response?.message);
           }
         } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
+          console.log(err);
         }
       }
 
@@ -126,7 +131,7 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? EN1900INSERT : EN1900UPDATE;
       const formValues = getValues();
-
+      isAddBtnClicked && (formValues.areaCode = areaCode);
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
@@ -134,7 +139,6 @@ const Form = React.forwardRef(
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
-            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -146,39 +150,10 @@ const Form = React.forwardRef(
             autoClose: 500,
           });
         } else {
-          toast.error(response?.message, {
-            autoClose: 500,
-          });
+          alert(response?.response?.data?.message);
         }
       } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
-      }
-    };
-
-    const handleSelectCode = async (event: any) => {
-      let newData: any = {};
-      const path = EN190011;
-      try {
-        const response: any = await API.get(path, {
-          params: { areaCode: event.target.value },
-        });
-        if (response.status === 200) {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          newData.gubunCode = response.data.tempCode;
-          newData.areaCode = event.target.value;
-          reset(newData);
-          document.getElementById("gubunName")?.focus();
-        } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
-        }
-      } catch (err: any) {
-        console.log("areaCode select error", err);
+        console.log(err);
       }
     };
 
@@ -201,8 +176,12 @@ const Form = React.forwardRef(
           <FormGroup>
             <Label style={{ minWidth: "83px" }}>영 업 소</Label>
             <Select
-              register={register("areaCode")}
-              onChange={handleSelectCode}
+              value={areaCode}
+              onChange={(e) => {
+                setAreaCode(e.target.value);
+                codeChangeHandler(e.target.value);
+              }}
+              name="areaCode"
               width={InputSize.i130}
               disabled={!isAddBtnClicked}
             >

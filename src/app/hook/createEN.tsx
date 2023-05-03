@@ -52,24 +52,21 @@ function CreateEN(
   function handleKeyDown(event: any) {
     if (event.key === "F1") {
       event.preventDefault();
-      setIsAddBtnClicked(true);
-      formRef.current.resetForm("clear");
+      handleClickBtn1();
     }
     if (event.key === "F4") {
       event.preventDefault();
-      dispatch(openModal({ type: "delModal" }));
-      dispatch(addDeleteMenuId({ menuId: menuId }));
+      handleClickBtn2();
     }
     if (event.key === "F7") {
       event.preventDefault();
       btnRef3.current.focus();
-      //btnRef3.current.classList.add("active");
-      formRef.current.crud(null);
+      handleClickBtn3();
     }
 
     if (event.key === "F9") {
       event.preventDefault();
-      formRef.current.resetForm("reset");
+      handleClickBtn4();
     }
   }
 
@@ -102,12 +99,12 @@ function CreateEN(
         const len = dataS && dataS.length > 0 ? dataS.length - 1 : 0;
         setSelectedRowIndex(len);
       } else {
-        setSelectedRowIndex(0);
+        // setSelectedRowIndex(0);
       }
     } catch (err) {
       setData([]);
       setSelected({});
-      setSelectedRowIndex(0);
+      // setSelectedRowIndex(0);
       console.log(`${menuId} DATA fetch error =======>`, err);
     }
   };
@@ -126,6 +123,35 @@ function CreateEN(
     setLinePos(ui.x);
   };
 
+  const handleClickBtn1 = () => {
+    btnRef1.current.classList.add("active");
+    // btnRef4.current.classList.remove("active");
+    setIsAddBtnClicked(true);
+    formRef.current.resetForm("clear");
+    formRef.current?.setImage64 && formRef.current?.setImage64("");
+  };
+
+  const handleClickBtn2 = () => {
+    dispatch(openModal({ type: "delModal" }));
+    dispatch(addDeleteMenuId({ menuId: menuId }));
+  };
+
+  const handleClickBtn3 = () => {
+    formRef.current.crud(null);
+  };
+
+  const handleClickBtn4 = () => {
+    btnRef1.current.classList.remove("active");
+    // btnRef4.current.classList.add("active");
+    setIsAddBtnClicked(false);
+    formRef.current.resetForm("reset");
+  };
+
+  const resetButtonCombination = () => {
+    setIsAddBtnClicked(false);
+    btnRef1.current.classList.remove("active");
+  };
+
   const showScreen = () => {
     return (
       <>
@@ -134,22 +160,13 @@ function CreateEN(
             <Button
               text="등록 (F1)"
               icon={<Plus />}
-              onClick={() => {
-                btnRef1.current.classList.add("active");
-                btnRef4.current.classList.remove("active");
-                setIsAddBtnClicked(true);
-                formRef.current.resetForm("clear");
-                formRef.current?.setImage64 && formRef.current?.setImage64("");
-              }}
+              onClick={handleClickBtn1}
               ref={btnRef1}
             />
             <Button
               text="삭제 (F4)"
               icon={<Trash />}
-              onClick={() => {
-                dispatch(openModal({ type: "delModal" }));
-                dispatch(addDeleteMenuId({ menuId: menuId }));
-              }}
+              onClick={handleClickBtn2}
               disabled={isAddBtnClicked}
               ref={btnRef2}
             />
@@ -157,20 +174,13 @@ function CreateEN(
               text="저장 (F7)"
               icon={<Update />}
               color={ButtonColor.SECONDARY}
-              onClick={() => {
-                formRef.current.crud(null);
-              }}
+              onClick={handleClickBtn3}
               ref={btnRef3}
             />
             <Button
               text="취소 (F9)"
               icon={<Reset />}
-              onClick={() => {
-                btnRef1.current.classList.remove("active");
-                btnRef4.current.classList.add("active");
-                setIsAddBtnClicked(false);
-                formRef.current.resetForm("reset");
-              }}
+              onClick={handleClickBtn4}
               disabled={!isAddBtnClicked}
               ref={btnRef4}
             />
@@ -196,15 +206,16 @@ function CreateEN(
           >
             <div style={{ width: rightSideWidth }}>
               <Form
-                selected={selected}
                 ref={formRef}
+                selected={selected}
+                setSelected={setSelected}
                 fetchData={fetchData}
                 setData={setData}
                 selectedRowIndex={selectedRowIndex}
                 setSelectedRowIndex={setSelectedRowIndex}
-                setSelected={setSelected}
                 isAddBtnClicked={isAddBtnClicked}
                 setIsAddBtnClicked={setIsAddBtnClicked}
+                resetButtonCombination={resetButtonCombination}
               />
             </div>
           </RightSide>
@@ -232,7 +243,7 @@ function CreateEN(
     );
   };
 
-  return { showScreen, handleKeyDown, activeTabId };
+  return { showScreen, handleKeyDown, activeTabId, fetchData };
 }
 
 export default CreateEN;
