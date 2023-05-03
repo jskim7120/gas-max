@@ -11,7 +11,7 @@ export const fields = [
   },
   {
     fieldName: "gjJungum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjGum",
@@ -19,31 +19,31 @@ export const fields = [
   },
   {
     fieldName: "gjGage",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjDanga",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "maintCost",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjPerkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjDangkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjMisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjCuSwCode",
@@ -95,6 +95,7 @@ export const columns = [
     header: {
       text: "전월",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjGum",
@@ -105,6 +106,7 @@ export const columns = [
     header: {
       text: "당월",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjGage",
@@ -115,6 +117,7 @@ export const columns = [
     header: {
       text: "사용량",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjDanga",
@@ -125,6 +128,7 @@ export const columns = [
     header: {
       text: "단가",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjKumack",
@@ -135,6 +139,7 @@ export const columns = [
     header: {
       text: "사용료",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "maintCost",
@@ -145,6 +150,7 @@ export const columns = [
     header: {
       text: "관리비외",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjPerkum",
@@ -155,6 +161,7 @@ export const columns = [
     header: {
       text: "연체료",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjDangkum",
@@ -165,6 +172,7 @@ export const columns = [
     header: {
       text: "당월금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjMisu",
@@ -175,6 +183,7 @@ export const columns = [
     header: {
       text: "미납액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjCuSwCode",

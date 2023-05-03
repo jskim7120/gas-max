@@ -120,7 +120,7 @@ function FormIP1205() {
   console.log(totalGuAmount, "is amount");
   return (
     <ModalWrapper>
-      <form onSubmit={handleSubmit(onSearchSubmit)}>
+      <form onSubmit={handleSubmit(onSearchSubmit)} autoComplete="off">
         <SearchWrapper
           style={{
             background: "#0B97F6",

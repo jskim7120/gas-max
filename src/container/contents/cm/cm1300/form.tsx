@@ -118,7 +118,7 @@ const Form = React.forwardRef(
     // const [aptRdangaSign, setAptRdangaSign] = useState<string>("");
     // const [aptRdangaAmt, setAptRdangaAmt] = useState<string>("");
 
-    const { register, handleSubmit, reset, getValues, control } =
+    const { register, handleSubmit, reset, getValues, control, setFocus} =
       useForm<ICM1300>({
         mode: "onChange",
       });
@@ -183,6 +183,7 @@ const Form = React.forwardRef(
 
     const resetForm = async (type: string) => {
       if (type === "clear" && areaCode !== "") {
+        setFocus("aptName");
         const dataS = await fetchCodes(areaCode);
         if (dataS?.tempAptCode) {
           reset({

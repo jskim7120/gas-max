@@ -122,7 +122,7 @@ function CM9003({
         areaCode={areaCode}
       />
       <WrapperContent style={{ height: `calc(100% - 76px)` }}>
-        <form onSubmit={handleSubmit(submit)}>
+        <form onSubmit={handleSubmit(submit)} autoComplete="off">
           <SearchWrapper style={{ alignItems: "baseline" }}>
             <div>
               <Wrapper grid col={5} fields="1fr 1fr 1fr 1fr 1.5fr">
