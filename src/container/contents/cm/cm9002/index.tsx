@@ -119,7 +119,7 @@ function CM9002({
         dataCommonDic={dataCommonDic}
       />
       <WrapperContent style={{ height: `calc(100% - 76px)` }}>
-        <form onSubmit={handleSubmit(submit)}>
+        <form onSubmit={handleSubmit(submit)} autoComplete="off">
           <SearchWrapper style={{ alignItems: "baseline" }}>
             <div>
               <Wrapper grid col={6} fields="1fr 1fr 1fr 1.3fr 1fr 1fr">

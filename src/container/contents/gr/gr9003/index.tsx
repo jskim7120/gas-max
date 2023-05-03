@@ -89,7 +89,7 @@ function GR9003({
         areaCode={areaCode}
       />
       <WrapperContent>
-        <form onSubmit={handleSubmit(submit)}>
+        <form onSubmit={handleSubmit(submit)} autoComplete="off"> 
           <SearchWrapper className="h35">
             <FormGroup>
               <Label style={{ minWidth: "auto" }}>충전소</Label>

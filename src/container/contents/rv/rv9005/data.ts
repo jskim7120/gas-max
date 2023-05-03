@@ -23,57 +23,57 @@ export const fields = [
   },
   {
     fieldName: "gjJungum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjGum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjJankg",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjGage",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjDanga",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
 
   {
     fieldName: "maintCost",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjDc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjPerkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjMisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
 
   {
     fieldName: "gjDangkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjTotal",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjMisujan",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjSldate",
@@ -146,6 +146,7 @@ export const columns = [
     header: {
       text: "전월검침",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjGum",
@@ -156,6 +157,7 @@ export const columns = [
     header: {
       text: "당월검침",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjJankg",
@@ -166,6 +168,7 @@ export const columns = [
     header: {
       text: "잔량",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjGage",
@@ -176,6 +179,7 @@ export const columns = [
     header: {
       text: "사용량",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjDanga",
@@ -186,6 +190,7 @@ export const columns = [
     header: {
       text: "단가",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjKumack",
@@ -196,6 +201,7 @@ export const columns = [
     header: {
       text: "사용금액",
     },
+    numberFormat: "#,##0",
   },
 
   {
@@ -207,6 +213,7 @@ export const columns = [
     header: {
       text: "관리비",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjDc",
@@ -217,6 +224,7 @@ export const columns = [
     header: {
       text: "할인액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjPerkum",
@@ -227,6 +235,7 @@ export const columns = [
     header: {
       text: "연체료",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjMisu",
@@ -237,6 +246,7 @@ export const columns = [
     header: {
       text: "전월미수",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjDangkum",
@@ -247,6 +257,7 @@ export const columns = [
     header: {
       text: "당월금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjTotal",
@@ -257,6 +268,7 @@ export const columns = [
     header: {
       text: "청구금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjMisujan",
@@ -267,12 +279,13 @@ export const columns = [
     header: {
       text: "미수잔액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjSldate",
     fieldName: "gjSldate",
     type: "data",
-    width: "150",
+    width: "180",
     header: {
       text: "사용기간",
     },

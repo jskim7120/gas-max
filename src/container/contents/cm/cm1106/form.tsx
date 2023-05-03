@@ -136,7 +136,7 @@ const FORMCM1106 = React.forwardRef(
 
     return (
       <form
-        onSubmit={handleSubmit(submit)}
+        onSubmit={handleSubmit(submit)} autoComplete="off"
         style={{ width: "25%", margin: "30px 30px 0 0" }}
       >
         <Field flex style={{ alignItems: "center" }}>

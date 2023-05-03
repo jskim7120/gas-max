@@ -105,7 +105,7 @@ function CM9005({
         areaCode={areaCode}
       />
       <WrapperContent>
-        <form onSubmit={handleSubmit(submit)}>
+        <form onSubmit={handleSubmit(submit)} autoComplete="off">
           <SearchWrapper>
             <div style={{ width: "80%" }}>
               <Wrapper grid col={6}>

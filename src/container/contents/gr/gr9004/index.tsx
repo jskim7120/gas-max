@@ -108,7 +108,7 @@ function GR9004({
         bigText="재고입고처"
       />
       <WrapperContent>
-        <form onSubmit={handleSubmit(submit)}>
+        <form onSubmit={handleSubmit(submit)} autoComplete="off">
           <SearchWrapper className="h35">
             <FormGroup>
               <Label style={{ minWidth: "auto" }}>충전소</Label>

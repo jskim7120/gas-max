@@ -19,39 +19,39 @@ export const fields = [
   },
   {
     fieldName: "gjGage",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "maintCost",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjDc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjDangkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjPerkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjBaGageKum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjTotal",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjMinab",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
 ];
 
@@ -106,6 +106,7 @@ export const columns = [
     header: {
       text: "사용량",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjKumack",
@@ -116,6 +117,7 @@ export const columns = [
     header: {
       text: "사용금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "maintCost",
@@ -126,6 +128,7 @@ export const columns = [
     header: {
       text: "관리비외",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjDc",
@@ -136,6 +139,7 @@ export const columns = [
     header: {
       text: "할인액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjDangkum",
@@ -146,6 +150,7 @@ export const columns = [
     header: {
       text: "당월금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjPerkum",
@@ -156,6 +161,7 @@ export const columns = [
     header: {
       text: "연체료",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjBaGageKum",
@@ -166,6 +172,7 @@ export const columns = [
     header: {
       text: "할인/기초",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjTotal",
@@ -176,6 +183,7 @@ export const columns = [
     header: {
       text: "당월합계",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjMinab",
@@ -186,5 +194,6 @@ export const columns = [
     header: {
       text: "당월미납액",
     },
+    numberFormat: "#,##0",
   },
 ];

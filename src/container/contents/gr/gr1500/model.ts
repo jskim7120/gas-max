@@ -11,6 +11,7 @@ export interface IGR1500SEARCH {
   //
   bjBuCode: string;
   bjBuName: string;
+  buGubunName:string;
   buBank: string;
   buBankno: string;
   buBankju: string;

@@ -17,6 +17,7 @@ import Button from "components/button/button";
 import Grid from "./grid";
 import { fields, columns } from "./data/dataBottom";
 import PinImg from "assets/image/pin.png";
+import { currencyMask } from "helpers/currency";
 
 function Footer({
   data,
@@ -191,6 +192,7 @@ function Footer({
                 labelStyle={{ minWidth: "66px" }}
                 inputSize={InputSize.i120}
                 textAlign="right"
+                mask={currencyMask}
               />
               <Input
                 label="㎥ 단가"
@@ -198,6 +200,7 @@ function Footer({
                 labelStyle={{ minWidth: "76px" }}
                 inputSize={InputSize.i120}
                 textAlign="right"
+                mask={currencyMask}
               />
               <Input
                 label="사용료"
@@ -205,6 +208,7 @@ function Footer({
                 labelStyle={{ minWidth: "52px" }}
                 inputSize={InputSize.i120}
                 textAlign="right"
+                mask={currencyMask}
               />
               <Input
                 label="당월 금액"
@@ -212,6 +216,7 @@ function Footer({
                 labelStyle={{ minWidth: "89px" }}
                 inputSize={InputSize.i120}
                 textAlign="right"
+                mask={currencyMask}
               />
             </Wrapper>
             <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
@@ -235,6 +240,7 @@ function Footer({
                 labelStyle={{ minWidth: "66px" }}
                 inputSize={InputSize.i120}
                 textAlign="right"
+                mask={currencyMask}
               />
               <FormGroup style={{ gap: "10px" }}>
                 <CheckBox
@@ -245,6 +251,7 @@ function Footer({
                   register={register("gjBaGageKum")}
                   inputSize={InputSize.i120}
                   textAlign="right"
+                  mask={currencyMask}
                 />
               </FormGroup>
               <Input
@@ -253,6 +260,7 @@ function Footer({
                 labelStyle={{ minWidth: "52px" }}
                 inputSize={InputSize.i120}
                 textAlign="right"
+                mask={currencyMask}
               />
               <Input
                 label="전미수"
@@ -260,6 +268,7 @@ function Footer({
                 labelStyle={{ minWidth: "89px" }}
                 inputSize={InputSize.i120}
                 textAlign="right"
+                mask={currencyMask}
               />
             </Wrapper>
             <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
@@ -281,6 +290,7 @@ function Footer({
                 labelStyle={{ minWidth: "66px" }}
                 inputSize={InputSize.i120}
                 textAlign="right"
+                mask={currencyMask}
               />
               <Input
                 label="관리비"
@@ -288,6 +298,7 @@ function Footer({
                 labelStyle={{ minWidth: "76px" }}
                 inputSize={InputSize.i120}
                 textAlign="right"
+                mask={currencyMask}
               />
               <Input
                 label="할인율"
@@ -295,6 +306,7 @@ function Footer({
                 labelStyle={{ minWidth: "52px" }}
                 inputSize={InputSize.i120}
                 textAlign="right"
+                mask={currencyMask}
               />
               <FormGroup style={{ gap: "10px" }}>
                 <CheckBox
@@ -305,6 +317,7 @@ function Footer({
                   register={register("gjJmisuAmt")}
                   inputSize={InputSize.i120}
                   textAlign="right"
+                  mask={currencyMask}
                 />
               </FormGroup>
             </Wrapper>
