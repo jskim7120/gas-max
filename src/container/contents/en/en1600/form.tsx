@@ -200,7 +200,6 @@ const Form = React.forwardRef(
       formValues.swJdate1 = DateWithoutDash(formValues.swJdate1);
       formValues.swJdate2 = DateWithoutDash(formValues.swJdate2);
       formValues.swOutDate = DateWithoutDash(formValues.swOutDate);
-      formValues.swGubun = formValues.swGubunName?.charAt(0);
 
       formValues.swStampFile = image64 && image64;
 
@@ -372,7 +371,7 @@ const Form = React.forwardRef(
           @
           <Select register={register("mailKind")} style={{ marginLeft: "3px" }}>
             {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
+              <option key={idx} value={obj.codeName}>
                 {obj.codeName}
               </option>
             ))}

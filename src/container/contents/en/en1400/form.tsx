@@ -70,7 +70,7 @@ const Form = React.forwardRef(
         });
 
         if (response.status === 200) {
-          return response?.data?.tempCode;
+          return response?.data;
         } else {
           alert(response.response.data?.message);
           resetButtonCombination();
@@ -83,11 +83,11 @@ const Form = React.forwardRef(
 
     const codeChangeHandler = async (aCode: any) => {
       try {
-        const tempCode = await fetchCode11(aCode);
+        const temp = await fetchCode11(aCode);
 
-        if (tempCode !== null) {
+        if (temp !== null) {
           setFocus("bpName");
-          emptyObj.bpCode = tempCode;
+          emptyObj.bpCode = temp.tempCode;
           reset(emptyObj);
         }
       } catch (err: any) {

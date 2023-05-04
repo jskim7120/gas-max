@@ -70,8 +70,9 @@ const Form = React.forwardRef(
         reset((formValues: any) => ({
           ...formValues,
           saupZipcode: addr ? addr?.split("/")[1] : "",
-          saupAddr1: addr ? addr?.split("/")[0] : "",
+          saupAddr2: "",
         }));
+        setSaupAddr1(addr ? addr?.split("/")[0] : "");
       }
     }, [addr]);
 
@@ -79,10 +80,6 @@ const Form = React.forwardRef(
       crud,
       resetForm,
     }));
-
-    const ggg = () => {
-      setFocus("saupAddr2");
-    };
 
     const fetchCode11 = async (code: string) => {
       try {
@@ -328,10 +325,9 @@ const Form = React.forwardRef(
               <DaumAddress
                 setAddress={setAddress}
                 defaultValue={saupAddr1}
-                onClose={ggg}
+                onClose={() => setFocus("saupAddr2")}
               />
               <Input
-                // register={register("saupAddr1")}
                 maxLength="40"
                 style={{ width: "383px" }}
                 value={saupAddr1}

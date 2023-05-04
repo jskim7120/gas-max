@@ -57,7 +57,7 @@ const Form = React.forwardRef(
       try {
         const response: any = await API.get(EN200011);
         if (response.status === 200) {
-          return response?.data?.tempCode;
+          return response?.data;
         } else {
           alert(response.response.data?.message);
           resetButtonCombination();
@@ -72,9 +72,9 @@ const Form = React.forwardRef(
       if (type === "clear") {
         setFocus("ccName");
         try {
-          const tempCode = await fetchCode11();
-          if (tempCode !== null) {
-            emptyObj.ccCode = tempCode;
+          const temp = await fetchCode11();
+          if (temp !== null) {
+            emptyObj.ccCode = temp.tempCode;
             reset(emptyObj);
           }
         } catch (err: any) {

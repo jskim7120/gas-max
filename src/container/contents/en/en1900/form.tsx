@@ -64,7 +64,7 @@ const Form = React.forwardRef(
           params: { areaCode: code },
         });
         if (response.status === 200) {
-          return response?.data?.tempCode;
+          return response?.data;
         } else {
           alert(response.response.data?.message);
           resetButtonCombination();
@@ -77,10 +77,10 @@ const Form = React.forwardRef(
 
     const codeChangeHandler = async (aCode: any) => {
       try {
-        const tempCode = await fetchCode11(aCode);
-        if (tempCode !== null) {
+        const temp = await fetchCode11(aCode);
+        if (temp !== null) {
           setFocus("gubunName");
-          emptyObj.gubunCode = tempCode;
+          emptyObj.gubunCode = temp.tempCode;
           reset(emptyObj);
         }
       } catch (err: any) {

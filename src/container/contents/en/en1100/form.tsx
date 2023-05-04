@@ -63,10 +63,12 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (addr.length > 0) {
-        reset({
+        reset((formValues: any) => ({
+          ...formValues,
           jnZipcode: addr ? addr?.split("/")[1] : "",
           jnAddr2: "",
-        });
+        }));
+
         setJnAddr1(addr ? addr?.split("/")[0] : "");
       }
     }, [addr]);
