@@ -35,6 +35,15 @@ export function removeCommas(data, returnType) {
   return result;
 }
 
+export function removeCommas2(data) {
+  const result =
+    typeof data === "string"
+      ? data.replace(/,/g, "")
+      : String(data).replace(/,/g, "");
+
+  return result;
+}
+
 export function formatMoney(str) {
   const regex = /^\d+(.\d{1,2})?$/;
   if (!regex.test(str)) {

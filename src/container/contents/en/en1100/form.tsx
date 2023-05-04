@@ -15,7 +15,7 @@ import {
 } from "components/form/style";
 import CheckBox from "components/checkbox";
 import DaumAddress from "components/daum";
-import { IJNOTRY } from "./model";
+import { IJNOTRY, emptyObj } from "./model";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
@@ -23,26 +23,28 @@ import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
+  setSelected: any;
   fetchData: any;
   setData: any;
   selectedRowIndex: number;
-  setSelected: any;
-  setSelectedRowIndex: any;
+  setSelectedRowIndex: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
+  resetButtonCombination: Function;
 }
 
 const Form = React.forwardRef(
   (
     {
       selected,
+      setSelected,
       fetchData,
       setData,
       selectedRowIndex,
-      setSelected,
       setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
+      resetButtonCombination,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -74,36 +76,42 @@ const Form = React.forwardRef(
       resetForm,
     }));
 
-    const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
+    const fetchCode11 = async () => {
+      try {
+        const response: any = await API.get(EN110011);
+        if (response.status === 200) {
+          return response?.data;
+        } else {
+          alert(response.response.data?.message);
+          resetButtonCombination();
+        }
+        return null;
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-        if (type === "clear") {
+    const resetForm = async (type: string) => {
+      if (type === "clear") {
+        const temp = await fetchCode11();
+        if (temp !== null) {
           //setFocus("areaName");
           document.getElementsByName("areaName")[0]?.focus();
 
-          const path = EN110011;
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.areaCode = response.data.tempCode;
-              setJnAddr1("");
-              reset(newData);
-            } else {
-              // toast.error(response.response.data?.message, {
-              //   autoClose: 500,
-              // });
-              alert(response.response.data?.message);
-            }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
-          }
-        } else if (type === "reset") {
+          setJnAddr1("");
+          reset({
+            ...emptyObj,
+            ...temp,
+            areaCode: temp.tempCode,
+            jnSekumea: temp.jnSekumea === "Y",
+            jnSegongYn: temp.jnSegongYn === "Y",
+            jnVatSumyn: temp.jnVatSumyn === "Y",
+          });
+        }
+        return;
+      }
+      if (type === "reset") {
+        if (selected !== undefined && Object.keys(selected)?.length > 0) {
           setJnAddr1(selected?.jnAddr1 ? selected?.jnAddr1 : "");
           reset({
             ...selected,
@@ -126,15 +134,10 @@ const Form = React.forwardRef(
             });
             await fetchData("delete");
           } else {
-            // toast.error(response?.response?.message, {
-            //   autoClose: 500,
-            // });
             alert(response?.response?.message);
           }
         } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
+          console.log(err);
         }
       }
 
@@ -173,17 +176,11 @@ const Form = React.forwardRef(
             autoClose: 500,
           });
         } else {
-          //  toast.error(response?.response?.data?.message, { autoClose: 500 });
           alert(response?.response?.data?.message);
         }
       } catch (err: any) {
-        // toast.error(err?.message, { autoClose: 500 });
-        alert(err?.message);
+        console.log(err);
       }
-    };
-
-    const ggg = () => {
-      setFocus("jnAddr2");
     };
 
     return (
@@ -241,14 +238,12 @@ const Form = React.forwardRef(
           />
           <Input
             label="상 호"
-            // labelStyle={{ minWidth: "50px" }}
             register={register("jnSangho")}
             maxLength="26"
             inputSize={InputSize.i150}
           />
           <Input
             label="대 표"
-            // labelStyle={{ minWidth: "50px" }}
             register={register("jnSajang")}
             maxLength="14"
             inputSize={InputSize.i90}
@@ -265,10 +260,9 @@ const Form = React.forwardRef(
           <DaumAddress
             setAddress={setAddress}
             defaultValue={jnAddr1}
-            onClose={ggg}
+            onClose={() => setFocus("jnAddr2")}
           />
           <Input
-            // register={register("jnAddr1")}
             maxLength="40"
             style={{ width: "453px" }}
             value={jnAddr1}
@@ -294,7 +288,6 @@ const Form = React.forwardRef(
           />
           <Input
             label="종 목"
-            // labelStyle={{ minWidth: "75px" }}
             register={register("jnJongmok")}
             inputSize={InputSize.i150}
             maxLength="50"
@@ -310,7 +303,6 @@ const Form = React.forwardRef(
           />
           <Input
             label="대표전화 2"
-            // labelStyle={{ minWidth: "80px" }}
             register={register("jnTel2")}
             inputSize={InputSize.i150}
             maxLength="14"
@@ -318,7 +310,6 @@ const Form = React.forwardRef(
 
           <Input
             label="팩 스"
-            // labelStyle={{ minWidth: "80px" }}
             register={register("jnFax")}
             inputSize={InputSize.i90}
             maxLength="14"
@@ -418,21 +409,21 @@ const Form = React.forwardRef(
           <Wrapper grid col={3} style={{ marginLeft: "12px" }}>
             <FormGroup>
               <CheckBox
-                register={{ ...register("jnSegongYn") }}
+                register={register("jnSegongYn")}
                 title="공급사업자 인쇄안함"
               />
             </FormGroup>
 
             <FormGroup style={{ marginLeft: "10px" }}>
               <CheckBox
-                register={{ ...register("jnVatSumyn") }}
+                register={register("jnVatSumyn")}
                 title="Vat 별도 단가계산"
               />
             </FormGroup>
 
             <FormGroup>
               <CheckBox
-                register={{ ...register("jnSekumea") }}
+                register={register("jnSekumea")}
                 title="수량 단가 인쇄 유무"
               />
             </FormGroup>

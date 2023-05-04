@@ -135,7 +135,7 @@ const Form = React.forwardRef(
       }
     };
 
-    const codeChangeHandler = async (aCode: any) => {
+    const codeChangeHandler = async (aCode: string) => {
       try {
         const tempCode = await fetchCode11(aCode);
         fetchData65(aCode);

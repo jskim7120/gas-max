@@ -11,7 +11,7 @@ import {
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
-import { IJNOSAUP } from "./model";
+import { IJNOSAUP, emptyObj } from "./model";
 import DaumAddress from "components/daum";
 import { SearchIcon, IconHome, IconReceipt } from "components/allSvgIcon";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -26,31 +26,32 @@ import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
 
 interface IForm {
   selected: any;
+  setSelected: any;
   fetchData: any;
   setData: any;
   selectedRowIndex: number;
-  setSelected: any;
-  setSelectedRowIndex: any;
+  setSelectedRowIndex: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
-  setIsCancelBtnDisabled: Function;
+  resetButtonCombination: Function;
 }
 
 const Form = React.forwardRef(
   (
     {
       selected,
+      setSelected,
       fetchData,
       setData,
       selectedRowIndex,
-      setSelected,
       setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      setIsCancelBtnDisabled,
+      resetButtonCombination,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
+    const [areaCode, setAreaCode] = useState("");
     const [addr, setAddress] = useState<string>("");
     const [image, setImage] = useState<{ name: string }>();
     const [image64, setImage64] = useState<any>(null);
@@ -83,36 +84,53 @@ const Form = React.forwardRef(
       setFocus("saupAddr2");
     };
 
-    const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
-        if (type === "clear") {
+    const fetchCode11 = async (code: string) => {
+      try {
+        const response: any = await API.get(EN120011, {
+          params: { areaCode: code },
+        });
+
+        if (response.status === 200) {
+          return response?.data;
+        } else {
+          alert(response.response.data?.message);
+          resetButtonCombination();
+        }
+        return null;
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const codeChangeHandler = async (aCode: string) => {
+      try {
+        const temp = await fetchCode11(aCode);
+
+        if (temp !== null) {
           document.getElementsByName("saupSsno")[0]?.focus();
           //setFocus("saupSsno");
-          const path = EN120011;
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.saupSno = response.data.tempCode;
-              newData.areaCode = selected.areaCode;
-              setSaupAddr1("");
-              reset(newData);
-            } else {
-              // toast.error(response.response.data?.message, {
-              //   autoClose: 500,
-              // });
-              alert(response.response.data?.message);
-            }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
-          }
-        } else if (type === "reset") {
+          emptyObj.saupSno = temp.tempCode;
+          emptyObj.emailKind = temp.emailKind;
+          reset(emptyObj);
+          setSaupAddr1("");
+        }
+      } catch (err: any) {
+        console.log("saupSno generate error", err);
+      }
+    };
+
+    const resetForm = async (type: string) => {
+      if (type === "clear") {
+        await codeChangeHandler(areaCode);
+        return;
+      }
+
+      if (type === "reset") {
+        if (selected !== undefined && Object.keys(selected)?.length > 0) {
           setSaupAddr1(selected.saupAddr1);
+          if (selected?.areaCode !== areaCode) {
+            setAreaCode(selected.areaCode);
+          }
           reset({
             ...selected,
             saupStampQu: selected?.saupStampQu === "Y",
@@ -139,15 +157,10 @@ const Form = React.forwardRef(
 
             await fetchData("delete");
           } else {
-            // toast.error(response?.response?.message, {
-            //   autoClose: 500,
-            // });
             alert(response?.response?.message);
           }
         } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
+          console.log(err);
         }
       }
 
@@ -160,13 +173,16 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? EN1200INSERT : EN1200UPDATE;
       const formValues = getValues();
+      isAddBtnClicked && (formValues.areaCode = areaCode);
 
       formValues.saupStampQu = formValues.saupStampQu ? "Y" : "N";
       formValues.saupStampEs = formValues.saupStampEs ? "Y" : "N";
       formValues.saupStampSe = formValues.saupStampSe ? "Y" : "N";
       formValues.saupDate = DateWithoutDash(formValues.saupDate);
+
       formValues.saupEdiEmail =
-        formValues.saupEdiEmail && formValues.saupEdiEmail.trim();
+        formValues.saupEdiEmail &&
+        formValues.saupEdiEmail.trim() + "@" + formValues.emailKind;
 
       formValues.saupStampImg = image64 && image64;
 
@@ -177,7 +193,6 @@ const Form = React.forwardRef(
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
-            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -189,15 +204,10 @@ const Form = React.forwardRef(
             autoClose: 500,
           });
         } else {
-          // toast.error(response.response.data?.message, {
-          //   autoClose: 500,
-          // });
           alert(response.response.data?.message);
         }
       } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
+        console.log(err);
       }
     };
 
@@ -212,31 +222,6 @@ const Form = React.forwardRef(
         setImage64(response);
       } catch (err: any) {
         console.log("image convert 64 error occured.", err);
-      }
-    };
-
-    const handleSelectCode = async (event: any) => {
-      let newData: any = {};
-      const path = EN120011;
-      try {
-        const response: any = await API.get(path, {
-          params: { areaCode: event.target.value },
-        });
-        if (response.status === 200) {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          newData.saupSno = response.data.tempCode;
-          newData.areaCode = event.target.value;
-
-          reset(newData);
-        } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
-        }
-      } catch (err: any) {
-        console.log("areaCode select error", err);
       }
     };
 
@@ -266,8 +251,11 @@ const Form = React.forwardRef(
               <FormGroup>
                 <Label>영 업 소</Label>
                 <Select
-                  register={register("areaCode")}
-                  onChange={handleSelectCode}
+                  value={areaCode}
+                  onChange={(e) => {
+                    setAreaCode(e.target.value);
+                    codeChangeHandler(e.target.value);
+                  }}
                   width={InputSize.i175}
                   disabled={!isAddBtnClicked}
                 >
@@ -558,9 +546,9 @@ const Form = React.forwardRef(
                 inputSize={InputSize.i200}
               />
               <p style={{ margin: "0 1px" }}>@</p>
-              <Select register={register("saupEdiId")}>
+              <Select register={register("emailKind")}>
                 {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
+                  <option key={idx} value={obj.codeName}>
                     {obj.codeName}
                   </option>
                 ))}

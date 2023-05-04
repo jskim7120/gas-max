@@ -14,7 +14,11 @@ import {
   Label,
 } from "components/form/style";
 import { IBUPUM, emptyObj } from "./model";
-import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
+import {
+  currencyMask,
+  formatCurrencyRemoveComma,
+  removeCommas,
+} from "helpers/currency";
 import { InputSize } from "components/componentsType";
 
 interface IForm {
@@ -64,7 +68,7 @@ const Form = React.forwardRef(
         const response: any = await API.get(EN140011, {
           params: { areaCode: code },
         });
-        console.log("resposn::", response);
+
         if (response.status === 200) {
           return response?.data?.tempCode;
         } else {
@@ -86,61 +90,30 @@ const Form = React.forwardRef(
           emptyObj.bpCode = tempCode;
           reset(emptyObj);
         }
-        // const response: any = await API.get(path, {
-        //   params: { areaCode: event.target.value },
-        // });
-        // if (response.status === 200) {
-        //   for (const [key, value] of Object.entries(selected)) {
-        //     newData[key] = null;
-        //   }
-        //   newData.bpCode = response.data.tempCode;
-        //   newData.areaCode = event.target.value;
-        //   reset(newData);
-        //   document.getElementById("bpName")?.focus();
-        // } else {
-        //   toast.error(response.response.data?.message, {
-        //     autoClose: 500,
-        //   });
-        // }
       } catch (err: any) {
-        console.log("areaCode select error", err);
+        console.log("bpCode generate error", err);
       }
     };
 
     const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
-        if (type === "clear") {
-          document.getElementById("bpName")?.focus();
-          const path = EN140011;
+      if (type === "clear") {
+        await codeChangeHandler(areaCode);
+        return;
+      }
 
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.bpCode = response.data.tempCode;
-              newData.areaCode = selected.areaCode;
-              reset(newData);
-            } else {
-              alert(response.response.data?.message);
-            }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
-          }
-        } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
+      if (type === "reset") {
+        if (selected !== undefined && Object.keys(selected)?.length > 0) {
+          if (areaCode !== selected.areaCode) {
+            setAreaCode(selected.areaCode);
           }
           reset({
-            ...newData,
+            ...selected,
           });
         }
+        return;
       }
     };
+
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
@@ -169,12 +142,9 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? EN1400INSERT : EN1400UPDATE;
       const formValues = getValues();
-      formValues.bpIndanga = formValues.bpIndanga
-        ? formatCurrencyRemoveComma(formValues.bpIndanga)
-        : "";
-      formValues.bpOutdanga = formValues.bpOutdanga
-        ? formatCurrencyRemoveComma(formValues.bpOutdanga)
-        : "";
+      isAddBtnClicked && (formValues.areaCode = areaCode);
+      formValues.bpIndanga = removeCommas(formValues.bpIndanga).toString();
+      formValues.bpOutdanga = removeCommas(formValues.bpOutdanga).toString();
 
       try {
         const response: any = await API.post(path, formValues);
@@ -194,14 +164,10 @@ const Form = React.forwardRef(
             autoClose: 500,
           });
         } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
+          alert(response.response.data?.message);
         }
       } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
+        console.log(err);
       }
     };
 

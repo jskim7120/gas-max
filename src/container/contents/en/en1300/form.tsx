@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
+import React, { useImperativeHandle, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -9,7 +9,7 @@ import {
   RadioButton,
   RadioButtonLabel,
 } from "components/radioButton/style";
-import { ISANGPUM } from "./model";
+import { ISANGPUM, emptyObj } from "./model";
 import {
   Input,
   Select,
@@ -20,18 +20,18 @@ import {
   Label,
 } from "components/form/style";
 import { InputSize } from "components/componentsType";
-import { formatCurrencyRemoveComma, currencyMask } from "helpers/currency";
+import { currencyMask, removeCommas2 } from "helpers/currency";
 
 interface IForm {
   selected: any;
+  setSelected: any;
   fetchData: any;
   setData: any;
   selectedRowIndex: number;
-  setSelected: any;
-  setSelectedRowIndex: any;
+  setSelectedRowIndex: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
-  setIsCancelBtnDisabled: Function;
+  resetButtonCombination: Function;
 }
 
 const radioOptions = [
@@ -49,23 +49,24 @@ const Form = React.forwardRef(
   (
     {
       selected,
+      setSelected,
       fetchData,
       setData,
       selectedRowIndex,
-      setSelected,
       setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      setIsCancelBtnDisabled,
+      resetButtonCombination,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
+    const [areaCode, setAreaCode] = useState("");
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1300",
     });
 
-    const { register, handleSubmit, reset, getValues, control } =
+    const { register, handleSubmit, reset, getValues, control, setFocus } =
       useForm<ISANGPUM>({
         mode: "onChange",
       });
@@ -75,49 +76,66 @@ const Form = React.forwardRef(
       resetForm,
     }));
 
-    const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
-        if (type === "clear") {
-          document.getElementById("jpName")?.focus();
-          const path = EN130011;
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.jpCode = response.data.tempCode;
-              newData.areaCode = selected.areaCode;
-              newData.jpGasType = response.data.jpGasType;
-              newData.jpGasuse = response.data.jpGasuse;
-              newData.jpGubun = response.data.jpGubun;
-              newData.jpJaegoYn = response.data.jpJaegoYn;
-              newData.jpKgDanwi = response.data.jpKgDanwi;
-              newData.jpKind = response.data.jpKind;
-              reset(newData);
-            } else {
-              // toast.error(response.response.data?.message, {
-              //   autoClose: 500,
-              // });
-              alert(response.response.data?.message);
-            }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
-          }
-        } else if (type === "reset") {
-          reset({
-            ...selected,
-            swWorkOut: selected?.swWorkOut === "Y",
-          });
+    const fetchCode11 = async (code: string) => {
+      try {
+        const response: any = await API.get(EN130011, {
+          params: { areaCode: code },
+        });
+
+        if (response.status === 200) {
+          return response?.data;
+        } else {
+          alert(response.response.data?.message);
+          resetButtonCombination();
         }
+        return null;
+      } catch (err) {
+        console.log(err);
       }
     };
+
+    const codeChangeHandler = async (aCode: any) => {
+      try {
+        const temp = await fetchCode11(aCode);
+
+        if (temp !== null) {
+          setFocus("jpName");
+
+          reset({
+            ...emptyObj,
+            ...temp,
+            jpCode: temp.tempCode,
+            jpJaegoYn: temp.jpJaegoYn === "Y",
+          });
+        }
+      } catch (err: any) {
+        console.log("jpCode generate error", err);
+      }
+    };
+
+    const resetForm = async (type: string) => {
+      if (type === "clear") {
+        await codeChangeHandler(areaCode);
+        return;
+      }
+
+      if (type === "reset") {
+        if (selected !== undefined && Object.keys(selected)?.length > 0) {
+          if (selected?.areaCode !== areaCode) {
+            setAreaCode(selected.areaCode);
+          }
+          reset({
+            ...selected,
+            jpJaegoYn: selected?.jpJaegoYn === "Y",
+          });
+        }
+        return;
+      }
+    };
+
     const crud = async (type: string | null) => {
       if (type === "delete") {
-        const formValues = getValues();
+        const formValues: any = getValues();
         delete formValues.jpIndanga;
         delete formValues.jpOutdanga;
         delete formValues.jpIntong;
@@ -132,15 +150,10 @@ const Form = React.forwardRef(
             });
             await fetchData("delete");
           } else {
-            // toast.error(response?.response?.message, {
-            //   autoClose: 500,
-            // });
             alert(response?.response?.message);
           }
         } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
+          console.log(err);
         }
       }
 
@@ -153,21 +166,19 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? EN1300INSERT : EN1300UPDATE;
       const formValues = getValues();
-      formValues.jpOutdanga = formValues.jpOutdanga
-        ? formatCurrencyRemoveComma(formValues.jpOutdanga)
-        : "";
-      formValues.jpIndanga = formValues.jpIndanga
-        ? formatCurrencyRemoveComma(formValues.jpIndanga)
-        : "";
-      formValues.jpIntong = formValues.jpIntong
-        ? formatCurrencyRemoveComma(formValues.jpIntong)
-        : "";
-      formValues.jpOuttong = formValues.jpOuttong
-        ? formatCurrencyRemoveComma(formValues.jpOuttong)
-        : "";
-      formValues.jpBaedal = formValues.jpBaedal
-        ? formatCurrencyRemoveComma(formValues.jpBaedal)
-        : "";
+
+      isAddBtnClicked && (formValues.areaCode = areaCode);
+      formValues.jpJaegoYn = formValues.jpJaegoYn ? "Y" : "N";
+      formValues.jpOutdanga =
+        formValues.jpOutdanga && +removeCommas2(formValues.jpOutdanga);
+      formValues.jpIndanga =
+        formValues.jpIndanga && +removeCommas2(formValues.jpIndanga);
+      formValues.jpIntong =
+        formValues.jpIntong && +removeCommas2(formValues.jpIntong);
+      formValues.jpOuttong =
+        formValues.jpOuttong && +removeCommas2(formValues.jpOuttong);
+      formValues.jpBaedal =
+        formValues.jpBaedal && +removeCommas2(formValues.jpBaedal);
 
       try {
         const response: any = await API.post(path, formValues);
@@ -177,7 +188,6 @@ const Form = React.forwardRef(
             setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
-            setIsCancelBtnDisabled(true);
           } else {
             setData((prev: any) => {
               prev[selectedRowIndex] = formValues;
@@ -189,45 +199,10 @@ const Form = React.forwardRef(
             autoClose: 500,
           });
         } else {
-          toast.error(response?.message, {
-            autoClose: 500,
-          });
+          alert(response.response.data?.message);
         }
       } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
-      }
-    };
-
-    const handleSelectCode = async (event: any) => {
-      let newData: any = {};
-      const path = EN130011;
-      try {
-        const response: any = await API.get(path, {
-          params: { areaCode: event.target.value },
-        });
-        if (response.status === 200) {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          newData.jpCode = response.data.tempCode;
-          newData.areaCode = event.target.value;
-          newData.jpGasType = response.data.jpGasType;
-          newData.jpGasuse = response.data.jpGasuse;
-          newData.jpGubun = response.data.jpGubun;
-          newData.jpJaegoYn = response.data.jpJaegoYn;
-          newData.jpKgDanwi = response.data.jpKgDanwi;
-          newData.jpKind = response.data.jpKind;
-          reset(newData);
-          document.getElementById("jpName")?.focus();
-        } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
-        }
-      } catch (err: any) {
-        console.log("areaCode select error", err);
+        console.log(err);
       }
     };
 
@@ -242,8 +217,11 @@ const Form = React.forwardRef(
             <Label>영 업 소</Label>
             <Select
               width={InputSize.i130}
-              register={register("areaCode")}
-              onChange={handleSelectCode}
+              value={areaCode}
+              onChange={(e) => {
+                setAreaCode(e.target.value);
+                codeChangeHandler(e.target.value);
+              }}
               disabled={!isAddBtnClicked}
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
@@ -498,14 +476,8 @@ const Form = React.forwardRef(
                 <RadioButton
                   type="radio"
                   value={option.id}
-                  {...register(
-                    `jpJaegoYn`
-                    // , {
-                    //   // required: "required",
-                    // }
-                  )}
+                  {...register(`jpJaegoYn`)}
                   id={option.id}
-                  // onChange={() => console.log(option.label)}
                 />
                 <RadioButtonLabel htmlFor={`${option.label}`}>
                   {option.label}
