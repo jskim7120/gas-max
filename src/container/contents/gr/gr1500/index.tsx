@@ -38,14 +38,13 @@ function GR1500({
   const [data, setData] = useState([]);
   const [dataSecond, setDataSecond] = useState([]);
   const [selected, setSelected] = useState<any>({});
+  const [selected2, setSelected2] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
     functionName: "GR1500",
   });
-
-  console.log(dataCommonDic);
 
   useEffect(() => {
     if (dataCommonDic !== undefined && dataCommonDic) {
@@ -103,9 +102,10 @@ function GR1500({
 
       if (data) {
         setDataSecond(data);
-        setLoading2(false);
-        setSelectedRowIndex(0);
+        setSelected2(data[0]);
       }
+      setSelectedRowIndex(0);
+      setLoading2(false);
     } catch (err) {
       console.log("GR1500 data search fetch error =======>", err);
     }
@@ -284,7 +284,7 @@ function GR1500({
             data={dataSecond.length > 0 && dataSecond}
             columns={columnsSecond}
             fields={fieldsSecond}
-            setSelected={setSelected}
+            setSelected={setSelected2}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             // evenFill
@@ -294,12 +294,14 @@ function GR1500({
         <RightSide>
           <Form
             selected={selected}
+            selected2={selected2}
             ref={formRef}
             fetchData={fetchDataSearch1}
             setData={setData}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
+            setSelected2={setSelected2}
             menuId={menuId}
           />
         </RightSide>

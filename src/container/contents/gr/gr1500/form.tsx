@@ -1,4 +1,9 @@
-import React, { useImperativeHandle, useEffect, useState, BaseSyntheticEvent } from "react";
+import React, {
+  useImperativeHandle,
+  useEffect,
+  useState,
+  BaseSyntheticEvent,
+} from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "app/store";
 import { toast } from "react-toastify";
@@ -11,7 +16,13 @@ import {
   addDeleteMenuId,
   setIsDelete,
 } from "app/state/modal/modalSlice";
-import { Plus, ResetGray, Trash, Update, MagnifyingGlass } from "components/allSvgIcon";
+import {
+  Plus,
+  ResetGray,
+  Trash,
+  Update,
+  MagnifyingGlass,
+} from "components/allSvgIcon";
 import { FormHeadCnt, DividerGR } from "./style";
 import {} from "app/path";
 import { IGR1500SEARCH } from "./model";
@@ -32,10 +43,12 @@ import { SearchBtn } from "components/daum";
 
 interface IForm {
   selected: any;
+  selected2: any;
   fetchData: any;
   setData: any;
   selectedRowIndex: number;
-  setSelected: any;
+  setSelected: Function;
+  setSelected2: Function;
   setSelectedRowIndex: any;
   menuId: string;
 }
@@ -44,10 +57,12 @@ const Form = React.forwardRef(
   (
     {
       selected,
+      selected2,
       fetchData,
       setData,
       selectedRowIndex,
       setSelected,
+      setSelected2,
       setSelectedRowIndex,
       menuId,
     }: IForm,
@@ -57,10 +72,10 @@ const Form = React.forwardRef(
     const [isCancelBtnDisabled, setIsCancelBtnDisabled] =
       useState<boolean>(true);
 
-    const[buMisu,setBuMisu] = useState();
-    const[bjOutkum, setBjOutkum] = useState();
-    const[bjDc, setBjDc] = useState();
-    const[baNow,setBaNow] = useState();
+    const [buMisu, setBuMisu] = useState();
+    const [bjOutkum, setBjOutkum] = useState();
+    const [bjDc, setBjDc] = useState();
+    const [baNow, setBaNow] = useState();
     const dispatch = useDispatch();
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -72,12 +87,17 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {
-        reset({
-          ...selected,
-        });
+        resetForm("reset");
       }
       setIsAddBtnClicked(false);
     }, [selected]);
+
+    useEffect(() => {
+      if (JSON.stringify(selected2) !== "{}") {
+        resetForm2("reset");
+      }
+      setIsAddBtnClicked(false);
+    }, [selected2]);
 
     useEffect(() => {
       if (isDelete.menuId === menuId && isDelete.isDelete) {
@@ -95,6 +115,11 @@ const Form = React.forwardRef(
       resetForm,
       setIsAddBtnClicked,
     }));
+    useImperativeHandle<HTMLFormElement, any>(ref, () => ({
+      crud,
+      resetForm2,
+      setIsAddBtnClicked,
+    }));
 
     const resetForm = async (type: string) => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {
@@ -104,16 +129,39 @@ const Form = React.forwardRef(
             newData[key] = null;
           }
           reset({ ...newData });
-        } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
+        }
+        if (type === "reset") {
+          setBuMisu(selected.curUnpay);
           reset({
-            ...newData,
+            bjBuName: selected.buCode,
+            buMisu: selected.curUnpay,
           });
         }
       }
     };
+    const resetForm2 = async (type: string) => {
+      if (selected2 !== undefined && JSON.stringify(selected2) !== "{}") {
+        let newData: any = {};
+        if (type === "clear") {
+          for (const [key, value] of Object.entries(selected2)) {
+            newData[key] = null;
+          }
+          reset({ ...newData });
+        }
+        if (type === "reset") {
+          setBjOutkum(selected2.bjOutkum);
+          setBjDc(selected2.bjDc);
+          //setBaNow(selected.curUnpay);
+          reset({
+            bjDate: selected2.bjDate,
+            bjOutkum: selected2.bjOutkum,
+            bjDc: selected2.bjDc,
+            //BaNow: selected2.buBigo,
+          });
+        }
+      }
+    };
+
     const crud = async (type: string | null) => {
       //   if (type === "delete") {
       //     const formValues = getValues();
@@ -226,8 +274,8 @@ const Form = React.forwardRef(
               register={register("bjBuCode")}
               inputSize={InputSize.i150}
             />
-            <SearchBtn type="button" onClick={() => { }}>
-              <MagnifyingGlass/>
+            <SearchBtn type="button" onClick={() => {}}>
+              <MagnifyingGlass />
             </SearchBtn>
           </FormGroup>
           <FormGroup>
@@ -251,7 +299,6 @@ const Form = React.forwardRef(
               textAlign="center"
               register={register("buBankno")}
               style={{ width: "84px" }}
-              
             />
           </Wrapper>
           <Wrapper>
@@ -281,7 +328,7 @@ const Form = React.forwardRef(
               label="미지급액"
               //register={register("buMisu")}
               value={buMisu}
-              onChange={(e:any)=>setBuMisu(e.target.value)}
+              onChange={(e: any) => setBuMisu(e.target.value)}
               inputSize={InputSize.i150}
               mask={currencyMask}
             />
@@ -309,7 +356,7 @@ const Form = React.forwardRef(
               textAlign="right"
               //register={register("bjOutkum")}
               value={bjOutkum}
-              onChange={(e:BaseSyntheticEvent)=>setBjOutkum(e.target.value)}
+              onChange={(e: BaseSyntheticEvent) => setBjOutkum(e.target.value)}
               inputSize={InputSize.i150}
               mask={currencyMask}
             />
@@ -320,19 +367,19 @@ const Form = React.forwardRef(
               label="D / C"
               //register={register("bjDc")}
               value={bjDc}
-              onChange={(e:any)=>setBjDc(e.target.value)}
+              onChange={(e: any) => setBjDc(e.target.value)}
               inputSize={InputSize.i150}
               mask={currencyMask}
             />
           </Wrapper>
           <Wrapper>
             {/* // bjDc = buMisu - bjOutkum - bjDc */}
-          <Input
+            <Input
               textAlign="right"
               label="지금후 잔액"
               // register={register("bjDc")}
               value={baNow}
-              onChange={(e:any)=>setBaNow(e.target.value)}
+              onChange={(e: any) => setBaNow(e.target.value)}
               inputSize={InputSize.i150}
               mask={currencyMask}
             />

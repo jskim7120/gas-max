@@ -65,7 +65,7 @@ const Form = React.forwardRef(
       useForm<IPTFORMMODEL>({ mode: "onChange" });
 
     useEffect(() => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && Object.keys(selected)?.length > 0) {
         resetForm("reset");
       }
     }, [selected]);
@@ -79,38 +79,34 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = async (type: string) => {
-      console.log(dataCommonDic);
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
-        if (type === "clear") {
-          document.getElementById("bpName")?.focus();
-          const path = EN140011;
+      let newData: any = {};
+      if (type === "clear") {
+        document.getElementById("bpName")?.focus();
+        const path = EN140011;
 
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.bpCode = response.data.tempCode;
-              newData.areaCode = selected.areaCode;
-              reset(newData);
-            } else {
-              toast.error(response.response.data?.message, {
-                autoClose: 500,
-              });
+        try {
+          const response: any = await API.get(path, {
+            params: { areaCode: selected.areaCode },
+          });
+          if (response.status === 200) {
+            for (const [key, value] of Object.entries(selected)) {
+              newData[key] = null;
             }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
+            newData.bpCode = response.data.tempCode;
+            newData.areaCode = selected.areaCode;
+            reset(newData);
+          } else {
+            toast.error(response.response.data?.message, {
+              autoClose: 500,
+            });
           }
-        } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
+        } catch (err: any) {
+          console.log("areaCode select error", err);
+        }
+      } else if (type === "reset") {
+        if (selected !== undefined && JSON.stringify(selected) !== "{}") {
           reset({
-            ...newData,
+            ...selected,
           });
         }
       }

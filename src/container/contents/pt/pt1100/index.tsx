@@ -73,6 +73,7 @@ function PT1100({
       resetSearchForm();
     }
   }, [dataCommonDic]);
+
   useEffect(() => {
     fetch65Data(selected);
   }, [selected]);
