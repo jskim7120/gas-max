@@ -34,7 +34,7 @@ export const fields = [
     dataType: ValueType.NUMBER,
   },
   {
-    fieldName: "curUnpa",
+    fieldName: "curUnpay",
     dataType: ValueType.NUMBER,
   },
 ];
@@ -138,8 +138,8 @@ export const columns = [
     numberFormat: "#,##0",
   },
   {
-    name: "curUnpa",
-    fieldName: "curUnpa",
+    name: "curUnpay",
+    fieldName: "curUnpay",
     type: "data",
     width: "80",
     header: {
