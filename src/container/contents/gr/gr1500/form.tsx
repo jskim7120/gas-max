@@ -157,6 +157,8 @@ const Form = React.forwardRef(
             bjOutkum: selected2.bjOutkum,
             bjDc: selected2.bjDc,
             //BaNow: selected2.buBigo,
+            bjAcbCode: selected2.bjOuttypName,
+            bjBigo: selected2.bjBigo,
           });
         }
       }
