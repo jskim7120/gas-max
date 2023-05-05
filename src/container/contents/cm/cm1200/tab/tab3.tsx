@@ -128,82 +128,89 @@ function Tab3({
     },
   ];
   return (
-    <div className="tab3">
-      <FormGroup>
-        <Label style={{ minWidth: "auto" }}>용기시설</Label>
-        <Wrapper style={{ marginBottom: "5px" }}>
-          <FormGroup>
-            {[
-              { name: "일반", value: "Y" },
-              { name: "싸이폰", value: "N" },
-            ].map((option, index) => {
-              return (
-                <Item key={index}>
-                  <RadioButton
-                    type="radio"
-                    value={index}
-                    {...register("cuCylinderType")}
-                    id={option.value}
-                  />
-                  <RadioButtonLabel htmlFor={``}>
-                    {option.name}
-                  </RadioButtonLabel>
-                </Item>
-              );
-            })}
-          </FormGroup>
+    <form autoComplete="off">
+      <div className="tab3">
+        <FormGroup>
+          <Label style={{ minWidth: "auto" }}>용기시설</Label>
+          <Wrapper style={{ marginBottom: "5px" }}>
+            <FormGroup>
+              {[
+                { name: "일반", value: "Y" },
+                { name: "싸이폰", value: "N" },
+              ].map((option, index) => {
+                return (
+                  <Item key={index}>
+                    <RadioButton
+                      type="radio"
+                      value={index}
+                      {...register("cuCylinderType")}
+                      id={option.value}
+                    />
+                    <RadioButtonLabel htmlFor={``}>
+                      {option.name}
+                    </RadioButtonLabel>
+                  </Item>
+                );
+              })}
+            </FormGroup>
 
-          <FormGroup>
-            <Label style={{ minWidth: "80px" }}>용기수량</Label>
-            <CSelect {...register("cuCylinderName")} width={InputSize.i100}>
-              {dataCommonDic?.cuCylinderName?.map((obj: any, index: number) => (
-                <option key={index} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </CSelect>
-            <p>x</p>
-            <Input
-              register={register("cuCylinderQty")}
-              inputSize={InputSize.xs}
-            />
-            <p>개</p>
-          </FormGroup>
-          <FormGroup>
-            <Label style={{ minWidth: "200px" }}>
-              발신기코드 / 절체고객코드
-            </Label>
-            <Input register={register("cuTransmCd")} inputSize={InputSize.sm} />
-            <Input
-              register={register("cuTransmCuCd")}
-              inputSize={InputSize.sm}
-            />
-            <SearchBtn
-              type="button"
-              onClick={() => console.log("cuTransmCuCd")}
-            >
-              <MagnifyingGlass />
-            </SearchBtn>
-          </FormGroup>
-        </Wrapper>
-      </FormGroup>
+            <FormGroup>
+              <Label style={{ minWidth: "80px" }}>용기수량</Label>
+              <CSelect {...register("cuCylinderName")} width={InputSize.i100}>
+                {dataCommonDic?.cuCylinderName?.map(
+                  (obj: any, index: number) => (
+                    <option key={index} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  )
+                )}
+              </CSelect>
+              <p>x</p>
+              <Input
+                register={register("cuCylinderQty")}
+                inputSize={InputSize.xs}
+              />
+              <p>개</p>
+            </FormGroup>
+            <FormGroup>
+              <Label style={{ minWidth: "200px" }}>
+                발신기코드 / 절체고객코드
+              </Label>
+              <Input
+                register={register("cuTransmCd")}
+                inputSize={InputSize.sm}
+              />
+              <Input
+                register={register("cuTransmCuCd")}
+                inputSize={InputSize.sm}
+              />
+              <SearchBtn
+                type="button"
+                onClick={() => console.log("cuTransmCuCd")}
+              >
+                <MagnifyingGlass />
+              </SearchBtn>
+            </FormGroup>
+          </Wrapper>
+        </FormGroup>
 
-      <Table
-        className="no-space"
-        tableHeader={[
-          "기화기",
-          "제조사",
-          "용량(kg)",
-          "제조번호",
-          "제작년월",
-          "전원",
-          "장치검사",
-        ]}
-        style={{ overflowX: "visible" }}
-        tableData={tableData}
-        onClick={(item) => console.log("table", item)}
-      />
-    </div>
+        <Table
+          className="no-space"
+          tableHeader={[
+            "기화기",
+            "제조사",
+            "용량(kg)",
+            "제조번호",
+            "제작년월",
+            "전원",
+            "장치검사",
+          ]}
+          style={{ overflowX: "visible" }}
+          tableData={tableData}
+          onClick={(item) => console.log("table", item)}
+        />
+      </div>
+    </form>
   );
 }
 

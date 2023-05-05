@@ -205,42 +205,44 @@ function TableData({
   ];
   return (
     <>
-      <Field flex style={{ justifyContent: "space-between" }}>
-        <Field flex>
-          <Field>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <form autoComplete="off">
+        <Field flex style={{ justifyContent: "space-between" }}>
+          <Field flex>
+            <Field>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <PersonInfoText
+                  text="LPG 매입 단가"
+                  style={{
+                    marginBottom: "6px",
+                    marginTop: "7px",
+                  }}
+                />
+                <InfoText style={{ marginTop: "3px" }} text="Vat 포함 가격" />
+              </div>
+              <Table
+                className="table1"
+                tableHeader={["구분", "kg 단가", "수송비", "합계"]}
+                tableData={data0}
+              />
+            </Field>
+            <Field style={{ marginLeft: "30px" }}>
               <PersonInfoText
-                text="LPG 매입 단가"
+                text="무료 충전 품목"
                 style={{
                   marginBottom: "6px",
                   marginTop: "7px",
+                  marginLeft: "4px",
                 }}
               />
-              <InfoText style={{ marginTop: "3px" }} text="Vat 포함 가격" />
-            </div>
-            <Table
-              className="table1"
-              tableHeader={["구분", "kg 단가", "수송비", "합계"]}
-              tableData={data0}
-            />
-          </Field>
-          <Field style={{ marginLeft: "30px" }}>
-            <PersonInfoText
-              text="무료 충전 품목"
-              style={{
-                marginBottom: "6px",
-                marginTop: "7px",
-                marginLeft: "4px",
-              }}
-            />
-            <Table
-              className="table2"
-              tableHeader={["품목"]}
-              tableData={data1}
-            />
+              <Table
+                className="table2"
+                tableHeader={["품목"]}
+                tableData={data1}
+              />
+            </Field>
           </Field>
         </Field>
-      </Field>
+      </form>
     </>
   );
 }

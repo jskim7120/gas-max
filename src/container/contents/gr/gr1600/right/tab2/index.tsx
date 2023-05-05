@@ -143,7 +143,7 @@ function Tab2({
           alignItems: "baseline",
         }}
       >
-        <form>
+        <form autoComplete="off">
           <Wrapper style={{ alignItems: "center" }}>
             <FormGroup style={{ alignItems: "center" }}>
               <Label style={{ background: "transparent" }}>조회구분</Label>

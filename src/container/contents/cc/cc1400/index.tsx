@@ -213,82 +213,84 @@ function CC1400({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
-          <SearchWrapper style={{ height: "35px" }}>
-            <FormGroup>
-              <Label style={{ minWidth: "auto" }}>기간</Label>
-              <Controller
-                control={control}
-                {...register("sDateF")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                  />
-                )}
-              />
-              <p
-                style={{
-                  width: "auto",
-                  display: "block",
-                  textAlign: "center",
-                }}
-              >
-                ~
-              </p>
-              <Controller
-                control={control}
-                {...register("sDateT")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                  />
-                )}
-              />
+          <form autoComplete="off">
+            <SearchWrapper style={{ height: "35px" }}>
+              <FormGroup>
+                <Label style={{ minWidth: "auto" }}>기간</Label>
+                <Controller
+                  control={control}
+                  {...register("sDateF")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <CustomDatePicker
+                      value={value}
+                      onChange={onChange}
+                      name={name}
+                    />
+                  )}
+                />
+                <p
+                  style={{
+                    width: "auto",
+                    display: "block",
+                    textAlign: "center",
+                  }}
+                >
+                  ~
+                </p>
+                <Controller
+                  control={control}
+                  {...register("sDateT")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <CustomDatePicker
+                      value={value}
+                      onChange={onChange}
+                      name={name}
+                    />
+                  )}
+                />
 
-              <Label>사원</Label>
-              <Select register={register("sSwCode")} width={InputSize.i120}>
-                {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
+                <Label>사원</Label>
+                <Select register={register("sSwCode")} width={InputSize.i120}>
+                  {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
 
-              <Button
-                text="검색"
-                icon={!loading && <MagnifyingGlass />}
-                type="button"
-                color={ButtonColor.DANGER}
-                onClick={handleSubmit(submit)}
-                style={{ marginLeft: "30px" }}
-                loader={
-                  loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={16}
-                        style={{ marginRight: "10px" }}
-                        borderWidth="2px"
-                      />
-                    </>
-                  )
-                }
-              />
-              <Button
-                text="취소"
-                icon={<ResetGray />}
-                style={{ marginLeft: "5px" }}
-                color={ButtonColor.LIGHT}
-                onClick={() => {
-                  resetSearchForm();
-                  setData([]);
-                }}
-              />
-            </FormGroup>
-          </SearchWrapper>
+                <Button
+                  text="검색"
+                  icon={!loading && <MagnifyingGlass />}
+                  type="button"
+                  color={ButtonColor.DANGER}
+                  onClick={handleSubmit(submit)}
+                  style={{ marginLeft: "30px" }}
+                  loader={
+                    loading && (
+                      <>
+                        <Loader
+                          color="white"
+                          size={16}
+                          style={{ marginRight: "10px" }}
+                          borderWidth="2px"
+                        />
+                      </>
+                    )
+                  }
+                />
+                <Button
+                  text="취소"
+                  icon={<ResetGray />}
+                  style={{ marginLeft: "5px" }}
+                  color={ButtonColor.LIGHT}
+                  onClick={() => {
+                    resetSearchForm();
+                    setData([]);
+                  }}
+                />
+              </FormGroup>
+            </SearchWrapper>
+          </form>
           <GridLeft
             areaCode={ownAreaCode}
             data={data}

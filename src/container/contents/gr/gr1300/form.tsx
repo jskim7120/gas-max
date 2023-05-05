@@ -450,7 +450,7 @@ function Form({
         width: "900px",
       }}
     >
-      <form>
+      <form autoComplete="off">
         <SearchWrapper
           className="h35"
           style={{

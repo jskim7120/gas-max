@@ -254,95 +254,97 @@ function Tab2({
     },
   ];
   return (
-    <div className="tab2">
-      <Wrapper style={{ marginBottom: "5px" }}>
-        <FormGroup>
-          <Label style={{ minWidth: "94px" }}>공급시설구분</Label>
-          {[
-            { name: "벌크 공급", value: "Y" },
-            { name: "용기 공급", value: "N" },
-          ].map((option, index) => {
-            return (
-              <Item key={index}>
-                <RadioButton
-                  type="radio"
-                  value={option.value}
-                  {...register("cuTankYn")}
-                  id={option.value}
+    <form autoComplete="off">
+      <div className="tab2">
+        <Wrapper style={{ marginBottom: "5px" }}>
+          <FormGroup>
+            <Label style={{ minWidth: "94px" }}>공급시설구분</Label>
+            {[
+              { name: "벌크 공급", value: "Y" },
+              { name: "용기 공급", value: "N" },
+            ].map((option, index) => {
+              return (
+                <Item key={index}>
+                  <RadioButton
+                    type="radio"
+                    value={option.value}
+                    {...register("cuTankYn")}
+                    id={option.value}
+                  />
+                  <RadioButtonLabel htmlFor={`${option.value}`}>
+                    {option.name}
+                  </RadioButtonLabel>
+                </Item>
+              );
+            })}
+          </FormGroup>
+          <FormGroup>
+            <Label>완성 검사일</Label>
+            <Controller
+              control={control}
+              {...register("cuFinishDate")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  style={{ width: "110px" }}
                 />
-                <RadioButtonLabel htmlFor={`${option.value}`}>
-                  {option.name}
-                </RadioButtonLabel>
-              </Item>
-            );
-          })}
-        </FormGroup>
-        <FormGroup>
-          <Label>완성 검사일</Label>
-          <Controller
-            control={control}
-            {...register("cuFinishDate")}
-            render={({ field: { onChange, value, name } }) => (
-              <CustomDatePicker
-                value={value}
-                onChange={onChange}
-                name={name}
-                style={{ width: "110px" }}
-              />
-            )}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label>정기 검사일</Label>
-          <Controller
-            control={control}
-            {...register("cuCircuitDate")}
-            render={({ field: { onChange, value, name } }) => (
-              <CustomDatePicker
-                value={value}
-                onChange={onChange}
-                name={name}
-                style={{ width: "110px" }}
-              />
-            )}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label>검사 예정일</Label>
-          <Controller
-            control={control}
-            {...register("cuScheduleDate")}
-            render={({ field: { onChange, value, name } }) => (
-              <CustomDatePicker
-                value={value}
-                onChange={onChange}
-                name={name}
-                style={{ width: "110px" }}
-              />
-            )}
-          />
-        </FormGroup>
-      </Wrapper>
+              )}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>정기 검사일</Label>
+            <Controller
+              control={control}
+              {...register("cuCircuitDate")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  style={{ width: "110px" }}
+                />
+              )}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>검사 예정일</Label>
+            <Controller
+              control={control}
+              {...register("cuScheduleDate")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  style={{ width: "110px" }}
+                />
+              )}
+            />
+          </FormGroup>
+        </Wrapper>
 
-      <Table
-        className="no-space"
-        tableHeader={[
-          "벌크 시설",
-          "제조사",
-          "용량(kg)",
-          "제조번호",
-          "제작년월",
-          "대여처",
-          "최초검사",
-          "외관검사",
-          "개방검사",
-          "Max레벨 / 발신기코드 / 탱크고객코드",
-        ]}
-        style={{ overflowX: "visible" }}
-        tableData={tableData}
-        onClick={(item) => console.log("table", item)}
-      />
-    </div>
+        <Table
+          className="no-space"
+          tableHeader={[
+            "벌크 시설",
+            "제조사",
+            "용량(kg)",
+            "제조번호",
+            "제작년월",
+            "대여처",
+            "최초검사",
+            "외관검사",
+            "개방검사",
+            "Max레벨 / 발신기코드 / 탱크고객코드",
+          ]}
+          style={{ overflowX: "visible" }}
+          tableData={tableData}
+          onClick={(item) => console.log("table", item)}
+        />
+      </div>
+    </form>
   );
 }
 

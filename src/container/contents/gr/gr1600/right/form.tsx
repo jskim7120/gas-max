@@ -161,7 +161,7 @@ function Form({
 
   return (
     <div style={{ padding: "10px", width: "900px" }}>
-      <form>
+      <form autoComplete="off">
         <Wrapper grid>
           <Input label="구분" register={register("buGubunName")} />
           <Input label="코드" register={register("buCode")} />

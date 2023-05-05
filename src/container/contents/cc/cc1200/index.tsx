@@ -189,34 +189,36 @@ function CC1200({
                 fields="1fr 1.5fr"
                 style={{ width: "min-content" }}
               >
-                <FormGroup>
-                  <Label style={{ minWidth: "80px" }}>기간</Label>
+                <form autoComplete="off">
+                  <FormGroup>
+                    <Label style={{ minWidth: "80px" }}>기간</Label>
 
-                  <Controller
-                    control={control}
-                    {...register("sDateF")}
-                    render={({ field: { onChange, value, name } }) => (
-                      <CustomDatePicker
-                        value={value}
-                        onChange={onChange}
-                        name={name}
-                      />
-                    )}
-                  />
-                  <p>~</p>
+                    <Controller
+                      control={control}
+                      {...register("sDateF")}
+                      render={({ field: { onChange, value, name } }) => (
+                        <CustomDatePicker
+                          value={value}
+                          onChange={onChange}
+                          name={name}
+                        />
+                      )}
+                    />
+                    <p>~</p>
 
-                  <Controller
-                    control={control}
-                    {...register("sDateT")}
-                    render={({ field: { onChange, value, name } }) => (
-                      <CustomDatePicker
-                        value={value}
-                        onChange={onChange}
-                        name={name}
-                      />
-                    )}
-                  />
-                </FormGroup>
+                    <Controller
+                      control={control}
+                      {...register("sDateT")}
+                      render={({ field: { onChange, value, name } }) => (
+                        <CustomDatePicker
+                          value={value}
+                          onChange={onChange}
+                          name={name}
+                        />
+                      )}
+                    />
+                  </FormGroup>
+                </form>
                 <Field style={{ width: "280px" }}>
                   <FormGroup>
                     &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;

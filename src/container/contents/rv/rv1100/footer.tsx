@@ -168,205 +168,207 @@ function Footer({
   };
   return (
     <div>
-      <InfoBox style={{ width: "1400px" }}>
-        <Field flex>
-          <div>
-            <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
-              <FormGroup className="small">
-                <Label style={{ minWidth: "80px" }}>검침 년월</Label>
-                <Controller
-                  control={control}
-                  {...register("gjDate")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
-                />
-              </FormGroup>
-              <Input
-                label="당월 검침"
-                register={register("gjGum")}
-                labelStyle={{ minWidth: "66px" }}
-                inputSize={InputSize.i120}
-                textAlign="right"
-                mask={currencyMask}
-              />
-              <Input
-                label="㎥ 단가"
-                register={register("gjDanga")}
-                labelStyle={{ minWidth: "76px" }}
-                inputSize={InputSize.i120}
-                textAlign="right"
-                mask={currencyMask}
-              />
-              <Input
-                label="사용료"
-                register={register("gjKumack")}
-                labelStyle={{ minWidth: "52px" }}
-                inputSize={InputSize.i120}
-                textAlign="right"
-                mask={currencyMask}
-              />
-              <Input
-                label="당월 금액"
-                register={register("gjTotal")}
-                labelStyle={{ minWidth: "89px" }}
-                inputSize={InputSize.i120}
-                textAlign="right"
-                mask={currencyMask}
-              />
-            </Wrapper>
-            <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
-              <FormGroup className="small">
-                <Label style={{ minWidth: "80px" }}>사용 시작일</Label>
-                <Controller
-                  control={control}
-                  {...register("gjSdate")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
-                />
-              </FormGroup>
-              <Input
-                label="전월 검침"
-                register={register("gjJungum")}
-                labelStyle={{ minWidth: "66px" }}
-                inputSize={InputSize.i120}
-                textAlign="right"
-                mask={currencyMask}
-              />
-              <FormGroup style={{ gap: "10px" }}>
-                <CheckBox
-                  register={{ ...register("gjBaGageYn") }}
-                  title="기본료"
-                />
+      <form autoComplete="off">
+        <InfoBox style={{ width: "1400px" }}>
+          <Field flex>
+            <div>
+              <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
+                <FormGroup className="small">
+                  <Label style={{ minWidth: "80px" }}>검침 년월</Label>
+                  <Controller
+                    control={control}
+                    {...register("gjDate")}
+                    render={({ field: { onChange, value, name } }) => (
+                      <CustomDatePicker
+                        value={value}
+                        onChange={onChange}
+                        name={name}
+                      />
+                    )}
+                  />
+                </FormGroup>
                 <Input
-                  register={register("gjBaGageKum")}
+                  label="당월 검침"
+                  register={register("gjGum")}
+                  labelStyle={{ minWidth: "66px" }}
                   inputSize={InputSize.i120}
                   textAlign="right"
                   mask={currencyMask}
                 />
-              </FormGroup>
-              <Input
-                label="연체료"
-                register={register("gjPerkum")}
-                labelStyle={{ minWidth: "52px" }}
-                inputSize={InputSize.i120}
-                textAlign="right"
-                mask={currencyMask}
-              />
-              <Input
-                label="전미수"
-                register={register("gjMisu")}
-                labelStyle={{ minWidth: "89px" }}
-                inputSize={InputSize.i120}
-                textAlign="right"
-                mask={currencyMask}
-              />
-            </Wrapper>
-            <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
-              <Field flex style={{ alignItems: "center" }}>
-                <img src={PinImg} style={{ marginLeft: "15px" }} />
-                <p
-                  style={{
-                    fontSize: "9px",
-                    color: "#686767",
-                    marginLeft: "10px",
-                  }}
-                >
-                  원격검침일시 2022-12-30 12:52
-                </p>
-              </Field>
-              <Input
-                label="사용량"
-                register={register("gjGage")}
-                labelStyle={{ minWidth: "66px" }}
-                inputSize={InputSize.i120}
-                textAlign="right"
-                mask={currencyMask}
-              />
-              <Input
-                label="관리비"
-                register={register("maintCost")}
-                labelStyle={{ minWidth: "76px" }}
-                inputSize={InputSize.i120}
-                textAlign="right"
-                mask={currencyMask}
-              />
-              <Input
-                label="할인율"
-                register={register("gjDc")}
-                labelStyle={{ minWidth: "52px" }}
-                inputSize={InputSize.i120}
-                textAlign="right"
-                mask={currencyMask}
-              />
-              <FormGroup style={{ gap: "10px" }}>
-                <CheckBox
-                  register={{ ...register("gjJmisuYn") }}
-                  title="중량 금액"
-                />
                 <Input
-                  register={register("gjJmisuAmt")}
+                  label="㎥ 단가"
+                  register={register("gjDanga")}
+                  labelStyle={{ minWidth: "76px" }}
                   inputSize={InputSize.i120}
                   textAlign="right"
                   mask={currencyMask}
                 />
-              </FormGroup>
-            </Wrapper>
-          </div>
-          <div>
-            <Input
-              label="비고"
-              register={register("gjBigo")}
-              labelStyle={{ minWidth: "68px" }}
-              inputSize={InputSize.i120}
-            />
-            {getGjJanType()}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-evenly",
-              marginLeft: "10px",
-            }}
-          >
-            <Button
-              text="저장"
-              type="button"
-              color={ButtonColor.SECONDARY}
+                <Input
+                  label="사용료"
+                  register={register("gjKumack")}
+                  labelStyle={{ minWidth: "52px" }}
+                  inputSize={InputSize.i120}
+                  textAlign="right"
+                  mask={currencyMask}
+                />
+                <Input
+                  label="당월 금액"
+                  register={register("gjTotal")}
+                  labelStyle={{ minWidth: "89px" }}
+                  inputSize={InputSize.i120}
+                  textAlign="right"
+                  mask={currencyMask}
+                />
+              </Wrapper>
+              <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
+                <FormGroup className="small">
+                  <Label style={{ minWidth: "80px" }}>사용 시작일</Label>
+                  <Controller
+                    control={control}
+                    {...register("gjSdate")}
+                    render={({ field: { onChange, value, name } }) => (
+                      <CustomDatePicker
+                        value={value}
+                        onChange={onChange}
+                        name={name}
+                      />
+                    )}
+                  />
+                </FormGroup>
+                <Input
+                  label="전월 검침"
+                  register={register("gjJungum")}
+                  labelStyle={{ minWidth: "66px" }}
+                  inputSize={InputSize.i120}
+                  textAlign="right"
+                  mask={currencyMask}
+                />
+                <FormGroup style={{ gap: "10px" }}>
+                  <CheckBox
+                    register={{ ...register("gjBaGageYn") }}
+                    title="기본료"
+                  />
+                  <Input
+                    register={register("gjBaGageKum")}
+                    inputSize={InputSize.i120}
+                    textAlign="right"
+                    mask={currencyMask}
+                  />
+                </FormGroup>
+                <Input
+                  label="연체료"
+                  register={register("gjPerkum")}
+                  labelStyle={{ minWidth: "52px" }}
+                  inputSize={InputSize.i120}
+                  textAlign="right"
+                  mask={currencyMask}
+                />
+                <Input
+                  label="전미수"
+                  register={register("gjMisu")}
+                  labelStyle={{ minWidth: "89px" }}
+                  inputSize={InputSize.i120}
+                  textAlign="right"
+                  mask={currencyMask}
+                />
+              </Wrapper>
+              <Wrapper grid col={5} fields="1fr 0.95fr 1fr 0.9fr 1fr">
+                <Field flex style={{ alignItems: "center" }}>
+                  <img src={PinImg} style={{ marginLeft: "15px" }} />
+                  <p
+                    style={{
+                      fontSize: "9px",
+                      color: "#686767",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    원격검침일시 2022-12-30 12:52
+                  </p>
+                </Field>
+                <Input
+                  label="사용량"
+                  register={register("gjGage")}
+                  labelStyle={{ minWidth: "66px" }}
+                  inputSize={InputSize.i120}
+                  textAlign="right"
+                  mask={currencyMask}
+                />
+                <Input
+                  label="관리비"
+                  register={register("maintCost")}
+                  labelStyle={{ minWidth: "76px" }}
+                  inputSize={InputSize.i120}
+                  textAlign="right"
+                  mask={currencyMask}
+                />
+                <Input
+                  label="할인율"
+                  register={register("gjDc")}
+                  labelStyle={{ minWidth: "52px" }}
+                  inputSize={InputSize.i120}
+                  textAlign="right"
+                  mask={currencyMask}
+                />
+                <FormGroup style={{ gap: "10px" }}>
+                  <CheckBox
+                    register={{ ...register("gjJmisuYn") }}
+                    title="중량 금액"
+                  />
+                  <Input
+                    register={register("gjJmisuAmt")}
+                    inputSize={InputSize.i120}
+                    textAlign="right"
+                    mask={currencyMask}
+                  />
+                </FormGroup>
+              </Wrapper>
+            </div>
+            <div>
+              <Input
+                label="비고"
+                register={register("gjBigo")}
+                labelStyle={{ minWidth: "68px" }}
+                inputSize={InputSize.i120}
+              />
+              {getGjJanType()}
+            </div>
+            <div
               style={{
-                marginLeft: "6px",
-                background: "#5284CE",
-                width: "72px",
-                color: "#fff",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-evenly",
+                marginLeft: "10px",
               }}
-              kind={ButtonType.ROUND}
-              onClick={handleSubmit(submit)}
-            />
-            <Button
-              text="취소"
-              type="button"
-              color={ButtonColor.SECONDARY}
-              style={{
-                marginLeft: "6px",
-                background: "#5284CE",
-                width: "72px",
-                color: "#fff",
-              }}
-              kind={ButtonType.ROUND}
-            />
-          </div>
-        </Field>
-      </InfoBox>
+            >
+              <Button
+                text="저장"
+                type="button"
+                color={ButtonColor.SECONDARY}
+                style={{
+                  marginLeft: "6px",
+                  background: "#5284CE",
+                  width: "72px",
+                  color: "#fff",
+                }}
+                kind={ButtonType.ROUND}
+                onClick={handleSubmit(submit)}
+              />
+              <Button
+                text="취소"
+                type="button"
+                color={ButtonColor.SECONDARY}
+                style={{
+                  marginLeft: "6px",
+                  background: "#5284CE",
+                  width: "72px",
+                  color: "#fff",
+                }}
+                kind={ButtonType.ROUND}
+              />
+            </div>
+          </Field>
+        </InfoBox>
+      </form>
       <Field flex style={{ width: "100%" }}>
         <div
           style={{

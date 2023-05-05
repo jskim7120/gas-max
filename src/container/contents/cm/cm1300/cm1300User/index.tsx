@@ -243,7 +243,7 @@ function FormCM1300User({
     const path = isAddBtnClicked ? CM1300CUSTOMERINSERT : CM1300CUSTOMERUPDATE;
     const formValues = getValues();
     formValues.cuCode = formValues.cuCode1 + "-" + formValues.cuCode2;
-    formValues.areaCode = areaCode;
+    formValues.areaCode = mainSelected?.areaCode;
 
     try {
       const response: any = await API.post(path, formValues);

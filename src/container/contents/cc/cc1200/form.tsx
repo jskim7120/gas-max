@@ -131,6 +131,7 @@ const Form = React.forwardRef(
     return (
       <form
         // onSubmit={handleSubmit(submit)}
+        autoComplete="off"
         style={{ width: "380px", padding: "20px 10px" }}
       >
         <Wrapper>
