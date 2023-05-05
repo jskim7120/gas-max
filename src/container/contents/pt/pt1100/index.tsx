@@ -224,7 +224,7 @@ function PT1100({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
-          <form style={{ minWidth: "1000px" }}>
+          <form autoComplete="off" style={{ minWidth: "1000px" }}>
             <SearchWrapper className="h35">
               <Field flex>
                 <PersonInfoText text="미수 현황" />
@@ -270,6 +270,7 @@ function PT1100({
           />
           <form
             onSubmit={handleSubmit(submitSearch2)}
+            autoComplete="off"
             style={{ minWidth: "925px" }}
           >
             <SearchWrapper className="h35">

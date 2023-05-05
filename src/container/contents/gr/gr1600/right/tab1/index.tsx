@@ -215,41 +215,43 @@ function Tab1({
   ];
   return (
     <>
-      <Field flex style={{ justifyContent: "space-between" }}>
-        <Field flex>
-          <Field>
-            <PersonInfoText
-              text="LPG 매입 단가"
-              style={{ marginBottom: "10px" }}
-            />
-            <Table
-              tableHeader={["구분", "kg 단가", "수송비", "합계"]}
-              tableData={data0}
-            />
-            <InfoText
-              style={{ marginTop: "3px" }}
-              text="LPG 매입단가는 Vat 포함 가격으로 계산합니다."
-            />
+      <form autoComplete="off">
+        <Field flex style={{ justifyContent: "space-between" }}>
+          <Field flex>
+            <Field>
+              <PersonInfoText
+                text="LPG 매입 단가"
+                style={{ marginBottom: "10px" }}
+              />
+              <Table
+                tableHeader={["구분", "kg 단가", "수송비", "합계"]}
+                tableData={data0}
+              />
+              <InfoText
+                style={{ marginTop: "3px" }}
+                text="LPG 매입단가는 Vat 포함 가격으로 계산합니다."
+              />
+            </Field>
+            <Field style={{ marginLeft: "30px" }}>
+              <PersonInfoText
+                text="무료 충전 품목"
+                style={{ marginBottom: "10px" }}
+              />
+              <Table tableHeader={["품목"]} tableData={data1} />
+            </Field>
           </Field>
-          <Field style={{ marginLeft: "30px" }}>
-            <PersonInfoText
-              text="무료 충전 품목"
-              style={{ marginBottom: "10px" }}
+          <Field flex>
+            <Button
+              text="저장"
+              icon={<Update />}
+              style={{ marginRight: "5px" }}
+              color={ButtonColor.SECONDARY}
+              onClick={update}
             />
-            <Table tableHeader={["품목"]} tableData={data1} />
+            <Button text="취소" icon={<Reset />} onClick={clearForm} />
           </Field>
         </Field>
-        <Field flex>
-          <Button
-            text="저장"
-            icon={<Update />}
-            style={{ marginRight: "5px" }}
-            color={ButtonColor.SECONDARY}
-            onClick={update}
-          />
-          <Button text="취소" icon={<Reset />} onClick={clearForm} />
-        </Field>
-      </Field>
+      </form>
     </>
   );
 }

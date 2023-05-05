@@ -126,7 +126,7 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form style={{ width: "380px", padding: "10px" }}>
+      <form autoComplete="off" style={{ width: "380px", padding: "10px" }}>
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>영 업 소</Label>
           <Select

@@ -73,6 +73,7 @@ const FORMPT1205 = React.forwardRef(
     return (
       <form
         // onSubmit={handleSubmit(submit)}
+        autoComplete="off"
         style={{ margin: "30px 30px 0 0", padding: "10px" }}
       >
         <Field flex style={{ alignItems: "center" }}>

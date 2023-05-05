@@ -228,6 +228,7 @@ function PT1200({
         <LeftSide>
           <form
             onSubmit={handleSubmit(submitSearch1)}
+            autoComplete="off"
             style={{ minWidth: "925px" }}
           >
             <SearchWrapper className="h35">
@@ -275,6 +276,7 @@ function PT1200({
           />
           <form
             onSubmit={handleSubmit(submitSearch2)}
+            autoComplete="off"
             style={{ minWidth: "925px" }}
           >
             <SearchWrapper className="h35">

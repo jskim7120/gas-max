@@ -174,7 +174,7 @@ function FormCM1106() {
         </div>
       </SearchWrapper>
 
-      <form onSubmit={handleSubmit(submit)}>
+      <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <div
           style={{
             background: "#CDE7EB",

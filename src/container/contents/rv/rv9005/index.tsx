@@ -169,283 +169,288 @@ function RV9005({
           />
         </div>
       </SearchWrapper>
-      <SearchWrapper>
-        <div style={{ width: "80%" }}>
-          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
-            <FormGroup>
-              <Item>
-                <RadioButton
-                  type="radio"
-                  value="0"
-                  {...register(`sType1`)}
-                  id="0"
-                  onChange={() => setSType1(false)}
-                />
-                <RadioButtonLabel htmlFor={``}>검침 년월</RadioButtonLabel>
-              </Item>
-              <Controller
-                control={control}
-                {...register("sGjGumymF")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    showMonthYearPicker
-                    readOnly={sType1}
-                  />
-                )}
-              />
-              <Select
-                register={register("sGjSnoF")}
-                disabled={sType1}
-                style={{ marginLeft: "0" }}
-              >
-                {dataCommonDic?.sGjSnoF?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-              <p>~</p>
-              <Controller
-                control={control}
-                {...register("sGjGumymT")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    showMonthYearPicker
-                    readOnly={sType1}
-                  />
-                )}
-              />
-              <Select
-                register={register("sGjSnoT")}
-                disabled={sType1}
-                style={{ marginLeft: "0" }}
-              >
-                {dataCommonDic?.sGjSnoT?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <FormGroup>
-              <Item>
-                <RadioButton
-                  type="radio"
-                  value="0"
-                  {...register(`sType2`)}
-                  id="0"
-                  onChange={() => setSType2("0")}
-                />
-                <RadioButtonLabel htmlFor={``} style={{ width: "105px" }}>
-                  거래처 담당사원
-                </RadioButtonLabel>
-              </Item>
-              <Select
-                register={register("sSwCode")}
-                disabled={sType2 !== "0"}
-                width={InputSize.i120}
-              >
-                {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-
-            <Input
-              label="건물명"
-              register={register("sCuName")}
-              labelStyle={{ minWidth: "70px" }}
-              inputSize={InputSize.i120}
-            />
-            <FormGroup>
-              <Button
-                text="검색"
-                icon={!loading && <MagnifyingGlass />}
-                type="button"
-                color={ButtonColor.SECONDARY}
-                onClick={handleSubmit(submit)}
-                loader={
-                  loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={16}
-                        style={{ marginRight: "10px" }}
-                        borderWidth="2px"
-                      />
-                    </>
-                  )
-                }
-              />
-              <Button
-                text="취소"
-                icon={<ResetGray />}
-                style={{ marginLeft: "5px" }}
-                color={ButtonColor.LIGHT}
-                onClick={() => {
-                  resetSearchForm();
-                  setData([]);
-                }}
-              />
-            </FormGroup>
-          </Wrapper>
-          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
-            <FormGroup>
-              {radioOptions.map((option, index) => (
-                <Item key={index}>
+      <form autoComplete="off">
+        <SearchWrapper>
+          <div style={{ width: "80%" }}>
+            <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
+              <FormGroup>
+                <Item>
                   <RadioButton
                     type="radio"
-                    value={option.id}
+                    value="0"
                     {...register(`sType1`)}
-                    id={option.id}
-                    onChange={() => setSType1(true)}
+                    id="0"
+                    onChange={() => setSType1(false)}
                   />
-                  <RadioButtonLabel htmlFor={`${option.label}`}>
-                    {option.label}
+                  <RadioButtonLabel htmlFor={``}>검침 년월</RadioButtonLabel>
+                </Item>
+                <Controller
+                  control={control}
+                  {...register("sGjGumymF")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <CustomDatePicker
+                      value={value}
+                      onChange={onChange}
+                      name={name}
+                      showMonthYearPicker
+                      readOnly={sType1}
+                    />
+                  )}
+                />
+                <Select
+                  register={register("sGjSnoF")}
+                  disabled={sType1}
+                  style={{ marginLeft: "0" }}
+                >
+                  {dataCommonDic?.sGjSnoF?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+                <p>~</p>
+                <Controller
+                  control={control}
+                  {...register("sGjGumymT")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <CustomDatePicker
+                      value={value}
+                      onChange={onChange}
+                      name={name}
+                      showMonthYearPicker
+                      readOnly={sType1}
+                    />
+                  )}
+                />
+                <Select
+                  register={register("sGjSnoT")}
+                  disabled={sType1}
+                  style={{ marginLeft: "0" }}
+                >
+                  {dataCommonDic?.sGjSnoT?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+              <FormGroup>
+                <Item>
+                  <RadioButton
+                    type="radio"
+                    value="0"
+                    {...register(`sType2`)}
+                    id="0"
+                    onChange={() => setSType2("0")}
+                  />
+                  <RadioButtonLabel htmlFor={``} style={{ width: "105px" }}>
+                    거래처 담당사원
                   </RadioButtonLabel>
                 </Item>
-              ))}
-            </FormGroup>
-            <FormGroup>
-              <Item>
-                <RadioButton
-                  type="radio"
-                  value="1"
-                  {...register(`sType2`)}
-                  id="1"
-                  onChange={() => setSType2("1")}
-                />
-                <RadioButtonLabel htmlFor={``} style={{ width: "105px" }}>
-                  체적 검침 사원
-                </RadioButtonLabel>
-              </Item>
-              <Select
-                register={register("sCuSwCode")}
-                disabled={sType2 !== "1"}
-                width={InputSize.i120}
-              >
-                {dataCommonDic?.sCuSwCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <FormGroup>
-              <Label style={{ minWidth: "70px" }}>지역 분류</Label>
-              <Select register={register("sJyCode")} width={InputSize.i120}>
-                {dataCommonDic?.sJyCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-          </Wrapper>
-          <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
-            <FormGroup>
-              <Label style={{ minWidth: "95px" }}>기간</Label>
-              <Controller
-                control={control}
-                {...register("sDateF")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    readOnly={!sType1}
-                  />
-                )}
-              />
-              <p
-                style={{
-                  width: "auto",
-                  display: "block",
-                  textAlign: "center",
-                }}
-              >
-                ~
-              </p>
-              <Controller
-                control={control}
-                {...register("sDateT")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    readOnly={!sType1}
-                  />
-                )}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Item>
-                <RadioButton
-                  type="radio"
-                  value="2"
-                  {...register(`sType2`)}
-                  id="2"
-                  onChange={() => setSType2("2")}
-                />
-                <RadioButtonLabel htmlFor={``} style={{ width: "105px" }}>
-                  관리 책임자 분류
-                </RadioButtonLabel>
-              </Item>
-              <Select
-                register={register("sCuCustgubun")}
-                disabled={sType2 !== "2"}
-                width={InputSize.i120}
-              >
-                {dataCommonDic?.sCuCustgubun?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
+                <Select
+                  register={register("sSwCode")}
+                  disabled={sType2 !== "0"}
+                  width={InputSize.i120}
+                >
+                  {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
 
-            <FormGroup>
-              <Label style={{ minWidth: "70px" }}>수금 방법</Label>
-              <Select register={register("sSukumtype")} width={InputSize.i120}>
-                {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
+              <Input
+                label="건물명"
+                register={register("sCuName")}
+                labelStyle={{ minWidth: "70px" }}
+                inputSize={InputSize.i120}
+              />
+              <FormGroup>
+                <Button
+                  text="검색"
+                  icon={!loading && <MagnifyingGlass />}
+                  type="button"
+                  color={ButtonColor.SECONDARY}
+                  onClick={handleSubmit(submit)}
+                  loader={
+                    loading && (
+                      <>
+                        <Loader
+                          color="white"
+                          size={16}
+                          style={{ marginRight: "10px" }}
+                          borderWidth="2px"
+                        />
+                      </>
+                    )
+                  }
+                />
+                <Button
+                  text="취소"
+                  icon={<ResetGray />}
+                  style={{ marginLeft: "5px" }}
+                  color={ButtonColor.LIGHT}
+                  onClick={() => {
+                    resetSearchForm();
+                    setData([]);
+                  }}
+                />
+              </FormGroup>
+            </Wrapper>
+            <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
+              <FormGroup>
+                {radioOptions.map((option, index) => (
+                  <Item key={index}>
+                    <RadioButton
+                      type="radio"
+                      value={option.id}
+                      {...register(`sType1`)}
+                      id={option.id}
+                      onChange={() => setSType1(true)}
+                    />
+                    <RadioButtonLabel htmlFor={`${option.label}`}>
+                      {option.label}
+                    </RadioButtonLabel>
+                  </Item>
                 ))}
-              </Select>
+              </FormGroup>
+              <FormGroup>
+                <Item>
+                  <RadioButton
+                    type="radio"
+                    value="1"
+                    {...register(`sType2`)}
+                    id="1"
+                    onChange={() => setSType2("1")}
+                  />
+                  <RadioButtonLabel htmlFor={``} style={{ width: "105px" }}>
+                    체적 검침 사원
+                  </RadioButtonLabel>
+                </Item>
+                <Select
+                  register={register("sCuSwCode")}
+                  disabled={sType2 !== "1"}
+                  width={InputSize.i120}
+                >
+                  {dataCommonDic?.sCuSwCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+              <FormGroup>
+                <Label style={{ minWidth: "70px" }}>지역 분류</Label>
+                <Select register={register("sJyCode")} width={InputSize.i120}>
+                  {dataCommonDic?.sJyCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+            </Wrapper>
+            <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
+              <FormGroup>
+                <Label style={{ minWidth: "95px" }}>기간</Label>
+                <Controller
+                  control={control}
+                  {...register("sDateF")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <CustomDatePicker
+                      value={value}
+                      onChange={onChange}
+                      name={name}
+                      readOnly={!sType1}
+                    />
+                  )}
+                />
+                <p
+                  style={{
+                    width: "auto",
+                    display: "block",
+                    textAlign: "center",
+                  }}
+                >
+                  ~
+                </p>
+                <Controller
+                  control={control}
+                  {...register("sDateT")}
+                  render={({ field: { onChange, value, name } }) => (
+                    <CustomDatePicker
+                      value={value}
+                      onChange={onChange}
+                      name={name}
+                      readOnly={!sType1}
+                    />
+                  )}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Item>
+                  <RadioButton
+                    type="radio"
+                    value="2"
+                    {...register(`sType2`)}
+                    id="2"
+                    onChange={() => setSType2("2")}
+                  />
+                  <RadioButtonLabel htmlFor={``} style={{ width: "105px" }}>
+                    관리 책임자 분류
+                  </RadioButtonLabel>
+                </Item>
+                <Select
+                  register={register("sCuCustgubun")}
+                  disabled={sType2 !== "2"}
+                  width={InputSize.i120}
+                >
+                  {dataCommonDic?.sCuCustgubun?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
 
-              <Label>조정기 압력</Label>
-              <Select register={register("sRh20")}>
-                {dataCommonDic?.sRh20?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-              <p>mmH20</p>
-            </FormGroup>
-            <FormGroup>
-              <Label style={{ minWidth: "90px" }}>정렬 순서</Label>
-              <Select register={register("sSort")}>
-                {dataCommonDic?.sSort?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-          </Wrapper>
-        </div>
-      </SearchWrapper>
+              <FormGroup>
+                <Label style={{ minWidth: "70px" }}>수금 방법</Label>
+                <Select
+                  register={register("sSukumtype")}
+                  width={InputSize.i120}
+                >
+                  {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+
+                <Label>조정기 압력</Label>
+                <Select register={register("sRh20")}>
+                  {dataCommonDic?.sRh20?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+                <p>mmH20</p>
+              </FormGroup>
+              <FormGroup>
+                <Label style={{ minWidth: "90px" }}>정렬 순서</Label>
+                <Select register={register("sSort")}>
+                  {dataCommonDic?.sSort?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+            </Wrapper>
+          </div>
+        </SearchWrapper>
+      </form>
       <WrapperContent>
         <Grid data={data} columns={columns} fields={fields} />
       </WrapperContent>

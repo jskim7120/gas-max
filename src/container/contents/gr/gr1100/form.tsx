@@ -301,7 +301,7 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form style={{ padding: "0px 10px", width: "745px" }}>
+      <form autoComplete="off" style={{ padding: "0px 10px", width: "745px" }}>
         <PersonInfoText
           text="매입처 정보"
           style={{ marginBottom: "6px", marginTop: "7px" }}
