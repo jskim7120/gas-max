@@ -17,11 +17,11 @@ export interface ISANGPUM {
   jpUnitName: string;
   jpVatKind: string;
   jpKg: string;
-  jpSort: string;
   jpSpecific: string;
 
   jpJaegoYn: string | boolean;
 
+  jpSort: number;
   jpBaedal: number;
   jpIntong: number;
   jpIndanga: number;
@@ -50,7 +50,7 @@ export const emptyObj = {
   jpName: "",
   jpOutdanga: 0,
   jpOuttong: 0,
-  jpSort: "",
+  jpSort: 0,
   jpSpec: "",
   jpSpecific: "",
   jpUnit: "",

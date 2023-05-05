@@ -20,14 +20,11 @@ import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
 import { InputSize } from "components/componentsType";
-
 interface IForm {
   selected: any;
   setSelected: any;
   fetchData: any;
   setData: any;
-  selectedRowIndex: number;
-  setSelectedRowIndex: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
   resetButtonCombination: Function;
@@ -40,8 +37,6 @@ const Form = React.forwardRef(
       setSelected,
       fetchData,
       setData,
-      selectedRowIndex,
-      setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
       resetButtonCombination,
@@ -84,7 +79,7 @@ const Form = React.forwardRef(
         if (response.status === 200) {
           return response?.data;
         } else {
-          alert(response.response.data?.message);
+          alert(response?.response?.data?.message);
           resetButtonCombination();
         }
         return null;
@@ -97,8 +92,7 @@ const Form = React.forwardRef(
       if (type === "clear") {
         const temp = await fetchCode11();
         if (temp !== null) {
-          //setFocus("areaName");
-          document.getElementsByName("areaName")[0]?.focus();
+          setFocus("areaName");
 
           setJnAddr1("");
           reset({
@@ -134,9 +128,9 @@ const Form = React.forwardRef(
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await fetchData("delete");
+            await fetchData("pos");
           } else {
-            alert(response?.response?.message);
+            alert(response?.response?.data?.message);
           }
         } catch (err) {
           console.log(err);
@@ -162,17 +156,11 @@ const Form = React.forwardRef(
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
+            await fetchData("pos");
           } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
+            await fetchData();
           }
-
-          setSelected(formValues);
 
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
@@ -252,7 +240,7 @@ const Form = React.forwardRef(
           />
         </Wrapper>
 
-        <Wrapper style={{ alignItems: "center" }}>
+        <FormGroup>
           <Input
             label="주 소"
             register={register("jnZipcode")}
@@ -266,11 +254,11 @@ const Form = React.forwardRef(
           />
           <Input
             maxLength="40"
-            style={{ width: "453px" }}
+            style={{ width: "460px" }}
             value={jnAddr1}
             onChange={(e: any) => setJnAddr1(e.target.value)}
           />
-        </Wrapper>
+        </FormGroup>
 
         <Wrapper grid col={3}>
           <Input

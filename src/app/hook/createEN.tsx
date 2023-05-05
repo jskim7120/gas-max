@@ -17,6 +17,7 @@ import {
   addDeleteMenuId,
   setIsDelete,
 } from "app/state/modal/modalSlice";
+import { setRowIndex } from "app/state/tab/tabSlice";
 
 function CreateEN(
   depthFullName: string,
@@ -38,15 +39,17 @@ function CreateEN(
 
   const [data, setData] = useState<Array<any>>([]);
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState<number>(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [linePos, setLinePos] = useState(leftSideWidth);
 
   const { isDelete } = useSelector((state) => state.modal);
   const activeTabId = useSelector((state) => state.tab.activeTabId);
+  const tabState = useSelector((state) => state.tab.tabs);
+
+  const rowIndex = tabState.find((item) => item.menuId === menuId)?.rowIndex;
 
   useEffect(() => {
-    fetchData();
+    fetchData("pos");
   }, []);
 
   function handleKeyDown(event: any) {
@@ -89,22 +92,18 @@ function CreateEN(
       const { data: dataS } = await API.get(searchPath);
       if (dataS) {
         setData(dataS);
-        setSelected(dataS[0]);
+        if (func === "pos") {
+          const lastIndex = dataS && dataS.length > 0 ? dataS.length - 1 : 0;
+          setSelected(dataS[lastIndex]);
+          dispatch(setRowIndex({ menuId: menuId, rowIndex: lastIndex }));
+        }
       } else {
         setData([]);
         setSelected({});
       }
-
-      if (func === "delete") {
-        const len = dataS && dataS.length > 0 ? dataS.length - 1 : 0;
-        setSelectedRowIndex(len);
-      } else {
-        // setSelectedRowIndex(0);
-      }
     } catch (err) {
       setData([]);
       setSelected({});
-      // setSelectedRowIndex(0);
       console.log(`${menuId} DATA fetch error =======>`, err);
     }
   };
@@ -194,9 +193,11 @@ function CreateEN(
             fields={fields}
             columns={columns}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
+            // selectedRowIndex={selectedRowIndex}
+            // setSelectedRowIndex={setSelectedRowIndex}
             setIsAddBtnClicked={setIsAddBtnClicked}
+            menuId={menuId}
+            rowIndex={rowIndex}
           />
 
           <RightSide
@@ -211,8 +212,8 @@ function CreateEN(
                 setSelected={setSelected}
                 fetchData={fetchData}
                 setData={setData}
-                selectedRowIndex={selectedRowIndex}
-                setSelectedRowIndex={setSelectedRowIndex}
+                // selectedRowIndex={selectedRowIndex}
+                // setSelectedRowIndex={setSelectedRowIndex}
                 isAddBtnClicked={isAddBtnClicked}
                 setIsAddBtnClicked={setIsAddBtnClicked}
                 resetButtonCombination={resetButtonCombination}

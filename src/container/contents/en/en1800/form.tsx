@@ -20,8 +20,8 @@ interface IForm {
   setSelected: any;
   fetchData: any;
   setData: any;
-  selectedRowIndex: number;
-  setSelectedRowIndex: Function;
+  // selectedRowIndex: number;
+  // setSelectedRowIndex: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
   resetButtonCombination: Function;
@@ -34,8 +34,8 @@ const Form = React.forwardRef(
       setSelected,
       fetchData,
       setData,
-      selectedRowIndex,
-      setSelectedRowIndex,
+      // selectedRowIndex,
+      // setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
       resetButtonCombination,
@@ -140,13 +140,14 @@ const Form = React.forwardRef(
         if (response.status === 200) {
           if (isAddBtnClicked) {
             setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
+            // setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
           } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
+            // setData((prev: any) => {
+            //   prev[selectedRowIndex] = formValues;
+            //   return [...prev];
+            // });
+            fetchData();
           }
           setSelected(formValues);
           toast.success("저장이 성공하였습니다", {

@@ -29,8 +29,6 @@ interface IForm {
   setSelected: any;
   fetchData: any;
   setData: any;
-  selectedRowIndex: number;
-  setSelectedRowIndex: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
   resetButtonCombination: Function;
@@ -43,8 +41,6 @@ const Form = React.forwardRef(
       setSelected,
       fetchData,
       setData,
-      selectedRowIndex,
-      setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
       resetButtonCombination,
@@ -72,6 +68,7 @@ const Form = React.forwardRef(
           saupZipcode: addr ? addr?.split("/")[1] : "",
           saupAddr2: "",
         }));
+
         setSaupAddr1(addr ? addr?.split("/")[0] : "");
       }
     }, [addr]);
@@ -90,7 +87,7 @@ const Form = React.forwardRef(
         if (response.status === 200) {
           return response?.data;
         } else {
-          alert(response.response.data?.message);
+          alert(response?.response?.data?.message);
           resetButtonCombination();
         }
         return null;
@@ -106,9 +103,11 @@ const Form = React.forwardRef(
         if (temp !== null) {
           document.getElementsByName("saupSsno")[0]?.focus();
           //setFocus("saupSsno");
-          emptyObj.saupSno = temp.tempCode;
-          emptyObj.emailKind = temp.emailKind;
-          reset(emptyObj);
+          reset({
+            ...emptyObj,
+            ...temp,
+            saupSno: temp.tempCode,
+          });
           setSaupAddr1("");
         }
       } catch (err: any) {
@@ -141,6 +140,7 @@ const Form = React.forwardRef(
         }
       }
     };
+
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
@@ -151,10 +151,9 @@ const Form = React.forwardRef(
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-
-            await fetchData("delete");
+            await fetchData("pos");
           } else {
-            alert(response?.response?.message);
+            alert(response?.response?.data?.message);
           }
         } catch (err) {
           console.log(err);
@@ -176,6 +175,7 @@ const Form = React.forwardRef(
       formValues.saupStampEs = formValues.saupStampEs ? "Y" : "N";
       formValues.saupStampSe = formValues.saupStampSe ? "Y" : "N";
       formValues.saupDate = DateWithoutDash(formValues.saupDate);
+      formValues.saupAddr1 = saupAddr1;
 
       formValues.saupEdiEmail =
         formValues.saupEdiEmail &&
@@ -187,21 +187,17 @@ const Form = React.forwardRef(
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
+            await fetchData("pos");
           } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
+            await fetchData();
           }
-          setSelected(formValues);
+
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
         } else {
-          alert(response.response.data?.message);
+          alert(response?.response?.data?.message);
         }
       } catch (err: any) {
         console.log(err);
@@ -544,7 +540,7 @@ const Form = React.forwardRef(
               <p style={{ margin: "0 1px" }}>@</p>
               <Select register={register("emailKind")}>
                 {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.codeName}>
+                  <option key={idx} value={obj.code1}>
                     {obj.codeName}
                   </option>
                 ))}

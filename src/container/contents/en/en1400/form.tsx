@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
+import React, { useImperativeHandle, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -7,18 +7,12 @@ import { EN1400INSERT, EN1400UPDATE, EN1400DELETE, EN140011 } from "app/path";
 import {
   Input,
   Select,
-  Field,
   FormGroup,
-  Wrapper,
   Divider,
   Label,
 } from "components/form/style";
 import { IBUPUM, emptyObj } from "./model";
-import {
-  currencyMask,
-  formatCurrencyRemoveComma,
-  removeCommas,
-} from "helpers/currency";
+import { currencyMask, removeCommas } from "helpers/currency";
 import { InputSize } from "components/componentsType";
 
 interface IForm {
@@ -26,8 +20,6 @@ interface IForm {
   setSelected: any;
   fetchData: any;
   setData: any;
-  selectedRowIndex: number;
-  setSelectedRowIndex: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
   resetButtonCombination: Function;
@@ -40,8 +32,6 @@ const Form = React.forwardRef(
       setSelected,
       fetchData,
       setData,
-      selectedRowIndex,
-      setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
       resetButtonCombination,
@@ -72,7 +62,7 @@ const Form = React.forwardRef(
         if (response.status === 200) {
           return response?.data;
         } else {
-          alert(response.response.data?.message);
+          alert(response?.response?.data?.message);
           resetButtonCombination();
         }
         return null;
@@ -116,7 +106,9 @@ const Form = React.forwardRef(
 
     const crud = async (type: string | null) => {
       if (type === "delete") {
-        const formValues = getValues();
+        const formValues: any = getValues();
+        delete formValues.bpIndanga;
+        delete formValues.bpOutdanga;
 
         try {
           const response: any = await API.post(EN1400DELETE, formValues);
@@ -124,9 +116,9 @@ const Form = React.forwardRef(
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await fetchData("delete");
+            await fetchData("pos");
           } else {
-            alert(response?.response?.message);
+            alert(response?.response?.data?.message);
           }
         } catch (err) {
           console.log(err);
@@ -150,21 +142,17 @@ const Form = React.forwardRef(
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
+            await fetchData("pos");
           } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
+            await fetchData();
           }
-          setSelected(formValues);
+
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
         } else {
-          alert(response.response.data?.message);
+          alert(response?.response?.data?.message);
         }
       } catch (err: any) {
         console.log(err);
@@ -177,27 +165,26 @@ const Form = React.forwardRef(
         style={{ width: "300px", padding: "0px 10px" }}
         autoComplete="off"
       >
-        <Wrapper>
-          <FormGroup>
-            <Label style={{ minWidth: "80px" }}>영 업 소</Label>
-            <Select
-              value={areaCode}
-              onChange={(e) => {
-                setAreaCode(e.target.value);
-                codeChangeHandler(e.target.value);
-              }}
-              width={InputSize.i150}
-              disabled={!isAddBtnClicked}
-            >
-              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
-        <Wrapper>
+        <FormGroup>
+          <Label style={{ minWidth: "80px" }}>영 업 소</Label>
+          <Select
+            value={areaCode}
+            onChange={(e) => {
+              setAreaCode(e.target.value);
+              codeChangeHandler(e.target.value);
+            }}
+            width={InputSize.i150}
+            disabled={!isAddBtnClicked}
+          >
+            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
           <Input
             label="부품 코드"
             labelStyle={{ minWidth: "80px" }}
@@ -206,9 +193,9 @@ const Form = React.forwardRef(
             maxLength="3"
             readOnly
           />
-        </Wrapper>
+        </FormGroup>
         <Divider />
-        <Wrapper>
+        <FormGroup>
           <Input
             label="부 품 명"
             labelStyle={{ minWidth: "80px" }}
@@ -216,8 +203,8 @@ const Form = React.forwardRef(
             inputSize={InputSize.i150}
             maxLength="20"
           />
-        </Wrapper>
-        <Wrapper>
+        </FormGroup>
+        <FormGroup>
           <Input
             label="규 격"
             labelStyle={{ minWidth: "80px" }}
@@ -225,8 +212,8 @@ const Form = React.forwardRef(
             inputSize={InputSize.i150}
             maxLength="10"
           />
-        </Wrapper>
-        <Wrapper>
+        </FormGroup>
+        <FormGroup>
           <Input
             label="단 위"
             labelStyle={{ minWidth: "80px" }}
@@ -234,50 +221,46 @@ const Form = React.forwardRef(
             inputSize={InputSize.i150}
             maxLength="10"
           />
-        </Wrapper>
+        </FormGroup>
         <Divider />
-        <Wrapper>
-          <Field flex>
-            <Controller
-              control={control}
-              {...register("bpIndanga")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="매입단가"
-                  labelStyle={{ minWidth: "80px" }}
-                  value={value}
-                  onChange={onChange}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i150}
-                  name={name}
-                />
-              )}
-            />
-            <p>원</p>
-          </Field>
-        </Wrapper>
-        <Wrapper>
-          <Field flex>
-            <Controller
-              control={control}
-              {...register("bpOutdanga")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="판매단가"
-                  labelStyle={{ minWidth: "80px" }}
-                  value={value}
-                  onChange={onChange}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i150}
-                  name={name}
-                />
-              )}
-            />
-            <p>원</p>
-          </Field>
-        </Wrapper>
+        <FormGroup>
+          <Controller
+            control={control}
+            {...register("bpIndanga")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="매입단가"
+                labelStyle={{ minWidth: "80px" }}
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i150}
+                name={name}
+              />
+            )}
+          />
+          <p>원</p>
+        </FormGroup>
+        <FormGroup>
+          <Controller
+            control={control}
+            {...register("bpOutdanga")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="판매단가"
+                labelStyle={{ minWidth: "80px" }}
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i150}
+                name={name}
+              />
+            )}
+          />
+          <p>원</p>
+        </FormGroup>
       </form>
     );
   }

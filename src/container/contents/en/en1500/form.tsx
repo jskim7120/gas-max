@@ -181,10 +181,7 @@ const Form = (
           autoClose: 500,
         });
       } else {
-        // toast.error("error", {
-        //   autoClose: 500,
-        // });
-        alert(response?.response?.message);
+        alert(response?.response?.data?.message);
       }
     } catch (err: any) {
       toast.error(err?.message, {
@@ -381,10 +378,7 @@ const Form = (
         setUnitPriceData(response.data[0]);
       } else {
         setUnitPriceData([]);
-        // toast.error(response.data?.message, {
-        //   autoClose: 500,
-        // });
-        alert(response.data?.message);
+        alert(response?.data?.message);
       }
     } catch (err: any) {
       setUnitPriceData([]);
