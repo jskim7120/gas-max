@@ -17,9 +17,7 @@ import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
-  setSelected: any;
   fetchData: any;
-  setData: any;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
   resetButtonCombination: Function;
@@ -29,9 +27,7 @@ const Form = React.forwardRef(
   (
     {
       selected,
-      setSelected,
       fetchData,
-      setData,
       isAddBtnClicked,
       setIsAddBtnClicked,
       resetButtonCombination,

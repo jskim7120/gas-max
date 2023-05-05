@@ -193,8 +193,6 @@ function CreateEN(
             fields={fields}
             columns={columns}
             setSelected={setSelected}
-            // selectedRowIndex={selectedRowIndex}
-            // setSelectedRowIndex={setSelectedRowIndex}
             setIsAddBtnClicked={setIsAddBtnClicked}
             menuId={menuId}
             rowIndex={rowIndex}
@@ -209,11 +207,7 @@ function CreateEN(
               <Form
                 ref={formRef}
                 selected={selected}
-                setSelected={setSelected}
                 fetchData={fetchData}
-                setData={setData}
-                // selectedRowIndex={selectedRowIndex}
-                // setSelectedRowIndex={setSelectedRowIndex}
                 isAddBtnClicked={isAddBtnClicked}
                 setIsAddBtnClicked={setIsAddBtnClicked}
                 resetButtonCombination={resetButtonCombination}

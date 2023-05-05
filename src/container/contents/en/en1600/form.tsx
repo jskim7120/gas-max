@@ -24,9 +24,7 @@ import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
-  setSelected: any;
-  fetchData: any;
-  setData: any;
+  fetchData: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
   resetButtonCombination: Function;
@@ -36,9 +34,7 @@ const Form = React.forwardRef(
   (
     {
       selected,
-      setSelected,
       fetchData,
-      setData,
       isAddBtnClicked,
       setIsAddBtnClicked,
       resetButtonCombination,
@@ -134,7 +130,7 @@ const Form = React.forwardRef(
       }
       if (type === "reset") {
         if (selected !== undefined && Object.keys(selected)?.length > 0) {
-          setSwAddr1(selected?.swAddr1);
+          setSwAddr1(selected?.swAddr1 ? selected?.swAddr1 : "");
           if (selected?.areaCode !== areaCode) {
             setAreaCode(selected.areaCode);
           }
@@ -150,7 +146,8 @@ const Form = React.forwardRef(
 
     const crud = async (type: string | null) => {
       if (type === "delete") {
-        const formValues = getValues();
+        const formValues: any = getValues();
+        delete formValues.swPaykum;
         try {
           const response: any = await API.post(EN1600DELETE, formValues);
           if (response.status === 200) {
@@ -176,7 +173,7 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? EN1600INSERT : EN1600UPDATE;
       const formValues = getValues();
-      console.log("formValues:::", formValues);
+
       isAddBtnClicked && (formValues.areaCode = areaCode);
 
       formValues.swPaykum =
@@ -193,6 +190,7 @@ const Form = React.forwardRef(
       formValues.swJdate1 = DateWithoutDash(formValues.swJdate1);
       formValues.swJdate2 = DateWithoutDash(formValues.swJdate2);
       formValues.swOutDate = DateWithoutDash(formValues.swOutDate);
+      formValues.swAddr1 = swAddr1;
 
       formValues.swStampFile = image64 && image64;
 
@@ -567,7 +565,7 @@ const Form = React.forwardRef(
         <Divider />
         <FormGroup>
           <Label>퇴사여부</Label>
-          <CheckBox register={{ ...register("swWorkOut") }} />
+          <CheckBox register={register("swWorkOut")} />
           <p
             style={{
               marginLeft: "25px",

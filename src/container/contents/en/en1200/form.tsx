@@ -26,9 +26,7 @@ import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
 
 interface IForm {
   selected: any;
-  setSelected: any;
   fetchData: any;
-  setData: any;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
   resetButtonCombination: Function;
@@ -38,9 +36,7 @@ const Form = React.forwardRef(
   (
     {
       selected,
-      setSelected,
       fetchData,
-      setData,
       isAddBtnClicked,
       setIsAddBtnClicked,
       resetButtonCombination,
@@ -404,7 +400,7 @@ const Form = React.forwardRef(
                     <CheckBox
                       title="세금계산서 도장출력"
                       rtl
-                      register={{ ...register("saupStampSe") }}
+                      register={register("saupStampSe")}
                     />
                   </FormGroup>
 
@@ -412,14 +408,14 @@ const Form = React.forwardRef(
                     <CheckBox
                       title="거래명세표 도장출력"
                       rtl
-                      register={{ ...register("saupStampEs") }}
+                      register={register("saupStampEs")}
                     />
                   </Field>
                   <Field>
                     <CheckBox
                       title="견적서 도장출력"
                       rtl
-                      register={{ ...register("saupStampQu") }}
+                      register={register("saupStampQu")}
                     />
                   </Field>
                 </Wrapper>
