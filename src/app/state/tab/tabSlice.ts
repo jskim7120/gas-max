@@ -4,6 +4,7 @@ type TabProps = {
   menuId: string;
   menuName: string;
   depthFullName: string;
+  rowIndex: number;
 };
 
 export interface initialStateType {
@@ -17,6 +18,7 @@ const initialState: initialStateType = {
       menuId: "HOME",
       menuName: "HOME",
       depthFullName: "HOME",
+      rowIndex: 0,
     },
   ],
   activeTabId: "HOME",
@@ -41,6 +43,7 @@ const tabSlice = createSlice({
               menuId: action.payload.menuId,
               menuName: action.payload.menuName,
               depthFullName: action.payload.depthFullName,
+              rowIndex: 0,
             },
           ];
           sessionStorage.setItem("tabs", JSON.stringify(state.tabs));
@@ -69,6 +72,7 @@ const tabSlice = createSlice({
           menuId: "HOME",
           menuName: "HOME",
           depthFullName: "HOME",
+          rowIndex: 0,
         },
       ];
       state.activeTabId = "HOME";
@@ -85,6 +89,15 @@ const tabSlice = createSlice({
     refreshTabs: (state) => {
       window.location.reload();
     },
+
+    setRowIndex: (state, action) => {
+      const tab = state.tabs.find(
+        (tab) => tab.menuId === action.payload.menuId
+      );
+      if (tab) {
+        tab.rowIndex = action.payload.rowIndex;
+      }
+    },
   },
 });
 
@@ -95,6 +108,7 @@ export const {
   setActiveTab,
   setTabs,
   refreshTabs,
+  setRowIndex,
 } = tabSlice.actions;
 
 export default tabSlice.reducer;

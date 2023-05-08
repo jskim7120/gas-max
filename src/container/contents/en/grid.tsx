@@ -1,32 +1,34 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { LeftSideEN } from "../commonStyle";
+import { setRowIndex } from "app/state/tab/tabSlice";
+import { useDispatch } from "app/store";
 
 function Grid({
   data,
   fields,
   columns,
   setSelected,
-  selectedRowIndex,
-  setSelectedRowIndex,
-  style,
-  setIsCancelBtnDisabled,
   setIsAddBtnClicked,
+  menuId,
+  style,
+  rowIndex,
 }: {
   data: any;
   fields: any;
   columns: any;
   setSelected: Function;
-  selectedRowIndex: number | null;
-  setSelectedRowIndex: Function;
-  style?: any;
-  setIsCancelBtnDisabled?: Function;
   setIsAddBtnClicked?: Function;
+  menuId: string;
+  style?: any;
+  rowIndex: number | undefined;
 }) {
+  // console.log("rowIndex rowIndex rowIndex:::::", rowIndex);
   let container: HTMLDivElement;
   let dp: any;
   let gv: any;
   const realgridElement = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;
@@ -52,16 +54,14 @@ function Grid({
 
     gv.displayOptions.useFocusClass = true;
     gv.setCurrent({
-      dataRow: selectedRowIndex,
+      dataRow: rowIndex,
     });
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected(data[itemIndex]);
-      setSelectedRowIndex(itemIndex);
-
-      setIsCancelBtnDisabled && setIsCancelBtnDisabled(true);
       setIsAddBtnClicked && setIsAddBtnClicked(false);
+      dispatch(setRowIndex({ menuId: menuId, rowIndex: itemIndex }));
     };
 
     return () => {

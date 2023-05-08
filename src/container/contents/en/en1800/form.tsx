@@ -7,7 +7,6 @@ import { EN1800INSERT, EN1800UPDATE, EN1800DELETE, EN180011 } from "app/path";
 import {
   Input,
   Select,
-  Wrapper,
   Divider,
   FormGroup,
   Label,
@@ -17,11 +16,7 @@ import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
-  setSelected: any;
-  fetchData: any;
-  setData: any;
-  selectedRowIndex: number;
-  setSelectedRowIndex: Function;
+  fetchData: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
   resetButtonCombination: Function;
@@ -31,11 +26,7 @@ const Form = React.forwardRef(
   (
     {
       selected,
-      setSelected,
       fetchData,
-      setData,
-      selectedRowIndex,
-      setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
       resetButtonCombination,
@@ -64,9 +55,9 @@ const Form = React.forwardRef(
           params: { areaCode: code },
         });
         if (response.status === 200) {
-          return response?.data?.tempCode;
+          return response?.data;
         } else {
-          alert(response.response.data?.message);
+          alert(response?.response?.data?.message);
           resetButtonCombination();
         }
         return null;
@@ -77,10 +68,10 @@ const Form = React.forwardRef(
 
     const codeChangeHandler = async (aCode: any) => {
       try {
-        const tempCode = await fetchCode11(aCode);
-        if (tempCode !== null) {
+        const temp = await fetchCode11(aCode);
+        if (temp !== null) {
           setFocus("jyName");
-          emptyObj.jyCode = tempCode;
+          emptyObj.jyCode = temp.tempCode;
           reset(emptyObj);
         }
       } catch (err: any) {
@@ -115,9 +106,9 @@ const Form = React.forwardRef(
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await fetchData("delete");
+            await fetchData("pos");
           } else {
-            alert(response?.response?.message);
+            alert(response?.response?.data?.message);
           }
         } catch (err) {
           console.log(err);
@@ -139,16 +130,12 @@ const Form = React.forwardRef(
 
         if (response.status === 200) {
           if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
+            await fetchData("pos");
           } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
+            await fetchData();
           }
-          setSelected(formValues);
+
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
@@ -166,7 +153,7 @@ const Form = React.forwardRef(
         style={{ width: "400px", padding: "0px 10px" }}
         autoComplete="off"
       >
-        <Wrapper>
+        <FormGroup>
           <Input
             label="코 드"
             labelStyle={{ minWidth: "50px" }}
@@ -176,43 +163,41 @@ const Form = React.forwardRef(
             inputSize={InputSize.i80}
           />
 
-          <FormGroup>
-            <Label style={{ minWidth: "83px" }}>영 업 소</Label>
-            <Select
-              value={areaCode}
-              onChange={(e) => {
-                setAreaCode(e.target.value);
-                codeChangeHandler(e.target.value);
-              }}
-              width={InputSize.i130}
-              disabled={!isAddBtnClicked}
-            >
-              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
+          <Label style={{ minWidth: "83px" }}>영 업 소</Label>
+          <Select
+            value={areaCode}
+            onChange={(e) => {
+              setAreaCode(e.target.value);
+              codeChangeHandler(e.target.value);
+            }}
+            width={InputSize.i130}
+            disabled={!isAddBtnClicked}
+          >
+            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
         <Divider />
-        <Wrapper>
+        <FormGroup>
           <Input
             label="분류명"
             labelStyle={{ minWidth: "50px" }}
             register={register("jyName")}
             inputSize={InputSize.i300}
           />
-        </Wrapper>
+        </FormGroup>
 
-        <Wrapper>
+        <FormGroup>
           <Input
             label="비 고"
             labelStyle={{ minWidth: "50px" }}
             register={register("jyBigo")}
             inputSize={InputSize.i300}
           />
-        </Wrapper>
+        </FormGroup>
       </form>
     );
   }

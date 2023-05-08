@@ -1,15 +1,9 @@
-import React, { useImperativeHandle, useEffect } from "react";
+import React, { useImperativeHandle } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
 import { EN2000INSERT, EN2000UPDATE, EN2000DELETE, EN200011 } from "app/path";
-import {
-  Input,
-  Wrapper,
-  Divider,
-  FormGroup,
-  Label,
-} from "components/form/style";
+import { Input, Divider, FormGroup, Label } from "components/form/style";
 import { InfoText } from "components/text";
 import { InfoDesc } from "../../commonStyle";
 import CheckBox from "components/checkbox";
@@ -18,11 +12,7 @@ import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
-  setSelected: any;
-  fetchData: any;
-  setData: any;
-  selectedRowIndex: number;
-  setSelectedRowIndex: Function;
+  fetchData: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
   resetButtonCombination: Function;
@@ -32,11 +22,7 @@ const Form = React.forwardRef(
   (
     {
       selected,
-      setSelected,
       fetchData,
-      setData,
-      selectedRowIndex,
-      setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
       resetButtonCombination,
@@ -57,9 +43,9 @@ const Form = React.forwardRef(
       try {
         const response: any = await API.get(EN200011);
         if (response.status === 200) {
-          return response?.data?.tempCode;
+          return response?.data;
         } else {
-          alert(response.response.data?.message);
+          alert(response?.response?.data?.message);
           resetButtonCombination();
         }
         return null;
@@ -72,9 +58,9 @@ const Form = React.forwardRef(
       if (type === "clear") {
         setFocus("ccName");
         try {
-          const tempCode = await fetchCode11();
-          if (tempCode !== null) {
-            emptyObj.ccCode = tempCode;
+          const temp = await fetchCode11();
+          if (temp !== null) {
+            emptyObj.ccCode = temp.tempCode;
             reset(emptyObj);
           }
         } catch (err: any) {
@@ -104,9 +90,9 @@ const Form = React.forwardRef(
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await fetchData("delete");
+            await fetchData("pos");
           } else {
-            alert(response?.response?.message);
+            alert(response?.response?.data?.message);
             return;
           }
         } catch (err) {
@@ -130,16 +116,12 @@ const Form = React.forwardRef(
 
         if (response.status === 200) {
           if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
+            await fetchData("pos");
           } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
+            await fetchData();
           }
-          setSelected(formValues);
+
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
@@ -157,7 +139,7 @@ const Form = React.forwardRef(
         style={{ width: "380px", padding: "0px 10px" }}
         autoComplete="off"
       >
-        <Wrapper>
+        <FormGroup>
           <Input
             label="코 드"
             register={register("ccCode")}
@@ -165,32 +147,32 @@ const Form = React.forwardRef(
             readOnly
             inputSize={InputSize.i80}
           />
-        </Wrapper>
+        </FormGroup>
         <Divider />
-        <Wrapper>
+        <FormGroup>
           <Input
             label="정비명"
             register={register("ccName")}
             maxLength="30"
             fullWidth
           />
-        </Wrapper>
+        </FormGroup>
 
-        <Wrapper>
+        <FormGroup>
           <Input
             label="비 고"
             register={register("ccBigo")}
             fullWidth
             maxLength="50"
           />
-        </Wrapper>
+        </FormGroup>
 
-        <Wrapper>
+        <FormGroup>
           <FormGroup>
             <Label>유류비계정 유무</Label>
             <CheckBox title="" rtl register={register("ccOilYn")} />
           </FormGroup>
-        </Wrapper>
+        </FormGroup>
 
         <InfoDesc>
           <InfoText text="유류비는 주유현황과 연동됩니다." />

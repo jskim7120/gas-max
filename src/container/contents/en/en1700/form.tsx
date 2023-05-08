@@ -37,11 +37,7 @@ import {
 
 interface IForm {
   selected: any;
-  setSelected: any;
-  fetchData: any;
-  setData: any;
-  selectedRowIndex: number;
-  setSelectedRowIndex: Function;
+  fetchData: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
   resetButtonCombination: Function;
@@ -74,11 +70,7 @@ const Form = React.forwardRef(
   (
     {
       selected,
-      setSelected,
       fetchData,
-      setData,
-      selectedRowIndex,
-      setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
       resetButtonCombination,
@@ -107,9 +99,9 @@ const Form = React.forwardRef(
           params: { areaCode: code },
         });
         if (response.status === 200) {
-          return response?.data?.tempCode;
+          return response?.data;
         } else {
-          alert(response.response.data?.message);
+          alert(response?.response?.data?.message);
           resetButtonCombination();
         }
         return null;
@@ -135,14 +127,14 @@ const Form = React.forwardRef(
       }
     };
 
-    const codeChangeHandler = async (aCode: any) => {
+    const codeChangeHandler = async (aCode: string) => {
       try {
-        const tempCode = await fetchCode11(aCode);
+        const temp = await fetchCode11(aCode);
         fetchData65(aCode);
 
-        if (tempCode !== null) {
+        if (temp !== null) {
           setFocus("caName");
-          emptyObj.caCode = tempCode;
+          emptyObj.caCode = temp.tempCode;
           reset(emptyObj);
         }
       } catch (err: any) {
@@ -173,7 +165,11 @@ const Form = React.forwardRef(
 
     const crud = async (type: string | null) => {
       if (type === "delete") {
-        const formValues = getValues();
+        const formValues: any = getValues();
+        delete formValues.caAmt;
+        delete formValues.caMAmt;
+        delete formValues.caDiscountAmt;
+        delete formValues.caInsuranceAmt;
 
         try {
           const response: any = await API.post(EN1700DELETE, formValues);
@@ -181,9 +177,9 @@ const Form = React.forwardRef(
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await fetchData("delete");
+            await fetchData("pos");
           } else {
-            alert(response?.response?.message);
+            alert(response?.response?.data?.message);
           }
         } catch (err) {
           console.log(err);
@@ -227,21 +223,17 @@ const Form = React.forwardRef(
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
+            await fetchData("pos");
           } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
+            await fetchData();
           }
-          setSelected(formValues);
+
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
         } else {
-          alert(response.response.data?.message);
+          alert(response?.response?.data?.message);
         }
       } catch (err: any) {
         console.log(err);
@@ -608,84 +600,69 @@ const Form = React.forwardRef(
             maxLength="20"
           />
         </Wrapper>
-        <Wrapper>
-          <Field>
-            <FormGroup>
-              <Label>연령 특약</Label>
-              {radioOptions.map((option, index) => (
-                <Item key={index}>
-                  <RadioButton
-                    type="radio"
-                    value={option.id}
-                    {...register(
-                      `caBage`
-                      // , {
-                      //   required: "required",
-                      // }
-                    )}
-                    id={option.id}
-                    // onChange={() => console.log(option.label)}
-                  />
-                  <RadioButtonLabel htmlFor={`${option.label}`}>
-                    {option.label}
-                  </RadioButtonLabel>
-                </Item>
-              ))}
-            </FormGroup>
-          </Field>
-        </Wrapper>
-        <Wrapper style={{ width: "630px" }}>
-          <Field flex style={{ alignItems: "center" }}>
-            <Label>보험 기간</Label>
-            <Controller
-              control={control}
-              {...register("caBsdate")}
-              render={({ field: { onChange, onBlur, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "150px" }}
-                  name={name}
-                />
-              )}
-            />
-          </Field>
-          <Field flex style={{ alignItems: "center" }}>
-            <Label style={{ minWidth: "auto" }}>~</Label>
-            <Controller
-              control={control}
-              {...register("caBldate")}
-              render={({ field: { onChange, onBlur, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "150px" }}
-                  name={name}
-                />
-              )}
-            />
-          </Field>
-        </Wrapper>
-        <Wrapper>
-          <Field flex>
-            <Controller
-              control={control}
-              {...register("caInsuranceAmt")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="보 험 료"
-                  value={value}
-                  onChange={onChange}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i150}
-                  name={name}
-                />
-              )}
-            />
-            <p>원</p>
-          </Field>
-        </Wrapper>
+        <FormGroup>
+          <Label>연령 특약</Label>
+          {radioOptions.map((option, index) => (
+            <Item key={index}>
+              <RadioButton
+                type="radio"
+                value={option.id}
+                {...register(`caBage`)}
+                id={option.id}
+              />
+              <RadioButtonLabel htmlFor={`${option.label}`}>
+                {option.label}
+              </RadioButtonLabel>
+            </Item>
+          ))}
+        </FormGroup>
+        <FormGroup>
+          <Label>보험 기간</Label>
+          <Controller
+            control={control}
+            {...register("caBsdate")}
+            render={({ field: { onChange, onBlur, value, name } }) => (
+              <CustomDatePicker
+                value={value}
+                onChange={onChange}
+                style={{ width: "150px" }}
+                name={name}
+              />
+            )}
+          />
+
+          <Label style={{ minWidth: "auto" }}>~</Label>
+          <Controller
+            control={control}
+            {...register("caBldate")}
+            render={({ field: { onChange, onBlur, value, name } }) => (
+              <CustomDatePicker
+                value={value}
+                onChange={onChange}
+                style={{ width: "150px" }}
+                name={name}
+              />
+            )}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Controller
+            control={control}
+            {...register("caInsuranceAmt")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="보 험 료"
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i150}
+                name={name}
+              />
+            )}
+          />
+          <p>원</p>
+        </FormGroup>
       </form>
     );
   }

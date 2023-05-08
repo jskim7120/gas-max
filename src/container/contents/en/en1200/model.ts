@@ -1,6 +1,6 @@
 export interface IJNOSAUP {
-  areaCode: number;
-  areaName: string;
+  areaCode: string;
+  emailKind: string;
   saupAddr1: string;
   saupAddr2: string;
   saupBigo: string;
@@ -10,15 +10,15 @@ export interface IJNOSAUP {
   saupEdiId: string;
   saupEdiPass: string;
   saupEdiSawon: string;
-  saupEdiSmsNo: number;
+  saupEdiSmsNo: string;
   saupEdiYn: string;
   saupJongmok: string;
   saupJumin: string;
   saupRCode: string;
   saupSajang: string;
   saupSangho: string;
-  saupSno: number;
-  saupSsno: number;
+  saupSno: string;
+  saupSsno: string;
   saupStamp: string;
   saupStampEs: string;
   saupStampImg: string;
@@ -27,5 +27,35 @@ export interface IJNOSAUP {
   saupStampSe: string;
   saupUptae: string;
   saupZipcode: string;
-  saupNo: string;
 }
+
+export const emptyObj = {
+  areaCode: "",
+  emailKind: "",
+  saupAddr1: "",
+  saupAddr2: "",
+  saupBigo: "",
+  saupCert: "",
+  saupDate: "",
+  saupEdiEmail: "",
+  saupEdiId: "",
+  saupEdiPass: "",
+  saupEdiSawon: "",
+  saupEdiSmsNo: "",
+  saupEdiYn: "",
+  saupJongmok: "",
+  saupJumin: "",
+  saupRCode: "",
+  saupSajang: "",
+  saupSangho: "",
+  saupSno: "",
+  saupSsno: "",
+  saupStamp: "",
+  saupStampEs: "",
+  saupStampImg: "",
+  saupStampImgType: "",
+  saupStampQu: "",
+  saupStampSe: "",
+  saupUptae: "",
+  saupZipcode: "",
+};

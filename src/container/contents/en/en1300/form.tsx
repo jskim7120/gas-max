@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
+import React, { useImperativeHandle, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -9,29 +9,23 @@ import {
   RadioButton,
   RadioButtonLabel,
 } from "components/radioButton/style";
-import { ISANGPUM } from "./model";
+import { ISANGPUM, emptyObj } from "./model";
 import {
   Input,
   Select,
-  Wrapper,
   Divider,
-  Field,
   FormGroup,
   Label,
 } from "components/form/style";
 import { InputSize } from "components/componentsType";
-import { formatCurrencyRemoveComma, currencyMask } from "helpers/currency";
+import { currencyMask, removeCommas2 } from "helpers/currency";
 
 interface IForm {
   selected: any;
   fetchData: any;
-  setData: any;
-  selectedRowIndex: number;
-  setSelected: any;
-  setSelectedRowIndex: any;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
-  setIsCancelBtnDisabled: Function;
+  resetButtonCombination: Function;
 }
 
 const radioOptions = [
@@ -50,22 +44,19 @@ const Form = React.forwardRef(
     {
       selected,
       fetchData,
-      setData,
-      selectedRowIndex,
-      setSelected,
-      setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      setIsCancelBtnDisabled,
+      resetButtonCombination,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
+    const [areaCode, setAreaCode] = useState("");
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1300",
     });
 
-    const { register, handleSubmit, reset, getValues, control } =
+    const { register, handleSubmit, reset, getValues, control, setFocus } =
       useForm<ISANGPUM>({
         mode: "onChange",
       });
@@ -75,49 +66,62 @@ const Form = React.forwardRef(
       resetForm,
     }));
 
-    const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
-        if (type === "clear") {
-          document.getElementById("jpName")?.focus();
-          const path = EN130011;
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.jpCode = response.data.tempCode;
-              newData.areaCode = selected.areaCode;
-              newData.jpGasType = response.data.jpGasType;
-              newData.jpGasuse = response.data.jpGasuse;
-              newData.jpGubun = response.data.jpGubun;
-              newData.jpJaegoYn = response.data.jpJaegoYn;
-              newData.jpKgDanwi = response.data.jpKgDanwi;
-              newData.jpKind = response.data.jpKind;
-              reset(newData);
-            } else {
-              // toast.error(response.response.data?.message, {
-              //   autoClose: 500,
-              // });
-              alert(response.response.data?.message);
-            }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
-          }
-        } else if (type === "reset") {
-          reset({
-            ...selected,
-            swWorkOut: selected?.swWorkOut === "Y",
-          });
+    const fetchCode11 = async (code: string) => {
+      try {
+        const response: any = await API.get(EN130011, {
+          params: { areaCode: code },
+        });
+
+        if (response.status === 200) {
+          return response?.data;
+        } else {
+          alert(response?.response?.data?.message);
+          resetButtonCombination();
         }
+        return null;
+      } catch (err) {
+        console.log(err);
       }
     };
+
+    const codeChangeHandler = async (aCode: any) => {
+      try {
+        const temp = await fetchCode11(aCode);
+        if (temp !== null) {
+          setFocus("jpName");
+          reset({
+            ...emptyObj,
+            ...temp,
+            jpCode: temp.tempCode,
+          });
+        }
+      } catch (err: any) {
+        console.log("jpCode generate error", err);
+      }
+    };
+
+    const resetForm = async (type: string) => {
+      if (type === "clear") {
+        await codeChangeHandler(areaCode);
+        return;
+      }
+
+      if (type === "reset") {
+        if (selected !== undefined && Object.keys(selected)?.length > 0) {
+          if (selected?.areaCode !== areaCode) {
+            setAreaCode(selected.areaCode);
+          }
+          reset({
+            ...selected,
+          });
+        }
+        return;
+      }
+    };
+
     const crud = async (type: string | null) => {
       if (type === "delete") {
-        const formValues = getValues();
+        const formValues: any = getValues();
         delete formValues.jpIndanga;
         delete formValues.jpOutdanga;
         delete formValues.jpIntong;
@@ -130,17 +134,12 @@ const Form = React.forwardRef(
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await fetchData("delete");
+            await fetchData("pos");
           } else {
-            // toast.error(response?.response?.message, {
-            //   autoClose: 500,
-            // });
-            alert(response?.response?.message);
+            alert(response?.response?.data?.message);
           }
         } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
+          console.log(err);
         }
       }
 
@@ -153,81 +152,39 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? EN1300INSERT : EN1300UPDATE;
       const formValues = getValues();
-      formValues.jpOutdanga = formValues.jpOutdanga
-        ? formatCurrencyRemoveComma(formValues.jpOutdanga)
-        : "";
-      formValues.jpIndanga = formValues.jpIndanga
-        ? formatCurrencyRemoveComma(formValues.jpIndanga)
-        : "";
-      formValues.jpIntong = formValues.jpIntong
-        ? formatCurrencyRemoveComma(formValues.jpIntong)
-        : "";
-      formValues.jpOuttong = formValues.jpOuttong
-        ? formatCurrencyRemoveComma(formValues.jpOuttong)
-        : "";
-      formValues.jpBaedal = formValues.jpBaedal
-        ? formatCurrencyRemoveComma(formValues.jpBaedal)
-        : "";
+
+      isAddBtnClicked && (formValues.areaCode = areaCode);
+      formValues.jpOutdanga =
+        formValues.jpOutdanga && +removeCommas2(formValues.jpOutdanga);
+      formValues.jpIndanga =
+        formValues.jpIndanga && +removeCommas2(formValues.jpIndanga);
+      formValues.jpIntong =
+        formValues.jpIntong && +removeCommas2(formValues.jpIntong);
+      formValues.jpOuttong =
+        formValues.jpOuttong && +removeCommas2(formValues.jpOuttong);
+      formValues.jpBaedal =
+        formValues.jpBaedal && +removeCommas2(formValues.jpBaedal);
+      formValues.jpSort = formValues.jpSort && +formValues.jpSort;
 
       try {
         const response: any = await API.post(path, formValues);
 
         if (response.status === 200) {
           if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
-            setIsCancelBtnDisabled(true);
+            await fetchData("pos");
           } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
+            await fetchData();
           }
-          setSelected(formValues);
+
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
         } else {
-          toast.error(response?.message, {
-            autoClose: 500,
-          });
+          alert(response?.response?.data?.message);
         }
       } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
-      }
-    };
-
-    const handleSelectCode = async (event: any) => {
-      let newData: any = {};
-      const path = EN130011;
-      try {
-        const response: any = await API.get(path, {
-          params: { areaCode: event.target.value },
-        });
-        if (response.status === 200) {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          newData.jpCode = response.data.tempCode;
-          newData.areaCode = event.target.value;
-          newData.jpGasType = response.data.jpGasType;
-          newData.jpGasuse = response.data.jpGasuse;
-          newData.jpGubun = response.data.jpGubun;
-          newData.jpJaegoYn = response.data.jpJaegoYn;
-          newData.jpKgDanwi = response.data.jpKgDanwi;
-          newData.jpKind = response.data.jpKind;
-          reset(newData);
-          document.getElementById("jpName")?.focus();
-        } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
-        }
-      } catch (err: any) {
-        console.log("areaCode select error", err);
+        console.log(err);
       }
     };
 
@@ -237,24 +194,26 @@ const Form = React.forwardRef(
         style={{ padding: "0px 10px", width: "328px" }}
         autoComplete="off"
       >
-        <Wrapper>
-          <FormGroup>
-            <Label>영 업 소</Label>
-            <Select
-              width={InputSize.i130}
-              register={register("areaCode")}
-              onChange={handleSelectCode}
-              disabled={!isAddBtnClicked}
-            >
-              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
-        <Wrapper>
+        <FormGroup>
+          <Label>영 업 소</Label>
+          <Select
+            width={InputSize.i130}
+            value={areaCode}
+            onChange={(e) => {
+              setAreaCode(e.target.value);
+              codeChangeHandler(e.target.value);
+            }}
+            disabled={!isAddBtnClicked}
+          >
+            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
           <Input
             label="코 드"
             register={register("jpCode")}
@@ -262,37 +221,37 @@ const Form = React.forwardRef(
             inputSize={InputSize.i130}
             readOnly
           />
-        </Wrapper>
+        </FormGroup>
         <Divider />
-        <Wrapper>
+        <FormGroup>
           <Input
             label="품 명"
             register={register("jpName")}
             inputSize={InputSize.i130}
             maxLength="30"
           />
-        </Wrapper>
-        <Wrapper>
+        </FormGroup>
+        <FormGroup>
           <Input
             label="규 격"
             register={register("jpSpec")}
             inputSize={InputSize.i130}
             maxLength="10"
           />
-        </Wrapper>
-        <Wrapper>
-          <FormGroup>
-            <Label>가스 구분</Label>
-            <Select register={register("jpGubun")} width={InputSize.i130}>
-              {dataCommonDic?.jpGubun?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
-        <Wrapper style={{ alignItems: "center" }}>
+        </FormGroup>
+
+        <FormGroup>
+          <Label>가스 구분</Label>
+          <Select register={register("jpGubun")} width={InputSize.i130}>
+            {dataCommonDic?.jpGubun?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
           <Controller
             control={control}
             {...register("jpKg")}
@@ -316,215 +275,189 @@ const Form = React.forwardRef(
               </option>
             ))}
           </Select>
-        </Wrapper>
-        <Wrapper>
-          <FormGroup>
-            <Label>단 위</Label>
-            <Select register={register("jpUnit")} width={InputSize.i130}>
-              {dataCommonDic?.jpUnit?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
-        <Wrapper>
-          <FormGroup>
-            <Input
-              label="비 중(1L)"
-              register={register("jpSpecific")}
-              inputSize={InputSize.i130}
-              textAlign="right"
-            />
-          </FormGroup>
-        </Wrapper>
-        <Wrapper>
-          <FormGroup>
-            <Label>가스 분류</Label>
-            <Select register={register("jpGasType")} width={InputSize.i130}>
-              {dataCommonDic?.jpGasType?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
-        <Wrapper>
-          <FormGroup>
-            <Label>품목 구분</Label>
+        </FormGroup>
 
-            <Select register={register("jpKind")} width={InputSize.i130}>
-              {dataCommonDic?.jpKind?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
-        <Wrapper>
-          <FormGroup>
-            <Label>용도 구분</Label>
-            <Select register={register("jpGasuse")} width={InputSize.i130}>
-              {dataCommonDic?.jpGasuse?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
-        <Divider />
-        <Wrapper>
-          <FormGroup>
-            <Label>Vat 구분</Label>
-            <Select register={register("jpVatKind")} width={InputSize.i130}>
-              {dataCommonDic?.jpVatKind?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
-        <Wrapper>
-          <Field flex>
-            <Controller
-              control={control}
-              {...register("jpOutdanga")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="가스판매 단가"
-                  value={value}
-                  onChange={onChange}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i130}
-                  name={name}
-                />
-              )}
-            />
-            <p>원</p>
-          </Field>
-        </Wrapper>
-        <Wrapper>
-          <Field flex>
-            <Controller
-              control={control}
-              {...register("jpOuttong")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="용기판매 단가"
-                  value={value}
-                  onChange={onChange}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i130}
-                  name={name}
-                />
-              )}
-            />
-            <p>원</p>
-          </Field>
-        </Wrapper>
-        <Wrapper>
-          <Field flex>
-            <Controller
-              control={control}
-              {...register("jpIndanga")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="가스매입 원가"
-                  value={value}
-                  onChange={onChange}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i130}
-                  name={name}
-                />
-              )}
-            />
-            <p>원</p>
-          </Field>
-        </Wrapper>
-        <Wrapper>
-          <Field flex>
-            <Controller
-              control={control}
-              {...register("jpIntong")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="용기구입 단가"
-                  value={value}
-                  onChange={onChange}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i130}
-                  name={name}
-                />
-              )}
-            />
-            <p>원</p>
-          </Field>
-        </Wrapper>
-        <Wrapper>
-          <Field flex>
-            <Controller
-              control={control}
-              {...register("jpBaedal")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="사원 배달 수수료"
-                  value={value}
-                  onChange={onChange}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i130}
-                  name={name}
-                />
-              )}
-            />
-            <p>원</p>
-          </Field>
-        </Wrapper>
-        <Divider />
-        <Wrapper>
-          <FormGroup style={{ alignItems: "center" }}>
-            <Label>재고사용 유무</Label>
-            {radioOptions.map((option, index) => (
-              <Item key={index}>
-                <RadioButton
-                  type="radio"
-                  value={option.id}
-                  {...register(
-                    `jpJaegoYn`
-                    // , {
-                    //   // required: "required",
-                    // }
-                  )}
-                  id={option.id}
-                  // onChange={() => console.log(option.label)}
-                />
-                <RadioButtonLabel htmlFor={`${option.label}`}>
-                  {option.label}
-                </RadioButtonLabel>
-              </Item>
+        <FormGroup>
+          <Label>단 위</Label>
+          <Select register={register("jpUnit")} width={InputSize.i130}>
+            {dataCommonDic?.jpUnit?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
             ))}
-          </FormGroup>
-        </Wrapper>
-        <Wrapper>
-          <Field>
-            <Input
-              style={{ textAlign: "end" }}
-              label="순번(조회 순서)"
-              register={register("jpSort")}
-              inputSize={InputSize.i130}
-              textAlign="right"
-            />
-          </Field>
-        </Wrapper>
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
+          <Input
+            label="비 중(1L)"
+            register={register("jpSpecific")}
+            inputSize={InputSize.i130}
+            textAlign="right"
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label>가스 분류</Label>
+          <Select register={register("jpGasType")} width={InputSize.i130}>
+            {dataCommonDic?.jpGasType?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
+          <Label>품목 구분</Label>
+          <Select register={register("jpKind")} width={InputSize.i130}>
+            {dataCommonDic?.jpKind?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
+          <Label>용도 구분</Label>
+          <Select register={register("jpGasuse")} width={InputSize.i130}>
+            {dataCommonDic?.jpGasuse?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+
+        <Divider />
+        <FormGroup>
+          <Label>Vat 구분</Label>
+          <Select register={register("jpVatKind")} width={InputSize.i130}>
+            {dataCommonDic?.jpVatKind?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+        <FormGroup>
+          <Controller
+            control={control}
+            {...register("jpOutdanga")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="가스판매 단가"
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i130}
+                name={name}
+              />
+            )}
+          />
+          <p>원</p>
+        </FormGroup>
+        <FormGroup>
+          <Controller
+            control={control}
+            {...register("jpOuttong")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="용기판매 단가"
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i130}
+                name={name}
+              />
+            )}
+          />
+          <p>원</p>
+        </FormGroup>
+        <FormGroup>
+          <Controller
+            control={control}
+            {...register("jpIndanga")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="가스매입 원가"
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i130}
+                name={name}
+              />
+            )}
+          />
+          <p>원</p>
+        </FormGroup>
+        <FormGroup>
+          <Controller
+            control={control}
+            {...register("jpIntong")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="용기구입 단가"
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i130}
+                name={name}
+              />
+            )}
+          />
+          <p>원</p>
+        </FormGroup>
+        <FormGroup>
+          <Controller
+            control={control}
+            {...register("jpBaedal")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="사원 배달 수수료"
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i130}
+                name={name}
+              />
+            )}
+          />
+          <p>원</p>
+        </FormGroup>
+        <Divider />
+
+        <FormGroup>
+          <Label>재고사용 유무</Label>
+          {radioOptions.map((option, index) => (
+            <Item key={index}>
+              <RadioButton
+                type="radio"
+                value={option.id}
+                {...register(`jpJaegoYn`)}
+                id={option.id}
+              />
+              <RadioButtonLabel htmlFor={`${option.label}`}>
+                {option.label}
+              </RadioButtonLabel>
+            </Item>
+          ))}
+        </FormGroup>
+        <FormGroup>
+          <Input
+            style={{ textAlign: "end" }}
+            label="순번(조회 순서)"
+            register={register("jpSort")}
+            inputSize={InputSize.i130}
+            textAlign="right"
+          />
+        </FormGroup>
       </form>
     );
   }

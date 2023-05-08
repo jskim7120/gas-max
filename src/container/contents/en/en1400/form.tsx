@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
+import React, { useImperativeHandle, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -7,26 +7,20 @@ import { EN1400INSERT, EN1400UPDATE, EN1400DELETE, EN140011 } from "app/path";
 import {
   Input,
   Select,
-  Field,
   FormGroup,
-  Wrapper,
   Divider,
   Label,
 } from "components/form/style";
-import { IBUPUM } from "./model";
-import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
+import { IBUPUM, emptyObj } from "./model";
+import { currencyMask, removeCommas } from "helpers/currency";
 import { InputSize } from "components/componentsType";
 
 interface IForm {
   selected: any;
   fetchData: any;
-  setData: any;
-  selectedRowIndex: number;
-  setSelected: any;
-  setSelectedRowIndex: any;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
-  setIsCancelBtnDisabled: Function;
+  resetButtonCombination: Function;
 }
 
 const Form = React.forwardRef(
@@ -34,22 +28,20 @@ const Form = React.forwardRef(
     {
       selected,
       fetchData,
-      setData,
-      selectedRowIndex,
-      setSelected,
-      setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      setIsCancelBtnDisabled,
+      resetButtonCombination,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
+    const [areaCode, setAreaCode] = useState("");
+
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "EN",
       functionName: "EN1400",
     });
 
-    const { register, handleSubmit, reset, getValues, control } =
+    const { register, handleSubmit, reset, getValues, control, setFocus } =
       useForm<IBUPUM>({ mode: "onChange" });
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
@@ -57,46 +49,62 @@ const Form = React.forwardRef(
       resetForm,
     }));
 
-    const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
-        if (type === "clear") {
-          document.getElementById("bpName")?.focus();
-          const path = EN140011;
+    const fetchCode11 = async (code: string) => {
+      try {
+        const response: any = await API.get(EN140011, {
+          params: { areaCode: code },
+        });
 
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.bpCode = response.data.tempCode;
-              newData.areaCode = selected.areaCode;
-              reset(newData);
-            } else {
-              // toast.error(response.response.data?.message, {
-              //   autoClose: 500,
-              // });
-              alert(response.response.data?.message);
-            }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
-          }
-        } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
-          reset({
-            ...newData,
-          });
+        if (response.status === 200) {
+          return response?.data;
+        } else {
+          alert(response?.response?.data?.message);
+          resetButtonCombination();
         }
+        return null;
+      } catch (err) {
+        console.log(err);
       }
     };
+
+    const codeChangeHandler = async (aCode: any) => {
+      try {
+        const temp = await fetchCode11(aCode);
+
+        if (temp !== null) {
+          setFocus("bpName");
+          emptyObj.bpCode = temp.tempCode;
+          reset(emptyObj);
+        }
+      } catch (err: any) {
+        console.log("bpCode generate error", err);
+      }
+    };
+
+    const resetForm = async (type: string) => {
+      if (type === "clear") {
+        await codeChangeHandler(areaCode);
+        return;
+      }
+
+      if (type === "reset") {
+        if (selected !== undefined && Object.keys(selected)?.length > 0) {
+          if (areaCode !== selected.areaCode) {
+            setAreaCode(selected.areaCode);
+          }
+          reset({
+            ...selected,
+          });
+        }
+        return;
+      }
+    };
+
     const crud = async (type: string | null) => {
       if (type === "delete") {
-        const formValues = getValues();
+        const formValues: any = getValues();
+        delete formValues.bpIndanga;
+        delete formValues.bpOutdanga;
 
         try {
           const response: any = await API.post(EN1400DELETE, formValues);
@@ -104,17 +112,12 @@ const Form = React.forwardRef(
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await fetchData("delete");
+            await fetchData("pos");
           } else {
-            // toast.error(response?.response?.message, {
-            //   autoClose: 500,
-            // });
-            alert(response?.response?.message);
+            alert(response?.response?.data?.message);
           }
         } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
+          console.log(err);
         }
       }
 
@@ -127,65 +130,28 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? EN1400INSERT : EN1400UPDATE;
       const formValues = getValues();
-      formValues.bpIndanga = formValues.bpIndanga
-        ? formatCurrencyRemoveComma(formValues.bpIndanga)
-        : "";
-      formValues.bpOutdanga = formValues.bpOutdanga
-        ? formatCurrencyRemoveComma(formValues.bpOutdanga)
-        : "";
+      isAddBtnClicked && (formValues.areaCode = areaCode);
+      formValues.bpIndanga = removeCommas(formValues.bpIndanga).toString();
+      formValues.bpOutdanga = removeCommas(formValues.bpOutdanga).toString();
 
       try {
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
-            setIsCancelBtnDisabled(true);
+            await fetchData("pos");
           } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
+            await fetchData();
           }
-          setSelected(formValues);
+
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
         } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
+          alert(response?.response?.data?.message);
         }
       } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
-      }
-    };
-
-    const handleSelectCode = async (event: any) => {
-      let newData: any = {};
-      const path = EN140011;
-      try {
-        const response: any = await API.get(path, {
-          params: { areaCode: event.target.value },
-        });
-        if (response.status === 200) {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          newData.bpCode = response.data.tempCode;
-          newData.areaCode = event.target.value;
-          reset(newData);
-          document.getElementById("bpName")?.focus();
-        } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
-        }
-      } catch (err: any) {
-        console.log("areaCode select error", err);
+        console.log(err);
       }
     };
 
@@ -195,24 +161,26 @@ const Form = React.forwardRef(
         style={{ width: "300px", padding: "0px 10px" }}
         autoComplete="off"
       >
-        <Wrapper>
-          <FormGroup>
-            <Label style={{ minWidth: "80px" }}>영 업 소</Label>
-            <Select
-              register={register("areaCode")}
-              onChange={handleSelectCode}
-              width={InputSize.i150}
-              disabled={!isAddBtnClicked}
-            >
-              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
-        <Wrapper>
+        <FormGroup>
+          <Label style={{ minWidth: "80px" }}>영 업 소</Label>
+          <Select
+            value={areaCode}
+            onChange={(e) => {
+              setAreaCode(e.target.value);
+              codeChangeHandler(e.target.value);
+            }}
+            width={InputSize.i150}
+            disabled={!isAddBtnClicked}
+          >
+            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
           <Input
             label="부품 코드"
             labelStyle={{ minWidth: "80px" }}
@@ -221,9 +189,9 @@ const Form = React.forwardRef(
             maxLength="3"
             readOnly
           />
-        </Wrapper>
+        </FormGroup>
         <Divider />
-        <Wrapper>
+        <FormGroup>
           <Input
             label="부 품 명"
             labelStyle={{ minWidth: "80px" }}
@@ -231,8 +199,8 @@ const Form = React.forwardRef(
             inputSize={InputSize.i150}
             maxLength="20"
           />
-        </Wrapper>
-        <Wrapper>
+        </FormGroup>
+        <FormGroup>
           <Input
             label="규 격"
             labelStyle={{ minWidth: "80px" }}
@@ -240,8 +208,8 @@ const Form = React.forwardRef(
             inputSize={InputSize.i150}
             maxLength="10"
           />
-        </Wrapper>
-        <Wrapper>
+        </FormGroup>
+        <FormGroup>
           <Input
             label="단 위"
             labelStyle={{ minWidth: "80px" }}
@@ -249,50 +217,46 @@ const Form = React.forwardRef(
             inputSize={InputSize.i150}
             maxLength="10"
           />
-        </Wrapper>
+        </FormGroup>
         <Divider />
-        <Wrapper>
-          <Field flex>
-            <Controller
-              control={control}
-              {...register("bpIndanga")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="매입단가"
-                  labelStyle={{ minWidth: "80px" }}
-                  value={value}
-                  onChange={onChange}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i150}
-                  name={name}
-                />
-              )}
-            />
-            <p>원</p>
-          </Field>
-        </Wrapper>
-        <Wrapper>
-          <Field flex>
-            <Controller
-              control={control}
-              {...register("bpOutdanga")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="판매단가"
-                  labelStyle={{ minWidth: "80px" }}
-                  value={value}
-                  onChange={onChange}
-                  mask={currencyMask}
-                  textAlign="right"
-                  inputSize={InputSize.i150}
-                  name={name}
-                />
-              )}
-            />
-            <p>원</p>
-          </Field>
-        </Wrapper>
+        <FormGroup>
+          <Controller
+            control={control}
+            {...register("bpIndanga")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="매입단가"
+                labelStyle={{ minWidth: "80px" }}
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i150}
+                name={name}
+              />
+            )}
+          />
+          <p>원</p>
+        </FormGroup>
+        <FormGroup>
+          <Controller
+            control={control}
+            {...register("bpOutdanga")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="판매단가"
+                labelStyle={{ minWidth: "80px" }}
+                value={value}
+                onChange={onChange}
+                mask={currencyMask}
+                textAlign="right"
+                inputSize={InputSize.i150}
+                name={name}
+              />
+            )}
+          />
+          <p>원</p>
+        </FormGroup>
       </form>
     );
   }

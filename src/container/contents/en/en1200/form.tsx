@@ -11,7 +11,7 @@ import {
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
-import { IJNOSAUP } from "./model";
+import { IJNOSAUP, emptyObj } from "./model";
 import DaumAddress from "components/daum";
 import { SearchIcon, IconHome, IconReceipt } from "components/allSvgIcon";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -27,13 +27,9 @@ import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
 interface IForm {
   selected: any;
   fetchData: any;
-  setData: any;
-  selectedRowIndex: number;
-  setSelected: any;
-  setSelectedRowIndex: any;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
-  setIsCancelBtnDisabled: Function;
+  resetButtonCombination: Function;
 }
 
 const Form = React.forwardRef(
@@ -41,16 +37,13 @@ const Form = React.forwardRef(
     {
       selected,
       fetchData,
-      setData,
-      selectedRowIndex,
-      setSelected,
-      setSelectedRowIndex,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      setIsCancelBtnDisabled,
+      resetButtonCombination,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
+    const [areaCode, setAreaCode] = useState("");
     const [addr, setAddress] = useState<string>("");
     const [image, setImage] = useState<{ name: string }>();
     const [image64, setImage64] = useState<any>(null);
@@ -69,8 +62,10 @@ const Form = React.forwardRef(
         reset((formValues: any) => ({
           ...formValues,
           saupZipcode: addr ? addr?.split("/")[1] : "",
-          saupAddr1: addr ? addr?.split("/")[0] : "",
+          saupAddr2: "",
         }));
+
+        setSaupAddr1(addr ? addr?.split("/")[0] : "");
       }
     }, [addr]);
 
@@ -79,40 +74,55 @@ const Form = React.forwardRef(
       resetForm,
     }));
 
-    const ggg = () => {
-      setFocus("saupAddr2");
+    const fetchCode11 = async (code: string) => {
+      try {
+        const response: any = await API.get(EN120011, {
+          params: { areaCode: code },
+        });
+
+        if (response.status === 200) {
+          return response?.data;
+        } else {
+          alert(response?.response?.data?.message);
+          resetButtonCombination();
+        }
+        return null;
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const codeChangeHandler = async (aCode: string) => {
+      try {
+        const temp = await fetchCode11(aCode);
+
+        if (temp !== null) {
+          document.getElementsByName("saupSsno")[0]?.focus();
+          //setFocus("saupSsno");
+          reset({
+            ...emptyObj,
+            ...temp,
+            saupSno: temp.tempCode,
+          });
+          setSaupAddr1("");
+        }
+      } catch (err: any) {
+        console.log("saupSno generate error", err);
+      }
     };
 
     const resetForm = async (type: string) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
-        if (type === "clear") {
-          document.getElementsByName("saupSsno")[0]?.focus();
-          //setFocus("saupSsno");
-          const path = EN120011;
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.saupSno = response.data.tempCode;
-              newData.areaCode = selected.areaCode;
-              setSaupAddr1("");
-              reset(newData);
-            } else {
-              // toast.error(response.response.data?.message, {
-              //   autoClose: 500,
-              // });
-              alert(response.response.data?.message);
-            }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
-          }
-        } else if (type === "reset") {
+      if (type === "clear") {
+        await codeChangeHandler(areaCode);
+        return;
+      }
+
+      if (type === "reset") {
+        if (selected !== undefined && Object.keys(selected)?.length > 0) {
           setSaupAddr1(selected.saupAddr1);
+          if (selected?.areaCode !== areaCode) {
+            setAreaCode(selected.areaCode);
+          }
           reset({
             ...selected,
             saupStampQu: selected?.saupStampQu === "Y",
@@ -126,6 +136,7 @@ const Form = React.forwardRef(
         }
       }
     };
+
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
@@ -136,18 +147,12 @@ const Form = React.forwardRef(
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-
-            await fetchData("delete");
+            await fetchData("pos");
           } else {
-            // toast.error(response?.response?.message, {
-            //   autoClose: 500,
-            // });
-            alert(response?.response?.message);
+            alert(response?.response?.data?.message);
           }
         } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
+          console.log(err);
         }
       }
 
@@ -160,13 +165,17 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? EN1200INSERT : EN1200UPDATE;
       const formValues = getValues();
+      isAddBtnClicked && (formValues.areaCode = areaCode);
 
       formValues.saupStampQu = formValues.saupStampQu ? "Y" : "N";
       formValues.saupStampEs = formValues.saupStampEs ? "Y" : "N";
       formValues.saupStampSe = formValues.saupStampSe ? "Y" : "N";
       formValues.saupDate = DateWithoutDash(formValues.saupDate);
+      formValues.saupAddr1 = saupAddr1;
+
       formValues.saupEdiEmail =
-        formValues.saupEdiEmail && formValues.saupEdiEmail.trim();
+        formValues.saupEdiEmail &&
+        formValues.saupEdiEmail.trim() + "@" + formValues.emailKind;
 
       formValues.saupStampImg = image64 && image64;
 
@@ -174,30 +183,20 @@ const Form = React.forwardRef(
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
             setIsAddBtnClicked(false);
-            setIsCancelBtnDisabled(true);
+            await fetchData("pos");
           } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
+            await fetchData();
           }
-          setSelected(formValues);
+
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
         } else {
-          // toast.error(response.response.data?.message, {
-          //   autoClose: 500,
-          // });
-          alert(response.response.data?.message);
+          alert(response?.response?.data?.message);
         }
       } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
+        console.log(err);
       }
     };
 
@@ -212,31 +211,6 @@ const Form = React.forwardRef(
         setImage64(response);
       } catch (err: any) {
         console.log("image convert 64 error occured.", err);
-      }
-    };
-
-    const handleSelectCode = async (event: any) => {
-      let newData: any = {};
-      const path = EN120011;
-      try {
-        const response: any = await API.get(path, {
-          params: { areaCode: event.target.value },
-        });
-        if (response.status === 200) {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          newData.saupSno = response.data.tempCode;
-          newData.areaCode = event.target.value;
-
-          reset(newData);
-        } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
-          });
-        }
-      } catch (err: any) {
-        console.log("areaCode select error", err);
       }
     };
 
@@ -266,8 +240,11 @@ const Form = React.forwardRef(
               <FormGroup>
                 <Label>영 업 소</Label>
                 <Select
-                  register={register("areaCode")}
-                  onChange={handleSelectCode}
+                  value={areaCode}
+                  onChange={(e) => {
+                    setAreaCode(e.target.value);
+                    codeChangeHandler(e.target.value);
+                  }}
                   width={InputSize.i175}
                   disabled={!isAddBtnClicked}
                 >
@@ -340,10 +317,9 @@ const Form = React.forwardRef(
               <DaumAddress
                 setAddress={setAddress}
                 defaultValue={saupAddr1}
-                onClose={ggg}
+                onClose={() => setFocus("saupAddr2")}
               />
               <Input
-                // register={register("saupAddr1")}
                 maxLength="40"
                 style={{ width: "383px" }}
                 value={saupAddr1}
@@ -424,7 +400,7 @@ const Form = React.forwardRef(
                     <CheckBox
                       title="세금계산서 도장출력"
                       rtl
-                      register={{ ...register("saupStampSe") }}
+                      register={register("saupStampSe")}
                     />
                   </FormGroup>
 
@@ -432,14 +408,14 @@ const Form = React.forwardRef(
                     <CheckBox
                       title="거래명세표 도장출력"
                       rtl
-                      register={{ ...register("saupStampEs") }}
+                      register={register("saupStampEs")}
                     />
                   </Field>
                   <Field>
                     <CheckBox
                       title="견적서 도장출력"
                       rtl
-                      register={{ ...register("saupStampQu") }}
+                      register={register("saupStampQu")}
                     />
                   </Field>
                 </Wrapper>
@@ -558,7 +534,7 @@ const Form = React.forwardRef(
                 inputSize={InputSize.i200}
               />
               <p style={{ margin: "0 1px" }}>@</p>
-              <Select register={register("saupEdiId")}>
+              <Select register={register("emailKind")}>
                 {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code1}>
                     {obj.codeName}

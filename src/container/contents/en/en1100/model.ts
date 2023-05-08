@@ -1,5 +1,5 @@
 export interface IJNOTRY {
-  areaCode: number;
+  areaCode: string;
   areaName: string;
   jnSsno: string;
   jnSangho: string;
@@ -9,19 +9,19 @@ export interface IJNOTRY {
   jnAddr2: string;
   jnUptae: string;
   jnJongmok: string;
-  jnTel1: number;
-  jnTel2: number;
-  jnFax: number;
+  jnTel1: string;
+  jnTel2: string;
+  jnFax: string;
   jnAnname1: string;
   jnAnname2: string;
-  jnAntel1: number;
-  jnAntel2: number;
+  jnAntel1: string;
+  jnAntel2: string;
   jnSekum: string;
-  jnSegongYn: string;
-  jnVatSumyn: string;
-  jnSekumea: string;
+  jnSegongYn: string | boolean;
+  jnVatSumyn: string | boolean;
+  jnSekumea: string | boolean;
   jnJangbu: string;
-  jnCMngNo: number;
+  jnCMngNo: string;
   innopayBankYn: string;
   niceBankYn: string;
 
@@ -79,3 +79,76 @@ export interface IJNOTRY {
   jnBankCms: string;
   jnCardCms: string;
 }
+
+export const emptyObj = {
+  areaCode: "",
+  areaName: "",
+  innopayBankYn: "",
+  jnAddr1: "",
+  jnAddr2: "",
+  jnAnname1: "",
+  jnAnname2: "",
+  jnAntel1: "",
+  jnAntel2: "",
+  jnBank1: "",
+  jnBank2: "",
+  jnBank3: "",
+  jnBank4: "",
+  jnBankCms: "",
+  jnBankno1: "",
+  jnBankno2: "",
+  jnBankno3: "",
+  jnBankno4: "",
+  jnCMngNo: "",
+  jnCardCms: "",
+  jnFax: "",
+  jnJangbu: "",
+  jnJangbuName: "",
+  jnJiro: "",
+  jnJiro2: "",
+  jnJiro2Name: "",
+  jnJiro3: "",
+  jnJiro3name: "",
+  jnJiro4: "",
+  jnJiro4Name: "",
+  jnJiroBigo: "",
+  jnJiroBigo02: "",
+  jnJiroBigo03: "",
+  jnJiroBigo04: "",
+  jnJiroName: "",
+  jnJiroSNo: "",
+  jnJiroSNo02: "",
+  jnJiroSNo03: "",
+  jnJiroSNo04: "",
+  jnJirono: "",
+  jnJirono02: "",
+  jnJirono03: "",
+  jnJirono04: "",
+  jnJongmok: "",
+  jnMark1: "",
+  jnMark2: "",
+  jnMark3: "",
+  jnMark4: "",
+  jnMark5: "",
+  jnOrder01: "",
+  jnOrder02: "",
+  jnOrder03: "",
+  jnOrder04: "",
+  jnOrder05: "",
+  jnOrder06: "",
+  jnOrder07: null,
+  jnSajang: "",
+  jnSangho: "",
+  jnSegongYn: "",
+  jnSekum: "",
+  jnSekumName: "",
+  jnSekumea: "",
+  jnSsno: "",
+  jnTel1: "",
+  jnTel2: "",
+  jnUptae: "",
+  jnVatSumyn: "",
+  jnVirtualAcc: "",
+  jnZipcode: "",
+  niceBankYn: "",
+};
