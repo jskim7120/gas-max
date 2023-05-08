@@ -123,7 +123,7 @@ function GR1500({
     useForm<IGR1500SEARCH>({
       mode: "onSubmit",
     });
-
+  console.log(dataCommonDic);
   return (
     <>
       <CustomTopPart
@@ -284,7 +284,8 @@ function GR1500({
             data={dataSecond.length > 0 && dataSecond}
             columns={columnsSecond}
             fields={fieldsSecond}
-            setSelected={setSelected2}
+            setSelected={setSelected}
+            // setSelected2={setSelected2}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             // evenFill
