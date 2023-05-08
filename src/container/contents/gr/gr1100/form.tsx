@@ -68,15 +68,23 @@ const Form = React.forwardRef(
     const [buPsum, setBuPsum] = useState<number>(0);
     const [buBsum, setBuBsum] = useState<number>(0);
     const [buBlsum, setBuBlsum] = useState<number>(0);
+    const [buAddr1, setBuAddr1] = useState("");
 
     const { data: dataCommonDic } = useGetCommonDictionaryQuery({
       groupId: "GR",
       functionName: "GR1100",
     });
-    const { register, handleSubmit, reset, control, getValues, watch } =
-      useForm<ISANGPUM>({
-        mode: "onChange",
-      });
+    const {
+      register,
+      handleSubmit,
+      reset,
+      control,
+      getValues,
+      watch,
+      setFocus,
+    } = useForm<ISANGPUM>({
+      mode: "onChange",
+    });
 
     const watcher = watch();
 
@@ -140,11 +148,11 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (addr.length > 0) {
-        reset((formValues: any) => ({
-          ...formValues,
+        reset({
           buZipcode: addr ? addr?.split("/")[1] : "",
-          buAddr1: addr ? addr?.split("/")[0] : "",
-        }));
+          buAddr2: "",
+        });
+        setBuAddr1(addr ? addr?.split("/")[0] : "");
       }
     }, [addr]);
 
@@ -175,28 +183,53 @@ const Form = React.forwardRef(
     };
 
     const resetForm = async (type: string) => {
-      if (type === "clear") {
-        const buCode = await fetchCodes();
-        reset({
-          ...emptyObj,
-          buCode: buCode,
-          buGubun: radioOptions[0].id,
-          buStae: dataCommonDic?.buStae[0].code,
-        });
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+        let newData: any = {};
 
-        setBuPsum(0);
-        setBuBsum(0);
-        setBuBlsum(0);
+        if (type === "clear") {
+          //const buCode = await fetchCodes();
+          // reset({
+          //   ...emptyObj,
+          //   buCode: buCode,
+          //   buGubun: radioOptions[0].id,
+          //   buStae: dataCommonDic?.buStae[0].code,
+          // });
 
-        document.getElementById("buName")?.focus();
-      }
+          // setBuPsum(0);
+          // setBuBsum(0);
+          // setBuBlsum(0);
 
-      if (type === "reset" && selected && Object.keys(selected).length > 0) {
-        reset({
-          ...selected,
-        });
+          document.getElementById("buName")?.focus();
+          const path = GR110065;
+          try {
+            const response: any = await API.get(path, {
+              params: { areaCode: selected.areaCode },
+            });
+            if (response.status === 200) {
+              for (const [key, value] of Object.entries(selected)) {
+                newData[key] = null;
+              }
+              newData.areaCode = response.data.tempCode;
+              setBuAddr1("");
+              reset(newData);
+            } else {
+              // toast.error(response.response.data?.message, {
+              //   autoClose: 500,
+              // });
+              alert(response.response.data?.message);
+            }
+          } catch (err: any) {
+            console.log("areaCode select error", err);
+          }
+        } else if (type === "reset") {
+          setBuAddr1(selected?.buAddr1 ? selected?.buAddr1 : "");
+          reset({
+            ...selected,
+          });
+        }
       }
     };
+
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
@@ -231,7 +264,8 @@ const Form = React.forwardRef(
       const path = isAddBtnClicked ? GR1100INSERT : GR1100UPDATE;
       const formValues = getValues();
 
-      formValues.areaCode = isAddBtnClicked ? areaCode : formValues.areaCode;
+      console.log(formValues);
+      // formValues.areaCode = isAddBtnClicked ? areaCode : formValues.areaCode;
 
       formValues.buMisu =
         formValues.buMisu && +removeCommas(formValues.buMisu, "number");
@@ -248,9 +282,10 @@ const Form = React.forwardRef(
       formValues.buBlcost =
         formValues.buBlcost && +removeCommas(formValues.buBlcost, "number");
 
+      formValues.buAddr1 = buAddr1;
+
       try {
         const response: any = await API.post(path, formValues);
-
         if (response.status === 200) {
           /*
           if (isAddBtnClicked) {
@@ -298,6 +333,10 @@ const Form = React.forwardRef(
           }
         } catch (err) {}
       }
+    };
+
+    const ggg = () => {
+      setFocus("buAddr2");
     };
 
     return (
@@ -424,9 +463,19 @@ const Form = React.forwardRef(
             label="주 소"
             register={register("buZipcode")}
             inputSize={InputSize.i80}
+            readOnly
           />
-          <DaumAddress setAddress={setAddress} />
-          <Input register={register("buAddr1")} style={{ width: "381px" }} />
+          <DaumAddress
+            setAddress={setAddress}
+            defaultValue={buAddr1}
+            onClose={ggg}
+          />
+
+          <Input
+            style={{ width: "381px" }}
+            value={buAddr1}
+            onChange={(e: any) => setBuAddr1(e.target.value)}
+          />
         </Wrapper>
         <Wrapper>
           <Label></Label>
