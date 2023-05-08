@@ -30,23 +30,22 @@ function Grid({
 
   const saveToExcel = () => {
     if (data.length !== 0) {
-      var msg = "CM1100 grid done excel export"; 
-          if(window.confirm(msg) === true){
-            msg = 'congratulations';
-            gv.exportGrid({
-              type: "excel",
-              target: "local",
-              fileName: "gridExportCM1100.xlsx",
-              progressMessage: "엑셀 Export중입니다.",
-              done: function () {
-                //내보내기 완료 후 실행되는 함수
-                
-              }
-            });
-          }else msg = `i can't this`;
+      var msg = "엑셀파일로 다운로드 하시겠습니까?";
+      if (window.confirm(msg) === true) {
+        msg = "congratulations";
+        gv.exportGrid({
+          type: "excel",
+          target: "local",
+          fileName: "gridExportCM1100.xlsx",
+          progressMessage: "엑셀 Export중입니다.",
+          done: function () {
+            //내보내기 완료 후 실행되는 함수
+          },
+        });
+      } else msg = `i can't this`;
     } else {
       /* eslint-disable no-restricted-globals */
-      confirm("CM1100 grid data not found");
+      confirm("엑셀 변환 데이터 없습니다");
     }
   };
 
