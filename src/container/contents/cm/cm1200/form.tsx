@@ -94,11 +94,19 @@ const Form = React.forwardRef(
     const [cuCustgubunDic, setCuCustgubunDic] = useState([]);
     const [cuJyCodeDic, setCuJyCodeDic] = useState([]);
     const [cuSwCodeDic, setCuSwCodeDic] = useState([]);
+    const [cuAddr1, setCuAddr1] = useState("");
 
-    const { handleSubmit, reset, register, getValues, control, watch, setFocus } =
-      useForm<ICM1200SEARCH>({
-        mode: "onChange",
-      });
+    const {
+      handleSubmit,
+      reset,
+      register,
+      getValues,
+      control,
+      watch,
+      setFocus,
+    } = useForm<ICM1200SEARCH>({
+      mode: "onChange",
+    });
 
     const {
       rdangaType,
@@ -155,13 +163,15 @@ const Form = React.forwardRef(
     }, [selectedSupplyTab]);
 
     useEffect(() => {
-      if (addr) {
+      if (addr.length > 0) {
         reset((formValues: any) => ({
           ...formValues,
           cuZipcode: addr ? addr?.split("/")[1] : "",
-          cuAddr1: addr ? addr?.split("/")[0].split("(")[0] : "",
-          cuAddr2: addr ? `(${addr?.split("/")[0].split("(")[1]}` : "",
+          //cuAddr1: addr ? addr?.split("/")[0].split("(")[0] : "",
+          cuAddr2: "",
         }));
+
+        setCuAddr1(addr ? addr?.split("/")[0] : "");
       }
     }, [addr]);
 
@@ -245,29 +255,50 @@ const Form = React.forwardRef(
       return null;
     };
 
+    const codeChangeHandler = async (aCode: string) => {
+      try {
+        const temp = await fetchCodes(aCode);
+
+        if (temp !== null) {
+          document.getElementsByName("saupSsno")[0]?.focus();
+          //setFocus("saupSsno");
+          reset({
+            ...emptyObj,
+            ...temp,
+            saupSno: temp.tempCode,
+          });
+          setCuAddr1("");
+        }
+      } catch (err: any) {
+        console.log("saupSno generate error", err);
+      }
+    };
+
     const resetForm = async (type: string) => {
       if (type === "clear" && areaCode !== "") {
         setFocus("cuName");
-        const data = await fetchCodes(areaCode);
-        if (data && data?.tempCuCode[0]) {
-          reset({ ...emptyObj, cuCode: data?.tempCuCode[0]?.tempCuCode });
-        }
+        // const data = await fetchCodes(areaCode);
+        // if (data && data?.tempCuCode[0]) {
+        //   reset({ ...emptyObj, cuCode: data?.tempCuCode[0]?.tempCuCode });
+        // }
+        await codeChangeHandler(areaCode);
+        return;
       }
-
-      if (type === "reset" && Object.keys(selected).length > 0) {
-        let tempData: any = { ...selected, ...selectedSupplyTab };
-
-        reset({
-          ...tempData,
-          cuAptnameYn: tempData?.cuAptnameYn === "Y",
-          cuBaGageYn: tempData?.cuBaGageYn === "Y",
-        });
-
-        setRdangaType(selected?.cuRdangaType);
-        setRdanga(selected?.cuRdanga);
-        setRdangaSign(selected?.cuRdangaSign);
-        setRdangaAmt(selected?.cuRdangaAmt);
-        setTotalValue("");
+      if (type === "reset") {
+        if (selected !== undefined && Object.keys(selected).length > 0) {
+          let tempData: any = { ...selected, ...selectedSupplyTab };
+          setCuAddr1(selected.cuAddr1);
+          reset({
+            ...tempData,
+            cuAptnameYn: tempData?.cuAptnameYn === "Y",
+            cuBaGageYn: tempData?.cuBaGageYn === "Y",
+          });
+          setRdangaType(selected?.cuRdangaType);
+          setRdanga(selected?.cuRdanga);
+          setRdangaSign(selected?.cuRdangaSign);
+          setRdangaAmt(selected?.cuRdangaAmt);
+          setTotalValue("");
+        }
       }
 
       setChkCuZipCode(false);
@@ -420,6 +451,7 @@ const Form = React.forwardRef(
       formValues.cuRdangaAmt =
         formValues.cuRdangaType !== "1" ? 0 : Number(formValues.cuRdangaAmt);
       formValues.cuRdanga = Number(formValues.cuRdanga);
+      formValues.cuAddr1 = cuAddr1;
 
       const path = isAddBtnClicked ? CM1200INSERT : CM1200UPDATE;
 
@@ -504,13 +536,20 @@ const Form = React.forwardRef(
                 readOnly={!chkCuZipCode}
                 style={{ marginRight: "3px" }}
               />
-              <DaumAddress setAddress={setAddress} disabled={!chkCuZipCode} />
+              <DaumAddress
+                setAddress={setAddress}
+                disabled={!chkCuZipCode}
+                defaultValue={cuAddr1}
+                onClose={() => setFocus("cuAddr2")}
+              />
             </FormGroup>
 
             <Input
-              register={register("cuAddr1")}
+              //register={register("cuAddr1")}
               inputSize={InputSize.md}
               style={{ marginRight: "0px" }}
+              value={cuAddr1}
+              onChange={(e: any) => setCuAddr1(e.target.value)}
             />
             <Input
               register={register("cuAddr2")}
