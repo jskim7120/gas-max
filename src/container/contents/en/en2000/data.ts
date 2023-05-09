@@ -9,6 +9,10 @@ export const fields = [
     fieldName: "ccName",
     dataType: ValueType.TEXT,
   },
+  {
+    fieldName: "ccBigo",
+    dataType: ValueType.TEXT,
+  },
 ];
 
 export const columns = [
