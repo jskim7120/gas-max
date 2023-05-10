@@ -176,7 +176,7 @@ const Form = React.forwardRef(
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await fetchData("pos");
+            await fetchData();
           } else {
             alert(response?.response?.data?.message);
           }
