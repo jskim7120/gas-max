@@ -320,21 +320,21 @@ const Form = React.forwardRef(
                 value={value}
                 name={name}
                 onChange={onChange}
-                mask={[
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                ]}
+                // mask={[
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   "-",
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   "-",
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                // ]}
                 inputSize={InputSize.i200}
               />
             )}
