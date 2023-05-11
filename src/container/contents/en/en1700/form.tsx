@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useState } from "react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import API from "app/axios";
@@ -130,12 +130,11 @@ const Form = React.forwardRef(
     const codeChangeHandler = async (aCode: string) => {
       try {
         const temp = await fetchCode11(aCode);
-        fetchData65(aCode);
+        await fetchData65(aCode);
 
         if (temp !== null) {
           setFocus("caName");
-          emptyObj.caCode = temp.tempCode;
-          reset(emptyObj);
+          reset({ ...emptyObj, ...temp, caCode: temp.tempCode });
         }
       } catch (err: any) {
         console.log("caCode generate error", err);
@@ -151,7 +150,7 @@ const Form = React.forwardRef(
       if (type === "reset") {
         if (selected !== undefined && Object.keys(selected)?.length > 0) {
           if (selected?.areaCode !== areaCode) {
-            fetchData65(selected.areaCode);
+            await fetchData65(selected.areaCode);
             setAreaCode(selected.areaCode);
           }
           reset({
@@ -177,7 +176,7 @@ const Form = React.forwardRef(
             toast.success("삭제하였습니다", {
               autoClose: 500,
             });
-            await fetchData("pos");
+            await fetchData();
           } else {
             alert(response?.response?.data?.message);
           }
@@ -195,8 +194,12 @@ const Form = React.forwardRef(
     const submit = async (data: ICAR) => {
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? EN1700INSERT : EN1700UPDATE;
-      const formValues = getValues();
+      const formValues: any = getValues();
       isAddBtnClicked && (formValues.areaCode = areaCode);
+      const obj: any =
+        formValues.caSwCode &&
+        caSwCode.find((item: any) => item.code === formValues.caSwCode);
+      formValues.caSwName = obj?.codeName ? obj?.codeName : "";
       formValues.caBkYn = formValues.caBkYn ? "Y" : "N";
       formValues.caRentYn = formValues.caRentYn ? "Y" : "N";
       formValues.caSafeDate = DateWithoutDash(formValues.caSafeDate);

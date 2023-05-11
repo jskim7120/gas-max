@@ -28,7 +28,7 @@ export interface ICAR {
   caRentYn: string;
   caSafeDate: string;
   caSwCode: string;
-  caSwName: string;
+  //caSwName: string;
   caType: string;
   caYear: string;
   eyeCarCode: string;
@@ -73,7 +73,7 @@ export const emptyObj = {
   caRentYn: "",
   caSafeDate: "",
   caSwCode: "",
-  caSwName: "",
+  //caSwName: "",
   caType: "",
   caYear: "",
   eyeCarCode: "",

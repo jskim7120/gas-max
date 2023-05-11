@@ -97,9 +97,6 @@ function EN1500({
           fields={fields}
           columns={columns}
           setSelected={setSelected}
-          // selectedRowIndex={selectedRowIndex}
-          // setSelectedRowIndex={setSelectedRowIndex}
-          // style={{ minWidth: "420px" }}
           style={{ width: `${linePos}px` }}
           menuId={menuId}
           rowIndex={0}
