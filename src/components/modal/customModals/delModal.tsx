@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "app/store";
 import {
@@ -78,6 +78,31 @@ const Container = styled.div`
 function DelModal() {
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    function handleKeyDown(event: any) {
+      if (event.key === "F4") {
+        event.preventDefault();
+        handleClickDel();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  const handleClickDel = () => {
+    dispatch(setIsDelete({ isDelete: true }));
+    dispatch(closeModal());
+  };
+
+  const handleClickClose = () => {
+    dispatch(addDeleteMenuId({ menuId: "" }));
+    dispatch(closeModal());
+  };
+
   return (
     <Draggable>
       <Container>
@@ -87,9 +112,7 @@ function DelModal() {
               marginRight: "4px",
               marginTop: "2px",
             }}
-            onClick={() => {
-              dispatch(closeModal());
-            }}
+            onClick={handleClickClose}
           >
             <WhiteClose />
           </span>
@@ -97,23 +120,10 @@ function DelModal() {
         <div className="modal_title">삭제하시겠습니까?</div>
 
         <div className="btn_cnt">
-          <button
-            onClick={() => {
-              dispatch(setIsDelete({ isDelete: true }));
-              dispatch(closeModal());
-            }}
-            className="modal_btn del"
-          >
+          <button onClick={handleClickDel} className="modal_btn del">
             삭제
           </button>
-          <button
-            onClick={() => {
-              dispatch(setIsDelete({ isDelete: false }));
-              dispatch(addDeleteMenuId({ menuId: "" }));
-              dispatch(closeModal());
-            }}
-            className="modal_btn close"
-          >
+          <button onClick={handleClickClose} className="modal_btn close">
             취소
           </button>
         </div>

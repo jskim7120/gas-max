@@ -45,7 +45,6 @@ function CM1100Page({
   const [data, setData] = useState<any>([]);
   const [data65, setData65] = useState<any>({});
   const [selected, setSelected] = useState<any>({});
-  const [areaCode, setAreaCode] = useState("");
   const [loading, setLoading] = useState(false);
   const { isDelete } = useSelector((state) => state.modal);
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -53,7 +52,7 @@ function CM1100Page({
     functionName: "CM1100",
   });
 
-  const { register, handleSubmit, reset } = useForm<ICM1100SEARCH>({
+  const { register, handleSubmit, reset, getValues } = useForm<ICM1100SEARCH>({
     mode: "onSubmit",
   });
 
@@ -64,7 +63,7 @@ function CM1100Page({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (Object.keys(selected).length > 0) {
+    if (selected && Object.keys(selected).length > 0) {
       setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
       fetchData65();
       dispatch(
@@ -93,15 +92,16 @@ function CM1100Page({
         toast.success("삭제하였습니다", {
           autoClose: 500,
         });
-        await fetchData(areaCode);
+        const values = getValues();
+        await fetchData(values);
+      } else {
+        alert(response?.response?.data?.message);
       }
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
       dispatch(closeModal());
     } catch (error) {
-      toast.error("Couldn't delete", {
-        autoClose: 500,
-      });
+      console.log(error);
     }
   };
 
@@ -109,10 +109,10 @@ function CM1100Page({
     try {
       setLoading(true);
       const { data: dataSearch } = await API.get(CM1100SEARCH, {
-        params: { ...params, areaCode: areaCode },
+        params: params,
       });
 
-      if (dataSearch?.length > 0) {
+      if (dataSearch && dataSearch?.length > 0) {
         setData(dataSearch);
         setSelected(dataSearch[0]);
       } else {
@@ -133,7 +133,7 @@ function CM1100Page({
       const { data: dataS65 } = await API.get(CM110065, {
         params: { cuCode: selected.cuCode, areaCode: selected.areaCode },
       });
-      if (Object.keys(dataS65).length > 0) {
+      if (dataS65 && Object.keys(dataS65).length > 0) {
         setData65(dataS65);
       } else {
         setData65({});
@@ -145,41 +145,37 @@ function CM1100Page({
   };
 
   const onClickUpdate = async () => {
-    if (Object.keys(selected).length > 0) {
-      if (areaCode !== "") {
-        openPopup({
-          cuCode: selected.cuCode,
-          areaCode: selected.areaCode,
-          status: "UPDATE",
-        });
-      }
-    } else {
-      toast.warning("please select row from grid", {
-        autoClose: 500,
+    if (selected && Object.keys(selected).length > 0) {
+      openPopup({
+        cuCode: selected.cuCode,
+        areaCode: selected.areaCode,
+        status: "UPDATE",
+        source: "CM1100",
       });
+    } else {
+      alert("등록 거래처를 선택하세요");
     }
   };
 
   const onClickAdd = () => {
-    if (Object.keys(selected).length > 0 && areaCode !== "") {
+    if (selected && Object.keys(selected).length > 0) {
       openPopup({
         cuCode: selected.cuCode,
-        areaCode: areaCode,
+        areaCode: selected.areaCode,
         status: "INSERT",
+        source: "CM1100",
       });
     } else {
-      openPopup({
-        cuCode: "",
-        areaCode: areaCode,
-        status: "INSERT",
-      });
+      alert("등록 거래처를 선택하세요");
     }
   };
 
   const onClickDelete = () => {
-    if (Object.keys(selected).length > 0 && areaCode !== "") {
+    if (selected && Object.keys(selected)?.length > 0) {
       dispatch(openModal({ type: "delModal" }));
       dispatch(addDeleteMenuId({ menuId: menuId }));
+    } else {
+      alert("등록 거래처를 선택하세요");
     }
   };
 
@@ -190,6 +186,7 @@ function CM1100Page({
 
   const resetSearchForm = () => {
     reset({
+      areaCode: dataCommonDic?.areaCode[0].code,
       cuType: dataCommonDic?.cuType[0].code,
       cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
       swCode: dataCommonDic?.swCode[0].code,
@@ -199,7 +196,6 @@ function CM1100Page({
       cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
       cuStae: dataCommonDic?.cuStae[0].code,
     });
-    setAreaCode(dataCommonDic?.areaCode[0].code);
   };
 
   return (
@@ -210,10 +206,7 @@ function CM1100Page({
           {ownAreaCode === "00" && (
             <>
               <p className="big">영업소</p>
-              <Select
-                // value={areaCode}
-                onChange={(e) => setAreaCode(e.target.value)}
-              >
+              <Select register={register("areaCode")}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
