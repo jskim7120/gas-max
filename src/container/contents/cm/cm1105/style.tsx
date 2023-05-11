@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ModalHeader = styled.div`
   width: 100%;
-  height: 35px;
+  height: 40px;
   background: #0b97f6;
   display: flex;
   justify-content: space-between;

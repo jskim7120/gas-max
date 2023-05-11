@@ -54,20 +54,25 @@ function CreateEN(
 
   function handleKeyDown(event: any) {
     if (event.key === "F1") {
+      console.log("F1-----");
       event.preventDefault();
       handleClickBtn1();
     }
     if (event.key === "F4") {
+      console.log("F4-----");
       event.preventDefault();
       handleClickBtn2();
     }
+
     if (event.key === "F7") {
+      console.log("F7-----");
       event.preventDefault();
       btnRef3.current.focus();
       handleClickBtn3();
     }
 
     if (event.key === "F9") {
+      console.log("F9-----");
       event.preventDefault();
       handleClickBtn4();
     }

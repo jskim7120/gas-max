@@ -22,14 +22,37 @@ function CustomDatePicker({
   name?: string;
   showMonthYearPicker?: boolean;
 }) {
+  const handleKeyPress = (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const element = event.target;
+      const form = element.form;
+
+      const index = Array.prototype.indexOf.call(form, element);
+      form.elements[index + 3].focus();
+      event.preventDefault();
+    }
+  };
+
   return (
     <DatePicker
       readOnly={readOnly}
       onChange={onChange}
+      onKeyDown={handleKeyPress}
       showMonthDropdown
       showYearDropdown
       showMonthYearPicker={showMonthYearPicker && showMonthYearPicker}
       locale="ko"
+      selected={
+        showMonthYearPicker
+          ? DateWithDashOnlyYearMonth(value) !== ""
+            ? new Date(DateWithDashOnlyYearMonth(value))
+            : new Date()
+          : DateWithDash(value) !== ""
+          ? new Date(DateWithDash(value))
+          : new Date()
+      }
+      dateFormat="yyyy-MM-dd"
       customInput={
         <InputWrapper style={style}>
           <MaskedInput
@@ -69,19 +92,21 @@ const InputWrapper = styled.div`
   }
 
   .customMaskInput {
-    width: 85px;
-    height: 17px;
+    width: calc(100% - 2px);
+    height: 28px;
     position: absolute;
     margin: 0;
     padding-left: 5px;
-    top: 6px;
+    top: 0px;
     left: 1px;
     border: none;
     outline: none;
     background: aliceblue;
     font-size: 15px;
 
-    &:hover {
+    &:hover,
+    &:focus,
+    &:focus .customMaskInput {
       background: #fffacd;
     }
   }
@@ -89,10 +114,10 @@ const InputWrapper = styled.div`
   .calendarImageWrapper {
     position: absolute;
     right: 0px;
-    top: 2px;
+    top: 0px;
     height: 100%;
     width: 20px;
-    padding-left: 3px;
+    padding: 2px 0 0 3px;
     border-left: 1px solid rgb(188, 185, 185);
 
     img {
