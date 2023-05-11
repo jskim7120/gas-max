@@ -161,12 +161,13 @@ export const Input = ({
 }: IInputProps) => {
   const handleKeyPress = (event: any) => {
     if (event.key === "Enter") {
-      // event.preventDefault();
+      event.preventDefault();
       const element = event.target;
       const form = element.form;
       const index = Array.prototype.indexOf.call(form, element);
-      form.elements[index + 1].focus();
-      event.preventDefault();
+      if (form.elements[index + 1] !== undefined) {
+        form.elements[index + 1].focus();
+      }
     }
   };
 
@@ -609,6 +610,7 @@ const FormSelect = styled.select<{
 
   &:disabled {
     background: #ebeae6;
+    opacity: 1;
   }
 
   option {

@@ -1,5 +1,5 @@
 export interface ICM1100SEARCH {
-  // areaCode: string;
+  areaCode: string;
   cuName: string;
   cuTel: string;
   cuAddr: string;

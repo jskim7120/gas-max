@@ -34,7 +34,6 @@ import useRdanga from "app/hook/calcRdanga";
 
 function FormCM1105() {
   const [data, setData] = useState<any>(null);
-  const [areaCode, setAreaCode] = useState("");
   const [addr, setAddress] = useState<string>("");
   const [addr2, setAddress2] = useState<string>("");
   const [tabId, setTabId] = useState(0);
@@ -74,13 +73,13 @@ function FormCM1105() {
     } else if (cm1105.areaCode && cm1105.cuCode) {
       fetchData();
     }
-    // reset({ areaCode: cm1105.areaCode });
-    setAreaCode(cm1105.areaCode);
+
+    console.log("state chagnaj bn INSERT", cm1105);
   }, [cm1105.areaCode, cm1105.cuCode, cm1105.status]);
 
   useEffect(() => {
     if (data) {
-      resetFormTemp("reset");
+      resetForm("reset");
     }
   }, [data]);
 
@@ -96,22 +95,24 @@ function FormCM1105() {
 
   useEffect(() => {
     if (addr2.length > 0) {
-      reset({
+      reset((formValues: any) => ({
+        ...formValues,
         cuSzipcode: addr2 ? addr2?.split("/")[1] : "",
         cuSaddr1: addr2 ? addr2?.split("/")[0] : "",
-      });
+      }));
     }
   }, [addr2]);
 
-  const resetFormTemp = (type: string) => {
+  const resetForm = (type: string) => {
     if (type === "clear") {
-      //reset(emptyObj);
       fetchCuCode(cm1105.areaCode, cm1105.cuCode);
       return;
-    } else if (type === "reset" && data !== undefined && data?.customerInfo) {
-      const customerInfo = data.customerInfo[0];
+    }
+
+    if (type === "reset" && data !== undefined && data?.customerInfo) {
+      const customerInfo = data.customerInfo;
       const cms = data?.cms
-        ? data.cms[0]
+        ? data.cms
         : {
             acctno: "",
             appdt: "",
@@ -125,9 +126,9 @@ function FormCM1105() {
             stateName: "",
             tel: "",
           };
-      const cuTank = data?.cuTank ? data.cuTank[0] : {};
+      const cuTank = data?.cuTank ? data.cuTank : {};
       const virtualAccount = data?.virturalAccoount
-        ? data.virturalAccoount[0]
+        ? data.virturalAccoount
         : {
             acctno: "",
             bankCd: "",
@@ -155,7 +156,16 @@ function FormCM1105() {
         },
       });
 
-      setData(dataS);
+      if (dataS) {
+        setData({
+          customerInfo: dataS?.customerInfo && dataS.customerInfo[0],
+          cuTank: dataS?.cuTank && dataS.cuTank[0],
+          cms: dataS?.cms && dataS.cms[0],
+          virtualAccount: dataS?.virtualAccount && dataS.virtualAccount[0],
+        });
+      } else {
+        setData(null);
+      }
     } catch (error) {
       console.log("Error fetching CM1105 data:", error);
     }
@@ -163,36 +173,33 @@ function FormCM1105() {
 
   const fetchCuCode = async (areaCode: string, cuCode: string) => {
     try {
-      const res = await API.get(CM110511, {
+      const res: any = await API.get(CM110511, {
         params: { areaCode: areaCode, cuCode: cuCode.substring(0, 3) },
       });
+
       if (res.status === 200) {
-        reset({
-          ...emptyObj,
-          cuCode: res.data[0].cuCode,
-          cuCutype: res.data[0].cuCutype,
-          cuStae: res.data[0].cuStae,
-          cuType: res.data[0].cuType,
-        });
+        if (res?.data) {
+          setIsAddBtnClicked(true);
+          setData(null);
+          reset({
+            ...emptyObj,
+            cuCode: res.data[0].cuCode,
+            cuCutype: res.data[0].cuCutype,
+            cuStae: res.data[0].cuStae,
+            cuType: res.data[0].cuType,
+          });
+        }
       } else {
-        toast.error("couldn't get CuCode", {
-          autoClose: 500,
-        });
+        alert(res?.response?.data?.message);
       }
-      setData(null);
     } catch (error: any) {
-      toast.error(error, {
-        autoClose: 500,
-      });
-      console.log("Error fetching CuCode on CM1105: ", error);
+      console.log(error);
     }
   };
 
-  const submit = async (data: ICM1105SEARCH) => {
-    const path = isAddBtnClicked ? CM1105INSERT : CM1105UPDATE;
+  const preSubmit = () => {
     const formValues: any = getValues();
 
-    formValues.areaCode = areaCode;
     formValues.cuSekumyn = formValues.cuSekumyn ? "Y" : "N";
     formValues.cuJangbuYn = formValues.cuJangbuYn ? "Y" : "N";
     formValues.cuSeSmsYn = formValues.cuSeSmsYn ? "Y" : "N";
@@ -279,6 +286,12 @@ function FormCM1105() {
     if (formValues.gasifyCheckDate1 === "") {
       delete formValues.gasifyCheckDate1;
     }
+    return formValues;
+  };
+
+  const submit = async (data: ICM1105SEARCH) => {
+    const formValues = preSubmit();
+    const path = isAddBtnClicked ? CM1105INSERT : CM1105UPDATE;
 
     try {
       const response: any = await API.post(path, formValues);
@@ -286,52 +299,66 @@ function FormCM1105() {
         toast.success("저장이 성공하였습니다", {
           autoClose: 500,
         });
+
         setIsAddBtnClicked(false);
 
         setTimeout(() => {
           dispatch(closeModal());
         }, 1800);
       } else {
-        toast.error(response?.response?.data?.message, {
-          autoClose: 500,
-        });
+        alert(response?.response?.data?.message);
       }
     } catch (err: any) {
-      toast.error(err?.message, {
-        autoClose: 500,
-      });
+      console.log(err);
     }
   };
+
+  const submitAgain = async () => {
+    const formValues = preSubmit();
+    const path = isAddBtnClicked ? CM1105INSERT : CM1105UPDATE;
+
+    try {
+      const response: any = await API.post(path, formValues);
+      if (response.status === 200) {
+        toast.success("저장이 성공하였습니다", {
+          autoClose: 500,
+        });
+      } else {
+        alert(response?.response?.data?.message);
+      }
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  const handleAddAgain = () => {
+    handleSubmit(submitAgain)();
+    resetForm("clear");
+  };
+
+  console.log("isAddBtnClicked::::", isAddBtnClicked);
 
   return (
     <form onSubmit={handleSubmit(submit)} autoComplete="off">
       <ModalHeader>
-        <Field flex style={{ alignItems: "center" }}>
+        <FormGroup>
           <p>거래처 정보</p>
-          <FormGroup>
-            <Label>영업소</Label>
-            <Select
-              value={areaCode}
-              onChange={(e) => setAreaCode(e.target.value)}
-            >
-              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Field>
-        <div style={{ display: "flex", alignItems: "center" }}>
+          <Label>영업소</Label>
+          <Select register={register("areaCode")} disabled>
+            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+        <FormGroup>
           <Button
             text="연속등록"
             icon={<Plus />}
             style={{ marginRight: "5px" }}
             type="button"
-            onClick={() => {
-              resetFormTemp("clear");
-              setIsAddBtnClicked(true);
-            }}
+            onClick={handleAddAgain}
           />
           <Button
             text="저장"
@@ -350,7 +377,7 @@ function FormCM1105() {
           >
             <WhiteClose />
           </span>
-        </div>
+        </FormGroup>
       </ModalHeader>
       <div style={{ padding: "10px" }}>
         <FormGroup>
@@ -393,103 +420,99 @@ function FormCM1105() {
           </Select>
         </FormGroup>
 
-        <Wrapper>
-          <Field flex>
-            <Controller
-              control={control}
-              {...register("cuHp")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  label="핸드폰"
-                  value={value}
-                  name={name}
-                  onChange={onChange}
-                  mask={[
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    "-",
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    "-",
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                  ]}
-                  inputSize={InputSize.i120}
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              {...register("cuTel23")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  mask={[
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    "-",
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    "-",
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                  ]}
-                  inputSize={InputSize.i150}
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              {...register("cuTel24")}
-              render={({ field: { onChange, value, name } }) => (
-                <Input
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  mask={[
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    "-",
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    "-",
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                  ]}
-                  inputSize={InputSize.i150}
-                />
-              )}
-            />
-          </Field>
+        <FormGroup>
+          <Controller
+            control={control}
+            {...register("cuHp")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                label="핸드폰"
+                value={value}
+                name={name}
+                onChange={onChange}
+                mask={[
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
+                inputSize={InputSize.i120}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            {...register("cuTel23")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                value={value}
+                onChange={onChange}
+                name={name}
+                mask={[
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
+                inputSize={InputSize.i150}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            {...register("cuTel24")}
+            render={({ field: { onChange, value, name } }) => (
+              <Input
+                value={value}
+                onChange={onChange}
+                name={name}
+                mask={[
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
+                inputSize={InputSize.i150}
+              />
+            )}
+          />
 
-          <FormGroup>
-            <Label style={{ minWidth: "114px" }}>거래상태</Label>
-            <Select register={register("cuStae")} width={InputSize.i150}>
-              {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
+          <Label style={{ minWidth: "114px" }}>거래상태</Label>
+          <Select register={register("cuStae")} width={InputSize.i150}>
+            {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
 
         <FormGroup>
           <Input
@@ -511,13 +534,13 @@ function FormCM1105() {
           <Input register={register("cuBigo2")} style={{ width: "264px" }} />
         </FormGroup>
         <Divider />
-        <Wrapper>
+        <FormGroup>
           <Input
             label="메 모"
             register={register("cuMemo")}
             style={{ width: "702px" }}
           />
-        </Wrapper>
+        </FormGroup>
 
         <Field
           style={{

@@ -16,17 +16,22 @@ export function DateWithDash(date) {
       "-" +
       (date.getDate() < 10 ? "0" + date.getDate() : date.getDate())
     );
-  } else if (regex.test(date)) {
-    return date;
-  } else if (withoutDashRegex.test(date)) {
-    const year = date.substring(0, 4);
-    const month = date.substring(4, 6);
-    const day = date.substring(6, 8);
-    return `${year}-${month}-${day}`;
-  } else {
-    return "";
   }
+
+  if (typeof date === "string") {
+    if (regex.test(date)) {
+      return date;
+    } else {
+      const temp = date?.replace(/-/g, "");
+      const year = temp.substring(0, 4);
+      const month = temp.substring(4, 6);
+      const day = temp.substring(6, 8);
+      return `${year}-${month}-${day}`;
+    }
+  }
+  return "";
 }
+
 export function DateWithDashOnlyYearMonth(date) {
   if (date === null || date === undefined || date === "") {
     return "";

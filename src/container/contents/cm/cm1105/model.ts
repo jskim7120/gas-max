@@ -4,7 +4,7 @@ export interface ICM1105SEARCH {
   cuBaGageYn: string;
 
   //-----------
-  // areaCode: string;
+  areaCode: string;
   areaName: string;
   cuAddr1: string;
   cuAddr2: string;
@@ -235,7 +235,7 @@ export const emptyObj = {
   cuBaGageM3: undefined,
   cuBaGageYn: "",
   //--------------------
-  // areaCode: "",
+  areaCode: "",
   areaName: "",
   cuAddr1: "",
   cuAddr2: "",
