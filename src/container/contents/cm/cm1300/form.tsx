@@ -111,6 +111,7 @@ const Form = React.forwardRef(
     const [chkAptPer, setChkAptPer] = useState(false);
     const [chkAptGumdate, setChkAptGumdate] = useState(false);
     const [chkAptSukumtype, setChkAptSukumtype] = useState(false);
+    const [aptAddr1, setAptAddr1] = useState("");
 
     // const [totalValue, setTotalValue] = useState<string>("");
     // const [aptRdangaType, setAptRdangaType] = useState<string>("");
@@ -118,7 +119,7 @@ const Form = React.forwardRef(
     // const [aptRdangaSign, setAptRdangaSign] = useState<string>("");
     // const [aptRdangaAmt, setAptRdangaAmt] = useState<string>("");
 
-    const { register, handleSubmit, reset, getValues, control, setFocus} =
+    const { register, handleSubmit, reset, getValues, control, setFocus } =
       useForm<ICM1300>({
         mode: "onChange",
       });
@@ -134,8 +135,10 @@ const Form = React.forwardRef(
         reset((formValues: any) => ({
           ...formValues,
           aptZipcode: addr ? addr?.split("/")[1] : "",
-          aptAddr1: addr ? addr?.split("/")[0] : "",
+          //aptAddr1: addr ? addr?.split("/")[0] : "",
+          aptAddr2: "",
         }));
+        setAptAddr1(addr ? addr?.split("/")[0] : "");
       }
     }, [addr]);
 
@@ -181,18 +184,38 @@ const Form = React.forwardRef(
       return null;
     };
 
+    const codeChangeHandler = async (aCode: string) => {
+      try {
+        const temp = await fetchCodes(aCode);
+
+        if (temp !== null) {
+          document.getElementsByName("saupSsno")[0]?.focus();
+          //setFocus("saupSsno");
+          reset({
+            ...emptyObj,
+            ...temp,
+            saupSno: temp.tempCode,
+          });
+          setAptAddr1("");
+        }
+      } catch (err: any) {
+        console.log("saupSno generate error", err);
+      }
+    };
+
     const resetForm = async (type: string) => {
       if (type === "clear" && areaCode !== "") {
         setFocus("aptName");
-        const dataS = await fetchCodes(areaCode);
-        if (dataS?.tempAptCode) {
-          reset({
-            ...emptyObj,
-            aptCode: dataS?.tempAptCode[0]?.tempAptCode,
-            aptType: radioOptions[0].id,
-            areaCode: areaCode,
-          });
-        }
+        // const dataS = await fetchCodes(areaCode);
+        // if (dataS?.tempAptCode) {
+        //   reset({
+        //     ...emptyObj,
+        //     aptCode: dataS?.tempAptCode[0]?.tempAptCode,
+        //     aptType: radioOptions[0].id,
+        //     areaCode: areaCode,
+        //   });
+        await codeChangeHandler(areaCode);
+        return;
       }
 
       if (type === "reset") {
@@ -221,6 +244,7 @@ const Form = React.forwardRef(
       setRdangaAmt(selected?.aptRdangaAmt);
       setTotalValue("");
     };
+
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
@@ -464,11 +488,18 @@ const Form = React.forwardRef(
             inputSize={InputSize.i80}
             readOnly={!chkAptZipCode}
           />
-          <DaumAddress setAddress={setAddress} disabled={!chkAptZipCode} />
+          <DaumAddress
+            setAddress={setAddress}
+            disabled={!chkAptZipCode}
+            defaultValue={aptAddr1}
+            onClose={() => setFocus("aptAddr2")}
+          />
           <Input
-            register={register("aptAddr1")}
+            //register={register("aptAddr1")}
             inputSize={InputSize.i250}
             readOnly={!chkAptZipCode}
+            value={aptAddr1}
+            onChange={(e: any) => setAptAddr1(e.target.value)}
           />
           <Input
             register={register("aptAddr2")}

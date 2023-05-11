@@ -254,7 +254,7 @@ const Form = React.forwardRef(
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "2px",
+              gap: "7px",
               marginRight: "10px",
             }}
             onClickAdd={onClickAdd}
