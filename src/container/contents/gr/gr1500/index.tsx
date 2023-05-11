@@ -63,7 +63,7 @@ function GR1500({
     if (selected) {
       reset((formValues: any) => ({
         ...formValues,
-        sBjBuName: selected ? selected.buName : "",
+        sBjBuName: selected ? selected.buCode : "",
       }));
     }
   }, [selected]);
@@ -249,11 +249,20 @@ function GR1500({
                   )}
                 />
 
-                <Input
+                {/* <Input
                   register={register("sBjBuName")}
                   inputSize={InputSize.md}
                   label="매입처명"
-                />
+                /> */}
+
+                <Label>매입처명</Label>
+                <Select width={InputSize.i130} register={register("sBjBuName")}>
+                  {dataCommonDic?.sBjBuName?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
               </FormGroup>
 
               <div className="buttons">
