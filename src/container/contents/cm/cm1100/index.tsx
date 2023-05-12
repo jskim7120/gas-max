@@ -214,7 +214,7 @@ function CM1100Page({
               </Select>
             </>
           )}
-          <div className="buttons">
+          <div className="buttons ml30">
             <Button
               text="등록"
               icon={<Plus />}
