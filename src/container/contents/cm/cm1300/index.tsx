@@ -26,6 +26,7 @@ import {
   FormGroup,
   Input,
   Select,
+  Label,
 } from "components/form/style";
 import { useDispatch, useSelector } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -205,10 +206,9 @@ function CM1300({
     <>
       <SearchWrapper className="h35 mt5">
         <FormGroup>
-          <p>{depthFullName}</p>
           {ownAreaCode === "00" && (
             <>
-              <p className="big">영업소</p>
+              <Label style={{ minWidth: "72px" }}>영업소</Label>
               <Select
                 value={areaCode}
                 onChange={(e) => setAreaCode(e.target.value)}
@@ -221,17 +221,17 @@ function CM1300({
               </Select>
             </>
           )}
+          <FourButtons
+            btn1Name="건물등록"
+            onClickAdd={onClickAdd}
+            onClickDelete={onClickDelete}
+            onClickUpdate={onClickUpdate}
+            onClickReset={onClickReset}
+            isAddBtnClicked={isAddBtnClicked}
+            isCancelBtnDisabled={isCancelBtnDisabled}
+          />
         </FormGroup>
-
-        <FourButtons
-          btn1Name="건물등록"
-          onClickAdd={onClickAdd}
-          onClickDelete={onClickDelete}
-          onClickUpdate={onClickUpdate}
-          onClickReset={onClickReset}
-          isAddBtnClicked={isAddBtnClicked}
-          isCancelBtnDisabled={isCancelBtnDisabled}
-        />
+        <p>{depthFullName}</p>
       </SearchWrapper>
 
       <MainWrapper
