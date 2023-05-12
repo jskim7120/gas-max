@@ -16,7 +16,6 @@ export const SearchWrapper = styled.div`
   }
 
   div.buttons {
-    margin-left: 30px;
     display: flex;
     align-items: center;
     gap: 7px;
@@ -40,6 +39,10 @@ export const SearchWrapper = styled.div`
 
   &.mt5 {
     margin-top: 4px;
+  }
+
+  &.ml30 {
+    margin-left: 30px;
   }
 
   p {
