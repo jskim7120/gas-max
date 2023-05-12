@@ -172,10 +172,9 @@ function CC1500({
     <>
       <SearchWrapper className="h35 mt5">
         <FormGroup>
-          <p>{depthFullName}</p>
           {ownAreaCode === "00" && (
             <>
-              <p className="big">영업소</p>
+              <Label style={{ minWidth: "48px" }}>영업소</Label>
               <Select
                 value={areaCode}
                 onChange={(e) => setAreaCode(e.target.value)}
@@ -188,8 +187,17 @@ function CC1500({
               </Select>
             </>
           )}
+          <FourButtons
+            onClickAdd={onClickAdd}
+            onClickDelete={onClickDelete}
+            onClickUpdate={onClickUpdate}
+            onClickReset={onClickReset}
+            isAddBtnClicked={isAddBtnClicked}
+            isCancelBtnDisabled={isCancelBtnDisabled}
+          />
         </FormGroup>
-        <SearchWrapper
+        <p>{depthFullName}</p>
+        {/* <SearchWrapper
           style={{
             // display: "flex",
             // position: "absolute",
@@ -202,16 +210,7 @@ function CC1500({
             // marginTop: "2px",
             borderBottom: "none",
           }}
-        >
-          <FourButtons
-            onClickAdd={onClickAdd}
-            onClickDelete={onClickDelete}
-            onClickUpdate={onClickUpdate}
-            onClickReset={onClickReset}
-            isAddBtnClicked={isAddBtnClicked}
-            isCancelBtnDisabled={isCancelBtnDisabled}
-          />
-        </SearchWrapper>
+        ></SearchWrapper> */}
         {/* <div className="buttons">
           <Button
             text="등록"

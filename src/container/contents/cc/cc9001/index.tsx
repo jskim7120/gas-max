@@ -70,6 +70,7 @@ function CC9001({
   return (
     <>
       <SearchWrapper className="h35 mt5">
+        <FormGroup></FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>

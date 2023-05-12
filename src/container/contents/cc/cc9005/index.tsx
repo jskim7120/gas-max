@@ -24,6 +24,7 @@ import {
 } from "components/allSvgIcon";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
+import { FormGroup, Select, Label } from "components/form/style";
 
 function CC9005({
   depthFullName,
@@ -84,34 +85,43 @@ function CC9005({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomAreaCodePart
-          areaCode={areaCode}
-          depthFullName={depthFullName}
-          register={register}
-          dataCommonDic={dataCommonDic}
-        />
+        <FormGroup>
+          {areaCode === "00" && (
+            <>
+              <Label style={{ minWidth: "48px" }}>영업소</Label>
 
-        <div className="buttons">
-          <Button
-            text="삭제"
-            icon={<Trash />}
-            style={{ marginRight: "5px" }}
-            onClick={onClickDelete}
-          />
-          <Button
-            text="저장"
-            icon={<Update />}
-            style={{ marginRight: "5px" }}
-            color={ButtonColor.SECONDARY}
-            onClick={onClickUpdate}
-          />
-          <Button
-            text="취소"
-            icon={<ResetGray />}
-            color={ButtonColor.LIGHT}
-            onClick={onClickReset}
-          />
-        </div>
+              <Select register={register("areaCode")}>
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+          <div className="buttons ml30">
+            <Button
+              text="삭제"
+              icon={<Trash />}
+              style={{ marginRight: "5px" }}
+              onClick={onClickDelete}
+            />
+            <Button
+              text="저장"
+              icon={<Update />}
+              style={{ marginRight: "5px" }}
+              color={ButtonColor.SECONDARY}
+              onClick={onClickUpdate}
+            />
+            <Button
+              text="취소"
+              icon={<ResetGray />}
+              color={ButtonColor.LIGHT}
+              onClick={onClickReset}
+            />
+          </div>
+        </FormGroup>
+        <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>

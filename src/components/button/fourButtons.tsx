@@ -29,7 +29,7 @@ function FourButtons({
   style?: any;
 }) {
   return (
-    <div className="buttons" style={style}>
+    <div className="buttons ml30" style={style}>
       <Button
         text={btn1Name ? btn1Name : "등록"}
         icon={<Plus />}

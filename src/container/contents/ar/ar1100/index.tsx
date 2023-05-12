@@ -145,28 +145,37 @@ function AR1100({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomAreaCodePart
-          areaCode={areaCode}
-          dataCommonDic={dataCommonDic}
-          depthFullName={depthFullName}
-          register={register}
-        />
-        <div className="buttons">
-          <Button text="등록" icon={<Plus />} onClick={() => {}} />
-          <Button text="삭제" icon={<Trash />} onClick={() => {}} />
-          <Button
-            text="저장"
-            icon={<Update />}
-            color={ButtonColor.SECONDARY}
-            onClick={() => {}}
-          />
-          <Button
-            text="취소"
-            icon={<ResetGray />}
-            color={ButtonColor.LIGHT}
-            onClick={() => {}}
-          />
-        </div>
+        <FormGroup>
+          {areaCode === "00" && (
+            <>
+              <Label style={{ minWidth: "120px" }}>영업소</Label>
+              <Select register={register("areaCode")}>
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+          <div className="buttons ml30">
+            <Button text="등록" icon={<Plus />} onClick={() => {}} />
+            <Button text="삭제" icon={<Trash />} onClick={() => {}} />
+            <Button
+              text="저장"
+              icon={<Update />}
+              color={ButtonColor.SECONDARY}
+              onClick={() => {}}
+            />
+            <Button
+              text="취소"
+              icon={<ResetGray />}
+              color={ButtonColor.LIGHT}
+              onClick={() => {}}
+            />
+          </div>
+        </FormGroup>
+        <p>{depthFullName}</p>
       </SearchWrapper>
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)} autoComplete="off">

@@ -191,30 +191,39 @@ function RV1100({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomAreaCodePart
-          areaCode={areaCode}
-          dataCommonDic={dataCommonDic}
-          depthFullName={depthFullName}
-          register={register}
-        />
-        <div className="buttons">
-          <Button
-            text="지로 출력"
-            icon={<Document />}
-            type="button"
-            color={ButtonColor.LIGHT}
-          />
-          <Button
-            text="체적환경"
-            icon={<Settings2 />}
-            type="button"
-            color={ButtonColor.LIGHT}
-            style={{ marginLeft: "7px" }}
-            onClick={() => {
-              openPopupEN1500(selected);
-            }}
-          />
-        </div>
+        <FormGroup>
+          {areaCode === "00" && (
+            <>
+              <Label style={{ minWidth: "90px" }}>영업소</Label>
+              <Select register={register("areaCode")}>
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+          <div className="buttons ml30">
+            <Button
+              text="지로 출력"
+              icon={<Document />}
+              type="button"
+              color={ButtonColor.LIGHT}
+            />
+            <Button
+              text="체적환경"
+              icon={<Settings2 />}
+              type="button"
+              color={ButtonColor.LIGHT}
+              style={{ marginLeft: "7px" }}
+              onClick={() => {
+                openPopupEN1500(selected);
+              }}
+            />
+          </div>
+        </FormGroup>
+        <p>{depthFullName}</p>
       </SearchWrapper>
       <form autoComplete="off">
         <SearchWrapper>

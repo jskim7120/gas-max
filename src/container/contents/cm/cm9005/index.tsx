@@ -113,6 +113,39 @@ function CM9005({
               </Select>
             </>
           )}
+          <div className="buttons ml30">
+            <Button
+              text="검색"
+              icon={!loading && <MagnifyingGlass />}
+              color={ButtonColor.DANGER}
+              type="submit"
+              loader={
+                loading && (
+                  <>
+                    <Loader
+                      color="white"
+                      size={13}
+                      borderWidth="2px"
+                      style={{ marginRight: "10px" }}
+                    />
+                  </>
+                )
+              }
+            />
+            <Button
+              text="취소"
+              icon={<ResetGray color="#707070" />}
+              type="button"
+              color={ButtonColor.LIGHT}
+              onClick={cancel}
+            />
+            <Button
+              text="엑셀"
+              icon={<ExcelIcon width="19px" height="19px" />}
+              color={ButtonColor.LIGHT}
+              type="button"
+            />
+          </div>
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
@@ -205,40 +238,6 @@ function CM9005({
                   </Select>
                 </FormGroup>
               </Wrapper>
-            </div>
-
-            <div className="buttons">
-              <Button
-                text="검색"
-                icon={!loading && <MagnifyingGlass />}
-                color={ButtonColor.DANGER}
-                type="submit"
-                loader={
-                  loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={13}
-                        borderWidth="2px"
-                        style={{ marginRight: "10px" }}
-                      />
-                    </>
-                  )
-                }
-              />
-              <Button
-                text="취소"
-                icon={<ResetGray color="#707070" />}
-                type="button"
-                color={ButtonColor.LIGHT}
-                onClick={cancel}
-              />
-              <Button
-                text="엑셀"
-                icon={<ExcelIcon width="19px" height="19px" />}
-                color={ButtonColor.LIGHT}
-                type="button"
-              />
             </div>
           </SearchWrapper>
         </form>

@@ -169,7 +169,6 @@ function CM1200({
             isCancelBtnDisabled={isCancelBtnDisabled}
           />
         </FormGroup>
-
         <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
