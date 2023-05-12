@@ -21,13 +21,14 @@ function EN1500({
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
+  const isOpen = useSelector((state) => state.sidebar);
+  const activeTabId = useSelector((state) => state.tab.activeTabId);
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [linePos, setLinePos] = useState(420);
-
-  const activeTabId = useSelector((state) => state.tab.activeTabId);
+  const [color, setColor] = useState("#707070");
 
   useEffect(() => {
     fetchData();
@@ -71,7 +72,22 @@ function EN1500({
     }
   };
   const handleDrag = (event: any, ui: any) => {
-    setLinePos(ui.x);
+    if (ui.x > -4) {
+      if (color === "transparent") {
+        setColor("#707070");
+      }
+    } else {
+      if (color === "#707070") {
+        setColor("transparent");
+      }
+    }
+
+    if (ui.x > 0) {
+      setLinePos(ui.x);
+    } else {
+      event.stopPropagation();
+      setLinePos(0);
+    }
   };
 
   return (
@@ -122,15 +138,16 @@ function EN1500({
           bounds="parent"
           onDrag={handleDrag}
           position={{ x: linePos, y: 0 }}
+          disabled={linePos < 0}
         >
           <div
             style={{
               position: "absolute",
               top: "110px",
-              left: "5px",
+              left: `${isOpen} ? 87px : 5px`,
               width: "4px",
               height: "calc(100% - 190px)",
-              backgroundColor: "#707070",
+              backgroundColor: color,
               cursor: "col-resize",
             }}
           ></div>
