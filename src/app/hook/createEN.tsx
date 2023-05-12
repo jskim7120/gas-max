@@ -36,17 +36,18 @@ function CreateEN(
   const btnRef4 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
   const dispatch = useDispatch();
+  const { isDelete } = useSelector((state) => state.modal);
+  const activeTabId = useSelector((state) => state.tab.activeTabId);
+  const tabState = useSelector((state) => state.tab.tabs);
+  const isOpen = useSelector((state) => state.sidebar);
+
+  const rowIndex = tabState.find((item) => item.menuId === menuId)?.rowIndex;
 
   const [data, setData] = useState<Array<any>>([]);
   const [selected, setSelected] = useState<any>({});
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [linePos, setLinePos] = useState(leftSideWidth);
-
-  const { isDelete } = useSelector((state) => state.modal);
-  const activeTabId = useSelector((state) => state.tab.activeTabId);
-  const tabState = useSelector((state) => state.tab.tabs);
-
-  const rowIndex = tabState.find((item) => item.menuId === menuId)?.rowIndex;
+  const [color, setColor] = useState("#707070");
 
   useEffect(() => {
     fetchData("pos");
@@ -124,7 +125,22 @@ function CreateEN(
   }
 
   const handleDrag = (event: any, ui: any) => {
-    setLinePos(ui.x);
+    if (ui.x > -4) {
+      if (color === "transparent") {
+        setColor("#707070");
+      }
+    } else {
+      if (color === "#707070") {
+        setColor("transparent");
+      }
+    }
+
+    if (ui.x > 0) {
+      setLinePos(ui.x);
+    } else {
+      event.stopPropagation();
+      setLinePos(0);
+    }
   };
 
   const handleClickBtn1 = () => {
@@ -225,15 +241,16 @@ function CreateEN(
             bounds="parent"
             onDrag={handleDrag}
             position={{ x: linePos, y: 0 }}
+            disabled={linePos < 0}
           >
             <div
               style={{
                 position: "absolute",
                 top: "117px",
-                left: "5px",
+                left: `${isOpen} ? 87px : 5px`,
                 width: "4px",
                 height: "calc(100% - 197px)",
-                backgroundColor: "#707070",
+                backgroundColor: color,
                 cursor: "col-resize",
               }}
             ></div>
