@@ -200,13 +200,12 @@ function CM1100Page({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5" style={{ paddingRight: "100px" }}>
+      <SearchWrapper className="h35 mt5">
         <FormGroup>
-          <p>{depthFullName}</p>
           {ownAreaCode === "00" && (
             <>
-              <p className="big">영업소</p>
-              <Select register={register("areaCode")}>
+              <Label>영업소</Label>
+              <Select register={register("areaCode")} width={InputSize.i150}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -215,28 +214,28 @@ function CM1100Page({
               </Select>
             </>
           )}
+          <div className="buttons">
+            <Button
+              text="등록"
+              icon={<Plus />}
+              type="button"
+              onClick={onClickAdd}
+            />
+            <Button
+              text="수정"
+              icon={<Reset />}
+              type="button"
+              onClick={onClickUpdate}
+            />
+            <Button
+              text="삭제"
+              icon={<Trash />}
+              type="button"
+              onClick={onClickDelete}
+            />
+          </div>
         </FormGroup>
-
-        <div className="buttons">
-          <Button
-            text="등록"
-            icon={<Plus />}
-            type="button"
-            onClick={onClickAdd}
-          />
-          <Button
-            text="수정"
-            icon={<Reset />}
-            type="button"
-            onClick={onClickUpdate}
-          />
-          <Button
-            text="삭제"
-            icon={<Trash />}
-            type="button"
-            onClick={onClickDelete}
-          />
-        </div>
+        <p>{depthFullName}</p>
       </SearchWrapper>
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)} autoComplete="off">

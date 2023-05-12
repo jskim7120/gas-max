@@ -16,6 +16,7 @@ export const SearchWrapper = styled.div`
   }
 
   div.buttons {
+    margin-left: 30px;
     display: flex;
     align-items: center;
     gap: 7px;
@@ -50,7 +51,6 @@ export const SearchWrapper = styled.div`
       font-family: "NotoSansKRRegular";
       font-size: 14px;
       font-weight: bold;
-      margin: 0 10px 0 15px;
     }
   }
 `;

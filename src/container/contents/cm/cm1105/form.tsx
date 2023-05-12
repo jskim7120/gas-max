@@ -430,21 +430,21 @@ function FormCM1105() {
                 value={value}
                 name={name}
                 onChange={onChange}
-                mask={[
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                ]}
+                // mask={[
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   "-",
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   "-",
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                // ]}
                 inputSize={InputSize.i120}
               />
             )}
