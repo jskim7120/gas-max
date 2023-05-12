@@ -41,7 +41,7 @@ export const SearchWrapper = styled.div`
     margin-top: 4px;
   }
 
-  &.ml30 {
+  .ml30 {
     margin-left: 30px;
   }
 
