@@ -99,12 +99,24 @@ function CM9004({
 
   return (
     <>
-      <CustomTopPart
-        depthFullName={depthFullName}
-        register={register}
-        dataCommonDic={dataCommonDic}
-        areaCode={areaCode}
-      />
+      <SearchWrapper className="h35 mt5">
+        <FormGroup>
+          {areaCode === "00" && (
+            <>
+              <Label style={{ minWidth: "66px" }}>영업소</Label>
+
+              <Select register={register("areaCode")}>
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+        </FormGroup>
+        <p>{depthFullName}</p>
+      </SearchWrapper>
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)} autoComplete="off">
           <SearchWrapper>

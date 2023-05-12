@@ -130,7 +130,8 @@ function CM9002({
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
-      <WrapperContent style={{ height: `calc(100% - 72px)` }}>
+
+      <WrapperContent style={{ height: `calc(100% - 76px)` }}>
         <form onSubmit={handleSubmit(submit)} autoComplete="off">
           <SearchWrapper style={{ alignItems: "baseline" }}>
             <div>
