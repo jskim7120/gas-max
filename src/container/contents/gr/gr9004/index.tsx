@@ -100,13 +100,51 @@ function GR9004({
 
   return (
     <>
-      <CustomTopPart
-        areaCode={areaCode}
-        depthFullName={depthFullName}
-        register={register}
-        dataCommonDic={dataCommonDic}
-        bigText="재고입고처"
-      />
+      <SearchWrapper className="h35 mt5">
+        <FormGroup>
+          {areaCode === "00" && (
+            <>
+              <Label style={{ minWidth: "72px" }}>재고입고처</Label>
+              <Select register={register("areaCode")}>
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+          <div className="buttons ml30">
+            <Button
+              text="검색"
+              icon={!loading && <MagnifyingGlass />}
+              color={ButtonColor.DANGER}
+              type="submit"
+              loader={
+                loading && (
+                  <>
+                    <Loader
+                      color="white"
+                      size={13}
+                      borderWidth="2px"
+                      style={{ marginRight: "10px" }}
+                    />
+                  </>
+                )
+              }
+              style={{ marginRight: "5px" }}
+            />
+            <Button
+              text="취소"
+              icon={<ResetGray />}
+              type="button"
+              color={ButtonColor.LIGHT}
+              onClick={cancel}
+            />
+          </div>
+        </FormGroup>
+        <p>{depthFullName}</p>
+      </SearchWrapper>
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)} autoComplete="off">
           <SearchWrapper className="h35">
@@ -147,35 +185,6 @@ function GR9004({
                 )}
               />
             </FormGroup>
-
-            <div className="buttons">
-              <Button
-                text="검색"
-                icon={!loading && <MagnifyingGlass />}
-                color={ButtonColor.DANGER}
-                type="submit"
-                loader={
-                  loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={13}
-                        borderWidth="2px"
-                        style={{ marginRight: "10px" }}
-                      />
-                    </>
-                  )
-                }
-                style={{ marginRight: "5px" }}
-              />
-              <Button
-                text="취소"
-                icon={<ResetGray />}
-                type="button"
-                color={ButtonColor.LIGHT}
-                onClick={cancel}
-              />
-            </div>
           </SearchWrapper>
         </form>
 

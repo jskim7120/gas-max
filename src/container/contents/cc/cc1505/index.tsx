@@ -107,8 +107,6 @@ function CC1505({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <p>{depthFullName}</p>
-
         <FourButtons
           onClickAdd={onClickAdd}
           onClickDelete={onClickDelete}
@@ -117,6 +115,7 @@ function CC1505({
           isAddBtnClicked={isAddBtnClicked}
           isCancelBtnDisabled={isCancelBtnDisabled}
         />
+        <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>

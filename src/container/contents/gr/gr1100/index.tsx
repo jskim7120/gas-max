@@ -134,25 +134,41 @@ function GR1100({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <AreaCodeWithFullName
-          ownAreaCode={ownAreaCode}
-          depthFullName={depthFullName}
-          setAreaCode={setAreaCode}
-          areaCode={areaCode}
-          dataCommonDic={dataCommonDic}
-        />
-        <FourButtons
-          onClickAdd={onClickAdd}
-          onClickDelete={onClickDelete}
-          onClickUpdate={onClickUpdate}
-          onClickReset={onClickReset}
-          isAddBtnClicked={isAddBtnClicked}
-          isCancelBtnDisabled={isCancelBtnDisabled}
-        />
+        <FormGroup>
+          {ownAreaCode === "00" && (
+            <>
+              <Label style={{ minWidth: "32px" }}>영업소</Label>
+              <Select
+                value={areaCode}
+                onChange={(e) => setAreaCode(e.target.value)}
+              >
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+
+          <FourButtons
+            onClickAdd={onClickAdd}
+            onClickDelete={onClickDelete}
+            onClickUpdate={onClickUpdate}
+            onClickReset={onClickReset}
+            isAddBtnClicked={isAddBtnClicked}
+            isCancelBtnDisabled={isCancelBtnDisabled}
+          />
+        </FormGroup>
+        <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
-          <form onSubmit={handleSubmit(submit)} autoComplete="off" style={{ minWidth: minWidth }}>
+          <form
+            onSubmit={handleSubmit(submit)}
+            autoComplete="off"
+            style={{ minWidth: minWidth }}
+          >
             <SearchWrapper className="h35">
               <FormGroup>
                 <Label

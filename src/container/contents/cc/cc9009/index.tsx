@@ -71,12 +71,12 @@ function GR9009({
     <>
       <SearchWrapper className="h35 mt5">
         <FormGroup>
-          <p>{depthFullName}</p>
           <p className="blue" style={{ marginLeft: "30px" }}>
             ※ 연비는 일자별 주유전,후 유량이 동일하다는 가정하에 산출한 평균연비
             입니다.
           </p>
         </FormGroup>
+        <p>{depthFullName}</p>
       </SearchWrapper>
 
       <WrapperContent>

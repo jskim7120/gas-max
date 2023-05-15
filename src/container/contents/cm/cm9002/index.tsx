@@ -127,10 +127,47 @@ function CM9002({
               </Select>
             </>
           )}
+          <div className="buttons ml30">
+            <Button
+              text="검색"
+              icon={!loading && <MagnifyingGlass />}
+              color={ButtonColor.DANGER}
+              type="submit"
+              loader={
+                loading && (
+                  <>
+                    <Loader
+                      color="white"
+                      size={13}
+                      borderWidth="2px"
+                      style={{ marginRight: "10px" }}
+                    />
+                  </>
+                )
+              }
+              style={{ minWidth: "max-content" }}
+            />
+            <Button
+              text="취소"
+              icon={<ResetGray />}
+              style={{ minWidth: "max-content" }}
+              type="button"
+              color={ButtonColor.LIGHT}
+              onClick={cancel}
+            />
+            <Button
+              text="엑셀"
+              style={{ minWidth: "max-content" }}
+              icon={<ExcelIcon width="19px" height="19px" />}
+              color={ButtonColor.LIGHT}
+              type="button"
+            />
+          </div>
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
-      <WrapperContent style={{ height: `calc(100% - 72px)` }}>
+
+      <WrapperContent style={{ height: `calc(100% - 76px)` }}>
         <form onSubmit={handleSubmit(submit)} autoComplete="off">
           <SearchWrapper style={{ alignItems: "baseline" }}>
             <div>
@@ -317,43 +354,6 @@ function CM9002({
                   </Select>
                 </FormGroup>
               </Wrapper>
-            </div>
-
-            <div className="buttons">
-              <Button
-                text="검색"
-                icon={!loading && <MagnifyingGlass />}
-                color={ButtonColor.DANGER}
-                type="submit"
-                loader={
-                  loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={13}
-                        borderWidth="2px"
-                        style={{ marginRight: "10px" }}
-                      />
-                    </>
-                  )
-                }
-                style={{ minWidth: "max-content" }}
-              />
-              <Button
-                text="취소"
-                icon={<ResetGray />}
-                style={{ minWidth: "max-content" }}
-                type="button"
-                color={ButtonColor.LIGHT}
-                onClick={cancel}
-              />
-              <Button
-                text="엑셀"
-                style={{ minWidth: "max-content" }}
-                icon={<ExcelIcon width="19px" height="19px" />}
-                color={ButtonColor.LIGHT}
-                type="button"
-              />
             </div>
           </SearchWrapper>
         </form>

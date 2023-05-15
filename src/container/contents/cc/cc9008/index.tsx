@@ -70,9 +70,8 @@ function GR9008({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <FormGroup>
-          <p>{depthFullName}</p>
-        </FormGroup>
+        <FormGroup></FormGroup>
+        <p>{depthFullName}</p>
       </SearchWrapper>
 
       <WrapperContent>

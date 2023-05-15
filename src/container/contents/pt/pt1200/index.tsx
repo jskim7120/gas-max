@@ -194,35 +194,45 @@ function PT1200({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomTopPart
-          depthFullName={depthFullName}
-          register={register}
-          dataCommonDic={dataCommonDic}
-          areaCode={areaCode}
-        />
+        <FormGroup>
+          {areaCode === "00" && (
+            <>
+              <Label style={{ minWidth: "42px" }}>영업소</Label>
 
-        <div className="buttons">
-          <Button
-            text="선택 수금"
-            icon={<Plus />}
-            onClick={openPopupPT1205}
-            style={{ marginRight: "5px" }}
-          />
-          <Button
-            text="수금"
-            icon={<Plus />}
-            onClick={() => {}}
-            style={{ marginRight: "5px" }}
-          />
-          <Button
-            text="저장"
-            icon={<Update />}
-            color={ButtonColor.SECONDARY}
-            onClick={() => {}}
-            style={{ marginRight: "5px" }}
-          />
-          <Button text="취소" icon={<Reset />} onClick={() => {}} />
-        </div>
+              <Select register={register("areaCode")}>
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+
+          <div className="buttons ml30">
+            <Button
+              text="선택 수금"
+              icon={<Plus />}
+              onClick={openPopupPT1205}
+              style={{ marginRight: "5px" }}
+            />
+            <Button
+              text="수금"
+              icon={<Plus />}
+              onClick={() => {}}
+              style={{ marginRight: "5px" }}
+            />
+            <Button
+              text="저장"
+              icon={<Update />}
+              color={ButtonColor.SECONDARY}
+              onClick={() => {}}
+              style={{ marginRight: "5px" }}
+            />
+            <Button text="취소" icon={<Reset />} onClick={() => {}} />
+          </div>
+        </FormGroup>
+        <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>

@@ -125,7 +125,11 @@ function GR1200({
       />
       <MainWrapper>
         <LeftSide>
-          <form onSubmit={handleSubmit(submit)} autoComplete="off" style={{ minWidth: minWidth }}>
+          <form
+            onSubmit={handleSubmit(submit)}
+            autoComplete="off"
+            style={{ minWidth: minWidth }}
+          >
             <SearchWrapper className="h35">
               <FormGroup>
                 <Label style={{ minWidth: "auto" }}>기간</Label>

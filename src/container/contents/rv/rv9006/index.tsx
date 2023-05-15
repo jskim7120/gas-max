@@ -127,20 +127,30 @@ function RV9006({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <CustomAreaCodePart
-          areaCode={areaCode}
-          dataCommonDic={dataCommonDic}
-          depthFullName={depthFullName}
-          register={register}
-        />
-        <div className="buttons">
-          <Button
-            text="출력"
-            icon={<Document />}
-            type="button"
-            color={ButtonColor.LIGHT}
-          />
-        </div>
+        <FormGroup>
+          {areaCode === "00" && (
+            <>
+              <Label style={{ minWidth: "72px" }}>영업소</Label>
+
+              <Select register={register("areaCode")}>
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+          <div className="buttons ml30">
+            <Button
+              text="출력"
+              icon={<Document />}
+              type="button"
+              color={ButtonColor.LIGHT}
+            />
+          </div>
+        </FormGroup>
+        <p>{depthFullName}</p>
       </SearchWrapper>
       <form autoComplete="off">
         <SearchWrapper>
