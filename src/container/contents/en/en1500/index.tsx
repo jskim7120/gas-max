@@ -6,7 +6,7 @@ import { EN1500LIST } from "app/path";
 
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import { Update, Reset } from "components/allSvgIcon";
+import { Update } from "components/allSvgIcon";
 import Form from "./form";
 import Grid from "../grid";
 import { columns, fields } from "./data";
@@ -119,7 +119,7 @@ function EN1500({
 
         <Draggable
           axis="x"
-          bounds={{ left: 0, right: window.innerWidth - 96 }}
+          bounds={{ left: 0, right: window.innerWidth }}
           position={{ x: linePos, y: 0 }}
           onDrag={handleDrag}
         >
