@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { ISEARCH } from "./model";
 import GridLeft from "components/grid";
 import Form from "./form";
@@ -12,7 +11,7 @@ import {
 } from "../../commonStyle";
 import Button from "components/button/button";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
-import { ButtonType, FieldKind } from "components/componentsType";
+import { ButtonType } from "components/componentsType";
 import { Field, FormGroup, Input, Label, Select } from "components/form/style";
 import CheckBox from "components/checkbox";
 import Loader from "components/loader";
