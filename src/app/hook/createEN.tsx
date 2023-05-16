@@ -47,7 +47,6 @@ function CreateEN(
   const [selected, setSelected] = useState<any>({});
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [linePos, setLinePos] = useState(leftSideWidth);
-  const [color, setColor] = useState("#707070");
 
   useEffect(() => {
     fetchData("pos");
@@ -125,22 +124,7 @@ function CreateEN(
   }
 
   const handleDrag = (event: any, ui: any) => {
-    if (ui.x > -4) {
-      if (color === "transparent") {
-        setColor("#707070");
-      }
-    } else {
-      if (color === "#707070") {
-        setColor("transparent");
-      }
-    }
-
-    if (ui.x > 0) {
-      setLinePos(ui.x);
-    } else {
-      event.stopPropagation();
-      setLinePos(0);
-    }
+    setLinePos(ui.x);
   };
 
   const handleClickBtn1 = () => {
@@ -238,10 +222,9 @@ function CreateEN(
 
           <Draggable
             axis="x"
-            bounds="parent"
-            onDrag={handleDrag}
+            bounds={{ left: 0, right: window.innerWidth - 96 }}
             position={{ x: linePos, y: 0 }}
-            disabled={linePos < 0}
+            onDrag={handleDrag}
           >
             <div
               style={{
@@ -250,7 +233,7 @@ function CreateEN(
                 left: `${isOpen} ? 87px : 5px`,
                 width: "4px",
                 height: "calc(100% - 197px)",
-                backgroundColor: color,
+                backgroundColor: "#707070",
                 cursor: "col-resize",
               }}
             ></div>
