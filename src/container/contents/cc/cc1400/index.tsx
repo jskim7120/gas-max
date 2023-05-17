@@ -216,7 +216,7 @@ function CC1400({
           <form autoComplete="off">
             <SearchWrapper style={{ height: "35px" }}>
               <FormGroup>
-                <Label style={{ minWidth: "auto" }}>기간</Label>
+                <Label style={{ minWidth: "48px" }}>기간</Label>
                 <Controller
                   control={control}
                   {...register("sDateF")}

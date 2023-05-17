@@ -72,7 +72,6 @@ function ENButtons({
           setIsAddBtnClicked(false);
           formRef.current.resetForm("reset");
         }}
-        disabled={!isAddBtnClicked}
         ref={btnRef4}
       />
     </div>

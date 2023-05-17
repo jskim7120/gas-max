@@ -230,7 +230,6 @@ function PT1100({
             />
           </div>
         </FormGroup>
-        <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>

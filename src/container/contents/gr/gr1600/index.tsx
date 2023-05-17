@@ -128,7 +128,7 @@ function GR1600({
               <FormGroup>
                 <Label
                   style={{
-                    minWidth: "auto",
+                    minWidth: "48px",
                   }}
                 >
                   구분

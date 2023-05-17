@@ -103,7 +103,6 @@ function FormCM1106() {
         style={{ background: "#0B97F6", height: "40px", borderBottom: "none" }}
       >
         <FormGroup>
-          <p style={{ color: "#fff" }}>거래처 사용품목</p>
           {areaCode === "00" && (
             <>
               <p className="big">영업소</p>
@@ -117,52 +116,53 @@ function FormCM1106() {
               </Select>
             </>
           )}
+          <div className="buttons ml30">
+            <Button
+              text="등록"
+              icon={<Plus />}
+              style={{ marginRight: "5px" }}
+              type="button"
+              onClick={() => {
+                formRef.current.resetForm("clear");
+                setIsCancelBtnDisabled(false);
+                setIsAddBtnClicked(true);
+              }}
+            />
+            <Button
+              text="삭제"
+              icon={<Trash />}
+              style={{ marginRight: "5px" }}
+              type="button"
+              onClick={() => {
+                // dispatch(openModal({ type: "delModal" }));
+                // dispatch(addDeleteMenuId({ menuId: "CM1106" }));
+                formRef.current.crud("delete");
+              }}
+              disabled={isAddBtnClicked}
+            />
+            <Button
+              text="저장"
+              icon={<Update />}
+              style={{ marginRight: "5px" }}
+              color={ButtonColor.SECONDARY}
+              onClick={() => formRef.current.crud(null)}
+              type="button"
+            />
+            <Button
+              text="취소"
+              style={{ marginRight: "5px" }}
+              icon={<Reset />}
+              type="button"
+              onClick={() => {
+                formRef.current.resetForm("reset");
+                setIsCancelBtnDisabled(true);
+                setIsAddBtnClicked(false);
+              }}
+            />
+          </div>
         </FormGroup>
-        <div className="buttons">
-          <Button
-            text="등록"
-            icon={<Plus />}
-            style={{ marginRight: "5px" }}
-            type="button"
-            onClick={() => {
-              formRef.current.resetForm("clear");
-              setIsCancelBtnDisabled(false);
-              setIsAddBtnClicked(true);
-            }}
-          />
-          <Button
-            text="삭제"
-            icon={<Trash />}
-            style={{ marginRight: "5px" }}
-            type="button"
-            onClick={() => {
-              // dispatch(openModal({ type: "delModal" }));
-              // dispatch(addDeleteMenuId({ menuId: "CM1106" }));
-              formRef.current.crud("delete");
-            }}
-            disabled={isAddBtnClicked}
-          />
-          <Button
-            text="저장"
-            icon={<Update />}
-            style={{ marginRight: "5px" }}
-            color={ButtonColor.SECONDARY}
-            onClick={() => formRef.current.crud(null)}
-            type="button"
-          />
-          <Button
-            text="취소"
-            style={{ marginRight: "5px" }}
-            icon={<Reset />}
-            type="button"
-            onClick={() => {
-              formRef.current.resetForm("reset");
-              setIsCancelBtnDisabled(true);
-              setIsAddBtnClicked(false);
-            }}
-            disabled={isCancelBtnDisabled}
-          />
-
+        <FormGroup>
+          <p style={{ color: "#fff" }}>거래처 사용품목</p>
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
@@ -171,7 +171,7 @@ function FormCM1106() {
           >
             <WhiteClose />
           </span>
-        </div>
+        </FormGroup>
       </SearchWrapper>
 
       <form onSubmit={handleSubmit(submit)} autoComplete="off">

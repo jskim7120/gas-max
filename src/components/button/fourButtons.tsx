@@ -55,7 +55,6 @@ function FourButtons({
         icon={<Reset />}
         type="button"
         onClick={onClickReset}
-        disabled={isCancelBtnDisabled}
       />
     </div>
   );

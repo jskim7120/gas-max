@@ -185,7 +185,6 @@ function CreateEN(
               text="취소 (F9)"
               icon={<Reset />}
               onClick={handleClickBtn4}
-              disabled={!isAddBtnClicked}
               ref={btnRef4}
             />
           </div>

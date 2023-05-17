@@ -152,7 +152,7 @@ function GR1500({
           >
             <SearchWrapper className="h35">
               <FormGroup>
-                <Label style={{ minWidth: "auto" }}>구분</Label>
+                <Label style={{ minWidth: "48px" }}>구분</Label>
                 <Select width={InputSize.i130} register={register("sBuGubun")}>
                   {dataCommonDic?.sBuGubun?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>

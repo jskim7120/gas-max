@@ -93,15 +93,31 @@ function GR1300({
 
   return (
     <>
-      <CustomTopPart
-        depthFullName={depthFullName}
-        register={register}
-        dataCommonDic={dataCommonDic}
-        areaCode={ownAreaCode}
-      />
+      <SearchWrapper className="h35 mt5">
+        <FormGroup>
+          {ownAreaCode === "00" && (
+            <>
+              <Label style={{ minWidth: "62px" }}>영업소</Label>
+
+              <Select register={register("areaCode")}>
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+        </FormGroup>
+        <p>{depthFullName}</p>
+      </SearchWrapper>
       <MainWrapper>
         <LeftSide>
-          <form onSubmit={handleSubmit(submit)} autoComplete="off" style={{ minWidth: minWidth }}>
+          <form
+            onSubmit={handleSubmit(submit)}
+            autoComplete="off"
+            style={{ minWidth: minWidth }}
+          >
             <SearchWrapper className="h35">
               <FormGroup>
                 <Label style={{ minWidth: "auto" }}>지급기간</Label>
