@@ -455,21 +455,21 @@ function FormCM1105() {
                 value={value}
                 onChange={onChange}
                 name={name}
-                mask={[
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                ]}
+                // mask={[
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   "-",
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   "-",
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                // ]}
                 inputSize={InputSize.i150}
               />
             )}
@@ -482,21 +482,21 @@ function FormCM1105() {
                 value={value}
                 onChange={onChange}
                 name={name}
-                mask={[
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                ]}
+                // mask={[
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   "-",
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   "-",
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                //   /\d/,
+                // ]}
                 inputSize={InputSize.i150}
               />
             )}
