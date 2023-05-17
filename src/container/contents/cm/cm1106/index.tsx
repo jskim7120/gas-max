@@ -158,7 +158,6 @@ function FormCM1106() {
                 setIsCancelBtnDisabled(true);
                 setIsAddBtnClicked(false);
               }}
-              disabled={isCancelBtnDisabled}
             />
           </div>
         </FormGroup>
