@@ -257,7 +257,7 @@ function Form() {
           <div className="top__left">
             <UserWhite />
             <FormGroup>
-              <Label style={{ minWidth: "63px" }} className="b">
+              <Label style={{ minWidth: "63px", color: "white" }} className="b">
                 영업소
               </Label>
               <Select register={register("areaCode")}>
@@ -271,7 +271,7 @@ function Form() {
           </div>
 
           <FormGroup>
-            <p className="w" style={{ marginRight: "20px" }}>
+            <p className="w" style={{ marginRight: "20px", color: "white" }}>
               거래처 검색
             </p>
             <span style={{}} onClick={handleCancel}>

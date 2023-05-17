@@ -340,8 +340,7 @@ function FormCM1105() {
     <form onSubmit={handleSubmit(submit)} autoComplete="off">
       <ModalHeader className="handle">
         <FormGroup>
-          <p>거래처 정보</p>
-          <Label>영업소</Label>
+          <Label style={{ minWidth: "114px", color: "white" }}>영업소</Label>
           <Select register={register("areaCode")} disabled>
             {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
@@ -349,23 +348,26 @@ function FormCM1105() {
               </option>
             ))}
           </Select>
+          <div style={{ marginLeft: "30px" }}>
+            <Button
+              text="연속등록"
+              icon={<Plus />}
+              style={{ marginRight: "5px" }}
+              type="button"
+              onClick={handleAddAgain}
+            />
+            <Button
+              text="저장"
+              icon={<Update />}
+              style={{ marginRight: "5px" }}
+              color={ButtonColor.SECONDARY}
+              onClick={handleSubmit(submit)}
+              type="button"
+            />
+          </div>
         </FormGroup>
         <FormGroup>
-          <Button
-            text="연속등록"
-            icon={<Plus />}
-            style={{ marginRight: "5px" }}
-            type="button"
-            onClick={handleAddAgain}
-          />
-          <Button
-            text="저장"
-            icon={<Update />}
-            style={{ marginRight: "5px" }}
-            color={ButtonColor.SECONDARY}
-            onClick={handleSubmit(submit)}
-            type="button"
-          />
+          <Label style={{ color: "white" }}>거래처 정보</Label>
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
