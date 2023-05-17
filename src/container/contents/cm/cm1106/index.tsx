@@ -105,7 +105,9 @@ function FormCM1106() {
         <FormGroup>
           {areaCode === "00" && (
             <>
-              <p className="big">영업소</p>
+              <p className="big" style={{ color: "white" }}>
+                영업소
+              </p>
 
               <Select register={register("areaCode")} disabled>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (

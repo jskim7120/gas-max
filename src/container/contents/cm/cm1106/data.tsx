@@ -43,7 +43,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "jcJpSateName",
+    fieldName: "jcJpStateName",
     dataType: ValueType.TEXT,
   },
 ];
@@ -148,8 +148,8 @@ export const columns = [
     },
   },
   {
-    name: "jcJpSateName",
-    fieldName: "jcJpSateName",
+    name: "jcJpStateName",
+    fieldName: "jcJpStateName",
     type: "data",
     width: "60",
     header: {
