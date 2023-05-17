@@ -190,7 +190,7 @@ function CC1200({
               >
                 <form autoComplete="off">
                   <FormGroup>
-                    <Label style={{ minWidth: "80px" }}>기간</Label>
+                    <Label style={{ minWidth: "48px" }}>기간</Label>
 
                     <Controller
                       control={control}

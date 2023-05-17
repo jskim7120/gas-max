@@ -117,12 +117,23 @@ function GR1200({
 
   return (
     <>
-      <CustomTopPart
-        depthFullName={depthFullName}
-        register={register}
-        dataCommonDic={dataCommonDic}
-        areaCode={ownAreaCode}
-      />
+      <SearchWrapper className="h35 mt5">
+        <FormGroup>
+          {ownAreaCode === "00" && (
+            <>
+              <Label style={{ minWidth: "40px" }}>영업소</Label>
+              <Select register={register("areaCode")}>
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </>
+          )}
+        </FormGroup>
+        <p>{depthFullName}</p>
+      </SearchWrapper>
       <MainWrapper>
         <LeftSide>
           <form
