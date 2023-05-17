@@ -9,7 +9,7 @@ import {
   Reset,
   TickInCircle,
 } from "components/allSvgIcon";
-import { Select } from "components/form/style";
+import { FormGroup, Select, Label } from "components/form/style";
 import { FOOT61, FOOTER } from "app/path";
 import Loader from "components/loader";
 import API from "app/axios";
@@ -256,20 +256,28 @@ function Form() {
         <div className="top">
           <div className="top__left">
             <UserWhite />
-            <p className="w">거래처 검색</p>
-            <p className="b">영업소</p>
-            <Select register={register("areaCode")}>
-              {areaCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
+            <FormGroup>
+              <Label style={{ minWidth: "63px" }} className="b">
+                영업소
+              </Label>
+              <Select register={register("areaCode")}>
+                {areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
           </div>
 
-          <span style={{}} onClick={handleCancel}>
-            <WhiteClose />
-          </span>
+          <FormGroup>
+            <p className="w" style={{ marginRight: "20px" }}>
+              거래처 검색
+            </p>
+            <span style={{}} onClick={handleCancel}>
+              <WhiteClose />
+            </span>
+          </FormGroup>
         </div>
         <div className="search-form">
           <div className="search-form__grid">
