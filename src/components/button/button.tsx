@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef } from "react";
 import styled, { css } from "styled-components";
 import {
   ButtonColor,
@@ -27,16 +27,13 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
     if (color === ButtonColor.PRIMARY) {
       attributes.bg = "#17A2B8";
       attributes.color = "#FFF";
-      attributes.bgHover = "#1EC5DF";
+      attributes.bgHover = `#137989`;
       attributes.lineColor = "#fff";
     }
     if (color === ButtonColor.SECONDARY) {
-      // attributes.bg = "linear-gradient(#FFB300, #E67F09)";
       attributes.bg = "#FFB300";
       attributes.color = "#FFF";
-      // attributes.bgHover =
-      // "linear-gradient(#F5D998 5%, #F4D38E 10%, #F3CD85 15%, #F2C77B 20%, #F1C171 25%, #F0BC69 30%, #E67F09 100%)";
-      attributes.bgHover = "#F0BC69";
+      attributes.bgHover = "#dba014";
       attributes.lineColor = "#fff";
     }
     if (color === ButtonColor.WARNING) {
@@ -158,33 +155,28 @@ const ButtonComponent = styled.button<{
       transition: all 0.3s ease;
       box-sizing: border-box;
       background: ${BtnAttribute(props.kind, props.color).bg};
-      //background: ${BtnAttribute(props.kind, props.color).bgHover};
       border: 1px solid ${BtnAttribute(props.kind, props.color).border};
       border-radius: ${BtnAttribute(props.kind, props.color).borderRad};
       color: ${BtnAttribute(props.kind, props.color).color};
       padding: ${BtnAttribute(props.kind, props.color).padding};
+      line-height: 14px;
 
       &:focus {
-        //  background: ${BtnAttribute(props.kind, props.color).bg};
         outline: none;
       }
 
       &:hover {
-        background: ${BtnAttribute(props.kind, props.color).bg};
+        background: ${BtnAttribute(props.kind, props.color).bgHover};
       }
 
       &.active {
-        //background: ${BtnAttribute(props.kind, props.color).bg};
-        background: rgb(19 121 137);
+        background: ${BtnAttribute(props.kind, props.color).bgHover};
       }
 
       &:disabled {
-        //opacity: 0.5;
         background: #cccccc;
         cursor: default;
       }
-
-      line-height: 14px;
     `;
   }}
 `;

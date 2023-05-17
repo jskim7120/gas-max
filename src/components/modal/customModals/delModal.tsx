@@ -6,7 +6,7 @@ import {
   setIsDelete,
   addDeleteMenuId,
 } from "app/state/modal/modalSlice";
-import Draggable from "components/modal/draggable";
+import Draggable from "react-draggable";
 import { WhiteClose } from "components/allSvgIcon";
 
 const Container = styled.div`
@@ -104,9 +104,9 @@ function DelModal() {
   };
 
   return (
-    <Draggable>
+    <Draggable handle=".handle">
       <Container>
-        <div className="modal_header">
+        <div className="modal_header handle">
           <span
             style={{
               marginRight: "4px",
