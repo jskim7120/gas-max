@@ -1,15 +1,13 @@
 import styled from "styled-components";
 
 export const TabContainer = styled.div`
-  width: 100%;
   height: 100%;
   border-left: 5px solid #707070;
   border-right: 5px solid #707070;
 `;
 
 export const TabHeaderWrapper = styled.div`
-  //width: 100%;
-
+  width: 100%;
   display: flex;
   align-items: end;
   background-color: #626161;

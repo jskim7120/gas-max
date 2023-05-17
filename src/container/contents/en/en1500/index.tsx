@@ -6,7 +6,7 @@ import { EN1500LIST } from "app/path";
 
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import { Update, Reset } from "components/allSvgIcon";
+import { Update } from "components/allSvgIcon";
 import Form from "./form";
 import Grid from "../grid";
 import { columns, fields } from "./data";
@@ -28,7 +28,6 @@ function EN1500({
   const [selected, setSelected] = useState({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [linePos, setLinePos] = useState(420);
-  const [color, setColor] = useState("#707070");
 
   useEffect(() => {
     fetchData();
@@ -72,22 +71,7 @@ function EN1500({
     }
   };
   const handleDrag = (event: any, ui: any) => {
-    if (ui.x > -4) {
-      if (color === "transparent") {
-        setColor("#707070");
-      }
-    } else {
-      if (color === "#707070") {
-        setColor("transparent");
-      }
-    }
-
-    if (ui.x > 0) {
-      setLinePos(ui.x);
-    } else {
-      event.stopPropagation();
-      setLinePos(0);
-    }
+    setLinePos(ui.x);
   };
 
   return (
@@ -135,10 +119,9 @@ function EN1500({
 
         <Draggable
           axis="x"
-          bounds="parent"
-          onDrag={handleDrag}
+          bounds={{ left: 0, right: window.innerWidth }}
           position={{ x: linePos, y: 0 }}
-          disabled={linePos < 0}
+          onDrag={handleDrag}
         >
           <div
             style={{
@@ -147,7 +130,7 @@ function EN1500({
               left: `${isOpen} ? 87px : 5px`,
               width: "4px",
               height: "calc(100% - 190px)",
-              backgroundColor: color,
+              backgroundColor: "#707070",
               cursor: "col-resize",
             }}
           ></div>

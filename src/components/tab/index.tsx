@@ -99,7 +99,11 @@ const Tab = (props: TabProps): JSX.Element => {
   };
 
   return (
-    <TabContainer>
+    <TabContainer
+      style={{
+        width: isOpen ? "calc(100% - 82px)" : "100%",
+      }}
+    >
       <TabHeaderWrapper>
         <div className="sideBar" onClick={() => dispatch(toggleSidebar())}>
           {isOpen ? <SidebarClose /> : <SidebarOpen />}

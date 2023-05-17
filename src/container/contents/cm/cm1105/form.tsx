@@ -336,11 +336,9 @@ function FormCM1105() {
     resetForm("clear");
   };
 
-  console.log("isAddBtnClicked::::", isAddBtnClicked);
-
   return (
     <form onSubmit={handleSubmit(submit)} autoComplete="off">
-      <ModalHeader>
+      <ModalHeader className="handle">
         <FormGroup>
           <p>거래처 정보</p>
           <Label>영업소</Label>

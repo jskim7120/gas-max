@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Draggable from "components/modal/draggable";
 import FormCM1105 from "container/contents/cm/cm1105/form";
+import Draggable from "react-draggable";
 const ModalWrapper = styled.div`
   width: 1200px;
   height: auto;
@@ -15,7 +15,7 @@ const ModalWrapper = styled.div`
 
 function CM1105Modal() {
   return (
-    <Draggable>
+    <Draggable handle=".handle">
       <ModalWrapper>
         <FormCM1105 />
       </ModalWrapper>
