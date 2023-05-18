@@ -262,7 +262,6 @@ const Form = React.forwardRef(
             onClickReset={onClickReset}
             onClickUpdate={onClickUpdate}
             isAddBtnClicked={isAddBtnClicked}
-            isCancelBtnDisabled={isCancelBtnDisabled}
           />
         </FormHeadCnt>
         <form

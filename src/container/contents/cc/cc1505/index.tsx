@@ -113,7 +113,6 @@ function CC1505({
           onClickUpdate={onClickUpdate}
           onClickReset={onClickReset}
           isAddBtnClicked={isAddBtnClicked}
-          isCancelBtnDisabled={isCancelBtnDisabled}
         />
         <p>{depthFullName}</p>
       </SearchWrapper>

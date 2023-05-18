@@ -42,7 +42,7 @@ export interface ICM1300 {
 }
 
 export interface ISEARCH {
-  // areaCode: string;
+  areaCode: string;
   aptCode: string;
   aptName: string;
 }

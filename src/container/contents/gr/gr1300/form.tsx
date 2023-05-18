@@ -478,7 +478,6 @@ function Form({
             onClickUpdate={onClickUpdate}
             onClickReset={onClickReset}
             isAddBtnClicked={isAddBtnClicked}
-            isCancelBtnDisabled={isCancelBtnDisabled}
           />
           {/* <FormGroup>
             <Button

@@ -156,7 +156,6 @@ function CC1100({
             onClickUpdate={onClickUpdate}
             onClickReset={onClickReset}
             isAddBtnClicked={isAddBtnClicked}
-            isCancelBtnDisabled={isCancelBtnDisabled}
           />
         </FormGroup>
         <p>{depthFullName}</p>

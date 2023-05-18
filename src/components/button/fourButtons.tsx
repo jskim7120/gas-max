@@ -9,7 +9,6 @@ function FourButtons({
   onClickUpdate,
   onClickReset,
   isAddBtnClicked,
-  isCancelBtnDisabled,
   btn1Name,
   btn2Name,
   btn3Name,
@@ -21,7 +20,6 @@ function FourButtons({
   onClickUpdate: any;
   onClickReset: any;
   isAddBtnClicked: any;
-  isCancelBtnDisabled: any;
   btn1Name?: string;
   btn2Name?: string;
   btn3Name?: string;

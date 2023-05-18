@@ -75,7 +75,6 @@ interface IForm {
   aptJyCode: Array<any>;
   aptSwCode: Array<any>;
   isAddBtnClicked: boolean;
-  setIsCancelBtnDisabled: Function;
   setIsAddBtnClicked: Function;
   dataCommonDic: any;
 }
@@ -94,7 +93,6 @@ const Form = React.forwardRef(
       aptJyCode,
       aptSwCode,
       isAddBtnClicked,
-      setIsCancelBtnDisabled,
       setIsAddBtnClicked,
       dataCommonDic,
     }: IForm,
@@ -166,15 +164,10 @@ const Form = React.forwardRef(
         const response: any = await API.get(CM1300INSERTSEQ, {
           params: { areaCode: areaCode },
         });
-        if (
-          response.status === 200 &&
-          response.data.tempAptCode[0]?.tempAptCode
-        ) {
+        if (response.status === 200) {
           return response.data;
         } else {
-          toast.error("can't get aptCode", {
-            autoClose: 500,
-          });
+          alert(response?.response?.data?.message);
         }
       } catch (err) {
         toast.error("Error occured during get aptCode", {
@@ -189,7 +182,8 @@ const Form = React.forwardRef(
         const temp = await fetchCodes(aCode);
 
         if (temp !== null) {
-          document.getElementsByName("saupSsno")[0]?.focus();
+          console.log("temp:::::", temp);
+          //document.getElementsByName("saupSsno")[0]?.focus();
           //setFocus("saupSsno");
           reset({
             ...emptyObj,
@@ -204,8 +198,8 @@ const Form = React.forwardRef(
     };
 
     const resetForm = async (type: string) => {
-      if (type === "clear" && areaCode !== "") {
-        setFocus("aptName");
+      if (type === "clear") {
+        //setFocus("aptName");
         // const dataS = await fetchCodes(areaCode);
         // if (dataS?.tempAptCode) {
         //   reset({
@@ -214,7 +208,7 @@ const Form = React.forwardRef(
         //     aptType: radioOptions[0].id,
         //     areaCode: areaCode,
         //   });
-        await codeChangeHandler(areaCode);
+        areaCode && (await codeChangeHandler(areaCode));
         return;
       }
 
@@ -322,7 +316,6 @@ const Form = React.forwardRef(
             autoClose: 500,
           });
           setIsAddBtnClicked(false);
-          setIsCancelBtnDisabled(true);
         } else {
           toast.error(response.response.data?.message, {
             autoClose: 500,

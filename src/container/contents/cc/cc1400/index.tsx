@@ -164,7 +164,6 @@ function CC1400({
             onClickUpdate={onClickUpdate}
             onClickReset={onClickReset}
             isAddBtnClicked={isAddBtnClicked}
-            isCancelBtnDisabled={isCancelBtnDisabled}
           />
         </FormGroup>
         <SearchWrapper

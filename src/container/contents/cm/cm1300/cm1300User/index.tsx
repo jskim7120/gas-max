@@ -42,8 +42,6 @@ function FormCM1300User({
   isAddBtnClicked,
   mainIsAddBtnClicked,
   setIsAddBtnClicked,
-  isCancelBtnDisabled,
-  setIsCancelBtnDisabled,
 }: {
   data: Array<any>;
   setData: Function;
@@ -59,13 +57,9 @@ function FormCM1300User({
   isAddBtnClicked: boolean;
   mainIsAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
-  isCancelBtnDisabled: boolean;
-  setIsCancelBtnDisabled: Function;
 }) {
   const dispatch = useDispatch();
 
-  // const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  // const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const { isDelete } = useSelector((state) => state.modal);
 
   const { register, handleSubmit, reset, getValues } = useForm<ICM1300User>({
@@ -87,7 +81,6 @@ function FormCM1300User({
       setData([]);
       resetForm("emptClear");
       setIsAddBtnClicked(true);
-      setIsCancelBtnDisabled(false);
     } else {
       setIsAddBtnClicked(false);
       fetchData65();
@@ -112,7 +105,6 @@ function FormCM1300User({
 
   const onClickAdd = () => {
     setIsAddBtnClicked(true);
-    setIsCancelBtnDisabled(false);
     resetForm("clear");
   };
 
@@ -262,7 +254,6 @@ function FormCM1300User({
           autoClose: 500,
         });
         setIsAddBtnClicked(false);
-        setIsCancelBtnDisabled(true);
       } else {
         toast.error(response.response.data?.message, {
           autoClose: 500,
@@ -314,7 +305,6 @@ function FormCM1300User({
               onClickUpdate={onClickUpdate}
               onClickReset={onClickReset}
               isAddBtnClicked={isAddBtnClicked}
-              isCancelBtnDisabled={isCancelBtnDisabled}
             />
           </div>
           <form

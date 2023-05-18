@@ -719,7 +719,6 @@ const Form = ({
             onClickUpdate={onClickUpdate}
             onClickReset={onClickReset}
             isAddBtnClicked={isAddBtnClicked}
-            isCancelBtnDisabled={isCancelBtnDisabled}
           />
         </SearchWrapper>
         <FormGroup>

@@ -14,7 +14,7 @@ import {
   FormGroup,
   Input,
   Label,
-  Select as CSelect,
+  Select,
   Divider,
   Wrapper,
 } from "components/form/style";
@@ -47,12 +47,9 @@ const Form = React.forwardRef(
       dataCommonDic,
       fetchData,
       setData,
-      selectedRowIndex,
       setSelected,
-      setSelectedRowIndex,
       areaCode,
       ownAreaCode,
-      setAreaCode,
       isAddBtnClicked,
       setIsAddBtnClicked,
     }: {
@@ -60,12 +57,9 @@ const Form = React.forwardRef(
       dataCommonDic: any;
       fetchData: any;
       setData: any;
-      selectedRowIndex: number;
       setSelected: any;
-      setSelectedRowIndex: any;
       areaCode: string;
       ownAreaCode: string;
-      setAreaCode: Function;
       isAddBtnClicked: boolean;
       setIsAddBtnClicked: Function;
     },
@@ -248,9 +242,7 @@ const Form = React.forwardRef(
           });
         }
       } catch (err) {
-        toast.error("Error occured during get CuCode", {
-          autoClose: 500,
-        });
+        console.log(err);
       }
       return null;
     };
@@ -260,30 +252,24 @@ const Form = React.forwardRef(
         const temp = await fetchCodes(aCode);
 
         if (temp !== null) {
-          document.getElementsByName("saupSsno")[0]?.focus();
-          //setFocus("saupSsno");
+          setFocus("cuName");
           reset({
             ...emptyObj,
-            ...temp,
-            saupSno: temp.tempCode,
+            cuCode: temp?.tempCuCode[0]?.tempCuCode,
           });
           setCuAddr1("");
         }
       } catch (err: any) {
-        console.log("saupSno generate error", err);
+        console.log("cuCode generate error", err);
       }
     };
 
     const resetForm = async (type: string) => {
-      if (type === "clear" && areaCode !== "") {
-        setFocus("cuName");
-        // const data = await fetchCodes(areaCode);
-        // if (data && data?.tempCuCode[0]) {
-        //   reset({ ...emptyObj, cuCode: data?.tempCuCode[0]?.tempCuCode });
-        // }
-        await codeChangeHandler(areaCode);
+      if (type === "clear") {
+        areaCode && (await codeChangeHandler(areaCode));
         return;
       }
+
       if (type === "reset") {
         if (selected !== undefined && Object.keys(selected).length > 0) {
           let tempData: any = { ...selected, ...selectedSupplyTab };
@@ -356,16 +342,12 @@ const Form = React.forwardRef(
             toast.success("삭제했습니다", {
               autoClose: 500,
             });
-            await fetchData();
+            await fetchData(null);
           } else {
-            toast.error(response?.message, {
-              autoClose: 500,
-            });
+            alert(response?.response?.data?.message);
           }
         } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
+          console.log(err);
         }
         return;
       }
@@ -459,29 +441,20 @@ const Form = React.forwardRef(
         const response: any = await API.post(path, formValues);
         if (response.status === 200) {
           if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
+            setIsAddBtnClicked(false);
+            await fetchData(null, "last");
           } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
+            await fetchData(null);
           }
-          setSelected(formValues);
+
           toast.success("저장이 성공하였습니다", {
             autoClose: 500,
           });
-
-          setIsAddBtnClicked(false);
         } else {
-          toast.error(response?.response?.data?.message, {
-            autoClose: 500,
-          });
+          alert(response?.response?.data?.message);
         }
       } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
+        console.log(err);
       }
     };
 
@@ -560,18 +533,18 @@ const Form = React.forwardRef(
           <Wrapper grid col={5}>
             <FormGroup>
               <Label>담당 사원</Label>
-              <CSelect {...register("cuSwCode")} width={InputSize.i120}>
+              <Select {...register("cuSwCode")} width={InputSize.i120}>
                 {cuSwCodeDic?.map((obj: any, index: number) => (
                   <option key={index} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
-              </CSelect>
+              </Select>
             </FormGroup>
 
             <FormGroup>
               <Label style={{ minWidth: "94px" }}>지역 분류</Label>
-              <CSelect
+              <Select
                 {...register("cuJyCode")}
                 width={InputSize.i120}
                 style={{ marginRight: "3px" }}
@@ -581,18 +554,18 @@ const Form = React.forwardRef(
                     {obj.codeName}
                   </option>
                 ))}
-              </CSelect>
+              </Select>
             </FormGroup>
 
             <FormGroup>
               <Label style={{ minWidth: "70px" }}>관리자 분류</Label>
-              <CSelect {...register("cuCustgubun")} width={InputSize.i120}>
+              <Select {...register("cuCustgubun")} width={InputSize.i120}>
                 {cuCustgubunDic?.map((obj: any, index: number) => (
                   <option key={index} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
-              </CSelect>
+              </Select>
             </FormGroup>
           </Wrapper>
 

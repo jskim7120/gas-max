@@ -5,6 +5,7 @@ import Button from "components/button/button";
 import Loader from "components/loader";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
 import { columns, fields } from "./data";
+import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import {
   openModal,
   closeModal,
@@ -12,6 +13,7 @@ import {
   setIsDelete,
 } from "app/state/modal/modalSlice";
 import Form from "./form";
+import { ButtonColor } from "components/componentsType";
 import { ButtonType, InputSize } from "components/componentsType";
 import {
   MainWrapper,
@@ -34,7 +36,6 @@ import FormCM1300User from "./cm1300User";
 import GridLeft from "components/grid";
 import { BuildingInfoText } from "components/text";
 import { ISEARCH } from "./model";
-import FourButtons from "components/button/fourButtons";
 
 function CM1300({
   depthFullName,
@@ -46,14 +47,17 @@ function CM1300({
   ownAreaCode: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
+  const btnRef2 = useRef() as React.MutableRefObject<HTMLButtonElement>;
+  const btnRef3 = useRef() as React.MutableRefObject<HTMLButtonElement>;
+  const btnRef4 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
-  const { register, handleSubmit } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
   const dispatch = useDispatch();
 
-  const [areaCode, setAreaCode] = useState("");
   const [data, setData] = useState([]);
   const [data65, setData65] = useState([]);
   const [selected, setSelected] = useState<any>({});
@@ -62,10 +66,7 @@ function CM1300({
   const [selectedRowIndex65, setSelectedRowIndex65] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const [isAddBtnClicked2, setIsAddBtnClicked2] = useState<boolean>(false);
-  const [isCancelBtnDisabled2, setIsCancelBtnDisabled2] =
-    useState<boolean>(true);
   const [aptGubun, setAptGubun] = useState<any>([]);
   const [aptJyCode, setAptJyCode] = useState<any>([]);
   const [aptSwCode, setAptSwCode] = useState<any>([]);
@@ -79,7 +80,7 @@ function CM1300({
 
   useEffect(() => {
     if (dataCommonDic) {
-      setAreaCode(dataCommonDic?.areaCode[0].code);
+      reset({ areaCode: dataCommonDic?.areaCode[0].code });
       fetchData({ areaCode: dataCommonDic.areaCode[0].code });
     }
   }, [dataCommonDic]);
@@ -97,7 +98,7 @@ function CM1300({
   }, [selected]);
 
   const submit = async (data: ISEARCH) => {
-    fetchData({ ...data, areaCode: areaCode });
+    fetchData({ ...data });
   };
 
   const fetchData = async (params: any) => {
@@ -184,8 +185,8 @@ function CM1300({
   }
 
   const onClickAdd = () => {
+    btnRef1.current.classList.add("active");
     setIsAddBtnClicked(true);
-    setIsCancelBtnDisabled(false);
     formRef.current.resetForm("clear");
   };
 
@@ -209,10 +210,7 @@ function CM1300({
           {ownAreaCode === "00" && (
             <>
               <Label style={{ minWidth: "72px" }}>영업소</Label>
-              <Select
-                value={areaCode}
-                onChange={(e) => setAreaCode(e.target.value)}
-              >
+              <Select register={register("areaCode")}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -221,15 +219,39 @@ function CM1300({
               </Select>
             </>
           )}
-          <FourButtons
-            btn1Name="건물등록"
-            onClickAdd={onClickAdd}
-            onClickDelete={onClickDelete}
-            onClickUpdate={onClickUpdate}
-            onClickReset={onClickReset}
-            isAddBtnClicked={isAddBtnClicked}
-            isCancelBtnDisabled={isCancelBtnDisabled}
-          />
+
+          <div className="buttons ml30">
+            <Button
+              text="건물등록"
+              icon={<Plus />}
+              type="button"
+              onClick={onClickAdd}
+              ref={btnRef1}
+            />
+            <Button
+              text="삭제"
+              icon={<Trash />}
+              type="button"
+              onClick={onClickDelete}
+              disabled={isAddBtnClicked}
+              ref={btnRef2}
+            />
+            <Button
+              text="저장"
+              icon={<Update />}
+              type="button"
+              color={ButtonColor.SECONDARY}
+              onClick={onClickUpdate}
+              ref={btnRef3}
+            />
+            <Button
+              text="취소"
+              icon={<Reset />}
+              type="button"
+              onClick={onClickReset}
+              ref={btnRef4}
+            />
+          </div>
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
@@ -284,9 +306,7 @@ function CM1300({
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
-            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
             setIsAddBtnClicked={setIsAddBtnClicked}
-            setIsCancelBtnDisabled2={setIsCancelBtnDisabled2}
             setIsAddBtnClicked2={setIsAddBtnClicked2}
             fields={fields}
             columns={columns}
@@ -295,7 +315,7 @@ function CM1300({
         </LeftSide>
         <RightSide style={{ width: "1000px" }}>
           <Form
-            areaCode={areaCode}
+            areaCode={watch("areaCode")}
             dataCommonDic={dataCommonDic}
             selected={selected}
             ref={formRef}
@@ -305,7 +325,6 @@ function CM1300({
             setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             isAddBtnClicked={isAddBtnClicked}
-            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
             setIsAddBtnClicked={setIsAddBtnClicked}
             aptGubun={aptGubun}
             aptJyCode={aptJyCode}
@@ -324,12 +343,10 @@ function CM1300({
             ownAreaCode={ownAreaCode}
             fetchData={fetchData65}
             aptCode={selected?.aptCode}
-            areaCode={areaCode}
+            areaCode={watch("areaCode")}
             mainIsAddBtnClicked={isAddBtnClicked}
             isAddBtnClicked={isAddBtnClicked2}
             setIsAddBtnClicked={setIsAddBtnClicked2}
-            isCancelBtnDisabled={isCancelBtnDisabled2}
-            setIsCancelBtnDisabled={setIsCancelBtnDisabled2}
           />
         </RightSide>
       </MainWrapper>
