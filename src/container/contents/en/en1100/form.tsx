@@ -1,7 +1,6 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
-import API from "app/axios";
+import { apiPost, apiGet } from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { EN1100INSERT, EN1100UPDATE, EN1100DELETE, EN110011 } from "app/path";
 import {
@@ -20,6 +19,7 @@ import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
 import { InputSize } from "components/componentsType";
+
 interface IForm {
   selected: any;
   fetchData: any;
@@ -69,39 +69,26 @@ const Form = React.forwardRef(
       resetForm,
     }));
 
-    const fetchCode11 = async () => {
-      try {
-        const response: any = await API.get(EN110011);
-        if (response.status === 200) {
-          return response?.data;
-        } else {
-          alert(response?.response?.data?.message);
-          resetButtonCombination();
-        }
-        return null;
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     const resetForm = async (type: string) => {
       if (type === "clear") {
-        const temp = await fetchCode11();
-        if (temp !== null) {
+        const res = await apiGet(EN110011);
+        if (res) {
           setFocus("areaName");
-
           setJnAddr1("");
           reset({
             ...emptyObj,
-            ...temp,
-            areaCode: temp.tempCode,
-            jnSekumea: temp.jnSekumea === "Y",
-            jnSegongYn: temp.jnSegongYn === "Y",
-            jnVatSumyn: temp.jnVatSumyn === "Y",
+            ...res,
+            areaCode: res.tempCode,
+            jnSekumea: res.jnSekumea === "Y",
+            jnSegongYn: res.jnSegongYn === "Y",
+            jnVatSumyn: res.jnVatSumyn === "Y",
           });
+        } else {
+          resetButtonCombination();
         }
         return;
       }
+
       if (type === "reset") {
         if (selected !== undefined && Object.keys(selected)?.length > 0) {
           setJnAddr1(selected?.jnAddr1 ? selected?.jnAddr1 : "");
@@ -118,19 +105,8 @@ const Form = React.forwardRef(
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
-        try {
-          const response: any = await API.post(EN1100DELETE, formValues);
-          if (response.status === 200) {
-            toast.success("삭제하였습니다", {
-              autoClose: 500,
-            });
-            await fetchData();
-          } else {
-            alert(response?.response?.data?.message);
-          }
-        } catch (err) {
-          console.log(err);
-        }
+        const res = await apiPost(EN1100DELETE, formValues, "삭제하였습니다");
+        res && (await fetchData());
       }
 
       if (type === null) {
@@ -148,24 +124,15 @@ const Form = React.forwardRef(
       formValues.jnSekumea = formValues.jnSekumea ? "Y" : "N";
       formValues.jnAddr1 = jnAddr1;
 
-      try {
-        const response: any = await API.post(path, formValues);
-        if (response.status === 200) {
-          if (isAddBtnClicked) {
-            setIsAddBtnClicked(false);
-            await fetchData("pos");
-          } else {
-            await fetchData();
-          }
+      const res = await apiPost(path, formValues, "저장이 성공하였습니다");
 
-          toast.success("저장이 성공하였습니다", {
-            autoClose: 500,
-          });
+      if (res) {
+        if (isAddBtnClicked) {
+          setIsAddBtnClicked(false);
+          await fetchData("last");
         } else {
-          alert(response?.response?.data?.message);
+          await fetchData();
         }
-      } catch (err: any) {
-        console.log(err);
       }
     };
 

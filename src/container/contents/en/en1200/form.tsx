@@ -1,6 +1,6 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
+import { apiGet, apiPost } from "app/axios";
 import {
   Input,
   Select,
@@ -19,7 +19,6 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { convertBase64 } from "helpers/convertBase64";
-import API from "app/axios";
 import IconInfo from "assets/image/Icon-info.png";
 import { ImageWrapper } from "../../commonStyle";
 import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
@@ -74,40 +73,38 @@ const Form = React.forwardRef(
       resetForm,
     }));
 
-    const fetchCode11 = async (code: string) => {
-      try {
-        const response: any = await API.get(EN120011, {
-          params: { areaCode: code },
-        });
+    // const fetchCode11 = async (code: string) => {
+    //   try {
+    //     const response: any = await API.get(EN120011, {
+    //       params: { areaCode: code },
+    //     });
 
-        if (response.status === 200) {
-          return response?.data;
-        } else {
-          alert(response?.response?.data?.message);
-          resetButtonCombination();
-        }
-        return null;
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    //     if (response.status === 200) {
+    //       return response?.data;
+    //     } else {
+    //       alert(response?.response?.data?.message);
+    //       resetButtonCombination();
+    //     }
+    //     return null;
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
 
     const codeChangeHandler = async (aCode: string) => {
-      try {
-        const temp = await fetchCode11(aCode);
+      const res = await apiGet(EN120011, { areaCode: aCode });
 
-        if (temp !== null) {
-          document.getElementsByName("saupSsno")[0]?.focus();
-          //setFocus("saupSsno");
-          reset({
-            ...emptyObj,
-            ...temp,
-            saupSno: temp.tempCode,
-          });
-          setSaupAddr1("");
-        }
-      } catch (err: any) {
-        console.log("saupSno generate error", err);
+      if (res) {
+        document.getElementsByName("saupSsno")[0]?.focus();
+        //setFocus("saupSsno");
+        reset({
+          ...emptyObj,
+          ...res,
+          saupSno: res.tempCode,
+        });
+        setSaupAddr1("");
+      } else {
+        resetButtonCombination();
       }
     };
 
@@ -141,19 +138,22 @@ const Form = React.forwardRef(
       if (type === "delete") {
         const formValues = getValues();
 
-        try {
-          const response: any = await API.post(EN1200DELETE, formValues);
-          if (response.status === 200) {
-            toast.success("삭제하였습니다", {
-              autoClose: 500,
-            });
-            await fetchData();
-          } else {
-            alert(response?.response?.data?.message);
-          }
-        } catch (err) {
-          console.log(err);
-        }
+        // try {
+        //   const response: any = await API.post(EN1200DELETE, formValues);
+        //   if (response.status === 200) {
+        //     toast.success("삭제하였습니다", {
+        //       autoClose: 500,
+        //     });
+        //     await fetchData();
+        //   } else {
+        //     alert(response?.response?.data?.message);
+        //   }
+        // } catch (err) {
+        //   console.log(err);
+        // }
+
+        const res = await apiPost(EN1200DELETE, formValues, "삭제하였습니다");
+        res && (await fetchData());
       }
 
       if (type === null) {
@@ -179,24 +179,35 @@ const Form = React.forwardRef(
 
       formValues.saupStampImg = image64 && image64;
 
-      try {
-        const response: any = await API.post(path, formValues);
-        if (response.status === 200) {
-          if (isAddBtnClicked) {
-            setIsAddBtnClicked(false);
-            await fetchData("pos");
-          } else {
-            await fetchData();
-          }
+      // try {
+      //   const response: any = await API.post(path, formValues);
+      //   if (response.status === 200) {
+      //     if (isAddBtnClicked) {
+      //       setIsAddBtnClicked(false);
+      //       await fetchData("pos");
+      //     } else {
+      //       await fetchData();
+      //     }
 
-          toast.success("저장이 성공하였습니다", {
-            autoClose: 500,
-          });
+      //     toast.success("저장이 성공하였습니다", {
+      //       autoClose: 500,
+      //     });
+      //   } else {
+      //     alert(response?.response?.data?.message);
+      //   }
+      // } catch (err: any) {
+      //   console.log(err);
+      // }
+
+      const res = await apiPost(path, formValues, "저장이 성공하였습니다");
+
+      if (res) {
+        if (isAddBtnClicked) {
+          setIsAddBtnClicked(false);
+          await fetchData("last");
         } else {
-          alert(response?.response?.data?.message);
+          await fetchData();
         }
-      } catch (err: any) {
-        console.log(err);
       }
     };
 
@@ -283,6 +294,7 @@ const Form = React.forwardRef(
                       /\d/,
                     ]}
                     onBlur={onBlur}
+                    readOnly={!isAddBtnClicked}
                   />
                 )}
               />

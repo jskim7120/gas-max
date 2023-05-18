@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "app/store";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
-import API from "app/axios";
 import Grid from "container/contents/en/grid";
 import {
   MainWrapper,
@@ -18,6 +17,7 @@ import {
   setIsDelete,
 } from "app/state/modal/modalSlice";
 import { setRowIndex } from "app/state/tab/tabSlice";
+import { apiGet } from "app/axios";
 
 function CreateEN(
   depthFullName: string,
@@ -41,7 +41,9 @@ function CreateEN(
   const tabState = useSelector((state) => state.tab.tabs);
   const isOpen = useSelector((state) => state.sidebar);
 
-  const rowIndex = tabState.find((item) => item.menuId === menuId)?.rowIndex;
+  const rowIndex = tabState.find(
+    (item: any) => item.menuId === menuId
+  )?.rowIndex;
 
   const [data, setData] = useState<Array<any>>([]);
   const [selected, setSelected] = useState<any>({});
@@ -49,30 +51,26 @@ function CreateEN(
   const [linePos, setLinePos] = useState(leftSideWidth);
 
   useEffect(() => {
-    fetchData("pos");
+    fetchData("last");
   }, []);
 
   function handleKeyDown(event: any) {
     if (event.key === "F1") {
-      console.log("F1-----");
       event.preventDefault();
       handleClickBtn1();
     }
     if (event.key === "F4") {
-      console.log("F4-----");
       event.preventDefault();
       handleClickBtn2();
     }
 
     if (event.key === "F7") {
-      console.log("F7-----");
       event.preventDefault();
       btnRef3.current.focus();
       handleClickBtn3();
     }
 
     if (event.key === "F9") {
-      console.log("F9-----");
       event.preventDefault();
       handleClickBtn4();
     }
@@ -93,23 +91,18 @@ function CreateEN(
   }, [selected]);
 
   const fetchData = async (func: string = "") => {
-    try {
-      const { data: dataS } = await API.get(searchPath);
-      if (dataS) {
-        setData(dataS);
-        if (func === "pos") {
-          const lastIndex = dataS && dataS.length > 0 ? dataS.length - 1 : 0;
-          setSelected(dataS[lastIndex]);
-          dispatch(setRowIndex({ menuId: menuId, rowIndex: lastIndex }));
-        }
-      } else {
-        setData([]);
-        setSelected({});
+    const dataS = await apiGet(searchPath);
+
+    if (dataS) {
+      setData(dataS);
+      if (func === "last") {
+        const lastIndex = dataS && dataS.length > 0 ? dataS.length - 1 : 0;
+        setSelected(dataS[lastIndex]);
+        dispatch(setRowIndex({ menuId: menuId, rowIndex: lastIndex }));
       }
-    } catch (err) {
+    } else {
       setData([]);
       setSelected({});
-      console.log(`${menuId} DATA fetch error =======>`, err);
     }
   };
 

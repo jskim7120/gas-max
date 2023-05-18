@@ -1,7 +1,6 @@
 import React, { useImperativeHandle, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { EN1300INSERT, EN1300UPDATE, EN1300DELETE, EN130011 } from "app/path";
 import {
@@ -66,37 +65,35 @@ const Form = React.forwardRef(
       resetForm,
     }));
 
-    const fetchCode11 = async (code: string) => {
-      try {
-        const response: any = await API.get(EN130011, {
-          params: { areaCode: code },
-        });
+    // const fetchCode11 = async (code: string) => {
+    //   try {
+    //     const response: any = await API.get(EN130011, {
+    //       params: { areaCode: code },
+    //     });
 
-        if (response.status === 200) {
-          return response?.data;
-        } else {
-          alert(response?.response?.data?.message);
-          resetButtonCombination();
-        }
-        return null;
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    //     if (response.status === 200) {
+    //       return response?.data;
+    //     } else {
+    //       alert(response?.response?.data?.message);
+    //       resetButtonCombination();
+    //     }
+    //     return null;
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
 
     const codeChangeHandler = async (aCode: any) => {
-      try {
-        const temp = await fetchCode11(aCode);
-        if (temp !== null) {
-          setFocus("jpName");
-          reset({
-            ...emptyObj,
-            ...temp,
-            jpCode: temp.tempCode,
-          });
-        }
-      } catch (err: any) {
-        console.log("jpCode generate error", err);
+      const res = await apiGet(EN130011, { areaCode: aCode });
+      if (res) {
+        setFocus("jpName");
+        reset({
+          ...emptyObj,
+          ...res,
+          jpCode: res.tempCode,
+        });
+      } else {
+        resetButtonCombination();
       }
     };
 
@@ -128,19 +125,21 @@ const Form = React.forwardRef(
         delete formValues.jpBaedal;
         delete formValues.jpOuttong;
 
-        try {
-          const response: any = await API.post(EN1300DELETE, formValues);
-          if (response.status === 200) {
-            toast.success("삭제하였습니다", {
-              autoClose: 500,
-            });
-            await fetchData();
-          } else {
-            alert(response?.response?.data?.message);
-          }
-        } catch (err) {
-          console.log(err);
-        }
+        // try {
+        //   const response: any = await API.post(EN1300DELETE, formValues);
+        //   if (response.status === 200) {
+        //     toast.success("삭제하였습니다", {
+        //       autoClose: 500,
+        //     });
+        //     await fetchData();
+        //   } else {
+        //     alert(response?.response?.data?.message);
+        //   }
+        // } catch (err) {
+        //   console.log(err);
+        // }
+        const res = await apiPost(EN1300DELETE, formValues, "삭제하였습니다");
+        res && (await fetchData());
       }
 
       if (type === null) {
@@ -166,25 +165,35 @@ const Form = React.forwardRef(
         formValues.jpBaedal && +removeCommas2(formValues.jpBaedal);
       formValues.jpSort = formValues.jpSort && +formValues.jpSort;
 
-      try {
-        const response: any = await API.post(path, formValues);
+      // try {
+      //   const response: any = await API.post(path, formValues);
 
-        if (response.status === 200) {
-          if (isAddBtnClicked) {
-            setIsAddBtnClicked(false);
-            await fetchData("pos");
-          } else {
-            await fetchData();
-          }
+      //   if (response.status === 200) {
+      //     if (isAddBtnClicked) {
+      //       setIsAddBtnClicked(false);
+      //       await fetchData("pos");
+      //     } else {
+      //       await fetchData();
+      //     }
 
-          toast.success("저장이 성공하였습니다", {
-            autoClose: 500,
-          });
+      //     toast.success("저장이 성공하였습니다", {
+      //       autoClose: 500,
+      //     });
+      //   } else {
+      //     alert(response?.response?.data?.message);
+      //   }
+      // } catch (err: any) {
+      //   console.log(err);
+      // }
+
+      const res = await apiPost(path, formValues, "저장이 성공하였습니다");
+      if (res) {
+        if (isAddBtnClicked) {
+          setIsAddBtnClicked(false);
+          await fetchData("last");
         } else {
-          alert(response?.response?.data?.message);
+          await fetchData();
         }
-      } catch (err: any) {
-        console.log(err);
       }
     };
 
