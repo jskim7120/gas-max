@@ -23,7 +23,6 @@ function Grid({
   style?: any;
   rowIndex: number | undefined;
 }) {
-  // console.log("rowIndex rowIndex rowIndex:::::", rowIndex);
   let container: HTMLDivElement;
   let dp: any;
   let gv: any;

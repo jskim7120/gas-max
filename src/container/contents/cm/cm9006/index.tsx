@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "app/store";
 import { CM9006SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import Loader from "components/loader";
 import Button from "components/button/button";
@@ -20,7 +20,6 @@ import {
 } from "components/form/style";
 import { ResetGray, MagnifyingGlass, ExcelIcon } from "components/allSvgIcon";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
-import CustomTopPart from "../../customTopPart";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 import { columns0, fields0 } from "./data/data0";
@@ -70,20 +69,14 @@ function CM9003({
       }
     }
 
-    try {
-      setLoading(true);
-      const { data } = await API.get(CM9006SEARCH, { params: paramTemp });
-      if (data) {
-        setData(data);
-      } else {
-        setData([]);
-      }
-      setLoading(false);
-    } catch (err) {
+    setLoading(true);
+    const data = await apiGet(CM9006SEARCH, paramTemp);
+    if (data) {
+      setData(data);
+    } else {
       setData([]);
-      setLoading(false);
-      console.log("CM9003 data search error =======>", err);
     }
+    setLoading(false);
   };
 
   const submit = (data: ISEARCH) => {

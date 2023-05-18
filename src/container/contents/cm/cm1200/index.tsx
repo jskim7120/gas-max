@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { apiGet, apiPost } from "app/axios";
 import { ISEARCH } from "./model";
 import GridLeft from "../grid";
 import Form from "./form";
@@ -26,7 +27,6 @@ import {
 import { useDispatch, useSelector } from "app/store";
 import { CM1200SEARCH } from "app/path";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import API from "app/axios";
 import { fields, columns } from "./data";
 import { setRowIndex } from "app/state/tab/tabSlice";
 
@@ -112,33 +112,24 @@ function CM1200({
       delete params.sCuName;
     }
 
-    try {
-      setLoading(true);
-      const { data: dataS } = await API.get(CM1200SEARCH, {
-        params: {
-          ...params,
-        },
-      });
+    setLoading(true);
+    const dataS = await apiGet(CM1200SEARCH, {
+      ...params,
+    });
 
-      if (dataS) {
-        setData(dataS);
-        if (flag === "last") {
-          const lastIndex = dataS && dataS.length > 0 ? dataS.length - 1 : 0;
-          setSelected(dataS[lastIndex]);
-          dispatch(setRowIndex({ menuId: menuId, rowIndex: lastIndex }));
-        }
-      } else {
-        setData([]);
-        setSelected({});
+    if (dataS) {
+      setData(dataS);
+      if (flag === "last") {
+        const lastIndex = dataS && dataS.length > 0 ? dataS.length - 1 : 0;
+        setSelected(dataS[lastIndex]);
+        dispatch(setRowIndex({ menuId: menuId, rowIndex: lastIndex }));
       }
-
-      setLoading(false);
-    } catch (err) {
+    } else {
       setData([]);
       setSelected({});
-      setLoading(false);
-      console.log("CM1200 data search fetch error =======>", err);
     }
+
+    setLoading(false);
   };
 
   const onClickAdd = () => {

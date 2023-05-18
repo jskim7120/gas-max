@@ -15,8 +15,7 @@ import Button from "components/button/button";
 import { ICM1106 } from "./model";
 import { CM1106INSERT, CM1106UPDATE, CM1106DELETE } from "app/path";
 import { currencyMask } from "helpers/currency";
-import { toast } from "react-toastify";
-import API from "app/axios";
+import { apiPost } from "app/axios";
 import { formatCurrencyRemoveComma } from "helpers/currency";
 import { emptyObj } from "./model";
 
@@ -63,8 +62,10 @@ const FORMCM1106 = React.forwardRef(
       if (type === "clear") {
         reset(emptyObj);
       }
-      if (type === "reset" && selected && Object.keys(selected)?.length > 0) {
-        reset(selected);
+      if (type === "reset") {
+        if (selected && Object.keys(selected)?.length > 0) {
+          reset(selected);
+        }
       }
     };
 
@@ -73,19 +74,8 @@ const FORMCM1106 = React.forwardRef(
         const path = CM1106DELETE;
         const formValues = getValues();
 
-        try {
-          const response: any = await API.post(path, formValues);
-          if (response.status === 200) {
-            toast.success("삭제했습니다", {
-              autoClose: 500,
-            });
-            await fetchData();
-          } else {
-            toast.error(response?.response?.message);
-          }
-        } catch (err) {
-          toast.error("Couldn't delete");
-        }
+        const res = await apiPost(path, formValues, "삭제했습니다");
+        res && (await fetchData());
       }
 
       if (type === null) {
@@ -102,41 +92,28 @@ const FORMCM1106 = React.forwardRef(
       formValues.jcJdcAmt = formatCurrencyRemoveComma(formValues.jcJdcAmt);
       formValues.jcJpDanga = formatCurrencyRemoveComma(formValues.jcJpDanga);
 
-      try {
-        const response: any = await API.post(path, formValues);
-        if (response.status === 200) {
-          if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
-            setIsAddBtnClicked(true);
-            setIsAddBtnClicked(false);
-          } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
-          }
-          // setSelected(formValues);
+      const res = await apiPost(path, formValues, "저장이 성공하였습니다");
+      if (res) {
+        if (isAddBtnClicked) {
+          setData((prev: any) => [formValues, ...prev]);
+          setSelectedRowIndex(0);
+          setIsAddBtnClicked(true);
           setIsAddBtnClicked(false);
-
-          toast.success("저장이 성공하였습니다", {
-            autoClose: 500,
-          });
         } else {
-          toast.error(response?.response?.data?.message, {
-            autoClose: 500,
+          setData((prev: any) => {
+            prev[selectedRowIndex] = formValues;
+            return [...prev];
           });
         }
-      } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
+        // setSelected(formValues);
+        setIsAddBtnClicked(false);
       }
     };
 
     return (
       <form
-        onSubmit={handleSubmit(submit)} autoComplete="off"
+        onSubmit={handleSubmit(submit)}
+        autoComplete="off"
         style={{ width: "25%", margin: "30px 30px 0 0" }}
       >
         <Field flex style={{ alignItems: "center" }}>

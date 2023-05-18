@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { useDispatch, useSelector } from "app/store";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import { CM1100SEARCH, CM110065, CM1100DELETE } from "app/path";
 import { ICM1100SEARCH } from "./model";
 import {
@@ -47,6 +46,7 @@ function CM1100Page({
   const [selected, setSelected] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const { isDelete } = useSelector((state) => state.modal);
+
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "CM",
     functionName: "CM1100",
@@ -86,61 +86,41 @@ function CM1100Page({
     let params: any = {};
     params.areaCode = selected?.areaCode;
     params.cuCode = selected?.cuCode;
-    try {
-      const response: any = await API.post(CM1100DELETE, params);
-      if (response.status === 200) {
-        toast.success("삭제하였습니다", {
-          autoClose: 500,
-        });
-        const values = getValues();
-        await fetchData(values);
-      } else {
-        alert(response?.response?.data?.message);
-      }
-      dispatch(addDeleteMenuId({ menuId: "" }));
-      dispatch(setIsDelete({ isDelete: false }));
-      dispatch(closeModal());
-    } catch (error) {
-      console.log(error);
+
+    const res = await apiPost(CM1100DELETE, params, "삭제하였습니다");
+    if (res) {
+      const values = getValues();
+      await fetchData(values);
     }
+    dispatch(addDeleteMenuId({ menuId: "" }));
+    dispatch(setIsDelete({ isDelete: false }));
+    dispatch(closeModal());
   };
 
   const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data: dataSearch } = await API.get(CM1100SEARCH, {
-        params: params,
-      });
+    setLoading(true);
+    const dataSearch = await apiGet(CM1100SEARCH, params);
 
-      if (dataSearch && dataSearch?.length > 0) {
-        setData(dataSearch);
-        setSelected(dataSearch[0]);
-      } else {
-        setData([]);
-        setSelected({});
-      }
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
+    if (dataSearch) {
+      setData(dataSearch);
+      setSelected(dataSearch[0]);
+    } else {
       setData([]);
       setSelected({});
-      console.log("CM1100 data search fetch error =======>", err);
     }
+    setLoading(false);
   };
 
   const fetchData65 = async () => {
-    try {
-      const { data: dataS65 } = await API.get(CM110065, {
-        params: { cuCode: selected.cuCode, areaCode: selected.areaCode },
-      });
-      if (dataS65 && Object.keys(dataS65).length > 0) {
-        setData65(dataS65);
-      } else {
-        setData65({});
-      }
-    } catch (err) {
+    const dataS65 = await apiGet(CM110065, {
+      cuCode: selected.cuCode,
+      areaCode: selected.areaCode,
+    });
+
+    if (dataS65 && Object.keys(dataS65).length > 0) {
+      setData65(dataS65);
+    } else {
       setData65({});
-      console.log("CM1100 data search fetch error =======>", err);
     }
   };
 

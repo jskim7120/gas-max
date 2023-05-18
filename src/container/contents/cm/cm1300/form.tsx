@@ -1,15 +1,12 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import {
   Input,
   Select,
-  Field,
   FormGroup,
   Divider,
   Label,
-  Input2,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { ICM1300, emptyObj } from "./model";
@@ -159,41 +156,20 @@ const Form = React.forwardRef(
       calcRdanga,
     } = useRdanga();
 
-    const fetchCodes = async (areaCode: string) => {
-      try {
-        const response: any = await API.get(CM1300INSERTSEQ, {
-          params: { areaCode: areaCode },
-        });
-        if (response.status === 200) {
-          return response.data;
-        } else {
-          alert(response?.response?.data?.message);
-        }
-      } catch (err) {
-        toast.error("Error occured during get aptCode", {
-          autoClose: 500,
-        });
-      }
-      return null;
-    };
-
     const codeChangeHandler = async (aCode: string) => {
-      try {
-        const temp = await fetchCodes(aCode);
+      const res = await apiGet(CM1300INSERTSEQ, {
+        areaCode: aCode,
+      });
 
-        if (temp !== null) {
-          console.log("temp:::::", temp);
-          //document.getElementsByName("saupSsno")[0]?.focus();
-          //setFocus("saupSsno");
-          reset({
-            ...emptyObj,
-            ...temp,
-            saupSno: temp.tempCode,
-          });
-          setAptAddr1("");
-        }
-      } catch (err: any) {
-        console.log("saupSno generate error", err);
+      if (res !== null) {
+        //document.getElementsByName("saupSsno")[0]?.focus();
+        //setFocus("saupSsno");
+        reset({
+          ...emptyObj,
+          ...res,
+          saupSno: res.tempCode,
+        });
+        setAptAddr1("");
       }
     };
 
@@ -298,33 +274,19 @@ const Form = React.forwardRef(
         //end yu boloh n logic todorhoigui
       }
 
-      try {
-        const response: any = await API.post(path, formValues);
-        if (response.status === 200) {
-          if (isAddBtnClicked) {
-            setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
-          } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
-          }
-          setSelected(formValues);
-
-          toast.success("저장이 성공하였습니다", {
-            autoClose: 500,
-          });
-          setIsAddBtnClicked(false);
+      const res: any = await apiPost(path, formValues, "저장이 성공하였습니다");
+      if (res) {
+        if (isAddBtnClicked) {
+          setData((prev: any) => [formValues, ...prev]);
+          setSelectedRowIndex(0);
         } else {
-          toast.error(response.response.data?.message, {
-            autoClose: 500,
+          setData((prev: any) => {
+            prev[selectedRowIndex] = formValues;
+            return [...prev];
           });
         }
-      } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
+        setSelected(formValues);
+        setIsAddBtnClicked(false);
       }
     };
 

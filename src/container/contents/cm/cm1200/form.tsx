@@ -21,7 +21,7 @@ import {
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import { ICM1200SEARCH, emptyObj } from "./model";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import {
   CM1200DELETE,
   CM1200INSERT,
@@ -188,79 +188,56 @@ const Form = React.forwardRef(
       areaCode: string;
       cuCode: string;
     }) => {
-      try {
-        const { data } = await API.get(CM120065, {
-          params: { cuCode: cuCode, areaCode: areaCode },
-        });
+      const res = await apiGet(CM120065, {
+        cuCode: cuCode,
+        areaCode: areaCode,
+      });
 
-        if (data) {
-          if (data?.userInfo) {
-            setUserInfo(data.userInfo);
-          } else {
-            setUserInfo([]);
-          }
-
-          if (data?.supplyTab) {
-            setSelectedSupplyTab(data?.supplyTab[0]);
-          } else {
-            setSelectedSupplyTab({});
-          }
-
-          if (data?.cuCustgubun) {
-            setCuCustgubunDic(data.cuCustgubun);
-          }
-
-          if (data?.cuJyCode) {
-            setCuJyCodeDic(data.cuJyCode);
-          }
-
-          if (data?.cuSwCode) {
-            setCuSwCodeDic(data.cuSwCode);
-          }
+      if (res) {
+        if (res?.userInfo) {
+          setUserInfo(res.userInfo);
         } else {
           setUserInfo([]);
+        }
+
+        if (res?.supplyTab) {
+          setSelectedSupplyTab(res?.supplyTab[0]);
+        } else {
           setSelectedSupplyTab({});
         }
-      } catch (err) {
-        console.log("CM120065 data fetch error =======>", err);
-      }
-    };
 
-    const fetchCodes = async (areaCode: string) => {
-      try {
-        const response: any = await API.get(CM1200INSERTSEQ, {
-          params: { areaCode: areaCode },
-        });
-        if (
-          response.status === 200 &&
-          response.data.tempCuCode[0]?.tempCuCode
-        ) {
-          return response.data;
-        } else {
-          toast.error("can't get cuCode", {
-            autoClose: 500,
-          });
+        if (res?.cuCustgubun) {
+          setCuCustgubunDic(res.cuCustgubun);
         }
-      } catch (err) {
-        console.log(err);
+
+        if (res?.cuJyCode) {
+          setCuJyCodeDic(res.cuJyCode);
+        }
+
+        if (res?.cuSwCode) {
+          setCuSwCodeDic(res.cuSwCode);
+        }
+      } else {
+        setUserInfo([]);
+        setSelectedSupplyTab({});
+        setCuCustgubunDic([]);
+        setCuJyCodeDic([]);
+        setCuSwCodeDic([]);
       }
-      return null;
     };
 
     const codeChangeHandler = async (aCode: string) => {
-      try {
-        const temp = await fetchCodes(aCode);
+      const res = await apiGet(CM1200INSERTSEQ, {
+        areaCode: aCode,
+      });
 
-        if (temp !== null) {
-          setFocus("cuName");
-          reset({
-            ...emptyObj,
-            cuCode: temp?.tempCuCode[0]?.tempCuCode,
-          });
-          setCuAddr1("");
-        }
-      } catch (err: any) {
-        console.log("cuCode generate error", err);
+      if (res) {
+        setFocus("cuName");
+        reset({
+          ...emptyObj,
+          cuCode: res?.tempCuCode[0]?.tempCuCode,
+        });
+        setCuAddr1("");
       }
     };
 
@@ -332,23 +309,16 @@ const Form = React.forwardRef(
       if (type === "delete") {
         const formValues = getValues();
 
-        try {
-          const response: any = await API.post(CM1200DELETE, {
+        const res = await apiPost(
+          CM1200DELETE,
+          {
             cuCode: formValues.cuCode,
             areaCode: selected.areaCode,
-          });
+          },
+          "삭제했습니다"
+        );
 
-          if (response.status === 200) {
-            toast.success("삭제했습니다", {
-              autoClose: 500,
-            });
-            await fetchData(null);
-          } else {
-            alert(response?.response?.data?.message);
-          }
-        } catch (err) {
-          console.log(err);
-        }
+        res && (await fetchData(null));
         return;
       }
 
@@ -437,24 +407,14 @@ const Form = React.forwardRef(
 
       const path = isAddBtnClicked ? CM1200INSERT : CM1200UPDATE;
 
-      try {
-        const response: any = await API.post(path, formValues);
-        if (response.status === 200) {
-          if (isAddBtnClicked) {
-            setIsAddBtnClicked(false);
-            await fetchData(null, "last");
-          } else {
-            await fetchData(null);
-          }
-
-          toast.success("저장이 성공하였습니다", {
-            autoClose: 500,
-          });
+      const res = await apiPost(path, formValues, "저장이 성공하였습니다");
+      if (res) {
+        if (isAddBtnClicked) {
+          setIsAddBtnClicked(false);
+          await fetchData(null, "last");
         } else {
-          alert(response?.response?.data?.message);
+          await fetchData(null);
         }
-      } catch (err: any) {
-        console.log(err);
       }
     };
 

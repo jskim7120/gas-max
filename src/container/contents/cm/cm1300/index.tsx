@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import Button from "components/button/button";
 import Loader from "components/loader";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
@@ -102,75 +102,59 @@ function CM1300({
   };
 
   const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data: dataSearch } = await API.get(CM1300SEARCH, {
-        params: params,
-      });
+    setLoading(true);
+    const dataSearch = await apiGet(CM1300SEARCH, params);
 
-      if (dataSearch) {
-        setData(dataSearch);
-        setSelected(dataSearch[0]);
-      } else {
-        setData([]);
-        setSelected({});
-      }
-      setSelectedRowIndex(0);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
+    if (dataSearch) {
+      setData(dataSearch);
+      setSelected(dataSearch[0]);
+    } else {
       setData([]);
       setSelected({});
-      setSelectedRowIndex(0);
-      console.log("CM1300 data search fetch error =======>", err);
     }
+    setSelectedRowIndex(0);
+    setLoading(false);
   };
   const fetchData65 = async () => {
-    try {
-      const { data: data65 } = await API.get(CM130065, {
-        params: {
-          areaCode: selected?.areaCode,
-          aptCode: selected?.aptCode,
-        },
-      });
+    const data65 = await apiGet(CM130065, {
+      areaCode: selected?.areaCode,
+      aptCode: selected?.aptCode,
+    });
 
-      if (data65) {
-        if (data65?.userCustomer && data65?.userCustomer?.length > 0) {
-          setData65(data65.userCustomer);
-          setSelected65(data65.userCustomer[0]);
-        } else {
-          setData65([]);
-          setSelected65({});
-        }
-
-        setSelectedRowIndex65(0);
-
-        if (data65?.aptGubun) {
-          setAptGubun(data65?.aptGubun);
-        } else {
-          setAptGubun([]);
-        }
-
-        if (data65?.aptJyCode) {
-          setAptJyCode(data65?.aptJyCode);
-        } else {
-          setAptJyCode([]);
-        }
-
-        if (data65?.aptSwCode) {
-          setAptSwCode(data65?.aptSwCode);
-        } else {
-          setAptSwCode([]);
-        }
+    if (data65) {
+      if (data65?.userCustomer && data65?.userCustomer?.length > 0) {
+        setData65(data65.userCustomer);
+        setSelected65(data65.userCustomer[0]);
+      } else {
+        setData65([]);
+        setSelected65({});
       }
-    } catch (err) {
+
+      setSelectedRowIndex65(0);
+
+      if (data65?.aptGubun) {
+        setAptGubun(data65?.aptGubun);
+      } else {
+        setAptGubun([]);
+      }
+
+      if (data65?.aptJyCode) {
+        setAptJyCode(data65?.aptJyCode);
+      } else {
+        setAptJyCode([]);
+      }
+
+      if (data65?.aptSwCode) {
+        setAptSwCode(data65?.aptSwCode);
+      } else {
+        setAptSwCode([]);
+      }
+    } else {
       setData65([]);
       setSelected65({});
       setAptSwCode([]);
       setAptJyCode([]);
       setAptGubun([]);
-
-      console.log("CM1300 data search fetch error =======>", err);
     }
   };
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "app/store";
 import { CM9005SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import { useForm } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -12,7 +12,6 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import Grid from "components/grid";
-import CustomTopPart from "../../customTopPart";
 import { columns, fields } from "./data";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
@@ -56,21 +55,31 @@ function CM9005({
       }
     }
 
-    try {
-      setLoading(true);
-      const { data } = await API.get(CM9005SEARCH, { params: paramTemp });
+    // try {
+    //   setLoading(true);
+    //   const { data } = await API.get(CM9005SEARCH, { params: paramTemp });
 
-      if (data) {
-        setData(data);
-      } else {
-        setData([]);
-      }
-      setLoading(false);
-    } catch (err) {
+    //   if (data) {
+    //     setData(data);
+    //   } else {
+    //     setData([]);
+    //   }
+    //   setLoading(false);
+    // } catch (err) {
+    //   setData([]);
+    //   setLoading(false);
+    //   console.log("CM9005 data search fetch error =======>", err);
+    // }
+
+    setLoading(true);
+    const data = await apiGet(CM9005SEARCH, paramTemp);
+
+    if (data) {
+      setData(data);
+    } else {
       setData([]);
-      setLoading(false);
-      console.log("CM9005 data search fetch error =======>", err);
     }
+    setLoading(false);
   };
 
   const submit = (data: ISEARCH) => {

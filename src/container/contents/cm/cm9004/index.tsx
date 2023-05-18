@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "app/store";
 import { CM9004SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
@@ -12,7 +12,6 @@ import { Select, FormGroup, Wrapper, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import CustomTopPart from "../../customTopPart";
 import Grid from "components/grid";
 import { columns, fields } from "./data";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
@@ -59,20 +58,15 @@ function CM9004({
       }
     }
 
-    try {
-      setLoading(true);
-      const { data } = await API.get(CM9004SEARCH, { params: paramTemp });
+    setLoading(true);
+    const data = await apiGet(CM9004SEARCH, paramTemp);
 
-      if (data) {
-        setData(data);
-      } else {
-        setData([]);
-      }
-    } catch (err) {
+    if (data) {
+      setData(data);
+    } else {
       setData([]);
-      setLoading(false);
-      console.log("CM9004 data search fetch error =======>", err);
     }
+    setLoading(false);
   };
 
   const submit = (data: ISEARCH) => {

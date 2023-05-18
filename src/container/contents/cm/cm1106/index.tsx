@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "app/store";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -40,7 +40,6 @@ function FormCM1106() {
   const cm1106 = useSelector((state) => state.modal.cm1106);
   const areaCode = useSelector((state) => state.auth.areaCode);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
@@ -76,22 +75,17 @@ function FormCM1106() {
   }, [selected]);
 
   const fetchData = async () => {
-    try {
-      const { data: data1106 } = await API.get(CM1106LIST, {
-        params: { jcCuCode: cm1106.cuCode, areaCode: cm1106.areaCode },
-      });
+    const data1106 = await apiGet(CM1106LIST, {
+      jcCuCode: cm1106.cuCode,
+      areaCode: cm1106.areaCode,
+    });
 
-      if (data1106) {
-        setData(data1106);
-        setSelected(data1106[0]);
-      } else {
-        setData([]);
-        setSelected({});
-      }
-    } catch (error) {
+    if (data1106) {
+      setData(data1106);
+      setSelected(data1106[0]);
+    } else {
       setData([]);
       setSelected({});
-      console.log("CM1106 fetch data error:", error);
     }
   };
 
@@ -126,7 +120,7 @@ function FormCM1106() {
               type="button"
               onClick={() => {
                 formRef.current.resetForm("clear");
-                setIsCancelBtnDisabled(false);
+
                 setIsAddBtnClicked(true);
               }}
             />
@@ -157,7 +151,7 @@ function FormCM1106() {
               type="button"
               onClick={() => {
                 formRef.current.resetForm("reset");
-                setIsCancelBtnDisabled(true);
+
                 setIsAddBtnClicked(false);
               }}
             />
