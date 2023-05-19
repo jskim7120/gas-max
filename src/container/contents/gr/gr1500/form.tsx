@@ -6,8 +6,6 @@ import React, {
 } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "app/store";
-import { toast } from "react-toastify";
-import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
 import {

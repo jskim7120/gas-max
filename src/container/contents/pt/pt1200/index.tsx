@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { useDispatch } from "app/store";
 import { openModal, pt1205Popup } from "app/state/modal/modalSlice";
@@ -97,16 +97,25 @@ function PT1200({
   };
 
   const fetch65Data = async (params: any) => {
-    try {
-      const { data } = await API.get(PT120065, {
-        params: { areaCode: params.areaCode, cuCode: params.cuCode },
-      });
+    // try {
+    //   const { data } = await API.get(PT120065, {
+    //     params: { areaCode: params.areaCode, cuCode: params.cuCode },
+    //   });
 
-      if (data) {
-        setData65(data);
-      }
-    } catch (err) {
-      console.log("PT120065 data search fetch error =======>", err);
+    //   if (data) {
+    //     setData65(data);
+    //   }
+    // } catch (err) {
+    //   console.log("PT120065 data search fetch error =======>", err);
+    // }
+
+    const data = await apiGet(PT120065, {
+      areaCode: params.areaCode,
+      cuCode: params.cuCode,
+    });
+
+    if (data) {
+      setData65(data);
     }
   };
   const resetSearchForm = () => {
@@ -123,41 +132,66 @@ function PT1200({
     }));
   };
   const fetchDataSearch1 = async (params: any) => {
-    try {
-      setLoading1(true);
-      if (params.sCheck) {
-        params.sCheck = "Y";
-      } else {
-        params.sCheck = "N";
-      }
-      const { data } = await API.get(PT1200SEARCH, { params: params });
-      if (data) {
-        setData(data);
-        setLoading1(false);
-        setSelectedRowIndex(0);
-        setTotMisukun(await calcTotal("cuCmisu", data));
-      }
-    } catch (err) {
-      console.log("PT1200 data search fetch error =======>", err);
+    // try {
+    //   setLoading1(true);
+    //   if (params.sCheck) {
+    //     params.sCheck = "Y";
+    //   } else {
+    //     params.sCheck = "N";
+    //   }
+    //   const { data } = await API.get(PT1200SEARCH, { params: params });
+    //   if (data) {
+    //     setData(data);
+    //     setLoading1(false);
+    //     setSelectedRowIndex(0);
+    //     setTotMisukun(await calcTotal("cuCmisu", data));
+    //   }
+    // } catch (err) {
+    //   console.log("PT1200 data search fetch error =======>", err);
+    // }
+
+    setLoading1(true);
+    if (params.sCheck) {
+      params.sCheck = "Y";
+    } else {
+      params.sCheck = "N";
+    }
+    const data = await apiGet(PT1200SEARCH, params);
+    if (data) {
+      setData(data);
+      setLoading1(false);
+      setSelectedRowIndex(0);
+      setTotMisukun(await calcTotal("cuCmisu", data));
     }
   };
 
   const fetchDataSearch2 = async (params: any) => {
     params.sMsdateF = DateWithoutDash(params.sMsdateF);
     params.sMsdateT = DateWithoutDash(params.sMsdateT);
-    try {
-      setLoading2(true);
-      const { data } = await API.get(PT1200SEARCH62, { params: params });
+    // try {
+    //   setLoading2(true);
+    //   const { data } = await API.get(PT1200SEARCH62, { params: params });
 
-      if (data) {
-        setDataSecond(data);
-        setLoading2(false);
-        setSelectedRowIndex(0);
-        setTotSukum(await calcTotal("gsKumack", data));
-        setTotDc(await calcTotal("gsDc", data));
-      }
-    } catch (err) {
-      console.log("PT110062 data search fetch error =======>", err);
+    //   if (data) {
+    //     setDataSecond(data);
+    //     setLoading2(false);
+    //     setSelectedRowIndex(0);
+    //     setTotSukum(await calcTotal("gsKumack", data));
+    //     setTotDc(await calcTotal("gsDc", data));
+    //   }
+    // } catch (err) {
+    //   console.log("PT110062 data search fetch error =======>", err);
+    // }
+
+    setLoading2(true);
+    const data = await apiGet(PT1200SEARCH62, params);
+
+    if (data) {
+      setDataSecond(data);
+      setLoading2(false);
+      setSelectedRowIndex(0);
+      setTotSukum(await calcTotal("gsKumack", data));
+      setTotDc(await calcTotal("gsDc", data));
     }
   };
 

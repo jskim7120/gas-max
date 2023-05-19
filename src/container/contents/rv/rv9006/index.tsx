@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { ISEARCH } from "./model";
 import { RV9006SEARCH } from "app/path";
 import CustomDatePicker from "components/customDatePicker";
@@ -85,23 +85,34 @@ function RV9006({
   };
 
   const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data: dataRV9006 } = await API.get(RV9006SEARCH, {
-        params: params,
-      });
+    // try {
+    //   setLoading(true);
+    //   const { data: dataRV9006 } = await API.get(RV9006SEARCH, {
+    //     params: params,
+    //   });
 
-      if (dataRV9006) {
-        setData(dataRV9006);
-      } else {
-        setData([]);
-      }
+    //   if (dataRV9006) {
+    //     setData(dataRV9006);
+    //   } else {
+    //     setData([]);
+    //   }
 
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
+    //   setLoading(false);
+    // } catch (err) {
+    //   setLoading(false);
+    //   setData([]);
+    // }
+
+    setLoading(true);
+    const dataRV9006 = await apiGet(RV9006SEARCH, params);
+
+    if (dataRV9006) {
+      setData(dataRV9006);
+    } else {
       setData([]);
     }
+
+    setLoading(false);
   };
 
   const submit = async (params: any) => {

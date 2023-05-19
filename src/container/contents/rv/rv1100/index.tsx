@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { apiGet, apiPost } from "app/axios";
 import { toast } from "react-toastify";
+import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { useDispatch } from "app/store";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import Button from "components/button/button";
@@ -24,7 +25,6 @@ import {
   Input,
 } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
-import API from "app/axios";
 import { RV1100SEARCH, RV1100SEARCH62, RV1100DELETE } from "app/path";
 import { ISEARCH } from "./model";
 import CheckBox from "components/checkbox";
@@ -96,18 +96,29 @@ function RV1100({
   };
 
   const fetchData = async (params: ISEARCH) => {
-    try {
-      setLoading(true);
-      const { data } = await API.get(RV1100SEARCH, { params: params });
+    // try {
+    //   setLoading(true);
+    //   const { data } = await API.get(RV1100SEARCH, { params: params });
 
-      if (data.mainData.length > 0) {
-        setData(data.mainData);
-      } else {
-        setData([]);
-      }
+    //   if (data.mainData.length > 0) {
+    //     setData(data.mainData);
+    //   } else {
+    //     setData([]);
+    //   }
 
-      setLoading(false);
-    } catch (err) {}
+    //   setLoading(false);
+    // } catch (err) {}
+
+    setLoading(true);
+    const data = await apiGet(RV1100SEARCH, params);
+
+    if (data.mainData.length > 0) {
+      setData(data.mainData);
+    } else {
+      setData([]);
+    }
+
+    setLoading(false);
   };
 
   const openPopupEN1500 = async (selected: any) => {
@@ -116,15 +127,22 @@ function RV1100({
   };
 
   const search2 = async (params: ISEARCH) => {
-    try {
-      const { data } = await API.get(RV1100SEARCH62, { params: params });
+    // try {
+    //   const { data } = await API.get(RV1100SEARCH62, { params: params });
 
-      if (data.mainData.length > 0) {
-        setData(data.mainData);
-      } else {
-        setData([]);
-      }
-    } catch (err) {}
+    //   if (data.mainData.length > 0) {
+    //     setData(data.mainData);
+    //   } else {
+    //     setData([]);
+    //   }
+    // } catch (err) {}
+
+    const data = await apiGet(RV1100SEARCH62, params);
+    if (data.mainData.length > 0) {
+      setData(data.mainData);
+    } else {
+      setData([]);
+    }
   };
 
   const deleteRow = async (params: ISEARCH) => {
@@ -154,26 +172,35 @@ function RV1100({
       newData.gjLdate = DateWithoutDash(newData.gjLdate);
       newData.gjSdate = DateWithoutDash(newData.gjSdate);
 
-      try {
-        const response: any = await API.post(RV1100DELETE, newData);
+      // try {
+      //   const response: any = await API.post(RV1100DELETE, newData);
 
-        if (response.status === 200) {
-          toast.success("삭제하였습니다", {
-            autoClose: 500,
-          });
-          params.sGjDate = DateWithoutDash(params.sGjDate);
-          params.sGjGumym = DateWithoutDashOnlyYearMonth(params.sGjGumym);
-          params.sGjPerDate = DateWithoutDash(params.sGjPerDate);
-          await fetchData(params);
-        } else {
-          toast.error(response?.response?.message, {
-            autoClose: 500,
-          });
-        }
-      } catch (err) {
-        toast.error("Couldn't delete", {
-          autoClose: 500,
-        });
+      //   if (response.status === 200) {
+      //     toast.success("삭제하였습니다", {
+      //       autoClose: 500,
+      //     });
+      //     params.sGjDate = DateWithoutDash(params.sGjDate);
+      //     params.sGjGumym = DateWithoutDashOnlyYearMonth(params.sGjGumym);
+      //     params.sGjPerDate = DateWithoutDash(params.sGjPerDate);
+      //     await fetchData(params);
+      //   } else {
+      //     toast.error(response?.response?.message, {
+      //       autoClose: 500,
+      //     });
+      //   }
+      // } catch (err) {
+      //   toast.error("Couldn't delete", {
+      //     autoClose: 500,
+      //   });
+      // }
+
+      const res: any = await apiPost(RV1100DELETE, newData, "삭제하였습니다");
+
+      if (res) {
+        params.sGjDate = DateWithoutDash(params.sGjDate);
+        params.sGjGumym = DateWithoutDashOnlyYearMonth(params.sGjGumym);
+        params.sGjPerDate = DateWithoutDash(params.sGjPerDate);
+        await fetchData(params);
       }
     }
   };

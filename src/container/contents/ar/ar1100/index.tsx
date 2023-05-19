@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { apiGet } from "app/axios";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import Button from "components/button/button";
 import {
@@ -25,7 +26,6 @@ import CheckBox from "components/checkbox";
 import { CustomAreaCodePart } from "container/contents/customTopPart";
 import { IAR1100SEARCH } from "./model";
 import Grid from "components/grid";
-import API from "app/axios";
 import { AR1100SEARCH, AR1100SELECT } from "app/path";
 import { DateWithoutDash } from "helpers/dateFormat";
 import PlainTab from "components/plainTab";
@@ -79,48 +79,73 @@ function AR1100({
   }, [selected]);
 
   const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data: dataSearch } = await API.get(AR1100SEARCH, {
-        params: params,
-      });
+    // try {
+    //   setLoading(true);
+    //   const { data: dataSearch } = await API.get(AR1100SEARCH, {
+    //     params: params,
+    //   });
 
-      if (dataSearch) {
-        setData(dataSearch);
-      } else {
-        setData([]);
-      }
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
+    //   if (dataSearch) {
+    //     setData(dataSearch);
+    //   } else {
+    //     setData([]);
+    //   }
+    //   setLoading(false);
+    // } catch (err) {
+    //   setLoading(false);
+    //   setData([]);
+    //   console.log("AR1100 data search fetch error =======>", err);
+    // }
+
+    setLoading(true);
+    const dataSearch = await apiGet(AR1100SEARCH, params);
+
+    if (dataSearch) {
+      setData(dataSearch);
+    } else {
       setData([]);
-      console.log("AR1100 data search fetch error =======>", err);
     }
+    setLoading(false);
   };
 
   const fetchData65 = async (params: any) => {
-    try {
-      const { data: dataSelect } = await API.get(AR1100SELECT, {
-        params: params,
+    // try {
+    //   const { data: dataSelect } = await API.get(AR1100SELECT, {
+    //     params: params,
+    //   });
+    //   console.log("dataSelect:::", dataSelect?.detailData[0]);
+    //   if (dataSelect) {
+    //     setData65(dataSelect?.detailData[0]);
+    //     setData65Dictionary({
+    //       pjVatDiv: dataSelect?.pjVatDiv,
+    //       pjSwCode: dataSelect?.pjSwCode,
+    //       proxyType: dataSelect?.proxyType,
+    //       pjInkumtype: dataSelect?.pjInkumtype,
+    //       saleType: dataSelect?.saleType,
+    //     });
+    //   } else {
+    //     setData65({});
+    //     setData65Dictionary({});
+    //   }
+    // } catch (err) {
+    //   setData65({});
+    //   setData65Dictionary({});
+    //   console.log("fetch AR1100 select err:::", err);
+    // }
+
+    const dataSelect = await apiGet(AR1100SELECT, params);
+    if (dataSelect) {
+      setData65(dataSelect?.detailData[0]);
+      setData65Dictionary({
+        pjVatDiv: dataSelect?.pjVatDiv,
+        pjSwCode: dataSelect?.pjSwCode,
+        proxyType: dataSelect?.proxyType,
+        pjInkumtype: dataSelect?.pjInkumtype,
+        saleType: dataSelect?.saleType,
       });
-      console.log("dataSelect:::", dataSelect?.detailData[0]);
-      if (dataSelect) {
-        setData65(dataSelect?.detailData[0]);
-        setData65Dictionary({
-          pjVatDiv: dataSelect?.pjVatDiv,
-          pjSwCode: dataSelect?.pjSwCode,
-          proxyType: dataSelect?.proxyType,
-          pjInkumtype: dataSelect?.pjInkumtype,
-          saleType: dataSelect?.saleType,
-        });
-      } else {
-        setData65({});
-        setData65Dictionary({});
-      }
-    } catch (err) {
+    } else {
       setData65({});
       setData65Dictionary({});
-      console.log("fetch AR1100 select err:::", err);
     }
   };
 
