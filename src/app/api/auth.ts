@@ -14,6 +14,27 @@ export const authApi = createApi({
         };
       },
     }),
+
+    loginInfo: builder.mutation({
+      query: (body: { username: string }) => {
+        return {
+          url: "auth/loginInfo",
+          method: "post",
+          body,
+        };
+      },
+    }),
+
+    reLogin: builder.mutation({
+      query: (body: { username: string; password: string; hpSeq: string }) => {
+        return {
+          url: "auth/reLogin",
+          method: "post",
+          body,
+        };
+      },
+    }),
   }),
 });
-export const { useLoginMutation } = authApi;
+export const { useLoginMutation, useLoginInfoMutation, useReLoginMutation } =
+  authApi;

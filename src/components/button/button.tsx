@@ -176,6 +176,10 @@ const ButtonComponent = styled.button<{
       &:disabled {
         background: #cccccc;
         cursor: default;
+
+        &.login {
+          border: 1px solid #cccccc;
+        }
       }
     `;
   }}

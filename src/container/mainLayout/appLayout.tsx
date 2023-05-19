@@ -5,6 +5,7 @@ import Navbar from "components/menu/navbar";
 import LogoImg from "assets/image/Logo.png";
 import { openModal } from "app/state/modal/modalSlice";
 import Footer from "../contents/footer";
+import { logout } from "app/state/auth/authSlice";
 
 let menuData: Array<any>;
 
@@ -19,7 +20,12 @@ export default function AppLayout({ children }: { children: any }) {
           <Navbar data={menuData} />
         </TopLeftWrapper>
         <Icons>
-          <span>
+          <span
+            onClick={() => {
+              dispatch(logout());
+              window.location.assign("/relogin");
+            }}
+          >
             <HeaderBtn />
           </span>
           <span>
