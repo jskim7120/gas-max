@@ -1,7 +1,6 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
-import API from "app/axios";
+import { apiPost, apiGet } from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import {
   GR1100INSERT,
@@ -59,7 +58,6 @@ const Form = React.forwardRef(
       setAreaCode,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      setIsCancelBtnDisabled,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -163,23 +161,23 @@ const Form = React.forwardRef(
     }));
 
     const fetchCodes = async () => {
-      try {
-        const response: any = await API.get(GR1100INSERTSEQ, {
-          params: { areaCode: areaCode },
-        });
+      // try {
+      //   const response: any = await API.get(GR1100INSERTSEQ, {
+      //     params: { areaCode: areaCode },
+      //   });
 
-        if (response.status === 200 && response.data.buCode) {
-          return response.data.buCode;
-        } else {
-          toast.error("can't get aptCode", {
-            autoClose: 500,
-          });
-        }
-      } catch (err) {
-        toast.error("Error occured during get aptCode", {
-          autoClose: 500,
-        });
-      }
+      //   if (response.status === 200 && response.data.buCode) {
+      //     return response.data.buCode;
+      //   } else {
+      //     toast.error("can't get aptCode", {
+      //       autoClose: 500,
+      //     });
+      //   }
+      // } catch (err) {
+      //   toast.error("Error occured during get aptCode", {
+      //     autoClose: 500,
+      //   });
+      // }
       return "";
     };
 
@@ -202,25 +200,37 @@ const Form = React.forwardRef(
 
           document.getElementById("buName")?.focus();
           const path = GR110065;
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.areaCode = response.data.tempCode;
-              setBuAddr1("");
-              reset(newData);
-            } else {
-              // toast.error(response.response.data?.message, {
-              //   autoClose: 500,
-              // });
-              alert(response.response.data?.message);
+          // try {
+          //   const response: any = await API.get(path, {
+          //     params: { areaCode: selected.areaCode },
+          //   });
+          //   if (response.status === 200) {
+          //     for (const [key, value] of Object.entries(selected)) {
+          //       newData[key] = null;
+          //     }
+          //     newData.areaCode = response.data.tempCode;
+          //     setBuAddr1("");
+          //     reset(newData);
+          //   } else {
+          //     // toast.error(response.response.data?.message, {
+          //     //   autoClose: 500,
+          //     // });
+          //     alert(response.response.data?.message);
+          //   }
+          // } catch (err: any) {
+          //   console.log("areaCode select error", err);
+          // }
+
+          const res = await apiGet(path, {
+            areaCode: selected.areaCode,
+          });
+          if (res) {
+            for (const [key, value] of Object.entries(selected)) {
+              newData[key] = null;
             }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
+            newData.areaCode = res.tempCode;
+            setBuAddr1("");
+            reset(newData);
           }
         } else if (type === "reset") {
           setBuAddr1(selected?.buAddr1 ? selected?.buAddr1 : "");
@@ -235,24 +245,16 @@ const Form = React.forwardRef(
       if (type === "delete") {
         const formValues = getValues();
 
-        try {
-          const response = await API.post(GR1100DELETE, {
+        const res = await apiPost(
+          GR1100DELETE,
+          {
             areaCode: formValues.areaCode,
             buCode: formValues.buCode,
-          });
+          },
+          "삭제하였습니다"
+        );
 
-          if (response.status === 200) {
-            toast.success("삭제하였습니다", {
-              autoClose: 500,
-            });
-
-            fetchData({ areaCode: areaCode });
-          }
-        } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
-        }
+        res && fetchData({ areaCode: areaCode });
       }
 
       if (type === null) {
@@ -285,10 +287,41 @@ const Form = React.forwardRef(
 
       formValues.buAddr1 = buAddr1;
 
-      try {
-        const response: any = await API.post(path, formValues);
-        if (response.status === 200) {
-          /*
+      // try {
+      //   const response: any = await API.post(path, formValues);
+      //   if (response.status === 200) {
+      //     /*
+      //     if (isAddBtnClicked) {
+      //       //setData((prev: any) => [formValues, ...prev]);
+      //       setSelectedRowIndex(0);
+      //     } else {
+      //       setData((prev: any) => {
+      //         prev[selectedRowIndex] = formValues;
+      //         return [...prev];
+      //       });
+      //     }
+      //     */
+
+      //     fetchData({ areaCode: areaCode });
+      //     //setSelected(formValues);
+      //     toast.success("저장이 성공하였습니다", {
+      //       autoClose: 500,
+      //     });
+      //     setIsAddBtnClicked(false);
+      //   } else {
+      //     toast.error(response?.message, {
+      //       autoClose: 500,
+      //     });
+      //   }
+      // } catch (err: any) {
+      //   toast.error(err?.message, {
+      //     autoClose: 500,
+      //   });
+      // }
+
+      const res = await apiPost(path, formValues, "저장이 성공하였습니다");
+      if (res) {
+        /*
           if (isAddBtnClicked) {
             //setData((prev: any) => [formValues, ...prev]);
             setSelectedRowIndex(0);
@@ -300,39 +333,22 @@ const Form = React.forwardRef(
           }
           */
 
-          fetchData({ areaCode: areaCode });
-          //setSelected(formValues);
-          toast.success("저장이 성공하였습니다", {
-            autoClose: 500,
-          });
-          setIsAddBtnClicked(false);
-          setIsCancelBtnDisabled(true);
-        } else {
-          toast.error(response?.message, {
-            autoClose: 500,
-          });
-        }
-      } catch (err: any) {
-        toast.error(err?.message, {
-          autoClose: 500,
-        });
+        fetchData({ areaCode: areaCode });
+        setIsAddBtnClicked(false);
       }
     };
 
     const fetchTableData = async () => {
       if (selected && Object.keys(selected).length > 0) {
-        try {
-          const { data: tableData } = await API.get(GR110065, {
-            params: {
-              areaCode: selected.areaCode,
-            },
-          });
-          if (tableData) {
-            setTableData(tableData);
-          } else {
-            setTableData(null);
-          }
-        } catch (err) {}
+        const tableData = await apiGet(GR110065, {
+          areaCode: selected.areaCode,
+        });
+
+        if (tableData) {
+          setTableData(tableData);
+        } else {
+          setTableData(null);
+        }
       }
     };
 

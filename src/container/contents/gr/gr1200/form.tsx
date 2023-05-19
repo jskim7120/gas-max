@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
+import { apiGet, apiPost } from "app/axios";
 import CustomDatePicker from "components/customDatePicker";
 import PlainTab from "components/plainTab";
 import EditableSelect from "components/editableSelect";
@@ -34,9 +35,7 @@ import {
   GR1200BLINSERT,
   GR1200BLDELETE,
 } from "app/path";
-import API from "app/axios";
 import { useGetAdditionalDictionaryQuery } from "app/api/commonDictionary";
-// import { emptyObjTab1, emptyObjTab2, emptyObjTab3 } from "./model";
 import { calcFooterTab2Tab3 } from "./tabs/tab2and3CalculationHelper";
 import { SearchWrapper } from "container/contents/commonStyle";
 import FourButtons from "components/button/fourButtons";
@@ -320,33 +319,24 @@ const Form = ({
   };
 
   const fetchData65 = async () => {
-    try {
-      const { data } = await API.get(GR120065, {
-        params: {
-          areaCode: selected?.areaCode,
-          bcDate: DateWithoutDash(selected?.bcDate),
-          sBcBuCode: selected?.bcBuCode,
-          bcSno: selected?.bcSno,
-          bcChitType: selected?.bcChitType,
-        },
-      });
+    const data = await apiGet(GR120065, {
+      areaCode: selected?.areaCode,
+      bcDate: DateWithoutDash(selected?.bcDate),
+      sBcBuCode: selected?.bcBuCode,
+      bcSno: selected?.bcSno,
+      bcChitType: selected?.bcChitType,
+    });
 
-      if (data) {
-        data?.mainData ? setData65(data?.mainData[0]) : setData65({});
-        data?.detailData
-          ? setData65Detail([...data?.detailData])
-          : setData65Detail([]);
-      } else {
-        setData65({});
-        setData65Detail([]);
-      }
-      setDeleteData65Detail([]);
-    } catch (err) {
+    if (data) {
+      data?.mainData ? setData65(data?.mainData[0]) : setData65({});
+      data?.detailData
+        ? setData65Detail([...data?.detailData])
+        : setData65Detail([]);
+    } else {
       setData65({});
       setData65Detail([]);
-      setDeleteData65Detail([]);
-      console.log("GR1200 65 DATA fetch error =======>", err);
     }
+    setDeleteData65Detail([]);
   };
 
   const resetForm = async (type: string) => {
@@ -422,22 +412,18 @@ const Form = ({
   const crud = async (type: string | null) => {
     if (type === "delete") {
       if (Object.keys(data65).length > 0) {
-        const res: any = await API.post(GR1200BUYDELETE, {
-          areaCode: data65.areaCode,
-          bcBuCode: data65.bcBuCode,
-          bcDate: data65.bcDate,
-          bcSno: data65.bcSno,
-        });
+        const res = await apiPost(
+          GR1200BUYDELETE,
+          {
+            areaCode: data65.areaCode,
+            bcBuCode: data65.bcBuCode,
+            bcDate: data65.bcDate,
+            bcSno: data65.bcSno,
+          },
+          "삭제하였습니다"
+        );
 
-        if (res.status === 200) {
-          toast.success("삭제하였습니다", {
-            autoClose: 500,
-          });
-          fetchData();
-        } else {
-          toast.error(res?.data?.message, { autoClose: 500 });
-          return null;
-        }
+        res && fetchData();
       }
       return null;
     }
@@ -493,33 +479,33 @@ const Form = ({
     }
 
     try {
-      const res = await API.post(path, body);
+      const res: any = await apiPost(path, body);
 
-      if (res.status === 200) {
+      if (res) {
         if (isAddBtnClicked) {
-          const bcSno = res?.data?.returnValue;
+          const bcSno = res?.returnValue;
           if (bcSno && bcSno !== "" && data65Detail?.length > 0) {
             await Promise.all(
               data65Detail.map((item: any) => {
                 if ("isNew" in item && "isProductNameSelected" in item) {
-                  API.post(GR1200BLINSERT, {
-                    inserted: [
-                      {
-                        ...item,
-                        areaCode: areaCode2,
-                        bcDate: DateWithoutDash(formValues.bcDate),
-                        bcBuCode: data65.bcBuCode,
-                        bcSno: bcSno,
-                      },
-                    ],
-                  });
+                  apiPost(
+                    GR1200BLINSERT,
+                    {
+                      inserted: [
+                        {
+                          ...item,
+                          areaCode: areaCode2,
+                          bcDate: DateWithoutDash(formValues.bcDate),
+                          bcBuCode: data65.bcBuCode,
+                          bcSno: bcSno,
+                        },
+                      ],
+                    },
+                    "저장이 성공하였습니다"
+                  );
                 }
               })
             );
-
-            toast.success("저장이 성공하였습니다", {
-              autoClose: 500,
-            });
           }
         } else {
           if (data65Detail?.length > 0) {
@@ -527,7 +513,7 @@ const Form = ({
               data65Detail.map((item: any) => {
                 //insert
                 if ("isNew" in item && "isProductNameSelected" in item) {
-                  API.post(GR1200BLINSERT, {
+                  apiPost(GR1200BLINSERT, {
                     inserted: [
                       {
                         ...item,
@@ -544,7 +530,7 @@ const Form = ({
                   !("isNew" in item) &&
                   ("isEdited" in item || "isProductNameSelected" in item)
                 ) {
-                  API.post(GR1200BLUPDATE, {
+                  apiPost(GR1200BLUPDATE, {
                     updated: [
                       {
                         ...item,
@@ -563,7 +549,7 @@ const Form = ({
             await Promise.all(
               deleteData65Detail.map((item: any) => {
                 //delete
-                API.post(GR1200BLDELETE, {
+                apiPost(GR1200BLDELETE, {
                   deleted: [
                     {
                       areaCode: data65?.areaCode,

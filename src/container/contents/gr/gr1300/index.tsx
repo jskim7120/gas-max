@@ -4,7 +4,7 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { ISEARCH } from "./model";
 import {
   MainWrapper,
@@ -21,7 +21,6 @@ import Loader from "components/loader";
 import { DateWithoutDash } from "helpers/dateFormat";
 import Table from "./table";
 import { fields, columns } from "./data";
-import CustomTopPart from "container/contents/customTopPart";
 
 const minWidth = "900px";
 
@@ -62,29 +61,22 @@ function GR1300({
   }, [dataCommonDic]);
 
   const fetchData = async (params: any) => {
-    try {
-      if (params.sDate !== undefined) {
-        params.sDate = DateWithoutDash(params.sDate);
-      }
-      if (params.eDate !== undefined) {
-        params.eDate = DateWithoutDash(params.eDate);
-      }
-      setLoading(true);
-      const res = await API.get(GR1300SEARCH, { params: params });
-      if (res?.data && res?.data?.length > 0) {
-        setData(res.data);
-        setSelected(res.data[0]);
-      } else {
-        setData([]);
-        setSelected({});
-      }
-      setLoading(false);
-    } catch (err) {
+    if (params.sDate !== undefined) {
+      params.sDate = DateWithoutDash(params.sDate);
+    }
+    if (params.eDate !== undefined) {
+      params.eDate = DateWithoutDash(params.eDate);
+    }
+    setLoading(true);
+    const res = await apiGet(GR1300SEARCH, params);
+    if (res) {
+      setData(res);
+      setSelected(res[0]);
+    } else {
       setData([]);
       setSelected({});
-      setLoading(false);
-      console.log("GR1300 DATA fetch error =======>", err);
     }
+    setLoading(false);
   };
 
   const submit = async (data: any) => {
