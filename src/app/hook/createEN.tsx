@@ -95,10 +95,20 @@ function CreateEN(
 
     if (dataS) {
       setData(dataS);
+      const lastIndex = dataS && dataS.length > 0 ? dataS.length - 1 : 0;
+
       if (func === "last") {
-        const lastIndex = dataS && dataS.length > 0 ? dataS.length - 1 : 0;
         setSelected(dataS[lastIndex]);
         dispatch(setRowIndex({ menuId: menuId, rowIndex: lastIndex }));
+      } else {
+        if (rowIndex) {
+          if (rowIndex > lastIndex) {
+            dispatch(setRowIndex({ menuId: menuId, rowIndex: lastIndex }));
+            setSelected(dataS[lastIndex]);
+          } else {
+            setSelected(dataS[rowIndex]);
+          }
+        }
       }
     } else {
       setData([]);

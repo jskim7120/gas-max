@@ -36,7 +36,7 @@ import {
   GR1300BLINSERT,
   GR1300BLDELETE,
 } from "app/path";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 
 let data65Orig: any = {};
 
@@ -206,30 +206,21 @@ function Form({
   };
 
   const fetchData65 = async () => {
-    try {
-      const { data } = await API.get(GR130065, {
-        params: {
-          areaCode: selected?.areaCode,
-          bbBuCode: selected?.bbBuCode,
-          bbDate: DateWithoutDash(selected?.bbDate),
-          bbSno: selected?.bbSno,
-        },
-      });
+    const data = await apiGet(GR130065, {
+      areaCode: selected?.areaCode,
+      bbBuCode: selected?.bbBuCode,
+      bbDate: DateWithoutDash(selected?.bbDate),
+      bbSno: selected?.bbSno,
+    });
 
-      if (data) {
-        setData65(data);
-        data65Orig = JSON.parse(JSON.stringify(data));
-      } else {
-        setData65({});
-        data65Orig = {};
-      }
-      setDeleteData65([]);
-    } catch (err) {
+    if (data) {
+      setData65(data);
+      data65Orig = JSON.parse(JSON.stringify(data));
+    } else {
       setData65({});
       data65Orig = {};
-      setDeleteData65([]);
-      console.log("GR1200 65 DATA fetch error =======>", err);
     }
+    setDeleteData65([]);
   };
 
   // const clear = () => {
@@ -265,21 +256,19 @@ function Form({
   const crud = async (type: string | null) => {
     if (type === "delete") {
       if (selected) {
-        const res: any = await API.post(GR1300BUYDELETE, {
-          areaCode: selected.areaCode,
-          bbBuCode: selected.bbBuCode,
-          // bbDate: formatDateByRemoveDash(selected.bbDate),
-          bbDate: DateWithoutDash(selected.bbDate),
-          bbSno: selected.bbSno,
-        });
-        if (res.status === 200) {
-          toast.success("삭제하였습니다", {
-            autoClose: 500,
-          });
-        } else {
-          //toast.error(res?.data?.message, { autoClose: 500 });
-        }
-        fetchData();
+        const res: any = await apiPost(
+          GR1300BUYDELETE,
+          {
+            areaCode: selected.areaCode,
+            bbBuCode: selected.bbBuCode,
+            // bbDate: formatDateByRemoveDash(selected.bbDate),
+            bbDate: DateWithoutDash(selected.bbDate),
+            bbSno: selected.bbSno,
+          },
+          "삭제하였습니다"
+        );
+
+        res && fetchData();
       }
     }
 
@@ -306,19 +295,19 @@ function Form({
     }
 
     try {
-      const res = await API.post(path, {
+      const res: any = await apiPost(path, {
         ...formValues,
         bbType: tabId,
       });
 
-      if (res.status === 200) {
-        const bbSno = res?.data?.returnValue;
+      if (res) {
+        const bbSno = res?.returnValue;
         if (isAddBtnClicked) {
           if (bbSno && bbSno !== "" && data65?.length > 0) {
             await Promise.all(
               data65.map((item: any) => {
                 if ("isEdited" in item && "isProductNameSelected" in item) {
-                  API.post(GR1300BLINSERT, {
+                  apiPost(GR1300BLINSERT, {
                     inserted: [
                       {
                         ...item,
@@ -346,7 +335,7 @@ function Form({
                   "isEdited" in item &&
                   "isProductNameSelected" in item
                 ) {
-                  API.post(GR1300BLINSERT, {
+                  apiPost(GR1300BLINSERT, {
                     inserted: [
                       {
                         ...item,
@@ -363,7 +352,7 @@ function Form({
                   !("isNew" in item) &&
                   ("isEdited" in item || "isProductNameSelected" in item)
                 ) {
-                  API.post(GR1300BLUPDATE, {
+                  apiPost(GR1300BLUPDATE, {
                     updated: [
                       {
                         ...item,
@@ -382,7 +371,7 @@ function Form({
             await Promise.all(
               deleteData65.map((item: any) => {
                 //delete
-                API.post(GR1300BLDELETE, {
+                apiPost(GR1300BLDELETE, {
                   deleted: [
                     {
                       ...item,

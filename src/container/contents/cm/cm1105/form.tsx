@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
 import DaumAddress from "components/daum";
 import { useSelector, useDispatch } from "app/store";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import { Plus, Update, WhiteClose } from "components/allSvgIcon";
@@ -148,52 +147,39 @@ function FormCM1105() {
   };
 
   const fetchData = async () => {
-    try {
-      const { data: dataS } = await API.get(CM1105SEARCH, {
-        params: {
-          cuCode: cm1105.cuCode,
-          areaCode: cm1105.areaCode,
-        },
-      });
+    const dataS = await apiGet(CM1105SEARCH, {
+      cuCode: cm1105.cuCode,
+      areaCode: cm1105.areaCode,
+    });
 
-      if (dataS) {
-        setData({
-          customerInfo: dataS?.customerInfo && dataS.customerInfo[0],
-          cuTank: dataS?.cuTank && dataS.cuTank[0],
-          cms: dataS?.cms && dataS.cms[0],
-          virtualAccount: dataS?.virtualAccount && dataS.virtualAccount[0],
-        });
-      } else {
-        setData(null);
-      }
-    } catch (error) {
-      console.log("Error fetching CM1105 data:", error);
+    if (dataS) {
+      setData({
+        customerInfo: dataS?.customerInfo && dataS.customerInfo[0],
+        cuTank: dataS?.cuTank && dataS.cuTank[0],
+        cms: dataS?.cms && dataS.cms[0],
+        virtualAccount: dataS?.virtualAccount && dataS.virtualAccount[0],
+      });
+    } else {
+      setData(null);
     }
   };
 
   const fetchCuCode = async (areaCode: string, cuCode: string) => {
-    try {
-      const res: any = await API.get(CM110511, {
-        params: { areaCode: areaCode, cuCode: cuCode.substring(0, 3) },
-      });
+    const res: any = await apiGet(CM110511, {
+      areaCode: areaCode,
+      cuCode: cuCode.substring(0, 3),
+    });
 
-      if (res.status === 200) {
-        if (res?.data) {
-          setIsAddBtnClicked(true);
-          setData(null);
-          reset({
-            ...emptyObj,
-            cuCode: res.data[0].cuCode,
-            cuCutype: res.data[0].cuCutype,
-            cuStae: res.data[0].cuStae,
-            cuType: res.data[0].cuType,
-          });
-        }
-      } else {
-        alert(res?.response?.data?.message);
-      }
-    } catch (error: any) {
-      console.log(error);
+    if (res) {
+      setIsAddBtnClicked(true);
+      setData(null);
+      reset({
+        ...emptyObj,
+        cuCode: res[0].cuCode,
+        cuCutype: res[0].cuCutype,
+        cuStae: res[0].cuStae,
+        cuType: res[0].cuType,
+      });
     }
   };
 
@@ -293,23 +279,12 @@ function FormCM1105() {
     const formValues = preSubmit();
     const path = isAddBtnClicked ? CM1105INSERT : CM1105UPDATE;
 
-    try {
-      const response: any = await API.post(path, formValues);
-      if (response.status === 200) {
-        toast.success("저장이 성공하였습니다", {
-          autoClose: 500,
-        });
-
-        setIsAddBtnClicked(false);
-
-        setTimeout(() => {
-          dispatch(closeModal());
-        }, 1800);
-      } else {
-        alert(response?.response?.data?.message);
-      }
-    } catch (err: any) {
-      console.log(err);
+    const res: any = await apiPost(path, formValues, "저장이 성공하였습니다");
+    if (res) {
+      setIsAddBtnClicked(false);
+      setTimeout(() => {
+        dispatch(closeModal());
+      }, 1800);
     }
   };
 
@@ -317,18 +292,7 @@ function FormCM1105() {
     const formValues = preSubmit();
     const path = isAddBtnClicked ? CM1105INSERT : CM1105UPDATE;
 
-    try {
-      const response: any = await API.post(path, formValues);
-      if (response.status === 200) {
-        toast.success("저장이 성공하였습니다", {
-          autoClose: 500,
-        });
-      } else {
-        alert(response?.response?.data?.message);
-      }
-    } catch (err: any) {
-      console.log(err);
-    }
+    const res = await apiPost(path, formValues, "저장이 성공하였습니다");
   };
 
   const handleAddAgain = () => {

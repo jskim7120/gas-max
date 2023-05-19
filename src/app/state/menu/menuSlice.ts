@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 
 export interface initialStateType {
   loading: boolean;
@@ -12,8 +12,11 @@ const initialState: initialStateType = {
 };
 
 export const getMenu = createAsyncThunk("menu/getMenu", async () => {
-  const response = await API.get("/app/SY1100/list");
-  return response.data as any;
+  const res = await apiGet("/app/SY1100/list");
+  if (res !== null) {
+    return res;
+  }
+  return [];
 });
 
 const menuSlice = createSlice({

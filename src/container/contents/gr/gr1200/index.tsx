@@ -8,7 +8,7 @@ import {
   ResetGray,
   ExcelIcon,
 } from "components/allSvgIcon";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { ISEARCH } from "./model";
 import {
   MainWrapper,
@@ -25,7 +25,6 @@ import Loader from "components/loader";
 import { DateWithoutDash } from "helpers/dateFormat";
 import Table from "./table";
 import { fields, columns, layout } from "./data";
-import CustomTopPart from "container/contents/customTopPart";
 
 const minWidth = "auto";
 
@@ -75,40 +74,34 @@ function GR1200({
   const fetchData = async (params: any) => {
     params.sDate = DateWithoutDash(params.sDate);
     params.eDate = DateWithoutDash(params.eDate);
-    try {
-      setLoading(true);
-      const res = await API.get(GR1200SEARCH, { params: params });
 
-      if (res?.data) {
-        if (res?.data?.realgridData) {
-          setData(res?.data?.realgridData);
-          setSelected(res?.data?.realgridData[0]);
-          setSelectedRowIndex(0);
-        } else {
-          setData([]);
-          setSelected({});
-          setSelectedRowIndex(0);
-        }
-        if (res?.data.totalData) {
-          setData2(res?.data?.totalData[0]);
-        } else {
-          setData2([]);
-        }
+    setLoading(true);
+    const res = await apiGet(GR1200SEARCH, params);
+
+    if (res) {
+      if (res?.realgridData) {
+        setData(res?.realgridData);
+        setSelected(res?.realgridData[0]);
+        setSelectedRowIndex(0);
       } else {
         setData([]);
-        setData2([]);
         setSelected({});
         setSelectedRowIndex(0);
       }
-      setLoading(false);
-      setIsAddBtnClicked(false);
-      setIsCancelBtnDisabled(true);
-    } catch (err) {
-      setLoading(false);
-      setIsAddBtnClicked(false);
-      setIsCancelBtnDisabled(true);
-      console.log("GR1200 DATA fetch error =======>", err);
+      if (res?.totalData) {
+        setData2(res?.totalData[0]);
+      } else {
+        setData2([]);
+      }
+    } else {
+      setData([]);
+      setData2([]);
+      setSelected({});
+      setSelectedRowIndex(0);
     }
+    setLoading(false);
+    setIsAddBtnClicked(false);
+    setIsCancelBtnDisabled(true);
   };
 
   const submit = async (data: any) => {

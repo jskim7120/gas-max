@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { useDispatch, useSelector } from "app/store";
 import {
@@ -25,7 +25,6 @@ import {
   SearchWrapper,
 } from "../../commonStyle";
 import Loader from "components/loader";
-import { AreaCodeWithFullName } from "container/contents/customTopPart";
 import FourButtons from "components/button/fourButtons";
 
 const minWidth = "763px";
@@ -48,7 +47,7 @@ function GR1100({
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
+
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
     groupId: "GR",
     functionName: "GR1100",
@@ -79,23 +78,16 @@ function GR1100({
   }, [isDelete.isDelete]);
 
   const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data: dataS } = await API.get(GR1100SEARCH, {
-        params: params,
-      });
-      if (dataS) {
-        setData(dataS);
-        setSelected(dataS[0]);
-      } else {
-        setData([]);
-        setSelected({});
-      }
-      setSelectedRowIndex(0);
-      setLoading(false);
-    } catch (err) {
-      console.log("DATA fetch error =======>", err);
+    setLoading(true);
+    const dataS = await apiGet(GR1100SEARCH, params);
+    if (dataS) {
+      setData(dataS);
+      setSelected(dataS[0]);
+    } else {
+      setData([]);
+      setSelected({});
     }
+    setLoading(false);
   };
 
   const submit = async (data: ISEARCH) => {
@@ -114,7 +106,6 @@ function GR1100({
 
   const onClickAdd = () => {
     setIsAddBtnClicked(true);
-    setIsCancelBtnDisabled(false);
     formRef.current.resetForm("clear");
   };
 
@@ -249,7 +240,6 @@ function GR1100({
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
-            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
             setIsAddBtnClicked={setIsAddBtnClicked}
             style={{ height: `calc(100% - 38px)`, minWidth: minWidth }}
           />
@@ -267,7 +257,6 @@ function GR1100({
             setAreaCode={setAreaCode}
             setIsAddBtnClicked={setIsAddBtnClicked}
             isAddBtnClicked={isAddBtnClicked}
-            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
           />
         </RightSide>
       </MainWrapper>

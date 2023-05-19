@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "app/store";
 import { CM9003SEARCH } from "app/path";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { ISEARCH } from "./model";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import Loader from "components/loader";
@@ -19,7 +19,6 @@ import {
   Label,
   Field,
 } from "components/form/style";
-import CustomTopPart from "../../customTopPart";
 import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
 import { columns2, fields2 } from "./data/data2";
@@ -71,20 +70,14 @@ function CM9003({
       }
     }
 
-    try {
-      setLoading(true);
-      const { data } = await API.get(CM9003SEARCH, { params: paramTemp });
-      if (data) {
-        setData(data);
-      } else {
-        setData([]);
-      }
-      setLoading(false);
-    } catch (err) {
+    setLoading(true);
+    const data = await apiGet(CM9003SEARCH, paramTemp);
+    if (data) {
+      setData(data);
+    } else {
       setData([]);
-      setLoading(false);
-      console.log("CM9003 data search error =======>", err);
     }
+    setLoading(false);
   };
 
   const submit = (data: ISEARCH) => {

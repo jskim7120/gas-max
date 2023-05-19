@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "app/store";
 import { CM9002SEARCH } from "app/path";
 import { ICM9002SEARCH } from "./model";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -81,22 +81,15 @@ function CM9002({
   }, [dataCommonDic]);
 
   const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data } = await API.get(CM9002SEARCH, { params: params });
+    setLoading(true);
+    const data = await apiGet(CM9002SEARCH, params);
 
-      if (data) {
-        setData(data);
-        // setSelectedRowIndex(0);
-      } else {
-        setData([]);
-      }
-      setLoading(false);
-    } catch (err) {
+    if (data) {
+      setData(data);
+    } else {
       setData([]);
-      setLoading(false);
-      console.log("CM9003 data search fetch error =======>", err);
     }
+    setLoading(false);
   };
 
   const cancel = () => {

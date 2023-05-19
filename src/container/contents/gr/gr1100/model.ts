@@ -16,7 +16,6 @@ export interface IForm {
   setAreaCode: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
-  setIsCancelBtnDisabled: Function;
 }
 
 export interface ISANGPUM {
