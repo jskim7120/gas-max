@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { apiGet } from "app/axios";
 import { GR9009SEARCH } from "app/path";
 import { ICC9009SEARCH } from "./model";
-import API from "app/axios";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
@@ -45,16 +45,23 @@ function GR9008({
   useEffect(() => {}, [dataCommonDic]);
 
   const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data } = await API.get(GR9009SEARCH, { params: params });
+    // try {
+    //   setLoading(true);
+    //   const { data } = await API.get(GR9009SEARCH, { params: params });
 
-      if (data) {
-        setData(data);
-        setLoading(false);
-      }
-    } catch (err) {
-      console.log("CC9008 data search fetch error =======>", err);
+    //   if (data) {
+    //     setData(data);
+    //     setLoading(false);
+    //   }
+    // } catch (err) {
+    //   console.log("CC9008 data search fetch error =======>", err);
+    // }
+
+    setLoading(true);
+    const data = await apiGet(GR9009SEARCH, params);
+    if (data) {
+      setData(data);
+      setLoading(false);
     }
   };
 

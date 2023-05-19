@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
+import { apiGet } from "app/axios";
 import { useDispatch } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import API from "app/axios";
 import { CC1600SEARCH, CC160065, CC160062 } from "app/path";
 import {
   SearchWrapper,
@@ -56,53 +56,73 @@ function CC1600({
   }, [selected]);
 
   const fetchData = async (params: any) => {
-    try {
-      const { data: datas } = await API.get(CC1600SEARCH, { params: params });
+    // try {
+    //   const { data: datas } = await API.get(CC1600SEARCH, { params: params });
 
-      if (datas) {
-        setData(datas);
-        setSelected(datas[0]);
-      } else {
-        setData([]);
-        setSelected({});
-      }
-    } catch (err) {
+    //   if (datas) {
+    //     setData(datas);
+    //     setSelected(datas[0]);
+    //   } else {
+    //     setData([]);
+    //     setSelected({});
+    //   }
+    // } catch (err) {
+    //   setData([]);
+    //   setSelected({});
+    //   console.log("CC1600 data search fetch error =======>", err);
+    // }
+
+    const datas = await apiGet(CC1600SEARCH, params);
+    if (datas) {
+      setData(datas);
+      setSelected(datas[0]);
+    } else {
       setData([]);
       setSelected({});
-      console.log("CC1600 data search fetch error =======>", err);
     }
   };
 
   const fetchData65 = async (params: any) => {
-    try {
-      const { data: data65 } = await API.get(CC160065, { params: params });
-      if (data65) {
-        // console.log("data65:", data65);
+    // try {
+    //   const { data: data65 } = await API.get(CC160065, { params: params });
+    //   if (data65) {
+    //     // console.log("data65:", data65);
 
-        setData65(data65.data[0]);
-        setAcsAccName(data65.acsAccName);
-      } else {
-        setData65({});
-        setAcsAccName([]);
-      }
-    } catch (err) {
+    //     setData65(data65.data[0]);
+    //     setAcsAccName(data65.acsAccName);
+    //   } else {
+    //     setData65({});
+    //     setAcsAccName([]);
+    //   }
+    // } catch (err) {
+    //   setData65({});
+    //   setAcsAccName([]);
+    //   console.log("CC1600 data 65 fetch error =======>", err);
+    // }
+
+    const data65 = await apiGet(CC160065, params);
+    if (data65) {
+      // console.log("data65:", data65);
+
+      setData65(data65.data[0]);
+      setAcsAccName(data65.acsAccName);
+    } else {
       setData65({});
       setAcsAccName([]);
-      console.log("CC1600 data 65 fetch error =======>", err);
     }
   };
 
-  const fetchData62 = async (params: any) => {
-    try {
-      const { data: data62 } = await API.get(CC160062, { params: params });
-      if (data62) {
-        // console.log("data62:", data62);
-      } else {
-      }
-    } catch (err) {
-      console.log("CC1600 data 65 fetch error =======>", err);
-    }
-  };
+  // const fetchData62 = async (params: any) => {
+  //   try {
+  //     const { data: data62 } = await API.get(CC160062, { params: params });
+  //     if (data62) {
+  //       // console.log("data62:", data62);
+  //     } else {
+  //     }
+  //   } catch (err) {
+  //     console.log("CC1600 data 65 fetch error =======>", err);
+  //   }
+  // };
 
   const onClickAdd = () => {
     setIsAddBtnClicked(true);

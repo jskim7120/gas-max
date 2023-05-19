@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
 import {
   Input,
   Select,
@@ -93,7 +92,8 @@ const Form = React.forwardRef(
 
     return (
       <form
-        onSubmit={handleSubmit(submit)} autoComplete="off"
+        onSubmit={handleSubmit(submit)}
+        autoComplete="off"
         style={{ width: "410px", padding: "10px 10px 0" }}
       >
         <div

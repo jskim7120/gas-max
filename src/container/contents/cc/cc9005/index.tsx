@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import API from "app/axios";
 import {
   SearchWrapper,
   MainWrapper,

@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
 import {
   Input,
   Select,
@@ -16,7 +15,6 @@ import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { currencyMask } from "helpers/currency";
-import API from "app/axios";
 import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
 
 interface IForm {
@@ -100,7 +98,8 @@ const Form = React.forwardRef(
 
     return (
       <form
-        onSubmit={handleSubmit(submit)} autoComplete="off"
+        onSubmit={handleSubmit(submit)}
+        autoComplete="off"
         style={{ width: "410px", padding: "20px 10px" }}
       >
         <div

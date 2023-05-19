@@ -1,7 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
-import API from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";

@@ -1,9 +1,8 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Input, Select, FormGroup, Label } from "components/form/style";
 import { ICC1505FORM, emtyObj } from "./model";
 import { InputSize } from "components/componentsType";
-import API from "app/axios";
 
 interface IForm {
   data: any;
@@ -44,7 +43,8 @@ const Form = React.forwardRef(
 
     return (
       <form
-        onSubmit={handleSubmit(submit)} autoComplete="off"
+        onSubmit={handleSubmit(submit)}
+        autoComplete="off"
         style={{ width: "360px", padding: "20px 10px" }}
       >
         <FormGroup>
