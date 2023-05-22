@@ -104,7 +104,8 @@ const Form = React.forwardRef(
             for (const [key, value] of Object.entries(selected)) {
               newData[key] = null;
             }
-            newData.bpCode = res.data.tempCode;
+
+            newData.bpCode = res.tempCode;
             newData.areaCode = selected.areaCode;
             reset(newData);
           }

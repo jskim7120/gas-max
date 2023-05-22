@@ -127,7 +127,7 @@ const Form = React.forwardRef(
 
       const res: any = await apiGet(EN170065, { areaCode: code });
       if (res) {
-        setCaSwCode(res.data);
+        setCaSwCode(res);
       } else {
         setCaSwCode([]);
       }
