@@ -117,9 +117,11 @@ function Login() {
           errors={errors["username"]?.message}
           placeholder="업체명"
           className="login"
-          style={{ margin: "0 0 20px 0" }}
+          style={{ margin: "0 0 20px 0", paddingRight: "40px" }}
           fullWidth
           onKeyDown={handleKeyPress}
+          icon
+          onClickIcon={handleSubmit(getLoginInfo)}
         />
 
         <Select
