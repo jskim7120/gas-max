@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { InputSize, FieldKind } from "components/componentsType";
 import MaskedInput from "react-text-mask";
-import Loader from "components/loader";
+import { MagnifyingGlassBig } from "components/allSvgIcon";
 
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
@@ -678,7 +678,8 @@ interface IInputLoginProps {
   textAlign?: string;
   onKeyDown?: any;
   readOnly?: boolean;
-  loader?: React.ReactNode;
+  icon?: boolean;
+  onClickIcon?: any;
 }
 
 export const InputLogin = ({
@@ -696,7 +697,8 @@ export const InputLogin = ({
   textAlign,
   onKeyDown,
   readOnly,
-  loader,
+  icon,
+  onClickIcon,
 }: IInputLoginProps) => {
   return (
     <InputWrapper fullWidth={fullWidth} style={{ position: "relative" }}>
@@ -710,6 +712,22 @@ export const InputLogin = ({
         {label !== undefined && (
           <Label className={className && className}>{label}</Label>
         )}
+        {icon && (
+          <span
+            style={{
+              position: "absolute",
+              right: "0px",
+              top: "0px",
+              width: "40px",
+              height: "40px",
+              padding: "6px",
+              cursor: "pointer",
+            }}
+            onClick={onClickIcon && onClickIcon}
+          >
+            <MagnifyingGlassBig color="#333" />
+          </span>
+        )}
 
         <InputForm
           id={register?.name}
@@ -719,7 +737,7 @@ export const InputLogin = ({
           {...register}
           value={value && value}
           placeholder={placeholder}
-          style={style}
+          style={style && style}
           className={className}
           kind={kind && kind}
           textAlign={textAlign && textAlign}

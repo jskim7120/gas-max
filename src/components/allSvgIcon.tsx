@@ -1079,7 +1079,7 @@ export const DeliveryTruck = ({
   );
 };
 
-export const MagnifyingGlass = () => {
+export const MagnifyingGlass = ({ color = "#fff" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -1104,7 +1104,7 @@ export const MagnifyingGlass = () => {
           data-name="Path 2751"
           d="M8.9,8.664l-2.44-2.44a3.718,3.718,0,1,0-.238.238L8.664,8.9A.168.168,0,0,0,8.9,8.664ZM3.728,7.1A3.37,3.37,0,1,1,7.1,3.728,3.374,3.374,0,0,1,3.728,7.1Z"
           transform="translate(-1 2)"
-          stroke="#fff"
+          stroke={color}
           strokeWidth="1"
         />
       </g>
@@ -4773,7 +4773,11 @@ export const UserCm1300Icon = () => {
   );
 };
 
-export const MagnifyingGlassBig = ({ width = "20.89", height = "20.832" }) => {
+export const MagnifyingGlassBig = ({
+  width = "20.89",
+  height = "20.832",
+  color = "#fff",
+}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -4796,7 +4800,7 @@ export const MagnifyingGlassBig = ({ width = "20.89", height = "20.832" }) => {
             data-name="Ellipse 15"
             transform="translate(-4.375 -2.375)"
             fill="none"
-            stroke="#fff"
+            stroke={color}
             strokeWidth="2"
           >
             <circle cx="8.352" cy="8.352" r="8.352" stroke="none" />
@@ -4809,7 +4813,7 @@ export const MagnifyingGlassBig = ({ width = "20.89", height = "20.832" }) => {
           d="M3863.345,7217.265l5.427,5.427"
           transform="translate(-2020.633 -7057.846)"
           fill="none"
-          stroke="#fff"
+          stroke={color}
           strokeLinecap="round"
           strokeWidth="2"
         />
