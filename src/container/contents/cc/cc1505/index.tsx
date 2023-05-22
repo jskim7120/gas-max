@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
+import { apiGet } from "app/axios";
 import { useDispatch } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import {
@@ -12,7 +13,6 @@ import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import { fields, columns } from "./data";
 import { ICC1505SEARCH } from "./model";
 import GridLeft from "components/grid";
-import API from "app/axios";
 import { CC1505SEARCH, CC150565 } from "app/path";
 import Form from "./form";
 import FourButtons from "components/button/fourButtons";
@@ -54,34 +54,50 @@ function CC1505({
   }, [selected]);
 
   const fetchData = async (params: any) => {
-    try {
-      const { data: datas } = await API.get(CC1505SEARCH, { params: params });
+    // try {
+    //   const { data: datas } = await API.get(CC1505SEARCH, { params: params });
 
-      if (datas) {
-        setData(datas);
-        setSelected(datas[0]);
-      } else {
-        setData([]);
-        setSelected({});
-      }
-    } catch (err) {
+    //   if (datas) {
+    //     setData(datas);
+    //     setSelected(datas[0]);
+    //   } else {
+    //     setData([]);
+    //     setSelected({});
+    //   }
+    // } catch (err) {
+    //   setData([]);
+    //   setSelected({});
+    //   console.log("CC1505 data search fetch error =======>", err);
+    // }
+
+    const datas = await apiGet(CC1505SEARCH, params);
+    if (datas) {
+      setData(datas);
+      setSelected(datas[0]);
+    } else {
       setData([]);
       setSelected({});
-      console.log("CC1505 data search fetch error =======>", err);
     }
   };
 
   const fetchData65 = async (params: any) => {
-    try {
-      const { data: data65 } = await API.get(CC150565, { params: params });
-      if (data65) {
-        setData65(data65[0]);
-      } else {
-        setData65({});
-      }
-    } catch (err) {
+    // try {
+    //   const { data: data65 } = await API.get(CC150565, { params: params });
+    //   if (data65) {
+    //     setData65(data65[0]);
+    //   } else {
+    //     setData65({});
+    //   }
+    // } catch (err) {
+    //   setData65({});
+    //   console.log("CC1505 data 65 fetch error =======>", err);
+    // }
+
+    const data65 = await apiGet(CC150565, params);
+    if (data65) {
+      setData65(data65[0]);
+    } else {
       setData65({});
-      console.log("CC1505 data 65 fetch error =======>", err);
     }
   };
 

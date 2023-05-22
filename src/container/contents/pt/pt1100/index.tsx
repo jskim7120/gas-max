@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { useDispatch } from "app/store";
 import { openModal, ptAreaCode } from "app/state/modal/modalSlice";
@@ -91,36 +91,59 @@ function PT1100({
   }, [sCheck]);
 
   const fetch65Data = async (params: any) => {
-    try {
-      const { data } = await API.get(PT110065, {
-        params: { areaCode: params.areaCode, cuCode: params.cuCode },
-      });
+    // try {
+    //   const { data } = await API.get(PT110065, {
+    //     params: { areaCode: params.areaCode, cuCode: params.cuCode },
+    //   });
 
-      if (data) {
-        setData65(data);
-      }
-    } catch (err) {
-      console.log("PT110065 data search fetch error =======>", err);
+    //   if (data) {
+    //     setData65(data);
+    //   }
+    // } catch (err) {
+    //   console.log("PT110065 data search fetch error =======>", err);
+    // }
+
+    const data = await apiGet(PT110065, {
+      areaCode: params.areaCode,
+      cuCode: params.cuCode,
+    });
+
+    if (data) {
+      setData65(data);
     }
   };
 
   const fetchDataSearch1 = async (params: any) => {
-    try {
-      setLoading1(true);
-      if (params.sCheck) {
-        params.sCheck = "Y";
-      } else {
-        params.sCheck = "N";
-      }
-      const { data } = await API.get(PT1100SEARCH, { params: params });
-      if (data) {
-        setData(data);
-        setLoading1(false);
-        setSelectedRowIndex(0);
-        setTotMisukun(await calcTotal("cuJmisu", data));
-      }
-    } catch (err) {
-      console.log("PT1100 data search fetch error =======>", err);
+    // try {
+    //   setLoading1(true);
+    //   if (params.sCheck) {
+    //     params.sCheck = "Y";
+    //   } else {
+    //     params.sCheck = "N";
+    //   }
+    //   const { data } = await API.get(PT1100SEARCH, { params: params });
+    //   if (data) {
+    //     setData(data);
+    //     setLoading1(false);
+    //     setSelectedRowIndex(0);
+    //     setTotMisukun(await calcTotal("cuJmisu", data));
+    //   }
+    // } catch (err) {
+    //   console.log("PT1100 data search fetch error =======>", err);
+    // }
+
+    setLoading1(true);
+    if (params.sCheck) {
+      params.sCheck = "Y";
+    } else {
+      params.sCheck = "N";
+    }
+    const data = await apiGet(PT1100SEARCH, params);
+    if (data) {
+      setData(data);
+      setLoading1(false);
+      setSelectedRowIndex(0);
+      setTotMisukun(await calcTotal("cuJmisu", data));
     }
   };
 
@@ -133,19 +156,30 @@ function PT1100({
   const fetchDataSearch2 = async (params: any) => {
     params.sMsdateF = DateWithoutDash(params.sMsdateF);
     params.sMsdateT = DateWithoutDash(params.sMsdateT);
-    try {
-      setLoading2(true);
-      const { data } = await API.get(PT1100SEARCH62, { params: params });
+    // try {
+    //   setLoading2(true);
+    //   const { data } = await API.get(PT1100SEARCH62, { params: params });
 
-      if (data) {
-        setDataSecond(data);
-        setLoading2(false);
-        setSelectedRowIndex(0);
-        setTotSukum(await calcTotal("msKumack", data));
-        setTotDc(await calcTotal("msDc", data));
-      }
-    } catch (err) {
-      console.log("PT110062 data search fetch error =======>", err);
+    //   if (data) {
+    //     setDataSecond(data);
+    //     setLoading2(false);
+    //     setSelectedRowIndex(0);
+    //     setTotSukum(await calcTotal("msKumack", data));
+    //     setTotDc(await calcTotal("msDc", data));
+    //   }
+    // } catch (err) {
+    //   console.log("PT110062 data search fetch error =======>", err);
+    // }
+
+    setLoading2(true);
+    const data = await apiGet(PT1100SEARCH62, params);
+
+    if (data) {
+      setDataSecond(data);
+      setLoading2(false);
+      setSelectedRowIndex(0);
+      setTotSukum(await calcTotal("msKumack", data));
+      setTotDc(await calcTotal("msDc", data));
     }
   };
 

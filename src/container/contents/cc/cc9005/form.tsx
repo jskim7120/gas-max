@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
 import {
   Input,
   Select,
@@ -14,7 +13,6 @@ import {
 import { ICC9005FORM } from "./model";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import API from "app/axios";
 import {
   Item,
   RadioButton,
@@ -74,7 +72,8 @@ const Form = React.forwardRef(
 
     return (
       <form
-        onSubmit={handleSubmit(submit)} autoComplete="off"
+        onSubmit={handleSubmit(submit)}
+        autoComplete="off"
         style={{ width: "410px", padding: "10px 10px" }}
       >
         <FormGroup>

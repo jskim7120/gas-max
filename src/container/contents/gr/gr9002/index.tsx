@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { apiGet } from "app/axios";
 import { CM9002SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import API from "app/axios";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -48,24 +48,36 @@ function GR9002({
   }, [dataCommonDic]);
 
   const fetchData = async (params: any) => {
-    try {
-      params.sDate = DateWithoutDash(params.sDate);
-      params.eDate = DateWithoutDash(params.eDate);
+    // try {
+    //   params.sDate = DateWithoutDash(params.sDate);
+    //   params.eDate = DateWithoutDash(params.eDate);
 
-      setLoading(true);
-      const { data } = await API.get(CM9002SEARCH, { params: params });
-      console.log("data:", data);
-      if (data) {
-        setData(data);
-      } else {
-        setData([]);
-      }
-      setLoading(false);
-    } catch (err) {
+    //   setLoading(true);
+    //   const { data } = await API.get(CM9002SEARCH, { params: params });
+    //   console.log("data:", data);
+    //   if (data) {
+    //     setData(data);
+    //   } else {
+    //     setData([]);
+    //   }
+    //   setLoading(false);
+    // } catch (err) {
+    //   setData([]);
+    //   setLoading(false);
+    //   console.log("CM9001 DATA fetch error =======>", err);
+    // }
+
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
+
+    setLoading(true);
+    const data = await apiGet(CM9002SEARCH, params);
+    if (data) {
+      setData(data);
+    } else {
       setData([]);
-      setLoading(false);
-      console.log("CM9001 DATA fetch error =======>", err);
     }
+    setLoading(false);
   };
 
   const submit = (data: ISEARCH) => {

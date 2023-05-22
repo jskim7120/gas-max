@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import { apiGet } from "app/axios";
 import { useDispatch } from "app/store";
 import { CC1200SEARCH } from "app/path";
 import { ICC1200SEARCH } from "./model";
 import GridLeft from "components/grid";
-import API from "app/axios";
 import CheckBox from "components/checkbox";
 import {
   MainWrapper,
@@ -88,17 +88,26 @@ function CC1200({
   }, [selected]);
 
   const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data } = await API.get(CC1200SEARCH, { params: params });
-      console.log("data irev:", data);
-      if (data) {
-        setData(data);
-        setLoading(false);
-        setSelectedRowIndex(0);
-      }
-    } catch (err) {
-      console.log("CC1200 data search fetch error =======>", err);
+    // try {
+    //   setLoading(true);
+    //   const { data } = await API.get(CC1200SEARCH, { params: params });
+    //   console.log("data irev:", data);
+    //   if (data) {
+    //     setData(data);
+    //     setLoading(false);
+    //     setSelectedRowIndex(0);
+    //   }
+    // } catch (err) {
+    //   console.log("CC1200 data search fetch error =======>", err);
+    // }
+
+    setLoading(true);
+    const data = await apiGet(CC1200SEARCH, params);
+    console.log("data irev:", data);
+    if (data) {
+      setData(data);
+      setLoading(false);
+      setSelectedRowIndex(0);
     }
   };
 

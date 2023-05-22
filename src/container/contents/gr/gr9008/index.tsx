@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { apiGet } from "app/axios";
 import { GR9008SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import API from "app/axios";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
@@ -38,31 +38,53 @@ function GR9008({
   useEffect(() => {
     resetForm();
   }, [dataCommonDic]);
+
   const fetchData = async (params: any) => {
-    try {
-      if (params.sDate !== undefined) {
-        // params.sDate =
-        //   typeof params.sDate === "string"
-        //     ? formatDateByRemoveDash(params.sDate)
-        //     : formatDateToStringWithoutDash(params.sDate);
-        params.sDate = DateWithoutDash(params.sDate);
-      }
-      if (params.eDate !== undefined) {
-        // params.eDate =
-        //   typeof params.eDate === "string"
-        //     ? formatDateByRemoveDash(params.eDate)
-        //     : formatDateToStringWithoutDash(params.eDate);
-        params.eDate = DateWithoutDash(params.eDate);
-      }
-      setLoading(true);
-      const { data } = await API.get(GR9008SEARCH, { params: params });
-      if (data) {
-        setData(data);
-        setLoading(false);
-      }
-    } catch (err) {
+    // try {
+    //   if (params.sDate !== undefined) {
+    //     // params.sDate =
+    //     //   typeof params.sDate === "string"
+    //     //     ? formatDateByRemoveDash(params.sDate)
+    //     //     : formatDateToStringWithoutDash(params.sDate);
+    //     params.sDate = DateWithoutDash(params.sDate);
+    //   }
+    //   if (params.eDate !== undefined) {
+    //     // params.eDate =
+    //     //   typeof params.eDate === "string"
+    //     //     ? formatDateByRemoveDash(params.eDate)
+    //     //     : formatDateToStringWithoutDash(params.eDate);
+    //     params.eDate = DateWithoutDash(params.eDate);
+    //   }
+    //   setLoading(true);
+    //   const { data } = await API.get(GR9008SEARCH, { params: params });
+    //   if (data) {
+    //     setData(data);
+    //     setLoading(false);
+    //   }
+    // } catch (err) {
+    //   setLoading(false);
+    //   console.log("GR9008 DATA fetch error =======>", err);
+    // }
+
+    if (params.sDate !== undefined) {
+      // params.sDate =
+      //   typeof params.sDate === "string"
+      //     ? formatDateByRemoveDash(params.sDate)
+      //     : formatDateToStringWithoutDash(params.sDate);
+      params.sDate = DateWithoutDash(params.sDate);
+    }
+    if (params.eDate !== undefined) {
+      // params.eDate =
+      //   typeof params.eDate === "string"
+      //     ? formatDateByRemoveDash(params.eDate)
+      //     : formatDateToStringWithoutDash(params.eDate);
+      params.eDate = DateWithoutDash(params.eDate);
+    }
+    setLoading(true);
+    const data = await apiGet(GR9008SEARCH, params);
+    if (data) {
+      setData(data);
       setLoading(false);
-      console.log("GR9008 DATA fetch error =======>", err);
     }
   };
 

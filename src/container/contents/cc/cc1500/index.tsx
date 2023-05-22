@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { apiGet } from "app/axios";
 import { useDispatch } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import API from "app/axios";
 import GridLeft from "components/grid";
 import { CC1500SEARCH, CC150065 } from "app/path";
 import {
@@ -109,43 +109,63 @@ function CC1500({
   };
 
   const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data: dataCC1500 } = await API.get(CC1500SEARCH, {
-        params: params,
-      });
+    // try {
+    //   setLoading(true);
+    //   const { data: dataCC1500 } = await API.get(CC1500SEARCH, {
+    //     params: params,
+    //   });
 
-      if (dataCC1500) {
-        setData(dataCC1500);
-      } else {
-        setData([]);
-      }
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
+    //   if (dataCC1500) {
+    //     setData(dataCC1500);
+    //   } else {
+    //     setData([]);
+    //   }
+    //   setLoading(false);
+    // } catch (err) {
+    //   setLoading(false);
+    //   setData([]);
+    //   console.log("CC1500 data search fetch error =======>", err);
+    // }
+
+    setLoading(true);
+    const dataCC1500 = await apiGet(CC1500SEARCH, params);
+    if (dataCC1500) {
+      setData(dataCC1500);
+    } else {
       setData([]);
-      console.log("CC1500 data search fetch error =======>", err);
     }
+    setLoading(false);
   };
 
   const fetchData65 = async (params: any) => {
-    try {
-      const { data: dataCC150065 } = await API.get(CC150065, {
-        params: params,
-      });
+    // try {
+    //   const { data: dataCC150065 } = await API.get(CC150065, {
+    //     params: params,
+    //   });
 
-      if (dataCC150065) {
-        setData65({
-          ...dataCC150065[0],
-          areaCode: selected.areaCode,
-          cjDate: selected.cjDate,
-        });
-      } else {
-        setData65([]);
-      }
-    } catch (err) {
+    //   if (dataCC150065) {
+    //     setData65({
+    //       ...dataCC150065[0],
+    //       areaCode: selected.areaCode,
+    //       cjDate: selected.cjDate,
+    //     });
+    //   } else {
+    //     setData65([]);
+    //   }
+    // } catch (err) {
+    //   setData65([]);
+    //   console.log("CC1500 65 fetch error =======>", err);
+    // }
+
+    const dataCC150065 = await apiGet(CC150065, params);
+    if (dataCC150065) {
+      setData65({
+        ...dataCC150065[0],
+        areaCode: selected.areaCode,
+        cjDate: selected.cjDate,
+      });
+    } else {
       setData65([]);
-      console.log("CC1500 65 fetch error =======>", err);
     }
   };
 

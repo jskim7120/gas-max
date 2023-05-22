@@ -1,7 +1,6 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import { EN1400DELETE, EN140011 } from "app/path";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
@@ -80,24 +79,34 @@ const Form = React.forwardRef(
           document.getElementById("bpName")?.focus();
           const path = EN140011;
 
-          try {
-            const response: any = await API.get(path, {
-              params: { areaCode: selected.areaCode },
-            });
-            if (response.status === 200) {
-              for (const [key, value] of Object.entries(selected)) {
-                newData[key] = null;
-              }
-              newData.bpCode = response.data.tempCode;
-              newData.areaCode = selected.areaCode;
-              reset(newData);
-            } else {
-              toast.error(response.response.data?.message, {
-                autoClose: 500,
-              });
+          // try {
+          //   const response: any = await API.get(path, {
+          //     params: { areaCode: selected.areaCode },
+          //   });
+          //   if (response.status === 200) {
+          //     for (const [key, value] of Object.entries(selected)) {
+          //       newData[key] = null;
+          //     }
+          //     newData.bpCode = response.data.tempCode;
+          //     newData.areaCode = selected.areaCode;
+          //     reset(newData);
+          //   } else {
+          //     toast.error(response.response.data?.message, {
+          //       autoClose: 500,
+          //     });
+          //   }
+          // } catch (err: any) {
+          //   console.log("areaCode select error", err);
+          // }
+
+          const res: any = await apiGet(path, { areaCode: selected.areaCode });
+          if (res) {
+            for (const [key, value] of Object.entries(selected)) {
+              newData[key] = null;
             }
-          } catch (err: any) {
-            console.log("areaCode select error", err);
+            newData.bpCode = res.data.tempCode;
+            newData.areaCode = selected.areaCode;
+            reset(newData);
           }
         } else if (type === "reset") {
           for (const [key, value] of Object.entries(selected)) {
@@ -113,19 +122,22 @@ const Form = React.forwardRef(
       if (type === "delete") {
         const formValues = getValues();
 
-        try {
-          const response = await API.post(EN1400DELETE, formValues);
-          if (response.status === 200) {
-            toast.success("삭제하였습니다", {
-              autoClose: 500,
-            });
-            await fetchData();
-          }
-        } catch (err) {
-          toast.error("Couldn't delete", {
-            autoClose: 500,
-          });
-        }
+        // try {
+        //   const response = await API.post(EN1400DELETE, formValues);
+        //   if (response.status === 200) {
+        //     toast.success("삭제하였습니다", {
+        //       autoClose: 500,
+        //     });
+        //     await fetchData();
+        //   }
+        // } catch (err) {
+        //   toast.error("Couldn't delete", {
+        //     autoClose: 500,
+        //   });
+        // }
+
+        const res = await apiPost(EN1400DELETE, formValues, "삭제하였습니다");
+        res && (await fetchData());
       }
 
       if (type === null) {

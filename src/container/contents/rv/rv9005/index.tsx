@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { RV9005SEARCH } from "app/path";
 import { IRV9005SEARCH } from "./model";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
@@ -101,23 +101,33 @@ function RV9005({
   };
 
   const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data: dataRV9005 } = await API.get(RV9005SEARCH, {
-        params: params,
-      });
+    // try {
+    //   setLoading(true);
+    //   const { data: dataRV9005 } = await API.get(RV9005SEARCH, {
+    //     params: params,
+    //   });
 
-      if (dataRV9005) {
-        setData(dataRV9005);
-      } else {
-        setData([]);
-      }
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
+    //   if (dataRV9005) {
+    //     setData(dataRV9005);
+    //   } else {
+    //     setData([]);
+    //   }
+    //   setLoading(false);
+    // } catch (err) {
+    //   setLoading(false);
+    //   setData([]);
+    //   console.log("RV9005 data search fetch error =======>", err);
+    // }
+
+    setLoading(true);
+    const dataRV9005 = await apiGet(RV9005SEARCH, params);
+
+    if (dataRV9005) {
+      setData(dataRV9005);
+    } else {
       setData([]);
-      console.log("RV9005 data search fetch error =======>", err);
     }
+    setLoading(false);
   };
 
   const submit = (params: any) => {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { apiGet } from "app/axios";
 import { useDispatch } from "app/store";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import API from "app/axios";
 import { CC1700SEARCH, CC170065 } from "app/path";
 import {
   SearchWrapper,
@@ -82,35 +82,52 @@ function CC1700({
   const submit = (params: any) => {};
 
   const fetchData = async (params: any) => {
-    try {
-      const { data: datas } = await API.get(CC1700SEARCH, { params: params });
+    // try {
+    //   const { data: datas } = await API.get(CC1700SEARCH, { params: params });
 
-      if (datas) {
-        setData(datas);
-        setSelected(datas[0]);
-      } else {
-        setData([]);
-        setSelected({});
-      }
-    } catch (err) {
+    //   if (datas) {
+    //     setData(datas);
+    //     setSelected(datas[0]);
+    //   } else {
+    //     setData([]);
+    //     setSelected({});
+    //   }
+    // } catch (err) {
+    //   setData([]);
+    //   setSelected({});
+    //   console.log("CC1700 data search fetch error =======>", err);
+    // }
+
+    const datas = await apiGet(CC1700SEARCH, params);
+
+    if (datas) {
+      setData(datas);
+      setSelected(datas[0]);
+    } else {
       setData([]);
       setSelected({});
-      console.log("CC1700 data search fetch error =======>", err);
     }
   };
 
   const fetchData65 = async (params: any) => {
-    try {
-      const { data: data65 } = await API.get(CC170065, { params: params });
-      if (data65 && data65?.length > 0) {
-        setData65(data65[0]);
-      } else {
-        setData65({});
-      }
-    } catch (err) {
-      setData65({});
+    // try {
+    //   const { data: data65 } = await API.get(CC170065, { params: params });
+    //   if (data65 && data65?.length > 0) {
+    //     setData65(data65[0]);
+    //   } else {
+    //     setData65({});
+    //   }
+    // } catch (err) {
+    //   setData65({});
 
-      console.log("CC1700 data 65 fetch error =======>", err);
+    //   console.log("CC1700 data 65 fetch error =======>", err);
+    // }
+
+    const data65 = await apiGet(CC170065, params);
+    if (data65 && data65?.length > 0) {
+      setData65(data65[0]);
+    } else {
+      setData65({});
     }
   };
 

@@ -4,7 +4,6 @@ import { useDispatch } from "app/store";
 import { CC1100SEARCH } from "app/path";
 import { ICC9002SEARCH } from "./model";
 import GridLeft from "components/grid";
-import API from "app/axios";
 import CheckBox from "components/checkbox";
 import {
   MainWrapper,

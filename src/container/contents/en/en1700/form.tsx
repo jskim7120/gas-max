@@ -1,7 +1,6 @@
 import React, { useEffect, useImperativeHandle, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import {
   EN1700INSERT,
@@ -93,51 +92,54 @@ const Form = React.forwardRef(
       resetForm,
     }));
 
-    const fetchCode11 = async (code: string) => {
-      try {
-        const response: any = await API.get(EN170011, {
-          params: { areaCode: code },
-        });
-        if (response.status === 200) {
-          return response?.data;
-        } else {
-          alert(response?.response?.data?.message);
-          resetButtonCombination();
-        }
-        return null;
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    // const fetchCode11 = async (code: string) => {
+    //   try {
+    //     const response: any = await API.get(EN170011, {
+    //       params: { areaCode: code },
+    //     });
+    //     if (response.status === 200) {
+    //       return response?.data;
+    //     } else {
+    //       alert(response?.response?.data?.message);
+    //       resetButtonCombination();
+    //     }
+    //     return null;
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
 
     const fetchData65 = async (code: string) => {
-      try {
-        const res: any = await API.get(EN170065, {
-          params: { areaCode: code },
-        });
+      // try {
+      //   const res: any = await API.get(EN170065, {
+      //     params: { areaCode: code },
+      //   });
 
-        if (res.status === 200) {
-          setCaSwCode(res.data);
-        } else {
-          setCaSwCode([]);
-        }
-      } catch (err) {
+      //   if (res.status === 200) {
+      //     setCaSwCode(res.data);
+      //   } else {
+      //     setCaSwCode([]);
+      //   }
+      // } catch (err) {
+      //   setCaSwCode([]);
+      //   console.log(err);
+      // }
+
+      const res: any = await apiGet(EN170065, { areaCode: code });
+      if (res) {
+        setCaSwCode(res.data);
+      } else {
         setCaSwCode([]);
-        console.log(err);
       }
     };
 
     const codeChangeHandler = async (aCode: string) => {
-      try {
-        const temp = await fetchCode11(aCode);
-        await fetchData65(aCode);
+      const res = await apiGet(EN170011, { areaCode: aCode });
+      await fetchData65(aCode);
 
-        if (temp !== null) {
-          setFocus("caName");
-          reset({ ...emptyObj, ...temp, caCode: temp.tempCode });
-        }
-      } catch (err: any) {
-        console.log("caCode generate error", err);
+      if (res) {
+        setFocus("caName");
+        reset({ ...emptyObj, ...res, caCode: res.tempCode });
       }
     };
 
@@ -170,20 +172,23 @@ const Form = React.forwardRef(
         delete formValues.caDiscountAmt;
         delete formValues.caInsuranceAmt;
 
-        try {
-          const response: any = await API.post(EN1700DELETE, formValues);
-          if (response.status === 200) {
-            toast.success("삭제하였습니다", {
-              autoClose: 500,
-            });
-            await fetchData();
-          } else {
-            alert(response?.response?.data?.message);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-        return;
+        // try {
+        //   const response: any = await API.post(EN1700DELETE, formValues);
+        //   if (response.status === 200) {
+        //     toast.success("삭제하였습니다", {
+        //       autoClose: 500,
+        //     });
+        //     await fetchData();
+        //   } else {
+        //     alert(response?.response?.data?.message);
+        //   }
+        // } catch (err) {
+        //   console.log(err);
+        // }
+
+        const res = await apiPost(EN1700DELETE, formValues, "삭제하였습니다");
+        res && (await fetchData());
+        //return;
       }
 
       if (type === null) {
@@ -222,24 +227,34 @@ const Form = React.forwardRef(
         "number"
       );
 
-      try {
-        const response: any = await API.post(path, formValues);
-        if (response.status === 200) {
-          if (isAddBtnClicked) {
-            setIsAddBtnClicked(false);
-            await fetchData("pos");
-          } else {
-            await fetchData();
-          }
+      // try {
+      //   const response: any = await API.post(path, formValues);
+      //   if (response.status === 200) {
+      //     if (isAddBtnClicked) {
+      //       setIsAddBtnClicked(false);
+      //       await fetchData("pos");
+      //     } else {
+      //       await fetchData();
+      //     }
 
-          toast.success("저장이 성공하였습니다", {
-            autoClose: 500,
-          });
+      //     toast.success("저장이 성공하였습니다", {
+      //       autoClose: 500,
+      //     });
+      //   } else {
+      //     alert(response?.response?.data?.message);
+      //   }
+      // } catch (err: any) {
+      //   console.log(err);
+      // }
+
+      const res = await apiPost(path, formValues, "저장이 성공하였습니다");
+      if (res) {
+        if (isAddBtnClicked) {
+          setIsAddBtnClicked(false);
+          await fetchData("last");
         } else {
-          alert(response?.response?.data?.message);
+          await fetchData();
         }
-      } catch (err: any) {
-        console.log(err);
       }
     };
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { apiGet } from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
-import API from "app/axios";
 import { GR1600SEARCH } from "app/path";
 import { InputSize, ButtonColor, ButtonType } from "components/componentsType";
 import Button from "components/button/button";
@@ -75,22 +75,33 @@ function GR1600({
   }, [dataCommonDic]);
 
   const fetchData = async (params: any) => {
-    try {
-      if (params?.buGubun && params.buGubun === "9") {
-        delete params.buGubun;
-      }
-      setLoading(true);
-      const { data: SEARCHDATA } = await API.get(GR1600SEARCH, {
-        params: params,
-      });
+    // try {
+    //   if (params?.buGubun && params.buGubun === "9") {
+    //     delete params.buGubun;
+    //   }
+    //   setLoading(true);
+    //   const { data: SEARCHDATA } = await API.get(GR1600SEARCH, {
+    //     params: params,
+    //   });
 
-      if (SEARCHDATA) {
-        setData(SEARCHDATA);
-        setLoading(false);
-      }
-    } catch (error) {
+    //   if (SEARCHDATA) {
+    //     setData(SEARCHDATA);
+    //     setLoading(false);
+    //   }
+    // } catch (error) {
+    //   setLoading(false);
+    //   console.log("GR1600 DATA fetch error =======>", error);
+    // }
+
+    if (params?.buGubun && params.buGubun === "9") {
+      delete params.buGubun;
+    }
+    setLoading(true);
+    const SEARCHDATA = await apiGet(GR1600SEARCH, params);
+
+    if (SEARCHDATA) {
+      setData(SEARCHDATA);
       setLoading(false);
-      console.log("GR1600 DATA fetch error =======>", error);
     }
   };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
+import { apiGet } from "app/axios";
 import { useSelector, useDispatch } from "app/store";
-import API from "app/axios";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -77,37 +77,63 @@ function FormIP1105() {
   };
 
   const fetchSearchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data } = await API.get(PT1105SEARCH, {
-        params: { sCuCode: params.sCuCode, areaCode: ptAreaCode },
-      });
+    // try {
+    //   setLoading(true);
+    //   const { data } = await API.get(PT1105SEARCH, {
+    //     params: { sCuCode: params.sCuCode, areaCode: ptAreaCode },
+    //   });
 
-      if (data) {
-        setData(data);
-        setLoading(false);
-        setSelected(data[0]);
-        setSelectedRowIndex(0);
-      }
-    } catch (err) {
-      console.log("PT1105 data search fetch error =======>", err);
+    //   if (data) {
+    //     setData(data);
+    //     setLoading(false);
+    //     setSelected(data[0]);
+    //     setSelectedRowIndex(0);
+    //   }
+    // } catch (err) {
+    //   console.log("PT1105 data search fetch error =======>", err);
+    // }
+
+    setLoading(true);
+    const data = await apiGet(PT1105SEARCH, {
+      sCuCode: params.sCuCode,
+      areaCode: ptAreaCode,
+    });
+
+    if (data) {
+      setData(data);
+      setLoading(false);
+      setSelected(data[0]);
+      setSelectedRowIndex(0);
     }
   };
   const firstFetchData = async () => {
-    try {
-      setLoading(true);
-      const { data } = await API.get(PT1105SEARCH, {
-        params: { sCuCode: ptScuCode, areaCode: ptAreaCode },
-      });
+    // try {
+    //   setLoading(true);
+    //   const { data } = await API.get(PT1105SEARCH, {
+    //     params: { sCuCode: ptScuCode, areaCode: ptAreaCode },
+    //   });
 
-      if (data) {
-        setData(data);
-        setLoading(false);
-        setSelected(data[0]);
-        setSelectedRowIndex(0);
-      }
-    } catch (err) {
-      console.log("PT1105 data search fetch error =======>", err);
+    //   if (data) {
+    //     setData(data);
+    //     setLoading(false);
+    //     setSelected(data[0]);
+    //     setSelectedRowIndex(0);
+    //   }
+    // } catch (err) {
+    //   console.log("PT1105 data search fetch error =======>", err);
+    // }
+
+    setLoading(true);
+    const data = await apiGet(PT1105SEARCH, {
+      sCuCode: ptScuCode,
+      areaCode: ptAreaCode,
+    });
+
+    if (data) {
+      setData(data);
+      setLoading(false);
+      setSelected(data[0]);
+      setSelectedRowIndex(0);
     }
   };
 

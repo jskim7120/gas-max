@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { apiGet } from "app/axios";
 import { useDispatch } from "app/store";
 import { CC1100SEARCH } from "app/path";
 import { ICC1100SEARCH } from "./model";
 import GridLeft from "components/grid";
-import API from "app/axios";
 import {
   MainWrapper,
   SearchWrapper,
@@ -80,20 +80,29 @@ function CC1100({
   };
 
   const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data } = await API.get(CC1100SEARCH, { params: params });
-      if (data) {
-        setData(data);
-      } else {
-        setData([]);
-      }
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
+    // try {
+    //   setLoading(true);
+    //   const { data } = await API.get(CC1100SEARCH, { params: params });
+    //   if (data) {
+    //     setData(data);
+    //   } else {
+    //     setData([]);
+    //   }
+    //   setLoading(false);
+    // } catch (err) {
+    //   setLoading(false);
+    //   setData([]);
+    //   console.log("CC1100 data search fetch error =======>", err);
+    // }
+
+    setLoading(true);
+    const data = await apiGet(CC1100SEARCH, params);
+    if (data) {
+      setData(data);
+    } else {
       setData([]);
-      console.log("CC1100 data search fetch error =======>", err);
     }
+    setLoading(false);
   };
 
   const onClickAdd = () => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { apiGet } from "app/axios";
 import { GR9006SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import API from "app/axios";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -12,7 +12,6 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import CustomTopPart from "container/contents/customTopPart";
 
 import Grid from "./grid";
 
@@ -40,23 +39,35 @@ function GR9006({
   }, [dataCommonDic]);
 
   const fetchData = async (params: any) => {
-    try {
-      params.sDate = DateWithoutDash(params.sDate);
-      params.eDate = DateWithoutDash(params.eDate);
+    // try {
+    //   params.sDate = DateWithoutDash(params.sDate);
+    //   params.eDate = DateWithoutDash(params.eDate);
 
-      setLoading(true);
-      const { data } = await API.get(GR9006SEARCH, { params: params });
-      if (data) {
-        setData(data);
-      } else {
-        setData([]);
-      }
-      setLoading(false);
-    } catch (err) {
+    //   setLoading(true);
+    //   const { data } = await API.get(GR9006SEARCH, { params: params });
+    //   if (data) {
+    //     setData(data);
+    //   } else {
+    //     setData([]);
+    //   }
+    //   setLoading(false);
+    // } catch (err) {
+    //   setData([]);
+    //   setLoading(false);
+    //   console.log("CM9006 DATA fetch error =======>", err);
+    // }
+
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
+
+    setLoading(true);
+    const data = await apiGet(GR9006SEARCH, params);
+    if (data) {
+      setData(data);
+    } else {
       setData([]);
-      setLoading(false);
-      console.log("CM9006 DATA fetch error =======>", err);
     }
+    setLoading(false);
   };
 
   const submit = (data: ISEARCH) => {

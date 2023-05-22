@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { apiGet } from "app/axios";
 import { GR9004SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import API from "app/axios";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
@@ -50,31 +50,53 @@ function GR9004({
   useEffect(() => {
     resetForm();
   }, [dataCommonDic]);
+
   const fetchData = async (params: any) => {
-    try {
-      if (params.sDate !== undefined) {
-        // params.sDate =
-        //   typeof params.sDate === "string"
-        //     ? formatDateByRemoveDash(params.sDate)
-        //     : formatDateToStringWithoutDash(params.sDate);
-        params.sDate = DateWithoutDash(params.sDate);
-      }
-      if (params.eDate !== undefined) {
-        // params.eDate =
-        //   typeof params.eDate === "string"
-        //     ? formatDateByRemoveDash(params.eDate)
-        //     : formatDateToStringWithoutDash(params.eDate);
-        params.eDate = DateWithoutDash(params.eDate);
-      }
-      setLoading(true);
-      const { data } = await API.get(GR9004SEARCH, { params: params });
-      if (data) {
-        setData(data);
-        setLoading(false);
-      }
-    } catch (err) {
+    // try {
+    //   if (params.sDate !== undefined) {
+    //     // params.sDate =
+    //     //   typeof params.sDate === "string"
+    //     //     ? formatDateByRemoveDash(params.sDate)
+    //     //     : formatDateToStringWithoutDash(params.sDate);
+    //     params.sDate = DateWithoutDash(params.sDate);
+    //   }
+    //   if (params.eDate !== undefined) {
+    //     // params.eDate =
+    //     //   typeof params.eDate === "string"
+    //     //     ? formatDateByRemoveDash(params.eDate)
+    //     //     : formatDateToStringWithoutDash(params.eDate);
+    //     params.eDate = DateWithoutDash(params.eDate);
+    //   }
+    //   setLoading(true);
+    //   const { data } = await API.get(GR9004SEARCH, { params: params });
+    //   if (data) {
+    //     setData(data);
+    //     setLoading(false);
+    //   }
+    // } catch (err) {
+    //   setLoading(false);
+    //   console.log("CM9003 DATA fetch error =======>", err);
+    // }
+
+    if (params.sDate !== undefined) {
+      // params.sDate =
+      //   typeof params.sDate === "string"
+      //     ? formatDateByRemoveDash(params.sDate)
+      //     : formatDateToStringWithoutDash(params.sDate);
+      params.sDate = DateWithoutDash(params.sDate);
+    }
+    if (params.eDate !== undefined) {
+      // params.eDate =
+      //   typeof params.eDate === "string"
+      //     ? formatDateByRemoveDash(params.eDate)
+      //     : formatDateToStringWithoutDash(params.eDate);
+      params.eDate = DateWithoutDash(params.eDate);
+    }
+    setLoading(true);
+    const data = await apiGet(GR9004SEARCH, params);
+    if (data) {
+      setData(data);
       setLoading(false);
-      console.log("CM9003 DATA fetch error =======>", err);
     }
   };
 

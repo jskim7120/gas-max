@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { GR1500SEARCH1, GR1500SEARCH2 } from "app/path";
 import {
@@ -69,24 +69,36 @@ function GR1500({
   }, [selected]);
 
   const fetchDataSearch1 = async (params: any) => {
-    try {
-      setLoading1(true);
-      const { data } = await API.get(GR1500SEARCH1, { params: params });
+    // try {
+    //   setLoading1(true);
+    //   const { data } = await API.get(GR1500SEARCH1, { params: params });
 
-      if (data) {
-        setData(data);
-        setSelected(data[0]);
-      } else {
-        setData([]);
-        setSelected({});
-      }
-      setSelectedRowIndex(0);
-      setLoading1(false);
-    } catch (err) {
+    //   if (data) {
+    //     setData(data);
+    //     setSelected(data[0]);
+    //   } else {
+    //     setData([]);
+    //     setSelected({});
+    //   }
+    //   setSelectedRowIndex(0);
+    //   setLoading1(false);
+    // } catch (err) {
+    //   setData([]);
+    //   setSelected({});
+    //   console.log("GR1500 data search fetch error =======>", err);
+    // }
+
+    setLoading1(true);
+    const data = await apiGet(GR1500SEARCH1, params);
+    if (data) {
+      setData(data);
+      setSelected(data[0]);
+    } else {
       setData([]);
       setSelected({});
-      console.log("GR1500 data search fetch error =======>", err);
     }
+    setSelectedRowIndex(0);
+    setLoading1(false);
   };
 
   useEffect(() => {
@@ -96,19 +108,28 @@ function GR1500({
   }, [dataCommonDic]);
 
   const fetchDataSearch2 = async (params: any) => {
-    try {
-      setLoading2(true);
-      const { data } = await API.get(GR1500SEARCH2, { params: params });
+    // try {
+    //   setLoading2(true);
+    //   const { data } = await API.get(GR1500SEARCH2, { params: params });
 
-      if (data) {
-        setDataSecond(data);
-        setSelected2(data[0]);
-      }
-      setSelectedRowIndex(0);
-      setLoading2(false);
-    } catch (err) {
-      console.log("GR1500 data search fetch error =======>", err);
+    //   if (data) {
+    //     setDataSecond(data);
+    //     setSelected2(data[0]);
+    //   }
+    //   setSelectedRowIndex(0);
+    //   setLoading2(false);
+    // } catch (err) {
+    //   console.log("GR1500 data search fetch error =======>", err);
+    // }
+
+    setLoading2(true);
+    const data = await apiGet(GR1500SEARCH2, params);
+    if (data) {
+      setDataSecond(data);
+      setSelected2(data[0]);
     }
+    setSelectedRowIndex(0);
+    setLoading2(false);
   };
 
   const submitSearch1 = (data: IGR1500SEARCH) => {

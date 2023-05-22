@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { apiGet } from "app/axios";
 import { GR9007SEARCH } from "app/path";
 import { IGR9007SEARCH } from "./model";
-import API from "app/axios";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
@@ -53,16 +53,23 @@ function GR9007({
   }, [dataCommonDic]);
 
   const fetchData = async (params: any) => {
-    try {
-      setLoading(true);
-      const { data } = await API.get(GR9007SEARCH, { params: params });
-      console.log("data irev:", data);
-      if (data) {
-        setData(data);
-        setLoading(false);
-      }
-    } catch (err) {
-      console.log("GR9003 data search fetch error =======>", err);
+    // try {
+    //   setLoading(true);
+    //   const { data } = await API.get(GR9007SEARCH, { params: params });
+    //   console.log("data irev:", data);
+    //   if (data) {
+    //     setData(data);
+    //     setLoading(false);
+    //   }
+    // } catch (err) {
+    //   console.log("GR9003 data search fetch error =======>", err);
+    // }
+
+    setLoading(true);
+    const data = await apiGet(GR9007SEARCH, params);
+    if (data) {
+      setData(data);
+      setLoading(false);
     }
   };
 

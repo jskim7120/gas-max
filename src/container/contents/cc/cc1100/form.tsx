@@ -1,7 +1,5 @@
 import React, { useImperativeHandle, useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
-import API from "app/axios";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import { currencyMask } from "helpers/currency";
