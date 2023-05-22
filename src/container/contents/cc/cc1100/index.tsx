@@ -264,7 +264,6 @@ function CC1100({
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
-            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
             setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}

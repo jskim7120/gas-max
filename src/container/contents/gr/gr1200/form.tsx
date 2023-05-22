@@ -65,8 +65,6 @@ const Form = ({
   menuId,
   isAddBtnClicked,
   setIsAddBtnClicked,
-  isCancelBtnDisabled,
-  setIsCancelBtnDisabled,
 }: {
   dataCommonDic: any;
   selected: any;
@@ -74,8 +72,6 @@ const Form = ({
   menuId: string;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
-  isCancelBtnDisabled: boolean;
-  setIsCancelBtnDisabled: Function;
 }) => {
   const [tabId, setTabId] = useState(0);
   const [rowIndex, setRowIndex] = useState<number | null>(null);
@@ -631,7 +627,7 @@ const Form = ({
 
   const onClickAdd = () => {
     setIsAddBtnClicked(true);
-    setIsCancelBtnDisabled(false);
+
     resetForm("clear");
   };
 
@@ -660,7 +656,7 @@ const Form = ({
 
   const onClickReset = () => {
     setIsAddBtnClicked(false);
-    setIsCancelBtnDisabled(true);
+
     resetForm("reset");
   };
 

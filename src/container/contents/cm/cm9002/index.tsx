@@ -22,7 +22,6 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import Grid from "components/grid";
 import { columns, fields } from "./data";
-import CustomTopPart from "../../customTopPart";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 function CM9002({
@@ -38,7 +37,6 @@ function CM9002({
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
-  //const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [dataChk, setDataChk] = useState(true);
   const [reportKind, setReportKind] = useState("");
   const { data: dataCommonDic } = useGetCommonDictionaryQuery({
@@ -105,260 +103,244 @@ function CM9002({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <FormGroup>
-          {areaCode === "00" && (
-            <>
-              <Label style={{ minWidth: "90px" }}>영업소</Label>
+      <form onSubmit={handleSubmit(submit)} autoComplete="off">
+        <SearchWrapper className="h35 mt5">
+          <FormGroup>
+            {areaCode === "00" && (
+              <>
+                <Label style={{ minWidth: "90px" }}>영업소</Label>
 
-              <Select register={register("areaCode")}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </>
-          )}
-          <div className="buttons ml30">
-            <Button
-              text="검색"
-              icon={!loading && <MagnifyingGlass />}
-              color={ButtonColor.DANGER}
-              type="submit"
-              loader={
-                loading && (
-                  <>
-                    <Loader
-                      color="white"
-                      size={13}
-                      borderWidth="2px"
-                      style={{ marginRight: "10px" }}
+                <Select register={register("areaCode")}>
+                  {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </>
+            )}
+            <div className="buttons ml30">
+              <Button
+                text="검색"
+                icon={!loading && <MagnifyingGlass />}
+                color={ButtonColor.DANGER}
+                type="submit"
+                loader={
+                  loading && (
+                    <>
+                      <Loader
+                        color="white"
+                        size={13}
+                        borderWidth="2px"
+                        style={{ marginRight: "10px" }}
+                      />
+                    </>
+                  )
+                }
+                style={{ minWidth: "max-content" }}
+              />
+              <Button
+                text="취소"
+                icon={<ResetGray />}
+                style={{ minWidth: "max-content" }}
+                type="button"
+                color={ButtonColor.LIGHT}
+                onClick={cancel}
+              />
+              <Button
+                text="엑셀"
+                style={{ minWidth: "max-content" }}
+                icon={<ExcelIcon width="19px" height="19px" />}
+                color={ButtonColor.LIGHT}
+                type="button"
+              />
+            </div>
+          </FormGroup>
+          <p>{depthFullName}</p>
+        </SearchWrapper>
+        <SearchWrapper style={{ alignItems: "baseline" }}>
+          <div>
+            <Wrapper grid col={6} fields="1fr 1fr 1fr 1.3fr 1fr 1fr">
+              <FormGroup style={{ width: "255px" }}>
+                <Label style={{ minWidth: "90px" }}>보고서 종류</Label>
+                <Select
+                  width={InputSize.i130}
+                  register={register("reportKind")}
+                  onChange={(e) => setReportKind(e.target.value)}
+                >
+                  {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+
+              <FormGroup style={{ width: "255px" }}>
+                <Label style={{ minWidth: "90px" }}>거래 구분</Label>
+                <Select register={register("cuType")} width={InputSize.i130}>
+                  {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+
+              <FormGroup style={{ width: "255px" }}>
+                <Label style={{ minWidth: "90px" }}>지역 분류</Label>
+                <Select register={register("cuJyCode")} width={InputSize.i130}>
+                  {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+
+              <FormGroup style={{ width: "362px" }}>
+                <Label style={{ minWidth: "90px" }}>담당 사원</Label>
+                <Select
+                  register={register("swCode")}
+                  width={InputSize.i130}
+                  style={{ marginLeft: "4px" }}
+                >
+                  {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+
+              <FormGroup>
+                <Label style={{ minWidth: "90px" }}>관리 책임자</Label>
+                <Select
+                  register={register("cuCustgubun")}
+                  width={InputSize.i130}
+                >
+                  {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+              <FormGroup>
+                <Label style={{ minWidth: "90px" }}>검사 대상</Label>
+                <Select register={register("cuGumsa")} width={InputSize.i130}>
+                  {dataCommonDic?.cuGumsa?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+            </Wrapper>
+            <Wrapper grid col={6} fields="1fr 1fr 1fr 1.3fr 1fr 1fr">
+              <FormGroup style={{ width: "255px" }}>
+                <Label style={{ minWidth: "90px" }}>미수 구분</Label>
+                <Select register={register("cuMisu")} width={InputSize.i130}>
+                  {dataCommonDic?.cuMisu?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+              <FormGroup style={{ width: "255px" }}>
+                <Label style={{ minWidth: "90px" }}>소비자 형태</Label>
+                <Select register={register("cuCutype")} width={InputSize.i130}>
+                  {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+              <FormGroup style={{ width: "255px" }}>
+                <Label style={{ minWidth: "90px" }}>거래 상태</Label>
+                <Select register={register("cuStae")} width={InputSize.i130}>
+                  {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+              <Field
+                flex
+                style={{
+                  alignItems: "center",
+                  // width: "335px",
+                }}
+              >
+                <p style={{ width: "69px" }}>등록기간</p>
+                <CheckBox
+                  register={{ ...register("dataChk") }}
+                  onChange={(e: any) => setDataChk(e.target.checked)}
+                  checked={dataChk}
+                />
+                <Controller
+                  control={control}
+                  {...register("sDate")}
+                  render={({ field: { onChange, value } }) => (
+                    <CustomDatePicker
+                      value={value}
+                      onChange={onChange}
+                      style={{ marginLeft: "8px", width: "130px" }}
+                      readOnly={!dataChk}
                     />
-                  </>
-                )
-              }
-              style={{ minWidth: "max-content" }}
-            />
-            <Button
-              text="취소"
-              icon={<ResetGray />}
-              style={{ minWidth: "max-content" }}
-              type="button"
-              color={ButtonColor.LIGHT}
-              onClick={cancel}
-            />
-            <Button
-              text="엑셀"
-              style={{ minWidth: "max-content" }}
-              icon={<ExcelIcon width="19px" height="19px" />}
-              color={ButtonColor.LIGHT}
-              type="button"
-            />
+                  )}
+                />
+                <Controller
+                  control={control}
+                  {...register("eDate")}
+                  render={({ field: { onChange, value } }) => (
+                    <CustomDatePicker
+                      value={value}
+                      onChange={onChange}
+                      readOnly={!dataChk}
+                      style={{ width: "130px" }}
+                    />
+                  )}
+                />
+              </Field>
+              <FormGroup>
+                <Label style={{ minWidth: "90px" }}>수금 방법</Label>
+                <Select
+                  register={register("cuSukumtype")}
+                  width={InputSize.i130}
+                >
+                  {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+              <FormGroup>
+                <Label style={{ minWidth: "90px" }}>장부 구분</Label>
+                <Select register={register("cuJangbu")} width={InputSize.i130}>
+                  {dataCommonDic?.cuJangbu?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+            </Wrapper>
           </div>
-        </FormGroup>
-        <p>{depthFullName}</p>
-      </SearchWrapper>
+        </SearchWrapper>
+      </form>
 
       <WrapperContent style={{ height: `calc(100% - 76px)` }}>
-        <form onSubmit={handleSubmit(submit)} autoComplete="off">
-          <SearchWrapper style={{ alignItems: "baseline" }}>
-            <div>
-              <Wrapper grid col={6} fields="1fr 1fr 1fr 1.3fr 1fr 1fr">
-                <FormGroup style={{ width: "255px" }}>
-                  <Label style={{ minWidth: "90px" }}>보고서 종류</Label>
-                  <Select
-                    width={InputSize.i130}
-                    register={register("reportKind")}
-                    onChange={(e) => setReportKind(e.target.value)}
-                  >
-                    {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-
-                <FormGroup style={{ width: "255px" }}>
-                  <Label style={{ minWidth: "90px" }}>거래 구분</Label>
-                  <Select register={register("cuType")} width={InputSize.i130}>
-                    {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-
-                <FormGroup style={{ width: "255px" }}>
-                  <Label style={{ minWidth: "90px" }}>지역 분류</Label>
-                  <Select
-                    register={register("cuJyCode")}
-                    width={InputSize.i130}
-                  >
-                    {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-
-                <FormGroup style={{ width: "362px" }}>
-                  <Label style={{ minWidth: "90px" }}>담당 사원</Label>
-                  <Select
-                    register={register("swCode")}
-                    width={InputSize.i130}
-                    style={{ marginLeft: "4px" }}
-                  >
-                    {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-
-                <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>관리 책임자</Label>
-                  <Select
-                    register={register("cuCustgubun")}
-                    width={InputSize.i130}
-                  >
-                    {dataCommonDic?.cuCustgubun?.map(
-                      (obj: any, idx: number) => (
-                        <option key={idx} value={obj.code}>
-                          {obj.codeName}
-                        </option>
-                      )
-                    )}
-                  </Select>
-                </FormGroup>
-                <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>검사 대상</Label>
-                  <Select register={register("cuGumsa")} width={InputSize.i130}>
-                    {dataCommonDic?.cuGumsa?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-              </Wrapper>
-              <Wrapper grid col={6} fields="1fr 1fr 1fr 1.3fr 1fr 1fr">
-                <FormGroup style={{ width: "255px" }}>
-                  <Label style={{ minWidth: "90px" }}>미수 구분</Label>
-                  <Select register={register("cuMisu")} width={InputSize.i130}>
-                    {dataCommonDic?.cuMisu?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <FormGroup style={{ width: "255px" }}>
-                  <Label style={{ minWidth: "90px" }}>소비자 형태</Label>
-                  <Select
-                    register={register("cuCutype")}
-                    width={InputSize.i130}
-                  >
-                    {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <FormGroup style={{ width: "255px" }}>
-                  <Label style={{ minWidth: "90px" }}>거래 상태</Label>
-                  <Select register={register("cuStae")} width={InputSize.i130}>
-                    {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <Field
-                  flex
-                  style={{
-                    alignItems: "center",
-                    // width: "335px",
-                  }}
-                >
-                  <p style={{ width: "69px" }}>등록기간</p>
-                  <CheckBox
-                    register={{ ...register("dataChk") }}
-                    onChange={(e: any) => setDataChk(e.target.checked)}
-                    checked={dataChk}
-                  />
-                  <Controller
-                    control={control}
-                    {...register("sDate")}
-                    render={({ field: { onChange, value } }) => (
-                      <CustomDatePicker
-                        value={value}
-                        onChange={onChange}
-                        style={{ marginLeft: "8px", width: "130px" }}
-                        readOnly={!dataChk}
-                      />
-                    )}
-                  />
-                  <Controller
-                    control={control}
-                    {...register("eDate")}
-                    render={({ field: { onChange, value } }) => (
-                      <CustomDatePicker
-                        value={value}
-                        onChange={onChange}
-                        readOnly={!dataChk}
-                        style={{ width: "130px" }}
-                      />
-                    )}
-                  />
-                </Field>
-                <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>수금 방법</Label>
-                  <Select
-                    register={register("cuSukumtype")}
-                    width={InputSize.i130}
-                  >
-                    {dataCommonDic?.cuSukumtype?.map(
-                      (obj: any, idx: number) => (
-                        <option key={idx} value={obj.code}>
-                          {obj.codeName}
-                        </option>
-                      )
-                    )}
-                  </Select>
-                </FormGroup>
-                <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>장부 구분</Label>
-                  <Select
-                    register={register("cuJangbu")}
-                    width={InputSize.i130}
-                  >
-                    {dataCommonDic?.cuJangbu?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-              </Wrapper>
-            </div>
-          </SearchWrapper>
-        </form>
-
         <Grid
           areaCode={areaCode}
           data={data}
           columns={columns}
           fields={fields}
           setSelected={setSelected}
-          // selectedRowIndex={selectedRowIndex}
-          // setSelectedRowIndex={setSelectedRowIndex}
           style={{ height: `calc(100% - 15px)` }}
           evenFill
         />
