@@ -283,7 +283,6 @@ function CC1200({
             columns={columns}
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
-            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
             setIsAddBtnClicked={setIsAddBtnClicked}
             setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: `calc(100% - 38px)` }}

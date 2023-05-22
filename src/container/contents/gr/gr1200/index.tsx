@@ -52,7 +52,6 @@ function GR1200({
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState<number>(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -101,7 +100,6 @@ function GR1200({
     }
     setLoading(false);
     setIsAddBtnClicked(false);
-    setIsCancelBtnDisabled(true);
   };
 
   const submit = async (data: any) => {
@@ -212,7 +210,6 @@ function GR1200({
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
             setIsAddBtnClicked={setIsAddBtnClicked}
-            setIsCancelBtnDisabled2={setIsCancelBtnDisabled}
             style={{ height: `calc(100% - 210px)`, minWidth: minWidth }}
             layout={layout}
           />
@@ -226,8 +223,6 @@ function GR1200({
             fetchData={handleSubmit(submit)}
             isAddBtnClicked={isAddBtnClicked}
             setIsAddBtnClicked={setIsAddBtnClicked}
-            isCancelBtnDisabled={isCancelBtnDisabled}
-            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
           />
         </RightSide>
       </MainWrapper>

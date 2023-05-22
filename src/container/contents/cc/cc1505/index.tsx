@@ -140,7 +140,6 @@ function CC1505({
             setSelected={setSelected}
             selectedRowIndex={selectedRowIndex}
             setSelectedRowIndex={setSelectedRowIndex}
-            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
             setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}

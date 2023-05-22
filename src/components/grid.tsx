@@ -12,9 +12,7 @@ function Grid({
   style,
   evenFill,
   layout,
-  setIsCancelBtnDisabled,
   setIsAddBtnClicked,
-  setIsCancelBtnDisabled2,
   setIsAddBtnClicked2,
   isEditable = false,
   calc,
@@ -30,9 +28,9 @@ function Grid({
   style?: any;
   evenFill?: boolean;
   layout?: any;
-  setIsCancelBtnDisabled?: Function;
+
   setIsAddBtnClicked?: Function;
-  setIsCancelBtnDisabled2?: Function;
+
   setIsAddBtnClicked2?: Function;
   isEditable?: boolean;
   calc?: Function;
@@ -106,16 +104,12 @@ function Grid({
     // if (setSelected) {
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
-
       setSelected && setSelected(data[itemIndex]);
       setSelectedRowIndex && setSelectedRowIndex(itemIndex);
-
-      setIsCancelBtnDisabled && setIsCancelBtnDisabled(true);
       setIsAddBtnClicked && setIsAddBtnClicked(false);
-
-      setIsCancelBtnDisabled2 && setIsCancelBtnDisabled2(true);
       setIsAddBtnClicked2 && setIsAddBtnClicked2(false);
     };
+
     gv.setCheckBar({ exclusive: true });
     // gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
     //   calc && calc(index.dataRow, newValue);
