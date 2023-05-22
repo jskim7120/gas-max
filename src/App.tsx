@@ -8,6 +8,7 @@ import "style/datePicker.css";
 import "react-toastify/dist/ReactToastify.css";
 import Main from "container/mainLayout/main";
 import Login from "container/login";
+import ReLogin from "container/login/reLogin";
 import ProtectedRoute from "routers/ProtectedRoute";
 import API from "app/axios";
 import { getMenu } from "app/state/menu/menuSlice";
@@ -37,6 +38,10 @@ function App() {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/relogin",
+      element: <ReLogin />,
     },
   ];
   const mainRouters = useRoutes(routes);

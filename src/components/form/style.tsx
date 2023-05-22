@@ -2,6 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { InputSize, FieldKind } from "components/componentsType";
 import MaskedInput from "react-text-mask";
+import Loader from "components/loader";
 
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
@@ -296,12 +297,7 @@ export const InputForm = styled.input<{
   ${InputCommonProp};
 
   &.login {
-    border: 1px solid #bbb;
-    font-size: 14px;
-    &:hover,
-    &:focus {
-      background: #fff;
-    }
+    height: 40px;
   }
 
   &.small {
@@ -602,6 +598,9 @@ const FormSelect = styled.select<{
   &.h27 {
     height: 27px;
   }
+  &.login {
+    height: 40px;
+  }
 
   &:hover,
   &:focus {
@@ -677,6 +676,9 @@ interface IInputLoginProps {
   className?: string;
   kind?: FieldKind;
   textAlign?: string;
+  onKeyDown?: any;
+  readOnly?: boolean;
+  loader?: React.ReactNode;
 }
 
 export const InputLogin = ({
@@ -692,9 +694,12 @@ export const InputLogin = ({
   className,
   kind,
   textAlign,
+  onKeyDown,
+  readOnly,
+  loader,
 }: IInputLoginProps) => {
   return (
-    <InputWrapper fullWidth={fullWidth}>
+    <InputWrapper fullWidth={fullWidth} style={{ position: "relative" }}>
       <FormGroup
         className={className && className}
         inputSize={inputSize}
@@ -705,6 +710,7 @@ export const InputLogin = ({
         {label !== undefined && (
           <Label className={className && className}>{label}</Label>
         )}
+
         <InputForm
           id={register?.name}
           type={type ? type : "text"}
@@ -717,9 +723,20 @@ export const InputLogin = ({
           className={className}
           kind={kind && kind}
           textAlign={textAlign && textAlign}
+          onKeyDown={onKeyDown && onKeyDown}
+          readOnly={readOnly && readOnly}
         />
       </FormGroup>
-      <ErrorText>{errors && errors}</ErrorText>
+      <ErrorText
+        style={{
+          position: "absolute",
+          top: "39px",
+          right: "0px",
+          fontSize: "12px",
+        }}
+      >
+        {errors && errors}
+      </ErrorText>
     </InputWrapper>
   );
 };
