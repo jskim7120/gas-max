@@ -1,35 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface IAuth {
-  username: string;
-  password: string;
-}
-interface IAuthResponse {
-  accessToken: string;
-  refreshToken: string;
-  username: string;
-}
-interface IAuthError {
-  error: string;
-  message: string;
-  path: string;
-  status: number;
-}
+import API from "app/axios";
 
 export interface initialStateType {
-  loading: boolean;
   token: string | null;
   areaCode: string;
-  error: any | null;
-  message: string;
+  username: string;
+  loginCo: string;
+  email: string;
 }
 
 const initialState: initialStateType = {
-  loading: false,
   token: null,
   areaCode: "",
-  error: null,
-  message: "",
+  username: "",
+  loginCo: "",
+  email: "",
 };
 
 const AuthSlice = createSlice({
@@ -39,26 +24,68 @@ const AuthSlice = createSlice({
   reducers: {
     setUser: (
       state,
-      action: PayloadAction<{ name: string; token: string }>
+      action: PayloadAction<{
+        token: string;
+        username: string;
+        areaCode: string;
+        loginCo: string;
+        email: string;
+      }>
     ) => {
+      API.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${action.payload.token}`;
+
       state.token = action.payload.token;
+      state.username = action.payload.username;
+      state.areaCode = action.payload.areaCode;
+      state.loginCo = action.payload.loginCo;
+      state.email = action.payload.email;
     },
 
     logout: (state) => {
       state.token = null;
       localStorage.removeItem("token");
       localStorage.removeItem("areaCode");
+      localStorage.removeItem("username");
+      localStorage.removeItem("loginCo");
+      localStorage.removeItem("email");
     },
 
-    setToken: (state, action: PayloadAction<{ token: string | null }>) => {
+    setReloginInfo: (
+      state,
+      action: PayloadAction<{
+        token: string;
+        areaCode: string;
+        loginCo: string;
+        email: string;
+      }>
+    ) => {
+      API.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${action.payload.token}`;
+
       state.token = action.payload.token;
+      state.areaCode = action.payload.areaCode;
+      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("areaCode", action.payload.areaCode);
+      localStorage.setItem("loginCo", action.payload.loginCo);
+      localStorage.setItem("email", action.payload.email);
     },
 
-    setAreaCode: (state, action: PayloadAction<{ areaCode: string }>) => {
-      state.areaCode = action.payload.areaCode;
-    },
+    //setToken: (state, action: PayloadAction<{ token: string | null }>) => {
+    //  state.token = action.payload.token;
+    //},
+
+    //setAreaCode: (state, action: PayloadAction<{ areaCode: string }>) => {
+    //  state.areaCode = action.payload.areaCode;
+    //},
+
+    //setUsername: (state, action: PayloadAction<{ username: string }>) => {
+    //  state.username = action.payload.username;
+    //},
   },
 });
 
-export const { logout, setToken, setAreaCode } = AuthSlice.actions;
+export const { logout, setUser, setReloginInfo } = AuthSlice.actions;
 export default AuthSlice.reducer;

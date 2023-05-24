@@ -1,151 +1,168 @@
 import { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import jwt from "jwt-decode";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ReLoginSchema } from "./validation";
 import { ILoginFormProps2 } from "./type";
-import { Field, FormGroup, InputLogin, Select } from "components/form/style";
-import { ButtonType } from "components/componentsType";
+import { useSelector, useDispatch } from "app/store";
+import { setReloginInfo } from "app/state/auth/authSlice";
+import { closeModal } from "app/state/modal/modalSlice";
+import {
+  useLoginInfoMutation,
+  useReLoginMutation,
+  useAreaInfoMutation,
+} from "app/api/auth";
+import { removeAllTabs } from "app/state/tab/tabSlice";
+import { Field, InputLogin, Select } from "components/form/style";
+import { ButtonType, ButtonColor } from "components/componentsType";
 import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
-import { useLoginInfoMutation, useReLoginMutation } from "app/api/auth";
 import Loader from "components/loader";
-
-import jwt from "jwt-decode";
 
 function Login() {
   const [checked, setChecked] = useState(false);
+  const authState = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
     getValues,
     reset,
     setFocus,
+    watch,
     formState: { errors },
   } = useForm<ILoginFormProps2>({
     resolver: yupResolver(ReLoginSchema),
     mode: "onChange",
   });
 
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [loginInfo, { data, isLoading, isError, isSuccess, error }] =
+  const [loginInfo, { data, isError, isSuccess, error }] =
     useLoginInfoMutation();
+
+  const [
+    areaInfo,
+    { data: data2, isError: isError2, isSuccess: isSuccess2, error: error2 },
+  ] = useAreaInfoMutation();
 
   const [
     reLogin,
     {
-      data: dataR,
-      isLoading: isLoadingR,
-      isError: isErrorR,
-      isSuccess: isSuccessR,
-      error: errorR,
+      data: data3,
+      isLoading: isLoading3,
+      isError: isError3,
+      isSuccess: isSuccess3,
+      error: error3,
     },
   ] = useReLoginMutation();
 
   useEffect(() => {
-    if (isErrorR) {
-      toast.warning((errorR as any)?.data?.message, {
-        autoClose: 500,
-      });
+    if (authState.username) {
+      loginInfo({ username: authState.username });
     }
-  }, [isErrorR]);
-
-  const [areaName, setAreaName] = useState<Array<any>>([]);
-  const [isActive, setIsActive] = useState<boolean>(true);
+  }, [authState]);
 
   useEffect(() => {
-    if (isSuccess) {
-      if (data && data?.length > 0) {
-        setAreaName(data);
-
-        reset((formValues) => ({
-          ...formValues,
-          areaName: data[0].hpSeq,
-        }));
-        setFocus("hpSeq");
-        setIsActive(false);
-      }
-    } else {
-      setAreaName([]);
-      setIsActive(true);
+    if (isSuccess && data) {
+      reset((formValues) => ({
+        ...formValues,
+        hpSeq: data[0].hpSeq,
+      }));
     }
   }, [isSuccess]);
 
   useEffect(() => {
-    if (isSuccessR) {
-      if (dataR) {
-        const { area_code }: { area_code: string } = jwt(dataR.accessToken);
-        localStorage.setItem("areaCode", area_code);
-        localStorage.setItem("token", dataR.accessToken);
-        navigate("/");
-      }
+    if (authState && watch("hpSeq")) {
+      areaInfo({ username: authState.username, hpSeq: watch("hpSeq") });
     }
-  }, [isSuccessR]);
+  }, [watch("hpSeq")]);
 
-  const getLoginInfo = async (params: any) => {
-    if (params.username) {
-      loginInfo({ username: params.username });
+  useEffect(() => {
+    if (isSuccess2) {
+      reset((formValues) => ({
+        ...formValues,
+        areaCode: data2[0].code,
+      }));
     }
-  };
+  }, [isSuccess2]);
+
+  useEffect(() => {
+    if (isSuccess3 && data3?.accessToken) {
+      const { area_code }: { area_code: string } = jwt(data3?.accessToken);
+      dispatch(
+        setReloginInfo({
+          areaCode: area_code,
+          token: data3.accessToken,
+          loginCo: data3.loginCo ? data3.loginCo : "",
+          email: data3.email ? data3.email : "",
+        })
+      );
+      dispatch(removeAllTabs());
+      dispatch(closeModal());
+    }
+  }, [isSuccess3]);
+
+  useEffect(() => {
+    if (isError3) {
+      toast.warning((error3 as any)?.data?.message, {
+        autoClose: 500,
+      });
+    }
+  }, [isError3]);
 
   const submit = async () => {
-    const formValues: any = getValues();
-    reLogin(formValues);
-  };
-
-  const handleKeyPress = (event: any) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      // const element = event.target;
-      // const form = element.form;
-      // const index = Array.prototype.indexOf.call(form, element);
-      // form.elements[index + 1].focus();
-      // if (element.name === "username") {
-      //   handleSubmit(getLoginInfo)();
-      // }
-      handleSubmit(getLoginInfo)();
+    if (authState.username) {
+      const formValues: any = getValues();
+      formValues.username = authState.username;
+      reLogin(formValues);
     }
   };
-  //01089208066
+
   return (
     <>
-      <form onSubmit={handleSubmit(submit)}>
-        <InputLogin
-          register={register("username")}
-          errors={errors["username"]?.message}
-          placeholder="업체명"
-          className="login"
-          style={{ margin: "0 0 20px 0", paddingRight: "40px" }}
-          fullWidth
-          onKeyDown={handleKeyPress}
-          icon
-          onClickIcon={handleSubmit(getLoginInfo)}
-        />
-
+      <form onSubmit={handleSubmit(submit)} style={{ padding: "0 25px" }}>
         <Select
           register={register("hpSeq")}
           className="login"
           style={{ margin: "0 0 20px 0" }}
           fullWidth
-          disabled={isActive}
         >
-          {areaName?.map((obj: any, idx: number) => (
+          {data?.map((obj: any, idx: number) => (
             <option key={idx} value={obj?.hpSeq}>
               {obj?.loginCo}
             </option>
           ))}
         </Select>
 
+        <Select
+          register={register("areaCode")}
+          className="login"
+          style={{ margin: "0 0 20px 0" }}
+          fullWidth
+        >
+          {data2?.map((obj: any, idx: number) => (
+            <option key={idx} value={obj?.code}>
+              {obj?.codeName}
+            </option>
+          ))}
+        </Select>
+
+        {/* <InputLogin
+          register={register("username")}
+          className="login"
+          style={{ margin: "0 0 20px 0" }}
+          errors={errors["username"]?.message}
+          placeholder="업체명"
+          fullWidth
+        /> */}
+
         <InputLogin
           register={register("password")}
+          className="login"
+          style={{ margin: "0 0 20px 0" }}
           errors={errors["password"]?.message}
           type="password"
           placeholder="비밀번호"
-          className="login"
-          readOnly={isActive}
-          style={{ margin: "0 0 20px 0" }}
           fullWidth
         />
 
@@ -168,8 +185,9 @@ function Login() {
               color={ButtonColor.PRIMARY}
               fullWidth
               style={{ alignItems: "center", lineHeight: "33px" }}
+              disabled={isError || isError2}
               loader={
-                isLoadingR && (
+                isLoading3 && (
                   <Loader
                     color="white"
                     size={25}
@@ -177,14 +195,12 @@ function Login() {
                   />
                 )
               }
-              disabled={isActive}
             />
           </Field>
         </div>
-        <ToastContainer />
       </form>
 
-      {isLoading && (
+      {/* {isLoading && (
         <div
           style={{
             width: "100%",
@@ -205,7 +221,7 @@ function Login() {
             style={{ marginRight: "5px", position: "absolute", top: "60px" }}
           />
         </div>
-      )}
+      )} */}
     </>
   );
 }

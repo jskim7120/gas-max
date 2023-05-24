@@ -4,7 +4,7 @@ import { useDispatch } from "app/store";
 import { CM9003SEARCH } from "app/path";
 import { apiGet } from "app/axios";
 import { ISEARCH } from "./model";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -38,10 +38,9 @@ function CM9003({
   areaCode: string;
 }) {
   const dispatch = useDispatch();
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CM",
-    functionName: "CM9003",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -51,6 +50,10 @@ function CM9003({
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CM", functionName: "CM9003" });
+  }, []);
 
   useEffect(() => {
     resetForm();

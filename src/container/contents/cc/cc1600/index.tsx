@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { apiGet } from "app/axios";
 import { useDispatch } from "app/store";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { CC1600SEARCH, CC160065, CC160062 } from "app/path";
 import {
   SearchWrapper,
@@ -33,12 +33,12 @@ function CC1600({
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const [acsAccName, setAcsAccName] = useState([]);
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CC",
-    functionName: "CC1600",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   useEffect(() => {
+    getCommonDictionary({ groupId: "CC", functionName: "CC1600" });
     if (ownAreaCode) {
       fetchData({ areaCode: ownAreaCode });
     }

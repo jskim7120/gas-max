@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "app/store";
 import { apiGet } from "app/axios";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { Plus, Trash, Update, Reset, WhiteClose } from "components/allSvgIcon";
 import SEARCH_RED from "assets/image/search_red.png";
 import Grid from "components/grid";
@@ -58,10 +58,12 @@ function FormCM1106() {
     }
   }, [cm1106.areaCode, cm1106.cuCode]);
 
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CM",
-    functionName: "CM1106",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CM", functionName: "CM1106" });
+  }, []);
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {

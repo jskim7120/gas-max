@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiPost, apiGet } from "app/axios";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { EN1100INSERT, EN1100UPDATE, EN1100DELETE, EN110011 } from "app/path";
 import {
   Input,
@@ -42,15 +42,18 @@ const Form = React.forwardRef(
     const [tabId, setTabId] = useState(0);
     const [jnAddr1, setJnAddr1] = useState("");
     const [addr, setAddress] = useState<string>("");
-    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-      groupId: "EN",
-      functionName: "EN1100",
-    });
+
+    const [getCommonDictionary, { data: dataCommonDic }] =
+      useGetCommonDictionaryMutation();
 
     const { register, handleSubmit, reset, control, getValues, setFocus } =
       useForm<IJNOTRY>({
         mode: "onChange",
       });
+
+    useEffect(() => {
+      getCommonDictionary({ groupId: "EN", functionName: "EN1100" });
+    }, []);
 
     useEffect(() => {
       if (addr.length > 0) {

@@ -7,7 +7,7 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import { Plus, Update, WhiteClose } from "components/allSvgIcon";
 import { ICM1105SEARCH, emptyObj } from "./model";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { currencyMask, removeCommas } from "helpers/currency";
 import {
   DateWithoutDash,
@@ -41,10 +41,9 @@ function FormCM1105() {
   const dispatch = useDispatch();
 
   const cm1105 = useSelector((state) => state.modal.cm1105);
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CM",
-    functionName: "CM1105",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset, getValues, control } =
     useForm<ICM1105SEARCH>({
@@ -64,6 +63,10 @@ function FormCM1105() {
     setTotalValue,
     calcRdanga,
   } = useRdanga();
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CM", functionName: "CM1105" });
+  }, []);
 
   useEffect(() => {
     if (cm1105.status === "INSERT") {

@@ -11,7 +11,6 @@ import {
   DividerGray,
 } from "components/form/style";
 import { ICC1500FORM } from "./model";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { currencyMask } from "helpers/currency";

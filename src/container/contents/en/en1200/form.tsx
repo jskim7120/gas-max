@@ -14,7 +14,7 @@ import CheckBox from "components/checkbox";
 import { IJNOSAUP, emptyObj } from "./model";
 import DaumAddress from "components/daum";
 import { SearchIcon, IconHome, IconReceipt } from "components/allSvgIcon";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { DateWithoutDash } from "helpers/dateFormat";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
@@ -48,13 +48,15 @@ const Form = React.forwardRef(
     const [image64, setImage64] = useState<any>(null);
     const [saupAddr1, setSaupAddr1] = useState("");
 
-    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-      groupId: "EN",
-      functionName: "EN1200",
-    });
+    const [getCommonDictionary, { data: dataCommonDic }] =
+      useGetCommonDictionaryMutation();
 
     const { register, handleSubmit, control, reset, getValues, setFocus } =
       useForm<IJNOSAUP>({ mode: "onChange" });
+
+    useEffect(() => {
+      getCommonDictionary({ groupId: "EN", functionName: "EN1200" });
+    }, []);
 
     useEffect(() => {
       if (addr.length > 0) {

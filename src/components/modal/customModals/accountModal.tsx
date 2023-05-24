@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import JoaImg from "assets/image/JOA.png";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import { logout } from "app/state/auth/authSlice";
 
 const ModalWrapper = styled.div`
@@ -14,16 +14,22 @@ const ModalWrapper = styled.div`
   font-family: SegoeUI;
   font-size: 12px;
   color: #0057aa;
+
+  .logoutBtn {
+    margin-top: 15px;
+  }
 `;
 
 function AccountModal() {
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
   return (
     <ModalWrapper>
       <img src={JoaImg} />
-      <label>조아테크1</label>
-      <label>jskim7120@daum.net</label>
+      <label>{auth?.loginCo}</label>
+      <label>{auth?.email}</label>
       <button
+        className="logoutBtn"
         onClick={() => {
           dispatch(logout());
           window.location.assign("/login");

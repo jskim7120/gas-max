@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet, apiPost } from "app/axios";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { EN1600INSERT, EN1600UPDATE, EN1600DELETE, EN160011 } from "app/path";
 import {
   Input,
@@ -48,15 +48,17 @@ const Form = React.forwardRef(
     }>();
     const [image64, setImage64] = useState<any>(null);
 
-    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-      groupId: "EN",
-      functionName: "EN1600",
-    });
+    const [getCommonDictionary, { data: dataCommonDic }] =
+      useGetCommonDictionaryMutation();
 
     const { register, handleSubmit, reset, getValues, control, setFocus } =
       useForm<IJNOSAUP>({
         mode: "onChange",
       });
+
+    useEffect(() => {
+      getCommonDictionary({ groupId: "EN", functionName: "EN1600" });
+    }, []);
 
     useEffect(() => {
       if (addr.length > 0) {

@@ -4,7 +4,7 @@ import { apiGet } from "app/axios";
 import { useSelector, useDispatch } from "app/store";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import {
   Update,
   Reset,
@@ -43,12 +43,11 @@ function FormIP1205() {
 
   const dispatch = useDispatch();
 
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "PT",
-    functionName: "PT1205",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   useEffect(() => {
+    getCommonDictionary({ groupId: "PT", functionName: "PT1205" });
     firstFetchData();
   }, []);
 

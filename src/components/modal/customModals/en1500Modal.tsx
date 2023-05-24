@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "app/store";
 import Table from "components/table";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { EN1500UPDATE, EN150062, EN150065 } from "app/path";
 import { InputSize } from "components/componentsType";
 import Button from "components/button/button";
@@ -49,10 +49,9 @@ const EN1500Modal = (
   IForm,
   ref: React.ForwardedRef<any>
 ) => {
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "EN",
-    functionName: "EN1500",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
+
   const [en1500PopupData, setEn1500PopupData] = useState<any>([]);
   const [unitPriceData, setUnitPriceData] = useState<any>([]);
   const [jnMpdanga, setJnMpdanga] = useState<number>();
@@ -60,6 +59,7 @@ const EN1500Modal = (
   const [jnKgdangaMp, setJnKgdangaMp] = useState<number>();
 
   useEffect(() => {
+    getCommonDictionary({ groupId: "EN", functionName: "EN1500" });
     if (areaCode !== undefined && JSON.stringify(areaCode) !== "{}") {
       fetchData(areaCode);
     }

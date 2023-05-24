@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { apiGet } from "app/axios";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { GR1600SEARCH } from "app/path";
 import { InputSize, ButtonColor, ButtonType } from "components/componentsType";
 import Button from "components/button/button";
@@ -40,14 +40,16 @@ function GR1600({
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "GR",
-    functionName: "GR1600",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "GR", functionName: "GR1600" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {

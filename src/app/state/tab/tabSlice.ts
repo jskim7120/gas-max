@@ -76,6 +76,8 @@ const tabSlice = createSlice({
         },
       ];
       state.activeTabId = "HOME";
+      sessionStorage.removeItem("tabs");
+      sessionStorage.removeItem("active-tab");
     },
     setActiveTab: (state, action) => {
       state.activeTabId = action.payload.activeTabId;

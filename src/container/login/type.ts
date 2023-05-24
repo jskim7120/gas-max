@@ -4,7 +4,8 @@ export interface ILoginFormProps {
 }
 
 export interface ILoginFormProps2 {
-  username: string;
   hpSeq: string;
+  areaCode: string;
+  username: string;
   password: string;
 }

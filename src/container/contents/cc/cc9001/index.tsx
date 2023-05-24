@@ -10,7 +10,7 @@ import {
   RightSide,
   LeftSide,
 } from "../../commonStyle";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label, Input } from "components/form/style";
 import Loader from "components/loader";
@@ -34,14 +34,17 @@ function CC9001({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CC",
-    functionName: "CC9001",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset, control } = useForm<ICC9001SEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CC", functionName: "CC9001" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {

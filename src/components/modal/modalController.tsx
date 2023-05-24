@@ -16,6 +16,7 @@ import CC1200Modal from "./customModals/cc1200Modal";
 import EN1500Modal from "./customModals/en1500Modal";
 import PT1105Modal from "./../../container/contents/pt/pt1105";
 import PT1205Modal from "./../../container/contents/pt/pt1205";
+import ReLoginModal from "./customModals/reLoginModal";
 const PopupArea = styled.section`
   position: fixed;
   width: 100%;
@@ -45,7 +46,8 @@ const PopupContiner = styled.div<{ type: string }>`
       props.type === "en1500Modal" ||
       props.type === "pt1105Modal" ||
       props.type === "pt1205Modal" ||
-      props.type === "cc1200Modal") &&
+      props.type === "cc1200Modal" ||
+      props.type === "reLoginModal") &&
     `
       top: 50%;
       left: 50%;  
@@ -104,6 +106,7 @@ function Popup() {
             {type === "en1500Modal" && <EN1500Modal />}
             {type === "pt1105Modal" && <PT1105Modal />}
             {type === "pt1205Modal" && <PT1205Modal />}
+            {type === "reLoginModal" && <ReLoginModal />}
           </Suspense>
         </PopupContiner>
       </PopupArea>

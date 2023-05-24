@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "app/store";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginSchema } from "./validation";
 import { ILoginFormProps } from "./type";
@@ -10,6 +11,7 @@ import { ButtonType } from "components/componentsType";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { useLoginMutation } from "app/api/auth";
+import { removeAllTabs } from "app/state/tab/tabSlice";
 import Loader from "components/loader";
 import jwt from "jwt-decode";
 
@@ -27,6 +29,7 @@ function Login() {
     resolver: yupResolver(LoginSchema),
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [login, { data, isLoading, isError, isSuccess, error }] =
     useLoginMutation();
@@ -38,9 +41,14 @@ function Login() {
   }, [isError]);
 
   if (isSuccess && data !== undefined && data.accessToken) {
+    dispatch(removeAllTabs());
     const { area_code }: { area_code: string } = jwt(data.accessToken);
-    localStorage.setItem("areaCode", area_code);
     localStorage.setItem("token", data.accessToken);
+    localStorage.setItem("areaCode", area_code);
+    localStorage.setItem("username", data.username);
+    localStorage.setItem("loginCo", data.loginCo);
+    localStorage.setItem("email", data.email);
+
     navigate("/");
   }
 

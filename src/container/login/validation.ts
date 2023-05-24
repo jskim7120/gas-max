@@ -23,5 +23,6 @@ export const LoginSchema = yup.object({
 });
 
 export const ReLoginSchema = yup.object({
-  username: yup.string().required("username is required"),
+  // username: yup.string().required("username is required"),
+  password: yup.string().required("password is required"),
 });

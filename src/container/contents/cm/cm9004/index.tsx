@@ -5,7 +5,7 @@ import { CM9004SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import { apiGet } from "app/axios";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CheckBox from "components/checkbox";
 import { Select, FormGroup, Wrapper, Label } from "components/form/style";
@@ -30,14 +30,17 @@ function CM9004({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
   const [cuSekyn, setCuSekyn] = useState("N");
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CM",
-    functionName: "CM9004",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CM", functionName: "CM9004" });
+  }, []);
 
   useEffect(() => {
     if (Object.keys(selected).length > 0) {

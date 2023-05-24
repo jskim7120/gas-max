@@ -4,7 +4,7 @@ import { CM9002SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import { DateWithoutDash } from "helpers/dateFormat";
@@ -28,10 +28,9 @@ function GR9002({
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "GR",
-    functionName: "GR9002",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const {
     register,
@@ -43,6 +42,11 @@ function GR9002({
   } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "GR", functionName: "GR9002" });
+  }, []);
+
   useEffect(() => {
     resetForm();
   }, [dataCommonDic]);

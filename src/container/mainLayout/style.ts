@@ -14,6 +14,12 @@ export const TopSide = styled.div`
   justify-content: space-between;
   align-items: center;
   background: #0a0a0a;
+
+  .areaName {
+    color: #fff;
+    font-size: 14px;
+    margin: 3px 40px 0 0;
+  }
 `;
 
 export const TopLeftWrapper = styled.div`

@@ -18,7 +18,6 @@ const Container = styled.div`
   padding: 0;
   border: 1px solid #707070;
   position: relative;
-  margin-top: 25px;
 
   .header {
     width: 100%;
@@ -45,7 +44,6 @@ const Container = styled.div`
 
   .footer {
     width: 100%;
-    margin-top: 20px;
 
     .contact {
       width: 100%;
@@ -88,7 +86,7 @@ function AuthenticationLayout({ children }: { children: JSX.Element }) {
   return (
     <Outer>
       <Container>
-        <div className="header">
+        <div className="header handle">
           <span>로그인</span>
         </div>
 

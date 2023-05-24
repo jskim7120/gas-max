@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { useDispatch } from "app/store";
 import { openModal, ptAreaCode } from "app/state/modal/modalSlice";
 import { PT1100SEARCH, PT1100SEARCH62, PT110065 } from "app/path";
@@ -59,10 +59,12 @@ function PT1100({
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const dispatch = useDispatch();
 
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "PT",
-    functionName: "PT1100",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "PT", functionName: "PT1100" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {

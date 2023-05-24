@@ -9,7 +9,7 @@ import {
   InputSize,
   FieldKind,
 } from "components/componentsType";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import {
   Plus,
   Trash,
@@ -42,10 +42,8 @@ function AR1100({
   menuId: string;
   areaCode: string;
 }) {
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "AR",
-    functionName: "AR1100",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -58,6 +56,10 @@ function AR1100({
   const { register, handleSubmit, reset, control } = useForm<IAR1100SEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "AR", functionName: "AR1100" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {

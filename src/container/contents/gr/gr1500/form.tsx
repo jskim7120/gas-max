@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "app/store";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
 import {
   openModal,
@@ -76,12 +76,13 @@ const Form = React.forwardRef(
     const [baNow, setBaNow] = useState();
     const dispatch = useDispatch();
 
-    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-      groupId: "GR",
-      functionName: "GR1500",
-    });
+    const [getCommonDictionary, { data: dataCommonDic }] =
+      useGetCommonDictionaryMutation();
 
     const { isDelete } = useSelector((state) => state.modal);
+    useEffect(() => {
+      getCommonDictionary({ groupId: "GR", functionName: "GR1500" });
+    }, []);
 
     useEffect(() => {
       if (JSON.stringify(selected) !== "{}") {

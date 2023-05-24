@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet, apiPost } from "app/axios";
 import { toast } from "react-toastify";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { useDispatch } from "app/store";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import Button from "components/button/button";
@@ -55,10 +55,13 @@ function RV1100({
   const [gjGumym, setGjGumym] = useState<string>();
   const [gjSno, setGjSno] = useState<string>();
   const [gjPerDate, setGjPerDate] = useState<string>();
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "RV",
-    functionName: "RV1100",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "RV", functionName: "RV1100" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {

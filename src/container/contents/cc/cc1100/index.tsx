@@ -12,7 +12,7 @@ import {
   LeftSide,
 } from "../../commonStyle";
 import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import Form from "./form";
 import {
   Item,
@@ -26,7 +26,6 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import { columns, fields } from "./data";
-import CustomTopPart from "container/contents/customTopPart";
 import FourButtons from "components/button/fourButtons";
 
 function CC1100({
@@ -48,15 +47,18 @@ function CC1100({
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const [codeGu, setCodeGu] = useState<boolean>(false);
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CC",
-    functionName: "CC1100",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset, control, getValues } =
     useForm<ICC1100SEARCH>({
       mode: "onSubmit",
     });
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CC", functionName: "CC1100" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {

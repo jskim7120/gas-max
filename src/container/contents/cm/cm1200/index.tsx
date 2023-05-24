@@ -26,7 +26,7 @@ import {
 } from "app/state/modal/modalSlice";
 import { useDispatch, useSelector } from "app/store";
 import { CM1200SEARCH } from "app/path";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { fields, columns } from "./data";
 import { setRowIndex } from "app/state/tab/tabSlice";
 
@@ -47,10 +47,8 @@ function CM1200({
 
   const dispatch = useDispatch();
 
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CM",
-    functionName: "CM1200",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, reset, handleSubmit, watch, getValues } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -66,6 +64,10 @@ function CM1200({
   const tabState = useSelector((state) => state.tab.tabs);
   const isOpen = useSelector((state) => state.sidebar);
   const rowIndex = tabState.find((item) => item.menuId === menuId)?.rowIndex;
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CM", functionName: "CM1200" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {

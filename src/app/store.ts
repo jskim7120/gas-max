@@ -10,7 +10,7 @@ import footerReducer from "app/state/footer/footerSlice";
 import sidebarReducer from "app/state/sidebar/sidebarSlice";
 import authReducer from "app/state/auth/authSlice";
 import { commonGubunApi } from "app/api/commonGubun";
-import { authApi } from "app/api/auth";
+import { authApi, reLoginApi } from "app/api/auth";
 import { commonDictionaryApi } from "app/api/commonDictionary";
 
 export const store = configureStore({
@@ -22,12 +22,14 @@ export const store = configureStore({
     sidebar: sidebarReducer,
     auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
+    [reLoginApi.reducerPath]: reLoginApi.reducer,
     [commonGubunApi.reducerPath]: commonGubunApi.reducer,
     [commonDictionaryApi.reducerPath]: commonDictionaryApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(authApi.middleware)
+      .concat(reLoginApi.middleware)
       .concat(commonGubunApi.middleware)
       .concat(commonDictionaryApi.middleware),
 });
