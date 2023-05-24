@@ -39,8 +39,10 @@ function Login() {
 
   if (isSuccess && data !== undefined && data.accessToken) {
     const { area_code }: { area_code: string } = jwt(data.accessToken);
+
     localStorage.setItem("areaCode", area_code);
     localStorage.setItem("token", data.accessToken);
+    localStorage.setItem("username", data.username);
     navigate("/");
   }
 
