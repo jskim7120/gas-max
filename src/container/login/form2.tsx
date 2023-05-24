@@ -57,15 +57,10 @@ function Login() {
   ] = useReLoginMutation();
 
   useEffect(() => {
-    if (authState) {
+    if (authState.username) {
       loginInfo({ username: authState.username });
-      reset((formValues) => ({
-        ...formValues,
-        username: authState.username,
-        //areaCode: authState.areaCode, ---buruu
-      }));
     }
-  }, []);
+  }, [authState]);
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -116,9 +111,11 @@ function Login() {
   }, [isError3]);
 
   const submit = async () => {
-    const formValues: any = getValues();
-    formValues.username = authState.username;
-    reLogin(formValues);
+    if (authState.username) {
+      const formValues: any = getValues();
+      formValues.username = authState.username;
+      reLogin(formValues);
+    }
   };
 
   return (
@@ -150,14 +147,14 @@ function Login() {
           ))}
         </Select>
 
-        <InputLogin
+        {/* <InputLogin
           register={register("username")}
           className="login"
           style={{ margin: "0 0 20px 0" }}
           errors={errors["username"]?.message}
           placeholder="업체명"
           fullWidth
-        />
+        /> */}
 
         <InputLogin
           register={register("password")}

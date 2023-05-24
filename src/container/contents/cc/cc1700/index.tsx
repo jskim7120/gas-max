@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
 import { useDispatch } from "app/store";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { CC1700SEARCH, CC170065 } from "app/path";
 import {
   SearchWrapper,
@@ -51,10 +51,12 @@ function CC1700({
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CC",
-    functionName: "CC1700",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CC", functionName: "CC1700" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {

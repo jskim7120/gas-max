@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
 import { useDispatch } from "app/store";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import GridLeft from "components/grid";
 import { CC1500SEARCH, CC150065 } from "app/path";
 import {
@@ -51,10 +51,12 @@ function CC1500({
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CC",
-    functionName: "CC1500",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CC", functionName: "CC1500" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {

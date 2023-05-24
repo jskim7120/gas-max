@@ -5,7 +5,7 @@ import { ISEARCH } from "./model";
 import { apiGet } from "app/axios";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import { useForm } from "react-hook-form";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Wrapper, Label } from "components/form/style";
 import Loader from "components/loader";
@@ -28,14 +28,17 @@ function CM9005({
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CM",
-    functionName: "CM9005",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CM", functionName: "CM9005" });
+  }, []);
 
   useEffect(() => {
     if (Object.keys(selected).length > 0) {

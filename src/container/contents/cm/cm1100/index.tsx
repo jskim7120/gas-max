@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { useDispatch, useSelector } from "app/store";
 import { apiGet, apiPost } from "app/axios";
 import { CM1100SEARCH, CM110065, CM1100DELETE } from "app/path";
@@ -47,15 +47,15 @@ function CM1100Page({
   const [loading, setLoading] = useState(false);
   const { isDelete } = useSelector((state) => state.modal);
 
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CM",
-    functionName: "CM1100",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset, getValues } = useForm<ICM1100SEARCH>({
     mode: "onSubmit",
   });
-
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CM", functionName: "CM1100" });
+  }, []);
   useEffect(() => {
     if (dataCommonDic) {
       resetSearchForm();

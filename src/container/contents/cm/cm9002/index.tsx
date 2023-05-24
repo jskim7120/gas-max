@@ -5,7 +5,7 @@ import { ICM9002SEARCH } from "./model";
 import { apiGet } from "app/axios";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import CheckBox from "components/checkbox";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import {
@@ -39,10 +39,13 @@ function CM9002({
   const [selected, setSelected] = useState<any>({});
   const [dataChk, setDataChk] = useState(true);
   const [reportKind, setReportKind] = useState("");
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CM",
-    functionName: "CM9002",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CM", functionName: "CM9002" });
+  }, []);
 
   const { register, handleSubmit, reset, control } = useForm<ICM9002SEARCH>({
     mode: "onSubmit",

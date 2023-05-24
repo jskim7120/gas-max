@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiPost, apiGet } from "app/axios";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import {
   GR1100INSERT,
   GR1100UPDATE,
@@ -68,10 +68,9 @@ const Form = React.forwardRef(
     const [buBlsum, setBuBlsum] = useState<number>(0);
     const [buAddr1, setBuAddr1] = useState("");
 
-    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-      groupId: "GR",
-      functionName: "GR1100",
-    });
+    const [getCommonDictionary, { data: dataCommonDic }] =
+      useGetCommonDictionaryMutation();
+
     const {
       register,
       handleSubmit,
@@ -83,6 +82,10 @@ const Form = React.forwardRef(
     } = useForm<ISANGPUM>({
       mode: "onChange",
     });
+
+    useEffect(() => {
+      getCommonDictionary({ groupId: "GR", functionName: "GR1100" });
+    }, []);
 
     const watcher = watch();
 

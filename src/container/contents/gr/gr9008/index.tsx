@@ -4,7 +4,7 @@ import { apiGet } from "app/axios";
 import { GR9008SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import { DateWithoutDash } from "helpers/dateFormat";
@@ -14,7 +14,6 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import Grid from "../grid2";
 import { columns, fields } from "./data";
-import CustomTopPart from "container/contents/customTopPart";
 
 function GR9008({
   depthFullName,
@@ -27,14 +26,18 @@ function GR9008({
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "GR",
-    functionName: "GR9008",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "GR", functionName: "GR9008" });
+  }, []);
+
   useEffect(() => {
     resetForm();
   }, [dataCommonDic]);

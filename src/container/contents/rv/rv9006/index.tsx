@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { apiGet } from "app/axios";
 import { ISEARCH } from "./model";
 import { RV9006SEARCH } from "app/path";
@@ -28,7 +28,6 @@ import {
   DateWithoutDash,
   DateWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
-import { CustomAreaCodePart } from "container/contents/customTopPart";
 
 const radioOptions = [
   {
@@ -52,14 +51,17 @@ function RV9006({
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sType1, setSType1] = useState(false);
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "RV",
-    functionName: "RV9006",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, control, reset, handleSubmit } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "RV", functionName: "RV9006" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {

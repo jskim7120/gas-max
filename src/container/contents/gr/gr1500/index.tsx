@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { GR1500SEARCH1, GR1500SEARCH2 } from "app/path";
 import {
   SearchWrapper,
@@ -41,10 +41,12 @@ function GR1500({
   const [selected2, setSelected2] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "GR",
-    functionName: "GR1500",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "GR", functionName: "GR1500" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic !== undefined && dataCommonDic) {

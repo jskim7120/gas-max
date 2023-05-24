@@ -4,7 +4,7 @@ import { apiGet } from "app/axios";
 import { RV9005SEARCH } from "app/path";
 import { IRV9005SEARCH } from "./model";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ResetGray, Document } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import {
@@ -64,14 +64,16 @@ function RV9005({
   const [sType1, setSType1] = useState(false);
   const [sType2, setSType2] = useState("0");
 
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "RV",
-    functionName: "RV9005",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset, control } = useForm<IRV9005SEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "RV", functionName: "RV9005" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {

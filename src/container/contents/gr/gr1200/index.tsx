@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import {
@@ -37,10 +37,8 @@ function GR1200({
   ownAreaCode: string;
   menuId: string;
 }) {
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "GR",
-    functionName: "GR1200",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -52,6 +50,10 @@ function GR1200({
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState<number>(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "GR", functionName: "GR1200" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {

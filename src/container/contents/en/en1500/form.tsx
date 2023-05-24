@@ -7,7 +7,7 @@ import React, {
 import { useForm, Controller } from "react-hook-form";
 import { apiGet, apiPost } from "app/axios";
 import Table from "components/table";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { EN1500UPDATE, EN150065 } from "app/path";
 import { InputSize } from "components/componentsType";
 import Button from "components/button/button";
@@ -46,14 +46,17 @@ const Form = (
   }: IForm,
   ref: React.ForwardedRef<any>
 ) => {
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "EN",
-    functionName: "EN1500",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
+
   const [unitPriceData, setUnitPriceData] = useState<any>([]);
   const [jnMpdanga, setJnMpdanga] = useState<number>(selected.jnMpdanga);
   const [jnKgdanga, setJnKgdanga] = useState<number>(selected.jnKgdanga);
   const [jnKgdangaMp, setJnKgdangaMp] = useState<number>(selected.jnKgdangaMp);
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "EN", functionName: "EN1500" });
+  }, []);
 
   useEffect(() => {
     if (selected !== undefined && JSON.stringify(selected) !== "{}") {

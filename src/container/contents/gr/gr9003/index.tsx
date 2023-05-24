@@ -4,7 +4,7 @@ import { GR9003SEARCH } from "app/path";
 import { IGR9003SEARCH } from "./model";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label, Field } from "components/form/style";
 import Loader from "components/loader";
@@ -28,10 +28,9 @@ function GR9003({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "GR",
-    functionName: "GR9003",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset, getValues, control } =
     useForm<IGR9003SEARCH>({
@@ -46,6 +45,9 @@ function GR9003({
       });
     }
   };
+  useEffect(() => {
+    getCommonDictionary({ groupId: "GR", functionName: "GR9003" });
+  }, []);
 
   useEffect(() => {
     reset({

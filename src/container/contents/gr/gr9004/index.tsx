@@ -4,7 +4,7 @@ import { GR9004SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import {
   Select,
@@ -33,10 +33,9 @@ function GR9004({
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "GR",
-    functionName: "GR9004",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const {
     register,
@@ -47,6 +46,11 @@ function GR9004({
   } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "GR", functionName: "GR9004" });
+  }, []);
+
   useEffect(() => {
     resetForm();
   }, [dataCommonDic]);

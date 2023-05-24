@@ -1,7 +1,7 @@
-import React, { useImperativeHandle, useState } from "react";
+import React, { useImperativeHandle, useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet, apiPost } from "app/axios";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { EN1300INSERT, EN1300UPDATE, EN1300DELETE, EN130011 } from "app/path";
 import {
   Item,
@@ -50,10 +50,9 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [areaCode, setAreaCode] = useState("");
-    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-      groupId: "EN",
-      functionName: "EN1300",
-    });
+
+    const [getCommonDictionary, { data: dataCommonDic }] =
+      useGetCommonDictionaryMutation();
 
     const { register, handleSubmit, reset, getValues, control, setFocus } =
       useForm<ISANGPUM>({
@@ -64,6 +63,10 @@ const Form = React.forwardRef(
       crud,
       resetForm,
     }));
+
+    useEffect(() => {
+      getCommonDictionary({ groupId: "EN", functionName: "EN1300" });
+    }, []);
 
     // const fetchCode11 = async (code: string) => {
     //   try {

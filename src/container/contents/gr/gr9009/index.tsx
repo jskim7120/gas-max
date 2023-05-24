@@ -4,7 +4,7 @@ import { apiGet } from "app/axios";
 import { GR9009SEARCH } from "app/path";
 import { IGR9009SEARCH } from "./model";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label, Field } from "components/form/style";
 import Loader from "components/loader";
@@ -13,7 +13,6 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import Grid from "../grid2";
 import { columns, fields } from "./data";
-import CustomTopPart from "container/contents/customTopPart";
 
 function GR9009({
   depthFullName,
@@ -27,10 +26,8 @@ function GR9009({
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
 
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "GR",
-    functionName: "GR9009",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset, control } = useForm<IGR9009SEARCH>({
     mode: "onSubmit",
@@ -44,6 +41,9 @@ function GR9009({
       });
     }
   };
+  useEffect(() => {
+    getCommonDictionary({ groupId: "GR", functionName: "GR9009" });
+  }, []);
 
   useEffect(() => {
     reset({

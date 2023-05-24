@@ -31,7 +31,7 @@ import {
   Label,
 } from "components/form/style";
 import { useDispatch, useSelector } from "app/store";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import FormCM1300User from "./cm1300User";
 import GridLeft from "components/grid";
 import { BuildingInfoText } from "components/text";
@@ -73,10 +73,12 @@ function CM1300({
 
   const { isDelete } = useSelector((state) => state.modal);
 
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CM",
-    functionName: "CM1300",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CM", functionName: "CM1300" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -112,7 +114,7 @@ function CM1300({
       setData([]);
       setSelected({});
     }
-    setSelectedRowIndex(0);
+
     setLoading(false);
   };
   const fetchData65 = async () => {
@@ -129,8 +131,6 @@ function CM1300({
         setData65([]);
         setSelected65({});
       }
-
-      setSelectedRowIndex65(0);
 
       if (data65?.aptGubun) {
         setAptGubun(data65?.aptGubun);

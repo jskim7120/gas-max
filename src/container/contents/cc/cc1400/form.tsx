@@ -11,11 +11,10 @@ import {
   DividerGray,
 } from "components/form/style";
 import { ICC1400FORM } from "./model";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { currencyMask } from "helpers/currency";
-import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
 
 interface IForm {
   selected: any;
@@ -42,13 +41,15 @@ const Form = React.forwardRef(
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-      groupId: "EN",
-      functionName: "EN1200",
-    });
+    const [getCommonDictionary, { data: dataCommonDic }] =
+      useGetCommonDictionaryMutation();
 
     const { register, handleSubmit, control, reset, getValues } =
       useForm<ICC1400FORM>({ mode: "onChange" });
+
+    useEffect(() => {
+      getCommonDictionary({ groupId: "CC", functionName: "CC1400" });
+    }, []);
 
     useEffect(() => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {

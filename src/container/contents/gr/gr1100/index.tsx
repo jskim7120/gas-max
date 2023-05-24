@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { apiGet } from "app/axios";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { useDispatch, useSelector } from "app/store";
 import {
   openModal,
@@ -48,16 +48,18 @@ function GR1100({
   const [loading, setLoading] = useState(false);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "GR",
-    functionName: "GR1100",
-  });
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
   const { isDelete } = useSelector((state) => state.modal);
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "GR", functionName: "GR1100" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {

@@ -4,7 +4,7 @@ import { apiGet } from "app/axios";
 import { GR9005SEARCH } from "app/path";
 import { IGR9005SEARCH } from "./model";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
@@ -28,10 +28,9 @@ function GR9005({
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "GR",
-    functionName: "GR9005",
-  });
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset, control } = useForm<IGR9005SEARCH>({
     mode: "onSubmit",
@@ -45,6 +44,10 @@ function GR9005({
       });
     }
   };
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "GR", functionName: "GR9005" });
+  }, []);
 
   useEffect(() => {
     reset({

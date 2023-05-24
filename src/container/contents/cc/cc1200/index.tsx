@@ -13,7 +13,7 @@ import {
 } from "../../commonStyle";
 import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import {
   FormGroup,
@@ -28,7 +28,6 @@ import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import { columns, fields } from "./data";
-import CustomTopPart from "container/contents/customTopPart";
 import FourButtons from "components/button/fourButtons";
 
 function CC1200({
@@ -50,12 +49,10 @@ function CC1200({
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const [dataChk, setDataChk] = useState("N");
-  const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-    groupId: "CC",
-    functionName: "CC1200",
-  });
 
-  console.log("CC1200:", dataCommonDic);
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
+
   const {
     register,
     handleSubmit,
@@ -66,6 +63,10 @@ function CC1200({
   } = useForm<ICC1200SEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CC", functionName: "CC1200" });
+  }, []);
 
   const resetSearchForm = () => {
     reset({

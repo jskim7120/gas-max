@@ -1,6 +1,6 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryQuery } from "app/api/commonDictionary";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import { currencyMask } from "helpers/currency";
@@ -69,15 +69,19 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
-    const { data: dataCommonDic } = useGetCommonDictionaryQuery({
-      groupId: "CC",
-      functionName: "CC1200",
-    });
+
+    const [getCommonDictionary, { data: dataCommonDic }] =
+      useGetCommonDictionaryMutation();
+
     const [radioChecked, setRadioChecked] = useState(0);
     const [radioCheckedSecond, setRadioCheckedSecond] = useState(0);
     const [acjType, setAcjType] = useState("");
     const { register, handleSubmit, reset, getValues, control } =
       useForm<ICC1200SEARCH>({ mode: "onChange" });
+
+    useEffect(() => {
+      getCommonDictionary({ groupId: "CC", functionName: "CC1200" });
+    }, []);
 
     useEffect(() => {
       if (selected !== undefined && JSON.stringify(selected) !== "{}") {

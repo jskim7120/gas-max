@@ -14,17 +14,23 @@ export const commonDictionaryApi = createApi({
   }),
 
   endpoints: (build) => ({
-    getCommonDictionary: build.query<any, any>({
-      query: ({ groupId, functionName }) =>
-        `/app/common/dictionary/${groupId}/${functionName}`,
-    }),
-
     getAdditionalDictionary: build.query<any, any>({
       query: ({ groupId, functionName, areaCode }) =>
         `/app/common/dictionary/${groupId}/${functionName}/${areaCode}`,
     }),
+
+    getCommonDictionary: build.mutation({
+      query: (body: { groupId: string; functionName: string }) => {
+        return {
+          url: `/app/common/dictionary/${body.groupId}/${body.functionName}`,
+          method: "get",
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetCommonDictionaryQuery, useGetAdditionalDictionaryQuery } =
-  commonDictionaryApi;
+export const {
+  useGetCommonDictionaryMutation,
+  useGetAdditionalDictionaryQuery,
+} = commonDictionaryApi;
