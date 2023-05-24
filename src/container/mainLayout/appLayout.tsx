@@ -14,14 +14,15 @@ let menuData: Array<any>;
 export default function AppLayout({ children }: { children: any }) {
   const dispatch = useDispatch();
   menuData = useSelector((state) => state.menu.menu);
-  const areaCode = useSelector((state) => state.auth.areaCode);
+  const auth = useSelector((state) => state.auth);
+
   const [areaName, { data }] = useAreaNameMutation();
 
   useEffect(() => {
-    if (areaCode) {
-      areaName({ areaCode: areaCode });
+    if (auth?.areaCode) {
+      areaName({ areaCode: auth.areaCode });
     }
-  }, [areaCode]);
+  }, [auth?.areaCode]);
 
   return (
     <Container>
@@ -32,7 +33,10 @@ export default function AppLayout({ children }: { children: any }) {
         </TopLeftWrapper>
 
         <Icons>
-          <div className="areaName">{data && data[0]?.areaName}</div>
+          <div className="areaName">
+            {auth?.areaCode && auth.areaCode}:{data && data[0]?.areaName} (
+            {auth?.loginCo && auth?.loginCo})
+          </div>
           <span
             onClick={() => {
               // dispatch(logout());

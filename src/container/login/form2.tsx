@@ -13,7 +13,7 @@ import {
   useReLoginMutation,
   useAreaInfoMutation,
 } from "app/api/auth";
-import { refreshTabs, removeAllTabs } from "app/state/tab/tabSlice";
+import { removeAllTabs } from "app/state/tab/tabSlice";
 import { Field, InputLogin, Select } from "components/form/style";
 import { ButtonType, ButtonColor } from "components/componentsType";
 import Button from "components/button/button";
@@ -84,8 +84,6 @@ function Login() {
 
   useEffect(() => {
     if (isSuccess2) {
-      console.log("data2data2data2data2data2data2:::", data2);
-
       reset((formValues) => ({
         ...formValues,
         areaCode: data2[0].code,
@@ -95,12 +93,14 @@ function Login() {
 
   useEffect(() => {
     if (isSuccess3 && data3?.accessToken) {
-      //console.log("dataRRRRRRRR:::::", dataR);
-      //console.log("accessToken:::::", jwt(dataR.accessToken));
-
       const { area_code }: { area_code: string } = jwt(data3?.accessToken);
       dispatch(
-        setReloginInfo({ token: data3.accessToken, areaCode: area_code })
+        setReloginInfo({
+          areaCode: area_code,
+          token: data3.accessToken,
+          loginCo: data3.loginCo ? data3.loginCo : "",
+          email: data3.email ? data3.email : "",
+        })
       );
       dispatch(removeAllTabs());
       dispatch(closeModal());
