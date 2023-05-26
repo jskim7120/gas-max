@@ -39,9 +39,7 @@ function GR1300({
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -176,8 +174,8 @@ function GR1300({
             fields={fields}
             columns={columns}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `calc(100% - 82px)`, minWidth: minWidth }}
           />
           <Table data={data} style={{ minWidth: minWidth }} />
@@ -190,8 +188,6 @@ function GR1300({
             fetchData={handleSubmit(submit)}
             isAddBtnClicked={isAddBtnClicked}
             setIsAddBtnClicked={setIsAddBtnClicked}
-            isCancelBtnDisabled={isCancelBtnDisabled}
-            setIsCancelBtnDisabled={setIsCancelBtnDisabled}
           />
         </RightSide>
       </MainWrapper>

@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+type GridProps = {
+  grid: number;
+  row: number;
+};
 
 type TabProps = {
   menuId: string;
   menuName: string;
   depthFullName: string;
-  rowIndex: number;
+  gridIndexes: Array<GridProps>;
 };
 
 export interface initialStateType {
@@ -18,7 +22,7 @@ const initialState: initialStateType = {
       menuId: "HOME",
       menuName: "HOME",
       depthFullName: "HOME",
-      rowIndex: 0,
+      gridIndexes: [{ grid: 0, row: 0 }],
     },
   ],
   activeTabId: "HOME",
@@ -43,7 +47,7 @@ const tabSlice = createSlice({
               menuId: action.payload.menuId,
               menuName: action.payload.menuName,
               depthFullName: action.payload.depthFullName,
-              rowIndex: 0,
+              gridIndexes: [{ grid: 0, row: 0 }],
             },
           ];
           sessionStorage.setItem("tabs", JSON.stringify(state.tabs));
@@ -72,7 +76,7 @@ const tabSlice = createSlice({
           menuId: "HOME",
           menuName: "HOME",
           depthFullName: "HOME",
-          rowIndex: 0,
+          gridIndexes: [{ grid: 0, row: 0 }],
         },
       ];
       state.activeTabId = "HOME";
@@ -97,7 +101,12 @@ const tabSlice = createSlice({
         (tab) => tab.menuId === action.payload.menuId
       );
       if (tab) {
-        tab.rowIndex = action.payload.rowIndex;
+        tab.gridIndexes = [
+          ...tab.gridIndexes.filter(
+            (item) => item.grid !== action.payload.grid
+          ),
+          { grid: action.payload.grid, row: action.payload.row },
+        ];
       }
     },
   },

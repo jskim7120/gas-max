@@ -18,8 +18,6 @@ const FORMCM1105 = React.forwardRef(
     {
       selected,
       setData,
-      selectedRowIndex,
-      setSelectedRowIndex,
       setSelected,
       dataCommonDic,
       guCheckAMount,
@@ -27,8 +25,6 @@ const FORMCM1105 = React.forwardRef(
     }: {
       selected: any;
       setData: Function;
-      selectedRowIndex: any;
-      setSelectedRowIndex: Function;
       setSelected: Function;
       dataCommonDic: any;
       guCheckAMount: number;

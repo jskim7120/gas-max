@@ -45,9 +45,7 @@ function CC1200({
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const [dataChk, setDataChk] = useState("N");
 
   const [getCommonDictionary, { data: dataCommonDic }] =
@@ -108,13 +106,11 @@ function CC1200({
     if (data) {
       setData(data);
       setLoading(false);
-      setSelectedRowIndex(0);
     }
   };
 
   const onClickAdd = () => {
     setIsAddBtnClicked(true);
-    setIsCancelBtnDisabled(false);
     formRef.current.resetForm("clear");
   };
 
@@ -283,9 +279,9 @@ function CC1200({
             fields={fields}
             columns={columns}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
+            menuId={menuId}
+            rowIndex={0}
             setIsAddBtnClicked={setIsAddBtnClicked}
-            setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: `calc(100% - 38px)` }}
           />
         </LeftSide>
@@ -295,8 +291,6 @@ function CC1200({
             ref={formRef}
             fetchData={fetchData}
             setData={setData}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             isAddBtnClicked={isAddBtnClicked}
             setIsAddBtnClicked={setIsAddBtnClicked}

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { apiGet } from "app/axios";
+import { useForm } from "react-hook-form";
+import { apiGet, apiPost } from "app/axios";
 import { ISEARCH } from "./model";
 import GridLeft from "components/grid";
 import Form from "./form";
@@ -25,11 +25,10 @@ import {
   closeModal,
 } from "app/state/modal/modalSlice";
 import { useDispatch, useSelector } from "app/store";
-import { CM1200SEARCH, CM120065 } from "app/path";
+import { CM1200SEARCH } from "app/path";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { fields, columns } from "./data";
-import CreateScreen from "app/hook/createScreen";
-
-const leftSideWidth: number = 530;
+import { setRowIndex } from "app/state/tab/tabSlice";
 
 function CM1200({
   depthFullName,
@@ -45,36 +44,33 @@ function CM1200({
   const btnRef2 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const btnRef3 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const btnRef4 = useRef() as React.MutableRefObject<HTMLButtonElement>;
-  const { handleSubmit, reset, watch, register, getValues, control } =
-    useForm<ISEARCH>({
-      mode: "onSubmit",
-    });
 
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    isAddBtnClicked,
-    setIsAddBtnClicked,
-    activeTabId,
-    fetchData,
-    showDraggableLine,
-    isOpen,
-    rowIndex,
-    dispatch,
-    dataCommonDic,
-    linePos,
-  } = CreateScreen("CM", "CM1200", menuId, CM1200SEARCH, leftSideWidth);
+  const dispatch = useDispatch();
+
+  const [getCommonDictionary, { data: dataCommonDic }] =
+    useGetCommonDictionaryMutation();
+
+  const { register, reset, handleSubmit, watch, getValues } = useForm<ISEARCH>({
+    mode: "onSubmit",
+  });
+
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selected, setSelected] = useState<any>({});
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [dataChk, setDataChk] = useState(true);
 
   const { isDelete } = useSelector((state) => state.modal);
-  const [selectedSupplyTab, setSelectedSupplyTab] = useState<any>({});
-  const [userInfo, setUserInfo] = useState<any[]>([]);
+  const tabState = useSelector((state) => state.tab.tabs);
+  const isOpen = useSelector((state) => state.sidebar);
+  const gridIndexes = tabState.find(
+    (item) => item.menuId === menuId
+  )?.gridIndexes;
+  const rowIndex = gridIndexes?.find((item) => item.grid === 0)?.row;
 
-  const [cuCustgubunDic, setCuCustgubunDic] = useState<any[]>([]);
-  const [cuJyCodeDic, setCuJyCodeDic] = useState<any[]>([]);
-  const [cuSwCodeDic, setCuSwCodeDic] = useState<any[]>([]);
+  useEffect(() => {
+    getCommonDictionary({ groupId: "CM", functionName: "CM1200" });
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -97,71 +93,8 @@ function CM1200({
     }
   }, [watch("areaCode")]);
 
-  useEffect(() => {
-    if (selected) {
-      if (isAddBtnClicked) {
-        btnRef1.current.classList.remove("active");
-        setIsAddBtnClicked(false);
-      }
-
-      if (selected.cuCode && selected.areaCode) {
-        fetchData65({
-          areaCode: selected.areaCode,
-          cuCode: selected.cuCode,
-        });
-      }
-    }
-  }, [selected]);
-
-  const prepareSearchFormValues = () => {
-    const params: any = getValues();
-    if (params.dataChk === undefined || params.dataChk === false) {
-      delete params.sCuName;
-      delete params.dataChk;
-    }
-
-    return params;
-  };
-
-  const fetchData65 = async (params: any) => {
-    const res = await apiGet(CM120065, params);
-
-    if (res) {
-      if (res?.userInfo) {
-        setUserInfo(res.userInfo);
-      } else {
-        setUserInfo([]);
-      }
-
-      if (res?.supplyTab) {
-        setSelectedSupplyTab(res?.supplyTab[0]);
-      } else {
-        setSelectedSupplyTab({});
-      }
-
-      if (res?.cuCustgubun) {
-        setCuCustgubunDic(res.cuCustgubun);
-      }
-
-      if (res?.cuJyCode) {
-        setCuJyCodeDic(res.cuJyCode);
-      }
-
-      if (res?.cuSwCode) {
-        setCuSwCodeDic(res.cuSwCode);
-      }
-    } else {
-      setUserInfo([]);
-      setSelectedSupplyTab({});
-      setCuCustgubunDic([]);
-      setCuJyCodeDic([]);
-      setCuSwCodeDic([]);
-    }
-  };
-
-  const submit = async (p: any) => {
-    const params = prepareSearchFormValues();
-    fetchData(params);
+  const submit = async (data: any) => {
+    fetchData(data);
   };
 
   function deleteRowGrid() {
@@ -173,6 +106,36 @@ function CM1200({
       dispatch(closeModal());
     } catch (error) {}
   }
+
+  const fetchData = async (params: any = null, flag: string = "") => {
+    if (params === null) {
+      params = getValues();
+    }
+
+    if (!dataChk) {
+      delete params.dataChk;
+      delete params.sCuName;
+    }
+
+    setLoading(true);
+    const dataS = await apiGet(CM1200SEARCH, {
+      ...params,
+    });
+
+    if (dataS) {
+      setData(dataS);
+      if (flag === "last") {
+        const lastIndex = dataS && dataS.length > 0 ? dataS.length - 1 : 0;
+        setSelected(dataS[lastIndex]);
+        dispatch(setRowIndex({ menuId: menuId, rowIndex: lastIndex }));
+      }
+    } else {
+      setData([]);
+      setSelected({});
+    }
+
+    setLoading(false);
+  };
 
   const onClickAdd = () => {
     btnRef1.current.classList.add("active");
@@ -248,29 +211,27 @@ function CM1200({
         <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
-        <LeftSide style={{ width: `${linePos}px` }}>
-          <SearchWrapper
-            style={{ minWidth: `${leftSideWidth}px`, padding: "5px 15px" }}
-          >
-            <form onSubmit={handleSubmit(submit)} autoComplete="off">
+        <LeftSide>
+          <SearchWrapper>
+            <form
+              onSubmit={handleSubmit(submit)}
+              style={{ padding: "5px 0px" }}
+              autoComplete="off"
+            >
               <FormGroup>
                 <Label className="lable-check" style={{ minWidth: "auto" }}>
-                  <Controller
-                    control={control}
-                    {...register("dataChk")}
-                    render={({ field: { onChange, value, name } }) => (
-                      <CheckBox
-                        title="건물명"
-                        checked={value}
-                        onChange={onChange}
-                      />
-                    )}
+                  <CheckBox
+                    register={{ ...register("dataChk") }}
+                    title="건물명"
+                    onChange={(e: any) => setDataChk(e.target.checked)}
+                    checked={dataChk}
                   />
                 </Label>
-
                 <Input
-                  register={register("sCuName")}
-                  readOnly={!watch("dataChk")}
+                  register={register("sCuName", {
+                    required: false,
+                  })}
+                  readOnly={!dataChk}
                 />
 
                 <Button
@@ -303,38 +264,25 @@ function CM1200({
             setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
-            style={{
-              height: `calc(100% - 48px)`,
-              minWidth: `${leftSideWidth}px`,
-            }}
+            style={{ height: `calc(100% - 48px)`, minWidth: "409px" }}
             menuId={menuId}
             rowIndex={rowIndex}
           />
         </LeftSide>
-        <RightSide
-          style={{ width: `calc(100% - ${linePos}px)`, padding: "0 10px" }}
-        >
+        <RightSide style={{ padding: "0 10px" }}>
           <Form
             ref={formRef}
             dataCommonDic={dataCommonDic}
             fetchData={fetchData}
-            areaCode={watch("areaCode")}
+            setData={setData}
             selected={selected}
+            setSelected={setSelected}
+            areaCode={watch("areaCode")}
             ownAreaCode={ownAreaCode}
             isAddBtnClicked={isAddBtnClicked}
             setIsAddBtnClicked={setIsAddBtnClicked}
-            prepareSearchFormValues={prepareSearchFormValues}
-            userInfo={userInfo}
-            cuCustgubunDic={cuCustgubunDic}
-            setCuCustgubunDic={setCuCustgubunDic}
-            cuJyCodeDic={cuJyCodeDic}
-            setCuJyCodeDic={setCuJyCodeDic}
-            selectedSupplyTab={selectedSupplyTab}
-            cuSwCodeDic={cuSwCodeDic}
-            setCuSwCodeDic={setCuSwCodeDic}
           />
         </RightSide>
-        {showDraggableLine()}
       </MainWrapper>
     </>
   );

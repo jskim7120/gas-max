@@ -30,9 +30,7 @@ interface IForm {
   selected: any;
   fetchData: any;
   setData: any;
-  selectedRowIndex: number;
   setSelected: any;
-  setSelectedRowIndex: any;
   dataCommonDic: any;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
@@ -45,9 +43,7 @@ const Form = React.forwardRef(
       selected,
       fetchData,
       setData,
-      selectedRowIndex,
       setSelected,
-      setSelectedRowIndex,
       dataCommonDic,
       isAddBtnClicked,
       setIsAddBtnClicked,

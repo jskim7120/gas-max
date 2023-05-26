@@ -39,7 +39,6 @@ function GR1500({
   const [dataSecond, setDataSecond] = useState([]);
   const [selected, setSelected] = useState<any>({});
   const [selected2, setSelected2] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
@@ -99,7 +98,7 @@ function GR1500({
       setData([]);
       setSelected({});
     }
-    setSelectedRowIndex(0);
+
     setLoading1(false);
   };
 
@@ -130,7 +129,7 @@ function GR1500({
       setDataSecond(data);
       setSelected2(data[0]);
     }
-    setSelectedRowIndex(0);
+
     setLoading2(false);
   };
 
@@ -227,10 +226,10 @@ function GR1500({
             areaCode={areaCode}
             data={data.length > 0 && data}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             fields={fields}
             columns={columns}
+            menuId={menuId}
+            rowIndex={0}
             // evenFill
             style={{ height: "43%", minWidth: "925px" }}
           />
@@ -329,8 +328,8 @@ function GR1500({
             fields={fieldsSecond}
             setSelected={setSelected}
             // setSelected2={setSelected2}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
+            menuId={menuId}
+            rowIndex={0}
             // evenFill
             style={{ height: "43%", minWidth: "925px" }}
           />
@@ -342,8 +341,6 @@ function GR1500({
             ref={formRef}
             fetchData={fetchDataSearch1}
             setData={setData}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             setSelected2={setSelected2}
             menuId={menuId}

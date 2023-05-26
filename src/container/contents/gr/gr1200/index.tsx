@@ -48,7 +48,6 @@ function GR1200({
   const [data, setData] = useState<Array<any>>([]);
   const [data2, setData2] = useState({});
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState<number>(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
   useEffect(() => {
@@ -83,11 +82,9 @@ function GR1200({
       if (res?.realgridData) {
         setData(res?.realgridData);
         setSelected(res?.realgridData[0]);
-        setSelectedRowIndex(0);
       } else {
         setData([]);
         setSelected({});
-        setSelectedRowIndex(0);
       }
       if (res?.totalData) {
         setData2(res?.totalData[0]);
@@ -98,7 +95,6 @@ function GR1200({
       setData([]);
       setData2([]);
       setSelected({});
-      setSelectedRowIndex(0);
     }
     setLoading(false);
     setIsAddBtnClicked(false);
@@ -208,9 +204,9 @@ function GR1200({
             data={data}
             fields={fields}
             columns={columns}
+            menuId={menuId}
+            rowIndex={0}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setIsAddBtnClicked={setIsAddBtnClicked}
             style={{ height: `calc(100% - 210px)`, minWidth: minWidth }}
             layout={layout}

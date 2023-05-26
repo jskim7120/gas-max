@@ -1,7 +1,7 @@
 export interface ISEARCH {
   areaCode: string;
   sCuName: string;
-  dataChk: boolean;
+  dataChk: string;
 }
 
 export interface ICM1200SEARCH {

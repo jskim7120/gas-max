@@ -188,10 +188,10 @@ function CC9003({
             areaCode="00"
             data={data}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             fields={fields}
             columns={columns}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `calc(100% - 38px)` }}
             layout={layout}
           />

@@ -324,6 +324,8 @@ function CM9003({
             setSelected={setSelected}
             fields={fields0}
             columns={columns0}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `calc(100% - 15px)` }}
             // evenFill
           />
@@ -335,6 +337,8 @@ function CM9003({
             setSelected={setSelected}
             fields={fields1}
             columns={columns1}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `calc(100% - 15px)` }}
             // evenFill
           />

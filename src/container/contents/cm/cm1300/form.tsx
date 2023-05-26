@@ -64,10 +64,8 @@ interface IForm {
   areaCode: string;
   selected: any;
   setSelected: any;
-  setSelectedRowIndex: any;
   fetchData: any;
   setData: any;
-  selectedRowIndex: number;
   aptGubun: Array<any>;
   aptJyCode: Array<any>;
   aptSwCode: Array<any>;
@@ -82,10 +80,8 @@ const Form = React.forwardRef(
       areaCode,
       selected,
       setSelected,
-      setSelectedRowIndex,
       fetchData,
       setData,
-      selectedRowIndex,
       aptGubun,
       aptJyCode,
       aptSwCode,
@@ -278,12 +274,11 @@ const Form = React.forwardRef(
       if (res) {
         if (isAddBtnClicked) {
           setData((prev: any) => [formValues, ...prev]);
-          setSelectedRowIndex(0);
         } else {
-          setData((prev: any) => {
-            prev[selectedRowIndex] = formValues;
-            return [...prev];
-          });
+          // setData((prev: any) => {
+          //   prev[selectedRowIndex] = formValues;
+          //   return [...prev];
+          // });
         }
         setSelected(formValues);
         setIsAddBtnClicked(false);

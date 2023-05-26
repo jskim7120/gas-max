@@ -11,7 +11,7 @@ import {
   WhiteClose,
   MagnifyingGlassBig,
 } from "components/allSvgIcon";
-import Grid from "components/grid";
+import Grid from "components/grid2";
 import Form from "./form";
 import { closeModal } from "app/state/modal/modalSlice";
 import { Select, FormGroup, Label, Input } from "components/form/style";
@@ -35,7 +35,6 @@ function FormIP1105() {
   const ptCuJmisu = useSelector((state) => state.modal.pt1105.cuJmisu);
   const [data, setData] = useState<any>([]);
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const { register, handleSubmit, reset, getValues } = useForm<IPT1105>();
   const [totalGuAmount, setTotalGuAmount] = useState(0);
@@ -102,7 +101,6 @@ function FormIP1105() {
       setData(data);
       setLoading(false);
       setSelected(data[0]);
-      setSelectedRowIndex(0);
     }
   };
   const firstFetchData = async () => {
@@ -132,7 +130,6 @@ function FormIP1105() {
       setData(data);
       setLoading(false);
       setSelected(data[0]);
-      setSelectedRowIndex(0);
     }
   };
 
@@ -217,8 +214,6 @@ function FormIP1105() {
             fields={fields}
             columns={columns}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             style={{
               height: "600px",
               width: "90%",
@@ -234,8 +229,6 @@ function FormIP1105() {
             selected={selected}
             ref={formRef}
             setData={setData}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
             guCheckAMount={totalGuAmount}

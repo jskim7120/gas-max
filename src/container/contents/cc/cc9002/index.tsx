@@ -34,7 +34,6 @@ function CC9002({
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
@@ -173,10 +172,10 @@ function CC9002({
             areaCode="00"
             data={data}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             fields={fields}
             columns={columns}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `calc(100% - 38px)` }}
           />
         </LeftSide>

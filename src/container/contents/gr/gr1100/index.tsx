@@ -44,7 +44,6 @@ function GR1100({
   const [areaCode, setAreaCode] = useState("");
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>();
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
@@ -239,9 +238,9 @@ function GR1100({
             data={data}
             fields={fields}
             columns={columns}
+            menuId={menuId}
+            rowIndex={0}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setIsAddBtnClicked={setIsAddBtnClicked}
             style={{ height: `calc(100% - 38px)`, minWidth: minWidth }}
           />
@@ -252,8 +251,6 @@ function GR1100({
             ref={formRef}
             fetchData={fetchData}
             setData={setData}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             areaCode={areaCode}
             setAreaCode={setAreaCode}

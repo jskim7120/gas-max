@@ -74,7 +74,7 @@ export const WrapperContent = styled.div`
 export const LeftSide = styled.div<{ width?: string }>`
   flex-grow: 1;
   overflow-x: auto;
-  border-right: 3px solid #707070;
+  // border-right: 3px solid #707070;
 `;
 
 export const LeftSideEN = styled.div<{ width?: string }>`

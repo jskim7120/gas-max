@@ -28,7 +28,6 @@ import { fields, columns } from "./data";
 import { ICC1500SEARCH } from "./model";
 import Form from "./form";
 import { DateWithoutDash } from "helpers/dateFormat";
-import { CustomAreaCodePart } from "container/contents/customTopPart";
 import FourButtons from "components/button/fourButtons";
 
 function CC1500({
@@ -47,9 +46,7 @@ function CC1500({
   const [data65, setData65] = useState({});
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
@@ -173,7 +170,6 @@ function CC1500({
 
   const onClickAdd = () => {
     setIsAddBtnClicked(true);
-    setIsCancelBtnDisabled(false);
     formRef.current.resetForm("clear");
   };
 
@@ -346,9 +342,9 @@ function CC1500({
             fields={fields}
             columns={columns}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
+            menuId={menuId}
+            rowIndex={0}
             setIsAddBtnClicked={setIsAddBtnClicked}
-            setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: `calc(100% - 38px)` }}
           />
         </LeftSide>
@@ -360,8 +356,6 @@ function CC1500({
             fetchData={fetchData}
             setData={setData}
             selected={selected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
             isAddBtnClicked={isAddBtnClicked}

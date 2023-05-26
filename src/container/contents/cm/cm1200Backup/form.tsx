@@ -35,6 +35,7 @@ import {
 import { formatCurrencyRemoveComma } from "helpers/currency";
 import getTabContent from "./getTabContent";
 import { useDispatch } from "app/store";
+import { CM120065 } from "app/path";
 import { openModal, addCM1105 } from "app/state/modal/modalSlice";
 import useRdanga from "app/hook/calcRdanga";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
@@ -45,41 +46,28 @@ const Form = React.forwardRef(
       selected,
       dataCommonDic,
       fetchData,
+      setData,
+      setSelected,
       areaCode,
       ownAreaCode,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      prepareSearchFormValues,
-      userInfo,
-      cuCustgubunDic,
-      setCuCustgubunDic,
-      cuJyCodeDic,
-      setCuJyCodeDic,
-      selectedSupplyTab,
-      cuSwCodeDic,
-      setCuSwCodeDic,
     }: {
       selected: any;
       dataCommonDic: any;
       fetchData: any;
+      setData: any;
+      setSelected: any;
       areaCode: string;
       ownAreaCode: string;
       isAddBtnClicked: boolean;
       setIsAddBtnClicked: Function;
-      prepareSearchFormValues: any;
-      userInfo: any;
-      cuCustgubunDic: any;
-      setCuCustgubunDic: any;
-      cuJyCodeDic: any;
-      setCuJyCodeDic: any;
-      selectedSupplyTab: any;
-      cuSwCodeDic: any;
-      setCuSwCodeDic: any;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
-
+    const [userInfo, setUserInfo] = useState<any[]>([]);
+    const [selectedSupplyTab, setSelectedSupplyTab] = useState<any>({});
     const [selectedUserInfo, setSelectedUserInfo] = useState<any>({});
 
     const [tabId, setTabId] = useState<number>(0);
@@ -97,6 +85,9 @@ const Form = React.forwardRef(
     const [chkCuGumdate, setChkCuGumdate] = useState(false);
     const [chkCuCno, setChkCuCno] = useState(false);
 
+    const [cuCustgubunDic, setCuCustgubunDic] = useState([]);
+    const [cuJyCodeDic, setCuJyCodeDic] = useState([]);
+    const [cuSwCodeDic, setCuSwCodeDic] = useState([]);
     const [cuAddr1, setCuAddr1] = useState("");
 
     const {
@@ -127,14 +118,14 @@ const Form = React.forwardRef(
 
     useEffect(() => {
       if (dataCommonDic) {
-        // setCuCustgubunDic(dataCommonDic?.cuCustgubun);
-        // setCuJyCodeDic(dataCommonDic?.cuJyCode);
-        // setCuSwCodeDic(dataCommonDic?.cuSwCode);
+        setCuCustgubunDic(dataCommonDic?.cuCustgubun);
+        setCuJyCodeDic(dataCommonDic?.cuJyCode);
+        setCuSwCodeDic(dataCommonDic?.cuSwCode);
 
         reset({
-          // cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
-          // cuJyCode: dataCommonDic?.cuJyCode[0].code,
-          // cuSwCode: dataCommonDic?.cuSwCode[0].code,
+          cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
+          cuJyCode: dataCommonDic?.cuJyCode[0].code,
+          cuSwCode: dataCommonDic?.cuSwCode[0].code,
           cuRh2O: dataCommonDic?.cuRh20[0].code,
           // cuRdangaType: dataCommonDic?.cuRdangaType[0].code,
           // cuRdangaSign: dataCommonDic?.cuRdangaSign[0].code,
@@ -149,6 +140,15 @@ const Form = React.forwardRef(
         });
       }
     }, [dataCommonDic]);
+
+    useEffect(() => {
+      if (selected && selected.cuCode && selected.areaCode) {
+        fetchAdditionalData({
+          areaCode: selected.areaCode,
+          cuCode: selected.cuCode,
+        });
+      }
+    }, [selected]);
 
     useEffect(() => {
       if (selectedSupplyTab) {
@@ -178,8 +178,53 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       resetForm,
       crud,
-      // setUserInfo,
+      setUserInfo,
     }));
+
+    const fetchAdditionalData = async ({
+      areaCode,
+      cuCode,
+    }: {
+      areaCode: string;
+      cuCode: string;
+    }) => {
+      const res = await apiGet(CM120065, {
+        cuCode: cuCode,
+        areaCode: areaCode,
+      });
+
+      if (res) {
+        if (res?.userInfo) {
+          setUserInfo(res.userInfo);
+        } else {
+          setUserInfo([]);
+        }
+
+        if (res?.supplyTab) {
+          setSelectedSupplyTab(res?.supplyTab[0]);
+        } else {
+          setSelectedSupplyTab({});
+        }
+
+        if (res?.cuCustgubun) {
+          setCuCustgubunDic(res.cuCustgubun);
+        }
+
+        if (res?.cuJyCode) {
+          setCuJyCodeDic(res.cuJyCode);
+        }
+
+        if (res?.cuSwCode) {
+          setCuSwCodeDic(res.cuSwCode);
+        }
+      } else {
+        setUserInfo([]);
+        setSelectedSupplyTab({});
+        setCuCustgubunDic([]);
+        setCuJyCodeDic([]);
+        setCuSwCodeDic([]);
+      }
+    };
 
     const codeChangeHandler = async (aCode: string) => {
       const res = await apiGet(CM1200INSERTSEQ, {
@@ -272,8 +317,8 @@ const Form = React.forwardRef(
           },
           "삭제했습니다"
         );
-        const par = prepareSearchFormValues();
-        res && (await fetchData(par));
+
+        res && (await fetchData(null));
         return;
       }
 
@@ -364,11 +409,11 @@ const Form = React.forwardRef(
 
       const res = await apiPost(path, formValues, "저장이 성공하였습니다");
       if (res) {
-        const par = prepareSearchFormValues();
         if (isAddBtnClicked) {
-          await fetchData(par, "last");
+          setIsAddBtnClicked(false);
+          await fetchData(null, "last");
         } else {
-          await fetchData(par);
+          await fetchData(null);
         }
       }
     };

@@ -34,8 +34,6 @@ function FormCM1300User({
   selected,
   mainSelected,
   setSelected,
-  selectedRowIndex,
-  setSelectedRowIndex,
   fetchData,
   aptCode,
   areaCode,
@@ -49,8 +47,6 @@ function FormCM1300User({
   selected: any;
   mainSelected: any;
   setSelected: Function;
-  selectedRowIndex: number;
-  setSelectedRowIndex: Function;
   fetchData: Function;
   aptCode: string;
   areaCode: string;
@@ -160,8 +156,6 @@ function FormCM1300User({
           setData([]);
           setSelected({});
         }
-
-        setSelectedRowIndex(0);
       }
     } catch (err) {
       console.log("CM1300 data search fetch error =======>", err);
@@ -242,12 +236,11 @@ function FormCM1300User({
       if (response.status === 200) {
         if (isAddBtnClicked) {
           setData((prev: any) => [formValues, ...prev]);
-          setSelectedRowIndex(0);
         } else {
-          setData((prev: any) => {
-            prev[selectedRowIndex] = formValues;
-            return [...prev];
-          });
+          // setData((prev: any) => {
+          //   prev[selectedRowIndex] = formValues;
+          //   return [...prev];
+          // });
         }
         setSelected(formValues);
         toast.success("저장이 성공하였습니다", {
@@ -272,16 +265,14 @@ function FormCM1300User({
       <div style={{ display: "flex" }}>
         <div style={{ width: "50%", flexGrow: 1 }}>
           <PersonInfoText text="사용자" style={{ padding: "10px" }} />
-          <Grid
+          {/* <Grid
             areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             fields={fields}
             columns={columns}
             style={{ height: `406px` }}
-          />
+          /> */}
         </div>
         <div style={{ width: "1px", background: "#707070" }}></div>
         <div style={{ paddingTop: "7px" }}>

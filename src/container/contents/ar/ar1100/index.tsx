@@ -51,7 +51,6 @@ function AR1100({
   const [data65Dictionary, setData65Dictionary] = useState({});
   const [tabId, setTabId] = useState(0);
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
 
   const { register, handleSubmit, reset, control } = useForm<IAR1100SEARCH>({
     mode: "onSubmit",
@@ -377,8 +376,8 @@ function AR1100({
           fields={fields}
           columns={columns}
           setSelected={setSelected}
-          selectedRowIndex={selectedRowIndex}
-          setSelectedRowIndex={setSelectedRowIndex}
+          menuId={menuId}
+          rowIndex={0}
           style={{
             height: `calc(100% - 368px)`,
             borderBottom: "1px solid #707070",

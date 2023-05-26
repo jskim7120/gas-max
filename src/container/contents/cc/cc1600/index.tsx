@@ -29,9 +29,7 @@ function CC1600({
   const [data, setData] = useState([]);
   const [data65, setData65] = useState({});
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
   const [acsAccName, setAcsAccName] = useState([]);
 
   const [getCommonDictionary, { data: dataCommonDic }] =
@@ -126,7 +124,6 @@ function CC1600({
 
   const onClickAdd = () => {
     setIsAddBtnClicked(true);
-    setIsCancelBtnDisabled(false);
     formRef.current.resetForm("clear");
   };
 
@@ -161,11 +158,11 @@ function CC1600({
             areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: "100%" }}
           />
         </LeftSide>

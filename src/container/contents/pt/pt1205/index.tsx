@@ -11,7 +11,7 @@ import {
   WhiteClose,
   MagnifyingGlassBig,
 } from "components/allSvgIcon";
-import Grid from "components/grid";
+import Grid from "components/grid2";
 import Form from "./form";
 import { closeModal } from "app/state/modal/modalSlice";
 import { Select, FormGroup, Label, Input } from "components/form/style";
@@ -36,7 +36,6 @@ function FormIP1205() {
   const ptCuCmisu = useSelector((state) => state.modal.pt1205.cuCmisu);
   const [data, setData] = useState<any>([]);
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [totalGuAmount, setTotalGuAmount] = useState(0);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const { register, handleSubmit, reset, getValues } = useForm<IPT1205>();
@@ -103,7 +102,6 @@ function FormIP1205() {
       setData(data);
       setLoading(false);
       setSelected(data[0]);
-      setSelectedRowIndex(0);
     }
   };
   const firstFetchData = async () => {
@@ -117,7 +115,7 @@ function FormIP1205() {
     //     setData(data);
     //     setLoading(false);
     //     setSelected(data[0]);
-    //     setSelectedRowIndex(0);
+
     //   }
     // } catch (err) {
     //   console.log("PT1205 data search fetch error =======>", err);
@@ -133,7 +131,6 @@ function FormIP1205() {
       setData(data);
       setLoading(false);
       setSelected(data[0]);
-      setSelectedRowIndex(0);
     }
   };
 
@@ -218,8 +215,6 @@ function FormIP1205() {
             fields={fields}
             columns={columns}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             style={{
               height: "500px",
               width: "90%",
@@ -234,8 +229,6 @@ function FormIP1205() {
             selected={selected}
             ref={formRef}
             setData={setData}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
             totalGuAmount={totalGuAmount}

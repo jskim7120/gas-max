@@ -61,7 +61,6 @@ function CM1300({
   const [data, setData] = useState([]);
   const [data65, setData65] = useState([]);
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState<number>(0);
   const [selected65, setSelected65] = useState<any>({});
   const [selectedRowIndex65, setSelectedRowIndex65] = useState<number>(0);
   const [loading, setLoading] = useState(false);
@@ -288,12 +287,12 @@ function CM1300({
             areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setIsAddBtnClicked={setIsAddBtnClicked}
             setIsAddBtnClicked2={setIsAddBtnClicked2}
             fields={fields}
             columns={columns}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `calc(100% - 73px)` }}
           />
         </LeftSide>
@@ -305,8 +304,6 @@ function CM1300({
             ref={formRef}
             fetchData={fetchData}
             setData={setData}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             isAddBtnClicked={isAddBtnClicked}
             setIsAddBtnClicked={setIsAddBtnClicked}
@@ -322,8 +319,6 @@ function CM1300({
             mainSelected={selected}
             selected={selected65}
             setSelected={setSelected65}
-            selectedRowIndex={selectedRowIndex65}
-            setSelectedRowIndex={setSelectedRowIndex65}
             ownAreaCode={ownAreaCode}
             fetchData={fetchData65}
             aptCode={selected?.aptCode}

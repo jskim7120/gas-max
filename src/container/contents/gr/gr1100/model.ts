@@ -9,9 +9,7 @@ export interface IForm {
   selected: any;
   fetchData: any;
   setData: any;
-  selectedRowIndex: number;
   setSelected: any;
-  setSelectedRowIndex: any;
   areaCode: string;
   setAreaCode: Function;
   isAddBtnClicked: boolean;
