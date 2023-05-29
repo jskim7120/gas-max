@@ -14,7 +14,7 @@ function Grid({
   layout,
   menuId,
   rowIndex,
-
+  gridNumber,
   setIsAddBtnClicked,
   setIsAddBtnClicked2,
 }: {
@@ -28,7 +28,7 @@ function Grid({
   layout?: any;
   menuId: string;
   rowIndex: number | undefined;
-
+  gridNumber?: number | undefined;
   setIsAddBtnClicked?: Function;
   setIsAddBtnClicked2?: Function;
 }) {
@@ -75,7 +75,13 @@ function Grid({
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected && setSelected(data[itemIndex]);
-      dispatch(setRowIndex({ menuId: menuId, grid: 0, row: itemIndex }));
+      dispatch(
+        setRowIndex({
+          menuId: menuId,
+          grid: gridNumber ? gridNumber : 0,
+          row: itemIndex,
+        })
+      );
       // setIsAddBtnClicked && setIsAddBtnClicked(false);
       // setIsAddBtnClicked2 && setIsAddBtnClicked2(false);
     };

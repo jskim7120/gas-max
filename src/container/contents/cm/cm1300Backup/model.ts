@@ -1,8 +1,3 @@
-export interface ISEARCH {
-  areaCode: string;
-  aptCode: string;
-  aptName: string;
-}
 export interface ICM1300 {
   apt4F: string;
   apt4Ho: string;
@@ -44,6 +39,12 @@ export interface ICM1300 {
   // chkAptPer: boolean;
   // chkAptGumdate: boolean;
   // chkAptSukumtype: boolean;
+}
+
+export interface ISEARCH {
+  areaCode: string;
+  aptCode: string;
+  aptName: string;
 }
 
 export const emptyObj: any = {

@@ -482,7 +482,7 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
 `;
 
 export const Divider = styled.div`
-  height: 2px;
+  height: 1px;
   background: rgba(0, 0, 0, 0.2);
 `;
 export const DividerGray = styled.div`

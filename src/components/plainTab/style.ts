@@ -39,10 +39,10 @@ export const TabContentWrapper = styled.div`
   height: auto;
   padding: 20px 25px;
 
-  border: 1px solid #707070;
+  border: 1px solid #00000033;
   border-radius: 0 0 8px 8px;
 
-  box-shadow: -1px 1px 3px 0px rgba(104, 103, 103, 0.35);
-  -webkit-box-shadow: -1px 1px 3px 0px rgba(104, 103, 103, 0.35);
-  -moz-box-shadow: -1px 1px 3px 0px rgba(104, 103, 103, 0.35);
+  // box-shadow: -1px 1px 3px 0px rgba(104, 103, 103, 0.35);
+  // -webkit-box-shadow: -1px 1px 3px 0px rgba(104, 103, 103, 0.35);
+  // -moz-box-shadow: -1px 1px 3px 0px rgba(104, 103, 103, 0.35);
 `;

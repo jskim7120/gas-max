@@ -1,13 +1,6 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet, apiPost } from "app/axios";
-import useRdanga from "app/hook/calcRdanga";
-import {
-  CM1300INSERT,
-  CM1300UPDATE,
-  CM1300DELETE,
-  CM1300INSERTSEQ,
-} from "app/path";
 import {
   Input,
   Select,
@@ -16,15 +9,22 @@ import {
   Label,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
+import { ICM1300, emptyObj } from "./model";
 import DaumAddress from "components/daum";
+import {
+  CM1300INSERT,
+  CM1300UPDATE,
+  CM1300DELETE,
+  CM1300INSERTSEQ,
+} from "app/path";
 import { InputSize } from "components/componentsType";
+import { currencyMask, removeCommas } from "helpers/currency";
 import {
   Item,
   RadioButton,
   RadioButtonLabel,
 } from "components/radioButton/style";
-import { currencyMask, removeCommas } from "helpers/currency";
-import { ICM1300, emptyObj } from "./model";
+import useRdanga from "app/hook/calcRdanga";
 
 const radioOptions = [
   {
@@ -67,15 +67,11 @@ interface IForm {
   fetchData: any;
   setData: any;
   aptGubun: Array<any>;
-  setAptGubun: Function;
   aptJyCode: Array<any>;
-  setAptJyCode: Function;
   aptSwCode: Array<any>;
-  setAptSwCode: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
   dataCommonDic: any;
-  prepareSearchFormValues: any;
 }
 
 const Form = React.forwardRef(
@@ -87,15 +83,11 @@ const Form = React.forwardRef(
       fetchData,
       setData,
       aptGubun,
-      setAptGubun,
       aptJyCode,
-      setAptJyCode,
       aptSwCode,
-      setAptSwCode,
       isAddBtnClicked,
       setIsAddBtnClicked,
       dataCommonDic,
-      prepareSearchFormValues,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -124,7 +116,7 @@ const Form = React.forwardRef(
       });
 
     useEffect(() => {
-      if (selected) {
+      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
         resetForm("reset");
       }
     }, [selected]);
@@ -134,6 +126,7 @@ const Form = React.forwardRef(
         reset((formValues: any) => ({
           ...formValues,
           aptZipcode: addr ? addr?.split("/")[1] : "",
+          //aptAddr1: addr ? addr?.split("/")[0] : "",
           aptAddr2: "",
         }));
         setAptAddr1(addr ? addr?.split("/")[0] : "");
@@ -164,28 +157,35 @@ const Form = React.forwardRef(
         areaCode: aCode,
       });
 
-      if (res) {
-        res?.aptGubun && setAptGubun(res.aptGubun);
-        res?.aptJyCode && setAptJyCode(res.aptJyCode);
-        res?.aptSwCode && setAptSwCode(res.aptSwCode);
-
+      if (res !== null) {
+        //document.getElementsByName("saupSsno")[0]?.focus();
+        //setFocus("saupSsno");
         reset({
           ...emptyObj,
-          aptCode: res?.tempAptCode[0]?.tempAptCode,
-          aptType: radioOptions[0].id,
+          ...res,
+          saupSno: res.tempCode,
         });
         setAptAddr1("");
-        setFocus("aptName");
       }
     };
 
     const resetForm = async (type: string) => {
       if (type === "clear") {
+        //setFocus("aptName");
+        // const dataS = await fetchCodes(areaCode);
+        // if (dataS?.tempAptCode) {
+        //   reset({
+        //     ...emptyObj,
+        //     aptCode: dataS?.tempAptCode[0]?.tempAptCode,
+        //     aptType: radioOptions[0].id,
+        //     areaCode: areaCode,
+        //   });
         areaCode && (await codeChangeHandler(areaCode));
+        return;
       }
 
       if (type === "reset") {
-        if (selected && Object.keys(selected).length > 0) {
+        if (selected !== undefined && Object.keys(selected).length > 0) {
           reset({
             ...selected,
             apt4F: selected?.apt4F === "Y",
@@ -194,7 +194,6 @@ const Form = React.forwardRef(
           });
         }
       }
-
       setChkAptZipCode(false);
       setChkAptRh2o(false);
       setChkAptRdangaType(false);
@@ -217,6 +216,24 @@ const Form = React.forwardRef(
         const formValues = getValues();
 
         //delete procedure bhgui yum bn
+
+        // try {
+        //   const response = await API.post(CM1300DELETE, formValues);
+        //   if (response.status === 200) {
+        //     toast.success("삭제했습니다", {
+        //       autoClose: 500,
+        //     });
+        //     await fetchData({ areaCode: areaCode });
+        //   } else {
+        //     toast.error("Couldn't delete", {
+        //       autoClose: 500,
+        //     });
+        //   }
+        // } catch (err) {
+        //   toast.error("Couldn't delete", {
+        //     autoClose: 500,
+        //   });
+        // }
       }
       if (type === null) {
         handleSubmit(submit)();
@@ -255,12 +272,16 @@ const Form = React.forwardRef(
 
       const res: any = await apiPost(path, formValues, "저장이 성공하였습니다");
       if (res) {
-        const par = prepareSearchFormValues();
         if (isAddBtnClicked) {
-          await fetchData(par, "last");
+          setData((prev: any) => [formValues, ...prev]);
         } else {
-          await fetchData(par);
+          // setData((prev: any) => {
+          //   prev[selectedRowIndex] = formValues;
+          //   return [...prev];
+          // });
         }
+        setSelected(formValues);
+        setIsAddBtnClicked(false);
       }
     };
 

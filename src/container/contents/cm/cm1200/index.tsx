@@ -1,33 +1,38 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
-import { ISEARCH } from "./model";
-import GridLeft from "components/grid";
-import Form from "./form";
-import {
-  SearchWrapper,
-  LeftSide,
-  RightSide,
-  MainWrapper,
-} from "../../commonStyle";
-import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
-import { MagnifyingGlassBig } from "components/allSvgIcon";
-import { ButtonType } from "components/componentsType";
-import { FormGroup, Input, Label, Select } from "components/form/style";
-import CheckBox from "components/checkbox";
-import Loader from "components/loader";
-import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
+import CreateScreen from "app/hook/createScreen";
+import { useSelector } from "app/store";
+import { CM1200SEARCH, CM120065 } from "app/path";
 import {
   openModal,
   addDeleteMenuId,
   setIsDelete,
   closeModal,
 } from "app/state/modal/modalSlice";
-import { useDispatch, useSelector } from "app/store";
-import { CM1200SEARCH, CM120065 } from "app/path";
+import GridLeft from "components/grid";
+import { ButtonColor } from "components/componentsType";
+import { ButtonType } from "components/componentsType";
+import { FormGroup, Input, Label, Select } from "components/form/style";
+import CheckBox from "components/checkbox";
+import Loader from "components/loader";
+import Button from "components/button/button";
+import {
+  SearchWrapper,
+  LeftSide,
+  RightSide,
+  MainWrapper,
+} from "../../commonStyle";
+import {
+  Plus,
+  Trash,
+  Update,
+  Reset,
+  MagnifyingGlassBig,
+} from "components/allSvgIcon";
+import { ISEARCH } from "./model";
+import Form from "./form";
 import { fields, columns } from "./data";
-import CreateScreen from "app/hook/createScreen";
 
 const leftSideWidth: number = 530;
 
@@ -45,6 +50,7 @@ function CM1200({
   const btnRef2 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const btnRef3 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const btnRef4 = useRef() as React.MutableRefObject<HTMLButtonElement>;
+
   const { handleSubmit, reset, watch, register, getValues, control } =
     useForm<ISEARCH>({
       mode: "onSubmit",
@@ -166,7 +172,6 @@ function CM1200({
 
   function deleteRowGrid() {
     try {
-      setIsAddBtnClicked(false);
       formRef.current.crud("delete");
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
@@ -177,8 +182,8 @@ function CM1200({
   const onClickAdd = () => {
     btnRef1.current.classList.add("active");
     setIsAddBtnClicked(true);
+    setUserInfo([]);
     formRef.current.resetForm("clear");
-    formRef.current.setUserInfo([]);
   };
 
   const onClickDelete = () => {
@@ -247,10 +252,11 @@ function CM1200({
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
+
       <MainWrapper>
         <LeftSide style={{ width: `${linePos}px` }}>
           <SearchWrapper
-            style={{ minWidth: `${leftSideWidth}px`, padding: "5px 15px" }}
+            style={{ minWidth: `${leftSideWidth}px`, padding: "3px 15px" }}
           >
             <form onSubmit={handleSubmit(submit)} autoComplete="off">
               <FormGroup>
@@ -278,7 +284,7 @@ function CM1200({
                   icon={!loading && <MagnifyingGlassBig />}
                   kind={ButtonType.ROUND}
                   type="submit"
-                  style={{ minWidth: "80px" }}
+                  style={{ minWidth: "80px", marginLeft: "15px" }}
                   loader={
                     loading && (
                       <>
@@ -303,16 +309,18 @@ function CM1200({
             setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
-            style={{
-              height: `calc(100% - 48px)`,
-              minWidth: `${leftSideWidth}px`,
-            }}
             menuId={menuId}
             rowIndex={rowIndex}
+            style={{
+              height: `calc(100% - 44px)`,
+              minWidth: `${leftSideWidth}px`,
+            }}
           />
         </LeftSide>
         <RightSide
-          style={{ width: `calc(100% - ${linePos}px)`, padding: "0 10px" }}
+          style={{
+            width: `calc(100% - ${linePos}px)`,
+          }}
         >
           <Form
             ref={formRef}
