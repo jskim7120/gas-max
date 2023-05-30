@@ -197,7 +197,7 @@ function FormCM1300User({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "2px",
+                gap: "5px",
                 marginRight: "10px",
               }}
               onClickAdd={onClickAdd}
@@ -210,7 +210,7 @@ function FormCM1300User({
           <form
             onSubmit={handleSubmit(submit)}
             style={{
-              padding: "10px 40px 10px 0",
+              padding: "10px 7px 0px 34px",
             }}
             autoComplete="off"
           >

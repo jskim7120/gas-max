@@ -342,42 +342,44 @@ function CM1300({
             width: `calc(100% - ${linePos}px)`,
           }}
         >
-          <Form
-            ref={formRef}
-            dataCommonDic={dataCommonDic}
-            areaCode={watch("areaCode")}
-            selected={selected}
-            fetchData={fetchData}
-            setData={setData}
-            setSelected={setSelected}
-            isAddBtnClicked={isAddBtnClicked}
-            setIsAddBtnClicked={setIsAddBtnClicked}
-            aptGubun={aptGubun}
-            setAptGubun={setAptGubun}
-            aptJyCode={aptJyCode}
-            setAptJyCode={setAptJyCode}
-            aptSwCode={aptSwCode}
-            setAptSwCode={setAptSwCode}
-            prepareSearchFormValues={getValues()}
-          />
+          <div style={{ width: "925px" }}>
+            <Form
+              ref={formRef}
+              dataCommonDic={dataCommonDic}
+              areaCode={watch("areaCode")}
+              selected={selected}
+              fetchData={fetchData}
+              setData={setData}
+              setSelected={setSelected}
+              isAddBtnClicked={isAddBtnClicked}
+              setIsAddBtnClicked={setIsAddBtnClicked}
+              aptGubun={aptGubun}
+              setAptGubun={setAptGubun}
+              aptJyCode={aptJyCode}
+              setAptJyCode={setAptJyCode}
+              aptSwCode={aptSwCode}
+              setAptSwCode={setAptSwCode}
+              prepareSearchFormValues={getValues()}
+            />
 
-          <Divider style={{ border: "1px solid #707070" }} />
+            <Divider style={{ border: "1px solid #707070" }} />
 
-          <CM1300User
-            data={data65}
-            setData={setData65}
-            mainSelected={selected}
-            selected={selected65}
-            setSelected={setSelected65}
-            ownAreaCode={ownAreaCode}
-            fetchData={fetchData65}
-            aptCode={selected?.aptCode}
-            areaCode={watch("areaCode")}
-            mainIsAddBtnClicked={isAddBtnClicked}
-            isAddBtnClicked={isAddBtnClicked2}
-            setIsAddBtnClicked={setIsAddBtnClicked2}
-            menuId={menuId}
-          />
+            <CM1300User
+              data={data65}
+              setData={setData65}
+              mainSelected={selected}
+              selected={selected65}
+              setSelected={setSelected65}
+              ownAreaCode={ownAreaCode}
+              fetchData={fetchData65}
+              aptCode={selected?.aptCode}
+              areaCode={watch("areaCode")}
+              mainIsAddBtnClicked={isAddBtnClicked}
+              isAddBtnClicked={isAddBtnClicked2}
+              setIsAddBtnClicked={setIsAddBtnClicked2}
+              menuId={menuId}
+            />
+          </div>
         </RightSide>
         {showDraggableLine()}
       </MainWrapper>

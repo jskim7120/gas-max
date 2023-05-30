@@ -333,7 +333,7 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ padding: "10px 10px 0 10px" }}
+        style={{ padding: "10px 0 0 10px" }}
         autoComplete="off"
       >
         <FormGroup>
@@ -424,15 +424,14 @@ const Form = React.forwardRef(
             onClose={() => setFocus("aptAddr2")}
           />
           <Input
-            //register={register("aptAddr1")}
-            inputSize={InputSize.i250}
+            style={{ width: "254px" }}
             readOnly={!chkAptZipCode}
             value={aptAddr1}
             onChange={(e: any) => setAptAddr1(e.target.value)}
           />
           <Input
             register={register("aptAddr2")}
-            inputSize={InputSize.i250}
+            style={{ width: "251px" }}
             readOnly={!chkAptZipCode}
           />
         </FormGroup>
@@ -456,7 +455,10 @@ const Form = React.forwardRef(
           </Select>
 
           <Label>관리자</Label>
-          <Select register={register("aptCustgubun")} width={InputSize.i120}>
+          <Select
+            register={register("aptCustgubun")}
+            style={{ width: "131px" }}
+          >
             {aptGubun?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
