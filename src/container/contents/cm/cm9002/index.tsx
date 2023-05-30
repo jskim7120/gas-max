@@ -343,6 +343,8 @@ function CM9002({
           data={data}
           columns={columns}
           fields={fields}
+          menuId={menuId}
+          rowIndex={0}
           setSelected={setSelected}
           style={{ height: `calc(100% - 15px)` }}
           evenFill

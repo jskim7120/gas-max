@@ -60,7 +60,7 @@ function Grid({
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected(data[itemIndex]);
       setIsAddBtnClicked && setIsAddBtnClicked(false);
-      dispatch(setRowIndex({ menuId: menuId, rowIndex: itemIndex }));
+      dispatch(setRowIndex({ menuId: menuId, row: itemIndex, grid: 0 }));
     };
 
     return () => {

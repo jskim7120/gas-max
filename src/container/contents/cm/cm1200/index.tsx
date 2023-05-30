@@ -1,34 +1,40 @@
 import { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { apiGet, apiPost } from "app/axios";
-import { ISEARCH } from "./model";
-import GridLeft from "../grid";
-import Form from "./form";
-import {
-  SearchWrapper,
-  LeftSide,
-  RightSide,
-  MainWrapper,
-} from "../../commonStyle";
-import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
-import { MagnifyingGlassBig } from "components/allSvgIcon";
-import { ButtonType } from "components/componentsType";
-import { FormGroup, Input, Label, Select } from "components/form/style";
-import CheckBox from "components/checkbox";
-import Loader from "components/loader";
-import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
+import { useForm, Controller } from "react-hook-form";
+import { apiGet } from "app/axios";
+import CreateScreen from "app/hook/createScreen";
+import { useSelector } from "app/store";
+import { CM1200SEARCH, CM120065 } from "app/path";
 import {
   openModal,
   addDeleteMenuId,
   setIsDelete,
   closeModal,
 } from "app/state/modal/modalSlice";
-import { useDispatch, useSelector } from "app/store";
-import { CM1200SEARCH } from "app/path";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
+import GridLeft from "components/grid";
+import { ButtonColor } from "components/componentsType";
+import { ButtonType } from "components/componentsType";
+import { FormGroup, Input, Label, Select } from "components/form/style";
+import CheckBox from "components/checkbox";
+import Loader from "components/loader";
+import Button from "components/button/button";
+import {
+  SearchWrapper,
+  LeftSide,
+  RightSide,
+  MainWrapper,
+} from "../../commonStyle";
+import {
+  Plus,
+  Trash,
+  Update,
+  Reset,
+  MagnifyingGlassBig,
+} from "components/allSvgIcon";
+import { ISEARCH } from "./model";
+import Form from "./form";
 import { fields, columns } from "./data";
-import { setRowIndex } from "app/state/tab/tabSlice";
+
+const leftSideWidth: number = 530;
 
 function CM1200({
   depthFullName,
@@ -45,29 +51,36 @@ function CM1200({
   const btnRef3 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const btnRef4 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
-  const dispatch = useDispatch();
+  const { handleSubmit, reset, watch, register, getValues, control } =
+    useForm<ISEARCH>({
+      mode: "onSubmit",
+    });
 
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
-
-  const { register, reset, handleSubmit, watch, getValues } = useForm<ISEARCH>({
-    mode: "onSubmit",
-  });
-
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [selected, setSelected] = useState<any>({});
-  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [dataChk, setDataChk] = useState(true);
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    isAddBtnClicked,
+    setIsAddBtnClicked,
+    activeTabId,
+    fetchData,
+    showDraggableLine,
+    isOpen,
+    rowIndex,
+    dispatch,
+    dataCommonDic,
+    linePos,
+  } = CreateScreen("CM", "CM1200", menuId, CM1200SEARCH, leftSideWidth);
 
   const { isDelete } = useSelector((state) => state.modal);
-  const tabState = useSelector((state) => state.tab.tabs);
-  const isOpen = useSelector((state) => state.sidebar);
-  const rowIndex = tabState.find((item) => item.menuId === menuId)?.rowIndex;
+  const [selectedSupplyTab, setSelectedSupplyTab] = useState<any>({});
+  const [userInfo, setUserInfo] = useState<any[]>([]);
 
-  useEffect(() => {
-    getCommonDictionary({ groupId: "CM", functionName: "CM1200" });
-  }, []);
+  const [cuCustgubunDic, setCuCustgubunDic] = useState<any[]>([]);
+  const [cuJyCodeDic, setCuJyCodeDic] = useState<any[]>([]);
+  const [cuSwCodeDic, setCuSwCodeDic] = useState<any[]>([]);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -90,13 +103,75 @@ function CM1200({
     }
   }, [watch("areaCode")]);
 
-  const submit = async (data: any) => {
-    fetchData(data);
+  useEffect(() => {
+    if (selected) {
+      if (isAddBtnClicked) {
+        btnRef1.current.classList.remove("active");
+        setIsAddBtnClicked(false);
+      }
+
+      if (selected.cuCode && selected.areaCode) {
+        fetchData65({
+          areaCode: selected.areaCode,
+          cuCode: selected.cuCode,
+        });
+      }
+    }
+  }, [selected]);
+
+  const prepareSearchFormValues = () => {
+    const params: any = getValues();
+    if (params.dataChk === undefined || params.dataChk === false) {
+      delete params.sCuName;
+      delete params.dataChk;
+    }
+
+    return params;
+  };
+
+  const fetchData65 = async (params: any) => {
+    const res = await apiGet(CM120065, params);
+
+    if (res) {
+      if (res?.userInfo) {
+        setUserInfo(res.userInfo);
+      } else {
+        setUserInfo([]);
+      }
+
+      if (res?.supplyTab) {
+        setSelectedSupplyTab(res?.supplyTab[0]);
+      } else {
+        setSelectedSupplyTab({});
+      }
+
+      if (res?.cuCustgubun) {
+        setCuCustgubunDic(res.cuCustgubun);
+      }
+
+      if (res?.cuJyCode) {
+        setCuJyCodeDic(res.cuJyCode);
+      }
+
+      if (res?.cuSwCode) {
+        setCuSwCodeDic(res.cuSwCode);
+      }
+    } else {
+      setUserInfo([]);
+      setSelectedSupplyTab({});
+      setCuCustgubunDic([]);
+      setCuJyCodeDic([]);
+      setCuSwCodeDic([]);
+    }
+  };
+
+  const submit = async (p: any) => {
+    const params = prepareSearchFormValues();
+    fetchData(params);
   };
 
   function deleteRowGrid() {
     try {
-      setIsAddBtnClicked(false);
       formRef.current.crud("delete");
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
@@ -104,41 +179,11 @@ function CM1200({
     } catch (error) {}
   }
 
-  const fetchData = async (params: any = null, flag: string = "") => {
-    if (params === null) {
-      params = getValues();
-    }
-
-    if (!dataChk) {
-      delete params.dataChk;
-      delete params.sCuName;
-    }
-
-    setLoading(true);
-    const dataS = await apiGet(CM1200SEARCH, {
-      ...params,
-    });
-
-    if (dataS) {
-      setData(dataS);
-      if (flag === "last") {
-        const lastIndex = dataS && dataS.length > 0 ? dataS.length - 1 : 0;
-        setSelected(dataS[lastIndex]);
-        dispatch(setRowIndex({ menuId: menuId, rowIndex: lastIndex }));
-      }
-    } else {
-      setData([]);
-      setSelected({});
-    }
-
-    setLoading(false);
-  };
-
   const onClickAdd = () => {
     btnRef1.current.classList.add("active");
     setIsAddBtnClicked(true);
+    setUserInfo([]);
     formRef.current.resetForm("clear");
-    formRef.current.setUserInfo([]);
   };
 
   const onClickDelete = () => {
@@ -207,28 +252,31 @@ function CM1200({
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
+
       <MainWrapper>
-        <LeftSide>
-          <SearchWrapper>
-            <form
-              onSubmit={handleSubmit(submit)}
-              style={{ padding: "5px 0px" }}
-              autoComplete="off"
-            >
+        <LeftSide style={{ width: `${linePos}px` }}>
+          <SearchWrapper
+            style={{ minWidth: `${leftSideWidth}px`, padding: "3px 15px" }}
+          >
+            <form onSubmit={handleSubmit(submit)} autoComplete="off">
               <FormGroup>
                 <Label className="lable-check" style={{ minWidth: "auto" }}>
-                  <CheckBox
-                    register={{ ...register("dataChk") }}
-                    title="건물명"
-                    onChange={(e: any) => setDataChk(e.target.checked)}
-                    checked={dataChk}
+                  <Controller
+                    control={control}
+                    {...register("dataChk")}
+                    render={({ field: { onChange, value, name } }) => (
+                      <CheckBox
+                        title="건물명"
+                        checked={value}
+                        onChange={onChange}
+                      />
+                    )}
                   />
                 </Label>
+
                 <Input
-                  register={register("sCuName", {
-                    required: false,
-                  })}
-                  readOnly={!dataChk}
+                  register={register("sCuName")}
+                  readOnly={!watch("dataChk")}
                 />
 
                 <Button
@@ -236,7 +284,7 @@ function CM1200({
                   icon={!loading && <MagnifyingGlassBig />}
                   kind={ButtonType.ROUND}
                   type="submit"
-                  style={{ minWidth: "80px" }}
+                  style={{ minWidth: "80px", marginLeft: "15px" }}
                   loader={
                     loading && (
                       <>
@@ -261,25 +309,40 @@ function CM1200({
             setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
-            style={{ height: `calc(100% - 48px)`, minWidth: "409px" }}
             menuId={menuId}
             rowIndex={rowIndex}
+            style={{
+              height: `calc(100% - 44px)`,
+              minWidth: `${leftSideWidth}px`,
+            }}
           />
         </LeftSide>
-        <RightSide style={{ padding: "0 10px" }}>
+        <RightSide
+          style={{
+            width: `calc(100% - ${linePos}px)`,
+          }}
+        >
           <Form
             ref={formRef}
             dataCommonDic={dataCommonDic}
             fetchData={fetchData}
-            setData={setData}
-            selected={selected}
-            setSelected={setSelected}
             areaCode={watch("areaCode")}
+            selected={selected}
             ownAreaCode={ownAreaCode}
             isAddBtnClicked={isAddBtnClicked}
             setIsAddBtnClicked={setIsAddBtnClicked}
+            prepareSearchFormValues={prepareSearchFormValues}
+            userInfo={userInfo}
+            cuCustgubunDic={cuCustgubunDic}
+            setCuCustgubunDic={setCuCustgubunDic}
+            cuJyCodeDic={cuJyCodeDic}
+            setCuJyCodeDic={setCuJyCodeDic}
+            selectedSupplyTab={selectedSupplyTab}
+            cuSwCodeDic={cuSwCodeDic}
+            setCuSwCodeDic={setCuSwCodeDic}
           />
         </RightSide>
+        {showDraggableLine()}
       </MainWrapper>
     </>
   );

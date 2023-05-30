@@ -44,10 +44,8 @@ interface IForm {
   selected2: any;
   fetchData: any;
   setData: any;
-  selectedRowIndex: number;
   setSelected: Function;
   setSelected2: Function;
-  setSelectedRowIndex: any;
   menuId: string;
 }
 
@@ -58,10 +56,8 @@ const Form = React.forwardRef(
       selected2,
       fetchData,
       setData,
-      selectedRowIndex,
       setSelected,
       setSelected2,
-      setSelectedRowIndex,
       menuId,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>

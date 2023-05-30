@@ -56,7 +56,6 @@ function PT1100({
   const [totSukum, setTotSukum] = useState(0);
   const [totDc, setTotDc] = useState(0);
   const [sCheck, setSCheck] = useState(false);
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const dispatch = useDispatch();
 
   const [getCommonDictionary, { data: dataCommonDic }] =
@@ -144,7 +143,6 @@ function PT1100({
     if (data) {
       setData(data);
       setLoading1(false);
-      setSelectedRowIndex(0);
       setTotMisukun(await calcTotal("cuJmisu", data));
     }
   };
@@ -179,7 +177,6 @@ function PT1100({
     if (data) {
       setDataSecond(data);
       setLoading2(false);
-      setSelectedRowIndex(0);
       setTotSukum(await calcTotal("msKumack", data));
       setTotDc(await calcTotal("msDc", data));
     }
@@ -298,9 +295,9 @@ function PT1100({
             data={data.length > 0 && data}
             columns={columns}
             fields={fields}
+            rowIndex={0}
+            menuId={menuId}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: "45%", minWidth: "925px" }}
           />
           <Grid
@@ -309,8 +306,8 @@ function PT1100({
             columns={columnsSecond}
             fields={fieldsSecond}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
+            rowIndex={0}
+            menuId={menuId}
             style={{ height: "12%", minWidth: "925px", marginTop: "17px" }}
           />
           <form
@@ -374,8 +371,8 @@ function PT1100({
             columns={columnsThird}
             fields={fieldsThird}
             setSelected={setSecondGridSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
+            rowIndex={0}
+            menuId={menuId}
             style={{ height: "43%", minWidth: "925px" }}
           />
         </LeftSide>
@@ -386,8 +383,6 @@ function PT1100({
             ref={formRef}
             fetchData={fetchDataSearch1}
             setData={setData}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
             totMisukum={totMisukum}

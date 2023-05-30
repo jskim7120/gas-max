@@ -27,7 +27,6 @@ import GridLeft from "components/grid";
 import { fields, columns } from "./data";
 import { ICC1700SEARCH } from "./model";
 import Form from "./form";
-import { CustomAreaCodePart } from "container/contents/customTopPart";
 import FourButtons from "components/button/fourButtons";
 import { getValue } from "@testing-library/user-event/dist/utils";
 
@@ -47,9 +46,7 @@ function CC1700({
   const [data65, setData65] = useState({});
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
@@ -135,7 +132,6 @@ function CC1700({
 
   const onClickAdd = () => {
     setIsAddBtnClicked(true);
-    setIsCancelBtnDisabled(false);
     formRef.current.resetForm("clear");
   };
 
@@ -187,11 +183,11 @@ function CC1700({
             areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `100%` }}
           />
         </LeftSide>
@@ -203,8 +199,6 @@ function CC1700({
             ref={formRef}
             fetchData={fetchData}
             setData={setData}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
             isAddBtnClicked={isAddBtnClicked}

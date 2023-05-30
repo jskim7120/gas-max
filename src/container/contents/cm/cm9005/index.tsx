@@ -260,6 +260,8 @@ function CM9005({
           setSelected={setSelected}
           fields={fields}
           columns={columns}
+          menuId={menuId}
+          rowIndex={0}
           style={{ height: `calc(100% - 38px)` }}
         />
       </WrapperContent>

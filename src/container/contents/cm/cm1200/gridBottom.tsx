@@ -10,12 +10,14 @@ function GridTable({
   setSelectedUserInfo,
   openPopup,
   selected,
+  style,
 }: {
   data: any;
   areaCode: string | undefined;
   setSelectedUserInfo: Function;
   openPopup?: any;
   selected?: any;
+  style?: any;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -64,6 +66,8 @@ function GridTable({
     ]);
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
+    gv.displayOptions.fitStyle = "evenFill";
+
     gv.setEditOptions({ editable: false });
 
     gv.onSelectionChanged = () => {
@@ -92,7 +96,11 @@ function GridTable({
   return (
     <div
       ref={realgridTableElement}
-      style={{ width: "100%", height: "310px" }}
+      style={{
+        width: "100%",
+        height: "310px",
+        borderTop: "1px solid #bcc0c8",
+      }}
     />
   );
 }

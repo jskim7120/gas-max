@@ -47,9 +47,7 @@ function CC1400({
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isCancelBtnDisabled, setIsCancelBtnDisabled] = useState<boolean>(true);
 
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
@@ -133,7 +131,6 @@ function CC1400({
 
   const onClickAdd = () => {
     setIsAddBtnClicked(true);
-    setIsCancelBtnDisabled(false);
     formRef.current.resetForm("clear");
   };
 
@@ -307,9 +304,9 @@ function CC1400({
             fields={fields}
             columns={columns}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
+            menuId={menuId}
+            rowIndex={0}
             setIsAddBtnClicked={setIsAddBtnClicked}
-            setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: `calc(100% - 38px)` }}
           />
         </LeftSide>
@@ -319,8 +316,6 @@ function CC1400({
             ref={formRef}
             fetchData={fetchData}
             setData={setData}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setSelected={setSelected}
             isAddBtnClicked={isAddBtnClicked}
             setIsAddBtnClicked={setIsAddBtnClicked}

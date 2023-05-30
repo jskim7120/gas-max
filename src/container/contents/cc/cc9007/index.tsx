@@ -13,7 +13,6 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import Grid from "components/grid";
 import { columns, fields } from "./data";
-import CustomTopPart from "container/contents/customTopPart";
 
 function GR9008({
   depthFullName,
@@ -168,6 +167,8 @@ function GR9008({
           data={data}
           columns={columns}
           fields={fields}
+          menuId={menuId}
+          rowIndex={0}
           style={{ height: `calc(100% - 35px)` }}
         />
       </WrapperContent>

@@ -1,24 +1,22 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "app/store";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import {
   CM1300INSERTSEQ2,
   CM1300CUSTOMERINSERT,
   CM1300CUSTOMERUPDATE,
   CM130065,
 } from "app/path";
-import { ICM1300User, emptyObj } from "./model";
-import { columns, fields } from "./data";
 import {
   openModal,
   closeModal,
   addDeleteMenuId,
   setIsDelete,
 } from "app/state/modal/modalSlice";
+import { ICM1300User, emptyObj } from "./model";
+import { columns, fields } from "./data";
 import { FormGroup, Input, Label } from "components/form/style";
-import { SearchWrapper } from "container/contents/commonStyle";
 import { PersonInfoText } from "components/text";
 import Grid from "components/grid";
 import FourButtons from "components/button/fourButtons";
@@ -34,14 +32,13 @@ function FormCM1300User({
   selected,
   mainSelected,
   setSelected,
-  selectedRowIndex,
-  setSelectedRowIndex,
   fetchData,
   aptCode,
   areaCode,
   isAddBtnClicked,
   mainIsAddBtnClicked,
   setIsAddBtnClicked,
+  menuId,
 }: {
   data: Array<any>;
   setData: Function;
@@ -49,14 +46,13 @@ function FormCM1300User({
   selected: any;
   mainSelected: any;
   setSelected: Function;
-  selectedRowIndex: number;
-  setSelectedRowIndex: Function;
   fetchData: Function;
   aptCode: string;
   areaCode: string;
   isAddBtnClicked: boolean;
   mainIsAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
+  menuId: string;
 }) {
   const dispatch = useDispatch();
 
@@ -67,25 +63,14 @@ function FormCM1300User({
   });
 
   useEffect(() => {
-    if (Object.keys(selected).length > 0) {
-      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
+    if (selected && Object.keys(selected).length > 0) {
       resetForm("reset");
+      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
     } else {
       resetForm("clear");
     }
     setIsAddBtnClicked(false);
   }, [selected]);
-
-  useEffect(() => {
-    if (mainIsAddBtnClicked) {
-      setData([]);
-      resetForm("emptClear");
-      setIsAddBtnClicked(true);
-    } else {
-      setIsAddBtnClicked(false);
-      fetchData65();
-    }
-  }, [mainIsAddBtnClicked]);
 
   useEffect(() => {
     if (isDelete.menuId === DELETECONSTANT && isDelete.isDelete) {
@@ -123,65 +108,19 @@ function FormCM1300User({
     resetForm("reset");
   };
 
-  const fetchCodes = async (areaC: string, aptC: string) => {
-    try {
-      const response: any = await API.get(CM1300INSERTSEQ2, {
-        params: { aptCode: aptC, areaCode: mainSelected?.areaCode },
-      });
-      if (response.status === 200) {
-        return response.data;
-      } else {
-        toast.error("can't get aptCode", {
-          autoClose: 500,
-        });
-      }
-    } catch (err) {
-      toast.error("Error occured during get aptCode", {
-        autoClose: 500,
-      });
-    }
-    return null;
-  };
-
-  const fetchData65 = async () => {
-    try {
-      const { data: data65 } = await API.get(CM130065, {
-        params: {
-          areaCode: mainSelected?.areaCode,
-          aptCode: mainSelected?.aptCode,
-        },
-      });
-
-      if (data65) {
-        if (data65?.userCustomer && data65?.userCustomer?.length > 0) {
-          setData(data65.userCustomer);
-          setSelected(data65.userCustomer[0]);
-        } else {
-          setData([]);
-          setSelected({});
-        }
-
-        setSelectedRowIndex(0);
-      }
-    } catch (err) {
-      console.log("CM1300 data search fetch error =======>", err);
-    }
-  };
   const resetForm = async (type: string) => {
     if (type === "clear") {
-      if (areaCode !== "" && aptCode !== "") {
-        // let newData: any = {};
+      if (mainSelected?.areaCode && aptCode) {
+        const res: any = await apiGet(CM1300INSERTSEQ2, {
+          aptCode: aptCode,
+          areaCode: mainSelected?.areaCode,
+        });
 
-        const dataC = await fetchCodes(areaCode, aptCode);
-        if (dataC[0]?.tempAptCode) {
-          // for (const [key] of Object.entries(selected)) {
-          //   newData[key] = null;
-          // }
-
+        if (res[0]?.tempAptCode) {
           reset({
             ...emptyObj,
-            cuCode1: dataC[0]?.tempAptCode?.split("-")[0],
-            cuCode2: dataC[0]?.tempAptCode?.split("-")[1],
+            cuCode1: res[0]?.tempAptCode?.split("-")[0],
+            cuCode2: res[0]?.tempAptCode?.split("-")[1],
           });
         } else {
           reset({
@@ -191,7 +130,7 @@ function FormCM1300User({
       }
     }
     if (type === "reset") {
-      if (selected !== undefined && Object.keys(selected).length > 0) {
+      if (selected && Object.keys(selected).length > 0) {
         reset({
           ...selected,
           cuCode1: selected?.cuCode?.split("-")[0],
@@ -210,20 +149,6 @@ function FormCM1300User({
     if (type === "delete") {
       const formValues = getValues();
       //delete procedure bhgui tul tur hoooson
-
-      // try {
-      //   const response = await API.post(path, formValues);
-      //   if (response.status === 200) {
-      //     toast.success("삭제했습니다", {
-      //       autoClose: 500,
-      //     });
-      //     await fetchData();
-      //   }
-      // } catch (err) {
-      // toast.error("Couldn't delete", {
-      //   autoClose: 500,
-      // });
-      // }
     }
     if (type === null) {
       handleSubmit(submit)();
@@ -237,33 +162,7 @@ function FormCM1300User({
     formValues.cuCode = formValues.cuCode1 + "-" + formValues.cuCode2;
     formValues.areaCode = mainSelected?.areaCode;
 
-    try {
-      const response: any = await API.post(path, formValues);
-      if (response.status === 200) {
-        if (isAddBtnClicked) {
-          setData((prev: any) => [formValues, ...prev]);
-          setSelectedRowIndex(0);
-        } else {
-          setData((prev: any) => {
-            prev[selectedRowIndex] = formValues;
-            return [...prev];
-          });
-        }
-        setSelected(formValues);
-        toast.success("저장이 성공하였습니다", {
-          autoClose: 500,
-        });
-        setIsAddBtnClicked(false);
-      } else {
-        toast.error(response.response.data?.message, {
-          autoClose: 500,
-        });
-      }
-    } catch (err: any) {
-      toast.error(err?.message, {
-        autoClose: 500,
-      });
-    }
+    const res = await apiPost(path, formValues, "저장이 성공하였습니다");
   };
 
   return (
@@ -276,11 +175,12 @@ function FormCM1300User({
             areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             fields={fields}
             columns={columns}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `406px` }}
+            gridNumber={1}
           />
         </div>
         <div style={{ width: "1px", background: "#707070" }}></div>
@@ -297,7 +197,7 @@ function FormCM1300User({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "2px",
+                gap: "5px",
                 marginRight: "10px",
               }}
               onClickAdd={onClickAdd}
@@ -310,7 +210,7 @@ function FormCM1300User({
           <form
             onSubmit={handleSubmit(submit)}
             style={{
-              padding: "10px 40px 10px 0",
+              padding: "10px 7px 0px 34px",
             }}
             autoComplete="off"
           >

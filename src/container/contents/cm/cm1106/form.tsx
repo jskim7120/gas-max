@@ -25,8 +25,6 @@ const FORMCM1106 = React.forwardRef(
       selected,
       fetchData,
       setData,
-      selectedRowIndex,
-      setSelectedRowIndex,
       setSelected,
       dataCommonDic,
       areaCode,
@@ -36,8 +34,6 @@ const FORMCM1106 = React.forwardRef(
       selected: any;
       fetchData: Function;
       setData: Function;
-      selectedRowIndex: any;
-      setSelectedRowIndex: Function;
       setSelected: Function;
       dataCommonDic: any;
       areaCode: string;
@@ -96,14 +92,14 @@ const FORMCM1106 = React.forwardRef(
       if (res) {
         if (isAddBtnClicked) {
           setData((prev: any) => [formValues, ...prev]);
-          setSelectedRowIndex(0);
+
           setIsAddBtnClicked(true);
           setIsAddBtnClicked(false);
         } else {
-          setData((prev: any) => {
-            prev[selectedRowIndex] = formValues;
-            return [...prev];
-          });
+          // setData((prev: any) => {
+          //   prev[selectedRowIndex] = formValues;
+          //   return [...prev];
+          // });
         }
         // setSelected(formValues);
         setIsAddBtnClicked(false);

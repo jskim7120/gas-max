@@ -42,7 +42,6 @@ function FormCM1106() {
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const { register, handleSubmit, reset, getValues } = useForm<ISEARCH>();
 
@@ -210,8 +209,8 @@ function FormCM1106() {
           fields={fields}
           columns={columns}
           setSelected={setSelected}
-          selectedRowIndex={selectedRowIndex}
-          setSelectedRowIndex={setSelectedRowIndex}
+          menuId={"CM1106"}
+          rowIndex={0}
           style={{
             height: "500px",
             width: "75%",
@@ -224,8 +223,6 @@ function FormCM1106() {
           ref={formRef}
           fetchData={fetchData}
           setData={setData}
-          selectedRowIndex={selectedRowIndex}
-          setSelectedRowIndex={setSelectedRowIndex}
           setSelected={setSelected}
           dataCommonDic={dataCommonDic}
           areaCode={getValues("areaCode")}

@@ -260,6 +260,8 @@ function CM9003({
             setSelected={setSelected}
             fields={fields0}
             columns={columns0}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `calc(100% - 38px)` }}
             //evenFill
           />
@@ -271,6 +273,8 @@ function CM9003({
             setSelected={setSelected}
             fields={fields1}
             columns={columns1}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `calc(100% - 38px)` }}
             //evenFill
           />
@@ -282,6 +286,8 @@ function CM9003({
             setSelected={setSelected}
             fields={fields2}
             columns={columns2}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `calc(100% - 38px)` }}
             //evenFill
           />
@@ -293,6 +299,8 @@ function CM9003({
             setSelected={setSelected}
             fields={fields3}
             columns={columns3}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `calc(100% - 38px)` }}
             //evenFill
           />
@@ -304,6 +312,8 @@ function CM9003({
             setSelected={setSelected}
             fields={fields4}
             columns={columns4}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `calc(100% - 38px)` }}
             // evenFill
           />
@@ -315,6 +325,8 @@ function CM9003({
             setSelected={setSelected}
             fields={fields5}
             columns={columns5}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `calc(100% - 38px)` }}
             // evenFill
           />
@@ -326,6 +338,8 @@ function CM9003({
             setSelected={setSelected}
             fields={fields6}
             columns={columns6}
+            menuId={menuId}
+            rowIndex={0}
             style={{ height: `calc(100% - 38px)` }}
             // evenFill
           />

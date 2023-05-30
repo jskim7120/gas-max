@@ -1,41 +1,42 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { apiGet } from "app/axios";
-import Button from "components/button/button";
-import Loader from "components/loader";
-import { MagnifyingGlassBig } from "components/allSvgIcon";
-import { columns, fields } from "./data";
-import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
+import CreateScreen from "app/hook/createScreen";
+import { CM1300SEARCH, CM130065 } from "app/path";
+import { useSelector } from "app/store";
 import {
   openModal,
   closeModal,
   addDeleteMenuId,
   setIsDelete,
 } from "app/state/modal/modalSlice";
-import Form from "./form";
+import Button from "components/button/button";
+import Loader from "components/loader";
+import { MagnifyingGlassBig } from "components/allSvgIcon";
+import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import { ButtonColor } from "components/componentsType";
 import { ButtonType, InputSize } from "components/componentsType";
+import GridLeft from "components/grid";
+import { BuildingInfoText } from "components/text";
 import {
   MainWrapper,
   SearchWrapper,
   LeftSide,
   RightSide,
 } from "../../commonStyle";
-import { CM1300SEARCH, CM130065 } from "app/path";
 import {
   Divider,
-  Field,
   FormGroup,
   Input,
   Select,
   Label,
 } from "components/form/style";
-import { useDispatch, useSelector } from "app/store";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
-import FormCM1300User from "./cm1300User";
-import GridLeft from "components/grid";
-import { BuildingInfoText } from "components/text";
+import { columns, fields } from "./data";
+import Form from "./form";
+import CM1300User from "./cm1300User";
 import { ISEARCH } from "./model";
+
+const leftSideWidth: number = 903;
 
 function CM1300({
   depthFullName,
@@ -52,38 +53,68 @@ function CM1300({
   const btnRef3 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const btnRef4 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
-  const { register, handleSubmit, reset, watch } = useForm<ISEARCH>({
+  const { handleSubmit, register, reset, watch, getValues } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const dispatch = useDispatch();
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    isAddBtnClicked,
+    setIsAddBtnClicked,
+    activeTabId,
+    fetchData,
+    showDraggableLine,
+    isOpen,
+    rowIndex,
+    dispatch,
+    dataCommonDic,
+    linePos,
+  } = CreateScreen("CM", "CM1300", menuId, CM1300SEARCH, leftSideWidth);
 
-  const [data, setData] = useState([]);
+  const { isDelete } = useSelector((state: any) => state.modal);
   const [data65, setData65] = useState([]);
-  const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState<number>(0);
   const [selected65, setSelected65] = useState<any>({});
-  const [selectedRowIndex65, setSelectedRowIndex65] = useState<number>(0);
-  const [loading, setLoading] = useState(false);
-  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [isAddBtnClicked2, setIsAddBtnClicked2] = useState<boolean>(false);
   const [aptGubun, setAptGubun] = useState<any>([]);
   const [aptJyCode, setAptJyCode] = useState<any>([]);
   const [aptSwCode, setAptSwCode] = useState<any>([]);
 
-  const { isDelete } = useSelector((state) => state.modal);
+  // const [data, setData] = useState([]);
+  // const [selected, setSelected] = useState<any>({});
+  // const [selectedRowIndex65, setSelectedRowIndex65] = useState<number>(0);
+  // const [loading, setLoading] = useState(false);
+  // const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  // const [getCommonDictionary, { data: dataCommonDic }] =
+  //   useGetCommonDictionaryMutation();
+  // useEffect(() => {
+  //   getCommonDictionary({ groupId: "CM", functionName: "CM1300" });
+  // }, []);
+  // const fetchData = async (params: any) => {
+  //   setLoading(true);
+  //   const dataSearch = await apiGet(CM1300SEARCH, params);
 
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
+  //   if (dataSearch) {
+  //     setData(dataSearch);
+  //     setSelected(dataSearch[0]);
+  //   } else {
+  //     setData([]);
+  //     setSelected({});
+  //   }
 
-  useEffect(() => {
-    getCommonDictionary({ groupId: "CM", functionName: "CM1300" });
-  }, []);
+  //   setLoading(false);
+  // };
 
   useEffect(() => {
     if (dataCommonDic) {
+      console.log("datacommondic>>>>>>>>>>>>>>", dataCommonDic);
+
       reset({ areaCode: dataCommonDic?.areaCode[0].code });
-      fetchData({ areaCode: dataCommonDic.areaCode[0].code });
+      fetchData({ areaCode: dataCommonDic.areaCode[0].code }, "last");
+      formRef.current.resetForm("fillcombos");
     }
   }, [dataCommonDic]);
 
@@ -94,58 +125,65 @@ function CM1300({
   }, [isDelete.isDelete]);
 
   useEffect(() => {
-    if (selected && JSON.stringify(selected) !== "{}") {
-      fetchData65();
+    if (watch("areaCode")) {
+      if (isAddBtnClicked) {
+        formRef.current.resetForm("clear");
+      }
+    }
+  }, [watch("areaCode")]);
+
+  useEffect(() => {
+    if (selected) {
+      if (isAddBtnClicked) {
+        btnRef1.current.classList.remove("active");
+        setIsAddBtnClicked(false);
+      }
+
+      if (selected.aptCode && selected.areaCode) {
+        fetchData65({
+          areaCode: selected.areaCode,
+          aptCode: selected.aptCode,
+        });
+      }
     }
   }, [selected]);
 
-  const submit = async (data: ISEARCH) => {
-    fetchData({ ...data });
+  const submit = async (params: ISEARCH) => {
+    fetchData(params);
   };
 
-  const fetchData = async (params: any) => {
-    setLoading(true);
-    const dataSearch = await apiGet(CM1300SEARCH, params);
+  const fetchData65 = async (params: any) => {
+    const res = await apiGet(CM130065, params);
+    console.log("65=====================>", res);
 
-    if (dataSearch) {
-      setData(dataSearch);
-      setSelected(dataSearch[0]);
-    } else {
-      setData([]);
-      setSelected({});
-    }
+    if (res) {
+      if (res?.userCustomer && res?.userCustomer?.length > 0) {
+        setData65(res.userCustomer);
 
-    setLoading(false);
-  };
-  const fetchData65 = async () => {
-    const data65 = await apiGet(CM130065, {
-      areaCode: selected?.areaCode,
-      aptCode: selected?.aptCode,
-    });
-
-    if (data65) {
-      if (data65?.userCustomer && data65?.userCustomer?.length > 0) {
-        setData65(data65.userCustomer);
-        setSelected65(data65.userCustomer[0]);
+        setSelected65(
+          res.userCustomer[
+            res.userCustomer.length > 0 ? res.userCustomer.length - 1 : 0
+          ]
+        );
       } else {
         setData65([]);
         setSelected65({});
       }
 
-      if (data65?.aptGubun) {
-        setAptGubun(data65?.aptGubun);
+      if (res?.aptGubun) {
+        setAptGubun(res?.aptGubun);
       } else {
         setAptGubun([]);
       }
 
-      if (data65?.aptJyCode) {
-        setAptJyCode(data65?.aptJyCode);
+      if (res?.aptJyCode) {
+        setAptJyCode(res?.aptJyCode);
       } else {
         setAptJyCode([]);
       }
 
-      if (data65?.aptSwCode) {
-        setAptSwCode(data65?.aptSwCode);
+      if (res?.aptSwCode) {
+        setAptSwCode(res?.aptSwCode);
       } else {
         setAptSwCode([]);
       }
@@ -160,7 +198,6 @@ function CM1300({
 
   function deleteRowGrid() {
     try {
-      setIsAddBtnClicked(false);
       formRef.current.crud("delete");
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
@@ -183,6 +220,7 @@ function CM1300({
   };
 
   const onClickReset = () => {
+    btnRef1.current.classList.remove("active");
     setIsAddBtnClicked(false);
     formRef.current.resetForm("reset");
   };
@@ -240,99 +278,110 @@ function CM1300({
         <p>{depthFullName}</p>
       </SearchWrapper>
 
-      <MainWrapper
-        style={{
-          height: "calc(100% + 18px)",
-        }}
-      >
-        <LeftSide>
-          <SearchWrapper>
+      <MainWrapper>
+        <LeftSide style={{ width: `${linePos}px` }}>
+          <SearchWrapper
+            style={{ minWidth: `${leftSideWidth}px`, padding: "3px 15px" }}
+          >
             <form onSubmit={handleSubmit(submit)} autoComplete="off">
-              <Field>
-                <FormGroup>
-                  <BuildingInfoText text="건물" />
-                  <Input
-                    label="코드"
-                    labelStyle={{ minWidth: "70px" }}
-                    register={register("aptCode")}
-                    inputSize={InputSize.i80}
-                  />
-                  <Input
-                    label="건물명"
-                    labelStyle={{ minWidth: "80px" }}
-                    register={register("aptName")}
-                    inputSize={InputSize.i120}
-                  />
-                  <Button
-                    text="검색"
-                    icon={!loading && <MagnifyingGlassBig />}
-                    kind={ButtonType.ROUND}
-                    type="submit"
-                    loader={
-                      loading && (
-                        <>
-                          <Loader
-                            color="white"
-                            size={21}
-                            style={{ marginRight: "10px" }}
-                          />
-                        </>
-                      )
-                    }
-                  />
-                </FormGroup>
-              </Field>
+              <FormGroup>
+                <BuildingInfoText text="건물" />
+                <Input
+                  label="코드"
+                  labelStyle={{ minWidth: "73px" }}
+                  register={register("aptCode")}
+                  inputSize={InputSize.i80}
+                />
+                <Input
+                  label="건물명"
+                  labelStyle={{ minWidth: "80px" }}
+                  register={register("aptName")}
+                  inputSize={InputSize.i120}
+                />
+                <Button
+                  text="검색"
+                  icon={!loading && <MagnifyingGlassBig />}
+                  kind={ButtonType.ROUND}
+                  type="submit"
+                  style={{ minWidth: "80px", marginLeft: "15px" }}
+                  loader={
+                    loading && (
+                      <>
+                        <Loader
+                          color="white"
+                          size={19}
+                          style={{ marginRight: "10px" }}
+                          borderWidth="3px"
+                        />
+                      </>
+                    )
+                  }
+                />
+              </FormGroup>
             </form>
           </SearchWrapper>
+
           <GridLeft
             areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             setIsAddBtnClicked={setIsAddBtnClicked}
             setIsAddBtnClicked2={setIsAddBtnClicked2}
             fields={fields}
             columns={columns}
-            style={{ height: `calc(100% - 73px)` }}
+            menuId={menuId}
+            rowIndex={rowIndex}
+            style={{
+              height: `calc(100% - 44px)`,
+              minWidth: `${leftSideWidth}px`,
+            }}
           />
         </LeftSide>
-        <RightSide style={{ width: "1000px" }}>
-          <Form
-            areaCode={watch("areaCode")}
-            dataCommonDic={dataCommonDic}
-            selected={selected}
-            ref={formRef}
-            fetchData={fetchData}
-            setData={setData}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
-            setSelected={setSelected}
-            isAddBtnClicked={isAddBtnClicked}
-            setIsAddBtnClicked={setIsAddBtnClicked}
-            aptGubun={aptGubun}
-            aptJyCode={aptJyCode}
-            aptSwCode={aptSwCode}
-          />
+        <RightSide
+          style={{
+            width: `calc(100% - ${linePos}px)`,
+          }}
+        >
+          <div style={{ width: "925px" }}>
+            <Form
+              ref={formRef}
+              dataCommonDic={dataCommonDic}
+              areaCode={watch("areaCode")}
+              selected={selected}
+              fetchData={fetchData}
+              setData={setData}
+              setSelected={setSelected}
+              isAddBtnClicked={isAddBtnClicked}
+              setIsAddBtnClicked={setIsAddBtnClicked}
+              aptGubun={aptGubun}
+              setAptGubun={setAptGubun}
+              aptJyCode={aptJyCode}
+              setAptJyCode={setAptJyCode}
+              aptSwCode={aptSwCode}
+              setAptSwCode={setAptSwCode}
+              prepareSearchFormValues={getValues()}
+            />
 
-          <Divider style={{ border: "1px solid #707070" }} />
-          <FormCM1300User
-            data={data65}
-            setData={setData65}
-            mainSelected={selected}
-            selected={selected65}
-            setSelected={setSelected65}
-            selectedRowIndex={selectedRowIndex65}
-            setSelectedRowIndex={setSelectedRowIndex65}
-            ownAreaCode={ownAreaCode}
-            fetchData={fetchData65}
-            aptCode={selected?.aptCode}
-            areaCode={watch("areaCode")}
-            mainIsAddBtnClicked={isAddBtnClicked}
-            isAddBtnClicked={isAddBtnClicked2}
-            setIsAddBtnClicked={setIsAddBtnClicked2}
-          />
+            <Divider style={{ border: "1px solid #707070" }} />
+
+            <CM1300User
+              data={data65}
+              setData={setData65}
+              mainSelected={selected}
+              selected={selected65}
+              setSelected={setSelected65}
+              ownAreaCode={ownAreaCode}
+              fetchData={fetchData65}
+              aptCode={selected?.aptCode}
+              areaCode={watch("areaCode")}
+              mainIsAddBtnClicked={isAddBtnClicked}
+              isAddBtnClicked={isAddBtnClicked2}
+              setIsAddBtnClicked={setIsAddBtnClicked2}
+              menuId={menuId}
+            />
+          </div>
         </RightSide>
+        {showDraggableLine()}
       </MainWrapper>
     </>
   );

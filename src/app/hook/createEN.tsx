@@ -41,9 +41,11 @@ function CreateEN(
   const tabState = useSelector((state) => state.tab.tabs);
   const isOpen = useSelector((state) => state.sidebar);
 
-  const rowIndex = tabState.find(
+  const gridIndexes = tabState.find(
     (item: any) => item.menuId === menuId
-  )?.rowIndex;
+  )?.gridIndexes;
+
+  const rowIndex = gridIndexes?.find((item) => item.grid === 0)?.row;
 
   const [data, setData] = useState<Array<any>>([]);
   const [selected, setSelected] = useState<any>({});
@@ -99,11 +101,11 @@ function CreateEN(
 
       if (func === "last") {
         setSelected(dataS[lastIndex]);
-        dispatch(setRowIndex({ menuId: menuId, rowIndex: lastIndex }));
+        dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 }));
       } else {
         if (rowIndex) {
           if (rowIndex > lastIndex) {
-            dispatch(setRowIndex({ menuId: menuId, rowIndex: lastIndex }));
+            dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 }));
             setSelected(dataS[lastIndex]);
           } else {
             setSelected(dataS[rowIndex]);

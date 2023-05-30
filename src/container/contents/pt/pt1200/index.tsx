@@ -305,9 +305,9 @@ function PT1200({
             data={data.length > 0 && data}
             columns={columns}
             fields={fields}
+            rowIndex={0}
+            menuId={menuId}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: "40%", minWidth: "925px" }}
           />
           <Grid
@@ -315,9 +315,9 @@ function PT1200({
             data={data65.length > 0 && data65}
             columns={columnsSecond}
             fields={fieldsSecond}
+            rowIndex={0}
+            menuId={menuId}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: "18%", minWidth: "925px" }}
           />
           <form
@@ -380,9 +380,9 @@ function PT1200({
             data={dataSecond.length > 0 && dataSecond}
             columns={columnsThird}
             fields={fieldsThird}
+            rowIndex={0}
+            menuId={menuId}
             setSelected={setSecondGridSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
             style={{ height: "43%", minWidth: "925px" }}
           />
         </LeftSide>

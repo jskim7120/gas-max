@@ -11,8 +11,6 @@ const FORMPT1205 = React.forwardRef(
     {
       selected,
       setData,
-      selectedRowIndex,
-      setSelectedRowIndex,
       setSelected,
       dataCommonDic,
       totalGuAmount,
@@ -20,8 +18,6 @@ const FORMPT1205 = React.forwardRef(
     }: {
       selected: any;
       setData: Function;
-      selectedRowIndex: any;
-      setSelectedRowIndex: Function;
       setSelected: Function;
       dataCommonDic: any;
       totalGuAmount: number;

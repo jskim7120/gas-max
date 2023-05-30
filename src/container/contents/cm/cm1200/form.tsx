@@ -35,7 +35,6 @@ import {
 import { formatCurrencyRemoveComma } from "helpers/currency";
 import getTabContent from "./getTabContent";
 import { useDispatch } from "app/store";
-import { CM120065 } from "app/path";
 import { openModal, addCM1105 } from "app/state/modal/modalSlice";
 import useRdanga from "app/hook/calcRdanga";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
@@ -46,28 +45,41 @@ const Form = React.forwardRef(
       selected,
       dataCommonDic,
       fetchData,
-      setData,
-      setSelected,
       areaCode,
       ownAreaCode,
       isAddBtnClicked,
       setIsAddBtnClicked,
+      prepareSearchFormValues,
+      userInfo,
+      selectedSupplyTab,
+      cuCustgubunDic,
+      setCuCustgubunDic,
+      cuJyCodeDic,
+      setCuJyCodeDic,
+      cuSwCodeDic,
+      setCuSwCodeDic,
     }: {
       selected: any;
       dataCommonDic: any;
       fetchData: any;
-      setData: any;
-      setSelected: any;
       areaCode: string;
       ownAreaCode: string;
       isAddBtnClicked: boolean;
       setIsAddBtnClicked: Function;
+      prepareSearchFormValues: any;
+      userInfo: any;
+      selectedSupplyTab: any;
+      cuCustgubunDic: any;
+      setCuCustgubunDic: any;
+      cuJyCodeDic: any;
+      setCuJyCodeDic: any;
+      cuSwCodeDic: any;
+      setCuSwCodeDic: any;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
-    const [userInfo, setUserInfo] = useState<any[]>([]);
-    const [selectedSupplyTab, setSelectedSupplyTab] = useState<any>({});
+
     const [selectedUserInfo, setSelectedUserInfo] = useState<any>({});
 
     const [tabId, setTabId] = useState<number>(0);
@@ -85,9 +97,6 @@ const Form = React.forwardRef(
     const [chkCuGumdate, setChkCuGumdate] = useState(false);
     const [chkCuCno, setChkCuCno] = useState(false);
 
-    const [cuCustgubunDic, setCuCustgubunDic] = useState([]);
-    const [cuJyCodeDic, setCuJyCodeDic] = useState([]);
-    const [cuSwCodeDic, setCuSwCodeDic] = useState([]);
     const [cuAddr1, setCuAddr1] = useState("");
 
     const {
@@ -117,40 +126,6 @@ const Form = React.forwardRef(
     } = useRdanga();
 
     useEffect(() => {
-      if (dataCommonDic) {
-        setCuCustgubunDic(dataCommonDic?.cuCustgubun);
-        setCuJyCodeDic(dataCommonDic?.cuJyCode);
-        setCuSwCodeDic(dataCommonDic?.cuSwCode);
-
-        reset({
-          cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
-          cuJyCode: dataCommonDic?.cuJyCode[0].code,
-          cuSwCode: dataCommonDic?.cuSwCode[0].code,
-          cuRh2O: dataCommonDic?.cuRh20[0].code,
-          // cuRdangaType: dataCommonDic?.cuRdangaType[0].code,
-          // cuRdangaSign: dataCommonDic?.cuRdangaSign[0].code,
-          cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
-          cuGumTurm: dataCommonDic?.cuGumTurm[0].code,
-          tankMakeCo1: dataCommonDic?.tankMakeCo1[0].code,
-          tankMakeCo2: dataCommonDic?.tankMakeCo2[0].code,
-          tankVol1: dataCommonDic?.tankVol1[0].code,
-          tankVol2: dataCommonDic?.tankVol2[0].code,
-          gasifyCo1: dataCommonDic?.gasifyCo1[0].code,
-          gasifyCo2: dataCommonDic?.gasifyCo2[0].code,
-        });
-      }
-    }, [dataCommonDic]);
-
-    useEffect(() => {
-      if (selected && selected.cuCode && selected.areaCode) {
-        fetchAdditionalData({
-          areaCode: selected.areaCode,
-          cuCode: selected.cuCode,
-        });
-      }
-    }, [selected]);
-
-    useEffect(() => {
       if (selectedSupplyTab) {
         resetForm("reset");
       }
@@ -161,7 +136,6 @@ const Form = React.forwardRef(
         reset((formValues: any) => ({
           ...formValues,
           cuZipcode: addr ? addr?.split("/")[1] : "",
-          //cuAddr1: addr ? addr?.split("/")[0].split("(")[0] : "",
           cuAddr2: "",
         }));
 
@@ -178,53 +152,7 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       resetForm,
       crud,
-      setUserInfo,
     }));
-
-    const fetchAdditionalData = async ({
-      areaCode,
-      cuCode,
-    }: {
-      areaCode: string;
-      cuCode: string;
-    }) => {
-      const res = await apiGet(CM120065, {
-        cuCode: cuCode,
-        areaCode: areaCode,
-      });
-
-      if (res) {
-        if (res?.userInfo) {
-          setUserInfo(res.userInfo);
-        } else {
-          setUserInfo([]);
-        }
-
-        if (res?.supplyTab) {
-          setSelectedSupplyTab(res?.supplyTab[0]);
-        } else {
-          setSelectedSupplyTab({});
-        }
-
-        if (res?.cuCustgubun) {
-          setCuCustgubunDic(res.cuCustgubun);
-        }
-
-        if (res?.cuJyCode) {
-          setCuJyCodeDic(res.cuJyCode);
-        }
-
-        if (res?.cuSwCode) {
-          setCuSwCodeDic(res.cuSwCode);
-        }
-      } else {
-        setUserInfo([]);
-        setSelectedSupplyTab({});
-        setCuCustgubunDic([]);
-        setCuJyCodeDic([]);
-        setCuSwCodeDic([]);
-      }
-    };
 
     const codeChangeHandler = async (aCode: string) => {
       const res = await apiGet(CM1200INSERTSEQ, {
@@ -232,23 +160,29 @@ const Form = React.forwardRef(
       });
 
       if (res) {
-        setFocus("cuName");
+        res?.cuCustgubun && setCuCustgubunDic(res.cuCustgubun);
+        res?.cuJyCode && setCuJyCodeDic(res.cuJyCode);
+        res?.cuSwCode && setCuSwCodeDic(res.cuSwCode);
+
         reset({
           ...emptyObj,
+          cuCustgubun: res?.cuCustgubun[0].code,
+          cuJyCode: res?.cuJyCode[0].code,
+          cuSwCode: res?.cuSwCode[0].code,
           cuCode: res?.tempCuCode[0]?.tempCuCode,
         });
         setCuAddr1("");
+        setFocus("cuName");
       }
     };
 
     const resetForm = async (type: string) => {
       if (type === "clear") {
         areaCode && (await codeChangeHandler(areaCode));
-        return;
       }
 
       if (type === "reset") {
-        if (selected !== undefined && Object.keys(selected).length > 0) {
+        if (selected && Object.keys(selected).length > 0) {
           let tempData: any = { ...selected, ...selectedSupplyTab };
           setCuAddr1(selected.cuAddr1);
           reset({
@@ -317,8 +251,8 @@ const Form = React.forwardRef(
           },
           "삭제했습니다"
         );
-
-        res && (await fetchData(null));
+        const par = prepareSearchFormValues();
+        res && (await fetchData(par));
         return;
       }
 
@@ -409,76 +343,69 @@ const Form = React.forwardRef(
 
       const res = await apiPost(path, formValues, "저장이 성공하였습니다");
       if (res) {
+        const par = prepareSearchFormValues();
         if (isAddBtnClicked) {
-          setIsAddBtnClicked(false);
-          await fetchData(null, "last");
+          await fetchData(par, "last");
         } else {
-          await fetchData(null);
+          await fetchData(par);
         }
       }
     };
 
     return (
-      <>
+      <div style={{ width: "1257px", padding: "0 10px" }}>
         <FormSectionTitle>
           <BuildingInfoText text="건물 정보" />
         </FormSectionTitle>
+        <Divider />
 
         <form onSubmit={handleSubmit(submit)} autoComplete="off">
-          {/* 1-1 Wrapper */}
-          <Divider />
-          <Wrapper style={{ alignItems: "baseline" }}>
-            <Field>
-              <Input
-                label="건물코드"
-                register={register("cuCode")}
-                inputSize={InputSize.i60}
-                readOnly={true}
-              />
-            </Field>
-            <Field>
-              <Input
-                label="건물명"
-                register={register("cuName")}
-                labelStyle={{ minWidth: "78px" }}
-                style={{ width: "198px" }}
-              />
-            </Field>
-            <Field style={{ marginLeft: "20px" }}>
-              <CheckBox
-                title="건물명 지로 출력 안함."
-                register={register("cuAptnameYn")}
-                gap="15px"
-                rtl
-              />
-            </Field>
-          </Wrapper>
-          {/* 1-2 Wrapper */}
-          <Wrapper col={3}>
-            <FormGroup>
-              <Label className="lable-check">
-                <CheckBox
-                  title="주 소"
-                  checked={chkCuZipCode}
-                  onChange={(e: any) => setChkCuZipCode(e.target.checked)}
-                />
-              </Label>
-              <Input
-                register={register("cuZipcode")}
-                inputSize={InputSize.i60}
-                readOnly={!chkCuZipCode}
-                style={{ marginRight: "3px" }}
-              />
-              <DaumAddress
-                setAddress={setAddress}
-                disabled={!chkCuZipCode}
-                defaultValue={cuAddr1}
-                onClose={() => setFocus("cuAddr2")}
-              />
-            </FormGroup>
+          <FormGroup>
+            <Input
+              label="건물코드"
+              register={register("cuCode")}
+              inputSize={InputSize.i60}
+              readOnly={true}
+            />
 
             <Input
-              //register={register("cuAddr1")}
+              label="건물명"
+              register={register("cuName")}
+              labelStyle={{ minWidth: "78px" }}
+              style={{ width: "198px" }}
+            />
+
+            <CheckBox
+              title="건물명 지로 출력 안함."
+              register={register("cuAptnameYn")}
+              gap="15px"
+              rtl
+              style={{ marginLeft: "30px" }}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label className="lable-check">
+              <CheckBox
+                title="주 소"
+                checked={chkCuZipCode}
+                onChange={(e: any) => setChkCuZipCode(e.target.checked)}
+              />
+            </Label>
+            <Input
+              register={register("cuZipcode")}
+              inputSize={InputSize.i60}
+              readOnly={!chkCuZipCode}
+              style={{ marginRight: "3px" }}
+            />
+            <DaumAddress
+              setAddress={setAddress}
+              disabled={!chkCuZipCode}
+              defaultValue={cuAddr1}
+              onClose={() => setFocus("cuAddr2")}
+            />
+
+            <Input
               inputSize={InputSize.md}
               style={{ marginRight: "0px" }}
               value={cuAddr1}
@@ -488,46 +415,40 @@ const Form = React.forwardRef(
               register={register("cuAddr2")}
               style={{ marginLeft: "5px", width: "225px" }}
             />
-          </Wrapper>
-          {/* 1-3 Wrapper */}
-          <Wrapper grid col={5}>
-            <FormGroup>
-              <Label>담당 사원</Label>
-              <Select {...register("cuSwCode")} width={InputSize.i120}>
-                {cuSwCodeDic?.map((obj: any, index: number) => (
-                  <option key={index} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
+          </FormGroup>
 
-            <FormGroup>
-              <Label style={{ minWidth: "94px" }}>지역 분류</Label>
-              <Select
-                {...register("cuJyCode")}
-                width={InputSize.i120}
-                style={{ marginRight: "3px" }}
-              >
-                {cuJyCodeDic?.map((obj: any, index: number) => (
-                  <option key={index} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
+          <FormGroup>
+            <Label>담당 사원</Label>
+            <Select {...register("cuSwCode")} width={InputSize.i120}>
+              {cuSwCodeDic?.map((obj: any, index: number) => (
+                <option key={index} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-            <FormGroup>
-              <Label style={{ minWidth: "70px" }}>관리자 분류</Label>
-              <Select {...register("cuCustgubun")} width={InputSize.i120}>
-                {cuCustgubunDic?.map((obj: any, index: number) => (
-                  <option key={index} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-          </Wrapper>
+            <Label style={{ minWidth: "96px" }}>지역 분류</Label>
+            <Select
+              {...register("cuJyCode")}
+              width={InputSize.i120}
+              style={{ marginRight: "3px" }}
+            >
+              {cuJyCodeDic?.map((obj: any, index: number) => (
+                <option key={index} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+
+            <Label style={{ minWidth: "104px" }}>관리자 분류</Label>
+            <Select {...register("cuCustgubun")} width={InputSize.i120}>
+              {cuCustgubunDic?.map((obj: any, index: number) => (
+                <option key={index} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
 
           <div style={{ marginTop: "5px" }}>
             <PlainTab
@@ -536,7 +457,7 @@ const Form = React.forwardRef(
               tabId={tabId}
             />
             <TabContentWrapper
-              style={{ minHeight: "171px", width: "1240px", padding: "10px" }}
+              style={{ minHeight: "171px", padding: "10px 5px" }}
             >
               {getTabContent(
                 tabId,
@@ -578,6 +499,7 @@ const Form = React.forwardRef(
             </TabContentWrapper>
           </div>
         </form>
+
         <FormSectionTitle>
           <PersonInfoText
             text="사용자 정보"
@@ -600,13 +522,10 @@ const Form = React.forwardRef(
               style={{ marginRight: "5px" }}
               onClick={openPopupCM1105Update}
             />
-            <Button
-              text="삭제"
-              icon={<Trash />}
-              style={{ marginRight: "5px" }}
-            />
+            <Button text="삭제" icon={<Trash />} />
           </div>
         </FormSectionTitle>
+
         <GridBottom
           data={userInfo}
           areaCode={ownAreaCode}
@@ -614,7 +533,7 @@ const Form = React.forwardRef(
           openPopup={openPopup}
           selected={selected}
         />
-      </>
+      </div>
     );
   }
 );
