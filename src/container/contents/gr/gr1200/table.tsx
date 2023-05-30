@@ -22,7 +22,7 @@ function Table({ data, style }: { data: any; style?: any }) {
   };
 
   const show = (field: any) => {
-    if (Object.keys(data).length === 0) return null;
+    if (Object.keys(data)?.length === 0) return null;
     return Number(field).toLocaleString("en-US");
   };
   return (

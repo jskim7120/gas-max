@@ -8,8 +8,8 @@ export interface ICM1300User {
 }
 
 export const emptyObj: any = {
-  areaCode: null,
-  cuCode: null,
+  //areaCode: null,
+  //cuCode: null,
   cuUsername: null,
   cuName: null,
   cuCode1: null,

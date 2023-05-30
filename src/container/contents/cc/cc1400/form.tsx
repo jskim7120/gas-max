@@ -61,7 +61,7 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = async (type: string) => {
-      if (selected !== undefined && Object.keys(selected).length > 0) {
+      if (selected !== undefined && Object.keys(selected)?.length > 0) {
         let newData: any = {};
         if (type === "clear") {
           document.getElementById("sgDate")?.focus();
@@ -72,7 +72,7 @@ const Form = React.forwardRef(
           newData.areaCode = selected.areaCode;
           reset(newData);
         } else if (type === "reset") {
-          if (selected !== undefined && Object.keys(selected).length > 0) {
+          if (selected !== undefined && Object.keys(selected)?.length > 0) {
             for (const [key, value] of Object.entries(selected)) {
               newData[key] = value;
             }

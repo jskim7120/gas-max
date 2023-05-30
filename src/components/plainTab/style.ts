@@ -26,8 +26,10 @@ export const List = styled.li<{ isActive: boolean }>`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  border: 1px solid rgba(104, 103, 103, 0.35);
+  border: 1px solid #00000033;
+  border-bottom: none;
   border-radius: 8px 8px 0 0;
+
   background: ${(props) =>
     props.isActive ? `rgba(101,84,255,.37)` : `rgba(104, 103, 103, 0.26)`};
   color: #OAOAOA;

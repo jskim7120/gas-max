@@ -10,6 +10,7 @@ import {
   addDeleteMenuId,
   setIsDelete,
 } from "app/state/modal/modalSlice";
+import { setRowIndex } from "app/state/tab/tabSlice";
 import Button from "components/button/button";
 import Loader from "components/loader";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
@@ -69,7 +70,7 @@ function CM1300({
     fetchData,
     showDraggableLine,
     isOpen,
-    rowIndex,
+    gridIndexes,
     dispatch,
     dataCommonDic,
     linePos,
@@ -83,38 +84,13 @@ function CM1300({
   const [aptJyCode, setAptJyCode] = useState<any>([]);
   const [aptSwCode, setAptSwCode] = useState<any>([]);
 
-  // const [data, setData] = useState([]);
-  // const [selected, setSelected] = useState<any>({});
-  // const [selectedRowIndex65, setSelectedRowIndex65] = useState<number>(0);
-  // const [loading, setLoading] = useState(false);
-  // const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  // const [getCommonDictionary, { data: dataCommonDic }] =
-  //   useGetCommonDictionaryMutation();
-  // useEffect(() => {
-  //   getCommonDictionary({ groupId: "CM", functionName: "CM1300" });
-  // }, []);
-  // const fetchData = async (params: any) => {
-  //   setLoading(true);
-  //   const dataSearch = await apiGet(CM1300SEARCH, params);
-
-  //   if (dataSearch) {
-  //     setData(dataSearch);
-  //     setSelected(dataSearch[0]);
-  //   } else {
-  //     setData([]);
-  //     setSelected({});
-  //   }
-
-  //   setLoading(false);
-  // };
+  const rowIndex0 = gridIndexes?.find((item) => item.grid === 0)?.row;
+  const rowIndex1 = gridIndexes?.find((item) => item.grid === 1)?.row;
 
   useEffect(() => {
     if (dataCommonDic) {
-      console.log("datacommondic>>>>>>>>>>>>>>", dataCommonDic);
-
       reset({ areaCode: dataCommonDic?.areaCode[0].code });
       fetchData({ areaCode: dataCommonDic.areaCode[0].code }, "last");
-      formRef.current.resetForm("fillcombos");
     }
   }, [dataCommonDic]);
 
@@ -140,10 +116,13 @@ function CM1300({
       }
 
       if (selected.aptCode && selected.areaCode) {
-        fetchData65({
-          areaCode: selected.areaCode,
-          aptCode: selected.aptCode,
-        });
+        fetchData65(
+          {
+            areaCode: selected.areaCode,
+            aptCode: selected.aptCode,
+          },
+          "last"
+        );
       }
     }
   }, [selected]);
@@ -152,19 +131,32 @@ function CM1300({
     fetchData(params);
   };
 
-  const fetchData65 = async (params: any) => {
+  //console.log("selected=============================>", selected);
+
+  const fetchData65 = async (params: any, pos: string = "") => {
     const res = await apiGet(CM130065, params);
-    console.log("65=====================>", res);
+    //console.log("65=====================>", res);
 
     if (res) {
       if (res?.userCustomer && res?.userCustomer?.length > 0) {
         setData65(res.userCustomer);
-
-        setSelected65(
-          res.userCustomer[
-            res.userCustomer.length > 0 ? res.userCustomer.length - 1 : 0
-          ]
-        );
+        const lastIndex =
+          res.userCustomer.length > 0 ? res.userCustomer.length - 1 : 0;
+        if (pos === "last") {
+          setSelected65(res.userCustomer[lastIndex]);
+          dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 1 }));
+        } else {
+          if (rowIndex1) {
+            if (rowIndex1 > lastIndex) {
+              dispatch(
+                setRowIndex({ menuId: menuId, row: lastIndex, grid: 1 })
+              );
+              setSelected65(res.userCustomer[lastIndex]);
+            } else {
+              setSelected65(res.userCustomer[rowIndex1]);
+            }
+          }
+        }
       } else {
         setData65([]);
         setSelected65({});
@@ -330,7 +322,7 @@ function CM1300({
             fields={fields}
             columns={columns}
             menuId={menuId}
-            rowIndex={rowIndex}
+            rowIndex={rowIndex0}
             style={{
               height: `calc(100% - 44px)`,
               minWidth: `${leftSideWidth}px`,
@@ -359,21 +351,18 @@ function CM1300({
               setAptJyCode={setAptJyCode}
               aptSwCode={aptSwCode}
               setAptSwCode={setAptSwCode}
-              prepareSearchFormValues={getValues()}
+              prepareSearchFormValues={getValues}
             />
 
             <Divider style={{ border: "1px solid #707070" }} />
 
             <CM1300User
+              ownAreaCode={ownAreaCode}
               data={data65}
-              setData={setData65}
               mainSelected={selected}
               selected={selected65}
               setSelected={setSelected65}
-              ownAreaCode={ownAreaCode}
               fetchData={fetchData65}
-              aptCode={selected?.aptCode}
-              areaCode={watch("areaCode")}
               mainIsAddBtnClicked={isAddBtnClicked}
               isAddBtnClicked={isAddBtnClicked2}
               setIsAddBtnClicked={setIsAddBtnClicked2}

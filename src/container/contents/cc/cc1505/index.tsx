@@ -45,7 +45,7 @@ function CC1505({
   }, []);
 
   useEffect(() => {
-    if (selected && Object.keys(selected).length > 0) {
+    if (selected && Object.keys(selected)?.length > 0) {
       fetchData65({ accCode: selected.accCode, areaCode: ownAreaCode });
     }
   }, [selected]);

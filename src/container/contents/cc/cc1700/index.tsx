@@ -63,7 +63,7 @@ function CC1700({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (selected && Object.keys(selected).length > 0) {
+    if (selected && Object.keys(selected)?.length > 0) {
       fetchData65({
         acbAreaCode: selected.acbAreaCode,
         acbCode: selected.acbCode,

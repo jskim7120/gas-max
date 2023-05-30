@@ -138,7 +138,7 @@ const Form = React.forwardRef(
     ]);
 
     useEffect(() => {
-      if (selected && Object.keys(selected).length > 0) {
+      if (selected && Object.keys(selected)?.length > 0) {
         resetForm("reset");
         setIsAddBtnClicked(false);
         fetchTableData();
@@ -340,7 +340,7 @@ const Form = React.forwardRef(
     };
 
     const fetchTableData = async () => {
-      if (selected && Object.keys(selected).length > 0) {
+      if (selected && Object.keys(selected)?.length > 0) {
         const tableData = await apiGet(GR110065, {
           areaCode: selected.areaCode,
         });

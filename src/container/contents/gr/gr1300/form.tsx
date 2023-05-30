@@ -127,7 +127,7 @@ function Form({
   }, [bclInqtyLPG]);
 
   const calcTab1GridChange = () => {
-    if (Object.keys(data65).length > 0) {
+    if (Object.keys(data65)?.length > 0) {
       let bbTotal = 0;
       data65.forEach((obj: any) => (bbTotal += obj.bblKumack ?? 0));
 
@@ -405,7 +405,7 @@ function Form({
   }
 
   const onClickDelete = () => {
-    if (Object.keys(selected).length > 0) {
+    if (Object.keys(selected)?.length > 0) {
       dispatch(openModal({ type: "delModal" }));
       dispatch(addDeleteMenuId({ menuId: menuId }));
     } else {

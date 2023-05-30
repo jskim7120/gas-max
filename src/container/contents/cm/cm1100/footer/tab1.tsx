@@ -17,7 +17,7 @@ function Tab1({ data }: { data: any }) {
   const realgridElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (Object.keys(data).length > 0 && data?.tab1) {
+    if (Object.keys(data)?.length > 0 && data?.tab1) {
       setGridData(data.tab1);
     } else {
       setGridData([]);

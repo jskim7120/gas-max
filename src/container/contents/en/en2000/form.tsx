@@ -68,7 +68,7 @@ const Form = React.forwardRef(
       }
 
       if (type === "reset") {
-        if (selected !== undefined && Object.keys(selected).length > 0) {
+        if (selected !== undefined && Object.keys(selected)?.length > 0) {
           reset({
             ...selected,
             ccOilYn: selected?.ccOilYn === "Y",
