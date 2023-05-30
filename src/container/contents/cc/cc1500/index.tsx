@@ -62,7 +62,7 @@ function CC1500({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (selected && Object.keys(selected).length > 0) {
+    if (selected && Object.keys(selected)?.length > 0) {
       fetchData65({
         areaCode: selected?.areaCode,
         cjCaCode: selected?.cjCaCode,

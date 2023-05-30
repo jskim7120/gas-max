@@ -41,7 +41,7 @@ function CM9005({
   }, []);
 
   useEffect(() => {
-    if (Object.keys(selected).length > 0) {
+    if (Object.keys(selected)?.length > 0) {
       setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
     }
   }, [selected]);

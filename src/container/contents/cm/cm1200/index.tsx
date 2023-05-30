@@ -68,7 +68,7 @@ function CM1200({
     fetchData,
     showDraggableLine,
     isOpen,
-    rowIndex,
+    gridIndexes,
     dispatch,
     dataCommonDic,
     linePos,
@@ -81,6 +81,8 @@ function CM1200({
   const [cuCustgubunDic, setCuCustgubunDic] = useState<any[]>([]);
   const [cuJyCodeDic, setCuJyCodeDic] = useState<any[]>([]);
   const [cuSwCodeDic, setCuSwCodeDic] = useState<any[]>([]);
+  const rowIndex0 = gridIndexes?.find((item) => item.grid === 0)?.row;
+  const rowIndex1 = gridIndexes?.find((item) => item.grid === 1)?.row;
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -310,7 +312,7 @@ function CM1200({
             fields={fields}
             columns={columns}
             menuId={menuId}
-            rowIndex={rowIndex}
+            rowIndex={rowIndex0}
             style={{
               height: `calc(100% - 44px)`,
               minWidth: `${leftSideWidth}px`,

@@ -61,7 +61,7 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = async (type: string) => {
-      if (selected !== undefined && Object.keys(selected).length > 0) {
+      if (selected !== undefined && Object.keys(selected)?.length > 0) {
         let newData: any = {};
         if (type === "clear") {
           document.getElementById("acjDate")?.focus();

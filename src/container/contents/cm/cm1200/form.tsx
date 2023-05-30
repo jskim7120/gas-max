@@ -144,7 +144,7 @@ const Form = React.forwardRef(
     }, [addr]);
 
     useEffect(() => {
-      if (Object.keys(selectedUserInfo).length > 0) {
+      if (Object.keys(selectedUserInfo)?.length > 0) {
         setFooterDetail(selected.areaCode, selectedUserInfo.cuCode, dispatch);
       }
     }, [selectedUserInfo]);
@@ -182,7 +182,7 @@ const Form = React.forwardRef(
       }
 
       if (type === "reset") {
-        if (selected && Object.keys(selected).length > 0) {
+        if (selected && Object.keys(selected)?.length > 0) {
           let tempData: any = { ...selected, ...selectedSupplyTab };
           setCuAddr1(selected.cuAddr1);
           reset({
@@ -212,7 +212,7 @@ const Form = React.forwardRef(
     };
 
     const openPopupCM1105Insert = () => {
-      if (Object.keys(selected).length > 0) {
+      if (Object.keys(selected)?.length > 0) {
         openPopup({
           cuCode: selected?.cuCode,
           areaCode: selected?.areaCode,
@@ -225,7 +225,7 @@ const Form = React.forwardRef(
       }
     };
     const openPopupCM1105Update = () => {
-      if (Object.keys(selectedUserInfo).length > 0) {
+      if (Object.keys(selectedUserInfo)?.length > 0) {
         openPopup({
           cuCode: selectedUserInfo.cuCode,
           areaCode: selected.areaCode,

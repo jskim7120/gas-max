@@ -106,7 +106,7 @@ function CreateScreen(
     fetchData,
     showDraggableLine,
     isOpen,
-    rowIndex,
+    gridIndexes,
     dispatch,
     dataCommonDic,
     linePos,

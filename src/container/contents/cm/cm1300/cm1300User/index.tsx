@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "app/store";
 import { apiGet, apiPost } from "app/axios";
@@ -6,7 +6,6 @@ import {
   CM1300INSERTSEQ2,
   CM1300CUSTOMERINSERT,
   CM1300CUSTOMERUPDATE,
-  CM130065,
 } from "app/path";
 import {
   openModal,
@@ -19,64 +18,77 @@ import { columns, fields } from "./data";
 import { FormGroup, Input, Label } from "components/form/style";
 import { PersonInfoText } from "components/text";
 import Grid from "components/grid";
-import FourButtons from "components/button/fourButtons";
 import { InputSize } from "components/componentsType";
+import Button from "components/button/button";
+import { ButtonColor } from "components/componentsType";
+import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
+import { SearchWrapper } from "container/contents/commonStyle";
 
 const DELETECONSTANT = "CM1300USERDELETE";
 
 function FormCM1300User({
   data,
-  setData,
   ownAreaCode,
   selected,
   mainSelected,
   setSelected,
   fetchData,
-  aptCode,
-  areaCode,
   isAddBtnClicked,
-  mainIsAddBtnClicked,
   setIsAddBtnClicked,
+  mainIsAddBtnClicked,
   menuId,
 }: {
   data: Array<any>;
-  setData: Function;
   ownAreaCode: string;
   selected: any;
   mainSelected: any;
   setSelected: Function;
   fetchData: Function;
-  aptCode: string;
-  areaCode: string;
   isAddBtnClicked: boolean;
-  mainIsAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
+  mainIsAddBtnClicked: boolean;
   menuId: string;
 }) {
-  const dispatch = useDispatch();
+  const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
+  const btnRef2 = useRef() as React.MutableRefObject<HTMLButtonElement>;
+  const btnRef3 = useRef() as React.MutableRefObject<HTMLButtonElement>;
+  const btnRef4 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
-  const { isDelete } = useSelector((state) => state.modal);
+  const dispatch = useDispatch();
+  const tabState = useSelector((state) => state.tab.tabs);
+  const gridIndexes = tabState.find(
+    (item) => item.menuId === menuId
+  )?.gridIndexes;
+  const rowIndex = gridIndexes?.find((item) => item.grid === 1)?.row;
+
+  //const { isDelete } = useSelector((state) => state.modal);
 
   const { register, handleSubmit, reset, getValues } = useForm<ICM1300User>({
     mode: "onChange",
   });
 
   useEffect(() => {
-    if (selected && Object.keys(selected).length > 0) {
+    if (selected && Object.keys(selected)?.length > 0) {
+      if (isAddBtnClicked) {
+        btnRef1.current.classList.remove("active");
+        setIsAddBtnClicked(false);
+      }
+
       resetForm("reset");
       setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
     } else {
-      resetForm("clear");
+      resetForm("emptClear");
     }
-    setIsAddBtnClicked(false);
   }, [selected]);
 
+  /*
   useEffect(() => {
     if (isDelete.menuId === DELETECONSTANT && isDelete.isDelete) {
       deleteRowGrid();
     }
   }, [isDelete.isDelete]);
+
 
   function deleteRowGrid() {
     try {
@@ -87,8 +99,9 @@ function FormCM1300User({
       dispatch(closeModal());
     } catch (error) {}
   }
-
+*/
   const onClickAdd = () => {
+    btnRef1.current.classList.add("active");
     setIsAddBtnClicked(true);
     resetForm("clear");
   };
@@ -103,34 +116,32 @@ function FormCM1300User({
   };
 
   const onClickReset = () => {
-    setIsAddBtnClicked(true);
+    btnRef1.current.classList.remove("active");
     setIsAddBtnClicked(false);
     resetForm("reset");
   };
 
   const resetForm = async (type: string) => {
     if (type === "clear") {
-      if (mainSelected?.areaCode && aptCode) {
+      if (mainSelected?.areaCode && mainSelected?.aptCode) {
         const res: any = await apiGet(CM1300INSERTSEQ2, {
-          aptCode: aptCode,
-          areaCode: mainSelected?.areaCode,
+          aptCode: mainSelected.aptCode,
+          areaCode: mainSelected.areaCode,
         });
 
-        if (res[0]?.tempAptCode) {
+        if (res && res[0]?.tempAptCode) {
           reset({
             ...emptyObj,
+            areaCode: mainSelected.areaCode,
+            cuCode: res[0]?.tempAptCode,
             cuCode1: res[0]?.tempAptCode?.split("-")[0],
             cuCode2: res[0]?.tempAptCode?.split("-")[1],
-          });
-        } else {
-          reset({
-            ...emptyObj,
           });
         }
       }
     }
     if (type === "reset") {
-      if (selected && Object.keys(selected).length > 0) {
+      if (selected && Object.keys(selected)?.length > 0) {
         reset({
           ...selected,
           cuCode1: selected?.cuCode?.split("-")[0],
@@ -159,18 +170,27 @@ function FormCM1300User({
     //form aldaagui uyd ajillana
     const path = isAddBtnClicked ? CM1300CUSTOMERINSERT : CM1300CUSTOMERUPDATE;
     const formValues = getValues();
-    formValues.cuCode = formValues.cuCode1 + "-" + formValues.cuCode2;
-    formValues.areaCode = mainSelected?.areaCode;
 
     const res = await apiPost(path, formValues, "저장이 성공하였습니다");
+
+    if (res) {
+      const par = {
+        areaCode: mainSelected.areaCode,
+        aptCode: mainSelected.aptCode,
+      };
+      if (isAddBtnClicked) {
+        await fetchData(par, "last");
+      } else {
+        await fetchData(par);
+      }
+    }
   };
 
   return (
     <>
-      {/* <div style={{ width: "1px", background: "#707070" }}></div> */}
       <div style={{ display: "flex" }}>
         <div style={{ width: "50%", flexGrow: 1 }}>
-          <PersonInfoText text="사용자" style={{ padding: "10px" }} />
+          <PersonInfoText text="사용자" style={{ margin: "7px 10px" }} />
           <Grid
             areaCode={ownAreaCode}
             data={data}
@@ -178,43 +198,68 @@ function FormCM1300User({
             fields={fields}
             columns={columns}
             menuId={menuId}
-            rowIndex={0}
-            style={{ height: `406px` }}
+            rowIndex={rowIndex}
+            style={{ height: `408px`, borderLeft: "none" }}
             gridNumber={1}
           />
         </div>
-        <div style={{ width: "1px", background: "#707070" }}></div>
-        <div style={{ paddingTop: "7px" }}>
-          <div
+
+        <div style={{ width: "1px", background: "#00000033" }}></div>
+
+        <div style={{ margin: "7px 10px 7px 7px" }}>
+          <SearchWrapper
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              background: "transparent",
+              borderBottom: "none",
+              padding: "0",
+              justifyContent: "end",
+              marginBottom: "10px",
             }}
           >
-            <div></div>
-            <FourButtons
+            <div className="buttons" style={{ gap: "5px" }}>
+              <Button
+                text="등록"
+                icon={<Plus />}
+                type="button"
+                onClick={onClickAdd}
+                ref={btnRef1}
+                disabled={mainIsAddBtnClicked}
+              />
+              <Button
+                text="삭제"
+                icon={<Trash />}
+                type="button"
+                onClick={onClickDelete}
+                disabled={isAddBtnClicked || mainIsAddBtnClicked}
+                ref={btnRef2}
+              />
+              <Button
+                text="저장"
+                icon={<Update />}
+                type="button"
+                color={ButtonColor.SECONDARY}
+                onClick={onClickUpdate}
+                disabled={mainIsAddBtnClicked}
+                ref={btnRef3}
+              />
+              <Button
+                text="취소"
+                icon={<Reset />}
+                type="button"
+                onClick={onClickReset}
+                disabled={mainIsAddBtnClicked}
+                ref={btnRef4}
+              />
+            </div>
+          </SearchWrapper>
+          <form onSubmit={handleSubmit(submit)} autoComplete="off">
+            <div
               style={{
                 display: "flex",
+                justifyContent: "end",
                 alignItems: "center",
-                gap: "5px",
-                marginRight: "10px",
               }}
-              onClickAdd={onClickAdd}
-              onClickDelete={onClickDelete}
-              onClickUpdate={onClickUpdate}
-              onClickReset={onClickReset}
-              isAddBtnClicked={isAddBtnClicked}
-            />
-          </div>
-          <form
-            onSubmit={handleSubmit(submit)}
-            style={{
-              padding: "10px 7px 0px 34px",
-            }}
-            autoComplete="off"
-          >
-            <FormGroup>
+            >
               <Input
                 label="거래처코드"
                 register={register("cuCode1")}
@@ -226,18 +271,30 @@ function FormCM1300User({
                 inputSize={InputSize.i80}
                 readOnly
               />
-            </FormGroup>
-            <FormGroup>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                alignItems: "center",
+              }}
+            >
               <Label>건 물 명</Label>
               <Input register={register("cuName")} style={{ width: "146px" }} />
-            </FormGroup>
-            <FormGroup>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                alignItems: "center",
+              }}
+            >
               <Label>사용자명</Label>
               <Input
                 register={register("cuUsername")}
                 style={{ width: "146px" }}
               />
-            </FormGroup>
+            </div>
           </form>
         </div>
       </div>

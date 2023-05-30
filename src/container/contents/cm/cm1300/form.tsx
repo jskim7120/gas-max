@@ -2,12 +2,7 @@ import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet, apiPost } from "app/axios";
 import useRdanga from "app/hook/calcRdanga";
-import {
-  CM1300INSERT,
-  CM1300UPDATE,
-  CM1300DELETE,
-  CM1300INSERTSEQ,
-} from "app/path";
+import { CM1300INSERT, CM1300UPDATE, CM1300INSERTSEQ } from "app/path";
 import {
   Input,
   Select,
@@ -112,12 +107,6 @@ const Form = React.forwardRef(
     const [chkAptSukumtype, setChkAptSukumtype] = useState(false);
     const [aptAddr1, setAptAddr1] = useState("");
 
-    // const [totalValue, setTotalValue] = useState<string>("");
-    // const [aptRdangaType, setAptRdangaType] = useState<string>("");
-    // const [aptRdanga, setAptRdanga] = useState<string>("");
-    // const [aptRdangaSign, setAptRdangaSign] = useState<string>("");
-    // const [aptRdangaAmt, setAptRdangaAmt] = useState<string>("");
-
     const { register, handleSubmit, reset, getValues, control, setFocus } =
       useForm<ICM1300>({
         mode: "onChange",
@@ -185,13 +174,14 @@ const Form = React.forwardRef(
       }
 
       if (type === "reset") {
-        if (selected && Object.keys(selected).length > 0) {
+        if (selected && Object.keys(selected)?.length > 0) {
           reset({
             ...selected,
             apt4F: selected?.apt4F === "Y",
             apt4Ho: selected?.apt4Ho === "Y",
             aptBf: selected?.aptBf === "Y",
           });
+          setAptAddr1("");
         }
       }
 
@@ -215,7 +205,6 @@ const Form = React.forwardRef(
     const crud = async (type: string | null) => {
       if (type === "delete") {
         const formValues = getValues();
-
         //delete procedure bhgui yum bn
       }
       if (type === null) {
@@ -228,6 +217,10 @@ const Form = React.forwardRef(
       const path = isAddBtnClicked ? CM1300INSERT : CM1300UPDATE;
       const formValues: any = getValues();
       formValues.areaCode = isAddBtnClicked ? areaCode : selected.areaCode;
+
+      formValues.apt4F = formValues?.apt4F ? "Y" : "N";
+      formValues.apt4Ho = formValues?.apt4Ho ? "Y" : "N";
+      formValues.aptBf = formValues?.aptBf ? "Y" : "N";
 
       formValues.aptF = +formValues.aptF;
       formValues.aptS = +formValues.aptS;
@@ -243,6 +236,10 @@ const Form = React.forwardRef(
         ? removeCommas(formValues.aptSisulkum)
         : 0;
 
+      //if (!chkAptRh2o) {
+      //  delete formValues.aptRh2O;
+      //}
+
       if (chkAptRdangaType) {
         formValues.aptRdangaType = rdangaType;
         formValues.aptRdanga = +rdanga;
@@ -256,6 +253,7 @@ const Form = React.forwardRef(
       const res: any = await apiPost(path, formValues, "저장이 성공하였습니다");
       if (res) {
         const par = prepareSearchFormValues();
+
         if (isAddBtnClicked) {
           await fetchData(par, "last");
         } else {

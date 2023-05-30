@@ -43,7 +43,7 @@ function CC1600({
   }, []);
 
   useEffect(() => {
-    if (selected && Object.keys(selected).length > 0) {
+    if (selected && Object.keys(selected)?.length > 0) {
       fetchData65({
         acsAccCode: selected.acsAccCode,
         acsCode: selected.acsCode,

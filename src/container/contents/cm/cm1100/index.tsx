@@ -63,7 +63,7 @@ function CM1100Page({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (selected && Object.keys(selected).length > 0) {
+    if (selected && Object.keys(selected)?.length > 0) {
       setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
       fetchData65();
       dispatch(
@@ -117,7 +117,7 @@ function CM1100Page({
       areaCode: selected.areaCode,
     });
 
-    if (dataS65 && Object.keys(dataS65).length > 0) {
+    if (dataS65 && Object.keys(dataS65)?.length > 0) {
       setData65(dataS65);
     } else {
       setData65({});
@@ -125,7 +125,7 @@ function CM1100Page({
   };
 
   const onClickUpdate = async () => {
-    if (selected && Object.keys(selected).length > 0) {
+    if (selected && Object.keys(selected)?.length > 0) {
       openPopup({
         cuCode: selected.cuCode,
         areaCode: selected.areaCode,
@@ -138,7 +138,7 @@ function CM1100Page({
   };
 
   const onClickAdd = () => {
-    if (selected && Object.keys(selected).length > 0) {
+    if (selected && Object.keys(selected)?.length > 0) {
       openPopup({
         cuCode: selected.cuCode,
         areaCode: selected.areaCode,

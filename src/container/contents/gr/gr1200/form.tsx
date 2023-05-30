@@ -407,7 +407,7 @@ const Form = ({
 
   const crud = async (type: string | null) => {
     if (type === "delete") {
-      if (Object.keys(data65).length > 0) {
+      if (Object.keys(data65)?.length > 0) {
         const res = await apiPost(
           GR1200BUYDELETE,
           {
@@ -641,7 +641,7 @@ const Form = ({
   }
 
   const onClickDelete = () => {
-    if (Object.keys(selected).length > 0) {
+    if (Object.keys(selected)?.length > 0) {
       dispatch(openModal({ type: "delModal" }));
       dispatch(addDeleteMenuId({ menuId: menuId }));
     } else {

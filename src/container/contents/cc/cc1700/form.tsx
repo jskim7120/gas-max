@@ -51,7 +51,7 @@ const Form = React.forwardRef(
       useForm<ICC1700FORM>({ mode: "onChange" });
 
     useEffect(() => {
-      if (data65 !== undefined && Object.keys(data65).length > 0) {
+      if (data65 !== undefined && Object.keys(data65)?.length > 0) {
         resetForm("reset");
       }
       setIsAddBtnClicked(false);
