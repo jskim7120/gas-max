@@ -515,14 +515,16 @@ const Form = React.forwardRef(
               icon={<Plus />}
               style={{ marginRight: "5px" }}
               onClick={openPopupCM1105Insert}
+              disabled={isAddBtnClicked}
             />
             <Button
               text="사용자 수정"
               icon={<Update />}
               style={{ marginRight: "5px" }}
               onClick={openPopupCM1105Update}
+              disabled={isAddBtnClicked}
             />
-            <Button text="삭제" icon={<Trash />} />
+            <Button text="삭제" icon={<Trash />} disabled={isAddBtnClicked} />
           </div>
         </FormSectionTitle>
 

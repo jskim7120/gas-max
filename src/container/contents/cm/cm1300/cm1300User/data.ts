@@ -24,7 +24,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "80",
+    width: "70",
     header: {
       text: "코드",
     },

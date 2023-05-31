@@ -200,6 +200,8 @@ function CM1300({
   const onClickAdd = () => {
     btnRef1.current.classList.add("active");
     setIsAddBtnClicked(true);
+    setData65([]);
+    setSelected65({});
     formRef.current.resetForm("clear");
   };
 
