@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
-import { ISEARCH } from "./model";
+import { AR9001SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label, Input } from "components/form/style";
 import Button from "components/button/button";
@@ -10,6 +10,9 @@ import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import CheckBox from "components/checkbox";
+import BasicGrid from "components/basicGrid";
+import { ISEARCH } from "./model";
+import { columns, fields } from "./data/data1";
 
 function AR9001({
   depthFullName,
@@ -30,13 +33,16 @@ function AR9001({
     gridIndexes,
     dispatch,
     dataCommonDic,
-  } = CreateReport("AR", "AR9001", menuId, "searchPath");
+  } = CreateReport("AR", "AR9001", menuId, AR9001SEARCH);
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const submit = (data: ISEARCH) => {};
+  const submit = (data: ISEARCH) => {
+    console.log("param:", data);
+    fetchData(data);
+  };
 
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
@@ -199,6 +205,13 @@ function AR9001({
           </FormGroup>
         </SearchWrapper>
       </form>
+      <BasicGrid
+        columns={columns}
+        fields={fields}
+        data={data}
+        rowIndex={data?.length ? data.length : 0}
+        style={{ height: "calc(100% - 52px)" }}
+      />
     </>
   );
 }
