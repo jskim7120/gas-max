@@ -1,5 +1,5 @@
 import Tab1 from "./tabs/tab1";
-// import Tab2 from "./tab2";
+import Tab2 from "./tabs/tab2";
 // import Tab3 from "./tab3";
 
 function getTabContent(id: number, data: any, dictionary: any) {
@@ -7,7 +7,7 @@ function getTabContent(id: number, data: any, dictionary: any) {
     case 0:
       return <Tab1 data={data} dictionary={dictionary} />;
     case 1:
-      //   return <Tab2 data={data} />;
+      return <Tab2 data={data} dictionary={dictionary} />;
       return <>1</>;
     case 2:
       //   return <Tab3 data={data} />;

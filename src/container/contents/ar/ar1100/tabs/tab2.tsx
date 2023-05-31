@@ -10,7 +10,7 @@ import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { Reset, MagnifyingGlass } from "components/allSvgIcon";
 import Loader from "components/loader";
 
-function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
+function Tab2({ data, dictionary }: { data: any; dictionary: any }) {
   const [loading, setLoading] = useState<boolean>(false);
   const { register, handleSubmit, reset, control } = useForm<IAR110065DETAIL>({
     mode: "onSubmit",
@@ -27,12 +27,7 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
           )}
         />
       ),
-      2: (
-        <FormGroup>
-          <Input register={register("pjJpCode")} />
-          <Input register={register("pjJpName")} />
-        </FormGroup>
-      ),
+      2: <Input register={register("pjJpCode")} />,
       3: (
         <Input
           register={
@@ -54,19 +49,6 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
           }
         />
       ),
-      6: <Input register={register("pjDanga")} />,
-      7: (
-        <Select register={register("pjVatDiv")} width={InputSize.i100}>
-          {dictionary?.pjVatDiv?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
-      ),
-      8: <Input register={register("pjKumSup")} />,
-      9: <Input register={register("pjKumVat")} />,
-      10: <Input register={register("pjKumack")} />,
     },
   ];
 
@@ -91,76 +73,30 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
         </Select>
       ),
       3: <Input register={register("buName")} />,
-      4: (
-        <Select register={register("pjInkumtype")} width={InputSize.i100}>
-          {dictionary?.pjInkumtype?.map((obj: any, idx: number) => (
+      4: <Input register={register("buName")} />,
+      5: (
+        <Select register={register("saleState")} width={InputSize.i100}>
+          {dictionary?.saleType?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
             </option>
           ))}
         </Select>
       ),
-      5: <Input register={register("pjInkum")} />,
       6: <Input register={register("pjDc")} />,
       7: <Input register={register("pjMisukum")} />,
-      8: (
-        <Select register={register("pjSwCode")} width={InputSize.i100}>
-          {dictionary?.pjSwCode?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
-      ),
-      9: <Input register={register("pjBigo")} />,
-      10: (
-        <>
-          <Input register={register("signuser")} />
-          <Input register={register("signkey")} />
-        </>
-      ),
     },
   ];
   return (
-    <div style={{ display: "flex", gap: "15px" }}>
-      <div>
+    <div>
+      <div style={{ display: "flex", justifyContent: "start" }}>
         <Table
           className="no-space"
-          tableHeader={[
-            "판매일자",
-            "품  명",
-            data.jpKind === null ? "판매수량" : "매출량(kg)",
-            data.jpKind === null ? "공병회수" : "매출량(ℓ)",
-            data.jpKind === null ? "재고" : "비중(kg/ℓ)",
-            "단가",
-            "VAT",
-            "공급가액",
-            "세액",
-            "합계금액",
-          ]}
+          tableHeader={["판매 일자", "품명", "공급가액", "세액", "합계금액"]}
           tableData={data1}
           onClick={(item) => console.log("table", item)}
           style={{ marginBottom: "2px" }}
         />
-        <Table
-          className="no-space"
-          tableHeader={[
-            "거래상태",
-            "대납구분",
-            "매입처명",
-            "입금방법",
-            "입금액",
-            "D/C",
-            "미입금액",
-            "사원",
-            "비고",
-            "확인자 서명",
-          ]}
-          tableData={data2}
-          onClick={(item) => console.log("table", item)}
-        />
-      </div>
-      <div>
         <Button
           text="검색"
           icon={!loading && <MagnifyingGlass />}
@@ -178,20 +114,24 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
               </>
             )
           }
-          style={{ marginBottom: "10px" }}
-        />
-
-        <Button
-          text="취소"
-          icon={<Reset />}
-          style={{ minWidth: "max-content" }}
-          type="button"
-
-          // onClick={handleReset}
         />
       </div>
+      <Table
+        className="no-space"
+        tableHeader={[
+          "거래 상태",
+          "입금 방법",
+          "입금액",
+          "D/C",
+          "미입금액",
+          "사원",
+          "비고",
+        ]}
+        tableData={data2}
+        onClick={(item) => console.log("table", item)}
+      />
     </div>
   );
 }
 
-export default Tab1;
+export default Tab2;

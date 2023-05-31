@@ -12,13 +12,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Grid from "components/grid";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import {
-  Select,
-  FormGroup,
-  Wrapper,
-  Label,
-  Field,
-} from "components/form/style";
+import { Select, FormGroup, Wrapper, Label } from "components/form/style";
 import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
 import { columns2, fields2 } from "./data/data2";
@@ -189,7 +183,7 @@ function CM9003({
                   </Select>
                 </FormGroup>
 
-                <Field flex style={{ alignItems: "center" }}>
+                <FormGroup>
                   <Label style={{ minWidth: "auto" }}>기간</Label>
                   <Controller
                     control={control}
@@ -205,7 +199,7 @@ function CM9003({
                       <CustomDatePicker value={value} onChange={onChange} />
                     )}
                   />
-                </Field>
+                </FormGroup>
 
                 <FormGroup>
                   <Label style={{ minWidth: "auto" }}>지역 분류</Label>

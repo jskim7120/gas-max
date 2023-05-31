@@ -3,12 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import Button from "components/button/button";
-import {
-  ButtonColor,
-  ButtonType,
-  InputSize,
-  FieldKind,
-} from "components/componentsType";
+import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import {
   Plus,
@@ -61,21 +56,21 @@ function AR1100({
   }, []);
 
   useEffect(() => {
-    if (dataCommonDic) {
-      console.log(dataCommonDic);
-      resetSearchForm();
+    if (dataCommonDic?.dataInit) {
+      console.log("dataCommonDic:::", dataCommonDic);
+      resetSearchForm("reset");
     }
   }, [dataCommonDic]);
 
   useEffect(() => {
     if (selected) {
-      fetchData65({
-        areaCode: selected?.areaCode,
-        pjCuCode: selected?.cuCode,
-        pjDate: selected?.pjDate,
-        pjSno: selected?.pjSno,
-        pjType: selected?.pjType,
-      });
+      // fetchData65({
+      //   areaCode: selected?.areaCode,
+      //   pjCuCode: selected?.cuCode,
+      //   pjDate: selected?.pjDate,
+      //   pjSno: selected?.pjSno,
+      //   pjType: selected?.pjType,
+      // });
     }
   }, [selected]);
 
@@ -150,13 +145,33 @@ function AR1100({
     }
   };
 
-  const resetSearchForm = () => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-      sInkumtype: dataCommonDic?.sInkumtype[0].code,
-      sInserttype: dataCommonDic?.sInserttype[0].code,
-      sProxytype: dataCommonDic?.sProxytype[0].code,
-    });
+  const resetSearchForm = (type: string) => {
+    if (type === "reset") {
+      const init = dataCommonDic.dataInit[0];
+
+      // sSalegubun: "NNNNN",
+      // sSalesatae: "NNNNN,
+
+      reset({
+        sDate: init.sDate,
+        sInkumtype: init.sInkumtype,
+        sInserttype: init.sInserttype,
+        sProxytype: init.sProxytype,
+        sSawon: init.sSawon,
+        sSalestate0: init.sSalesatae.charAt(0) === "N",
+        sSalestate1: init.sSalesatae.charAt(1) === "Y",
+        sSalestate2: init.sSalesatae.charAt(2) === "Y",
+        sSalestate3: init.sSalesatae.charAt(3) === "Y",
+        sSalestate4: init.sSalesatae.charAt(4) === "Y",
+        sSalestate5: init.sSalesatae.charAt(5) === "Y",
+
+        sSalegubun0: init.sSalegubun.charAt(0) === "Y",
+        sSalegubun1: init.sSalegubun.charAt(1) === "Y",
+        sSalegubun2: init.sSalegubun.charAt(2) === "Y",
+        sSalegubun3: init.sSalegubun.charAt(3) === "Y",
+        sSalegubun4: init.sSalegubun.charAt(4) === "Y",
+      });
+    }
   };
 
   const submit = async (params: IAR1100SEARCH) => {
@@ -300,68 +315,68 @@ function AR1100({
               <FormGroup>
                 <Label>거래 상태 :</Label>
                 <CheckBox
-                  register={{ ...register("sSalestate1") }}
+                  register={{ ...register("sSalestate0") }}
                   title="접수"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate2") }}
+                  register={{ ...register("sSalestate1") }}
                   title="배송중"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate3") }}
+                  register={{ ...register("sSalestate2") }}
                   title="완료"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate4") }}
+                  register={{ ...register("sSalestate3") }}
                   title="예약"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate5") }}
+                  register={{ ...register("sSalestate4") }}
                   title="취소"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate6") }}
+                  register={{ ...register("sSalestate5") }}
                   title="연기"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <Label>거래 구분 :</Label>
                 <CheckBox
-                  register={{ ...register("sSalesGubun1") }}
+                  register={{ ...register("sSalegubun0") }}
                   title="중량"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalesGubun2") }}
+                  register={{ ...register("sSalegubun1") }}
                   title="체적"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalesGubun3") }}
+                  register={{ ...register("sSalegubun2") }}
                   title="용기"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalesGubun4") }}
+                  register={{ ...register("sSalegubun3") }}
                   title="기구"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalesGubun5") }}
+                  register={{ ...register("sSalegubun4") }}
                   title="A/S"
                   rtl
                   style={{ width: "80px" }}
