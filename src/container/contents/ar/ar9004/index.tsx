@@ -9,6 +9,8 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
+import BasicGrid from "components/basicGrid";
+import { columns, fields } from "./data";
 
 function AR9004({
   depthFullName,
@@ -152,6 +154,13 @@ function AR9004({
           </FormGroup>
         </SearchWrapper>
       </form>
+      <BasicGrid
+        columns={columns}
+        fields={fields}
+        data={data}
+        rowIndex={data?.length ? data.length : 0}
+        style={{ height: "calc(100% - 52px)" }}
+      />
     </>
   );
 }
