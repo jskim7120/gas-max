@@ -11,6 +11,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import CheckBox from "components/checkbox";
 import BasicGrid from "components/basicGrid";
+import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields } from "./data/data1";
 
@@ -35,17 +36,25 @@ function AR9001({
     dataCommonDic,
   } = CreateReport("AR", "AR9001", menuId, AR9001SEARCH);
 
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const submit = (data: ISEARCH) => {
-    console.log("param:", data);
-    fetchData(data);
-  };
-
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+  }, [dataCommonDic]);
+
+  const submit = (params: ISEARCH) => {
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
+
+    fetchData(params);
+  };
+
+  const resetForm = (type: string) => {
+    if (type === "reset") {
       const init = dataCommonDic.dataInit[0];
       reset({
         sDate: init?.sDate,
@@ -59,7 +68,13 @@ function AR9001({
         swCode: init?.swCode,
       });
     }
-  }, [dataCommonDic]);
+  };
+
+  const handleReset = () => {
+    if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+  };
 
   return (
     <>
@@ -113,7 +128,7 @@ function AR9001({
                 style={{ minWidth: "max-content" }}
                 type="button"
                 color={ButtonColor.LIGHT}
-                // onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
@@ -180,12 +195,14 @@ function AR9001({
               ))}
             </Select>
 
-            <Input
-              label="지역구분"
-              labelStyle={{ minWidth: "90px" }}
-              register={register("cuJyCode")}
-              inputSize={InputSize.i130}
-            />
+            <Label style={{ minWidth: "90px" }}>지역구분</Label>
+            <Select register={register("cuJyCode")} width={InputSize.i130}>
+              {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
             <Label style={{ minWidth: "90px" }}>장부구분</Label>
             <Select register={register("cuJangbu")} width={InputSize.i120}>
               {dataCommonDic?.cuJangbu?.map((obj: any, idx: number) => (

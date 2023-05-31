@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
-import { ISEARCH } from "./model";
+import { AR9002SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label, Input } from "components/form/style";
 import Button from "components/button/button";
@@ -10,6 +10,11 @@ import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import CheckBox from "components/checkbox";
+import BasicGrid from "components/basicGrid";
+import { DateWithoutDash } from "helpers/dateFormat";
+import { ISEARCH } from "./model";
+import { columns1, fields1 } from "./data/data1";
+import { columns2, fields2 } from "./data/data2";
 
 function AR9002({
   depthFullName,
@@ -30,16 +35,27 @@ function AR9002({
     gridIndexes,
     dispatch,
     dataCommonDic,
-  } = CreateReport("AR", "AR9002", menuId, "searchPath");
+  } = CreateReport("AR", "AR9002", menuId, AR9002SEARCH);
 
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const submit = (data: ISEARCH) => {};
-
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+  }, [dataCommonDic]);
+
+  const submit = (params: ISEARCH) => {
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
+
+    fetchData(params);
+  };
+
+  const resetForm = (type: string) => {
+    if (type === "reset") {
       const init = dataCommonDic.dataInit[0];
       reset({
         sDate: init?.sDate,
@@ -53,7 +69,13 @@ function AR9002({
         swCode: init?.swCode,
       });
     }
-  }, [dataCommonDic]);
+  };
+
+  const handleReset = () => {
+    if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+  };
 
   return (
     <>
@@ -107,7 +129,7 @@ function AR9002({
                 style={{ minWidth: "max-content" }}
                 type="button"
                 color={ButtonColor.LIGHT}
-                // onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
@@ -175,12 +197,14 @@ function AR9002({
               ))}
             </Select>
 
-            <Input
-              label="지역구분"
-              labelStyle={{ minWidth: "90px" }}
-              register={register("cuJyCode")}
-              inputSize={InputSize.i130}
-            />
+            <Label style={{ minWidth: "90px" }}>지역구분</Label>
+            <Select register={register("cuJyCode")} width={InputSize.i130}>
+              {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
             <Label style={{ minWidth: "90px" }}>장부구분</Label>
             <Select register={register("cuJangbu")} width={InputSize.i120}>
               {dataCommonDic?.cuJangbu?.map((obj: any, idx: number) => (
@@ -200,6 +224,14 @@ function AR9002({
           </FormGroup>
         </SearchWrapper>
       </form>
+
+      <BasicGrid
+        columns={columns1}
+        fields={fields1}
+        data={data}
+        rowIndex={data?.length ? data.length : 0}
+        style={{ height: "calc(100% - 52px)" }}
+      />
     </>
   );
 }
