@@ -19,9 +19,8 @@ const Table = styled.table`
       color: #424242;
 
       th {
-        border-top: 1px solid #000;
-        border-bottom: 1px solid #000;
-        border-right: 1px solid #d6d2ce;
+        border: 1px solid #d6d2ce;
+        border-left: none;
         font-weight: 500;
         padding: 5px;
         width: 120px;

@@ -134,16 +134,17 @@ export const InfoDesc = styled.div`
 
 export const PaymentLineCnt = styled.div`
   display: flex;
-  border: 1px solid #bbbbbb;
   width: fit-content;
   .title {
+    border: 1px solid #d6d2ce;
+    border-right: none;
     writing-mode: vertical-rl;
     text-align: center;
     font-size: 14px;
-    width: 22px;
-    // height: 78px;
+    width: 28px;
     letter-spacing: 11px;
-    background: rgba(104, 103, 103, 0.35);
+    background: #f5f5f5;
+    padding: 5px 3px 0 0;
   }
   table tbody tr td {
     height: 45px;

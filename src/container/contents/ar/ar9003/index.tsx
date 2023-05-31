@@ -10,6 +10,9 @@ import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import CheckBox from "components/checkbox";
+import BasicGrid from "components/basicGrid";
+import { columns1, fields1 } from "./data/data1";
+import { columns2, fields2 } from "./data/data2";
 
 function AR9003({
   depthFullName,
@@ -179,6 +182,13 @@ function AR9003({
           </FormGroup>
         </SearchWrapper>
       </form>
+      <BasicGrid
+        columns={columns1}
+        fields={fields1}
+        data={data}
+        rowIndex={data?.length ? data.length : 0}
+        style={{ height: "calc(100% - 52px)" }}
+      />
     </>
   );
 }
