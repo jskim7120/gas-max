@@ -49,6 +49,7 @@ const Table = styled.table`
     }
     th {
       width: auto;
+      padding: 2px 0;
     }
   }
 `;
