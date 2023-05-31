@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Table from "components/table";
-import { Input, Select, Field } from "components/form/style";
+import { Input, Select, Field, FormGroup } from "components/form/style";
 import { InputSize } from "components/componentsType";
 import { Controller } from "react-hook-form";
 import CustomDatePicker from "components/customDatePicker";
@@ -53,10 +53,10 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
         />
       ),
       2: (
-        <>
+        <FormGroup>
           <Input register={register("pjJpCode")} />
           <Input register={register("pjJpName")} />
-        </>
+        </FormGroup>
       ),
       3: (
         <Input
@@ -149,6 +149,7 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
   return (
     <div>
       <Table
+        className="no-space"
         tableHeader={[
           "판매일자",
           "품  명",

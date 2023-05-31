@@ -6,17 +6,17 @@ export interface IAR1100SEARCH {
   sInkumtype: string;
   sProxytype: string;
   sInserttype: string;
-  sSalestate1: string;
-  sSalestate2: string;
-  sSalestate3: string;
-  sSalestate4: string;
-  sSalestate5: string;
-  sSalestate6: string;
-  sSalesGubun1: string;
-  sSalesGubun2: string;
-  sSalesGubun3: string;
-  sSalesGubun4: string;
-  sSalesGubun5: string;
+  sSalestate0: boolean;
+  sSalestate1: boolean;
+  sSalestate2: boolean;
+  sSalestate3: boolean;
+  sSalestate4: boolean;
+  sSalestate5: boolean;
+  sSalegubun0: boolean;
+  sSalegubun1: boolean;
+  sSalegubun2: boolean;
+  sSalegubun3: boolean;
+  sSalegubun4: boolean;
 }
 
 export interface IAR1100GRID {

@@ -70,10 +70,16 @@ function FormCM1105() {
 
   useEffect(() => {
     if (cm1105.status === "INSERT") {
-      fetchCuCode(cm1105.areaCode, cm1105.cuCode);
+      fetchCuCode({
+        areaCode: cm1105.areaCode,
+        cuCode: cm1105.cuCode.substring(0, 3),
+      });
       setIsAddBtnClicked(true);
     } else if (cm1105.areaCode && cm1105.cuCode) {
-      fetchData();
+      fetchData({
+        cuCode: cm1105.cuCode,
+        areaCode: cm1105.areaCode,
+      });
     }
 
     console.log("state chagnaj bn INSERT", cm1105);
@@ -107,53 +113,55 @@ function FormCM1105() {
 
   const resetForm = (type: string) => {
     if (type === "clear") {
-      fetchCuCode(cm1105.areaCode, cm1105.cuCode);
+      fetchCuCode({
+        areaCode: cm1105.areaCode,
+        cuCode: cm1105.cuCode.substring(0, 3),
+      });
       return;
     }
 
-    if (type === "reset" && data !== undefined && data?.customerInfo) {
-      const customerInfo = data.customerInfo;
-      const cms = data?.cms
-        ? data.cms
-        : {
-            acctno: "",
-            appdt: "",
-            bankName: "",
-            bigo: "",
-            cmsGubun: "",
-            depositor: "",
-            managerNo: "",
-            monthday: "",
-            regDate: "",
-            stateName: "",
-            tel: "",
-          };
-      const cuTank = data?.cuTank ? data.cuTank : {};
-      const virtualAccount = data?.virturalAccoount
-        ? data.virturalAccoount
-        : {
-            acctno: "",
-            bankCd: "",
-            bankName: "",
-            depositor: "",
-            managerCode: "",
-            regDate: "",
-          };
-      reset({ ...customerInfo, ...cms, ...cuTank, ...virtualAccount });
+    if (type === "reset") {
+      if (data && data?.customerInfo) {
+        const customerInfo = data.customerInfo;
+        const cms = data?.cms
+          ? data.cms
+          : {
+              acctno: "",
+              appdt: "",
+              bankName: "",
+              bigo: "",
+              cmsGubun: "",
+              depositor: "",
+              managerNo: "",
+              monthday: "",
+              regDate: "",
+              stateName: "",
+              tel: "",
+            };
+        const cuTank = data?.cuTank ? data.cuTank : {};
+        const virtualAccount = data?.virturalAccoount
+          ? data.virturalAccoount
+          : {
+              acctno: "",
+              bankCd: "",
+              bankName: "",
+              depositor: "",
+              managerCode: "",
+              regDate: "",
+            };
+        reset({ ...customerInfo, ...cms, ...cuTank, ...virtualAccount });
 
-      setRdangaType(customerInfo?.cuRdangaType);
-      setRdanga(customerInfo?.cuRdanga);
-      setRdangaSign(customerInfo?.cuRdangaSign);
-      // setRdangaAmt(customerInfo?.aptRdangaAmt);
-      setTotalValue("");
+        setRdangaType(customerInfo?.cuRdangaType);
+        setRdanga(customerInfo?.cuRdanga);
+        setRdangaSign(customerInfo?.cuRdangaSign);
+        // setRdangaAmt(customerInfo?.aptRdangaAmt);
+        setTotalValue("");
+      }
     }
   };
 
-  const fetchData = async () => {
-    const dataS = await apiGet(CM1105SEARCH, {
-      cuCode: cm1105.cuCode,
-      areaCode: cm1105.areaCode,
-    });
+  const fetchData = async (params: any) => {
+    const dataS = await apiGet(CM1105SEARCH, params);
 
     if (dataS) {
       setData({
@@ -167,14 +175,11 @@ function FormCM1105() {
     }
   };
 
-  const fetchCuCode = async (areaCode: string, cuCode: string) => {
-    const res: any = await apiGet(CM110511, {
-      areaCode: areaCode,
-      cuCode: cuCode.substring(0, 3),
-    });
+  const fetchCuCode = async (params: any) => {
+    const res: any = await apiGet(CM110511, params);
 
     if (res) {
-      setIsAddBtnClicked(true);
+      //setIsAddBtnClicked(true);
       setData(null);
       reset({
         ...emptyObj,
