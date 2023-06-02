@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { AR9001SEARCH } from "app/path";
@@ -14,6 +15,7 @@ import BasicGrid from "components/basicGrid";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields } from "./data/data1";
+import Viewer from "components/viewer";
 
 function AR9001({
   depthFullName,
@@ -46,6 +48,21 @@ function AR9001({
     }
   }, [dataCommonDic]);
 
+  const openPopup = async () => {
+    const width = 1500;
+    const height = 2000;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2;
+
+    console.log("data::S:CDscdc>>>>>>>>>>>", data);
+
+    const newWindow = window.open(
+      "/print" + `?${JSON.stringify(data)}`,
+      "",
+      `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
+    );
+  };
+
   const submit = (params: ISEARCH) => {
     params.sDate = DateWithoutDash(params.sDate);
     params.eDate = DateWithoutDash(params.eDate);
@@ -55,7 +72,7 @@ function AR9001({
 
   const resetForm = (type: string) => {
     if (type === "reset") {
-      const init = dataCommonDic.dataInit[0];
+      const init: any = dataCommonDic.dataInit[0];
       reset({
         sDate: init?.sDate,
         eDate: init?.dDate,
@@ -136,6 +153,13 @@ function AR9001({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+              />
+              <Button
+                text="Report"
+                style={{ minWidth: "max-content" }}
+                color={ButtonColor.LIGHT}
+                type="button"
+                onClick={openPopup}
               />
             </div>
           </FormGroup>

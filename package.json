@@ -29,6 +29,7 @@
     "react-text-mask": "^5.5.0",
     "react-toastify": "^9.0.8",
     "realgrid": "^2.5.4",
+    "realreport": "^1.7.1",
     "redux-logger": "^3.0.6",
     "styled-components": "^5.3.5",
     "text-mask-addons": "^3.8.0",
