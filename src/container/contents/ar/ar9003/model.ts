@@ -7,4 +7,5 @@ export interface ISEARCH {
   swCode: string;
   cuJyCode: string;
   chkSv: boolean;
+  chkDate: string;
 }

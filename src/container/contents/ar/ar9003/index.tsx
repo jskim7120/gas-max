@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
+import { AR9003SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label, Input } from "components/form/style";
@@ -11,6 +12,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import CheckBox from "components/checkbox";
 import BasicGrid from "components/basicGrid";
+import { DateWithoutDash } from "helpers/dateFormat";
 import { columns1, fields1 } from "./data/data1";
 import { columns2, fields2 } from "./data/data2";
 
@@ -33,17 +35,30 @@ function AR9003({
     gridIndexes,
     dispatch,
     dataCommonDic,
-  } = CreateReport("AR", "AR9003", menuId, "searchPath");
+  } = CreateReport("AR", "AR9003", menuId, AR9003SEARCH);
+
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const submit = (data: ISEARCH) => {
-    // fetchData(data);
-  };
-
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+  }, [dataCommonDic]);
+
+  const submit = (data: ISEARCH) => {
+    data.sDate = DateWithoutDash(data.sDate);
+    data.eDate = DateWithoutDash(data.eDate);
+    data.chkDate = "Y";
+    data.areaCode = areaCode;
+    fetchData(data);
+  };
+
+  const [reportKind, setReportKind] = useState("");
+
+  const resetForm = (type: string) => {
+    if (type === "reset") {
       const init = dataCommonDic.dataInit[0];
       reset({
         sDate: init?.sDate,
@@ -53,8 +68,15 @@ function AR9003({
         cuJyCode: init?.cuJyCode,
         reportKind: init?.reportKind,
       });
+      setReportKind(dataCommonDic?.reportKind[0].code);
     }
-  }, [dataCommonDic]);
+  };
+
+  const handleReset = () => {
+    if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+  };
 
   return (
     <>
@@ -74,7 +96,11 @@ function AR9003({
               </>
             )}
             <Label style={{ minWidth: "90px" }}>보고서종류</Label>
-            <Select register={register("reportKind")} width={InputSize.i200}>
+            <Select
+              value={reportKind}
+              onChange={(e) => setReportKind(e.target.value)}
+              width={InputSize.i200}
+            >
               {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -182,13 +208,24 @@ function AR9003({
           </FormGroup>
         </SearchWrapper>
       </form>
-      <BasicGrid
-        columns={columns1}
-        fields={fields1}
-        data={data}
-        rowIndex={data?.length ? data.length : 0}
-        style={{ height: "calc(100% - 52px)" }}
-      />
+      {reportKind === "0" && (
+        <BasicGrid
+          columns={columns1}
+          fields={fields1}
+          data={data}
+          rowIndex={data?.length ? data.length : 0}
+          style={{ height: "calc(100% - 52px)" }}
+        />
+      )}
+      {reportKind === "1" && (
+        <BasicGrid
+          columns={columns2}
+          fields={fields2}
+          data={data}
+          rowIndex={data?.length ? data.length : 0}
+          style={{ height: "calc(100% - 52px)" }}
+        />
+      )}
     </>
   );
 }
