@@ -7,7 +7,13 @@ import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label, Input } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
+import {
+  MagnifyingGlass,
+  ExcelIcon,
+  ResetGray,
+  PrintPreview,
+  Print,
+} from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import CheckBox from "components/checkbox";
@@ -48,13 +54,11 @@ function AR9001({
     }
   }, [dataCommonDic]);
 
-  const openPopup = async () => {
+  const openNewWindow = async () => {
     const width = 1500;
     const height = 2000;
     const left = window.screen.width / 2 - width / 2;
     const top = window.screen.height / 2;
-
-    console.log("data::S:CDscdc>>>>>>>>>>>", data);
 
     const newWindow = window.open(
       "/print" + `?${JSON.stringify(data)}`,
@@ -137,29 +141,33 @@ function AR9001({
                     </>
                   )
                 }
-                style={{ minWidth: "max-content" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ minWidth: "max-content" }}
                 type="button"
                 color={ButtonColor.LIGHT}
                 onClick={handleReset}
               />
               <Button
                 text="엑셀"
-                style={{ minWidth: "max-content" }}
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
               />
               <Button
-                text="Report"
-                style={{ minWidth: "max-content" }}
+                text="미리보기"
+                icon={<PrintPreview />}
                 color={ButtonColor.LIGHT}
                 type="button"
-                onClick={openPopup}
+                onClick={openNewWindow}
+              />
+
+              <Button
+                text="출력"
+                icon={<Print />}
+                color={ButtonColor.LIGHT}
+                type="button"
               />
             </div>
           </FormGroup>
