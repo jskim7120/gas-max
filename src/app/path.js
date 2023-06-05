@@ -5,6 +5,8 @@ export const AR9001SEARCH = "/app/AR9001/search";
 
 export const AR9002SEARCH = "/app/AR9002/search";
 
+export const AR9006SEARCH = "/app/AR9006/search";
+
 export const EN1100LIST = "/app/EN1100/list";
 export const EN1100INSERT = "/app/EN1100/insert";
 export const EN1100UPDATE = "/app/EN1100/update";
