@@ -6,15 +6,22 @@ import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label, Input } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
+import {
+  MagnifyingGlass,
+  ExcelIcon,
+  ResetGray,
+  PrintPreview,
+  Print,
+} from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import CheckBox from "components/checkbox";
 import BasicGrid from "components/basicGrid";
+import Viewer from "components/viewer";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
+import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
-import { columns2, fields2 } from "./data/data2";
 
 function AR9002({
   depthFullName,
@@ -46,6 +53,25 @@ function AR9002({
       resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("reportKind")) {
+      setData([]);
+    }
+  }, [watch("reportKind")]);
+
+  const openNewWindow = async () => {
+    const width = 1500;
+    const height = 2000;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2;
+
+    const newWindow = window.open(
+      "/print" + `?${JSON.stringify(data)}`,
+      "",
+      `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
+    );
+  };
 
   const submit = (params: ISEARCH) => {
     params.sDate = DateWithoutDash(params.sDate);
@@ -122,20 +148,30 @@ function AR9002({
                     </>
                   )
                 }
-                style={{ minWidth: "max-content" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ minWidth: "max-content" }}
                 type="button"
                 color={ButtonColor.LIGHT}
                 onClick={handleReset}
               />
               <Button
                 text="엑셀"
-                style={{ minWidth: "max-content" }}
                 icon={<ExcelIcon width="19px" height="19px" />}
+                color={ButtonColor.LIGHT}
+                type="button"
+              />
+              <Button
+                text="미리보기"
+                icon={<PrintPreview />}
+                color={ButtonColor.LIGHT}
+                type="button"
+                onClick={openNewWindow}
+              />
+              <Button
+                text="출력"
+                icon={<Print />}
                 color={ButtonColor.LIGHT}
                 type="button"
               />
@@ -226,13 +262,25 @@ function AR9002({
         </SearchWrapper>
       </form>
 
-      <BasicGrid
-        columns={columns1}
-        fields={fields1}
-        data={data}
-        rowIndex={data?.length ? data.length : 0}
-        style={{ height: "calc(100% - 52px)" }}
-      />
+      {watch("reportKind") === "1" ? (
+        <BasicGrid
+          areaCode={ownAreaCode}
+          columns={columns1}
+          fields={fields1}
+          data={data}
+          rowIndex={data?.length ? data.length : 0}
+          style={{ height: "calc(100% - 52px)" }}
+        />
+      ) : (
+        <BasicGrid
+          areaCode={ownAreaCode}
+          columns={columns0}
+          fields={fields0}
+          data={data}
+          rowIndex={data?.length ? data.length : 0}
+          style={{ height: "calc(100% - 52px)" }}
+        />
+      )}
     </>
   );
 }

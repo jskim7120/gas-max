@@ -184,7 +184,6 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
         <Button
           text="취소"
           icon={<Reset />}
-          style={{ minWidth: "max-content" }}
           type="button"
 
           // onClick={handleReset}

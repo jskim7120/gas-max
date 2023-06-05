@@ -1,70 +1,69 @@
 import { ValueType } from "realgrid";
 
-export const fields2 = [
+export const fields0 = [
   {
     fieldName: "areaCode",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bgDate",
+    fieldName: "pcDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bgCuCode",
+    fieldName: "pcCuCode",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bgCuName",
+    fieldName: "pcCuName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bglBpCode",
+    fieldName: "pcJpName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bglBpName",
+    fieldName: "pcQty",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bglBptype",
+    fieldName: "pcDanga",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bglQty",
+    fieldName: "pcKumack",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bglDanga",
+    fieldName: "pcGum",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bglKumack",
+    fieldName: "pcGage",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bgSwName",
+    fieldName: "pcBigo",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "pcSwName",
     dataType: ValueType.TEXT,
   },
 ];
 
-export const columns2 = [
+export const columns0 = [
   {
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "60",
+    width: "100",
     header: {
       text: "영업소",
     },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
-      },
-    },
   },
   {
-    name: "bgDate",
-    fieldName: "bgDate",
+    name: "pcDate",
+    fieldName: "pcDate",
     type: "data",
     width: "100",
     header: {
@@ -72,17 +71,17 @@ export const columns2 = [
     },
   },
   {
-    name: "bgCuCode",
-    fieldName: "bgCuCode",
+    name: "pcCuCode",
+    fieldName: "pcCuCode",
     type: "data",
     width: "100",
     header: {
-      text: "코드",
+      text: "거래처코드",
     },
   },
   {
-    name: "bgCuName",
-    fieldName: "bgCuName",
+    name: "pcCuName",
+    fieldName: "pcCuName",
     type: "data",
     width: "100",
     header: {
@@ -90,35 +89,18 @@ export const columns2 = [
     },
   },
   {
-    name: "bglBpCode",
-    fieldName: "bglBpCode",
+    name: "pcJpName",
+    fieldName: "pcJpName",
     type: "data",
     width: "100",
     header: {
-      text: "코드",
+      text: "품명",
     },
   },
+
   {
-    name: "bglBpName",
-    fieldName: "bglBpName",
-    type: "data",
-    width: "100",
-    header: {
-      text: "부품명",
-    },
-  },
-  {
-    name: "bglBptype",
-    fieldName: "bglBptype",
-    type: "data",
-    width: "100",
-    header: {
-      text: "규격",
-    },
-  },
-  {
-    name: "bglQty",
-    fieldName: "bglQty",
+    name: "pcQty",
+    fieldName: "pcQty",
     type: "data",
     width: "100",
     header: {
@@ -126,8 +108,8 @@ export const columns2 = [
     },
   },
   {
-    name: "bglDanga",
-    fieldName: "bglDanga",
+    name: "pcDanga",
+    fieldName: "pcDanga",
     type: "data",
     width: "100",
     header: {
@@ -135,17 +117,44 @@ export const columns2 = [
     },
   },
   {
-    name: "bglKumack",
-    fieldName: "bglKumack",
+    name: "pcKumack",
+    fieldName: "pcKumack",
     type: "data",
     width: "100",
     header: {
-      text: "금액",
+      text: "공급액",
     },
   },
   {
-    name: "bgSwName",
-    fieldName: "bgSwName",
+    name: "pcGum",
+    fieldName: "pcGum",
+    type: "data",
+    width: "100",
+    header: {
+      text: "배달검침",
+    },
+  },
+  {
+    name: "pcGage",
+    fieldName: "pcGage",
+    type: "data",
+    width: "100",
+    header: {
+      text: "사용량",
+    },
+  },
+  {
+    name: "pcBigo",
+    fieldName: "pcBigo",
+    type: "data",
+    width: "100",
+    header: {
+      text: "비고",
+    },
+  },
+  {
+    name: "pcSwName",
+    fieldName: "pcSwName",
     type: "data",
     width: "100",
     header: {

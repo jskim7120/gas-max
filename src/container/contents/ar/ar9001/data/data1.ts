@@ -6,10 +6,6 @@ export const fields1 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "pjDate",
-    dataType: ValueType.TEXT,
-  },
-  {
     fieldName: "pjCuCode",
     dataType: ValueType.TEXT,
   },
@@ -66,15 +62,6 @@ export const columns1 = [
     },
   },
   {
-    name: "pjDate",
-    fieldName: "pjDate",
-    type: "data",
-    width: "100",
-    header: {
-      text: "일자",
-    },
-  },
-  {
     name: "pjCuCode",
     fieldName: "pjCuCode",
     type: "data",
@@ -110,6 +97,7 @@ export const columns1 = [
       text: "수량",
     },
   },
+
   {
     name: "pjDanga",
     fieldName: "pjDanga",
@@ -161,7 +149,7 @@ export const columns1 = [
     type: "data",
     width: "100",
     header: {
-      text: "사원",
+      text: "최종거래일",
     },
   },
   {

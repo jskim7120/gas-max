@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
-import { AR9004SEARCH } from "app/path";
+import { AR9005SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
-import { Select, FormGroup, Label } from "components/form/style";
+import { Select, FormGroup, Label, Input } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import {
@@ -40,7 +40,7 @@ function AR9004({
     gridIndexes,
     dispatch,
     dataCommonDic,
-  } = CreateReport("AR", "AR9004", menuId, AR9004SEARCH);
+  } = CreateReport("AR", "AR9005", menuId, AR9005SEARCH);
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -48,6 +48,8 @@ function AR9004({
 
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
+      console.log("data:::::", dataCommonDic);
+
       resetForm("reset");
     }
   }, [dataCommonDic]);
@@ -79,7 +81,6 @@ function AR9004({
         sDate: init?.sDate,
         eDate: init?.dDate,
         jpCode: init?.jpCode,
-        swCode: init?.swCode,
       });
     }
   };
@@ -108,24 +109,6 @@ function AR9004({
               </>
             )}
             <div className="buttons ml30">
-              <Button
-                text="검색"
-                icon={!loading && <MagnifyingGlass />}
-                color={ButtonColor.DANGER}
-                type="submit"
-                loader={
-                  loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={13}
-                        borderWidth="2px"
-                        style={{ marginRight: "10px" }}
-                      />
-                    </>
-                  )
-                }
-              />
               <Button
                 text="취소"
                 icon={<ResetGray />}
@@ -156,50 +139,84 @@ function AR9004({
           </FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
-        <SearchWrapper>
+        <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>기간</Label>
-            <Controller
-              control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
-              )}
+            <Input
+              label="거래처코드"
+              labelStyle={{ minWidth: "90px" }}
+              register={register("cuCode")}
+              inputSize={InputSize.i120}
             />
-            <Controller
-              control={control}
-              {...register("eDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
-              )}
+            <Input
+              label="거래처명"
+              labelStyle={{ minWidth: "90px" }}
+              register={register("cuName")}
+              inputSize={InputSize.i250}
             />
-            <Label style={{ minWidth: "80px" }}>사원</Label>
-            <Select register={register("swCode")} width={InputSize.i120}>
-              {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-
-            <Label style={{ minWidth: "80px" }}>품목</Label>
-            <Select register={register("jpCode")} width={InputSize.i120}>
-              {dataCommonDic?.jpCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
+            <Input
+              label="전화"
+              labelStyle={{ minWidth: "90px" }}
+              register={register("cuTel")}
+              inputSize={InputSize.i150}
+            />
+            <Input
+              label="핸드폰"
+              labelStyle={{ minWidth: "90px" }}
+              register={register("cuHp")}
+              inputSize={InputSize.i150}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Input
+              label="주소"
+              labelStyle={{ minWidth: "90px" }}
+              register={register("cuZipCode")}
+              inputSize={InputSize.i80}
+            />
+            <Input register={register("cuZipCode")} inputSize={InputSize.i80} />
+            <Input register={register("cuAddr1")} inputSize={InputSize.i290} />
+            <Input register={register("cuAddr2")} inputSize={InputSize.i290} />
+          </FormGroup>
+          <FormGroup>
+            <Input
+              label="비고"
+              labelStyle={{ minWidth: "90px" }}
+              register={register("cuBigo1")}
+              inputSize={InputSize.i290}
+            />
+            <Input register={register("cuBigo2")} inputSize={InputSize.i290} />
+          </FormGroup>
+          <FormGroup>
+            <Input
+              label="지역분류"
+              labelStyle={{ minWidth: "90px" }}
+              register={register("cuJyname")}
+              inputSize={InputSize.i120}
+            />
+            <Input
+              label="소비자 형태"
+              labelStyle={{ minWidth: "90px" }}
+              register={register("cuCutype")}
+              inputSize={InputSize.i120}
+            />
+            <Input
+              label="용기 보조금"
+              labelStyle={{ minWidth: "90px" }}
+              register={register("cuTongkum")}
+              inputSize={InputSize.i120}
+            />
+            <Input
+              label="중량 미수"
+              labelStyle={{ minWidth: "90px" }}
+              register={register("cuJMisu")}
+              inputSize={InputSize.i120}
+            />
+            <Input
+              label="체적미수"
+              labelStyle={{ minWidth: "90px" }}
+              register={register("cuCMisu")}
+              inputSize={InputSize.i120}
+            />
           </FormGroup>
         </SearchWrapper>
       </form>
