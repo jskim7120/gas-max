@@ -19,11 +19,11 @@ import { columns2, fields2 } from "./data/data2";
 function AR9002({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const {
     data,
@@ -58,6 +58,7 @@ function AR9002({
     if (type === "reset") {
       const init = dataCommonDic.dataInit[0];
       reset({
+        areaCode: dataCommonDic.areaCode[0].code,
         sDate: init?.sDate,
         eDate: init?.dDate,
         cuCustgubun: init?.cuCustgubun,
@@ -82,7 +83,7 @@ function AR9002({
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <SearchWrapper className="h35 mt5">
           <FormGroup>
-            {areaCode === "00" && (
+            {ownAreaCode === "00" && (
               <>
                 <Label style={{ minWidth: "90px" }}>영업소</Label>
                 <Select register={register("areaCode")} width={InputSize.i120}>

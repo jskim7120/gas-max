@@ -69,23 +69,43 @@ export const getContent = (
       return <div>Home</div>;
     case "AR1100":
       return (
-        <AR1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <AR1100
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "AR9001":
       return (
-        <AR9001 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <AR9001
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "AR9002":
       return (
-        <AR9002 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <AR9002
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "AR9003":
       return (
-        <AR9003 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <AR9003
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "AR9004":
       return (
-        <AR9004 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <AR9004
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "AR9006":
       return (

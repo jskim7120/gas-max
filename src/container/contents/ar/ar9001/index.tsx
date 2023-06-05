@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { AR9001SEARCH } from "app/path";
@@ -18,19 +17,20 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import CheckBox from "components/checkbox";
 import BasicGrid from "components/basicGrid";
+import Viewer from "components/viewer";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
-import { columns, fields } from "./data/data1";
-import Viewer from "components/viewer";
+import { columns1, fields1 } from "./data/data1";
+import { columns2, fields2 } from "./data/data2";
 
 function AR9001({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const {
     data,
@@ -53,6 +53,12 @@ function AR9001({
       resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("reportKind")) {
+      setData([]);
+    }
+  }, [watch("reportKind")]);
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -77,7 +83,9 @@ function AR9001({
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init: any = dataCommonDic.dataInit[0];
+
       reset({
+        areaCode: dataCommonDic.areaCode[0].code,
         sDate: init?.sDate,
         eDate: init?.dDate,
         cuCustgubun: init?.cuCustgubun,
@@ -102,7 +110,7 @@ function AR9001({
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <SearchWrapper className="h35 mt5">
           <FormGroup>
-            {areaCode === "00" && (
+            {ownAreaCode === "00" && (
               <>
                 <Label style={{ minWidth: "90px" }}>영업소</Label>
                 <Select register={register("areaCode")} width={InputSize.i120}>
@@ -254,13 +262,25 @@ function AR9001({
           </FormGroup>
         </SearchWrapper>
       </form>
-      <BasicGrid
-        columns={columns}
-        fields={fields}
-        data={data}
-        rowIndex={data?.length ? data.length : 0}
-        style={{ height: "calc(100% - 52px)" }}
-      />
+      {watch("reportKind") === "1" ? (
+        <BasicGrid
+          areaCode={ownAreaCode}
+          columns={columns2}
+          fields={fields2}
+          data={data}
+          rowIndex={data?.length ? data.length : 0}
+          style={{ height: "calc(100% - 52px)" }}
+        />
+      ) : (
+        <BasicGrid
+          areaCode={ownAreaCode}
+          columns={columns1}
+          fields={fields1}
+          data={data}
+          rowIndex={data?.length ? data.length : 0}
+          style={{ height: "calc(100% - 52px)" }}
+        />
+      )}
     </>
   );
 }
