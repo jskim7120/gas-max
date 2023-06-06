@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
-import { ISEARCH } from "./model";
+import { AR9009SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
+import PlainTab from "components/plainTab";
+import { TabContentWrapper } from "components/plainTab/style";
 import { Select, FormGroup, Label } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -10,9 +12,11 @@ import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import { DateWithoutDash } from "helpers/dateFormat";
 import Loader from "components/loader";
-import BasicGrid from "components/basicGrid";
-import { AR9009SEARCH } from "app/path";
-import { columns, fields } from "./data";
+import Grid from "./grid";
+import { ISEARCH } from "./model";
+import { columns0, fields0 } from "./data/data0";
+import { columns1, fields1 } from "./data/data1";
+import getTabContent from "./getTabContent";
 
 function AR9009({
   depthFullName,
@@ -39,6 +43,8 @@ function AR9009({
     mode: "onSubmit",
   });
 
+  const [tabId, setTabId] = useState(0);
+
   const submit = (params: ISEARCH) => {
     // params.sDate = DateWithoutDash(params.sDate);
     // params.eDate = DateWithoutDash(params.eDate);
@@ -57,6 +63,15 @@ function AR9009({
       });
     }
   }, [dataCommonDic]);
+
+  const selectColumns = () => {
+    switch (tabId) {
+      case 0:
+        return { columns: columns0, fields: fields0 };
+      case 1:
+        return { columns: columns1, fields: fields1 };
+    }
+  };
 
   return (
     <>
@@ -124,10 +139,22 @@ function AR9009({
           <p>{depthFullName}</p>
         </SearchWrapper>
       </form>
-      <BasicGrid
+      <div style={{ marginTop: "5px" }}>
+        <PlainTab
+          tabHeader={["지로 양식", "고객 안내문", "입금계좌 안내", "결재 라인"]}
+          onClick={(id) => setTabId(id)}
+          tabId={tabId}
+        />
+        <TabContentWrapper style={{ padding: "0" }}>
+          {getTabContent(tabId, register, dataCommonDic, data)}
+        </TabContentWrapper>
+      </div>
+
+      <Grid
+        tabId={tabId}
         areaCode={ownAreaCode}
-        columns={columns}
-        fields={fields}
+        columns={selectColumns()?.columns}
+        fields={selectColumns()?.fields}
         data={data}
         rowIndex={data?.length ? data.length : 0}
         style={{ height: "calc(100% - 52px)" }}
