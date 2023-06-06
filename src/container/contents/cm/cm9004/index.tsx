@@ -72,8 +72,8 @@ function CM9004({
     setLoading(false);
   };
 
-  const submit = (data: ISEARCH) => {
-    fetchData(data);
+  const submit = (params: ISEARCH) => {
+    fetchData(params);
   };
 
   const resetForm = () => {
@@ -96,155 +96,146 @@ function CM9004({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <FormGroup>
-          {areaCode === "00" && (
-            <>
-              <Label style={{ minWidth: "66px" }}>영업소</Label>
+      <form onSubmit={handleSubmit(submit)} autoComplete="off">
+        <SearchWrapper className="h35 mt5">
+          <FormGroup>
+            {areaCode === "00" && (
+              <>
+                <Label style={{ minWidth: "66px" }}>영업소</Label>
 
-              <Select register={register("areaCode")}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </>
-          )}
-          <div className="buttons ml30">
-            <Button
-              text="검색"
-              icon={!loading && <MagnifyingGlass />}
-              color={ButtonColor.DANGER}
-              type="submit"
-              loader={
-                loading && (
-                  <>
-                    <Loader
-                      color="white"
-                      size={13}
-                      borderWidth="2px"
-                      style={{ marginRight: "10px" }}
-                    />
-                  </>
-                )
-              }
-            />
-            <Button
-              text="취소"
-              icon={<ResetGray color="#707070" />}
-              type="button"
-              color={ButtonColor.LIGHT}
-              onClick={cancel}
-            />
-            <Button
-              text="엑셀"
-              icon={<ExcelIcon width="19px" height="19px" />}
-              color={ButtonColor.LIGHT}
-              type="button"
-            />
-          </div>
-        </FormGroup>
-        <p>{depthFullName}</p>
-      </SearchWrapper>
-      <WrapperContent>
-        <form onSubmit={handleSubmit(submit)} autoComplete="off">
-          <SearchWrapper>
-            <div style={{ width: "80%" }}>
-              <Wrapper grid col={6}>
-                <FormGroup>
-                  <Label style={{ minWidth: "auto" }}>공급 사업</Label>
-                  <Select
-                    register={register("cuGong")}
-                    style={{ width: "100%" }}
-                    // onChange={(e) => setReportKind(e.target.value)}
-                  >
-                    {dataCommonDic?.cuGong?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-
-                <FormGroup>
-                  <Label>거래 구분</Label>
-                  <Select
-                    register={register("cuType")}
-                    style={{ width: "100%" }}
-                  >
-                    {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-
-                <FormGroup>
-                  <Label>담당 사원</Label>
-                  <Select
-                    register={register("swCode")}
-                    style={{ width: "100%" }}
-                  >
-                    {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-
-                <FormGroup>
-                  <Label>지역 분류</Label>
-                  <Select
-                    register={register("cuJyCode")}
-                    style={{ width: "100%" }}
-                  >
-                    {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-
-                <FormGroup>
-                  <Label>거래 상태</Label>
-                  <Select
-                    register={register("cuStae")}
-                    style={{ width: "100%" }}
-                  >
-                    {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
-                <FormGroup style={{ marginLeft: "36px" }}>
-                  <CheckBox
-                    title=""
-                    register={register("cuSekumyn")}
-                    rtl={false}
-                    onChange={(e: any) =>
-                      e.target.checked ? setCuSekyn("Y") : setCuSekyn("N")
-                    }
-                  />
-                  <p
-                    style={{
-                      fontSize: "15px",
-                      fontFamily: "NotoSansKRRegular",
-                    }}
-                  >
-                    계산서 발행거래처만 보기
-                  </p>
-                </FormGroup>
-              </Wrapper>
+                <Select register={register("areaCode")}>
+                  {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </>
+            )}
+            <div className="buttons ml30">
+              <Button
+                text="검색"
+                icon={!loading && <MagnifyingGlass />}
+                color={ButtonColor.DANGER}
+                type="submit"
+                loader={
+                  loading && (
+                    <>
+                      <Loader
+                        color="white"
+                        size={13}
+                        borderWidth="2px"
+                        style={{ marginRight: "10px" }}
+                      />
+                    </>
+                  )
+                }
+              />
+              <Button
+                text="취소"
+                icon={<ResetGray color="#707070" />}
+                type="button"
+                color={ButtonColor.LIGHT}
+                onClick={cancel}
+              />
+              <Button
+                text="엑셀"
+                icon={<ExcelIcon width="19px" height="19px" />}
+                color={ButtonColor.LIGHT}
+                type="button"
+              />
             </div>
-          </SearchWrapper>
-        </form>
+          </FormGroup>
+          <p>{depthFullName}</p>
+        </SearchWrapper>
 
+        <SearchWrapper>
+          <div style={{ width: "80%" }}>
+            <Wrapper grid col={6}>
+              <FormGroup>
+                <Label style={{ minWidth: "auto" }}>공급 사업</Label>
+                <Select
+                  register={register("cuGong")}
+                  style={{ width: "100%" }}
+                  // onChange={(e) => setReportKind(e.target.value)}
+                >
+                  {dataCommonDic?.cuGong?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+
+              <FormGroup>
+                <Label>거래 구분</Label>
+                <Select register={register("cuType")} style={{ width: "100%" }}>
+                  {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+
+              <FormGroup>
+                <Label>담당 사원</Label>
+                <Select register={register("swCode")} style={{ width: "100%" }}>
+                  {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+
+              <FormGroup>
+                <Label>지역 분류</Label>
+                <Select
+                  register={register("cuJyCode")}
+                  style={{ width: "100%" }}
+                >
+                  {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+
+              <FormGroup>
+                <Label>거래 상태</Label>
+                <Select register={register("cuStae")} style={{ width: "100%" }}>
+                  {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </FormGroup>
+              <FormGroup style={{ marginLeft: "36px" }}>
+                <CheckBox
+                  title=""
+                  register={register("cuSekumyn")}
+                  rtl={false}
+                  onChange={(e: any) =>
+                    e.target.checked ? setCuSekyn("Y") : setCuSekyn("N")
+                  }
+                />
+                <p
+                  style={{
+                    fontSize: "15px",
+                    fontFamily: "NotoSansKRRegular",
+                  }}
+                >
+                  계산서 발행거래처만 보기
+                </p>
+              </FormGroup>
+            </Wrapper>
+          </div>
+        </SearchWrapper>
+      </form>
+      <WrapperContent>
         <Grid
           areaCode={areaCode}
           data={data}

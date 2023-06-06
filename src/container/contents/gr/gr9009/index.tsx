@@ -91,101 +91,101 @@ function GR9009({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <FormGroup>
-          {areaCode === "00" && (
-            <>
-              <Label style={{ minWidth: "48px" }}>영업소</Label>
+      <form onSubmit={handleSubmit(submit)} autoComplete="off">
+        <SearchWrapper className="h35 mt5">
+          <FormGroup>
+            {areaCode === "00" && (
+              <>
+                <Label style={{ minWidth: "48px" }}>영업소</Label>
 
-              <Select register={register("areaCode")}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </>
-          )}
-          <div className="buttons ml30">
-            <Button
-              text="검색"
-              icon={!loading && <MagnifyingGlass />}
-              color={ButtonColor.DANGER}
-              type="submit"
-              loader={
-                loading && (
-                  <>
-                    <Loader
-                      color="white"
-                      size={13}
-                      borderWidth="2px"
-                      style={{ marginRight: "10px" }}
-                    />
-                  </>
-                )
-              }
-              style={{ marginRight: "5px" }}
+                <Select register={register("areaCode")}>
+                  {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </>
+            )}
+            <div className="buttons ml30">
+              <Button
+                text="검색"
+                icon={!loading && <MagnifyingGlass />}
+                color={ButtonColor.DANGER}
+                type="submit"
+                loader={
+                  loading && (
+                    <>
+                      <Loader
+                        color="white"
+                        size={13}
+                        borderWidth="2px"
+                        style={{ marginRight: "10px" }}
+                      />
+                    </>
+                  )
+                }
+                style={{ marginRight: "5px" }}
+              />
+              <Button
+                text="취소"
+                icon={<ResetGray />}
+                style={{ marginRight: "5px" }}
+                type="button"
+                color={ButtonColor.LIGHT}
+                onClick={cancel}
+              />
+              <Button
+                text="엑셀"
+                icon={<ExcelIcon width="19px" height="19px" />}
+                color={ButtonColor.LIGHT}
+                type="button"
+              />
+            </div>
+          </FormGroup>
+          <p>{depthFullName}</p>
+        </SearchWrapper>
+
+        <SearchWrapper className="h35">
+          <FormGroup>
+            <Label style={{ minWidth: "auto" }}>충전소</Label>
+            <Select width={InputSize.i130} register={register("bcBuCode")}>
+              {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+
+            <Label style={{ minWidth: "80px" }}>기간</Label>
+
+            <Controller
+              control={control}
+              {...register("sDate")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                />
+              )}
             />
-            <Button
-              text="취소"
-              icon={<ResetGray />}
-              style={{ marginRight: "5px" }}
-              type="button"
-              color={ButtonColor.LIGHT}
-              onClick={cancel}
+
+            <Controller
+              control={control}
+              {...register("eDate")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                />
+              )}
             />
-            <Button
-              text="엑셀"
-              icon={<ExcelIcon width="19px" height="19px" />}
-              color={ButtonColor.LIGHT}
-              type="button"
-            />
-          </div>
-        </FormGroup>
-        <p>{depthFullName}</p>
-      </SearchWrapper>
+          </FormGroup>
+        </SearchWrapper>
+      </form>
       <WrapperContent>
-        <form onSubmit={handleSubmit(submit)} autoComplete="off">
-          <SearchWrapper className="h35">
-            <FormGroup>
-              <Label style={{ minWidth: "auto" }}>충전소</Label>
-              <Select width={InputSize.i130} register={register("bcBuCode")}>
-                {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-
-              <Label style={{ minWidth: "80px" }}>기간</Label>
-
-              <Controller
-                control={control}
-                {...register("sDate")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                  />
-                )}
-              />
-
-              <Controller
-                control={control}
-                {...register("eDate")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                  />
-                )}
-              />
-            </FormGroup>
-          </SearchWrapper>
-        </form>
-
         <Grid data={data} columns={columns} fields={fields} />
       </WrapperContent>
     </>
