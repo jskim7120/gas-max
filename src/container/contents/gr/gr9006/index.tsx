@@ -99,108 +99,108 @@ function GR9006({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <FormGroup>
-          {areaCode === "00" && (
-            <>
-              <Label style={{ minWidth: "80px" }}>재고입고처</Label>
-              <Select register={register("areaCode")}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </>
-          )}
-          <div className="buttons ml30">
-            <Button
-              text="검색"
-              icon={!loading && <MagnifyingGlass />}
-              color={ButtonColor.DANGER}
-              type="submit"
-              loader={
-                loading && (
-                  <>
-                    <Loader
-                      color="white"
-                      size={13}
-                      borderWidth="2px"
-                      style={{ marginRight: "10px" }}
-                    />
-                  </>
-                )
-              }
-              style={{ marginRight: "5px" }}
+      <form onSubmit={handleSubmit(submit)} autoComplete="off">
+        <SearchWrapper className="h35 mt5">
+          <FormGroup>
+            {areaCode === "00" && (
+              <>
+                <Label style={{ minWidth: "80px" }}>재고입고처</Label>
+                <Select register={register("areaCode")}>
+                  {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </>
+            )}
+            <div className="buttons ml30">
+              <Button
+                text="검색"
+                icon={!loading && <MagnifyingGlass />}
+                color={ButtonColor.DANGER}
+                type="submit"
+                loader={
+                  loading && (
+                    <>
+                      <Loader
+                        color="white"
+                        size={13}
+                        borderWidth="2px"
+                        style={{ marginRight: "10px" }}
+                      />
+                    </>
+                  )
+                }
+                style={{ marginRight: "5px" }}
+              />
+              <Button
+                text="취소"
+                icon={<ResetGray />}
+                type="button"
+                color={ButtonColor.LIGHT}
+                onClick={cancel}
+              />
+            </div>
+          </FormGroup>
+          <p>{depthFullName}</p>
+        </SearchWrapper>
+
+        <SearchWrapper className="h35">
+          <FormGroup>
+            <Label style={{ minWidth: "auto" }}>보고서 종류</Label>
+            <Select
+              //register={register("reportType")}
+              width={InputSize.i150}
+              onChange={(e) => setReportType(e.target.value)}
+            >
+              {dataCommonDic?.reportType?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+
+            <Label style={{ minWidth: "80px" }}>매입처</Label>
+            <Select
+              register={register("bcBuCode")}
+              width={InputSize.i150}
+              // onChange={(e) => setReportKind(e.target.value)}
+            >
+              {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+
+            <Label style={{ minWidth: "70px" }}>기간</Label>
+            <Controller
+              control={control}
+              {...register("sDate")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                />
+              )}
             />
-            <Button
-              text="취소"
-              icon={<ResetGray />}
-              type="button"
-              color={ButtonColor.LIGHT}
-              onClick={cancel}
+            <Controller
+              control={control}
+              {...register("eDate")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                />
+              )}
             />
-          </div>
-        </FormGroup>
-        <p>{depthFullName}</p>
-      </SearchWrapper>
+          </FormGroup>
+        </SearchWrapper>
+      </form>
       <WrapperContent>
-        <form onSubmit={handleSubmit(submit)} autoComplete="off">
-          <SearchWrapper className="h35">
-            <FormGroup>
-              <Label style={{ minWidth: "auto" }}>보고서 종류</Label>
-              <Select
-                //register={register("reportType")}
-                width={InputSize.i150}
-                onChange={(e) => setReportType(e.target.value)}
-              >
-                {dataCommonDic?.reportType?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-
-              <Label style={{ minWidth: "80px" }}>매입처</Label>
-              <Select
-                register={register("bcBuCode")}
-                width={InputSize.i150}
-                // onChange={(e) => setReportKind(e.target.value)}
-              >
-                {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-
-              <Label style={{ minWidth: "70px" }}>기간</Label>
-              <Controller
-                control={control}
-                {...register("sDate")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                  />
-                )}
-              />
-              <Controller
-                control={control}
-                {...register("eDate")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                  />
-                )}
-              />
-            </FormGroup>
-          </SearchWrapper>
-        </form>
-
         <Grid data={data} reportType={reportType} />
       </WrapperContent>
     </>
