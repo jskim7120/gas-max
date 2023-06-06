@@ -4,6 +4,8 @@ import AR9002 from "container/contents/ar/ar9002";
 import AR9003 from "container/contents/ar/ar9003";
 import AR9004 from "container/contents/ar/ar9004";
 import AR9005 from "container/contents/ar/ar9005";
+import AR9007 from "container/contents/ar/ar9007";
+import AR9008 from "container/contents/ar/ar9008";
 import EN1100 from "container/contents/en/en1100";
 import EN1200 from "container/contents/en/en1200";
 import EN1300 from "container/contents/en/en1300";
@@ -110,6 +112,22 @@ export const getContent = (
     case "AR9005":
       return (
         <AR9005
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
+      );
+    case "AR9007":
+      return (
+        <AR9007
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
+      );
+    case "AR9008":
+      return (
+        <AR9008
           depthFullName={depthFullName}
           menuId={id}
           ownAreaCode={areaCode}
