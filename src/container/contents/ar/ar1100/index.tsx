@@ -75,29 +75,10 @@ function AR1100({
   }, [selected]);
 
   const fetchData = async (params: any) => {
-    // try {
-    //   setLoading(true);
-    //   const { data: dataSearch } = await API.get(AR1100SEARCH, {
-    //     params: params,
-    //   });
-
-    //   if (dataSearch) {
-    //     setData(dataSearch);
-    //   } else {
-    //     setData([]);
-    //   }
-    //   setLoading(false);
-    // } catch (err) {
-    //   setLoading(false);
-    //   setData([]);
-    //   console.log("AR1100 data search fetch error =======>", err);
-    // }
-
     setLoading(true);
-    const dataSearch = await apiGet(AR1100SEARCH, params);
-
-    if (dataSearch) {
-      setData(dataSearch);
+    const res = await apiGet(AR1100SEARCH, params);
+    if (res) {
+      setData(res);
     } else {
       setData([]);
     }
@@ -105,30 +86,6 @@ function AR1100({
   };
 
   const fetchData65 = async (params: any) => {
-    // try {
-    //   const { data: dataSelect } = await API.get(AR1100SELECT, {
-    //     params: params,
-    //   });
-    //   console.log("dataSelect:::", dataSelect?.detailData[0]);
-    //   if (dataSelect) {
-    //     setData65(dataSelect?.detailData[0]);
-    //     setData65Dictionary({
-    //       pjVatDiv: dataSelect?.pjVatDiv,
-    //       pjSwCode: dataSelect?.pjSwCode,
-    //       proxyType: dataSelect?.proxyType,
-    //       pjInkumtype: dataSelect?.pjInkumtype,
-    //       saleType: dataSelect?.saleType,
-    //     });
-    //   } else {
-    //     setData65({});
-    //     setData65Dictionary({});
-    //   }
-    // } catch (err) {
-    //   setData65({});
-    //   setData65Dictionary({});
-    //   console.log("fetch AR1100 select err:::", err);
-    // }
-
     const dataSelect = await apiGet(AR1100SELECT, params);
     if (dataSelect) {
       setData65(dataSelect?.detailData[0]);
@@ -149,10 +106,8 @@ function AR1100({
     if (type === "reset") {
       const init = dataCommonDic.dataInit[0];
 
-      // sSalegubun: "NNNNN",
-      // sSalesatae: "NNNNN,
-
       reset({
+        areaCode: dataCommonDic.areaCode[0].code,
         sDate: init.sDate,
         sInkumtype: init.sInkumtype,
         sInserttype: init.sInserttype,
@@ -175,10 +130,6 @@ function AR1100({
   };
 
   const submit = async (params: IAR1100SEARCH) => {
-    // params.sDate =
-    //   typeof params.sDate === "string"
-    //     ? formatDateByRemoveDash(params.sDate)
-    //     : formatDateToStringWithoutDash(params.sDate);
     params.sDate = DateWithoutDash(params.sDate);
 
     fetchData(params);
@@ -189,7 +140,7 @@ function AR1100({
         <FormGroup>
           {ownAreaCode === "00" && (
             <>
-              <Label style={{ minWidth: "120px" }}>영업소</Label>
+              <Label style={{ minWidth: "90px" }}>영업소</Label>
               <Select register={register("areaCode")}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -202,12 +153,7 @@ function AR1100({
           <div className="buttons ml30">
             <Button text="등록" icon={<Plus />} onClick={() => {}} />
             <Button text="삭제" icon={<Trash />} onClick={() => {}} />
-            <Button
-              text="저장"
-              icon={<Update />}
-              color={ButtonColor.SECONDARY}
-              onClick={() => {}}
-            />
+
             <Button
               text="취소"
               icon={<ResetGray />}
@@ -223,7 +169,7 @@ function AR1100({
           <SearchWrapper>
             <div>
               <FormGroup>
-                <Label>판매 일자</Label>
+                <Label style={{ minWidth: "90px" }}>판매 일자</Label>
                 <Controller
                   control={control}
                   {...register("sDate")}
@@ -240,50 +186,6 @@ function AR1100({
                   inputSize={InputSize.i200}
                 />
 
-                <Label>사원</Label>
-                <Select register={register("sSawon")} width={InputSize.i100}>
-                  {dataCommonDic?.sSawon?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-
-                <Label>입금 구분</Label>
-                <Select
-                  register={register("sInkumtype")}
-                  width={InputSize.i100}
-                >
-                  {dataCommonDic?.sInkumtype?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-
-                <Label>대납 구분</Label>
-                <Select
-                  register={register("sProxytype")}
-                  width={InputSize.i100}
-                >
-                  {dataCommonDic?.sProxytype?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-
-                <Label>등록 구분</Label>
-                <Select
-                  register={register("sInserttype")}
-                  width={InputSize.i100}
-                >
-                  {dataCommonDic?.sInserttype?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
                 <Button
                   text="검색"
                   icon={!loading && <MagnifyingGlass />}
@@ -301,19 +203,58 @@ function AR1100({
                       </>
                     )
                   }
-                  style={{ marginRight: "10px", minWidth: "max-content" }}
+                  style={{ marginRight: "10px" }}
                 />
-                <Button
-                  text="취소"
-                  icon={<ResetGray />}
-                  style={{ marginRight: "10px", minWidth: "max-content" }}
-                  type="button"
-                  color={ButtonColor.LIGHT}
-                  //onClick={cancel}
-                />
+
+                <Label style={{ minWidth: "90px" }}>사원</Label>
+                <Select register={register("sSawon")} width={InputSize.i100}>
+                  {dataCommonDic?.sSawon?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+
+                <Label style={{ minWidth: "90px" }}>입금 구분</Label>
+                <Select
+                  register={register("sInkumtype")}
+                  width={InputSize.i100}
+                >
+                  {dataCommonDic?.sInkumtype?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+
+                <Label style={{ minWidth: "90px" }}>대납 구분</Label>
+                <Select
+                  register={register("sProxytype")}
+                  width={InputSize.i100}
+                >
+                  {dataCommonDic?.sProxytype?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+
+                <Label style={{ minWidth: "90px" }}>등록 구분</Label>
+                <Select
+                  register={register("sInserttype")}
+                  width={InputSize.i100}
+                >
+                  {dataCommonDic?.sInserttype?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
               </FormGroup>
               <FormGroup>
-                <Label>거래 상태 :</Label>
+                <Label style={{ minWidth: "90px", marginRight: "5px" }}>
+                  거래 상태
+                </Label>
                 <CheckBox
                   register={{ ...register("sSalestate0") }}
                   title="접수"
@@ -350,7 +291,9 @@ function AR1100({
                   rtl
                   style={{ width: "80px" }}
                 />
-                <Label>거래 구분 :</Label>
+                <Label style={{ minWidth: "90px", marginRight: "5px" }}>
+                  거래 구분
+                </Label>
                 <CheckBox
                   register={{ ...register("sSalegubun0") }}
                   title="중량"

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "app/store";
 import { openModal } from "app/state/modal/modalSlice";
 import { addSearchText, removeSearchText } from "app/state/footer/footerSlice";
-import API from "app/axios";
+import { apiGet } from "app/axios";
 import { FOOTHISTORY } from "app/path";
 import { FooterContainer } from "./style";
 import { SearchIcon } from "components/allSvgIcon";
@@ -32,16 +32,12 @@ function Footer() {
   }, [infoState]);
 
   const fetchLatestFooterData = async () => {
-    try {
-      const { data } = await API.get(FOOTHISTORY);
-      if (data) {
-        setInfo(data[0]);
-      } else {
-        setInfo({});
-      }
-    } catch (err) {
+    const data = await apiGet(FOOTHISTORY);
+
+    if (data) {
+      setInfo(data[0]);
+    } else {
       setInfo({});
-      console.log("fetch foothistory error:::", err);
     }
   };
 
