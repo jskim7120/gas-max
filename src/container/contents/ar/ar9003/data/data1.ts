@@ -42,22 +42,6 @@ export const fields1 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bgSvKumack",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "bgInkum",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "bgDc",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "bgMisu",
-    dataType: ValueType.TEXT,
-  },
-  {
     fieldName: "bgSwName",
     dataType: ValueType.TEXT,
   },
@@ -157,42 +141,6 @@ export const columns1 = [
     width: "100",
     header: {
       text: "금액",
-    },
-  },
-  {
-    name: "bgSvKumack",
-    fieldName: "bgSvKumack",
-    type: "data",
-    width: "100",
-    header: {
-      text: "무료시설",
-    },
-  },
-  {
-    name: "bgInkum",
-    fieldName: "bgInkum",
-    type: "data",
-    width: "100",
-    header: {
-      text: "입금액",
-    },
-  },
-  {
-    name: "bgDc",
-    fieldName: "bgDc",
-    type: "data",
-    width: "100",
-    header: {
-      text: "D/C",
-    },
-  },
-  {
-    name: "bgMisu",
-    fieldName: "bgMisu",
-    type: "data",
-    width: "100",
-    header: {
-      text: "미수금액",
     },
   },
   {

@@ -6,12 +6,14 @@ import "style/App.css";
 import "style/realgrid.css";
 import "style/datePicker.css";
 import "react-toastify/dist/ReactToastify.css";
+import "realreport/dist/realreport.css";
 import Main from "container/mainLayout/main";
 import Login from "container/login";
 import ProtectedRoute from "routers/ProtectedRoute";
 import { getMenu } from "app/state/menu/menuSlice";
 import { setUser } from "app/state/auth/authSlice";
 import { store } from "app/store";
+import Viewer from "components/viewer";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -45,6 +47,10 @@ function App() {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/print",
+      element: <Viewer />,
     },
   ];
   const mainRouters = useRoutes(routes);

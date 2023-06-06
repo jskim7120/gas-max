@@ -1,12 +1,8 @@
 import { ValueType } from "realgrid";
 
-export const fields = [
+export const fields1 = [
   {
     fieldName: "areaCode",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "pjDate",
     dataType: ValueType.TEXT,
   },
   {
@@ -55,7 +51,7 @@ export const fields = [
   },
 ];
 
-export const columns = [
+export const columns1 = [
   {
     name: "areaCode",
     fieldName: "areaCode",
@@ -63,15 +59,6 @@ export const columns = [
     width: "100",
     header: {
       text: "영업소",
-    },
-  },
-  {
-    name: "pjDate",
-    fieldName: "pjDate",
-    type: "data",
-    width: "100",
-    header: {
-      text: "일자",
     },
   },
   {
@@ -110,6 +97,7 @@ export const columns = [
       text: "수량",
     },
   },
+
   {
     name: "pjDanga",
     fieldName: "pjDanga",
@@ -161,7 +149,7 @@ export const columns = [
     type: "data",
     width: "100",
     header: {
-      text: "사원",
+      text: "최종거래일",
     },
   },
   {

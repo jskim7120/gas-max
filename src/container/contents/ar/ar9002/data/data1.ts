@@ -6,10 +6,6 @@ export const fields1 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "pcDate",
-    dataType: ValueType.TEXT,
-  },
-  {
     fieldName: "pcCuCode",
     dataType: ValueType.TEXT,
   },
@@ -33,16 +29,9 @@ export const fields1 = [
     fieldName: "pcKumack",
     dataType: ValueType.TEXT,
   },
+
   {
-    fieldName: "pcGum",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "pcGage",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "pcBigo",
+    fieldName: "pcDate",
     dataType: ValueType.TEXT,
   },
   {
@@ -59,15 +48,6 @@ export const columns1 = [
     width: "100",
     header: {
       text: "영업소",
-    },
-  },
-  {
-    name: "pcDate",
-    fieldName: "pcDate",
-    type: "data",
-    width: "100",
-    header: {
-      text: "일자",
     },
   },
   {
@@ -126,30 +106,12 @@ export const columns1 = [
     },
   },
   {
-    name: "pcGum",
-    fieldName: "pcGum",
+    name: "pcDate",
+    fieldName: "pcDate",
     type: "data",
     width: "100",
     header: {
-      text: "배달검침",
-    },
-  },
-  {
-    name: "pcGage",
-    fieldName: "pcGage",
-    type: "data",
-    width: "100",
-    header: {
-      text: "사용량",
-    },
-  },
-  {
-    name: "pcBigo",
-    fieldName: "pcBigo",
-    type: "data",
-    width: "100",
-    header: {
-      text: "비고",
+      text: "최종공급일",
     },
   },
   {
@@ -158,7 +120,7 @@ export const columns1 = [
     type: "data",
     width: "100",
     header: {
-      text: "사원",
+      text: "담당사원",
     },
   },
 ];

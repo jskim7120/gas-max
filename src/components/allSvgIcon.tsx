@@ -5071,3 +5071,154 @@ export const Users = ({ width = "13.777", height = "12.839" }) => {
     </svg>
   );
 };
+
+export const PrintPreview = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="12.08"
+      height="13.309"
+      viewBox="0 0 12.08 13.309"
+    >
+      <g
+        id="Group_1810"
+        data-name="Group 1810"
+        transform="translate(-700.93 -95.147)"
+      >
+        <rect
+          id="Rectangle_2019"
+          data-name="Rectangle 2019"
+          width="8.289"
+          height="12.309"
+          transform="translate(701.43 95.647)"
+          fill="#fff"
+          stroke="#707070"
+          stroke-linejoin="round"
+          stroke-width="1"
+        />
+        <path
+          id="Path_3088"
+          data-name="Path 3088"
+          d="M3824.574,3432.99"
+          transform="translate(-3119 -3330)"
+          fill="none"
+          stroke="#707070"
+          stroke-width="1"
+        />
+        <g
+          id="Ellipse_29"
+          data-name="Ellipse 29"
+          transform="translate(706 99)"
+          fill="#b0d1fe"
+          stroke="#707070"
+          stroke-width="1"
+        >
+          <circle cx="3" cy="3" r="3" stroke="none" />
+          <circle cx="3" cy="3" r="2.5" fill="none" />
+        </g>
+        <path
+          id="Path_3092"
+          data-name="Path 3092"
+          d="M3828.532,3457.558l1.953,1.954"
+          transform="translate(-3117.829 -3353.829)"
+          fill="none"
+          stroke="#707070"
+          stroke-width="1"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const Print = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="13.327"
+      height="12.411"
+      viewBox="0 0 13.327 12.411"
+    >
+      <g
+        id="Group_1814"
+        data-name="Group 1814"
+        transform="translate(-218.911 -247.046)"
+      >
+        <g id="Group_1813" data-name="Group 1813">
+          <g id="Group_1812" data-name="Group 1812">
+            <g id="Group_1811" data-name="Group 1811">
+              <rect
+                id="Rectangle_2016"
+                data-name="Rectangle 2016"
+                width="8.289"
+                height="2.911"
+                transform="translate(221.43 247.546)"
+                fill="#fff"
+                stroke="#707070"
+                stroke-linejoin="round"
+                stroke-width="1"
+              />
+              <rect
+                id="Rectangle_2017"
+                data-name="Rectangle 2017"
+                width="12.327"
+                height="3.099"
+                transform="translate(219.411 250.451)"
+                fill="#707070"
+                stroke="#707070"
+                stroke-linejoin="round"
+                stroke-width="1"
+              />
+              <rect
+                id="Rectangle_2018"
+                data-name="Rectangle 2018"
+                width="8.289"
+                height="6.457"
+                transform="translate(221.43 252.5)"
+                fill="#fff"
+                stroke="#707070"
+                stroke-linejoin="round"
+                stroke-width="1"
+              />
+            </g>
+            <path
+              id="Path_3087"
+              data-name="Path 3087"
+              d="M3824.574,3432.99"
+              transform="translate(-3599 -3179)"
+              fill="none"
+              stroke="#707070"
+              stroke-width="1"
+            />
+            <path
+              id="Path_3089"
+              data-name="Path 3089"
+              d="M3822.41,3433.314h4.382"
+              transform="translate(-3599.026 -3178.884)"
+              fill="none"
+              stroke="#707070"
+              stroke-width="1"
+            />
+          </g>
+          <path
+            id="Path_3090"
+            data-name="Path 3090"
+            d="M3822.41,3433.314h4.382"
+            transform="translate(-3599.026 -3176.816)"
+            fill="none"
+            stroke="#707070"
+            stroke-width="1"
+          />
+        </g>
+        <path
+          id="Path_3091"
+          data-name="Path 3091"
+          d="M3827.182,3430.24h1.675"
+          transform="translate(-3598 -3179)"
+          fill="none"
+          stroke="#dfdfdf"
+          stroke-width="1"
+        />
+      </g>
+    </svg>
+  );
+};

@@ -31,11 +31,11 @@ import getTabContent from "./getTabContent";
 function AR1100({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
@@ -187,7 +187,7 @@ function AR1100({
     <>
       <SearchWrapper className="h35 mt5">
         <FormGroup>
-          {areaCode === "00" && (
+          {ownAreaCode === "00" && (
             <>
               <Label style={{ minWidth: "120px" }}>영업소</Label>
               <Select register={register("areaCode")}>
@@ -386,7 +386,7 @@ function AR1100({
           </SearchWrapper>
         </form>
         <Grid
-          areaCode={areaCode}
+          areaCode={ownAreaCode}
           data={data}
           fields={fields}
           columns={columns}
