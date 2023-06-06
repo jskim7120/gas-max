@@ -23,23 +23,23 @@ export const fields1 = [
   },
   {
     fieldName: "pjDanga",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "pjKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "pjInkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "pjDc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "pjMisukum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "pjSwName",
@@ -56,7 +56,7 @@ export const columns1 = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "100",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -65,7 +65,7 @@ export const columns1 = [
     name: "pjCuCode",
     fieldName: "pjCuCode",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "거래처코드",
     },
@@ -74,74 +74,87 @@ export const columns1 = [
     name: "pjCuName",
     fieldName: "pjCuName",
     type: "data",
-    width: "100",
+    width: "200",
     header: {
       text: "거래처명",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "pjJpName",
     fieldName: "pjJpName",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "품명",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "pjQty",
     fieldName: "pjQty",
     type: "data",
-    width: "100",
+    width: "50",
     header: {
       text: "수량",
     },
+    styleName: "rg-right-column",
   },
 
   {
     name: "pjDanga",
     fieldName: "pjDanga",
     type: "data",
-    width: "100",
+    width: "70",
     header: {
       text: "단가",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "pjKumack",
     fieldName: "pjKumack",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "pjInkum",
     fieldName: "pjInkum",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "입금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "pjDc",
     fieldName: "pjDc",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "D/C",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "pjMisukum",
     fieldName: "pjMisukum",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "미입금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "pjSwName",
@@ -156,7 +169,7 @@ export const columns1 = [
     name: "pjBigo",
     fieldName: "pjBigo",
     type: "data",
-    width: "100",
+    width: "130",
     header: {
       text: "비고",
     },
