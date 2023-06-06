@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useSelector } from "app/store";
 import CreateReport from "app/hook/createReportAR9005";
 import { AR9005SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
@@ -51,7 +52,13 @@ function AR9004({
     mode: "onSubmit",
   });
 
-  useEffect(() => {}, []);
+  const infoState = useSelector((state) => state.footer.info);
+  console.log("infoSatte:", infoState);
+
+  useEffect(() => {
+    document.getElementById("footerSearchId")?.focus();
+    console.log(document.getElementById("footerSearchId"));
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
@@ -93,9 +100,17 @@ function AR9004({
     }
   };
 
+  const resetForm2 = (type: string) => {
+    if (type === "reset") {
+      reset2({
+        cuCode: infoState?.cuCode,
+      });
+    }
+  };
+
   const handleReset = () => {
     if (dataCommonDic?.dataInit) {
-      // resetForm("reset");
+      // resetForm2("reset");
     }
   };
 

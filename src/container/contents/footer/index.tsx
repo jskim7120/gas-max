@@ -57,6 +57,7 @@ function Footer() {
             <input
               type="text"
               placeholder=""
+              id="footerSearchId"
               value={searchText}
               onChange={(e: any) => setSearchText(e.target.value)}
             />

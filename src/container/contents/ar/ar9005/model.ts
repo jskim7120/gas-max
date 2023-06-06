@@ -14,10 +14,6 @@ export interface I2 {
   cuTongkum: string;
   cuJMisu: string;
   cuCMisu: string;
-
-  sDate: string;
-  eDate: string;
-  jpCode: string;
 }
 
 export interface ISEARCH {
