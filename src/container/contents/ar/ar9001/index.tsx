@@ -20,8 +20,8 @@ import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
+import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
-import { columns2, fields2 } from "./data/data2";
 
 function AR9001({
   depthFullName,
@@ -265,8 +265,8 @@ function AR9001({
       {watch("reportKind") === "1" ? (
         <BasicGrid
           areaCode={ownAreaCode}
-          columns={columns2}
-          fields={fields2}
+          columns={columns1}
+          fields={fields1}
           data={data}
           rowIndex={data?.length ? data.length : 0}
           style={{ height: "calc(100% - 52px)" }}
@@ -274,8 +274,8 @@ function AR9001({
       ) : (
         <BasicGrid
           areaCode={ownAreaCode}
-          columns={columns1}
-          fields={fields1}
+          columns={columns0}
+          fields={fields0}
           data={data}
           rowIndex={data?.length ? data.length : 0}
           style={{ height: "calc(100% - 52px)" }}

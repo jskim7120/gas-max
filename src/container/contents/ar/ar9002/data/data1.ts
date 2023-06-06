@@ -6,10 +6,6 @@ export const fields1 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "pcDate",
-    dataType: ValueType.TEXT,
-  },
-  {
     fieldName: "pcCuCode",
     dataType: ValueType.TEXT,
   },
@@ -27,22 +23,15 @@ export const fields1 = [
   },
   {
     fieldName: "pcDanga",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "pcKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
+
   {
-    fieldName: "pcGum",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "pcGage",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "pcBigo",
+    fieldName: "pcDate",
     dataType: ValueType.TEXT,
   },
   {
@@ -56,25 +45,16 @@ export const columns1 = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "100",
+    width: "50",
     header: {
       text: "영업소",
-    },
-  },
-  {
-    name: "pcDate",
-    fieldName: "pcDate",
-    type: "data",
-    width: "100",
-    header: {
-      text: "일자",
     },
   },
   {
     name: "pcCuCode",
     fieldName: "pcCuCode",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "거래처코드",
     },
@@ -83,74 +63,64 @@ export const columns1 = [
     name: "pcCuName",
     fieldName: "pcCuName",
     type: "data",
-    width: "100",
+    width: "200",
     header: {
       text: "거래처명",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "pcJpName",
     fieldName: "pcJpName",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "품명",
     },
+    styleName: "rg-left-column",
   },
 
   {
     name: "pcQty",
     fieldName: "pcQty",
     type: "data",
-    width: "100",
+    width: "50",
     header: {
       text: "수량",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "pcDanga",
     fieldName: "pcDanga",
     type: "data",
-    width: "100",
+    width: "70",
     header: {
       text: "단가",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "pcKumack",
     fieldName: "pcKumack",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "공급액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
-    name: "pcGum",
-    fieldName: "pcGum",
+    name: "pcDate",
+    fieldName: "pcDate",
     type: "data",
     width: "100",
     header: {
-      text: "배달검침",
+      text: "최종공급일",
     },
-  },
-  {
-    name: "pcGage",
-    fieldName: "pcGage",
-    type: "data",
-    width: "100",
-    header: {
-      text: "사용량",
-    },
-  },
-  {
-    name: "pcBigo",
-    fieldName: "pcBigo",
-    type: "data",
-    width: "100",
-    header: {
-      text: "비고",
-    },
+    styleName: "rg-left-column",
   },
   {
     name: "pcSwName",
@@ -158,7 +128,8 @@ export const columns1 = [
     type: "data",
     width: "100",
     header: {
-      text: "사원",
+      text: "담당사원",
     },
+    styleName: "rg-left-column",
   },
 ];

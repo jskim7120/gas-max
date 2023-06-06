@@ -1,15 +1,24 @@
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
-import { ISEARCH } from "./model";
+import { AR9004SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
+import {
+  MagnifyingGlass,
+  ExcelIcon,
+  ResetGray,
+  PrintPreview,
+  Print,
+} from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
+import Viewer from "components/viewer";
+import { DateWithoutDash } from "helpers/dateFormat";
+import { ISEARCH } from "./model";
 import { columns, fields } from "./data";
 
 function AR9004({
@@ -31,25 +40,55 @@ function AR9004({
     gridIndexes,
     dispatch,
     dataCommonDic,
-  } = CreateReport("AR", "AR9004", menuId, "searchPath");
+  } = CreateReport("AR", "AR9004", menuId, AR9004SEARCH);
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const submit = (data: ISEARCH) => {};
-
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+  }, [dataCommonDic]);
+
+  const openNewWindow = async () => {
+    const width = 1500;
+    const height = 2000;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2;
+
+    const newWindow = window.open(
+      "/print" + `?${JSON.stringify(data)}`,
+      "",
+      `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
+    );
+  };
+  const submit = (params: ISEARCH) => {
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
+    fetchData(params);
+  };
+
+  const resetForm = (type: string) => {
+    if (type === "reset") {
       const init = dataCommonDic.dataInit[0];
+
       reset({
+        areaCode: dataCommonDic.areaCode[0].code,
         sDate: init?.sDate,
         eDate: init?.dDate,
         jpCode: init?.jpCode,
         swCode: init?.swCode,
       });
     }
-  }, [dataCommonDic]);
+  };
+
+  const handleReset = () => {
+    if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+  };
 
   return (
     <>
@@ -86,20 +125,30 @@ function AR9004({
                     </>
                   )
                 }
-                style={{ minWidth: "max-content" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ minWidth: "max-content" }}
                 type="button"
                 color={ButtonColor.LIGHT}
-                // onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
-                style={{ minWidth: "max-content" }}
                 icon={<ExcelIcon width="19px" height="19px" />}
+                color={ButtonColor.LIGHT}
+                type="button"
+              />
+              <Button
+                text="미리보기"
+                icon={<PrintPreview />}
+                color={ButtonColor.LIGHT}
+                type="button"
+                onClick={openNewWindow}
+              />
+              <Button
+                text="출력"
+                icon={<Print />}
                 color={ButtonColor.LIGHT}
                 type="button"
               />
@@ -155,6 +204,7 @@ function AR9004({
         </SearchWrapper>
       </form>
       <BasicGrid
+        areaCode={ownAreaCode}
         columns={columns}
         fields={fields}
         data={data}

@@ -1,20 +1,8 @@
 import { ValueType } from "realgrid";
 
-export const fields = [
-  {
-    fieldName: "areaCode",
-    dataType: ValueType.TEXT,
-  },
+export const fields2 = [
   {
     fieldName: "tsDate",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "tsCuCode",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuUsername",
     dataType: ValueType.TEXT,
   },
   {
@@ -62,62 +50,31 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "tsSwName",
-    dataType: ValueType.TEXT,
-  },
-  {
     fieldName: "tsBigo",
     dataType: ValueType.TEXT,
   },
 ];
 
-export const columns = [
-  {
-    name: "areaCode",
-    fieldName: "areaCode",
-    type: "data",
-    width: "60",
-    header: {
-      text: "영업소",
-    },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
-      },
-    },
-  },
+export const columns2 = [
   {
     name: "tsDate",
     fieldName: "tsDate",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "일자",
     },
-  },
-  {
-    name: "tsCuCode",
-    fieldName: "tsCuCode",
-    type: "data",
-    width: "100",
-    header: {
-      text: "코드",
-    },
-  },
-  {
-    name: "cuUsername",
-    fieldName: "cuUsername",
-    type: "data",
-    width: "100",
-    header: {
-      text: "거래처명",
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("tsDate", "count");
+      },
     },
   },
   {
     name: "tsGubun",
     fieldName: "tsGubun",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "입출구분",
     },
@@ -126,7 +83,7 @@ export const columns = [
     name: "tsJpName",
     fieldName: "tsJpName",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "품명",
     },
@@ -135,7 +92,7 @@ export const columns = [
     name: "tsInqty",
     fieldName: "tsInqty",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "입고",
     },
@@ -144,7 +101,7 @@ export const columns = [
     name: "tsOutqty",
     fieldName: "tsOutqty",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "출고",
     },
@@ -153,25 +110,25 @@ export const columns = [
     name: "tsKumack",
     fieldName: "tsKumack",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
-      text: "판매액",
+      text: "판매금액",
     },
   },
   {
     name: "tsBkum",
     fieldName: "tsBkum",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
-      text: "보증금",
+      text: "대여보증금",
     },
   },
   {
     name: "tsInkum",
     fieldName: "tsInkum",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "입금액",
     },
@@ -180,25 +137,25 @@ export const columns = [
     name: "tsDc",
     fieldName: "tsDc",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
-      text: " D/C",
+      text: "D/C",
     },
   },
   {
     name: "tsMisu",
     fieldName: "tsMisu",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
-      text: "미수액 ",
+      text: "미수금액",
     },
   },
   {
     name: "tsGukum",
     fieldName: "tsGukum",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "구입액",
     },
@@ -207,25 +164,16 @@ export const columns = [
     name: "tsBoutkum",
     fieldName: "tsBoutkum",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
-      text: "환불액",
-    },
-  },
-  {
-    name: "tsSwName",
-    fieldName: "tsSwName",
-    type: "data",
-    width: "100",
-    header: {
-      text: "사원",
+      text: "보증환불액",
     },
   },
   {
     name: "tsBigo",
     fieldName: "tsBigo",
     type: "data",
-    width: "100",
+    width: "150",
     header: {
       text: "비고",
     },
@@ -233,30 +181,33 @@ export const columns = [
 ];
 
 export const layout = [
-  "areaCode",
   "tsDate",
-  "tsCuCode",
-  "cuUsername",
   "tsGubun",
   "tsJpName",
-
   {
-    name: "수량",
+    name: "someGroup",
     directions: "horizontal",
-    hideChildHeaders: false,
     items: ["tsInqty", "tsOutqty"],
+    header: {
+      text: "수량",
+    },
   },
-  "tsKumack",
-  "tsBkum",
-  "tsInkum",
-  "tsDc",
-  "tsMisu",
   {
-    name: "출금액",
+    name: "someGroup",
     directions: "horizontal",
-    hideChildHeaders: false,
-    items: ["tsGukum", "tsBoutkum"],
+    items: ["tsKumack", "tsBkum", "tsInkum", "tsDc", "tsMisu"],
+    header: {
+      text: "입금액",
+    },
   },
-  "tsSwName",
+  {
+    name: "someGroup",
+    directions: "horizontal",
+    items: ["tsGukum", "tsBoutkum"],
+    header: {
+      text: "출금액",
+    },
+  },
+
   "tsBigo",
 ];

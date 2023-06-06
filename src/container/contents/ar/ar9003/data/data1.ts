@@ -35,27 +35,11 @@ export const fields1 = [
   },
   {
     fieldName: "bglDanga",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bglKumack",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "bgSvKumack",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "bgInkum",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "bgDc",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "bgMisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "bgSwName",
@@ -68,7 +52,7 @@ export const columns1 = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "60",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -91,7 +75,7 @@ export const columns1 = [
     name: "bgCuCode",
     fieldName: "bgCuCode",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "코드",
     },
@@ -100,16 +84,17 @@ export const columns1 = [
     name: "bgCuName",
     fieldName: "bgCuName",
     type: "data",
-    width: "100",
+    width: "200",
     header: {
       text: "거래처명",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "bglBpCode",
     fieldName: "bglBpCode",
     type: "data",
-    width: "100",
+    width: "70",
     header: {
       text: "코드",
     },
@@ -118,82 +103,53 @@ export const columns1 = [
     name: "bglBpName",
     fieldName: "bglBpName",
     type: "data",
-    width: "100",
+    width: "150",
     header: {
       text: "부품명",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "bglBptype",
     fieldName: "bglBptype",
     type: "data",
-    width: "100",
+    width: "70",
     header: {
       text: "규격",
     },
+    styleName: "rg-left-column",
   },
   {
     name: "bglQty",
     fieldName: "bglQty",
     type: "data",
-    width: "100",
+    width: "50",
     header: {
       text: "수량",
     },
+    styleName: "rg-right-column",
   },
   {
     name: "bglDanga",
     fieldName: "bglDanga",
     type: "data",
-    width: "100",
+    width: "70",
     header: {
       text: "단가",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "bglKumack",
     fieldName: "bglKumack",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "금액",
     },
-  },
-  {
-    name: "bgSvKumack",
-    fieldName: "bgSvKumack",
-    type: "data",
-    width: "100",
-    header: {
-      text: "무료시설",
-    },
-  },
-  {
-    name: "bgInkum",
-    fieldName: "bgInkum",
-    type: "data",
-    width: "100",
-    header: {
-      text: "입금액",
-    },
-  },
-  {
-    name: "bgDc",
-    fieldName: "bgDc",
-    type: "data",
-    width: "100",
-    header: {
-      text: "D/C",
-    },
-  },
-  {
-    name: "bgMisu",
-    fieldName: "bgMisu",
-    type: "data",
-    width: "100",
-    header: {
-      text: "미수금액",
-    },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "bgSwName",

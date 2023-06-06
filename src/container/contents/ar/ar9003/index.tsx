@@ -1,18 +1,27 @@
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
-import { ISEARCH } from "./model";
+import { AR9003SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label, Input } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
+import {
+  MagnifyingGlass,
+  ExcelIcon,
+  ResetGray,
+  PrintPreview,
+  Print,
+} from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import CheckBox from "components/checkbox";
 import BasicGrid from "components/basicGrid";
+import Viewer from "components/viewer";
+import { DateWithoutDash } from "helpers/dateFormat";
+import { ISEARCH } from "./model";
+import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
-import { columns2, fields2 } from "./data/data2";
 
 function AR9003({
   depthFullName,
@@ -33,28 +42,69 @@ function AR9003({
     gridIndexes,
     dispatch,
     dataCommonDic,
-  } = CreateReport("AR", "AR9003", menuId, "searchPath");
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  } = CreateReport("AR", "AR9003", menuId, AR9003SEARCH);
+  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const submit = (data: ISEARCH) => {
-    // fetchData(data);
-  };
-
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+  }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("reportKind")) {
+      console.log(watch("reportKind"));
+      setData([]);
+    }
+  }, [watch("reportKind")]);
+
+  const openNewWindow = async () => {
+    const width = 1500;
+    const height = 2000;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2;
+
+    const newWindow = window.open(
+      "/print" + `?${JSON.stringify(data)}`,
+      "",
+      `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
+    );
+  };
+
+  const submit = (params: any) => {
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
+    params.chkDate = params.chkDate ? "Y" : "N";
+    params.chkSv = params.chkSv ? "Y" : "N";
+
+    console.log("params:::", params);
+
+    fetchData(params);
+  };
+
+  const resetForm = (type: string) => {
+    if (type === "reset") {
       const init = dataCommonDic.dataInit[0];
       reset({
+        areaCode: dataCommonDic.areaCode[0].code,
         sDate: init?.sDate,
         eDate: init?.dDate,
         swCode: init?.swCode,
+        chkDate: init?.chkDate === "Y",
         chkSv: init?.chkSv === "Y",
         cuJyCode: init?.cuJyCode,
         reportKind: init?.reportKind,
       });
     }
-  }, [dataCommonDic]);
+  };
+
+  const handleReset = () => {
+    if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+  };
 
   return (
     <>
@@ -100,19 +150,16 @@ function AR9003({
                     </>
                   )
                 }
-                style={{ minWidth: "max-content" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ minWidth: "max-content" }}
                 type="button"
                 color={ButtonColor.LIGHT}
-                // onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
-                style={{ minWidth: "max-content" }}
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
@@ -123,7 +170,13 @@ function AR9003({
         </SearchWrapper>
         <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
           <FormGroup>
-            <Label style={{ minWidth: "90px" }}>기간</Label>
+            <CheckBox
+              register={register("chkDate")}
+              title="기간"
+              rtl
+              style={{ marginLeft: "35px" }}
+            />
+
             <Controller
               control={control}
               {...register("sDate")}
@@ -182,13 +235,25 @@ function AR9003({
           </FormGroup>
         </SearchWrapper>
       </form>
-      <BasicGrid
-        columns={columns1}
-        fields={fields1}
-        data={data}
-        rowIndex={data?.length ? data.length : 0}
-        style={{ height: "calc(100% - 52px)" }}
-      />
+      {watch("reportKind") === "1" ? (
+        <BasicGrid
+          areaCode={ownAreaCode}
+          columns={columns1}
+          fields={fields1}
+          data={data}
+          rowIndex={data?.length ? data.length : 0}
+          style={{ height: "calc(100% - 52px)" }}
+        />
+      ) : (
+        <BasicGrid
+          areaCode={ownAreaCode}
+          columns={columns0}
+          fields={fields0}
+          data={data}
+          rowIndex={data?.length ? data.length : 0}
+          style={{ height: "calc(100% - 52px)" }}
+        />
+      )}
     </>
   );
 }

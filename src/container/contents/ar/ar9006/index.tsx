@@ -8,9 +8,11 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
+import { DateWithoutDash } from "helpers/dateFormat";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
-import { columns, fields } from "./data";
+import { AR9006SEARCH } from "app/path";
+import { columns, fields, layout } from "./data";
 
 function AR9006({
   depthFullName,
@@ -31,13 +33,18 @@ function AR9006({
     gridIndexes,
     dispatch,
     dataCommonDic,
-  } = CreateReport("AR", "AR9006", menuId, "searchPath");
+  } = CreateReport("AR", "AR9006", menuId, AR9006SEARCH);
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const submit = (data: ISEARCH) => {};
+  const submit = (params: ISEARCH) => {
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
+
+    fetchData(params);
+  };
 
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
@@ -152,7 +159,7 @@ function AR9006({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "80px" }}>입출구분</Label>
+            <Label style={{ minWidth: "80px" }}>품목</Label>
             <Select register={register("cuGubun")} width={InputSize.i120}>
               {dataCommonDic?.jpCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -169,6 +176,7 @@ function AR9006({
         data={data}
         rowIndex={data?.length ? data.length : 0}
         style={{ height: "calc(100% - 52px)" }}
+        layout={layout}
       />
     </>
   );
