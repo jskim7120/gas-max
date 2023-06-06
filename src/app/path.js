@@ -13,6 +13,9 @@ export const AR9004SEARCH = "/app/AR9004/search";
 export const AR9005SEARCH = "/app/AR9005/search";
 export const AR9009SEARCH = "/app/AR9009/search";
 
+export const AR9007SEARCH = "/app/AR9007/search";
+export const AR9008SEARCH = "/app/AR9008/search";
+
 export const EN1100LIST = "/app/EN1100/list";
 export const EN1100INSERT = "/app/EN1100/insert";
 export const EN1100UPDATE = "/app/EN1100/update";
