@@ -45,6 +45,11 @@ export const FooterContainer = styled.div`
       border-radius: 15px;
       border: 1px solid #7c77a8;
       margin-top: 15px;
+
+      input:hover,
+      input:focus {
+        background: #fffacd;
+      }
     }
 
     button {

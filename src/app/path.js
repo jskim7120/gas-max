@@ -5,11 +5,13 @@ export const AR9001SEARCH = "/app/AR9001/search";
 
 export const AR9002SEARCH = "/app/AR9002/search";
 
+export const AR9006SEARCH = "/app/AR9006/search";
 export const AR9003SEARCH = "/app/AR9003/search";
 
 export const AR9004SEARCH = "/app/AR9004/search";
 
 export const AR9005SEARCH = "/app/AR9005/search";
+export const AR9009SEARCH = "/app/AR9009/search";
 
 export const AR9007SEARCH = "/app/AR9007/search";
 export const AR9008SEARCH = "/app/AR9008/search";
