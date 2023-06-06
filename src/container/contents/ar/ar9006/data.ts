@@ -35,31 +35,31 @@ export const fields = [
   },
   {
     fieldName: "tsKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "tsBkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "tsInkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "tsDc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "tsMisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "tsGukum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "tsBoutkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "tsSwName",
@@ -76,7 +76,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "60",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -99,7 +99,7 @@ export const columns = [
     name: "tsCuCode",
     fieldName: "tsCuCode",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "코드",
     },
@@ -108,7 +108,8 @@ export const columns = [
     name: "cuUsername",
     fieldName: "cuUsername",
     type: "data",
-    width: "100",
+    width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -117,7 +118,7 @@ export const columns = [
     name: "tsGubun",
     fieldName: "tsGubun",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "입출구분",
     },
@@ -126,7 +127,8 @@ export const columns = [
     name: "tsJpName",
     fieldName: "tsJpName",
     type: "data",
-    width: "100",
+    width: "130",
+    styleName: "rg-left-column",
     header: {
       text: "품명",
     },
@@ -135,7 +137,8 @@ export const columns = [
     name: "tsInqty",
     fieldName: "tsInqty",
     type: "data",
-    width: "100",
+    width: "50",
+    styleName: "rg-right-column",
     header: {
       text: "입고",
     },
@@ -144,7 +147,8 @@ export const columns = [
     name: "tsOutqty",
     fieldName: "tsOutqty",
     type: "data",
-    width: "100",
+    width: "50",
+    styleName: "rg-right-column",
     header: {
       text: "출고",
     },
@@ -153,70 +157,85 @@ export const columns = [
     name: "tsKumack",
     fieldName: "tsKumack",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "판매액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "tsBkum",
     fieldName: "tsBkum",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "보증금",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "tsInkum",
     fieldName: "tsInkum",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "입금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "tsDc",
     fieldName: "tsDc",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: " D/C",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "tsMisu",
     fieldName: "tsMisu",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "미수액 ",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "tsGukum",
     fieldName: "tsGukum",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "구입액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "tsBoutkum",
     fieldName: "tsBoutkum",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "환불액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "tsSwName",
     fieldName: "tsSwName",
     type: "data",
     width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "사원",
     },
@@ -225,7 +244,8 @@ export const columns = [
     name: "tsBigo",
     fieldName: "tsBigo",
     type: "data",
-    width: "100",
+    width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "비고",
     },

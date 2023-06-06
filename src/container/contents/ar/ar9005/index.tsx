@@ -210,18 +210,21 @@ function AR9004({
             labelStyle={{ minWidth: "86px" }}
             register={register2("cuTongkum")}
             inputSize={InputSize.i120}
+            textAlign="right"
           />
           <Input
             label="중량 미수"
             labelStyle={{ minWidth: "86px" }}
             register={register2("cuJMisu")}
             inputSize={InputSize.i120}
+            textAlign="right"
           />
           <Input
             label="체적미수"
             labelStyle={{ minWidth: "86px" }}
             register={register2("cuCMisu")}
             inputSize={InputSize.i120}
+            textAlign="right"
           />
         </FormGroup>
       </SearchWrapper>

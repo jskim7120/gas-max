@@ -159,7 +159,7 @@ function AR9006({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "80px" }}>품목</Label>
+            <Label style={{ minWidth: "80px" }}>입출구분</Label>
             <Select register={register("cuGubun")} width={InputSize.i120}>
               {dataCommonDic?.jpCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
