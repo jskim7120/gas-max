@@ -5,11 +5,15 @@ export const AR9001SEARCH = "/app/AR9001/search";
 
 export const AR9002SEARCH = "/app/AR9002/search";
 
+<<<<<<< HEAD
+export const AR9006SEARCH = "/app/AR9006/search";
+=======
 export const AR9003SEARCH = "/app/AR9003/search";
 
 export const AR9004SEARCH = "/app/AR9004/search";
 
 export const AR9005SEARCH = "/app/AR9005/search";
+>>>>>>> c5b586849797754ae522e0c803f25ecf79dd6639
 
 export const EN1100LIST = "/app/EN1100/list";
 export const EN1100INSERT = "/app/EN1100/insert";
