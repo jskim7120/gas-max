@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
-import { AR9003SEARCH } from "app/path";
+import { AR9008SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
-import { Select, FormGroup, Label, Input } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import {
@@ -15,15 +15,14 @@ import {
 } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
-import CheckBox from "components/checkbox";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
-import { columns0, fields0 } from "./data/data0";
-import { columns1, fields1 } from "./data/data1";
+import { columns, fields } from "./data";
+import CheckBox from "components/checkbox";
 
-function AR9003({
+function AR9008({
   depthFullName,
   menuId,
   ownAreaCode,
@@ -42,8 +41,9 @@ function AR9003({
     gridIndexes,
     dispatch,
     dataCommonDic,
-  } = CreateReport("AR", "AR9003", menuId, AR9003SEARCH);
-  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
+  } = CreateReport("AR", "AR9008", menuId, AR9008SEARCH);
+
+  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -53,49 +53,20 @@ function AR9003({
     }
   }, [dataCommonDic]);
 
-  useEffect(() => {
-    if (watch("reportKind")) {
-      console.log(watch("reportKind"));
-      setData([]);
-    }
-  }, [watch("reportKind")]);
-
-  const openNewWindow = async () => {
-    const width = 1500;
-    const height = 2000;
-    const left = window.screen.width / 2 - width / 2;
-    const top = window.screen.height / 2;
-
-    const newWindow = window.open(
-      "/print" + `?${JSON.stringify(data)}`,
-      "",
-      `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
-    );
-  };
-
-  const submit = (params: any) => {
-    params.sDate = DateWithoutDash(params.sDate);
-    params.eDate = DateWithoutDash(params.eDate);
-    params.chkDate = params.chkDate ? "Y" : "N";
-    params.chkSv = params.chkSv ? "Y" : "N";
-
-    console.log("params:::", params);
-
+  const submit = (params: ISEARCH) => {
     fetchData(params);
   };
 
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init = dataCommonDic.dataInit[0];
+
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        sDate: init?.sDate,
-        eDate: init?.dDate,
         swCode: init?.swCode,
-        chkDate: init?.chkDate === "Y",
-        chkSv: init?.chkSv === "Y",
         cuJyCode: init?.cuJyCode,
-        reportKind: init?.reportKind,
+        cuJangbu: init?.cuJangbu,
+        cuCustgubun: init?.cuCustgubun,
       });
     }
   };
@@ -104,7 +75,6 @@ function AR9003({
     if (dataCommonDic?.dataInit) {
       resetForm("reset");
     }
-    setData([]);
   };
 
   return (
@@ -114,7 +84,7 @@ function AR9003({
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
-                <Label style={{ minWidth: "90px" }}>영업소</Label>
+                <Label style={{ minWidth: "80px" }}>영업소</Label>
                 <Select register={register("areaCode")} width={InputSize.i120}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -124,15 +94,6 @@ function AR9003({
                 </Select>
               </>
             )}
-            <Label style={{ minWidth: "90px" }}>보고서종류</Label>
-            <Select register={register("reportKind")} width={InputSize.i200}>
-              {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-
             <div className="buttons ml30">
               <Button
                 text="검색"
@@ -169,49 +130,18 @@ function AR9003({
           </FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
-        <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
+        <SearchWrapper>
           <FormGroup>
-            <CheckBox
-              register={register("chkDate")}
-              title="기간"
-              rtl
-              style={{ marginLeft: "35px" }}
-            />
+            <Label style={{ minWidth: "80px" }}>년 - 월</Label>
+            <Select register={register("sMonth")} width={InputSize.i120}>
+              {dataCommonDic?.sMonth?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-            <Controller
-              control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              {...register("eDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
-              )}
-            />
-
-            <Input
-              label="거래처명"
-              labelStyle={{ minWidth: "90px" }}
-              register={register("aptName")}
-              inputSize={InputSize.i200}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label style={{ minWidth: "90px" }}>사원</Label>
+            <Label style={{ minWidth: "80px" }}>담당사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -219,7 +149,7 @@ function AR9003({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "216px" }}>지역구분</Label>
+            <Label style={{ minWidth: "80px" }}>지역구분</Label>
             <Select register={register("cuJyCode")} width={InputSize.i120}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -227,36 +157,42 @@ function AR9003({
                 </option>
               ))}
             </Select>
+
+            <Label style={{ minWidth: "80px" }}>장부구분</Label>
+            <Select register={register("cuJangbu")} width={InputSize.i120}>
+              {dataCommonDic?.cuJangbu?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+            <Label style={{ minWidth: "80px" }}>관리책임자</Label>
+            <Select register={register("cuCustgubun")} width={InputSize.i120}>
+              {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
             <CheckBox
-              title="무료시설 자료만 조회"
+              title="당월 매출/수금  조회"
               rtl
               style={{ marginLeft: "61px" }}
-              register={register("chkSv")}
+              register={register("chkGubun")}
             />
           </FormGroup>
         </SearchWrapper>
       </form>
-      {watch("reportKind") === "1" ? (
-        <BasicGrid
-          areaCode={ownAreaCode}
-          columns={columns1}
-          fields={fields1}
-          data={data}
-          rowIndex={data?.length ? data.length : 0}
-          style={{ height: "calc(100% - 52px)" }}
-        />
-      ) : (
-        <BasicGrid
-          areaCode={ownAreaCode}
-          columns={columns0}
-          fields={fields0}
-          data={data}
-          rowIndex={data?.length ? data.length : 0}
-          style={{ height: "calc(100% - 52px)" }}
-        />
-      )}
+      <BasicGrid
+        areaCode={ownAreaCode}
+        columns={columns}
+        fields={fields}
+        data={data}
+        rowIndex={data?.length ? data.length : 0}
+        style={{ height: "calc(100% - 52px)" }}
+      />
     </>
   );
 }
 
-export default AR9003;
+export default AR9008;

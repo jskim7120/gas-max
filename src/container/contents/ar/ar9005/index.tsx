@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import CreateReport from "app/hook/createReportAR9005";
+import { useSelector } from "app/store";
+import CreateReportAR9005 from "app/hook/createReportAR9005";
 import { AR9005SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label, Input } from "components/form/style";
@@ -41,7 +42,7 @@ function AR9004({
     fetchData,
     dispatch,
     dataCommonDic,
-  } = CreateReport("AR", "AR9005", menuId, AR9005SEARCH);
+  } = CreateReportAR9005("AR", "AR9005", menuId, AR9005SEARCH);
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -51,13 +52,25 @@ function AR9004({
     mode: "onSubmit",
   });
 
-  useEffect(() => {}, []);
+  const infoState = useSelector((state) => state.footer.info);
+  console.log("infoSatte:", infoState);
+
+  useEffect(() => {
+    document.getElementById("footerSearchId")?.focus();
+    console.log(document.getElementById("footerSearchId"));
+  }, []);
 
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
       resetForm1("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (infoState) {
+      resetFromFooter();
+    }
+  }, [infoState]);
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -76,7 +89,7 @@ function AR9004({
     params.sDate = DateWithoutDash(params.sDate);
     params.eDate = DateWithoutDash(params.eDate);
     params.chkDate = params.chkDate ? "Y" : "N";
-    params.cuCode = "001";
+
     fetchData(params);
   };
 
@@ -93,9 +106,34 @@ function AR9004({
     }
   };
 
+  const resetFromFooter = () => {
+    reset((formValues) => ({
+      ...formValues,
+      areaCode: infoState?.areaCode,
+      cuCode: infoState?.cuCode,
+    }));
+
+    //cuName: infoState?.cuName
+    // cuZipCode
+    // cuAddr2
+    // cuJyname
+    // cuCutype
+
+    reset2({
+      cuTel: infoState?.cuTel,
+      cuHp: infoState?.cuHp,
+      cuAddr1: infoState?.cuSaddr1,
+      cuBigo1: infoState?.cuBigo1,
+      cuBigo2: infoState?.cuBigo2,
+      cuTongkum: infoState?.cuTongkum,
+      cuJmisu: infoState?.cuJmisu,
+      cuCmisu: infoState?.cuCmisu,
+    });
+  };
+
   const handleReset = () => {
     if (dataCommonDic?.dataInit) {
-      // resetForm("reset");
+      // resetForm2("reset");
     }
   };
 
@@ -215,14 +253,14 @@ function AR9004({
           <Input
             label="중량 미수"
             labelStyle={{ minWidth: "86px" }}
-            register={register2("cuJMisu")}
+            register={register2("cuJmisu")}
             inputSize={InputSize.i120}
             textAlign="right"
           />
           <Input
             label="체적미수"
             labelStyle={{ minWidth: "86px" }}
-            register={register2("cuCMisu")}
+            register={register2("cuCmisu")}
             inputSize={InputSize.i120}
             textAlign="right"
           />

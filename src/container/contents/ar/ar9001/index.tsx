@@ -103,6 +103,7 @@ function AR9001({
     if (dataCommonDic?.dataInit) {
       resetForm("reset");
     }
+    setData([]);
   };
 
   return (
