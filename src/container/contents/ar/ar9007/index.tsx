@@ -149,7 +149,7 @@ function AR9007({
           </FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
-        <SearchWrapper>
+        <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
           <FormGroup>
             <Label style={{ minWidth: "80px" }}>품목</Label>
             <Select register={register("jpCode")} width={InputSize.i120}>
@@ -185,8 +185,6 @@ function AR9007({
               ))}
             </Select>
           </FormGroup>
-        </SearchWrapper>
-        <SearchWrapper>
           <FormGroup>
             <Label style={{ minWidth: "80px" }}>거래구분</Label>
             <Select register={register("cuType")} width={InputSize.i120}>
