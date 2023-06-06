@@ -106,7 +106,7 @@ export const columns = [
     name: "cuHp",
     fieldName: "cuHp",
     type: "data",
-    width: "40",
+    width: "45",
     header: {
       text: "핸드폰",
     },

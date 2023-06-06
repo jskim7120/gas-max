@@ -144,7 +144,7 @@ export const columns = [
     name: "jpName",
     fieldName: "jpName",
     type: "data",
-    width: "150",
+    width: "90",
     styleName: "rg-left-column",
     header: {
       text: "품명",
@@ -154,7 +154,7 @@ export const columns = [
     name: "qty",
     fieldName: "qty",
     type: "data",
-    width: "80",
+    width: "60",
     styleName: "rg-right-column",
     header: {
       text: "납품",
@@ -164,7 +164,7 @@ export const columns = [
     name: "reqty",
     fieldName: "reqty",
     type: "data",
-    width: "80",
+    width: "60",
     styleName: "rg-right-column",
     header: {
       text: "회수",
@@ -174,7 +174,7 @@ export const columns = [
     name: "vatDiv",
     fieldName: "vatDiv",
     type: "data",
-    width: "80",
+    width: "60",
     styleName: "rg-right-column",
     header: {
       text: "VAT",
@@ -239,7 +239,7 @@ export const columns = [
     name: "bigo",
     fieldName: "bigo",
     type: "data",
-    width: "100",
+    width: "130",
     styleName: "rg-left-column",
     header: {
       text: "비고",
@@ -249,7 +249,7 @@ export const columns = [
     name: "inkumtypeName",
     fieldName: "inkumtypeName",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "입금",
     },
@@ -258,7 +258,7 @@ export const columns = [
     name: "proxytypeName",
     fieldName: "proxytypeName",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "대납",
     },
