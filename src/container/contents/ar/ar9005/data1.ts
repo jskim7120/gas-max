@@ -46,7 +46,7 @@ export const columns1 = [
     name: "jcJpCode",
     fieldName: "jcJpCode",
     type: "data",
-    width: "80",
+    width: "50",
     header: {
       text: "코드",
     },
@@ -60,7 +60,8 @@ export const columns1 = [
     name: "jcJpName",
     fieldName: "jcJpName",
     type: "data",
-    width: "80",
+    width: "130",
+    styleName: "rg-left-column",
     header: {
       text: "품명",
     },
@@ -69,7 +70,8 @@ export const columns1 = [
     name: "jcBoyou",
     fieldName: "jcBoyou",
     type: "data",
-    width: "80",
+    width: "60",
+    styleName: "rg-right-column",
     header: {
       text: "보유",
     },
@@ -78,7 +80,8 @@ export const columns1 = [
     name: "jcTdaekumy",
     fieldName: "jcTdaekumy",
     type: "data",
-    width: "80",
+    width: "70",
+    styleName: "rg-right-column",
     header: {
       text: "유상대여",
     },
@@ -87,7 +90,8 @@ export const columns1 = [
     name: "jcTdaekumn",
     fieldName: "jcTdaekumn",
     type: "data",
-    width: "80",
+    width: "70",
+    styleName: "rg-right-column",
     header: {
       text: "무상대여",
     },
@@ -97,6 +101,7 @@ export const columns1 = [
     fieldName: "jcTm",
     type: "data",
     width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "미회수용기",
     },
@@ -105,7 +110,8 @@ export const columns1 = [
     name: "jcBok",
     fieldName: "jcBok",
     type: "data",
-    width: "80",
+    width: "70",
+    styleName: "rg-right-column",
     header: {
       text: "보관용기",
     },
@@ -114,7 +120,8 @@ export const columns1 = [
     name: "jcFirstdate",
     fieldName: "jcFirstdate",
     type: "data",
-    width: "80",
+    width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "최초공급일",
     },
@@ -123,7 +130,8 @@ export const columns1 = [
     name: "jcLastdate5",
     fieldName: "jcLastdate5",
     type: "data",
-    width: "80",
+    width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "최종공급일",
     },
