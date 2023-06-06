@@ -1,6 +1,5 @@
-export interface ISEARCH {
+export interface I2 {
   areaCode: string;
-
   cuCode: string;
   cuName: string;
   cuTel: string;
@@ -19,4 +18,13 @@ export interface ISEARCH {
   sDate: string;
   eDate: string;
   jpCode: string;
+}
+
+export interface ISEARCH {
+  areaCode: string;
+  cuCode: string;
+  sDate: string;
+  eDate: string;
+  jpCode: string;
+  chkDate: boolean;
 }
