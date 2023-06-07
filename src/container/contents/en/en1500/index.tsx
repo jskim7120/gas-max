@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "app/store";
 import Draggable from "react-draggable";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import { EN1500LIST } from "app/path";
 
 import Button from "components/button/button";
@@ -30,7 +30,8 @@ function EN1500({
   const [linePos, setLinePos] = useState(420);
 
   useEffect(() => {
-    fetchData();
+    //fetchData();
+    fetchData(data);
   }, []);
 
   useEffect(() => {
@@ -53,22 +54,33 @@ function EN1500({
     }
   }, [activeTabId]);
 
-  const fetchData = async () => {
-    try {
-      const { data: data1500 } = await API.get(EN1500LIST);
-      if (data1500) {
-        setData(data1500);
-        setSelected(data1500[0]);
-      } else {
-        setData([]);
-        setSelected({});
-      }
-      setSelectedRowIndex(0);
-    } catch (err) {
+  const fetchData = async (params: any) => {
+    //const fetchData = async () => {
+    // try {
+    //   const { data: data1500 } = await API.get(EN1500LIST);
+    //   if (data1500) {
+    //     setData(data1500);
+    //     setSelected(data1500[0]);
+    //   } else {
+    //     setData([]);
+    //     setSelected({});
+    //   }
+    //   setSelectedRowIndex(0);
+    // } catch (err) {
+    //   setData([]);
+    //   setSelected({});
+    //   console.log("JNOTRY DATA fetch error =======>", err);
+    // }
+
+    const data1500 = await apiGet(EN1500LIST, params);
+    if (data1500) {
+      setData(data1500);
+      setSelected(data1500[0]);
+    } else {
       setData([]);
       setSelected({});
-      console.log("JNOTRY DATA fetch error =======>", err);
     }
+    setSelectedRowIndex(0);
   };
   const handleDrag = (event: any, ui: any) => {
     setLinePos(ui.x);

@@ -39,7 +39,7 @@ import {
   BasicItems,
 } from "../../../container/contents/en/en1500/style";
 
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 
 interface IForm {}
 
@@ -85,13 +85,18 @@ const EN1500Modal = (
   const areaCode = useSelector((state) => state.modal.rv1100);
 
   const fetchData = async (params: any) => {
-    try {
-      const response = await API.get(EN150062, { params: params });
-      if (response.status === 200) {
-        setEn1500PopupData(response.data[0]);
-      }
-    } catch (err) {
-      console.log("error =======>", err);
+    // try {
+    //   const response = await API.get(EN150062, { params: params });
+    //   if (response.status === 200) {
+    //     setEn1500PopupData(response.data[0]);
+    //   }
+    // } catch (err) {
+    //   console.log("error =======>", err);
+    // }
+
+    const response = await apiGet(EN150062, params);
+    if (response) {
+      setEn1500PopupData(response.data[0]);
     }
   };
 
@@ -192,18 +197,26 @@ const EN1500Modal = (
     updateParams.jnGumdate = formValues.jnGumdate;
     updateParams.jnSukumtype = formValues.jnSukumtype;
     updateParams.jnPer = formValues.jnPer;
-    try {
-      const response = await API.post(EN1500UPDATE, updateParams);
-      if (response.status === 200) {
-        toast.success("저장이 성공하였습니다", {
-          autoClose: 500,
-        });
-      }
-    } catch (err: any) {
-      toast.error(err?.message, {
-        autoClose: 500,
-      });
-    }
+    // try {
+    //   const response = await API.post(EN1500UPDATE, updateParams);
+    //   if (response.status === 200) {
+    //     toast.success("저장이 성공하였습니다", {
+    //       autoClose: 500,
+    //     });
+    //   }
+    // } catch (err: any) {
+    //   toast.error(err?.message, {
+    //     autoClose: 500,
+    //   });
+    // }
+
+    const response = await apiPost(
+      EN1500UPDATE,
+      updateParams,
+      "저장이 성공하였습니다"
+    );
+    const values = getValues();
+    response && (await fetchData(values));
   };
 
   const calcUnitPrice = async () => {
@@ -212,20 +225,28 @@ const EN1500Modal = (
     params.jnMpdanga = jnMpdanga;
     params.jnKgdanga = jnKgdanga;
     params.jnKgdangaMp = jnKgdangaMp;
-    try {
-      const response = await API.get(EN150065, { params });
+    // try {
+    //   const response = await API.get(EN150065, { params });
 
-      if (response.status === 200) {
-        setUnitPriceData(response.data[0]);
-      } else {
-        setUnitPriceData([]);
-        toast.error(response.data?.message, {
-          autoClose: 500,
-        });
-      }
-    } catch (err: any) {
+    //   if (response.status === 200) {
+    //     setUnitPriceData(response.data[0]);
+    //   } else {
+    //     setUnitPriceData([]);
+    //     toast.error(response.data?.message, {
+    //       autoClose: 500,
+    //     });
+    //   }
+    // } catch (err: any) {
+    //   setUnitPriceData([]);
+    //   console.log("error", err);
+    // }
+
+    const response = await apiGet(EN150065, params);
+
+    if (response) {
+      setUnitPriceData(response.data[0]);
+    } else {
       setUnitPriceData([]);
-      console.log("error", err);
     }
   };
 

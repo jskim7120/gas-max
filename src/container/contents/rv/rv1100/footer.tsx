@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { InfoBox } from "./style";
 import { IRV1100 } from "./model";
 import { RV110065, RV1100INSERT } from "app/path";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import CustomDatePicker from "components/customDatePicker";
 import CheckBox from "components/checkbox";
 import { Wrapper, FormGroup, Label, Field, Input } from "components/form/style";
@@ -76,12 +76,17 @@ function Footer({
 
   const fetchData65 = async () => {
     if (data.gjCuCode && data.areaCode) {
-      try {
-        const { data: data65 } = await API.get(RV110065, {
-          params: { areaCode: data?.areaCode, gjCuCode: data?.gjCuCode },
-        });
-        setData65(data65);
-      } catch (err) {}
+      // try {
+      //   const { data: data65 } = await API.get(RV110065, {
+      //     params: { areaCode: data?.areaCode, gjCuCode: data?.gjCuCode },
+      //   });
+      //   setData65(data65);
+      // } catch (err) {}
+      const data65 = await apiGet(RV110065, {
+        areaCode: data?.areaCode,
+        gjCuCode: data?.gjCuCode,
+      });
+      setData65(data65);
     }
   };
 
@@ -150,20 +155,30 @@ function Footer({
     params.gjGum = Number(params.gjGum);
     params.gjBigo = Number(params.gjBigo);
 
-    try {
-      const response: any = await API.post(RV1100INSERT, params);
-      if (response.status === 200) {
-        toast.success("저장이 성공하였습니다", {
-          autoClose: 500,
-        });
-        setSelectedRowIndex(selectedRowIndex + 1);
-      } else {
-        toast.error(response?.response?.message, {
-          autoClose: 500,
-        });
-      }
-      setData65(data65);
-    } catch (err) {}
+    // try {
+    //   const response: any = await API.post(RV1100INSERT, params);
+    //   if (response.status === 200) {
+    //     toast.success("저장이 성공하였습니다", {
+    //       autoClose: 500,
+    //     });
+    //     setSelectedRowIndex(selectedRowIndex + 1);
+    //   } else {
+    //     toast.error(response?.response?.message, {
+    //       autoClose: 500,
+    //     });
+    //   }
+    //   setData65(data65);
+    // } catch (err) {}
+
+    const response: any = await apiPost(
+      RV1100INSERT,
+      params,
+      "저장이 성공하였습니다"
+    );
+    if (response) {
+      setSelectedRowIndex(selectedRowIndex + 1);
+    }
+    setData65(data65);
     // }
   };
   return (
