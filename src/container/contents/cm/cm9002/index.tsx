@@ -105,7 +105,6 @@ function CM9002({
       resetForm("reset");
     }
     setDataChk(true);
-    setData([]);
   };
 
   const submit = (data: ICM9002SEARCH) => {
