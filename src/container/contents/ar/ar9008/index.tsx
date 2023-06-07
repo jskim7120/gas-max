@@ -38,7 +38,6 @@ function AR9008({
     setSelected,
     loading,
     fetchData,
-    gridIndexes,
     dispatch,
     dataCommonDic,
   } = CreateReport("AR", "AR9008", menuId, AR9008SEARCH);

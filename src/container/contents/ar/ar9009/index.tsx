@@ -34,7 +34,6 @@ function AR9009({
     setSelected,
     loading,
     fetchData,
-    gridIndexes,
     dispatch,
     dataCommonDic,
   } = CreateReport("AR", "AR9009", menuId, AR9009SEARCH);
