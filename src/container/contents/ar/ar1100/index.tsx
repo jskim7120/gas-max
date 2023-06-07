@@ -1,31 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
-import { WrapperContent, SearchWrapper } from "../../commonStyle";
-import Button from "components/button/button";
-import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
+import { AR1100SEARCH, AR1100SELECT } from "app/path";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import {
   Plus,
   Trash,
   Update,
   Reset,
-  MagnifyingGlassBig,
   MagnifyingGlass,
   ResetGray,
 } from "components/allSvgIcon";
+import Button from "components/button/button";
+import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { Select, Label, FormGroup, Input } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import CheckBox from "components/checkbox";
-import { CustomAreaCodePart } from "container/contents/customTopPart";
-import { IAR1100SEARCH } from "./model";
 import Grid from "components/grid";
-import { AR1100SEARCH, AR1100SELECT } from "app/path";
-import { DateWithoutDash } from "helpers/dateFormat";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
+import { WrapperContent, SearchWrapper } from "../../commonStyle";
+import { DateWithoutDash } from "helpers/dateFormat";
 import { fields, columns } from "./data";
+import { IAR1100SEARCH } from "./model";
 import getTabContent from "./getTabContent";
 
 function AR1100({
@@ -42,10 +40,10 @@ function AR1100({
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [selected, setSelected] = useState<any>({});
   const [data65, setData65] = useState({});
   const [data65Dictionary, setData65Dictionary] = useState({});
   const [tabId, setTabId] = useState(0);
-  const [selected, setSelected] = useState<any>({});
 
   const { register, handleSubmit, reset, control } = useForm<IAR1100SEARCH>({
     mode: "onSubmit",
@@ -57,44 +55,48 @@ function AR1100({
 
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
-      console.log("dataCommonDic:::", dataCommonDic);
       resetSearchForm("reset");
     }
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (selected) {
-      // fetchData65({
-      //   areaCode: selected?.areaCode,
-      //   pjCuCode: selected?.cuCode,
-      //   pjDate: selected?.pjDate,
-      //   pjSno: selected?.pjSno,
-      //   pjType: selected?.pjType,
-      // });
+    if (selected && Object.keys(selected)?.length > 0) {
+      fetchData65({
+        areaCode: selected?.areaCode,
+        pjCuCode: selected?.cuCode,
+        pjDate: DateWithoutDash(selected?.pjDate),
+        pjSno: selected?.pjSno,
+        pjType: selected?.pjType,
+      });
     }
   }, [selected]);
 
   const fetchData = async (params: any) => {
     setLoading(true);
     const res = await apiGet(AR1100SEARCH, params);
-    if (res) {
+
+    if (res && res?.length > 0) {
       setData(res);
+      setSelected(res[0]);
     } else {
       setData([]);
+      setSelected({});
     }
+
     setLoading(false);
   };
 
   const fetchData65 = async (params: any) => {
-    const dataSelect = await apiGet(AR1100SELECT, params);
-    if (dataSelect) {
-      setData65(dataSelect?.detailData[0]);
+    const res = await apiGet(AR1100SELECT, params);
+
+    if (res && Object.keys(res)?.length > 0) {
+      setData65(res?.detailData[0]);
       setData65Dictionary({
-        pjVatDiv: dataSelect?.pjVatDiv,
-        pjSwCode: dataSelect?.pjSwCode,
-        proxyType: dataSelect?.proxyType,
-        pjInkumtype: dataSelect?.pjInkumtype,
-        saleType: dataSelect?.saleType,
+        pjVatDiv: res?.pjVatDiv,
+        pjSwCode: res?.pjSwCode,
+        proxyType: res?.proxyType,
+        pjInkumtype: res?.pjInkumtype,
+        saleType: res?.saleType,
       });
     } else {
       setData65({});
@@ -113,7 +115,7 @@ function AR1100({
         sInserttype: init.sInserttype,
         sProxytype: init.sProxytype,
         sSawon: init.sSawon,
-        sSalestate0: init.sSalesatae.charAt(0) === "N",
+        sSalestate0: init.sSalesatae.charAt(0) === "Y",
         sSalestate1: init.sSalesatae.charAt(1) === "Y",
         sSalestate2: init.sSalesatae.charAt(2) === "Y",
         sSalestate3: init.sSalesatae.charAt(3) === "Y",
@@ -131,9 +133,11 @@ function AR1100({
 
   const submit = async (params: IAR1100SEARCH) => {
     params.sDate = DateWithoutDash(params.sDate);
-
     fetchData(params);
   };
+
+  const handleClickBtnAdd = () => {};
+
   return (
     <>
       <SearchWrapper className="h35 mt5">
@@ -151,7 +155,7 @@ function AR1100({
             </>
           )}
           <div className="buttons ml30">
-            <Button text="등록" icon={<Plus />} onClick={() => {}} />
+            <Button text="등록" icon={<Plus />} onClick={handleClickBtnAdd} />
             <Button text="삭제" icon={<Trash />} onClick={() => {}} />
 
             <Button

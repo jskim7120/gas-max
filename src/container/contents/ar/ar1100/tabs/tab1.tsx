@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "components/table";
 import { Input, Select, FormGroup } from "components/form/style";
 import { Controller } from "react-hook-form";
@@ -8,13 +8,43 @@ import { useForm } from "react-hook-form";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
-import Loader from "components/loader";
 
 function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
   const [loading, setLoading] = useState<boolean>(false);
   const { register, handleSubmit, reset, control } = useForm<IAR110065DETAIL>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    if (data && Object.keys(data)?.length > 0) {
+      resetForm("reset");
+    }
+  }, [data]);
+
+  const resetForm = (type: string) => {
+    if ((type = "reset")) {
+      reset({
+        pjDate: data?.pjDate,
+        pjJpCode: data?.pjJpCode,
+        pjJpName: data?.pjJpName,
+        pjQty: data?.pjQty,
+        pjReqty: data?.pjReqty,
+        pjDanga: data?.pjDanga,
+        pjVatDiv: data?.pjVatDiv,
+        pjKumVat: data?.pjKumVat,
+        pjKumack: data?.pjKumack,
+        saleState: data?.saleState,
+        proxyType: data?.proxyType,
+        buName: data?.buName,
+        pjInkumtype: data?.pjInkumtype,
+        pjInkum: data?.pjInkum,
+        pjDc: data?.pjDc,
+        pjMisukum: data?.pjMisukum,
+        pjSwCode: data?.pjSwCode,
+        pjBigo: data?.pjBigo,
+      });
+    }
+  };
 
   const data1 = [
     {
@@ -29,32 +59,15 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
       ),
       2: (
         <FormGroup>
-          <Input register={register("pjJpCode")} />
+          <Input register={register("pjJpCode")} inputSize={InputSize.i70} />
           <Input register={register("pjJpName")} />
+          <span>s</span>
         </FormGroup>
       ),
-      3: (
-        <Input
-          register={
-            data.jpKind === null ? register("pjQty") : register("qtyKg")
-          }
-        />
-      ),
-      4: (
-        <Input
-          register={
-            data.jpKind === null ? register("pjReqty") : register("qtyL")
-          }
-        />
-      ),
-      5: (
-        <Input
-          register={
-            data.jpKind === null ? register("pjJago") : register("jpSpecific")
-          }
-        />
-      ),
-      6: <Input register={register("pjDanga")} />,
+      3: <Input register={register("pjQty")} inputSize={InputSize.i100} />,
+      4: <Input register={register("pjReqty")} inputSize={InputSize.i100} />,
+      5: <Input register={register("pjJago")} inputSize={InputSize.i100} />,
+      6: <Input register={register("pjDanga")} inputSize={InputSize.i100} />,
       7: (
         <Select register={register("pjVatDiv")} width={InputSize.i100}>
           {dictionary?.pjVatDiv?.map((obj: any, idx: number) => (
@@ -64,9 +77,9 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
           ))}
         </Select>
       ),
-      8: <Input register={register("pjKumSup")} />,
-      9: <Input register={register("pjKumVat")} />,
-      10: <Input register={register("pjKumack")} />,
+      8: <Input register={register("pjKumSup")} inputSize={InputSize.i100} />,
+      9: <Input register={register("pjKumVat")} inputSize={InputSize.i100} />,
+      10: <Input register={register("pjKumack")} inputSize={InputSize.i100} />,
     },
   ];
 
