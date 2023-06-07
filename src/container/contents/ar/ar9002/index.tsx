@@ -268,7 +268,7 @@ function AR9002({
           columns={columns1}
           fields={fields1}
           data={data}
-          rowIndex={data?.length ? data.length : 0}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: "calc(100% - 52px)" }}
         />
       ) : (
@@ -277,7 +277,7 @@ function AR9002({
           columns={columns0}
           fields={fields0}
           data={data}
-          rowIndex={data?.length ? data.length : 0}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: "calc(100% - 52px)" }}
         />
       )}

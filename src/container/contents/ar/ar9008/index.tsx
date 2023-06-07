@@ -204,7 +204,7 @@ function AR9008({
         columns={columns}
         fields={fields}
         data={data}
-        rowIndex={data?.length ? data.length : 0}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={{ height: "calc(100% - 52px)" }}
       />
     </>
