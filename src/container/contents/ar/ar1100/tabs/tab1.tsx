@@ -1,19 +1,23 @@
+import { Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "app/store";
+import { openModal } from "app/state/modal/modalSlice";
 import Table from "components/table";
 import { Input, Select, FormGroup } from "components/form/style";
-import { Controller } from "react-hook-form";
 import CustomDatePicker from "components/customDatePicker";
-import { IAR110065DETAIL } from "../model";
-import { useForm } from "react-hook-form";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
+import { IAR110065DETAIL } from "../model";
 
 function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
   const [loading, setLoading] = useState<boolean>(false);
   const { register, handleSubmit, reset, control } = useForm<IAR110065DETAIL>({
     mode: "onSubmit",
   });
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (data && Object.keys(data)?.length > 0) {
@@ -58,10 +62,26 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
         />
       ),
       2: (
-        <FormGroup>
+        <FormGroup style={{ position: "relative" }}>
           <Input register={register("pjJpCode")} inputSize={InputSize.i70} />
           <Input register={register("pjJpName")} />
-          <span>s</span>
+          <span
+            style={{
+              width: "22px",
+              height: "22px",
+              borderRadius: "50%",
+              background: "#686767",
+              position: "absolute",
+              right: "6px",
+              bottom: "6px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingLeft: "3px",
+            }}
+          >
+            <MagnifyingGlass />
+          </span>
         </FormGroup>
       ),
       3: <Input register={register("pjQty")} inputSize={InputSize.i100} />,

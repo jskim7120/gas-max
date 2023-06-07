@@ -50,6 +50,10 @@ export const fields2 = [
     dataType: ValueType.NUMBER,
   },
   {
+    fieldName: "tsSwName",
+    dataType: ValueType.TEXT,
+  },
+  {
     fieldName: "tsBigo",
     dataType: ValueType.TEXT,
   },
@@ -188,6 +192,16 @@ export const columns2 = [
     numberFormat: "#,##0",
   },
   {
+    name: "tsSwName",
+    fieldName: "tsSwName",
+    type: "data",
+    width: "100",
+    styleName: "rg-left-column",
+    header: {
+      text: "사원",
+    },
+  },
+  {
     name: "tsBigo",
     fieldName: "tsBigo",
     type: "data",
@@ -227,6 +241,6 @@ export const layout = [
       text: "출금액",
     },
   },
-
+  "tsSwName",
   "tsBigo",
 ];
