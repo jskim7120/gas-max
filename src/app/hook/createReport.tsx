@@ -27,9 +27,9 @@ function CreateReport(
 
     const dataS = await apiGet(searchPath, params);
 
-    if (dataS) {
+    if (dataS && dataS?.length > 0) {
       setData(dataS);
-      const lastIndex = dataS && dataS?.length > 0 ? dataS.length - 1 : 0;
+      const lastIndex = dataS && dataS?.length > 1 ? dataS.length - 1 : 0;
       setSelected(dataS[lastIndex]);
       dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 }));
     } else {
