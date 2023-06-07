@@ -61,8 +61,8 @@ const setFooterDetail = async (
     sCuCode: sCuCode,
   });
 
-  if (response.data && response.data?.length > 0) {
-    dispatch(addInfo({ info: response.data[0] }));
+  if (response && response?.length > 0) {
+    dispatch(addInfo({ info: response[0] }));
   } else {
     dispatch(addInfo({ info: emptyFooterObj }));
   }
