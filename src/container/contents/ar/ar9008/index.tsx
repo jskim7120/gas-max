@@ -81,11 +81,6 @@ function AR9008({
     }
   };
 
-  console.log(
-    "dataCommonDic HHHHHHHHHHHHHHHHHHHHHHHHHHH: ",
-    dataCommonDic?.dataInit[0]?.sMonth
-  );
-
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">

@@ -96,7 +96,7 @@ const EN1500Modal = (
 
     const response = await apiGet(EN150062, params);
     if (response) {
-      setEn1500PopupData(response.data[0]);
+      setEn1500PopupData(response[0]);
     }
   };
 
@@ -244,7 +244,7 @@ const EN1500Modal = (
     const response = await apiGet(EN150065, params);
 
     if (response) {
-      setUnitPriceData(response.data[0]);
+      setUnitPriceData(response[0]);
     } else {
       setUnitPriceData([]);
     }
