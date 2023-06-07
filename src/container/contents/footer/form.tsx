@@ -12,7 +12,7 @@ import {
 import { FormGroup, Select, Label } from "components/form/style";
 import { FOOT61, FOOTER } from "app/path";
 import Loader from "components/loader";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import Grid from "./grid";
 import { closeModal } from "app/state/modal/modalSlice";
 import { addInfo } from "app/state/footer/footerSlice";
@@ -210,27 +210,36 @@ function Form() {
   }, [areaCode]);
 
   const fetchAreaCode = async () => {
-    try {
-      const { data } = await API.get(FOOT61);
-      data?.areaCode && setAreaCode(data.areaCode);
-    } catch (err) {
-      console.log("err=========>", err);
-    }
+    // try {
+    //   const { data } = await API.get(FOOT61);
+    //   data?.areaCode && setAreaCode(data.areaCode);
+    // } catch (err) {
+    //   console.log("err=========>", err);
+    // }
+
+    const data = await apiGet(FOOT61);
+    data?.areaCode && setAreaCode(data.areaCode);
   };
 
   const fetchData = async (params: ISEARCH) => {
-    try {
-      setLoading(true);
-      const { data: SEARCHDATA } = await API.get(FOOTER, {
-        params: params,
-      });
+    // try {
+    //   setLoading(true);
+    //   const { data: SEARCHDATA } = await API.get(FOOTER, {
+    //     params: params,
+    //   });
 
-      setData(SEARCHDATA);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.log("FOOTER DATA fetch error =======>", error);
-    }
+    //   setData(SEARCHDATA);
+    //   setLoading(false);
+    // } catch (error) {
+    //   setLoading(false);
+    //   console.log("FOOTER DATA fetch error =======>", error);
+    // }
+
+    setLoading(true);
+    const SEARCHDATA = await apiGet(FOOTER, params);
+
+    setData(SEARCHDATA);
+    setLoading(false);
   };
 
   const handleChoose = () => {

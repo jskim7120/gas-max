@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import { toast } from "react-toastify";
 import { GR160065, GR1600UPDATE } from "app/path";
 import { IGR1600SEARCH } from "../model";
@@ -88,17 +88,24 @@ function Form({
   ]);
 
   const fetchData = async () => {
-    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-      try {
-        const { data: tabData } = await API.get(GR160065, {
-          params: {
-            areaCode: selected.areaCode,
-            buCode: selected?.buCode,
-          },
-        });
+    // if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+    //   try {
+    //     const { data: tabData } = await API.get(GR160065, {
+    //       params: {
+    //         areaCode: selected.areaCode,
+    //         buCode: selected?.buCode,
+    //       },
+    //     });
 
-        setTabData(tabData);
-      } catch (err) {}
+    //     setTabData(tabData);
+    //   } catch (err) {}
+    // }
+    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      const tabData = await apiGet(GR160065, {
+        areaCode: selected.areaCode,
+        buCode: selected?.buCode,
+      });
+      setTabData(tabData);
     }
   };
 
@@ -109,41 +116,68 @@ function Form({
 
   const update = async () => {
     if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-      try {
-        const formValues = getValues();
+      // try {
+      //   const formValues = getValues();
 
-        const response: any = await API.post(GR1600UPDATE, {
-          areaCode: formValues.areaCode,
-          buCode: formValues.buCode,
-          buPdanga:
-            formValues.buPdanga && Number(formValues.buPdanga.replace(",", "")),
-          buBdanga:
-            formValues.buBdanga && Number(formValues.buBdanga.replace(",", "")),
-          buBldanga:
-            formValues.buBldanga &&
-            Number(formValues.buBldanga.replace(",", "")),
-          buPcost:
-            formValues.buPcost && Number(formValues.buPcost.replace(",", "")),
-          buBcost:
-            formValues.buBcost && Number(formValues.buBcost.replace(",", "")),
-          buBlcost:
-            formValues.buBlcost && Number(formValues.buBlcost.replace(",", "")),
-          buJpCode1: formValues.buJpCode1,
-          buJpCode2: formValues.buJpCode2,
-          buJpCode3: formValues.buJpCode3,
-          buJpCode4: formValues.buJpCode4,
-        });
+      //   const response: any = await apiPost(GR1600UPDATE, {
+      //     areaCode: formValues.areaCode,
+      //     buCode: formValues.buCode,
+      //     buPdanga:
+      //       formValues.buPdanga && Number(formValues.buPdanga.replace(",", "")),
+      //     buBdanga:
+      //       formValues.buBdanga && Number(formValues.buBdanga.replace(",", "")),
+      //     buBldanga:
+      //       formValues.buBldanga &&
+      //       Number(formValues.buBldanga.replace(",", "")),
+      //     buPcost:
+      //       formValues.buPcost && Number(formValues.buPcost.replace(",", "")),
+      //     buBcost:
+      //       formValues.buBcost && Number(formValues.buBcost.replace(",", "")),
+      //     buBlcost:
+      //       formValues.buBlcost && Number(formValues.buBlcost.replace(",", "")),
+      //     buJpCode1: formValues.buJpCode1,
+      //     buJpCode2: formValues.buJpCode2,
+      //     buJpCode3: formValues.buJpCode3,
+      //     buJpCode4: formValues.buJpCode4,
+      //   });
 
-        if (response.status === 200) {
-          fetchLeftData();
-          toast.success("update successfull", {
-            autoClose: 500,
-          });
-        } else {
-          toast.error(response?.response?.data?.message, { autoClose: 500 });
-        }
-      } catch (err) {
-        console.log("error::::::::", err);
+      //   if (response.status === 200) {
+      //     fetchLeftData();
+      //     toast.success("update successfull", {
+      //       autoClose: 500,
+      //     });
+      //   } else {
+      //     toast.error(response?.response?.data?.message, { autoClose: 500 });
+      //   }
+      // } catch (err) {
+      //   console.log("error::::::::", err);
+      // }
+
+      const formValues = getValues();
+
+      const response: any = await apiPost(GR1600UPDATE, {
+        areaCode: formValues.areaCode,
+        buCode: formValues.buCode,
+        buPdanga:
+          formValues.buPdanga && Number(formValues.buPdanga.replace(",", "")),
+        buBdanga:
+          formValues.buBdanga && Number(formValues.buBdanga.replace(",", "")),
+        buBldanga:
+          formValues.buBldanga && Number(formValues.buBldanga.replace(",", "")),
+        buPcost:
+          formValues.buPcost && Number(formValues.buPcost.replace(",", "")),
+        buBcost:
+          formValues.buBcost && Number(formValues.buBcost.replace(",", "")),
+        buBlcost:
+          formValues.buBlcost && Number(formValues.buBlcost.replace(",", "")),
+        buJpCode1: formValues.buJpCode1,
+        buJpCode2: formValues.buJpCode2,
+        buJpCode3: formValues.buJpCode3,
+        buJpCode4: formValues.buJpCode4,
+      });
+
+      if (response) {
+        fetchLeftData();
       }
     }
   };

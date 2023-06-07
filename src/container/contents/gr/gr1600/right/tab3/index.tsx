@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GR1600TAB3, GR1600BPUPDATE } from "app/path";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import Grid from "./grid";
 import { useForm } from "react-hook-form";
 import {
@@ -76,22 +76,34 @@ function Tab3({
   };
 
   const fetchData = async (params: any) => {
-    try {
-      if (areaCode && buCode) {
-        const { data: tab3Data } = await API.get(GR1600TAB3, {
-          params: {
-            areaCode: areaCode,
-            buCode: buCode,
-            bpGubun: params && params.bpGubun,
-            bpName: params && params.bpName,
-          },
-        });
+    // try {
+    //   if (areaCode && buCode) {
+    //     const { data: tab3Data } = await API.get(GR1600TAB3, {
+    //       params: {
+    //         areaCode: areaCode,
+    //         buCode: buCode,
+    //         bpGubun: params && params.bpGubun,
+    //         bpName: params && params.bpName,
+    //       },
+    //     });
 
-        setData(tab3Data);
-        dataOrig = JSON.parse(JSON.stringify(tab3Data));
-      }
-    } catch (error) {
-      console.log(error);
+    //     setData(tab3Data);
+    //     dataOrig = JSON.parse(JSON.stringify(tab3Data));
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
+    if (areaCode && buCode) {
+      const tab3Data = await apiGet(GR1600TAB3, {
+        areaCode: areaCode,
+        buCode: buCode,
+        bpGubun: params && params.bpGubun,
+        bpName: params && params.bpName,
+      });
+
+      setData(tab3Data);
+      dataOrig = JSON.parse(JSON.stringify(tab3Data));
     }
   };
 
@@ -103,30 +115,46 @@ function Tab3({
 
   const update = async () => {
     if (areaCode && buCode) {
-      try {
-        // let successList: any = [];
-        // let failList: any = [];
+      // try {
+      //   // let successList: any = [];
+      //   // let failList: any = [];
 
-        editedRowIds.forEach(async (id: any) => {
-          let response = await API.post(GR1600BPUPDATE, {
-            areaCode: areaCode,
-            buCode: buCode,
-            ...data[id],
-          });
+      //   editedRowIds.forEach(async (id: any) => {
+      //     let response = await API.post(GR1600BPUPDATE, {
+      //       areaCode: areaCode,
+      //       buCode: buCode,
+      //       ...data[id],
+      //     });
 
-          // if (response.status === 200) {
-          //   successList.push(id);
-          // } else {
-          //   failList.push(id);
-          // }
+      //     // if (response.status === 200) {
+      //     //   successList.push(id);
+      //     // } else {
+      //     //   failList.push(id);
+      //     // }
+      //   });
+
+      //   toast.success(`row ${editedRowIds} successfully changed.`, {
+      //     autoClose: 500,
+      //   });
+
+      //   editedRowIds = [];
+      // } catch (error: any) {}
+
+      editedRowIds.forEach(async (id: any) => {
+        let response = await apiPost(GR1600BPUPDATE, {
+          areaCode: areaCode,
+          buCode: buCode,
+          ...data[id],
         });
 
-        toast.success(`row ${editedRowIds} successfully changed.`, {
-          autoClose: 500,
-        });
+        // if (response.status === 200) {
+        //   successList.push(id);
+        // } else {
+        //   failList.push(id);
+        // }
+      });
 
-        editedRowIds = [];
-      } catch (error: any) {}
+      editedRowIds = [];
     }
   };
 
