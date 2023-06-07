@@ -79,6 +79,7 @@ function AR9008({
     if (dataCommonDic?.dataInit) {
       resetForm("reset");
     }
+    setData([]);
   };
 
   return (
