@@ -7,7 +7,7 @@ import { IAR110065DETAIL } from "../model";
 import { useForm } from "react-hook-form";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
-import { Reset, MagnifyingGlass } from "components/allSvgIcon";
+import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
 import Loader from "components/loader";
 
 function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
@@ -162,23 +162,10 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
       </div>
       <div>
         <Button
-          text="검색"
-          icon={!loading && <MagnifyingGlass />}
-          color={ButtonColor.DANGER}
-          type="submit"
-          loader={
-            loading && (
-              <>
-                <Loader
-                  color="white"
-                  size={13}
-                  borderWidth="2px"
-                  style={{ marginRight: "10px" }}
-                />
-              </>
-            )
-          }
-          style={{ marginBottom: "10px" }}
+          text="저장"
+          icon={<Update />}
+          color={ButtonColor.SECONDARY}
+          onClick={() => {}}
         />
 
         <Button
