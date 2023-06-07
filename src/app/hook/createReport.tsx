@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "app/store";
-import { setRowIndex } from "app/state/tab/tabSlice";
 import { apiGet } from "app/axios";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 
@@ -31,7 +30,6 @@ function CreateReport(
       setData(dataS);
       const lastIndex = dataS && dataS?.length > 1 ? dataS.length - 1 : 0;
       setSelected(dataS[lastIndex]);
-      dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 }));
     } else {
       setData([]);
       setSelected({});
