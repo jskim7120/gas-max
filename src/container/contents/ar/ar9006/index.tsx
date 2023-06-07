@@ -45,17 +45,33 @@ function AR9006({
     fetchData(params);
   };
 
+  const resetForm = (type: string) => {
+    if (type === "reset") {
+      if (dataCommonDic?.dataInit) {
+        const init = dataCommonDic.dataInit[0];
+        reset({
+          sDate: init?.sDate,
+          eDate: init?.dDate,
+          jpCode: init?.jpCode,
+          swCode: init?.swCode,
+          cuGubun: init?.cuGubun,
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
-      const init = dataCommonDic.dataInit[0];
-      reset({
-        sDate: init?.sDate,
-        eDate: init?.dDate,
-        jpCode: init?.jpCode,
-        swCode: init?.swCode,
-      });
+      resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  const handleReset = () => {
+    if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+    setData([]);
+  };
 
   return (
     <>
@@ -100,7 +116,7 @@ function AR9006({
                 style={{ minWidth: "max-content" }}
                 type="button"
                 color={ButtonColor.LIGHT}
-                // onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
@@ -160,7 +176,7 @@ function AR9006({
 
             <Label style={{ minWidth: "80px" }}>입출구분</Label>
             <Select register={register("cuGubun")} width={InputSize.i120}>
-              {dataCommonDic?.jpCode?.map((obj: any, idx: number) => (
+              {dataCommonDic?.cuGubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
