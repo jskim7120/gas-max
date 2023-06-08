@@ -3,13 +3,20 @@ import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "app/store";
 import { apiGet } from "app/axios";
 import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
+import { ButtonColor, ButtonType } from "components/componentsType";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
-import { Plus, Trash, Update, Reset, WhiteClose } from "components/allSvgIcon";
+import {
+  Plus,
+  Trash,
+  Update,
+  Reset,
+  WhiteClose,
+  Tick,
+} from "components/allSvgIcon";
 import SEARCH_RED from "assets/image/search_red.png";
 import Grid from "components/grid";
 import Form from "./form";
-import { closeModal } from "app/state/modal/modalSlice";
+import { addCM1106AR100Tick, closeModal } from "app/state/modal/modalSlice";
 import { Select, FormGroup } from "components/form/style";
 import { CM1106LIST } from "app/path";
 import { ISEARCH } from "./model";
@@ -50,10 +57,7 @@ function FormCM1106() {
   useEffect(() => {
     if (cm1106.areaCode && cm1106.cuCode) {
       fetchData();
-      reset((formValues) => ({
-        ...formValues,
-        areaCode: cm1106.areaCode,
-      }));
+      resetForm("resetAreaCode");
     }
   }, [cm1106.areaCode, cm1106.cuCode]);
 
@@ -67,11 +71,7 @@ function FormCM1106() {
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
       setIsAddBtnClicked(false);
-      reset((formValues) => ({
-        ...formValues,
-        jcCuCode: selected?.jcCuCode,
-        jcCuName: selected?.jcCuName,
-      }));
+      resetForm("resetName");
     }
   }, [selected]);
 
@@ -91,6 +91,34 @@ function FormCM1106() {
   };
 
   const submit = async (data: ISEARCH) => {};
+
+  const handleClickTick = () => {
+    if (selected && Object.keys(selected)?.length > 0) {
+      dispatch(
+        addCM1106AR100Tick({
+          jpName: selected?.jcJpName,
+          jpCode: selected?.jcJpCode,
+        })
+      );
+      dispatch(closeModal());
+    }
+  };
+
+  const resetForm = (type: string) => {
+    if ("resetAreaCode") {
+      reset((formValues) => ({
+        ...formValues,
+        areaCode: cm1106.areaCode,
+      }));
+    }
+    if ("resetName") {
+      reset((formValues) => ({
+        ...formValues,
+        jcCuCode: selected?.jcCuCode,
+        jcCuName: selected?.jcCuName,
+      }));
+    }
+  };
 
   return (
     <>
@@ -152,7 +180,6 @@ function FormCM1106() {
               type="button"
               onClick={() => {
                 formRef.current.resetForm("reset");
-
                 setIsAddBtnClicked(false);
               }}
             />
@@ -203,21 +230,59 @@ function FormCM1106() {
         </div>
       </form>
       <div style={{ display: "flex", width: "100%" }}>
-        <Grid
-          areaCode={areaCode}
-          data={data}
-          fields={fields}
-          columns={columns}
-          setSelected={setSelected}
-          menuId={"CM1106"}
-          rowIndex={0}
-          style={{
-            height: "500px",
-            width: "75%",
-            borderRight: "1px solid #000",
-            margin: "10px",
-          }}
-        />
+        <div style={{ flex: "1" }}>
+          <Grid
+            areaCode={areaCode}
+            data={data}
+            fields={fields}
+            columns={columns}
+            setSelected={setSelected}
+            menuId={"CM1106"}
+            rowIndex={0}
+            style={{
+              height: "500px",
+              width: "100%",
+            }}
+          />
+          {cm1106.source === "AR1100" && (
+            <div
+              style={{
+                background: "rgba(104,103,103,0.35)",
+                padding: "5px",
+                margin: "5px",
+                display: "flex",
+                justifyContent: "end",
+              }}
+            >
+              <Button
+                text="선택"
+                icon={<Tick />}
+                withoutLine
+                style={{
+                  width: "110px",
+                  marginRight: "10px",
+                }}
+                kind={ButtonType.ROUND}
+                color={ButtonColor.BLUE}
+                type="button"
+                onClick={handleClickTick}
+              />
+
+              <Button
+                text="취소"
+                icon={<WhiteClose width="11" height="11" />}
+                withoutLine
+                style={{
+                  width: "80px",
+                }}
+                kind={ButtonType.ROUND}
+                color={ButtonColor.BLUE}
+                type="button"
+              />
+            </div>
+          )}
+        </div>
+
         <Form
           selected={selected}
           ref={formRef}
