@@ -30,13 +30,8 @@ export const fields0 = [
     dataType: ValueType.NUMBER,
   },
   {
-<<<<<<< HEAD
-    fieldName: "jcTdaemKumn",
-    dataType: ValueType.NUMBER,
-=======
     fieldName: "cuTongKum",
     dataType: ValueType.TEXT,
->>>>>>> 5edeea10789cc9e430ed2ceedd62e5c33245a9bb
   },
   {
     fieldName: "jcLastdate5",
