@@ -72,7 +72,7 @@ export const columns = [
     name: "cuCode",
     fieldName: "cuCode",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "코드",
     },
@@ -81,7 +81,8 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "100",
+    width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -91,6 +92,7 @@ export const columns = [
     fieldName: "cuTel",
     type: "data",
     width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "전화",
     },
@@ -99,7 +101,8 @@ export const columns = [
     name: "sumKg",
     fieldName: "sumKg",
     type: "data",
-    width: "100",
+    width: "50",
+    styleName: "rg-right-column",
     header: {
       text: "공급량",
     },
@@ -108,7 +111,8 @@ export const columns = [
     name: "junMisu",
     fieldName: "junMisu",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "전월미수",
     },
@@ -117,7 +121,8 @@ export const columns = [
     name: "kumack",
     fieldName: "kumack",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "매출액",
     },
@@ -126,7 +131,8 @@ export const columns = [
     name: "DC",
     fieldName: "DC",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "D/C",
     },
@@ -135,7 +141,8 @@ export const columns = [
     name: "inkum",
     fieldName: "inkum",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "입금액",
     },
@@ -144,7 +151,8 @@ export const columns = [
     name: "misukum",
     fieldName: "misukum",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "미수금액",
     },
@@ -153,7 +161,8 @@ export const columns = [
     name: "suKum",
     fieldName: "suKum",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "수금액",
     },
@@ -162,7 +171,8 @@ export const columns = [
     name: "suDC",
     fieldName: "suDC",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "D/C",
     },
@@ -171,7 +181,8 @@ export const columns = [
     name: "dangMisu",
     fieldName: "dangMisu",
     type: "data",
-    width: "100",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
       text: "당월미수",
     },
@@ -180,7 +191,7 @@ export const columns = [
     name: "chkYn",
     fieldName: "chkYn",
     type: "data",
-    width: "100",
+    width: "50",
     header: {
       text: "선택 ",
     },
