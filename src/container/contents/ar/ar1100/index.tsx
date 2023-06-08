@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useSelector, useDispatch } from "app/store";
 import { apiGet } from "app/axios";
 import { AR1100SEARCH, AR1100SELECT } from "app/path";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
@@ -25,6 +26,7 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { fields, columns } from "./data";
 import { IAR1100SEARCH } from "./model";
 import getTabContent from "./getTabContent";
+import { addCM1106 } from "app/state/modal/modalSlice";
 
 function AR1100({
   depthFullName,
@@ -37,6 +39,7 @@ function AR1100({
 }) {
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -68,6 +71,14 @@ function AR1100({
         pjSno: selected?.pjSno,
         pjType: selected?.pjType,
       });
+
+      dispatch(
+        addCM1106({
+          areaCode: selected.areaCode,
+          cuCode: selected.cuCode,
+          source: "AR1100",
+        })
+      );
     }
   }, [selected]);
 
@@ -341,7 +352,7 @@ function AR1100({
           menuId={menuId}
           rowIndex={0}
           style={{
-            height: `calc(100% - 368px)`,
+            height: `calc(50%)`,
             borderBottom: "1px solid #707070",
             marginBottom: "3px",
           }}

@@ -856,6 +856,155 @@ export const CloseCircle = ({
   );
 };
 
+export const WhiteClose = ({
+  color = "#fff",
+  width = "17.658",
+  height = "16.231",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 17.658 16.231"
+    >
+      <g
+        id="Group_1249"
+        data-name="Group 1249"
+        transform="translate(-389.735 -16.735)"
+      >
+        <line
+          id="Line_43"
+          data-name="Line 43"
+          x1="14.128"
+          y2="12.491"
+          transform="translate(391.5 18.5)"
+          fill="none"
+          stroke={color}
+          strokeLinecap="round"
+          strokeWidth="2.5"
+        />
+        <path
+          id="Path_45"
+          data-name="Path 45"
+          d="M0,0,14.128,12.7"
+          transform="translate(405.628 31.201) rotate(180)"
+          fill="none"
+          stroke={color}
+          strokeLinecap="round"
+          strokeWidth="2.5"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const WhiteCloseCircle = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14.11"
+      height="15.238"
+      viewBox="0 0 14.11 15.238"
+    >
+      <g id="Group_1353" data-name="Group 1353" transform="translate(0.5 0.5)">
+        <path
+          id="Path_3070"
+          data-name="Path 3070"
+          d="M12.02,12.983a6.193,6.193,0,0,1-9.27,0,7.558,7.558,0,0,1,0-10.067,6.193,6.193,0,0,1,9.27,0A7.558,7.558,0,0,1,12.02,12.983Z"
+          transform="translate(-0.83 -0.83)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+        <line
+          id="Line_220"
+          data-name="Line 220"
+          x1="5.221"
+          y2="5.221"
+          transform="translate(4.046 4.392)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+        <line
+          id="Line_221"
+          data-name="Line 221"
+          x1="5.221"
+          y1="5.221"
+          transform="translate(4.046 4.392)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const Tick = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="11.69"
+      height="9.501"
+      viewBox="0 0 11.69 9.501"
+    >
+      <path
+        id="Path_3053"
+        data-name="Path 3053"
+        d="M-1191.5,965.684l3.193,3.677,5.676-6.563"
+        transform="translate(1192.915 -961.387)"
+        fill="none"
+        stroke="#fff"
+        stroke-linecap="square"
+        stroke-width="2"
+      />
+    </svg>
+  );
+};
+
+export const TickInCircle = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="12.049"
+      height="12.474"
+      viewBox="0 0 12.049 12.474"
+    >
+      <g
+        id="Group_1783"
+        data-name="Group 1783"
+        transform="translate(-785.548 -621.685)"
+      >
+        <g
+          id="Ellipse_213"
+          data-name="Ellipse 213"
+          transform="translate(785.548 623.159)"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="1"
+        >
+          <circle cx="5.5" cy="5.5" r="5.5" stroke="none" />
+          <circle cx="5.5" cy="5.5" r="5" fill="none" />
+        </g>
+        <path
+          id="Path_3065"
+          data-name="Path 3065"
+          d="M1028.014,567.1l5.181,5.685,6.006-7.794"
+          transform="translate(-242 57)"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="1"
+        />
+      </g>
+    </svg>
+  );
+};
+
 export const ExcelIcon = ({
   color = "#4CAF50",
   width = "24px",
@@ -1383,45 +1532,6 @@ export const IconReceipt = ({
   );
 };
 
-export const WhiteClose = ({ color = "#fff" }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="17.658"
-      height="16.231"
-      viewBox="0 0 17.658 16.231"
-    >
-      <g
-        id="Group_1249"
-        data-name="Group 1249"
-        transform="translate(-389.735 -16.735)"
-      >
-        <line
-          id="Line_43"
-          data-name="Line 43"
-          x1="14.128"
-          y2="12.491"
-          transform="translate(391.5 18.5)"
-          fill="none"
-          stroke={color}
-          strokeLinecap="round"
-          strokeWidth="2.5"
-        />
-        <path
-          id="Path_45"
-          data-name="Path 45"
-          d="M0,0,14.128,12.7"
-          transform="translate(405.628 31.201) rotate(180)"
-          fill="none"
-          stroke={color}
-          strokeLinecap="round"
-          strokeWidth="2.5"
-        />
-      </g>
-    </svg>
-  );
-};
-
 export const Notebook = () => {
   return (
     <svg
@@ -1521,90 +1631,6 @@ export const Edit2 = () => {
           fill="none"
           stroke="#fff"
           strokeLinejoin="round"
-          strokeWidth="1"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const WhiteCloseCircle = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="14.11"
-      height="15.238"
-      viewBox="0 0 14.11 15.238"
-    >
-      <g id="Group_1353" data-name="Group 1353" transform="translate(0.5 0.5)">
-        <path
-          id="Path_3070"
-          data-name="Path 3070"
-          d="M12.02,12.983a6.193,6.193,0,0,1-9.27,0,7.558,7.558,0,0,1,0-10.067,6.193,6.193,0,0,1,9.27,0A7.558,7.558,0,0,1,12.02,12.983Z"
-          transform="translate(-0.83 -0.83)"
-          fill="none"
-          stroke="#fff"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_220"
-          data-name="Line 220"
-          x1="5.221"
-          y2="5.221"
-          transform="translate(4.046 4.392)"
-          fill="none"
-          stroke="#fff"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_221"
-          data-name="Line 221"
-          x1="5.221"
-          y1="5.221"
-          transform="translate(4.046 4.392)"
-          fill="none"
-          stroke="#fff"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const TickInCircle = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="12.049"
-      height="12.474"
-      viewBox="0 0 12.049 12.474"
-    >
-      <g
-        id="Group_1783"
-        data-name="Group 1783"
-        transform="translate(-785.548 -621.685)"
-      >
-        <g
-          id="Ellipse_213"
-          data-name="Ellipse 213"
-          transform="translate(785.548 623.159)"
-          fill="none"
-          stroke="#fff"
-          strokeWidth="1"
-        >
-          <circle cx="5.5" cy="5.5" r="5.5" stroke="none" />
-          <circle cx="5.5" cy="5.5" r="5" fill="none" />
-        </g>
-        <path
-          id="Path_3065"
-          data-name="Path 3065"
-          d="M1028.014,567.1l5.181,5.685,6.006-7.794"
-          transform="translate(-242 57)"
-          fill="none"
-          stroke="#fff"
           strokeWidth="1"
         />
       </g>
