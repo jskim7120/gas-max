@@ -102,11 +102,18 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
       attributes.border = "#FF0000";
       attributes.color = "#fff";
       attributes.lineColor = "#fff";
-    } else if (color === ButtonColor.SECONDARY) {
+    }
+    if (color === ButtonColor.SECONDARY) {
       attributes.bg = "#ECECEC";
       attributes.border = "#707070";
       attributes.color = "#0A0A0A";
       attributes.lineColor = "#707070";
+    }
+    if (color === ButtonColor.BLUE) {
+      attributes.bg = "#5284CE";
+      attributes.border = "#fff";
+      attributes.color = "#fff";
+      attributes.lineColor = "#fff";
     }
   } else if (kind === ButtonType.SQUARE_BIG) {
     attributes = {
@@ -228,7 +235,7 @@ function Button(
           }}
         >
           {props.icon}
-          {!props.withoutLine && (
+          {!props.withoutLine ? (
             <div
               style={{
                 height: BtnAttribute(
@@ -247,6 +254,8 @@ function Button(
                 ).lineMarginLeft,
               }}
             ></div>
+          ) : (
+            <div style={{ width: "3px" }}></div>
           )}
         </span>
       )}

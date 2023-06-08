@@ -85,6 +85,7 @@ function AR9007({
     if (dataCommonDic?.dataInit) {
       resetForm("reset");
     }
+    setData([]);
   };
 
   return (
@@ -219,7 +220,7 @@ function AR9007({
           columns={columns3}
           fields={fields3}
           data={data}
-          rowIndex={data?.length ? data.length : 0}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: "calc(100% - 52px)" }}
         />
       ) : watch("reportKind") === "2" ? (
@@ -228,7 +229,7 @@ function AR9007({
           columns={columns2}
           fields={fields2}
           data={data}
-          rowIndex={data?.length ? data.length : 0}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: "calc(100% - 52px)" }}
         />
       ) : watch("reportKind") === "1" ? (
@@ -237,7 +238,7 @@ function AR9007({
           columns={columns1}
           fields={fields1}
           data={data}
-          rowIndex={data?.length ? data.length : 0}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: "calc(100% - 52px)" }}
         />
       ) : (
@@ -246,7 +247,7 @@ function AR9007({
           columns={columns0}
           fields={fields0}
           data={data}
-          rowIndex={data?.length ? data.length : 0}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: "calc(100% - 52px)" }}
         />
       )}

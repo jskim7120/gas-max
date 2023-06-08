@@ -110,49 +110,55 @@ const FORMCM1106 = React.forwardRef(
       <form
         onSubmit={handleSubmit(submit)}
         autoComplete="off"
-        style={{ width: "25%", margin: "30px 30px 0 0" }}
+        style={{
+          padding: "30px 30px 0 0",
+          borderLeft: "1px solid #e6e5e5",
+        }}
       >
-        <Field flex style={{ alignItems: "center" }}>
+        <FormGroup>
           <Input
             label="코 드"
+            labelStyle={{ minWidth: "90px" }}
             register={register("jcJpCode")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i160}
             kind={FieldKind.BORDER}
           />
           <SearchBtn type="button" onClick={() => alert("dsdsds")}>
             <MagnifyingGlass />
           </SearchBtn>
-        </Field>
-        <Field>
+        </FormGroup>
+        <FormGroup>
           <Input
             label="품 명"
+            labelStyle={{ minWidth: "90px" }}
             register={register("jcJpName")}
             kind={FieldKind.BORDER}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i160}
           />
-        </Field>
-        <Field>
+        </FormGroup>
+        <FormGroup>
           <Input
             label="규 격"
+            labelStyle={{ minWidth: "90px" }}
             register={register("jcJpSpec")}
             kind={FieldKind.BORDER}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i160}
           />
-        </Field>
-        <Field>
-          <FormGroup>
-            <Label></Label>
-            <p style={{ marginLeft: "5px" }}>환경단가 : 25,000 원 (Vat포함)</p>
-          </FormGroup>
-        </Field>
+        </FormGroup>
+
+        <FormGroup>
+          <Label style={{ minWidth: "90px" }}></Label>
+          <p style={{ marginLeft: "5px" }}>환경단가 : 25,000 원 (Vat포함)</p>
+        </FormGroup>
+
         <DividerGray />
 
         <FormGroup>
-          <Label>적용구분</Label>
+          <Label style={{ minWidth: "90px" }}>적용구분</Label>
           <Select
             register={register("jcDangaType")}
             kind={FieldKind.BORDER}
-            width={InputSize.i130}
+            width={InputSize.i160}
           >
             {dataCommonDic?.jcDangaType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
@@ -163,11 +169,11 @@ const FORMCM1106 = React.forwardRef(
         </FormGroup>
 
         <FormGroup>
-          <Label>Vat구분</Label>
+          <Label style={{ minWidth: "90px" }}>Vat구분</Label>
           <Select
             register={register("jcVatKind")}
             kind={FieldKind.BORDER}
-            width={InputSize.i130}
+            width={InputSize.i160}
           >
             {dataCommonDic?.jcVatKind?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
@@ -177,78 +183,83 @@ const FORMCM1106 = React.forwardRef(
           </Select>
         </FormGroup>
 
-        <Field flex>
+        <FormGroup>
           <Controller
             control={control}
             {...register("jcJdcAmt")}
             render={({ field: { onChange, value, name } }) => (
               <Input
                 label="할인액"
+                labelStyle={{ minWidth: "90px" }}
                 value={value}
                 onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
-                inputSize={InputSize.i130}
+                inputSize={InputSize.i160}
                 name={name}
               />
             )}
           />
           <p>원</p>
-        </Field>
-        <Field flex>
+        </FormGroup>
+        <FormGroup>
           <Controller
             control={control}
             {...register("jcJdcPer")}
             render={({ field: { onChange, value, name } }) => (
               <Input
                 label="할인율"
+                labelStyle={{ minWidth: "90px" }}
                 value={value}
                 onChange={onChange}
                 mask={[/\d/, /\d/, /\d/]}
                 textAlign="right"
                 name={name}
-                inputSize={InputSize.i130}
+                inputSize={InputSize.i160}
               />
             )}
           />
 
           <p>%</p>
-        </Field>
-        <Field flex>
+        </FormGroup>
+
+        <FormGroup>
           <Controller
             control={control}
             {...register("jcJpDanga")}
             render={({ field: { onChange, value, name } }) => (
               <Input
                 label="적용단가"
+                labelStyle={{ minWidth: "90px" }}
                 value={value}
                 onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
-                inputSize={InputSize.i130}
+                inputSize={InputSize.i160}
                 name={name}
               />
             )}
           />
           <p>원</p>
-        </Field>
+        </FormGroup>
         <DividerGray />
-        <Field flex>
+        <FormGroup>
           <Input
             label="기초재고"
+            labelStyle={{ minWidth: "90px" }}
             register={register("jcBasicJaego")}
             kind={FieldKind.BORDER}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i160}
             textAlign="right"
           />
           <p>개</p>
-        </Field>
+        </FormGroup>
         <FormGroup>
-          <Label>사용상태</Label>
+          <Label style={{ minWidth: "90px" }}>사용상태</Label>
           <Select
             register={register("jcJpState")}
             kind={FieldKind.BORDER}
-            width={InputSize.i130}
+            width={InputSize.i160}
           >
             {dataCommonDic?.jcJpState?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
@@ -257,40 +268,6 @@ const FORMCM1106 = React.forwardRef(
             ))}
           </Select>
         </FormGroup>
-
-        <Field flex style={{ justifyContent: "center", marginTop: "20px" }}>
-          {/* <Button
-            text="선택"
-            icon={<SmallWhiteTick />}
-            style={{
-              background: "#5284CE",
-              marginRight: "20px",
-              border: "1px solid #5284CE",
-              borderRadius: "999px",
-              height: "28px",
-              minWidth: "60px",
-              padding: "0 15px",
-            }}
-            type="button"
-            withoutLine
-          />
-          <Button
-            text="취소"
-            icon={<SmallWhiteClose />}
-            style={{
-              background: "#707070",
-              marginRight: "5px",
-              border: "1px solid #707070",
-              borderRadius: "999px",
-              height: "28px",
-              minWidth: "60px",
-              padding: "0 15px",
-              fontSize: "14px",
-            }}
-            type="button"
-            withoutLine
-          /> */}
-        </Field>
       </form>
     );
   }

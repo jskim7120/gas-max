@@ -1,10 +1,10 @@
 import { ValueType } from "realgrid";
 
 export const fields2 = [
-  //   {
-  //     fieldName: "areaCode",
-  //     dataType: ValueType.TEXT,
-  //   },
+  {
+    fieldName: "areaCode",
+    dataType: ValueType.TEXT,
+  },
   {
     fieldName: "jcCuCode",
     dataType: ValueType.TEXT,
@@ -30,25 +30,21 @@ export const fields2 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "jcTdaemKumn",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuTongKum",
+    fieldName: "jcLastdate5",
     dataType: ValueType.TEXT,
   },
 ];
 
 export const columns2 = [
-  //   {
-  //     name: "areaCode",
-  //     fieldName: "areaCode",
-  //     type: "data",
-  //     width: "100",
-  //     header: {
-  //       text: "영업소",
-  //     },
-  //   },
+  {
+    name: "areaCode",
+    fieldName: "areaCode",
+    type: "data",
+    width: "100",
+    header: {
+      text: "영업소",
+    },
+  },
   {
     name: "jcCuCode",
     fieldName: "jcCuCode",
@@ -108,18 +104,9 @@ export const columns2 = [
       text: "수량",
     },
   },
-  //   {
-  //     name: "jcTdaemKumn",
-  //     fieldName: "jcTdaemKumn",
-  //     type: "data",
-  //     width: "100",
-  //     header: {
-  //       text: "대여보증금",
-  //     },
-  //   },
   {
-    name: "cuTongKum",
-    fieldName: "cuTongKum",
+    name: "jcLastdate5",
+    fieldName: "jcLastdate5",
     type: "data",
     width: "100",
     styleName: "rg-left-column",

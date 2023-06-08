@@ -1,8 +1,9 @@
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Controller } from "react-hook-form";
 import { useForm } from "react-hook-form";
-import React, { useEffect, useState } from "react";
 import { useDispatch } from "app/store";
-import { openModal } from "app/state/modal/modalSlice";
+import { addCM1106, openModal } from "app/state/modal/modalSlice";
 import Table from "components/table";
 import { Input, Select, FormGroup } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
@@ -18,7 +19,13 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
   });
 
   const dispatch = useDispatch();
+  const cm1106 = useSelector((state: any) => state.modal.cm1106);
 
+  useEffect(() => {
+    if (cm1106.source === "AR1100" && cm1106.jpCode && cm1106.jpName) {
+      resetForm("jpName");
+    }
+  }, [cm1106.jpCode, cm1106.jpName]);
   useEffect(() => {
     if (data && Object.keys(data)?.length > 0) {
       resetForm("reset");
@@ -48,6 +55,16 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
         pjBigo: data?.pjBigo,
       });
     }
+    if ((type = "jpName")) {
+      reset((formValues) => ({
+        ...formValues,
+        pjJpName: cm1106.jpName,
+        pjJpCode: cm1106.jpCode,
+      }));
+    }
+  };
+  const openPopupCM1106 = async () => {
+    dispatch(openModal({ type: "cm1106Modal" }));
   };
 
   const data1 = [
@@ -79,6 +96,7 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
               alignItems: "center",
               paddingLeft: "3px",
             }}
+            onClick={openPopupCM1106}
           >
             <MagnifyingGlass />
           </span>
