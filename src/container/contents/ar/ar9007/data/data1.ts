@@ -1,10 +1,10 @@
 import { ValueType } from "realgrid";
 
 export const fields1 = [
-  //   {
-  //     fieldName: "areaCode",
-  //     dataType: ValueType.TEXT,
-  //   },
+  {
+    fieldName: "areaCode",
+    dataType: ValueType.TEXT,
+  },
   {
     fieldName: "jcCuCode",
     dataType: ValueType.TEXT,
@@ -34,21 +34,21 @@ export const fields1 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuTongKum",
+    fieldName: "jcLastdate5",
     dataType: ValueType.TEXT,
   },
 ];
 
 export const columns1 = [
-  //   {
-  //     name: "areaCode",
-  //     fieldName: "areaCode",
-  //     type: "data",
-  //     width: "100",
-  //     header: {
-  //       text: "영업소",
-  //     },
-  //   },
+  {
+    name: "areaCode",
+    fieldName: "areaCode",
+    type: "data",
+    width: "100",
+    header: {
+      text: "영업소",
+    },
+  },
   {
     name: "jcCuCode",
     fieldName: "jcCuCode",
@@ -94,27 +94,27 @@ export const columns1 = [
       text: "품명",
     },
   },
-  //   {
-  //     name: "yBokTmQty",
-  //     fieldName: "yBokTmQty",
-  //     type: "data",
-  //     width: "100",
-  //     header: {
-  //       text: "수량",
-  //     },
-  //   },
-  //   {
-  //     name: "jcTdaemKumn",
-  //     fieldName: "jcTdaemKumn",
-  //     type: "data",
-  //     width: "100",
-  //     header: {
-  //       text: "대여보증금",
-  //     },
-  //   },
   {
-    name: "cuTongKum",
-    fieldName: "cuTongKum",
+    name: "yBokTmQty",
+    fieldName: "yBokTmQty",
+    type: "data",
+    width: "100",
+    header: {
+      text: "유상",
+    },
+  },
+  {
+    name: "jcTdaemKumn",
+    fieldName: "jcTdaemKumn",
+    type: "data",
+    width: "100",
+    header: {
+      text: "무상",
+    },
+  },
+  {
+    name: "jcLastdate5",
+    fieldName: "jcLastdate5",
     type: "data",
     width: "100",
     header: {

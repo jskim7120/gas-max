@@ -48,7 +48,7 @@ function AR9001({
   });
 
   useEffect(() => {
-    if (dataCommonDic?.dataInit) {
+    if (dataCommonDic && dataCommonDic?.dataInit) {
       resetForm("reset");
     }
   }, [dataCommonDic]);
