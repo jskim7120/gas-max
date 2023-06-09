@@ -72,17 +72,15 @@ function AR9001({
     );
   };
 
-  const submit = (params: ISEARCH) => {
-    params.sDate = DateWithoutDash(params.sDate);
-    params.eDate = DateWithoutDash(params.eDate);
-
-    fetchData(params);
+  const submit = (data: ISEARCH) => {
+    data.sDate = DateWithoutDash(data.sDate);
+    data.eDate = DateWithoutDash(data.eDate);
+    fetchData(data);
   };
 
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init: any = dataCommonDic.dataInit[0];
-
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
         sDate: init?.sDate,
