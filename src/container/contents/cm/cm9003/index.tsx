@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useDispatch } from "app/store";
+import CreateReport from "app/hook/createReport";
 import { CM9003SEARCH } from "app/path";
-import { apiGet } from "app/axios";
 import { ISEARCH } from "./model";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -32,60 +30,23 @@ function CM9003({
   menuId: string;
   areaCode: string;
 }) {
-  const dispatch = useDispatch();
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("CM", "CM9003", menuId, CM9003SEARCH);
 
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
-
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>({});
-  const [reportKind, setReportKind] = useState("");
-
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  useEffect(() => {
-    getCommonDictionary({ groupId: "CM", functionName: "CM9003" });
-  }, []);
-
-  useEffect(() => {
-    resetForm();
-  }, [dataCommonDic]);
-
-  useEffect(() => {
-    if (Object.keys(selected)?.length > 0) {
-      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
-    }
-  }, [selected]);
-
-  const fetchData = async (params: any) => {
-    let paramTemp: any = {};
-    for (const [key, value] of Object.entries(params)) {
-      if (value !== "" && value !== undefined) {
-        paramTemp = { ...paramTemp, [key]: value };
-      }
-    }
-
-    setLoading(true);
-    const data = await apiGet(CM9003SEARCH, paramTemp);
-    if (data) {
-      setData(data);
-    } else {
-      setData([]);
-    }
-    setLoading(false);
-  };
-
-  const submit = (params: ISEARCH) => {
-    params.sDate = DateWithoutDash(params.sDate);
-    params.eDate = DateWithoutDash(params.eDate);
-    fetchData(params);
-  };
-
   const resetForm = () => {
-    if (dataCommonDic !== undefined) {
+    if (dataCommonDic) {
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
         reportKind: dataCommonDic?.reportKind[0].code,
@@ -94,12 +55,34 @@ function CM9003({
         swCode: dataCommonDic?.swCode[0].code,
         cuCutype: dataCommonDic?.cuCutype[0].code,
       });
-      setReportKind(dataCommonDic?.reportKind[0].code);
     }
   };
-  const cancel = () => {
+
+  useEffect(() => {
+    if (selected && Object.keys(selected)?.length > 0) {
+      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    resetForm();
+  }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("reportKind")) {
+      setData([]);
+    }
+  }, [watch("reportKind")]);
+
+  const handleReset = () => {
     resetForm();
     setData([]);
+  };
+
+  const submit = (data: ISEARCH) => {
+    data.sDate = DateWithoutDash(data.sDate);
+    data.eDate = DateWithoutDash(data.eDate);
+    fetchData(data);
   };
 
   return (
@@ -144,7 +127,7 @@ function CM9003({
                 icon={<ResetGray color="#707070" />}
                 type="button"
                 color={ButtonColor.LIGHT}
-                onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
@@ -163,9 +146,8 @@ function CM9003({
               <FormGroup>
                 <Label style={{ minWidth: "90px" }}>보고서 종류</Label>
                 <Select
-                  value={reportKind}
+                  register={register("reportKind")}
                   width={InputSize.i130}
-                  onChange={(e) => setReportKind(e.target.value)}
                 >
                   {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -244,7 +226,7 @@ function CM9003({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        {reportKind === "0" && (
+        {watch("reportKind") === "0" ? (
           <Grid
             areaCode={areaCode}
             data={data}
@@ -252,12 +234,11 @@ function CM9003({
             fields={fields0}
             columns={columns0}
             menuId={menuId}
-            rowIndex={0}
+            rowIndex={data?.length > 1 ? data.length - 1 : 0}
             style={{ height: `calc(100% - 38px)` }}
             //evenFill
           />
-        )}
-        {reportKind === "1" && (
+        ) : watch("reportKind") === "1" ? (
           <Grid
             areaCode={areaCode}
             data={data}
@@ -265,12 +246,11 @@ function CM9003({
             fields={fields1}
             columns={columns1}
             menuId={menuId}
-            rowIndex={0}
+            rowIndex={data?.length > 1 ? data.length - 1 : 0}
             style={{ height: `calc(100% - 38px)` }}
             //evenFill
           />
-        )}
-        {reportKind === "2" && (
+        ) : watch("reportKind") === "2" ? (
           <Grid
             areaCode={areaCode}
             data={data}
@@ -278,12 +258,11 @@ function CM9003({
             fields={fields2}
             columns={columns2}
             menuId={menuId}
-            rowIndex={0}
+            rowIndex={data?.length > 1 ? data.length - 1 : 0}
             style={{ height: `calc(100% - 38px)` }}
             //evenFill
           />
-        )}
-        {reportKind === "3" && (
+        ) : watch("reportKind") === "3" ? (
           <Grid
             areaCode={areaCode}
             data={data}
@@ -291,12 +270,11 @@ function CM9003({
             fields={fields3}
             columns={columns3}
             menuId={menuId}
-            rowIndex={0}
+            rowIndex={data?.length > 1 ? data.length - 1 : 0}
             style={{ height: `calc(100% - 38px)` }}
             //evenFill
           />
-        )}
-        {reportKind === "4" && (
+        ) : watch("reportKind") === "4" ? (
           <Grid
             areaCode={areaCode}
             data={data}
@@ -304,12 +282,11 @@ function CM9003({
             fields={fields4}
             columns={columns4}
             menuId={menuId}
-            rowIndex={0}
+            rowIndex={data?.length > 1 ? data.length - 1 : 0}
             style={{ height: `calc(100% - 38px)` }}
             // evenFill
           />
-        )}
-        {reportKind === "5" && (
+        ) : watch("reportKind") === "5" ? (
           <Grid
             areaCode={areaCode}
             data={data}
@@ -317,23 +294,24 @@ function CM9003({
             fields={fields5}
             columns={columns5}
             menuId={menuId}
-            rowIndex={0}
+            rowIndex={data?.length > 1 ? data.length - 1 : 0}
             style={{ height: `calc(100% - 38px)` }}
             // evenFill
           />
-        )}
-        {reportKind === "6" && (
-          <Grid
-            areaCode={areaCode}
-            data={data}
-            setSelected={setSelected}
-            fields={fields6}
-            columns={columns6}
-            menuId={menuId}
-            rowIndex={0}
-            style={{ height: `calc(100% - 38px)` }}
-            // evenFill
-          />
+        ) : (
+          watch("reportKind") === "6" && (
+            <Grid
+              areaCode={areaCode}
+              data={data}
+              setSelected={setSelected}
+              fields={fields6}
+              columns={columns6}
+              menuId={menuId}
+              rowIndex={data?.length > 1 ? data.length - 1 : 0}
+              style={{ height: `calc(100% - 38px)` }}
+              // evenFill
+            />
+          )
         )}
       </WrapperContent>
     </>

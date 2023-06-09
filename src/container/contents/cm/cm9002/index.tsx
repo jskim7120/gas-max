@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
-import { useDispatch } from "app/store";
 import { CM9002SEARCH } from "app/path";
 import { ICM9002SEARCH } from "./model";
-import { apiGet } from "app/axios";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import CheckBox from "components/checkbox";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import {
@@ -57,16 +54,6 @@ function CM9002({
         const init = dataCommonDic.dataInit[0];
         reset({
           areaCode: dataCommonDic?.areaCode[0].code,
-          // reportKind: dataCommonDic?.reportKind[0].code,
-          // cuType: dataCommonDic?.cuType[0].code,
-          // cuGumsa: dataCommonDic?.cuGumsa[0].code,
-          // cuJyCode: dataCommonDic?.cuJyCode[0].code,
-          // swCode: dataCommonDic?.swCode[0].code,
-          // cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
-          // cuCutype: dataCommonDic?.cuCutype[0].code,
-          // cuStae: dataCommonDic?.cuStae[0].code,
-          // cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
-
           reportKind: init?.reportKind,
           cuType: init?.cuType,
           cuGumsa: init?.cuGumsa,
@@ -90,25 +77,20 @@ function CM9002({
   }, [selected]);
 
   useEffect(() => {
-    if (dataCommonDic?.dataInit) {
+    if (dataCommonDic && dataCommonDic?.dataInit) {
       resetForm("reset");
     }
   }, [dataCommonDic]);
 
-  // const cancel = () => {
-  //   resetForm();
-  //   setDataChk(true);
-  //   setData([]);
-  // };
   const handleReset = () => {
     if (dataCommonDic?.dataInit) {
       resetForm("reset");
     }
+    setData([]);
     setDataChk(true);
   };
 
   const submit = (data: ICM9002SEARCH) => {
-    console.log("IISEARCH:", data);
     fetchData(data);
   };
 
@@ -148,19 +130,16 @@ function CM9002({
                     </>
                   )
                 }
-                style={{ minWidth: "max-content" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ minWidth: "max-content" }}
                 type="button"
                 color={ButtonColor.LIGHT}
                 onClick={handleReset}
               />
               <Button
                 text="엑셀"
-                style={{ minWidth: "max-content" }}
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
