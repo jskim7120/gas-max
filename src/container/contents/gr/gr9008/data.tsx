@@ -41,6 +41,11 @@ export const columns = [
     header: {
       text: "매입처명",
     },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("areaCode", "count");
+      },
+    },
   },
   {
     name: "areaCode",

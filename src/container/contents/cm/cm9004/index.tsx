@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CM9004SEARCH } from "app/path";
@@ -10,7 +10,7 @@ import { Select, FormGroup, Wrapper, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
@@ -33,12 +33,24 @@ function CM9004({
     dispatch,
     dataCommonDic,
   } = CreateReport("CM", "CM9004", menuId, CM9004SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
+  // const dispatch = useDispatch();
+  // const [loading, setLoading] = useState(false);
+  // const [data, setData] = useState([]);
+  // const [selected, setSelected] = useState<any>({});
   const [cuSekyn, setCuSekyn] = useState("N");
+
+  // const [getCommonDictionary, { data: dataCommonDic }] =
+  //   useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+
+  // useEffect(() => {
+  //   getCommonDictionary({ groupId: "CM", functionName: "CM9004" });
+  // }, []);
 
   useEffect(() => {
     if (Object.keys(selected)?.length > 0) {
@@ -49,6 +61,26 @@ function CM9004({
   useEffect(() => {
     resetForm();
   }, [dataCommonDic]);
+
+  // const fetchData = async (params: any) => {
+  //   params.cuSekumyn = cuSekyn;
+  //   let paramTemp: any = {};
+  //   for (const [key, value] of Object.entries(params)) {
+  //     if (value !== "" && value !== undefined) {
+  //       paramTemp = { ...paramTemp, [key]: value };
+  //     }
+  //   }
+
+  //   setLoading(true);
+  //   const data = await apiGet(CM9004SEARCH, paramTemp);
+
+  //   if (data) {
+  //     setData(data);
+  //   } else {
+  //     setData([]);
+  //   }
+  //   setLoading(false);
+  // };
 
   const submit = (data: ISEARCH) => {
     fetchData(data);
@@ -67,6 +99,10 @@ function CM9004({
     }
   };
 
+  // const cancel = () => {
+  //   resetForm();
+  //   setData([]);
+  // };
   const handleReset = () => {
     resetForm();
     setData([]);
@@ -121,6 +157,7 @@ function CM9004({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -132,7 +169,11 @@ function CM9004({
             <Wrapper grid col={6}>
               <FormGroup>
                 <Label style={{ minWidth: "auto" }}>공급 사업</Label>
-                <Select register={register("cuGong")} style={{ width: "100%" }}>
+                <Select
+                  register={register("cuGong")}
+                  style={{ width: "100%" }}
+                  // onChange={(e) => setReportKind(e.target.value)}
+                >
                   {dataCommonDic?.cuGong?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -210,15 +251,15 @@ function CM9004({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        <Grid
+        <BasicGrid
+          ref={gridRef}
           areaCode={areaCode}
           data={data}
-          setSelected={setSelected}
           fields={fields}
           columns={columns}
           menuId={menuId}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: `calc(100% - 38px)` }}
+          style={{ height: `calc(100% - 66px)` }}
           evenFill
         />
       </WrapperContent>

@@ -12,6 +12,8 @@ const Grid = React.forwardRef(
       evenFill,
       layout,
       rowIndex,
+      gridChangeField,
+      menuId,
     }: {
       areaCode?: string;
       data: any;
@@ -21,6 +23,8 @@ const Grid = React.forwardRef(
       evenFill?: boolean;
       layout?: any;
       rowIndex: number | undefined;
+      gridChangeField?: any;
+      menuId: string;
     },
     ref: any
   ) => {
@@ -70,7 +74,7 @@ const Grid = React.forwardRef(
         gv.destroy();
         dp.destroy();
       };
-    }, [data]);
+    }, [data, gridChangeField && gridChangeField]);
 
     const saveToExcel = () => {
       if (data && data?.length > 0) {
@@ -80,7 +84,7 @@ const Grid = React.forwardRef(
           gv.exportGrid({
             type: "excel",
             target: "local",
-            fileName: "grid.xlsx",
+            fileName: `${menuId}.xlsx`,
             progressMessage: "엑셀 Export중입니다.",
             //done: function () {},
           });

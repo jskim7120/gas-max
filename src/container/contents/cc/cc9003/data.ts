@@ -41,6 +41,11 @@ export const columns = [
     header: {
       text: "합계",
     },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("areaCode", "count");
+      },
+    },
   },
   {
     name: "sumCha",

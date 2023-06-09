@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CM9002SEARCH } from "app/path";
@@ -18,7 +18,7 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
@@ -41,6 +41,7 @@ function CM9002({
     dispatch,
     dataCommonDic,
   } = CreateReport("CM", "CM9002", menuId, CM9002SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const [dataChk, setDataChk] = useState(true);
 
@@ -143,6 +144,7 @@ function CM9002({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -324,15 +326,15 @@ function CM9002({
       </form>
 
       <WrapperContent style={{ height: `calc(100% - 76px)` }}>
-        <Grid
+        <BasicGrid
+          ref={gridRef}
           areaCode={areaCode}
           data={data}
           columns={columns}
           fields={fields}
           menuId={menuId}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          setSelected={setSelected}
-          style={{ height: `calc(100% - 15px)` }}
+          style={{ height: `calc(100% - 12px)` }}
           evenFill
         />
       </WrapperContent>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { AR9008SEARCH } from "app/path";
@@ -44,6 +44,7 @@ function AR9008({
     dispatch,
     dataCommonDic,
   } = CreateReport("AR", "AR9008", menuId, AR9008SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -130,6 +131,7 @@ function AR9008({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -201,6 +203,8 @@ function AR9008({
         </SearchWrapper>
       </form>
       <BasicGrid
+        menuId={menuId}
+        ref={gridRef}
         areaCode={ownAreaCode}
         columns={columns}
         fields={fields}

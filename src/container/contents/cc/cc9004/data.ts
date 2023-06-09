@@ -33,6 +33,11 @@ export const columns = [
     header: {
       text: " 계정 과목",
     },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("areaCode", "count");
+      },
+    },
   },
   {
     name: "toCha",

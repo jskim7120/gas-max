@@ -189,7 +189,7 @@ function CC9003({
             columns={columns}
             menuId={menuId}
             rowIndex={0}
-            style={{ height: `calc(100% - 38px)` }}
+            style={{ height: `calc(100% - 47px)` }}
             layout={layout}
           />
         </LeftSide>

@@ -156,7 +156,7 @@ function GR9008({
           fields={fields}
           menuId={menuId}
           rowIndex={0}
-          style={{ height: `calc(100% - 35px)` }}
+          style={{ height: `calc(100% - 47px)` }}
         />
       </WrapperContent>
     </>

@@ -264,23 +264,25 @@ function AR9001({
       </form>
       {watch("reportKind") === "1" ? (
         <BasicGrid
+          menuId={menuId}
           ref={gridRef}
           areaCode={ownAreaCode}
           columns={columns1}
           fields={fields1}
           data={data}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: "calc(100% - 52px)" }}
+          style={{ height: "calc(100% - 88px)" }}
         />
       ) : (
         <BasicGrid
+          menuId={menuId}
           ref={gridRef}
           areaCode={ownAreaCode}
           columns={columns0}
           fields={fields0}
           data={data}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: "calc(100% - 52px)" }}
+          style={{ height: "calc(100% - 88px)" }}
         />
       )}
     </>
