@@ -36,6 +36,7 @@ function AR9004({
   const {
     data,
     data2,
+    data3,
     selected,
     selected2,
     loading,
@@ -54,7 +55,6 @@ function AR9004({
   });
 
   const infoState = useSelector((state) => state.footer.info);
-  console.log("infoSatte:", infoState);
 
   useEffect(() => {
     document.getElementById("footerSearchId")?.focus();
@@ -72,6 +72,20 @@ function AR9004({
       resetFromFooter();
     }
   }, [infoState]);
+
+  useEffect(() => {
+    if (data3 && Object.keys(data3).length > 0) {
+      reset2((formValues) => ({
+        ...formValues,
+        cuZipCode: data3?.cuZipcode,
+        cuName: data3?.cuName,
+        cuAddr1: data3?.cuAddr1,
+        cuAddr2: data3?.cuAddr2,
+        cuJyname: data3?.cuJyname,
+        cuCutype: data3?.cuCutype,
+      }));
+    }
+  }, [data3]);
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -113,12 +127,6 @@ function AR9004({
       areaCode: infoState?.areaCode,
       cuCode: infoState?.cuCode,
     }));
-
-    //cuName: infoState?.cuName
-    // cuZipCode
-    // cuAddr2
-    // cuJyname
-    // cuCutype
 
     reset2({
       cuTel: infoState?.cuTel,

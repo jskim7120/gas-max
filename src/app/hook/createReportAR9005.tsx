@@ -17,6 +17,7 @@ function CreateReportAR9005(
 
   const [data, setData] = useState<Array<any>>([]);
   const [data2, setData2] = useState<Array<any>>([]);
+  const [data3, setData3] = useState<any>({});
 
   const [selected, setSelected] = useState<any>({});
   const [selected2, setSelected2] = useState<any>({});
@@ -50,9 +51,16 @@ function CreateReportAR9005(
         setData2([]);
         setSelected2({});
       }
+
+      if (dataS?.custData && dataS?.custData?.length > 0) {
+        setData3(dataS.custData[0]);
+      } else {
+        setData3({});
+      }
     } else {
       setData([]);
       setData2([]);
+      setData3({});
       setSelected({});
       setSelected2({});
     }
@@ -62,6 +70,7 @@ function CreateReportAR9005(
   return {
     data,
     data2,
+    data3,
     selected,
     selected2,
     loading,

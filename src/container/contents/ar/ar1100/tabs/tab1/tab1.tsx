@@ -3,16 +3,26 @@ import { useSelector } from "react-redux";
 import { Controller } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "app/store";
-import { addCM1106, openModal } from "app/state/modal/modalSlice";
+import { openModal } from "app/state/modal/modalSlice";
 import Table from "components/table";
 import { Input, Select, FormGroup } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
-import { IAR110065DETAIL } from "../model";
+import { IAR110065DETAIL } from "./model";
 
-function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
+function Tab1({
+  data,
+  dictionary,
+  isAddBtnClicked,
+  setIsAddBtnClicked,
+}: {
+  data: any;
+  dictionary: any;
+  isAddBtnClicked: boolean;
+  setIsAddBtnClicked: Function;
+}) {
   const [loading, setLoading] = useState<boolean>(false);
   const { register, handleSubmit, reset, control } = useForm<IAR110065DETAIL>({
     mode: "onSubmit",
@@ -33,7 +43,7 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
   }, [data]);
 
   const resetForm = (type: string) => {
-    if ((type = "reset")) {
+    if (type === "reset") {
       reset({
         pjDate: data?.pjDate,
         pjJpCode: data?.pjJpCode,
@@ -55,7 +65,7 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
         pjBigo: data?.pjBigo,
       });
     }
-    if ((type = "jpName")) {
+    if (type === "jpName") {
       reset((formValues) => ({
         ...formValues,
         pjJpName: cm1106.jpName,
@@ -73,15 +83,23 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
         <Controller
           control={control}
           {...register("pjDate")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker value={value} onChange={onChange} name={name} />
+          render={({ field }) => (
+            <CustomDatePicker
+              {...field}
+              readOnly={!isAddBtnClicked}
+              style={{ margin: "1px 0 0 0" }}
+            />
           )}
         />
       ),
       2: (
         <FormGroup style={{ position: "relative" }}>
-          <Input register={register("pjJpCode")} inputSize={InputSize.i70} />
-          <Input register={register("pjJpName")} />
+          <Input
+            register={register("pjJpCode")}
+            inputSize={InputSize.i70}
+            readOnly={!isAddBtnClicked}
+          />
+          <Input register={register("pjJpName")} readOnly={!isAddBtnClicked} />
           <span
             style={{
               width: "22px",
@@ -96,7 +114,7 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
               alignItems: "center",
               paddingLeft: "3px",
             }}
-            onClick={openPopupCM1106}
+            onClick={isAddBtnClicked ? openPopupCM1106 : undefined}
           >
             <MagnifyingGlass />
           </span>
@@ -107,13 +125,15 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
       5: <Input register={register("pjJago")} inputSize={InputSize.i100} />,
       6: <Input register={register("pjDanga")} inputSize={InputSize.i100} />,
       7: (
-        <Select register={register("pjVatDiv")} width={InputSize.i100}>
-          {dictionary?.pjVatDiv?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
+        <FormGroup>
+          <Select register={register("pjVatDiv")} width={InputSize.i100}>
+            {dictionary?.pjVatDiv?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
       ),
       8: <Input register={register("pjKumSup")} inputSize={InputSize.i100} />,
       9: <Input register={register("pjKumVat")} inputSize={InputSize.i100} />,
@@ -124,57 +144,65 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
   const data2 = [
     {
       1: (
-        <Select register={register("saleState")} width={InputSize.i100}>
-          {dictionary?.saleType?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
+        <FormGroup>
+          <Select register={register("saleState")} width={InputSize.i100}>
+            {dictionary?.saleType?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
       ),
       2: (
-        <Select register={register("proxyType")} width={InputSize.i100}>
-          {dictionary?.proxyType?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
+        <FormGroup>
+          <Select register={register("proxyType")} width={InputSize.i100}>
+            {dictionary?.proxyType?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
       ),
       3: <Input register={register("buName")} />,
       4: (
-        <Select register={register("pjInkumtype")} width={InputSize.i100}>
-          {dictionary?.pjInkumtype?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
+        <FormGroup>
+          <Select register={register("pjInkumtype")} width={InputSize.i100}>
+            {dictionary?.pjInkumtype?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
       ),
       5: <Input register={register("pjInkum")} />,
       6: <Input register={register("pjDc")} />,
       7: <Input register={register("pjMisukum")} />,
       8: (
-        <Select register={register("pjSwCode")} width={InputSize.i100}>
-          {dictionary?.pjSwCode?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
+        <FormGroup>
+          <Select register={register("pjSwCode")} width={InputSize.i100}>
+            {dictionary?.pjSwCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
       ),
       9: <Input register={register("pjBigo")} />,
       10: (
-        <>
+        <FormGroup>
           <Input register={register("signuser")} />
           <Input register={register("signkey")} />
-        </>
+        </FormGroup>
       ),
     },
   ];
   return (
-    <div style={{ display: "flex", gap: "15px" }}>
-      <div>
+    <div style={{ display: "flex", gap: "15px" }} className="tab1">
+      <form autoComplete="off">
         <Table
           className="no-space"
           tableHeader={[
@@ -190,7 +218,6 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
             "합계금액",
           ]}
           tableData={data1}
-          onClick={(item) => console.log("table", item)}
           style={{ marginBottom: "2px" }}
         />
         <Table
@@ -208,9 +235,8 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
             "확인자 서명",
           ]}
           tableData={data2}
-          onClick={(item) => console.log("table", item)}
         />
-      </div>
+      </form>
       <div>
         <Button
           text="저장"
