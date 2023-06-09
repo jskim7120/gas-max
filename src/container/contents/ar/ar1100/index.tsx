@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useSelector, useDispatch } from "app/store";
+import { useSelector } from "app/store";
 import { apiGet } from "app/axios";
 import { AR1100SEARCH, AR1100SELECT } from "app/path";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import {
   Plus,
   Trash,
@@ -12,6 +11,8 @@ import {
   MagnifyingGlass,
   ResetGray,
 } from "components/allSvgIcon";
+import { addCM1106 } from "app/state/modal/modalSlice";
+import CreateReport from "app/hook/createReport";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { Select, Label, FormGroup, Input } from "components/form/style";
@@ -26,7 +27,6 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { fields, columns } from "./data";
 import { IAR1100SEARCH } from "./model";
 import getTabContent from "./getTabContent";
-import { addCM1106 } from "app/state/modal/modalSlice";
 
 function AR1100({
   depthFullName,
@@ -37,24 +37,27 @@ function AR1100({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
-  const dispatch = useDispatch();
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("AR", "AR1100", menuId, AR1100SEARCH);
 
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>({});
+  const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
+
   const [data65, setData65] = useState({});
   const [data65Dictionary, setData65Dictionary] = useState({});
   const [tabId, setTabId] = useState(0);
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
   const { register, handleSubmit, reset, control } = useForm<IAR1100SEARCH>({
     mode: "onSubmit",
   });
-
-  useEffect(() => {
-    getCommonDictionary({ groupId: "AR", functionName: "AR1100" });
-  }, []);
 
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
@@ -81,21 +84,6 @@ function AR1100({
       );
     }
   }, [selected]);
-
-  const fetchData = async (params: any) => {
-    setLoading(true);
-    const res = await apiGet(AR1100SEARCH, params);
-
-    if (res && res?.length > 0) {
-      setData(res);
-      setSelected(res[0]);
-    } else {
-      setData([]);
-      setSelected({});
-    }
-
-    setLoading(false);
-  };
 
   const fetchData65 = async (params: any) => {
     const res = await apiGet(AR1100SELECT, params);
@@ -147,7 +135,10 @@ function AR1100({
     fetchData(params);
   };
 
-  const handleClickBtnAdd = () => {};
+  const handleClickBtnAdd = () => {
+    btnRef1.current.classList.add("active");
+    setIsAddBtnClicked(true);
+  };
 
   return (
     <>
@@ -166,7 +157,12 @@ function AR1100({
             </>
           )}
           <div className="buttons ml30">
-            <Button text="등록" icon={<Plus />} onClick={handleClickBtnAdd} />
+            <Button
+              text="등록"
+              icon={<Plus />}
+              onClick={handleClickBtnAdd}
+              ref={btnRef1}
+            />
             <Button text="삭제" icon={<Trash />} onClick={() => {}} />
 
             <Button
@@ -188,13 +184,7 @@ function AR1100({
                 <Controller
                   control={control}
                   {...register("sDate")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
+                  render={({ field }) => <CustomDatePicker {...field} />}
                 />
                 <Input
                   register={register("sCustomer")}
@@ -271,37 +261,37 @@ function AR1100({
                   거래 상태
                 </Label>
                 <CheckBox
-                  register={{ ...register("sSalestate0") }}
+                  register={register("sSalestate0")}
                   title="접수"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate1") }}
+                  register={register("sSalestate1")}
                   title="배송중"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate2") }}
+                  register={register("sSalestate2")}
                   title="완료"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate3") }}
+                  register={register("sSalestate3")}
                   title="예약"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate4") }}
+                  register={register("sSalestate4")}
                   title="취소"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate5") }}
+                  register={register("sSalestate5")}
                   title="연기"
                   rtl
                   style={{ width: "80px" }}
@@ -310,31 +300,31 @@ function AR1100({
                   거래 구분
                 </Label>
                 <CheckBox
-                  register={{ ...register("sSalegubun0") }}
+                  register={register("sSalegubun0")}
                   title="중량"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalegubun1") }}
+                  register={register("sSalegubun1")}
                   title="체적"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalegubun2") }}
+                  register={register("sSalegubun2")}
                   title="용기"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalegubun3") }}
+                  register={register("sSalegubun3")}
                   title="기구"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalegubun4") }}
+                  register={register("sSalegubun4")}
                   title="A/S"
                   rtl
                   style={{ width: "80px" }}
@@ -373,7 +363,13 @@ function AR1100({
         />
 
         <TabContentWrapper>
-          {getTabContent(tabId, data65, data65Dictionary)}
+          {getTabContent(
+            tabId,
+            data65,
+            data65Dictionary,
+            isAddBtnClicked,
+            setIsAddBtnClicked
+          )}
         </TabContentWrapper>
       </WrapperContent>
     </>
