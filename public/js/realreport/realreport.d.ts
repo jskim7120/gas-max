@@ -1,21 +1,20 @@
+/// <reference types="pdfkit" />
 /// <reference types="node" />
 /** 
-* RealReport v1.4.1
-* commit cfce98e
+* RealReport v1.7.1
+* commit c679afc
 
-* Copyright (C) 2013-2022 WooriTech Inc.
+* Copyright (C) 2013-2023 WooriTech Inc.
 	https://real-report.com
 * All Rights Reserved.
 */
 
 /** 
-* RealReport Core v1.4.1
-* Copyright (C) 2013-2022 WooriTech Inc.
+* RealReport Core v1.7.1
+* Copyright (C) 2013-2023 WooriTech Inc.
 * All Rights Reserved.
-* commit e90b28d0b4dcc8900f90b18868af46c321368e38
+* commit 56a210fb76e4d63b35b52c50072d73d1e55e61c3
 */
-
-
 declare const enum Cursor$1 {
     DEFAULT = "default",
     AUTO = "auto",
@@ -49,8 +48,8 @@ declare enum PrintUnit {
     CENTCH = "cm",
     MILLI = "mm"
 }
-declare type ValueString = string | number;
-declare type Styles = {
+type ValueString = string | number;
+type Styles = {
     [key: string]: string;
 };
 /**
@@ -72,9 +71,11 @@ declare class Dimension {
     equals(other: any): boolean;
     toString(): string;
     getValue(): any;
+    getValueNull(): any;
     getPixel(domain: number): number;
     getFixedPixel(): number;
     $_getPixel(): number;
+    getFixedInch(): number;
 }
 /**
  * 상수로 다룬다.
@@ -111,6 +112,16 @@ declare enum PageBreakMode {
     AFTER = "after",
     BOTH = "both"
 }
+declare enum LinkTarget {
+    SELF = "_self",
+    BLANK = "_blank",
+    PARENT = "_parent",
+    TOP = "_top"
+}
+declare enum PaperOrientation {
+    PORTRAIT = "portrait",
+    LANDSCAPE = "landscape"
+}
 declare enum ResizeDirection {
     LEFT = "left",
     RIGHT = "right",
@@ -136,8 +147,63 @@ interface FindOptions {
     regularExpression?: boolean;
     inSelection?: boolean;
 }
+declare enum BoxItemsAlign {
+    START = "start",
+    MIDDLE = "middle",
+    END = "end"
+}
+declare enum AnchorPosition {
+    CENTER = "center",
+    LEFT = "left",
+    RIGHT = "right",
+    TOP = "top",
+    BOTTOM = "bottom",
+    INNER_LEFT = "innerLeft",
+    INNER_RIGHT = "innerRight",
+    INNER_TOP = "innerTop",
+    INNER_BOTTOM = "innerBottom"
+}
+declare enum HichartStacking {
+    NORMAL = "normal",
+    PERCENT = "percent"
+}
+declare enum HichartDash {
+    DASH = "Dash",
+    DASH_DOT = "DashDot",
+    DOT = "Dot",
+    LONG_DASH = "LongDash",
+    LONG_DASH_DOT = "LongDashDot",
+    LONG_DASH_DOT_DOT = "LongDashDotDot",
+    SHORT_DASH = "ShortDash",
+    SHORT_DASH_DOT = "ShortDashDot",
+    SHORT_DASH_DOT_DOT = "ShortDashDotDot",
+    SHORT_DOT = "ShortDot",
+    SOLID = "Solid"
+}
+declare enum HichartLegendLayout {
+    HORIZONTAL = "horizontal",
+    VERTICAL = "vertical",
+    PROXIMATE = "proximate"
+}
+declare enum BandSectionLayout {
+    ACROSS_DOWN = "acrossDown",
+    DOWN_ACROSS = "downAcross"
+}
+declare enum CrosstabSummary {
+    SUM = "sum",
+    AVG = "avg",
+    MIN = "min",
+    MAX = "max",
+    COUNT = "count",
+    DISTINCT = "distinct"
+}
+declare enum SectionInherit {
+    NONE = "none",
+    HEAD = "head",
+    PREVIOUS = "previous"
+}
 
-declare type ConfigObject$1 = {
+type ConfigObject$1 = {
     [key: string]: any;
 };
 /** @internal */
@@ -191,6 +257,12 @@ interface IPoint {
 interface IRect extends IPoint {
     width: number;
     height: number;
+}
+interface ISides {
+    left: number;
+    top: number;
+    right: number;
+    bottom: number;
 }
 /** @internal */
 declare class Rectangle$1 implements IRect {
@@ -761,6 +833,7 @@ declare abstract class VisualContainer$1 extends EventAware$1 implements VisualT
     private _saveDisplay;
     private $_testing;
     constructor(containerId: string | HTMLDivElement);
+    protected _initContainer(containerId: string | HTMLDivElement): void;
     protected _doDispose(): void;
     /** document */
     get doc(): Document;
@@ -884,7 +957,7 @@ declare abstract class VisualContainer$1 extends EventAware$1 implements VisualT
     private _focusHandlerFireFox;
 }
 
-declare type VisualElementCallback = (element: VisualElement$1, dom: HTMLElement) => void;
+type VisualElementCallback = (element: VisualElement$1, dom: HTMLElement) => void;
 /** @internal */
 declare abstract class VisualElement$1 extends EventAware$1 {
     private static readonly Testing;
@@ -1018,6 +1091,8 @@ declare abstract class VisualElement$1 extends EventAware$1 {
     hitTest(x: number, y: number): boolean;
     findChildAt(x: number, y: number, hitTesting: boolean, blockLayer: boolean): VisualElement$1;
     findChildOf(dom: Element): VisualElement$1;
+    internalSetX(x: number): void;
+    internalSetY(y: number): void;
     move(x: number, y: number, draw?: boolean): void;
     moveBy(dx: number, dy: number, draw?: boolean): void;
     resize(width: number, height: number, draw?: boolean): void;
@@ -1096,6 +1171,7 @@ declare abstract class PropertyItem extends Base$1 {
     hasColor(): boolean;
 }
 declare class PropertyGroup extends Base$1 {
+    static readonly $_ctor: string;
     private _label;
     private _items;
     private _pool;
@@ -1138,21 +1214,32 @@ declare class ListableProperty extends StringProperty {
 /**
  */
 declare class PageItemContainer extends BoundedContainer {
+    static readonly PROP_INHERIT = "inherit";
     static readonly $_ctor: string;
+    static readonly PROPINFOS: IPropInfo[];
+    private _inherit;
+    protected _inherited: boolean;
     private _label;
     constructor(name: string, label: string);
+    /**
+     * 이전 페이지 표시대로 출력한다.
+     */
+    get inherit(): SectionInherit;
+    set inherit(value: SectionInherit);
+    get inherited(): boolean;
     get outlineLabel(): string;
     get isArray(): boolean;
+    canNamed(): boolean;
+    canTagged(): boolean;
     canResize(dir: ResizeDirection): boolean;
+    canPageBreak(): boolean;
+    canHide(): boolean;
+    getMoveType(item: ReportItem): ItemMoveType;
     protected _doLoad(loader: IReportLoader, src: any): void;
     protected _doSave(target: object): void;
+    protected _getEditProps(): IPropInfo[];
 }
 
-declare enum BoxItemsAlign {
-    START = "start",
-    MIDDLE = "middle",
-    END = "end"
-}
 declare abstract class BoxContainer extends ReportGroupItem {
     static readonly PROP_ITEMS_ALIGN = "itemsAlign";
     static readonly PROP_ITEM_GAP = "itemGap";
@@ -1306,6 +1393,7 @@ declare class EditCommandStack$1 extends EventAware$1 {
  * 1. band는 body의 최상위 항목으로만 추가될 수 있다. 즉, 다른 항목의 자식이 될 수 없다.
  */
 declare class ReportPage extends ReportGroupItem implements IEventAware {
+    static readonly PROP_ORIENTATION = "orientation";
     static readonly ITEM_ADDED = "onPageItemAdded";
     static readonly ITEMS_ADDED = "onPageItemsAdded";
     static readonly ITEM_REMOVED = "onPageItemRemoved";
@@ -1313,7 +1401,10 @@ declare class ReportPage extends ReportGroupItem implements IEventAware {
     static readonly ITEM_CHANGED = "onPageItemChanged";
     static readonly COLLECTION_CHANGED = "onPageCollectionChanged";
     static readonly $_ctor: string;
+    static readonly PROPINFOS: IPropInfo[];
+    private _orientation;
     private _report;
+    private _pageIndex;
     private _events;
     private _nameMap;
     private _reportHeader;
@@ -1368,12 +1459,18 @@ declare class ReportPage extends ReportGroupItem implements IEventAware {
      * loading
      */
     get loading(): boolean;
+    /**
+     * orientation
+     */
+    get orientation(): PaperOrientation;
+    set orientation(value: PaperOrientation);
     getItem(name: string): ReportItem;
     removeItems(commands: EditCommandStack$1, items: ReportPageItem[]): number;
-    search(key: string, options: FindOptions, results: FindResult[]): void;
+    search(page: number, key: string, options: FindOptions, results: FindResult[]): void;
     get outlineLabel(): string;
     get pathLabel(): string;
     get page(): ReportPage;
+    outlineVisible(child: IOutlineSource): boolean;
     canMove(): boolean;
     getEditProps(): IPropInfo[];
     protected _getStyleProps(): string[];
@@ -1419,25 +1516,14 @@ declare class ReportPage extends ReportGroupItem implements IEventAware {
  */
 declare class PageBody extends PageSection {
     static readonly $_ctor: string;
-    private _backItems;
-    private _frontItems;
     private _bodyItems;
     constructor();
-    /**
-     * backItems
-     */
-    get backItems(): ReportItem[];
-    get backItemsContainer(): PageItemContainer;
-    /**
-     * frontItems
-     */
-    get frontItems(): ReportItem[];
-    get frontItemsContainer(): PageItemContainer;
     /**
      * items
      */
     get bodyItems(): ReportItem[];
     get itemsContainer(): ColumnBoxContainer;
+    get itemsAlign(): BoxItemsAlign;
     get outlineLabel(): string;
     canParentOf(itemType: string): boolean;
     canResize(dir: ResizeDirection): boolean;
@@ -1776,7 +1862,8 @@ declare class DesignDataManager extends EventAware$1 implements IReportDataProvi
     removeData(data: string | IReportData): IReportData;
     dataNameChanged(data: IReportData, oldName: string): void;
     fieldNameChanged?(data: IReportData, newName: string, oldName: string): void;
-    load(source: any): DesignDataManager;
+    clear(): DesignDataManager;
+    load(source: any, clear?: boolean): DesignDataManager;
     save(target: object): void;
     getFieldIndex(data: string, field: string): number;
     updateField(data: BandData, index: number, field: IBandDataField): void;
@@ -1816,6 +1903,7 @@ declare abstract class TableCellItem extends CellGroup {
 declare class TableRow extends ReportItemCollectionItem {
     static readonly PROP_HEIGHT = "height";
     private static readonly styleProps;
+    static readonly $_ctor: string;
     static readonly PROPINFOS: IPropInfo[];
     private _height;
     private _index;
@@ -1852,6 +1940,7 @@ declare class TableRowCollection extends ReportItemCollection<TableRow> {
     private _table;
     private _rows;
     private _heights;
+    static readonly $_ctor: string;
     constructor(table?: TableBase);
     get outlineParent(): IOutlineSource;
     get outlineLabel(): string;
@@ -1900,7 +1989,7 @@ declare class TableRowCollection extends ReportItemCollection<TableRow> {
     private $_invalidateRows;
     private $_rowChanged;
 }
-declare type TableCellStyleCallback = (ctx: PrintContext, cell: TableCell$1, row: number) => {
+type TableCellStyleCallback = (ctx: PrintContext, cell: TableCell$1, row: number) => {
     [key: string]: string | undefined;
 };
 /**
@@ -1914,6 +2003,7 @@ declare class TableCell$1 extends ReportItemCollectionItem {
     static readonly PROP_APPLY_END_STYLES = "applyEndStyles";
     static readonly PROP_ON_GET_STYLES = "onGetStyles";
     static readonly PROP_STYLE_CALLBACK = "styleCallback";
+    static readonly $_ctor: string;
     static readonly PROPINFOS: IPropInfo[];
     private static readonly styleProps;
     private _colspan;
@@ -1949,6 +2039,7 @@ declare class TableCell$1 extends ReportItemCollectionItem {
     set rowspan(value: number);
     /**
      * true면 span 됐을 때 마지막 셀에 해당하는 tableRowStyles, tableColumnStyles를 적용한다.
+     * autoMerge된 셀의 rowspan은 적용되지 않는다.
      */
     get applyEndStyles(): boolean;
     set applyEndStyles(value: boolean);
@@ -1999,6 +2090,7 @@ declare class TableCellCollection extends ReportItemCollection<TableCell$1> {
     private _table;
     private _cells;
     private _vcells;
+    static readonly $_ctor: string;
     constructor(table?: TableBase);
     get outlineParent(): IOutlineSource;
     get outlineLabel(): string;
@@ -2086,13 +2178,13 @@ declare class TableCellCollection extends ReportItemCollection<TableCell$1> {
     protected _doMoveItem(from: number, to: number): boolean;
     protected _createCell(row: number, col: number): TableCell$1;
 }
-declare type TableBounds = {
+type TableBounds = {
     r1: number;
     c1: number;
     r2: number;
     c2: number;
 };
-declare type TableCellSpan = {
+type TableCellSpan = {
     r: number;
     c: number;
     v: TableCell$1;
@@ -2404,6 +2496,7 @@ declare abstract class DataBand extends ReportGroupItem {
     static readonly PROP_DATA_BAND_MAX_END_ROW_COUNT = "maxEndRowCount";
     static readonly PROP_DATA_BAND_END_ROW_MESSAGE = "endRowMessage";
     static readonly PROP_DATA_BAND_ALWAYS_HEADER = "alwaysHeader";
+    static readonly PROP_DATA_BAND_NO_SPLIT = "noSplit";
     static readonly PROPINFOS: IPropInfo[];
     private _sectionCount;
     private _sectionLayout;
@@ -2421,6 +2514,7 @@ declare abstract class DataBand extends ReportGroupItem {
     private _repeatDetailHeader;
     private _repeatDetailFooter;
     private _alwaysHeader;
+    private _noSplit;
     private _detail;
     private _master;
     private _keyFlds;
@@ -2435,6 +2529,7 @@ declare abstract class DataBand extends ReportGroupItem {
     private _designData;
     private _fieldSummary;
     private _summaryRuntime;
+    _pr: number;
     constructor(name: string);
     get dataObj(): IBandData;
     get designData(): IBandData;
@@ -2517,6 +2612,7 @@ declare abstract class DataBand extends ReportGroupItem {
      * 실제 데이터행 이후 행은 빈 행으로 표시된다.
      * 마지막 페이지에 적용된다.
      * 마지막 페이지에 출력할 수 있는 만큼만 빈 행을 출력한다.
+     * band footer가 우선적으로 출력된다.
      * {@link endRowCount}가 0보다 큰 값으로 설정되면 이 속성은 무시된다.
      *
      * 그룹 설정과 같이 적용할 수 없다. 즉, 그룹이 설정되면 이 속성은 무시된다.
@@ -2577,6 +2673,11 @@ declare abstract class DataBand extends ReportGroupItem {
     get alwaysHeader(): boolean;
     set alwaysHeader(value: boolean);
     /**
+     * true면 밴드 아이템 전체 높이가 출력 페이지의 남은 높이 보다 클 경우 다음 페이지에 출력한다. #612
+     */
+    get noSplit(): boolean;
+    set noSplit(value: boolean);
+    /**
      * summary runtime
      */
     get summaryRuntime(): DataBandSummaryRuntime;
@@ -2598,6 +2699,7 @@ declare abstract class DataBand extends ReportGroupItem {
         endRowCount: number;
         stopEndRow: boolean;
     };
+    getEndRowMarker(): EndRowMarker;
     getCount(field: string, count: number, rows?: number[]): number;
     getVCount(field: string, count: number, rows?: number[]): number;
     getSum(field: string, count: number, rows?: number[]): number;
@@ -2632,6 +2734,7 @@ declare abstract class DataBand extends ReportGroupItem {
  */
 declare class DataBandCollection extends ReportGroupItem {
     static readonly PROPINFOS: IPropInfo[];
+    static readonly $_ctor: string;
     private _owner;
     private _label;
     constructor(owner: DataBand, label: string);
@@ -2879,18 +2982,19 @@ declare class TableBand extends DataBand {
     static readonly PROP_COL_COUNT = "colCount";
     static readonly PROP_COLUMNS = "columns";
     static readonly PROP_GROUPS = "groups";
+    static readonly PROP_END_ROW_MERGED = "endRowMerged";
     static readonly PROPINFOS: IPropInfo[];
     static readonly DEFAULT_COL_COUNT = 5;
     static readonly $_ctor: string;
     static readonly ITEM_TYPE = "Table Band";
     private _colCount;
+    private _endRowMerged;
     private _columns;
     private _groups;
     private _header;
     private _footer;
     private _dataRow;
     private _tables;
-    private _pr;
     private _tr;
     private _lastTrs;
     constructor(name: string);
@@ -2898,6 +3002,11 @@ declare class TableBand extends DataBand {
     /** cols */
     get colCount(): number;
     set colCount(value: number);
+    /**
+     * true면 end row 행들을 하나로 묶어서 표시한다. #760
+     */
+    get endRowMerged(): boolean;
+    set endRowMerged(value: boolean);
     /** columns */
     get columns(): TableBandColumnCollection;
     /** groups */
@@ -2953,6 +3062,7 @@ declare class TableBand extends DataBand {
 }
 
 declare class TableColumn extends TableColumnBase {
+    static readonly $_ctor: string;
     constructor(collection: TableColumnCollection, src?: any);
     /** table */
     get table(): TableContainer;
@@ -2964,6 +3074,7 @@ declare class TableColumn extends TableColumnBase {
     protected _changed(prop: string, newValue: any, oldValue: any): void;
 }
 declare class TableColumnCollection extends TableColumnCollectionBase<TableContainer, TableColumn> {
+    static readonly $_ctor: string;
     constructor(table?: TableContainer);
     /** table */
     get table(): TableContainer;
@@ -3193,7 +3304,6 @@ declare class SimpleBand extends DataBand {
     private _header;
     private _footer;
     private _dataRow;
-    private _pr;
     constructor(name: string);
     get outlineItems(): IOutlineSource[];
     /** groups */
@@ -3248,6 +3358,8 @@ declare class SpaceItem extends ReportItem {
     set size(value: ValueString);
     getSize(domain: number): number;
     getSaveType(): string;
+    canAddToFrontContainer(): boolean;
+    canAddToBackContainer(): boolean;
     get outlineLabel(): string;
     protected _sizable(): boolean;
     protected _boundable(): boolean;
@@ -3282,13 +3394,17 @@ declare class ReportElement extends VisualElement$1 {
     get measuredWidth(): number;
     /** measuredHeight */
     get measuredHeight(): number;
+    get measuredSize(): Size$1;
     /**
      * true면 measure() 시점이 아니라
      * layout() 시점에 parent의 크기를 기준으로 measure + layout을 동시 진행한다.
      */
     get lazyLayout(): boolean;
     get floating(): boolean;
+    hasModelWidth(): boolean;
+    hasModelHeight(): boolean;
     measure(ctx: PrintContext, hintWidth: number, hintHeight: number): Size$1;
+    measureContent(ctx: PrintContext, hintWidth: number, hintHeight: number): Size$1;
     layoutContent(ctx: PrintContext): void;
     print(doc: Document, ctx: PrintContext, w?: number): number;
     findElement(modelName: string): ReportItemElement<ReportItem>;
@@ -3316,12 +3432,15 @@ declare class ReportElement extends VisualElement$1 {
 
 /** @internal */
 declare abstract class ReportItemElement<T extends ReportItem> extends ReportElement {
+    static readonly FOLDED_HEIGHT = 22;
     protected _designView: HTMLDivElement;
     protected _bindMarker: HTMLSpanElement;
+    private _a;
     private _model;
     protected _modelChanged: boolean;
     private _prevStyles;
     private _rotation;
+    inCell: boolean;
     constructor(doc: Document, model?: T, name?: string);
     protected _doDispose(): void;
     /** model */
@@ -3334,29 +3453,36 @@ declare abstract class ReportItemElement<T extends ReportItem> extends ReportEle
     get designable(): boolean;
     get editable(): boolean;
     get isSpace(): boolean;
-    get isRelativeHeight(): boolean;
     get rotation(): number;
     setRotation(value: number): void;
+    canFold(): boolean;
     _clearDesign(): void;
     getEditText(): string;
     setEditText(report: Report, text: string): void;
     refreshPrintValues(ctx: PrintContext): void;
     get printable(): boolean;
+    protected _getModel(): T;
     protected _initDom(doc: Document, dom: HTMLElement): void;
     protected _setBindMarker(visible?: boolean, system?: boolean): void;
+    measureContent(ctx: PrintContext, hintWidth: number, hintHeight: number): Size$1;
+    layoutContent(ctx: PrintContext): void;
+    protected _doMeasureFolded(hintWidth: number, hintHeight: number): Size$1;
+    protected _doLayoutFolded(): void;
     protected _doPrepareMeasure(ctx: PrintContext, dom: HTMLElement): void;
     private $_setRotation;
     protected _doAfterMeasure(ctx: PrintContext, dom: HTMLElement, hintWidth: number, hintHeight: number, sz: Size$1): void;
     findElement(modelName: string): ReportItemElement<ReportItem>;
     findElementOf(dom: HTMLElement): ReportItemElement<ReportItem>;
     getPrintValue(ctx: PrintContext, m: ReportItem, defaultValue?: any): any;
+    getPrintLinkValue(ctx: PrintContext, m: ReportItem): any;
     protected _doModelChanged(oldModel: T): void;
     protected _setX(dom: HTMLElement, x: number): void;
     protected _setY(dom: HTMLElement, y: number): void;
     protected _setPos(dom: HTMLElement, x: number, y: number): void;
     protected _runValueCallback(ctx: PrintContext, m: ReportItem, value: any): any;
+    protected _getDesignText(): string;
 }
-declare type ReportItemView = ReportItemElement<ReportItem>;
+type ReportItemView = ReportItemElement<ReportItem>;
 /** @internal */
 declare abstract class ReportGroupItemElement<T extends ReportGroupItem> extends ReportItemElement<T> {
     private _contentBox;
@@ -3369,6 +3495,7 @@ declare abstract class ReportGroupItemElement<T extends ReportGroupItem> extends
     measureFixed: boolean;
     constructor(doc: Document, model: T, name: string);
     protected _doDispose(): void;
+    get contentBox(): HTMLDivElement;
     get navigable(): boolean;
     get lazyLayoutChildren(): boolean;
     isContentDom(dom: HTMLElement): boolean;
@@ -3405,9 +3532,9 @@ declare abstract class ReportGroupItemElement<T extends ReportGroupItem> extends
     protected _isItemFocused(item: ReportPageItem): boolean;
     protected _isItemSelected(item: ReportPageItem): boolean;
     protected _getFocusedItem(): ReportPageItem;
+    protected _doMeasureFolded(hintWidth: number, hintHeight: number): Size$1;
     protected _doMeasure(ctx: PrintContext, dom: HTMLElement, hintWidth: number, hintHeight: number): Size$1;
     protected _doPrepareMeasure(ctx: PrintContext, dom: HTMLElement): void;
-    protected _getDesignText(): string;
     protected _setDesignContent(empty: boolean, designView: HTMLDivElement): void;
     protected _doMeasureItem(ctx: PrintContext, index: number, elt: ReportElement, hintWidth: number, hintHeight: number): void;
     protected _createElement(report: ReportView, parent: ReportElement, item: ReportItem): ReportElement;
@@ -3421,7 +3548,7 @@ declare abstract class ReportGroupItemElement<T extends ReportGroupItem> extends
     protected _doAfterLayout(ctx: PrintContext): void;
     protected _doPrint(doc: Document, ctx: PrintContext): void;
 }
-declare type ReportGroupItemView = ReportGroupItemElement<ReportGroupItem>;
+type ReportGroupItemView = ReportGroupItemElement<ReportGroupItem>;
 interface ITable {
     colCount: number;
     columns: TableColumnCollectionBase<ReportGroupItem, TableColumnBase>;
@@ -3429,17 +3556,10 @@ interface ITable {
     getColPoints(): number[];
 }
 
-declare enum CrosstabSummary {
-    SUM = "sum",
-    AVG = "avg",
-    MIN = "min",
-    MAX = "max",
-    COUNT = "count",
-    DISTINCT = "distinct"
-}
 declare class CrosstabFieldHeader extends ReportItem {
     static readonly PROP_SUFFIX = "suffix";
     static readonly PROPINFOS: IPropInfo[];
+    static readonly $_ctor: string;
     private _suffix;
     private _field;
     constructor(field: CrosstabField, source: any);
@@ -3461,6 +3581,7 @@ declare class CrosstabFieldHeader extends ReportItem {
 declare class CrosstabFieldSummaryHeader extends ReportItem {
     static readonly PROP_TEXT = "text";
     static readonly PROPINFOS: IPropInfo[];
+    static readonly $_ctor: string;
     private _text;
     private _summary;
     constructor(summary: CrosstabFieldSummary, source: any);
@@ -3483,6 +3604,7 @@ declare class CrosstabFieldSummaryHeader extends ReportItem {
  */
 declare class CrosstabFieldSummary extends ReportItem {
     static readonly PROPINFOS: IPropInfo[];
+    static readonly $_ctor: string;
     private _field;
     private _header;
     constructor(field: CrosstabField, source: any);
@@ -3563,34 +3685,65 @@ declare abstract class CrosstabFieldCollection<T extends CrosstabField> extends 
     protected _resetFields(): void;
     protected _fieldChanged(field: CrosstabField): void;
 }
-declare type CrosstabFieldCell = CrosstabField | CrosstabFieldHeader | CrosstabFieldSummary | CrosstabFieldSummaryHeader;
+type CrosstabFieldCell = CrosstabField | CrosstabFieldHeader | CrosstabFieldSummary | CrosstabFieldSummaryHeader;
 declare class CrosstabRowField extends CrosstabField {
+    static readonly $_ctor: string;
     get itemType(): string;
     getCollectionLabel(): string;
 }
 declare class CrosstabRowFieldCollection extends CrosstabFieldCollection<CrosstabRowField> {
+    static readonly $_ctor: string;
     constructor(owner: CrosstabBand);
     protected _createField(src: any): CrosstabRowField;
 }
 declare class CrosstabColumnField extends CrosstabField {
+    static readonly PROPINFOS: IPropInfo[];
+    static readonly $_ctor: string;
+    private _prefix;
+    private _suffix;
     constructor(collection: CrosstabColumnFieldCollection, source: any);
     get itemType(): string;
     getCollectionLabel(): string;
+    getEditProps(): IPropInfo[];
     protected _doLoad(src: any): void;
     protected _doSave(target: any): any;
 }
 declare class CrosstabColumnFieldCollection extends CrosstabFieldCollection<CrosstabColumnField> {
+    static readonly $_ctor: string;
     constructor(owner: CrosstabBand);
     protected _createField(src: any): CrosstabColumnField;
 }
 declare class CrosstabValueField extends CrosstabField {
+    static readonly DEF_FORMAT = "#,##0";
     static readonly PROP_VALUE = "value";
+    static readonly PROP_PREFIX = "prefix";
+    static readonly PROP_SUFFIX = "suffix";
+    static readonly PROP_FORMAT = "format";
     static readonly PROPINFOS: IPropInfo[];
+    static readonly $_ctor: string;
     private _value;
+    private _prefix;
+    private _suffix;
+    private _format;
     constructor(collection: CrosstabFieldCollection<any>, source: any);
     /** value */
     get value(): CrosstabSummary;
     set value(value: CrosstabSummary);
+    /**
+     * 접두어.
+     */
+    get prefix(): string;
+    set prefix(value: string);
+    /**
+     * 접미어.
+     */
+    get suffix(): string;
+    set suffix(value: string);
+    /**
+     * format
+     */
+    get format(): string;
+    set format(value: string);
     get itemType(): string;
     getCollectionLabel(): string;
     getEditProps(): IPropInfo[];
@@ -3598,10 +3751,11 @@ declare class CrosstabValueField extends CrosstabField {
     protected _doSave(target: object): void;
 }
 declare class CrosstabValueFieldCollection extends CrosstabFieldCollection<CrosstabValueField> {
+    static readonly $_ctor: string;
     constructor(owner: CrosstabBand);
     protected _createField(src: any): CrosstabValueField;
 }
-declare class CrosstabRec {
+declare class CrosstabCell {
     private _keys;
     private _rows;
     private sum;
@@ -3612,29 +3766,31 @@ declare class CrosstabRec {
     constructor(keys: any[], rows: number[]);
     get rowCount(): number;
     getKey(field: number): any;
-    getSummary(data: IBandData, field: number, exp: string): number;
+    getValue(data: IBandData, field: number, exp: string): number;
 }
 interface IFilter {
     select(data: IBandData, row: number): boolean;
 }
-declare class RecCollection {
+declare class CellCollection {
     private _band;
     private _filters;
-    private _recs;
+    private _cells;
     constructor(band: CrosstabBand);
     get count(): number;
-    getKey(rec: number, field: number): any;
-    getRec(index: number): CrosstabRec;
-    getRecs(start?: number, end?: number): CrosstabRec[];
+    getKey(index: number, field: number): any;
+    getCell(index: number): CrosstabCell;
+    getCells(start?: number, end?: number): CrosstabCell[];
     setFilters(filters: IFilter[]): void;
     build(data: BandArrayData): void;
     private $_collectRows;
     private $_sortRows;
-    private $_buildRecs;
+    private $_buildCells;
 }
 declare class CrosstabColumn {
+    static readonly $_ctor: string;
     hash: number;
     parent: CrosstabColumn;
+    vlevel: number;
     protected _field: CrosstabColumnField;
     private _value;
     private _children;
@@ -3652,12 +3808,16 @@ declare class CrosstabColumn {
     addSummary(column: CrosstabSummaryColumn): void;
     sort(): void;
     getHeader(): string;
+    ancestorByLevel(level: number): CrosstabColumn;
+    ancestorByVlevel(level: number): CrosstabColumn;
 }
 declare class CrosstabLeafColumn extends CrosstabColumn {
     protected _valueField: CrosstabValueField;
     constructor(field: CrosstabColumnField, valueField: CrosstabValueField, value: any);
     get valueField(): CrosstabValueField;
     get leafCount(): number;
+    contains(leaf: CrosstabLeafColumn): boolean;
+    includes(band: CrosstabBand, cell: CrosstabCell): boolean;
     getHeader(): string;
 }
 declare class CrosstabSummaryColumn extends CrosstabColumn {
@@ -3666,6 +3826,13 @@ declare class CrosstabSummaryColumn extends CrosstabColumn {
     get summary(): CrosstabFieldSummary;
     getHeader(): string;
 }
+/**
+ * @internal
+ *
+ * 컬럼 layer 셋을 구성한다.
+ * layer 마다 앞쪽에 summary 컬럼이 추가된다.
+ * row 컬럼들 + 마지막 leaf 목록을 기준으로 table 컬럼들이 구성된다.
+ */
 declare class ColumnCollection$1 {
     private _band;
     private _root;
@@ -3675,7 +3842,7 @@ declare class ColumnCollection$1 {
     get count(): number;
     get leafCount(): number;
     get levels(): number;
-    build(recs: RecCollection): void;
+    build(cells: CellCollection): void;
     get(index: number): CrosstabColumn;
     getLeaf(index: number): CrosstabLeafColumn;
     getColumns(parent: CrosstabColumn, columns: CrosstabColumn[][]): void;
@@ -3684,7 +3851,7 @@ declare class ColumnCollection$1 {
 declare abstract class CrosstabRowBase {
     abstract slice(count: number): any[];
     abstract getValue(index: number): any;
-    abstract getColumnRec(column: CrosstabColumn): CrosstabRec;
+    abstract getColumnCell(column: CrosstabColumn): CrosstabCell;
 }
 declare class RowCollection {
     private _band;
@@ -3692,7 +3859,7 @@ declare class RowCollection {
     constructor(band: CrosstabBand);
     get rowCount(): number;
     getRow(index: number): CrosstabRowBase;
-    build(data: BandArrayData, recs: RecCollection): void;
+    build(data: BandArrayData, cells: CellCollection): void;
     private $_collectRows;
     private $_collectSummaryRows;
 }
@@ -3730,25 +3897,29 @@ declare class CrosstabNullValue extends ReportItem {
     protected _doSave(target: object): void;
 }
 /**
- * Crosstab band
+ * Crosstab band.
+ *
+ * 1. rowFields + columnFields 로 정렬하고 그룹핑해서 cellCollection에 저장한다.
  */
 declare class CrosstabBand extends ReportGroupItem {
     static readonly PROP_TITLE = "title";
     static readonly PROP_NULL_VALUE = "nullValue";
     static readonly PROP_MAX_ROW_COUNT = "maxRowCount";
+    static readonly PROP_NO_SPLIT = "noSplit";
     static readonly PROPINFOS: IPropInfo[];
     static readonly $_ctor: string;
     static isFieldCell(item: ReportPageItem): boolean;
     static getFieldOf(cell: CrosstabFieldCell): CrosstabField;
     static getBandOf(cell: CrosstabFieldCell): CrosstabBand;
     private _maxRowCount;
+    private _noSplit;
     private _title;
     private _nullValue;
     private _rowFields;
     private _columnFields;
     private _valueFields;
-    private _recs;
-    _columns: ColumnCollection$1;
+    private _cells;
+    private _columns;
     private _rows;
     pageNo: number;
     rowIndex: number;
@@ -3759,6 +3930,11 @@ declare class CrosstabBand extends ReportGroupItem {
     get maxRowCount(): number;
     set maxRowCount(value: number);
     /**
+     * true면 밴드 아이템 전체 높이가 출력 페이지의 남은 높이 보다 클 경우 다음 페이지에 출력한다. #612
+     */
+    get noSplit(): boolean;
+    set noSplit(value: boolean);
+    /**
      * title
      */
     get title(): CrosstabBandTitle;
@@ -3768,13 +3944,14 @@ declare class CrosstabBand extends ReportGroupItem {
     get nullValue(): CrosstabNullValue;
     /** rowFields */
     get rowFields(): CrosstabRowFieldCollection;
+    get rowFieldCount(): number;
     /** columnFields */
     get columnFields(): CrosstabColumnFieldCollection;
     /** valueFields */
     get valueFields(): CrosstabValueFieldCollection;
     get rows(): RowCollection;
     get bandData(): BandArrayData;
-    get columnLevels(): number;
+    get columns(): ColumnCollection$1;
     containsField(field: string): boolean;
     getRowField(index: number): CrosstabField;
     getColumnField(index: number): CrosstabColumnField;
@@ -3805,10 +3982,6 @@ declare enum PaperSize {
     A7 = "A7",
     A8 = "A8"
 }
-declare enum PaperOrientation {
-    PORTRAIT = "portrait",
-    LANDSCAPE = "landscape"
-}
 /**
  * Paper options
  */
@@ -3836,6 +4009,7 @@ declare class PaperOptions extends Base$1 {
     /** size */
     get size(): PaperSize;
     set size(value: PaperSize);
+    private $_checkSize;
     /** width */
     get width(): ValueString;
     set width(value: ValueString);
@@ -3855,13 +4029,22 @@ declare class PaperOptions extends Base$1 {
     get marginBottom(): ValueString;
     set marginBottom(value: ValueString);
     load(src: any): void;
-    getPageSize(): Size$1;
+    getOrientation(page?: ReportPage): PaperOrientation;
+    getPaperSize(): Size$1;
+    getPageSize(page?: ReportPage): Size$1;
+    getMargins(): ISides;
     getContentRect(r: Rectangle$1): Rectangle$1;
-    getClientRect(): Rectangle$1;
-    applyExtents(css: CSSStyleDeclaration): void;
-    applyPreviewExtents(css: CSSStyleDeclaration): void;
-    applyClient(css: CSSStyleDeclaration): void;
-    applyPreviewClient(css: CSSStyleDeclaration): void;
+    getClientRect(page: ReportPage): Rectangle$1;
+    applyExtents(page: ReportPage, css: CSSStyleDeclaration): void;
+    applyPreviewExtents(page: ReportPage, css: CSSStyleDeclaration): {
+        width: string;
+        height: string;
+    };
+    applyClient(page: ReportPage, css: CSSStyleDeclaration): void;
+    applyPreviewClient(page: ReportPage, css: CSSStyleDeclaration): {
+        width: string;
+        height: string;
+    };
     protected _changed(): void;
 }
 /**
@@ -3880,6 +4063,7 @@ declare class ReportInfo extends Base$1 {
  * Find result
  */
 interface FindResult {
+    page: number;
     item: ReportItem;
     prop: string;
 }
@@ -3888,6 +4072,7 @@ declare class ReportRootItem extends ReportGroupItem {
     static readonly PROP_REPORT_AUTHOR = "author";
     static readonly PROP_REPORT_VERSION = "version";
     static readonly PROP_REPORT_DESCRIPTION = "description";
+    static readonly PROP_PRINT_MAX_PAGE_COUNT = "maxPageCount";
     static readonly PROP_PAPER_ORIENTATION = "paperOrientation";
     static readonly PROP_PAPER_SIZE = "paperSize";
     static readonly PROP_PAPER_WIDTH = "paperWidth";
@@ -3899,6 +4084,7 @@ declare class ReportRootItem extends ReportGroupItem {
     static readonly PROPINFOS: IPropInfo[];
     static readonly $_ctor: string;
     private _report;
+    private _maxPageCount;
     constructor(report: Report);
     get report(): Report;
     /** name */
@@ -3913,6 +4099,12 @@ declare class ReportRootItem extends ReportGroupItem {
     /** description */
     get description(): string;
     set description(value: string);
+    /**
+     * 최대 출력 페이지 수.
+     * 내용에 상관 없이 이 속성에 지정한 페이지 수만큼만 출력한다.
+     */
+    get maxPageCount(): number;
+    set maxPageCount(value: number);
     /** paperOrientation */
     get paperOrientation(): PaperOrientation;
     set paperOrientation(value: PaperOrientation);
@@ -3952,6 +4144,8 @@ declare class ReportRootItem extends ReportGroupItem {
 declare class Report extends EventAware$1 implements IEditCommandStackOwner, IPropertyContainer {
     static readonly RESET = "onReportReset";
     static readonly PAPER_CHANGED = "onReportPaperChanged";
+    static readonly PAGE_ADDED = "onReportPageAdded";
+    static readonly PAGE_REMOVED = "onReportPageRemoved";
     static readonly ITEM_ADD = "onReportItemAdd";
     static readonly ITEM_ADDED = "onReportItemAdded";
     static readonly ITEMS_ADDED = "onReportItemsAdded";
@@ -3959,6 +4153,7 @@ declare class Report extends EventAware$1 implements IEditCommandStackOwner, IPr
     static readonly ITEMS_REMOVED = "onReportItemsRemoved";
     static readonly ITEM_CHANGED = "onReportItemChanged";
     static readonly ITEM_MOVED = "onReportItemMoved";
+    static readonly ITEM_FOLDED = "onReportItemFolded";
     static readonly COLLECTION_CHANGED = "onReportCollectionChanged";
     static readonly COMMANDS_STACK_CHANGED = "onReportCommandStackChanged";
     static readonly DIRTY_CHANGED = "onReportDirtyChanged";
@@ -3974,7 +4169,7 @@ declare class Report extends EventAware$1 implements IEditCommandStackOwner, IPr
     private _unit;
     private _assetRoot;
     private _root;
-    private _page;
+    private _pages;
     private _assets;
     private _data;
     private _designData;
@@ -3995,6 +4190,7 @@ declare class Report extends EventAware$1 implements IEditCommandStackOwner, IPr
     editCommandStackChanged(stack: EditCommandStack$1, cmd: EditCommand$1, undoable: boolean, redoable: boolean): void;
     editCommandStackDirtyChanged(stack: EditCommandStack$1): void;
     addCollectionItem(collection: IPropertySource): void;
+    get designTime(): boolean;
     /** @internal */
     get loader(): IReportLoader;
     /** info */
@@ -4010,7 +4206,8 @@ declare class Report extends EventAware$1 implements IEditCommandStackOwner, IPr
     get root(): ReportRootItem;
     /** page */
     get page(): ReportPage;
-    set page(value: ReportPage);
+    get pages(): ReportPage[];
+    get pageCount(): number;
     /** assets */
     get assets(): AssetManager;
     /** data */
@@ -4021,10 +4218,19 @@ declare class Report extends EventAware$1 implements IEditCommandStackOwner, IPr
     get canUndo(): boolean;
     /** canRedo */
     get canRedo(): boolean;
+    /** dirty */
     get dirty(): boolean;
     load(src: any): Report;
     setSaveTagging(tag: string): Report;
     save(pageOnly?: boolean): object;
+    getPage(index: number): ReportPage;
+    addPage(): ReportPage;
+    removePage(index: number): boolean;
+    movePage(index: number, newIndex: number): void;
+    internalAddPage(page?: ReportPage): ReportPage;
+    internalRemovePage(page: ReportPage): boolean;
+    internalMovePage(index: number, newIndex: number): void;
+    getMaxPageCount(): number;
     prepareLayout(): void;
     preparePrint(ctx: PrintContext): void;
     getImageUrl(url: string): string;
@@ -4148,13 +4354,16 @@ declare class Report extends EventAware$1 implements IEditCommandStackOwner, IPr
         item: ReportItem;
         reason: string;
     }[];
+    foldedChanged(item: ReportItem): void;
+    private $_addPage;
     private $_refreshInvalids;
-    private onPageItemAdded;
-    private onPageItemsAdded;
-    private onPageItemRemoved;
-    private onPageItemsRemoved;
-    private onPageItemChanged;
-    private onPageCollectionChanged;
+    private $_resetPages;
+    protected onPageItemAdded(source: IEventAware, item: ReportPageItem, index: number, silent: boolean): void;
+    protected onPageItemsAdded(source: IEventAware, items: ReportPageItem[], index: number): void;
+    protected onPageItemRemoved(source: IEventAware, item: ReportPageItem, oldParent: ReportGroupItem): void;
+    protected onPageItemsRemoved(source: IEventAware, items: ReportPageItem[]): void;
+    protected onPageItemChanged(source: IEventAware, item: ReportPageItem, prop: string, value: any, oldValue: any): void;
+    protected onPageCollectionChanged(source: IEventAware, collection: ReportItemCollection<any>): void;
     protected _fireReset(): void;
     protected _firePaperChanged(): void;
     protected _fireItemAdd(group: ReportGroupItem, item: ReportItem, index: number): boolean;
@@ -4170,6 +4379,7 @@ interface IOutlineSource {
     outlineItems?: IOutlineSource[];
     outlineLabel: string;
     outlineOrder: number;
+    outlineVisible(child: IOutlineSource): boolean;
     getSaveType(): string;
     canRemoveFrom(): boolean;
     canParentOf?(itemType: string): boolean;
@@ -4289,19 +4499,6 @@ declare abstract class ChartSeriesCollection<T extends ReportGroupItem> extends 
     protected _doMoveItem(from: number, to: number): boolean;
 }
 
-declare enum HichartDash {
-    DASH = "Dash",
-    DASH_DOT = "DashDot",
-    DOT = "Dot",
-    LONG_DASH = "LongDash",
-    LONG_DASH_DOT = "LongDashDot",
-    LONG_DASH_DOT_DOT = "LongDashDotDot",
-    SHORT_DASH = "ShortDash",
-    SHORT_DASH_DOT = "ShortDashDot",
-    SHORT_DASH_DOT_DOT = "ShortDashDotDot",
-    SHORT_DOT = "ShortDot",
-    SOLID = "Solid"
-}
 /**
  * Chart title.
  */
@@ -4348,10 +4545,6 @@ declare class HichartSubtitle extends HichartTitle {
     getSaveLabel(): string;
     protected _isDefaultVisible(): boolean;
     protected _doDefaultInit(loader: IReportLoader, parent: ReportGroupItem, hintWidth: number, hintHeight: number): void;
-}
-declare enum HichartStacking {
-    NORMAL = "normal",
-    PERCENT = "percent"
 }
 /**
  * Highcharts chart item.
@@ -4717,6 +4910,7 @@ declare abstract class HichartAxis extends ChartObject<HichartItem> {
 }
 declare class HichartXAxis extends HichartAxis {
     static readonly PROPINFOS: IPropInfo[];
+    static readonly $_ctor: string;
     constructor(chart: HichartItem);
     getPropDomain(prop: IPropInfo): any[];
     getSaveLabel(): string;
@@ -4733,6 +4927,7 @@ declare class HichartYAxis extends HichartAxis {
     static readonly PROP_MIN = "min";
     static readonly PROP_MAX = "max";
     static readonly PROPINFOS: IPropInfo[];
+    static readonly $_ctor: string;
     private _min;
     private _max;
     constructor(chart: HichartItem);
@@ -4803,11 +4998,6 @@ declare class HichartSeriesCollection extends ChartSeriesCollection<HichartItem>
     isCollectionProp(): boolean;
     protected _createSeries(loader: IReportLoader, src: any): HichartSeries;
     protected _seriesChanged(series: HichartSeries): void;
-}
-declare enum HichartLegendLayout {
-    HORIZONTAL = "horizontal",
-    VERTICAL = "vertical",
-    PROXIMATE = "proximate"
 }
 declare class HichartLegend extends ChartObject<HichartItem> {
     static readonly PROP_HICHART_ALIGN = "align";
@@ -4904,6 +5094,7 @@ declare abstract class ReportPageItem extends Base$1 implements ISelectionSource
     outlineOrder: number;
     get index(): number;
     get outlineItems(): IOutlineSource[];
+    outlineVisible(child: IOutlineSource): boolean;
     abstract getSaveType(): string;
     abstract canRemoveFrom(): boolean;
     canParentOf(itemType: string): boolean;
@@ -4972,13 +5163,16 @@ declare abstract class ReportPageItem extends Base$1 implements ISelectionSource
     protected _saveObjects(items: ReportItem[], target: any): void;
     protected _arrangePaddingStyles(styles: Styles): void;
     protected _validateSize(v: ValueString): ValueString;
+    protected _validateStylesValue(styles: {
+        [key: string]: string;
+    }): void;
 }
 declare enum ItemMoveType {
     INNER = "inner",
     OUTER = "outer"
 }
-declare type ReportItemValueCallback = (ctx: PrintContext, item: ReportItem, row: number, value: any) => any;
-declare type ReportItemStyleCallback = (ctx: PrintContext, item: ReportItem, row: number, value: any) => {
+type ReportItemValueCallback = (ctx: PrintContext, item: ReportItem, row: number, value: any) => any;
+type ReportItemStyleCallback = (ctx: PrintContext, item: ReportItem, row: number, value: any) => {
     [key: string]: string | undefined;
 };
 /**
@@ -5014,6 +5208,9 @@ declare abstract class ReportItem extends ReportPageItem {
     static readonly PROP_PAGE_BREAK = "pageBreak";
     static readonly PROP_STYLE_CALLBACK = "styleCallback";
     static readonly PROP_ROTATION = "rotation";
+    static readonly PROP_LINK_URL = "linkUrl";
+    static readonly PROP_LINK_TARGET = "linkTarget";
+    static readonly PROP_LINK_FIELD = "linkField";
     static readonly DATA_PROP: {
         name: string;
         category: PropCategory;
@@ -5031,8 +5228,19 @@ declare abstract class ReportItem extends ReportPageItem {
         domain: any;
         validate: (source: ReportItem, value: any) => void;
     };
+    static readonly LINK_FIELD_PROP: {
+        name: string;
+        category: PropCategory;
+        type: typeof ListableProperty;
+        multiple: boolean;
+        default: any;
+        domain: any;
+        validate: (source: ReportItem, value: any) => void;
+        visible: (source: IPropertySource) => boolean;
+    };
     static readonly PROPINFOS: IPropInfo[];
     static readonly SIZE_PROPINFOS: IPropInfo[];
+    static readonly LINK_PROPINFOS: IPropInfo[];
     static readonly VALUE_PROPINFOS: IPropInfo[];
     static findFloatingAnchor(item: ReportPageItem): ReportItem;
     private _name;
@@ -5048,12 +5256,16 @@ declare abstract class ReportItem extends ReportPageItem {
     private _minWidth;
     private _minHeight;
     private _rotation;
+    private _linkUrl;
+    private _linkTarget;
+    private _linkField;
     private _styles;
     private _styleCallback;
     private _onGetStyles;
     private _pageBreak;
     private _designOrder;
     private _designBorder;
+    private _folded;
     private _parent;
     private _index;
     private _childPropInfos;
@@ -5185,6 +5397,25 @@ declare abstract class ReportItem extends ReportPageItem {
     set rotation(value: number);
     get isRotated(): boolean;
     /**
+     * linkUrl
+     * linkValue의 값이 있을 경우 해당 속성은 무시된다.
+     */
+    get linkUrl(): string;
+    set linkUrl(value: string);
+    /**
+     * linkTarget
+     */
+    get linkTarget(): LinkTarget;
+    set linkTarget(value: LinkTarget);
+    /**
+     * 리포트에 지정된 data의 특정 값(들)을 지시하는 경로.
+     * 자신으로 시작해서 Report까지 가장 가까운 곳(dataParent)에 설정된 data에서 값을 가져온다.
+     * Link 기능을 사용할 수 있는 아이템에 Url로 사용이 된다.
+     * print 시 해당 속성의 값이 linkUrl보다 우선 적용된다.
+     */
+    get linkField(): string;
+    set linkField(value: string);
+    /**
      * onGetValue
      */
     get onGetValue(): string;
@@ -5225,7 +5456,9 @@ declare abstract class ReportItem extends ReportPageItem {
     set designOrder(value: number);
     get designBorder(): boolean;
     set designBorder(value: boolean);
-    get isRelativeHeight(): boolean;
+    isRelativeHeight(): boolean;
+    isRelativeWidth(): boolean;
+    get folded(): boolean;
     /**
      * ColumnBoxContainer|BoundedContainer
      */
@@ -5281,7 +5514,7 @@ declare abstract class ReportItem extends ReportPageItem {
      * _loadObject(), _saveObject()에서 사용.
      */
     getSaveLabel(): string;
-    isContextValue(): boolean;
+    isContextValue(value?: string): boolean;
     /**
      * 아이템이 특별한 부모에 포함될 때 추가되는 속성들.
      * 예를들어 아이템을 table의 cell로 이동시키면 table에 추가하기 전
@@ -5296,6 +5529,8 @@ declare abstract class ReportItem extends ReportPageItem {
     isStyleProp(prop: string): boolean;
     canParentOf(itemType: string): boolean;
     canAddTo(group: ReportGroupItem): boolean;
+    canAddToFrontContainer(): boolean;
+    canAddToBackContainer(): boolean;
     prepareLayout(printing: boolean): void;
     preparePrint(ctx: PrintContext): void;
     getLeft(domain: number): number;
@@ -5316,6 +5551,7 @@ declare abstract class ReportItem extends ReportPageItem {
     canResizeHeight(): boolean;
     resize(width: number, height: number): ReportItem;
     canRotate(): boolean;
+    canLink(): boolean;
     hasStyle(style: string): boolean;
     getStyle(style: string): string;
     setStyle(style: string, value: string): void;
@@ -5335,14 +5571,22 @@ declare abstract class ReportItem extends ReportPageItem {
      * 출력 시 ReportItemElement에서 호출.
      */
     getPrintValue(dp: IReportDataProvider, row: number): any;
+    getLinkValue(dp: IReportDataProvider, row: number): any;
     protected _getParentData(): string;
     canRemoveFrom(): boolean;
     canAdoptDragSource(source: any): boolean;
     adoptDragSource(source: any): IDropResult;
+    canNamed(): boolean;
+    canTagged(): boolean;
+    canHide(): boolean;
     canPageBreak(): boolean;
     isBreakBefore(): boolean;
     isBreakAfter(): boolean;
     getInvalids(report: Report): string[];
+    canFold(): boolean;
+    fold(): boolean;
+    unfold(): boolean;
+    protected _foldedChanged(): void;
     get marqueeParent(): ReportItem;
     get printable(): boolean;
     isReadOnlyProperty(prop: IPropInfo): boolean;
@@ -5419,6 +5663,8 @@ declare abstract class ReportGroupItem extends ReportItem {
     get(index: number): ReportItem;
     canContainsBand(): boolean;
     canContainsBandGroup(): boolean;
+    canAddToFrontContainer(): boolean;
+    canAddToBackContainer(): boolean;
     contains(item: ReportPageItem, deep?: boolean): boolean;
     indexOf(item: ReportPageItem): number;
     getNames(list: string[], recursive?: boolean): string[];
@@ -5435,7 +5681,7 @@ declare abstract class ReportGroupItem extends ReportItem {
     clear(): void;
     getMoveType(item: ReportItem): ItemMoveType;
     canResizeChild(item: ReportItem, dir: ResizeDirection): boolean;
-    search(key: string, options: FindOptions, results: FindResult[]): void;
+    search(page: number, key: string, options: FindOptions, results: FindResult[]): void;
     canChangeChildProp(item: ReportPageItem, prop: string, value: any): boolean;
     changeChildIndex(child: ReportItem, newIndex: number): boolean;
     canAlign(child: ReportItem): boolean;
@@ -5484,6 +5730,7 @@ declare abstract class ReportItemCollectionItem extends ReportPageItem {
     private _collection;
     private _styles;
     constructor(collection: ReportItemCollection<any>, src?: any);
+    protected _doInitDefaults(): void;
     get outlineParent(): IOutlineSource;
     get outlineExpandable(): boolean;
     get outlineLabel(): string;
@@ -5560,17 +5807,6 @@ declare abstract class ReportItemCollection<T extends ReportPageItem> extends Re
     protected _indexChanged(): void;
     protected _doPreparePrint(ctx: PrintContext): void;
 }
-declare enum AnchorPosition {
-    CENTER = "center",
-    LEFT = "left",
-    RIGHT = "right",
-    TOP = "top",
-    BOTTOM = "bottom",
-    INNER_LEFT = "innerLeft",
-    INNER_RIGHT = "innerRight",
-    INNER_TOP = "innerTop",
-    INNER_BOTTOM = "innerBottom"
-}
 /**
  * 동일 그룹 내의 다른 아이템을 기준점으로 표시되는 아이템.
  * 자식으로 floating을 추가할 수 없다.
@@ -5646,10 +5882,6 @@ declare abstract class CellContainer extends ReportGroupItem {
     protected abstract _prepareCellGroup(item: ReportItem): CellGroup;
     protected _unprepareCellGroup(item: ReportItem): CellGroup;
 }
-declare enum BandSectionLayout {
-    ACROSS_DOWN = "acrossDown",
-    DOWN_ACROSS = "downAcross"
-}
 
 interface IPropertySource {
     getEditProps(): IPropInfo[];
@@ -5687,10 +5919,13 @@ declare enum PropCategory {
     TEXT = "text",
     DATA = "data",
     BOUND = "bound",
+    LINK = "link",
     EVENT = "event",
+    SECTION = "section",
     EDITOR = "editor",
     REPORT = "report",
     PAPER = "paper",
+    PRINT = "print",
     BOX = "box",
     TABLE = "table",
     BARCODE = "barcode",
@@ -5760,6 +5995,7 @@ declare class StackContainer extends BoundedContainer {
     protected _datable(): boolean;
     protected _doDefaultInit(loader: IReportLoader, parent: ReportGroupItem, hintWidth: number, hintHeight: number): void;
     protected _getStyleProps(): string[];
+    protected _getEditProps(): IPropInfo[];
     canAlign(child: ReportItem): boolean;
     canAdoptDragSource(source: any): boolean;
     getMoveType(item: ReportItem): ItemMoveType;
@@ -5833,10 +6069,25 @@ declare class ReportFooter extends SpaceableSection {
     protected _doLoad(loader: IReportLoader, src: any): void;
     protected _doSave(target: object): void;
 }
+declare abstract class InheritableSection extends SpaceableSection {
+    static readonly PROP_INHERIT = "inherit";
+    static readonly PROPINFOS: IPropInfo[];
+    private _inherit;
+    protected _inherited: boolean;
+    /**
+     * 이전 페이지 표시대로 출력한다.
+     */
+    get inherit(): SectionInherit;
+    set inherit(value: SectionInherit);
+    get inherited(): boolean;
+    protected _doLoad(loader: IReportLoader, src: any): void;
+    protected _doSave(target: object): void;
+    protected _getEditProps(): IPropInfo[];
+}
 /**
  * Report page header model.
  */
-declare class PageHeader extends SpaceableSection {
+declare class PageHeader extends InheritableSection {
     static readonly $_ctor: string;
     constructor();
     get outlineLabel(): string;
@@ -5846,7 +6097,7 @@ declare class PageHeader extends SpaceableSection {
 /**
  * Report page footer model.
  */
-declare class PageFooter extends SpaceableSection {
+declare class PageFooter extends InheritableSection {
     static readonly $_ctor: string;
     constructor();
     get outlineLabel(): string;
@@ -5883,7 +6134,7 @@ declare abstract class SectionElement<T extends PageSection> extends StackContai
     protected _isContexable(): boolean;
     protected _doPrepareMeasure(ctx: PrintContext, dom: HTMLElement): void;
     protected _doMeasure(ctx: PrintContext, dom: HTMLElement, hintWidth: number, hintHeight: number): Size$1;
-    measure(ctx: PrintContext, hintWidth: number, hintHeight: number): Size$1;
+    measureContent(ctx: PrintContext, hintWidth: number, hintHeight: number): Size$1;
 }
 /** @internal */
 declare class ReportHeaderElement extends SectionElement<ReportHeader> {
@@ -5894,28 +6145,38 @@ declare class ReportHeaderElement extends SectionElement<ReportHeader> {
 }
 /** @internal */
 declare class ReportFooterElement extends SectionElement<ReportFooter> {
-    static readonly STYLE_NAME = "rr-page-header rr-group-element";
+    static readonly STYLE_NAME = "rr-report-footer rr-group-element";
     static isFooter: (div: HTMLElement) => boolean;
     constructor(doc: Document, model?: ReportFooter);
     protected _doDispose(): void;
     get debugLabel(): string;
     protected _getCssSelector(): string;
 }
+declare abstract class InheritableSectionElement<T extends InheritableSection> extends SectionElement<T> {
+    static readonly CLONE_CLASS = "rr-section-clone";
+    private _baseModel;
+    setBase(base: T): void;
+    protected _getModel(): T;
+    protected _setDesignContent(empty: boolean, designView: HTMLDivElement): void;
+}
 /** @internal */
-declare class PageHeaderElement extends SectionElement<PageHeader> {
+declare class PageHeaderElement extends InheritableSectionElement<PageHeader> {
     constructor(doc: Document, model?: PageHeader);
     protected _doDispose(): void;
     get debugLabel(): string;
     protected _getCssSelector(): string;
     protected _isContexable(): boolean;
+    protected _doPrepareMeasure(ctx: PrintContext, dom: HTMLElement): void;
+    measureContent(ctx: PrintContext, hintWidth: number, hintHeight: number): Size$1;
 }
 /** @internal */
-declare class PageFooterElement extends SectionElement<PageFooter> {
+declare class PageFooterElement extends InheritableSectionElement<PageFooter> {
     constructor(doc: Document, model?: PageFooter);
     protected _doDispose(): void;
     get debugLabel(): string;
     protected _getCssSelector(): string;
     protected _isContexable(): boolean;
+    protected _doPrepareMeasure(ctx: PrintContext, dom: HTMLElement): void;
 }
 
 /**
@@ -5924,10 +6185,21 @@ declare class PageFooterElement extends SectionElement<PageFooter> {
  */
 declare abstract class BoxContainerElement<T extends BoxContainer> extends ReportGroupItemElement<T> {
     protected _container: ReportGroupItemView;
-    protected _paddings: any;
+    protected _paddings: {
+        left: number;
+        right: number;
+        top: number;
+        bottom: number;
+    };
     protected _gap: number;
     constructor(doc: Document, model: T, name: string);
     get gap(): number;
+    get paddings(): {
+        left: number;
+        right: number;
+        top: number;
+        bottom: number;
+    };
     get debugLabel(): string;
     protected _needDesignBox(): boolean;
     protected _initDom(doc: Document, dom: HTMLElement): void;
@@ -5957,8 +6229,6 @@ declare class ColumnBoxContainerElement extends BoxContainerElement<ColumnBoxCon
 declare class PageBodyElement extends ReportElement {
     private _model;
     private _findable;
-    private _backContainerView;
-    private _frontContainerView;
     private _itemsView;
     private _modelChanged;
     constructor(doc: Document, model?: PageBody);
@@ -5988,7 +6258,6 @@ declare class PageBodyElement extends ReportElement {
      */
     getLine(index: number): ReportItemView;
     getLines(): ReportItemView[];
-    printAll(doc: Document, ctx: PrintContext): PageBodyOutput;
     prepareAsync(doc: Document, ctx: PrintContext): PrintLine[];
     itemOfDom(dom: Element): ReportItem;
     protected _getCssSelector(): string;
@@ -6000,11 +6269,7 @@ declare class PageBodyElement extends ReportElement {
     protected _doMeasure(ctx: PrintContext, dom: HTMLElement, hintWidth: number, hintHeight: number): Size$1;
     protected _doLayoutContent(ctx: PrintContext): void;
     layoutFloating(ctx: PrintContext): void;
-    private $_buildPages;
     private $_prepareAsync;
-}
-interface PageBodyOutput {
-    pages: HTMLDivElement[][];
 }
 
 /** @internal */
@@ -6026,8 +6291,8 @@ declare class PageItemContainerElement extends BoundedContainerElement<PageItemC
     protected _doMeasure(ctx: PrintContext, dom: HTMLElement, hintWidth: number, hintHeight: number): Size$1;
 }
 
-declare type PrintPageCallback = (ctx: PrintContext, page: PrintPage, pageNo: number) => void;
-declare type PrintEndCallback = (ctx: PrintContext, pages: PrintPage[]) => void;
+type PrintPageCallback = (ctx: PrintContext, page: PrintPage, pageNo: number) => void;
+type PrintEndCallback = (ctx: PrintContext, pages: PrintPage[]) => void;
 /** @internal */
 declare class PageView extends LayerElement$1 {
     private _model;
@@ -6040,6 +6305,10 @@ declare class PageView extends LayerElement$1 {
     private _frontView;
     private _sections;
     private _sectionGuard;
+    headerHeight: number;
+    footerHeight: number;
+    reportHeaderHeight: number;
+    reportFooterHeight: number;
     constructor(doc: Document);
     protected _doDispose(): void;
     /** model */
@@ -6060,7 +6329,9 @@ declare class PageView extends LayerElement$1 {
     get frontFloatingView(): PageItemContainerElement;
     get sections(): ReportElement[];
     isPageDom(dom: HTMLElement): boolean;
-    measure(ctx: PrintContext, bounds: Rectangle$1): ISize;
+    getBaseView<T extends InheritableSectionElement<any>>(view: T, pageViews: PageView[], viewType: string): T;
+    preparePrint(ctx: PrintContext): void;
+    measure(ctx: PrintContext, bounds: Rectangle$1, pageViews: PageView[]): ISize;
     layout(ctx: PrintContext, bounds: Rectangle$1): void;
     layoutFloating(ctx: PrintContext): void;
     afterRender(ctx: PrintContext): void;
@@ -6070,7 +6341,7 @@ declare class PageView extends LayerElement$1 {
     getAllElements(root: ReportElement, bounds: Rectangle$1): ReportItemView[];
     prepareAsync(doc: Document, ctx: PrintContext): PrintLine[];
     refreshPageHeader(doc: Document, ctx: PrintContext): HTMLDivElement;
-    getSections(): ReportElement[];
+    getSections(): ReportItemView[];
     /**
      * 페이지의 한 행을 전부 차지하는가?
      */
@@ -6087,13 +6358,14 @@ declare class PageView extends LayerElement$1 {
     getLower(elt: ReportItemView): ReportItemView;
     itemOfDom(dom: Element): ReportItem;
     protected _getCssSelector(): string;
-    private $_setModel;
+    $_setModel(model: ReportPage): void;
 }
 /**
  * print page model.
  */
 declare class PrintPage {
     page: HTMLDivElement;
+    pageOrientation: PaperOrientation;
     pageHeader: HTMLDivElement;
     pageFooter: HTMLDivElement;
     background: HTMLDivElement;
@@ -6111,8 +6383,8 @@ declare class ReportView extends LayerElement$1 implements IImageContainer {
     private _loadError;
     private _editable;
     private _emptyView;
-    private _pageView;
-    private _activePage;
+    private _pageLayer;
+    private _pageViews;
     private _boxMeasurer;
     private _boxInner;
     private _nameMap;
@@ -6128,12 +6400,15 @@ declare class ReportView extends LayerElement$1 implements IImageContainer {
     /** model */
     get model(): Report;
     set model(value: Report);
-    /** pageView */
     get pageView(): PageView;
+    protected _resetPages(model: Report): void;
     /** loadError */
     get loadError(): string;
     set loadError(value: string);
     get zoom(): number;
+    get pageViews(): PageView[];
+    _internalPageViews(): PageView[];
+    getPageView(index: number): PageView;
     getBoxPaddings(model: ReportItem): {
         left: number;
         right: number;
@@ -6147,22 +6422,26 @@ declare class ReportView extends LayerElement$1 implements IImageContainer {
     protected _getCssSelector(): string;
     protected _initDom(doc: Document, dom: HTMLElement): void;
     protected _createEmptyView(doc: Document): VisualElement$1;
+    protected _createPageView(doc: Document): PageView;
     protected _layoutPageBorders(rReport: Rectangle$1, rPage: Rectangle$1): void;
     private $_layout;
-    protected _afterLayout(ctx: PrintContext): void;
+    protected _afterLayout(ctx: PrintContext, bounds: Rectangle$1): void;
     $_afterRender(ctx: PrintContext): void;
     $_createElement(item: ReportItem): ReportElement;
     /**
      * PrintContainer.$_print(...)에서 호출한다.
      */
-    private $_preparePrint;
+    $_preparePrint(ctx: PrintContext): void;
     /**
      * PrintContainer.$_print(...)에서 호출한다.
      */
-    private $_endPrint;
+    $_endPrint(ctx: PrintContext): void;
+    protected _modelReset(): void;
     protected _modelChanged(): void;
     protected onReportReset(report: Report): void;
     protected onReportPaperChanged(report: Report): void;
+    protected onReportPageAdded(report: Report, page: ReportPage): void;
+    protected onReportPageRemoved(report: Report, page: ReportPage, index: number): void;
     protected onReportItemAdded(report: Report, item: ReportItem, index: number, silent: boolean): void;
     protected onReportItemRemoved(report: Report, item: ReportItem, oldParent: ReportGroupItem): void;
     protected onReportItemsRemoved(report: Report, items: ReportPageItem[]): void;
@@ -6248,13 +6527,13 @@ declare abstract class TextItemBase extends ReportItem {
     protected _doSave(target: object): void;
     protected _doApplyStyle(prop: string, value: string, target: CSSStyleDeclaration): boolean;
     canRotate(): boolean;
+    canLink(): boolean;
     canAdoptDragSource(source: any): boolean;
     adoptDragSource(source: any): IDropResult;
     canPropAdoptDragSource(prop: IPropInfo, source: any): boolean;
     adoptPropDragSource(prop: IPropInfo, source: any): IDropResult;
     getPrintValue(dp: IReportDataProvider, row: number): any;
 }
-declare type ContextValueCallback = (ctx: PrintContext) => any;
 /**
  * 고정된 텍스트나 데이터 필드의 값을 출력하는 아이템.
  */
@@ -6315,13 +6594,66 @@ declare abstract class TextItemElementBase<T extends TextItemBase> extends Repor
     isDom(dom: HTMLElement): boolean;
     protected _getText(m: TextItemBase, v: any): string;
     protected abstract _getPrintText(ctx: PrintContext, m: T): string;
-    protected abstract _getDesignText(m: T, system: boolean): string;
+    protected abstract _getDesignText2(m: T, system: boolean): string;
+}
+
+/**
+ * html 속성으로 지정한 문자열을 dom의 innerHtml로 설정한다.
+ * 문자열에 포함된 '${value}'나 '@{value}'는 연결된 field의 값으로 대체되고,
+ * 나머지 '${xxx}', '@{xxx}'는 'xxx' 필드의 값으로 대체된다.
+ */
+declare class HtmlItem extends ReportItem {
+    static readonly PROP_HTML = "html";
+    static readonly PROPINFOS: IPropInfo[];
+    static readonly STYLE_PROPS: string[];
+    static readonly $_ctor: string;
+    static readonly ITEM_TYPE = "Html";
+    private _html;
+    private _tokens;
+    constructor(name: string);
+    /**
+     */
+    get html(): string;
+    set html(value: string);
+    getHtml(ctx: PrintContext): string;
+    getSaveType(): string;
+    get outlineLabel(): string;
+    protected _doDefaultInit(loader: IReportLoader, parent: ReportGroupItem, hintWidth: number, hintHeight: number): void;
+    protected _getEditProps(): IPropInfo[];
+    protected _getStyleProps(): string[];
+    protected _doLoad(loader: IReportLoader, src: any): void;
+    protected _doSave(target: object): void;
+    canRotate(): boolean;
+    canAdoptDragSource(source: any): boolean;
+    adoptDragSource(source: any): IDropResult;
+    canPropAdoptDragSource(prop: IPropInfo, source: any): boolean;
+    adoptPropDragSource(prop: IPropInfo, source: any): IDropResult;
+    getRowContextValue(value: string, ctx: PrintContext): string | number;
+    private $_getTokenValue;
+    private $_parse;
+    private $_parseValues;
+}
+
+/** @internal */
+declare class HtmlItemElement extends ReportItemElement<HtmlItem> {
+    private _content;
+    constructor(doc: Document, model: HtmlItem);
+    protected _doDispose(): void;
+    get debugLabel(): string;
+    protected _getCssSelector(): string;
+    protected _initDom(doc: Document, dom: HTMLElement): void;
+    protected _doPrepareMeasure(ctx: PrintContext, dom: HTMLElement): void;
+    protected _doMeasure(ctx: PrintContext, dom: HTMLElement, hintWidth: number, hintHeight: number): Size$1;
+    saveContextValue(ctx: PrintContext): string;
+    replaceContextValue(ctx: PrintContext, value?: string): string;
+    refreshPrintValues(ctx: PrintContext, save?: boolean): void;
 }
 
 /**
  * Printing 관련 상태 정보 모델.
  */
 declare class PrintContext extends Base$1 {
+    static readonly VALUES: string[];
     private _printing;
     private _compositePrinting;
     private _dp;
@@ -6340,8 +6672,10 @@ declare class PrintContext extends Base$1 {
     detailRows: number[];
     noValueCallback: boolean;
     preview: boolean;
+    pageDelay: number;
     report: Report;
     container: HTMLDivElement;
+    tableContainer: HTMLDivElement;
     headerHeight: number;
     footerHeight: number;
     reportHeaderHeight: number;
@@ -6356,7 +6690,10 @@ declare class PrintContext extends Base$1 {
     row: number;
     index: number;
     contextable: boolean;
-    contextValues: TextItemElementBase<any>[];
+    contextValues: (TextItemElementBase<any> | HtmlItemElement)[];
+    contextReplaces: {
+        [hash: string]: HtmlItemElement;
+    };
     private _userData;
     private _tags;
     private _bandSave;
@@ -6452,8 +6789,17 @@ declare class PrintContext extends Base$1 {
     getValue(data: string, row: number, field: string): any;
     saveBand(): void;
     restoreBand(): void;
+    getBaseView(view: InheritableSectionElement<any>, viewType: string): InheritableSectionElement<any>;
 }
+type ContextValueCallback = (ctx: PrintContext) => any;
 declare class PageBreaker {
+}
+declare class ReportFooterPrintInfo {
+}
+declare class EndRowMarker {
+    count: number;
+    maxCount: number;
+    constructor(count: number, maxCount: number);
 }
 declare abstract class BandPrintInfo<T extends ReportItem> {
     band: T;
@@ -6478,6 +6824,7 @@ declare abstract class BandPrintInfo<T extends ReportItem> {
     abstract isEnded(): boolean;
     abstract getRows(): any[];
     abstract getNextPage(doc: Document, ctx: PrintContext, width: number, parent: HTMLDivElement): HTMLDivElement | null;
+    rollback(page: HTMLDivElement): void;
     setMaxCount(rows: any[], count: number): void;
     isRow(row: any): row is number;
     isBand(row: any): row is BandPrintInfo<any>;
@@ -6487,8 +6834,11 @@ declare abstract class BandPrintInfo<T extends ReportItem> {
     protected _setY(dom: HTMLElement, y: number): void;
     protected _setPos(dom: HTMLElement, x: number, y: number): void;
     protected _createPage(doc: Document, parent: HTMLDivElement): HTMLDivElement;
+    protected _createSectionPage(doc: Document, parent: HTMLDivElement): HTMLDivElement;
+    protected _buildEndRows(marker: EndRowMarker, rowCount: number, rows: any[]): void;
+    protected _unshiftEndRows(row: any, rows: any[]): void;
 }
-declare type PrintLine = HTMLElement | BandPrintInfo<any> | PageBreaker;
+type PrintLine = HTMLElement | BandPrintInfo<any> | ReportFooterPrintInfo | PageBreaker;
 interface IReportData {
     name: string;
     isBand: boolean;
@@ -6545,23 +6895,32 @@ interface IPrintReport {
     report: Report;
     data: IReportDataProvider;
 }
+interface IPreviewOptions {
+    debug?: boolean;
+    async?: boolean;
+    pageMark?: boolean;
+    optimize?: boolean;
+    pageDelay?: number;
+    noScroll?: boolean;
+    noIndicator?: boolean;
+    singlePage?: boolean;
+    callback?: PrintPageCallback;
+    endCallback?: PrintEndCallback;
+}
 interface IPrintOptions {
     report: Report | (Report | IPrintReport)[];
     data: IReportDataProvider;
     preview?: boolean;
     id?: string;
-    async?: boolean;
-    pageMark?: boolean;
-    noScroll?: boolean;
-    callback?: PrintPageCallback;
-    endCallback?: PrintEndCallback;
+    previewOptions?: IPreviewOptions;
 }
-/**
- */
 declare class PrintContainer extends VisualContainer$1 {
     static readonly CLASS_NAME = "rr-report-container";
     static readonly PREVIEW_CLASS = "rr-report-preview";
-    private static readonly CONFIRM_CLASS;
+    static readonly PRINT_SIZE = "--rr-print-size";
+    private static readonly MARKER_CLASS;
+    private static readonly PRINT_INDICATOR_CLASS;
+    private static readonly PRINT_BACK_CLASS;
     private _pageGap;
     private _zoom;
     private _align;
@@ -6578,6 +6937,7 @@ declare class PrintContainer extends VisualContainer$1 {
     private _preview;
     private _previewId;
     private _options;
+    private _printMode;
     constructor(containerId: string | HTMLDivElement);
     protected _doDispose(): void;
     /** pageCount */
@@ -6591,10 +6951,8 @@ declare class PrintContainer extends VisualContainer$1 {
     get pages(): PrintPage[];
     print(options: IPrintOptions): void;
     printSingle(options: IPrintOptions): void;
-    private $_printSingle2;
     printAll(options: IPrintOptions): void;
-    private $_printAll2;
-    isAllRendered(): boolean;
+    private $_printAll;
     getPrintHtml(): string;
     setStyles(styles: any): void;
     fitToWidth(): void;
@@ -6607,13 +6965,22 @@ declare class PrintContainer extends VisualContainer$1 {
     private $_showError;
     private $_createIndicator;
     private $_refreshContextValues;
-    private $_printAsync;
-    private $_print2Async;
+    private $_replacePages;
+    private $_refreshHtmlItemValue;
+    private $_printReport;
     private $_getContainer;
     private $_getPreviewer;
     private $_resetPreviewer;
-    private $_addPageSpace;
-    private $_buildOutputAsync;
+    private $_buildOutput;
+    /**
+     * unitpost 한장 요약 HTML 요청으로 singlePage 별도 메서드로 분리
+     */
+    private $_prepareSinglePage;
+    private $_setSinglePage;
+    private $_isReportFooter;
+    private $_setPrintMode;
+    private $_getScaleSize;
+    private $_setUnvisibleDom;
     private $_layoutFloatings;
 }
 
@@ -6623,6 +6990,15 @@ interface PdfFont {
     content: string;
     style?: 'normal' | 'italic';
     weight?: 'normal' | 'bold';
+}
+interface IPdfPermissions {
+    printing?: 'lowResolution' | 'highResolution';
+    modifying?: boolean;
+    copying?: boolean;
+    annotating?: boolean;
+    fillingForms?: boolean;
+    contentAccessibility?: boolean;
+    documentAssembly?: boolean;
 }
 
 declare enum CCITTScheme {
@@ -6645,7 +7021,7 @@ interface ImageExportOptions {
 }
 
 interface DocExportOptions {
-    type: 'hwp' | 'docx';
+    type: 'hwp' | 'docx' | 'pptx';
     fileName?: string;
 }
 
@@ -40589,6 +40965,7 @@ declare class ReportViewer extends ReportViewBase {
     constructor(container: string | HTMLDivElement, reportForm?: ReportForm, dataSet?: ReportDataSet, options?: ReportOptions);
     get reportForm(): ReportForm;
     set reportForm(v: ReportForm);
+    get report(): Report;
     get dataSet(): ReportDataSet;
     set dataSet(v: any);
     /**
@@ -40635,6 +41012,7 @@ interface GridReportOptions extends ReportOptions {
 declare class GridReportViewer extends ReportViewer {
     private _grid;
     private _gridValues;
+    private _gridTable;
     protected _options: GridReportOptions;
     constructor(container: string | HTMLDivElement, grid: GridView, options?: GridReportOptions);
     /**
@@ -40660,6 +41038,12 @@ declare class GridReportViewer extends ReportViewer {
      */
     private _addPageHeader;
     /**
+     * 페이지 푸터 추가
+     * @param footer PageFooter 객체
+     * @returns
+     */
+    private _addPageFooter;
+    /**
      * Layout 정보
      *   - visibleCount: number
      *   - getDataColumns(): DataColumn[]
@@ -40667,6 +41051,7 @@ declare class GridReportViewer extends ReportViewer {
      */
     private _addGridTable;
     private _prepare;
+    exportImage(imageOptions?: ImageExportOptions): void;
 }
 
 /**
@@ -40716,6 +41101,10 @@ declare type GridReportLayout = {
  */
 declare type PreviewOptions = {
     /**
+     * 리포트간 간격 조절 옵션
+     */
+    pageGap?: number;
+    /**
      * 비동기 출력 여부
      * default: false;
      */
@@ -40757,6 +41146,21 @@ declare type PDFExportOptions = {
      * 지원되는 브라우저가 제한될 수 있습니다.
      */
     preview?: boolean;
+    /**
+     * 이 옵션을 이용해 내보낸 PDF문서에
+     * 소유자(owner)권한의 암호를 설정할 수 있습니다.
+     */
+    ownerPassword?: string;
+    /**
+     * 이 옵션을 이용해 내보낸 PDF문서에
+     * 사용자(user)권한의 암호를 설정할 수 있습니다.
+     */
+    userPassword?: string;
+    /**
+     * 권한에 따른 기능을 제한 할 수 있습니다.
+     */
+    permissions: IPdfPermissions;
+    pdfVersion: '1.3' | '1.4' | '1.5' | '1.6' | '1.7' | '1.7ext3';
 };
 
 export { GridReportLayout, GridReportViewer, PDFExportOptions, PreviewOptions, ReportCompositeViewer, ReportData, ReportDataSet, ReportForm, ReportFormSet, ReportFormSets, ReportOptions, ReportViewer };
