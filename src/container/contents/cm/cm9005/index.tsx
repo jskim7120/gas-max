@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "app/store";
+import { useForm } from "react-hook-form";
+import CreateReport from "app/hook/createReport";
 import { CM9005SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import { apiGet } from "app/axios";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
-import { useForm } from "react-hook-form";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Wrapper, Label } from "components/form/style";
 import Loader from "components/loader";
@@ -24,73 +22,33 @@ function CM9005({
   menuId: string;
   areaCode: string;
 }) {
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>({});
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("CM", "CM9005", menuId, CM9005SEARCH);
 
   const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
   useEffect(() => {
-    getCommonDictionary({ groupId: "CM", functionName: "CM9005" });
-  }, []);
-
-  useEffect(() => {
-    if (Object.keys(selected)?.length > 0) {
+    if (selected && Object.keys(selected)?.length > 0) {
       setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
     }
   }, [selected]);
 
   useEffect(() => {
-    reset();
+    resetForm();
   }, [dataCommonDic]);
 
-  const fetchData = async (params: any) => {
-    let paramTemp: any = {};
-    for (const [key, value] of Object.entries(params)) {
-      if (value !== "" && value !== undefined) {
-        paramTemp = { ...paramTemp, [key]: value };
-      }
-    }
-
-    // try {
-    //   setLoading(true);
-    //   const { data } = await API.get(CM9005SEARCH, { params: paramTemp });
-
-    //   if (data) {
-    //     setData(data);
-    //   } else {
-    //     setData([]);
-    //   }
-    //   setLoading(false);
-    // } catch (err) {
-    //   setData([]);
-    //   setLoading(false);
-    //   console.log("CM9005 data search fetch error =======>", err);
-    // }
-
-    setLoading(true);
-    const data = await apiGet(CM9005SEARCH, paramTemp);
-
-    if (data) {
-      setData(data);
-    } else {
-      setData([]);
-    }
-    setLoading(false);
-  };
-
-  const submit = (params: ISEARCH) => {
-    fetchData(params);
-  };
-
   const resetForm = () => {
-    if (dataCommonDic !== undefined) {
+    if (dataCommonDic) {
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
         cuJpGubun: dataCommonDic?.cuJpGubun[0].code,
@@ -103,9 +61,12 @@ function CM9005({
     }
   };
 
-  const cancel = () => {
+  const handleReset = () => {
     resetForm();
     setData([]);
+  };
+  const submit = (data: ISEARCH) => {
+    fetchData(data);
   };
 
   return (
@@ -150,7 +111,7 @@ function CM9005({
                 icon={<ResetGray color="#707070" />}
                 type="button"
                 color={ButtonColor.LIGHT}
-                onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
@@ -171,7 +132,6 @@ function CM9005({
                 <Select
                   register={register("cuJpGubun")}
                   style={{ width: "100%" }}
-                  // onChange={(e) => setReportKind(e.target.value)}
                 >
                   {dataCommonDic?.cuJpGubun?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -252,7 +212,7 @@ function CM9005({
           fields={fields}
           columns={columns}
           menuId={menuId}
-          rowIndex={0}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: `calc(100% - 38px)` }}
         />
       </WrapperContent>

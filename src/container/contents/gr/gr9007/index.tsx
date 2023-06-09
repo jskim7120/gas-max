@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { apiGet } from "app/axios";
+import CreateReport from "app/hook/createReport";
 import { GR9007SEARCH } from "app/path";
 import { IGR9007SEARCH } from "./model";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "../grid2";
+import Grid from "components/grid";
 import { columns, fields } from "./data";
 
 function GR9007({
@@ -23,11 +22,16 @@ function GR9007({
   menuId: string;
   areaCode: string;
 }) {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("GR", "GR9007", menuId, GR9007SEARCH);
 
   const { register, handleSubmit, reset, control } = useForm<IGR9007SEARCH>({
     mode: "onSubmit",
@@ -43,38 +47,13 @@ function GR9007({
   };
 
   useEffect(() => {
-    getCommonDictionary({ groupId: "GR", functionName: "GR9007" });
-  }, []);
-
-  useEffect(() => {
     reset({
       areaCode: dataCommonDic?.areaCode[0].code,
       bcBuCode: dataCommonDic?.bcBuCode[0].code,
     });
   }, [dataCommonDic]);
 
-  const fetchData = async (params: any) => {
-    // try {
-    //   setLoading(true);
-    //   const { data } = await API.get(GR9007SEARCH, { params: params });
-    //   console.log("data irev:", data);
-    //   if (data) {
-    //     setData(data);
-    //     setLoading(false);
-    //   }
-    // } catch (err) {
-    //   console.log("GR9003 data search fetch error =======>", err);
-    // }
-
-    setLoading(true);
-    const data = await apiGet(GR9007SEARCH, params);
-    if (data) {
-      setData(data);
-      setLoading(false);
-    }
-  };
-
-  const cancel = () => {
+  const handleReset = () => {
     resetForm();
     setData([]);
   };
@@ -127,7 +106,7 @@ function GR9007({
                 style={{ marginRight: "5px" }}
                 type="button"
                 color={ButtonColor.LIGHT}
-                onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
@@ -181,10 +160,15 @@ function GR9007({
       </form>
       <WrapperContent>
         <Grid
+          areaCode={areaCode}
           data={data}
           columns={columns}
           fields={fields}
-          style={{ height: `calc(100% - 35px)` }}
+          menuId={menuId}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
+          setSelected={setSelected}
+          style={{ height: `calc(100% - 15px)` }}
+          evenFill
         />
       </WrapperContent>
     </>

@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { apiGet } from "app/axios";
+import CreateReport from "app/hook/createReport";
 import { GR9004SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
-import {
-  Select,
-  FormGroup,
-  Wrapper,
-  Label,
-  Field,
-} from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import { DateWithoutDash } from "helpers/dateFormat";
 import Loader from "components/loader";
 import Button from "components/button/button";
-import { ButtonColor, InputSize, FieldKind } from "components/componentsType";
+import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-
-import Grid from "./grid";
-import CustomTopPart from "container/contents/customTopPart";
+import Grid from "components/grid";
+import { columns, fields } from "./data";
 
 function GR9004({
   depthFullName,
@@ -31,12 +23,16 @@ function GR9004({
   menuId: string;
   areaCode: string;
 }) {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
-
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("GR", "GR9004", menuId, GR9004SEARCH);
   const {
     register,
     handleSubmit,
@@ -48,65 +44,8 @@ function GR9004({
   });
 
   useEffect(() => {
-    getCommonDictionary({ groupId: "GR", functionName: "GR9004" });
-  }, []);
-
-  useEffect(() => {
     resetForm();
   }, [dataCommonDic]);
-
-  const fetchData = async (params: any) => {
-    // try {
-    //   if (params.sDate !== undefined) {
-    //     // params.sDate =
-    //     //   typeof params.sDate === "string"
-    //     //     ? formatDateByRemoveDash(params.sDate)
-    //     //     : formatDateToStringWithoutDash(params.sDate);
-    //     params.sDate = DateWithoutDash(params.sDate);
-    //   }
-    //   if (params.eDate !== undefined) {
-    //     // params.eDate =
-    //     //   typeof params.eDate === "string"
-    //     //     ? formatDateByRemoveDash(params.eDate)
-    //     //     : formatDateToStringWithoutDash(params.eDate);
-    //     params.eDate = DateWithoutDash(params.eDate);
-    //   }
-    //   setLoading(true);
-    //   const { data } = await API.get(GR9004SEARCH, { params: params });
-    //   if (data) {
-    //     setData(data);
-    //     setLoading(false);
-    //   }
-    // } catch (err) {
-    //   setLoading(false);
-    //   console.log("CM9003 DATA fetch error =======>", err);
-    // }
-
-    if (params.sDate !== undefined) {
-      // params.sDate =
-      //   typeof params.sDate === "string"
-      //     ? formatDateByRemoveDash(params.sDate)
-      //     : formatDateToStringWithoutDash(params.sDate);
-      params.sDate = DateWithoutDash(params.sDate);
-    }
-    if (params.eDate !== undefined) {
-      // params.eDate =
-      //   typeof params.eDate === "string"
-      //     ? formatDateByRemoveDash(params.eDate)
-      //     : formatDateToStringWithoutDash(params.eDate);
-      params.eDate = DateWithoutDash(params.eDate);
-    }
-    setLoading(true);
-    const data = await apiGet(GR9004SEARCH, params);
-    if (data) {
-      setData(data);
-      setLoading(false);
-    }
-  };
-
-  const submit = (data: ISEARCH) => {
-    fetchData(data);
-  };
 
   const resetForm = () => {
     if (dataCommonDic !== undefined) {
@@ -119,7 +58,13 @@ function GR9004({
     }
   };
 
-  const cancel = () => {
+  const submit = (data: ISEARCH) => {
+    data.sDate = DateWithoutDash(data.sDate);
+    data.eDate = DateWithoutDash(data.eDate);
+    fetchData(data);
+  };
+
+  const handleReset = () => {
     resetForm();
     setData([]);
   };
@@ -166,7 +111,7 @@ function GR9004({
                 icon={<ResetGray />}
                 type="button"
                 color={ButtonColor.LIGHT}
-                onClick={cancel}
+                onClick={handleReset}
               />
             </div>
           </FormGroup>
@@ -176,11 +121,7 @@ function GR9004({
         <SearchWrapper className="h35">
           <FormGroup>
             <Label style={{ minWidth: "auto" }}>충전소</Label>
-            <Select
-              register={register("bcBuCode")}
-              width={InputSize.i150}
-              // onChange={(e) => setReportKind(e.target.value)}
-            >
+            <Select register={register("bcBuCode")} width={InputSize.i150}>
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -214,7 +155,17 @@ function GR9004({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        <Grid data={data} />
+        <Grid
+          areaCode={areaCode}
+          data={data}
+          columns={columns}
+          fields={fields}
+          menuId={menuId}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
+          setSelected={setSelected}
+          style={{ height: `calc(100% - 15px)` }}
+          evenFill
+        />
       </WrapperContent>
     </>
   );

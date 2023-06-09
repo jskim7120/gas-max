@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { apiGet } from "app/axios";
+import CreateReport from "app/hook/createReport";
 import { GR9006SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
-import { Select, FormGroup, Label, Field } from "components/form/style";
-import { DateWithoutDash } from "helpers/dateFormat";
+import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-
-import Grid from "./grid";
+import Grid from "components/grid";
+import { columns1, fields1 } from "./data/data1";
 
 function GR9006({
   depthFullName,
@@ -24,63 +22,38 @@ function GR9006({
   menuId: string;
   areaCode: string;
 }) {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [reportType, setReportType] = useState("");
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("GR", "GR9006", menuId, GR9006SEARCH);
 
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
-
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
-
-  useEffect(() => {
-    getCommonDictionary({ groupId: "GR", functionName: "GR9006" });
-  }, []);
 
   useEffect(() => {
     resetForm();
   }, [dataCommonDic]);
 
-  const fetchData = async (params: any) => {
-    // try {
-    //   params.sDate = DateWithoutDash(params.sDate);
-    //   params.eDate = DateWithoutDash(params.eDate);
-
-    //   setLoading(true);
-    //   const { data } = await API.get(GR9006SEARCH, { params: params });
-    //   if (data) {
-    //     setData(data);
-    //   } else {
-    //     setData([]);
-    //   }
-    //   setLoading(false);
-    // } catch (err) {
-    //   setData([]);
-    //   setLoading(false);
-    //   console.log("CM9006 DATA fetch error =======>", err);
-    // }
-
-    params.sDate = DateWithoutDash(params.sDate);
-    params.eDate = DateWithoutDash(params.eDate);
-
-    setLoading(true);
-    const data = await apiGet(GR9006SEARCH, params);
-    if (data) {
-      setData(data);
-    } else {
-      setData([]);
-    }
-    setLoading(false);
-  };
-
   const submit = (data: ISEARCH) => {
     fetchData(data);
   };
 
+  // useEffect(() => {
+  //   if (watch("reportKind")) {
+  //     setData([]);
+  //   }
+  // }, [watch("reportKind")]);
+
   const resetForm = () => {
     if (dataCommonDic !== undefined) {
+      console.log(dataCommonDic);
       reset({
         areaCode: dataCommonDic?.areaCode[0]?.code,
         bcBuCode: dataCommonDic?.bcBuCode[0]?.code,
@@ -88,11 +61,10 @@ function GR9006({
         eDate: dataCommonDic?.eDate[0]?.code,
         sDate: dataCommonDic?.sDate[0]?.code,
       });
-      setReportType(dataCommonDic?.reportType[0].code);
     }
   };
 
-  const cancel = () => {
+  const handleReset = () => {
     resetForm();
     setData([]);
   };
@@ -139,7 +111,7 @@ function GR9006({
                 icon={<ResetGray />}
                 type="button"
                 color={ButtonColor.LIGHT}
-                onClick={cancel}
+                onClick={handleReset}
               />
             </div>
           </FormGroup>
@@ -148,25 +120,8 @@ function GR9006({
 
         <SearchWrapper className="h35">
           <FormGroup>
-            <Label style={{ minWidth: "auto" }}>보고서 종류</Label>
-            <Select
-              //register={register("reportType")}
-              width={InputSize.i150}
-              onChange={(e) => setReportType(e.target.value)}
-            >
-              {dataCommonDic?.reportType?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-
             <Label style={{ minWidth: "80px" }}>매입처</Label>
-            <Select
-              register={register("bcBuCode")}
-              width={InputSize.i150}
-              // onChange={(e) => setReportKind(e.target.value)}
-            >
+            <Select register={register("bcBuCode")} width={InputSize.i150}>
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -201,7 +156,17 @@ function GR9006({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        <Grid data={data} reportType={reportType} />
+        <Grid
+          areaCode={areaCode}
+          data={data}
+          columns={columns1}
+          fields={fields1}
+          menuId={menuId}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
+          setSelected={setSelected}
+          style={{ height: `calc(100% - 15px)` }}
+          evenFill
+        />
       </WrapperContent>
     </>
   );
