@@ -67,96 +67,89 @@ function CC9001({
 
   return (
     <>
-      <MainWrapper>
-        <LeftSide style={{ border: "none" }}>
-          <form onSubmit={handleSubmit(submit)} autoComplete="off">
-            <SearchWrapper className="h35 mt5">
-              <FormGroup></FormGroup>
-              <p>{depthFullName}</p>
-            </SearchWrapper>
+      <form onSubmit={handleSubmit(submit)} autoComplete="off">
+        <SearchWrapper className="h35 mt5">
+          <FormGroup></FormGroup>
+          <p>{depthFullName}</p>
+        </SearchWrapper>
 
-            <SearchWrapper className="h35" style={{ justifyContent: "start" }}>
-              <FormGroup>
-                <Label style={{ minWidth: "62px" }}>계정 과목</Label>
-                <Select
-                  register={register("acjAccCode")}
-                  width={InputSize.i120}
-                >
-                  {dataCommonDic?.acjAccCode?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
+        <SearchWrapper className="h35" style={{ justifyContent: "start" }}>
+          <FormGroup>
+            <Label style={{ minWidth: "62px" }}>계정 과목</Label>
+            <Select register={register("acjAccCode")} width={InputSize.i120}>
+              {dataCommonDic?.acjAccCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-                <Label style={{ minWidth: "60px" }}>기간</Label>
-                <Controller
-                  control={control}
-                  {...register("sDateF")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
+            <Label style={{ minWidth: "60px" }}>기간</Label>
+            <Controller
+              control={control}
+              {...register("sDateF")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                />
+              )}
+            />
+            <p>~</p>
+
+            <Controller
+              control={control}
+              {...register("sDateT")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                />
+              )}
+            />
+          </FormGroup>
+
+          <div className="buttons" style={{ marginLeft: "30px" }}>
+            <Button
+              text="검색"
+              icon={!loading && <MagnifyingGlass />}
+              color={ButtonColor.DANGER}
+              type="submit"
+              loader={
+                loading && (
+                  <>
+                    <Loader
+                      color="white"
+                      size={13}
+                      borderWidth="2px"
+                      style={{ marginRight: "10px" }}
                     />
-                  )}
-                />
-                <p>~</p>
-
-                <Controller
-                  control={control}
-                  {...register("sDateT")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
-                />
-              </FormGroup>
-
-              <div className="buttons" style={{ marginLeft: "30px" }}>
-                <Button
-                  text="검색"
-                  icon={!loading && <MagnifyingGlass />}
-                  color={ButtonColor.DANGER}
-                  type="submit"
-                  loader={
-                    loading && (
-                      <>
-                        <Loader
-                          color="white"
-                          size={13}
-                          borderWidth="2px"
-                          style={{ marginRight: "10px" }}
-                        />
-                      </>
-                    )
-                  }
-                />
-                <Button
-                  text="취소"
-                  icon={<ResetGray />}
-                  type="button"
-                  color={ButtonColor.LIGHT}
-                  onClick={handleReset}
-                />
-              </div>
-            </SearchWrapper>
-          </form>
-          <GridLeft
-            areaCode="00"
-            data={data}
-            setSelected={setSelected}
-            menuId={menuId}
-            rowIndex={0}
-            fields={fields}
-            columns={columns}
-            style={{ height: `calc(100% - 38px)` }}
-          />
-        </LeftSide>
-      </MainWrapper>
+                  </>
+                )
+              }
+            />
+            <Button
+              text="취소"
+              icon={<ResetGray />}
+              type="button"
+              color={ButtonColor.LIGHT}
+              onClick={handleReset}
+            />
+          </div>
+        </SearchWrapper>
+      </form>
+      <GridLeft
+        areaCode="00"
+        data={data}
+        setSelected={setSelected}
+        menuId={menuId}
+        rowIndex={0}
+        fields={fields}
+        columns={columns}
+        style={{ height: `calc(100% - 61px)` }}
+      />
     </>
   );
 }

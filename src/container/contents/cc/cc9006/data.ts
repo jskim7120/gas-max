@@ -16,5 +16,10 @@ export const columns = [
     header: {
       text: "영업소",
     },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("areaCode", "count");
+      },
+    },
   },
 ];

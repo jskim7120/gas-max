@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CM9005SEARCH } from "app/path";
@@ -9,7 +9,7 @@ import { Select, FormGroup, Wrapper, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
@@ -32,6 +32,7 @@ function CM9005({
     dispatch,
     dataCommonDic,
   } = CreateReport("CM", "CM9005", menuId, CM9005SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -118,6 +119,7 @@ function CM9005({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -205,10 +207,10 @@ function CM9005({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        <Grid
+        <BasicGrid
+          ref={gridRef}
           areaCode={areaCode}
           data={data}
-          setSelected={setSelected}
           fields={fields}
           columns={columns}
           menuId={menuId}

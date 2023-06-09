@@ -186,7 +186,7 @@ function GR1600({
             menuId={menuId}
             rowIndex={data?.length > 1 ? data.length - 1 : 0}
             setSelected={setSelected}
-            style={{ height: `calc(100% - 15px)` }}
+            style={{ height: `calc(100% - 47px)` }}
             evenFill
           />
         </LeftSide>

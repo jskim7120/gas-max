@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CM9006SEARCH } from "app/path";
@@ -8,7 +8,7 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CheckBox from "components/checkbox";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import {
   Select,
   FormGroup,
@@ -43,6 +43,7 @@ function CM9003({
     dispatch,
     dataCommonDic,
   } = CreateReport("CM", "CM9006", menuId, CM9006SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const [dataChk, setDataChk] = useState(true);
 
@@ -143,6 +144,7 @@ function CM9003({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -294,27 +296,27 @@ function CM9003({
       </form>
       <WrapperContent style={{ height: `calc(100% - 76px)` }}>
         {watch("reportKind") === "0" ? (
-          <Grid
+          <BasicGrid
+            ref={gridRef}
             areaCode={areaCode}
             data={data}
-            setSelected={setSelected}
             fields={fields0}
             columns={columns0}
             menuId={menuId}
             rowIndex={data?.length > 1 ? data.length - 1 : 0}
-            style={{ height: `calc(100% - 15px)` }}
+            style={{ height: `calc(100% - 12px)` }}
             // evenFill
           />
         ) : (
-          <Grid
+          <BasicGrid
+            ref={gridRef}
             areaCode={areaCode}
             data={data}
-            setSelected={setSelected}
             fields={fields1}
             columns={columns1}
             menuId={menuId}
             rowIndex={data?.length > 1 ? data.length - 1 : 0}
-            style={{ height: `calc(100% - 15px)` }}
+            style={{ height: `calc(100% - 12px)` }}
             // evenFill
           />
         )}

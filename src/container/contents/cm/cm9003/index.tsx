@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CM9003SEARCH } from "app/path";
@@ -7,7 +7,7 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { Select, FormGroup, Wrapper, Label } from "components/form/style";
@@ -40,6 +40,7 @@ function CM9003({
     dispatch,
     dataCommonDic,
   } = CreateReport("CM", "CM9003", menuId, CM9003SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -134,6 +135,7 @@ function CM9003({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -227,10 +229,10 @@ function CM9003({
       </form>
       <WrapperContent>
         {watch("reportKind") === "0" ? (
-          <Grid
+          <BasicGrid
+            ref={gridRef}
             areaCode={areaCode}
             data={data}
-            setSelected={setSelected}
             fields={fields0}
             columns={columns0}
             menuId={menuId}
@@ -239,10 +241,10 @@ function CM9003({
             //evenFill
           />
         ) : watch("reportKind") === "1" ? (
-          <Grid
+          <BasicGrid
+            ref={gridRef}
             areaCode={areaCode}
             data={data}
-            setSelected={setSelected}
             fields={fields1}
             columns={columns1}
             menuId={menuId}
@@ -251,10 +253,10 @@ function CM9003({
             //evenFill
           />
         ) : watch("reportKind") === "2" ? (
-          <Grid
+          <BasicGrid
+            ref={gridRef}
             areaCode={areaCode}
             data={data}
-            setSelected={setSelected}
             fields={fields2}
             columns={columns2}
             menuId={menuId}
@@ -263,10 +265,10 @@ function CM9003({
             //evenFill
           />
         ) : watch("reportKind") === "3" ? (
-          <Grid
+          <BasicGrid
+            ref={gridRef}
             areaCode={areaCode}
             data={data}
-            setSelected={setSelected}
             fields={fields3}
             columns={columns3}
             menuId={menuId}
@@ -275,10 +277,10 @@ function CM9003({
             //evenFill
           />
         ) : watch("reportKind") === "4" ? (
-          <Grid
+          <BasicGrid
+            ref={gridRef}
             areaCode={areaCode}
             data={data}
-            setSelected={setSelected}
             fields={fields4}
             columns={columns4}
             menuId={menuId}
@@ -287,10 +289,10 @@ function CM9003({
             // evenFill
           />
         ) : watch("reportKind") === "5" ? (
-          <Grid
+          <BasicGrid
+            ref={gridRef}
             areaCode={areaCode}
             data={data}
-            setSelected={setSelected}
             fields={fields5}
             columns={columns5}
             menuId={menuId}
@@ -300,15 +302,15 @@ function CM9003({
           />
         ) : (
           watch("reportKind") === "6" && (
-            <Grid
+            <BasicGrid
+              ref={gridRef}
               areaCode={areaCode}
               data={data}
-              setSelected={setSelected}
               fields={fields6}
               columns={columns6}
               menuId={menuId}
               rowIndex={data?.length > 1 ? data.length - 1 : 0}
-              style={{ height: `calc(100% - 38px)` }}
+              style={{ height: `calc(100% - 36px)` }}
               // evenFill
             />
           )

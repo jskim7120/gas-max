@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import CreateReport from "app/hook/createReport";
 import { GR9003SEARCH } from "app/path";
 import { IGR9003SEARCH } from "./model";
@@ -10,7 +10,7 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { columns, fields } from "./data";
 
@@ -33,6 +33,7 @@ function GR9003({
     dispatch,
     dataCommonDic,
   } = CreateReport("GR", "GR9003", menuId, GR9003SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<IGR9003SEARCH>({
     mode: "onSubmit",
@@ -115,6 +116,7 @@ function GR9003({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -158,15 +160,15 @@ function GR9003({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        <Grid
+        <BasicGrid
+          ref={gridRef}
           areaCode={areaCode}
           data={data}
           columns={columns}
           fields={fields}
           menuId={menuId}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          setSelected={setSelected}
-          style={{ height: `calc(100% - 15px)` }}
+          style={{ height: `calc(100% - 47px)` }}
           evenFill
         />
       </WrapperContent>
