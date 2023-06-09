@@ -13,6 +13,9 @@ export interface initialStateType {
   cm1106: {
     cuCode: string;
     areaCode: string;
+    source: string;
+    jpName: string;
+    jpCode: string;
   };
   gr1200Popup: {
     index: number | undefined;
@@ -89,6 +92,9 @@ const initialState: initialStateType = {
   cm1106: {
     cuCode: "",
     areaCode: "",
+    source: "",
+    jpName: "",
+    jpCode: "",
   },
   gr1200Popup: {
     index: undefined,
@@ -175,6 +181,11 @@ const modalSlice = createSlice({
     addCM1106: (state, action) => {
       state.cm1106.cuCode = action.payload.cuCode;
       state.cm1106.areaCode = action.payload.areaCode;
+      state.cm1106.source = action.payload?.source && action.payload.source;
+    },
+
+    addCM1106AR100Tick: (state, action) => {
+      state.cm1106 = { ...state.cm1106, ...action.payload };
     },
 
     addGR1200Popup: (state, action) => {
@@ -244,6 +255,7 @@ export const {
   closeModal,
   addCM1105,
   addCM1106,
+  addCM1106AR100Tick,
   addGR1200Popup,
   addGR1200,
   addGR1300,

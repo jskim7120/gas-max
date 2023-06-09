@@ -39,6 +39,22 @@ export const fields1 = [
     fieldName: "jcLastdate5",
     dataType: ValueType.TEXT,
   },
+  {
+    fieldName: "jcCycle",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "xjpJunjaego",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "xjpOut",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "xjpIn",
+    dataType: ValueType.TEXT,
+  },
 ];
 
 export const columns1 = [
@@ -134,6 +150,46 @@ export const columns1 = [
     styleName: "rg-left-column",
     header: {
       text: "최종공급일",
+    },
+  },
+  {
+    name: "jcCycle",
+    fieldName: "jcCycle",
+    type: "data",
+    width: "100",
+    styleName: "rg-left-column",
+    header: {
+      text: "평균사용일",
+    },
+  },
+  {
+    name: "xjpJunjaego",
+    fieldName: "xjpJunjaego",
+    type: "data",
+    width: "100",
+    styleName: "rg-left-column",
+    header: {
+      text: "junjaego",
+    },
+  },
+  {
+    name: "xjpOut",
+    fieldName: "xjpOut",
+    type: "data",
+    width: "100",
+    styleName: "rg-left-column",
+    header: {
+      text: "납품",
+    },
+  },
+  {
+    name: "xjpIn",
+    fieldName: "xjpIn",
+    type: "data",
+    width: "100",
+    styleName: "rg-left-column",
+    header: {
+      text: "회수",
     },
   },
 ];

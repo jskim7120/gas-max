@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "app/store";
+import { addCM1106, openModal } from "app/state/modal/modalSlice";
 import Table from "components/table";
 import { Input, Select, FormGroup } from "components/form/style";
-import { Controller } from "react-hook-form";
 import CustomDatePicker from "components/customDatePicker";
-import { IAR110065DETAIL } from "../model";
-import { useForm } from "react-hook-form";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
+import { IAR110065DETAIL } from "../model";
 
 function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -15,6 +18,14 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
     mode: "onSubmit",
   });
 
+  const dispatch = useDispatch();
+  const cm1106 = useSelector((state: any) => state.modal.cm1106);
+
+  useEffect(() => {
+    if (cm1106.source === "AR1100" && cm1106.jpCode && cm1106.jpName) {
+      resetForm("jpName");
+    }
+  }, [cm1106.jpCode, cm1106.jpName]);
   useEffect(() => {
     if (data && Object.keys(data)?.length > 0) {
       resetForm("reset");
@@ -44,6 +55,16 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
         pjBigo: data?.pjBigo,
       });
     }
+    if ((type = "jpName")) {
+      reset((formValues) => ({
+        ...formValues,
+        pjJpName: cm1106.jpName,
+        pjJpCode: cm1106.jpCode,
+      }));
+    }
+  };
+  const openPopupCM1106 = async () => {
+    dispatch(openModal({ type: "cm1106Modal" }));
   };
 
   const data1 = [
@@ -58,10 +79,27 @@ function Tab1({ data, dictionary }: { data: any; dictionary: any }) {
         />
       ),
       2: (
-        <FormGroup>
+        <FormGroup style={{ position: "relative" }}>
           <Input register={register("pjJpCode")} inputSize={InputSize.i70} />
           <Input register={register("pjJpName")} />
-          <span>s</span>
+          <span
+            style={{
+              width: "22px",
+              height: "22px",
+              borderRadius: "50%",
+              background: "#686767",
+              position: "absolute",
+              right: "6px",
+              bottom: "6px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingLeft: "3px",
+            }}
+            onClick={openPopupCM1106}
+          >
+            <MagnifyingGlass />
+          </span>
         </FormGroup>
       ),
       3: <Input register={register("pjQty")} inputSize={InputSize.i100} />,
