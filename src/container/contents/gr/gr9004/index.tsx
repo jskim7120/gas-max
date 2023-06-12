@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CreateReport from "app/hook/createReport";
 import { GR9004SEARCH } from "app/path";
 import { ISEARCH } from "./model";
@@ -11,7 +11,7 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
 
 function GR9004({
@@ -33,6 +33,8 @@ function GR9004({
     dispatch,
     dataCommonDic,
   } = CreateReport("GR", "GR9004", menuId, GR9004SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
+
   const {
     register,
     handleSubmit,
@@ -137,6 +139,7 @@ function GR9004({
                   value={value}
                   onChange={onChange}
                   name={name}
+                  showMonthYearPicker
                 />
               )}
             />
@@ -148,6 +151,7 @@ function GR9004({
                   value={value}
                   onChange={onChange}
                   name={name}
+                  showMonthYearPicker
                 />
               )}
             />
@@ -155,14 +159,14 @@ function GR9004({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        <Grid
+        <BasicGrid
+          ref={gridRef}
           areaCode={areaCode}
           data={data}
           columns={columns}
           fields={fields}
           menuId={menuId}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          setSelected={setSelected}
           style={{ height: `calc(100% - 47px)` }}
           evenFill
         />

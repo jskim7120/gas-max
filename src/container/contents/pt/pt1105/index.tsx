@@ -138,6 +138,7 @@ function FormIP1105() {
       fetchSearchData(data);
     }
   };
+  console.log("setSelectedsetSelectedsetSelectedsetSelected: ", setSelected);
   return (
     <ModalWrapper>
       <form onSubmit={handleSubmit(onSearchSubmit)} autoComplete="off">

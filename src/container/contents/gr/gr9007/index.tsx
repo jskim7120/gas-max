@@ -43,6 +43,8 @@ function GR9007({
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
         bcBuCode: dataCommonDic?.bcBuCode[0].code,
+        sDate: dataCommonDic?.sDate[0].code,
+        eDate: dataCommonDic?.eDate[0].code,
       });
     }
   };
@@ -51,6 +53,8 @@ function GR9007({
     reset({
       areaCode: dataCommonDic?.areaCode[0].code,
       bcBuCode: dataCommonDic?.bcBuCode[0].code,
+      sDate: dataCommonDic?.sDate[0].code,
+      eDate: dataCommonDic?.eDate[0].code,
     });
   }, [dataCommonDic]);
 
@@ -142,6 +146,7 @@ function GR9007({
                   value={value}
                   onChange={onChange}
                   name={name}
+                  showMonthYearPicker
                 />
               )}
             />
@@ -154,6 +159,7 @@ function GR9007({
                   value={value}
                   onChange={onChange}
                   name={name}
+                  showMonthYearPicker
                 />
               )}
             />
