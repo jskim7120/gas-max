@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CC1100SEARCH } from "app/path";
@@ -10,7 +10,7 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
 
 function GR9009({
@@ -32,6 +32,7 @@ function GR9009({
     dispatch,
     dataCommonDic,
   } = CreateReport("CC", "CC9009", menuId, CC1100SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ICC9009SEARCH>({
     mode: "onSubmit",
@@ -154,7 +155,8 @@ function GR9009({
           </SearchWrapper>
         </form>
 
-        <Grid
+        <BasicGrid
+          ref={gridRef}
           areaCode={areaCode}
           data={data}
           columns={columns}

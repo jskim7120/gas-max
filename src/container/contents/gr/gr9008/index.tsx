@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { GR9008SEARCH } from "app/path";
@@ -10,8 +10,9 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
+import { DateWithoutDash } from "helpers/dateFormat";
 
 function GR9008({
   depthFullName,
@@ -32,6 +33,7 @@ function GR9008({
     dispatch,
     dataCommonDic,
   } = CreateReport("GR", "GR9008", menuId, GR9008SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -42,6 +44,8 @@ function GR9008({
   }, [dataCommonDic]);
 
   const submit = (data: ISEARCH) => {
+    data.sDate = DateWithoutDash(data.sDate);
+    data.eDate = DateWithoutDash(data.eDate);
     fetchData(data);
   };
 
@@ -130,6 +134,7 @@ function GR9008({
                   value={value}
                   onChange={onChange}
                   name={name}
+                  showMonthYearPicker
                 />
               )}
             />
@@ -141,6 +146,7 @@ function GR9008({
                   value={value}
                   onChange={onChange}
                   name={name}
+                  showMonthYearPicker
                 />
               )}
             />
@@ -148,14 +154,14 @@ function GR9008({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        <Grid
+        <BasicGrid
+          ref={gridRef}
           areaCode={areaCode}
           data={data}
           columns={columns}
           fields={fields}
           menuId={menuId}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          setSelected={setSelected}
           style={{ height: `calc(100% - 47px)` }}
           evenFill
         />

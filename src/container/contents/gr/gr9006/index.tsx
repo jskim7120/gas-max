@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CreateReport from "app/hook/createReport";
 import { GR9006SEARCH } from "app/path";
 import { ISEARCH } from "./model";
@@ -10,7 +10,7 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { columns1, fields1 } from "./data/data1";
 
 function GR9006({
@@ -32,6 +32,7 @@ function GR9006({
     dispatch,
     dataCommonDic,
   } = CreateReport("GR", "GR9006", menuId, GR9006SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -156,14 +157,14 @@ function GR9006({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        <Grid
+        <BasicGrid
+          ref={gridRef}
           areaCode={areaCode}
           data={data}
           columns={columns1}
           fields={fields1}
           menuId={menuId}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          setSelected={setSelected}
           style={{ height: `calc(100% - 47px)` }}
           evenFill
         />
