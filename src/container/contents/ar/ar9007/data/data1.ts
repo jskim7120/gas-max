@@ -44,7 +44,7 @@ export const columns1 = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "100",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -72,7 +72,7 @@ export const columns1 = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "100",
+    width: "110",
     styleName: "rg-left-column",
     header: {
       text: "전화번호",
@@ -102,7 +102,8 @@ export const columns1 = [
     name: "yBokTmQty",
     fieldName: "yBokTmQty",
     type: "data",
-    width: "100",
+    width: "50",
+    styleName: "rg-right-column",
     header: {
       text: "유상",
     },
@@ -111,7 +112,8 @@ export const columns1 = [
     name: "jcTdaemKumn",
     fieldName: "jcTdaemKumn",
     type: "data",
-    width: "100",
+    width: "50",
+    styleName: "rg-right-column",
     header: {
       text: "무상",
     },

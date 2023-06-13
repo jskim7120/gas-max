@@ -51,7 +51,7 @@ export const fields = [
   },
   {
     fieldName: "dangMisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "chkYn",
@@ -106,6 +106,7 @@ export const columns = [
     header: {
       text: "공급량",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "junMisu",
@@ -116,6 +117,7 @@ export const columns = [
     header: {
       text: "전월미수",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "kumack",
@@ -126,6 +128,7 @@ export const columns = [
     header: {
       text: "매출액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "DC",
@@ -136,6 +139,7 @@ export const columns = [
     header: {
       text: "D/C",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "inkum",
@@ -146,6 +150,7 @@ export const columns = [
     header: {
       text: "입금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "misukum",
@@ -156,6 +161,7 @@ export const columns = [
     header: {
       text: "미수금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "suKum",
@@ -166,6 +172,7 @@ export const columns = [
     header: {
       text: "수금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "suDC",
@@ -176,6 +183,7 @@ export const columns = [
     header: {
       text: "D/C",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "dangMisu",
@@ -186,6 +194,7 @@ export const columns = [
     header: {
       text: "당월미수",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "chkYn",

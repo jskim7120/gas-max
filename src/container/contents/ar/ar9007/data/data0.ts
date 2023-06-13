@@ -31,7 +31,7 @@ export const fields0 = [
   },
   {
     fieldName: "cuTongKum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "jcLastdate5",
@@ -72,7 +72,7 @@ export const columns0 = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "100",
+    width: "110",
     styleName: "rg-left-column",
     header: {
       text: "전화번호",
@@ -102,7 +102,7 @@ export const columns0 = [
     name: "yBokTmQty",
     fieldName: "yBokTmQty",
     type: "data",
-    width: "50",
+    width: "60",
     styleName: "rg-right-column",
     header: {
       text: "수량",
