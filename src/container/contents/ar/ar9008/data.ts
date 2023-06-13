@@ -1,10 +1,10 @@
 import { ValueType } from "realgrid";
 
 export const fields = [
-  //   {
-  //     fieldName: "areaCode",
-  //     dataType: ValueType.TEXT,
-  //   },
+  {
+    fieldName: "areaCode",
+    dataType: ValueType.TEXT,
+  },
   {
     fieldName: "cuCode",
     dataType: ValueType.TEXT,
@@ -59,15 +59,21 @@ export const fields = [
   },
 ];
 export const columns = [
-  //   {
-  //     name: "areaCode",
-  //     fieldName: "areaCode",
-  //     type: "data",
-  //     width: "100",
-  //     header: {
-  //       text: "영업소",
-  //     },
-  //   },
+  {
+    name: "areaCode",
+    fieldName: "areaCode",
+    type: "data",
+    width: "100",
+    header: {
+      text: "영업소",
+    },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("jcBok", "count");
+      },
+    },
+  },
+
   {
     name: "cuCode",
     fieldName: "cuCode",

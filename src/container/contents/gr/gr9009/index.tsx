@@ -1,17 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { apiGet } from "app/axios";
+import CreateReport from "app/hook/createReport";
 import { GR9009SEARCH } from "app/path";
 import { IGR9009SEARCH } from "./model";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label, Field } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "../grid2";
+import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
 
 function GR9009({
@@ -23,11 +22,17 @@ function GR9009({
   menuId: string;
   areaCode: string;
 }) {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("GR", "GR9009", menuId, GR9009SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<IGR9009SEARCH>({
     mode: "onSubmit",
@@ -38,49 +43,22 @@ function GR9009({
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
         bcBuCode: dataCommonDic?.bcBuCode[0].code,
+        sDate: dataCommonDic?.sDate[0].code,
+        eDate: dataCommonDic?.eDate[0].code,
       });
     }
   };
-  useEffect(() => {
-    getCommonDictionary({ groupId: "GR", functionName: "GR9009" });
-  }, []);
 
   useEffect(() => {
     reset({
       areaCode: dataCommonDic?.areaCode[0].code,
       bcBuCode: dataCommonDic?.bcBuCode[0].code,
+      sDate: dataCommonDic?.sDate[0].code,
+      eDate: dataCommonDic?.eDate[0].code,
     });
   }, [dataCommonDic]);
 
-  const fetchData = async (params: any) => {
-    // try {
-    //   setLoading(true);
-    //   const { data: dats } = await API.get(GR9009SEARCH, { params: params });
-
-    //   if (dats) {
-    //     setData(dats);
-    //   } else {
-    //     setData([]);
-    //   }
-    //   setLoading(false);
-    // } catch (err) {
-    //   setData([]);
-    //   setLoading(false);
-    //   console.log("GR9003 data search fetch error =======>", err);
-    // }
-
-    setLoading(true);
-    const dats = await apiGet(GR9009SEARCH, params);
-
-    if (dats) {
-      setData(dats);
-    } else {
-      setData([]);
-    }
-    setLoading(false);
-  };
-
-  const cancel = () => {
+  const handleReset = () => {
     resetForm();
     setData([]);
   };
@@ -133,13 +111,14 @@ function GR9009({
                 style={{ marginRight: "5px" }}
                 type="button"
                 color={ButtonColor.LIGHT}
-                onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -167,6 +146,7 @@ function GR9009({
                   value={value}
                   onChange={onChange}
                   name={name}
+                  showMonthYearPicker
                 />
               )}
             />
@@ -179,6 +159,7 @@ function GR9009({
                   value={value}
                   onChange={onChange}
                   name={name}
+                  showMonthYearPicker
                 />
               )}
             />
@@ -186,7 +167,17 @@ function GR9009({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        <Grid data={data} columns={columns} fields={fields} />
+        <BasicGrid
+          ref={gridRef}
+          areaCode={areaCode}
+          data={data}
+          columns={columns}
+          fields={fields}
+          menuId={menuId}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
+          style={{ height: `calc(100% - 47px)` }}
+          evenFill
+        />
       </WrapperContent>
     </>
   );

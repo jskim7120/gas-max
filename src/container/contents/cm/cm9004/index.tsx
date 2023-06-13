@@ -1,18 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "app/store";
+import CreateReport from "app/hook/createReport";
 import { CM9004SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import { apiGet } from "app/axios";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CheckBox from "components/checkbox";
 import { Select, FormGroup, Wrapper, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
@@ -25,22 +23,34 @@ function CM9004({
   menuId: string;
   areaCode: string;
 }) {
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>({});
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("CM", "CM9004", menuId, CM9004SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
+
+  // const dispatch = useDispatch();
+  // const [loading, setLoading] = useState(false);
+  // const [data, setData] = useState([]);
+  // const [selected, setSelected] = useState<any>({});
   const [cuSekyn, setCuSekyn] = useState("N");
 
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
+  // const [getCommonDictionary, { data: dataCommonDic }] =
+  //   useGetCommonDictionaryMutation();
 
-  const { register, handleSubmit, reset } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  useEffect(() => {
-    getCommonDictionary({ groupId: "CM", functionName: "CM9004" });
-  }, []);
+  // useEffect(() => {
+  //   getCommonDictionary({ groupId: "CM", functionName: "CM9004" });
+  // }, []);
 
   useEffect(() => {
     if (Object.keys(selected)?.length > 0) {
@@ -52,28 +62,28 @@ function CM9004({
     resetForm();
   }, [dataCommonDic]);
 
-  const fetchData = async (params: any) => {
-    params.cuSekumyn = cuSekyn;
-    let paramTemp: any = {};
-    for (const [key, value] of Object.entries(params)) {
-      if (value !== "" && value !== undefined) {
-        paramTemp = { ...paramTemp, [key]: value };
-      }
-    }
+  // const fetchData = async (params: any) => {
+  //   params.cuSekumyn = cuSekyn;
+  //   let paramTemp: any = {};
+  //   for (const [key, value] of Object.entries(params)) {
+  //     if (value !== "" && value !== undefined) {
+  //       paramTemp = { ...paramTemp, [key]: value };
+  //     }
+  //   }
 
-    setLoading(true);
-    const data = await apiGet(CM9004SEARCH, paramTemp);
+  //   setLoading(true);
+  //   const data = await apiGet(CM9004SEARCH, paramTemp);
 
-    if (data) {
-      setData(data);
-    } else {
-      setData([]);
-    }
-    setLoading(false);
-  };
+  //   if (data) {
+  //     setData(data);
+  //   } else {
+  //     setData([]);
+  //   }
+  //   setLoading(false);
+  // };
 
-  const submit = (params: ISEARCH) => {
-    fetchData(params);
+  const submit = (data: ISEARCH) => {
+    fetchData(data);
   };
 
   const resetForm = () => {
@@ -89,7 +99,11 @@ function CM9004({
     }
   };
 
-  const cancel = () => {
+  // const cancel = () => {
+  //   resetForm();
+  //   setData([]);
+  // };
+  const handleReset = () => {
     resetForm();
     setData([]);
   };
@@ -136,13 +150,14 @@ function CM9004({
                 icon={<ResetGray color="#707070" />}
                 type="button"
                 color={ButtonColor.LIGHT}
-                onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -236,15 +251,15 @@ function CM9004({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        <Grid
+        <BasicGrid
+          ref={gridRef}
           areaCode={areaCode}
           data={data}
-          setSelected={setSelected}
           fields={fields}
           columns={columns}
           menuId={menuId}
-          rowIndex={0}
-          style={{ height: `calc(100% - 38px)` }}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
+          style={{ height: `calc(100% - 66px)` }}
           evenFill
         />
       </WrapperContent>

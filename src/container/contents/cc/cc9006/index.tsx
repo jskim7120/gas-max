@@ -1,12 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { apiGet } from "app/axios";
-import { GR9009SEARCH } from "app/path";
+import CreateReport from "app/hook/createReport";
+import { CC1100SEARCH } from "app/path";
 import { ICC9009SEARCH } from "./model";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { Select, FormGroup, Label, Field } from "components/form/style";
+import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
+import { Select, FormGroup, Field, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -14,12 +13,6 @@ import CustomDatePicker from "components/customDatePicker";
 import Grid from "components/grid";
 import { columns, fields } from "./data";
 import CheckBox from "components/checkbox";
-import CustomTopPart from "container/contents/customTopPart";
-import {
-  Item,
-  RadioButton,
-  RadioButtonLabel,
-} from "components/radioButton/style";
 
 const radioOptions = [
   {
@@ -41,51 +34,38 @@ function GR9006({
   menuId: string;
   areaCode: string;
 }) {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("CC", "CC9009", menuId, CC1100SEARCH);
 
   const { register, handleSubmit, reset, control } = useForm<ICC9009SEARCH>({
     mode: "onSubmit",
   });
 
-  const resetForm = () => {
-    if (dataCommonDic !== undefined) {
+  const resetForm = (type: string) => {
+    if (type === "reset") {
+      const init: any = dataCommonDic.dataInit[0];
       reset({});
     }
   };
+
   useEffect(() => {
-    getCommonDictionary({ groupId: "CC", functionName: "CC9009" });
-  }, []);
-
-  useEffect(() => {}, [dataCommonDic]);
-
-  const fetchData = async (params: any) => {
-    // try {
-    //   setLoading(true);
-    //   const { data } = await API.get(GR9009SEARCH, { params: params });
-
-    //   if (data) {
-    //     setData(data);
-    //     setLoading(false);
-    //   }
-    // } catch (err) {
-    //   console.log("CC9008 data search fetch error =======>", err);
-    // }
-
-    setLoading(true);
-    const data = await apiGet(GR9009SEARCH, params);
-
-    if (data) {
-      setData(data);
-      setLoading(false);
+    if (dataCommonDic && dataCommonDic?.dataInit) {
+      resetForm("reset");
     }
-  };
+  }, [dataCommonDic]);
 
-  const cancel = () => {
-    resetForm();
+  const handleReset = () => {
+    if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
     setData([]);
   };
 

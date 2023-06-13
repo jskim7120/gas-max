@@ -44,6 +44,11 @@ export const columns3 = [
     header: {
       text: "영업소",
     },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("jcBok", "count");
+      },
+    },
   },
   {
     name: "jcCuCode",

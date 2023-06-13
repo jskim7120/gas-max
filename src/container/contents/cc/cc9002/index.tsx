@@ -1,17 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useDispatch } from "app/store";
+import CreateReport from "app/hook/createReport";
 import { CC1100SEARCH } from "app/path";
 import { ICC9002SEARCH } from "./model";
 import GridLeft from "components/grid";
 import CheckBox from "components/checkbox";
-import {
-  MainWrapper,
-  SearchWrapper,
-  RightSide,
-  LeftSide,
-} from "../../commonStyle";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
+import { MainWrapper, SearchWrapper, LeftSide } from "../../commonStyle";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label, Field } from "components/form/style";
 import Loader from "components/loader";
@@ -29,45 +23,48 @@ function CC9002({
   areaCode: string;
   menuId: string;
 }) {
-  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>({});
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("CC", "CC9002", menuId, CC1100SEARCH);
 
   const { register, handleSubmit, reset, control } = useForm<ICC9002SEARCH>({
     mode: "onSubmit",
   });
 
   useEffect(() => {
-    getCommonDictionary({ groupId: "CC", functionName: "CC9002" });
-  }, []);
-
-  useEffect(() => {
-    if (dataCommonDic) {
-      resetSearchForm();
+    if (dataCommonDic && dataCommonDic?.dataInit) {
+      resetForm("reset");
     }
   }, [dataCommonDic]);
 
-  const resetSearchForm = () => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-      sDateT: dataCommonDic?.sDateT[0].code,
-      sDateF: dataCommonDic?.sDateF[0].code,
-    });
+  const resetForm = (type: string) => {
+    if (type === "reset") {
+      const init: any = dataCommonDic.dataInit[0];
+      reset({
+        areaCode: dataCommonDic?.areaCode[0].code,
+        sDateT: dataCommonDic?.sDateT[0].code,
+        sDateF: dataCommonDic?.sDateF[0].code,
+      });
+    }
   };
 
-  const fetchData = async (params: any) => {};
-
-  const cancel = () => {
-    resetSearchForm();
+  const handleReset = () => {
+    if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
     setData([]);
   };
 
-  const submit = (data: ICC9002SEARCH) => {};
+  const submit = (data: ICC9002SEARCH) => {
+    fetchData(data);
+  };
 
   return (
     <>
@@ -163,7 +160,7 @@ function CC9002({
                   icon={<ResetGray />}
                   type="button"
                   color={ButtonColor.LIGHT}
-                  onClick={cancel}
+                  onClick={handleReset}
                 />
               </div>
             </SearchWrapper>
@@ -176,7 +173,7 @@ function CC9002({
             columns={columns}
             menuId={menuId}
             rowIndex={0}
-            style={{ height: `calc(100% - 38px)` }}
+            style={{ height: `calc(100% - 47px)` }}
           />
         </LeftSide>
       </MainWrapper>

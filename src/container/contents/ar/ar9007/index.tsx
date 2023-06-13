@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { AR9007SEARCH } from "app/path";
@@ -42,6 +42,7 @@ function AR9007({
     dispatch,
     dataCommonDic,
   } = CreateReport("AR", "AR9007", menuId, AR9007SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -144,6 +145,7 @@ function AR9007({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -216,39 +218,47 @@ function AR9007({
       </form>
       {watch("reportKind") === "3" ? (
         <BasicGrid
+          menuId={menuId}
+          ref={gridRef}
           areaCode={ownAreaCode}
           columns={columns3}
           fields={fields3}
           data={data}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: "calc(100% - 52px)" }}
+          style={{ height: "calc(100% - 88px)" }}
         />
       ) : watch("reportKind") === "2" ? (
         <BasicGrid
+          menuId={menuId}
+          ref={gridRef}
           areaCode={ownAreaCode}
           columns={columns2}
           fields={fields2}
           data={data}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: "calc(100% - 52px)" }}
+          style={{ height: "calc(100% - 88px)" }}
         />
       ) : watch("reportKind") === "1" ? (
         <BasicGrid
+          menuId={menuId}
+          ref={gridRef}
           areaCode={ownAreaCode}
           columns={columns1}
           fields={fields1}
           data={data}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: "calc(100% - 52px)" }}
+          style={{ height: "calc(100% - 88px)" }}
         />
       ) : (
         <BasicGrid
+          menuId={menuId}
+          ref={gridRef}
           areaCode={ownAreaCode}
           columns={columns0}
           fields={fields0}
           data={data}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: "calc(100% - 52px)" }}
+          style={{ height: "calc(100% - 88px)" }}
         />
       )}
     </>

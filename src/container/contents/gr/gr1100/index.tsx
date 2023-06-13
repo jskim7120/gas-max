@@ -242,7 +242,7 @@ function GR1100({
             rowIndex={0}
             setSelected={setSelected}
             setIsAddBtnClicked={setIsAddBtnClicked}
-            style={{ height: `calc(100% - 38px)`, minWidth: minWidth }}
+            style={{ height: `calc(100% - 58px)`, minWidth: minWidth }}
           />
         </LeftSide>
         <RightSide>

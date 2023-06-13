@@ -53,6 +53,11 @@ export const columns3 = [
       text: "구분",
     },
     editable: false,
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("areaCode", "count");
+      },
+    },
   },
   {
     name: "bclJpCode",

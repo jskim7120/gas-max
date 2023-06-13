@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { apiGet } from "app/axios";
-import { CM9002SEARCH } from "app/path";
+import React, { useState, useEffect, useRef } from "react";
+import CreateReport from "app/hook/createReport";
+import { GR9002SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import { DateWithoutDash } from "helpers/dateFormat";
@@ -13,9 +12,7 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import { columns, fields, layout } from "./data";
-
-import Grid from "./grid";
-import CustomTopPart from "container/contents/customTopPart";
+import BasicGrid from "components/basicGrid";
 
 function GR9002({
   depthFullName,
@@ -26,66 +23,31 @@ function GR9002({
   menuId: string;
   areaCode: string;
 }) {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
-
   const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    getValues,
-    control,
-  } = useForm<ISEARCH>({
-    mode: "onSubmit",
-  });
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("GR", "GR9002", menuId, GR9002SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
-  useEffect(() => {
-    getCommonDictionary({ groupId: "GR", functionName: "GR9002" });
-  }, []);
+  const { register, handleSubmit, reset, getValues, control } =
+    useForm<ISEARCH>({
+      mode: "onSubmit",
+    });
 
   useEffect(() => {
     resetForm();
   }, [dataCommonDic]);
 
-  const fetchData = async (params: any) => {
-    // try {
-    //   params.sDate = DateWithoutDash(params.sDate);
-    //   params.eDate = DateWithoutDash(params.eDate);
-
-    //   setLoading(true);
-    //   const { data } = await API.get(CM9002SEARCH, { params: params });
-    //   console.log("data:", data);
-    //   if (data) {
-    //     setData(data);
-    //   } else {
-    //     setData([]);
-    //   }
-    //   setLoading(false);
-    // } catch (err) {
-    //   setData([]);
-    //   setLoading(false);
-    //   console.log("CM9001 DATA fetch error =======>", err);
-    // }
-
-    params.sDate = DateWithoutDash(params.sDate);
-    params.eDate = DateWithoutDash(params.eDate);
-
-    setLoading(true);
-    const data = await apiGet(CM9002SEARCH, params);
-    if (data) {
-      setData(data);
-    } else {
-      setData([]);
-    }
-    setLoading(false);
-  };
-
-  const submit = (params: ISEARCH) => {
-    fetchData(params);
+  const submit = (data: ISEARCH) => {
+    data.sDate = DateWithoutDash(data.sDate);
+    data.eDate = DateWithoutDash(data.eDate);
+    fetchData(data);
   };
 
   const resetForm = () => {
@@ -101,7 +63,7 @@ function GR9002({
     }
   };
 
-  const cancel = () => {
+  const handleReset = () => {
     resetForm();
     setData([]);
   };
@@ -148,7 +110,7 @@ function GR9002({
                 icon={<ResetGray />}
                 type="button"
                 color={ButtonColor.LIGHT}
-                onClick={cancel}
+                onClick={handleReset}
               />
             </div>
           </FormGroup>
@@ -157,11 +119,7 @@ function GR9002({
         <SearchWrapper className="h35">
           <FormGroup>
             <Label style={{ minWidth: "auto" }}>충전소</Label>
-            <Select
-              register={register("bcBuCode")}
-              width={InputSize.i150}
-              // onChange={(e) => setReportKind(e.target.value)}
-            >
+            <Select register={register("bcBuCode")} width={InputSize.i150}>
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -206,7 +164,17 @@ function GR9002({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        <Grid data={data} />
+        <BasicGrid
+          ref={gridRef}
+          areaCode={areaCode}
+          data={data}
+          columns={columns}
+          fields={fields}
+          menuId={menuId}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
+          style={{ height: `calc(100% - 47px)` }}
+          evenFill
+        />
       </WrapperContent>
     </>
   );

@@ -1,17 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { apiGet } from "app/axios";
-import { GR9009SEARCH } from "app/path";
+import CreateReport from "app/hook/createReport";
+import { CC1100SEARCH } from "app/path";
 import { ICC9009SEARCH } from "./model";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { Select, FormGroup, Label, Field } from "components/form/style";
+import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
+import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
 
 function GR9009({
@@ -23,52 +22,39 @@ function GR9009({
   menuId: string;
   areaCode: string;
 }) {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("CC", "CC9009", menuId, CC1100SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ICC9009SEARCH>({
     mode: "onSubmit",
   });
 
-  const resetForm = () => {
-    if (dataCommonDic !== undefined) {
+  const resetForm = (type: string) => {
+    if (type === "reset") {
+      const init: any = dataCommonDic.dataInit[0];
       reset({});
     }
   };
 
   useEffect(() => {
-    getCommonDictionary({ groupId: "CC", functionName: "CC9009" });
-  }, []);
-
-  useEffect(() => {}, [dataCommonDic]);
-
-  const fetchData = async (params: any) => {
-    // try {
-    //   setLoading(true);
-    //   const { data } = await API.get(GR9009SEARCH, { params: params });
-
-    //   if (data) {
-    //     setData(data);
-    //     setLoading(false);
-    //   }
-    // } catch (err) {
-    //   console.log("CC9009 data search fetch error =======>", err);
-    // }
-
-    setLoading(true);
-    const data = await apiGet(GR9009SEARCH, params);
-
-    if (data) {
-      setData(data);
-      setLoading(false);
+    if (dataCommonDic && dataCommonDic?.dataInit) {
+      resetForm("reset");
     }
-  };
+  }, [dataCommonDic]);
 
-  const cancel = () => {
-    resetForm();
+  const handleReset = () => {
+    if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
     setData([]);
   };
 
@@ -169,14 +155,15 @@ function GR9009({
           </SearchWrapper>
         </form>
 
-        <Grid
+        <BasicGrid
+          ref={gridRef}
           areaCode={areaCode}
           data={data}
           columns={columns}
           fields={fields}
           menuId={menuId}
           rowIndex={0}
-          style={{ height: `calc(100% - 35px)` }}
+          style={{ height: `calc(100% - 47px)` }}
         />
       </WrapperContent>
     </>

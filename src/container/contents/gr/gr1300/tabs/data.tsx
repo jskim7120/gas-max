@@ -40,6 +40,11 @@ export const columns = [
       text: "코드",
     },
     editable: false,
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("areaCode", "count");
+      },
+    },
   },
   {
     name: "bblBpName",
