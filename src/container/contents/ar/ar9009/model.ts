@@ -1,4 +1,6 @@
 export interface ISEARCH {
   areaCode: string;
-  dataInit: string;
+  sMonth: string;
+  chkGubun: string;
+  tabKind: number;
 }

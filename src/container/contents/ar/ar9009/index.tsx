@@ -48,7 +48,13 @@ function AR9009({
   const submit = (params: ISEARCH) => {
     // params.sDate = DateWithoutDash(params.sDate);
     // params.eDate = DateWithoutDash(params.eDate);
-
+    if (params.chkGubun) {
+      params.chkGubun = "Y";
+    } else {
+      params.chkGubun = "N";
+    }
+    params.tabKind = tabId;
+    params.sMonth = "202305";
     fetchData(params);
   };
 
@@ -56,7 +62,8 @@ function AR9009({
     if (dataCommonDic?.dataInit) {
       const init = dataCommonDic.dataInit[0];
       reset({
-        // sDate: init?.sDate,
+        sMonth: init?.sMonth,
+
         // eDate: init?.dDate,
         // jpCode: init?.jpCode,
         // swCode: init?.swCode,
@@ -76,7 +83,7 @@ function AR9009({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
@@ -92,8 +99,8 @@ function AR9009({
             )}
 
             <Label style={{ minWidth: "80px" }}>년 - 월</Label>
-            <Select register={register("dataInit")} width={InputSize.i120}>
-              {dataCommonDic?.dataInit?.map((obj: any, idx: number) => (
+            <Select register={register("sMonth")} width={InputSize.i120}>
+              {dataCommonDic?.dataInit?.sMonth?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
