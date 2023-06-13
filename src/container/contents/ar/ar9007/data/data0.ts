@@ -27,11 +27,11 @@ export const fields0 = [
   },
   {
     fieldName: "yBokTmQty",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "cuTongKum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "jcLastdate5",
@@ -58,7 +58,7 @@ export const columns0 = [
     name: "jcCuCode",
     fieldName: "jcCuCode",
     type: "data",
-    width: "100",
+    width: "90",
     header: {
       text: "코드",
     },
@@ -67,7 +67,8 @@ export const columns0 = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "100",
+    width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -76,7 +77,8 @@ export const columns0 = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "100",
+    width: "110",
+    styleName: "rg-left-column",
     header: {
       text: "전화번호",
     },
@@ -85,7 +87,8 @@ export const columns0 = [
     name: "cuAddr1",
     fieldName: "cuAddr1",
     type: "data",
-    width: "100",
+    width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "주소",
     },
@@ -94,7 +97,8 @@ export const columns0 = [
     name: "jcJpName",
     fieldName: "jcJpName",
     type: "data",
-    width: "100",
+    width: "90",
+    styleName: "rg-left-column",
     header: {
       text: "품명",
     },
@@ -103,25 +107,30 @@ export const columns0 = [
     name: "yBokTmQty",
     fieldName: "yBokTmQty",
     type: "data",
-    width: "100",
+    width: "60",
+    styleName: "rg-right-column",
     header: {
       text: "수량",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "cuTongKum",
     fieldName: "cuTongKum",
     type: "data",
-    width: "100",
+    width: "90",
+    styleName: "rg-right-column",
     header: {
       text: "대여보증금",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "jcLastdate5",
     fieldName: "jcLastdate5",
     type: "data",
     width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "최종공급일",
     },
