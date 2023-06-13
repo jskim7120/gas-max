@@ -9,7 +9,7 @@ import {
   LeftSide,
 } from "../../commonStyle";
 import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
-import GridLeft from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { fields, columns } from "./data";
 import { ICC9005SEARCH } from "./model";
 import Form from "./form";
@@ -35,6 +35,7 @@ function CC9005({
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const gridRef = useRef() as React.MutableRefObject<any>;
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [data65, setData65] = useState({});
@@ -124,11 +125,11 @@ function CC9005({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide>
-          <GridLeft
+          <BasicGrid
+            ref={gridRef}
             areaCode={areaCode}
             data={data}
-            setSelected={setSelected}
-            setIsAddBtnClicked={setIsAddBtnClicked}
+            //setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
             menuId={menuId}
