@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "app/store";
-import API from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import { CC110080 } from "app/path";
 import { CTable2 } from "container/contents/gr/gr1200/style";
 
@@ -24,21 +24,31 @@ function CC1100Modal() {
   }, []);
 
   const fetchData = async () => {
-    try {
-      const res = await API.get(CC110080, {
-        params: {
-          acjType: state.acjType,
-        },
-      });
+    // try {
+    //   const res = await API.get(CC110080, {
+    //     params: {
+    //       acjType: state.acjType,
+    //     },
+    //   });
 
-      if (res.status === 200) {
-        setData(res.data);
-      } else {
-        setData([]);
-      }
-    } catch (err) {
+    //   if (res.status === 200) {
+    //     setData(res.data);
+    //   } else {
+    //     setData([]);
+    //   }
+    // } catch (err) {
+    //   setData([]);
+    //   console.log("error fetching cc1100 Modal data");
+    // }
+
+    const response = await apiGet(CC110080, {
+      acjType: state.acjType,
+    });
+
+    if (response) {
+      setData(response);
+    } else {
       setData([]);
-      console.log("error fetching cc1100 Modal data");
     }
   };
 

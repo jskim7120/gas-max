@@ -10,7 +10,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "pjCucode",
+    fieldName: "pjCuCode",
     dataType: ValueType.TEXT,
   },
   {
@@ -76,8 +76,8 @@ export const columns = [
     },
   },
   {
-    name: "pjCucode",
-    fieldName: "pjCucode",
+    name: "pjCuCode",
+    fieldName: "pjCuCode",
     type: "data",
     width: "90",
     header: {

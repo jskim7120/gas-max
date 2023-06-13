@@ -133,7 +133,7 @@ function CC9005({
             columns={columns}
             menuId={menuId}
             rowIndex={0}
-            style={{ height: `calc(100% - 38px)` }}
+            style={{ height: `calc(100% - 0px)` }}
           />
         </LeftSide>
         <RightSide>

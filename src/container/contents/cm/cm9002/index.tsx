@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "app/store";
+import { useState, useEffect, useRef } from "react";
+import { useForm, Controller } from "react-hook-form";
+import CreateReport from "app/hook/createReport";
 import { CM9002SEARCH } from "app/path";
 import { ICM9002SEARCH } from "./model";
-import { apiGet } from "app/axios";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import CheckBox from "components/checkbox";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import {
@@ -20,7 +18,7 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
@@ -33,74 +31,67 @@ function CM9002({
   menuId: string;
   areaCode: string;
 }) {
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>({});
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("CM", "CM9002", menuId, CM9002SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
+
   const [dataChk, setDataChk] = useState(true);
-  const [reportKind, setReportKind] = useState("");
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
-
-  useEffect(() => {
-    getCommonDictionary({ groupId: "CM", functionName: "CM9002" });
-  }, []);
 
   const { register, handleSubmit, reset, control } = useForm<ICM9002SEARCH>({
     mode: "onSubmit",
   });
 
-  const resetForm = () => {
-    if (dataCommonDic) {
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-        reportKind: dataCommonDic?.reportKind[0].code,
-        cuType: dataCommonDic?.cuType[0].code,
-        cuGumsa: dataCommonDic?.cuGumsa[0].code,
-        cuJyCode: dataCommonDic?.cuJyCode[0].code,
-        swCode: dataCommonDic?.swCode[0].code,
-        cuCustgubun: dataCommonDic?.cuCustgubun[0].code,
-        cuCutype: dataCommonDic?.cuCutype[0].code,
-        cuStae: dataCommonDic?.cuStae[0].code,
-        cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
-      });
-      setReportKind(dataCommonDic?.reportKind[0].code);
+  const resetForm = (type: string) => {
+    if (type === "reset") {
+      if (dataCommonDic) {
+        const init = dataCommonDic.dataInit[0];
+        reset({
+          areaCode: dataCommonDic?.areaCode[0].code,
+          reportKind: init?.reportKind,
+          cuType: init?.cuType,
+          cuGumsa: init?.cuGumsa,
+          cuJyCode: init?.cuJyCode,
+          swCode: init?.swCode,
+          cuCustgubun: init?.cuCustgubun,
+          cuCutype: init?.cuCutype,
+          cuStae: init?.cuStae,
+          cuSukumtype: init?.cuSukumtype,
+          cuJangbu: init?.cuJangbu,
+          cuMisu: init?.cuMisu,
+        });
+      }
     }
   };
 
   useEffect(() => {
-    if (Object.keys(selected)?.length > 0) {
+    if (selected && Object.keys(selected)?.length > 0) {
       setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
     }
   }, [selected]);
 
   useEffect(() => {
-    if (dataCommonDic) {
-      resetForm();
+    if (dataCommonDic && dataCommonDic?.dataInit) {
+      resetForm("reset");
     }
   }, [dataCommonDic]);
 
-  const fetchData = async (params: any) => {
-    setLoading(true);
-    const data = await apiGet(CM9002SEARCH, params);
-
-    if (data) {
-      setData(data);
-    } else {
-      setData([]);
+  const handleReset = () => {
+    if (dataCommonDic?.dataInit) {
+      resetForm("reset");
     }
-    setLoading(false);
-  };
-
-  const cancel = () => {
-    resetForm();
-    setDataChk(true);
     setData([]);
+    setDataChk(true);
   };
 
   const submit = (data: ICM9002SEARCH) => {
-    console.log("IISEARCH:", data);
     fetchData(data);
   };
 
@@ -140,22 +131,20 @@ function CM9002({
                     </>
                   )
                 }
-                style={{ minWidth: "max-content" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ minWidth: "max-content" }}
                 type="button"
                 color={ButtonColor.LIGHT}
-                onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
-                style={{ minWidth: "max-content" }}
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -169,7 +158,6 @@ function CM9002({
                 <Select
                   width={InputSize.i130}
                   register={register("reportKind")}
-                  onChange={(e) => setReportKind(e.target.value)}
                 >
                   {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -338,15 +326,15 @@ function CM9002({
       </form>
 
       <WrapperContent style={{ height: `calc(100% - 76px)` }}>
-        <Grid
+        <BasicGrid
+          ref={gridRef}
           areaCode={areaCode}
           data={data}
           columns={columns}
           fields={fields}
           menuId={menuId}
-          rowIndex={0}
-          setSelected={setSelected}
-          style={{ height: `calc(100% - 15px)` }}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
+          style={{ height: `calc(100% - 12px)` }}
           evenFill
         />
       </WrapperContent>

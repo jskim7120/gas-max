@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { AR9003SEARCH } from "app/path";
@@ -39,10 +39,11 @@ function AR9003({
     setSelected,
     loading,
     fetchData,
-    gridIndexes,
     dispatch,
     dataCommonDic,
   } = CreateReport("AR", "AR9003", menuId, AR9003SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
+
   const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
@@ -164,6 +165,7 @@ function AR9003({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -238,21 +240,25 @@ function AR9003({
       </form>
       {watch("reportKind") === "1" ? (
         <BasicGrid
+          menuId={menuId}
+          ref={gridRef}
           areaCode={ownAreaCode}
           columns={columns1}
           fields={fields1}
           data={data}
-          rowIndex={data?.length ? data.length : 0}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: "calc(100% - 52px)" }}
         />
       ) : (
         <BasicGrid
+          menuId={menuId}
+          ref={gridRef}
           areaCode={ownAreaCode}
           columns={columns0}
           fields={fields0}
           data={data}
-          rowIndex={data?.length ? data.length : 0}
-          style={{ height: "calc(100% - 52px)" }}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
+          style={{ height: "calc(100% - 88px)" }}
         />
       )}
     </>

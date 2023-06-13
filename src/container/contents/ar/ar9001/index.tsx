@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { AR9001SEARCH } from "app/path";
@@ -39,17 +39,17 @@ function AR9001({
     setSelected,
     loading,
     fetchData,
-    gridIndexes,
     dispatch,
     dataCommonDic,
   } = CreateReport("AR", "AR9001", menuId, AR9001SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
   useEffect(() => {
-    if (dataCommonDic?.dataInit) {
+    if (dataCommonDic && dataCommonDic?.dataInit) {
       resetForm("reset");
     }
   }, [dataCommonDic]);
@@ -73,17 +73,15 @@ function AR9001({
     );
   };
 
-  const submit = (params: ISEARCH) => {
-    params.sDate = DateWithoutDash(params.sDate);
-    params.eDate = DateWithoutDash(params.eDate);
-
-    fetchData(params);
+  const submit = (data: ISEARCH) => {
+    data.sDate = DateWithoutDash(data.sDate);
+    data.eDate = DateWithoutDash(data.eDate);
+    fetchData(data);
   };
 
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init: any = dataCommonDic.dataInit[0];
-
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
         sDate: init?.sDate,
@@ -163,6 +161,7 @@ function AR9001({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
               <Button
                 text="미리보기"
@@ -265,21 +264,25 @@ function AR9001({
       </form>
       {watch("reportKind") === "1" ? (
         <BasicGrid
+          menuId={menuId}
+          ref={gridRef}
           areaCode={ownAreaCode}
           columns={columns1}
           fields={fields1}
           data={data}
-          rowIndex={data?.length ? data.length : 0}
-          style={{ height: "calc(100% - 52px)" }}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
+          style={{ height: "calc(100% - 88px)" }}
         />
       ) : (
         <BasicGrid
+          menuId={menuId}
+          ref={gridRef}
           areaCode={ownAreaCode}
           columns={columns0}
           fields={fields0}
           data={data}
-          rowIndex={data?.length ? data.length : 0}
-          style={{ height: "calc(100% - 52px)" }}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
+          style={{ height: "calc(100% - 88px)" }}
         />
       )}
     </>

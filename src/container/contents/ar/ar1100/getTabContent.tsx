@@ -1,13 +1,23 @@
-import Tab1 from "./tabs/tab1";
-import Tab2 from "./tabs/tab2";
-// import Tab3 from "./tab3";
+import Tab1 from "./tabs/tab1/tab1";
 
-function getTabContent(id: number, data: any, dictionary: any) {
+function getTabContent(
+  id: number,
+  data: any,
+  dictionary: any,
+  isAddBtnClicked: boolean,
+  setIsAddBtnClicked: Function
+) {
   switch (id) {
     case 0:
-      return <Tab1 data={data} dictionary={dictionary} />;
+      return (
+        <Tab1
+          data={data}
+          dictionary={dictionary}
+          isAddBtnClicked={isAddBtnClicked}
+          setIsAddBtnClicked={setIsAddBtnClicked}
+        />
+      );
     case 1:
-      return <Tab2 data={data} dictionary={dictionary} />;
       return <>1</>;
     case 2:
       //   return <Tab3 data={data} />;

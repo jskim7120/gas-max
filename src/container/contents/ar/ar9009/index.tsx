@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { AR9009SEARCH } from "app/path";
@@ -12,7 +12,7 @@ import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import { DateWithoutDash } from "helpers/dateFormat";
 import Loader from "components/loader";
-import Grid from "./grid";
+import BasicGrid from "components/basicGrid";
 import { ISEARCH } from "./model";
 import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
@@ -34,10 +34,10 @@ function AR9009({
     setSelected,
     loading,
     fetchData,
-    gridIndexes,
     dispatch,
     dataCommonDic,
   } = CreateReport("AR", "AR9009", menuId, AR9009SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -140,6 +140,7 @@ function AR9009({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -157,14 +158,16 @@ function AR9009({
         </TabContentWrapper>
       </div>
 
-      <Grid
-        tabId={tabId}
+      <BasicGrid
+        menuId={menuId}
+        ref={gridRef}
+        gridChangeField={tabId}
         areaCode={ownAreaCode}
         columns={selectColumns()?.columns}
         fields={selectColumns()?.fields}
         data={data}
-        rowIndex={data?.length ? data.length : 0}
-        style={{ height: "calc(100% - 52px)" }}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
+        style={{ height: "calc(100% - 292px)" }}
       />
     </>
   );

@@ -2,9 +2,8 @@ import React from "react";
 import { useDispatch } from "app/store";
 import { closeModal } from "app/state/modal/modalSlice";
 import styled from "styled-components";
+import { User, MenuModalBtn } from "components/allSvgIcon";
 import {
-  User,
-  MenuModalBtn,
   CustomInf,
   VolBook,
   WeightBook,
@@ -21,7 +20,7 @@ import {
   SafCheck,
   VolReading,
   CollRegistr,
-} from "components/allSvgIcon";
+} from "components/allSvgIcon-backup";
 
 const ModalWrapper = styled.div`
   cursor: pointer;

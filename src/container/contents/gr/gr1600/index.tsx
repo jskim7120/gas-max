@@ -14,7 +14,7 @@ import {
   LeftSide,
 } from "../../commonStyle";
 import Form from "./right/form";
-import Grid from "../grid";
+import Grid from "components/grid";
 import { ISEARCH } from "./model";
 import { fields, columns } from "./data";
 import Loader from "components/loader";
@@ -77,24 +77,6 @@ function GR1600({
   }, [dataCommonDic]);
 
   const fetchData = async (params: any) => {
-    // try {
-    //   if (params?.buGubun && params.buGubun === "9") {
-    //     delete params.buGubun;
-    //   }
-    //   setLoading(true);
-    //   const { data: SEARCHDATA } = await API.get(GR1600SEARCH, {
-    //     params: params,
-    //   });
-
-    //   if (SEARCHDATA) {
-    //     setData(SEARCHDATA);
-    //     setLoading(false);
-    //   }
-    // } catch (error) {
-    //   setLoading(false);
-    //   console.log("GR1600 DATA fetch error =======>", error);
-    // }
-
     if (params?.buGubun && params.buGubun === "9") {
       delete params.buGubun;
     }
@@ -197,13 +179,15 @@ function GR1600({
             </SearchWrapper>
           </form>
           <Grid
+            areaCode={areaCode}
             data={data}
-            fields={fields}
             columns={columns}
+            fields={fields}
+            menuId={menuId}
+            rowIndex={data?.length > 1 ? data.length - 1 : 0}
             setSelected={setSelected}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
-            style={{ height: `calc(100% - 38px)`, minWidth: minWidth }}
+            style={{ height: `calc(100% - 47px)` }}
+            evenFill
           />
         </LeftSide>
         <RightSide>

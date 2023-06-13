@@ -2,10 +2,8 @@ import { useSelector } from "app/store";
 import { Main, Sidebar, UnOrderedList } from "./style";
 import Tab from "components/tab";
 
+import { ShortcutIcon } from "components/allSvgIcon";
 import {
-  // SidebarOpen,
-  // SidebarClose,
-  ShortcutIcon,
   Sidebar1,
   Sidebar2,
   Sidebar3,
@@ -17,7 +15,7 @@ import {
   Sidebar9,
   Sidebar10,
   Sidebar11,
-} from "components/allSvgIcon";
+} from "components/allSvgIcon-sidebar";
 
 function MainContainer() {
   const { isOpen } = useSelector((state) => state.sidebar);

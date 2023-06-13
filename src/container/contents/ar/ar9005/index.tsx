@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector } from "app/store";
 import CreateReportAR9005 from "app/hook/createReportAR9005";
@@ -36,6 +36,7 @@ function AR9004({
   const {
     data,
     data2,
+    data3,
     selected,
     selected2,
     loading,
@@ -43,6 +44,7 @@ function AR9004({
     dispatch,
     dataCommonDic,
   } = CreateReportAR9005("AR", "AR9005", menuId, AR9005SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -53,7 +55,6 @@ function AR9004({
   });
 
   const infoState = useSelector((state) => state.footer.info);
-  console.log("infoSatte:", infoState);
 
   useEffect(() => {
     document.getElementById("footerSearchId")?.focus();
@@ -71,6 +72,20 @@ function AR9004({
       resetFromFooter();
     }
   }, [infoState]);
+
+  useEffect(() => {
+    if (data3 && Object.keys(data3).length > 0) {
+      reset2((formValues) => ({
+        ...formValues,
+        cuZipCode: data3?.cuZipcode,
+        cuName: data3?.cuName,
+        cuAddr1: data3?.cuAddr1,
+        cuAddr2: data3?.cuAddr2,
+        cuJyname: data3?.cuJyname,
+        cuCutype: data3?.cuCutype,
+      }));
+    }
+  }, [data3]);
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -112,12 +127,6 @@ function AR9004({
       areaCode: infoState?.areaCode,
       cuCode: infoState?.cuCode,
     }));
-
-    //cuName: infoState?.cuName
-    // cuZipCode
-    // cuAddr2
-    // cuJyname
-    // cuCutype
 
     reset2({
       cuTel: infoState?.cuTel,
@@ -166,6 +175,7 @@ function AR9004({
               icon={<ExcelIcon width="19px" height="19px" />}
               color={ButtonColor.LIGHT}
               type="button"
+              onClick={() => gridRef.current.saveToExcel()}
             />
             <Button
               text="미리보기"
@@ -267,6 +277,8 @@ function AR9004({
         </FormGroup>
       </SearchWrapper>
       <BasicGrid
+        menuId={menuId}
+        ref={gridRef}
         columns={columns1}
         fields={fields1}
         data={data}
@@ -334,11 +346,13 @@ function AR9004({
         </SearchWrapper>
       </form>
       <BasicGrid
+        menuId={menuId}
+        ref={gridRef}
         areaCode={ownAreaCode}
         columns={columns2}
         fields={fields2}
         data={data2}
-        rowIndex={data2?.length ? data.length - 1 : 0}
+        rowIndex={data2?.length > 1 ? data.length - 1 : 0}
         style={{ height: "calc(50% - 78px)" }}
         layout={layout}
       />

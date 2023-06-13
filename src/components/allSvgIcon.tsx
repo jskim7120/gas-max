@@ -169,6 +169,7 @@ export const Update = ({
     </svg>
   );
 };
+
 export const Reset = ({
   color = "#fff",
   width = "11.69px",
@@ -315,6 +316,42 @@ export const Reset = ({
             strokeWidth="1"
           />
         </g>
+      </g>
+    </svg>
+  );
+};
+
+export const ResetGray = ({
+  width = "16.828",
+  height = "16.831",
+  color = "#707070",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 16.828 16.831"
+    >
+      <g id="Group_130" data-name="Group 130" transform="translate(0.711 0.4)">
+        <path
+          id="Path_101"
+          data-name="Path 101"
+          d="M.277,7.3a5.567,5.567,0,1,1,2.472,3.068"
+          transform="matrix(-0.545, 0.839, -0.839, -0.545, 15.403, 6.382)"
+          fill="none"
+          stroke={color}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+        <path
+          id="Polygon_3"
+          data-name="Polygon 3"
+          d="M2,0l2,3.207H0Z"
+          transform="matrix(0.454, -0.891, 0.891, 0.454, 6.721, 3.572)"
+          fill={color}
+        />
       </g>
     </svg>
   );
@@ -550,6 +587,44 @@ export const Settings = ({
   );
 };
 
+export const Settings2 = ({ width = "24", height = "24" }) => {
+  return (
+    <svg
+      id="Icon_settings"
+      data-name="Icon/settings"
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+    >
+      <path id="Path_40" data-name="Path 40" d="M0,0H24V24H0Z" fill="none" />
+      <path
+        id="Path_41"
+        data-name="Path 41"
+        d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z"
+        fill="none"
+        stroke="#0f88bf"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+      <circle
+        id="Ellipse_2"
+        data-name="Ellipse 2"
+        cx="3"
+        cy="3"
+        r="3"
+        transform="translate(9 9)"
+        fill="none"
+        stroke="#0f88bf"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+};
+
 export const User = ({ color = "#000", width = "25px", height = "25px" }) => {
   return (
     <svg
@@ -632,71 +707,100 @@ export const User = ({ color = "#000", width = "25px", height = "25px" }) => {
     </svg>
   );
 };
-
-export const Heart = ({ color = "#000", width = "24px", height = "24px" }) => {
+export const UserWhite = () => {
   return (
     <svg
-      id="Icon_heart"
-      data-name="Icon/heart"
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
+      width="19"
+      height="17"
+      viewBox="0 0 19 17"
     >
-      <path id="Path_201" data-name="Path 201" d="M0,0H24V24H0Z" fill="none" />
-      <path
-        id="Path_202"
-        data-name="Path 202"
-        d="M19.5,13.572,12,21,4.5,13.572m0,0A5,5,0,1,1,12,7.006a5,5,0,1,1,7.5,6.572"
-        fill="none"
-        stroke="#000"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
+      <g id="Icon_user" data-name="Icon/user" transform="translate(-27.024 7)">
+        <rect
+          id="Container"
+          width="19"
+          height="17"
+          transform="translate(27.024 -7)"
+          fill="none"
+        />
+        <path
+          id="Path_2753"
+          data-name="Path 2753"
+          d="M49.21,6.462a5.392,5.392,0,0,0-2.1-1.327,2.91,2.91,0,0,0,.513-4.017A2.755,2.755,0,0,0,43.7.594a2.91,2.91,0,0,0-.513,4.017,2.832,2.832,0,0,0,.514.526,5.463,5.463,0,0,0-3.677,5.221V12.12a1.09,1.09,0,0,0,1.076,1.1h8.61a1.09,1.09,0,0,0,1.076-1.1V10.357A5.548,5.548,0,0,0,49.21,6.462Zm-6.172-3.6a2.368,2.368,0,1,1,4.735,0A2.431,2.431,0,0,1,46.5,5.017a2.239,2.239,0,0,1-.251.114l-.037.013q-.108.039-.217.068l-.057.014q-.106.024-.213.039l-.05.007a2.358,2.358,0,0,1-.53,0l-.05-.007q-.108-.015-.215-.039l-.056-.013a2.24,2.24,0,0,1-.218-.068l-.037-.013a2.291,2.291,0,0,1-.251-.115A2.422,2.422,0,0,1,43.038,2.866Zm7.318,9.254a.654.654,0,0,1-.646.661H41.1a.654.654,0,0,1-.646-.661V10.357a5.025,5.025,0,0,1,3.494-4.843.629.629,0,0,1,.189-.029.665.665,0,0,1,.247.048l.018.006c.029.012.06.02.089.031.065.022.129.044.194.061.042.011.084.021.126.03s.113.022.17.031.086.014.131.019c.076.008.152.012.228.014.022,0,.043,0,.065,0s.043,0,.066,0c.076,0,.151-.006.227-.014.045,0,.088-.012.132-.019s.113-.019.168-.031.085-.019.127-.03c.067-.018.132-.039.2-.063.028-.01.056-.018.084-.029l.02-.007a.647.647,0,0,1,.433-.02,5.055,5.055,0,0,1,3.5,4.844Z"
+          transform="translate(-8.5 -5.5)"
+          stroke="#fff"
+          strokeWidth="1"
+        />
+      </g>
     </svg>
   );
 };
 
-export const Chat = ({ color = "#000", width = "25px", height = "24px" }) => {
+export const Users = ({ width = "13.777", height = "12.839" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 13.777 12.839"
+    >
+      <path
+        id="Path_2752"
+        data-name="Path 2752"
+        d="M12.332,4.762A4.6,4.6,0,0,0,10.646,3.8a2.008,2.008,0,0,0,.368-3A2.5,2.5,0,0,0,7.726.466a2.936,2.936,0,0,0-3.835.716A2.378,2.378,0,0,0,4.5,4.566a4.885,4.885,0,0,0-3.637,4.6v1.553a1.022,1.022,0,0,0,1.065.971h8.518a1.022,1.022,0,0,0,1.065-.971V9.783H12.72a.886.886,0,0,0,.922-.843V7.647A3.888,3.888,0,0,0,12.332,4.762ZM9.171.4A1.838,1.838,0,0,1,11.09,2.142,1.735,1.735,0,0,1,10.055,3.7c-.058.027-.117.053-.178.075l-.007,0-.021.006c-.034.012-.07.022-.108.033a1.917,1.917,0,0,1-.358.069c-.032,0-.062.005-.092.007-.082,0-.161,0-.241,0-.032,0-.062,0-.1-.007A1.921,1.921,0,0,1,8.6,3.813h0c.006-.009.009-.019.015-.028a2.417,2.417,0,0,0,.135-.251l.008-.017a2.327,2.327,0,0,0,.1-.272c.006-.018.011-.036.016-.054a2.3,2.3,0,0,0,.059-.276c0-.017,0-.035.007-.052a2.318,2.318,0,0,0,.021-.3,2.354,2.354,0,0,0-.017-.28c0-.03-.011-.06-.015-.09-.01-.062-.02-.123-.035-.184-.009-.035-.02-.069-.03-.1-.016-.054-.033-.108-.052-.162-.013-.035-.028-.07-.043-.1-.021-.051-.045-.1-.07-.15s-.036-.068-.055-.1-.057-.1-.088-.142-.043-.063-.066-.094c-.034-.046-.071-.091-.109-.136C8.353.992,8.329.962,8.3.935,8.261.89,8.216.847,8.17.8,8.145.78,8.121.756,8.094.733,8.086.726,8.08.719,8.073.713A2.035,2.035,0,0,1,9.171.4ZM3.847,2.566A2.246,2.246,0,0,1,6.189.43,2.246,2.246,0,0,1,8.532,2.566q0,.083-.007.165c0,.046-.01.091-.017.136,0,.008,0,.016,0,.024a2.029,2.029,0,0,1-.345.827c-.018.026-.036.052-.055.077v0l-.009.01a2.292,2.292,0,0,1-.828.654,2.385,2.385,0,0,1-.654.2c-.045.009-.089.014-.139.019L6.357,4.7H6.331c-.046,0-.094,0-.142,0H6.166c-.039,0-.078,0-.128,0S5.95,4.69,5.9,4.685s-.091-.01-.142-.019a2.378,2.378,0,0,1-.652-.2A2.112,2.112,0,0,1,3.847,2.566Zm7.24,8.155a.613.613,0,0,1-.639.582H1.93a.613.613,0,0,1-.639-.582V9.167A4.509,4.509,0,0,1,4.748,4.9a.687.687,0,0,1,.185-.025.725.725,0,0,1,.247.044,3.014,3.014,0,0,0,.5.13c.057.011.114.017.169.024s.1.01.154.015h.026c.046,0,.092,0,.138,0h.023c.054,0,.108,0,.168,0l.031,0c.048,0,.1-.008.139-.013.059-.007.114-.013.166-.023A3.034,3.034,0,0,0,7.2,4.916.708.708,0,0,1,7.628,4.9a4.535,4.535,0,0,1,3.459,4.269v1.553Zm2.13-1.78a.477.477,0,0,1-.5.454H11.513V9.167a4.625,4.625,0,0,0-1.56-3.432c-.075-.068-.153-.134-.232-.2l-.075-.057c-.056-.043-.112-.087-.17-.128-.031-.022-.062-.042-.093-.063-.054-.037-.106-.074-.162-.109l-.1-.062c-.053-.032-.106-.064-.162-.095l-.113-.06c-.054-.028-.106-.056-.162-.083-.04-.019-.08-.037-.121-.056s-.106-.049-.162-.071L8.271,4.7c-.053-.021-.106-.041-.161-.06L7.974,4.6,7.88,4.565c.021-.015.04-.032.06-.048.043-.032.084-.065.124-.1s.078-.067.115-.1.075-.074.112-.112c.018-.019.039-.037.057-.058.04.014.082.026.122.038a2.406,2.406,0,0,0,.436.084c.041,0,.079.007.121.009s.094,0,.143,0,.095,0,.144,0,.079,0,.117-.009a2.4,2.4,0,0,0,.437-.083c.043-.012.085-.025.125-.039l.02-.007.012,0a.558.558,0,0,1,.333-.014,4.172,4.172,0,0,1,1.671.916,3.519,3.519,0,0,1,1.186,2.611V8.94Z"
+        transform="translate(-0.365 0.647)"
+        stroke="rgba(11,175,248,0.74)"
+        strokeWidth="1"
+      />
+    </svg>
+  );
+};
+export const Close = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="25"
-      height="24"
-      viewBox="0 0 25 24"
+      height="25"
+      viewBox="0 0 25 25"
     >
-      <g id="Icon_Chat" data-name="Icon/Chat" transform="translate(0.5 3)">
-        <rect
-          id="Container"
-          width="24"
-          height="24"
-          transform="translate(0 -3)"
+      <g
+        id="Group_119"
+        data-name="Group 119"
+        transform="translate(-1865.643 -49.164)"
+      >
+        <ellipse
+          id="Ellipse_4"
+          data-name="Ellipse 4"
+          cx="12.5"
+          cy="12.5"
+          rx="12.5"
+          ry="12.5"
+          transform="translate(1865.643 49.164)"
+          fill="#AEAEAE"
+        />
+        <line
+          id="Line_9"
+          data-name="Line 9"
+          x1="9.877"
+          y2="9.877"
+          transform="translate(1873.292 56.638)"
           fill="none"
+          stroke="#0A0A0A"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
-        <path
-          id="Path_2762"
-          data-name="Path 2762"
-          d="M16.393,64.1H7.6a7.775,7.775,0,0,0,0,15.545h3.9l4.714,2.414a.392.392,0,0,0,.179.041.4.4,0,0,0,.4-.409V79.639a7.779,7.779,0,0,0-.4-15.535Zm0,14.727a.4.4,0,0,0-.4.409v1.793l-4.219-2.161a.392.392,0,0,0-.179-.041h-4a6.956,6.956,0,0,1,0-13.909h8.8a6.956,6.956,0,0,1,0,13.909Z"
-          transform="translate(0 -64.104)"
-          stroke="#000"
-          strokeWidth="1"
-        />
-        <path
-          id="Path_2763"
-          data-name="Path 2763"
-          d="M146.1,264.1H136.4a.4.4,0,1,0,0,.808H146.1a.4.4,0,1,0,0-.808Z"
-          transform="translate(-129.255 -253.871)"
-          stroke="#000"
-          strokeWidth="1"
-        />
-        <path
-          id="Path_2764"
-          data-name="Path 2764"
-          d="M146.1,168.1H136.4a.4.4,0,0,0,0,.808H146.1a.4.4,0,0,0,0-.808Z"
-          transform="translate(-129.255 -162.783)"
-          stroke="#000"
-          strokeWidth="1"
+        <line
+          id="Line_10"
+          data-name="Line 10"
+          x1="9.877"
+          y1="9.877"
+          transform="translate(1873.292 56.638)"
+          fill="none"
+          stroke="#0A0A0A"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
         />
       </g>
     </svg>
@@ -752,127 +856,151 @@ export const CloseCircle = ({
   );
 };
 
-export const Calendar = ({
-  color = "currentColor",
-  width = "24px",
-  height = "24px",
+export const WhiteClose = ({
+  color = "#fff",
+  width = "17.658",
+  height = "16.231",
 }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="feather feather-calendar"
+      viewBox="0 0 17.658 16.231"
     >
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-      <line x1="16" y1="2" x2="16" y2="6"></line>
-      <line x1="8" y1="2" x2="8" y2="6"></line>
-      <line x1="3" y1="10" x2="21" y2="10"></line>
+      <g
+        id="Group_1249"
+        data-name="Group 1249"
+        transform="translate(-389.735 -16.735)"
+      >
+        <line
+          id="Line_43"
+          data-name="Line 43"
+          x1="14.128"
+          y2="12.491"
+          transform="translate(391.5 18.5)"
+          fill="none"
+          stroke={color}
+          strokeLinecap="round"
+          strokeWidth="2.5"
+        />
+        <path
+          id="Path_45"
+          data-name="Path 45"
+          d="M0,0,14.128,12.7"
+          transform="translate(405.628 31.201) rotate(180)"
+          fill="none"
+          stroke={color}
+          strokeLinecap="round"
+          strokeWidth="2.5"
+        />
+      </g>
     </svg>
   );
 };
 
-export const Power = ({
-  color = "#56AAFF",
-  width = "24px",
-  height = "24px",
-}) => {
+export const WhiteCloseCircle = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="feather feather-power"
+      width="14.11"
+      height="15.238"
+      viewBox="0 0 14.11 15.238"
     >
-      <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
-      <line x1="12" y1="2" x2="12" y2="12"></line>
+      <g id="Group_1353" data-name="Group 1353" transform="translate(0.5 0.5)">
+        <path
+          id="Path_3070"
+          data-name="Path 3070"
+          d="M12.02,12.983a6.193,6.193,0,0,1-9.27,0,7.558,7.558,0,0,1,0-10.067,6.193,6.193,0,0,1,9.27,0A7.558,7.558,0,0,1,12.02,12.983Z"
+          transform="translate(-0.83 -0.83)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+        <line
+          id="Line_220"
+          data-name="Line 220"
+          x1="5.221"
+          y2="5.221"
+          transform="translate(4.046 4.392)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+        <line
+          id="Line_221"
+          data-name="Line 221"
+          x1="5.221"
+          y1="5.221"
+          transform="translate(4.046 4.392)"
+          fill="none"
+          stroke="#fff"
+          strokeLinejoin="round"
+          strokeWidth="1"
+        />
+      </g>
     </svg>
   );
 };
 
-export const PlusCircle = ({
-  color = "currentColor",
-  width = "24px",
-  height = "24px",
-}) => {
+export const Tick = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="feather feather-plus-circle"
+      width="11.69"
+      height="9.501"
+      viewBox="0 0 11.69 9.501"
     >
-      <circle cx="12" cy="12" r="10"></circle>
-      <line x1="12" y1="8" x2="12" y2="16"></line>
-      <line x1="8" y1="12" x2="16" y2="12"></line>
+      <path
+        id="Path_3053"
+        data-name="Path 3053"
+        d="M-1191.5,965.684l3.193,3.677,5.676-6.563"
+        transform="translate(1192.915 -961.387)"
+        fill="none"
+        stroke="#fff"
+        stroke-linecap="square"
+        stroke-width="2"
+      />
     </svg>
   );
 };
 
-export const ArrowDownCircle = ({
-  color = "currentColor",
-  width = "24px",
-  height = "24px",
-}) => {
+export const TickInCircle = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="feather feather-arrow-down-circle"
+      width="12.049"
+      height="12.474"
+      viewBox="0 0 12.049 12.474"
     >
-      <circle cx="12" cy="12" r="10"></circle>
-      <polyline points="8 12 12 16 16 12"></polyline>
-      <line x1="12" y1="8" x2="12" y2="16"></line>
-    </svg>
-  );
-};
-
-export const ForbidCircle = ({
-  color = "currentColor",
-  width = "24px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="icon icon-tabler icon-tabler-forbid"
-      width={width}
-      height={height}
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke={color}
-      fill="none"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <circle cx="12" cy="12" r="9" />
-      <line x1="9" y1="9" x2="15" y2="15" />
+      <g
+        id="Group_1783"
+        data-name="Group 1783"
+        transform="translate(-785.548 -621.685)"
+      >
+        <g
+          id="Ellipse_213"
+          data-name="Ellipse 213"
+          transform="translate(785.548 623.159)"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="1"
+        >
+          <circle cx="5.5" cy="5.5" r="5.5" stroke="none" />
+          <circle cx="5.5" cy="5.5" r="5" fill="none" />
+        </g>
+        <path
+          id="Path_3065"
+          data-name="Path 3065"
+          d="M1028.014,567.1l5.181,5.685,6.006-7.794"
+          transform="translate(-242 57)"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="1"
+        />
+      </g>
     </svg>
   );
 };
@@ -906,175 +1034,40 @@ export const ExcelIcon = ({
   );
 };
 
-export const Favorite = ({
+export const SearchIcon = ({
   color = "#4CAF50",
   width = "24px",
   height = "24px",
 }) => {
   return (
     <svg
-      id="Icon_heart"
-      data-name="Icon/heart"
+      id="search_icon"
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
+      width="13.33"
+      height="14.495"
+      viewBox="0 0 13.33 14.495"
     >
-      <path id="Path_201" data-name="Path 201" d="M0,0H24V24H0Z" fill="none" />
-      <path
-        id="Path_202"
-        data-name="Path 202"
-        d="M19.5,13.572,12,21,4.5,13.572m0,0A5,5,0,1,1,12,7.006a5,5,0,1,1,7.5,6.572"
+      <g
+        id="Ellipse_15"
+        data-name="Ellipse 15"
         fill="none"
         stroke="#fff"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-    </svg>
-  );
-};
-export const IconFile = ({
-  color = "#4CAF50",
-  width = "24px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-    >
-      <g id="Icon_File" data-name="Icon/File" transform="translate(-61 1)">
-        <rect
-          id="Container"
-          width="24"
-          height="24"
-          transform="translate(61 -1)"
-          fill="none"
-        />
-        <path
-          id="Path_2795"
-          data-name="Path 2795"
-          d="M79.942,0H66.058A1.962,1.962,0,0,0,64,1.844V20.156A1.962,1.962,0,0,0,66.058,22H79.942A1.962,1.962,0,0,0,82,20.156V1.844A1.962,1.962,0,0,0,79.942,0Zm1.24,20.156a1.182,1.182,0,0,1-1.24,1.111H66.058a1.182,1.182,0,0,1-1.24-1.111V1.844A1.182,1.182,0,0,1,66.058.733H79.942a1.182,1.182,0,0,1,1.24,1.111Z"
-          stroke="#000"
-          strokeWidth="0.8"
-        />
-        <path
-          id="Path_2796"
-          data-name="Path 2796"
-          d="M146.1,232h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
-          transform="translate(-68.253 -221.404)"
-          stroke="#000"
-          strokeWidth="0.8"
-        />
-        <path
-          id="Path_2797"
-          data-name="Path 2797"
-          d="M146.1,328h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
-          transform="translate(-68.253 -313.02)"
-          stroke="#000"
-          strokeWidth="0.8"
-        />
-        <path
-          id="Path_2798"
-          data-name="Path 2798"
-          d="M146.1,136h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
-          transform="translate(-68.253 -129.789)"
-          stroke="#000"
-          strokeWidth="0.8"
-        />
+        strokeWidth="2"
+      >
+        <circle cx="4.978" cy="4.978" r="4.978" stroke="none" />
+        <circle cx="4.978" cy="4.978" r="3.978" fill="none" />
       </g>
-    </svg>
-  );
-};
-export const Attach = ({
-  color = "#4CAF50",
-  width = "24px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      id="Attach"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-    >
-      <path
-        id="Icon_metro-attachment"
-        data-name="Icon metro-attachment"
-        d="M12.572,6.545,11.485,5.458,6.049,10.893A2.306,2.306,0,0,0,9.31,14.154l6.523-6.522A3.843,3.843,0,0,0,10.4,2.2L3.549,9.045l-.015.014a5.36,5.36,0,0,0,7.581,7.58l.014-.015h0L15.8,11.951l-1.088-1.087-4.675,4.674-.014.014a3.823,3.823,0,1,1-5.407-5.405l.015-.014h0l6.85-6.848a2.306,2.306,0,0,1,3.262,3.261L8.223,13.067A.769.769,0,1,1,7.136,11.98l5.436-5.436Z"
-        transform="translate(2.735 2.359)"
+      <g
+        id="Rectangle_202"
+        data-name="Rectangle 202"
+        transform="translate(6.58 9.047) rotate(-40)"
         fill="#fff"
-      />
-      <path id="Path_165" data-name="Path 165" d="M0,0H24V24H0Z" fill="none" />
-    </svg>
-  );
-};
-export const DeliveryTruck = ({
-  color = "#4CAF50",
-  width = "24px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      id="Icon_delivery-truck"
-      data-name="Icon/delivery-truck"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-    >
-      <path id="Path_53" data-name="Path 53" d="M0,0H24V24H0Z" fill="none" />
-      <circle
-        id="Ellipse_4"
-        data-name="Ellipse 4"
-        cx="2"
-        cy="2"
-        r="2"
-        transform="translate(5 15)"
-        fill="none"
-        stroke="#000"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-      <circle
-        id="Ellipse_5"
-        data-name="Ellipse 5"
-        cx="2"
-        cy="2"
-        r="2"
-        transform="translate(15 15)"
-        fill="none"
-        stroke="#000"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-      <path
-        id="Path_54"
-        data-name="Path 54"
-        d="M5,17H3V13M2,5H13V17M9,17h6m4,0h2V11H13m0-5h5l3,5"
-        fill="none"
-        stroke="#000"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-      <line
-        id="Line_18"
-        data-name="Line 18"
-        x2="4"
-        transform="translate(3 9)"
-        fill="none"
-        stroke="#000"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
+        stroke="#fff"
+        strokeWidth="1"
+      >
+        <rect width="2.844" height="7.111" stroke="none" />
+        <rect x="0.5" y="0.5" width="1.844" height="6.111" fill="none" />
+      </g>
     </svg>
   );
 };
@@ -1112,89 +1105,50 @@ export const MagnifyingGlass = ({ color = "#fff" }) => {
   );
 };
 
-export const SwitchIcon = ({
-  color = "#4CAF50",
-  width = "24px",
-  height = "24px",
+export const MagnifyingGlassBig = ({
+  width = "20.89",
+  height = "20.832",
+  color = "#fff",
 }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="31"
-      height="31"
-      viewBox="0 0 31 31"
+      width={width}
+      height={height}
+      viewBox="0 0 20.89 20.832"
     >
-      <defs>
-        <linearGradient
-          id="linear-gradient"
-          x1="0.5"
-          y1="0.771"
-          x2="0.5"
-          gradientUnits="objectBoundingBox"
+      <g
+        id="Group_1345"
+        data-name="Group 1345"
+        transform="translate(-1828.662 -145.428)"
+      >
+        <g
+          id="Group_272"
+          data-name="Group 272"
+          transform="translate(1833.037 147.803)"
         >
-          <stop offset="0" stopColor="#a1a1a1" />
-          <stop offset="1" stopColor="#e8e8e8" />
-        </linearGradient>
-      </defs>
-      <g id="Group_424" data-name="Group 424" transform="translate(0 -43)">
-        <g id="Group_112" data-name="Group 112" transform="translate(0 -3)">
-          <rect
-            id="Rectangle_9"
-            data-name="Rectangle 9"
-            width="31"
-            height="31"
-            transform="translate(0 46)"
-            fill="#707070"
-          />
-          <rect
-            id="Rectangle_26"
-            data-name="Rectangle 26"
-            width="27"
-            height="27"
-            rx="3"
-            transform="translate(2 48)"
-            fill="url(#linear-gradient)"
-          />
           <g
-            id="Group_13"
-            data-name="Group 13"
-            transform="translate(5.698 50.881)"
+            id="Ellipse_15"
+            data-name="Ellipse 15"
+            transform="translate(-4.375 -2.375)"
+            fill="none"
+            stroke={color}
+            strokeWidth="2"
           >
-            <path
-              id="Path_60"
-              data-name="Path 60"
-              d="M535.122,169.134h5.739a2.188,2.188,0,0,0,2.188-2.188V151.042a2.188,2.188,0,0,0-2.188-2.188h-5.739"
-              transform="translate(-525.188 -148.854)"
-              fill="none"
-              stroke="#fff"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            />
-            <line
-              id="Line_1"
-              data-name="Line 1"
-              x2="9.934"
-              transform="translate(0 10.14)"
-              fill="none"
-              stroke="#fff"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            />
-            <path
-              id="Path_61"
-              data-name="Path 61"
-              d="M488.463,193.9l5.387,5.387-5.387,5.387"
-              transform="translate(-483.452 -189.148)"
-              fill="none"
-              stroke="#fff"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            />
+            <circle cx="8.352" cy="8.352" r="8.352" stroke="none" />
+            <circle cx="8.352" cy="8.352" r="7.352" fill="none" />
           </g>
         </g>
+        <path
+          id="Path_3064"
+          data-name="Path 3064"
+          d="M3863.345,7217.265l5.427,5.427"
+          transform="translate(-2020.633 -7057.846)"
+          fill="none"
+          stroke={color}
+          strokeLinecap="round"
+          strokeWidth="2"
+        />
       </g>
     </svg>
   );
@@ -1282,1391 +1236,6 @@ export const SidebarClose = () => {
   );
 };
 
-export const Sidebar1 = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="28.366"
-      height="27.902"
-      viewBox="0 0 28.366 27.902"
-    >
-      <g
-        id="Group_1328"
-        data-name="Group 1328"
-        transform="translate(-27 -94.098)"
-      >
-        <path
-          id="Path_3006"
-          data-name="Path 3006"
-          d="M-79.175,109.766a6.635,6.635,0,0,1,6.518-5.395,6.636,6.636,0,0,1,6.5,5.3"
-          transform="translate(113.84 -9.273)"
-          fill="none"
-          stroke="#8cb808"
-          strokeMiterlimit="10"
-          strokeWidth="2"
-        />
-        <g id="Group_1327" data-name="Group 1327">
-          <g
-            id="Path_3005"
-            data-name="Path 3005"
-            transform="translate(113.84 -9.273)"
-            fill="none"
-            strokeMiterlimit="10"
-          >
-            <path
-              d="M-63.438,131.273H-81.867c-2.713,0-5.331-1.98-4.933-4.7l2-12.71a5.108,5.108,0,0,1,4.932-4.7h14.428c2.713,0,4.516,2.143,4.933,4.7l2,12.71C-58.159,129.293-60.725,131.273-63.438,131.273Z"
-              stroke="none"
-            />
-            <path
-              d="M -63.43799591064453 129.2729949951172 C -62.46114730834961 129.2729949951172 -61.50477600097656 128.8759613037109 -60.94210815429688 128.2368316650391 C -60.57646560668945 127.8214950561523 -60.42744445800781 127.3690643310547 -60.48694229125977 126.8544921875 L -62.48078918457031 114.18359375 C -62.7097282409668 112.7920303344727 -63.62116241455078 111.1699981689453 -65.43901062011719 111.1699981689453 L -79.86699676513672 111.1699981689453 C -81.62580108642578 111.1699981689453 -82.62862396240234 112.7033081054688 -82.81610870361328 114.1279373168945 L -82.82333374023438 114.1780395507812 L -84.82239532470703 126.8757019042969 C -84.89249420166016 127.370002746582 -84.75626373291016 127.8074569702148 -84.40605926513672 128.2127227783203 C -83.84946441650391 128.8568115234375 -82.85282897949219 129.2729949951172 -81.86699676513672 129.2729949951172 L -63.43799591064453 129.2729949951172 M -63.43799591064453 131.2729949951172 L -81.86699676513672 131.2729949951172 C -84.57999420166016 131.2729949951172 -87.197998046875 129.2929992675781 -86.80001068115234 126.5770034790039 L -84.79900360107422 113.8669967651367 C -84.46699523925781 111.3440093994141 -82.57999420166016 109.1699981689453 -79.86699676513672 109.1699981689453 L -65.43901062011719 109.1699981689453 C -62.72599792480469 109.1699981689453 -60.92299652099609 111.3130035400391 -60.50599670410156 113.8669967651367 L -58.50599670410156 126.5770034790039 C -58.15899658203125 129.2929992675781 -60.72499847412109 131.2729949951172 -63.43799591064453 131.2729949951172 Z"
-              stroke="none"
-              fill="#0057aa"
-            />
-          </g>
-          <path
-            id="패스_208"
-            data-name="패스 208"
-            d="M-79.175,114.413h1.432v4.3h.035l3.454-4.3h1.591l-2.812,3.515L-72.2,123.5h-1.59l-2.565-4.455-1.392,1.714v2.737h-1.432Z"
-            transform="translate(113.84 -9.273)"
-            fill="#0057aa"
-          />
-          <path
-            id="패스_209"
-            data-name="패스 209"
-            d="M-71.617,124.759a1.793,1.793,0,0,1,.991-1.485v-.062a1.243,1.243,0,0,1-.619-1.121,1.657,1.657,0,0,1,.763-1.259v-.049a2.3,2.3,0,0,1-.9-1.813,2.442,2.442,0,0,1,2.45-2.435c.059,0,.117,0,.176.007a2.839,2.839,0,0,1,.99.172h2.4v1.062h-1.3a1.821,1.821,0,0,1,.444,1.243,2.318,2.318,0,0,1-2.293,2.342,2.285,2.285,0,0,1-.248-.01,2.356,2.356,0,0,1-.949-.211.884.884,0,0,0-.371.716c0,.408.272.667,1.135.667H-67.7c1.608,0,2.441.495,2.441,1.651,0,1.308-1.381,2.368-3.55,2.368C-70.433,126.547-71.617,125.942-71.617,124.759Zm4.995-.358c0-.568-.444-.742-1.271-.742h-1.023a4.3,4.3,0,0,1-.912-.1,1.226,1.226,0,0,0-.581.99c0,.666.692,1.062,1.813,1.062,1.185,0,1.979-.581,1.979-1.209Zm-.851-5.426a1.292,1.292,0,0,0-1.139-1.427,1.292,1.292,0,0,0-1.427,1.139,1.386,1.386,0,0,0,0,.288,1.3,1.3,0,0,0,1.109,1.456,1.294,1.294,0,0,0,1.457-1.108A1.351,1.351,0,0,0-67.473,118.975Z"
-            transform="translate(113.84 -9.273)"
-            fill="#0057aa"
-          />
-        </g>
-      </g>
-    </svg>
-  );
-};
-
-export const Sidebar2 = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="29.731"
-      height="29.24"
-      viewBox="0 0 29.731 29.24"
-    >
-      <g
-        id="Group_471"
-        data-name="Group 471"
-        transform="translate(-24.009 -144.113)"
-      >
-        <g id="Group_466" data-name="Group 466" transform="translate(0 -2.013)">
-          <g
-            id="Group_450"
-            data-name="Group 450"
-            transform="translate(0 12.749)"
-          >
-            <path
-              id="Path_259"
-              data-name="Path 259"
-              d="M129.771,472.518a11.818,11.818,0,0,1,18.367-5.7"
-              transform="translate(-95.799 -326.921)"
-              fill="none"
-              stroke="#8cb808"
-              strokeLinecap="round"
-              strokeMiterlimit="10"
-              strokeWidth="2"
-            />
-            <path
-              id="Path_260"
-              data-name="Path 260"
-              d="M133.449,471.21a8.469,8.469,0,0,1,5.369-3.979"
-              transform="translate(-95.799 -326.921)"
-              fill="none"
-              stroke="#8cb808"
-              strokeLinecap="round"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <path
-              id="Path_261"
-              data-name="Path 261"
-              d="M148.134,485.635a11.764,11.764,0,0,1-7.142,2.4,11.951,11.951,0,0,1-8.367-3.474"
-              transform="translate(-95.799 -326.921)"
-              fill="none"
-              stroke="#8cb808"
-              strokeLinecap="round"
-              strokeMiterlimit="10"
-              strokeWidth="2"
-            />
-            <path
-              id="Path_263"
-              data-name="Path 263"
-              d="M2070.371,3629.236v-3.112h7.139v3.112"
-              transform="translate(-2029 -3491.748)"
-              fill="none"
-              stroke="#8cb808"
-              strokeWidth="2"
-            />
-            <path
-              id="Path_258"
-              data-name="Path 258"
-              d="M120.809,472.873h10.785a5.592,5.592,0,0,1,5.576,5.575h0a5.592,5.592,0,0,1-5.576,5.576H121.032"
-              transform="translate(-95.799 -326.921)"
-              fill="none"
-              stroke="#0057aa"
-              strokeLinecap="round"
-              strokeMiterlimit="10"
-              strokeWidth="2"
-            />
-            <circle
-              id="Ellipse_24"
-              data-name="Ellipse 24"
-              cx="2.237"
-              cy="2.237"
-              r="2.237"
-              transform="translate(31.481 157.642)"
-              fill="none"
-              stroke="#0057aa"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <line
-              id="Line_100"
-              data-name="Line 100"
-              y2="11.151"
-              transform="translate(31.826 145.951)"
-              fill="none"
-              stroke="#0057aa"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <line
-              id="Line_101"
-              data-name="Line 101"
-              y2="11.151"
-              transform="translate(35.609 145.951)"
-              fill="none"
-              stroke="#0057aa"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <line
-              id="Line_102"
-              data-name="Line 102"
-              x2="3.782"
-              transform="translate(31.826 148.651)"
-              fill="none"
-              stroke="#0057aa"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <line
-              id="Line_103"
-              data-name="Line 103"
-              x2="3.782"
-              transform="translate(31.826 151.442)"
-              fill="none"
-              stroke="#0057aa"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <line
-              id="Line_104"
-              data-name="Line 104"
-              x2="3.782"
-              transform="translate(31.826 154.233)"
-              fill="none"
-              stroke="#0057aa"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-          </g>
-        </g>
-      </g>
-    </svg>
-  );
-};
-
-export const Sidebar3 = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="28.249"
-      height="30.449"
-      viewBox="0 0 28.249 30.449"
-    >
-      <g
-        id="Group_460"
-        data-name="Group 460"
-        transform="translate(-27.071 -201.016)"
-      >
-        <g
-          id="Group_458"
-          data-name="Group 458"
-          transform="translate(-180.065 -308.773)"
-        >
-          <g id="Group_457" data-name="Group 457">
-            <path
-              id="Path_271"
-              data-name="Path 271"
-              d="M224.561,530.139h0a5.592,5.592,0,0,1-5.575,5.576H207.144"
-              fill="none"
-              stroke="#8cb808"
-              strokeMiterlimit="10"
-              strokeWidth="1.225"
-            />
-            <line
-              id="Line_107"
-              data-name="Line 107"
-              x2="6.095"
-              transform="translate(207.136 524.563)"
-              fill="none"
-              stroke="#8cb808"
-              strokeMiterlimit="10"
-              strokeWidth="1.225"
-            />
-            <circle
-              id="Ellipse_28"
-              data-name="Ellipse 28"
-              cx="1.426"
-              cy="1.426"
-              r="1.426"
-              transform="translate(215.017 536.773)"
-              fill="none"
-              stroke="#8cb808"
-              strokeMiterlimit="10"
-              strokeWidth="1.225"
-            />
-            <line
-              id="Line_108"
-              data-name="Line 108"
-              y2="8.715"
-              transform="translate(215.017 527)"
-              fill="none"
-              stroke="#8cb808"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <line
-              id="Line_109"
-              data-name="Line 109"
-              y2="5.576"
-              transform="translate(218.8 530.139)"
-              fill="none"
-              stroke="#8cb808"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <line
-              id="Line_110"
-              data-name="Line 110"
-              x2="3.782"
-              transform="translate(215.017 530.139)"
-              fill="none"
-              stroke="#8cb808"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <line
-              id="Line_111"
-              data-name="Line 111"
-              x2="3.782"
-              transform="translate(215.017 533.278)"
-              fill="none"
-              stroke="#8cb808"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-          </g>
-          <path
-            id="Path_272"
-            data-name="Path 272"
-            d="M213.613,516.784h8.477a9.744,9.744,0,0,1,9.4,7.273"
-            fill="none"
-            stroke="#8cb808"
-            strokeMiterlimit="10"
-            strokeWidth="1"
-          />
-          <line
-            id="Line_112"
-            data-name="Line 112"
-            y2="9.705"
-            transform="translate(215.183 516.784)"
-            fill="none"
-            stroke="#8cb808"
-            strokeMiterlimit="10"
-            strokeWidth="1"
-          />
-          <line
-            id="Line_113"
-            data-name="Line 113"
-            y2="13.325"
-            transform="translate(221.766 516.784)"
-            fill="none"
-            stroke="#8cb808"
-            strokeMiterlimit="10"
-            strokeWidth="1"
-          />
-          <line
-            id="Line_114"
-            data-name="Line 114"
-            x2="6.584"
-            transform="translate(215.183 521.026)"
-            fill="none"
-            stroke="#8cb808"
-            strokeMiterlimit="10"
-            strokeWidth="1"
-          />
-          <line
-            id="Line_115"
-            data-name="Line 115"
-            x2="6.584"
-            transform="translate(215.183 526.49)"
-            fill="none"
-            stroke="#8cb808"
-            strokeMiterlimit="10"
-            strokeWidth="1"
-          />
-          <circle
-            id="Ellipse_27"
-            data-name="Ellipse 27"
-            cx="9.66"
-            cy="9.66"
-            r="9.66"
-            transform="translate(212.89 510.789)"
-            fill="none"
-            stroke="#0057aa"
-            strokeMiterlimit="10"
-            strokeWidth="2"
-          />
-          <path
-            id="Path_270"
-            data-name="Path 270"
-            d="M229.929,526.362l5.456,5.776v4.343l-7.327-7.93Z"
-            fill="#0057aa"
-          />
-        </g>
-      </g>
-    </svg>
-  );
-};
-
-export const Sidebar4 = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="29.77"
-      height="28.717"
-      viewBox="0 0 29.77 28.717"
-    >
-      <g
-        id="Group_445"
-        data-name="Group 445"
-        transform="translate(-30.187 -203.629)"
-      >
-        <line
-          id="Line_86"
-          data-name="Line 86"
-          x2="5.288"
-          transform="translate(53.396 204.335)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeMiterlimit="10"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_87"
-          data-name="Line 87"
-          x2="5.288"
-          transform="translate(53.396 207.493)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeMiterlimit="10"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_88"
-          data-name="Line 88"
-          x2="5.288"
-          transform="translate(53.396 210.651)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeMiterlimit="10"
-          strokeWidth="1"
-        />
-        <rect
-          id="Rectangle_179"
-          data-name="Rectangle 179"
-          width="3"
-          height="3"
-          transform="translate(35.691 208.651)"
-          fill="#8cb808"
-        />
-        <rect
-          id="Rectangle_180"
-          data-name="Rectangle 180"
-          width="3"
-          height="3"
-          transform="translate(42.36 208.651)"
-          fill="#8cb808"
-        />
-        <rect
-          id="Rectangle_181"
-          data-name="Rectangle 181"
-          width="3"
-          height="3"
-          transform="translate(35.691 214.146)"
-          fill="#8cb808"
-        />
-        <rect
-          id="Rectangle_182"
-          data-name="Rectangle 182"
-          width="3"
-          height="3"
-          transform="translate(42.36 214.146)"
-          fill="#8cb808"
-        />
-        <rect
-          id="Rectangle_183"
-          data-name="Rectangle 183"
-          width="3"
-          height="3"
-          transform="translate(35.691 219.642)"
-          fill="#8cb808"
-        />
-        <path
-          id="Path_238"
-          data-name="Path 238"
-          d="M233.8,452.786H222.856V426.069h18.935v13.064"
-          transform="translate(-191.669 -221.44)"
-          fill="none"
-          stroke="#8cb808"
-          strokeMiterlimit="10"
-          strokeWidth="2"
-        />
-        <path
-          id="Path_237"
-          data-name="Path 237"
-          d="M250.626,445.116l-9.391-6.3-9.391,6.3H233.8v7.67h14.872v-7.67Z"
-          transform="translate(-191.669 -221.44)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-        <rect
-          id="Rectangle_184"
-          data-name="Rectangle 184"
-          width="4.38"
-          height="4.39"
-          transform="translate(47.377 226.956)"
-          fill="#0057aa"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const Sidebar5 = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="18.207"
-      height="28.327"
-      viewBox="0 0 18.207 28.327"
-    >
-      <g
-        id="Group_1257"
-        data-name="Group 1257"
-        transform="translate(-30.071 -320.125)"
-      >
-        <line
-          id="Line_59"
-          data-name="Line 59"
-          x2="7.958"
-          transform="translate(35.195 321.125)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-        <line
-          id="Line_60"
-          data-name="Line 60"
-          x2="3.204"
-          transform="translate(37.573 324.162)"
-          fill="none"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <path
-          id="Path_3009"
-          data-name="Path 3009"
-          d="M16.207,0"
-          transform="translate(31.071 331.103)"
-          fill="none"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_65"
-          data-name="Line 65"
-          y2="3.036"
-          transform="translate(39.175 324.162)"
-          fill="none"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <path
-          id="Path_249"
-          data-name="Path 249"
-          d="M403.953,440.2h.084q.344-1.47.7-2.9t.72-2.92h1.585l-2.19,8.874h-1.7l-1.46-5.714-1.408,5.714h-1.7l-2.263-8.874h1.6l1.471,5.819h.083l.344-1.419q.271-1.1.538-2.194t.537-2.206h1.594Z"
-          transform="translate(-362.65 -101.489)"
-          fill="#0057aa"
-        />
-        <line
-          id="Line_89"
-          data-name="Line 89"
-          x2="11.821"
-          transform="translate(33.264 335.356)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="0.998"
-        />
-        <line
-          id="Line_90"
-          data-name="Line 90"
-          x2="11.821"
-          transform="translate(33.264 338.944)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="0.998"
-        />
-        <rect
-          id="Rectangle_168"
-          data-name="Rectangle 168"
-          width="16.207"
-          height="20.254"
-          rx="2.991"
-          transform="translate(31.071 327.198)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-        <line
-          id="Line_63"
-          data-name="Line 63"
-          y2="6.073"
-          transform="translate(35.089 321.125)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-        <line
-          id="Line_64"
-          data-name="Line 64"
-          y2="6.073"
-          transform="translate(43.154 321.125)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const Sidebar6 = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="28.78"
-      height="28.624"
-      viewBox="0 0 28.78 28.624"
-    >
-      <g
-        id="Group_473"
-        data-name="Group 473"
-        transform="translate(-24.839 -378.987)"
-      >
-        <g id="Group_461" data-name="Group 461">
-          <rect
-            id="Rectangle_186"
-            data-name="Rectangle 186"
-            width="28.346"
-            height="28.346"
-            transform="translate(25.071 379.125)"
-            fill="none"
-          />
-          <path
-            id="Path_239"
-            data-name="Path 239"
-            d="M323.723,425.3l-13.39,6.127v20.5h4.248V436.086H332.9v15.839h4.215v-20.5Z"
-            transform="translate(-284.494 -45.314)"
-            fill="none"
-            stroke="#0057aa"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-          />
-          <rect
-            id="Rectangle_187"
-            data-name="Rectangle 187"
-            width="4.793"
-            height="4.793"
-            transform="translate(33.154 394.63)"
-            fill="#8cb808"
-          />
-          <rect
-            id="Rectangle_188"
-            data-name="Rectangle 188"
-            width="4.793"
-            height="4.793"
-            transform="translate(33.154 402.02)"
-            fill="#8cb808"
-          />
-          <rect
-            id="Rectangle_189"
-            data-name="Rectangle 189"
-            width="4.793"
-            height="4.793"
-            transform="translate(40.542 394.63)"
-            fill="#8cb808"
-          />
-          <rect
-            id="Rectangle_190"
-            data-name="Rectangle 190"
-            width="4.793"
-            height="4.793"
-            transform="translate(40.542 402.02)"
-            fill="#8cb808"
-          />
-        </g>
-      </g>
-    </svg>
-  );
-};
-
-export const Sidebar7 = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="23.367"
-      height="23.236"
-      viewBox="0 0 23.367 23.236"
-    >
-      <g
-        id="Group_1252"
-        data-name="Group 1252"
-        transform="translate(-27.071 -439.126)"
-      >
-        <g
-          id="Group_427"
-          data-name="Group 427"
-          transform="translate(-325.009 12.131)"
-        >
-          <path
-            id="Path_241"
-            data-name="Path 241"
-            d="M359.938,436.585a.458.458,0,0,1-.088.279.627.627,0,0,1-.254.216.969.969,0,0,1-.673.127.761.761,0,0,1-.318-.165c-.025-.025-.05-.038-.063-.063a.314.314,0,0,0-.063-.064,1.434,1.434,0,0,1-.178-.241c-.038-.076-.076-.153-.127-.241a.656.656,0,0,1-.089-.191,1.289,1.289,0,0,1-.064-.2l-.266-.622c-1.155,0-2.336.013-3.491,0l-.267.622c-.025.064-.038.14-.063.2a1.365,1.365,0,0,1-.089.191c-.051.088-.089.165-.14.241a.911.911,0,0,1-.165.241.291.291,0,0,0-.063.064c-.013.025-.039.038-.064.063a.757.757,0,0,1-.317.165.968.968,0,0,1-.673-.127.627.627,0,0,1-.254-.216.452.452,0,0,1-.089-.279,2.408,2.408,0,0,1,.025-.3,1.243,1.243,0,0,1,.064-.228,1.128,1.128,0,0,0,.038-.114l2.641-6.5.076-.2c.038-.1.089-.177.127-.292a1.579,1.579,0,0,1,.139-.292,1.424,1.424,0,0,1,.191-.266.653.653,0,0,1,.216-.165,1.308,1.308,0,0,1,.825,0,.663.663,0,0,1,.216.165,2.449,2.449,0,0,1,.19.266,1.523,1.523,0,0,1,.14.292c.038.115.089.191.127.292l.076.2,2.641,6.5a.884.884,0,0,0,.038.114,1.243,1.243,0,0,1,.063.228A2.241,2.241,0,0,1,359.938,436.585ZM356.9,433.17c-.216-.482-.444-1.016-.7-1.562-.063-.152-.14-.317-.2-.469-.051.152-.127.317-.191.469-.253.546-.482,1.08-.7,1.562l-.228.559h2.247Z"
-            fill="#0057aa"
-          />
-        </g>
-        <g
-          id="Group_429"
-          data-name="Group 429"
-          transform="translate(-325.009 12.131)"
-        >
-          <g id="Group_428" data-name="Group 428">
-            <path
-              id="Path_242"
-              data-name="Path 242"
-              d="M373.359,446.817c-.546,1.9-3.567,2.565-5.294,1.613a2.879,2.879,0,0,1-1.193-1.295.813.813,0,0,1,.419-1.168.944.944,0,0,1,1.079.419,2.087,2.087,0,0,0,.952.85c1.117.381,2.4-.2,2.4-1.18,0-.8-.483-1.029-1.206-1.206a11.649,11.649,0,0,1-2.463-.445c-1.549-.647-1.625-2.843-.508-3.91a3.476,3.476,0,0,1,2.222-.711,4.282,4.282,0,0,1,2.729.711c.432.343,1.016,1.206.368,1.6-.533.343-.977-.2-1.333-.457a2.744,2.744,0,0,0-1.8-.381c-.737.089-1.333.482-1.27,1.244.038.546.622.724,1.117.787a9.814,9.814,0,0,1,2.26.368,2.419,2.419,0,0,1,1.511,1.473A3.048,3.048,0,0,1,373.359,446.817Z"
-              fill="#0057aa"
-            />
-          </g>
-        </g>
-        <path
-          id="Path_243"
-          data-name="Path 243"
-          d="M358.02,439.638l-5.314,5.314a1.692,1.692,0,0,0,0,2.392l2.391,2.391a1.691,1.691,0,0,0,2.392,0h0l5.315-5.313a3.383,3.383,0,0,0-4.784-4.784Z"
-          transform="translate(-325.009 12.131)"
-          fill="#8cb808"
-        />
-        <path
-          id="Path_244"
-          data-name="Path 244"
-          d="M372.542,426.995l-5.809,4.357v2.816l-3.768,3.768a4.463,4.463,0,0,1,1.54,1.541l3.768-3.768h2.817l4.357-5.81Z"
-          transform="translate(-325.009 12.131)"
-          fill="#8cb808"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const Sidebar8 = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="28.445"
-      height="28.441"
-      viewBox="0 0 28.445 28.441"
-    >
-      <g
-        id="Group_463"
-        data-name="Group 463"
-        transform="translate(-24.442 -493.587)"
-      >
-        <path
-          id="Path_245"
-          data-name="Path 245"
-          d="M405.466,425.693a13.508,13.508,0,0,1,9.284,9.278"
-          transform="translate(-363.12 69.146)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-        <path
-          id="Path_246"
-          data-name="Path 246"
-          d="M388.791,435.071a13.5,13.5,0,0,1,9.392-9.4"
-          transform="translate(-363.12 69.146)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-        <path
-          id="Path_247"
-          data-name="Path 247"
-          d="M398.183,451.651a13.507,13.507,0,0,1-9.391-9.4"
-          transform="translate(-363.12 69.146)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-        <path
-          id="Path_248"
-          data-name="Path 248"
-          d="M414.776,442.254a13.5,13.5,0,0,1-9.31,9.374"
-          transform="translate(-363.12 69.146)"
-          fill="none"
-          stroke="#0057aa"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-        <g
-          id="Group_435"
-          data-name="Group 435"
-          transform="translate(-3.901 124.792)"
-        >
-          <path
-            id="Path_249"
-            data-name="Path 249"
-            d="M403.953,440.2h.084q.344-1.47.7-2.9t.72-2.92h1.585l-2.19,8.874h-1.7l-1.46-5.714-1.408,5.714h-1.7l-2.263-8.874h1.6l1.471,5.819h.083l.344-1.419q.271-1.1.538-2.194t.537-2.206h1.594Z"
-            transform="translate(-359.219 -55.645)"
-            fill="#0057aa"
-          />
-          <line
-            id="Line_89"
-            data-name="Line 89"
-            x2="11.821"
-            transform="translate(36.695 381.2)"
-            fill="none"
-            stroke="#0057aa"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="0.998"
-          />
-          <line
-            id="Line_90"
-            data-name="Line 90"
-            x2="11.821"
-            transform="translate(36.695 384.788)"
-            fill="none"
-            stroke="#0057aa"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="0.998"
-          />
-        </g>
-        <line
-          id="Line_91"
-          data-name="Line 91"
-          x1="5.45"
-          transform="translate(46.486 507.759)"
-          fill="#fff"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <path
-          id="Path_250"
-          data-name="Path 250"
-          d="M413.208,436.363l2.25,2.25-2.25,2.25"
-          transform="translate(-363.12 69.146)"
-          fill="none"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_92"
-          data-name="Line 92"
-          x2="5.45"
-          transform="translate(25.474 507.759)"
-          fill="#fff"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <path
-          id="Path_251"
-          data-name="Path 251"
-          d="M390.441,440.863l-2.25-2.25,2.25-2.25"
-          transform="translate(-363.12 69.146)"
-          fill="none"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_93"
-          data-name="Line 93"
-          y2="5.45"
-          transform="translate(38.705 515.943)"
-          fill="#fff"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <path
-          id="Path_252"
-          data-name="Path 252"
-          d="M399.575,448.644l2.25-2.25,2.25,2.25"
-          transform="translate(-363.12 69.146)"
-          fill="none"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_94"
-          data-name="Line 94"
-          y1="5.45"
-          transform="translate(38.705 494.125)"
-          fill="#fff"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <path
-          id="Path_253"
-          data-name="Path 253"
-          d="M404.074,428.582l-2.25,2.25-2.25-2.25"
-          transform="translate(-363.12 69.146)"
-          fill="none"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const Sidebar9 = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="29.75"
-      height="29.451"
-      viewBox="0 0 29.75 29.451"
-    >
-      <g
-        id="Group_1329"
-        data-name="Group 1329"
-        transform="translate(-25.671 -560.129)"
-      >
-        <path
-          id="Path_3006"
-          data-name="Path 3006"
-          d="M-79.175,109.766a6.635,6.635,0,0,1,6.518-5.395,6.636,6.636,0,0,1,6.5,5.3"
-          transform="translate(112.512 458.307)"
-          fill="none"
-          stroke="#8cb808"
-          strokeMiterlimit="10"
-          strokeWidth="2"
-        />
-        <g
-          id="Path_3005"
-          data-name="Path 3005"
-          transform="translate(112.512 458.307)"
-          fill="none"
-          strokeMiterlimit="10"
-        >
-          <path
-            d="M-63.438,131.273H-81.867c-2.713,0-5.331-1.98-4.933-4.7l2-12.71a5.108,5.108,0,0,1,4.932-4.7h14.428c2.713,0,4.516,2.143,4.933,4.7l2,12.71C-58.159,129.293-60.725,131.273-63.438,131.273Z"
-            stroke="none"
-          />
-          <path
-            d="M -63.43799591064453 129.2729949951172 C -62.46114730834961 129.2729949951172 -61.50477600097656 128.8759613037109 -60.94210815429688 128.2368316650391 C -60.57646560668945 127.8214950561523 -60.42744445800781 127.3690643310547 -60.48694229125977 126.8544921875 L -62.48078918457031 114.18359375 C -62.7097282409668 112.7920303344727 -63.62116241455078 111.1699981689453 -65.43901062011719 111.1699981689453 L -79.86699676513672 111.1699981689453 C -81.62580108642578 111.1699981689453 -82.62862396240234 112.7033081054688 -82.81610870361328 114.1279373168945 L -82.82333374023438 114.1780395507812 L -84.82239532470703 126.8757019042969 C -84.89249420166016 127.370002746582 -84.75626373291016 127.8074569702148 -84.40605926513672 128.2127227783203 C -83.84946441650391 128.8568115234375 -82.85282897949219 129.2729949951172 -81.86699676513672 129.2729949951172 L -63.43799591064453 129.2729949951172 M -63.43799591064453 131.2729949951172 L -81.86699676513672 131.2729949951172 C -84.57999420166016 131.2729949951172 -87.197998046875 129.2929992675781 -86.80001068115234 126.5770034790039 L -84.79900360107422 113.8669967651367 C -84.46699523925781 111.3440093994141 -82.57999420166016 109.1699981689453 -79.86699676513672 109.1699981689453 L -65.43901062011719 109.1699981689453 C -62.72599792480469 109.1699981689453 -60.92299652099609 111.3130035400391 -60.50599670410156 113.8669967651367 L -58.50599670410156 126.5770034790039 C -58.15899658203125 129.2929992675781 -60.72499847412109 131.2729949951172 -63.43799591064453 131.2729949951172 Z"
-            stroke="none"
-            fill="#0057aa"
-          />
-        </g>
-        <path
-          id="패스_208"
-          data-name="패스 208"
-          d="M-79.175,114.413h1.432v4.3h.035l3.454-4.3h1.591l-2.812,3.515L-72.2,123.5h-1.59l-2.565-4.455-1.392,1.714v2.737h-1.432Z"
-          transform="translate(112.512 458.307)"
-          fill="#0057aa"
-        />
-        <path
-          id="패스_209"
-          data-name="패스 209"
-          d="M-71.617,124.759a1.793,1.793,0,0,1,.991-1.485v-.062a1.243,1.243,0,0,1-.619-1.121,1.657,1.657,0,0,1,.763-1.259v-.049a2.3,2.3,0,0,1-.9-1.813,2.442,2.442,0,0,1,2.45-2.435c.059,0,.117,0,.176.007a2.839,2.839,0,0,1,.99.172h2.4v1.062h-1.3a1.821,1.821,0,0,1,.444,1.243,2.318,2.318,0,0,1-2.293,2.342,2.285,2.285,0,0,1-.248-.01,2.356,2.356,0,0,1-.949-.211.884.884,0,0,0-.371.716c0,.408.272.667,1.135.667H-67.7c1.608,0,2.441.495,2.441,1.651,0,1.308-1.381,2.368-3.55,2.368C-70.433,126.547-71.617,125.942-71.617,124.759Zm4.995-.358c0-.568-.444-.742-1.271-.742h-1.023a4.3,4.3,0,0,1-.912-.1,1.226,1.226,0,0,0-.581.99c0,.666.692,1.062,1.813,1.062,1.185,0,1.979-.581,1.979-1.209Zm-.851-5.426a1.292,1.292,0,0,0-1.139-1.427,1.292,1.292,0,0,0-1.427,1.139,1.386,1.386,0,0,0,0,.288,1.3,1.3,0,0,0,1.109,1.456,1.294,1.294,0,0,0,1.457-1.108A1.351,1.351,0,0,0-67.473,118.975Z"
-          transform="translate(112.512 458.307)"
-          fill="#0057aa"
-        />
-        <circle
-          id="Ellipse_23"
-          data-name="Ellipse 23"
-          cx="6.996"
-          cy="6.996"
-          r="6.996"
-          transform="translate(41.429 560.129)"
-          fill="#ce0303"
-        />
-        <path
-          id="Path_249"
-          data-name="Path 249"
-          d="M402.224,438.878h.065q.266-1.137.54-2.243t.557-2.259h1.226l-1.694,6.864H401.6l-1.129-4.42-1.089,4.42H398.07l-1.75-6.864h1.234l1.138,4.5h.064l.266-1.1q.21-.854.416-1.7t.415-1.706h1.233Z"
-          transform="translate(-352.153 129.316)"
-          fill="#fff"
-        />
-        <line
-          id="Line_89"
-          data-name="Line 89"
-          x2="9.144"
-          transform="translate(43.853 565.603)"
-          fill="none"
-          stroke="#fff"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="0.998"
-        />
-        <line
-          id="Line_90"
-          data-name="Line 90"
-          x2="9.144"
-          transform="translate(43.853 568.378)"
-          fill="none"
-          stroke="#fff"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="0.998"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const Sidebar10 = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="29.731"
-      height="29.24"
-      viewBox="0 0 29.731 29.24"
-    >
-      <g
-        id="Group_1260"
-        data-name="Group 1260"
-        transform="translate(-24.009 -613.125)"
-      >
-        <g id="Group_464" data-name="Group 464" transform="translate(0 467)">
-          <g
-            id="Group_450"
-            data-name="Group 450"
-            transform="translate(0 12.749)"
-          >
-            <path
-              id="Path_259"
-              data-name="Path 259"
-              d="M129.771,472.518a11.818,11.818,0,0,1,18.367-5.7"
-              transform="translate(-95.799 -326.921)"
-              fill="none"
-              stroke="#8cb808"
-              strokeLinecap="round"
-              strokeMiterlimit="10"
-              strokeWidth="2"
-            />
-            <path
-              id="Path_261"
-              data-name="Path 261"
-              d="M148.134,485.635a11.764,11.764,0,0,1-7.142,2.4,11.951,11.951,0,0,1-8.367-3.474"
-              transform="translate(-95.799 -326.921)"
-              fill="none"
-              stroke="#8cb808"
-              strokeLinecap="round"
-              strokeMiterlimit="10"
-              strokeWidth="2"
-            />
-            <path
-              id="Path_263"
-              data-name="Path 263"
-              d="M2070.371,3629.236v-3.112h7.139v3.112"
-              transform="translate(-2029 -3491.748)"
-              fill="none"
-              stroke="#8cb808"
-              strokeWidth="2"
-            />
-            <path
-              id="Path_258"
-              data-name="Path 258"
-              d="M120.809,472.873h10.785a5.592,5.592,0,0,1,5.576,5.575h0a5.592,5.592,0,0,1-5.576,5.576H121.032"
-              transform="translate(-95.799 -326.921)"
-              fill="none"
-              stroke="#0057aa"
-              strokeLinecap="round"
-              strokeMiterlimit="10"
-              strokeWidth="2"
-            />
-            <circle
-              id="Ellipse_24"
-              data-name="Ellipse 24"
-              cx="2.237"
-              cy="2.237"
-              r="2.237"
-              transform="translate(31.481 157.642)"
-              fill="none"
-              stroke="#0057aa"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <line
-              id="Line_100"
-              data-name="Line 100"
-              y2="11.151"
-              transform="translate(31.826 145.951)"
-              fill="none"
-              stroke="#0057aa"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <line
-              id="Line_101"
-              data-name="Line 101"
-              y2="11.151"
-              transform="translate(35.609 145.951)"
-              fill="none"
-              stroke="#0057aa"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <line
-              id="Line_102"
-              data-name="Line 102"
-              x2="3.782"
-              transform="translate(31.826 148.651)"
-              fill="none"
-              stroke="#0057aa"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <line
-              id="Line_103"
-              data-name="Line 103"
-              x2="3.782"
-              transform="translate(31.826 151.442)"
-              fill="none"
-              stroke="#0057aa"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-            <line
-              id="Line_104"
-              data-name="Line 104"
-              x2="3.782"
-              transform="translate(31.826 154.233)"
-              fill="none"
-              stroke="#0057aa"
-              strokeMiterlimit="10"
-              strokeWidth="1"
-            />
-          </g>
-        </g>
-        <g
-          id="Group_469"
-          data-name="Group 469"
-          transform="translate(-3.718 212.368)"
-        >
-          <circle
-            id="Ellipse_23"
-            data-name="Ellipse 23"
-            cx="6.996"
-            cy="6.996"
-            r="6.996"
-            transform="translate(42 410)"
-            fill="#ce0303"
-          />
-          <g
-            id="Group_437"
-            data-name="Group 437"
-            transform="translate(44.424 413.564)"
-          >
-            <path
-              id="Path_249"
-              data-name="Path 249"
-              d="M402.224,438.878h.065q.266-1.137.54-2.243t.557-2.259h1.226l-1.694,6.864H401.6l-1.129-4.42-1.089,4.42H398.07l-1.75-6.864h1.234l1.138,4.5h.064l.266-1.1q.21-.854.416-1.7t.415-1.706h1.233Z"
-              transform="translate(-396.006 -434.377)"
-              fill="#fff"
-            />
-            <line
-              id="Line_89"
-              data-name="Line 89"
-              x2="9.144"
-              transform="translate(0 1.909)"
-              fill="none"
-              stroke="#fff"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="0.998"
-            />
-            <line
-              id="Line_90"
-              data-name="Line 90"
-              x2="9.144"
-              transform="translate(0 4.684)"
-              fill="none"
-              stroke="#fff"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="0.998"
-            />
-          </g>
-        </g>
-      </g>
-    </svg>
-  );
-};
-
-export const Sidebar11 = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="28.402"
-      height="28.462"
-      viewBox="0 0 28.402 28.462"
-    >
-      <g
-        id="Group_1258"
-        data-name="Group 1258"
-        transform="translate(-25.071 -672.126)"
-      >
-        <path
-          id="Path_231"
-          data-name="Path 231"
-          d="M559.483,437.457h7.308v14.387H547.7V440.029"
-          transform="translate(-514.318 247.744)"
-          fill="none"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-        <line
-          id="Line_74"
-          data-name="Line 74"
-          x2="19.094"
-          transform="translate(33.379 690.241)"
-          fill="none"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_75"
-          data-name="Line 75"
-          x2="19.094"
-          transform="translate(33.379 693.337)"
-          fill="none"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_76"
-          data-name="Line 76"
-          x2="19.094"
-          transform="translate(33.379 696.434)"
-          fill="none"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_77"
-          data-name="Line 77"
-          y2="9.347"
-          transform="translate(37.748 690.241)"
-          fill="none"
-          stroke="#8cb808"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <g id="Group_465" data-name="Group 465">
-          <rect
-            id="Rectangle_170"
-            data-name="Rectangle 170"
-            width="19.094"
-            height="14.387"
-            transform="translate(26.071 673.126)"
-            fill="none"
-            stroke="#0057aa"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-          />
-          <line
-            id="Line_70"
-            data-name="Line 70"
-            x2="19.094"
-            transform="translate(26.071 678.166)"
-            fill="none"
-            stroke="#0057aa"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1"
-          />
-          <line
-            id="Line_71"
-            data-name="Line 71"
-            x2="19.094"
-            transform="translate(26.071 681.262)"
-            fill="none"
-            stroke="#0057aa"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1"
-          />
-          <line
-            id="Line_72"
-            data-name="Line 72"
-            x2="19.094"
-            transform="translate(26.071 684.358)"
-            fill="none"
-            stroke="#0057aa"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1"
-          />
-          <line
-            id="Line_73"
-            data-name="Line 73"
-            y2="9.347"
-            transform="translate(30.439 678.166)"
-            fill="none"
-            stroke="#0057aa"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1"
-          />
-        </g>
-      </g>
-    </svg>
-  );
-};
-
-export const Close = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="25"
-      height="25"
-      viewBox="0 0 25 25"
-    >
-      <g
-        id="Group_119"
-        data-name="Group 119"
-        transform="translate(-1865.643 -49.164)"
-      >
-        <ellipse
-          id="Ellipse_4"
-          data-name="Ellipse 4"
-          cx="12.5"
-          cy="12.5"
-          rx="12.5"
-          ry="12.5"
-          transform="translate(1865.643 49.164)"
-          fill="#AEAEAE"
-        />
-        <line
-          id="Line_9"
-          data-name="Line 9"
-          x1="9.877"
-          y2="9.877"
-          transform="translate(1873.292 56.638)"
-          fill="none"
-          stroke="#0A0A0A"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-        <line
-          id="Line_10"
-          data-name="Line 10"
-          x1="9.877"
-          y1="9.877"
-          transform="translate(1873.292 56.638)"
-          fill="none"
-          stroke="#0A0A0A"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-      </g>
-    </svg>
-  );
-};
-
 export const Refresh = () => {
   return (
     <svg
@@ -2749,44 +1318,6 @@ export const Info = () => {
             fill="#0A0A0A"
           />
         </g>
-      </g>
-    </svg>
-  );
-};
-
-export const SearchIcon = ({
-  color = "#4CAF50",
-  width = "24px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      id="search_icon"
-      xmlns="http://www.w3.org/2000/svg"
-      width="13.33"
-      height="14.495"
-      viewBox="0 0 13.33 14.495"
-    >
-      <g
-        id="Ellipse_15"
-        data-name="Ellipse 15"
-        fill="none"
-        stroke="#fff"
-        strokeWidth="2"
-      >
-        <circle cx="4.978" cy="4.978" r="4.978" stroke="none" />
-        <circle cx="4.978" cy="4.978" r="3.978" fill="none" />
-      </g>
-      <g
-        id="Rectangle_202"
-        data-name="Rectangle 202"
-        transform="translate(6.58 9.047) rotate(-40)"
-        fill="#fff"
-        stroke="#fff"
-        strokeWidth="1"
-      >
-        <rect width="2.844" height="7.111" stroke="none" />
-        <rect x="0.5" y="0.5" width="1.844" height="6.111" fill="none" />
       </g>
     </svg>
   );
@@ -2886,1505 +1417,6 @@ export const ShortcutIcon = ({
   );
 };
 
-export const CustomInf = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="21.683"
-      height="24.314"
-      viewBox="0 0 21.683 24.314"
-    >
-      <g id="icon1" transform="translate(-885.37 -61.45)">
-        <rect
-          id="Rectangle_1"
-          data-name="Rectangle 1"
-          width="16.949"
-          height="22.814"
-          transform="translate(887.737 62.2)"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <line
-          id="Line_1"
-          data-name="Line 1"
-          x2="21.683"
-          transform="translate(885.37 85.013)"
-          fill="none"
-          stroke="#000"
-          strokeWidth="1.5"
-        />
-        <g id="Group_12" data-name="Group 12">
-          <rect
-            id="Rectangle_2"
-            data-name="Rectangle 2"
-            width="3.3"
-            height="2.95"
-            rx="0.686"
-            transform="translate(891.138 66.43)"
-          />
-          <rect
-            id="Rectangle_3"
-            data-name="Rectangle 3"
-            width="3.3"
-            height="2.95"
-            rx="0.686"
-            transform="translate(897.986 66.43)"
-          />
-        </g>
-        <g id="Group_13" data-name="Group 13">
-          <rect
-            id="Rectangle_4"
-            data-name="Rectangle 4"
-            width="3.3"
-            height="2.95"
-            rx="0.686"
-            transform="translate(891.138 71.073)"
-          />
-          <rect
-            id="Rectangle_5"
-            data-name="Rectangle 5"
-            width="3.3"
-            height="2.95"
-            rx="0.686"
-            transform="translate(897.986 71.073)"
-          />
-        </g>
-        <g id="Group_14" data-name="Group 14">
-          <rect
-            id="Rectangle_6"
-            data-name="Rectangle 6"
-            width="3.3"
-            height="2.95"
-            rx="0.686"
-            transform="translate(891.138 75.717)"
-          />
-          <rect
-            id="Rectangle_7"
-            data-name="Rectangle 7"
-            width="3.3"
-            height="2.95"
-            rx="0.686"
-            transform="translate(897.986 75.717)"
-          />
-        </g>
-        <rect
-          id="Rectangle_8"
-          data-name="Rectangle 8"
-          width="3.914"
-          height="4.644"
-          rx="0.718"
-          transform="translate(894.255 80.656)"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const VolBook = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="21.003"
-      height="24.914"
-      viewBox="0 0 21.003 24.914"
-    >
-      <g
-        id="Group_1322"
-        data-name="Group 1322"
-        transform="translate(-116.341 -675.229)"
-      >
-        <g
-          id="Group_1262"
-          data-name="Group 1262"
-          transform="translate(-769.37 573.271)"
-        >
-          <path
-            id="Path_1"
-            data-name="Path 1"
-            d="M899.435,102.708H889.257a3.017,3.017,0,0,0,0,6.011h10.178Z"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <path
-            id="Path_2"
-            data-name="Path 2"
-            d="M893.033,102.708h10.178a3.017,3.017,0,0,1,0,6.011H893.033Z"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <path
-            id="Path_3"
-            data-name="Path 3"
-            d="M905.963,105.713H886.5l-.044,17.136,1.729-2.785,17.774-.221Z"
-            stroke="#000"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <path
-            id="Path_4"
-            data-name="Path 4"
-            d="M905.963,119.844H889.219a3.017,3.017,0,0,0,0,6.011h16.744"
-            fill="#fff"
-            stroke="#000"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <path
-            id="Path_5"
-            data-name="Path 5"
-            d="M904.925,119.844s-1.991,2.345,0,6.011"
-            stroke="#000"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-        </g>
-        <g
-          id="Group_1264"
-          data-name="Group 1264"
-          transform="translate(-769.37 573.271)"
-        >
-          <g id="Group_18" data-name="Group 18">
-            <path
-              id="Path_11"
-              data-name="Path 11"
-              d="M890.544,108.738h1.218l.116,1h.039a3.1,3.1,0,0,1,2.2-1.179,1.9,1.9,0,0,1,1.97,1.308,3.282,3.282,0,0,1,2.318-1.308c1.49,0,2.19,1.01,2.19,2.824v4.482h-1.49v-4.3c0-1.231-.388-1.724-1.192-1.724a2.379,2.379,0,0,0-1.606.972v5.052h-1.49v-4.3c0-1.231-.376-1.724-1.192-1.724a2.355,2.355,0,0,0-1.593.972v5.052h-1.49Z"
-              fill="#fff"
-            />
-          </g>
-          <g id="Group_19" data-name="Group 19">
-            <path
-              id="Path_12"
-              data-name="Path 12"
-              d="M901.215,109.731l.364-.482a1.552,1.552,0,0,0,1.134.527c.541,0,.912-.293.912-.762,0-.514-.339-.847-1.42-.847v-.554c.944,0,1.258-.345,1.258-.795a.652.652,0,0,0-.736-.671,1.347,1.347,0,0,0-.958.457l-.391-.47a2,2,0,0,1,1.374-.586c.86,0,1.467.443,1.467,1.212a1.125,1.125,0,0,1-.828,1.088v.032a1.2,1.2,0,0,1,.99,1.173,1.425,1.425,0,0,1-1.6,1.336A1.989,1.989,0,0,1,901.215,109.731Z"
-              fill="#fff"
-            />
-          </g>
-        </g>
-      </g>
-    </svg>
-  );
-};
-
-export const WeightBook = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="21.003"
-      height="24.914"
-      viewBox="0 0 21.003 24.914"
-    >
-      <g
-        id="Group_1323"
-        data-name="Group 1323"
-        transform="translate(-239.918 -675.229)"
-      >
-        <g
-          id="Group_1263"
-          data-name="Group 1263"
-          transform="translate(-769.37 573.271)"
-        >
-          <path
-            id="Path_6"
-            data-name="Path 6"
-            d="M1023.012,102.708h-10.177a3.017,3.017,0,0,0,0,6.011h10.177Z"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <path
-            id="Path_7"
-            data-name="Path 7"
-            d="M1016.611,102.708h10.177a3.017,3.017,0,0,1,0,6.011h-10.177Z"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <path
-            id="Path_8"
-            data-name="Path 8"
-            d="M1029.541,105.713h-19.458l-.044,17.136,1.729-2.785,17.774-.221Z"
-            stroke="#000"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <path
-            id="Path_9"
-            data-name="Path 9"
-            d="M1029.541,119.844H1012.8a3.017,3.017,0,0,0,0,6.011h16.744"
-            fill="#fff"
-            stroke="#000"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <path
-            id="Path_10"
-            data-name="Path 10"
-            d="M1028.5,119.844s-1.991,2.345,0,6.011"
-            stroke="#000"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-        </g>
-        <g
-          id="Group_1265"
-          data-name="Group 1265"
-          transform="translate(-769.37 573.271)"
-        >
-          <path
-            id="Path_13"
-            data-name="Path 13"
-            d="M1013.225,104.542h1.464v6.646h.052l2.76-3.446h1.658l-2.41,2.9,2.682,4.223h-1.62l-1.929-3.226-1.193,1.373v1.853h-1.464Z"
-            fill="#fff"
-          />
-          <path
-            id="Path_14"
-            data-name="Path 14"
-            d="M1020.016,116.188a1.883,1.883,0,0,1,1.038-1.555v-.064a1.308,1.308,0,0,1-.649-1.179,1.738,1.738,0,0,1,.8-1.322v-.051a2.417,2.417,0,0,1-.945-1.9,2.567,2.567,0,0,1,2.758-2.552,2.953,2.953,0,0,1,1.036.182h2.527v1.114h-1.361a1.921,1.921,0,0,1,.467,1.308,2.434,2.434,0,0,1-2.669,2.449,2.482,2.482,0,0,1-1-.22.924.924,0,0,0-.388.751c0,.427.285.7,1.191.7h1.309c1.683,0,2.565.518,2.565,1.736,0,1.374-1.451,2.487-3.731,2.487C1021.261,118.066,1020.016,117.432,1020.016,116.188Zm5.248-.375c0-.6-.466-.778-1.334-.778h-1.076a4.583,4.583,0,0,1-.959-.1,1.279,1.279,0,0,0-.608,1.036c0,.7.725,1.114,1.9,1.114C1024.434,117.082,1025.264,116.473,1025.264,115.813Zm-.894-5.7a1.356,1.356,0,1,0-2.7,0,1.36,1.36,0,1,0,2.7,0Z"
-            fill="#fff"
-          />
-        </g>
-      </g>
-    </svg>
-  );
-};
-
-export const BillIcon = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="22.061"
-      height="17.658"
-      viewBox="0 0 22.061 17.658"
-    >
-      <g
-        id="Group_1271"
-        data-name="Group 1271"
-        transform="translate(-885.842 -142.604)"
-      >
-        <rect
-          id="Rectangle_17"
-          data-name="Rectangle 17"
-          width="17.956"
-          height="13.529"
-          transform="translate(886.592 145.983)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <path
-          id="Path_29"
-          data-name="Path 29"
-          d="M889.2,145.983v-2.629h17.956v13.529h-2.412"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <line
-          id="Line_9"
-          data-name="Line 9"
-          x2="17.956"
-          transform="translate(886.592 150.722)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_10"
-          data-name="Line 10"
-          x2="17.956"
-          transform="translate(886.592 153.634)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_11"
-          data-name="Line 11"
-          x2="17.956"
-          transform="translate(886.592 156.546)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_12"
-          data-name="Line 12"
-          y2="8.79"
-          transform="translate(890.7 150.722)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_13"
-          data-name="Line 13"
-          x1="2.201"
-          transform="translate(899.744 148.729)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const InsHistory = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="19.441"
-      height="24.479"
-      viewBox="0 0 19.441 24.479"
-    >
-      <g
-        id="Group_1324"
-        data-name="Group 1324"
-        transform="translate(-117.901 -746.902)"
-      >
-        <rect
-          id="Rectangle_1940"
-          data-name="Rectangle 1940"
-          width="17.941"
-          height="22.979"
-          transform="translate(118.651 747.652)"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <path
-          id="Path_3014"
-          data-name="Path 3014"
-          d="M900.908,177.34h-7.831l-1.124-2.958h10.079Z"
-          transform="translate(-769.37 573.271)"
-        />
-        <g
-          id="Group_1267"
-          data-name="Group 1267"
-          transform="translate(-769.37 573.271)"
-        >
-          <path
-            id="Path_16"
-            data-name="Path 16"
-            d="M894.048,191.31h0Z"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1"
-          />
-          <path
-            id="Path_17"
-            data-name="Path 17"
-            d="M891.681,191.31h0Z"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1"
-          />
-          <path
-            id="Path_18"
-            data-name="Path 18"
-            d="M894.048,193.758h0Z"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1"
-          />
-          <path
-            id="Path_19"
-            data-name="Path 19"
-            d="M891.681,193.758h0Z"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1"
-          />
-        </g>
-        <rect
-          id="Rectangle_1941"
-          data-name="Rectangle 1941"
-          width="7.675"
-          height="7.675"
-          transform="translate(123.785 753.334)"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="0.899"
-        />
-        <path
-          id="Path_3015"
-          data-name="Path 3015"
-          d="M894.5,181.766l2.277,2.286,6.49-6.15"
-          transform="translate(-769.37 573.271)"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const CidHistory = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="19.441"
-      height="24.479"
-      viewBox="0 0 19.441 24.479"
-    >
-      <g
-        id="Group_1269"
-        data-name="Group 1269"
-        transform="translate(-1009.513 -173.632)"
-      >
-        <rect
-          id="Rectangle_13"
-          data-name="Rectangle 13"
-          width="17.941"
-          height="22.979"
-          transform="translate(1010.263 174.382)"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <path
-          id="Path_22"
-          data-name="Path 22"
-          d="M1023.15,177.34h-7.831l-1.124-2.958h10.079Z"
-        />
-        <g id="Group_25" data-name="Group 25">
-          <path
-            id="Path_23"
-            data-name="Path 23"
-            d="M1016.29,191.31h0Z"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1"
-          />
-          <path
-            id="Path_24"
-            data-name="Path 24"
-            d="M1013.923,191.31h0Z"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1"
-          />
-          <path
-            id="Path_25"
-            data-name="Path 25"
-            d="M1016.29,193.758h0Z"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1"
-          />
-          <path
-            id="Path_26"
-            data-name="Path 26"
-            d="M1013.923,193.758h0Z"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1"
-          />
-        </g>
-        <path
-          id="Path_27"
-          data-name="Path 27"
-          d="M1018.821,188.838h0Z"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="2"
-        />
-        <path
-          id="headphones"
-          d="M1019.234,178.482a5.036,5.036,0,0,0-5.039,5.032v.953a.631.631,0,0,0,.348.563l.283.143a2.205,2.205,0,0,0,2.2,2.13h.472a.472.472,0,0,0,.472-.473h0v-3.464a.472.472,0,0,0-.47-.474h-.475a2.2,2.2,0,0,0-1.574.661v-.032a3.779,3.779,0,1,1,7.559,0h0v.032a2.2,2.2,0,0,0-1.575-.662h-.473a.472.472,0,0,0-.472.473v3.464a.472.472,0,0,0,.472.472h.473a2.2,2.2,0,0,0,2.2-2.129l.283-.143a.63.63,0,0,0,.349-.563v-.943a5.037,5.037,0,0,0-5.032-5.04Z"
-        />
-        <path
-          id="Path_28"
-          data-name="Path 28"
-          d="M1023.787,184.6s.416,4.236-3.858,4.236"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const RemoteMeter = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="19.673"
-      height="24.479"
-      viewBox="0 0 19.673 24.479"
-    >
-      <g
-        id="Group_1325"
-        data-name="Group 1325"
-        transform="translate(-117.901 -784.497)"
-      >
-        <rect
-          id="Rectangle_1942"
-          data-name="Rectangle 1942"
-          width="18.173"
-          height="22.979"
-          transform="translate(118.651 785.247)"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <rect
-          id="Rectangle_1943"
-          data-name="Rectangle 1943"
-          width="12.551"
-          height="3.065"
-          transform="translate(121.462 788.779)"
-        />
-        <path
-          id="Path_3016"
-          data-name="Path 3016"
-          d="M894.5,226.642l3.2-3.421H891.3Z"
-          transform="translate(-769.37 573.271)"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_116"
-          data-name="Line 116"
-          y2="4.73"
-          transform="translate(125.133 799.913)"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_117"
-          data-name="Line 117"
-          y2="4.73"
-          transform="translate(127.978 799.913)"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_118"
-          data-name="Line 118"
-          y2="6.592"
-          transform="translate(130.821 798.051)"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_119"
-          data-name="Line 119"
-          y2="8.733"
-          transform="translate(133.666 795.91)"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const ItemStock = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="19.441"
-      height="24.388"
-      viewBox="0 0 19.441 24.388"
-    >
-      <g
-        id="Group_1270"
-        data-name="Group 1270"
-        transform="translate(-1009.638 -135.87)"
-      >
-        <g id="Group_27" data-name="Group 27">
-          <rect
-            id="Rectangle_14"
-            data-name="Rectangle 14"
-            width="8.563"
-            height="11.146"
-            transform="translate(1010.388 148.362)"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <rect
-            id="Rectangle_15"
-            data-name="Rectangle 15"
-            width="8.563"
-            height="11.146"
-            transform="translate(1019.766 148.362)"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-        </g>
-        <rect
-          id="Rectangle_16"
-          data-name="Rectangle 16"
-          width="11.146"
-          height="11.146"
-          transform="translate(1013.786 136.62)"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-      </g>
-    </svg>
-  );
-};
-export const WeightSales = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="21.786"
-      height="19.917"
-      viewBox="0 0 21.786 19.917"
-    >
-      <g
-        id="Group_1326"
-        data-name="Group 1326"
-        transform="translate(-118.193 -845.536)"
-      >
-        <path
-          id="패스_3006"
-          data-name="패스 3006"
-          d="M894.593,275.212a3.93,3.93,0,0,1,7.711-.057"
-          transform="translate(-769.37 574.271)"
-          fill="none"
-          stroke="#000"
-          strokeMiterlimit="10"
-          strokeWidth="1.5"
-        />
-        <path
-          id="Path_3017"
-          data-name="Path 3017"
-          d="M906.131,290.433a2.819,2.819,0,0,0,2.078-.863,1.415,1.415,0,0,0,.379-1.151l-1.66-10.549a2.674,2.674,0,0,0-2.463-2.509H892.453A2.617,2.617,0,0,0,890,277.824l-.006.041-1.664,10.572a1.337,1.337,0,0,0,.347,1.113,2.876,2.876,0,0,0,2.114.883h15.343"
-          transform="translate(-769.37 574.271)"
-          fill="none"
-          stroke="#000"
-          strokeMiterlimit="10"
-          strokeWidth="1.5"
-        />
-        <path
-          id="패스_208"
-          data-name="패스 208"
-          d="M893.029,278.061h1.192v3.58h.029l2.876-3.58h1.325l-2.342,2.926,2.727,4.64h-1.324l-2.135-3.71-1.159,1.428v2.278h-1.192Z"
-          transform="translate(-769.37 574.271)"
-        />
-        <path
-          id="패스_209"
-          data-name="패스 209"
-          d="M899.322,286.675a1.491,1.491,0,0,1,.825-1.237v-.051a1.034,1.034,0,0,1-.516-.933,1.382,1.382,0,0,1,.636-1.049v-.041a1.913,1.913,0,0,1-.75-1.509,2.033,2.033,0,0,1,2.039-2.027h0a1.21,1.21,0,0,1,.147.006,2.34,2.34,0,0,1,.824.143h2v.884h-1.082a1.516,1.516,0,0,1,.369,1.035,1.93,1.93,0,0,1-1.909,1.95,1.773,1.773,0,0,1-.206-.009,1.955,1.955,0,0,1-.79-.175.735.735,0,0,0-.309.6c0,.34.226.555.945.555h1.039c1.339,0,2.032.412,2.032,1.375,0,1.089-1.15,1.971-2.956,1.971C900.307,288.163,899.322,287.66,899.322,286.675Zm4.158-.3c0-.473-.369-.618-1.058-.618h-.852a3.653,3.653,0,0,1-.759-.083,1.02,1.02,0,0,0-.484.824c0,.554.576.884,1.51.884.986,0,1.647-.484,1.647-1.006Zm-.708-4.518a1.075,1.075,0,0,0-2.137-.24,1.2,1.2,0,0,0,0,.24,1.078,1.078,0,0,0,2.137.29h0A1.17,1.17,0,0,0,902.772,281.859Z"
-          transform="translate(-769.37 574.271)"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const VolSupply = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="19.441"
-      height="24.479"
-      viewBox="0 0 19.441 24.479"
-    >
-      <g
-        id="Group_1272"
-        data-name="Group 1272"
-        transform="translate(-1010.773 -270.219)"
-      >
-        <rect
-          id="Rectangle_20"
-          data-name="Rectangle 20"
-          width="17.941"
-          height="22.979"
-          transform="translate(1011.523 270.969)"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <path
-          id="Path_31"
-          data-name="Path 31"
-          d="M1024.419,273.9h-7.85l-2.092,1.905V278.5l2.092,1.905h7.85l2.092-1.905V275.8Z"
-          fill="none"
-          stroke="#000"
-          strokeMiterlimit="10"
-          strokeWidth="1"
-        />
-        <g id="Group_30" data-name="Group 30">
-          <line
-            id="Line_18"
-            data-name="Line 18"
-            y2="2.886"
-            transform="translate(1016.728 275.781)"
-            stroke="#000"
-            strokeMiterlimit="10"
-            strokeWidth="1.5"
-          />
-          <line
-            id="Line_19"
-            data-name="Line 19"
-            y2="2.886"
-            transform="translate(1019.239 275.781)"
-            stroke="#000"
-            strokeMiterlimit="10"
-            strokeWidth="1.5"
-          />
-          <line
-            id="Line_20"
-            data-name="Line 20"
-            y2="2.886"
-            transform="translate(1021.75 275.781)"
-            stroke="#000"
-            strokeMiterlimit="10"
-            strokeWidth="1.5"
-          />
-          <line
-            id="Line_21"
-            data-name="Line 21"
-            y2="2.886"
-            transform="translate(1024.26 275.781)"
-            stroke="#000"
-            strokeMiterlimit="10"
-            strokeWidth="1.5"
-          />
-        </g>
-        <path
-          id="Path_32"
-          data-name="Path 32"
-          d="M1020.692,281.862a4.835,4.835,0,0,0-1.994.437,1.745,1.745,0,1,0-2.44,2.44,4.865,4.865,0,1,0,4.434-2.877Z"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const EqpSales = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24.439"
-      height="24.494"
-      viewBox="0 0 24.439 24.494"
-    >
-      <g
-        id="Group_1274"
-        data-name="Group 1274"
-        transform="translate(-886.834 -307.348)"
-      >
-        <line
-          id="Line_26"
-          data-name="Line 26"
-          x2="6.951"
-          transform="translate(895.579 308.098)"
-          fill="#fff"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <line
-          id="Line_27"
-          data-name="Line 27"
-          x2="2.798"
-          transform="translate(897.655 310.749)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <rect
-          id="Rectangle_22"
-          data-name="Rectangle 22"
-          width="14.155"
-          height="17.69"
-          rx="2.612"
-          transform="translate(891.977 313.401)"
-          fill="#fff"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <line
-          id="Line_28"
-          data-name="Line 28"
-          y2="5.304"
-          transform="translate(895.486 308.098)"
-          fill="#fff"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <line
-          id="Line_29"
-          data-name="Line 29"
-          y2="5.304"
-          transform="translate(902.529 308.098)"
-          fill="#fff"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <line
-          id="Line_30"
-          data-name="Line 30"
-          y2="2.652"
-          transform="translate(899.054 310.749)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <path
-          id="Path_35"
-          data-name="Path 35"
-          d="M910.345,325.567a4.4,4.4,0,0,0-6.844-4.645l-7.2-4.887a4.4,4.4,0,0,0-6.844-4.645l3.992,2.709-1.7,2.5-3.992-2.709a4.4,4.4,0,0,0,6.844,4.645l7.2,4.887a4.395,4.395,0,0,0,6.843,4.645l-3.991-2.709,1.7-2.5Z"
-          fill="#fff"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const CntEntryExit = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="15.655"
-      height="24.494"
-      viewBox="0 0 15.655 24.494"
-    >
-      <g
-        id="Group_1266"
-        data-name="Group 1266"
-        transform="translate(-1012.667 -307.348)"
-      >
-        <line
-          id="Line_2"
-          data-name="Line 2"
-          x2="6.951"
-          transform="translate(1017.019 308.098)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <line
-          id="Line_3"
-          data-name="Line 3"
-          x2="2.798"
-          transform="translate(1019.095 310.749)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <rect
-          id="Rectangle_9"
-          data-name="Rectangle 9"
-          width="14.155"
-          height="17.69"
-          rx="2.612"
-          transform="translate(1013.417 313.401)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <line
-          id="Line_4"
-          data-name="Line 4"
-          x2="14.155"
-          transform="translate(1013.417 316.811)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_5"
-          data-name="Line 5"
-          x2="14.155"
-          transform="translate(1013.417 327.546)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_6"
-          data-name="Line 6"
-          y2="5.304"
-          transform="translate(1016.926 308.098)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <line
-          id="Line_7"
-          data-name="Line 7"
-          y2="5.304"
-          transform="translate(1023.969 308.098)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <line
-          id="Line_8"
-          data-name="Line 8"
-          y2="2.652"
-          transform="translate(1020.494 310.749)"
-          fill="none"
-          stroke="#231815"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const AsIcon = ({ color = "#000", width = "21px", height = "24px" }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="21.55"
-      height="21.429"
-      viewBox="0 0 21.55 21.429"
-    >
-      <g
-        id="그룹_474"
-        data-name="그룹 474"
-        transform="translate(-887.629 -346.16)"
-      >
-        <g
-          id="그룹_427"
-          data-name="그룹 427"
-          transform="translate(887.629 347.236)"
-        >
-          <path
-            id="패스_241"
-            data-name="패스 241"
-            d="M894.876,355.1a.422.422,0,0,1-.081.257.578.578,0,0,1-.234.2.893.893,0,0,1-.621.117.716.716,0,0,1-.293-.152c-.023-.023-.046-.035-.058-.058a.294.294,0,0,0-.058-.059,1.381,1.381,0,0,1-.164-.222c-.035-.07-.07-.141-.117-.222a.6.6,0,0,1-.082-.176,1.194,1.194,0,0,1-.059-.184l-.245-.574c-1.065,0-2.154.012-3.22,0l-.246.574c-.023.059-.035.129-.058.184a1.127,1.127,0,0,1-.082.176c-.047.081-.082.152-.129.222a.815.815,0,0,1-.152.222.272.272,0,0,0-.058.059c-.012.023-.036.035-.059.058a.7.7,0,0,1-.292.152.894.894,0,0,1-.621-.117.591.591,0,0,1-.234-.2.418.418,0,0,1-.082-.257,2.291,2.291,0,0,1,.023-.277,1.19,1.19,0,0,1,.059-.21.831.831,0,0,0,.035-.105l2.436-5.995.07-.184c.035-.092.082-.163.117-.269a1.442,1.442,0,0,1,.128-.269,1.323,1.323,0,0,1,.176-.245.6.6,0,0,1,.2-.152,1.206,1.206,0,0,1,.761,0,.608.608,0,0,1,.2.152,2.2,2.2,0,0,1,.175.245,1.39,1.39,0,0,1,.129.269c.035.106.082.176.117.269l.07.184,2.436,5.995a.812.812,0,0,0,.035.105,1.1,1.1,0,0,1,.058.21A1.971,1.971,0,0,1,894.876,355.1Zm-2.8-3.15c-.2-.445-.409-.937-.646-1.441-.058-.14-.129-.292-.185-.433-.047.14-.117.292-.176.433-.233.5-.445,1-.646,1.441l-.21.516h2.072Z"
-            transform="translate(-887.629 -347.326)"
-          />
-        </g>
-        <g
-          id="그룹_429"
-          data-name="그룹 429"
-          transform="translate(901.171 357.942)"
-        >
-          <g id="그룹_428" data-name="그룹 428">
-            <path
-              id="패스_242"
-              data-name="패스 242"
-              d="M908.4,365.434c-.5,1.752-3.29,2.366-4.882,1.488a2.663,2.663,0,0,1-1.1-1.194.751.751,0,0,1,.275-1.025.769.769,0,0,1,.112-.053.87.87,0,0,1,1,.386,1.927,1.927,0,0,0,.878.784c1.03.351,2.213-.184,2.213-1.088,0-.738-.445-.949-1.112-1.112a10.809,10.809,0,0,1-2.271-.41,2.238,2.238,0,0,1-.469-3.606,3.207,3.207,0,0,1,2.049-.656,3.944,3.944,0,0,1,2.517.656c.4.316.937,1.112.339,1.476-.492.316-.9-.184-1.229-.421a2.527,2.527,0,0,0-1.66-.351c-.68.082-1.229.445-1.171,1.147.035.5.574.668,1.03.726a9.015,9.015,0,0,1,2.084.339,2.228,2.228,0,0,1,1.394,1.358A2.81,2.81,0,0,1,908.4,365.434Z"
-              transform="translate(-902.312 -358.935)"
-            />
-          </g>
-        </g>
-        <path
-          id="패스_243"
-          data-name="패스 243"
-          d="M893.117,358.728l-4.9,4.9a1.561,1.561,0,0,0,0,2.206l2.205,2.205a1.56,1.56,0,0,0,2.206,0h0l4.9-4.9a3.12,3.12,0,0,0-4.412-4.412Z"
-          transform="translate(-0.01 -0.908)"
-        />
-        <path
-          id="패스_244"
-          data-name="패스 244"
-          d="M907.346,346.16l-5.357,4.018v2.6l-3.475,3.475a4.108,4.108,0,0,1,1.42,1.421l3.475-3.475h2.6l4.018-5.358Z"
-          transform="translate(-0.846)"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const SafCheck = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="19.441"
-      height="24.479"
-      viewBox="0 0 19.441 24.479"
-    >
-      <g
-        id="Group_1286"
-        data-name="Group 1286"
-        transform="translate(-363.327 -920.109)"
-      >
-        <g
-          id="Group_1283"
-          data-name="Group 1283"
-          transform="translate(-38.923 142.859)"
-        >
-          <rect
-            id="Rectangle_1947"
-            data-name="Rectangle 1947"
-            width="17.941"
-            height="22.979"
-            transform="translate(403 778)"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <path
-            id="Path_3018"
-            data-name="Path 3018"
-            d="M1024.333,349.307H1016.5l-1.124-2.958h10.079Z"
-            transform="translate(-608.447 431.651)"
-          />
-          <g
-            id="Group_1278"
-            data-name="Group 1278"
-            transform="translate(-608.447 431.651)"
-          >
-            <path
-              id="Path_3019"
-              data-name="Path 3019"
-              d="M1017.473,363.277h0Z"
-              fill="none"
-              stroke="#000"
-              strokeLinejoin="round"
-              strokeWidth="1"
-            />
-            <path
-              id="Path_3020"
-              data-name="Path 3020"
-              d="M1015.106,363.277h0Z"
-              fill="none"
-              stroke="#000"
-              strokeLinejoin="round"
-              strokeWidth="1"
-            />
-            <path
-              id="Path_3021"
-              data-name="Path 3021"
-              d="M1017.473,365.725h0Z"
-              fill="none"
-              stroke="#000"
-              strokeLinejoin="round"
-              strokeWidth="1"
-            />
-            <path
-              id="Path_3022"
-              data-name="Path 3022"
-              d="M1015.106,365.725h0Z"
-              fill="none"
-              stroke="#000"
-              strokeLinejoin="round"
-              strokeWidth="1"
-            />
-          </g>
-          <circle
-            id="Ellipse_29"
-            data-name="Ellipse 29"
-            cx="4.963"
-            cy="4.963"
-            r="4.963"
-            transform="translate(407.084 782.456)"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <line
-            id="Line_123"
-            data-name="Line 123"
-            y2="5.848"
-            transform="translate(411.971 784.334)"
-            fill="none"
-            stroke="#000"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <line
-            id="Line_124"
-            data-name="Line 124"
-            x1="5.848"
-            transform="translate(409.046 787.258)"
-            fill="none"
-            stroke="#000"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-        </g>
-      </g>
-    </svg>
-  );
-};
-
-export const VolReading = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="19.441"
-      height="24.479"
-      viewBox="0 0 19.441 24.479"
-    >
-      <g
-        id="Group_1285"
-        data-name="Group 1285"
-        transform="translate(-241.403 -956.029)"
-      >
-        <g
-          id="Group_1276"
-          data-name="Group 1276"
-          transform="translate(-769.37 610.491)"
-        >
-          <rect
-            id="Rectangle_12"
-            data-name="Rectangle 12"
-            width="7.675"
-            height="7.675"
-            transform="translate(1016.836 358.332)"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="0.899"
-          />
-          <path
-            id="Path_21"
-            data-name="Path 21"
-            d="M1018.184,360.034l2.277,2.286,6.49-6.15"
-            fill="none"
-            stroke="#000"
-            strokeLinejoin="round"
-            strokeWidth="2"
-          />
-        </g>
-        <rect
-          id="Rectangle_1946"
-          data-name="Rectangle 1946"
-          width="17.941"
-          height="22.979"
-          transform="translate(242.153 956.779)"
-          fill="none"
-          stroke="#000"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-        <g
-          id="Group_1277"
-          data-name="Group 1277"
-          transform="translate(-769.37 610.491)"
-        >
-          <path
-            id="Path_33"
-            data-name="Path 33"
-            d="M1024.456,349.348h-7.85l-2.092,1.905v2.694l2.092,1.905h7.85l2.092-1.905v-2.694Z"
-            fill="none"
-            stroke="#000"
-            strokeMiterlimit="10"
-            strokeWidth="1"
-          />
-          <g id="Group_32" data-name="Group 32">
-            <line
-              id="Line_22"
-              data-name="Line 22"
-              y2="2.886"
-              transform="translate(1016.764 351.231)"
-              stroke="#000"
-              strokeMiterlimit="10"
-              strokeWidth="1.5"
-            />
-            <line
-              id="Line_23"
-              data-name="Line 23"
-              y2="2.886"
-              transform="translate(1019.275 351.231)"
-              stroke="#000"
-              strokeMiterlimit="10"
-              strokeWidth="1.5"
-            />
-            <line
-              id="Line_24"
-              data-name="Line 24"
-              y2="2.886"
-              transform="translate(1021.786 351.231)"
-              stroke="#000"
-              strokeMiterlimit="10"
-              strokeWidth="1.5"
-            />
-            <line
-              id="Line_25"
-              data-name="Line 25"
-              y2="2.886"
-              transform="translate(1024.297 351.231)"
-              stroke="#000"
-              strokeMiterlimit="10"
-              strokeWidth="1.5"
-            />
-          </g>
-        </g>
-      </g>
-    </svg>
-  );
-};
-
-export const CollRegistr = ({
-  color = "#000",
-  width = "21px",
-  height = "24px",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="19.441"
-      height="24.479"
-      viewBox="0 0 19.441 24.479"
-    >
-      <g
-        id="Group_1287"
-        data-name="Group 1287"
-        transform="translate(-241.44 -954.597)"
-      >
-        <g
-          id="Group_1284"
-          data-name="Group 1284"
-          transform="translate(-160.887 135.817)"
-        >
-          <path
-            id="Path_3023"
-            data-name="Path 3023"
-            d="M1020.673,387.878h-9.15v4.175"
-            transform="translate(-608.447 431.651)"
-            fill="#fff"
-            stroke="#231815"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <path
-            id="Path_3024"
-            data-name="Path 3024"
-            d="M1016.1,394.454h-4.575v16.4h17.941v-16.4H1025"
-            transform="translate(-608.447 431.651)"
-            fill="#fff"
-            stroke="#231815"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <path
-            id="Path_3025"
-            data-name="Path 3025"
-            d="M1020.529,387.878h8.936v4.175"
-            transform="translate(-608.447 431.651)"
-            fill="#fff"
-            stroke="#231815"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.5"
-          />
-          <g
-            id="Group_1281"
-            data-name="Group 1281"
-            transform="translate(-608.447 431.651)"
-          >
-            <g id="Group_1280" data-name="Group 1280">
-              <g id="Group_1279" data-name="Group 1279">
-                <path
-                  id="Path_3026"
-                  data-name="Path 3026"
-                  d="M1022.8,404.495h.084q.342-1.471.7-2.9t.72-2.92h1.584l-2.19,8.875H1022l-1.46-5.714-1.408,5.714h-1.7l-2.262-8.875h1.594l1.471,5.82h.083l.345-1.419q.272-1.1.537-2.194t.537-2.207h1.595Z"
-                  fill="#231815"
-                />
-              </g>
-            </g>
-            <line
-              id="Line_120"
-              data-name="Line 120"
-              x2="11.821"
-              transform="translate(1014.763 400.858)"
-              fill="none"
-              stroke="#231815"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="0.998"
-            />
-            <line
-              id="Line_121"
-              data-name="Line 121"
-              x2="11.821"
-              transform="translate(1014.763 403.731)"
-              fill="none"
-              stroke="#231815"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="0.998"
-            />
-          </g>
-          <g
-            id="Group_1282"
-            data-name="Group 1282"
-            transform="translate(-608.447 431.651)"
-          >
-            <line
-              id="Line_122"
-              data-name="Line 122"
-              y1="7.298"
-              transform="translate(1020.673 387.878)"
-              fill="#fff"
-              stroke="#231815"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-            />
-            <path
-              id="Path_3027"
-              data-name="Path 3027"
-              d="M1022.923,393.329l-2.25,2.25-2.25-2.25"
-              fill="none"
-              stroke="#231815"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-            />
-          </g>
-        </g>
-      </g>
-    </svg>
-  );
-};
-
 export const IconInfo = ({
   color = "#000",
   width = "18px",
@@ -4440,6 +1472,7 @@ export const IconInfo = ({
     </svg>
   );
 };
+
 export const IconHome = ({
   color = "#000",
   width = "21px",
@@ -4495,45 +1528,6 @@ export const IconReceipt = ({
         strokeLinejoin="round"
         strokeWidth="1.5"
       />
-    </svg>
-  );
-};
-
-export const WhiteClose = ({ color = "#fff" }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="17.658"
-      height="16.231"
-      viewBox="0 0 17.658 16.231"
-    >
-      <g
-        id="Group_1249"
-        data-name="Group 1249"
-        transform="translate(-389.735 -16.735)"
-      >
-        <line
-          id="Line_43"
-          data-name="Line 43"
-          x1="14.128"
-          y2="12.491"
-          transform="translate(391.5 18.5)"
-          fill="none"
-          stroke={color}
-          strokeLinecap="round"
-          strokeWidth="2.5"
-        />
-        <path
-          id="Path_45"
-          data-name="Path 45"
-          d="M0,0,14.128,12.7"
-          transform="translate(405.628 31.201) rotate(180)"
-          fill="none"
-          stroke={color}
-          strokeLinecap="round"
-          strokeWidth="2.5"
-        />
-      </g>
     </svg>
   );
 };
@@ -4644,287 +1638,6 @@ export const Edit2 = () => {
   );
 };
 
-export const WhiteCloseCircle = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="14.11"
-      height="15.238"
-      viewBox="0 0 14.11 15.238"
-    >
-      <g id="Group_1353" data-name="Group 1353" transform="translate(0.5 0.5)">
-        <path
-          id="Path_3070"
-          data-name="Path 3070"
-          d="M12.02,12.983a6.193,6.193,0,0,1-9.27,0,7.558,7.558,0,0,1,0-10.067,6.193,6.193,0,0,1,9.27,0A7.558,7.558,0,0,1,12.02,12.983Z"
-          transform="translate(-0.83 -0.83)"
-          fill="none"
-          stroke="#fff"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_220"
-          data-name="Line 220"
-          x1="5.221"
-          y2="5.221"
-          transform="translate(4.046 4.392)"
-          fill="none"
-          stroke="#fff"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <line
-          id="Line_221"
-          data-name="Line 221"
-          x1="5.221"
-          y1="5.221"
-          transform="translate(4.046 4.392)"
-          fill="none"
-          stroke="#fff"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const SmallWhiteClose = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="10.536"
-      height="11.471"
-      viewBox="0 0 10.536 11.471"
-    >
-      <g
-        id="Group_1374"
-        data-name="Group 1374"
-        transform="translate(-923.587 -615.445)"
-      >
-        <line
-          id="Line_201"
-          data-name="Line 201"
-          x1="7.71"
-          y2="8.436"
-          transform="translate(925 616.857)"
-          fill="none"
-          stroke="#fff"
-          strokeLinecap="round"
-          strokeWidth="2"
-        />
-        <path
-          id="Path_3054"
-          data-name="Path 3054"
-          d="M0,0,7.71,8.647"
-          transform="translate(932.71 625.504) rotate(180)"
-          fill="none"
-          stroke="#fff"
-          strokeLinecap="round"
-          strokeWidth="2"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const SmallWhiteTick = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="11.69"
-      height="8.974"
-      viewBox="0 0 11.69 8.974"
-    >
-      <path
-        id="Path_3053"
-        data-name="Path 3053"
-        d="M-1191.5,965.684l3.193,3.677,5.676-6.563"
-        transform="translate(1192.915 -961.388)"
-        fill="none"
-        stroke="#fff"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-};
-export const UserCm1300Icon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="17.298"
-      height="20.017"
-      viewBox="0 0 17.298 20.017"
-    >
-      <path
-        id="Path_3177"
-        data-name="Path 3177"
-        d="M17.728,56.231A10.092,10.092,0,0,0,12.565,48.6a4.347,4.347,0,0,0,1.009-2.8,4,4,0,1,0-7.991-.443,3.849,3.849,0,0,0,0,.443,4.342,4.342,0,0,0,1.009,2.8A10.092,10.092,0,0,0,1.43,56.231a9.824,9.824,0,0,0,16.3,0Z"
-        transform="translate(-0.93 -41.068)"
-        fill="none"
-        stroke="#707070"
-        strokeLinejoin="round"
-        strokeWidth="1"
-      />
-    </svg>
-  );
-};
-
-export const MagnifyingGlassBig = ({
-  width = "20.89",
-  height = "20.832",
-  color = "#fff",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 20.89 20.832"
-    >
-      <g
-        id="Group_1345"
-        data-name="Group 1345"
-        transform="translate(-1828.662 -145.428)"
-      >
-        <g
-          id="Group_272"
-          data-name="Group 272"
-          transform="translate(1833.037 147.803)"
-        >
-          <g
-            id="Ellipse_15"
-            data-name="Ellipse 15"
-            transform="translate(-4.375 -2.375)"
-            fill="none"
-            stroke={color}
-            strokeWidth="2"
-          >
-            <circle cx="8.352" cy="8.352" r="8.352" stroke="none" />
-            <circle cx="8.352" cy="8.352" r="7.352" fill="none" />
-          </g>
-        </g>
-        <path
-          id="Path_3064"
-          data-name="Path 3064"
-          d="M3863.345,7217.265l5.427,5.427"
-          transform="translate(-2020.633 -7057.846)"
-          fill="none"
-          stroke={color}
-          strokeLinecap="round"
-          strokeWidth="2"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const UserWhite = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="19"
-      height="17"
-      viewBox="0 0 19 17"
-    >
-      <g id="Icon_user" data-name="Icon/user" transform="translate(-27.024 7)">
-        <rect
-          id="Container"
-          width="19"
-          height="17"
-          transform="translate(27.024 -7)"
-          fill="none"
-        />
-        <path
-          id="Path_2753"
-          data-name="Path 2753"
-          d="M49.21,6.462a5.392,5.392,0,0,0-2.1-1.327,2.91,2.91,0,0,0,.513-4.017A2.755,2.755,0,0,0,43.7.594a2.91,2.91,0,0,0-.513,4.017,2.832,2.832,0,0,0,.514.526,5.463,5.463,0,0,0-3.677,5.221V12.12a1.09,1.09,0,0,0,1.076,1.1h8.61a1.09,1.09,0,0,0,1.076-1.1V10.357A5.548,5.548,0,0,0,49.21,6.462Zm-6.172-3.6a2.368,2.368,0,1,1,4.735,0A2.431,2.431,0,0,1,46.5,5.017a2.239,2.239,0,0,1-.251.114l-.037.013q-.108.039-.217.068l-.057.014q-.106.024-.213.039l-.05.007a2.358,2.358,0,0,1-.53,0l-.05-.007q-.108-.015-.215-.039l-.056-.013a2.24,2.24,0,0,1-.218-.068l-.037-.013a2.291,2.291,0,0,1-.251-.115A2.422,2.422,0,0,1,43.038,2.866Zm7.318,9.254a.654.654,0,0,1-.646.661H41.1a.654.654,0,0,1-.646-.661V10.357a5.025,5.025,0,0,1,3.494-4.843.629.629,0,0,1,.189-.029.665.665,0,0,1,.247.048l.018.006c.029.012.06.02.089.031.065.022.129.044.194.061.042.011.084.021.126.03s.113.022.17.031.086.014.131.019c.076.008.152.012.228.014.022,0,.043,0,.065,0s.043,0,.066,0c.076,0,.151-.006.227-.014.045,0,.088-.012.132-.019s.113-.019.168-.031.085-.019.127-.03c.067-.018.132-.039.2-.063.028-.01.056-.018.084-.029l.02-.007a.647.647,0,0,1,.433-.02,5.055,5.055,0,0,1,3.5,4.844Z"
-          transform="translate(-8.5 -5.5)"
-          stroke="#fff"
-          strokeWidth="1"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const TickInCircle = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="12.049"
-      height="12.474"
-      viewBox="0 0 12.049 12.474"
-    >
-      <g
-        id="Group_1783"
-        data-name="Group 1783"
-        transform="translate(-785.548 -621.685)"
-      >
-        <g
-          id="Ellipse_213"
-          data-name="Ellipse 213"
-          transform="translate(785.548 623.159)"
-          fill="none"
-          stroke="#fff"
-          strokeWidth="1"
-        >
-          <circle cx="5.5" cy="5.5" r="5.5" stroke="none" />
-          <circle cx="5.5" cy="5.5" r="5" fill="none" />
-        </g>
-        <path
-          id="Path_3065"
-          data-name="Path 3065"
-          d="M1028.014,567.1l5.181,5.685,6.006-7.794"
-          transform="translate(-242 57)"
-          fill="none"
-          stroke="#fff"
-          strokeWidth="1"
-        />
-      </g>
-    </svg>
-  );
-};
-
-export const ResetGray = ({
-  width = "16.828",
-  height = "16.831",
-  color = "#707070",
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 16.828 16.831"
-    >
-      <g id="Group_130" data-name="Group 130" transform="translate(0.711 0.4)">
-        <path
-          id="Path_101"
-          data-name="Path 101"
-          d="M.277,7.3a5.567,5.567,0,1,1,2.472,3.068"
-          transform="matrix(-0.545, 0.839, -0.839, -0.545, 15.403, 6.382)"
-          fill="none"
-          stroke={color}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1"
-        />
-        <path
-          id="Polygon_3"
-          data-name="Polygon 3"
-          d="M2,0l2,3.207H0Z"
-          transform="matrix(0.454, -0.891, 0.891, 0.454, 6.721, 3.572)"
-          fill={color}
-        />
-      </g>
-    </svg>
-  );
-};
-
 export const DownArrow = ({ width = "24", height = "24" }) => {
   return (
     <svg
@@ -5009,64 +1722,6 @@ export const Document = ({ width = "24", height = "24" }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="1.5"
-      />
-    </svg>
-  );
-};
-
-export const Settings2 = ({ width = "24", height = "24" }) => {
-  return (
-    <svg
-      id="Icon_settings"
-      data-name="Icon/settings"
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 24 24"
-    >
-      <path id="Path_40" data-name="Path 40" d="M0,0H24V24H0Z" fill="none" />
-      <path
-        id="Path_41"
-        data-name="Path 41"
-        d="M10.325,4.317a1.724,1.724,0,0,1,3.35,0,1.724,1.724,0,0,0,2.573,1.066,1.725,1.725,0,0,1,2.37,2.37,1.724,1.724,0,0,0,1.065,2.572,1.724,1.724,0,0,1,0,3.35,1.724,1.724,0,0,0-1.066,2.573,1.725,1.725,0,0,1-2.37,2.37,1.724,1.724,0,0,0-2.572,1.065,1.724,1.724,0,0,1-3.35,0,1.724,1.724,0,0,0-2.573-1.066,1.725,1.725,0,0,1-2.37-2.37,1.724,1.724,0,0,0-1.065-2.572,1.724,1.724,0,0,1,0-3.35A1.724,1.724,0,0,0,5.383,7.752a1.725,1.725,0,0,1,2.37-2.37,1.723,1.723,0,0,0,2.572-1.065Z"
-        fill="none"
-        stroke="#0f88bf"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-      <circle
-        id="Ellipse_2"
-        data-name="Ellipse 2"
-        cx="3"
-        cy="3"
-        r="3"
-        transform="translate(9 9)"
-        fill="none"
-        stroke="#0f88bf"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-    </svg>
-  );
-};
-
-export const Users = ({ width = "13.777", height = "12.839" }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 13.777 12.839"
-    >
-      <path
-        id="Path_2752"
-        data-name="Path 2752"
-        d="M12.332,4.762A4.6,4.6,0,0,0,10.646,3.8a2.008,2.008,0,0,0,.368-3A2.5,2.5,0,0,0,7.726.466a2.936,2.936,0,0,0-3.835.716A2.378,2.378,0,0,0,4.5,4.566a4.885,4.885,0,0,0-3.637,4.6v1.553a1.022,1.022,0,0,0,1.065.971h8.518a1.022,1.022,0,0,0,1.065-.971V9.783H12.72a.886.886,0,0,0,.922-.843V7.647A3.888,3.888,0,0,0,12.332,4.762ZM9.171.4A1.838,1.838,0,0,1,11.09,2.142,1.735,1.735,0,0,1,10.055,3.7c-.058.027-.117.053-.178.075l-.007,0-.021.006c-.034.012-.07.022-.108.033a1.917,1.917,0,0,1-.358.069c-.032,0-.062.005-.092.007-.082,0-.161,0-.241,0-.032,0-.062,0-.1-.007A1.921,1.921,0,0,1,8.6,3.813h0c.006-.009.009-.019.015-.028a2.417,2.417,0,0,0,.135-.251l.008-.017a2.327,2.327,0,0,0,.1-.272c.006-.018.011-.036.016-.054a2.3,2.3,0,0,0,.059-.276c0-.017,0-.035.007-.052a2.318,2.318,0,0,0,.021-.3,2.354,2.354,0,0,0-.017-.28c0-.03-.011-.06-.015-.09-.01-.062-.02-.123-.035-.184-.009-.035-.02-.069-.03-.1-.016-.054-.033-.108-.052-.162-.013-.035-.028-.07-.043-.1-.021-.051-.045-.1-.07-.15s-.036-.068-.055-.1-.057-.1-.088-.142-.043-.063-.066-.094c-.034-.046-.071-.091-.109-.136C8.353.992,8.329.962,8.3.935,8.261.89,8.216.847,8.17.8,8.145.78,8.121.756,8.094.733,8.086.726,8.08.719,8.073.713A2.035,2.035,0,0,1,9.171.4ZM3.847,2.566A2.246,2.246,0,0,1,6.189.43,2.246,2.246,0,0,1,8.532,2.566q0,.083-.007.165c0,.046-.01.091-.017.136,0,.008,0,.016,0,.024a2.029,2.029,0,0,1-.345.827c-.018.026-.036.052-.055.077v0l-.009.01a2.292,2.292,0,0,1-.828.654,2.385,2.385,0,0,1-.654.2c-.045.009-.089.014-.139.019L6.357,4.7H6.331c-.046,0-.094,0-.142,0H6.166c-.039,0-.078,0-.128,0S5.95,4.69,5.9,4.685s-.091-.01-.142-.019a2.378,2.378,0,0,1-.652-.2A2.112,2.112,0,0,1,3.847,2.566Zm7.24,8.155a.613.613,0,0,1-.639.582H1.93a.613.613,0,0,1-.639-.582V9.167A4.509,4.509,0,0,1,4.748,4.9a.687.687,0,0,1,.185-.025.725.725,0,0,1,.247.044,3.014,3.014,0,0,0,.5.13c.057.011.114.017.169.024s.1.01.154.015h.026c.046,0,.092,0,.138,0h.023c.054,0,.108,0,.168,0l.031,0c.048,0,.1-.008.139-.013.059-.007.114-.013.166-.023A3.034,3.034,0,0,0,7.2,4.916.708.708,0,0,1,7.628,4.9a4.535,4.535,0,0,1,3.459,4.269v1.553Zm2.13-1.78a.477.477,0,0,1-.5.454H11.513V9.167a4.625,4.625,0,0,0-1.56-3.432c-.075-.068-.153-.134-.232-.2l-.075-.057c-.056-.043-.112-.087-.17-.128-.031-.022-.062-.042-.093-.063-.054-.037-.106-.074-.162-.109l-.1-.062c-.053-.032-.106-.064-.162-.095l-.113-.06c-.054-.028-.106-.056-.162-.083-.04-.019-.08-.037-.121-.056s-.106-.049-.162-.071L8.271,4.7c-.053-.021-.106-.041-.161-.06L7.974,4.6,7.88,4.565c.021-.015.04-.032.06-.048.043-.032.084-.065.124-.1s.078-.067.115-.1.075-.074.112-.112c.018-.019.039-.037.057-.058.04.014.082.026.122.038a2.406,2.406,0,0,0,.436.084c.041,0,.079.007.121.009s.094,0,.143,0,.095,0,.144,0,.079,0,.117-.009a2.4,2.4,0,0,0,.437-.083c.043-.012.085-.025.125-.039l.02-.007.012,0a.558.558,0,0,1,.333-.014,4.172,4.172,0,0,1,1.671.916,3.519,3.519,0,0,1,1.186,2.611V8.94Z"
-        transform="translate(-0.365 0.647)"
-        stroke="rgba(11,175,248,0.74)"
-        strokeWidth="1"
       />
     </svg>
   );

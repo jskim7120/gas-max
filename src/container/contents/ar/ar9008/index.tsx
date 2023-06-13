@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { AR9008SEARCH } from "app/path";
@@ -17,7 +17,10 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import { DateWithoutDash } from "helpers/dateFormat";
+import {
+  DateWithoutDash,
+  DateWithoutDashOnlyYearMonth,
+} from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields } from "./data";
 import CheckBox from "components/checkbox";
@@ -38,10 +41,10 @@ function AR9008({
     setSelected,
     loading,
     fetchData,
-    gridIndexes,
     dispatch,
     dataCommonDic,
   } = CreateReport("AR", "AR9008", menuId, AR9008SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -54,6 +57,7 @@ function AR9008({
   }, [dataCommonDic]);
 
   const submit = (params: ISEARCH) => {
+    params.sMonth = DateWithoutDashOnlyYearMonth(params.sMonth);
     fetchData(params);
   };
 
@@ -67,6 +71,7 @@ function AR9008({
         cuJyCode: init?.cuJyCode,
         cuJangbu: init?.cuJangbu,
         cuCustgubun: init?.cuCustgubun,
+        sMonth: init?.sMonth,
       });
     }
   };
@@ -75,6 +80,7 @@ function AR9008({
     if (dataCommonDic?.dataInit) {
       resetForm("reset");
     }
+    setData([]);
   };
 
   return (
@@ -125,6 +131,7 @@ function AR9008({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -133,13 +140,25 @@ function AR9008({
         <SearchWrapper>
           <FormGroup>
             <Label style={{ minWidth: "80px" }}>년 - 월</Label>
-            <Select register={register("sMonth")} width={InputSize.i120}>
+            {/* <Select register={register("sMonth")} width={InputSize.i120}>
               {dataCommonDic?.sMonth?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
               ))}
-            </Select>
+            </Select> */}
+            <Controller
+              control={control}
+              {...register("sMonth")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  showMonthYearPicker
+                />
+              )}
+            />
 
             <Label style={{ minWidth: "80px" }}>담당사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
@@ -184,11 +203,13 @@ function AR9008({
         </SearchWrapper>
       </form>
       <BasicGrid
+        menuId={menuId}
+        ref={gridRef}
         areaCode={ownAreaCode}
         columns={columns}
         fields={fields}
         data={data}
-        rowIndex={data?.length ? data.length : 0}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={{ height: "calc(100% - 52px)" }}
       />
     </>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { ISEARCH } from "./model";
@@ -30,10 +30,10 @@ function AR9006({
     setSelected,
     loading,
     fetchData,
-    gridIndexes,
     dispatch,
     dataCommonDic,
   } = CreateReport("AR", "AR9006", menuId, AR9006SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -46,17 +46,33 @@ function AR9006({
     fetchData(params);
   };
 
+  const resetForm = (type: string) => {
+    if (type === "reset") {
+      if (dataCommonDic?.dataInit) {
+        const init = dataCommonDic.dataInit[0];
+        reset({
+          sDate: init?.sDate,
+          eDate: init?.dDate,
+          jpCode: init?.jpCode,
+          swCode: init?.swCode,
+          cuGubun: init?.cuGubun,
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
-      const init = dataCommonDic.dataInit[0];
-      reset({
-        sDate: init?.sDate,
-        eDate: init?.dDate,
-        jpCode: init?.jpCode,
-        swCode: init?.swCode,
-      });
+      resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  const handleReset = () => {
+    if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+    setData([]);
+  };
 
   return (
     <>
@@ -101,7 +117,7 @@ function AR9006({
                 style={{ minWidth: "max-content" }}
                 type="button"
                 color={ButtonColor.LIGHT}
-                // onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
@@ -109,6 +125,7 @@ function AR9006({
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -161,7 +178,7 @@ function AR9006({
 
             <Label style={{ minWidth: "80px" }}>입출구분</Label>
             <Select register={register("cuGubun")} width={InputSize.i120}>
-              {dataCommonDic?.jpCode?.map((obj: any, idx: number) => (
+              {dataCommonDic?.cuGubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -171,10 +188,12 @@ function AR9006({
         </SearchWrapper>
       </form>
       <BasicGrid
+        menuId={menuId}
+        ref={gridRef}
         columns={columns}
         fields={fields}
         data={data}
-        rowIndex={data?.length ? data.length : 0}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={{ height: "calc(100% - 52px)" }}
         layout={layout}
       />

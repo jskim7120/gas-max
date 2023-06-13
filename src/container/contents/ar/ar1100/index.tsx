@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useSelector } from "app/store";
 import { apiGet } from "app/axios";
-import { WrapperContent, SearchWrapper } from "../../commonStyle";
-import Button from "components/button/button";
-import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
+import { AR1100SEARCH, AR1100SELECT } from "app/path";
 import {
   Plus,
   Trash,
   Update,
   Reset,
-  MagnifyingGlassBig,
   MagnifyingGlass,
   ResetGray,
 } from "components/allSvgIcon";
+import { addCM1106 } from "app/state/modal/modalSlice";
+import CreateReport from "app/hook/createReport";
+import Button from "components/button/button";
+import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { Select, Label, FormGroup, Input } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import CheckBox from "components/checkbox";
-import { CustomAreaCodePart } from "container/contents/customTopPart";
-import { IAR1100SEARCH } from "./model";
 import Grid from "components/grid";
-import { AR1100SEARCH, AR1100SELECT } from "app/path";
-import { DateWithoutDash } from "helpers/dateFormat";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
+import { WrapperContent, SearchWrapper } from "../../commonStyle";
+import { DateWithoutDash } from "helpers/dateFormat";
 import { fields, columns } from "./data";
+import { IAR1100SEARCH } from "./model";
 import getTabContent from "./getTabContent";
 
 function AR1100({
@@ -37,64 +37,65 @@ function AR1100({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("AR", "AR1100", menuId, AR1100SEARCH);
 
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+  const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
+
   const [data65, setData65] = useState({});
   const [data65Dictionary, setData65Dictionary] = useState({});
   const [tabId, setTabId] = useState(0);
-  const [selected, setSelected] = useState<any>({});
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
   const { register, handleSubmit, reset, control } = useForm<IAR1100SEARCH>({
     mode: "onSubmit",
   });
 
   useEffect(() => {
-    getCommonDictionary({ groupId: "AR", functionName: "AR1100" });
-  }, []);
-
-  useEffect(() => {
     if (dataCommonDic?.dataInit) {
-      console.log("dataCommonDic:::", dataCommonDic);
       resetSearchForm("reset");
     }
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (selected) {
-      // fetchData65({
-      //   areaCode: selected?.areaCode,
-      //   pjCuCode: selected?.cuCode,
-      //   pjDate: selected?.pjDate,
-      //   pjSno: selected?.pjSno,
-      //   pjType: selected?.pjType,
-      // });
+    if (selected && Object.keys(selected)?.length > 0) {
+      fetchData65({
+        areaCode: selected?.areaCode,
+        pjCuCode: selected?.cuCode,
+        pjDate: DateWithoutDash(selected?.pjDate),
+        pjSno: selected?.pjSno,
+        pjType: selected?.pjType,
+      });
+
+      dispatch(
+        addCM1106({
+          areaCode: selected.areaCode,
+          cuCode: selected.cuCode,
+          source: "AR1100",
+        })
+      );
     }
   }, [selected]);
 
-  const fetchData = async (params: any) => {
-    setLoading(true);
-    const res = await apiGet(AR1100SEARCH, params);
-    if (res) {
-      setData(res);
-    } else {
-      setData([]);
-    }
-    setLoading(false);
-  };
-
   const fetchData65 = async (params: any) => {
-    const dataSelect = await apiGet(AR1100SELECT, params);
-    if (dataSelect) {
-      setData65(dataSelect?.detailData[0]);
+    const res = await apiGet(AR1100SELECT, params);
+
+    if (res && Object.keys(res)?.length > 0) {
+      setData65(res?.detailData[0]);
       setData65Dictionary({
-        pjVatDiv: dataSelect?.pjVatDiv,
-        pjSwCode: dataSelect?.pjSwCode,
-        proxyType: dataSelect?.proxyType,
-        pjInkumtype: dataSelect?.pjInkumtype,
-        saleType: dataSelect?.saleType,
+        pjVatDiv: res?.pjVatDiv,
+        pjSwCode: res?.pjSwCode,
+        proxyType: res?.proxyType,
+        pjInkumtype: res?.pjInkumtype,
+        saleType: res?.saleType,
       });
     } else {
       setData65({});
@@ -113,7 +114,7 @@ function AR1100({
         sInserttype: init.sInserttype,
         sProxytype: init.sProxytype,
         sSawon: init.sSawon,
-        sSalestate0: init.sSalesatae.charAt(0) === "N",
+        sSalestate0: init.sSalesatae.charAt(0) === "Y",
         sSalestate1: init.sSalesatae.charAt(1) === "Y",
         sSalestate2: init.sSalesatae.charAt(2) === "Y",
         sSalestate3: init.sSalesatae.charAt(3) === "Y",
@@ -131,9 +132,14 @@ function AR1100({
 
   const submit = async (params: IAR1100SEARCH) => {
     params.sDate = DateWithoutDash(params.sDate);
-
     fetchData(params);
   };
+
+  const handleClickBtnAdd = () => {
+    btnRef1.current.classList.add("active");
+    setIsAddBtnClicked(true);
+  };
+
   return (
     <>
       <SearchWrapper className="h35 mt5">
@@ -151,7 +157,12 @@ function AR1100({
             </>
           )}
           <div className="buttons ml30">
-            <Button text="등록" icon={<Plus />} onClick={() => {}} />
+            <Button
+              text="등록"
+              icon={<Plus />}
+              onClick={handleClickBtnAdd}
+              ref={btnRef1}
+            />
             <Button text="삭제" icon={<Trash />} onClick={() => {}} />
 
             <Button
@@ -173,13 +184,7 @@ function AR1100({
                 <Controller
                   control={control}
                   {...register("sDate")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
+                  render={({ field }) => <CustomDatePicker {...field} />}
                 />
                 <Input
                   register={register("sCustomer")}
@@ -256,37 +261,37 @@ function AR1100({
                   거래 상태
                 </Label>
                 <CheckBox
-                  register={{ ...register("sSalestate0") }}
+                  register={register("sSalestate0")}
                   title="접수"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate1") }}
+                  register={register("sSalestate1")}
                   title="배송중"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate2") }}
+                  register={register("sSalestate2")}
                   title="완료"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate3") }}
+                  register={register("sSalestate3")}
                   title="예약"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate4") }}
+                  register={register("sSalestate4")}
                   title="취소"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalestate5") }}
+                  register={register("sSalestate5")}
                   title="연기"
                   rtl
                   style={{ width: "80px" }}
@@ -295,31 +300,31 @@ function AR1100({
                   거래 구분
                 </Label>
                 <CheckBox
-                  register={{ ...register("sSalegubun0") }}
+                  register={register("sSalegubun0")}
                   title="중량"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalegubun1") }}
+                  register={register("sSalegubun1")}
                   title="체적"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalegubun2") }}
+                  register={register("sSalegubun2")}
                   title="용기"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalegubun3") }}
+                  register={register("sSalegubun3")}
                   title="기구"
                   rtl
                   style={{ width: "80px" }}
                 />
                 <CheckBox
-                  register={{ ...register("sSalegubun4") }}
+                  register={register("sSalegubun4")}
                   title="A/S"
                   rtl
                   style={{ width: "80px" }}
@@ -337,7 +342,7 @@ function AR1100({
           menuId={menuId}
           rowIndex={0}
           style={{
-            height: `calc(100% - 368px)`,
+            height: `calc(50%)`,
             borderBottom: "1px solid #707070",
             marginBottom: "3px",
           }}
@@ -358,7 +363,13 @@ function AR1100({
         />
 
         <TabContentWrapper>
-          {getTabContent(tabId, data65, data65Dictionary)}
+          {getTabContent(
+            tabId,
+            data65,
+            data65Dictionary,
+            isAddBtnClicked,
+            setIsAddBtnClicked
+          )}
         </TabContentWrapper>
       </WrapperContent>
     </>

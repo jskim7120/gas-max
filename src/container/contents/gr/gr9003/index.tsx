@@ -1,19 +1,18 @@
-import { useState, useEffect } from "react";
-import { apiGet } from "app/axios";
+import { useState, useEffect, useRef } from "react";
+import CreateReport from "app/hook/createReport";
 import { GR9003SEARCH } from "app/path";
 import { IGR9003SEARCH } from "./model";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { Select, FormGroup, Label, Field } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "./grid";
+import BasicGrid from "components/basicGrid";
+import { DateWithoutDash } from "helpers/dateFormat";
 import { columns, fields } from "./data";
-import CustomTopPart from "container/contents/customTopPart";
 
 function GR9003({
   depthFullName,
@@ -24,70 +23,50 @@ function GR9003({
   menuId: string;
   areaCode: string;
 }) {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("GR", "GR9003", menuId, GR9003SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
-
-  const { register, handleSubmit, reset, getValues, control } =
-    useForm<IGR9003SEARCH>({
-      mode: "onSubmit",
-    });
+  const { register, handleSubmit, reset, control } = useForm<IGR9003SEARCH>({
+    mode: "onSubmit",
+  });
 
   const resetForm = () => {
     if (dataCommonDic !== undefined) {
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
         bcBuCode: dataCommonDic?.bcBuCode[0].code,
+        sDate: dataCommonDic?.sDate[0].code,
+        eDate: dataCommonDic?.eDate[0].code,
       });
     }
   };
-  useEffect(() => {
-    getCommonDictionary({ groupId: "GR", functionName: "GR9003" });
-  }, []);
 
   useEffect(() => {
     reset({
       areaCode: dataCommonDic?.areaCode[0].code,
       bcBuCode: dataCommonDic?.bcBuCode[0].code,
+      sDate: dataCommonDic?.sDate[0].code,
+      eDate: dataCommonDic?.eDate[0].code,
     });
   }, [dataCommonDic]);
 
-  const fetchData = async (params: any) => {
-    // try {
-    //   setLoading(true);
-    //   const { data: dataS } = await API.get(GR9003SEARCH, { params: params });
-    //   if (dataS) {
-    //     setData(dataS);
-    //   } else {
-    //     setData([]);
-    //   }
-    //   setLoading(false);
-    // } catch (err) {
-    //   setData([]);
-    //   setLoading(false);
-    //   console.log("GR9003 data search fetch error =======>", err);
-    // }
-
-    setLoading(true);
-    const dataS = await apiGet(GR9003SEARCH, params);
-    if (dataS) {
-      setData(dataS);
-    } else {
-      setData([]);
-    }
-    setLoading(false);
-  };
-
-  const cancel = () => {
+  const handleReset = () => {
     resetForm();
     setData([]);
   };
 
   const submit = (data: IGR9003SEARCH) => {
+    data.sDate = DateWithoutDash(data.sDate);
+    data.eDate = DateWithoutDash(data.eDate);
     fetchData(data);
   };
 
@@ -134,13 +113,14 @@ function GR9003({
                 style={{ marginRight: "5px" }}
                 type="button"
                 color={ButtonColor.LIGHT}
-                onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
+                onClick={() => gridRef.current.saveToExcel()}
               />
             </div>
           </FormGroup>
@@ -184,13 +164,16 @@ function GR9003({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        <Grid
-          data={data.length > 0 && data}
+        <BasicGrid
+          ref={gridRef}
+          areaCode={areaCode}
+          data={data}
           columns={columns}
           fields={fields}
-          setSelected={setSelected}
-          selectedRowIndex={selectedRowIndex}
-          setSelectedRowIndex={setSelectedRowIndex}
+          menuId={menuId}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
+          style={{ height: `calc(100% - 47px)` }}
+          evenFill
         />
       </WrapperContent>
     </>

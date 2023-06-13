@@ -14,7 +14,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuUsername",
+    fieldName: "cuName",
     dataType: ValueType.TEXT,
   },
   {
@@ -105,8 +105,8 @@ export const columns = [
     },
   },
   {
-    name: "cuUsername",
-    fieldName: "cuUsername",
+    name: "cuName",
+    fieldName: "cuName",
     type: "data",
     width: "200",
     styleName: "rg-left-column",
@@ -256,7 +256,7 @@ export const layout = [
   "areaCode",
   "tsDate",
   "tsCuCode",
-  "cuUsername",
+  "cuName",
   "tsGubun",
   "tsJpName",
 
