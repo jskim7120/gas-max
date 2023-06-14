@@ -1,0 +1,223 @@
+{
+  "report": {
+    "name": "reportRoot",
+    "paperSize": "A4",
+    "paperWidth": "210mm",
+    "paperHeight": "297mm",
+    "marginLeft": "12mm",
+    "marginRight": "12mm",
+    "marginTop": "15mm",
+    "marginBottom": "15mm"
+  },
+  "page": {
+    "name": "reportPage",
+    "pageHeader": {
+      "name": "pageHeader",
+      "items": [
+        {
+          "type": "rbox",
+          "name": "",
+          "right": 0,
+          "itemGap": 4,
+          "items": [
+            {
+              "type": "text",
+              "name": "",
+              "text": "Date:"
+            },
+            {
+              "type": "text",
+              "value": "${date}",
+              "name": "",
+              "text": "Text"
+            }
+          ]
+        }
+      ]
+    },
+    "reportHeader": {
+      "name": "reportHeader",
+      "items": [
+        {
+          "type": "text",
+          "text": "일자별 중량 판매 현황",
+          "styles": {
+            "fontSize": "30px",
+            "fontWeight": "bold",
+            "__tag_": {}
+          }
+        }
+      ]
+    },
+    "reportFooter": {
+      "name": "reportFooter"
+    },
+    "pageFooter": {
+      "name": "pageFooter",
+      "items": [
+        {
+          "type": "rbox",
+          "name": "",
+          "right": 0,
+          "itemGap": 4,
+          "items": [
+            {
+              "type": "text",
+              "value": "${page}",
+              "name": "",
+              "text": "Text"
+            },
+            {
+              "type": "text",
+              "name": "",
+              "text": "/",
+              "styles": {
+                "paddingLeft": "3px",
+                "paddingRight": "3px",
+                "__tag_": {}
+              }
+            },
+            {
+              "type": "text",
+              "value": "${pages}",
+              "name": "",
+              "text": "Text"
+            }
+          ]
+        }
+      ]
+    },
+    "body": {
+      "itemGap": 4,
+      "items": [
+        {
+          "type": "tableband",
+          "data": "dataset-1",
+          "width": "100%",
+          "name": "",
+          "detail": {
+            "type": "detail",
+            "width": "100%",
+            "name": ""
+          },
+          "colCount": 3,
+          "columns": [
+            {
+              "width": "20%"
+            },
+            {
+              "width": "20%"
+            },
+            {
+              "width": "20%"
+            }
+          ],
+          "header": {
+            "width": "100%",
+            "name": null,
+            "rowCount": 1,
+            "cellStyles": {},
+            "rows": [{}],
+            "cells": [
+              {
+                "r": 0,
+                "c": 0,
+                "colspan": 3,
+                "styles": {
+                  "borderLeft": "0px solid black",
+                  "borderRight": "0px solid black",
+                  "borderTop": "0px solid black"
+                }
+              }
+            ]
+          },
+          "footer": {
+            "width": "100%",
+            "name": null,
+            "rowCount": 1,
+            "cellStyles": {},
+            "rows": [{}],
+            "cells": [
+              {
+                "r": 0,
+                "c": 0,
+                "colspan": 3,
+                "styles": {
+                  "borderLeft": "0px solid black",
+                  "borderRight": "0px solid black",
+                  "borderBottom": "0px solid black"
+                }
+              }
+            ]
+          },
+          "dataRow": {
+            "width": "100%",
+            "name": null,
+            "rowCount": 1,
+            "cellStyles": {},
+            "rows": [{}],
+            "cells": [],
+            "items": [
+              {
+                "type": "text",
+                "value": "pjCuCode",
+                "name": "",
+                "col": 0,
+                "row": 0
+              },
+              {
+                "type": "text",
+                "value": "pjSno",
+                "name": "",
+                "col": 1,
+                "row": 0
+              },
+              {
+                "type": "text",
+                "value": "pjSwName",
+                "name": "",
+                "col": 2,
+                "row": 0
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "assets": {
+    "/": []
+  },
+  "data": {
+    "dataset-1": {
+      "type": "band",
+      "fields": [
+        {
+          "fieldName": "pjSno",
+          "dataType": "text",
+          "description": "",
+          "sample": "001",
+          "format": "",
+          "dateReader": null
+        },
+        {
+          "fieldName": "pjSwName",
+          "dataType": "text",
+          "description": "",
+          "sample": "김재선배송",
+          "format": "",
+          "dateReader": null
+        },
+        {
+          "fieldName": "pjCuCode",
+          "dataType": "text",
+          "description": "",
+          "sample": "011-00003",
+          "format": "",
+          "dateReader": null
+        }
+      ]
+    }
+  },
+  "guid": "4f89e0dd-71f6-4cca-8b1b-ce806d8f2150"
+}

@@ -48,6 +48,8 @@ function AR1100({
     dataCommonDic,
   } = CreateReport("AR", "AR1100", menuId, AR1100SEARCH);
 
+  const tabRef = useRef() as React.MutableRefObject<any>;
+
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
   const [data65, setData65] = useState({});
@@ -55,18 +57,27 @@ function AR1100({
   const [tabId, setTabId] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
-  const { register, handleSubmit, reset, control } = useForm<IAR1100SEARCH>({
-    mode: "onSubmit",
-  });
+  const { register, handleSubmit, reset, control, getValues } =
+    useForm<IAR1100SEARCH>({
+      mode: "onSubmit",
+    });
 
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
       resetSearchForm("reset");
+      const params = prepareParams();
+      params.sDate = DateWithoutDash(params.sDate);
+      fetchData(params);
     }
   }, [dataCommonDic]);
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
+      if (isAddBtnClicked) {
+        btnRef1.current.classList.remove("active");
+        setIsAddBtnClicked(false);
+      }
+
       fetchData65({
         areaCode: selected?.areaCode,
         pjCuCode: selected?.cuCode,
@@ -84,6 +95,12 @@ function AR1100({
       );
     }
   }, [selected]);
+
+  const fetchDataWithParams = () => {
+    const params = getValues();
+    params.sDate = DateWithoutDash(params.sDate);
+    fetchData(params);
+  };
 
   const fetchData65 = async (params: any) => {
     const res = await apiGet(AR1100SELECT, params);
@@ -103,30 +120,36 @@ function AR1100({
     }
   };
 
+  const prepareParams = () => {
+    const init = dataCommonDic.dataInit[0];
+    return {
+      areaCode: dataCommonDic.areaCode[0].code,
+      sDate: init.sDate,
+      sInkumtype: init.sInkumtype,
+      sInserttype: init.sInserttype,
+      sProxytype: init.sProxytype,
+      sSawon: init.sSawon,
+      sSalestate0: init.sSalesatae.charAt(0) === "Y",
+      sSalestate1: init.sSalesatae.charAt(1) === "Y",
+      sSalestate2: init.sSalesatae.charAt(2) === "Y",
+      sSalestate3: init.sSalesatae.charAt(3) === "Y",
+      sSalestate4: init.sSalesatae.charAt(4) === "Y",
+      sSalestate5: init.sSalesatae.charAt(5) === "Y",
+
+      sSalegubun0: init.sSalegubun.charAt(0) === "Y",
+      sSalegubun1: init.sSalegubun.charAt(1) === "Y",
+      sSalegubun2: init.sSalegubun.charAt(2) === "Y",
+      sSalegubun3: init.sSalegubun.charAt(3) === "Y",
+      sSalegubun4: init.sSalegubun.charAt(4) === "Y",
+    };
+  };
+
   const resetSearchForm = (type: string) => {
     if (type === "reset") {
-      const init = dataCommonDic.dataInit[0];
-
-      reset({
-        areaCode: dataCommonDic.areaCode[0].code,
-        sDate: init.sDate,
-        sInkumtype: init.sInkumtype,
-        sInserttype: init.sInserttype,
-        sProxytype: init.sProxytype,
-        sSawon: init.sSawon,
-        sSalestate0: init.sSalesatae.charAt(0) === "Y",
-        sSalestate1: init.sSalesatae.charAt(1) === "Y",
-        sSalestate2: init.sSalesatae.charAt(2) === "Y",
-        sSalestate3: init.sSalesatae.charAt(3) === "Y",
-        sSalestate4: init.sSalesatae.charAt(4) === "Y",
-        sSalestate5: init.sSalesatae.charAt(5) === "Y",
-
-        sSalegubun0: init.sSalegubun.charAt(0) === "Y",
-        sSalegubun1: init.sSalegubun.charAt(1) === "Y",
-        sSalegubun2: init.sSalegubun.charAt(2) === "Y",
-        sSalegubun3: init.sSalegubun.charAt(3) === "Y",
-        sSalegubun4: init.sSalegubun.charAt(4) === "Y",
-      });
+      const params = prepareParams();
+      reset(params);
+    }
+    if (type === "clear") {
     }
   };
 
@@ -138,6 +161,16 @@ function AR1100({
   const handleClickBtnAdd = () => {
     btnRef1.current.classList.add("active");
     setIsAddBtnClicked(true);
+    tabRef.current.resetForm("clear");
+    document.getElementById("footerSearchId")?.focus();
+  };
+
+  const handleClickBtnDel = () => {
+    if (isAddBtnClicked) {
+      setIsAddBtnClicked(false);
+      btnRef1.current.classList.remove("active");
+    }
+    tabRef.current.crud("delete");
   };
 
   return (
@@ -163,7 +196,7 @@ function AR1100({
               onClick={handleClickBtnAdd}
               ref={btnRef1}
             />
-            <Button text="삭제" icon={<Trash />} onClick={() => {}} />
+            <Button text="삭제" icon={<Trash />} onClick={handleClickBtnDel} />
 
             <Button
               text="취소"
@@ -340,7 +373,7 @@ function AR1100({
           columns={columns}
           setSelected={setSelected}
           menuId={menuId}
-          rowIndex={0}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{
             height: `calc(50%)`,
             borderBottom: "1px solid #707070",
@@ -366,9 +399,14 @@ function AR1100({
           {getTabContent(
             tabId,
             data65,
+            selected,
             data65Dictionary,
             isAddBtnClicked,
-            setIsAddBtnClicked
+            setIsAddBtnClicked,
+            getValues("areaCode"),
+            fetchDataWithParams,
+            menuId,
+            tabRef
           )}
         </TabContentWrapper>
       </WrapperContent>

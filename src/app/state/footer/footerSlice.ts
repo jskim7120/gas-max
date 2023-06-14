@@ -1,10 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface initialStateType {
-  footerParams: {
-    areaCode: string;
-    sCuCode: string;
-  };
+  source: string;
 
   info: {
     areaCode: string;
@@ -39,6 +36,7 @@ export interface initialStateType {
     mTransYn: string;
     tTransYn: string;
   };
+
   search: {
     fieldName: string;
     text: string;
@@ -46,10 +44,8 @@ export interface initialStateType {
 }
 
 const initialState: initialStateType = {
-  footerParams: {
-    areaCode: "",
-    sCuCode: "",
-  },
+  source: "",
+
   info: {
     areaCode: "",
     barcodeYn: "",
@@ -94,8 +90,8 @@ const footerSlice = createSlice({
   initialState: initialState,
 
   reducers: {
-    addFooterParams: (state, action) => {
-      state.footerParams = action.payload;
+    addSource: (state, action) => {
+      state.source = action.payload.source;
     },
     addInfo: (state, action) => {
       state.info = action.payload.info;
@@ -113,7 +109,7 @@ const footerSlice = createSlice({
 });
 
 export const {
-  addFooterParams,
+  addSource,
   addInfo,
   removeInfo,
   addSearchText,
