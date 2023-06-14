@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { apiGet } from "app/axios";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
+import CreateScreen from "app/hook/createScreen";
 import { GR1600SEARCH } from "app/path";
 import { InputSize, ButtonColor, ButtonType } from "components/componentsType";
 import Button from "components/button/button";
@@ -14,7 +14,7 @@ import {
   LeftSide,
 } from "../../commonStyle";
 import Form from "./right/form";
-import Grid from "components/grid";
+import GridLeft from "components/grid";
 import { ISEARCH } from "./model";
 import { fields, columns } from "./data";
 import Loader from "components/loader";
@@ -24,7 +24,8 @@ let values1: any;
 let labels1: any;
 let values2: any;
 let labels2: any;
-const minWidth = "822px";
+const minWidth = "833px";
+const leftSideWidth: number = 850;
 
 function GR1600({
   depthFullName,
@@ -35,21 +36,27 @@ function GR1600({
   menuId: string;
   areaCode: string;
 }) {
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
-  const [loading, setLoading] = useState(false);
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
-
   const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  useEffect(() => {
-    getCommonDictionary({ groupId: "GR", functionName: "GR1600" });
-  }, []);
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    isAddBtnClicked,
+    setIsAddBtnClicked,
+    activeTabId,
+    fetchData,
+    showDraggableLine,
+    isOpen,
+    gridIndexes,
+    dispatch,
+    dataCommonDic,
+    linePos,
+  } = CreateScreen("GR", "GR1600", menuId, GR1600SEARCH, leftSideWidth);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -76,20 +83,10 @@ function GR1600({
     }
   }, [dataCommonDic]);
 
-  const fetchData = async (params: any) => {
-    if (params?.buGubun && params.buGubun === "9") {
-      delete params.buGubun;
+  const submit = async (data: any) => {
+    if (data?.buGubun && data.buGubun === "9") {
+      delete data.buGubun;
     }
-    setLoading(true);
-    const SEARCHDATA = await apiGet(GR1600SEARCH, params);
-
-    if (SEARCHDATA) {
-      setData(SEARCHDATA);
-      setLoading(false);
-    }
-  };
-
-  const submit = async (data: ISEARCH) => {
     fetchData(data);
   };
 
@@ -113,13 +110,15 @@ function GR1600({
         <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
-        <LeftSide>
-          <form
-            onSubmit={handleSubmit(submit)}
-            autoComplete="off"
-            style={{ minWidth: minWidth }}
+        <LeftSide style={{ width: `${linePos}px` }}>
+          <SearchWrapper
+            style={{ minWidth: `${leftSideWidth}px`, padding: "3px 15px" }}
           >
-            <SearchWrapper className="h35">
+            <form
+              onSubmit={handleSubmit(submit)}
+              autoComplete="off"
+              style={{ minWidth: minWidth }}
+            >
               <FormGroup>
                 <Label
                   style={{
@@ -141,8 +140,7 @@ function GR1600({
                   register={register("buName")}
                   inputSize={InputSize.i200}
                 />
-              </FormGroup>
-              <div className="buttons">
+
                 <Button
                   text="검색"
                   icon={
@@ -175,10 +173,10 @@ function GR1600({
                   type="button"
                   style={{ height: "26px" }}
                 />
-              </div>
-            </SearchWrapper>
-          </form>
-          <Grid
+              </FormGroup>
+            </form>
+          </SearchWrapper>
+          <GridLeft
             areaCode={areaCode}
             data={data}
             columns={columns}
@@ -186,11 +184,18 @@ function GR1600({
             menuId={menuId}
             rowIndex={data?.length > 1 ? data.length - 1 : 0}
             setSelected={setSelected}
-            style={{ height: `calc(100% - 47px)` }}
+            style={{
+              height: `calc(100% - 47px)`,
+              minWidth: `${leftSideWidth}px`,
+            }}
             evenFill
           />
         </LeftSide>
-        <RightSide>
+        <RightSide
+          style={{
+            width: `calc(100% - ${linePos}px)`,
+          }}
+        >
           <Form
             selected={selected}
             values1={values1}
@@ -200,6 +205,7 @@ function GR1600({
             fetchLeftData={handleSubmit(submit)}
           />
         </RightSide>
+        {showDraggableLine()}
       </MainWrapper>
     </>
   );

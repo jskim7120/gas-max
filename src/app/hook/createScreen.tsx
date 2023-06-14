@@ -110,6 +110,7 @@ function CreateScreen(
     dispatch,
     dataCommonDic,
     linePos,
+    setLoading,
   };
 }
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
+import CreateScreen from "app/hook/createScreen";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
@@ -22,7 +22,8 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import Table from "./table";
 import { fields, columns } from "./data";
 
-const minWidth = "900px";
+const minWidth = "905px";
+const leftSideWidth: number = 922;
 
 function GR1300({
   depthFullName,
@@ -33,21 +34,27 @@ function GR1300({
   ownAreaCode: string;
   menuId: string;
 }) {
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
-
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>({});
-  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  useEffect(() => {
-    getCommonDictionary({ groupId: "GR", functionName: "GR1300" });
-  }, []);
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    isAddBtnClicked,
+    setIsAddBtnClicked,
+    activeTabId,
+    fetchData,
+    showDraggableLine,
+    isOpen,
+    gridIndexes,
+    dispatch,
+    dataCommonDic,
+    linePos,
+  } = CreateScreen("GR", "GR1300", menuId, GR1300SEARCH, leftSideWidth);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -60,26 +67,13 @@ function GR1300({
     }
   }, [dataCommonDic]);
 
-  const fetchData = async (params: any) => {
-    if (params.sDate !== undefined) {
-      params.sDate = DateWithoutDash(params.sDate);
-    }
-    if (params.eDate !== undefined) {
-      params.eDate = DateWithoutDash(params.eDate);
-    }
-    setLoading(true);
-    const res = await apiGet(GR1300SEARCH, params);
-    if (res) {
-      setData(res);
-      setSelected(res[0]);
-    } else {
-      setData([]);
-      setSelected({});
-    }
-    setLoading(false);
-  };
-
   const submit = async (data: any) => {
+    if (data.sDate !== undefined) {
+      data.sDate = DateWithoutDash(data.sDate);
+    }
+    if (data.eDate !== undefined) {
+      data.eDate = DateWithoutDash(data.eDate);
+    }
     fetchData(data);
   };
 
@@ -104,13 +98,15 @@ function GR1300({
         <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
-        <LeftSide>
-          <form
-            onSubmit={handleSubmit(submit)}
-            autoComplete="off"
-            style={{ minWidth: minWidth }}
+        <LeftSide style={{ width: `${linePos}px` }}>
+          <SearchWrapper
+            style={{ minWidth: `${leftSideWidth}px`, padding: "3px 15px" }}
           >
-            <SearchWrapper className="h35">
+            <form
+              onSubmit={handleSubmit(submit)}
+              autoComplete="off"
+              style={{ minWidth: minWidth }}
+            >
               <FormGroup>
                 <Label style={{ minWidth: "auto" }}>지급기간</Label>
                 <Controller
@@ -144,8 +140,7 @@ function GR1300({
                     </option>
                   ))}
                 </Select>
-              </FormGroup>
-              <div className="buttons">
+
                 <Button
                   text="검색"
                   icon={!loading && <MagnifyingGlassBig width="15px" />}
@@ -165,9 +160,9 @@ function GR1300({
                     )
                   }
                 />
-              </div>
-            </SearchWrapper>
-          </form>
+              </FormGroup>
+            </form>
+          </SearchWrapper>
           <GridLeft
             areaCode={ownAreaCode}
             data={data}
@@ -176,11 +171,18 @@ function GR1300({
             setSelected={setSelected}
             menuId={menuId}
             rowIndex={0}
-            style={{ height: `calc(100% - 82px)`, minWidth: minWidth }}
+            style={{
+              height: `calc(100% - 82px)`,
+              minWidth: `${leftSideWidth}px`,
+            }}
           />
-          <Table data={data} style={{ minWidth: minWidth }} />
+          <Table data={data} style={{ minWidth: minWidth, width: "922px" }} />
         </LeftSide>
-        <RightSide>
+        <RightSide
+          style={{
+            width: `calc(100% - ${linePos}px)`,
+          }}
+        >
           <Form
             menuId={menuId}
             dataCommonDic={dataCommonDic}
@@ -190,6 +192,7 @@ function GR1300({
             setIsAddBtnClicked={setIsAddBtnClicked}
           />
         </RightSide>
+        {showDraggableLine()}
       </MainWrapper>
     </>
   );

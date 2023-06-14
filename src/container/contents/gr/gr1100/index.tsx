@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { apiGet } from "app/axios";
+import CreateScreen from "app/hook/createScreen";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { useDispatch, useSelector } from "app/store";
 import {
@@ -17,7 +18,7 @@ import { MagnifyingGlassBig, ExcelIcon } from "components/allSvgIcon";
 import Form from "./form";
 import { columns, fields } from "./data";
 import { ISEARCH } from "./model";
-import Grid from "components/grid";
+import GridLeft from "components/grid";
 import {
   MainWrapper,
   RightSide,
@@ -28,6 +29,7 @@ import Loader from "components/loader";
 import FourButtons from "components/button/fourButtons";
 
 const minWidth = "763px";
+const leftSideWidth: number = 780;
 
 function GR1100({
   depthFullName,
@@ -39,26 +41,32 @@ function GR1100({
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-  const dispatch = useDispatch();
 
-  const [areaCode, setAreaCode] = useState("");
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState<any>();
-  const [loading, setLoading] = useState(false);
-  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
-
-  const { register, handleSubmit, reset } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, getValues } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const { isDelete } = useSelector((state) => state.modal);
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    isAddBtnClicked,
+    setIsAddBtnClicked,
+    activeTabId,
+    fetchData,
+    showDraggableLine,
+    isOpen,
+    gridIndexes,
+    dispatch,
+    dataCommonDic,
+    linePos,
+  } = CreateScreen("GR", "GR1100", menuId, GR1100SEARCH, leftSideWidth);
 
-  useEffect(() => {
-    getCommonDictionary({ groupId: "GR", functionName: "GR1100" });
-  }, []);
+  const [areaCode, setAreaCode] = useState("");
+
+  const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -77,19 +85,6 @@ function GR1100({
       deleteRowGrid();
     }
   }, [isDelete.isDelete]);
-
-  const fetchData = async (params: any) => {
-    setLoading(true);
-    const dataS = await apiGet(GR1100SEARCH, params);
-    if (dataS) {
-      setData(dataS);
-      setSelected(dataS[0]);
-    } else {
-      setData([]);
-      setSelected({});
-    }
-    setLoading(false);
-  };
 
   const submit = async (data: ISEARCH) => {
     fetchData({ ...data, areaCode: areaCode });
@@ -153,14 +148,17 @@ function GR1100({
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
+
       <MainWrapper>
-        <LeftSide>
-          <form
-            onSubmit={handleSubmit(submit)}
-            autoComplete="off"
-            style={{ minWidth: minWidth }}
+        <LeftSide style={{ width: `${linePos}px` }}>
+          <SearchWrapper
+            style={{ minWidth: `${leftSideWidth}px`, padding: "3px 15px" }}
           >
-            <SearchWrapper className="h35">
+            <form
+              onSubmit={handleSubmit(submit)}
+              autoComplete="off"
+              style={{ minWidth: minWidth }}
+            >
               <FormGroup>
                 <Label
                   style={{
@@ -198,9 +196,7 @@ function GR1100({
                     </option>
                   ))}
                 </Select>
-              </FormGroup>
 
-              <div className="buttons">
                 <Button
                   text="검색"
                   icon={!loading && <MagnifyingGlassBig />}
@@ -229,11 +225,11 @@ function GR1100({
                   type="button"
                   style={{ height: "26px" }}
                 />
-              </div>
-            </SearchWrapper>
-          </form>
+              </FormGroup>
+            </form>
+          </SearchWrapper>
 
-          <Grid
+          <GridLeft
             areaCode={ownAreaCode}
             data={data}
             fields={fields}
@@ -242,10 +238,17 @@ function GR1100({
             rowIndex={0}
             setSelected={setSelected}
             setIsAddBtnClicked={setIsAddBtnClicked}
-            style={{ height: `calc(100% - 58px)`, minWidth: minWidth }}
+            style={{
+              height: `calc(100% - 44px)`,
+              minWidth: `${leftSideWidth}px`,
+            }}
           />
         </LeftSide>
-        <RightSide>
+        <RightSide
+          style={{
+            width: `calc(100% - ${linePos}px)`,
+          }}
+        >
           <Form
             selected={selected}
             ref={formRef}
@@ -258,6 +261,7 @@ function GR1100({
             isAddBtnClicked={isAddBtnClicked}
           />
         </RightSide>
+        {showDraggableLine()}
       </MainWrapper>
     </>
   );

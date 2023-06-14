@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
+import CreateScreen from "app/hook/createScreen";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import {
@@ -26,7 +26,8 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import Table from "./table";
 import { fields, columns, layout } from "./data";
 
-const minWidth = "auto";
+const minWidth = "925px";
+const leftSideWidth: number = 942;
 
 function GR1200({
   depthFullName,
@@ -37,22 +38,29 @@ function GR1200({
   ownAreaCode: string;
   menuId: string;
 }) {
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
-
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<Array<any>>([]);
-  const [data2, setData2] = useState({});
-  const [selected, setSelected] = useState<any>({});
-  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    isAddBtnClicked,
+    setIsAddBtnClicked,
+    activeTabId,
+    showDraggableLine,
+    isOpen,
+    gridIndexes,
+    dispatch,
+    dataCommonDic,
+    linePos,
+    setLoading,
+  } = CreateScreen("GR", "GR1200", menuId, GR1200SEARCH, leftSideWidth);
 
-  useEffect(() => {
-    getCommonDictionary({ groupId: "GR", functionName: "GR1200" });
-  }, []);
+  const [data2, setData2] = useState({});
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -101,6 +109,8 @@ function GR1200({
   };
 
   const submit = async (data: any) => {
+    data.sDate = DateWithoutDash(data.sDate);
+    data.eDate = DateWithoutDash(data.eDate);
     fetchData(data);
   };
 
@@ -124,13 +134,15 @@ function GR1200({
         <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
-        <LeftSide>
-          <form
-            onSubmit={handleSubmit(submit)}
-            autoComplete="off"
-            style={{ minWidth: minWidth }}
+        <LeftSide style={{ width: `${linePos}px` }}>
+          <SearchWrapper
+            style={{ minWidth: `${leftSideWidth}px`, padding: "3px 15px" }}
           >
-            <SearchWrapper className="h35">
+            <form
+              onSubmit={handleSubmit(submit)}
+              autoComplete="off"
+              style={{ minWidth: minWidth }}
+            >
               <FormGroup>
                 <Label style={{ minWidth: "auto" }}>기간</Label>
                 <Controller
@@ -164,8 +176,7 @@ function GR1200({
                     </option>
                   ))}
                 </Select>
-              </FormGroup>
-              <div className="buttons">
+
                 <Button
                   text="검색"
                   icon={!loading && <MagnifyingGlassBig width="15px" />}
@@ -196,9 +207,9 @@ function GR1200({
                   icon={<ExcelIcon width="18px" />}
                   color={ButtonColor.LIGHT}
                 />
-              </div>
-            </SearchWrapper>
-          </form>
+              </FormGroup>
+            </form>
+          </SearchWrapper>
           <GridLeft
             areaCode={ownAreaCode}
             data={data}
@@ -208,12 +219,19 @@ function GR1200({
             rowIndex={0}
             setSelected={setSelected}
             setIsAddBtnClicked={setIsAddBtnClicked}
-            style={{ height: `calc(100% - 210px)`, minWidth: minWidth }}
+            style={{
+              height: `calc(100% - 200px)`,
+              minWidth: `${leftSideWidth}px`,
+            }}
             layout={layout}
           />
-          <Table data={data2} style={{ minWidth: minWidth }} />
+          <Table data={data2} style={{ minWidth: minWidth, width: "942px" }} />
         </LeftSide>
-        <RightSide>
+        <RightSide
+          style={{
+            width: `calc(100% - ${linePos}px)`,
+          }}
+        >
           <Form
             menuId={menuId}
             dataCommonDic={dataCommonDic}
@@ -223,6 +241,7 @@ function GR1200({
             setIsAddBtnClicked={setIsAddBtnClicked}
           />
         </RightSide>
+        {showDraggableLine()}
       </MainWrapper>
     </>
   );

@@ -85,6 +85,17 @@ function CreateEN(
   }, [isDelete.isDelete]);
 
   useEffect(() => {
+    if (activeTabId) {
+      if (activeTabId === menuId) {
+        document.addEventListener("keydown", handleKeyDown);
+      }
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [activeTabId]);
+
+  useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
       btnRef1.current.classList.remove("active");
       formRef.current.resetForm("reset");
