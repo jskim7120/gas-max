@@ -1,5 +1,8 @@
 export const AR1100SEARCH = "/app/AR1100/search";
 export const AR1100SELECT = "/app/AR1100/select";
+export const AR1100INSERT = "/app/AR1100/insert";
+export const AR1100UPDATE = "/app/AR1100/update";
+export const AR1100DELETE = "/app/AR1100/delete";
 
 export const AR9001SEARCH = "/app/AR9001/search";
 export const AR9002SEARCH = "/app/AR9002/search";

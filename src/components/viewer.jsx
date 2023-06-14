@@ -14,13 +14,20 @@ const Viewer = () => {
   const reportRef = useRef(null);
   const location = useLocation();
 
-  //Object.fromEntries(new URLSearchParams(location.search.split("?")[1]).entries());
-
   const [report, setReport] = useState(null);
+  const [dataSet, setDataSet] = useState([]);
   const [viewer, setViewer] = useState(null);
 
   const getJson = async () => {
-    const json = await (await fetch(`/report/report-1.json`)).json();
+    const json = await (await fetch(`/report/r-test.json`)).json();
+
+    const iterator = new URLSearchParams(
+      location.search.split("?")[1]
+    ).entries();
+
+    const arr = iterator.next().value[0];
+
+    setDataSet(JSON.parse(arr));
     setReport(json);
   };
 
@@ -36,16 +43,20 @@ const Viewer = () => {
     setViewer(viewer);
 
     const pageCallback = (ctx, page, pageNo) => {
-      console.log(`${pageNo} 페이지 미리보기 완료`);
+      // console.log(`${pageNo} 페이지 미리보기 완료`);
     };
 
     const endCallback = (ctx, pages) => {
-      console.log("모든 페이지 미리보기 완료");
+      // console.log("모든 페이지 미리보기 완료");
     };
 
     if (viewer && report) {
-      viewer.reportForm = report.form;
-      viewer.dataSet = report.dataSet;
+      viewer.reportForm = report;
+      viewer.dataSet = {
+        "dataset-1": {
+          values: dataSet,
+        },
+      };
       viewer.preview({
         async: true,
         pageMark: false,
