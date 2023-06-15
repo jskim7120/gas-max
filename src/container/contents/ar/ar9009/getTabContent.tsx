@@ -64,6 +64,14 @@ function getTabContent(
       return (
         <div>
           <SearchWrapper>
+            <Label style={{ minWidth: "80px" }}>담당사원</Label>
+            <Select register={register("swCode2")} width={InputSize.i120}>
+              {dataCommonDic?.swCode2?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
             <Label style={{ minWidth: "80px" }}>지역구분</Label>
             <Select register={register("cuJyCode")} width={InputSize.i120}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
@@ -75,14 +83,6 @@ function getTabContent(
             <Label style={{ minWidth: "80px" }}>소비자형태</Label>
             <Select register={register("cuCutype")} width={InputSize.i120}>
               {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-            <Label style={{ minWidth: "80px" }}>관리책임자</Label>
-            <Select register={register("cuCustgubun")} width={InputSize.i120}>
-              {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
