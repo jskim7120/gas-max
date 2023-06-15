@@ -1,5 +1,6 @@
 export interface IAR110065DETAIL {
   areaCode: string;
+  pjCuCode: string;
   buCode: string;
   buName: string;
   jpKind: string;
@@ -31,3 +32,26 @@ export interface IAR110065DETAIL {
   signkey: string;
   signuser: string;
 }
+
+export const emptyObj = {
+  pjDate: "",
+  pjJpCode: "",
+  pjJpName: "",
+  pjQty: "",
+  pjReqty: "",
+  pjDanga: 0,
+  pjVatDiv: "",
+  pjKumVat: 0,
+  pjKumack: 0,
+  saleState: "",
+  proxyType: "",
+  buName: "",
+  pjInkumtype: "",
+  pjInkum: 0,
+  pjDc: 0,
+  pjMisukum: 0,
+  pjSwCode: "",
+  pjBigo: "",
+  signkey: "",
+  signuser: "",
+};

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import CreateScreen from "app/hook/createScreen";
 import { apiGet } from "app/axios";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { GR1500SEARCH1, GR1500SEARCH2 } from "app/path";
 import {
   SearchWrapper,
@@ -13,15 +13,17 @@ import { IGR1500SEARCH } from "./model";
 import Button from "components/button/button";
 import { columns, fields } from "./data";
 import { columnsSecond, fieldsSecond } from "./secondData";
-import Grid from "components/grid";
+import GridLeft from "components/grid";
 import Loader from "components/loader";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import Form from "./form";
 import CustomDatePicker from "components/customDatePicker";
 import { FormGroup, Select, Label, Field, Input } from "components/form/style";
 import { ButtonColor, InputSize } from "components/componentsType";
-import CustomTopPart from "container/contents/customTopPart";
-import { getValue } from "@testing-library/user-event/dist/utils";
+import { DateWithoutDash } from "helpers/dateFormat";
+
+const minWidth = "927px";
+const leftSideWidth: number = 940;
 
 function GR1500({
   depthFullName,
@@ -33,19 +35,33 @@ function GR1500({
   areaCode: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-  const [loading1, setLoading1] = useState(false);
+  const { register, handleSubmit, control, reset, getValues } =
+    useForm<IGR1500SEARCH>({
+      mode: "onSubmit",
+    });
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    isAddBtnClicked,
+    setIsAddBtnClicked,
+    activeTabId,
+    fetchData,
+    showDraggableLine,
+    isOpen,
+    gridIndexes,
+    dispatch,
+    dataCommonDic,
+    linePos,
+  } = CreateScreen("GR", "GR1500", menuId, GR1500SEARCH1, leftSideWidth);
+
   const [loading2, setLoading2] = useState(false);
-  const [data, setData] = useState([]);
+
   const [dataSecond, setDataSecond] = useState([]);
-  const [selected, setSelected] = useState<any>({});
+
   const [selected2, setSelected2] = useState<any>({});
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
-
-  useEffect(() => {
-    getCommonDictionary({ groupId: "GR", functionName: "GR1500" });
-  }, []);
 
   useEffect(() => {
     if (dataCommonDic !== undefined && dataCommonDic) {
@@ -69,60 +85,13 @@ function GR1500({
     }
   }, [selected]);
 
-  const fetchDataSearch1 = async (params: any) => {
-    // try {
-    //   setLoading1(true);
-    //   const { data } = await API.get(GR1500SEARCH1, { params: params });
-
-    //   if (data) {
-    //     setData(data);
-    //     setSelected(data[0]);
-    //   } else {
-    //     setData([]);
-    //     setSelected({});
-    //   }
-    //   setSelectedRowIndex(0);
-    //   setLoading1(false);
-    // } catch (err) {
-    //   setData([]);
-    //   setSelected({});
-    //   console.log("GR1500 data search fetch error =======>", err);
-    // }
-
-    setLoading1(true);
-    const data = await apiGet(GR1500SEARCH1, params);
-    if (data) {
-      setData(data);
-      setSelected(data[0]);
-    } else {
-      setData([]);
-      setSelected({});
-    }
-
-    setLoading1(false);
-  };
-
   useEffect(() => {
     if (dataCommonDic) {
-      fetchDataSearch1({ areaCode: dataCommonDic.areaCode[0].code });
+      fetchData({ areaCode: dataCommonDic.areaCode[0].code });
     }
   }, [dataCommonDic]);
 
   const fetchDataSearch2 = async (params: any) => {
-    // try {
-    //   setLoading2(true);
-    //   const { data } = await API.get(GR1500SEARCH2, { params: params });
-
-    //   if (data) {
-    //     setDataSecond(data);
-    //     setSelected2(data[0]);
-    //   }
-    //   setSelectedRowIndex(0);
-    //   setLoading2(false);
-    // } catch (err) {
-    //   console.log("GR1500 data search fetch error =======>", err);
-    // }
-
     setLoading2(true);
     const data = await apiGet(GR1500SEARCH2, params);
     if (data) {
@@ -134,18 +103,25 @@ function GR1500({
   };
 
   const submitSearch1 = (data: IGR1500SEARCH) => {
-    fetchDataSearch1(data);
+    if (data.sDate !== undefined) {
+      data.sDate = DateWithoutDash(data.sDate);
+    }
+    if (data.eDate !== undefined) {
+      data.eDate = DateWithoutDash(data.eDate);
+    }
+    fetchData(data);
   };
 
   const submitSearch2 = (data: IGR1500SEARCH) => {
+    if (data.sDate !== undefined) {
+      data.sDate = DateWithoutDash(data.sDate);
+    }
+    if (data.eDate !== undefined) {
+      data.eDate = DateWithoutDash(data.eDate);
+    }
     fetchDataSearch2(data);
   };
 
-  const { register, handleSubmit, control, reset, getValues } =
-    useForm<IGR1500SEARCH>({
-      mode: "onSubmit",
-    });
-  console.log(dataCommonDic);
   return (
     <>
       <SearchWrapper className="h35 mt5">
@@ -166,13 +142,15 @@ function GR1500({
         <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
-        <LeftSide>
-          <form
-            onSubmit={handleSubmit(submitSearch1)}
-            autoComplete="off"
-            style={{ minWidth: "925px" }}
+        <LeftSide style={{ width: `${linePos}px` }}>
+          <SearchWrapper
+            style={{ minWidth: `${leftSideWidth}px`, padding: "3px 15px" }}
           >
-            <SearchWrapper className="h35">
+            <form
+              onSubmit={handleSubmit(submitSearch1)}
+              autoComplete="off"
+              style={{ minWidth: "925px" }}
+            >
               <FormGroup>
                 <Label style={{ minWidth: "48px" }}>구분</Label>
                 <Select width={InputSize.i130} register={register("sBuGubun")}>
@@ -197,16 +175,14 @@ function GR1500({
                     </option>
                   ))}
                 </Select>
-              </FormGroup>
 
-              <div className="buttons">
                 <Button
                   text="검색"
-                  icon={!loading1 && <MagnifyingGlass />}
+                  icon={!loading && <MagnifyingGlass />}
                   color={ButtonColor.DANGER}
                   type="submit"
                   loader={
-                    loading1 && (
+                    loading && (
                       <>
                         <Loader
                           color="white"
@@ -218,11 +194,10 @@ function GR1500({
                     )
                   }
                 />
-              </div>
-            </SearchWrapper>
-          </form>
-
-          <Grid
+              </FormGroup>
+            </form>
+          </SearchWrapper>
+          <GridLeft
             areaCode={areaCode}
             data={data.length > 0 && data}
             setSelected={setSelected}
@@ -321,7 +296,7 @@ function GR1500({
             </SearchWrapper>
           </form>
 
-          <Grid
+          <GridLeft
             areaCode={areaCode}
             data={dataSecond.length > 0 && dataSecond}
             columns={columnsSecond}
@@ -331,21 +306,26 @@ function GR1500({
             menuId={menuId}
             rowIndex={0}
             // evenFill
-            style={{ height: "43%", minWidth: "925px" }}
+            style={{ height: "43%", minWidth: `${leftSideWidth}px` }}
           />
         </LeftSide>
-        <RightSide>
+        <RightSide
+          style={{
+            width: `calc(100% - ${linePos}px)`,
+          }}
+        >
           <Form
             selected={selected}
             selected2={selected2}
             ref={formRef}
-            fetchData={fetchDataSearch1}
+            fetchData={fetchData}
             setData={setData}
             setSelected={setSelected}
             setSelected2={setSelected2}
             menuId={menuId}
           />
         </RightSide>
+        {showDraggableLine()}
       </MainWrapper>
     </>
   );

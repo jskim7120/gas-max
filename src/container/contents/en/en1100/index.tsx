@@ -24,17 +24,6 @@ function EN1100({
     "815px"
   );
 
-  useEffect(() => {
-    if (activeTabId) {
-      if (activeTabId === menuId) {
-        document.addEventListener("keydown", handleKeyDown);
-      }
-      return () => {
-        document.removeEventListener("keydown", handleKeyDown);
-      };
-    }
-  }, [activeTabId]);
-
   return showScreen();
 }
 

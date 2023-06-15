@@ -58,7 +58,6 @@ function AR9004({
 
   useEffect(() => {
     document.getElementById("footerSearchId")?.focus();
-    console.log(document.getElementById("footerSearchId"));
   }, []);
 
   useEffect(() => {

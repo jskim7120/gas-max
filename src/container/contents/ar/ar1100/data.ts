@@ -6,11 +6,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "pjDate",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "pjType",
+    fieldName: "pjTypeName",
     dataType: ValueType.TEXT,
   },
   {
@@ -95,17 +91,8 @@ export const columns = [
     },
   },
   {
-    name: "pjDate",
-    fieldName: "pjDate",
-    type: "data",
-    width: "90",
-    header: {
-      text: "일자",
-    },
-  },
-  {
-    name: "pjType",
-    fieldName: "pjType",
+    name: "pjTypeName",
+    fieldName: "pjTypeName",
     type: "data",
     width: "50",
     header: {

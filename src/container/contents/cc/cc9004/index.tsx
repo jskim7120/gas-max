@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CC1100SEARCH } from "app/path";
 import { ICC9004SEARCH } from "./model";
-import GridLeft from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { MainWrapper, SearchWrapper, LeftSide } from "../../commonStyle";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
@@ -32,6 +32,7 @@ function CC9004({
     dispatch,
     dataCommonDic,
   } = CreateReport("CC", "CC9004", menuId, CC1100SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ICC9004SEARCH>({
     mode: "onSubmit",
@@ -130,10 +131,10 @@ function CC9004({
               </div>
             </SearchWrapper>
           </form>
-          <GridLeft
+          <BasicGrid
+            ref={gridRef}
             areaCode="00"
             data={data}
-            setSelected={setSelected}
             fields={fields}
             columns={columns}
             menuId={menuId}

@@ -210,31 +210,11 @@ function Form() {
   }, [areaCode]);
 
   const fetchAreaCode = async () => {
-    // try {
-    //   const { data } = await API.get(FOOT61);
-    //   data?.areaCode && setAreaCode(data.areaCode);
-    // } catch (err) {
-    //   console.log("err=========>", err);
-    // }
-
     const data = await apiGet(FOOT61);
     data?.areaCode && setAreaCode(data.areaCode);
   };
 
   const fetchData = async (params: ISEARCH) => {
-    // try {
-    //   setLoading(true);
-    //   const { data: SEARCHDATA } = await API.get(FOOTER, {
-    //     params: params,
-    //   });
-
-    //   setData(SEARCHDATA);
-    //   setLoading(false);
-    // } catch (error) {
-    //   setLoading(false);
-    //   console.log("FOOTER DATA fetch error =======>", error);
-    // }
-
     setLoading(true);
     const SEARCHDATA = await apiGet(FOOTER, params);
 

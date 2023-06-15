@@ -3,18 +3,28 @@ import Tab1 from "./tabs/tab1/tab1";
 function getTabContent(
   id: number,
   data: any,
+  selected: any,
   dictionary: any,
   isAddBtnClicked: boolean,
-  setIsAddBtnClicked: Function
+  setIsAddBtnClicked: Function,
+  areaCode: string,
+  fetchData: Function,
+  menuId: string,
+  tabRef: any
 ) {
   switch (id) {
     case 0:
       return (
         <Tab1
+          areaCode={areaCode}
           data={data}
           dictionary={dictionary}
           isAddBtnClicked={isAddBtnClicked}
           setIsAddBtnClicked={setIsAddBtnClicked}
+          fetch={fetch}
+          selected={selected}
+          menuId={menuId}
+          ref={tabRef}
         />
       );
     case 1:
