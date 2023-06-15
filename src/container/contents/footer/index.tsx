@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "app/store";
 import { openModal } from "app/state/modal/modalSlice";
-import {
-  addSearchText,
-  removeSearchText,
-  addSource,
-  removeInfo,
-} from "app/state/footer/footerSlice";
+import { addSearchText, removeSearchText } from "app/state/footer/footerSlice";
 import { apiGet } from "app/axios";
 import { FOOTHISTORY } from "app/path";
 import { FooterContainer } from "./style";
@@ -25,7 +20,6 @@ function Footer() {
   const [searchText, setSearchText] = useState("");
 
   const infoState = useSelector((state) => state.footer.info);
-  const activeTabId = useSelector((state) => state.tab.activeTabId);
 
   useEffect(() => {
     fetchLatestFooterData();
@@ -94,8 +88,7 @@ function Footer() {
                 } else {
                   dispatch(removeSearchText({}));
                 }
-                dispatch(addSource({ source: activeTabId }));
-                dispatch(removeInfo({}));
+
                 dispatch(openModal({ type: "customerModal" }));
               }}
             >

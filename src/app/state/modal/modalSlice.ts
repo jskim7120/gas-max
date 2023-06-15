@@ -16,6 +16,9 @@ export interface initialStateType {
     source: string;
     jpName: string;
     jpCode: string;
+    custIn: string;
+    custOut: string;
+    jcBasicJaego: string;
   };
   gr1200Popup: {
     index: number | undefined;
@@ -95,6 +98,9 @@ const initialState: initialStateType = {
     source: "",
     jpName: "",
     jpCode: "",
+    custIn: "0",
+    custOut: "0",
+    jcBasicJaego: "0",
   },
   gr1200Popup: {
     index: undefined,
@@ -184,7 +190,7 @@ const modalSlice = createSlice({
       state.cm1106.source = action.payload?.source && action.payload.source;
     },
 
-    addCM1106AR100Tick: (state, action) => {
+    addCM1106AR1100Tick: (state, action) => {
       state.cm1106 = { ...state.cm1106, ...action.payload };
     },
 
@@ -255,7 +261,7 @@ export const {
   closeModal,
   addCM1105,
   addCM1106,
-  addCM1106AR100Tick,
+  addCM1106AR1100Tick,
   addGR1200Popup,
   addGR1200,
   addGR1300,

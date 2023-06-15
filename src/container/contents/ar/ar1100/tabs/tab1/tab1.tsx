@@ -59,7 +59,7 @@ const Tab1 = React.forwardRef(
     }, [data]);
 
     useImperativeHandle<any, any>(ref, () => ({
-      resetForm,
+      reset,
       crud,
     }));
 
@@ -94,12 +94,13 @@ const Tab1 = React.forwardRef(
           pjJpName: cm1106.jpName,
           pjJpCode: cm1106.jpCode,
         }));
-      } else if (type === "clear") {
-        reset({
-          ...emptyObj,
-          pjDate: DateWithDash(new Date()),
-        });
       }
+      // else if (type === "clear") {
+      //   reset({
+      //     ...emptyObj,
+      //     pjDate: DateWithDash(new Date()),
+      //   });
+      // }
     };
 
     const openPopupCM1106 = async () => {

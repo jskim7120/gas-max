@@ -14,7 +14,7 @@ import { FOOT61, FOOTER } from "app/path";
 import Loader from "components/loader";
 import { apiGet, apiPost } from "app/axios";
 import Grid from "./grid";
-import { closeModal } from "app/state/modal/modalSlice";
+import { closeModal, addCM1106 } from "app/state/modal/modalSlice";
 import { addInfo } from "app/state/footer/footerSlice";
 import Button from "components/button/button";
 import {
@@ -170,6 +170,7 @@ function Form() {
   const [loading, setLoading] = useState(false);
 
   const searchState = useSelector((state) => state.footer.search);
+  const activeTabId = useSelector((state) => state.tab.activeTabId);
 
   useEffect(() => {
     fetchAreaCode();
@@ -223,8 +224,18 @@ function Form() {
   };
 
   const handleChoose = () => {
-    if (JSON.stringify(selected) !== "{}") {
-      dispatch(addInfo({ info: selected }));
+    if (Object.keys(selected)?.length > 0) {
+      dispatch(addInfo({ info: selected, source: activeTabId }));
+
+      activeTabId === "AR1100" &&
+        dispatch(
+          addCM1106({
+            areaCode: selected?.areaCode,
+            cuCode: selected?.cuCode,
+            source: activeTabId,
+          })
+        );
+
       dispatch(closeModal());
     } else {
       alert("please choose row from grid ");

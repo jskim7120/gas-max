@@ -10,12 +10,15 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
-import { DateWithoutDash } from "helpers/dateFormat";
+import { DateWithoutDashOnlyYearMonth } from "helpers/dateFormat";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import { ISEARCH } from "./model";
 import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
+import { columns2, fields2 } from "./data/data2";
+import { columns3, fields3 } from "./data/data3";
+
 import getTabContent from "./getTabContent";
 
 function AR9009({
@@ -39,37 +42,24 @@ function AR9009({
   } = CreateReport("AR", "AR9009", menuId, AR9009SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
-    mode: "onSubmit",
-  });
+  const { register, handleSubmit, reset, control, getValues } =
+    useForm<ISEARCH>({
+      mode: "onSubmit",
+    });
 
   const [tabId, setTabId] = useState(0);
 
-  const submit = (params: ISEARCH) => {
-    // params.sDate = DateWithoutDash(params.sDate);
-    // params.eDate = DateWithoutDash(params.eDate);
-    if (params.chkGubun) {
-      params.chkGubun = "Y";
-    } else {
-      params.chkGubun = "N";
-    }
-    params.tabKind = tabId;
-    params.sMonth = "202305";
-    fetchData(params);
-  };
-
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
-      const init = dataCommonDic.dataInit[0];
-      reset({
-        sMonth: init?.sMonth,
-
-        // eDate: init?.dDate,
-        // jpCode: init?.jpCode,
-        // swCode: init?.swCode,
-      });
+      resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (tabId !== undefined) {
+      setData([]);
+    }
+  }, [tabId]);
 
   const selectColumns = () => {
     switch (tabId) {
@@ -77,7 +67,101 @@ function AR9009({
         return { columns: columns0, fields: fields0 };
       case 1:
         return { columns: columns1, fields: fields1 };
+      case 2:
+        return { columns: columns2, fields: fields2 };
+      case 3:
+        return { columns: columns3, fields: fields3 };
     }
+  };
+
+  const resetForm = (type: string) => {
+    if (type === "reset") {
+      const init = dataCommonDic.dataInit[0];
+      reset({
+        areaCode: dataCommonDic.areaCode[0].code,
+        sMonth: init?.sMonth,
+        chkGubun: init?.chkGubun === "Y",
+        cuCustgubun: init?.cuCustgubun,
+        cuCutype: init?.cuCutype,
+        swCode: init?.swCode,
+      });
+    }
+  };
+
+  const handleReset = () => {
+    if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+    setData([]);
+  };
+
+  const submit = (params: any) => {
+    params.sMonth = DateWithoutDashOnlyYearMonth(params.sMonth);
+    params.chkGubun = params.chkGubun ? "Y" : "N";
+    params.tabKind = tabId;
+    if (tabId === 0) {
+      delete params.swCode2;
+      delete params.cuJyCode2;
+      delete params.cuCutype2;
+
+      delete params.swCode3;
+      delete params.cuJyCode3;
+      delete params.cuCutype3;
+
+      delete params.swCode4;
+      delete params.cuJyCode4;
+      delete params.cuCutype4;
+    } else if (tabId === 1) {
+      delete params.swCode;
+      delete params.cuJyCode;
+      delete params.cuCutype;
+
+      delete params.swCode3;
+      delete params.cuJyCode3;
+      delete params.cuCutype3;
+
+      delete params.swCode4;
+      delete params.cuJyCode4;
+      delete params.cuCutype4;
+
+      params.swCode = params.swCode2;
+      params.cuJyCode = params.cuJyCode2;
+      params.cuCutype = params.cuCutype2;
+    } else if (tabId === 2) {
+      delete params.swCode;
+      delete params.cuJyCode;
+      delete params.cuCutype;
+
+      delete params.swCode2;
+      delete params.cuJyCode2;
+      delete params.cuCutype2;
+
+      delete params.swCode4;
+      delete params.cuJyCode4;
+      delete params.cuCutype4;
+
+      params.swCode = params.swCode3;
+      params.cuJyCode = params.cuJyCode3;
+      params.cuCutype = params.cuCutype3;
+    } else if (tabId === 3) {
+      delete params.swCode;
+      delete params.cuJyCode;
+      delete params.cuCutype;
+
+      delete params.swCode2;
+      delete params.cuJyCode2;
+      delete params.cuCutype2;
+
+      delete params.swCode3;
+      delete params.cuJyCode3;
+      delete params.cuCutype3;
+
+      params.swCode = params.swCode4;
+      params.cuJyCode = params.cuJyCode4;
+      params.cuCutype = params.cuCutype4;
+    }
+    console.log("params >>>>>>>>>>>>>>>>>>", params);
+    fetchData(params);
   };
 
   return (
@@ -99,13 +183,14 @@ function AR9009({
             )}
 
             <Label style={{ minWidth: "80px" }}>년 - 월</Label>
-            <Select register={register("sMonth")} width={InputSize.i120}>
-              {dataCommonDic?.dataInit?.sMonth?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
+            <Controller
+              control={control}
+              {...register("sMonth")}
+              render={({ field }) => (
+                <CustomDatePicker {...field} showMonthYearPicker />
+              )}
+            />
+
             <div className="buttons ml30">
               <Button
                 text="검색"
@@ -124,19 +209,16 @@ function AR9009({
                     </>
                   )
                 }
-                style={{ minWidth: "max-content" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ minWidth: "max-content" }}
                 type="button"
                 color={ButtonColor.LIGHT}
-                // onClick={cancel}
+                onClick={handleReset}
               />
               <Button
                 text="엑셀"
-                style={{ minWidth: "max-content" }}
                 icon={<ExcelIcon width="19px" height="19px" />}
                 color={ButtonColor.LIGHT}
                 type="button"
@@ -147,13 +229,31 @@ function AR9009({
           <p>{depthFullName}</p>
         </SearchWrapper>
       </form>
-      <div style={{ marginTop: "5px" }}>
+      <div
+        style={{
+          width: "100%",
+          paddingTop: "2px",
+          background: "#626161",
+        }}
+      >
         <PlainTab
-          tabHeader={["지로 양식", "고객 안내문", "입금계좌 안내", "결재 라인"]}
+          tabHeader={[
+            "사용 자별",
+            "담당사원별",
+            "다세대 / 건물별",
+            "그룹 코드별",
+          ]}
           onClick={(id) => setTabId(id)}
           tabId={tabId}
         />
-        <TabContentWrapper style={{ padding: "0" }}>
+        <TabContentWrapper
+          style={{
+            padding: "0",
+            minHeight: "auto",
+            border: "none",
+            borderTop: "1px solid #00000033",
+          }}
+        >
           {getTabContent(tabId, register, dataCommonDic, data)}
         </TabContentWrapper>
       </div>
@@ -167,7 +267,9 @@ function AR9009({
         fields={selectColumns()?.fields}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 292px)" }}
+        style={{
+          height: `calc(100% - 125px)`,
+        }}
       />
     </>
   );

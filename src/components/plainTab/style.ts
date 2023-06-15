@@ -30,9 +30,8 @@ export const List = styled.li<{ isActive: boolean }>`
   border-bottom: none;
   border-radius: 8px 8px 0 0;
 
-  background: ${(props) =>
-    props.isActive ? `rgba(101,84,255,.37)` : `rgba(104, 103, 103, 0.26)`};
-  color: #OAOAOA;
+  background: ${(props) => (props.isActive ? `#B0AAE9` : `#DBDBDB`)};
+  color: ${(props) => (props.isActive ? `#FFF` : `#OAOAOA`)};
 `;
 
 export const TabContentWrapper = styled.div`

@@ -1,16 +1,12 @@
 import { ValueType } from "realgrid";
 
-export const fields0 = [
+export const fields2 = [
   {
     fieldName: "areaCode",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuCno",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuCode",
+    fieldName: "cuApt",
     dataType: ValueType.TEXT,
   },
   {
@@ -18,7 +14,11 @@ export const fields0 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuTel",
+    fieldName: "gjGage",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "m3ToKg",
     dataType: ValueType.TEXT,
   },
   {
@@ -31,6 +31,14 @@ export const fields0 = [
   },
   {
     fieldName: "gjAnkum",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjMeterkum",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjSisulkum",
     dataType: ValueType.TEXT,
   },
   {
@@ -59,7 +67,7 @@ export const fields0 = [
   },
 ];
 
-export const columns0 = [
+export const columns2 = [
   {
     name: "areaCode",
     fieldName: "areaCode",
@@ -70,8 +78,8 @@ export const columns0 = [
     },
   },
   {
-    name: "cuCno",
-    fieldName: "cuCno",
+    name: "cuApt",
+    fieldName: "cuApt",
     type: "data",
     width: "70",
     header: {
@@ -79,123 +87,129 @@ export const columns0 = [
     },
   },
   {
-    name: "cuCode",
-    fieldName: "cuCode",
-    type: "data",
-    width: "70",
-    styleName: "rg-left-column",
-    header: {
-      text: "코드",
-    },
-  },
-  {
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "150",
-    styleName: "rg-left-column",
+    width: "70",
     header: {
-      text: "거래처명",
+      text: "",
     },
   },
   {
-    name: "cuTel",
-    fieldName: "cuTel",
+    name: "gjGage",
+    fieldName: "gjGage",
     type: "data",
-    width: "80",
-    styleName: "rg-left-column",
+    width: "70",
     header: {
-      text: "전화",
+      text: "",
+    },
+  },
+  {
+    name: "m3ToKg",
+    fieldName: "m3ToKg",
+    type: "data",
+    width: "70",
+    header: {
+      text: "",
     },
   },
   {
     name: "junmisu",
     fieldName: "junmisu",
     type: "data",
-    width: "80",
-    styleName: "rg-left-column",
+    width: "70",
     header: {
-      text: "전월미수",
+      text: "",
     },
   },
   {
     name: "gjKumack",
     fieldName: "gjKumack",
     type: "data",
-    width: "80",
-    styleName: "rg-left-column",
+    width: "70",
     header: {
-      text: "사용료",
+      text: "",
     },
   },
   {
     name: "gjAnkum",
     fieldName: "gjAnkum",
     type: "data",
-    width: "80",
-    styleName: "rg-left-column",
+    width: "70",
     header: {
-      text: "관리비",
+      text: "",
+    },
+  },
+  {
+    name: "gjMeterkum",
+    fieldName: "gjMeterkum",
+    type: "data",
+    width: "70",
+    header: {
+      text: "",
+    },
+  },
+  {
+    name: "gjSisulkum",
+    fieldName: "gjSisulkum",
+    type: "data",
+    width: "70",
+    header: {
+      text: "",
     },
   },
   {
     name: "gjDc",
     fieldName: "gjDc",
     type: "data",
-    width: "80",
-    styleName: "rg-left-column",
+    width: "70",
     header: {
-      text: "할인액",
+      text: "",
     },
   },
   {
     name: "gjPerkum",
     fieldName: "gjPerkum",
     type: "data",
-    width: "80",
-    styleName: "rg-left-column",
+    width: "70",
     header: {
-      text: "연체료",
+      text: "",
     },
   },
   {
     name: "gjTotal",
     fieldName: "gjTotal",
     type: "data",
-    width: "80",
-    styleName: "rg-left-column",
+    width: "70",
     header: {
-      text: "당월금액",
+      text: "",
     },
   },
   {
     name: "gsKumack",
     fieldName: "gsKumack",
     type: "data",
-    width: "80",
-    styleName: "rg-left-column",
+    width: "70",
     header: {
-      text: "수금액",
+      text: "",
     },
   },
   {
     name: "gsDc",
     fieldName: "gsDc",
     type: "data",
-    width: "80",
-    styleName: "rg-left-column",
+    width: "70",
     header: {
-      text: "D/C",
+      text: "",
     },
   },
   {
     name: "dangmisu",
     fieldName: "dangmisu",
     type: "data",
-    width: "80",
-    styleName: "rg-left-column",
+    width: "70",
     header: {
-      text: "당월미수",
+      text: "",
     },
   },
 ];

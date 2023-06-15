@@ -10,7 +10,7 @@ function getTabContent(
   areaCode: string,
   fetchData: Function,
   menuId: string,
-  tabRef: any
+  tabRef1: any
 ) {
   switch (id) {
     case 0:
@@ -24,7 +24,7 @@ function getTabContent(
           fetch={fetch}
           selected={selected}
           menuId={menuId}
-          ref={tabRef}
+          ref={tabRef1}
         />
       );
     case 1:
