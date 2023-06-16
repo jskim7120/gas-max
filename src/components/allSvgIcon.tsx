@@ -960,8 +960,8 @@ export const Tick = () => {
         transform="translate(1192.915 -961.387)"
         fill="none"
         stroke="#fff"
-        stroke-linecap="square"
-        stroke-width="2"
+        strokeLinecap="square"
+        strokeWidth="2"
       />
     </svg>
   );
@@ -1749,7 +1749,7 @@ export const PrintPreview = () => {
           fill="#fff"
           stroke="#707070"
           stroke-linejoin="round"
-          stroke-width="1"
+          strokeWidth="1"
         />
         <path
           id="Path_3088"
@@ -1758,7 +1758,7 @@ export const PrintPreview = () => {
           transform="translate(-3119 -3330)"
           fill="none"
           stroke="#707070"
-          stroke-width="1"
+          strokeWidth="1"
         />
         <g
           id="Ellipse_29"
@@ -1766,7 +1766,7 @@ export const PrintPreview = () => {
           transform="translate(706 99)"
           fill="#b0d1fe"
           stroke="#707070"
-          stroke-width="1"
+          strokeWidth="1"
         >
           <circle cx="3" cy="3" r="3" stroke="none" />
           <circle cx="3" cy="3" r="2.5" fill="none" />
@@ -1778,7 +1778,7 @@ export const PrintPreview = () => {
           transform="translate(-3117.829 -3353.829)"
           fill="none"
           stroke="#707070"
-          stroke-width="1"
+          strokeWidth="1"
         />
       </g>
     </svg>
@@ -1810,7 +1810,7 @@ export const Print = () => {
                 fill="#fff"
                 stroke="#707070"
                 stroke-linejoin="round"
-                stroke-width="1"
+                strokeWidth="1"
               />
               <rect
                 id="Rectangle_2017"
@@ -1821,7 +1821,7 @@ export const Print = () => {
                 fill="#707070"
                 stroke="#707070"
                 stroke-linejoin="round"
-                stroke-width="1"
+                strokeWidth="1"
               />
               <rect
                 id="Rectangle_2018"
@@ -1832,7 +1832,7 @@ export const Print = () => {
                 fill="#fff"
                 stroke="#707070"
                 stroke-linejoin="round"
-                stroke-width="1"
+                strokeWidth="1"
               />
             </g>
             <path
@@ -1842,7 +1842,7 @@ export const Print = () => {
               transform="translate(-3599 -3179)"
               fill="none"
               stroke="#707070"
-              stroke-width="1"
+              strokeWidth="1"
             />
             <path
               id="Path_3089"
@@ -1851,7 +1851,7 @@ export const Print = () => {
               transform="translate(-3599.026 -3178.884)"
               fill="none"
               stroke="#707070"
-              stroke-width="1"
+              strokeWidth="1"
             />
           </g>
           <path
@@ -1861,7 +1861,7 @@ export const Print = () => {
             transform="translate(-3599.026 -3176.816)"
             fill="none"
             stroke="#707070"
-            stroke-width="1"
+            strokeWidth="1"
           />
         </g>
         <path
@@ -1871,7 +1871,7 @@ export const Print = () => {
           transform="translate(-3598 -3179)"
           fill="none"
           stroke="#dfdfdf"
-          stroke-width="1"
+          strokeWidth="1"
         />
       </g>
     </svg>

@@ -12,7 +12,7 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
 import { IAR110065DETAIL, emptyObj } from "./model";
 import { apiPost } from "app/axios";
-import { DateWithDash, DateWithoutDash } from "helpers/dateFormat";
+import { DateWithoutDash } from "helpers/dateFormat";
 
 const Tab1 = React.forwardRef(
   (
@@ -37,7 +37,7 @@ const Tab1 = React.forwardRef(
     },
     ref: React.ForwardedRef<any>
   ) => {
-    const { register, handleSubmit, reset, control, getValues } =
+    const { register, handleSubmit, reset, control, getValues, watch } =
       useForm<IAR110065DETAIL>({
         mode: "onSubmit",
       });
@@ -45,6 +45,14 @@ const Tab1 = React.forwardRef(
     const dispatch = useDispatch();
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const footerState = useSelector((state: any) => state.footer);
+    const [pjJago, setPjJago] = useState<number>(0);
+    let calcPjJago = 0;
+    let pjKumSup = 0;
+    let pjKumVat = 0;
+    let pjKumack = 0;
+    let pjDanga = 0;
+    let pjQty = 0;
+    let pjReqty = 0;
 
     useEffect(() => {
       if (cm1106.source === "AR1100" && cm1106.jpCode && cm1106.jpName) {
@@ -59,7 +67,7 @@ const Tab1 = React.forwardRef(
     }, [data]);
 
     useImperativeHandle<any, any>(ref, () => ({
-      resetForm,
+      reset,
       crud,
     }));
 
@@ -87,20 +95,120 @@ const Tab1 = React.forwardRef(
           pjMisukum: data?.pjMisukum,
           pjSwCode: data?.pjSwCode,
           pjBigo: data?.pjBigo,
+          qtyKg: data?.qtyKg,
+          qtyL: data?.qtyL,
+          jpSpecific: data?.jpSpecific,
         });
       } else if (type === "jpName") {
+        const pjJago =
+          (cm1106?.jcBasicJaego ? +cm1106.jcBasicJaego : 0) +
+          (cm1106?.custOut ? +cm1106.custOut : 0) -
+          (cm1106?.custIn ? +cm1106.custIn : 0);
+
+        const pjKumSup =
+          (cm1106?.jcJpDanga ? +cm1106.jcJpDanga : 0) *
+          (getValues("pjQty") ? +getValues("pjQty") : 0);
+
+        setPjJago(pjJago);
+
         reset((formValues) => ({
           ...formValues,
           pjJpName: cm1106.jpName,
           pjJpCode: cm1106.jpCode,
+          pjJago: pjJago,
+          pjDanga: cm1106.jcJpDanga,
+          pjKumSup: pjKumSup,
         }));
-      } else if (type === "clear") {
-        reset({
-          ...emptyObj,
-          pjDate: DateWithDash(new Date()),
-        });
       }
     };
+
+    const calcLast2field = () => {
+      if (getValues("pjVatDiv") === "0") {
+        pjKumVat = 0;
+        pjKumack = pjKumSup;
+      } else if (
+        getValues("pjVatDiv") === "1" ||
+        getValues("pjVatDiv") === "2"
+      ) {
+        pjKumVat = Math.round(pjKumSup * 0.1);
+        pjKumack = pjKumVat + pjKumSup;
+      }
+    };
+
+    const handlePjQtyChange = () => {
+      // console.log("watch 1---------->>>>>>>");
+      pjDanga = getValues("pjDanga") ? +getValues("pjDanga") : 0;
+      pjQty = getValues("pjQty") ? +getValues("pjQty") : 0;
+      pjKumSup = pjDanga * pjQty;
+      calcLast2field();
+      reset((formValues) => ({
+        ...formValues,
+        pjReqty: watch("pjQty"),
+        pjKumSup: pjKumSup,
+        pjKumVat: pjKumVat,
+        pjKumack: pjKumack,
+      }));
+    };
+
+    const handlePjReqtyChange = () => {
+      // console.log("watch 2--------->>>>>>>");
+      pjQty = getValues("pjQty") ? +getValues("pjQty") : 0;
+      pjReqty = getValues("pjReqty") ? +getValues("pjReqty") : 0;
+      calcPjJago = pjJago + pjQty - pjReqty;
+      reset((formValues) => ({
+        ...formValues,
+        pjJago: calcPjJago,
+      }));
+    };
+
+    const handlePjDangaChange = () => {
+      // console.log("watch 3------->>>>>>>");
+      pjDanga = getValues("pjDanga") ? +getValues("pjDanga") : 0;
+      pjQty = getValues("pjQty") ? +getValues("pjQty") : 0;
+      pjKumSup = pjDanga * pjQty;
+      calcLast2field();
+      reset((formValues) => ({
+        ...formValues,
+        pjKumSup: pjKumSup,
+        pjKumVat: pjKumVat,
+        pjKumack: pjKumack,
+      }));
+    };
+
+    const handlePjVatDivChange = () => {
+      // console.log("watch 4------->>>>>>>");
+      pjKumSup = getValues("pjKumSup") ? +getValues("pjKumSup") : 0;
+      calcLast2field();
+      reset((formValues) => ({
+        ...formValues,
+        pjKumVat: pjKumVat,
+        pjKumack: pjKumack,
+      }));
+    };
+
+    useEffect(() => {
+      if (watch("pjQty") !== undefined) {
+        handlePjQtyChange();
+      }
+    }, [watch("pjQty")]);
+
+    useEffect(() => {
+      if (watch("pjReqty") !== undefined) {
+        handlePjReqtyChange();
+      }
+    }, [watch("pjReqty")]);
+
+    useEffect(() => {
+      if (watch("pjDanga") !== undefined) {
+        handlePjDangaChange();
+      }
+    }, [watch("pjDanga")]);
+
+    useEffect(() => {
+      if (watch("pjVatDiv") !== undefined) {
+        handlePjVatDivChange();
+      }
+    }, [watch("pjVatDiv")]);
 
     const openPopupCM1106 = async () => {
       dispatch(openModal({ type: "cm1106Modal" }));
@@ -156,7 +264,7 @@ const Tab1 = React.forwardRef(
         1: (
           <Controller
             control={control}
-            {...register("pjDate")}
+            name="pjDate"
             render={({ field }) => (
               <CustomDatePicker
                 {...field}
@@ -173,10 +281,14 @@ const Tab1 = React.forwardRef(
               inputSize={InputSize.i70}
               readOnly={!isAddBtnClicked}
             />
-            <Input
-              register={register("pjJpName")}
-              readOnly={!isAddBtnClicked}
+            <Controller
+              control={control}
+              name="pjJpName"
+              render={({ field }) => (
+                <Input {...field} readOnly={!isAddBtnClicked} />
+              )}
             />
+
             <span
               style={{
                 width: "22px",
@@ -197,25 +309,98 @@ const Tab1 = React.forwardRef(
             </span>
           </FormGroup>
         ),
-        3: <Input register={register("pjQty")} inputSize={InputSize.i100} />,
-        4: <Input register={register("pjReqty")} inputSize={InputSize.i100} />,
-        5: <Input register={register("pjJago")} inputSize={InputSize.i100} />,
-        6: <Input register={register("pjDanga")} inputSize={InputSize.i100} />,
+        3:
+          data?.jpKind === "4" ? (
+            <Controller
+              control={control}
+              name="qtyKg"
+              render={({ field }) => (
+                <Input {...field} inputSize={InputSize.i100} />
+              )}
+            />
+          ) : (
+            <Controller
+              control={control}
+              name="pjQty"
+              render={({ field }) => (
+                <Input {...field} inputSize={InputSize.i100} />
+              )}
+            />
+          ),
+
+        4:
+          data?.jpKind === "4" ? (
+            <Controller
+              control={control}
+              name="qtyL"
+              render={({ field }) => (
+                <Input {...field} inputSize={InputSize.i100} />
+              )}
+            />
+          ) : (
+            <Controller
+              control={control}
+              name="pjReqty"
+              render={({ field }) => (
+                <Input {...field} inputSize={InputSize.i100} />
+              )}
+            />
+          ),
+        5:
+          data?.jpKind === "4" ? (
+            <Input
+              register={register("jpSpecific")}
+              inputSize={InputSize.i100}
+            />
+          ) : (
+            <Input register={register("pjJago")} inputSize={InputSize.i100} />
+          ),
+        6: (
+          <Controller
+            control={control}
+            name="pjDanga"
+            render={({ field }) => (
+              <Input {...field} inputSize={InputSize.i100} />
+            )}
+          />
+        ),
         7: (
           <FormGroup>
-            <Select register={register("pjVatDiv")} width={InputSize.i100}>
-              {dictionary?.pjVatDiv?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
+            <Controller
+              control={control}
+              name="pjVatDiv"
+              render={({ field }) => (
+                <Select {...field} width={InputSize.i100}>
+                  {dictionary?.pjVatDiv?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            />
           </FormGroup>
         ),
-        8: <Input register={register("pjKumSup")} inputSize={InputSize.i100} />,
-        9: <Input register={register("pjKumVat")} inputSize={InputSize.i100} />,
+        8: (
+          <Input
+            register={register("pjKumSup")}
+            inputSize={InputSize.i100}
+            readOnly
+          />
+        ),
+        9: (
+          <Input
+            register={register("pjKumVat")}
+            inputSize={InputSize.i100}
+            readOnly
+          />
+        ),
         10: (
-          <Input register={register("pjKumack")} inputSize={InputSize.i100} />
+          <Input
+            register={register("pjKumack")}
+            inputSize={InputSize.i100}
+            readOnly
+          />
         ),
       },
     ];
@@ -291,14 +476,14 @@ const Tab1 = React.forwardRef(
               tableHeader={[
                 "판매일자",
                 "품  명",
-                data.jpKind === null ? "판매수량" : "매출량(kg)",
-                data.jpKind === null ? "공병회수" : "매출량(ℓ)",
-                data.jpKind === null ? "재고" : "비중(kg/ℓ)",
+                data?.jpKind === "4" ? "매출량(kg)" : "판매수량",
+                data?.jpKind === "4" ? "매출량(ℓ)" : "공병회수",
+                data?.jpKind === "4" ? "비중(kg/ℓ)" : "재고",
                 "단가",
                 "VAT",
                 "공급가액",
                 "세액",
-                "합계금액",
+                " 합계금액",
               ]}
               tableData={data1}
               style={{ marginBottom: "2px" }}

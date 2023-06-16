@@ -1,16 +1,12 @@
 import { ValueType } from "realgrid";
 
-export const fields0 = [
+export const fields2 = [
   {
     fieldName: "areaCode",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuCno",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuCode",
+    fieldName: "cuApt",
     dataType: ValueType.TEXT,
   },
   {
@@ -18,8 +14,12 @@ export const fields0 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuTel",
-    dataType: ValueType.TEXT,
+    fieldName: "gjGage",
+    dataType: ValueType.NUMBER,
+  },
+  {
+    fieldName: "m3ToKg",
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "junmisu",
@@ -31,6 +31,14 @@ export const fields0 = [
   },
   {
     fieldName: "gjAnkum",
+    dataType: ValueType.NUMBER,
+  },
+  {
+    fieldName: "gjMeterkum",
+    dataType: ValueType.NUMBER,
+  },
+  {
+    fieldName: "gjSisulkum",
     dataType: ValueType.NUMBER,
   },
   {
@@ -57,13 +65,9 @@ export const fields0 = [
     fieldName: "dangmisu",
     dataType: ValueType.NUMBER,
   },
-  {
-    fieldName: "rowchk",
-    dataType: ValueType.TEXT,
-  },
 ];
 
-export const columns0 = [
+export const columns2 = [
   {
     name: "areaCode",
     fieldName: "areaCode",
@@ -74,17 +78,8 @@ export const columns0 = [
     },
   },
   {
-    name: "cuCno",
-    fieldName: "cuCno",
-    type: "data",
-    width: "50",
-    header: {
-      text: "",
-    },
-  },
-  {
-    name: "cuCode",
-    fieldName: "cuCode",
+    name: "cuApt",
+    fieldName: "cuApt",
     type: "data",
     width: "80",
     header: {
@@ -95,21 +90,33 @@ export const columns0 = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "200",
+    width: "150",
     styleName: "rg-left-column",
     header: {
-      text: "거래처명",
+      text: "APT 분류명",
     },
   },
   {
-    name: "cuTel",
-    fieldName: "cuTel",
+    name: "gjGage",
+    fieldName: "gjGage",
     type: "data",
-    width: "110",
-    styleName: "rg-left-column",
+    width: "70",
+    styleName: "rg-right-column",
     header: {
-      text: "전화",
+      text: "사용(m3)",
     },
+    numberFormat: "#,##0",
+  },
+  {
+    name: "m3ToKg",
+    fieldName: "m3ToKg",
+    type: "data",
+    width: "70",
+    styleName: "rg-right-column",
+    header: {
+      text: "기화(kg)",
+    },
+    numberFormat: "#,##0",
   },
   {
     name: "junmisu",
@@ -129,7 +136,7 @@ export const columns0 = [
     width: "80",
     styleName: "rg-right-column",
     header: {
-      text: "사용료",
+      text: "당월사용료",
     },
     numberFormat: "#,##0",
   },
@@ -137,7 +144,7 @@ export const columns0 = [
     name: "gjAnkum",
     fieldName: "gjAnkum",
     type: "data",
-    width: "80",
+    width: "70",
     styleName: "rg-right-column",
     header: {
       text: "관리비",
@@ -145,10 +152,32 @@ export const columns0 = [
     numberFormat: "#,##0",
   },
   {
+    name: "gjMeterkum",
+    fieldName: "gjMeterkum",
+    type: "data",
+    width: "70",
+    styleName: "rg-right-column",
+    header: {
+      text: "계량기",
+    },
+    numberFormat: "#,##0",
+  },
+  {
+    name: "gjSisulkum",
+    fieldName: "gjSisulkum",
+    type: "data",
+    width: "70",
+    styleName: "rg-right-column",
+    header: {
+      text: "시설비",
+    },
+    numberFormat: "#,##0",
+  },
+  {
     name: "gjDc",
     fieldName: "gjDc",
     type: "data",
-    width: "80",
+    width: "70",
     styleName: "rg-right-column",
     header: {
       text: "할인액",
@@ -159,7 +188,7 @@ export const columns0 = [
     name: "gjPerkum",
     fieldName: "gjPerkum",
     type: "data",
-    width: "80",
+    width: "70",
     styleName: "rg-right-column",
     header: {
       text: "연체료",
@@ -170,7 +199,7 @@ export const columns0 = [
     name: "gjTotal",
     fieldName: "gjTotal",
     type: "data",
-    width: "80",
+    width: "70",
     styleName: "rg-right-column",
     header: {
       text: "당월금액",
@@ -181,7 +210,7 @@ export const columns0 = [
     name: "gsKumack",
     fieldName: "gsKumack",
     type: "data",
-    width: "80",
+    width: "70",
     styleName: "rg-right-column",
     header: {
       text: "수금액",
@@ -192,7 +221,7 @@ export const columns0 = [
     name: "gsDc",
     fieldName: "gsDc",
     type: "data",
-    width: "80",
+    width: "70",
     styleName: "rg-right-column",
     header: {
       text: "D/C",
@@ -209,14 +238,5 @@ export const columns0 = [
       text: "당월미수",
     },
     numberFormat: "#,##0",
-  },
-  {
-    name: "rowchk",
-    fieldName: "rowchk",
-    type: "data",
-    width: "50",
-    header: {
-      text: "선택",
-    },
   },
 ];

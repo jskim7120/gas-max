@@ -241,7 +241,7 @@ export const columns = [
     name: "gjMisu",
     fieldName: "gjMisu",
     type: "data",
-    width: "80",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "전월미수",

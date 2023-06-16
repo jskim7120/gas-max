@@ -51,6 +51,7 @@ function AR9006({
       if (dataCommonDic?.dataInit) {
         const init = dataCommonDic.dataInit[0];
         reset({
+          areaCode: dataCommonDic?.areaCode[0].code,
           sDate: init?.sDate,
           eDate: init?.dDate,
           jpCode: init?.jpCode,

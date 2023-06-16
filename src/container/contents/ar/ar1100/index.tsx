@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector } from "app/store";
 import { apiGet } from "app/axios";
-import { AR1100SEARCH, AR1100SELECT } from "app/path";
+import { AR1100SEARCH, AR1100SELECT, AR1100INIT } from "app/path";
 import {
   Plus,
   Trash,
@@ -27,6 +27,7 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { fields, columns } from "./data";
 import { IAR1100SEARCH } from "./model";
 import getTabContent from "./getTabContent";
+import { emptyObj as emptyObj1 } from "./tabs/tab1/model";
 
 function AR1100({
   depthFullName,
@@ -48,12 +49,12 @@ function AR1100({
     dataCommonDic,
   } = CreateReport("AR", "AR1100", menuId, AR1100SEARCH);
 
-  const tabRef = useRef() as React.MutableRefObject<any>;
+  const tabRef1 = useRef() as React.MutableRefObject<any>;
 
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
   const [data65, setData65] = useState({});
-  const [data65Dictionary, setData65Dictionary] = useState({});
+  const [dataDictionary, setDataDictionary] = useState({});
   const [tabId, setTabId] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
@@ -73,10 +74,7 @@ function AR1100({
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
-      if (isAddBtnClicked) {
-        btnRef1.current.classList.remove("active");
-        setIsAddBtnClicked(false);
-      }
+      addBtnUnClick();
 
       fetchData65({
         areaCode: selected?.areaCode,
@@ -86,13 +84,13 @@ function AR1100({
         pjType: selected?.pjType,
       });
 
-      dispatch(
-        addCM1106({
-          areaCode: selected.areaCode,
-          cuCode: selected.cuCode,
-          source: "AR1100",
-        })
-      );
+      // dispatch(
+      //   addCM1106({
+      //     areaCode: selected.areaCode,
+      //     cuCode: selected.cuCode,
+      //     source: "AR1100",
+      //   })
+      // );
     }
   }, [selected]);
 
@@ -107,7 +105,7 @@ function AR1100({
 
     if (res && Object.keys(res)?.length > 0) {
       setData65(res?.detailData[0]);
-      setData65Dictionary({
+      setDataDictionary({
         pjVatDiv: res?.pjVatDiv,
         pjSwCode: res?.pjSwCode,
         proxyType: res?.proxyType,
@@ -116,7 +114,28 @@ function AR1100({
       });
     } else {
       setData65({});
-      setData65Dictionary({});
+      setDataDictionary({});
+    }
+  };
+
+  const fetchData11 = async (params: any) => {
+    const res = await apiGet(AR1100INIT, params);
+
+    console.log("res>>>>>>>>>>>>>>>>>", res);
+
+    if (res && Object.keys(res)?.length > 0) {
+      setDataDictionary({
+        pjInkumtype: res?.pjInkumtype,
+        pjSwCode: res?.pjSwCode,
+        pjVatDiv: res?.pjVatDiv,
+        proxyType: res?.proxyType,
+        saleType: res?.saleType,
+      });
+      if (tabId === 0) {
+        if (res?.initData?.length > 0) {
+          tabRef1.current.reset({ ...res.initData[0] });
+        }
+      }
     }
   };
 
@@ -144,12 +163,17 @@ function AR1100({
     };
   };
 
+  const addBtnUnClick = () => {
+    if (isAddBtnClicked) {
+      btnRef1.current.classList.remove("active");
+      setIsAddBtnClicked(false);
+    }
+  };
+
   const resetSearchForm = (type: string) => {
     if (type === "reset") {
       const params = prepareParams();
       reset(params);
-    }
-    if (type === "clear") {
     }
   };
 
@@ -159,18 +183,21 @@ function AR1100({
   };
 
   const handleClickBtnAdd = () => {
+    fetchData11({ areaCode: getValues("areaCode"), pjType: 0 });
     btnRef1.current.classList.add("active");
     setIsAddBtnClicked(true);
-    tabRef.current.resetForm("clear");
     document.getElementById("footerSearchId")?.focus();
   };
 
   const handleClickBtnDel = () => {
-    if (isAddBtnClicked) {
-      setIsAddBtnClicked(false);
-      btnRef1.current.classList.remove("active");
-    }
-    tabRef.current.crud("delete");
+    addBtnUnClick();
+    tabRef1.current.crud("delete");
+  };
+
+  const handleReset = () => {
+    resetSearchForm("reset");
+    addBtnUnClick();
+    setData([]);
   };
 
   return (
@@ -202,7 +229,7 @@ function AR1100({
               text="취소"
               icon={<ResetGray />}
               color={ButtonColor.LIGHT}
-              onClick={() => {}}
+              onClick={handleReset}
             />
           </div>
         </FormGroup>
@@ -400,13 +427,13 @@ function AR1100({
             tabId,
             data65,
             selected,
-            data65Dictionary,
+            dataDictionary,
             isAddBtnClicked,
             setIsAddBtnClicked,
             getValues("areaCode"),
             fetchDataWithParams,
             menuId,
-            tabRef
+            tabRef1
           )}
         </TabContentWrapper>
       </WrapperContent>

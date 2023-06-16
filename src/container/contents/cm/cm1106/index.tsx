@@ -16,7 +16,7 @@ import {
 import SEARCH_RED from "assets/image/search_red.png";
 import Grid from "components/grid";
 import Form from "./form";
-import { addCM1106AR100Tick, closeModal } from "app/state/modal/modalSlice";
+import { addCM1106AR1100Tick, closeModal } from "app/state/modal/modalSlice";
 import { Select, FormGroup } from "components/form/style";
 import { CM1106LIST } from "app/path";
 import { ISEARCH } from "./model";
@@ -95,9 +95,13 @@ function FormCM1106() {
   const handleClickTick = () => {
     if (selected && Object.keys(selected)?.length > 0) {
       dispatch(
-        addCM1106AR100Tick({
+        addCM1106AR1100Tick({
           jpName: selected?.jcJpName,
           jpCode: selected?.jcJpCode,
+          custIn: selected?.custIn,
+          custOut: selected?.custOut,
+          jcBasicJaego: selected?.jcBasicJaego,
+          jcJpDanga: selected?.jcJpDanga,
         })
       );
       dispatch(closeModal());
