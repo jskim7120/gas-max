@@ -95,6 +95,9 @@ const Tab1 = React.forwardRef(
           pjMisukum: data?.pjMisukum,
           pjSwCode: data?.pjSwCode,
           pjBigo: data?.pjBigo,
+          qtyKg: data?.qtyKg,
+          qtyL: data?.qtyL,
+          jpSpecific: data?.jpSpecific,
         });
       } else if (type === "jpName") {
         const pjJago =
@@ -306,26 +309,52 @@ const Tab1 = React.forwardRef(
             </span>
           </FormGroup>
         ),
-        3: (
-          <Controller
-            control={control}
-            name="pjQty"
-            render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} />
-            )}
-          />
-        ),
+        3:
+          data?.jpKind === "4" ? (
+            <Controller
+              control={control}
+              name="qtyKg"
+              render={({ field }) => (
+                <Input {...field} inputSize={InputSize.i100} />
+              )}
+            />
+          ) : (
+            <Controller
+              control={control}
+              name="pjQty"
+              render={({ field }) => (
+                <Input {...field} inputSize={InputSize.i100} />
+              )}
+            />
+          ),
 
-        4: (
-          <Controller
-            control={control}
-            name="pjReqty"
-            render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} />
-            )}
-          />
-        ),
-        5: <Input register={register("pjJago")} inputSize={InputSize.i100} />,
+        4:
+          data?.jpKind === "4" ? (
+            <Controller
+              control={control}
+              name="qtyL"
+              render={({ field }) => (
+                <Input {...field} inputSize={InputSize.i100} />
+              )}
+            />
+          ) : (
+            <Controller
+              control={control}
+              name="pjReqty"
+              render={({ field }) => (
+                <Input {...field} inputSize={InputSize.i100} />
+              )}
+            />
+          ),
+        5:
+          data?.jpKind === "4" ? (
+            <Input
+              register={register("jpSpecific")}
+              inputSize={InputSize.i100}
+            />
+          ) : (
+            <Input register={register("pjJago")} inputSize={InputSize.i100} />
+          ),
         6: (
           <Controller
             control={control}
@@ -447,14 +476,14 @@ const Tab1 = React.forwardRef(
               tableHeader={[
                 "판매일자",
                 "품  명",
-                "pjQty",
-                "pjReqty",
-                "pjJago",
-                "pjDanga",
-                "pjVatDiv",
-                "pjKumSup",
-                "pjKumVat",
-                " pjKumack",
+                data?.jpKind === "4" ? "매출량(kg)" : "판매수량",
+                data?.jpKind === "4" ? "매출량(ℓ)" : "공병회수",
+                data?.jpKind === "4" ? "비중(kg/ℓ)" : "재고",
+                "단가",
+                "VAT",
+                "공급가액",
+                "세액",
+                " 합계금액",
               ]}
               tableData={data1}
               style={{ marginBottom: "2px" }}

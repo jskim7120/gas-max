@@ -74,10 +74,7 @@ function AR1100({
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
-      if (isAddBtnClicked) {
-        btnRef1.current.classList.remove("active");
-        setIsAddBtnClicked(false);
-      }
+      addBtnUnClick();
 
       fetchData65({
         areaCode: selected?.areaCode,
@@ -166,6 +163,13 @@ function AR1100({
     };
   };
 
+  const addBtnUnClick = () => {
+    if (isAddBtnClicked) {
+      btnRef1.current.classList.remove("active");
+      setIsAddBtnClicked(false);
+    }
+  };
+
   const resetSearchForm = (type: string) => {
     if (type === "reset") {
       const params = prepareParams();
@@ -194,13 +198,6 @@ function AR1100({
     resetSearchForm("reset");
     addBtnUnClick();
     setData([]);
-  };
-
-  const addBtnUnClick = () => {
-    if (isAddBtnClicked) {
-      btnRef1.current.classList.remove("active");
-      setIsAddBtnClicked(false);
-    }
   };
 
   return (
