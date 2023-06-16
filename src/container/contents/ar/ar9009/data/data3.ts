@@ -15,55 +15,55 @@ export const fields3 = [
   },
   {
     fieldName: "gjGage",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "m3ToKg",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "junmisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjAnkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjMeterkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjSisulkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjDc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjPerkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjTotal",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gsKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gsDc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "dangmisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
 ];
 
@@ -72,9 +72,9 @@ export const columns3 = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "70",
+    width: "50",
     header: {
-      text: "",
+      text: "영업소",
     },
   },
   {
@@ -83,7 +83,7 @@ export const columns3 = [
     type: "data",
     width: "70",
     header: {
-      text: "",
+      text: "코드",
     },
   },
   {
@@ -91,8 +91,9 @@ export const columns3 = [
     fieldName: "groupName",
     type: "data",
     width: "70",
+    styleName: "rg-left-column",
     header: {
-      text: "",
+      text: "그룹명",
     },
   },
   {
@@ -100,116 +101,142 @@ export const columns3 = [
     fieldName: "gjGage",
     type: "data",
     width: "70",
+    styleName: "rg-right-column",
     header: {
-      text: "",
+      text: "사용(m3)",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "m3ToKg",
     fieldName: "m3ToKg",
     type: "data",
     width: "70",
+    styleName: "rg-right-column",
     header: {
-      text: "",
+      text: "기화(kg)",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "junmisu",
     fieldName: "junmisu",
     type: "data",
-    width: "70",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
-      text: "",
+      text: "전월미수",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjKumack",
     fieldName: "gjKumack",
     type: "data",
-    width: "70",
+    width: "80",
+    styleName: "rg-right-column",
     header: {
-      text: "",
+      text: "당월사용료",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjAnkum",
     fieldName: "gjAnkum",
     type: "data",
     width: "70",
+    styleName: "rg-right-column",
     header: {
-      text: "",
+      text: "관리비",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjMeterkum",
     fieldName: "gjMeterkum",
     type: "data",
     width: "70",
+    styleName: "rg-right-column",
     header: {
-      text: "",
+      text: "계량기",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjSisulkum",
     fieldName: "gjSisulkum",
     type: "data",
     width: "70",
+    styleName: "rg-right-column",
     header: {
-      text: "",
+      text: "시설비",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjDc",
     fieldName: "gjDc",
     type: "data",
     width: "70",
+    styleName: "rg-right-column",
     header: {
-      text: "",
+      text: "할인액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjPerkum",
     fieldName: "gjPerkum",
     type: "data",
     width: "70",
+    styleName: "rg-right-column",
     header: {
-      text: "",
+      text: "연체료",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gjTotal",
     fieldName: "gjTotal",
     type: "data",
     width: "70",
+    styleName: "rg-right-column",
     header: {
-      text: "",
+      text: "당월금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gsKumack",
     fieldName: "gsKumack",
     type: "data",
     width: "70",
+    styleName: "rg-right-column",
     header: {
-      text: "",
+      text: "수금액",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "gsDc",
     fieldName: "gsDc",
     type: "data",
     width: "70",
+    styleName: "rg-right-column",
     header: {
-      text: "",
+      text: "D/C",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "dangmisu",
     fieldName: "dangmisu",
     type: "data",
-    width: "70",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
-      text: "",
+      text: "당월미수",
     },
+    numberFormat: "#,##0",
   },
 ];

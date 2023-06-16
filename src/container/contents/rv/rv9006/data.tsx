@@ -74,7 +74,7 @@ export const columns = [
     name: "code",
     fieldName: "code",
     type: "data",
-    width: "150",
+    width: "70",
     header: {
       text: "코드",
     },
@@ -83,7 +83,8 @@ export const columns = [
     name: "codeName",
     fieldName: "codeName",
     type: "data",
-    width: "200",
+    width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "사원",
     },
@@ -112,7 +113,7 @@ export const columns = [
     name: "gjKumack",
     fieldName: "gjKumack",
     type: "data",
-    width: "80",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "사용금액",
@@ -145,7 +146,7 @@ export const columns = [
     name: "gjDangkum",
     fieldName: "gjDangkum",
     type: "data",
-    width: "80",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "당월금액",
@@ -178,7 +179,7 @@ export const columns = [
     name: "gjTotal",
     fieldName: "gjTotal",
     type: "data",
-    width: "80",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "당월합계",
@@ -189,7 +190,7 @@ export const columns = [
     name: "gjMinab",
     fieldName: "gjMinab",
     type: "data",
-    width: "80",
+    width: "100",
     styleName: "rg-right-column",
     header: {
       text: "당월미납액",
