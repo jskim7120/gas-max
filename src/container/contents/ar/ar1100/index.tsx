@@ -171,8 +171,6 @@ function AR1100({
       const params = prepareParams();
       reset(params);
     }
-    if (type === "clear") {
-    }
   };
 
   const submit = async (params: IAR1100SEARCH) => {
@@ -188,11 +186,21 @@ function AR1100({
   };
 
   const handleClickBtnDel = () => {
-    if (isAddBtnClicked) {
-      setIsAddBtnClicked(false);
-      btnRef1.current.classList.remove("active");
-    }
+    addBtnUnClick();
     tabRef1.current.crud("delete");
+  };
+
+  const handleReset = () => {
+    resetSearchForm("reset");
+    addBtnUnClick();
+    setData([]);
+  };
+
+  const addBtnUnClick = () => {
+    if (isAddBtnClicked) {
+      btnRef1.current.classList.remove("active");
+      setIsAddBtnClicked(false);
+    }
   };
 
   return (
@@ -224,7 +232,7 @@ function AR1100({
               text="취소"
               icon={<ResetGray />}
               color={ButtonColor.LIGHT}
-              onClick={() => {}}
+              onClick={handleReset}
             />
           </div>
         </FormGroup>
