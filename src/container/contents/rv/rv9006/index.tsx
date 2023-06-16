@@ -167,7 +167,7 @@ function RV9006({
       </SearchWrapper>
       <form autoComplete="off">
         <SearchWrapper>
-          <Field flex style={{ width: "70%" }}>
+          <Field flex style={{ width: "80%" }}>
             <Field>
               <Wrapper grid col={4} fields="1.5fr 1fr 1fr 1fr">
                 <FormGroup>
