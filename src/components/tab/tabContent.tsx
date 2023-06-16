@@ -43,7 +43,13 @@ import GR9009 from "container/contents/gr/gr9009";
 import RV1100 from "container/contents/rv/rv1100";
 import RV9005 from "container/contents/rv/rv9005";
 import RV9006 from "container/contents/rv/rv9006";
-
+import RV9007 from "container/contents/rv/rv9007";
+import RV9008 from "container/contents/rv/rv9008";
+import RV9009 from "container/contents/rv/rv9009";
+import RV9010 from "container/contents/rv/rv9010";
+import RV9011 from "container/contents/rv/rv9011";
+import RV9012 from "container/contents/rv/rv9012";
+import RV9013 from "container/contents/rv/rv9013";
 import CC1100 from "container/contents/cc/cc1100";
 import CC1200 from "container/contents/cc/cc1200";
 import CC1400 from "container/contents/cc/cc1400";
@@ -342,6 +348,34 @@ export const getContent = (
     case "RV9006":
       return (
         <RV9006 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "RV9007":
+      return (
+        <RV9007 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "RV9008":
+      return (
+        <RV9008 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "RV9009":
+      return (
+        <RV9009 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "RV9010":
+      return (
+        <RV9010 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "RV9011":
+      return (
+        <RV9011 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "RV9012":
+      return (
+        <RV9012 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "RV9013":
+      return (
+        <RV9013 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
       );
     case "CC1100":
       return (

@@ -177,6 +177,15 @@ export const RV1100SEARCH62 = "/app/RV1100/search62";
 export const RV1100INSERT = "/app/RV1100/insert";
 export const RV1100DELETE = "/app/RV1100/delete";
 export const RV110065 = "/app/RV1100/65";
+export const RV9005SEARCH = "/app/RV9005/search";
+export const RV9006SEARCH = "/app/RV9006/search";
+export const RV9007SEARCH = "/app/RV9007/search";
+export const RV9008SEARCH = "/app/RV9008/search";
+export const RV9009SEARCH = "/app/RV9009/search";
+export const RV9010SEARCH = "/app/RV9010/search";
+export const RV9011SEARCH = "/app/RV9011/search";
+export const RV9012SEARCH = "/app/RV9012/search";
+export const RV9013SEARCH = "/app/RV9013/search";
 
 export const CC1100SEARCH = "/app/CC1100/search";
 export const CC110065 = "/app/CC1100/65";
@@ -193,9 +202,6 @@ export const CC160065 = "/app/CC1600/65";
 export const CC160062 = "/app/CC1600/62";
 export const CC1700SEARCH = "/app/CC1700/search";
 export const CC170065 = "/app/CC1700/65";
-
-export const RV9006SEARCH = "/app/RV9006/search";
-export const RV9005SEARCH = "/app/RV9005/search";
 
 export const PT1100SEARCH = "/app/PT1100/search";
 export const PT110065 = "/app/PT1100/65";
