@@ -433,7 +433,8 @@ function AR1100({
             getValues("areaCode"),
             fetchDataWithParams,
             menuId,
-            tabRef1
+            tabRef1,
+            addBtnUnClick
           )}
         </TabContentWrapper>
       </WrapperContent>
