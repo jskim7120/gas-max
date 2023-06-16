@@ -101,6 +101,7 @@ function FormCM1106() {
           custIn: selected?.custIn,
           custOut: selected?.custOut,
           jcBasicJaego: selected?.jcBasicJaego,
+          jcJpDanga: selected?.jcJpDanga,
         })
       );
       dispatch(closeModal());
