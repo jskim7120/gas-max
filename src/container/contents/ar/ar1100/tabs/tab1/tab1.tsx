@@ -241,7 +241,8 @@ const Tab1 = React.forwardRef(
           footerState?.info?.cuCode !== ""
         ) {
           params.areaCode = areaCode;
-          params.pjCuCode = footerState.info.cuCode;
+          params.pjCuCode = footerState?.info?.cuCode;
+          params.pjCuName = footerState?.info?.cuViewName;
         } else {
           return null;
         }
