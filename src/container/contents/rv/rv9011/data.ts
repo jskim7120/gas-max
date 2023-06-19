@@ -135,17 +135,16 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "100",
+    width: "150",
     header: {
       text: "거래처명",
     },
   },
-
   {
     name: "maxRh20",
     fieldName: "maxRh20",
     type: "data",
-    width: "90",
+    width: "50",
     header: {
       text: "압력",
     },
@@ -154,7 +153,7 @@ export const columns = [
     name: "sumGageA",
     fieldName: "sumGageA",
     type: "data",
-    width: "200",
+    width: "50",
     header: {
       text: "M3",
     },
@@ -183,7 +182,7 @@ export const columns = [
   },
   {
     name: "janAJun",
-    fieldName: "janAJunD",
+    fieldName: "janAJun",
     type: "data",
     width: "50",
     header: {
@@ -192,7 +191,6 @@ export const columns = [
     styleName: "rg-right-column",
     numberFormat: "#,##0",
   },
-
   {
     name: "janADang",
     fieldName: "janADang",
@@ -295,7 +293,7 @@ export const columns = [
     name: "m3KumackB",
     fieldName: "m3KumackB",
     type: "data",
-    width: "100",
+    width: "50",
     header: {
       text: "오차",
     },
@@ -305,7 +303,7 @@ export const columns = [
     name: "sumGageC",
     fieldName: "sumGageC",
     type: "data",
-    width: "100",
+    width: "50",
     header: {
       text: "M3",
     },
@@ -321,7 +319,6 @@ export const columns = [
     },
     styleName: "rg-right-column",
   },
-
   {
     name: "kgC",
     fieldName: "kgC",
@@ -370,7 +367,7 @@ export const columns = [
     name: "m3KumackC",
     fieldName: "m3KumackC",
     type: "data",
-    width: "100",
+    width: "50",
     header: {
       text: "오차",
     },
@@ -380,7 +377,7 @@ export const columns = [
     name: "sumM3Kumack",
     fieldName: "sumM3Kumack",
     type: "data",
-    width: "100",
+    width: "70",
     header: {
       text: "오차합계",
     },
@@ -434,5 +431,5 @@ export const layout = [
       "m3KumackC",
     ],
   },
-  "sumKg",
+  "sumM3Kumack",
 ];

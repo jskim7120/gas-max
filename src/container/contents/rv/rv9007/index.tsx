@@ -180,7 +180,7 @@ function RV9007({
               label="건물명"
               register={register("cuName")}
               labelStyle={{ minWidth: "70px" }}
-              inputSize={InputSize.i120}
+              inputSize={InputSize.i160}
             />
 
             <Label style={{ minWidth: "80px" }}>담당사원</Label>
@@ -191,7 +191,7 @@ function RV9007({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>지역구분</Label>
+            <Label style={{ minWidth: "100px" }}>지역구분</Label>
             <Select register={register("jyCode")} width={InputSize.i120}>
               {dataCommonDic?.jyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -201,7 +201,7 @@ function RV9007({
             </Select>
           </FormGroup>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>소비형태</Label>
+            <Label style={{ minWidth: "276px" }}>소비형태</Label>
             <Select register={register("cuCutype")} width={InputSize.i120}>
               {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -210,7 +210,7 @@ function RV9007({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "80px" }}>거래상태</Label>
+            <Label style={{ minWidth: "120px" }}>거래상태</Label>
             <Select register={register("cuStae")} width={InputSize.i120}>
               {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -218,7 +218,7 @@ function RV9007({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>조정기 압력</Label>
+            <Label style={{ minWidth: "100px" }}>조정기 압력</Label>
             <Select register={register("jyCode")} width={InputSize.i120}>
               {dataCommonDic?.jyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -226,7 +226,7 @@ function RV9007({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>mmH20</Label>
+            <Label style={{ minWidth: "68px" }}>mmH20</Label>
           </FormGroup>
         </SearchWrapper>
       </form>

@@ -182,7 +182,7 @@ function RV9012({
             <CheckBox
               title="당월 미검침 거래처 포함"
               rtl
-              style={{ marginLeft: "61px" }}
+              style={{ marginLeft: "30px" }}
               register={register("sChk")}
             />
           </FormGroup>

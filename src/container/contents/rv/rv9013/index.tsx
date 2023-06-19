@@ -159,6 +159,7 @@ function RV9013({
         </SearchWrapper>
         <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
           <FormGroup>
+            <Label style={{ marginLeft: "-38px" }}>단가적용 구분</Label>
             <Item>
               <RadioButton
                 type="radio"
@@ -167,8 +168,8 @@ function RV9013({
                 id="2"
                 //onChange={() => setSType2("2")}
               />
-              <RadioButtonLabel htmlFor={``} style={{ width: "120px" }}>
-                단가적용 구분 전체
+              <RadioButtonLabel htmlFor={``} style={{ width: "50px" }}>
+                전체
               </RadioButtonLabel>
             </Item>
             <Item>
@@ -179,11 +180,10 @@ function RV9013({
                 id="2"
                 //onChange={() => setSType2("2")}
               />
-              <RadioButtonLabel htmlFor={``} style={{ width: "105px" }}>
-                개별단가 지정
+              <RadioButtonLabel htmlFor={``} style={{ width: "133px" }}>
+                개별단가 지정 거래처
               </RadioButtonLabel>
             </Item>
-            <Label style={{ minWidth: "80px" }}>거래처</Label>
             <Select register={register("cuRdanga")} width={InputSize.i120}>
               {dataCommonDic?.cuRdanga?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -192,6 +192,7 @@ function RV9013({
               ))}
             </Select>
             <Item>
+              <Label style={{ marginLeft: "-96px" }}></Label>
               <RadioButton
                 type="radio"
                 value="2"
@@ -199,11 +200,10 @@ function RV9013({
                 id="2"
                 //onChange={() => setSType2("2")}
               />
-              <RadioButtonLabel htmlFor={``} style={{ width: "105px" }}>
-                할인단가 지정
+              <RadioButtonLabel htmlFor={``} style={{ width: "133px" }}>
+                할인단가 지정 거래처
               </RadioButtonLabel>
             </Item>
-            <Label style={{ minWidth: "80px" }}>거래처</Label>
             <Select register={register("cuRdangaSign")} width={InputSize.i120}>
               {dataCommonDic?.cuRdangaSign?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -221,7 +221,7 @@ function RV9013({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>조정기 압력</Label>
+            <Label style={{ minWidth: "139px" }}>조정기 압력</Label>
             <Select register={register("cuRh20")} width={InputSize.i120}>
               {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
