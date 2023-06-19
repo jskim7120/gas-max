@@ -107,7 +107,7 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "100",
+    width: "150",
     header: {
       text: "거래처명",
     },
@@ -117,7 +117,7 @@ export const columns = [
     name: "janAJun",
     fieldName: "janAJun",
     type: "data",
-    width: "90",
+    width: "50",
     header: {
       text: "kg",
     },
@@ -126,7 +126,7 @@ export const columns = [
     name: "kumackA",
     fieldName: "kumackA",
     type: "data",
-    width: "200",
+    width: "70",
     header: {
       text: "공급액",
     },
@@ -147,7 +147,7 @@ export const columns = [
     name: "aSumKumack",
     fieldName: "aSumKumack",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "사용금액",
     },
@@ -180,7 +180,7 @@ export const columns = [
     name: "kumackB",
     fieldName: "kumackB",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "공급액",
     },
@@ -202,7 +202,7 @@ export const columns = [
     name: "BSumKumack",
     fieldName: "BSumKumack",
     type: "data",
-    width: "50",
+    width: "70",
     styleName: "rg-right-column",
     header: {
       text: "사용금액",
@@ -234,7 +234,7 @@ export const columns = [
     name: "kumackC",
     fieldName: "kumackC",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "공급액",
     },
@@ -256,7 +256,7 @@ export const columns = [
     name: "cSumKumack",
     fieldName: "cSumKumack",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "사용금액",
     },
@@ -267,7 +267,7 @@ export const columns = [
     name: "m3KumackC",
     fieldName: "m3KumackC",
     type: "data",
-    width: "100",
+    width: "50",
     header: {
       text: "오차",
     },
@@ -277,7 +277,7 @@ export const columns = [
     name: "sumM3Kumack",
     fieldName: "sumM3Kumack",
     type: "data",
-    width: "100",
+    width: "70",
     header: {
       text: "오차합계",
     },
@@ -306,5 +306,5 @@ export const layout = [
     hideChildHeaders: false,
     items: ["janCJun", "kumackC", "cSumGage", "cSumKumack", "m3KumackC"],
   },
-  "sumKg",
+  "sumM3Kumack",
 ];

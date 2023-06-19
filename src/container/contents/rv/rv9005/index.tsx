@@ -29,7 +29,7 @@ import {
   DateWithoutDash,
   DateWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
-import { CustomAreaCodePart } from "container/contents/customTopPart";
+import { PrintPreview, Print } from "components/allSvgIcon";
 
 const radioOptions = [
   {
@@ -80,6 +80,19 @@ function RV9005({
       resetSearchForm();
     }
   }, [dataCommonDic]);
+
+  const openNewWindow = async () => {
+    const width = 1500;
+    const height = 2000;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2;
+
+    const newWindow = window.open(
+      "/print" + `?${JSON.stringify(data)}`,
+      "",
+      `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
+    );
+  };
 
   const resetSearchForm = () => {
     reset({
@@ -163,34 +176,74 @@ function RV9005({
     fetchData(params);
   };
 
+  const handleReset = () => {
+    if (dataCommonDic?.dataInit) {
+      resetSearchForm();
+    }
+    setData([]);
+  };
+
   return (
     <>
-      <SearchWrapper className="h35 mt5">
-        <FormGroup>
-          {areaCode === "00" && (
-            <>
-              <Label style={{ minWidth: "72px" }}>영업소</Label>
-              <Select register={register("areaCode")}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </>
-          )}
-          <div className="buttons ml30">
-            <Button
-              text="출력"
-              icon={<Document />}
-              type="button"
-              color={ButtonColor.LIGHT}
-            />
-          </div>
-        </FormGroup>
-        <p>{depthFullName}</p>
-      </SearchWrapper>
-      <form autoComplete="off">
+      <form onSubmit={handleSubmit(submit)} autoComplete="off">
+        <SearchWrapper className="h35 mt5">
+          <FormGroup>
+            {areaCode === "00" && (
+              <>
+                <Label style={{ minWidth: "72px" }}>영업소</Label>
+                <Select register={register("areaCode")}>
+                  {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              </>
+            )}
+            <div className="buttons ml30">
+              <Button
+                text="검색"
+                icon={!loading && <MagnifyingGlass />}
+                color={ButtonColor.DANGER}
+                type="submit"
+                loader={
+                  loading && (
+                    <>
+                      <Loader
+                        color="white"
+                        size={13}
+                        borderWidth="2px"
+                        style={{ marginRight: "10px" }}
+                      />
+                    </>
+                  )
+                }
+              />
+              <Button
+                text="취소"
+                icon={<ResetGray />}
+                type="button"
+                color={ButtonColor.LIGHT}
+                onClick={handleReset}
+              />
+              <Button
+                text="미리보기"
+                icon={<PrintPreview />}
+                color={ButtonColor.LIGHT}
+                type="button"
+                onClick={openNewWindow}
+              />
+              <Button
+                text="출력"
+                icon={<Print />}
+                color={ButtonColor.LIGHT}
+                type="button"
+              />
+            </div>
+          </FormGroup>
+          <p>{depthFullName}</p>
+        </SearchWrapper>
+
         <SearchWrapper>
           <div style={{ width: "80%" }}>
             <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
@@ -287,37 +340,6 @@ function RV9005({
                 labelStyle={{ minWidth: "70px" }}
                 inputSize={InputSize.i120}
               />
-              <FormGroup>
-                <Button
-                  text="검색"
-                  icon={!loading && <MagnifyingGlass />}
-                  type="button"
-                  color={ButtonColor.SECONDARY}
-                  onClick={handleSubmit(submit)}
-                  loader={
-                    loading && (
-                      <>
-                        <Loader
-                          color="white"
-                          size={16}
-                          style={{ marginRight: "10px" }}
-                          borderWidth="2px"
-                        />
-                      </>
-                    )
-                  }
-                />
-                <Button
-                  text="취소"
-                  icon={<ResetGray />}
-                  style={{ marginLeft: "5px" }}
-                  color={ButtonColor.LIGHT}
-                  onClick={() => {
-                    resetSearchForm();
-                    setData([]);
-                  }}
-                />
-              </FormGroup>
             </Wrapper>
             <Wrapper grid col={4} fields="1.2fr 0.8fr 1.2fr 0.6fr">
               <FormGroup>

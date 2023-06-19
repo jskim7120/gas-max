@@ -103,7 +103,7 @@ export const columns = [
     name: "cuAddr",
     fieldName: "cuAddr",
     type: "data",
-    width: "50",
+    width: "200",
     header: {
       text: "주소",
     },

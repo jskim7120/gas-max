@@ -173,7 +173,7 @@ function RV9011({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "80px" }}>관리책임자</Label>
+            <Label style={{ minWidth: "96px" }}>관리책임자</Label>
             <Select register={register("cuCustgubun")} width={InputSize.i120}>
               {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -192,7 +192,7 @@ function RV9011({
             <CheckBox
               title="사용기간 자동 적용"
               rtl
-              style={{ marginLeft: "61px" }}
+              style={{ marginLeft: "42px" }}
               register={register("sChk")}
             />
           </FormGroup>

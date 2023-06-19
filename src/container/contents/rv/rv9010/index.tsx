@@ -184,12 +184,12 @@ function RV9010({
             <CheckBox
               title="사용기간 자동 적용"
               rtl
-              style={{ marginLeft: "61px" }}
+              style={{ marginLeft: "50px" }}
               register={register("sChk1")}
             />
           </FormGroup>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>지역구분</Label>
+            <Label style={{ minWidth: "286px" }}>지역구분</Label>
             <Select register={register("jyCode")} width={InputSize.i120}>
               {dataCommonDic?.jyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -200,7 +200,7 @@ function RV9010({
             <CheckBox
               title="체적사용료 할인액차감"
               rtl
-              style={{ marginLeft: "61px" }}
+              style={{ marginLeft: "256px" }}
               register={register("sChk2")}
             />
           </FormGroup>

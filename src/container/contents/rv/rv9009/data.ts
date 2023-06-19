@@ -90,7 +90,7 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "100",
+    width: "150",
     header: {
       text: "거래처명",
     },
@@ -99,7 +99,7 @@ export const columns = [
     name: "cuUsername",
     fieldName: "cuUsername",
     type: "data",
-    width: "90",
+    width: "150",
     header: {
       text: "사용자명",
     },
@@ -108,7 +108,7 @@ export const columns = [
     name: "gjDate",
     fieldName: "gjDate",
     type: "data",
-    width: "200",
+    width: "50",
     header: {
       text: "검침일",
     },
@@ -150,7 +150,7 @@ export const columns = [
     name: "gjGage",
     fieldName: "gjGage",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "사용량",
     },
@@ -161,7 +161,7 @@ export const columns = [
     name: "gjDanga",
     fieldName: "gjDanga",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "m3단가",
     },
@@ -172,7 +172,7 @@ export const columns = [
     name: "gjKumack",
     fieldName: "gjKumack",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "사용료",
     },
@@ -183,7 +183,7 @@ export const columns = [
     name: "giwha",
     fieldName: "giwha",
     type: "data",
-    width: "50",
+    width: "70",
     styleName: "rg-right-column",
     header: {
       text: "kg단가",
@@ -193,7 +193,7 @@ export const columns = [
     name: "m3tokg",
     fieldName: "m3tokg",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "사용량",
     },
@@ -203,7 +203,7 @@ export const columns = [
     name: "qtykg",
     fieldName: "qtykg",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "공급량",
     },
@@ -236,7 +236,7 @@ export const columns = [
     name: "sUseqty",
     fieldName: "sUseqty",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "사용량",
     },
@@ -247,13 +247,14 @@ export const columns = [
     name: "sumKg",
     fieldName: "sumKg",
     type: "data",
-    width: "100",
+    width: "70",
     header: {
       text: "오차",
     },
     styleName: "rg-left-column",
   },
 ];
+
 export const layout = [
   "gjCuCode",
   "cuName",
@@ -278,7 +279,7 @@ export const layout = [
     name: "가스 공급량",
     directions: "horizontal",
     hideChildHeaders: false,
-    items: ["qtyKg", "junjankg", "jankg", "sUseqty"],
+    items: ["qtykg", "junjankg", "jankg", "sUseqty"],
   },
   "sumKg",
 ];
