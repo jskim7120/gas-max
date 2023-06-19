@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
+import { apiGet } from "app/axios";
 import { AR9009SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import PlainTab from "components/plainTab";
@@ -36,9 +37,10 @@ function AR9009({
     selected,
     setSelected,
     loading,
-    fetchData,
+    // fetchData,
     dispatch,
     dataCommonDic,
+    setLoading,
   } = CreateReport("AR", "AR9009", menuId, AR9009SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
@@ -60,6 +62,24 @@ function AR9009({
       setData([]);
     }
   }, [tabId]);
+
+  const fetchData = async (params: any) => {
+    setLoading(true);
+
+    const dataS = await apiGet(AR9009SEARCH, params);
+
+    if (dataS && dataS?.length > 0) {
+      dataS.map((d: any) => (d.rowchk = +d.dangmisu > 0 ? "Y" : "N"));
+
+      setData(dataS);
+      const lastIndex = dataS && dataS?.length > 1 ? dataS.length - 1 : 0;
+      setSelected(dataS[lastIndex]);
+    } else {
+      setData([]);
+      setSelected({});
+    }
+    setLoading(false);
+  };
 
   const selectColumns = () => {
     switch (tabId) {

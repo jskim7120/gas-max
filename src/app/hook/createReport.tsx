@@ -46,6 +46,7 @@ function CreateReport(
     fetchData,
     dispatch,
     dataCommonDic,
+    setLoading,
   };
 }
 

@@ -10,7 +10,8 @@ function getTabContent(
   areaCode: string,
   fetchData: Function,
   menuId: string,
-  tabRef1: any
+  tabRef1: any,
+  addBtnUnClick: Function
 ) {
   switch (id) {
     case 0:
@@ -25,6 +26,7 @@ function getTabContent(
           selected={selected}
           menuId={menuId}
           ref={tabRef1}
+          addBtnUnClick={addBtnUnClick}
         />
       );
     case 1:

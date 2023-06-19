@@ -218,5 +218,10 @@ export const columns0 = [
     header: {
       text: "선택",
     },
+    renderer: {
+      type: "check",
+      trueValues: "Y",
+      falseValues: "N",
+    },
   },
 ];

@@ -25,6 +25,7 @@ const Tab1 = React.forwardRef(
       fetch,
       selected,
       menuId,
+      addBtnUnClick,
     }: {
       areaCode: string;
       data: any;
@@ -34,6 +35,7 @@ const Tab1 = React.forwardRef(
       fetch: Function;
       selected: any;
       menuId: string;
+      addBtnUnClick: Function;
     },
     ref: React.ForwardedRef<any>
   ) => {
@@ -239,7 +241,8 @@ const Tab1 = React.forwardRef(
           footerState?.info?.cuCode !== ""
         ) {
           params.areaCode = areaCode;
-          params.pjCuCode = footerState.info.cuCode;
+          params.pjCuCode = footerState?.info?.cuCode;
+          params.pjCuName = footerState?.info?.cuViewName;
         } else {
           return null;
         }
@@ -526,8 +529,10 @@ const Tab1 = React.forwardRef(
               text="취소"
               icon={<Reset />}
               type="button"
-
-              // onClick={handleReset}
+              onClick={() => {
+                resetForm("reset");
+                addBtnUnClick();
+              }}
             />
           </div>
         </div>

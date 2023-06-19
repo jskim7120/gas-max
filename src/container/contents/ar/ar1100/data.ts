@@ -6,7 +6,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "pjTypeName",
+    fieldName: "pjtypeName",
     dataType: ValueType.TEXT,
   },
   {
@@ -91,8 +91,8 @@ export const columns = [
     },
   },
   {
-    name: "pjTypeName",
-    fieldName: "pjTypeName",
+    name: "pjtypeName",
+    fieldName: "pjtypeName",
     type: "data",
     width: "50",
     header: {
