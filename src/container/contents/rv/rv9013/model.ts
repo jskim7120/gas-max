@@ -6,7 +6,7 @@ export interface ISEARCH {
   swCode: string;
   cuRh20: string;
   cuPer: string;
-  cuDc: string;
+  cuCdc: string;
   cuStae: string;
   jyCode: string;
 }

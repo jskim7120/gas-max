@@ -1,7 +1,7 @@
 export interface ISEARCH {
   areaCode: string;
   gjMonth: string;
-  sSwCode: string;
+  swCode: string;
   sChk: string;
-  sJyCode: string;
+  jyCode: string;
 }
