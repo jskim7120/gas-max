@@ -1,0 +1,954 @@
+{
+  "report": {
+    "name": "reportRoot",
+    "paperSize": "A4",
+    "paperWidth": "210mm",
+    "paperHeight": "297mm",
+    "marginLeft": "12mm",
+    "marginRight": "12mm",
+    "marginTop": "15mm",
+    "marginBottom": "15mm"
+  },
+  "page": {
+    "name": "reportPage",
+    "pageHeader": {
+      "name": "pageHeader",
+      "items": [
+        {
+          "type": "rbox",
+          "name": "",
+          "right": 0,
+          "itemGap": 4,
+          "items": [
+            {
+              "type": "text",
+              "name": "",
+              "text": "Date:"
+            },
+            {
+              "type": "text",
+              "value": "${date}",
+              "name": "",
+              "text": "Text"
+            }
+          ]
+        }
+      ]
+    },
+    "reportHeader": {
+      "name": "reportHeader",
+      "items": [
+        {
+          "type": "text",
+          "text": "일자별 중량 판매 현황",
+          "styles": {
+            "fontSize": "30px",
+            "fontWeight": "bold",
+            "__tag_": {},
+            "borderBottom": "1px solid black"
+          }
+        }
+      ]
+    },
+    "reportFooter": {
+      "name": "reportFooter"
+    },
+    "pageFooter": {
+      "name": "pageFooter",
+      "items": [
+        {
+          "type": "rbox",
+          "name": "",
+          "right": 0,
+          "itemGap": 4,
+          "items": [
+            {
+              "type": "text",
+              "value": "${page}",
+              "name": "",
+              "text": "Text"
+            },
+            {
+              "type": "text",
+              "name": "",
+              "text": "/",
+              "styles": {
+                "paddingLeft": "3px",
+                "paddingRight": "3px",
+                "__tag_": {}
+              }
+            },
+            {
+              "type": "text",
+              "value": "${pages}",
+              "name": "",
+              "text": "Text"
+            }
+          ]
+        }
+      ]
+    },
+    "body": {
+      "itemGap": 4,
+      "items": [
+        {
+          "type": "table",
+          "width": "100%",
+          "name": "",
+          "rowCount": 1,
+          "minRowHeight": "24px",
+          "cellStyles": {
+            "paddingTop": "10px"
+          },
+          "rows": [
+            {}
+          ],
+          "cells": [
+            {
+              "r": 0,
+              "c": 0,
+              "styles": {
+                "borderLeft": "none",
+                "borderRight": "none",
+                "borderTop": "none",
+                "borderBottom": "none"
+              }
+            },
+            {
+              "r": 0,
+              "c": 1,
+              "styles": {
+                "borderLeft": "none",
+                "borderRight": "none",
+                "borderTop": "none",
+                "borderBottom": "none"
+              }
+            },
+            {
+              "r": 0,
+              "c": 2,
+              "styles": {
+                "borderLeft": "none",
+                "borderRight": "none",
+                "borderTop": "none",
+                "borderBottom": "none"
+              }
+            },
+            {
+              "r": 0,
+              "c": 3,
+              "styles": {
+                "borderLeft": "none",
+                "borderRight": "none",
+                "borderTop": "none",
+                "borderBottom": "none"
+              }
+            },
+            {
+              "r": 0,
+              "c": 4,
+              "styles": {
+                "borderLeft": "none",
+                "borderRight": "none",
+                "borderTop": "none",
+                "borderBottom": "none"
+              }
+            },
+            {
+              "r": 0,
+              "c": 5,
+              "styles": {
+                "borderLeft": "none",
+                "borderRight": "none",
+                "borderTop": "none",
+                "borderBottom": "none"
+              }
+            },
+            {
+              "r": 0,
+              "c": 6,
+              "styles": {
+                "borderLeft": "none",
+                "borderRight": "none",
+                "borderTop": "none",
+                "borderBottom": "none"
+              }
+            },
+            {
+              "r": 0,
+              "c": 7,
+              "styles": {
+                "borderLeft": "none",
+                "borderRight": "none",
+                "borderTop": "none",
+                "borderBottom": "none"
+              }
+            }
+          ],
+          "colCount": 8,
+          "columns": [
+            {
+              "width": "14.7%"
+            },
+            {
+              "width": "26.5%"
+            },
+            {
+              "width": "16.7%"
+            },
+            {
+              "width": "28%"
+            },
+            {
+              "width": "25.7%"
+            },
+            {
+              "width": "23.6%"
+            },
+            {
+              "width": "24.8%"
+            },
+            {
+              "width": "20%"
+            }
+          ],
+          "items": [
+            {
+              "type": "text",
+              "name": "",
+              "col": 0,
+              "row": 0,
+              "text": "공급사원",
+              "styles": {
+                "fontWeight": "700",
+                "__tag_": {}
+              }
+            },
+            {
+              "type": "text",
+              "data": "headerInfo",
+              "value": "swCode",
+              "name": "",
+              "col": 1,
+              "row": 0,
+              "text": "Text"
+            },
+            {
+              "type": "text",
+              "name": "",
+              "col": 2,
+              "row": 0,
+              "text": "품목",
+              "styles": {
+                "fontWeight": "700",
+                "__tag_": {}
+              }
+            },
+            {
+              "type": "text",
+              "data": "headerInfo",
+              "value": "jpCode",
+              "name": "",
+              "col": 3,
+              "row": 0,
+              "text": "Text"
+            },
+            {
+              "type": "text",
+              "name": "",
+              "col": 4,
+              "row": 0,
+              "text": "기간",
+              "styles": {
+                "fontWeight": "700",
+                "__tag_": {}
+              }
+            },
+            {
+              "type": "text",
+              "data": "headerInfo",
+              "value": "date",
+              "name": "",
+              "col": 5,
+              "row": 0,
+              "text": "Text"
+            },
+            {
+              "type": "text",
+              "name": "",
+              "col": 6,
+              "row": 0,
+              "text": "지역",
+              "styles": {
+                "fontWeight": "700",
+                "__tag_": {}
+              }
+            },
+            {
+              "type": "text",
+              "data": "headerInfo",
+              "value": "cuJyCode",
+              "name": "",
+              "col": 7,
+              "row": 0,
+              "text": "Text"
+            }
+          ]
+        },
+        {
+          "type": "tableband",
+          "data": "tableInfo",
+          "width": "100%",
+          "name": "",
+          "detail": {
+            "type": "detail",
+            "width": "100%",
+            "name": ""
+          },
+          "colCount": 11,
+          "columns": [
+            {
+              "width": "10.1%"
+            },
+            {
+              "width": "22%"
+            },
+            {
+              "width": "59.1%"
+            },
+            {
+              "width": "18.5%"
+            },
+            {
+              "width": "14.8%"
+            },
+            {
+              "width": "14.5%"
+            },
+            {
+              "width": "17.3%"
+            },
+            {
+              "width": "18.6%"
+            },
+            {
+              "width": "12.6%"
+            },
+            {
+              "width": "12.4%"
+            },
+            {
+              "width": "20.1%"
+            }
+          ],
+          "header": {
+            "width": "100%",
+            "name": null,
+            "rowCount": 1,
+            "cellStyles": {},
+            "rows": [
+              {}
+            ],
+            "cells": [
+              {
+                "r": 0,
+                "c": 0,
+                "styles": {
+                  "borderRight": "none",
+                  "borderLeft": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 1,
+                "styles": {
+                  "borderRight": "none",
+                  "borderLeft": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 2,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 3,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 4,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 5,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 6,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 7,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 8,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 9,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 10,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none"
+                }
+              }
+            ],
+            "items": [
+              {
+                "type": "text",
+                "name": "",
+                "col": 0,
+                "row": 0,
+                "text": "No"
+              },
+              {
+                "type": "text",
+                "name": "",
+                "col": 1,
+                "row": 0,
+                "text": "일자"
+              },
+              {
+                "type": "text",
+                "name": "",
+                "col": 2,
+                "row": 0,
+                "text": "거래처"
+              },
+              {
+                "type": "text",
+                "name": "",
+                "col": 3,
+                "row": 0,
+                "text": "품명"
+              },
+              {
+                "type": "text",
+                "name": "",
+                "col": 4,
+                "row": 0,
+                "text": "수량"
+              },
+              {
+                "type": "text",
+                "name": "",
+                "col": 5,
+                "row": 0,
+                "text": "단가"
+              },
+              {
+                "type": "text",
+                "name": "",
+                "col": 6,
+                "row": 0,
+                "text": "금액"
+              },
+              {
+                "type": "text",
+                "name": "",
+                "col": 7,
+                "row": 0,
+                "text": "입금액"
+              },
+              {
+                "type": "text",
+                "name": "",
+                "col": 8,
+                "row": 0,
+                "text": "D/C"
+              },
+              {
+                "type": "text",
+                "name": "",
+                "col": 9,
+                "row": 0,
+                "text": "미입금액",
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none",
+                  "__tag_": {}
+                }
+              },
+              {
+                "type": "text",
+                "name": "",
+                "col": 10,
+                "row": 0,
+                "text": "사원"
+              }
+            ]
+          },
+          "footer": {
+            "width": "100%",
+            "name": null,
+            "rowCount": 1,
+            "cellStyles": {},
+            "rows": [
+              {}
+            ],
+            "cells": [
+              {
+                "r": 0,
+                "c": 0,
+                "styles": {
+                  "borderBottom": "none",
+                  "borderRight": "none",
+                  "borderLeft": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 1,
+                "styles": {
+                  "borderBottom": "none",
+                  "borderRight": "none",
+                  "borderLeft": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 2,
+                "styles": {
+                  "borderBottom": "none",
+                  "borderRight": "none",
+                  "borderLeft": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 3,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none",
+                  "borderBottom": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 4,
+                "styles": {
+                  "borderBottom": "none",
+                  "borderRight": "none",
+                  "borderLeft": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 5,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none",
+                  "borderBottom": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 6,
+                "styles": {
+                  "borderBottom": "none",
+                  "borderRight": "none",
+                  "borderLeft": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 7,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none",
+                  "borderBottom": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 8,
+                "styles": {
+                  "borderBottom": "none",
+                  "borderRight": "none",
+                  "borderLeft": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 9,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none",
+                  "borderBottom": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 10,
+                "styles": {
+                  "borderBottom": "none",
+                  "borderRight": "none",
+                  "borderLeft": "none"
+                }
+              }
+            ]
+          },
+          "dataRow": {
+            "width": "100%",
+            "name": null,
+            "rowCount": 1,
+            "cellStyles": {},
+            "rows": [
+              {}
+            ],
+            "cells": [
+              {
+                "r": 0,
+                "c": 0,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none",
+                  "borderBottom": "none",
+                  "borderTop": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 1,
+                "styles": {
+                  "borderRight": "none",
+                  "borderLeft": "none",
+                  "borderBottom": "none",
+                  "borderTop": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 2,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none",
+                  "borderBottom": "none",
+                  "borderTop": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 3,
+                "styles": {
+                  "borderRight": "none",
+                  "borderLeft": "none",
+                  "borderTop": "none",
+                  "borderBottom": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 4,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none",
+                  "borderTop": "none",
+                  "borderBottom": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 5,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none",
+                  "borderTop": "none",
+                  "borderBottom": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 6,
+                "styles": {
+                  "borderRight": "none",
+                  "borderLeft": "none",
+                  "borderTop": "none",
+                  "borderBottom": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 7,
+                "styles": {
+                  "borderRight": "none",
+                  "borderLeft": "none",
+                  "borderTop": "none",
+                  "borderBottom": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 8,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none",
+                  "borderTop": "none",
+                  "borderBottom": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 9,
+                "styles": {
+                  "borderRight": "none",
+                  "borderLeft": "none",
+                  "borderTop": "none",
+                  "borderBottom": "none"
+                }
+              },
+              {
+                "r": 0,
+                "c": 10,
+                "styles": {
+                  "borderLeft": "none",
+                  "borderRight": "none",
+                  "borderTop": "none",
+                  "borderBottom": "none"
+                }
+              }
+            ],
+            "items": [
+              {
+                "type": "text",
+                "value": "No",
+                "name": "",
+                "col": 0,
+                "row": 0
+              },
+              {
+                "type": "text",
+                "value": "pjDate",
+                "name": "",
+                "col": 1,
+                "row": 0
+              },
+              {
+                "type": "text",
+                "value": "pjCuCode",
+                "name": "",
+                "col": 2,
+                "row": 0
+              },
+              {
+                "type": "text",
+                "value": "pjJpName",
+                "name": "",
+                "col": 3,
+                "row": 0
+              },
+              {
+                "type": "text",
+                "value": "pjQty",
+                "name": "",
+                "col": 4,
+                "row": 0
+              },
+              {
+                "type": "text",
+                "value": "pjDanga",
+                "name": "",
+                "col": 5,
+                "row": 0
+              },
+              {
+                "type": "text",
+                "value": "pjKumack",
+                "name": "",
+                "col": 6,
+                "row": 0
+              },
+              {
+                "type": "text",
+                "value": "pjInkum",
+                "name": "",
+                "col": 7,
+                "row": 0
+              },
+              {
+                "type": "text",
+                "value": "pjDc",
+                "name": "",
+                "col": 8,
+                "row": 0
+              },
+              {
+                "type": "text",
+                "value": "pjMisukum",
+                "name": "",
+                "col": 9,
+                "row": 0,
+                "styles": {
+                  "borderRight": "none",
+                  "borderLeft": "none",
+                  "__tag_": {}
+                }
+              },
+              {
+                "type": "text",
+                "value": "pjSwName",
+                "name": "",
+                "col": 10,
+                "row": 0
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "assets": {
+    "/": []
+  },
+  "data": {
+    "headerInfo": {
+      "type": "simple",
+      "sample": {
+        "swCode": "swCode1",
+        "jpCode": "jpCode1",
+        "date": "2023-06-01 ~ 2023-06-02",
+        "cuJyCode": "cuJyCode1"
+      }
+    },
+    "tableInfo": {
+      "type": "band",
+      "fields": [
+        {
+          "fieldName": "No",
+          "dataType": "text",
+          "description": "",
+          "sample": "1",
+          "format": "",
+          "dateReader": null
+        },
+        {
+          "fieldName": "pjDate",
+          "dataType": "text",
+          "description": "",
+          "sample": "2023-06-02",
+          "format": "",
+          "dateReader": null
+        },
+        {
+          "fieldName": "pjCuCode",
+          "dataType": "text",
+          "description": "",
+          "sample": "011-00003 조아 최종순연수원",
+          "format": "",
+          "dateReader": null
+        },
+        {
+          "fieldName": "pjJpName",
+          "dataType": "text",
+          "description": "",
+          "sample": "LPG 20kg",
+          "format": "",
+          "dateReader": null
+        },
+        {
+          "fieldName": "pjQty",
+          "dataType": "text",
+          "description": "",
+          "sample": "2",
+          "format": "",
+          "dateReader": null
+        },
+        {
+          "fieldName": "pjDanga",
+          "dataType": "text",
+          "description": "",
+          "sample": "3,540",
+          "format": "",
+          "dateReader": null
+        },
+        {
+          "fieldName": "pjKumack",
+          "dataType": "text",
+          "description": "",
+          "sample": "7,080",
+          "format": "",
+          "dateReader": null
+        },
+        {
+          "fieldName": "pjInkum",
+          "dataType": "text",
+          "description": "",
+          "sample": "7,080",
+          "format": "",
+          "dateReader": null
+        },
+        {
+          "fieldName": "pjDc",
+          "dataType": "text",
+          "description": "",
+          "sample": "0",
+          "format": "",
+          "dateReader": null
+        },
+        {
+          "fieldName": "pjMisukum",
+          "dataType": "text",
+          "description": "",
+          "sample": "0",
+          "format": "",
+          "dateReader": null
+        },
+        {
+          "fieldName": "pjSwName",
+          "dataType": "text",
+          "description": "",
+          "sample": "김재선배송",
+          "format": "",
+          "dateReader": null
+        }
+      ]
+    }
+  },
+  "guid": "a2e67f75-0299-458e-b06f-df9718ac93d9"
+}
