@@ -24,11 +24,11 @@ import CheckBox from "components/checkbox";
 function PT9001({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const {
     data,
@@ -97,7 +97,7 @@ function PT9001({
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <SearchWrapper className="h35 mt5">
           <FormGroup>
-            {areaCode === "00" && (
+            {ownAreaCode === "00" && (
               <>
                 <Label style={{ minWidth: "80px" }}>영업소</Label>
                 <Select register={register("areaCode")} width={InputSize.i120}>
@@ -243,7 +243,7 @@ function PT9001({
       <BasicGrid
         menuId={menuId}
         ref={gridRef}
-        areaCode={areaCode}
+        areaCode={ownAreaCode}
         columns={columns}
         fields={fields}
         data={data}
