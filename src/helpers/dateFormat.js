@@ -102,3 +102,36 @@ export function DateWithoutDashOnlyYearMonth(date) {
 
   return "";
 }
+
+export function GetMonth(date) {
+  if (date === null || date === undefined || date === "") {
+    return "";
+  }
+
+  if (typeof date === "string") {
+    date = date?.replace(/-/g, "");
+    return date.substring(4, 6);
+  }
+
+  if (date instanceof Date) {
+    return date.getMonth() + 1;
+  }
+
+  return "";
+}
+
+export function GetYear(date) {
+  if (date === null || date === undefined || date === "") {
+    return "";
+  }
+
+  if (typeof date === "string") {
+    return date.substring(0, 4);
+  }
+
+  if (date instanceof Date) {
+    return date.getFullYear();
+  }
+
+  return "";
+}

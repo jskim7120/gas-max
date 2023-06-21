@@ -22,7 +22,7 @@ const Tab1 = React.forwardRef(
       dictionary,
       isAddBtnClicked,
       setIsAddBtnClicked,
-      fetch,
+      fetchData,
       selected,
       menuId,
       addBtnUnClick,
@@ -32,7 +32,7 @@ const Tab1 = React.forwardRef(
       dictionary: any;
       isAddBtnClicked: boolean;
       setIsAddBtnClicked: Function;
-      fetch: Function;
+      fetchData: Function;
       selected: any;
       menuId: string;
       addBtnUnClick: Function;
@@ -77,6 +77,7 @@ const Tab1 = React.forwardRef(
       if (type === "reset") {
         reset({
           pjCuCode: selected?.cuCode,
+          pjCuName: selected?.cuName,
           areaCode: data?.areaCode,
           pjSno: data?.pjSno,
           pjDate: data?.pjDate,
@@ -222,7 +223,7 @@ const Tab1 = React.forwardRef(
 
         const res = await apiPost(AR1100DELETE, formValues, "삭제했습니다");
 
-        res && (await fetch());
+        res && (await fetchData());
         return;
       }
 
@@ -243,8 +244,6 @@ const Tab1 = React.forwardRef(
           params.areaCode = areaCode;
           params.pjCuCode = footerState?.info?.cuCode;
           params.pjCuName = footerState?.info?.cuViewName;
-        } else {
-          return null;
         }
       }
 
@@ -252,13 +251,7 @@ const Tab1 = React.forwardRef(
 
       const res = await apiPost(path, params, "저장이 성공하였습니다");
       if (res) {
-        fetch();
-        // const par = prepareSearchFormValues();
-        // if (isAddBtnClicked) {
-        //   await fetchData(par, "last");
-        // } else {
-        //   await fetchData(par);
-        // }
+        await fetchData();
       }
     };
 

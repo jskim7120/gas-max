@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { RV9007SEARCH } from "app/path";
@@ -16,7 +16,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import { DateWithoutDash } from "helpers/dateFormat";
+import { GetMonth } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns0, fields0, layout0 } from "./data/data0";
 import { columns1, fields1, layout1 } from "./data/data1";
@@ -42,15 +42,46 @@ function RV9007({
   } = CreateReport("RV", "RV9007", menuId, RV9007SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
-    mode: "onSubmit",
-  });
+  const [toggler, setToggler] = useState<boolean>(true);
+
+  const { register, handleSubmit, reset, control, watch, getValues } =
+    useForm<ISEARCH>({
+      mode: "onSubmit",
+    });
 
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
       resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("gjGumym")) {
+      handleGjGumymChange(watch("gjGumym"));
+      setToggler((prev) => !prev);
+    }
+  }, [watch("reportKind"), watch("gjGumym")]);
+
+  const handleGjGumymChange = (gjGumym: string) => {
+    const month = GetMonth(gjGumym);
+    let j;
+    for (let i = 0; i < 12; i++) {
+      j = i + +month;
+      j > 12 && (j = j - 12);
+      selectColumns().columns[4 + i].header.text = `${j}월`;
+    }
+  };
+
+  const selectColumns = () => {
+    switch (watch("reportKind")) {
+      case "0":
+        return { columns: columns0, fields: fields0, layout: layout0 };
+      case "1":
+        return { columns: columns1, fields: fields1, layout: layout1 };
+      default:
+        return { columns: columns0, fields: fields0, layout: layout0 };
+    }
+  };
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -109,8 +140,8 @@ function RV9007({
                 </Select>
               </>
             )}
-            <Label style={{ minWidth: "90px" }}>보고서종류</Label>
-            <Select register={register("reportKind")} width={InputSize.i130}>
+            <Label style={{ minWidth: "80px" }}>보고서종류</Label>
+            <Select register={register("reportKind")} width={InputSize.i140}>
               {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -166,11 +197,9 @@ function RV9007({
             <Controller
               control={control}
               {...register("gjGumym")}
-              render={({ field: { onChange, value, name } }) => (
+              render={({ field }) => (
                 <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
+                  {...field}
                   style={{ width: "120px" }}
                   showMonthYearPicker
                 />
@@ -179,7 +208,7 @@ function RV9007({
             <Input
               label="건물명"
               register={register("cuName")}
-              labelStyle={{ minWidth: "70px" }}
+              labelStyle={{ minWidth: "80px" }}
               inputSize={InputSize.i160}
             />
 
@@ -201,7 +230,7 @@ function RV9007({
             </Select>
           </FormGroup>
           <FormGroup>
-            <Label style={{ minWidth: "276px" }}>소비형태</Label>
+            <Label style={{ minWidth: "286px" }}>소비형태</Label>
             <Select register={register("cuCutype")} width={InputSize.i120}>
               {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -234,12 +263,11 @@ function RV9007({
         menuId={menuId}
         ref={gridRef}
         areaCode={areaCode}
-        columns={columns0}
-        fields={fields0}
+        {...selectColumns()}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 52px)" }}
-        layout={layout0}
+        style={{ height: "calc(100% - 88px)" }}
+        gridChangeField={toggler}
       />
     </>
   );

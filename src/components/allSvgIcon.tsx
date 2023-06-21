@@ -1748,7 +1748,7 @@ export const PrintPreview = () => {
           transform="translate(701.43 95.647)"
           fill="#fff"
           stroke="#707070"
-          stroke-linejoin="round"
+          strokeLinejoin="round"
           strokeWidth="1"
         />
         <path
@@ -1809,7 +1809,7 @@ export const Print = () => {
                 transform="translate(221.43 247.546)"
                 fill="#fff"
                 stroke="#707070"
-                stroke-linejoin="round"
+                strokeLinejoin="round"
                 strokeWidth="1"
               />
               <rect
@@ -1820,7 +1820,7 @@ export const Print = () => {
                 transform="translate(219.411 250.451)"
                 fill="#707070"
                 stroke="#707070"
-                stroke-linejoin="round"
+                strokeLinejoin="round"
                 strokeWidth="1"
               />
               <rect
@@ -1831,7 +1831,7 @@ export const Print = () => {
                 transform="translate(221.43 252.5)"
                 fill="#fff"
                 stroke="#707070"
-                stroke-linejoin="round"
+                strokeLinejoin="round"
                 strokeWidth="1"
               />
             </g>

@@ -128,6 +128,7 @@ function FormCM1106() {
     <>
       <SearchWrapper
         style={{ background: "#0B97F6", height: "40px", borderBottom: "none" }}
+        className="handle"
       >
         <FormGroup>
           {areaCode === "00" && (

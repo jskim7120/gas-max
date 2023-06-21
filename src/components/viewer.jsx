@@ -16,10 +16,11 @@ const Viewer = () => {
 
   const [report, setReport] = useState(null);
   const [dataSet, setDataSet] = useState([]);
+
   const [viewer, setViewer] = useState(null);
 
   const getJson = async () => {
-    const json = await (await fetch(`/report/r-test.json`)).json();
+    const json = await (await fetch(`/report/ar/AR9001-1.json`)).json();
 
     const iterator = new URLSearchParams(
       location.search.split("?")[1]
@@ -53,8 +54,16 @@ const Viewer = () => {
     if (viewer && report) {
       viewer.reportForm = report;
       viewer.dataSet = {
-        "dataset-1": {
+        tableInfo: {
           values: dataSet,
+        },
+        headerInfo: {
+          values: {
+            swCode: "99 전체",
+            jpCode: "99 전체",
+            date: "2023-06-01 ~ 2023-06-02",
+            cuJyCode: "99 전체",
+          },
         },
       };
       viewer.preview({

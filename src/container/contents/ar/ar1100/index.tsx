@@ -121,8 +121,6 @@ function AR1100({
   const fetchData11 = async (params: any) => {
     const res = await apiGet(AR1100INIT, params);
 
-    console.log("res>>>>>>>>>>>>>>>>>", res);
-
     if (res && Object.keys(res)?.length > 0) {
       setDataDictionary({
         pjInkumtype: res?.pjInkumtype,

@@ -90,7 +90,7 @@ export const columns = [
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("cuCno", "count");
       },
     },
   },
@@ -289,22 +289,25 @@ export const layout = [
   "gjCuCode",
   "cuName",
   {
-    name: "2023-05월",
+    name: "bla",
     directions: "horizontal",
     hideChildHeaders: false,
     items: ["janAJun", "kumackA", "aSumGage", "aSumKumack", "m3KumackA"],
+    header: { text: "" },
   },
   {
-    name: "2023-06월",
+    name: "bla2",
     directions: "horizontal",
     hideChildHeaders: false,
     items: ["janBJun", "kumackB", "bSumGage", "BSumKumack", "m3KumackB"],
+    header: { text: "" },
   },
   {
-    name: "2023-07월",
+    name: "bla3",
     directions: "horizontal",
     hideChildHeaders: false,
     items: ["janCJun", "kumackC", "cSumGage", "cSumKumack", "m3KumackC"],
+    header: { text: "" },
   },
   "sumM3Kumack",
 ];
