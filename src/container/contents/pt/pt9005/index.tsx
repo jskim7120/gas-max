@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
-import { RV9011SEARCH } from "app/path";
+import { PT9005SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label } from "components/form/style";
 import Button from "components/button/button";
@@ -18,10 +18,10 @@ import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
-import { columns, fields, layout } from "./data";
+import { columns, fields } from "./data";
 import CheckBox from "components/checkbox";
 
-function RV9011({
+function PT9005({
   depthFullName,
   menuId,
   areaCode,
@@ -39,7 +39,7 @@ function RV9011({
     fetchData,
     dispatch,
     dataCommonDic,
-  } = CreateReport("RV", "RV9011", menuId, RV9011SEARCH);
+  } = CreateReport("PT", "PT9005", menuId, PT9005SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
@@ -73,10 +73,15 @@ function RV9011({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        gjMonth: init?.gjMonth,
+        sOver: init?.sOver,
         swCode: init?.swCode,
         cuCustgubun: init?.cuCustgubun,
-        jyCode: init?.jyCode,
+        cuCutype: init?.cuCutype,
+        cuJyCode: init?.cuJyCode,
+        cuSukumtype: init?.cuSukumtype,
+        cuStae: init?.cuStae,
+        sOrd: init?.sOrd,
+        sChk: init?.sChk,
       });
     }
   };
@@ -150,20 +155,15 @@ function RV9011({
         </SearchWrapper>
         <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>검침년월</Label>
-            <Controller
-              control={control}
-              {...register("gjMonth")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                  showMonthYearPicker
-                />
-              )}
-            />
+            <Label style={{ minWidth: "80px" }}>연체기간</Label>
+            <Select register={register("sOver")} width={InputSize.i120}>
+              {dataCommonDic?.sOver?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+            <Label style={{ minWidth: "80px" }}>개월(2023-03)</Label>
             <Label style={{ minWidth: "80px" }}>담당사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
@@ -172,8 +172,7 @@ function RV9011({
                 </option>
               ))}
             </Select>
-
-            <Label style={{ minWidth: "96px" }}>관리책임자</Label>
+            <Label style={{ minWidth: "94px" }}>관리책임자</Label>
             <Select register={register("cuCustgubun")} width={InputSize.i120}>
               {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -181,18 +180,52 @@ function RV9011({
                 </option>
               ))}
             </Select>
+            <Label style={{ minWidth: "100px" }}>소비자 형태</Label>
+            <Select register={register("cuCutype")} width={InputSize.i120}>
+              {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <FormGroup>
             <Label style={{ minWidth: "80px" }}>지역구분</Label>
-            <Select register={register("jyCode")} width={InputSize.i120}>
-              {dataCommonDic?.jyCode?.map((obj: any, idx: number) => (
+            <Select register={register("cuJyCode")} width={InputSize.i120}>
+              {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+            <Label style={{ minWidth: "180px" }}>수금 방법 </Label>
+            <Select register={register("cuSukumtype")} width={InputSize.i120}>
+              {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+            <Label style={{ minWidth: "94px" }}>수금 방법 </Label>
+            <Select register={register("cuStae")} width={InputSize.i120}>
+              {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+            <Label style={{ minWidth: "100px" }}>정렬순서</Label>
+            <Select register={register("sOrd")} width={InputSize.i120}>
+              {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
               ))}
             </Select>
             <CheckBox
-              title="사용기간 자동 적용"
+              title="내역별 조회"
               rtl
-              style={{ marginLeft: "42px" }}
+              style={{ marginLeft: "30px" }}
               register={register("sChk")}
             />
           </FormGroup>
@@ -207,10 +240,9 @@ function RV9011({
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={{ height: "calc(100% - 52px)" }}
-        layout={layout}
       />
     </>
   );
 }
 
-export default RV9011;
+export default PT9005;

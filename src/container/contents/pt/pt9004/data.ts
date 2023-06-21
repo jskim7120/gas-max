@@ -2,15 +2,7 @@ import { ValueType } from "realgrid";
 
 export const fields = [
   {
-    fieldName: "no",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuCno",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuCode",
+    fieldName: "gjCuCode",
     dataType: ValueType.TEXT,
   },
   {
@@ -18,31 +10,19 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuUsername",
-    dataType: ValueType.TEXT,
-  },
-  {
     fieldName: "cuAddr",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuGongname",
+    fieldName: "gjDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuRh20",
+    fieldName: "gjGumymsno",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "jnCost",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuPer",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuCdc",
+    fieldName: "gjJankg",
     dataType: ValueType.TEXT,
   },
   {
@@ -50,15 +30,39 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuRdangaSign",
+    fieldName: "gaa",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gaa1",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gaa2",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gaa3",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gaa4",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gaa5",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gaa6",
     dataType: ValueType.TEXT,
   },
 ];
 
 export const columns = [
   {
-    name: "cuCno",
-    fieldName: "cuCno",
+    name: "gjCuCode",
+    fieldName: "gjCuCode",
     type: "data",
     width: "50",
     header: {
@@ -71,117 +75,134 @@ export const columns = [
     },
   },
   {
-    name: "cuCode",
-    fieldName: "cuCode",
-    type: "data",
-    width: "100",
-    header: {
-      text: "거래처코드",
-    },
-  },
-
-  {
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "150",
+    width: "70",
     header: {
-      text: "거래처명",
+      text: "코드",
     },
   },
-  {
-    name: "cuUsername",
-    fieldName: "cuUsername",
-    type: "data",
-    width: "150",
-    header: {
-      text: "사용자명",
-    },
-    styleName: "rg-left-column",
-  },
+
   {
     name: "cuAddr",
     fieldName: "cuAddr",
     type: "data",
     width: "200",
     header: {
-      text: "주소",
+      text: "거래처명",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "cuGongname",
-    fieldName: "cuGongname",
+    name: "gjDate",
+    fieldName: "gjDate",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
-      text: "성명",
+      text: "전화번호",
     },
     styleName: "rg-left-column",
   },
   {
-    name: "cuRh20",
-    fieldName: "cuRh20",
-    type: "data",
-    width: "50",
-    header: {
-      text: "조정기",
-    },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
-  },
-  {
-    name: "jnCost",
-    fieldName: "jnCost",
+    name: "gjGumymsno",
+    fieldName: "gjGumymsno",
     type: "data",
     width: "70",
     header: {
-      text: "루베단가",
+      text: "검침일자",
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
   },
   {
-    name: "cuPer",
-    fieldName: "cuPer",
+    name: "gjJankg",
+    fieldName: "gjJankg",
     type: "data",
     width: "50",
     header: {
-      text: "연체율",
+      text: "전검",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
-  },
-  {
-    name: "cuCdc",
-    fieldName: "cuCdc",
-    type: "data",
-    width: "50",
-    header: {
-      text: "할인율",
-    },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
+    styleName: "rg-left-column",
   },
   {
     name: "cuSwName",
     fieldName: "cuSwName",
     type: "data",
-    width: "70",
+    width: "50",
     header: {
-      text: "담당사원",
+      text: "당검침",
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
   },
   {
-    name: "cuRdangaSign",
-    fieldName: "cuRdangaSign",
+    name: "gaa",
+    fieldName: "gaa",
+    type: "data",
+    width: "50",
+    header: {
+      text: "사용",
+    },
+  },
+
+  {
+    name: "gaa1",
+    fieldName: "gaa1",
+    type: "data",
+    width: "50",
+    header: {
+      text: "단가",
+    },
+  },
+  {
+    name: "gaa2",
+    fieldName: "gaa2",
+    type: "data",
+    width: "90",
+    header: {
+      text: "당월금액",
+    },
+    styleName: "rg-left-column",
+  },
+  {
+    name: "gaa3",
+    fieldName: "gaa3",
+    type: "data",
+    width: "50",
+    header: {
+      text: "연체료",
+    },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
+  },
+  {
+    name: "gaa4",
+    fieldName: "gaa4",
     type: "data",
     width: "70",
     header: {
-      text: "단가구분",
+      text: "당월미수",
+    },
+    styleName: "rg-left-column",
+  },
+  {
+    name: "gaa5",
+    fieldName: "gaa5",
+    type: "data",
+    width: "70",
+    header: {
+      text: "미수누계",
+    },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
+  },
+  {
+    name: "gaa6",
+    fieldName: "gaa6",
+    type: "data",
+    width: "50",
+    header: {
+      text: "사원",
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",

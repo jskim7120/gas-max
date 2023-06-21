@@ -186,11 +186,11 @@ function RV9009({
             <Input
               label="건물명"
               register={register("cuName")}
-              labelStyle={{ minWidth: "70px" }}
-              inputSize={InputSize.i120}
+              labelStyle={{ minWidth: "81px" }}
+              inputSize={InputSize.i160}
             />
 
-            <Label style={{ minWidth: "80px" }}>정렬순서</Label>
+            <Label style={{ minWidth: "256px" }}>정렬순서</Label>
             <Select register={register("sOrder")} width={InputSize.i120}>
               {dataCommonDic?.sOrder?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -201,14 +201,15 @@ function RV9009({
             <CheckBox
               title="검침 상세 내역 조회"
               rtl
-              style={{ marginLeft: "61px" }}
+              style={{ marginLeft: "44px" }}
               register={register("sChk1")}
             />
           </FormGroup>
           <FormGroup>
+            <Label style={{ marginLeft: "-38px" }}>조회구분</Label>
             <Item>
-              <RadioButtonLabel htmlFor={``} style={{ width: "105px" }}>
-                조회구분 전체
+              <RadioButtonLabel htmlFor={``} style={{ width: "32px" }}>
+                전체
               </RadioButtonLabel>
               <RadioButton
                 type="radio"
@@ -226,7 +227,7 @@ function RV9009({
                 id="2"
                 //onChange={() => setSType2("2")}
               />
-              <RadioButtonLabel htmlFor={``} style={{ width: "105px" }}>
+              <RadioButtonLabel htmlFor={``} style={{ width: "50px" }}>
                 이익(+)
               </RadioButtonLabel>
             </Item>
@@ -238,12 +239,12 @@ function RV9009({
                 id="2"
                 //onChange={() => setSType2("2")}
               />
-              <RadioButtonLabel htmlFor={``} style={{ width: "105px" }}>
+              <RadioButtonLabel htmlFor={``} style={{ width: "50px" }}>
                 손실(-)
               </RadioButtonLabel>
             </Item>
 
-            <Label style={{ minWidth: "80px" }}>지역구분</Label>
+            <Label style={{ minWidth: "79px" }}>지역구분</Label>
             <Select register={register("jyCode")} width={InputSize.i120}>
               {dataCommonDic?.jyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -251,7 +252,7 @@ function RV9009({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>거래처구분</Label>
+            <Label style={{ minWidth: "90px" }}>거래처구분</Label>
             <Select register={register("cuType")} width={InputSize.i120}>
               {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -270,7 +271,7 @@ function RV9009({
             <CheckBox
               title="사용기간 자동 적용"
               rtl
-              style={{ marginLeft: "61px" }}
+              style={{ marginLeft: "44px" }}
               register={register("sChk2")}
             />
           </FormGroup>

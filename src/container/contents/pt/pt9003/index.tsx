@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
-import { RV9011SEARCH } from "app/path";
+import { PT9003SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
-import { Select, FormGroup, Label } from "components/form/style";
+import { Select, FormGroup, Label, Input } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import {
@@ -18,10 +18,10 @@ import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
-import { columns, fields, layout } from "./data";
+import { columns, fields } from "./data";
 import CheckBox from "components/checkbox";
 
-function RV9011({
+function PT9003({
   depthFullName,
   menuId,
   areaCode,
@@ -39,7 +39,7 @@ function RV9011({
     fetchData,
     dispatch,
     dataCommonDic,
-  } = CreateReport("RV", "RV9011", menuId, RV9011SEARCH);
+  } = CreateReport("PT", "PT9003", menuId, PT9003SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
@@ -73,10 +73,12 @@ function RV9011({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        gjMonth: init?.gjMonth,
+        reportKind: init?.reportKind,
+        sDate: init?.sDate,
+        eDate: init?.eDate,
         swCode: init?.swCode,
-        cuCustgubun: init?.cuCustgubun,
-        jyCode: init?.jyCode,
+        cuSukumtype: init?.cuSukumtype,
+        cuJyCode: init?.cuJyCode,
       });
     }
   };
@@ -105,6 +107,14 @@ function RV9011({
                 </Select>
               </>
             )}
+            <Label style={{ minWidth: "80px" }}>보고서종류</Label>
+            <Select register={register("reportKind")} width={InputSize.i120}>
+              {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
             <div className="buttons ml30">
               <Button
                 text="검색"
@@ -150,17 +160,28 @@ function RV9011({
         </SearchWrapper>
         <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>검침년월</Label>
+            <Label style={{ minWidth: "80px" }}>기간</Label>
             <Controller
               control={control}
-              {...register("gjMonth")}
+              {...register("sDate")}
               render={({ field: { onChange, value, name } }) => (
                 <CustomDatePicker
                   value={value}
                   onChange={onChange}
                   name={name}
                   style={{ width: "120px" }}
-                  showMonthYearPicker
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              {...register("eDate")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  style={{ width: "120px" }}
                 />
               )}
             />
@@ -172,28 +193,27 @@ function RV9011({
                 </option>
               ))}
             </Select>
-
-            <Label style={{ minWidth: "96px" }}>관리책임자</Label>
-            <Select register={register("cuCustgubun")} width={InputSize.i120}>
-              {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
+            <Label style={{ minWidth: "80px" }}>수금 방법</Label>
+            <Select register={register("cuSukumtype")} width={InputSize.i120}>
+              {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
               ))}
             </Select>
             <Label style={{ minWidth: "80px" }}>지역구분</Label>
-            <Select register={register("jyCode")} width={InputSize.i120}>
-              {dataCommonDic?.jyCode?.map((obj: any, idx: number) => (
+            <Select register={register("cuJyCode")} width={InputSize.i120}>
+              {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
               ))}
             </Select>
-            <CheckBox
-              title="사용기간 자동 적용"
-              rtl
-              style={{ marginLeft: "42px" }}
-              register={register("sChk")}
+            <Input
+              label="비고"
+              labelStyle={{ minWidth: "50px" }}
+              register={register("sBigo")}
+              inputSize={InputSize.i200}
             />
           </FormGroup>
         </SearchWrapper>
@@ -207,10 +227,9 @@ function RV9011({
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={{ height: "calc(100% - 52px)" }}
-        layout={layout}
       />
     </>
   );
 }
 
-export default RV9011;
+export default PT9003;

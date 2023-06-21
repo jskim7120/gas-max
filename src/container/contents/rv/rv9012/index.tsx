@@ -74,8 +74,8 @@ function RV9012({
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
         gjMonth: init?.gjMonth,
-        sSwCode: init?.sSwCode,
-        sJyCode: init?.sJyCode,
+        swCode: init?.swCode,
+        jyCode: init?.jyCode,
       });
     }
   };
@@ -164,16 +164,16 @@ function RV9012({
               )}
             />
             <Label style={{ minWidth: "80px" }}>담당사원</Label>
-            <Select register={register("sSwCode")} width={InputSize.i120}>
-              {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
+            <Select register={register("swCode")} width={InputSize.i120}>
+              {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
               ))}
             </Select>
             <Label style={{ minWidth: "80px" }}>지역구분</Label>
-            <Select register={register("sJyCode")} width={InputSize.i120}>
-              {dataCommonDic?.sJyCode?.map((obj: any, idx: number) => (
+            <Select register={register("jyCode")} width={InputSize.i120}>
+              {dataCommonDic?.jyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -182,7 +182,7 @@ function RV9012({
             <CheckBox
               title="당월 미검침 거래처 포함"
               rtl
-              style={{ marginLeft: "61px" }}
+              style={{ marginLeft: "30px" }}
               register={register("sChk")}
             />
           </FormGroup>
