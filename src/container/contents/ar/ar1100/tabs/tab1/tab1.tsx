@@ -60,7 +60,7 @@ const Tab1 = React.forwardRef(
       if (cm1106.source === "AR1100" && cm1106.jpCode && cm1106.jpName) {
         resetForm("jpName");
       }
-    }, [cm1106.jpCode, cm1106.jpName]);
+    }, [cm1106.jpCode, cm1106.jpName, cm1106.tick]);
 
     useEffect(() => {
       if (data && Object.keys(data)?.length > 0) {
