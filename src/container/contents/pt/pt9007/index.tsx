@@ -114,7 +114,7 @@ function PT9007({
               </>
             )}
             <Label style={{ minWidth: "80px" }}>보고서종류</Label>
-            <Select register={register("reportKind")} width={InputSize.i120}>
+            <Select register={register("reportKind")} width={InputSize.i160}>
               {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}

@@ -190,11 +190,12 @@ function PT9008({
             />
 
             <CheckBox
-              title="수금 사원"
+              //title="수금 사원"
               rtl
               style={{ marginLeft: "30px" }}
               register={register("sawonChk")}
             />
+            <Label style={{ minWidth: "67px" }}>수금 사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -202,7 +203,7 @@ function PT9008({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>관리책임자</Label>
+            <Label style={{ minWidth: "90px" }}>관리책임자</Label>
             <Select register={register("cuCustgubun1")} width={InputSize.i120}>
               {dataCommonDic?.cuCustgubun1?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -226,7 +227,7 @@ function PT9008({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>지역구분</Label>
+            <Label style={{ minWidth: "90px" }}>지역구분</Label>
             <Select register={register("cuJyCode")} width={InputSize.i120}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

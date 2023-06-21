@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { PT9004SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
+import PlainTab from "components/plainTab";
+import { TabContentWrapper } from "components/plainTab/style";
 import { Select, FormGroup, Label } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -18,8 +20,11 @@ import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
-import { columns, fields } from "./data";
+import { columns0, fields0 } from "./data/data0";
+import { columns1, fields1 } from "./data/data1";
+import { columns2, fields2 } from "./data/data2";
 import CheckBox from "components/checkbox";
+import getTabContent from "./getTabContent";
 
 function PT9004({
   depthFullName,
@@ -46,11 +51,19 @@ function PT9004({
     mode: "onSubmit",
   });
 
+  const [tabId, setTabId] = useState(0);
+
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
       resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (tabId !== undefined) {
+      setData([]);
+    }
+  }, [tabId]);
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -64,8 +77,16 @@ function PT9004({
       `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
     );
   };
-  const submit = (params: ISEARCH) => {
-    fetchData(params);
+
+  const selectColumns = () => {
+    switch (tabId) {
+      case 0:
+        return { columns: columns0, fields: fields0 };
+      case 1:
+        return { columns: columns1, fields: fields1 };
+      case 2:
+        return { columns: columns2, fields: fields2 };
+    }
   };
 
   const resetForm = (type: string) => {
@@ -92,6 +113,65 @@ function PT9004({
       resetForm("reset");
     }
     setData([]);
+  };
+
+  const submit = (params: any) => {
+    if (tabId === 0) {
+      delete params.swCode1;
+      delete params.cuJyCode1;
+      delete params.cuStae1;
+      delete params.sOrd1;
+      delete params.sChk1;
+
+      delete params.swCode2;
+      delete params.cuCustgubun2;
+      delete params.sOver2;
+      delete params.cuJyCode2;
+      delete params.cuSukumtype2;
+      delete params.cuStae2;
+      delete params.sOrd2;
+    } else if (tabId === 1) {
+      delete params.swCode;
+      delete params.cuJyCode;
+      delete params.dateChk;
+      delete params.sDate;
+      delete params.eDate;
+      delete params.cuStae;
+      delete params.sOrd;
+      delete params.sChk;
+
+      delete params.swCode2;
+      delete params.cuCustgubun2;
+      delete params.sOver2;
+      delete params.cuJyCode2;
+      delete params.cuSukumtype2;
+      delete params.cuStae2;
+      delete params.sOrd2;
+
+      params.swCode = params.swCode1;
+    } else if (tabId === 2) {
+      delete params.swCode;
+      delete params.cuJyCode;
+      delete params.dateChk;
+      delete params.sDate;
+      delete params.eDate;
+      delete params.cuStae;
+      delete params.sOrd;
+      delete params.sChk;
+
+      delete params.swCode1;
+      delete params.cuCustgubun1;
+      delete params.cuJyCode1;
+      delete params.cuSukumtype1;
+      delete params.cuStae1;
+      delete params.sOrd1;
+      delete params.sChk1;
+
+      params.swCode = params.swCode2;
+      params.cuJyCode = params.cuJyCode3;
+      params.cuCutype = params.cuCutype3;
+    }
+    fetchData(params);
   };
 
   return (
@@ -154,106 +234,37 @@ function PT9004({
           </FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
-        <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
-          <FormGroup>
-            <Label style={{ minWidth: "80px" }}>담당사원</Label>
-            <Select register={register("swCode")} width={InputSize.i120}>
-              {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-            <Label style={{ minWidth: "206px" }}>관리책임자</Label>
-            <Select register={register("cuCustgubun1")} width={InputSize.i120}>
-              {dataCommonDic?.cuCustgubun1?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-            <Label style={{ minWidth: "80px" }}>지역구분</Label>
-            <Select register={register("cuJyCode")} width={InputSize.i120}>
-              {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-          <FormGroup>
-            <Label style={{ marginLeft: "-65px" }}>기간</Label>
-            <CheckBox
-              //title="기간"
-              rtl
-              style={{ marginLeft: "6px" }}
-              register={register("dateChk")}
-            />
-            <Controller
-              control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                  showMonthYearPicker
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              {...register("eDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                  showMonthYearPicker
-                />
-              )}
-            />
-            <Label style={{ minWidth: "80px" }}>수금 방법</Label>
-            <Select register={register("cuSukumtype1")} width={InputSize.i120}>
-              {dataCommonDic?.cuSukumtype1?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-            <Label style={{ minWidth: "80px" }}>거래상태</Label>
-            <Select register={register("cuStae")} width={InputSize.i120}>
-              {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-            <Label style={{ minWidth: "80px" }}>정렬순서 </Label>
-            <Select register={register("sOrd")} width={InputSize.i120}>
-              {dataCommonDic?.sOrd?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-            <CheckBox
-              title="내역별 조회"
-              rtl
-              style={{ marginLeft: "6px" }}
-              register={register("dateChk")}
-            />
-          </FormGroup>
-        </SearchWrapper>
       </form>
+      <div
+        style={{
+          width: "100%",
+          paddingTop: "2px",
+          background: "#626161",
+        }}
+      >
+        <PlainTab
+          tabHeader={["미수 상세 현황", "최종 미수 현황", "월별 미수 현황"]}
+          onClick={(id) => setTabId(id)}
+          tabId={tabId}
+        />
+        <TabContentWrapper
+          style={{
+            padding: "0",
+            minHeight: "auto",
+            border: "none",
+            borderTop: "1px solid #00000033",
+          }}
+        >
+          {getTabContent(tabId, register, dataCommonDic, data, control)}
+        </TabContentWrapper>
+      </div>
       <BasicGrid
         menuId={menuId}
         ref={gridRef}
+        gridChangeField={tabId}
         areaCode={ownAreaCode}
-        columns={columns}
-        fields={fields}
+        columns={selectColumns()?.columns}
+        fields={selectColumns()?.fields}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={{ height: "calc(100% - 52px)" }}

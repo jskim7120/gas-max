@@ -1,6 +1,6 @@
 import { ValueType } from "realgrid";
 
-export const fields = [
+export const fields1 = [
   {
     fieldName: "gjCuCode",
     dataType: ValueType.TEXT,
@@ -53,13 +53,9 @@ export const fields = [
     fieldName: "gaa5",
     dataType: ValueType.TEXT,
   },
-  {
-    fieldName: "gaa6",
-    dataType: ValueType.TEXT,
-  },
 ];
 
-export const columns = [
+export const columns1 = [
   {
     name: "gjCuCode",
     fieldName: "gjCuCode",
@@ -109,7 +105,7 @@ export const columns = [
     type: "data",
     width: "70",
     header: {
-      text: "검침일자",
+      text: "전미수",
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
@@ -118,9 +114,9 @@ export const columns = [
     name: "gjJankg",
     fieldName: "gjJankg",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
-      text: "전검",
+      text: "1월",
     },
     styleName: "rg-left-column",
   },
@@ -128,9 +124,20 @@ export const columns = [
     name: "cuSwName",
     fieldName: "cuSwName",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
-      text: "당검침",
+      text: "2월",
+    },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
+  },
+  {
+    name: "cuSwName",
+    fieldName: "cuSwName",
+    type: "data",
+    width: "70",
+    header: {
+      text: "3월",
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
@@ -139,9 +146,9 @@ export const columns = [
     name: "gaa",
     fieldName: "gaa",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
-      text: "사용",
+      text: "4월",
     },
   },
 
@@ -149,9 +156,9 @@ export const columns = [
     name: "gaa1",
     fieldName: "gaa1",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
-      text: "단가",
+      text: "5월",
     },
   },
   {
@@ -160,7 +167,7 @@ export const columns = [
     type: "data",
     width: "90",
     header: {
-      text: "당월금액",
+      text: "미수합계",
     },
     styleName: "rg-left-column",
   },
@@ -170,7 +177,7 @@ export const columns = [
     type: "data",
     width: "50",
     header: {
-      text: "연체료",
+      text: "사원",
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
@@ -181,7 +188,7 @@ export const columns = [
     type: "data",
     width: "70",
     header: {
-      text: "당월미수",
+      text: "최종수금",
     },
     styleName: "rg-left-column",
   },
@@ -189,20 +196,9 @@ export const columns = [
     name: "gaa5",
     fieldName: "gaa5",
     type: "data",
-    width: "70",
-    header: {
-      text: "미수누계",
-    },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
-  },
-  {
-    name: "gaa6",
-    fieldName: "gaa6",
-    type: "data",
     width: "50",
     header: {
-      text: "사원",
+      text: "연체",
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
