@@ -83,7 +83,7 @@ function RV9013({
         swCode: init?.swCode,
         cuRh20: init?.cuRh20,
         cuPer: init?.cuPer,
-        cuDc: init?.cuDc,
+        cuCdc: init?.cuCdc,
         cuStae: init?.cuStae,
         jyCode: init?.jyCode,
       });
@@ -238,8 +238,8 @@ function RV9013({
               ))}
             </Select>
             <Label style={{ minWidth: "80px" }}>할인율</Label>
-            <Select register={register("cuDc")} width={InputSize.i120}>
-              {dataCommonDic?.cuDc?.map((obj: any, idx: number) => (
+            <Select register={register("cuCdc")} width={InputSize.i120}>
+              {dataCommonDic?.cuCdc?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>

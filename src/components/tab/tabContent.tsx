@@ -69,6 +69,15 @@ import CC9005 from "container/contents/cc/cc9005";
 
 import PT1100 from "container/contents/pt/pt1100";
 import PT1200 from "container/contents/pt/pt1200";
+import PT9001 from "container/contents/pt/pt9001";
+import PT9002 from "container/contents/pt/pt9002";
+import PT9003 from "container/contents/pt/pt9003";
+import PT9004 from "container/contents/pt/pt9004";
+import PT9005 from "container/contents/pt/pt9005";
+import PT9006 from "container/contents/pt/pt9006";
+import PT9007 from "container/contents/pt/pt9007";
+import PT9008 from "container/contents/pt/pt9008";
+import PT9009 from "container/contents/pt/pt9009";
 
 export const getContent = (
   id: any,
@@ -481,6 +490,42 @@ export const getContent = (
     case "PT1200":
       return (
         <PT1200 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "PT9001":
+      return (
+        <PT9001 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "PT9002":
+      return (
+        <PT9002 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "PT9003":
+      return (
+        <PT9003 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "PT9004":
+      return (
+        <PT9004 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "PT9005":
+      return (
+        <PT9005 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "PT9006":
+      return (
+        <PT9006 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "PT9007":
+      return (
+        <PT9007 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "PT9008":
+      return (
+        <PT9008 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+      );
+    case "PT9009":
+      return (
+        <PT9009 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
       );
   }
 };

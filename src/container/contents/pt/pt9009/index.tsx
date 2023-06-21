@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
-import { RV9012SEARCH } from "app/path";
+import { PT9009SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
-import { Select, FormGroup, Label } from "components/form/style";
+import { Select, FormGroup, Label, Input } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import {
@@ -21,7 +21,7 @@ import { ISEARCH } from "./model";
 import { columns, fields } from "./data";
 import CheckBox from "components/checkbox";
 
-function RV9012({
+function PT9009({
   depthFullName,
   menuId,
   areaCode,
@@ -39,7 +39,7 @@ function RV9012({
     fetchData,
     dispatch,
     dataCommonDic,
-  } = CreateReport("RV", "RV9012", menuId, RV9012SEARCH);
+  } = CreateReport("PT", "PT9009", menuId, PT9009SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
@@ -73,9 +73,12 @@ function RV9012({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        gjMonth: init?.gjMonth,
-        swCode: init?.swCode,
-        jyCode: init?.jyCode,
+        cuSukumtype: init?.cuSukumtype,
+        sGubun: init?.sGubun,
+        rabChk: init?.rabChk,
+        sDate: init?.sDate,
+        eDate: init?.eDate,
+        sSearch: init?.sSearch,
       });
     }
   };
@@ -149,41 +152,65 @@ function RV9012({
         </SearchWrapper>
         <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>검침년월</Label>
-            <Controller
-              control={control}
-              {...register("gjMonth")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                  showMonthYearPicker
-                />
-              )}
-            />
-            <Label style={{ minWidth: "80px" }}>담당사원</Label>
-            <Select register={register("swCode")} width={InputSize.i120}>
-              {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-            <Label style={{ minWidth: "80px" }}>지역구분</Label>
-            <Select register={register("jyCode")} width={InputSize.i120}>
-              {dataCommonDic?.jyCode?.map((obj: any, idx: number) => (
+            <Label style={{ minWidth: "80px" }}>수금 방법 </Label>
+            <Select register={register("cuSukumtype")} width={InputSize.i120}>
+              {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
               ))}
             </Select>
             <CheckBox
-              title="당월 미검침 거래처 포함"
+              title="수금 기간"
               rtl
               style={{ marginLeft: "30px" }}
-              register={register("sChk")}
+              register={register("rabChk")}
+            />
+            <Controller
+              control={control}
+              {...register("sDate")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  style={{ width: "120px" }}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              {...register("eDate")}
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                  style={{ width: "120px" }}
+                />
+              )}
+            />
+            <Input
+              label="찾 기"
+              labelStyle={{ minWidth: "80px" }}
+              register={register("sSearch")}
+              inputSize={InputSize.i200}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>처리구분</Label>
+            <Select register={register("sGubun")} width={InputSize.i120}>
+              {dataCommonDic?.sGubun?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+            <CheckBox
+              title="만기 기간"
+              rtl
+              style={{ marginLeft: "30px" }}
+              register={register("rabChk")}
             />
           </FormGroup>
         </SearchWrapper>
@@ -202,4 +229,4 @@ function RV9012({
   );
 }
 
-export default RV9012;
+export default PT9009;
