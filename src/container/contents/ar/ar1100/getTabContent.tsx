@@ -22,7 +22,7 @@ function getTabContent(
           dictionary={dictionary}
           isAddBtnClicked={isAddBtnClicked}
           setIsAddBtnClicked={setIsAddBtnClicked}
-          fetch={fetch}
+          fetchData={fetchData}
           selected={selected}
           menuId={menuId}
           ref={tabRef1}

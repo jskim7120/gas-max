@@ -1,6 +1,7 @@
 export interface IAR110065DETAIL {
   areaCode: string;
   pjCuCode: string;
+  pjCuName: string;
   buCode: string;
   buName: string;
   jpKind: string;
