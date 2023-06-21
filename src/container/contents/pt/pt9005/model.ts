@@ -9,4 +9,6 @@ export interface ISEARCH {
   cuStae: string;
   sOrd: string;
   sChk: string;
+  prtCode: string;
+  prtAddr: string;
 }

@@ -24,11 +24,11 @@ import CheckBox from "components/checkbox";
 function PT9005({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const {
     data,
@@ -82,6 +82,8 @@ function PT9005({
         cuStae: init?.cuStae,
         sOrd: init?.sOrd,
         sChk: init?.sChk,
+        prtCode: init?.prtCode,
+        prtAddr: init?.prtAddr,
       });
     }
   };
@@ -98,7 +100,7 @@ function PT9005({
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <SearchWrapper className="h35 mt5">
           <FormGroup>
-            {areaCode === "00" && (
+            {ownAreaCode === "00" && (
               <>
                 <Label style={{ minWidth: "80px" }}>영업소</Label>
                 <Select register={register("areaCode")} width={InputSize.i120}>
@@ -150,6 +152,18 @@ function PT9005({
                 type="button"
               />
             </div>
+            <CheckBox
+              title="코드출력"
+              rtl
+              style={{ marginLeft: "30px" }}
+              register={register("prtCode")}
+            />
+            <CheckBox
+              title="주소출력"
+              rtl
+              style={{ marginLeft: "30px" }}
+              register={register("prtAddr")}
+            />
           </FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
@@ -190,7 +204,7 @@ function PT9005({
             </Select>
           </FormGroup>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>지역구분</Label>
+            <Label style={{ minWidth: "386px" }}>지역구분</Label>
             <Select register={register("cuJyCode")} width={InputSize.i120}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -198,7 +212,7 @@ function PT9005({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "180px" }}>수금 방법 </Label>
+            <Label style={{ minWidth: "94px" }}>수금 방법 </Label>
             <Select register={register("cuSukumtype")} width={InputSize.i120}>
               {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -206,7 +220,7 @@ function PT9005({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "94px" }}>수금 방법 </Label>
+            <Label style={{ minWidth: "100px" }}>수금 방법 </Label>
             <Select register={register("cuStae")} width={InputSize.i120}>
               {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -234,7 +248,7 @@ function PT9005({
       <BasicGrid
         menuId={menuId}
         ref={gridRef}
-        areaCode={areaCode}
+        areaCode={ownAreaCode}
         columns={columns}
         fields={fields}
         data={data}

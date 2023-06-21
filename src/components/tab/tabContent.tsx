@@ -493,39 +493,75 @@ export const getContent = (
       );
     case "PT9001":
       return (
-        <PT9001 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <PT9001
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "PT9002":
       return (
-        <PT9002 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <PT9002
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "PT9003":
       return (
-        <PT9003 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <PT9003
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "PT9004":
       return (
-        <PT9004 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <PT9004
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "PT9005":
       return (
-        <PT9005 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <PT9005
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "PT9006":
       return (
-        <PT9006 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <PT9006
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "PT9007":
       return (
-        <PT9007 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <PT9007
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "PT9008":
       return (
-        <PT9008 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <PT9008
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "PT9009":
       return (
-        <PT9009 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <PT9009
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
   }
 };

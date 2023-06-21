@@ -10,4 +10,18 @@ export interface ISEARCH {
   cuStae: string;
   sOrd: string;
   sChk: string;
+
+  swCode1: string;
+  cuJyCode1: string;
+  cuStae1: string;
+  sOrd1: string;
+  sChk1: string;
+
+  swCode2: string;
+  cuCustgubun2: string;
+  sOver2: string;
+  cuJyCode2: string;
+  cuSukumtype2: string;
+  cuStae2: string;
+  sOrd2: string;
 }
