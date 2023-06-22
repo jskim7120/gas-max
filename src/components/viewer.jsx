@@ -16,6 +16,7 @@ const Viewer = () => {
 
   const [report, setReport] = useState(null);
   const [dataSet, setDataSet] = useState([]);
+  const [title, setTitle] = useState({});
 
   const [viewer, setViewer] = useState(null);
 
@@ -27,8 +28,10 @@ const Viewer = () => {
     ).entries();
 
     const arr = iterator.next().value[0];
+    const obj = JSON.parse(arr);
 
-    setDataSet(JSON.parse(arr));
+    setDataSet(obj.data);
+    setTitle(obj.title);
     setReport(json);
   };
 
@@ -58,12 +61,7 @@ const Viewer = () => {
           values: dataSet,
         },
         headerInfo: {
-          values: {
-            swCode: "99 전체",
-            jpCode: "99 전체",
-            date: "2023-06-01 ~ 2023-06-02",
-            cuJyCode: "99 전체",
-          },
+          values: title,
         },
       };
       viewer.preview({

@@ -100,9 +100,7 @@
           "cellStyles": {
             "paddingTop": "10px"
           },
-          "rows": [
-            {}
-          ],
+          "rows": [{}],
           "cells": [
             {
               "r": 0,
@@ -346,9 +344,7 @@
             "name": null,
             "rowCount": 1,
             "cellStyles": {},
-            "rows": [
-              {}
-            ],
+            "rows": [{}],
             "cells": [
               {
                 "r": 0,
@@ -529,9 +525,7 @@
             "name": null,
             "rowCount": 1,
             "cellStyles": {},
-            "rows": [
-              {}
-            ],
+            "rows": [{}],
             "cells": [
               {
                 "r": 0,
@@ -639,9 +633,7 @@
             "name": null,
             "rowCount": 1,
             "cellStyles": {},
-            "rows": [
-              {}
-            ],
+            "rows": [{}],
             "cells": [
               {
                 "r": 0,
@@ -757,7 +749,7 @@
             "items": [
               {
                 "type": "text",
-                "value": "No",
+                "value": "no",
                 "name": "",
                 "col": 0,
                 "row": 0
