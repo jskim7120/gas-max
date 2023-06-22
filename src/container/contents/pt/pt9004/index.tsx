@@ -149,6 +149,10 @@ function PT9004({
       delete params.sOrd2;
 
       params.swCode = params.swCode1;
+      params.cuJyCode = params.cuJyCode1;
+      params.cuStae = params.cuStae1;
+      params.sOrd = params.sOrd1;
+      params.sChk = params.sChk1;
     } else if (tabId === 2) {
       delete params.swCode;
       delete params.cuJyCode;
@@ -168,8 +172,11 @@ function PT9004({
       delete params.sChk1;
 
       params.swCode = params.swCode2;
-      params.cuJyCode = params.cuJyCode3;
-      params.cuCutype = params.cuCutype3;
+      params.cuJyCode = params.cuJyCode2;
+      params.cuStae = params.cuStae2;
+      params.sOrd = params.sOrd2;
+      params.cuCustgubun1 = params.cuCustgubun2;
+      params.cuCustgubun1 = params.cuSukumtype2;
     }
     fetchData(params);
   };

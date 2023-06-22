@@ -13,6 +13,7 @@ import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
 import { IAR110065DETAIL, emptyObj } from "./model";
 import { apiPost } from "app/axios";
 import { DateWithoutDash } from "helpers/dateFormat";
+import { currencyMask } from "helpers/currency";
 
 const Tab1 = React.forwardRef(
   (
@@ -311,7 +312,11 @@ const Tab1 = React.forwardRef(
               control={control}
               name="qtyKg"
               render={({ field }) => (
-                <Input {...field} inputSize={InputSize.i100} />
+                <Input
+                  {...field}
+                  inputSize={InputSize.i100}
+                  textAlign="right"
+                />
               )}
             />
           ) : (
@@ -319,7 +324,11 @@ const Tab1 = React.forwardRef(
               control={control}
               name="pjQty"
               render={({ field }) => (
-                <Input {...field} inputSize={InputSize.i100} />
+                <Input
+                  {...field}
+                  inputSize={InputSize.i100}
+                  textAlign="right"
+                />
               )}
             />
           ),
@@ -330,7 +339,11 @@ const Tab1 = React.forwardRef(
               control={control}
               name="qtyL"
               render={({ field }) => (
-                <Input {...field} inputSize={InputSize.i100} />
+                <Input
+                  {...field}
+                  inputSize={InputSize.i100}
+                  textAlign="right"
+                />
               )}
             />
           ) : (
@@ -338,7 +351,11 @@ const Tab1 = React.forwardRef(
               control={control}
               name="pjReqty"
               render={({ field }) => (
-                <Input {...field} inputSize={InputSize.i100} />
+                <Input
+                  {...field}
+                  inputSize={InputSize.i100}
+                  textAlign="right"
+                />
               )}
             />
           ),
@@ -347,16 +364,26 @@ const Tab1 = React.forwardRef(
             <Input
               register={register("jpSpecific")}
               inputSize={InputSize.i100}
+              textAlign="right"
             />
           ) : (
-            <Input register={register("pjJago")} inputSize={InputSize.i100} />
+            <Input
+              register={register("pjJago")}
+              inputSize={InputSize.i100}
+              textAlign="right"
+            />
           ),
         6: (
           <Controller
             control={control}
             name="pjDanga"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} />
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                textAlign="right"
+                mask={currencyMask}
+              />
             )}
           />
         ),
@@ -378,24 +405,48 @@ const Tab1 = React.forwardRef(
           </FormGroup>
         ),
         8: (
-          <Input
-            register={register("pjKumSup")}
-            inputSize={InputSize.i100}
-            readOnly
+          <Controller
+            control={control}
+            name="pjKumSup"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                readOnly
+                textAlign="right"
+                mask={currencyMask}
+              />
+            )}
           />
         ),
         9: (
-          <Input
-            register={register("pjKumVat")}
-            inputSize={InputSize.i100}
-            readOnly
+          <Controller
+            control={control}
+            name="pjKumVat"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                readOnly
+                textAlign="right"
+                mask={currencyMask}
+              />
+            )}
           />
         ),
         10: (
-          <Input
-            register={register("pjKumack")}
-            inputSize={InputSize.i100}
-            readOnly
+          <Controller
+            control={control}
+            name="pjKumack"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                readOnly
+                textAlign="right"
+                mask={currencyMask}
+              />
+            )}
           />
         ),
       },
@@ -437,10 +488,48 @@ const Tab1 = React.forwardRef(
             </Select>
           </FormGroup>
         ),
-        5: <Input register={register("pjInkum")} inputSize={InputSize.i100} />,
-        6: <Input register={register("pjDc")} inputSize={InputSize.i100} />,
+        5: (
+          <Controller
+            control={control}
+            name="pjInkum"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                textAlign="right"
+                mask={currencyMask}
+              />
+            )}
+          />
+        ),
+
+        6: (
+          <Controller
+            control={control}
+            name="pjDc"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                textAlign="right"
+                mask={currencyMask}
+              />
+            )}
+          />
+        ),
         7: (
-          <Input register={register("pjMisukum")} inputSize={InputSize.i100} />
+          <Controller
+            control={control}
+            name="pjMisukum"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                textAlign="right"
+                mask={currencyMask}
+              />
+            )}
+          />
         ),
         8: (
           <FormGroup>
