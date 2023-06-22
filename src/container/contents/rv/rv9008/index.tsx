@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { RV9008SEARCH } from "app/path";
@@ -26,6 +26,21 @@ import {
   RadioButtonLabel,
 } from "components/radioButton/style";
 
+const radioOptions = [
+  {
+    label: "조회구분 ",
+    id: "1",
+  },
+  {
+    label: "이익(+)",
+    id: "2",
+  },
+  {
+    label: "손실(-)",
+    id: "3",
+  },
+];
+
 function RV9008({
   depthFullName,
   menuId,
@@ -51,6 +66,9 @@ function RV9008({
     mode: "onSubmit",
   });
 
+  const [sType1, setSType1] = useState(false);
+  const [sType2, setSType2] = useState("0");
+
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
       resetForm("reset");
@@ -70,6 +88,8 @@ function RV9008({
     );
   };
   const submit = (params: ISEARCH) => {
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
     fetchData(params);
   };
 
@@ -214,18 +234,20 @@ function RV9008({
           </FormGroup>
           <FormGroup>
             <Label style={{ marginLeft: "-38px" }}>조회구분</Label>
-            <Item>
-              <RadioButtonLabel htmlFor={``} style={{ width: "32px" }}>
-                전체
-              </RadioButtonLabel>
-              <RadioButton
-                type="radio"
-                value="2"
-                {...register(`sChk0`)}
-                id="2"
-                //onChange={() => setSType2("2")}
-              />
-            </Item>
+            {radioOptions.map((option, index) => (
+              <Item key={index}>
+                <RadioButton
+                  type="radio"
+                  value={option.id}
+                  {...register(`sChk0`)}
+                  id={option.id}
+                  onChange={() => setSType1(true)}
+                />
+                <RadioButtonLabel htmlFor={`${option.label}`}>
+                  {option.label}
+                </RadioButtonLabel>
+              </Item>
+            ))}
             <Item>
               <RadioButton
                 type="radio"

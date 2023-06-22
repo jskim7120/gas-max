@@ -20,6 +20,7 @@ import { GetMonth } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns0, fields0, layout0 } from "./data/data0";
 import { columns1, fields1, layout1 } from "./data/data1";
+import { DateWithoutDash } from "helpers/dateFormat";
 
 function RV9007({
   depthFullName,
@@ -96,6 +97,7 @@ function RV9007({
     );
   };
   const submit = (params: ISEARCH) => {
+    params.gjGumym = DateWithoutDash(params.gjGumym);
     fetchData(params);
   };
 

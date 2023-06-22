@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { RV9011SEARCH } from "app/path";
@@ -16,7 +16,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import { DateWithoutDash } from "helpers/dateFormat";
+import { DateWithoutDash, GetYear, GetMonth } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields, layout } from "./data";
 import CheckBox from "components/checkbox";
@@ -42,7 +42,9 @@ function RV9011({
   } = CreateReport("RV", "RV9011", menuId, RV9011SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const [toggler, setToggler] = useState<boolean>(true);
+
+  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -51,6 +53,35 @@ function RV9011({
       resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("gjMonth")) {
+      handleGjMonthChange(watch("gjMonth"));
+      setToggler((prev) => !prev);
+    }
+  }, [watch("gjMonth")]);
+
+  const handleGjMonthChange = (gjMonth: string) => {
+    let year = GetYear(gjMonth);
+    const month = GetMonth(gjMonth);
+
+    let tempMonth;
+    let tempYear = year;
+
+    for (let i = 0; i < 3; i++) {
+      tempMonth = +month + i;
+
+      if (tempMonth > 12) {
+        tempMonth = tempMonth - 12;
+        if (tempYear === year) {
+          tempYear = +tempYear + 1;
+        }
+      }
+      tempMonth < 10 && (tempMonth = `0${tempMonth}`);
+
+      (layout[4 + i] as any).header.text = `${tempYear}-${tempMonth}월`;
+    }
+  };
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -65,6 +96,7 @@ function RV9011({
     );
   };
   const submit = (params: ISEARCH) => {
+    params.gjMonth = DateWithoutDash(params.gjMonth);
     fetchData(params);
   };
 
@@ -153,7 +185,7 @@ function RV9011({
             <Label style={{ minWidth: "80px" }}>검침년월</Label>
             <Controller
               control={control}
-              {...register("gjMonth")}
+              name="gjMonth"
               render={({ field: { onChange, value, name } }) => (
                 <CustomDatePicker
                   value={value}
@@ -208,6 +240,7 @@ function RV9011({
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={{ height: "calc(100% - 52px)" }}
         layout={layout}
+        gridChangeField={toggler}
       />
     </>
   );
