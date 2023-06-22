@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import CreateReport from "app/hook/createReport";
+import { useGetTabDictionaryQuery } from "app/api/commonDictionary";
 import { PT9001SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import PlainTab from "components/plainTab";
@@ -20,11 +20,12 @@ import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
-import { columns0, fields0 } from "./data/data0";
-import { columns1, fields1 } from "./data/data1";
+import { columns0, fields0 } from "./tab/tab1/data0";
+import { columns1, fields1 } from "./tab/tab2/data1";
 import CheckBox from "components/checkbox";
-
+import { useDispatch } from "app/store";
 import getTabContent from "./getTabContent";
+import { apiGet } from "app/axios";
 
 function PT9001({
   depthFullName,
@@ -35,23 +36,22 @@ function PT9001({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    fetchData,
-    dispatch,
-    dataCommonDic,
-  } = CreateReport("PT", "PT9001", menuId, PT9001SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
+  const [data, setData] = useState<Array<any>>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [tabId, setTabId] = useState(0);
+
+  const { data: dataCommonDic } = useGetTabDictionaryQuery({
+    groupId: "PT",
+    functionName: "PT9001",
+    tabId: tabId,
+  });
+
+  const dispatch = useDispatch();
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
-
-  const [tabId, setTabId] = useState(0);
 
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
@@ -59,11 +59,19 @@ function PT9001({
     }
   }, [dataCommonDic]);
 
-  useEffect(() => {
-    if (tabId !== undefined) {
+  const fetchData = async (params: any) => {
+    setLoading(true);
+
+    const dataS = await apiGet(PT9001SEARCH, params);
+
+    if (dataS && dataS?.length > 0) {
+      setData(dataS);
+      const lastIndex = dataS && dataS?.length > 1 ? dataS.length - 1 : 0;
+    } else {
       setData([]);
     }
-  }, [tabId]);
+    setLoading(false);
+  };
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -84,22 +92,34 @@ function PT9001({
         return { columns: columns0, fields: fields0 };
       case 1:
         return { columns: columns1, fields: fields1 };
+      default:
+        return { columns: columns0, fields: fields0 };
     }
   };
 
   const resetForm = (type: string) => {
     if (type === "reset") {
-      const init = dataCommonDic.dataInit[0];
+      const init = dataCommonDic?.dataInit[0];
+
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
         cuGubun: init?.cuGubun,
+        cuJangbu: init?.cuJangbu,
         cuJyCode: init?.cuJyCode,
         cuStae: init?.cuStae,
-        sDate: init?.sDate,
+        dateChk: init?.dateChk === "Y",
         eDate: init?.eDate,
-        cuJangbu: init?.cuJangbu,
-        swCode: init?.swCode,
+        sDate: init?.sDate,
         sOrd: init?.sOrd,
+        swCode: init?.swCode,
+
+        cuCustgubun1: init?.cuCustgubun1,
+        cuJangbu1: init?.cuJangbu1,
+        cuJyCode1: init?.cuJyCode1,
+        cuStae1: init?.cuStae1,
+        cuSukumtype1: init?.cuSukumtype1,
+        sOrd1: init?.sOrd1,
+        swCode1: init?.swCode1,
       });
     }
   };
@@ -122,6 +142,9 @@ function PT9001({
       delete params.cuSukumtype1;
       delete params.cuStae1;
       delete params.sOrd1;
+      params.sDate = DateWithoutDash(params.sDate);
+      params.eDate = DateWithoutDash(params.eDate);
+      params.dateChk = params.dateChk ? "Y" : "N";
     } else if (tabId === 1) {
       delete params.cuGubun;
       delete params.cuJyCode;
@@ -131,13 +154,12 @@ function PT9001({
       delete params.cuJangbu;
       delete params.swCode;
       delete params.sOrd;
-
-      params.swCode = params.swCode1;
-      params.cuJangbu = params.cuJangbu1;
-      params.cuJyCode = params.cuJyCode1;
-      params.cuStae = params.cuStae1;
-      params.sOrd = params.sOrd1;
+      delete params.dateChk;
+      delete params.sDate;
+      delete params.eDate;
+      delete params.sOver;
     }
+
     fetchData(params);
   };
 
@@ -231,8 +253,7 @@ function PT9001({
         ref={gridRef}
         gridChangeField={tabId}
         areaCode={ownAreaCode}
-        columns={selectColumns()?.columns}
-        fields={selectColumns()?.fields}
+        {...selectColumns()}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={{ height: "calc(100% - 52px)" }}

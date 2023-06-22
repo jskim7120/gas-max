@@ -35,7 +35,7 @@ import {
   GR1200BLINSERT,
   GR1200BLDELETE,
 } from "app/path";
-import { useGetAdditionalDictionaryQuery } from "app/api/commonDictionary";
+import { useGetAreaCodeDictionaryQuery } from "app/api/commonDictionary";
 import { calcFooterTab2Tab3 } from "./tabs/tab2and3CalculationHelper";
 import { SearchWrapper } from "container/contents/commonStyle";
 import FourButtons from "components/button/fourButtons";
@@ -99,7 +99,7 @@ const Form = ({
   const stateGR1200 = useSelector((state: any) => state.modal.gr1200);
   const { isDelete } = useSelector((state) => state.modal);
 
-  const { data: dataAdditionalDic } = useGetAdditionalDictionaryQuery({
+  const { data: dataAdditionalDic } = useGetAreaCodeDictionaryQuery({
     groupId: "GR",
     functionName: "GR1200",
     areaCode: areaCode2,

@@ -18,7 +18,7 @@ import Loader from "components/loader";
 import CheckBox from "components/checkbox";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import { DateWithoutDash } from "helpers/dateFormat";
+import { DateWithDash, DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
@@ -44,9 +44,10 @@ function AR9001({
   } = CreateReport("AR", "AR9001", menuId, AR9001SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
-    mode: "onSubmit",
-  });
+  const { register, handleSubmit, reset, control, watch, getValues } =
+    useForm<ISEARCH>({
+      mode: "onSubmit",
+    });
 
   useEffect(() => {
     if (dataCommonDic && dataCommonDic?.dataInit) {
@@ -65,12 +66,33 @@ function AR9001({
     const height = 2000;
     const left = window.screen.width / 2 - width / 2;
     const top = window.screen.height / 2;
+    if (data?.length > 0) {
+      const report = realReportDataPrep();
 
-    const newWindow = window.open(
-      "/print" + `?${JSON.stringify(data)}`,
-      "",
-      `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
-    );
+      const newWindow = window.open(
+        "/print" + `?${JSON.stringify(report)}`,
+        "",
+        `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
+      );
+    }
+  };
+
+  const realReportDataPrep = () => {
+    data.map((item, idx) => (item.no = idx + 1));
+
+    const values = getValues();
+    const sDate = DateWithDash(values?.sDate);
+    const eDate = DateWithDash(values?.eDate);
+
+    return {
+      data: data,
+      title: {
+        swCode: values?.swCode,
+        jpCode: values?.jpCode,
+        date: `${sDate} ~ ${eDate}`,
+        cuJyCode: values?.cuJyCode,
+      },
+    };
   };
 
   const submit = (data: ISEARCH) => {

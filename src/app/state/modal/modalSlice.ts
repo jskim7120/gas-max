@@ -19,6 +19,7 @@ export interface initialStateType {
     custIn: string;
     custOut: string;
     jcBasicJaego: string;
+    tick: boolean;
   };
   gr1200Popup: {
     index: number | undefined;
@@ -101,6 +102,7 @@ const initialState: initialStateType = {
     custIn: "0",
     custOut: "0",
     jcBasicJaego: "0",
+    tick: false,
   },
   gr1200Popup: {
     index: undefined,
@@ -191,7 +193,11 @@ const modalSlice = createSlice({
     },
 
     addCM1106AR1100Tick: (state, action) => {
-      state.cm1106 = { ...state.cm1106, ...action.payload };
+      state.cm1106 = {
+        ...state.cm1106,
+        ...action.payload,
+        tick: !state.cm1106.tick,
+      };
     },
 
     addGR1200Popup: (state, action) => {

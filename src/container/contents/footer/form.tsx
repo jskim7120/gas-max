@@ -253,7 +253,7 @@ function Form() {
   return (
     <FooterWrapper>
       <form onSubmit={handleSubmit(submit)}>
-        <div className="top">
+        <div className="top handle">
           <div className="top__left">
             <UserWhite />
             <FormGroup>
