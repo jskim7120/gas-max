@@ -402,6 +402,7 @@ export const layout = [
       "kumackA",
       "m3KumackA",
     ],
+    header: { text: "" },
   },
   {
     name: "2023-05월",
@@ -416,6 +417,7 @@ export const layout = [
       "kumackB",
       "m3KumackB",
     ],
+    header: { text: "" },
   },
   {
     name: "2023-06월",
@@ -430,6 +432,7 @@ export const layout = [
       "kumackC",
       "m3KumackC",
     ],
+    header: { text: "" },
   },
   "sumM3Kumack",
 ];

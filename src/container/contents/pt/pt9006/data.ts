@@ -262,18 +262,21 @@ export const layout = [
     directions: "horizontal",
     hideChildHeaders: false,
     items: ["gjGumymsno", "gjJankg", "cuSwName", "gaa"],
+    header: { text: "" },
   },
   {
     name: "2023-05월",
     directions: "horizontal",
     hideChildHeaders: false,
     items: ["gaa1", "gaa2", "gaa3", "gaa4"],
+    header: { text: "" },
   },
   {
     name: " 2023-06월",
     directions: "horizontal",
     hideChildHeaders: false,
     items: ["gaa5", "gaa6", "gaa7", "gaa8"],
+    header: { text: "" },
   },
   "gaa9",
 ];
