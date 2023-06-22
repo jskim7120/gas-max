@@ -131,6 +131,12 @@ function PT9001({
       delete params.cuJangbu;
       delete params.swCode;
       delete params.sOrd;
+
+      params.swCode = params.swCode1;
+      params.cuJangbu = params.cuJangbu1;
+      params.cuJyCode = params.cuJyCode1;
+      params.cuStae = params.cuStae1;
+      params.sOrd = params.sOrd1;
     }
     fetchData(params);
   };
