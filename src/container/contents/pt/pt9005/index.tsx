@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { PT9005SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
-import { Select, FormGroup, Label } from "components/form/style";
+import { Select, FormGroup, Label, Input } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import {
@@ -169,14 +169,13 @@ function PT9005({
         </SearchWrapper>
         <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>연체기간</Label>
-            <Select register={register("sOver")} width={InputSize.i120}>
-              {dataCommonDic?.sOver?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
+            <Input
+              label="연체기간"
+              register={register("sOver")}
+              labelStyle={{ minWidth: "70px" }}
+              inputSize={InputSize.i120}
+              type="number"
+            />
             <Label style={{ minWidth: "80px" }}>개월(2023-03)</Label>
             <Label style={{ minWidth: "80px" }}>담당사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
@@ -204,7 +203,7 @@ function PT9005({
             </Select>
           </FormGroup>
           <FormGroup>
-            <Label style={{ minWidth: "386px" }}>지역구분</Label>
+            <Label style={{ minWidth: "376px" }}>지역구분</Label>
             <Select register={register("cuJyCode")} width={InputSize.i120}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

@@ -66,7 +66,7 @@ function RV9008({
     mode: "onSubmit",
   });
 
-  const [sType1, setSType1] = useState(false);
+  const [sChk0, setSChk0] = useState(false);
   const [sType2, setSType2] = useState("0");
 
   useEffect(() => {
@@ -105,6 +105,11 @@ function RV9008({
         jyCode: init?.jyCode,
         cuType: init?.cuType,
         swCode: init?.swCode,
+        sChk0: init?.sChk0 === "0",
+        sChk1: init?.sChk1 === "Y",
+        sChk2: init?.sChk2 === "Y",
+        sChk3: init?.sChk3 === "Y",
+        sChk4: init?.sChk4 === "N",
         sDanga: init?.sDanga,
       });
     }
@@ -213,7 +218,7 @@ function RV9008({
             <Input
               label="건물명"
               register={register("cuName")}
-              labelStyle={{ minWidth: "70px" }}
+              labelStyle={{ minWidth: "76px" }}
               inputSize={InputSize.i160}
             />
 
@@ -241,39 +246,14 @@ function RV9008({
                   value={option.id}
                   {...register(`sChk0`)}
                   id={option.id}
-                  onChange={() => setSType1(true)}
+                  onChange={() => setSChk0(true)}
                 />
                 <RadioButtonLabel htmlFor={`${option.label}`}>
                   {option.label}
                 </RadioButtonLabel>
               </Item>
             ))}
-            <Item>
-              <RadioButton
-                type="radio"
-                value="2"
-                {...register(`sChk0`)}
-                id="2"
-                //onChange={() => setSType2("2")}
-              />
-              <RadioButtonLabel htmlFor={``} style={{ width: "50px" }}>
-                이익(+)
-              </RadioButtonLabel>
-            </Item>
-            <Item>
-              <RadioButton
-                type="radio"
-                value="2"
-                {...register(`sChk0`)}
-                id="2"
-                //onChange={() => setSType2("2")}
-              />
-              <RadioButtonLabel htmlFor={``} style={{ width: "50px" }}>
-                손실(-)
-              </RadioButtonLabel>
-            </Item>
-
-            <Label style={{ minWidth: "68px" }}>지역구분</Label>
+            <Label style={{ minWidth: "48px" }}>지역구분</Label>
             <Select register={register("jyCode")} width={InputSize.i120}>
               {dataCommonDic?.jyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
