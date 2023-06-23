@@ -223,6 +223,7 @@ function PT9008({
           background: "#626161",
         }}
       >
+        {getTabContent(tabId, register, dataCommonDic, data, control)}
         <PlainTab
           tabHeader={["거 래 처 별", "구분별 집계 "]}
           onClick={(id) => setTabId(id)}
@@ -235,9 +236,7 @@ function PT9008({
             border: "none",
             borderTop: "1px solid #00000033",
           }}
-        >
-          {getTabContent(tabId, register, dataCommonDic, data, control)}
-        </TabContentWrapper>
+        ></TabContentWrapper>
       </div>
       <BasicGrid
         menuId={menuId}

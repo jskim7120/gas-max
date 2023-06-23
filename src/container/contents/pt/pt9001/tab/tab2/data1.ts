@@ -2,7 +2,11 @@ import { ValueType } from "realgrid";
 
 export const fields1 = [
   {
-    fieldName: "gjCuCode",
+    fieldName: "cuCno",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuCode",
     dataType: ValueType.TEXT,
   },
   {
@@ -10,19 +14,35 @@ export const fields1 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuAddr",
+    fieldName: "cuTel",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjDate",
+    fieldName: "junjan",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjGumymsno",
+    fieldName: "jmonth1",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjJankg",
+    fieldName: "jmonth2",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "jmonth3",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "jmonth4",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "jmonth5",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuJmisu",
     dataType: ValueType.TEXT,
   },
   {
@@ -30,35 +50,19 @@ export const fields1 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa",
+    fieldName: "mjDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa1",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "gaa2",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "gaa3",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "gaa4",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "gaa5",
+    fieldName: "minDate",
     dataType: ValueType.TEXT,
   },
 ];
 
 export const columns1 = [
   {
-    name: "gjCuCode",
-    fieldName: "gjCuCode",
+    name: "cuCno",
+    fieldName: "cuCno",
     type: "data",
     width: "50",
     header: {
@@ -66,63 +70,65 @@ export const columns1 = [
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("cuCno", "count");
       },
+    },
+  },
+
+  {
+    name: "cuCode",
+    fieldName: "cuCode",
+    type: "data",
+    width: "50",
+    header: {
+      text: "코드",
     },
   },
   {
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "70",
-    header: {
-      text: "코드",
-    },
-  },
-
-  {
-    name: "cuAddr",
-    fieldName: "cuAddr",
-    type: "data",
-    width: "200",
+    width: "150",
     header: {
       text: "거래처명",
-    },
-  },
-  {
-    name: "gjDate",
-    fieldName: "gjDate",
-    type: "data",
-    width: "100",
-    header: {
-      text: "전화번호",
     },
     styleName: "rg-left-column",
   },
   {
-    name: "gjGumymsno",
-    fieldName: "gjGumymsno",
+    name: "cuTel",
+    fieldName: "cuTel",
     type: "data",
-    width: "70",
+    width: "150",
     header: {
-      text: "전미수",
+      text: "전화번호",
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
   },
   {
-    name: "gjJankg",
-    fieldName: "gjJankg",
+    name: "junjan",
+    fieldName: "junjan",
+    type: "data",
+    width: "70",
+    header: {
+      text: "전미수",
+    },
+    styleName: "rg-left-column",
+  },
+  {
+    name: "jmonth1",
+    fieldName: "jmonth1",
     type: "data",
     width: "70",
     header: {
       text: "1월",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
-    name: "cuSwName",
-    fieldName: "cuSwName",
+    name: "jmonth2",
+    fieldName: "jmonth2",
     type: "data",
     width: "70",
     header: {
@@ -132,71 +138,71 @@ export const columns1 = [
     numberFormat: "#,##0",
   },
   {
-    name: "cuSwName",
-    fieldName: "cuSwName",
+    name: "jmonth3",
+    fieldName: "jmonth3",
     type: "data",
     width: "70",
     header: {
       text: "3월",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
+
   {
-    name: "gaa",
-    fieldName: "gaa",
+    name: "jmonth4",
+    fieldName: "jmonth4",
     type: "data",
     width: "70",
     header: {
       text: "4월",
     },
   },
-
   {
-    name: "gaa1",
-    fieldName: "gaa1",
-    type: "data",
-    width: "70",
-    header: {
-      text: "5월",
-    },
-  },
-  {
-    name: "gaa2",
-    fieldName: "gaa2",
+    name: "jmonth5",
+    fieldName: "jmonth5",
     type: "data",
     width: "90",
     header: {
-      text: "미수합계",
+      text: "5월",
     },
     styleName: "rg-left-column",
   },
   {
-    name: "gaa3",
-    fieldName: "gaa3",
+    name: "cuJmisu",
+    fieldName: "cuJmisu",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
-      text: "사원",
+      text: "미수합계",
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
   },
   {
-    name: "gaa4",
-    fieldName: "gaa4",
+    name: "cuSwName",
+    fieldName: "cuSwName",
     type: "data",
     width: "70",
     header: {
-      text: "최종수금",
+      text: "사원 ",
     },
     styleName: "rg-left-column",
   },
   {
-    name: "gaa5",
-    fieldName: "gaa5",
+    name: "mjDate",
+    fieldName: "mjDate",
     type: "data",
-    width: "50",
+    width: "100",
+    header: {
+      text: "최종수금",
+    },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
+  },
+  {
+    name: "minDate",
+    fieldName: "minDate",
+    type: "data",
+    width: "70",
     header: {
       text: "연체",
     },
