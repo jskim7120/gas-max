@@ -19,7 +19,7 @@ export const fields1 = [
   },
   {
     fieldName: "mm01",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "mm02",
@@ -43,7 +43,7 @@ export const fields1 = [
   },
   {
     fieldName: "mm07",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "mm08",
@@ -75,11 +75,11 @@ export const fields1 = [
   },
   {
     fieldName: "cuAddr",
-    dataType: ValueType.NUMBER,
+    dataType: ValueType.TEXT,
   },
   {
     fieldName: "cuDate",
-    dataType: ValueType.NUMBER,
+    dataType: ValueType.TEXT,
   },
 ];
 
@@ -88,7 +88,7 @@ export const columns1 = [
     name: "cuCno",
     fieldName: "cuCno",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "순번",
     },
@@ -102,7 +102,7 @@ export const columns1 = [
     name: "cuCode",
     fieldName: "cuCode",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "코드",
     },
@@ -111,7 +111,8 @@ export const columns1 = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "100",
+    width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -121,10 +122,10 @@ export const columns1 = [
     fieldName: "cuUsername",
     type: "data",
     width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "사용자명",
     },
-    styleName: "rg-left-column",
   },
   {
     name: "mm01",
@@ -145,7 +146,8 @@ export const columns1 = [
     header: {
       text: "",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "mm03",
@@ -196,10 +198,11 @@ export const columns1 = [
     fieldName: "mm07",
     type: "data",
     width: "50",
-    styleName: "rg-right-column",
     header: {
       text: "",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "mm08",
@@ -210,6 +213,7 @@ export const columns1 = [
       text: "",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "mm09",
@@ -263,13 +267,14 @@ export const columns1 = [
     header: {
       text: "공급량",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gageKum",
     fieldName: "gageKum",
     type: "data",
-    width: "80",
+    width: "100",
     header: {
       text: "공급금액",
     },
@@ -281,21 +286,19 @@ export const columns1 = [
     fieldName: "cuAddr",
     type: "data",
     width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "주소",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
     name: "cuDate",
     fieldName: "cuDate",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "등록일",
     },
-    styleName: "rg-left-column",
   },
 ];
 export const layout1 = [

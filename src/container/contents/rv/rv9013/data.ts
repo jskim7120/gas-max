@@ -2,10 +2,6 @@ import { ValueType } from "realgrid";
 
 export const fields = [
   {
-    fieldName: "no",
-    dataType: ValueType.TEXT,
-  },
-  {
     fieldName: "cuCno",
     dataType: ValueType.TEXT,
   },
@@ -31,11 +27,11 @@ export const fields = [
   },
   {
     fieldName: "cuRh20",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "jnCost",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "cuPer",
@@ -60,13 +56,13 @@ export const columns = [
     name: "cuCno",
     fieldName: "cuCno",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "순번",
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("cuCno", "count");
       },
     },
   },
@@ -74,7 +70,7 @@ export const columns = [
     name: "cuCode",
     fieldName: "cuCode",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
       text: "거래처코드",
     },
@@ -84,7 +80,8 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "150",
+    width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -94,37 +91,35 @@ export const columns = [
     fieldName: "cuUsername",
     type: "data",
     width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "사용자명",
     },
-    styleName: "rg-left-column",
   },
   {
     name: "cuAddr",
     fieldName: "cuAddr",
     type: "data",
-    width: "200",
+    width: "250",
+    styleName: "rg-left-column",
     header: {
       text: "주소",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
     name: "cuGongname",
     fieldName: "cuGongname",
     type: "data",
-    width: "50",
+    width: "80",
     header: {
       text: "성명",
     },
-    styleName: "rg-left-column",
   },
   {
     name: "cuRh20",
     fieldName: "cuRh20",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "조정기",
     },
@@ -135,7 +130,7 @@ export const columns = [
     name: "jnCost",
     fieldName: "jnCost",
     type: "data",
-    width: "70",
+    width: "80",
     header: {
       text: "루베단가",
     },
@@ -150,8 +145,6 @@ export const columns = [
     header: {
       text: "연체율",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
     name: "cuCdc",
@@ -161,29 +154,25 @@ export const columns = [
     header: {
       text: "할인율",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
     name: "cuSwName",
     fieldName: "cuSwName",
     type: "data",
-    width: "70",
+    width: "80",
+    styleName: "rg-left-column",
     header: {
       text: "담당사원",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
     name: "cuRdangaSign",
     fieldName: "cuRdangaSign",
     type: "data",
-    width: "70",
+    width: "80",
+    styleName: "rg-left-column",
     header: {
       text: "단가구분",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
 ];

@@ -59,6 +59,12 @@ function PT9001({
     }
   }, [dataCommonDic]);
 
+  useEffect(() => {
+    if (tabId) {
+      setData([]);
+    }
+  }, [tabId]);
+
   const fetchData = async (params: any) => {
     setLoading(true);
 
@@ -167,7 +173,6 @@ function PT9001({
       delete params.dateChk;
       delete params.sDate;
       delete params.eDate;
-      delete params.sOver;
     }
 
     fetchData(params);

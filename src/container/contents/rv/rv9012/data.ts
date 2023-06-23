@@ -23,7 +23,7 @@ export const fields = [
   },
   {
     fieldName: "gjJankg",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "cuSwName",
@@ -36,13 +36,13 @@ export const columns = [
     name: "gjCuCode",
     fieldName: "gjCuCode",
     type: "data",
-    width: "50",
+    width: "80",
     header: {
       text: "코드",
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("gjCuCode", "count");
       },
     },
   },
@@ -50,7 +50,8 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "150",
+    width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처",
     },
@@ -60,7 +61,8 @@ export const columns = [
     name: "cuAddr",
     fieldName: "cuAddr",
     type: "data",
-    width: "400",
+    width: "250",
+    styleName: "rg-left-column",
     header: {
       text: "주소",
     },
@@ -69,11 +71,10 @@ export const columns = [
     name: "gjDate",
     fieldName: "gjDate",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "검침일자",
     },
-    styleName: "rg-left-column",
   },
   {
     name: "gjGumymsno",
@@ -83,18 +84,17 @@ export const columns = [
     header: {
       text: "회차",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
     name: "gjJankg",
     fieldName: "gjJankg",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "잔량",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "cuSwName",
@@ -104,7 +104,5 @@ export const columns = [
     header: {
       text: "담당사원",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
 ];

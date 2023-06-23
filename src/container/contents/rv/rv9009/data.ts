@@ -23,51 +23,51 @@ export const fields = [
   },
   {
     fieldName: "gjJunGum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjGum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjGage",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjDanga",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "giwha",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "m3tokg",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "qtykg",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "junjankg",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "jankg",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "sUseqty",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "sumKg",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
 ];
 
@@ -76,13 +76,13 @@ export const columns = [
     name: "gjCuCode",
     fieldName: "gjCuCode",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "코드",
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("gjCuCode", "count");
       },
     },
   },
@@ -90,7 +90,8 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "150",
+    width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -99,7 +100,8 @@ export const columns = [
     name: "cuUsername",
     fieldName: "cuUsername",
     type: "data",
-    width: "150",
+    width: "100",
+    styleName: "rg-left-column",
     header: {
       text: "사용자명",
     },
@@ -108,11 +110,10 @@ export const columns = [
     name: "gjDate",
     fieldName: "gjDate",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "검침일",
     },
-    styleName: "rg-left-column",
   },
   {
     name: "gjGumymsno",
@@ -122,24 +123,23 @@ export const columns = [
     header: {
       text: "회차",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
     name: "gjJunGum",
     fieldName: "gjJunGum",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "전검",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjGum",
     fieldName: "gjGum",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "당검",
     },
@@ -150,7 +150,7 @@ export const columns = [
     name: "gjGage",
     fieldName: "gjGage",
     type: "data",
-    width: "70",
+    width: "60",
     header: {
       text: "사용량",
     },
@@ -161,7 +161,7 @@ export const columns = [
     name: "gjDanga",
     fieldName: "gjDanga",
     type: "data",
-    width: "70",
+    width: "60",
     header: {
       text: "m3단가",
     },
@@ -172,7 +172,7 @@ export const columns = [
     name: "gjKumack",
     fieldName: "gjKumack",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "사용료",
     },
@@ -183,27 +183,29 @@ export const columns = [
     name: "giwha",
     fieldName: "giwha",
     type: "data",
-    width: "70",
-    styleName: "rg-right-column",
+    width: "60",
     header: {
       text: "kg단가",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "m3tokg",
     fieldName: "m3tokg",
     type: "data",
-    width: "70",
+    width: "60",
     header: {
       text: "사용량",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "qtykg",
     fieldName: "qtykg",
     type: "data",
-    width: "70",
+    width: "60",
     header: {
       text: "공급량",
     },
@@ -214,7 +216,7 @@ export const columns = [
     name: "junjankg",
     fieldName: "junjankg",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "전잔",
     },
@@ -225,7 +227,7 @@ export const columns = [
     name: "jankg",
     fieldName: "jankg",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "당잔",
     },
@@ -236,7 +238,7 @@ export const columns = [
     name: "sUseqty",
     fieldName: "sUseqty",
     type: "data",
-    width: "70",
+    width: "60",
     header: {
       text: "사용량",
     },
@@ -251,7 +253,8 @@ export const columns = [
     header: {
       text: "오차",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
 ];
 

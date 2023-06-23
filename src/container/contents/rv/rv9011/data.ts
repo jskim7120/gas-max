@@ -15,95 +15,95 @@ export const fields = [
   },
   {
     fieldName: "maxRh20",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "sumGageA",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "m3ToKgA",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "kgA",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "janAJun",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "janADang",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "kumackA",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "m3KumackA",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "sumGageB",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "im3ToKgB",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "kgB",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "janBJun",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "janBDang",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "kumackB",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "m3KumackB",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "sumGageC",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "m3ToKgC",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "kgC",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "janCJun",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "janCDang",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "kumackC",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "m3KumackC",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "sumM3Kumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
 ];
 
@@ -112,13 +112,13 @@ export const columns = [
     name: "cuCno",
     fieldName: "cuCno",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "순번",
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("cuCno", "count");
       },
     },
   },
@@ -126,7 +126,7 @@ export const columns = [
     name: "gjCuCode",
     fieldName: "gjCuCode",
     type: "data",
-    width: "50",
+    width: "80",
     header: {
       text: "코드",
     },
@@ -135,7 +135,8 @@ export const columns = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "150",
+    width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -144,26 +145,29 @@ export const columns = [
     name: "maxRh20",
     fieldName: "maxRh20",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "압력",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "sumGageA",
     fieldName: "sumGageA",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "M3",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "m3ToKgA",
     fieldName: "m3ToKgA",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "KG",
     },
@@ -174,17 +178,18 @@ export const columns = [
     name: "kgA",
     fieldName: "kgA",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "공급량",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "janAJun",
     fieldName: "janAJun",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "전잔",
     },
@@ -195,7 +200,7 @@ export const columns = [
     name: "janADang",
     fieldName: "janADang",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "당잔",
     },
@@ -206,7 +211,7 @@ export const columns = [
     name: "kumackA",
     fieldName: "kumackA",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "KG",
     },
@@ -217,7 +222,7 @@ export const columns = [
     name: "m3KumackA",
     fieldName: "m3KumackA",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "오차",
     },
@@ -228,28 +233,30 @@ export const columns = [
     name: "sumGageB",
     fieldName: "sumGageB",
     type: "data",
-    width: "50",
-    styleName: "rg-right-column",
+    width: "60",
     header: {
       text: "M3",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "im3ToKgB",
     fieldName: "im3ToKgB",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "KG",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
 
   {
     name: "kgB",
     fieldName: "kgB",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "공급량",
     },
@@ -260,7 +267,7 @@ export const columns = [
     name: "janBJun",
     fieldName: "janBJun",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "전잔",
     },
@@ -282,7 +289,7 @@ export const columns = [
     name: "kumackB",
     fieldName: "kumackB",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "KG",
     },
@@ -293,37 +300,40 @@ export const columns = [
     name: "m3KumackB",
     fieldName: "m3KumackB",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "오차",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "sumGageC",
     fieldName: "sumGageC",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "M3",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "m3ToKgC",
     fieldName: "m3ToKgC",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "KG",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "kgC",
     fieldName: "kgC",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "공급량",
     },
@@ -334,7 +344,7 @@ export const columns = [
     name: "janCJun",
     fieldName: "janCJun",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "전잔",
     },
@@ -345,7 +355,7 @@ export const columns = [
     name: "janCDang",
     fieldName: "janCDang",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "당잔",
     },
@@ -356,7 +366,7 @@ export const columns = [
     name: "kumackC",
     fieldName: "kumackC",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "KG",
     },
@@ -367,21 +377,23 @@ export const columns = [
     name: "m3KumackC",
     fieldName: "m3KumackC",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "오차",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "sumM3Kumack",
     fieldName: "sumM3Kumack",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "오차합계",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
 ];
 export const layout = [
