@@ -788,3 +788,89 @@ export const StcTable = styled.table`
     }
   }
 `;
+
+export const NumberInput = ({
+  register,
+  min,
+  max,
+  inputSize,
+  fullWidth,
+  style,
+  kind,
+  textAlign,
+  readOnly,
+}: {
+  register: any;
+  min: string;
+  max: string;
+  inputSize?: InputSize;
+  fullWidth?: boolean;
+  style?: any;
+  kind?: FieldKind;
+  textAlign?: string;
+  readOnly?: boolean;
+}) => {
+  const limitValue = (event: any) => {
+    const input = event.target;
+    if (input.value > +max) {
+      input.value = +max;
+    }
+    if (input.value < +min) {
+      input.value = +min;
+    }
+  };
+
+  return (
+    <NumberInputForm
+      {...register}
+      type="number"
+      min={min}
+      max={max}
+      maxLength={99}
+      inputSize={inputSize}
+      fullWidth={fullWidth}
+      kind={kind}
+      textAlign={textAlign && textAlign}
+      readOnly={readOnly && readOnly}
+      onInput={(e: any) => limitValue(e)}
+    />
+  );
+};
+
+export const NumberInputForm = styled.input<{
+  inputSize?: InputSize;
+  fullWidth?: boolean;
+  kind?: FieldKind;
+  textAlign?: string;
+  readOnly?: boolean;
+  minWidth?: InputSize;
+}>`
+  height: 30px;
+  width: ${(props) =>
+    props.inputSize ? getInputSize(props.inputSize) : "100%"};
+  min-width: ${(props) =>
+    props.minWidth ? getInputSize(props.minWidth) : "auto"};
+  flex: ${(props) => props.fullWidth && "1"};
+  text-align: ${(props) => (props.textAlign ? props.textAlign : "right")};
+  border: ${(props) =>
+    props.kind
+      ? getInputKind(props.kind)?.border
+      : `1px solid rgb(188, 185 ,185)`};
+  background: aliceblue;
+  border-radius: ${(props) =>
+    props.kind ? getInputKind(props.kind)?.borderRadius : "4px"};
+
+  outline: none;
+  display: inline-block;
+  padding: 0 0 0 6px;
+  font-family: "NotoSansKRRegular";
+  font-size: 15px;
+
+  &:hover,
+  &:focus {
+    background: #fffacd;
+  }
+  &:read-only {
+    background: #ebeae6;
+  }
+`;

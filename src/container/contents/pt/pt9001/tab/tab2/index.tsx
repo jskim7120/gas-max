@@ -1,7 +1,13 @@
 import React from "react";
 import { Controller } from "react-hook-form";
 import { SearchWrapper } from "container/contents/commonStyle";
-import { FormGroup, Input, Label, Select } from "components/form/style";
+import {
+  FormGroup,
+  Input,
+  Label,
+  NumberInput,
+  Select,
+} from "components/form/style";
 import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
@@ -10,10 +16,12 @@ function Tab2({
   register,
   dataCommonDic,
   control,
+  handleSOverChange,
 }: {
   register: Function;
   dataCommonDic: any;
   control: any;
+  handleSOverChange: Function;
 }) {
   return (
     <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
@@ -43,14 +51,13 @@ function Tab2({
           ))}
         </Select>
         <Label style={{ minWidth: "90px" }}>연체기간</Label>
-        <Select register={register("sOver")} width={InputSize.i120}>
-          {dataCommonDic?.sOver?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
-        <Label>개월 (2023-06)</Label>
+        <NumberInput
+          register={register("sOver")}
+          min="0"
+          max="99"
+          inputSize={InputSize.i50}
+        />
+        <Label>개월 ({handleSOverChange()})</Label>
       </FormGroup>
       <FormGroup>
         <Label style={{ minWidth: "80px" }}>지역구분</Label>

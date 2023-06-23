@@ -16,10 +16,11 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import { DateWithoutDash } from "helpers/dateFormat";
+import { DateWithDashOnlyYearMonth, DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields } from "./data";
 import CheckBox from "components/checkbox";
+import { NumberInput } from "components/form/style";
 
 function PT9005({
   depthFullName,
@@ -42,7 +43,7 @@ function PT9005({
   } = CreateReport("PT", "PT9005", menuId, PT9005SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -51,6 +52,16 @@ function PT9005({
       resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  const handleSOverChange = () => {
+    if (watch("sOver") !== undefined && watch("sOver") !== null) {
+      const today = new Date();
+      const newDate = new Date(
+        today.setMonth(today.getMonth() - +watch("sOver"))
+      );
+      return DateWithDashOnlyYearMonth(newDate);
+    }
+  };
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -169,14 +180,18 @@ function PT9005({
         </SearchWrapper>
         <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
           <FormGroup>
-            <Input
-              label="연체기간"
+            <Label style={{ minWidth: "70px" }}>연체기간</Label>
+            <NumberInput
               register={register("sOver")}
-              labelStyle={{ minWidth: "70px" }}
-              inputSize={InputSize.i120}
-              type="number"
+              min="0"
+              max="99"
+              inputSize={InputSize.i50}
             />
-            <Label style={{ minWidth: "80px" }}>개월(2023-03)</Label>
+
+            <Label style={{ minWidth: "80px" }}>
+              개월 ({handleSOverChange()})
+            </Label>
+
             <Label style={{ minWidth: "80px" }}>담당사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
@@ -203,7 +218,7 @@ function PT9005({
             </Select>
           </FormGroup>
           <FormGroup>
-            <Label style={{ minWidth: "376px" }}>지역구분</Label>
+            <Label style={{ minWidth: "310px" }}>지역구분</Label>
             <Select register={register("cuJyCode")} width={InputSize.i120}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
