@@ -13,7 +13,7 @@ import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
 import { IAR110065DETAIL, emptyObj } from "./model";
 import { apiPost } from "app/axios";
 import { DateWithoutDash } from "helpers/dateFormat";
-import { currencyMask } from "helpers/currency";
+import { currencyMask, removeCommas } from "helpers/currency";
 
 const Tab1 = React.forwardRef(
   (
@@ -110,7 +110,7 @@ const Tab1 = React.forwardRef(
           (cm1106?.custIn ? +cm1106.custIn : 0);
 
         const pjKumSup =
-          (cm1106?.jcJpDanga ? +cm1106.jcJpDanga : 0) *
+          (cm1106?.jcJpDanga ? +removeCommas(cm1106.jcJpDanga, "number") : 0) *
           (getValues("pjQty") ? +getValues("pjQty") : 0);
 
         setPjJago(pjJago);
@@ -141,7 +141,7 @@ const Tab1 = React.forwardRef(
 
     const handlePjQtyChange = () => {
       // console.log("watch 1---------->>>>>>>");
-      pjDanga = getValues("pjDanga") ? +getValues("pjDanga") : 0;
+      pjDanga = getValues("pjDanga") ? +removeCommas(getValues("pjDanga")) : 0;
       pjQty = getValues("pjQty") ? +getValues("pjQty") : 0;
       pjKumSup = pjDanga * pjQty;
       calcLast2field();
@@ -166,10 +166,15 @@ const Tab1 = React.forwardRef(
     };
 
     const handlePjDangaChange = () => {
-      // console.log("watch 3------->>>>>>>");
-      pjDanga = getValues("pjDanga") ? +getValues("pjDanga") : 0;
+      console.log("watch 3------->>>>>>>", getValues("pjDanga"));
+      pjDanga = +removeCommas(getValues("pjDanga"))
+        ? +removeCommas(getValues("pjDanga"), "number")
+        : 0;
+
+      console.log(">>>>>>>>>>", pjDanga);
       pjQty = getValues("pjQty") ? +getValues("pjQty") : 0;
       pjKumSup = pjDanga * pjQty;
+
       calcLast2field();
       reset((formValues) => ({
         ...formValues,
@@ -181,7 +186,9 @@ const Tab1 = React.forwardRef(
 
     const handlePjVatDivChange = () => {
       // console.log("watch 4------->>>>>>>");
-      pjKumSup = getValues("pjKumSup") ? +getValues("pjKumSup") : 0;
+      pjKumSup = getValues("pjKumSup")
+        ? +removeCommas(getValues("pjKumSup"), "number")
+        : 0;
       calcLast2field();
       reset((formValues) => ({
         ...formValues,
@@ -249,6 +256,21 @@ const Tab1 = React.forwardRef(
       }
 
       params.pjDate = DateWithoutDash(params.pjDate);
+
+      params.pjDanga = removeCommas(params.pjDanga, "number");
+      params.pjKumSup = removeCommas(params.pjKumSup, "number");
+      params.pjKumVat = removeCommas(params.pjKumVat, "number");
+      params.pjKumack = removeCommas(params.pjKumack, "number");
+      params.pjInkum = removeCommas(params.pjInkum, "number");
+      params.pjDc = removeCommas(params.pjDc, "number");
+      params.pjMisukum = removeCommas(params.pjMisukum, "number");
+
+      if (params.pjSwCode) {
+        const pjSwName = dictionary?.pjSwCode?.find(
+          (item: any) => item.code === params.pjSwCode
+        ).codeName;
+        params.pjSwName = pjSwName;
+      }
 
       const res = await apiPost(path, params, "저장이 성공하였습니다");
       if (res) {
@@ -380,6 +402,7 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
+                // value={field.value ? field.value : ""}
                 inputSize={InputSize.i100}
                 textAlign="right"
                 mask={currencyMask}
@@ -411,6 +434,7 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
+                // value={!isNaN(field.value) ? field.value : ""}
                 inputSize={InputSize.i100}
                 readOnly
                 textAlign="right"
@@ -426,6 +450,7 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
+                // value={!isNaN(field.value) ? field.value : ""}
                 inputSize={InputSize.i100}
                 readOnly
                 textAlign="right"
@@ -441,6 +466,7 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
+                // value={!isNaN(field.value) ? field.value : ""}
                 inputSize={InputSize.i100}
                 readOnly
                 textAlign="right"
@@ -495,6 +521,7 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
+                // value={!isNaN(field.value) ? field.value : ""}
                 inputSize={InputSize.i100}
                 textAlign="right"
                 mask={currencyMask}
@@ -510,6 +537,7 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
+                // value={!isNaN(field.value) ? field.value : ""}
                 inputSize={InputSize.i100}
                 textAlign="right"
                 mask={currencyMask}
@@ -524,6 +552,7 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
+                // value={!isNaN(field.value) ? field.value : ""}
                 inputSize={InputSize.i100}
                 textAlign="right"
                 mask={currencyMask}

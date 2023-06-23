@@ -18,7 +18,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import { DateWithoutDash } from "helpers/dateFormat";
+import { DateWithDashOnlyYearMonth, DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns0, fields0 } from "./tab/tab1/data0";
 import { columns1, fields1 } from "./tab/tab2/data1";
@@ -49,7 +49,7 @@ function PT9001({
   });
 
   const dispatch = useDispatch();
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -129,6 +129,16 @@ function PT9001({
       resetForm("reset");
     }
     setData([]);
+  };
+
+  const handleSOverChange = () => {
+    if (watch("sOver") !== undefined && watch("sOver") !== null) {
+      const today = new Date();
+      const newDate = new Date(
+        today.setMonth(today.getMonth() - +watch("sOver"))
+      );
+      return DateWithDashOnlyYearMonth(newDate);
+    }
   };
 
   const submit = (params: any) => {
@@ -244,7 +254,14 @@ function PT9001({
             borderTop: "1px solid #00000033",
           }}
         >
-          {getTabContent(tabId, register, dataCommonDic, data, control)}
+          {getTabContent(
+            tabId,
+            register,
+            dataCommonDic,
+            data,
+            control,
+            handleSOverChange
+          )}
         </TabContentWrapper>
       </div>
 

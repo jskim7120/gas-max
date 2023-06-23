@@ -6,7 +6,8 @@ function getTabContent(
   register: any,
   dataCommonDic: any,
   data: any,
-  control: any
+  control: any,
+  handleSOverChange: Function
 ) {
   switch (id) {
     case 0:
@@ -23,6 +24,7 @@ function getTabContent(
           register={register}
           dataCommonDic={dataCommonDic}
           control={control}
+          handleSOverChange={handleSOverChange}
         />
       );
   }
