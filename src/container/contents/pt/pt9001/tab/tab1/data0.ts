@@ -2,53 +2,57 @@ import { ValueType } from "realgrid";
 
 export const fields0 = [
   {
-    fieldName: "gjCuCode",
+    fieldName: "mjCuCode",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuName",
+    fieldName: "mjCuName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuAddr",
+    fieldName: "cuTel",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjDate",
+    fieldName: "mjDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjGumymsno",
+    fieldName: "mjBigo",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjJankg",
+    fieldName: "mjMisulan",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuSwName",
+    fieldName: "lastMisu",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "mjSwName",
     dataType: ValueType.TEXT,
   },
 ];
 
 export const columns0 = [
   {
-    name: "gjCuCode",
-    fieldName: "gjCuCode",
+    name: "mjCuCode",
+    fieldName: "mjCuCode",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "코드",
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("mjCuCode", "count");
       },
     },
   },
   {
-    name: "cuName",
-    fieldName: "cuName",
+    name: "mjCuName",
+    fieldName: "mjCuName",
     type: "data",
     width: "200",
     header: {
@@ -57,8 +61,8 @@ export const columns0 = [
   },
 
   {
-    name: "cuAddr",
-    fieldName: "cuAddr",
+    name: "cuTel",
+    fieldName: "cuTel",
     type: "data",
     width: "70",
     header: {
@@ -66,8 +70,8 @@ export const columns0 = [
     },
   },
   {
-    name: "gjDate",
-    fieldName: "gjDate",
+    name: "mjDate",
+    fieldName: "mjDate",
     type: "data",
     width: "50",
     header: {
@@ -76,8 +80,8 @@ export const columns0 = [
     styleName: "rg-left-column",
   },
   {
-    name: "gjGumymsno",
-    fieldName: "gjGumymsno",
+    name: "mjBigo",
+    fieldName: "mjBigo",
     type: "data",
     width: "200",
     header: {
@@ -87,8 +91,8 @@ export const columns0 = [
     numberFormat: "#,##0",
   },
   {
-    name: "gjJankg",
-    fieldName: "gjJankg",
+    name: "mjMisulan",
+    fieldName: "mjMisulan",
     type: "data",
     width: "70",
     header: {
@@ -97,8 +101,8 @@ export const columns0 = [
     styleName: "rg-left-column",
   },
   {
-    name: "cuSwName",
-    fieldName: "cuSwName",
+    name: "lastMisu",
+    fieldName: "lastMisu",
     type: "data",
     width: "50",
     header: {
@@ -108,8 +112,8 @@ export const columns0 = [
     numberFormat: "#,##0",
   },
   {
-    name: "cuSwName",
-    fieldName: "cuSwName",
+    name: "mjSwName",
+    fieldName: "mjSwName",
     type: "data",
     width: "50",
     header: {

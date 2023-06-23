@@ -67,7 +67,6 @@ function RV9008({
   });
 
   const [sChk0, setSChk0] = useState(false);
-  const [sType2, setSType2] = useState("0");
 
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
@@ -87,9 +86,13 @@ function RV9008({
       `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
     );
   };
-  const submit = (params: ISEARCH) => {
+  const submit = (params: any) => {
     params.sDate = DateWithoutDash(params.sDate);
     params.eDate = DateWithoutDash(params.eDate);
+    params.sChk1 = params.sChk1 ? "Y" : "N";
+    params.sChk2 = params.sChk2 ? "Y" : "N";
+    params.sChk3 = params.sChk3 ? "Y" : "N";
+    params.sChk4 = params.sChk4 ? "N" : "Y";
     fetchData(params);
   };
 
