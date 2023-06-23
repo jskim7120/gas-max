@@ -2,10 +2,6 @@ import { ValueType } from "realgrid";
 
 export const fields1 = [
   {
-    fieldName: "no",
-    dataType: ValueType.TEXT,
-  },
-  {
     fieldName: "cuCno",
     dataType: ValueType.TEXT,
   },
@@ -65,8 +61,8 @@ export const fields1 = [
 
 export const columns1 = [
   {
-    name: "no",
-    fieldName: "no",
+    name: "cuCno",
+    fieldName: "cuCno",
     type: "data",
     width: "50",
     header: {
@@ -74,17 +70,8 @@ export const columns1 = [
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("no", "count");
+        return grid.getSummary("cuCno", "count");
       },
-    },
-  },
-  {
-    name: "cuCno",
-    fieldName: "cuCno",
-    type: "data",
-    width: "70",
-    header: {
-      text: "코드",
     },
   },
 
@@ -92,16 +79,16 @@ export const columns1 = [
     name: "cuCode",
     fieldName: "cuCode",
     type: "data",
-    width: "200",
+    width: "50",
     header: {
-      text: "거래처명",
+      text: "코드",
     },
   },
   {
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "100",
+    width: "150",
     header: {
       text: "거래처명",
     },
@@ -111,7 +98,7 @@ export const columns1 = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "70",
+    width: "150",
     header: {
       text: "전화번호",
     },
@@ -204,7 +191,7 @@ export const columns1 = [
     name: "mjDate",
     fieldName: "mjDate",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "최종수금",
     },

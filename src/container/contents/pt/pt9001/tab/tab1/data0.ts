@@ -22,7 +22,7 @@ export const fields0 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "mjMisulan",
+    fieldName: "mjMisujan",
     dataType: ValueType.TEXT,
   },
   {
@@ -64,7 +64,7 @@ export const columns0 = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "70",
+    width: "150",
     header: {
       text: "전화번호",
     },
@@ -73,7 +73,7 @@ export const columns0 = [
     name: "mjDate",
     fieldName: "mjDate",
     type: "data",
-    width: "50",
+    width: "150",
     header: {
       text: "일자",
     },
@@ -91,10 +91,10 @@ export const columns0 = [
     numberFormat: "#,##0",
   },
   {
-    name: "mjMisulan",
-    fieldName: "mjMisulan",
+    name: "mjMisujan",
+    fieldName: "mjMisujan",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "미수금액",
     },
@@ -115,7 +115,7 @@ export const columns0 = [
     name: "mjSwName",
     fieldName: "mjSwName",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "사원",
     },
