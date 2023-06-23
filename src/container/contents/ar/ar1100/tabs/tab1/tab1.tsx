@@ -265,6 +265,13 @@ const Tab1 = React.forwardRef(
       params.pjDc = removeCommas(params.pjDc, "number");
       params.pjMisukum = removeCommas(params.pjMisukum, "number");
 
+      if (params.pjSwCode) {
+        const pjSwName = dictionary?.pjSwCode?.find(
+          (item: any) => item.code === params.pjSwCode
+        ).codeName;
+        params.pjSwName = pjSwName;
+      }
+
       const res = await apiPost(path, params, "저장이 성공하였습니다");
       if (res) {
         await fetchData();
