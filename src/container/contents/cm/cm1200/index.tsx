@@ -1,17 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
 import CreateScreen from "app/hook/createScreen";
-import { useSelector } from "app/store";
 import { CM1200SEARCH, CM120065 } from "app/path";
-import {
-  openModal,
-  addDeleteMenuId,
-  setIsDelete,
-  closeModal,
-} from "app/state/modal/modalSlice";
 import GridLeft from "components/grid";
-import { ButtonColor } from "components/componentsType";
 import { ButtonType } from "components/componentsType";
 import { FormGroup, Input, Label, Select } from "components/form/style";
 import CheckBox from "components/checkbox";
@@ -23,13 +15,7 @@ import {
   RightSide,
   MainWrapper,
 } from "../../commonStyle";
-import {
-  Plus,
-  Trash,
-  Update,
-  Reset,
-  MagnifyingGlassBig,
-} from "components/allSvgIcon";
+import { MagnifyingGlassBig } from "components/allSvgIcon";
 import { ISEARCH } from "./model";
 import Form from "./form";
 import { fields, columns } from "./data";
@@ -45,12 +31,6 @@ function CM1200({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-  const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
-  const btnRef2 = useRef() as React.MutableRefObject<HTMLButtonElement>;
-  const btnRef3 = useRef() as React.MutableRefObject<HTMLButtonElement>;
-  const btnRef4 = useRef() as React.MutableRefObject<HTMLButtonElement>;
-
   const { handleSubmit, reset, watch, register, getValues, control } =
     useForm<ISEARCH>({
       mode: "onSubmit",
@@ -67,14 +47,16 @@ function CM1200({
     activeTabId,
     fetchData,
     showDraggableLine,
+    show4Btns,
     isOpen,
     gridIndexes,
     dispatch,
     dataCommonDic,
     linePos,
+    formRef,
+    addBtnUnclick,
   } = CreateScreen("CM", "CM1200", menuId, CM1200SEARCH, leftSideWidth);
 
-  const { isDelete } = useSelector((state) => state.modal);
   const [selectedSupplyTab, setSelectedSupplyTab] = useState<any>({});
   const [userInfo, setUserInfo] = useState<any[]>([]);
 
@@ -92,12 +74,6 @@ function CM1200({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (isDelete.menuId === menuId && isDelete.isDelete) {
-      deleteRowGrid();
-    }
-  }, [isDelete.isDelete]);
-
-  useEffect(() => {
     if (watch("areaCode")) {
       if (isAddBtnClicked) {
         formRef.current.resetForm("clear");
@@ -108,8 +84,7 @@ function CM1200({
   useEffect(() => {
     if (selected) {
       if (isAddBtnClicked) {
-        btnRef1.current.classList.remove("active");
-        setIsAddBtnClicked(false);
+        addBtnUnclick();
       }
 
       if (selected.cuCode && selected.areaCode) {
@@ -172,35 +147,11 @@ function CM1200({
     fetchData(params);
   };
 
-  function deleteRowGrid() {
-    try {
-      formRef.current.crud("delete");
-      dispatch(addDeleteMenuId({ menuId: "" }));
-      dispatch(setIsDelete({ isDelete: false }));
-      dispatch(closeModal());
-    } catch (error) {}
-  }
-
-  const onClickAdd = () => {
-    btnRef1.current.classList.add("active");
-    setIsAddBtnClicked(true);
-    setUserInfo([]);
-    formRef.current.resetForm("clear");
-  };
-
-  const onClickDelete = () => {
-    dispatch(openModal({ type: "delModal" }));
-    dispatch(addDeleteMenuId({ menuId: menuId }));
-  };
-  const onClickUpdate = () => {
-    formRef.current.crud(null);
-  };
-
-  const onClickReset = () => {
-    btnRef1.current.classList.remove("active");
-    setIsAddBtnClicked(false);
-    formRef.current.resetForm("reset");
-  };
+  // const onClickAdd = () => {
+  //   addBtnClick();
+  //   setUserInfo([]);
+  //   formRef.current.resetForm("clear");
+  // };
 
   return (
     <>
@@ -219,38 +170,7 @@ function CM1200({
             </>
           )}
 
-          <div className="buttons ml30">
-            <Button
-              text="등록"
-              icon={<Plus />}
-              type="button"
-              onClick={onClickAdd}
-              ref={btnRef1}
-            />
-            <Button
-              text="삭제"
-              icon={<Trash />}
-              type="button"
-              onClick={onClickDelete}
-              disabled={isAddBtnClicked}
-              ref={btnRef2}
-            />
-            <Button
-              text="저장"
-              icon={<Update />}
-              type="button"
-              color={ButtonColor.SECONDARY}
-              onClick={onClickUpdate}
-              ref={btnRef3}
-            />
-            <Button
-              text="취소"
-              icon={<Reset />}
-              type="button"
-              onClick={onClickReset}
-              ref={btnRef4}
-            />
-          </div>
+          {show4Btns({})}
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
