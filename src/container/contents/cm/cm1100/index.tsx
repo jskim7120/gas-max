@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { useDispatch, useSelector } from "app/store";
@@ -40,6 +40,7 @@ function CM1100Page({
   ownAreaCode: string;
 }) {
   const dispatch = useDispatch();
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const [data, setData] = useState<any>([]);
   const [data65, setData65] = useState<any>({});
@@ -184,7 +185,7 @@ function CM1100Page({
         <FormGroup>
           {ownAreaCode === "00" && (
             <>
-              <Label>영업소</Label>
+              <Label style={{ minWidth: "70px" }}>영업소</Label>
               <Select register={register("areaCode")} width={InputSize.i150}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -194,7 +195,10 @@ function CM1100Page({
               </Select>
             </>
           )}
-          <div className="buttons ml30">
+          <div
+            className="buttons"
+            style={{ marginLeft: ownAreaCode === "00" ? "30px" : "75px" }}
+          >
             <Button
               text="등록"
               icon={<Plus />}
@@ -219,21 +223,24 @@ function CM1100Page({
       </SearchWrapper>
       <WrapperContent>
         <form onSubmit={handleSubmit(submit)} autoComplete="off">
-          <SearchWrapper>
+          <SearchWrapper style={{ justifyContent: "start" }}>
             <div>
               <FormGroup>
                 <Input
                   label="거래처명"
+                  labelStyle={{ minWidth: "70px" }}
                   register={register("cuName")}
                   inputSize={InputSize.i150}
                 />
                 <Input
                   label="전화"
+                  labelStyle={{ minWidth: "90px" }}
                   register={register("cuTel")}
                   inputSize={InputSize.i150}
                 />
                 <Input
                   label="주소/비고"
+                  labelStyle={{ minWidth: "90px" }}
                   register={register("cuAddr")}
                   inputSize={InputSize.i150}
                 />
@@ -248,7 +255,7 @@ function CM1100Page({
               </FormGroup>
 
               <FormGroup>
-                <Label>거래 구분</Label>
+                <Label style={{ minWidth: "70px" }}>거래 구분</Label>
                 <Select register={register("cuType")} width={InputSize.i150}>
                   {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -257,7 +264,7 @@ function CM1100Page({
                   ))}
                 </Select>
 
-                <Label>담당 사원</Label>
+                <Label style={{ minWidth: "90px" }}>담당 사원</Label>
                 <Select register={register("swCode")} width={InputSize.i150}>
                   {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -266,7 +273,7 @@ function CM1100Page({
                   ))}
                 </Select>
 
-                <Label>지역 분류</Label>
+                <Label style={{ minWidth: "90px" }}>지역 분류</Label>
                 <Select register={register("cuJyCode")} width={InputSize.i150}>
                   {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -293,7 +300,7 @@ function CM1100Page({
                   ))}
                 </Select>
 
-                <Label>거래 상태</Label>
+                <Label style={{ minWidth: "80px" }}>거래 상태</Label>
                 <Select register={register("cuStae")} width={InputSize.i150}>
                   {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -304,7 +311,7 @@ function CM1100Page({
               </FormGroup>
 
               <FormGroup>
-                <Label>수금 방법</Label>
+                <Label style={{ minWidth: "70px" }}>수금 방법</Label>
                 <Select
                   register={register("cuSukumtype")}
                   width={InputSize.i150}
@@ -316,7 +323,7 @@ function CM1100Page({
                   ))}
                 </Select>
 
-                <Label>기타 분류</Label>
+                <Label style={{ minWidth: "90px" }}>기타 분류</Label>
                 <Select
                   register={register("cuEtOption")}
                   width={InputSize.i150}
@@ -328,7 +335,7 @@ function CM1100Page({
                   ))}
                 </Select>
 
-                <Label>공급 사업자</Label>
+                <Label style={{ minWidth: "90px" }}>공급 사업자</Label>
                 <Select register={register("cuGong")} width={InputSize.i150}>
                   {dataCommonDic?.cuGong?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -348,7 +355,14 @@ function CM1100Page({
                 />
               </FormGroup>
             </div>
-            <div style={{ marginBottom: "40px", marginRight: "37px" }}>
+            <div
+              style={{
+                marginLeft: "25px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
               <Button
                 text="검색"
                 icon={!loading && <MagnifyingGlassBig />}
@@ -368,11 +382,21 @@ function CM1100Page({
                   )
                 }
               />
+              <Button
+                text="엑셀"
+                icon={<ExcelIcon />}
+                kind={ButtonType.ROUND}
+                color={ButtonColor.SECONDARY}
+                type="button"
+                onClick={() => gridRef.current.saveToExcel()}
+              />
             </div>
           </SearchWrapper>
         </form>
 
         <Grid
+          menuId={menuId}
+          ref={gridRef}
           data={data}
           columns={columns}
           fields={fields}

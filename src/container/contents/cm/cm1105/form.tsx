@@ -351,7 +351,7 @@ function FormCM1105() {
           </span>
         </FormGroup>
       </ModalHeader>
-      <div style={{ padding: "10px" }}>
+      <div style={{ padding: "5px 10px" }}>
         <FormGroup>
           <Input
             label="거래처코드"
@@ -514,14 +514,12 @@ function FormCM1105() {
           />
         </FormGroup>
 
-        <Field
+        <FormGroup
           style={{
-            display: "flex",
             alignItems: "start",
-            marginRight: "20px",
           }}
         >
-          <Field>
+          <FormGroup style={{ flexDirection: "column" }}>
             <FormGroup>
               <Label>담당 사원</Label>
               <Select register={register("cuSwCode")} width={InputSize.i150}>
@@ -651,7 +649,7 @@ function FormCM1105() {
                 )}
               />
             </Wrapper>
-          </Field>
+          </FormGroup>
           <Field
             className="rectangle"
             style={{ width: "20%", marginLeft: "30px", marginTop: "3px" }}
@@ -708,8 +706,8 @@ function FormCM1105() {
               />
             </FormGroup>
           </Field>
-        </Field>
-        <Divider />
+        </FormGroup>
+
         <div style={{ marginTop: "5px" }}>
           <PlainTab
             tabHeader={[
@@ -723,7 +721,7 @@ function FormCM1105() {
             onClick={(id) => setTabId(id)}
             tabId={tabId}
           />
-          <TabContentWrapper style={{ padding: "15px", minHeight: "322px" }}>
+          <TabContentWrapper style={{ padding: "5px 10px" }}>
             {getTabContent(
               tabId,
               register,

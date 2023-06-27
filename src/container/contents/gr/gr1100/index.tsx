@@ -1,20 +1,18 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { apiGet } from "app/axios";
 import CreateScreen from "app/hook/createScreen";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
-import { useDispatch, useSelector } from "app/store";
-import {
-  openModal,
-  closeModal,
-  addDeleteMenuId,
-  setIsDelete,
-} from "app/state/modal/modalSlice";
 import { GR1100SEARCH } from "app/path";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import Button from "components/button/button";
 import { Input, Select, FormGroup, Label } from "components/form/style";
-import { MagnifyingGlassBig, ExcelIcon } from "components/allSvgIcon";
+import {
+  MagnifyingGlassBig,
+  ExcelIcon,
+  Plus,
+  Trash,
+  Update,
+  Reset,
+} from "components/allSvgIcon";
 import Form from "./form";
 import { columns, fields } from "./data";
 import { ISEARCH } from "./model";
@@ -26,7 +24,6 @@ import {
   SearchWrapper,
 } from "../../commonStyle";
 import Loader from "components/loader";
-import FourButtons from "components/button/fourButtons";
 
 const minWidth = "763px";
 const leftSideWidth: number = 780;
@@ -40,8 +37,6 @@ function GR1100({
   ownAreaCode: string;
   menuId: string;
 }) {
-  const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-
   const { register, handleSubmit, reset, getValues } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
@@ -57,16 +52,16 @@ function GR1100({
     activeTabId,
     fetchData,
     showDraggableLine,
-    isOpen,
+    show4Btns,
     gridIndexes,
     dispatch,
     dataCommonDic,
     linePos,
+    formRef,
+    addBtnUnclick,
   } = CreateScreen("GR", "GR1100", menuId, GR1100SEARCH, leftSideWidth);
 
   const [areaCode, setAreaCode] = useState("");
-
-  const { isDelete } = useSelector((state) => state.modal);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -81,41 +76,15 @@ function GR1100({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (isDelete.menuId === menuId && isDelete.isDelete) {
-      deleteRowGrid();
+    if (selected) {
+      if (isAddBtnClicked) {
+        addBtnUnclick();
+      }
     }
-  }, [isDelete.isDelete]);
+  }, [selected]);
 
   const submit = async (data: ISEARCH) => {
     fetchData({ ...data, areaCode: areaCode });
-  };
-
-  function deleteRowGrid() {
-    try {
-      setIsAddBtnClicked(false);
-      formRef.current.crud("delete");
-      dispatch(addDeleteMenuId({ menuId: "" }));
-      dispatch(setIsDelete({ isDelete: false }));
-      dispatch(closeModal());
-    } catch (error) {}
-  }
-
-  const onClickAdd = () => {
-    setIsAddBtnClicked(true);
-    formRef.current.resetForm("clear");
-  };
-
-  const onClickDelete = () => {
-    dispatch(openModal({ type: "delModal" }));
-    dispatch(addDeleteMenuId({ menuId: menuId }));
-  };
-  const onClickUpdate = () => {
-    formRef.current.crud(null);
-  };
-
-  const onClickReset = () => {
-    setIsAddBtnClicked(false);
-    formRef.current.resetForm("reset");
   };
 
   return (
@@ -124,7 +93,7 @@ function GR1100({
         <FormGroup>
           {ownAreaCode === "00" && (
             <>
-              <Label style={{ minWidth: "32px" }}>영업소</Label>
+              <Label style={{ minWidth: "50px" }}>영업소</Label>
               <Select
                 value={areaCode}
                 onChange={(e) => setAreaCode(e.target.value)}
@@ -138,31 +107,31 @@ function GR1100({
             </>
           )}
 
-          <FourButtons
-            onClickAdd={onClickAdd}
-            onClickDelete={onClickDelete}
-            onClickUpdate={onClickUpdate}
-            onClickReset={onClickReset}
-            isAddBtnClicked={isAddBtnClicked}
-          />
+          {show4Btns({
+            style: { marginLeft: ownAreaCode === "00" ? "30px" : "55px" },
+          })}
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
 
       <MainWrapper>
         <LeftSide style={{ width: `${linePos}px` }}>
-          <SearchWrapper
-            style={{ minWidth: `${leftSideWidth}px`, padding: "3px 15px" }}
+          <form
+            onSubmit={handleSubmit(submit)}
+            autoComplete="off"
+            style={{ minWidth: minWidth }}
           >
-            <form
-              onSubmit={handleSubmit(submit)}
-              autoComplete="off"
-              style={{ minWidth: minWidth }}
+            <SearchWrapper
+              style={{
+                minWidth: `${leftSideWidth}px`,
+                padding: "3px 15px",
+                justifyContent: "flex-start",
+              }}
             >
               <FormGroup>
                 <Label
                   style={{
-                    minWidth: "auto",
+                    minWidth: "50px",
                   }}
                 >
                   구분
@@ -177,14 +146,14 @@ function GR1100({
 
                 <Input
                   label="매입처명"
-                  labelStyle={{ minWidth: "100px" }}
+                  labelStyle={{ minWidth: "80px" }}
                   register={register("sBuName")}
                   inputSize={InputSize.i130}
                 />
 
                 <Label
                   style={{
-                    minWidth: "95px",
+                    minWidth: "80px",
                   }}
                 >
                   거래 상태
@@ -196,7 +165,8 @@ function GR1100({
                     </option>
                   ))}
                 </Select>
-
+              </FormGroup>
+              <div className="buttons" style={{ marginLeft: "20px" }}>
                 <Button
                   text="검색"
                   icon={!loading && <MagnifyingGlassBig />}
@@ -205,16 +175,11 @@ function GR1100({
                   loader={
                     loading && (
                       <>
-                        <Loader
-                          color="white"
-                          size={19}
-                          style={{ marginRight: "10px" }}
-                          borderWidth="3px"
-                        />
+                        <Loader color="white" size={19} borderWidth="3px" />
                       </>
                     )
                   }
-                  style={{ marginRight: "5px", height: "26px" }}
+                  style={{ marginRight: "5px", height: "30px" }}
                 />
 
                 <Button
@@ -223,11 +188,11 @@ function GR1100({
                   kind={ButtonType.ROUND}
                   color={ButtonColor.SECONDARY}
                   type="button"
-                  style={{ height: "26px" }}
+                  style={{ height: "30px" }}
                 />
-              </FormGroup>
-            </form>
-          </SearchWrapper>
+              </div>
+            </SearchWrapper>
+          </form>
 
           <GridLeft
             areaCode={ownAreaCode}

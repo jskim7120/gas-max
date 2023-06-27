@@ -52,7 +52,6 @@ function GR1200({
     setIsAddBtnClicked,
     activeTabId,
     showDraggableLine,
-    isOpen,
     gridIndexes,
     dispatch,
     dataCommonDic,

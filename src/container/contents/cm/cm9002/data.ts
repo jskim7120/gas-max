@@ -131,7 +131,7 @@ export const columns = [
     name: "cuSwName",
     fieldName: "cuSwName",
     type: "data",
-    width: "30",
+    width: "40",
     header: {
       text: "담당사원",
     },
@@ -191,7 +191,7 @@ export const columns = [
     name: "cuTypeName",
     fieldName: "cuTypeName",
     type: "data",
-    width: "30",
+    width: "40",
     header: {
       text: "거래구분",
     },
@@ -201,7 +201,7 @@ export const columns = [
     name: "cuStaeName",
     fieldName: "cuStaeName",
     type: "data",
-    width: "30",
+    width: "40",
     header: {
       text: "거래상태",
     },
