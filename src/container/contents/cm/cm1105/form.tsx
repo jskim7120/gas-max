@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import DaumAddress from "components/daum";
 import { useSelector, useDispatch } from "app/store";
@@ -32,6 +32,7 @@ import { CM1105SEARCH, CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
 import useRdanga from "app/hook/calcRdanga";
 
 function FormCM1105() {
+  const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const [data, setData] = useState<any>(null);
   const [addr, setAddress] = useState<string>("");
   const [addr2, setAddress2] = useState<string>("");
@@ -45,7 +46,7 @@ function FormCM1105() {
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
 
-  const { register, handleSubmit, reset, getValues, control } =
+  const { register, handleSubmit, reset, getValues, control, setFocus } =
     useForm<ICM1105SEARCH>({
       mode: "onChange",
     });
@@ -75,6 +76,8 @@ function FormCM1105() {
         cuCode: cm1105.cuCode.substring(0, 3),
       });
       setIsAddBtnClicked(true);
+      btnRef1.current.classList.add("active");
+      setFocus("cuName");
     } else if (cm1105.areaCode && cm1105.cuCode) {
       fetchData({
         cuCode: cm1105.cuCode,
@@ -82,8 +85,14 @@ function FormCM1105() {
       });
     }
 
-    console.log("state chagnaj bn INSERT", cm1105);
+    // console.log("state chagnaj bn INSERT", cm1105);
   }, [cm1105.areaCode, cm1105.cuCode, cm1105.status]);
+
+  useEffect(() => {
+    if (dataCommonDic) {
+      resetForm("init");
+    }
+  }, [dataCommonDic]);
 
   useEffect(() => {
     if (data) {
@@ -93,21 +102,13 @@ function FormCM1105() {
 
   useEffect(() => {
     if (addr.length > 0) {
-      reset((formValues: any) => ({
-        ...formValues,
-        cuZipcode: addr ? addr?.split("/")[1] : "",
-        cuAddr1: addr ? addr?.split("/")[0] : "",
-      }));
+      resetForm("addr");
     }
   }, [addr]);
 
   useEffect(() => {
     if (addr2.length > 0) {
-      reset((formValues: any) => ({
-        ...formValues,
-        cuSzipcode: addr2 ? addr2?.split("/")[1] : "",
-        cuSaddr1: addr2 ? addr2?.split("/")[0] : "",
-      }));
+      resetForm("addr2");
     }
   }, [addr2]);
 
@@ -117,10 +118,15 @@ function FormCM1105() {
         areaCode: cm1105.areaCode,
         cuCode: cm1105.cuCode.substring(0, 3),
       });
+      setFocus("cuName");
       return;
     }
-
-    if (type === "reset") {
+    if (type === "init") {
+      reset((formValues: any) => ({
+        ...formValues,
+        areaCode: dataCommonDic?.areaCode[0].code,
+      }));
+    } else if (type === "reset") {
       if (data && data?.customerInfo) {
         const customerInfo = data.customerInfo;
         const cms = data?.cms
@@ -157,6 +163,18 @@ function FormCM1105() {
         // setRdangaAmt(customerInfo?.aptRdangaAmt);
         setTotalValue("");
       }
+    } else if (type === "addr") {
+      reset((formValues: any) => ({
+        ...formValues,
+        cuZipcode: addr ? addr?.split("/")[1] : "",
+        cuAddr1: addr ? addr?.split("/")[0] : "",
+      }));
+    } else if (type === "addr2") {
+      reset((formValues: any) => ({
+        ...formValues,
+        cuSzipcode: addr2 ? addr2?.split("/")[1] : "",
+        cuSaddr1: addr2 ? addr2?.split("/")[0] : "",
+      }));
     }
   };
 
@@ -177,17 +195,19 @@ function FormCM1105() {
 
   const fetchCuCode = async (params: any) => {
     const res: any = await apiGet(CM110511, params);
+    // console.log("res>>>>>>>>>>>>>", res);
 
     if (res) {
       //setIsAddBtnClicked(true);
       setData(null);
-      reset({
+      reset((formValues: any) => ({
+        ...formValues,
         ...emptyObj,
         cuCode: res[0].cuCode,
         cuCutype: res[0].cuCutype,
         cuStae: res[0].cuStae,
         cuType: res[0].cuType,
-      });
+      }));
     }
   };
 
@@ -301,11 +321,9 @@ function FormCM1105() {
     const path = isAddBtnClicked ? CM1105INSERT : CM1105UPDATE;
 
     const res = await apiPost(path, formValues, "저장이 성공하였습니다");
-  };
-
-  const handleAddAgain = () => {
-    handleSubmit(submitAgain)();
-    resetForm("clear");
+    if (res) {
+      resetForm("clear");
+    }
   };
 
   return (
@@ -313,28 +331,34 @@ function FormCM1105() {
       <ModalHeader className="handle">
         <FormGroup>
           <Label style={{ minWidth: "114px", color: "white" }}>영업소</Label>
-          <Select register={register("areaCode")} disabled>
-            {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
+          <Controller
+            control={control}
+            name="areaCode"
+            render={({ field }) => (
+              <Select {...field} width={InputSize.i120}>
+                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            )}
+          />
           <div style={{ marginLeft: "30px" }}>
             <Button
               text="연속등록"
               icon={<Plus />}
               style={{ marginRight: "5px" }}
               type="button"
-              onClick={handleAddAgain}
+              onClick={handleSubmit(submitAgain)}
+              ref={btnRef1}
             />
             <Button
               text="저장"
               icon={<Update />}
               style={{ marginRight: "5px" }}
               color={ButtonColor.SECONDARY}
-              onClick={handleSubmit(submit)}
-              type="button"
+              type="submit"
             />
           </div>
         </FormGroup>
@@ -402,21 +426,6 @@ function FormCM1105() {
                 value={value}
                 name={name}
                 onChange={onChange}
-                // mask={[
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   "-",
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   "-",
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                // ]}
                 inputSize={InputSize.i120}
               />
             )}
@@ -429,21 +438,6 @@ function FormCM1105() {
                 value={value}
                 onChange={onChange}
                 name={name}
-                // mask={[
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   "-",
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   "-",
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                // ]}
                 inputSize={InputSize.i150}
               />
             )}
@@ -456,21 +450,6 @@ function FormCM1105() {
                 value={value}
                 onChange={onChange}
                 name={name}
-                // mask={[
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   "-",
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   "-",
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                // ]}
                 inputSize={InputSize.i150}
               />
             )}
@@ -627,7 +606,7 @@ function FormCM1105() {
               <FormGroup>
                 <Label>장부 사용유무</Label>
                 <CheckBox
-                  register={{ ...register("cuJangbuYn") }}
+                  register={register("cuJangbuYn")}
                   style={{
                     marginLeft: "4px",
                   }}
@@ -636,12 +615,10 @@ function FormCM1105() {
               <Controller
                 control={control}
                 {...register("cuSvKumack")}
-                render={({ field: { onChange, value, name } }) => (
+                render={({ field }) => (
                   <Input
                     label="무료시설 투자비"
-                    value={value}
-                    onChange={onChange}
-                    name={name}
+                    {...field}
                     mask={currencyMask}
                     textAlign="right"
                     inputSize={InputSize.i150}

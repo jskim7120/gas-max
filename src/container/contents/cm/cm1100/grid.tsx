@@ -7,7 +7,6 @@ import { ButtonColor, ButtonType } from "components/componentsType";
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
-let selectedRowIndex: number = 0;
 
 const Grid = React.forwardRef(
   (
@@ -15,6 +14,7 @@ const Grid = React.forwardRef(
       data,
       columns,
       fields,
+      rowIndex,
       setSelected,
       openPopup,
       cm1105PopUp,
@@ -24,6 +24,7 @@ const Grid = React.forwardRef(
       data: any;
       columns: any;
       fields: any;
+      rowIndex: number | undefined;
       setSelected?: any;
       openPopup?: any;
       cm1105PopUp?: any;
@@ -58,7 +59,7 @@ const Grid = React.forwardRef(
       gv.setEditOptions({ editable: false });
       gv.displayOptions.useFocusClass = true;
       gv.setCurrent({
-        dataRow: selectedRowIndex,
+        dataRow: rowIndex,
       });
 
       if (areaCode !== "00") {

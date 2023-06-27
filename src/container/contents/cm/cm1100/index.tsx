@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
-import { useDispatch, useSelector } from "app/store";
+import { useSelector } from "app/store";
 import { apiGet, apiPost } from "app/axios";
 import { CM1100SEARCH, CM110065, CM1100DELETE } from "app/path";
 import { ICM1100SEARCH } from "./model";
@@ -29,6 +28,7 @@ import { columns, fields } from "./data";
 import CM1100Footer from "./footer";
 import Loader from "components/loader";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
+import CreateReport from "app/hook/createReport";
 
 function CM1100Page({
   depthFullName,
@@ -39,24 +39,27 @@ function CM1100Page({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const dispatch = useDispatch();
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+    setLoading,
+  } = CreateReport("CM", "CM1100", menuId, CM1100SEARCH);
+
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const [data, setData] = useState<any>([]);
   const [data65, setData65] = useState<any>({});
-  const [selected, setSelected] = useState<any>({});
-  const [loading, setLoading] = useState(false);
   const { isDelete } = useSelector((state) => state.modal);
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset, getValues } = useForm<ICM1100SEARCH>({
     mode: "onSubmit",
   });
-  useEffect(() => {
-    getCommonDictionary({ groupId: "CM", functionName: "CM1100" });
-  }, []);
+
   useEffect(() => {
     if (dataCommonDic) {
       resetSearchForm();
@@ -98,20 +101,6 @@ function CM1100Page({
     dispatch(closeModal());
   };
 
-  const fetchData = async (params: any) => {
-    setLoading(true);
-    const dataSearch = await apiGet(CM1100SEARCH, params);
-
-    if (dataSearch) {
-      setData(dataSearch);
-      setSelected(dataSearch[0]);
-    } else {
-      setData([]);
-      setSelected({});
-    }
-    setLoading(false);
-  };
-
   const fetchData65 = async () => {
     const dataS65 = await apiGet(CM110065, {
       cuCode: selected.cuCode,
@@ -147,7 +136,12 @@ function CM1100Page({
         source: "CM1100",
       });
     } else {
-      alert("등록 거래처를 선택하세요");
+      openPopup({
+        cuCode: "",
+        areaCode: ownAreaCode,
+        status: "INSERT",
+        source: "CM1100",
+      });
     }
   };
 
@@ -400,6 +394,7 @@ function CM1100Page({
           data={data}
           columns={columns}
           fields={fields}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
           setSelected={setSelected}
           openPopup={openPopup}
           areaCode={ownAreaCode}
