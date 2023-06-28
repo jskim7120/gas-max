@@ -2,7 +2,11 @@ import { ValueType } from "realgrid";
 
 export const fields = [
   {
-    fieldName: "gjCuCode",
+    fieldName: "cuCno",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuCode",
     dataType: ValueType.TEXT,
   },
   {
@@ -10,71 +14,71 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuAddr",
+    fieldName: "cuUsername",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjDate",
+    fieldName: "cuTel",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjGumymsno",
+    fieldName: "gage01",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjJankg",
+    fieldName: "dang01",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuSwName",
+    fieldName: "sukum01",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa",
+    fieldName: "sukum01D",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa1",
+    fieldName: "gage02",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa2",
+    fieldName: "dang02",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa3",
+    fieldName: "sukum02",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa4",
+    fieldName: "sukum02D",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa5",
+    fieldName: "gage03",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa6",
+    fieldName: "dang03",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa7",
+    fieldName: "sukum03",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa8",
+    fieldName: "sukum03D",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa9",
+    fieldName: "cmisu",
     dataType: ValueType.TEXT,
   },
 ];
 
 export const columns = [
   {
-    name: "gjCuCode",
-    fieldName: "gjCuCode",
+    name: "cuCno",
+    fieldName: "cuCno",
     type: "data",
     width: "50",
     header: {
@@ -82,13 +86,13 @@ export const columns = [
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("cuCno", "count");
       },
     },
   },
   {
-    name: "cuName",
-    fieldName: "cuName",
+    name: "cuCode",
+    fieldName: "cuCode",
     type: "data",
     width: "100",
     header: {
@@ -97,186 +101,178 @@ export const columns = [
   },
 
   {
-    name: "cuAddr",
-    fieldName: "cuAddr",
+    name: "cuName",
+    fieldName: "cuName",
     type: "data",
-    width: "70",
+    width: "200",
     header: {
       text: "사용자명",
     },
   },
   {
-    name: "gjDate",
-    fieldName: "gjDate",
+    name: "cuUsername",
+    fieldName: "cuUsername",
     type: "data",
-    width: "70",
+    width: "200",
     header: {
       text: "전화번호",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gjGumymsno",
-    fieldName: "gjGumymsno",
+    name: "cuTel",
+    fieldName: "cuTel",
     type: "data",
-    width: "50",
+    width: "150",
     header: {
-      text: "사용량",
+      text: "",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "gjJankg",
-    fieldName: "gjJankg",
+    name: "gage01",
+    fieldName: "gage01",
     type: "data",
     width: "70",
     header: {
-      text: "당월금액",
+      text: "사용량",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "cuSwName",
-    fieldName: "cuSwName",
+    name: "dang01",
+    fieldName: "dang01",
+    type: "data",
+    width: "50",
+    header: {
+      text: "당월금액",
+    },
+  },
+  {
+    name: "sukum01",
+    fieldName: "sukum01",
     type: "data",
     width: "50",
     header: {
       text: "수금액",
-    },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
-  },
-  {
-    name: "gaa",
-    fieldName: "gaa",
-    type: "data",
-    width: "50",
-    header: {
-      text: "일",
     },
   },
 
   {
-    name: "gaa1",
-    fieldName: "gaa1",
-    type: "data",
-    width: "50",
-    header: {
-      text: "사용량",
-    },
-  },
-  {
-    name: "gaa2",
-    fieldName: "gaa2",
-    type: "data",
-    width: "70",
-    header: {
-      text: "당월금액",
-    },
-    styleName: "rg-left-column",
-  },
-  {
-    name: "gaa3",
-    fieldName: "gaa3",
-    type: "data",
-    width: "50",
-    header: {
-      text: "수금액",
-    },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
-  },
-  {
-    name: "gaa4",
-    fieldName: "gaa4",
+    name: "sukum01D",
+    fieldName: "sukum01D",
     type: "data",
     width: "50",
     header: {
       text: "일",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gaa5",
-    fieldName: "gaa5",
-    type: "data",
-    width: "50",
-    header: {
-      text: "사용량",
-    },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
-  },
-  {
-    name: "gaa6",
-    fieldName: "gaa6",
+    name: "gage02",
+    fieldName: "gage02",
     type: "data",
     width: "70",
     header: {
-      text: "당월금액",
+      text: "사용량",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gaa7",
-    fieldName: "gaa7",
+    name: "dang02",
+    fieldName: "dang02",
+    type: "data",
+    width: "50",
+    header: {
+      text: "당월금액",
+    },
+  },
+  {
+    name: "sukum02",
+    fieldName: "sukum02",
     type: "data",
     width: "50",
     header: {
       text: "수금액",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "gaa8",
-    fieldName: "gaa8",
+    name: "sukum02D",
+    fieldName: "sukum02D",
     type: "data",
     width: "50",
     header: {
       text: "일",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gaa9",
-    fieldName: "gaa9",
+    name: "gage03",
+    fieldName: "gage03",
+    type: "data",
+    width: "70",
+    header: {
+      text: "사용량",
+    },
+  },
+  {
+    name: "dang03",
+    fieldName: "dang03",
+    type: "data",
+    width: "50",
+    header: {
+      text: "당월금액",
+    },
+  },
+  {
+    name: "sukum03",
+    fieldName: "sukum03",
+    type: "data",
+    width: "50",
+    header: {
+      text: "수금액",
+    },
+  },
+  {
+    name: "sukum03D",
+    fieldName: "sukum03D",
+    type: "data",
+    width: "70",
+    header: {
+      text: "일",
+    },
+  },
+  {
+    name: "cmisu",
+    fieldName: "cmisu",
     type: "data",
     width: "70",
     header: {
       text: "현재미수",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
 ];
 
 export const layout = [
-  "gjCuCode",
+  "cuCno",
+  "cuCode",
   "cuName",
-  "cuAddr",
-  "gjDate",
+  "cuUsername",
+  "cuTel",
   {
     name: "2023-04월",
     directions: "horizontal",
     hideChildHeaders: false,
-    items: ["gjGumymsno", "gjJankg", "cuSwName", "gaa"],
+    items: ["gage01", "dang01", "sukum01", "sukum01D"],
     header: { text: "" },
   },
   {
     name: "2023-05월",
     directions: "horizontal",
     hideChildHeaders: false,
-    items: ["gaa1", "gaa2", "gaa3", "gaa4"],
+    items: ["gage02", "dang02", "sukum02", "sukum02D"],
     header: { text: "" },
   },
   {
     name: " 2023-06월",
     directions: "horizontal",
     hideChildHeaders: false,
-    items: ["gaa5", "gaa6", "gaa7", "gaa8"],
+    items: ["gage03", "dang03", "sukum03", "sukum03D"],
     header: { text: "" },
   },
-  "gaa9",
+  "cmisu",
 ];

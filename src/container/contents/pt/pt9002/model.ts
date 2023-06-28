@@ -6,4 +6,5 @@ export interface ISEARCH {
   swCode: string;
   cuStae: string;
   cuJangbu: string;
+  dateChk: boolean;
 }

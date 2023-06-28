@@ -14,7 +14,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "maxRh20",
+    fieldName: "maxRh2O",
     dataType: ValueType.NUMBER,
   },
   {
@@ -142,8 +142,8 @@ export const columns = [
     },
   },
   {
-    name: "maxRh20",
-    fieldName: "maxRh20",
+    name: "maxRh2O",
+    fieldName: "maxRh2O",
     type: "data",
     width: "60",
     header: {
@@ -400,7 +400,7 @@ export const layout = [
   "cuCno",
   "gjCuCode",
   "cuName",
-  "maxRh20",
+  "maxRh2O",
   {
     name: "2023-04월",
     directions: "horizontal",

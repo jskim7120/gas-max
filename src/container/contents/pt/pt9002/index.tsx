@@ -79,6 +79,7 @@ function PT9002({
         swCode: init?.swCode,
         cuStae: init?.cuStae,
         cuJangbu: init?.cuJangbu,
+        dateChk: init?.dateChk === "N",
       });
     }
   };

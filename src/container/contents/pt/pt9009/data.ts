@@ -2,63 +2,63 @@ import { ValueType } from "realgrid";
 
 export const fields = [
   {
-    fieldName: "gjCuCode",
+    fieldName: "suType",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuName",
+    fieldName: "msDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuAddr",
+    fieldName: "msCuCode",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjDate",
+    fieldName: "msCuName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjGumymsno",
+    fieldName: "msKumack",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjJankg",
+    fieldName: "msSwName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuSwName",
+    fieldName: "msSukumtype",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa",
+    fieldName: "msCdBank",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa1",
+    fieldName: "msCdDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa2",
+    fieldName: "msCdLastDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa3",
+    fieldName: "msCdNo",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa4",
+    fieldName: "msCdBigo",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa5",
+    fieldName: "msCdType",
     dataType: ValueType.TEXT,
   },
 ];
 
 export const columns = [
   {
-    name: "gjCuCode",
-    fieldName: "gjCuCode",
+    name: "suType",
+    fieldName: "suType",
     type: "data",
     width: "50",
     header: {
@@ -66,13 +66,13 @@ export const columns = [
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("suType", "count");
       },
     },
   },
   {
-    name: "cuName",
-    fieldName: "cuName",
+    name: "msDate",
+    fieldName: "msDate",
     type: "data",
     width: "70",
     header: {
@@ -81,8 +81,8 @@ export const columns = [
   },
 
   {
-    name: "cuAddr",
-    fieldName: "cuAddr",
+    name: "msCuCode",
+    fieldName: "msCuCode",
     type: "data",
     width: "80",
     header: {
@@ -90,50 +90,44 @@ export const columns = [
     },
   },
   {
-    name: "gjDate",
-    fieldName: "gjDate",
+    name: "msCuName",
+    fieldName: "msCuName",
     type: "data",
     width: "100",
     header: {
       text: "거래처명",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gjGumymsno",
-    fieldName: "gjGumymsno",
+    name: "msKumack",
+    fieldName: "msKumack",
     type: "data",
     width: "50",
     header: {
       text: "수금액",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "gjJankg",
-    fieldName: "gjJankg",
+    name: "msSwName",
+    fieldName: "msSwName",
     type: "data",
     width: "50",
     header: {
       text: "사원",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "cuSwName",
-    fieldName: "cuSwName",
+    name: "msSukumtype",
+    fieldName: "msSukumtype",
     type: "data",
     width: "50",
     header: {
       text: "방법",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "gaa",
-    fieldName: "gaa",
+    name: "msCdBank",
+    fieldName: "msCdBank",
     type: "data",
     width: "70",
     header: {
@@ -142,8 +136,8 @@ export const columns = [
   },
 
   {
-    name: "gaa1",
-    fieldName: "gaa1",
+    name: "msCdDate",
+    fieldName: "msCdDate",
     type: "data",
     width: "70",
     header: {
@@ -151,45 +145,39 @@ export const columns = [
     },
   },
   {
-    name: "gaa2",
-    fieldName: "gaa2",
+    name: "msCdLastDate",
+    fieldName: "msCdLastDate",
     type: "data",
     width: "70",
     header: {
       text: "결재일자",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gaa3",
-    fieldName: "gaa3",
+    name: "msCdNo",
+    fieldName: "msCdNo",
     type: "data",
     width: "70",
     header: {
       text: "수표번호",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "gaa4",
-    fieldName: "gaa4",
+    name: "msCdBigo",
+    fieldName: "msCdBigo",
     type: "data",
     width: "50",
     header: {
       text: "적요",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gaa5",
-    fieldName: "gaa5",
+    name: "msCdType",
+    fieldName: "msCdType",
     type: "data",
     width: "70",
     header: {
       text: "처리구분",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
 ];

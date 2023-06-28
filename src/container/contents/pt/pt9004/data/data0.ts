@@ -2,6 +2,10 @@ import { ValueType } from "realgrid";
 
 export const fields0 = [
   {
+    fieldName: "cuCno",
+    dataType: ValueType.TEXT,
+  },
+  {
     fieldName: "gjCuCode",
     dataType: ValueType.TEXT,
   },
@@ -10,7 +14,7 @@ export const fields0 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuAddr",
+    fieldName: "cuTel",
     dataType: ValueType.TEXT,
   },
   {
@@ -22,47 +26,51 @@ export const fields0 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjJankg",
+    fieldName: "gjJungum",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjGum",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjGage",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjDanga",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjDangkum",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjPerkum",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjTotal",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjMisujan",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "lastMisu",
     dataType: ValueType.TEXT,
   },
   {
     fieldName: "cuSwName",
     dataType: ValueType.TEXT,
   },
-  {
-    fieldName: "gaa",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "gaa1",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "gaa2",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "gaa3",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "gaa4",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "gaa5",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "gaa6",
-    dataType: ValueType.TEXT,
-  },
 ];
 
 export const columns0 = [
   {
-    name: "gjCuCode",
-    fieldName: "gjCuCode",
+    name: "cuCno",
+    fieldName: "cuCno",
     type: "data",
     width: "50",
     header: {
@@ -70,13 +78,13 @@ export const columns0 = [
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("cuCno", "count");
       },
     },
   },
   {
-    name: "cuName",
-    fieldName: "cuName",
+    name: "gjCuCode",
+    fieldName: "gjCuCode",
     type: "data",
     width: "70",
     header: {
@@ -85,8 +93,8 @@ export const columns0 = [
   },
 
   {
-    name: "cuAddr",
-    fieldName: "cuAddr",
+    name: "cuName",
+    fieldName: "cuName",
     type: "data",
     width: "200",
     header: {
@@ -94,50 +102,44 @@ export const columns0 = [
     },
   },
   {
-    name: "gjDate",
-    fieldName: "gjDate",
+    name: "cuTel",
+    fieldName: "cuTel",
     type: "data",
     width: "100",
     header: {
       text: "전화번호",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gjGumymsno",
-    fieldName: "gjGumymsno",
+    name: "gjDate",
+    fieldName: "gjDate",
     type: "data",
     width: "70",
     header: {
       text: "검침일자",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "gjJankg",
-    fieldName: "gjJankg",
+    name: "gjGumymsno",
+    fieldName: "gjGumymsno",
     type: "data",
     width: "50",
     header: {
       text: "전검",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "cuSwName",
-    fieldName: "cuSwName",
+    name: "gjJungum",
+    fieldName: "gjJungum",
     type: "data",
     width: "50",
     header: {
       text: "당검침",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "gaa",
-    fieldName: "gaa",
+    name: "gjGum",
+    fieldName: "gjGum",
     type: "data",
     width: "50",
     header: {
@@ -146,8 +148,8 @@ export const columns0 = [
   },
 
   {
-    name: "gaa1",
-    fieldName: "gaa1",
+    name: "gjGage",
+    fieldName: "gjGage",
     type: "data",
     width: "50",
     header: {
@@ -155,56 +157,66 @@ export const columns0 = [
     },
   },
   {
-    name: "gaa2",
-    fieldName: "gaa2",
+    name: "gjDanga",
+    fieldName: "gjDanga",
     type: "data",
     width: "90",
     header: {
       text: "당월금액",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gaa3",
-    fieldName: "gaa3",
+    name: "gjDangkum",
+    fieldName: "gjDangkum",
     type: "data",
     width: "50",
     header: {
       text: "연체료",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "gaa4",
-    fieldName: "gaa4",
+    name: "gjPerkum",
+    fieldName: "gjPerkum",
     type: "data",
     width: "70",
     header: {
       text: "당월미수",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gaa5",
-    fieldName: "gaa5",
+    name: "gjTotal",
+    fieldName: "gjTotal",
     type: "data",
     width: "70",
     header: {
       text: "미수누계",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "gaa6",
-    fieldName: "gaa6",
+    name: "gjMisujan",
+    fieldName: "gjMisujan",
     type: "data",
     width: "50",
     header: {
       text: "사원",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
+  },
+  {
+    name: "lastMisu",
+    fieldName: "lastMisu",
+    type: "data",
+    width: "70",
+    header: {
+      text: "",
+    },
+  },
+  {
+    name: "cuSwName",
+    fieldName: "cuSwName",
+    type: "data",
+    width: "50",
+    header: {
+      text: "",
+    },
   },
 ];

@@ -65,6 +65,8 @@ function PT9003({
     );
   };
   const submit = (params: ISEARCH) => {
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
     fetchData(params);
   };
 

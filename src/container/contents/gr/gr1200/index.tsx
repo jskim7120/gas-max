@@ -134,13 +134,17 @@ function GR1200({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide style={{ width: `${linePos}px` }}>
-          <SearchWrapper
-            style={{ minWidth: `${leftSideWidth}px`, padding: "3px 15px" }}
+          <form
+            onSubmit={handleSubmit(submit)}
+            autoComplete="off"
+            style={{ minWidth: minWidth }}
           >
-            <form
-              onSubmit={handleSubmit(submit)}
-              autoComplete="off"
-              style={{ minWidth: minWidth }}
+            <SearchWrapper
+              style={{
+                minWidth: `${leftSideWidth}px`,
+                padding: "3px 15px",
+                justifyContent: "flex-start",
+              }}
             >
               <FormGroup>
                 <Label style={{ minWidth: "auto" }}>기간</Label>
@@ -207,8 +211,9 @@ function GR1200({
                   color={ButtonColor.LIGHT}
                 />
               </FormGroup>
-            </form>
-          </SearchWrapper>
+            </SearchWrapper>
+          </form>
+
           <GridLeft
             areaCode={ownAreaCode}
             data={data}
@@ -219,7 +224,7 @@ function GR1200({
             setSelected={setSelected}
             setIsAddBtnClicked={setIsAddBtnClicked}
             style={{
-              height: `calc(100% - 200px)`,
+              height: `calc(100% - 206px)`,
               minWidth: `${leftSideWidth}px`,
             }}
             layout={layout}

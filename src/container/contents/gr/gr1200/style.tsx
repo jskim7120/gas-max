@@ -35,7 +35,7 @@ export const CustomTable = styled.table`
       }
     }
   }
-
+  border-right: 1px solid #707070;
   border-top: 1px solid #707070;
 `;
 
