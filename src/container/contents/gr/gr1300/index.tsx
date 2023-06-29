@@ -23,7 +23,7 @@ import Table from "./table";
 import { fields, columns } from "./data";
 
 const minWidth = "905px";
-const leftSideWidth: number = 922;
+const leftSideWidth: number = 960;
 
 function GR1300({
   depthFullName,
@@ -99,13 +99,17 @@ function GR1300({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide style={{ width: `${linePos}px` }}>
-          <SearchWrapper
-            style={{ minWidth: `${leftSideWidth}px`, padding: "3px 15px" }}
+          <form
+            onSubmit={handleSubmit(submit)}
+            autoComplete="off"
+            style={{ minWidth: minWidth }}
           >
-            <form
-              onSubmit={handleSubmit(submit)}
-              autoComplete="off"
-              style={{ minWidth: minWidth }}
+            <SearchWrapper
+              style={{
+                minWidth: `${leftSideWidth}px`,
+                padding: "3px 15px",
+                justifyContent: "flex-start",
+              }}
             >
               <FormGroup>
                 <Label style={{ minWidth: "auto" }}>지급기간</Label>
@@ -161,8 +165,8 @@ function GR1300({
                   }
                 />
               </FormGroup>
-            </form>
-          </SearchWrapper>
+            </SearchWrapper>
+          </form>
           <GridLeft
             areaCode={ownAreaCode}
             data={data}
@@ -172,11 +176,11 @@ function GR1300({
             menuId={menuId}
             rowIndex={0}
             style={{
-              height: `calc(100% - 82px)`,
+              height: `calc(100% - 91px)`,
               minWidth: `${leftSideWidth}px`,
             }}
           />
-          <Table data={data} style={{ minWidth: minWidth, width: "922px" }} />
+          <Table data={data} style={{ minWidth: minWidth, width: "960px" }} />
         </LeftSide>
         <RightSide
           style={{
