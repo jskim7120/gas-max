@@ -19,6 +19,8 @@ import { MagnifyingGlassBig } from "components/allSvgIcon";
 import { ISEARCH } from "./model";
 import Form from "./form";
 import { fields, columns } from "./data";
+import { useSelector } from "app/store";
+import { addCM1105LoadStatus } from "app/state/modal/modalSlice";
 
 const leftSideWidth: number = 530;
 
@@ -59,12 +61,14 @@ function CM1200({
 
   const [selectedSupplyTab, setSelectedSupplyTab] = useState<any>({});
   const [userInfo, setUserInfo] = useState<any[]>([]);
+  const [selectedUserInfo, setSelectedUserInfo] = useState<any>({});
 
   const [cuCustgubunDic, setCuCustgubunDic] = useState<any[]>([]);
   const [cuJyCodeDic, setCuJyCodeDic] = useState<any[]>([]);
   const [cuSwCodeDic, setCuSwCodeDic] = useState<any[]>([]);
   const rowIndex0 = gridIndexes?.find((item) => item.grid === 0)?.row;
   const rowIndex1 = gridIndexes?.find((item) => item.grid === 1)?.row;
+  const cm1105 = useSelector((state) => state.modal.cm1105);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -88,13 +92,44 @@ function CM1200({
       }
 
       if (selected.cuCode && selected.areaCode) {
-        fetchData65({
-          areaCode: selected.areaCode,
-          cuCode: selected.cuCode,
-        });
+        fetchData65(
+          {
+            areaCode: selected.areaCode,
+            cuCode: selected.cuCode,
+          },
+          "last"
+        );
       }
     }
   }, [selected]);
+
+  useEffect(() => {
+    if (
+      cm1105 &&
+      cm1105.source === menuId &&
+      cm1105.loadStatus === true &&
+      Object.keys(selected)?.length > 0
+    ) {
+      if (selected.cuCode && selected.areaCode) {
+        if (cm1105.status === "INSERT") {
+          fetchData65(
+            {
+              areaCode: selected.areaCode,
+              cuCode: selected.cuCode,
+            },
+            "last"
+          );
+        }
+        if (cm1105.status === "UPDATE") {
+          fetchData65({
+            areaCode: selected.areaCode,
+            cuCode: selected.cuCode,
+          });
+        }
+      }
+      dispatch(addCM1105LoadStatus({ loadStatus: false }));
+    }
+  }, [cm1105]);
 
   const prepareSearchFormValues = () => {
     const params: any = getValues();
@@ -106,14 +141,18 @@ function CM1200({
     return params;
   };
 
-  const fetchData65 = async (params: any) => {
+  const fetchData65 = async (params: any, pos: any = null) => {
     const res = await apiGet(CM120065, params);
 
     if (res) {
       if (res?.userInfo) {
         setUserInfo(res.userInfo);
+        if (pos === "last") {
+          setSelectedUserInfo(res.userInfo[res.userInfo?.length - 1]);
+        }
       } else {
         setUserInfo([]);
+        setSelectedUserInfo({});
       }
 
       if (res?.supplyTab) {
@@ -135,6 +174,7 @@ function CM1200({
       }
     } else {
       setUserInfo([]);
+      setSelectedUserInfo({});
       setSelectedSupplyTab({});
       setCuCustgubunDic([]);
       setCuJyCodeDic([]);
@@ -146,12 +186,6 @@ function CM1200({
     const params = prepareSearchFormValues();
     fetchData(params);
   };
-
-  // const onClickAdd = () => {
-  //   addBtnClick();
-  //   setUserInfo([]);
-  //   formRef.current.resetForm("clear");
-  // };
 
   return (
     <>
@@ -185,13 +219,9 @@ function CM1200({
                 <Label className="lable-check" style={{ minWidth: "auto" }}>
                   <Controller
                     control={control}
-                    {...register("dataChk")}
-                    render={({ field: { onChange, value, name } }) => (
-                      <CheckBox
-                        title="건물명"
-                        checked={value}
-                        onChange={onChange}
-                      />
+                    name="dataChk"
+                    render={({ field }) => (
+                      <CheckBox {...field} title="건물명" />
                     )}
                   />
                 </Label>
@@ -262,6 +292,11 @@ function CM1200({
             selectedSupplyTab={selectedSupplyTab}
             cuSwCodeDic={cuSwCodeDic}
             setCuSwCodeDic={setCuSwCodeDic}
+            parentFetchData65={fetchData65}
+            setSelectedUserInfo={setSelectedUserInfo}
+            selectedUserInfo={selectedUserInfo}
+            menuId={menuId}
+            setUserInfo={setUserInfo}
           />
         </RightSide>
         {showDraggableLine()}

@@ -235,7 +235,7 @@ export const emptyObj = {
   cuBaGageM3: undefined,
   cuBaGageYn: "",
   //--------------------
-  areaCode: "",
+  // areaCode: "",
   areaName: "",
   cuAddr1: "",
   cuAddr2: "",

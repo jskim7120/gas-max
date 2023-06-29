@@ -118,7 +118,7 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
   } else if (kind === ButtonType.SQUARE_BIG) {
     attributes = {
       borderRad: "4px",
-      fontSize: "14px",
+      fontSize: "15px",
       fontFamily: "SegoeUI",
       fontWeight: "500",
       height: "30px",
