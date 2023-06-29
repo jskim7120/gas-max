@@ -21,29 +21,29 @@ export const fields = [
     fieldName: "gjDate",
     dataType: ValueType.TEXT,
   },
-  {
-    fieldName: "gjGumymsno",
-    dataType: ValueType.TEXT,
-  },
+  // {
+  //   fieldName: "gjGumymsno",
+  //   dataType: ValueType.TEXT,
+  // },
   {
     fieldName: "gjGum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjGage",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjTotal",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjMisujan",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "lastMisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "cuSwName",
@@ -60,7 +60,7 @@ export const columns = [
     name: "gjCuCode",
     fieldName: "gjCuCode",
     type: "data",
-    width: "90",
+    width: "80",
     header: {
       text: "코드",
     },
@@ -75,6 +75,7 @@ export const columns = [
     fieldName: "cuName",
     type: "data",
     width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -84,7 +85,8 @@ export const columns = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "90",
+    width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "전화번호",
     },
@@ -93,7 +95,7 @@ export const columns = [
     name: "cuHp",
     fieldName: "cuHp",
     type: "data",
-    width: "90",
+    width: "120",
     header: {
       text: "핸드폰",
     },
@@ -102,81 +104,94 @@ export const columns = [
     name: "gjDate",
     fieldName: "gjDate",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "검침일자",
     },
   },
-  {
-    name: "gjGumymsno",
-    fieldName: "gjGumymsno",
-    type: "data",
-    width: "50",
-    header: {
-      text: "당검침",
-    },
-  },
+  // {
+  //   name: "gjGumymsno",
+  //   fieldName: "gjGumymsno",
+  //   type: "data",
+  //   width: "80",
+  //   header: {
+  //     text: "당검침",
+  //   },
+  //   styleName: "rg-right-column",
+  //   numberFormat: "#,##0",
+  // },
   {
     name: "gjGum",
     fieldName: "gjGum",
     type: "data",
-    width: "50",
+    width: "80",
     header: {
-      text: "사용량",
+      text: "당검침",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjGage",
     fieldName: "gjGage",
     type: "data",
-    width: "70",
+    width: "80",
     header: {
-      text: "당월금액",
+      text: "사용량",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjTotal",
     fieldName: "gjTotal",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
-      text: "당월미수",
+      text: "당월금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjMisujan",
     fieldName: "gjMisujan",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
-      text: "누계",
+      text: "당월미수",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "lastMisu",
     fieldName: "lastMisu",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
-      text: "검침사원",
+      text: "누계",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "cuSwName",
     fieldName: "cuSwName",
     type: "data",
-    width: "90",
+    width: "80",
     header: {
-      text: "최종수금일",
+      text: "검침사원",
     },
   },
   {
     name: "gsDate",
     fieldName: "gsDate",
     type: "data",
-    width: "90",
+    width: "100",
+    styleName: "rg-left-column",
     header: {
-      text: "gsDate",
+      text: "최종수금일",
     },
   },
 ];

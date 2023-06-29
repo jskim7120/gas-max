@@ -23,23 +23,23 @@ export const fields0 = [
   },
   {
     fieldName: "gslkumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "suPer",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "suPerDc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gsKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gsDc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "swName",
@@ -56,7 +56,7 @@ export const columns0 = [
     name: "gsCuCode",
     fieldName: "gsCuCode",
     type: "data",
-    width: "50",
+    width: "80",
     header: {
       text: "코드",
     },
@@ -71,6 +71,7 @@ export const columns0 = [
     fieldName: "gsCuName",
     type: "data",
     width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "건물명",
     },
@@ -80,7 +81,8 @@ export const columns0 = [
     name: "gsCuUsername",
     fieldName: "gsCuUsername",
     type: "data",
-    width: "70",
+    width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "사용자명",
     },
@@ -89,7 +91,7 @@ export const columns0 = [
     name: "gsDate",
     fieldName: "gsDate",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "수금일자",
     },
@@ -107,53 +109,63 @@ export const columns0 = [
     name: "gslkumack",
     fieldName: "gslkumack",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "사용료",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "suPer",
     fieldName: "suPer",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "연체료",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
 
   {
     name: "suPerDc",
     fieldName: "suPerDc",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "원단위",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gsKumack",
     fieldName: "gsKumack",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "수금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gsDc",
     fieldName: "gsDc",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "D/C",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "swName",
     fieldName: "swName",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "사원",
     },
@@ -162,7 +174,8 @@ export const columns0 = [
     name: "gsBigo",
     fieldName: "gsBigo",
     type: "data",
-    width: "50",
+    width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "비고",
     },

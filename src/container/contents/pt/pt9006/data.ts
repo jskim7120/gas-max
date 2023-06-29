@@ -23,15 +23,15 @@ export const fields = [
   },
   {
     fieldName: "gage01",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "dang01",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "sukum01",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "sukum01D",
@@ -39,15 +39,15 @@ export const fields = [
   },
   {
     fieldName: "gage02",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "dang02",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "sukum02",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "sukum02D",
@@ -55,15 +55,15 @@ export const fields = [
   },
   {
     fieldName: "gage03",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "dang03",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "sukum03",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "sukum03D",
@@ -71,7 +71,7 @@ export const fields = [
   },
   {
     fieldName: "cmisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
 ];
 
@@ -80,9 +80,9 @@ export const columns = [
     name: "cuCno",
     fieldName: "cuCno",
     type: "data",
-    width: "50",
+    width: "80",
     header: {
-      text: "코드",
+      text: "순번",
     },
     footer: {
       valueCallback: function (grid: any) {
@@ -94,9 +94,9 @@ export const columns = [
     name: "cuCode",
     fieldName: "cuCode",
     type: "data",
-    width: "100",
+    width: "80",
     header: {
-      text: "거래처명",
+      text: "코드",
     },
   },
 
@@ -105,8 +105,9 @@ export const columns = [
     fieldName: "cuName",
     type: "data",
     width: "200",
+    styleName: "rg-left-column",
     header: {
-      text: "사용자명",
+      text: "거래처명",
     },
   },
   {
@@ -114,17 +115,19 @@ export const columns = [
     fieldName: "cuUsername",
     type: "data",
     width: "200",
+    styleName: "rg-left-column",
     header: {
-      text: "전화번호",
+      text: "사용자명",
     },
   },
   {
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "150",
+    width: "120",
+    styleName: "rg-left-column",
     header: {
-      text: "",
+      text: "전화번호",
     },
   },
   {
@@ -135,24 +138,30 @@ export const columns = [
     header: {
       text: "사용량",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "dang01",
     fieldName: "dang01",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "당월금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "sukum01",
     fieldName: "sukum01",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "수금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
 
   {
@@ -172,24 +181,30 @@ export const columns = [
     header: {
       text: "사용량",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "dang02",
     fieldName: "dang02",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "당월금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "sukum02",
     fieldName: "sukum02",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "수금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "sukum02D",
@@ -208,30 +223,36 @@ export const columns = [
     header: {
       text: "사용량",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "dang03",
     fieldName: "dang03",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "당월금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "sukum03",
     fieldName: "sukum03",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "수금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "sukum03D",
     fieldName: "sukum03D",
     type: "data",
-    width: "70",
+    width: "50",
     header: {
       text: "일",
     },
@@ -240,10 +261,12 @@ export const columns = [
     name: "cmisu",
     fieldName: "cmisu",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "현재미수",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
 ];
 
