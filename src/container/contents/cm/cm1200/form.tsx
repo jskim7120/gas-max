@@ -35,54 +35,51 @@ import getTabContent from "./getTabContent";
 import { useDispatch } from "app/store";
 import { openModal, addCM1105 } from "app/state/modal/modalSlice";
 import useRdanga from "app/hook/calcRdanga";
-import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 const Form = React.forwardRef(
   (
     {
-      selected,
-      dataCommonDic,
-      fetchData,
-      areaCode,
       ownAreaCode,
+      menuId,
+      dataCommonDic,
+      data,
+      userInfo,
+      setUserInfo,
+      selectedUserInfo,
+      setSelectedUserInfo,
+      dataDictionary,
+      setDataDictionary,
+      supplyTab,
+      setSupplyTab,
+      fetchData,
+      fetchData65,
+      areaCode,
+      selected,
       isAddBtnClicked,
       setIsAddBtnClicked,
       prepareSearchFormValues,
-      userInfo,
-      selectedSupplyTab,
-      cuCustgubunDic,
-      setCuCustgubunDic,
-      cuJyCodeDic,
-      setCuJyCodeDic,
-      cuSwCodeDic,
-      setCuSwCodeDic,
-      parentFetchData65,
-      setSelectedUserInfo,
-      selectedUserInfo,
-      menuId,
-      setUserInfo,
+      clonedSelected,
     }: {
-      selected: any;
-      dataCommonDic: any;
-      fetchData: any;
-      areaCode: string;
       ownAreaCode: string;
+      menuId: string;
+      dataCommonDic: any;
+      data: any;
+      userInfo: any;
+      setUserInfo: Function;
+      selectedUserInfo: any;
+      setSelectedUserInfo: Function;
+      dataDictionary: any;
+      setDataDictionary: Function;
+      supplyTab: any;
+      setSupplyTab: Function;
+      fetchData: Function;
+      fetchData65: Function;
+      areaCode: string;
+      selected: any;
       isAddBtnClicked: boolean;
       setIsAddBtnClicked: Function;
-      prepareSearchFormValues: any;
-      userInfo: any;
-      selectedSupplyTab: any;
-      cuCustgubunDic: any;
-      setCuCustgubunDic: any;
-      cuJyCodeDic: any;
-      setCuJyCodeDic: any;
-      cuSwCodeDic: any;
-      setCuSwCodeDic: any;
-      parentFetchData65: Function;
-      setSelectedUserInfo: Function;
-      selectedUserInfo: any;
-      menuId: string;
-      setUserInfo: Function;
+      prepareSearchFormValues: Function;
+      clonedSelected: any;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -90,19 +87,6 @@ const Form = React.forwardRef(
 
     const [tabId, setTabId] = useState<number>(0);
     const [addr, setAddress] = useState<string>("");
-
-    const [chkCuZipCode, setChkCuZipCode] = useState(false);
-    const [chkCuRh20, setChkCuRh20] = useState(false);
-    const [chkCuRdanga, setChkCuRdanga] = useState(false);
-    const [chkCuAnKum, setChkCuAnKum] = useState(false);
-    const [chkCuMeterKum, setChkCuMeterKum] = useState(false);
-    const [chkCuPer, setChkCuPer] = useState(false);
-    const [chkCuCdc, setChkCuCdc] = useState(false);
-    const [chkCuSukumtype, setChkCuSukumtype] = useState(false);
-    const [chkCuGumTurm, setChkCuGumTurm] = useState(false);
-    const [chkCuGumdate, setChkCuGumdate] = useState(false);
-    const [chkCuCno, setChkCuCno] = useState(false);
-
     const [cuAddr1, setCuAddr1] = useState("");
 
     const {
@@ -132,10 +116,10 @@ const Form = React.forwardRef(
     } = useRdanga();
 
     useEffect(() => {
-      if (selectedSupplyTab) {
+      if (Object.keys(selected)?.length > 0) {
         resetForm("reset");
       }
-    }, [selectedSupplyTab]);
+    }, [selected]);
 
     useEffect(() => {
       if (addr.length > 0) {
@@ -148,12 +132,6 @@ const Form = React.forwardRef(
         setCuAddr1(addr ? addr?.split("/")[0] : "");
       }
     }, [addr]);
-
-    useEffect(() => {
-      if (Object.keys(selectedUserInfo)?.length > 0) {
-        setFooterDetail(selected.areaCode, selectedUserInfo.cuCode, dispatch);
-      }
-    }, [selectedUserInfo]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       resetForm,
@@ -168,9 +146,11 @@ const Form = React.forwardRef(
       if (res) {
         setCuAddr1("");
 
-        res?.cuCustgubun && setCuCustgubunDic(res.cuCustgubun);
-        res?.cuJyCode && setCuJyCodeDic(res.cuJyCode);
-        res?.cuSwCode && setCuSwCodeDic(res.cuSwCode);
+        setDataDictionary({
+          cuCustgubun: res?.cuCustgubun ? res.cuCustgubun : [],
+          cuJyCode: res?.cuJyCode ? res.cuJyCode : [],
+          cuSwCode: res?.cuSwCode ? res.cuSwCode : [],
+        });
 
         reset({
           ...emptyObj,
@@ -193,15 +173,24 @@ const Form = React.forwardRef(
 
       if (type === "reset") {
         if (selected && Object.keys(selected)?.length > 0) {
-          let tempData: any = { ...selected, ...selectedSupplyTab };
-
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>", selected);
+          let tempData: any = { ...selected, ...supplyTab };
 
           setCuAddr1(selected.cuAddr1 ? selected.cuAddr1 : "");
           reset({
             ...tempData,
             cuAptnameYn: tempData?.cuAptnameYn === "Y",
             cuBaGageYn: tempData?.cuBaGageYn === "Y",
+            chkCuZipCode: false,
+            chkCuRh20: false,
+            chkCuRdanga: false,
+            chkCuAnKum: false,
+            chkCuMeterKum: false,
+            chkCuPer: false,
+            chkCuCdc: false,
+            chkCuSukumtype: false,
+            chkCuGumTurm: false,
+            chkCuGumdate: false,
+            chkCuCno: false,
           });
           setRdangaType(selected?.cuRdangaType);
           setRdanga(selected?.cuRdanga);
@@ -210,18 +199,6 @@ const Form = React.forwardRef(
           setTotalValue("");
         }
       }
-
-      setChkCuZipCode(false);
-      setChkCuRh20(false);
-      setChkCuRdanga(false);
-      setChkCuAnKum(false);
-      setChkCuMeterKum(false);
-      setChkCuPer(false);
-      setChkCuCdc(false);
-      setChkCuSukumtype(false);
-      setChkCuGumTurm(false);
-      setChkCuGumdate(false);
-      setChkCuCno(false);
     };
 
     const openPopupCM1105Insert = () => {
@@ -278,36 +255,68 @@ const Form = React.forwardRef(
       }
     };
 
-    const submit = async (data: ICM1200SEARCH) => {
+    const submit = async (data: any) => {
       const formValues: any = getValues();
 
       formValues.areaCode = isAddBtnClicked ? areaCode : selected.areaCode;
+      console.log("data>>>>>>>>>>>>>>", data);
+      console.log("formValues>>>>>>>>>>>>>>", formValues);
+      console.log("clonedObject>>>>>>>>>>>>>>", clonedSelected);
 
-      if (chkCuRdanga) {
-        formValues.cuRdangaType = rdangaType;
-        formValues.cuRdanga = +rdanga;
-        formValues.cuRdangaSign = rdangaSign;
-        formValues.cuRdangaAmt = +rdangaAmt;
-        // formValues.totalValue = totalValue; ene talbar tsaanaasaa irehgui bgaa irvel nemeh yum
-      } else {
-        //end yu boloh n logic todorhoigui
+      if (!formValues.chkCuRh20) {
+        formValues.cuRh2O = clonedSelected.cuRh2O;
+      }
+      if (!formValues.chkCuAnKum) {
+        formValues.cuAnkum = clonedSelected.cuAnkum;
+      }
+      if (!formValues.chkCuMeterKum) {
+        formValues.cuMeterkum = clonedSelected.cuMeterkum;
+      }
+      if (!formValues.chkCuPer) {
+        formValues.cuPer = clonedSelected.cuPer;
+      }
+      if (!formValues.chkCuCdc) {
+        formValues.cuCdc = clonedSelected.cuCdc;
+      }
+      if (!formValues.chkCuSukumtype) {
+        formValues.cuSukumtype = clonedSelected.cuSukumtype;
+      }
+      if (!formValues.chkCuGumTurm) {
+        formValues.cuGumTurm = clonedSelected.cuGumTurm;
+      }
+      if (!formValues.chkCuGumdate) {
+        formValues.cuGumdate = clonedSelected.cuGumdate;
+      }
+      if (!formValues.chkCuCno) {
+        formValues.cuCno = clonedSelected.cuCno;
       }
 
-      if (!chkCuAnKum) {
-        // delete formValues.cuAnkum;
-      } else {
-        formValues.cuAnkum = formValues.cuAnkum
-          ? formatCurrencyRemoveComma(formValues.cuAnkum)
-          : "";
-      }
+      // if (chkCuRdanga) {
+      //   formValues.cuRdangaType = rdangaType;
+      //   formValues.cuRdanga = +rdanga;
+      //   formValues.cuRdangaSign = rdangaSign;
+      //   formValues.cuRdangaAmt = +rdangaAmt;
+      //   // formValues.totalValue = totalValue; ene talbar tsaanaasaa irehgui bgaa irvel nemeh yum
+      // } else {
+      //   //end yu boloh n logic todorhoigui
+      // }
 
-      if (!chkCuMeterKum) {
-        // delete formValues.cuMeterkum;
-      } else {
-        formValues.cuMeterkum = formValues.cuMeterkum
-          ? formatCurrencyRemoveComma(formValues.cuMeterkum)
-          : "";
-      }
+      // if (!chkCuAnKum) {
+      //   // delete formValues.cuAnkum;
+      // } else {
+      //   formValues.cuAnkum = formValues.cuAnkum
+      //     ? formatCurrencyRemoveComma(formValues.cuAnkum)
+      //     : "";
+      // }
+
+      // if (!chkCuMeterKum) {
+      //   // delete formValues.cuMeterkum;
+      // } else {
+      //   formValues.cuMeterkum = formValues.cuMeterkum
+      //     ? formatCurrencyRemoveComma(formValues.cuMeterkum)
+      //     : "";
+      // }
+
       if (formValues.cuBaGageKum) {
         formValues.cuBaGageKum = formatCurrencyRemoveComma(
           formValues.cuBaGageKum
@@ -370,7 +379,12 @@ const Form = React.forwardRef(
     };
 
     return (
-      <div style={{ width: "1257px", padding: "0 10px" }}>
+      <div
+        style={{
+          width: "1237px",
+          padding: "0 10px 0 0",
+        }}
+      >
         <FormSectionTitle>
           <BuildingInfoText text="건물 정보" />
         </FormSectionTitle>
@@ -396,7 +410,6 @@ const Form = React.forwardRef(
                 />
               )}
             />
-
             <CheckBox
               title="건물명 지로 출력 안함."
               register={register("cuAptnameYn")}
@@ -405,66 +418,73 @@ const Form = React.forwardRef(
               style={{ marginLeft: "30px" }}
             />
           </FormGroup>
-
           <FormGroup>
-            <Label className="lable-check">
-              <CheckBox
-                title="주 소"
-                checked={chkCuZipCode}
-                onChange={(e: any) => setChkCuZipCode(e.target.checked)}
-              />
-            </Label>
+            <Controller
+              control={control}
+              name="chkCuZipCode"
+              render={({ field }) => (
+                <CheckBox
+                  title="주 소"
+                  {...field}
+                  gap="7px"
+                  style={{
+                    width: "120px",
+                    display: "flex",
+                    justifyContent: "end",
+                  }}
+                />
+              )}
+            />
             <Input
               register={register("cuZipcode")}
               inputSize={InputSize.i60}
-              readOnly={!chkCuZipCode}
+              readOnly={!watch("chkCuZipCode")}
               style={{ marginRight: "3px" }}
             />
             <DaumAddress
               setAddress={setAddress}
-              disabled={!chkCuZipCode}
+              disabled={!watch("chkCuZipCode")}
               defaultValue={cuAddr1}
               onClose={() => setFocus("cuAddr2")}
             />
-
             <Input
               inputSize={InputSize.md}
               style={{ marginRight: "0px" }}
               value={cuAddr1}
               onChange={(e: any) => setCuAddr1(e.target.value)}
+              readOnly={!watch("chkCuZipCode")}
             />
             <Input
               register={register("cuAddr2")}
               style={{ marginLeft: "5px", width: "225px" }}
+              readOnly={!watch("chkCuZipCode")}
             />
           </FormGroup>
 
           <FormGroup>
             <Label>담당 사원</Label>
             <Select {...register("cuSwCode")} width={InputSize.i120}>
-              {cuSwCodeDic?.map((obj: any, index: number) => (
+              {dataDictionary?.cuSwCode?.map((obj: any, index: number) => (
                 <option key={index} value={obj.code}>
                   {obj.codeName}
                 </option>
               ))}
             </Select>
-
             <Label style={{ minWidth: "96px" }}>지역 분류</Label>
             <Select
               {...register("cuJyCode")}
               width={InputSize.i120}
               style={{ marginRight: "3px" }}
             >
-              {cuJyCodeDic?.map((obj: any, index: number) => (
+              {dataDictionary?.cuJyCode?.map((obj: any, index: number) => (
                 <option key={index} value={obj.code}>
                   {obj.codeName}
                 </option>
               ))}
             </Select>
-
             <Label style={{ minWidth: "104px" }}>관리자 분류</Label>
             <Select {...register("cuCustgubun")} width={InputSize.i120}>
-              {cuCustgubunDic?.map((obj: any, index: number) => (
+              {dataDictionary?.cuCustgubun?.map((obj: any, index: number) => (
                 <option key={index} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -472,40 +492,19 @@ const Form = React.forwardRef(
             </Select>
           </FormGroup>
 
-          <div style={{ marginTop: "5px" }}>
+          <div style={{ margin: "5px 0 0 10px" }}>
             <PlainTab
               tabHeader={["건물 기초", "벌크 시설", "용기 시설"]}
               onClick={(id) => setTabId(id)}
               tabId={tabId}
             />
-            <TabContentWrapper
-              style={{ minHeight: "171px", padding: "10px 5px" }}
-            >
+            <TabContentWrapper style={{ minHeight: "160px", padding: "5px" }}>
               {getTabContent(
                 tabId,
                 register,
+                watch,
                 dataCommonDic,
-                chkCuRh20,
-                setChkCuRh20,
-                chkCuRdanga,
-                setChkCuRdanga,
-                chkCuAnKum,
-                setChkCuAnKum,
-                chkCuMeterKum,
-                setChkCuMeterKum,
                 control,
-                chkCuPer,
-                setChkCuPer,
-                chkCuCdc,
-                setChkCuCdc,
-                chkCuSukumtype,
-                setChkCuSukumtype,
-                chkCuGumTurm,
-                setChkCuGumTurm,
-                chkCuGumdate,
-                setChkCuGumdate,
-                chkCuCno,
-                setChkCuCno,
                 rdangaType,
                 setRdangaType,
                 rdanga,

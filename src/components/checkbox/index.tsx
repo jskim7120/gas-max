@@ -62,6 +62,12 @@ const CheckBoxWrapper = styled.div<{ rtl: boolean; gap?: string }>`
   input[type="checkbox"]:focus:before {
     background: #fffacd;
   }
+
+  &.label-check {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
 `;
 
 function CheckBox(props: {
@@ -72,6 +78,7 @@ function CheckBox(props: {
   gap?: string;
   checked?: boolean;
   style?: any;
+  className?: any;
 }) {
   const handleKeyPress = (event: any) => {
     if (event.key === "Enter") {
@@ -90,6 +97,7 @@ function CheckBox(props: {
       rtl={props.rtl ? props.rtl : false}
       gap={props.gap && props.gap}
       style={props.style}
+      className={props.className && props.className}
     >
       <label>
         <input

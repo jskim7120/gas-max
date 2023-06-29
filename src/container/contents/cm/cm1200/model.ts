@@ -80,6 +80,19 @@ export interface ICM1200SEARCH {
   tankTransmCd2: string;
   tankVol1: string;
   tankVol2: string;
+
+  //checkbox talbaruud---------------------
+  chkCuZipCode: boolean;
+  chkCuRh20: boolean;
+  chkCuRdanga: boolean;
+  chkCuAnKum: boolean;
+  chkCuMeterKum: boolean;
+  chkCuPer: boolean;
+  chkCuCdc: boolean;
+  chkCuSukumtype: boolean;
+  chkCuGumTurm: boolean;
+  chkCuGumdate: boolean;
+  chkCuCno: boolean;
 }
 
 export interface ICM1200GRID {}
@@ -219,4 +232,16 @@ export const emptyObj = {
   tankTransmCd2: "",
   tankVol1: "",
   tankVol2: "",
+
+  chkCuZipCode: false,
+  chkCuRh20: false,
+  chkCuRdanga: false,
+  chkCuAnKum: false,
+  chkCuMeterKum: false,
+  chkCuPer: false,
+  chkCuCdc: false,
+  chkCuSukumtype: false,
+  chkCuGumTurm: false,
+  chkCuGumdate: false,
+  chkCuCno: false,
 } as ICM1200SEARCH;
