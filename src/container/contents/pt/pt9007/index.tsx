@@ -42,7 +42,7 @@ function PT9007({
   } = CreateReport("PT", "PT9007", menuId, PT9007SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -51,6 +51,12 @@ function PT9007({
       resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("reportKind")) {
+      setData([]);
+    }
+  }, [watch("reportKind")]);
 
   const openNewWindow = async () => {
     const width = 1500;
