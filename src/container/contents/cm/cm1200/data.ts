@@ -19,57 +19,6 @@ export const fields = [
   },
 ];
 
-export const fieldsSelected = [
-  {
-    fieldName: "cuCode",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuUsername",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuTel",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuAnkum",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuCdc",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuPer",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuRdangaTypeName",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuRdanga",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuJungumdate",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuCmisu",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuSukumtype",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "cuStae",
-    dataType: ValueType.TEXT,
-  },
-];
-
 export const columns = [
   {
     name: "areaCode",
@@ -122,7 +71,58 @@ export const columns = [
   },
 ];
 
-export const columnsSelected = [
+export const fields2 = [
+  {
+    fieldName: "cuCode",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuUsername",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuTel",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuAnkum",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuCdc",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuPer",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuRdangaTypeName",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuRdanga",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuJungumdate",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuCmisu",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuSukumtype",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "cuStae",
+    dataType: ValueType.TEXT,
+  },
+];
+
+export const columns2 = [
   {
     name: "cuCode",
     fieldName: "cuCode",
@@ -242,4 +242,24 @@ export const columnsSelected = [
       text: "상태",
     },
   },
+];
+
+export const layout2 = [
+  "cuCode",
+  "cuUsername",
+  "cuTel",
+  "cuAnkum",
+  "cuCdc",
+  "cuPer",
+
+  {
+    name: "㎥ 단가",
+    directions: "horizontal",
+    hideChildHeaders: true,
+    items: ["cuRdangaTypeName", "cuRdanga"],
+  },
+  "cuJungumdate",
+  "cuCmisu",
+  "cuSukumtype",
+  "cuStae",
 ];

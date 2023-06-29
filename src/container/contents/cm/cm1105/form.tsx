@@ -13,7 +13,7 @@ import {
   DateWithoutDash,
   DateWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
-import { closeModal } from "app/state/modal/modalSlice";
+import { closeModal, addCM1105LoadStatus } from "app/state/modal/modalSlice";
 import {
   Input,
   Select,
@@ -31,6 +31,9 @@ import getTabContent from "./getTabContent";
 import { CM1105SEARCH, CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
 import useRdanga from "app/hook/calcRdanga";
 
+let IDCM1100 = "CM1100";
+let IDCM1200 = "CM1200";
+
 function FormCM1105() {
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const [data, setData] = useState<any>(null);
@@ -46,7 +49,7 @@ function FormCM1105() {
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
 
-  const { register, handleSubmit, reset, getValues, control, setFocus } =
+  const { register, handleSubmit, reset, getValues, control, setFocus, watch } =
     useForm<ICM1105SEARCH>({
       mode: "onChange",
     });
@@ -71,22 +74,23 @@ function FormCM1105() {
 
   useEffect(() => {
     if (cm1105.status === "INSERT") {
-      fetchCuCode({
-        areaCode: cm1105.areaCode,
-        cuCode: cm1105.cuCode.substring(0, 3),
-      });
-      setIsAddBtnClicked(true);
-      btnRef1.current.classList.add("active");
-      setFocus("cuName");
-    } else if (cm1105.areaCode && cm1105.cuCode) {
+      resetForm("clear");
+    }
+
+    if (cm1105.status === "UPDATE" && cm1105.areaCode && cm1105.cuCode) {
       fetchData({
         cuCode: cm1105.cuCode,
         areaCode: cm1105.areaCode,
       });
     }
-
     // console.log("state chagnaj bn INSERT", cm1105);
   }, [cm1105.areaCode, cm1105.cuCode, cm1105.status]);
+
+  useEffect(() => {
+    if (watch("cuName") !== undefined && cm1105.source === "CM1100") {
+      resetForm("copyCuName");
+    }
+  }, [watch("cuName")]);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -112,6 +116,51 @@ function FormCM1105() {
     }
   }, [addr2]);
 
+  const fetchData = async (params: any) => {
+    const dataS = await apiGet(CM1105SEARCH, params);
+
+    if (dataS) {
+      setData({
+        customerInfo: dataS?.customerInfo && dataS.customerInfo[0],
+        cuTank: dataS?.cuTank && dataS.cuTank[0],
+        cms: dataS?.cms && dataS.cms[0],
+        virtualAccount: dataS?.virtualAccount && dataS.virtualAccount[0],
+      });
+    } else {
+      setData(null);
+    }
+  };
+
+  const fetchCuCode = async (params: any) => {
+    const res: any = await apiGet(CM110511, params);
+
+    if (res) {
+      setIsAddBtnClicked(true);
+      setData(null);
+      if (cm1105?.source === IDCM1200 && cm1105?.cuName !== "") {
+        reset((formValues: any) => ({
+          ...formValues,
+          ...emptyObj,
+          cuCode: res[0].cuCode,
+          cuCutype: res[0].cuCutype,
+          cuStae: res[0].cuStae,
+          cuType: res[0].cuType,
+          cuName: cm1105.cuName,
+        }));
+      }
+      if (cm1105?.source === IDCM1100) {
+        reset((formValues: any) => ({
+          ...formValues,
+          ...emptyObj,
+          cuCode: res[0].cuCode,
+          cuCutype: res[0].cuCutype,
+          cuStae: res[0].cuStae,
+          cuType: res[0].cuType,
+        }));
+      }
+    }
+  };
+
   const resetForm = (type: string) => {
     if (type === "clear") {
       fetchCuCode({
@@ -119,9 +168,7 @@ function FormCM1105() {
         cuCode: cm1105.cuCode.substring(0, 3),
       });
       setFocus("cuName");
-      return;
-    }
-    if (type === "init") {
+    } else if (type === "init") {
       reset((formValues: any) => ({
         ...formValues,
         areaCode: dataCommonDic?.areaCode[0].code,
@@ -155,7 +202,20 @@ function FormCM1105() {
               managerCode: "",
               regDate: "",
             };
-        reset({ ...customerInfo, ...cms, ...cuTank, ...virtualAccount });
+        reset({
+          ...customerInfo,
+          cuSekumyn: customerInfo?.cuSekumyn === "Y",
+          cuJangbuYn: customerInfo?.cuJangbuYn === "Y",
+          cuSeSmsYn: customerInfo?.cuSeSmsYn === "Y",
+          cuSeListYn: customerInfo?.cuSeListYn === "Y",
+          cuSeFaxYn: customerInfo?.cuSeFaxYn === "Y",
+          cuSmsYn: customerInfo?.cuSmsYn === "Y",
+          cuCashpayYn: customerInfo?.cuCashpayYn === "Y",
+          cuBaGageYn: customerInfo?.cuBaGageYn === "Y",
+          ...cms,
+          ...cuTank,
+          ...virtualAccount,
+        });
 
         setRdangaType(customerInfo?.cuRdangaType);
         setRdanga(customerInfo?.cuRdanga);
@@ -169,44 +229,20 @@ function FormCM1105() {
         cuZipcode: addr ? addr?.split("/")[1] : "",
         cuAddr1: addr ? addr?.split("/")[0] : "",
       }));
+      //setFocus("cuAddr2");
+      document.getElementsByName("cuAddr2")[0]?.focus();
     } else if (type === "addr2") {
       reset((formValues: any) => ({
         ...formValues,
         cuSzipcode: addr2 ? addr2?.split("/")[1] : "",
         cuSaddr1: addr2 ? addr2?.split("/")[0] : "",
       }));
-    }
-  };
-
-  const fetchData = async (params: any) => {
-    const dataS = await apiGet(CM1105SEARCH, params);
-
-    if (dataS) {
-      setData({
-        customerInfo: dataS?.customerInfo && dataS.customerInfo[0],
-        cuTank: dataS?.cuTank && dataS.cuTank[0],
-        cms: dataS?.cms && dataS.cms[0],
-        virtualAccount: dataS?.virtualAccount && dataS.virtualAccount[0],
-      });
-    } else {
-      setData(null);
-    }
-  };
-
-  const fetchCuCode = async (params: any) => {
-    const res: any = await apiGet(CM110511, params);
-    // console.log("res>>>>>>>>>>>>>", res);
-
-    if (res) {
-      //setIsAddBtnClicked(true);
-      setData(null);
+      //setFocus("cuSaddr2");
+      document.getElementsByName("cuSaddr2")[0]?.focus();
+    } else if (type === "copyCuName") {
       reset((formValues: any) => ({
         ...formValues,
-        ...emptyObj,
-        cuCode: res[0].cuCode,
-        cuCutype: res[0].cuCutype,
-        cuStae: res[0].cuStae,
-        cuType: res[0].cuType,
+        cuUsername: watch("cuName"),
       }));
     }
   };
@@ -309,6 +345,7 @@ function FormCM1105() {
 
     const res: any = await apiPost(path, formValues, "저장이 성공하였습니다");
     if (res) {
+      dispatch(addCM1105LoadStatus({ loadStatus: true }));
       setIsAddBtnClicked(false);
       setTimeout(() => {
         dispatch(closeModal());
@@ -322,6 +359,7 @@ function FormCM1105() {
 
     const res = await apiPost(path, formValues, "저장이 성공하였습니다");
     if (res) {
+      dispatch(addCM1105LoadStatus({ loadStatus: true }));
       resetForm("clear");
     }
   };
@@ -383,17 +421,29 @@ function FormCM1105() {
             inputSize={InputSize.i120}
             readOnly
           />
-          <Input
-            label="거래처명(건물명)"
-            register={register("cuName")}
-            inputSize={InputSize.i150}
-            labelStyle={{ minWidth: "156px" }}
+          <Controller
+            control={control}
+            name="cuName"
+            render={({ field }) => (
+              <Input
+                {...field}
+                label="거래처명(건물명)"
+                inputSize={InputSize.i150}
+                labelStyle={{ minWidth: "156px" }}
+              />
+            )}
           />
-          <Input
-            label="사용자명"
-            register={register("cuUsername")}
-            labelStyle={{ minWidth: "114px" }}
-            inputSize={InputSize.i150}
+          <Controller
+            control={control}
+            name="cuUsername"
+            render={({ field }) => (
+              <Input
+                {...field}
+                label="사용자명"
+                labelStyle={{ minWidth: "114px" }}
+                inputSize={InputSize.i150}
+              />
+            )}
           />
         </FormGroup>
 
@@ -473,7 +523,13 @@ function FormCM1105() {
           />
           <DaumAddress setAddress={setAddress} />
           <Input register={register("cuAddr1")} style={{ width: "280px" }} />
-          <Input register={register("cuAddr2")} style={{ width: "264px" }} />
+          <Controller
+            control={control}
+            name="cuAddr2"
+            render={({ field }) => (
+              <Input {...field} style={{ width: "264px" }} />
+            )}
+          />
         </FormGroup>
 
         <FormGroup>
@@ -698,7 +754,7 @@ function FormCM1105() {
             onClick={(id) => setTabId(id)}
             tabId={tabId}
           />
-          <TabContentWrapper style={{ padding: "5px 10px" }}>
+          <TabContentWrapper style={{ padding: "5px" }}>
             {getTabContent(
               tabId,
               register,

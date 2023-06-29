@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { useDispatch } from "app/store";
 import { addCM1105 } from "app/state/modal/modalSlice";
-import { fieldsSelected, columnsSelected } from "./data";
+import { fields2, columns2, layout2 } from "./data";
 
 function GridTable({
   data,
@@ -10,6 +10,7 @@ function GridTable({
   setSelectedUserInfo,
   openPopup,
   selected,
+  rowIndex,
   style,
 }: {
   data: any;
@@ -17,6 +18,7 @@ function GridTable({
   setSelectedUserInfo: Function;
   openPopup?: any;
   selected?: any;
+  rowIndex: number | undefined;
   style?: any;
 }) {
   let container: HTMLDivElement;
@@ -32,8 +34,10 @@ function GridTable({
     gv = new GridView(container);
 
     gv.setDataSource(dp);
-    dp.setFields(fieldsSelected);
-    gv.setColumns(columnsSelected);
+    dp.setFields(fields2);
+    gv.setColumns(columns2);
+    gv.setColumnLayout(layout2);
+
     dp.setRows(data);
     gv.setHeader({
       height: 35,
@@ -45,30 +49,17 @@ function GridTable({
       stateBar: { visible: false },
       itemIndex: { visible: false },
     });
-    gv.setColumnLayout([
-      "cuCode",
-      "cuUsername",
-      "cuTel",
-      "cuAnkum",
-      "cuCdc",
-      "cuPer",
 
-      {
-        name: "㎥ 단가",
-        directions: "horizontal",
-        hideChildHeaders: true,
-        items: ["cuRdangaTypeName", "cuRdanga"],
-      },
-      "cuJungumdate",
-      "cuCmisu",
-      "cuSukumtype",
-      "cuStae",
-    ]);
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
     gv.displayOptions.fitStyle = "evenFill";
 
     gv.setEditOptions({ editable: false });
+
+    gv.displayOptions.useFocusClass = true;
+    gv.setCurrent({
+      dataRow: rowIndex,
+    });
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;

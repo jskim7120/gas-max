@@ -9,6 +9,8 @@ export interface initialStateType {
     areaCode: string;
     status: string;
     source: string;
+    cuName: string;
+    loadStatus: boolean;
   };
   cm1106: {
     cuCode: string;
@@ -92,6 +94,8 @@ const initialState: initialStateType = {
     areaCode: "",
     status: "",
     source: "",
+    cuName: "",
+    loadStatus: false,
   },
   cm1106: {
     cuCode: "",
@@ -180,10 +184,17 @@ const modalSlice = createSlice({
     },
 
     addCM1105: (state, action) => {
-      state.cm1105.cuCode = action.payload.cuCode;
-      state.cm1105.areaCode = action.payload.areaCode;
-      state.cm1105.status = action.payload.status;
-      state.cm1105.source = action.payload.source;
+      state.cm1105 = {
+        ...state.cm1105,
+        ...action.payload,
+      };
+    },
+
+    addCM1105LoadStatus: (state, action) => {
+      state.cm1105 = {
+        ...state.cm1105,
+        loadStatus: action.payload.loadStatus,
+      };
     },
 
     addCM1106: (state, action) => {
@@ -266,6 +277,7 @@ export const {
   openModal,
   closeModal,
   addCM1105,
+  addCM1105LoadStatus,
   addCM1106,
   addCM1106AR1100Tick,
   addGR1200Popup,

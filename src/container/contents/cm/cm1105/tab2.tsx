@@ -389,7 +389,7 @@ function Tab2({
                 </option>
               ))}
             </Select>
-            <p style={{ margin: "0 3px 0 52px" }}>바코드 번호</p>
+            <Label style={{ minWidth: "130px" }}>바코드 번호</Label>
 
             <Input
               register={register("cuBarcode")}
@@ -432,7 +432,7 @@ function Tab2({
               register={register("cuMTransmCd")}
               inputSize={InputSize.i80}
             />
-            <p style={{ margin: "0 3px 0 6px" }}>원격검침 고객코드</p>
+            <Label style={{ minWidth: "130px" }}>원격검침 고객코드</Label>
             <Input register={register("blabla")} inputSize={InputSize.i100} />
             <SearchBtn type="button" onClick={() => alert("dsdsds")}>
               <MagnifyingGlass />

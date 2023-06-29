@@ -1,5 +1,5 @@
 import React, { useEffect, useImperativeHandle, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import GridBottom from "./gridBottom";
 import DaumAddress from "components/daum";
@@ -10,13 +10,11 @@ import Button from "components/button/button";
 import { Plus, Trash, Update } from "components/allSvgIcon";
 import { FormSectionTitle } from "../../commonStyle";
 import {
-  Field,
   FormGroup,
   Input,
   Label,
   Select,
   Divider,
-  Wrapper,
 } from "components/form/style";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
@@ -58,6 +56,11 @@ const Form = React.forwardRef(
       setCuJyCodeDic,
       cuSwCodeDic,
       setCuSwCodeDic,
+      parentFetchData65,
+      setSelectedUserInfo,
+      selectedUserInfo,
+      menuId,
+      setUserInfo,
     }: {
       selected: any;
       dataCommonDic: any;
@@ -75,12 +78,15 @@ const Form = React.forwardRef(
       setCuJyCodeDic: any;
       cuSwCodeDic: any;
       setCuSwCodeDic: any;
+      parentFetchData65: Function;
+      setSelectedUserInfo: Function;
+      selectedUserInfo: any;
+      menuId: string;
+      setUserInfo: Function;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
-
-    const [selectedUserInfo, setSelectedUserInfo] = useState<any>({});
 
     const [tabId, setTabId] = useState<number>(0);
     const [addr, setAddress] = useState<string>("");
@@ -160,6 +166,8 @@ const Form = React.forwardRef(
       });
 
       if (res) {
+        setCuAddr1("");
+
         res?.cuCustgubun && setCuCustgubunDic(res.cuCustgubun);
         res?.cuJyCode && setCuJyCodeDic(res.cuJyCode);
         res?.cuSwCode && setCuSwCodeDic(res.cuSwCode);
@@ -171,8 +179,10 @@ const Form = React.forwardRef(
           cuSwCode: res?.cuSwCode[0].code,
           cuCode: res?.tempCuCode[0]?.tempCuCode,
         });
-        setCuAddr1("");
-        setFocus("cuName");
+        setUserInfo([]);
+
+        //setFocus("cuName") ene 2 ajillahgui bn
+        //document.getElementsByName("cuName")[0]?.focus(); ene 2 ajillahgui bn
       }
     };
 
@@ -184,7 +194,10 @@ const Form = React.forwardRef(
       if (type === "reset") {
         if (selected && Object.keys(selected)?.length > 0) {
           let tempData: any = { ...selected, ...selectedSupplyTab };
-          setCuAddr1(selected.cuAddr1);
+
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>", selected);
+
+          setCuAddr1(selected.cuAddr1 ? selected.cuAddr1 : "");
           reset({
             ...tempData,
             cuAptnameYn: tempData?.cuAptnameYn === "Y",
@@ -216,7 +229,9 @@ const Form = React.forwardRef(
         openPopup({
           cuCode: selected?.cuCode,
           areaCode: selected?.areaCode,
+          cuName: selected?.cuName,
           status: "INSERT",
+          source: menuId,
         });
       } else {
         toast.warning("no selected data", {
@@ -224,12 +239,14 @@ const Form = React.forwardRef(
         });
       }
     };
+
     const openPopupCM1105Update = () => {
       if (Object.keys(selectedUserInfo)?.length > 0) {
         openPopup({
           cuCode: selectedUserInfo.cuCode,
           areaCode: selected.areaCode,
           status: "UPDATE",
+          source: menuId,
         });
       }
     };
@@ -367,12 +384,17 @@ const Form = React.forwardRef(
               inputSize={InputSize.i60}
               readOnly={true}
             />
-
-            <Input
-              label="건물명"
-              register={register("cuName")}
-              labelStyle={{ minWidth: "78px" }}
-              style={{ width: "198px" }}
+            <Controller
+              control={control}
+              name="cuName"
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  label="건물명"
+                  labelStyle={{ minWidth: "78px" }}
+                  style={{ width: "198px" }}
+                />
+              )}
             />
 
             <CheckBox
@@ -534,6 +556,7 @@ const Form = React.forwardRef(
           setSelectedUserInfo={setSelectedUserInfo}
           openPopup={openPopup}
           selected={selected}
+          rowIndex={userInfo?.length > 1 ? userInfo.length - 1 : 0}
         />
       </div>
     );
