@@ -19,31 +19,31 @@ export const fields2 = [
   },
   {
     fieldName: "junjan",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "jmonth1",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "jmonth2",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "jmonth3",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "jmonth4",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "jmonth5",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "cuCmisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "cuSwName",
@@ -64,7 +64,7 @@ export const columns2 = [
     name: "cuCno",
     fieldName: "cuCno",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "순번",
     },
@@ -78,7 +78,7 @@ export const columns2 = [
     name: "cuCode",
     fieldName: "cuCode",
     type: "data",
-    width: "70",
+    width: "80",
     header: {
       text: "코드",
     },
@@ -89,6 +89,7 @@ export const columns2 = [
     fieldName: "cuName",
     type: "data",
     width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -97,7 +98,8 @@ export const columns2 = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "100",
+    width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "전화번호",
     },
@@ -106,71 +108,86 @@ export const columns2 = [
     name: "junjan",
     fieldName: "junjan",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "전미수",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "jmonth1",
     fieldName: "jmonth1",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "1월",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "jmonth2",
     fieldName: "jmonth2",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "2월",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "jmonth3",
     fieldName: "jmonth3",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "3월",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
 
   {
     name: "jmonth4",
     fieldName: "jmonth4",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "4월",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "jmonth5",
     fieldName: "jmonth5",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "5월",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "cuCmisu",
     fieldName: "cuCmisu",
     type: "data",
-    width: "70",
+    width: "120",
     header: {
       text: "미수합계",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "cuSwName",
     fieldName: "cuSwName",
     type: "data",
-    width: "50",
+    width: "80",
+    styleName: "rg-left-column",
     header: {
       text: "사원",
     },
@@ -179,7 +196,7 @@ export const columns2 = [
     name: "gsDate",
     fieldName: "gsDate",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "최종수금",
     },
@@ -189,6 +206,7 @@ export const columns2 = [
     fieldName: "minDate",
     type: "data",
     width: "50",
+    styleName: "rg-right-column",
     header: {
       text: "연체",
     },

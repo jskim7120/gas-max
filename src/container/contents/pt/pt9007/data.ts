@@ -19,15 +19,15 @@ export const fields = [
   },
   {
     fieldName: "gsKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gsDc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gsKumackSameName",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "swName",
@@ -48,7 +48,7 @@ export const columns = [
     name: "gsCuCode",
     fieldName: "gsCuCode",
     type: "data",
-    width: "50",
+    width: "80",
     header: {
       text: "코드",
     },
@@ -63,6 +63,7 @@ export const columns = [
     fieldName: "gsCuName",
     type: "data",
     width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -71,7 +72,7 @@ export const columns = [
     name: "gsDate",
     fieldName: "gsDate",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "수금일자",
     },
@@ -89,34 +90,41 @@ export const columns = [
     name: "gsKumack",
     fieldName: "gsKumack",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "수금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gsDc",
     fieldName: "gsDc",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "D/C",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gsKumackSameName",
     fieldName: "gsKumackSameName",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "합계",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "swName",
     fieldName: "swName",
     type: "data",
-    width: "50",
+    width: "80",
+    styleName: "rg-left-column",
     header: {
       text: "사원",
     },
@@ -125,7 +133,8 @@ export const columns = [
     name: "gsBigo",
     fieldName: "gsBigo",
     type: "data",
-    width: "50",
+    width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "비고",
     },
@@ -134,7 +143,7 @@ export const columns = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "70",
+    width: "120",
     header: {
       text: "핸드폰",
     },

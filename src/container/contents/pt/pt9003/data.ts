@@ -19,11 +19,11 @@ export const fields = [
   },
   {
     fieldName: "msKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "msDc",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "msSwName",
@@ -44,7 +44,7 @@ export const columns = [
     name: "msCuCode",
     fieldName: "msCuCode",
     type: "data",
-    width: "50",
+    width: "80",
     header: {
       text: "코드",
     },
@@ -58,7 +58,8 @@ export const columns = [
     name: "msCuName",
     fieldName: "msCuName",
     type: "data",
-    width: "200",
+    width: "150",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -68,7 +69,7 @@ export const columns = [
     name: "msDate",
     fieldName: "msDate",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "수금일자",
     },
@@ -86,25 +87,30 @@ export const columns = [
     name: "msKumack",
     fieldName: "msKumack",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "수금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "msDc",
     fieldName: "msDc",
     type: "data",
-    width: "70",
+    width: "80",
     header: {
       text: "D/C",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "msSwName",
     fieldName: "msSwName",
     type: "data",
     width: "70",
+    styleName: "rg-left-column",
     header: {
       text: "사원",
     },
@@ -113,7 +119,7 @@ export const columns = [
     name: "msBigo",
     fieldName: "msBigo",
     type: "data",
-    width: "100",
+    width: "150",
     header: {
       text: "비고",
     },
@@ -122,7 +128,7 @@ export const columns = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "70",
+    width: "120",
     header: {
       text: "핸드폰",
     },

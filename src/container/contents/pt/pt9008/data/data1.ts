@@ -44,9 +44,10 @@ export const columns1 = [
     name: "gjCuCode",
     fieldName: "gjCuCode",
     type: "data",
-    width: "50",
+    width: "150",
+    styleName: "rg-left-column",
     header: {
-      text: "영업소",
+      text: "업소",
     },
     footer: {
       valueCallback: function (grid: any) {
@@ -58,7 +59,7 @@ export const columns1 = [
     name: "cuName",
     fieldName: "cuName",
     type: "data",
-    width: "200",
+    width: "150",
     header: {
       text: "일자",
     },
@@ -69,6 +70,7 @@ export const columns1 = [
     fieldName: "cuAddr",
     type: "data",
     width: "70",
+    styleName: "rg-left-column",
     header: {
       text: "건수",
     },
@@ -77,17 +79,18 @@ export const columns1 = [
     name: "gjDate",
     fieldName: "gjDate",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "사용료",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjGumymsno",
     fieldName: "gjGumymsno",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "연체료",
     },
@@ -98,17 +101,18 @@ export const columns1 = [
     name: "gjJankg",
     fieldName: "gjJankg",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "원단위",
     },
-    styleName: "rg-left-column",
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "cuSwName",
     fieldName: "cuSwName",
     type: "data",
-    width: "50",
+    width: "120",
     header: {
       text: "수금액",
     },
@@ -120,19 +124,22 @@ export const columns1 = [
     name: "gaa",
     fieldName: "gaa",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "D/C",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gaa1",
     fieldName: "gaa1",
     type: "data",
-    width: "50",
+    width: "120",
     header: {
       text: "합계",
     },
-    styleName: "rg-left-column",
+    sstyleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
 ];
