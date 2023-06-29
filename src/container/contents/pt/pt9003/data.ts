@@ -2,47 +2,47 @@ import { ValueType } from "realgrid";
 
 export const fields = [
   {
-    fieldName: "gjCuCode",
+    fieldName: "msCuCode",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuName",
+    fieldName: "msCuName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuAddr",
+    fieldName: "msDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjDate",
+    fieldName: "msSukumtype",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjGumymsno",
+    fieldName: "msKumack",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjJankg",
+    fieldName: "msDc",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuSwName",
+    fieldName: "msSwName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaaa",
+    fieldName: "msBigo",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaaa1",
+    fieldName: "cuTel",
     dataType: ValueType.TEXT,
   },
 ];
 
 export const columns = [
   {
-    name: "gjCuCode",
-    fieldName: "gjCuCode",
+    name: "msCuCode",
+    fieldName: "msCuCode",
     type: "data",
     width: "50",
     header: {
@@ -50,13 +50,13 @@ export const columns = [
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("msCuCode", "count");
       },
     },
   },
   {
-    name: "cuName",
-    fieldName: "cuName",
+    name: "msCuName",
+    fieldName: "msCuName",
     type: "data",
     width: "200",
     header: {
@@ -65,8 +65,8 @@ export const columns = [
   },
 
   {
-    name: "cuAddr",
-    fieldName: "cuAddr",
+    name: "msDate",
+    fieldName: "msDate",
     type: "data",
     width: "70",
     header: {
@@ -74,66 +74,57 @@ export const columns = [
     },
   },
   {
-    name: "gjDate",
-    fieldName: "gjDate",
+    name: "msSukumtype",
+    fieldName: "msSukumtype",
     type: "data",
     width: "70",
     header: {
       text: "수금방법",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gjGumymsno",
-    fieldName: "gjGumymsno",
+    name: "msKumack",
+    fieldName: "msKumack",
     type: "data",
     width: "70",
     header: {
       text: "수금액",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "gjJankg",
-    fieldName: "gjJankg",
+    name: "msDc",
+    fieldName: "msDc",
     type: "data",
     width: "70",
     header: {
       text: "D/C",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "cuSwName",
-    fieldName: "cuSwName",
+    name: "msSwName",
+    fieldName: "msSwName",
     type: "data",
     width: "70",
     header: {
       text: "사원",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "gaaa",
-    fieldName: "gaaa",
+    name: "msBigo",
+    fieldName: "msBigo",
     type: "data",
     width: "100",
     header: {
       text: "비고",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gaaa1",
-    fieldName: "gaaa1",
+    name: "cuTel",
+    fieldName: "cuTel",
     type: "data",
     width: "70",
     header: {
       text: "핸드폰",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
 ];

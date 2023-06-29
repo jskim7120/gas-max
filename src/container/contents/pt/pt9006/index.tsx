@@ -16,7 +16,12 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import { DateWithoutDash, GetYear, GetMonth } from "helpers/dateFormat";
+import {
+  DateWithoutDash,
+  GetYear,
+  GetMonth,
+  DateWithDashOnlyYearMonth,
+} from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields, layout } from "./data";
 import CheckBox from "components/checkbox";
@@ -61,15 +66,39 @@ function PT9006({
     }
   }, [watch("sMonth")]);
 
+  const handleSMonthChangeGet = () => {
+    if (watch("sMonth") !== undefined && watch("sMonth") !== null) {
+      let year = +GetYear(watch("sMonth"));
+      let month: any = +GetMonth(watch("sMonth"));
+
+      let tempMonth: any = +month + 2;
+      let tempYear: number = year;
+
+      if (tempMonth > 12) {
+        tempYear += 1;
+        tempMonth = tempMonth - 12;
+      }
+
+      if (+month < 10) {
+        month = `0${month}`;
+      }
+      if (+tempMonth < 10) {
+        tempMonth = `0${tempMonth}`;
+      }
+
+      return `${year}-${month} ~ ${tempYear}-${tempMonth}`;
+    }
+  };
+
   const handleSMonthChange = (sMonth: string) => {
     let year = GetYear(sMonth);
     const month = GetMonth(sMonth);
-
     let tempMonth;
     let tempYear = year;
 
     for (let i = 0; i < 3; i++) {
       tempMonth = +month + i;
+
       if (tempMonth > 12) {
         tempMonth = tempMonth - 12;
         if (tempYear === year) {
@@ -77,7 +106,8 @@ function PT9006({
         }
       }
       tempMonth < 10 && (tempMonth = `0${tempMonth}`);
-      (layout[4 + i] as any).header.text = `${tempYear}-${tempMonth}월`;
+
+      (layout[5 + i] as any).header.text = `${tempYear}-${tempMonth}월`;
     }
   };
 
@@ -94,6 +124,7 @@ function PT9006({
     );
   };
   const submit = (params: ISEARCH) => {
+    params.sMonth = DateWithoutDash(params.sMonth);
     fetchData(params);
   };
 
@@ -194,7 +225,9 @@ function PT9006({
                 />
               )}
             />
-            <Label style={{ minWidth: "80px" }}>(2023-04 ~ 2023-06)</Label>
+            <Label style={{ minWidth: "80px" }}>
+              ({handleSMonthChangeGet()})
+            </Label>
             <Label style={{ minWidth: "80px" }}>담당사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (

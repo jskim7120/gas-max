@@ -26,7 +26,7 @@ import {
 import Loader from "components/loader";
 
 const minWidth = "763px";
-const leftSideWidth: number = 780;
+const leftSideWidth: number = 825;
 
 function GR1100({
   depthFullName,
@@ -204,7 +204,7 @@ function GR1100({
             setSelected={setSelected}
             setIsAddBtnClicked={setIsAddBtnClicked}
             style={{
-              height: `calc(100% - 44px)`,
+              height: `calc(100% - 140px)`,
               minWidth: `${leftSideWidth}px`,
             }}
           />

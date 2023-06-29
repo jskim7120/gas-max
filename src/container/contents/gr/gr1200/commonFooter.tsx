@@ -37,7 +37,7 @@ function CommonFooterInfo({
             <CTextArea {...register("bcMemo")} />
           </Field>
 
-          <Field style={{ width: "20%" }}>
+          <Field style={{ width: "22%" }}>
             <Field flex style={{ alignItems: "center" }}>
               <CLabel>공급액</CLabel>
               <Controller

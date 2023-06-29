@@ -2,59 +2,59 @@ import { ValueType } from "realgrid";
 
 export const fields0 = [
   {
-    fieldName: "gjCuCode",
+    fieldName: "gsCuCode",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuName",
+    fieldName: "gsCuName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuAddr",
+    fieldName: "gsCuUsername",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjDate",
+    fieldName: "gsDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjGumymsno",
+    fieldName: "gsSukumtype",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjJankg",
+    fieldName: "gslkumack",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuSwName",
+    fieldName: "suPer",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa",
+    fieldName: "suPerDc",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa1",
+    fieldName: "gsKumack",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa2",
+    fieldName: "gsDc",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa3",
+    fieldName: "swName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gaa4",
+    fieldName: "gsBigo",
     dataType: ValueType.TEXT,
   },
 ];
 
 export const columns0 = [
   {
-    name: "gjCuCode",
-    fieldName: "gjCuCode",
+    name: "gsCuCode",
+    fieldName: "gsCuCode",
     type: "data",
     width: "50",
     header: {
@@ -62,13 +62,13 @@ export const columns0 = [
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("gsCuCode", "count");
       },
     },
   },
   {
-    name: "cuName",
-    fieldName: "cuName",
+    name: "gsCuName",
+    fieldName: "gsCuName",
     type: "data",
     width: "200",
     header: {
@@ -77,8 +77,8 @@ export const columns0 = [
   },
 
   {
-    name: "cuAddr",
-    fieldName: "cuAddr",
+    name: "gsCuUsername",
+    fieldName: "gsCuUsername",
     type: "data",
     width: "70",
     header: {
@@ -86,51 +86,45 @@ export const columns0 = [
     },
   },
   {
-    name: "gjDate",
-    fieldName: "gjDate",
+    name: "gsDate",
+    fieldName: "gsDate",
     type: "data",
     width: "70",
     header: {
       text: "수금일자",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gjGumymsno",
-    fieldName: "gjGumymsno",
+    name: "gsSukumtype",
+    fieldName: "gsSukumtype",
     type: "data",
     width: "70",
     header: {
       text: "수금방법",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "gjJankg",
-    fieldName: "gjJankg",
+    name: "gslkumack",
+    fieldName: "gslkumack",
     type: "data",
     width: "50",
     header: {
       text: "사용료",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "cuSwName",
-    fieldName: "cuSwName",
+    name: "suPer",
+    fieldName: "suPer",
     type: "data",
     width: "50",
     header: {
       text: "연체료",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
 
   {
-    name: "gaa",
-    fieldName: "gaa",
+    name: "suPerDc",
+    fieldName: "suPerDc",
     type: "data",
     width: "50",
     header: {
@@ -138,45 +132,39 @@ export const columns0 = [
     },
   },
   {
-    name: "gaa1",
-    fieldName: "gaa1",
+    name: "gsKumack",
+    fieldName: "gsKumack",
     type: "data",
     width: "50",
     header: {
       text: "수금액",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gaa2",
-    fieldName: "gaa2",
+    name: "gsDc",
+    fieldName: "gsDc",
     type: "data",
     width: "50",
     header: {
       text: "D/C",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
   {
-    name: "gaa3",
-    fieldName: "gaa3",
+    name: "swName",
+    fieldName: "swName",
     type: "data",
     width: "50",
     header: {
       text: "사원",
     },
-    styleName: "rg-left-column",
   },
   {
-    name: "gaa4",
-    fieldName: "gaa4",
+    name: "gsBigo",
+    fieldName: "gsBigo",
     type: "data",
     width: "50",
     header: {
       text: "비고",
     },
-    styleName: "rg-right-column",
-    numberFormat: "#,##0",
   },
 ];

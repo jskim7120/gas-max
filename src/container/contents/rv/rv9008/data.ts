@@ -22,7 +22,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjJunGum",
+    fieldName: "gjJungum",
     dataType: ValueType.NUMBER,
   },
   {
@@ -46,11 +46,11 @@ export const fields = [
     dataType: ValueType.NUMBER,
   },
   {
-    fieldName: "junjankg",
+    fieldName: "gjJunjankg",
     dataType: ValueType.NUMBER,
   },
   {
-    fieldName: "jankg",
+    fieldName: "gjJankg",
     dataType: ValueType.NUMBER,
   },
   {
@@ -125,8 +125,8 @@ export const columns = [
     },
   },
   {
-    name: "gjJunGum",
-    fieldName: "gjJunGum",
+    name: "gjJungum",
+    fieldName: "gjJungum",
     type: "data",
     width: "60",
     header: {
@@ -191,8 +191,8 @@ export const columns = [
     numberFormat: "#,##0",
   },
   {
-    name: "junjankg",
-    fieldName: "junjankg",
+    name: "gjJunjankg",
+    fieldName: "gjJunjankg",
     type: "data",
     width: "60",
     header: {
@@ -202,8 +202,8 @@ export const columns = [
     numberFormat: "#,##0",
   },
   {
-    name: "jankg",
-    fieldName: "jankg",
+    name: "gjJankg",
+    fieldName: "gjJankg",
     type: "data",
     width: "60",
     header: {
@@ -267,13 +267,13 @@ export const layout = [
     name: "체적 사용 금액",
     directions: "horizontal",
     hideChildHeaders: false,
-    items: ["gjJunGum", "gjGum", "gjGage", "gjDanga", "gjKumack"],
+    items: ["gjJungum", "gjGum", "gjGage", "gjDanga", "gjKumack"],
   },
   {
     name: "중량 사용 금액",
     directions: "horizontal",
     hideChildHeaders: false,
-    items: ["qtyKg", "junjankg", "jankg", "sUseqty", "danga", "sKumack"],
+    items: ["qtyKg", "gjJunjankg", "gjJankg", "sUseqty", "danga", "sKumack"],
   },
   "sumKumack",
 ];
