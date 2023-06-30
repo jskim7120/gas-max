@@ -13,7 +13,6 @@ import {
   PrintPreview,
   Print,
 } from "components/allSvgIcon";
-import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
@@ -87,6 +86,19 @@ function AR9007({
       resetForm("reset");
     }
     setData([]);
+  };
+
+  const selectColumns = () => {
+    switch (watch("reportKind")) {
+      case "0":
+        return { columns: columns0, fields: fields0 };
+      case "1":
+        return { columns: columns1, fields: fields1 };
+      case "2":
+        return { columns: columns2, fields: fields2 };
+      case "3":
+        return { columns: columns3, fields: fields3 };
+    }
   };
 
   return (
@@ -216,51 +228,18 @@ function AR9007({
           </FormGroup>
         </SearchWrapper>
       </form>
-      {watch("reportKind") === "3" ? (
-        <BasicGrid
-          menuId={menuId}
-          ref={gridRef}
-          areaCode={ownAreaCode}
-          columns={columns3}
-          fields={fields3}
-          data={data}
-          rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: "calc(100% - 88px)" }}
-        />
-      ) : watch("reportKind") === "2" ? (
-        <BasicGrid
-          menuId={menuId}
-          ref={gridRef}
-          areaCode={ownAreaCode}
-          columns={columns2}
-          fields={fields2}
-          data={data}
-          rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: "calc(100% - 88px)" }}
-        />
-      ) : watch("reportKind") === "1" ? (
-        <BasicGrid
-          menuId={menuId}
-          ref={gridRef}
-          areaCode={ownAreaCode}
-          columns={columns1}
-          fields={fields1}
-          data={data}
-          rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: "calc(100% - 88px)" }}
-        />
-      ) : (
-        <BasicGrid
-          menuId={menuId}
-          ref={gridRef}
-          areaCode={ownAreaCode}
-          columns={columns0}
-          fields={fields0}
-          data={data}
-          rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: "calc(100% - 88px)" }}
-        />
-      )}
+
+      <BasicGrid
+        menuId={menuId}
+        ref={gridRef}
+        areaCode={ownAreaCode}
+        columns={selectColumns()?.columns}
+        fields={selectColumns()?.fields}
+        data={data}
+        gridChangeField={watch("reportKind")}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
+        style={{ height: "calc(100% - 88px)" }}
+      />
     </>
   );
 }

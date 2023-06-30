@@ -1,12 +1,12 @@
 export interface ISEARCH {
   areaCode: string;
   swCode: string;
-  cuCustgubun1: string;
+  cuCustgubun: string;
   cuJyCode: string;
-  dateChk: string;
+  dateChk: boolean;
   sDate: string;
   eDate: string;
-  cuSukumtype1: string;
+  cuSukumtype: string;
   cuStae: string;
   sOrd: string;
   sChk: string;

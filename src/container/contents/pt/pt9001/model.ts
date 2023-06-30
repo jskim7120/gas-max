@@ -13,7 +13,7 @@ export interface ISEARCH {
   swCode1: string;
   cuCustgubun1: string;
   cuJangbu1: string;
-  sOver: string;
+  sOver1: string;
   cuJyCode1: string;
   cuSukumtype1: string;
   cuStae1: string;
