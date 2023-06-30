@@ -59,6 +59,7 @@ const Form = React.forwardRef(
       setIsAddBtnClicked,
       prepareSearchFormValues,
       clonedSelected,
+      clonedUserInfo,
     }: {
       ownAreaCode: string;
       menuId: string;
@@ -80,6 +81,7 @@ const Form = React.forwardRef(
       setIsAddBtnClicked: Function;
       prepareSearchFormValues: Function;
       clonedSelected: any;
+      clonedUserInfo: any;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -118,6 +120,10 @@ const Form = React.forwardRef(
     useEffect(() => {
       if (Object.keys(selected)?.length > 0) {
         resetForm("reset");
+        setRdangaType(selected?.cuRdangaType);
+        setRdanga(selected?.cuRdanga);
+        setRdangaSign(selected?.cuRdangaSign);
+        setRdangaAmt(selected?.cuRdangaAmt);
       }
     }, [selected]);
 
@@ -169,13 +175,12 @@ const Form = React.forwardRef(
     const resetForm = async (type: string) => {
       if (type === "clear") {
         areaCode && (await codeChangeHandler(areaCode));
-      }
-
-      if (type === "reset") {
+      } else if (type === "reset") {
         if (selected && Object.keys(selected)?.length > 0) {
           let tempData: any = { ...selected, ...supplyTab };
 
           setCuAddr1(selected.cuAddr1 ? selected.cuAddr1 : "");
+          setUserInfo(clonedUserInfo);
           reset({
             ...tempData,
             cuAptnameYn: tempData?.cuAptnameYn === "Y",
@@ -259,9 +264,6 @@ const Form = React.forwardRef(
       const formValues: any = getValues();
 
       formValues.areaCode = isAddBtnClicked ? areaCode : selected.areaCode;
-      console.log("data>>>>>>>>>>>>>>", data);
-      console.log("formValues>>>>>>>>>>>>>>", formValues);
-      console.log("clonedObject>>>>>>>>>>>>>>", clonedSelected);
 
       if (!formValues.chkCuRh20) {
         formValues.cuRh2O = clonedSelected.cuRh2O;
@@ -291,31 +293,12 @@ const Form = React.forwardRef(
         formValues.cuCno = clonedSelected.cuCno;
       }
 
-      // if (chkCuRdanga) {
-      //   formValues.cuRdangaType = rdangaType;
-      //   formValues.cuRdanga = +rdanga;
-      //   formValues.cuRdangaSign = rdangaSign;
-      //   formValues.cuRdangaAmt = +rdangaAmt;
-      //   // formValues.totalValue = totalValue; ene talbar tsaanaasaa irehgui bgaa irvel nemeh yum
-      // } else {
-      //   //end yu boloh n logic todorhoigui
-      // }
-
-      // if (!chkCuAnKum) {
-      //   // delete formValues.cuAnkum;
-      // } else {
-      //   formValues.cuAnkum = formValues.cuAnkum
-      //     ? formatCurrencyRemoveComma(formValues.cuAnkum)
-      //     : "";
-      // }
-
-      // if (!chkCuMeterKum) {
-      //   // delete formValues.cuMeterkum;
-      // } else {
-      //   formValues.cuMeterkum = formValues.cuMeterkum
-      //     ? formatCurrencyRemoveComma(formValues.cuMeterkum)
-      //     : "";
-      // }
+      if (!formValues.chkCuRdanga) {
+        formValues.cuRdanga = clonedSelected.cuRdanga;
+        formValues.cuRdangaAmt = clonedSelected.cuRdangaAmt;
+        formValues.cuRdangaSign = clonedSelected.cuRdangaSign;
+        formValues.cuRdangaType = clonedSelected.cuRdangaType;
+      }
 
       if (formValues.cuBaGageKum) {
         formValues.cuBaGageKum = formatCurrencyRemoveComma(
@@ -324,6 +307,7 @@ const Form = React.forwardRef(
       }
 
       formValues.cuAptnameYn = formValues.cuAptnameYn ? "Y" : "N";
+      formValues.cuBaGageYn = formValues.cuBaGageYn ? "Y" : "N";
 
       formValues.cuFinishDate = DateWithoutDash(formValues.cuFinishDate);
       formValues.cuCircuitDate = DateWithoutDash(formValues.cuCircuitDate);
