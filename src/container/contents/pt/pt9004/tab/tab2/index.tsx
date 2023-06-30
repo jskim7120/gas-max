@@ -6,7 +6,7 @@ import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 
-function Tab2({
+function Tab1({
   register,
   dataCommonDic,
   control,
@@ -79,4 +79,4 @@ function Tab2({
   );
 }
 
-export default Tab2;
+export default Tab1;

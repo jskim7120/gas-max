@@ -12,7 +12,9 @@ export interface ISEARCH {
   sChk: string;
 
   swCode1: string;
+  cuCustgubun1: string;
   cuJyCode1: string;
+  cuSukumtype1: string;
   cuStae1: string;
   sOrd1: string;
   sChk1: string;
