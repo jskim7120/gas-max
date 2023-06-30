@@ -1,13 +1,7 @@
 import React from "react";
 import { Controller } from "react-hook-form";
 import { SearchWrapper } from "container/contents/commonStyle";
-import {
-  FormGroup,
-  Input,
-  Label,
-  NumberInput,
-  Select,
-} from "components/form/style";
+import { FormGroup, Input, Label, Select } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
@@ -16,12 +10,10 @@ function Tab2({
   register,
   dataCommonDic,
   control,
-  handleSOverChange,
 }: {
   register: Function;
   dataCommonDic: any;
   control: any;
-  handleSOverChange: Function;
 }) {
   return (
     <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
@@ -42,22 +34,6 @@ function Tab2({
             </option>
           ))}
         </Select>
-        <Label style={{ minWidth: "90px" }}>장부구분</Label>
-        <Select register={register("cuJangbu1")} width={InputSize.i120}>
-          {dataCommonDic?.cuJangbu1?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
-        <Label style={{ minWidth: "90px" }}>연체기간</Label>
-        <NumberInput
-          register={register("sOver1")}
-          min="0"
-          max="99"
-          inputSize={InputSize.i50}
-        />
-        <Label>개월 ({handleSOverChange()})</Label>
       </FormGroup>
       <FormGroup>
         <Label style={{ minWidth: "80px" }}>지역구분</Label>
@@ -76,7 +52,7 @@ function Tab2({
             </option>
           ))}
         </Select>
-        <Label style={{ minWidth: "90px" }}>거래상태</Label>
+        <Label style={{ minWidth: "80px" }}>거래상태</Label>
         <Select register={register("cuStae1")} width={InputSize.i120}>
           {dataCommonDic?.cuStae1?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
@@ -84,7 +60,7 @@ function Tab2({
             </option>
           ))}
         </Select>
-        <Label style={{ minWidth: "90px" }}>정렬순서</Label>
+        <Label style={{ minWidth: "80px" }}>정렬순서</Label>
         <Select register={register("sOrd1")} width={InputSize.i120}>
           {dataCommonDic?.sOrd1?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
@@ -92,6 +68,12 @@ function Tab2({
             </option>
           ))}
         </Select>
+        <CheckBox
+          title="세로양식 인쇄"
+          rtl
+          style={{ marginLeft: "10px" }}
+          register={register("sChk1")}
+        />
       </FormGroup>
     </SearchWrapper>
   );

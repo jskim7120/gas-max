@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { AR9001SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
-import { Select, FormGroup, Label, Input } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import {
@@ -124,6 +124,15 @@ function AR9001({
       resetForm("reset");
     }
     setData([]);
+  };
+
+  const selectColumns = () => {
+    switch (watch("reportKind")) {
+      case "0":
+        return { columns: columns0, fields: fields0 };
+      case "1":
+        return { columns: columns1, fields: fields1 };
+    }
   };
 
   return (
@@ -284,29 +293,18 @@ function AR9001({
           </FormGroup>
         </SearchWrapper>
       </form>
-      {watch("reportKind") === "1" ? (
-        <BasicGrid
-          menuId={menuId}
-          ref={gridRef}
-          areaCode={ownAreaCode}
-          columns={columns1}
-          fields={fields1}
-          data={data}
-          rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: "calc(100% - 88px)" }}
-        />
-      ) : (
-        <BasicGrid
-          menuId={menuId}
-          ref={gridRef}
-          areaCode={ownAreaCode}
-          columns={columns0}
-          fields={fields0}
-          data={data}
-          rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: "calc(100% - 88px)" }}
-        />
-      )}
+
+      <BasicGrid
+        menuId={menuId}
+        ref={gridRef}
+        areaCode={ownAreaCode}
+        columns={selectColumns()?.columns}
+        fields={selectColumns()?.fields}
+        data={data}
+        gridChangeField={watch("reportKind")}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
+        style={{ height: "calc(100% - 88px)" }}
+      />
     </>
   );
 }

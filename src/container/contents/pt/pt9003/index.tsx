@@ -19,7 +19,7 @@ import Viewer from "components/viewer";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields } from "./data";
-import CheckBox from "components/checkbox";
+import { report } from "process";
 
 function PT9003({
   depthFullName,
@@ -42,7 +42,7 @@ function PT9003({
   } = CreateReport("PT", "PT9003", menuId, PT9003SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -51,6 +51,12 @@ function PT9003({
       resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("reportKind") !== undefined) {
+      setData([]);
+    }
+  }, [watch("reportKind")]);
 
   const openNewWindow = async () => {
     const width = 1500;

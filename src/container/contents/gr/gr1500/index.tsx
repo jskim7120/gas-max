@@ -143,13 +143,17 @@ function GR1500({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide style={{ width: `${linePos}px` }}>
-          <SearchWrapper
-            style={{ minWidth: `${leftSideWidth}px`, padding: "3px 15px" }}
+          <form
+            onSubmit={handleSubmit(submitSearch1)}
+            autoComplete="off"
+            style={{ minWidth: "925px" }}
           >
-            <form
-              onSubmit={handleSubmit(submitSearch1)}
-              autoComplete="off"
-              style={{ minWidth: "925px" }}
+            <SearchWrapper
+              style={{
+                minWidth: `${leftSideWidth}px`,
+                padding: "3px 15px",
+                justifyContent: "flex-start",
+              }}
             >
               <FormGroup>
                 <Label style={{ minWidth: "48px" }}>구분</Label>
@@ -195,8 +199,8 @@ function GR1500({
                   }
                 />
               </FormGroup>
-            </form>
-          </SearchWrapper>
+            </SearchWrapper>
+          </form>
           <GridLeft
             areaCode={areaCode}
             data={data.length > 0 && data}
@@ -306,7 +310,7 @@ function GR1500({
             menuId={menuId}
             rowIndex={0}
             // evenFill
-            style={{ height: "43%", minWidth: `${leftSideWidth}px` }}
+            style={{ height: "38%", minWidth: `${leftSideWidth}px` }}
           />
         </LeftSide>
         <RightSide

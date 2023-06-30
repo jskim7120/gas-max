@@ -111,13 +111,17 @@ function GR1600({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide style={{ width: `${linePos}px` }}>
-          <SearchWrapper
-            style={{ minWidth: `${leftSideWidth}px`, padding: "3px 15px" }}
+          <form
+            onSubmit={handleSubmit(submit)}
+            autoComplete="off"
+            style={{ minWidth: minWidth }}
           >
-            <form
-              onSubmit={handleSubmit(submit)}
-              autoComplete="off"
-              style={{ minWidth: minWidth }}
+            <SearchWrapper
+              style={{
+                minWidth: `${leftSideWidth}px`,
+                padding: "3px 15px",
+                justifyContent: "flex-start",
+              }}
             >
               <FormGroup>
                 <Label
@@ -174,8 +178,9 @@ function GR1600({
                   style={{ height: "26px" }}
                 />
               </FormGroup>
-            </form>
-          </SearchWrapper>
+            </SearchWrapper>
+          </form>
+
           <GridLeft
             areaCode={areaCode}
             data={data}
@@ -188,7 +193,7 @@ function GR1600({
               height: `calc(100% - 47px)`,
               minWidth: `${leftSideWidth}px`,
             }}
-            evenFill
+            //evenFill
           />
         </LeftSide>
         <RightSide

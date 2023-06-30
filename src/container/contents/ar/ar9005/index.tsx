@@ -20,8 +20,8 @@ import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH, I2 } from "./model";
-import { columns1, fields1 } from "./data1";
-import { columns2, fields2, layout } from "./data2";
+import { columns0, fields0 } from "./data/data0";
+import { columns1, fields1 } from "./data/data1";
 import CheckBox from "components/checkbox";
 
 function AR9004({
@@ -348,12 +348,12 @@ function AR9004({
         menuId={menuId}
         ref={gridRef}
         areaCode={ownAreaCode}
-        columns={columns2}
-        fields={fields2}
+        columns={columns0}
+        fields={fields0}
         data={data2}
         rowIndex={data2?.length > 1 ? data.length - 1 : 0}
         style={{ height: "calc(50% - 78px)" }}
-        layout={layout}
+        //layout={layout1}
       />
     </>
   );

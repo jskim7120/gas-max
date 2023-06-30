@@ -143,10 +143,10 @@ function PT9001({
   };
 
   const handleSOverChange = () => {
-    if (watch("sOver") !== undefined && watch("sOver") !== null) {
+    if (watch("sOver1") !== undefined && watch("sOver1") !== null) {
       const today = new Date();
       const newDate = new Date(
-        today.setMonth(today.getMonth() - +watch("sOver"))
+        today.setMonth(today.getMonth() - +watch("sOver1"))
       );
       return DateWithDashOnlyYearMonth(newDate);
     }
@@ -158,7 +158,7 @@ function PT9001({
       delete params.swCode1;
       delete params.cuCustgubun1;
       delete params.cuJangbu1;
-      delete params.sOver;
+      delete params.sOver1;
       delete params.cuJyCode1;
       delete params.cuSukumtype1;
       delete params.cuStae1;

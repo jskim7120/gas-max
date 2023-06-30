@@ -152,34 +152,32 @@ function CC9003({
                 </Select>
               </FormGroup>
 
-              <div className="buttons">
-                <Button
-                  text="검색"
-                  icon={!loading && <MagnifyingGlass />}
-                  color={ButtonColor.DANGER}
-                  type="submit"
-                  loader={
-                    loading && (
-                      <>
-                        <Loader
-                          color="white"
-                          size={13}
-                          borderWidth="2px"
-                          style={{ marginRight: "10px" }}
-                        />
-                      </>
-                    )
-                  }
-                  style={{ margin: " 0 5px 0 50px" }}
-                />
-                <Button
-                  text="취소"
-                  icon={<ResetGray />}
-                  type="button"
-                  color={ButtonColor.LIGHT}
-                  onClick={handleReset}
-                />
-              </div>
+              <Button
+                text="검색"
+                icon={!loading && <MagnifyingGlass />}
+                color={ButtonColor.DANGER}
+                type="submit"
+                loader={
+                  loading && (
+                    <>
+                      <Loader
+                        color="white"
+                        size={13}
+                        borderWidth="2px"
+                        style={{ marginRight: "10px" }}
+                      />
+                    </>
+                  )
+                }
+                style={{ margin: " 0 5px 0 50px" }}
+              />
+              <Button
+                text="취소"
+                icon={<ResetGray />}
+                type="button"
+                color={ButtonColor.LIGHT}
+                onClick={handleReset}
+              />
             </SearchWrapper>
           </form>
           <BasicGrid

@@ -52,7 +52,7 @@ export const columns = [
   {
     name: "bbDate",
     fieldName: "bbDate",
-    width: "90",
+    width: "70",
     type: "data",
     header: {
       text: "매입일자",
@@ -61,7 +61,7 @@ export const columns = [
   {
     name: "bbTypeName",
     fieldName: "bbTypeName",
-    width: "60",
+    width: "58",
     type: "data",
     header: {
       text: "구분",
