@@ -27,7 +27,7 @@ export const fields = [
   },
   {
     fieldName: "mjMisujan",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
 ];
 
@@ -36,7 +36,7 @@ export const columns = [
     name: "mjSwCode",
     fieldName: "mjSwCode",
     type: "data",
-    width: "50",
+    width: "70",
     header: {
       text: "사원",
     },
@@ -46,12 +46,11 @@ export const columns = [
       },
     },
   },
-
   {
     name: "mjDate",
     fieldName: "mjDate",
     type: "data",
-    width: "90",
+    width: "100",
     header: {
       text: "일자",
     },
@@ -60,7 +59,7 @@ export const columns = [
     name: "mjCuCode",
     fieldName: "mjCuCode",
     type: "data",
-    width: "90",
+    width: "80",
     header: {
       text: "코드",
     },
@@ -70,6 +69,7 @@ export const columns = [
     fieldName: "mjCuName",
     type: "data",
     width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -78,7 +78,8 @@ export const columns = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "110",
+    width: "120",
+    styleName: "rg-left-column",
     header: {
       text: "전화번호",
     },
@@ -87,7 +88,8 @@ export const columns = [
     name: "mjBigo",
     fieldName: "mjBigo",
     type: "data",
-    width: "300",
+    width: "250",
+    styleName: "rg-left-column",
     header: {
       text: "적요",
     },
@@ -96,9 +98,11 @@ export const columns = [
     name: "mjMisujan",
     fieldName: "mjMisujan",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "미수금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
 ];

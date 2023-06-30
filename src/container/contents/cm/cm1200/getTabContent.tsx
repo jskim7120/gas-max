@@ -5,28 +5,9 @@ import Tab3 from "./tab/tab3";
 function getTabContent(
   id: number,
   register: Function,
+  watch: Function,
   dataCommonDic: any,
-  chkCuRh20: boolean,
-  setChkCuRh20: Function,
-  chkCuRdanga: boolean,
-  setChkCuRdanga: Function,
-  chkCuAnKum: boolean,
-  setChkCuAnKum: Function,
-  chkCuMeterKum: boolean,
-  setChkCuMeterKum: Function,
   control: any,
-  chkCuPer: boolean,
-  setChkCuPer: Function,
-  chkCuCdc: boolean,
-  setChkCuCdc: Function,
-  chkCuSukumtype: boolean,
-  setChkCuSukumtype: Function,
-  chkCuGumTurm: boolean,
-  setChkCuGumTurm: Function,
-  chkCuGumdate: boolean,
-  setChkCuGumdate: Function,
-  chkCuCno: boolean,
-  setChkCuCno: Function,
   rdangaType: any,
   setRdangaType: Function,
   rdanga: any,
@@ -44,28 +25,9 @@ function getTabContent(
       return (
         <Tab1
           register={register}
+          watch={watch}
           dataCommonDic={dataCommonDic}
           control={control}
-          chkCuRh20={chkCuRh20}
-          setChkCuRh20={setChkCuRh20}
-          chkCuRdanga={chkCuRdanga}
-          setChkCuRdanga={setChkCuRdanga}
-          chkCuAnKum={chkCuAnKum}
-          setChkCuAnKum={setChkCuAnKum}
-          chkCuMeterKum={chkCuMeterKum}
-          setChkCuMeterKum={setChkCuMeterKum}
-          chkCuPer={chkCuPer}
-          setChkCuPer={setChkCuPer}
-          chkCuCdc={chkCuCdc}
-          setChkCuCdc={setChkCuCdc}
-          chkCuSukumtype={chkCuSukumtype}
-          setChkCuSukumtype={setChkCuSukumtype}
-          chkCuGumTurm={chkCuGumTurm}
-          setChkCuGumTurm={setChkCuGumTurm}
-          chkCuGumdate={chkCuGumdate}
-          setChkCuGumdate={setChkCuGumdate}
-          chkCuCno={chkCuCno}
-          setChkCuCno={setChkCuCno}
           rdangaType={rdangaType}
           setRdangaType={setRdangaType}
           rdanga={rdanga}

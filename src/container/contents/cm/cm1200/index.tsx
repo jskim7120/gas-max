@@ -3,6 +3,8 @@ import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
 import CreateScreen from "app/hook/createScreen";
 import { CM1200SEARCH, CM120065 } from "app/path";
+import { useSelector } from "app/store";
+import { addCM1105LoadStatus } from "app/state/modal/modalSlice";
 import GridLeft from "components/grid";
 import { ButtonType } from "components/componentsType";
 import { FormGroup, Input, Label, Select } from "components/form/style";
@@ -16,13 +18,13 @@ import {
   MainWrapper,
 } from "../../commonStyle";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
+import setFooterDetail from "container/contents/footer/footerDetailFunc";
 import { ISEARCH } from "./model";
 import Form from "./form";
 import { fields, columns } from "./data";
-import { useSelector } from "app/store";
-import { addCM1105LoadStatus } from "app/state/modal/modalSlice";
 
-const leftSideWidth: number = 530;
+const leftSideWidth: number = 450;
+let clonedSelected: any;
 
 function CM1200({
   depthFullName,
@@ -59,16 +61,14 @@ function CM1200({
     addBtnUnclick,
   } = CreateScreen("CM", "CM1200", menuId, CM1200SEARCH, leftSideWidth);
 
-  const [selectedSupplyTab, setSelectedSupplyTab] = useState<any>({});
+  const cm1105 = useSelector((state) => state.modal.cm1105);
+
   const [userInfo, setUserInfo] = useState<any[]>([]);
   const [selectedUserInfo, setSelectedUserInfo] = useState<any>({});
-
-  const [cuCustgubunDic, setCuCustgubunDic] = useState<any[]>([]);
-  const [cuJyCodeDic, setCuJyCodeDic] = useState<any[]>([]);
-  const [cuSwCodeDic, setCuSwCodeDic] = useState<any[]>([]);
+  const [supplyTab, setSupplyTab] = useState<any>({});
+  const [dataDictionary, setDataDictionary] = useState({});
   const rowIndex0 = gridIndexes?.find((item) => item.grid === 0)?.row;
   const rowIndex1 = gridIndexes?.find((item) => item.grid === 1)?.row;
-  const cm1105 = useSelector((state) => state.modal.cm1105);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -86,11 +86,12 @@ function CM1200({
   }, [watch("areaCode")]);
 
   useEffect(() => {
-    if (selected) {
+    if (selected && Object.keys(selected)?.length > 0) {
       if (isAddBtnClicked) {
         addBtnUnclick();
       }
 
+      clonedSelected = structuredClone(selected);
       if (selected.cuCode && selected.areaCode) {
         fetchData65(
           {
@@ -131,6 +132,28 @@ function CM1200({
     }
   }, [cm1105]);
 
+  useEffect(() => {
+    if (Object.keys(selectedUserInfo)?.length > 0) {
+      setFooterDetail(selected.areaCode, selectedUserInfo.cuCode, dispatch);
+    }
+  }, [selectedUserInfo]);
+
+  function deepClone(obj: any) {
+    if (obj === null || typeof obj !== "object") {
+      return obj;
+    }
+
+    let clone: any = Array.isArray(obj) ? [] : {};
+
+    for (let key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        clone[key] = deepClone(obj[key]);
+      }
+    }
+
+    return clone;
+  }
+
   const prepareSearchFormValues = () => {
     const params: any = getValues();
     if (params.dataChk === undefined || params.dataChk === false) {
@@ -155,30 +178,17 @@ function CM1200({
         setSelectedUserInfo({});
       }
 
-      if (res?.supplyTab) {
-        setSelectedSupplyTab(res?.supplyTab[0]);
-      } else {
-        setSelectedSupplyTab({});
-      }
-
-      if (res?.cuCustgubun) {
-        setCuCustgubunDic(res.cuCustgubun);
-      }
-
-      if (res?.cuJyCode) {
-        setCuJyCodeDic(res.cuJyCode);
-      }
-
-      if (res?.cuSwCode) {
-        setCuSwCodeDic(res.cuSwCode);
-      }
+      setSupplyTab(res?.supplyTab ? res?.supplyTab[0] : {});
+      setDataDictionary({
+        cuCustgubun: res?.cuCustgubun ? res.cuCustgubun : [],
+        cuJyCode: res?.cuJyCode ? res.cuJyCode : [],
+        cuSwCode: res?.cuSwCode ? res.cuSwCode : [],
+      });
     } else {
       setUserInfo([]);
       setSelectedUserInfo({});
-      setSelectedSupplyTab({});
-      setCuCustgubunDic([]);
-      setCuJyCodeDic([]);
-      setCuSwCodeDic([]);
+      setSupplyTab({});
+      setDataDictionary({});
     }
   };
 
@@ -276,27 +286,26 @@ function CM1200({
         >
           <Form
             ref={formRef}
+            ownAreaCode={ownAreaCode}
+            menuId={menuId}
             dataCommonDic={dataCommonDic}
+            data={data}
+            userInfo={userInfo}
+            setUserInfo={setUserInfo}
+            selectedUserInfo={selectedUserInfo}
+            setSelectedUserInfo={setSelectedUserInfo}
+            dataDictionary={dataDictionary}
+            setDataDictionary={setDataDictionary}
+            supplyTab={supplyTab}
+            setSupplyTab={setSupplyTab}
             fetchData={fetchData}
+            fetchData65={fetchData65}
             areaCode={watch("areaCode")}
             selected={selected}
-            ownAreaCode={ownAreaCode}
             isAddBtnClicked={isAddBtnClicked}
             setIsAddBtnClicked={setIsAddBtnClicked}
             prepareSearchFormValues={prepareSearchFormValues}
-            userInfo={userInfo}
-            cuCustgubunDic={cuCustgubunDic}
-            setCuCustgubunDic={setCuCustgubunDic}
-            cuJyCodeDic={cuJyCodeDic}
-            setCuJyCodeDic={setCuJyCodeDic}
-            selectedSupplyTab={selectedSupplyTab}
-            cuSwCodeDic={cuSwCodeDic}
-            setCuSwCodeDic={setCuSwCodeDic}
-            parentFetchData65={fetchData65}
-            setSelectedUserInfo={setSelectedUserInfo}
-            selectedUserInfo={selectedUserInfo}
-            menuId={menuId}
-            setUserInfo={setUserInfo}
+            clonedSelected={clonedSelected}
           />
         </RightSide>
         {showDraggableLine()}

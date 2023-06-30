@@ -13,28 +13,9 @@ import CheckBox from "components/checkbox";
 
 function Tab1({
   register,
+  watch,
   dataCommonDic,
   control,
-  chkCuRh20,
-  setChkCuRh20,
-  chkCuRdanga,
-  setChkCuRdanga,
-  chkCuAnKum,
-  setChkCuAnKum,
-  chkCuMeterKum,
-  setChkCuMeterKum,
-  chkCuPer,
-  setChkCuPer,
-  chkCuCdc,
-  setChkCuCdc,
-  chkCuSukumtype,
-  setChkCuSukumtype,
-  chkCuGumTurm,
-  setChkCuGumTurm,
-  chkCuGumdate,
-  setChkCuGumdate,
-  chkCuCno,
-  setChkCuCno,
   rdangaType,
   setRdangaType,
   rdanga,
@@ -48,28 +29,9 @@ function Tab1({
   calcRdanga,
 }: {
   register: Function;
+  watch: Function;
   dataCommonDic: any;
   control: any;
-  chkCuRh20: boolean;
-  setChkCuRh20: Function;
-  chkCuRdanga: boolean;
-  setChkCuRdanga: Function;
-  chkCuAnKum: boolean;
-  setChkCuAnKum: Function;
-  chkCuMeterKum: boolean;
-  setChkCuMeterKum: Function;
-  chkCuPer: boolean;
-  setChkCuPer: Function;
-  chkCuCdc: boolean;
-  setChkCuCdc: Function;
-  chkCuSukumtype: boolean;
-  setChkCuSukumtype: Function;
-  chkCuGumTurm: boolean;
-  setChkCuGumTurm: Function;
-  chkCuGumdate: boolean;
-  setChkCuGumdate: Function;
-  chkCuCno: boolean;
-  setChkCuCno: Function;
   rdangaType: any;
   setRdangaType: Function;
   rdanga: any;
@@ -148,283 +110,337 @@ function Tab1({
     }
   };
   return (
-    <form autoComplete="off">
-      <div className="tab1">
-        <Wrapper grid col={3} fields="0.7fr 0.8fr 1.5fr">
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <FormGroup>
-              <Label className="lable-check">
-                <CheckBox
-                  title="조 정 기"
-                  checked={chkCuRh20}
-                  onChange={(e: any) => setChkCuRh20(e.target.checked)}
-                />
-              </Label>
-              <Select
-                disabled={!chkCuRh20}
-                register={register("cuRh2O")}
-                width={InputSize.i120}
-              >
-                {dataCommonDic?.cuRh20?.map((obj: any, index: number) => (
-                  <option key={index} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-              <p>mmH20</p>
-            </FormGroup>
-            <FormGroup>
-              <Label className="lable-check">
-                <CheckBox
-                  title="관 리 비"
-                  checked={chkCuAnKum}
-                  onChange={(e: any) => setChkCuAnKum(e.target.checked)}
-                />
-              </Label>
+    <form autoComplete="off" className="tab1">
+      <FormGroup>
+        <Controller
+          control={control}
+          name="chkCuRh20"
+          render={({ field }) => (
+            <CheckBox
+              {...field}
+              title="조 정 기"
+              className="label-check"
+              style={{ width: "100px" }}
+            />
+          )}
+        />
 
-              <Controller
-                control={control}
-                {...register("cuAnkum")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={currencyMask}
-                    textAlign="right"
-                    inputSize={InputSize.i120}
-                    readOnly={!chkCuAnKum}
-                  />
-                )}
-              />
-              <p>원</p>
-            </FormGroup>
-            <FormGroup>
-              <Label className="lable-check">
-                <CheckBox
-                  title="연 체 율"
-                  checked={chkCuPer}
-                  onChange={(e: any) => setChkCuPer(e.target.checked)}
-                />
-              </Label>
+        <Controller
+          control={control}
+          name="cuRh2O"
+          render={({ field }) => (
+            <Select
+              {...field}
+              width={InputSize.i120}
+              disabled={!watch("chkCuRh20")}
+            >
+              {dataCommonDic?.cuRh20?.map((obj: any, index: number) => (
+                <option key={index} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          )}
+        />
+        <p>mmH20</p>
 
-              <Controller
-                control={control}
-                {...register("cuPer")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={[/\d/, /\d/, /\d/]}
-                    readOnly={!chkCuPer}
-                    inputSize={InputSize.i120}
-                    textAlign="right"
-                  />
-                )}
-              />
-              <p>{`%`}</p>
-            </FormGroup>
-            <FormGroup>
-              <Label className="lable-check">
-                <CheckBox
-                  title="검침주기"
-                  //register={register("chkCuGumTurm")}
-                  checked={chkCuGumTurm}
-                  onChange={(e: any) => setChkCuGumTurm(e.target.checked)}
-                />
-              </Label>
-              <Select
-                disabled={!chkCuGumTurm}
-                register={register("cuGumTurm")}
-                width={InputSize.i175}
-              >
-                {dataCommonDic?.cuGumTurm?.map((obj: any, index: number) => (
-                  <option key={index} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <FormGroup>
-              <Label className="lable-check">
-                <CheckBox
-                  title="루베단가"
-                  checked={chkCuRdanga}
-                  onChange={(e: any) => setChkCuRdanga(e.target.checked)}
-                />
-              </Label>
-              <Select
-                disabled={!chkCuRdanga}
-                value={rdangaType}
-                onChange={(e: any) => {
-                  setRdangaType(e.target.value);
-                  calcRdanga("rdangaType", e.target.value);
-                }}
-                width={InputSize.i120}
-              >
-                {dataCommonDic?.cuRdangaType.map((obj: any, index: number) => (
-                  <option key={index} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <FormGroup>
-              <Label className="lable-check">
-                <CheckBox
-                  title="계 량 기"
-                  checked={chkCuMeterKum}
-                  onChange={(e: any) => setChkCuMeterKum(e.target.checked)}
-                />
-              </Label>
+        <Controller
+          control={control}
+          name="chkCuRdanga"
+          render={({ field }) => (
+            <CheckBox
+              {...field}
+              title="루베단가"
+              className="label-check"
+              style={{ width: "99px" }}
+            />
+          )}
+        />
 
-              <Controller
-                control={control}
-                {...register("cuMeterkum")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={currencyMask}
-                    textAlign="right"
-                    inputSize={InputSize.i120}
-                    readOnly={!chkCuMeterKum}
-                  />
-                )}
-              />
-              <p>원</p>
-            </FormGroup>
-            <FormGroup>
-              <Label className="lable-check">
-                <CheckBox
-                  title="할 인 율"
-                  checked={chkCuCdc}
-                  onChange={(e: any) => setChkCuCdc(e.target.checked)}
-                />
-              </Label>
+        <Select
+          name="rdangaType"
+          value={rdangaType}
+          onChange={(e: any) => {
+            setRdangaType(e.target.value);
+            calcRdanga("rdangaType", e.target.value);
+          }}
+          width={InputSize.i120}
+          disabled={!watch("chkCuRdanga")}
+        >
+          {dataCommonDic?.cuRdangaType.map((obj: any, index: number) => (
+            <option key={index} value={obj.code}>
+              {obj.codeName}
+            </option>
+          ))}
+        </Select>
+        {showRdanga()}
+      </FormGroup>
+      <FormGroup>
+        <Controller
+          control={control}
+          name="chkCuAnKum"
+          render={({ field }) => (
+            <CheckBox
+              {...field}
+              title="관 리 비"
+              className="label-check"
+              style={{ width: "100px" }}
+            />
+          )}
+        />
 
-              <Controller
-                control={control}
-                {...register("cuCdc")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={[/\d/, /\d/, /\d/]}
-                    readOnly={!chkCuCdc}
-                    inputSize={InputSize.i120}
-                    textAlign="right"
-                  />
-                )}
-              />
-              <p>{`%`}</p>
-            </FormGroup>
-            <FormGroup>
-              <Label className="lable-check">
-                <CheckBox
-                  title="검 침 일"
-                  checked={chkCuGumdate}
-                  onChange={(e: any) => setChkCuGumdate(e.target.checked)}
-                />
-              </Label>
+        <Controller
+          control={control}
+          name="cuAnkum"
+          render={({ field }) => (
+            <Input
+              {...field}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i120}
+              readOnly={!watch("chkCuAnKum")}
+            />
+          )}
+        />
+        <p>원</p>
 
-              <Controller
-                control={control}
-                {...register("cuGumdate")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={[/\d/, /\d/]}
-                    inputSize={InputSize.i120}
-                    readOnly={!chkCuGumdate}
-                  />
-                )}
-              />
-              <p>일</p>
-            </FormGroup>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            {showRdanga()}
-            <FormGroup style={{ gap: "7px" }}>
-              <Label style={{ minWidth: "auto" }}>기본사용료</Label>
+        <Controller
+          control={control}
+          name="chkCuMeterKum"
+          render={({ field }) => (
+            <CheckBox
+              {...field}
+              title="계 량 기"
+              style={{ width: "140px" }}
+              className="label-check"
+            />
+          )}
+        />
 
-              <Label className="lable-check" style={{ minWidth: "60px" }}>
-                <CheckBox
-                  title="적용"
-                  register={{ ...register("cuBaGageYn") }}
-                />
-              </Label>
+        <Controller
+          control={control}
+          name="cuMeterkum"
+          render={({ field }) => (
+            <Input
+              {...field}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i120}
+              readOnly={!watch("chkCuMeterKum")}
+            />
+          )}
+        />
+        <p>원</p>
 
-              <Input
-                type="number"
-                register={register("cuBaGageM3", {
-                  valueAsNumber: true,
-                })}
-                textAlign="right"
-                inputSize={InputSize.i80}
-                style={{ marginLeft: "0px" }}
-              />
-              <p>m3이하 일때</p>
-              <Controller
-                control={control}
-                {...register("cuBaGageKum")}
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    mask={currencyMask}
-                    textAlign="right"
-                    inputSize={InputSize.i80}
-                  />
-                )}
-              />
-              <p>원 적용</p>
-            </FormGroup>
-            <FormGroup>
-              <Label className="lable-check" style={{ minWidth: "143px" }}>
-                <CheckBox
-                  title="수금 방법"
-                  checked={chkCuSukumtype}
-                  onChange={(e: any) => setChkCuSukumtype(e.target.checked)}
-                />
-              </Label>
-              <Select
-                disabled={!chkCuSukumtype}
-                register={register("cuSukumtype")}
-                width={InputSize.i120}
-              >
-                {dataCommonDic?.cuSukumtype?.map((obj: any, index: number) => (
-                  <option key={index} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <FormGroup>
-              <Label className="lable-check" style={{ minWidth: "143px" }}>
-                <CheckBox
-                  title="순 번"
-                  checked={chkCuCno}
-                  onChange={(e: any) => setChkCuCno(e.target.checked)}
-                />
-              </Label>
-              <Input
-                register={register("cuCno")}
-                inputSize={InputSize.i120}
-                readOnly={!chkCuCno}
-              />
-            </FormGroup>
-          </div>
-        </Wrapper>
-      </div>
+        <Label style={{ minWidth: "110px" }}>기본사용료</Label>
+        <Controller
+          control={control}
+          name="cuBaGageYn"
+          render={({ field }) => (
+            <CheckBox
+              {...field}
+              title="적용"
+              className="label-check"
+              style={{ width: "60px" }}
+            />
+          )}
+        />
+
+        <Input
+          type="number"
+          register={register("cuBaGageM3", {
+            valueAsNumber: true,
+          })}
+          textAlign="right"
+          inputSize={InputSize.i80}
+        />
+        <p>m3이하 일때</p>
+        <Controller
+          control={control}
+          name="cuBaGageKum"
+          render={({ field }) => (
+            <Input
+              {...field}
+              mask={currencyMask}
+              textAlign="right"
+              inputSize={InputSize.i80}
+            />
+          )}
+        />
+        <p>원 적용</p>
+      </FormGroup>
+      <FormGroup>
+        <Controller
+          control={control}
+          name="chkCuPer"
+          render={({ field }) => (
+            <CheckBox
+              {...field}
+              title="연 체 율"
+              className="label-check"
+              style={{ width: "100px" }}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="cuPer"
+          render={({ field }) => (
+            <Input
+              {...field}
+              mask={[/\d/, /\d/, /\d/]}
+              readOnly={!watch("chkCuPer")}
+              inputSize={InputSize.i120}
+              textAlign="right"
+            />
+          )}
+        />
+        <p>{`%`}</p>
+
+        <Controller
+          control={control}
+          name="chkCuCdc"
+          render={({ field }) => (
+            <CheckBox
+              {...field}
+              title="할 인 율"
+              className="label-check"
+              style={{ width: "140px" }}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="cuCdc"
+          render={({ field }) => (
+            <Input
+              {...field}
+              mask={[/\d/, /\d/, /\d/]}
+              readOnly={!watch("chkCuCdc")}
+              inputSize={InputSize.i120}
+              textAlign="right"
+            />
+          )}
+        />
+        <p>{`%`}</p>
+
+        <Controller
+          control={control}
+          name="chkCuSukumtype"
+          render={({ field }) => (
+            <CheckBox
+              {...field}
+              title="수금 방법"
+              className="label-check"
+              style={{ width: "170px" }}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="cuSukumtype"
+          render={({ field }) => (
+            <Select
+              {...field}
+              disabled={!watch("chkCuSukumtype")}
+              width={InputSize.i120}
+            >
+              {dataCommonDic?.cuSukumtype?.map((obj: any, index: number) => (
+                <option key={index} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          )}
+        />
+      </FormGroup>
+      <FormGroup>
+        <Controller
+          control={control}
+          name="chkCuGumTurm"
+          render={({ field }) => (
+            <CheckBox
+              {...field}
+              title="검침주기"
+              className="label-check"
+              style={{ width: "100px" }}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="cuGumTurm"
+          render={({ field }) => (
+            <Select
+              {...field}
+              disabled={!watch("chkCuGumTurm")}
+              width={InputSize.i175}
+            >
+              {dataCommonDic?.cuGumTurm?.map((obj: any, index: number) => (
+                <option key={index} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="chkCuGumdate"
+          render={({ field }) => (
+            <CheckBox
+              {...field}
+              title="검 침 일"
+              className="label-check"
+              style={{ width: "99px" }}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="cuGumdate"
+          render={({ field }) => (
+            <Input
+              {...field}
+              mask={[/\d/, /\d/]}
+              inputSize={InputSize.i120}
+              readOnly={!watch("chkCuGumdate")}
+            />
+          )}
+        />
+        <p>일</p>
+
+        <Controller
+          control={control}
+          name="chkCuCno"
+          render={({ field }) => (
+            <CheckBox
+              {...field}
+              title="순 번"
+              className="label-check"
+              style={{ width: "170px" }}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="cuCno"
+          render={({ field }) => (
+            <Input
+              {...field}
+              inputSize={InputSize.i120}
+              readOnly={!watch("chkCuCno")}
+            />
+          )}
+        />
+      </FormGroup>
     </form>
   );
 }

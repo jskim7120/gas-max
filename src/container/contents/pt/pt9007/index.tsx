@@ -250,14 +250,12 @@ function PT9007({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "90px" }}>비고</Label>
-            <Select register={register("sBigo")} width={InputSize.i120}>
-              {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
+            <Input
+              label="비고"
+              labelStyle={{ minWidth: "90px" }}
+              register={register("sBigo")}
+              inputSize={InputSize.i120}
+            />
             <Label style={{ minWidth: "90px" }}>정렬순서</Label>
             <Select register={register("sOrd")} width={InputSize.i120}>
               {dataCommonDic?.sOrd?.map((obj: any, idx: number) => (

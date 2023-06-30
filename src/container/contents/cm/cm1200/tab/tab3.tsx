@@ -131,7 +131,7 @@ function Tab3({
     <form autoComplete="off">
       <div className="tab3">
         <FormGroup>
-          <Label style={{ minWidth: "auto" }}>용기시설</Label>
+          <Label style={{ minWidth: "65px" }}>용기시설</Label>
           <Wrapper style={{ marginBottom: "5px" }}>
             <FormGroup>
               {[

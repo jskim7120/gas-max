@@ -19,7 +19,7 @@ export const fields = [
   },
   {
     fieldName: "msKumack",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "msSwName",
@@ -60,7 +60,7 @@ export const columns = [
     name: "suType",
     fieldName: "suType",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "구분",
     },
@@ -74,7 +74,7 @@ export const columns = [
     name: "msDate",
     fieldName: "msDate",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "수금일자",
     },
@@ -84,7 +84,7 @@ export const columns = [
     name: "msCuCode",
     fieldName: "msCuCode",
     type: "data",
-    width: "80",
+    width: "100",
     header: {
       text: "거래처코드",
     },
@@ -93,7 +93,8 @@ export const columns = [
     name: "msCuName",
     fieldName: "msCuName",
     type: "data",
-    width: "100",
+    width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -102,16 +103,19 @@ export const columns = [
     name: "msKumack",
     fieldName: "msKumack",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
       text: "수금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "msSwName",
     fieldName: "msSwName",
     type: "data",
-    width: "50",
+    width: "70",
+    styleName: "rg-left-column",
     header: {
       text: "사원",
     },
@@ -120,7 +124,7 @@ export const columns = [
     name: "msSukumtype",
     fieldName: "msSukumtype",
     type: "data",
-    width: "50",
+    width: "60",
     header: {
       text: "방법",
     },
@@ -129,7 +133,8 @@ export const columns = [
     name: "msCdBank",
     fieldName: "msCdBank",
     type: "data",
-    width: "70",
+    width: "80",
+    styleName: "rg-left-column",
     header: {
       text: "발행은행",
     },
@@ -139,7 +144,7 @@ export const columns = [
     name: "msCdDate",
     fieldName: "msCdDate",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "발행일자",
     },
@@ -148,7 +153,7 @@ export const columns = [
     name: "msCdLastDate",
     fieldName: "msCdLastDate",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "결재일자",
     },
@@ -157,7 +162,7 @@ export const columns = [
     name: "msCdNo",
     fieldName: "msCdNo",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "수표번호",
     },
@@ -166,7 +171,7 @@ export const columns = [
     name: "msCdBigo",
     fieldName: "msCdBigo",
     type: "data",
-    width: "50",
+    width: "80",
     header: {
       text: "적요",
     },
@@ -175,7 +180,8 @@ export const columns = [
     name: "msCdType",
     fieldName: "msCdType",
     type: "data",
-    width: "70",
+    width: "80",
+    styleName: "rg-left-column",
     header: {
       text: "처리구분",
     },

@@ -110,7 +110,7 @@ export const FormSeaction = styled.div<{ topBorder: boolean }>`
 `;
 
 export const FormSectionTitle = styled.div`
-  padding: 10px 0px;
+  padding: 10px 0 10px 10px;
   display: flex;
   justify-content: space-between;
 
