@@ -25,6 +25,7 @@ import { fields, columns } from "./data";
 
 const leftSideWidth: number = 450;
 let clonedSelected: any;
+let clonedUserInfo: any;
 
 function CM1200({
   depthFullName,
@@ -72,6 +73,7 @@ function CM1200({
 
   useEffect(() => {
     if (dataCommonDic) {
+      console.log("dataCommonDic.cuRdangaType:", dataCommonDic?.cuRdangaType);
       reset({ areaCode: dataCommonDic?.areaCode[0].code });
       fetchData({ areaCode: dataCommonDic?.areaCode[0].code }, "last");
     }
@@ -92,6 +94,7 @@ function CM1200({
       }
 
       clonedSelected = structuredClone(selected);
+
       if (selected.cuCode && selected.areaCode) {
         fetchData65(
           {
@@ -138,22 +141,6 @@ function CM1200({
     }
   }, [selectedUserInfo]);
 
-  function deepClone(obj: any) {
-    if (obj === null || typeof obj !== "object") {
-      return obj;
-    }
-
-    let clone: any = Array.isArray(obj) ? [] : {};
-
-    for (let key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        clone[key] = deepClone(obj[key]);
-      }
-    }
-
-    return clone;
-  }
-
   const prepareSearchFormValues = () => {
     const params: any = getValues();
     if (params.dataChk === undefined || params.dataChk === false) {
@@ -170,6 +157,8 @@ function CM1200({
     if (res) {
       if (res?.userInfo) {
         setUserInfo(res.userInfo);
+        clonedUserInfo = [...res.userInfo];
+
         if (pos === "last") {
           setSelectedUserInfo(res.userInfo[res.userInfo?.length - 1]);
         }
@@ -306,6 +295,7 @@ function CM1200({
             setIsAddBtnClicked={setIsAddBtnClicked}
             prepareSearchFormValues={prepareSearchFormValues}
             clonedSelected={clonedSelected}
+            clonedUserInfo={clonedUserInfo}
           />
         </RightSide>
         {showDraggableLine()}

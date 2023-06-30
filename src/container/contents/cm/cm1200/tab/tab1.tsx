@@ -68,6 +68,7 @@ function Tab1({
               setRdanga(e.target.value);
               calcRdanga("rdanga", e.target.value);
             }}
+            readOnly={!watch("chkCuRdanga")}
           />
           <p>원</p>
           <Select
@@ -77,6 +78,7 @@ function Tab1({
               setRdangaSign(e.target.value);
               calcRdanga("rdangaSign", e.target.value);
             }}
+            disabled={!watch("chkCuRdanga")}
           >
             {dataCommonDic?.cuRdangaSign.map((obj: any, index: number) => (
               <option key={index} value={obj.code}>
@@ -92,6 +94,7 @@ function Tab1({
               setRdangaAmt(e.target.value);
               calcRdanga("rdangaAmt", e.target.value);
             }}
+            readOnly={!watch("chkCuRdanga")}
           />
           <p>{totalValue}</p>
         </FormGroup>
@@ -104,6 +107,7 @@ function Tab1({
             inputSize={InputSize.i60}
             value={rdanga}
             onChange={(e: any) => setRdanga(e.target.value)}
+            readOnly={!watch("chkCuRdanga")}
           />
         </FormGroup>
       );
@@ -118,13 +122,13 @@ function Tab1({
           render={({ field }) => (
             <CheckBox
               {...field}
+              checked={field.value}
               title="조 정 기"
               className="label-check"
               style={{ width: "100px" }}
             />
           )}
         />
-
         <Controller
           control={control}
           name="cuRh2O"
@@ -143,20 +147,19 @@ function Tab1({
           )}
         />
         <p>mmH20</p>
-
         <Controller
           control={control}
           name="chkCuRdanga"
           render={({ field }) => (
             <CheckBox
               {...field}
+              checked={field.value}
               title="루베단가"
               className="label-check"
               style={{ width: "99px" }}
             />
           )}
         />
-
         <Select
           name="rdangaType"
           value={rdangaType}
@@ -167,7 +170,7 @@ function Tab1({
           width={InputSize.i120}
           disabled={!watch("chkCuRdanga")}
         >
-          {dataCommonDic?.cuRdangaType.map((obj: any, index: number) => (
+          {dataCommonDic?.cuRdangaType?.map((obj: any, index: number) => (
             <option key={index} value={obj.code}>
               {obj.codeName}
             </option>
@@ -182,13 +185,13 @@ function Tab1({
           render={({ field }) => (
             <CheckBox
               {...field}
+              checked={field.value}
               title="관 리 비"
               className="label-check"
               style={{ width: "100px" }}
             />
           )}
         />
-
         <Controller
           control={control}
           name="cuAnkum"
@@ -203,20 +206,19 @@ function Tab1({
           )}
         />
         <p>원</p>
-
         <Controller
           control={control}
           name="chkCuMeterKum"
           render={({ field }) => (
             <CheckBox
               {...field}
+              checked={field.value}
               title="계 량 기"
               style={{ width: "140px" }}
               className="label-check"
             />
           )}
         />
-
         <Controller
           control={control}
           name="cuMeterkum"
@@ -231,7 +233,6 @@ function Tab1({
           )}
         />
         <p>원</p>
-
         <Label style={{ minWidth: "110px" }}>기본사용료</Label>
         <Controller
           control={control}
@@ -239,13 +240,13 @@ function Tab1({
           render={({ field }) => (
             <CheckBox
               {...field}
+              checked={field.value}
               title="적용"
               className="label-check"
               style={{ width: "60px" }}
             />
           )}
         />
-
         <Input
           type="number"
           register={register("cuBaGageM3", {
@@ -276,13 +277,13 @@ function Tab1({
           render={({ field }) => (
             <CheckBox
               {...field}
+              checked={field.value}
               title="연 체 율"
               className="label-check"
               style={{ width: "100px" }}
             />
           )}
         />
-
         <Controller
           control={control}
           name="cuPer"
@@ -297,20 +298,19 @@ function Tab1({
           )}
         />
         <p>{`%`}</p>
-
         <Controller
           control={control}
           name="chkCuCdc"
           render={({ field }) => (
             <CheckBox
               {...field}
+              checked={field.value}
               title="할 인 율"
               className="label-check"
               style={{ width: "140px" }}
             />
           )}
         />
-
         <Controller
           control={control}
           name="cuCdc"
@@ -325,20 +325,19 @@ function Tab1({
           )}
         />
         <p>{`%`}</p>
-
         <Controller
           control={control}
           name="chkCuSukumtype"
           render={({ field }) => (
             <CheckBox
               {...field}
+              checked={field.value}
               title="수금 방법"
               className="label-check"
               style={{ width: "170px" }}
             />
           )}
         />
-
         <Controller
           control={control}
           name="cuSukumtype"
@@ -364,13 +363,13 @@ function Tab1({
           render={({ field }) => (
             <CheckBox
               {...field}
+              checked={field.value}
               title="검침주기"
               className="label-check"
               style={{ width: "100px" }}
             />
           )}
         />
-
         <Controller
           control={control}
           name="cuGumTurm"
@@ -388,20 +387,19 @@ function Tab1({
             </Select>
           )}
         />
-
         <Controller
           control={control}
           name="chkCuGumdate"
           render={({ field }) => (
             <CheckBox
               {...field}
+              checked={field.value}
               title="검 침 일"
               className="label-check"
               style={{ width: "99px" }}
             />
           )}
         />
-
         <Controller
           control={control}
           name="cuGumdate"
@@ -415,20 +413,19 @@ function Tab1({
           )}
         />
         <p>일</p>
-
         <Controller
           control={control}
           name="chkCuCno"
           render={({ field }) => (
             <CheckBox
               {...field}
+              checked={field.value}
               title="순 번"
               className="label-check"
               style={{ width: "170px" }}
             />
           )}
         />
-
         <Controller
           control={control}
           name="cuCno"
