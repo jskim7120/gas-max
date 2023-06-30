@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useGetTabDictionaryQuery } from "app/api/commonDictionary";
+import { useGetTabDictionaryMutation } from "app/api/commonDictionary";
 import { PT9001SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import PlainTab from "components/plainTab";
@@ -42,16 +42,21 @@ function PT9001({
   const [loading, setLoading] = useState<boolean>(false);
   const [tabId, setTabId] = useState(0);
 
-  const { data: dataCommonDic } = useGetTabDictionaryQuery({
-    groupId: "PT",
-    functionName: "PT9001",
-    tabId: tabId,
-  });
+  const [getTabDictionary, { data: dataCommonDic }] =
+    useGetTabDictionaryMutation();
 
   const dispatch = useDispatch();
   const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    getTabDictionary({
+      groupId: "PT",
+      functionName: "PT9001",
+      tabId: tabId,
+    });
+  }, [tabId]);
 
   useEffect(() => {
     if (dataCommonDic?.dataInit) {

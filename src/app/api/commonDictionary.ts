@@ -19,9 +19,17 @@ export const commonDictionaryApi = createApi({
         `/app/common/dictionary/${groupId}/${functionName}/${areaCode}`,
     }),
 
-    getTabDictionary: build.query<any, any>({
-      query: ({ groupId, functionName, tabId }) =>
-        `/app/common/dictionary/${groupId}/${functionName}/tab/${tabId}`,
+    getTabDictionary: build.mutation({
+      query: (body: {
+        groupId: string;
+        functionName: string;
+        tabId: number;
+      }) => {
+        return {
+          url: `/app/common/dictionary/${body.groupId}/${body.functionName}/tab/${body.tabId}`,
+          method: "get",
+        };
+      },
     }),
 
     getCommonDictionary: build.mutation({
@@ -38,5 +46,5 @@ export const commonDictionaryApi = createApi({
 export const {
   useGetCommonDictionaryMutation,
   useGetAreaCodeDictionaryQuery,
-  useGetTabDictionaryQuery,
+  useGetTabDictionaryMutation,
 } = commonDictionaryApi;
