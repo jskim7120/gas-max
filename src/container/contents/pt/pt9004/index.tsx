@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
-import { useGetTabDictionaryQuery } from "app/api/commonDictionary";
+import { useGetTabDictionaryMutation } from "app/api/commonDictionary";
 import { PT9004SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import PlainTab from "components/plainTab";
@@ -19,7 +19,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import { DateWithoutDash } from "helpers/dateFormat";
+import { DateWithDashOnlyYearMonth, DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns0, fields0 } from "./tab/tab1/data0";
 import { columns1, fields1 } from "./tab/tab2/data1";
@@ -44,21 +44,29 @@ function PT9004({
   const [loading, setLoading] = useState<boolean>(false);
   const [tabId, setTabId] = useState(0);
 
-  const { data: dataCommonDic } = useGetTabDictionaryQuery({
-    groupId: "PT",
-    functionName: "PT9004",
-    tabId: tabId,
-  });
+  const [getTabDictionary, { data: dataCommonDic }] =
+    useGetTabDictionaryMutation();
 
   const dispatch = useDispatch();
 
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
   useEffect(() => {
-    if (dataCommonDic?.dataInit) {
-      console.log("DataDataData: ", dataCommonDic);
+    getTabDictionary({
+      groupId: "PT",
+      functionName: "PT9004",
+      tabId: tabId,
+    });
+  }, [tabId]);
+
+  useEffect(() => {
+    if (
+      dataCommonDic?.dataInit &&
+      dataCommonDic?.dataInit1 &&
+      dataCommonDic?.dataInit2
+    ) {
       resetForm("reset");
     }
   }, [dataCommonDic]);
@@ -117,13 +125,29 @@ function PT9004({
         swCode: init?.swCode,
         cuCustgubun: init?.cuCustgubun,
         cuJyCode: init?.cuJyCode,
-        dateChk: init?.dateChk,
+        dateChk: init?.dateChk === "Y",
         sDate: init?.sDate,
         eDate: init?.eDate,
         cuSukumtype: init?.cuSukumtype,
         cuStae: init?.cuStae,
         sOrd: init?.sOrd,
         sChk: init?.sChk,
+
+        swCode1: init?.swCode1,
+        cuCustgubun1: init?.cuCustgubun1,
+        cuJyCode1: init?.cuJyCode1,
+        cuSukumtype1: init?.cuSukumtype1,
+        cuStae1: init?.cuStae1,
+        sOrd1: init?.sOrd1,
+        sChk1: init?.sChk1,
+
+        swCode2: init?.swCode2,
+        cuCustgubun2: init?.cuCustgubun2,
+        sOver2: init?.sOver2,
+        cuJyCode2: init?.cuJyCode2,
+        cuSukumtype2: init?.cuSukumtype2,
+        cuStae2: init?.cuStae2,
+        sOrd2: init?.sOrd2,
       });
     }
   };
@@ -135,9 +159,21 @@ function PT9004({
     setData([]);
   };
 
+  const handleSOverChange = () => {
+    if (watch("sOver2") !== undefined && watch("sOver2") !== null) {
+      const today = new Date();
+      const newDate = new Date(
+        today.setMonth(today.getMonth() - +watch("sOver2"))
+      );
+      return DateWithDashOnlyYearMonth(newDate);
+    }
+  };
+
   const submit = (params: any) => {
     params.tabKind = tabId;
     if (tabId === 0) {
+      delete params.cuCustgubun1;
+      delete params.cuSukumtype1;
       delete params.swCode1;
       delete params.cuJyCode1;
       delete params.cuStae1;
@@ -173,12 +209,6 @@ function PT9004({
       delete params.cuSukumtype2;
       delete params.cuStae2;
       delete params.sOrd2;
-
-      // params.swCode = params.swCode1;
-      // params.cuJyCode = params.cuJyCode1;
-      // params.cuStae = params.cuStae1;
-      // params.sOrd = params.sOrd1;
-      // params.sChk = params.sChk1;
     } else if (tabId === 2) {
       delete params.swCode;
       delete params.cuJyCode;
@@ -198,17 +228,9 @@ function PT9004({
       delete params.cuStae1;
       delete params.sOrd1;
       delete params.sChk1;
-
-      // params.swCode = params.swCode2;
-      // params.cuJyCode = params.cuJyCode2;
-      // params.cuStae = params.cuStae2;
-      // params.sOrd = params.sOrd2;
-      // params.cuCustgubun1 = params.cuCustgubun2;
-      // params.cuCustgubun1 = params.cuSukumtype2;
     }
     fetchData(params);
   };
-
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
@@ -290,7 +312,14 @@ function PT9004({
             borderTop: "1px solid #00000033",
           }}
         >
-          {getTabContent(tabId, register, dataCommonDic, data, control)}
+          {getTabContent(
+            tabId,
+            register,
+            dataCommonDic,
+            data,
+            control,
+            handleSOverChange
+          )}
         </TabContentWrapper>
       </div>
       <BasicGrid
