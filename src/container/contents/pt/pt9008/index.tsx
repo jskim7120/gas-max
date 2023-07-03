@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
+import { useGetTabDictionaryMutation } from "app/api/commonDictionary";
 import { PT9008SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import PlainTab from "components/plainTab";
@@ -20,10 +21,12 @@ import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
-import { columns0, fields0 } from "./data/data0";
-import { columns1, fields1 } from "./data/data1";
+import { columns0, fields0 } from "./tab/tab1/data0";
+import { columns1, fields1 } from "./tab/tab2/data1";
 import CheckBox from "components/checkbox";
+import { useDispatch } from "app/store";
 import getTabContent from "./getTabContent";
+import { apiGet } from "app/axios";
 
 function PT9008({
   depthFullName,
@@ -34,29 +37,54 @@ function PT9008({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    fetchData,
-    dispatch,
-    dataCommonDic,
-  } = CreateReport("PT", "PT9008", menuId, PT9008SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const [data, setData] = useState<Array<any>>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [tabId, setTabId] = useState(0);
+
+  const [getTabDictionary, { data: dataCommonDic }] =
+    useGetTabDictionaryMutation();
+
+  const dispatch = useDispatch();
+
+  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const [tabId, setTabId] = useState(0);
+  useEffect(() => {
+    getTabDictionary({
+      groupId: "PT",
+      functionName: "PT9008",
+      tabId: tabId,
+    });
+  }, [tabId]);
 
   useEffect(() => {
-    if (dataCommonDic?.dataInit) {
+    if (dataCommonDic) {
       resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (tabId === 0 || tabId === 1) {
+      setData([]);
+    }
+  }, [tabId]);
+
+  const fetchData = async (params: any) => {
+    setLoading(true);
+
+    const dataS = await apiGet(PT9008SEARCH, params);
+
+    if (dataS && dataS?.length > 0) {
+      setData(dataS);
+      const lastIndex = dataS && dataS?.length > 1 ? dataS.length - 1 : 0;
+    } else {
+      setData([]);
+    }
+    setLoading(false);
+  };
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -77,74 +105,58 @@ function PT9008({
         return { columns: columns0, fields: fields0 };
       case 1:
         return { columns: columns1, fields: fields1 };
+      default:
+        return { columns: columns0, fields: fields0 };
     }
-  };
-
-  const submit = (params: ISEARCH) => {
-    // if (tabId === 0) {
-    //   delete params.swCode1;
-    //   delete params.cuJyCode1;
-    //   delete params.cuStae1;
-    //   delete params.sOrd1;
-    //   delete params.sChk1;
-
-    //   delete params.swCode2;
-    //   delete params.cuCustgubun2;
-    //   delete params.sOver2;
-    //   delete params.cuJyCode2;
-    //   delete params.cuSukumtype2;
-    //   delete params.cuStae2;
-    //   delete params.sOrd2;
-    // } else if (tabId === 1) {
-    //   delete params.swCode;
-    //   delete params.cuJyCode;
-    //   delete params.dateChk;
-    //   delete params.sDate;
-    //   delete params.eDate;
-    //   delete params.cuStae;
-    //   delete params.sOrd;
-    //   delete params.sChk;
-
-    //   delete params.swCode2;
-    //   delete params.cuCustgubun2;
-    //   delete params.sOver2;
-    //   delete params.cuJyCode2;
-    //   delete params.cuSukumtype2;
-    //   delete params.cuStae2;
-    //   delete params.sOrd2;
-
-    //   params.swCode = params.swCode1;
-    //   params.cuJyCode = params.cuJyCode1;
-    //   params.cuStae = params.cuStae1;
-    //   params.sOrd = params.sOrd1;
-    //   params.sChk = params.sChk1;
-    // }
-    fetchData(params);
   };
 
   const resetForm = (type: string) => {
     if (type === "reset") {
-      const init = dataCommonDic.dataInit[0];
-      reset({
-        areaCode: dataCommonDic.areaCode[0].code,
-        cuGubun: init?.cuGubun,
-        sDate: init?.sDate,
-        eDate: init?.eDate,
-        sawonChk: init?.sawonChk,
-        swCode: init?.swCode,
-        cuCustgubun1: init?.cuCustgubun1,
-        cuName: init?.cuName,
-        cuSukumtype1: init?.cuSukumtype1,
-        cuJyCode: init?.cuJyCode,
-      });
+      if (tabId === 0) {
+        const init = dataCommonDic.dataInit[0];
+        reset({
+          areaCode: dataCommonDic.areaCode[0].code,
+          cuGubun: init?.cuGubun,
+          sDate: init?.sDate,
+          eDate: init?.eDate,
+          sawonChk: init?.sawonChk,
+          swCode: init?.swCode,
+          cuCustgubun: init?.cuCustgubun,
+          cuName: init?.cuName,
+          cuSukumtype: init?.cuSukumtype,
+          cuJyCode: init?.cuJyCode,
+        });
+      }
+      if (tabId === 1) {
+        const init = dataCommonDic?.dataInit[0];
+        reset({
+          areaCode: dataCommonDic.areaCode[0].code,
+          cuGubun: init?.cuGubun,
+          sDate: init?.sDate,
+          eDate: init?.eDate,
+          sawonChk: init?.sawonChk,
+          swCode: init?.swCode,
+          cuCustgubun: init?.cuCustgubun,
+          cuName: init?.cuName,
+          cuSukumtype: init?.cuSukumtype,
+          cuJyCode: init?.cuJyCode,
+        });
+      }
     }
   };
 
   const handleReset = () => {
-    if (dataCommonDic?.dataInit) {
+    if (dataCommonDic?.dataInit || dataCommonDic?.dataInit1) {
       resetForm("reset");
     }
     setData([]);
+  };
+
+  const submit = (params: any) => {
+    params.tabKind = tabId;
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
+    fetchData(params);
   };
 
   return (
@@ -243,8 +255,7 @@ function PT9008({
         ref={gridRef}
         gridChangeField={tabId}
         areaCode={ownAreaCode}
-        columns={selectColumns()?.columns}
-        fields={selectColumns()?.fields}
+        {...selectColumns()}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={{ height: "calc(100% - 52px)" }}

@@ -5,8 +5,8 @@ export interface ISEARCH {
   eDate: string;
   sawonChk: string;
   swCode: string;
-  cuCustgubun1: string;
+  cuCustgubun: string;
   cuName: string;
-  cuSukumtype1: string;
+  cuSukumtype: string;
   cuJyCode: string;
 }

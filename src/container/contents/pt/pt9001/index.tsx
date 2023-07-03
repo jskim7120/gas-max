@@ -50,7 +50,7 @@ function PT9001({
   const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
-  console.log("dataCommonDicdataCommonDicdataCommonDic: ", dataCommonDic);
+
   useEffect(() => {
     getTabDictionary({
       groupId: "PT",
