@@ -62,17 +62,13 @@ function PT9004({
   }, [tabId]);
 
   useEffect(() => {
-    if (
-      dataCommonDic?.dataInit &&
-      dataCommonDic?.dataInit1 &&
-      dataCommonDic?.dataInit2
-    ) {
+    if (dataCommonDic) {
       resetForm("reset");
     }
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (tabId) {
+    if (tabId === 0 || tabId === 1 || tabId === 2) {
       setData([]);
     }
   }, [tabId]);
@@ -119,41 +115,55 @@ function PT9004({
 
   const resetForm = (type: string) => {
     if (type === "reset") {
-      const init = dataCommonDic.dataInit[0];
-      reset({
-        areaCode: dataCommonDic.areaCode[0].code,
-        swCode: init?.swCode,
-        cuCustgubun: init?.cuCustgubun,
-        cuJyCode: init?.cuJyCode,
-        dateChk: init?.dateChk === "Y",
-        sDate: init?.sDate,
-        eDate: init?.eDate,
-        cuSukumtype: init?.cuSukumtype,
-        cuStae: init?.cuStae,
-        sOrd: init?.sOrd,
-        sChk: init?.sChk,
-
-        swCode1: init?.swCode1,
-        cuCustgubun1: init?.cuCustgubun1,
-        cuJyCode1: init?.cuJyCode1,
-        cuSukumtype1: init?.cuSukumtype1,
-        cuStae1: init?.cuStae1,
-        sOrd1: init?.sOrd1,
-        sChk1: init?.sChk1,
-
-        swCode2: init?.swCode2,
-        cuCustgubun2: init?.cuCustgubun2,
-        sOver2: init?.sOver2,
-        cuJyCode2: init?.cuJyCode2,
-        cuSukumtype2: init?.cuSukumtype2,
-        cuStae2: init?.cuStae2,
-        sOrd2: init?.sOrd2,
-      });
+      if (tabId === 0) {
+        const init = dataCommonDic.dataInit[0];
+        reset({
+          areaCode: dataCommonDic.areaCode[0].code,
+          swCode: init?.swCode,
+          cuCustgubun: init?.cuCustgubun,
+          cuJyCode: init?.cuJyCode,
+          dateChk: init?.dateChk === "Y",
+          sDate: init?.sDate,
+          eDate: init?.eDate,
+          cuSukumtype: init?.cuSukumtype,
+          cuStae: init?.cuStae,
+          sOrd: init?.sOrd,
+          sChk: init?.sChk,
+        });
+      }
+      if (tabId === 1) {
+        const init = dataCommonDic.dataInit1[0];
+        reset({
+          swCode1: init?.swCode1,
+          cuCustgubun1: init?.cuCustgubun1,
+          cuJyCode1: init?.cuJyCode1,
+          cuSukumtype1: init?.cuSukumtype1,
+          cuStae1: init?.cuStae1,
+          sOrd1: init?.sOrd1,
+          sChk1: init?.sChk1,
+        });
+      }
+      if (tabId === 2) {
+        const init = dataCommonDic.dataInit2[0];
+        reset({
+          swCode2: init?.swCode2,
+          cuCustgubun2: init?.cuCustgubun2,
+          sOver2: init?.sOver2,
+          cuJyCode2: init?.cuJyCode2,
+          cuSukumtype2: init?.cuSukumtype2,
+          cuStae2: init?.cuStae2,
+          sOrd2: init?.sOrd2,
+        });
+      }
     }
   };
 
   const handleReset = () => {
-    if (dataCommonDic?.dataInit) {
+    if (
+      dataCommonDic?.dataInit ||
+      dataCommonDic?.dataInit1 ||
+      dataCommonDic?.dataInit2
+    ) {
       resetForm("reset");
     }
     setData([]);
