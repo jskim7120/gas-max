@@ -22,44 +22,36 @@ export const fields0 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gjGumymsno",
-    dataType: ValueType.TEXT,
-  },
-  {
     fieldName: "gjJungum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjGum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjGage",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjDanga",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjDangkum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjPerkum",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "gjTotal",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "gjMisujan",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "lastMisu",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "cuSwName",
@@ -86,17 +78,17 @@ export const columns0 = [
     name: "gjCuCode",
     fieldName: "gjCuCode",
     type: "data",
-    width: "70",
+    width: "80",
     header: {
       text: "코드",
     },
   },
-
   {
     name: "cuName",
     fieldName: "cuName",
     type: "data",
     width: "200",
+    styleName: "rg-left-column",
     header: {
       text: "거래처명",
     },
@@ -105,7 +97,7 @@ export const columns0 = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "100",
+    width: "120",
     header: {
       text: "전화번호",
     },
@@ -114,109 +106,96 @@ export const columns0 = [
     name: "gjDate",
     fieldName: "gjDate",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
       text: "검침일자",
-    },
-  },
-  {
-    name: "gjGumymsno",
-    fieldName: "gjGumymsno",
-    type: "data",
-    width: "50",
-    header: {
-      text: "전검",
     },
   },
   {
     name: "gjJungum",
     fieldName: "gjJungum",
     type: "data",
-    width: "50",
+    width: "80",
     header: {
-      text: "당검침",
+      text: "전검",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjGum",
     fieldName: "gjGum",
     type: "data",
-    width: "50",
+    width: "80",
     header: {
-      text: "사용",
+      text: "당검침",
     },
-  },
-
-  {
-    name: "gjGage",
-    fieldName: "gjGage",
-    type: "data",
-    width: "50",
-    header: {
-      text: "단가",
-    },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjDanga",
     fieldName: "gjDanga",
     type: "data",
-    width: "90",
+    width: "80",
     header: {
-      text: "당월금액",
+      text: "단가",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjDangkum",
     fieldName: "gjDangkum",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
-      text: "연체료",
+      text: "당월금액",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjPerkum",
     fieldName: "gjPerkum",
     type: "data",
-    width: "70",
+    width: "80",
     header: {
-      text: "당월미수",
+      text: "연체료",
     },
-  },
-  {
-    name: "gjTotal",
-    fieldName: "gjTotal",
-    type: "data",
-    width: "70",
-    header: {
-      text: "미수누계",
-    },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "gjMisujan",
     fieldName: "gjMisujan",
     type: "data",
-    width: "50",
+    width: "100",
     header: {
-      text: "사원",
+      text: "당월미수",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "lastMisu",
     fieldName: "lastMisu",
     type: "data",
-    width: "70",
+    width: "100",
     header: {
-      text: "",
+      text: "미수누계",
     },
+    styleName: "rg-right-column",
+    numberFormat: "#,##0",
   },
   {
     name: "cuSwName",
     fieldName: "cuSwName",
     type: "data",
-    width: "50",
+    width: "80",
+    styleName: "rg-left-column",
     header: {
-      text: "",
+      text: "사원",
     },
   },
 ];

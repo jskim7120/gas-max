@@ -73,7 +73,6 @@ function CM1200({
 
   useEffect(() => {
     if (dataCommonDic) {
-      console.log("dataCommonDic.cuRdangaType:", dataCommonDic?.cuRdangaType);
       reset({ areaCode: dataCommonDic?.areaCode[0].code });
       fetchData({ areaCode: dataCommonDic?.areaCode[0].code }, "last");
     }
