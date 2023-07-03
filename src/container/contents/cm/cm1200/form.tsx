@@ -166,9 +166,8 @@ const Form = React.forwardRef(
           cuCode: res?.tempCuCode[0]?.tempCuCode,
         });
         setUserInfo([]);
-
-        //setFocus("cuName") ene 2 ajillahgui bn
-        //document.getElementsByName("cuName")[0]?.focus(); ene 2 ajillahgui bn
+        // setFocus("cuName")
+        document.getElementsByName("cuName")[0]?.focus();
       }
     };
 
@@ -180,7 +179,7 @@ const Form = React.forwardRef(
           let tempData: any = { ...selected, ...supplyTab };
 
           setCuAddr1(selected.cuAddr1 ? selected.cuAddr1 : "");
-          setUserInfo(clonedUserInfo);
+          // setUserInfo(clonedUserInfo);
           reset({
             ...tempData,
             cuAptnameYn: tempData?.cuAptnameYn === "Y",
@@ -264,40 +263,76 @@ const Form = React.forwardRef(
       const formValues: any = getValues();
 
       formValues.areaCode = isAddBtnClicked ? areaCode : selected.areaCode;
+      if (isAddBtnClicked) {
+        if (!formValues.chkCuRh20) {
+          formValues.cuRh2O = "";
+        }
+        if (!formValues.chkCuAnKum) {
+          formValues.cuAnkum = "";
+        }
+        if (!formValues.chkCuMeterKum) {
+          formValues.cuMeterkum = "";
+        }
+        if (!formValues.chkCuPer) {
+          formValues.cuPer = "";
+        }
+        if (!formValues.chkCuCdc) {
+          formValues.cuCdc = "";
+        }
+        if (!formValues.chkCuSukumtype) {
+          formValues.cuSukumtype = "";
+        }
+        if (!formValues.chkCuGumTurm) {
+          formValues.cuGumTurm = "";
+        }
+        if (!formValues.chkCuGumdate) {
+          formValues.cuGumdate = "";
+        }
+        if (!formValues.chkCuCno) {
+          formValues.cuCno = "";
+        }
 
-      if (!formValues.chkCuRh20) {
-        formValues.cuRh2O = clonedSelected.cuRh2O;
-      }
-      if (!formValues.chkCuAnKum) {
-        formValues.cuAnkum = clonedSelected.cuAnkum;
-      }
-      if (!formValues.chkCuMeterKum) {
-        formValues.cuMeterkum = clonedSelected.cuMeterkum;
-      }
-      if (!formValues.chkCuPer) {
-        formValues.cuPer = clonedSelected.cuPer;
-      }
-      if (!formValues.chkCuCdc) {
-        formValues.cuCdc = clonedSelected.cuCdc;
-      }
-      if (!formValues.chkCuSukumtype) {
-        formValues.cuSukumtype = clonedSelected.cuSukumtype;
-      }
-      if (!formValues.chkCuGumTurm) {
-        formValues.cuGumTurm = clonedSelected.cuGumTurm;
-      }
-      if (!formValues.chkCuGumdate) {
-        formValues.cuGumdate = clonedSelected.cuGumdate;
-      }
-      if (!formValues.chkCuCno) {
-        formValues.cuCno = clonedSelected.cuCno;
-      }
+        if (!formValues.chkCuRdanga) {
+          formValues.cuRdanga = "";
+          formValues.cuRdangaAmt = "";
+          formValues.cuRdangaSign = "";
+          formValues.cuRdangaType = "";
+        }
+      } else {
+        if (!formValues.chkCuRh20) {
+          formValues.cuRh2O = clonedSelected.cuRh2O;
+        }
+        if (!formValues.chkCuAnKum) {
+          formValues.cuAnkum = clonedSelected.cuAnkum;
+        }
+        if (!formValues.chkCuMeterKum) {
+          formValues.cuMeterkum = clonedSelected.cuMeterkum;
+        }
+        if (!formValues.chkCuPer) {
+          formValues.cuPer = clonedSelected.cuPer;
+        }
+        if (!formValues.chkCuCdc) {
+          formValues.cuCdc = clonedSelected.cuCdc;
+        }
+        if (!formValues.chkCuSukumtype) {
+          formValues.cuSukumtype = clonedSelected.cuSukumtype;
+        }
+        if (!formValues.chkCuGumTurm) {
+          formValues.cuGumTurm = clonedSelected.cuGumTurm;
+        }
+        if (!formValues.chkCuGumdate) {
+          formValues.cuGumdate = clonedSelected.cuGumdate;
+        }
+        if (!formValues.chkCuCno) {
+          formValues.cuCno = clonedSelected.cuCno;
+        }
 
-      if (!formValues.chkCuRdanga) {
-        formValues.cuRdanga = clonedSelected.cuRdanga;
-        formValues.cuRdangaAmt = clonedSelected.cuRdangaAmt;
-        formValues.cuRdangaSign = clonedSelected.cuRdangaSign;
-        formValues.cuRdangaType = clonedSelected.cuRdangaType;
+        if (!formValues.chkCuRdanga) {
+          formValues.cuRdanga = clonedSelected.cuRdanga;
+          formValues.cuRdangaAmt = clonedSelected.cuRdangaAmt;
+          formValues.cuRdangaSign = clonedSelected.cuRdangaSign;
+          formValues.cuRdangaType = clonedSelected.cuRdangaType;
+        }
       }
 
       if (formValues.cuBaGageKum) {
