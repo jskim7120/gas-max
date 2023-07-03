@@ -50,7 +50,7 @@ function PT9001({
   const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
-
+  console.log("dataCommonDicdataCommonDicdataCommonDic: ", dataCommonDic);
   useEffect(() => {
     getTabDictionary({
       groupId: "PT",
@@ -66,7 +66,7 @@ function PT9001({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (tabId) {
+    if (tabId === 0 || tabId === 1) {
       setData([]);
     }
   }, [tabId]);
@@ -111,40 +111,38 @@ function PT9001({
 
   const resetForm = (type: string) => {
     if (type === "reset") {
-      const init = dataCommonDic;
-
-      // if (init?.dataInit[0]) {
-      //   reset({
-      //     areaCode: dataCommonDic.areaCode[0].code,
-      //     cuGubun: init?.dataInit[0]?.cuGubun,
-      //     cuJangbu: init?.dataInit[0]?.cuJangbu,
-      //     cuJyCode: init?.dataInit[0]?.cuJyCode,
-      //     cuStae: init?.dataInit[0]?.cuStae,
-      //     dateChk: init?.dataInit[0]?.dateChk === "Y",
-      //     eDate: init?.dataInit[0]?.eDate,
-      //     sDate: init?.dataInit[0]?.sDate,
-      //     sOrd: init?.dataInit[0]?.sOrd,
-      //     swCode: init?.dataInit[0]?.swCode,
-      //   });
-      // }
-      // if (init?.dataInit1[0]) {
-      //   reset({
-      //     areaCode: dataCommonDic.areaCode[0].code,
-      //     cuCustgubun1: init?.dataInit1[0]?.cuCustgubun1,
-      //     cuJangbu1: init?.dataInit1[0]?.cuJangbu1,
-      //     cuJyCode1: init?.dataInit1[0]?.cuJyCode1,
-      //     cuStae1: init?.dataInit1[0]?.cuStae1,
-      //     cuSukumtype1: init?.dataInit1[0]?.cuSukumtype1,
-      //     sOrd1: init?.dataInit1[0]?.sOrd1,
-      //     swCode1: init?.dataInit1[0]?.swCode1,
-      //   });
-      // }
-      console.log(init);
+      if (tabId === 0) {
+        const init = dataCommonDic?.dataInit[0];
+        reset({
+          areaCode: dataCommonDic.areaCode[0].code,
+          cuGubun: init?.cuGubun,
+          cuJangbu: init?.cuJangbu,
+          cuJyCode: init?.cuJyCode,
+          cuStae: init?.cuStae,
+          dateChk: init?.dateChk === "Y",
+          eDate: init?.eDate,
+          sDate: init?.sDate,
+          sOrd: init?.sOrd,
+          swCode: init?.swCode,
+        });
+      }
+      if (tabId === 1) {
+        const init = dataCommonDic?.dataInit1[0];
+        reset({
+          cuCustgubun1: init?.cuCustgubun1,
+          cuJangbu1: init?.cuJangbu1,
+          cuJyCode1: init?.cuJyCode1,
+          cuStae1: init?.cuStae1,
+          cuSukumtype1: init?.cuSukumtype1,
+          sOrd1: init?.sOrd1,
+          swCode1: init?.swCode1,
+        });
+      }
     }
   };
 
   const handleReset = () => {
-    if (dataCommonDic?.dataInit) {
+    if (dataCommonDic?.dataInit || dataCommonDic?.dataInit1) {
       resetForm("reset");
     }
     setData([]);
