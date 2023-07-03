@@ -68,7 +68,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "20",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -82,7 +82,7 @@ export const columns = [
     name: "cuCode",
     fieldName: "cuCode",
     type: "data",
-    width: "40",
+    width: "80",
     header: {
       text: "코드",
     },
@@ -91,7 +91,7 @@ export const columns = [
     name: "cuViewName",
     fieldName: "cuViewName",
     type: "data",
-    width: "100",
+    width: "200",
     header: {
       text: "거래처",
     },
@@ -101,7 +101,7 @@ export const columns = [
     name: "cuTel",
     fieldName: "cuTel",
     type: "data",
-    width: "40",
+    width: "120",
     header: {
       text: "전화번호",
     },
@@ -111,7 +111,7 @@ export const columns = [
     name: "cuHp",
     fieldName: "cuHp",
     type: "data",
-    width: "45",
+    width: "120",
     header: {
       text: "핸드폰",
     },
@@ -121,7 +121,7 @@ export const columns = [
     name: "cuAddrn2",
     fieldName: "cuAddrn2",
     type: "data",
-    width: "150",
+    width: "250",
     header: {
       text: "주소",
     },
@@ -131,7 +131,7 @@ export const columns = [
     name: "cuSwName",
     fieldName: "cuSwName",
     type: "data",
-    width: "40",
+    width: "70",
     header: {
       text: "담당사원",
     },
@@ -141,7 +141,7 @@ export const columns = [
     name: "cuJmisu",
     fieldName: "cuJmisu",
     type: "data",
-    width: "40",
+    width: "100",
     header: {
       text: "중량미수",
     },
@@ -151,7 +151,7 @@ export const columns = [
     name: "cuCmisu",
     fieldName: "cuCmisu",
     type: "data",
-    width: "40",
+    width: "100",
     header: {
       text: "체적미수",
     },
@@ -161,7 +161,7 @@ export const columns = [
     name: "cuCutypeName",
     fieldName: "cuCutypeName",
     type: "data",
-    width: "60",
+    width: "100",
     header: {
       text: "소비자형태",
     },
@@ -171,7 +171,7 @@ export const columns = [
     name: "cuGongdate",
     fieldName: "cuGongdate",
     type: "data",
-    width: "40",
+    width: "100",
     header: {
       text: "공급계약",
     },
@@ -181,7 +181,7 @@ export const columns = [
     name: "cuGongno",
     fieldName: "cuGongno",
     type: "data",
-    width: "40",
+    width: "100",
     header: {
       text: "계약번호",
     },
@@ -191,7 +191,7 @@ export const columns = [
     name: "cuTypeName",
     fieldName: "cuTypeName",
     type: "data",
-    width: "40",
+    width: "100",
     header: {
       text: "거래구분",
     },
@@ -201,7 +201,7 @@ export const columns = [
     name: "cuStaeName",
     fieldName: "cuStaeName",
     type: "data",
-    width: "40",
+    width: "70",
     header: {
       text: "거래상태",
     },
@@ -211,7 +211,7 @@ export const columns = [
     name: "cuSupplyDate",
     fieldName: "cuSupplyDate",
     type: "data",
-    width: "40",
+    width: "100",
     header: {
       text: "최종공급일",
     },
