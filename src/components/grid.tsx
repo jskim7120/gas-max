@@ -82,8 +82,6 @@ function Grid({
           row: itemIndex,
         })
       );
-      // setIsAddBtnClicked && setIsAddBtnClicked(false);
-      // setIsAddBtnClicked2 && setIsAddBtnClicked2(false);
     };
 
     return () => {

@@ -25,7 +25,6 @@ import { fields, columns } from "./data";
 
 const leftSideWidth: number = 450;
 let clonedSelected: any;
-let clonedUserInfo: any;
 
 function CM1200({
   depthFullName,
@@ -43,17 +42,16 @@ function CM1200({
 
   const {
     data,
-    setData,
+    // setData,
     selected,
     setSelected,
     loading,
     isAddBtnClicked,
     setIsAddBtnClicked,
-    activeTabId,
+    // activeTabId,
     fetchData,
     showDraggableLine,
     show4Btns,
-    isOpen,
     gridIndexes,
     dispatch,
     dataCommonDic,
@@ -156,8 +154,6 @@ function CM1200({
     if (res) {
       if (res?.userInfo) {
         setUserInfo(res.userInfo);
-        clonedUserInfo = [...res.userInfo];
-
         if (pos === "last") {
           setSelectedUserInfo(res.userInfo[res.userInfo?.length - 1]);
         }
@@ -277,24 +273,19 @@ function CM1200({
             ownAreaCode={ownAreaCode}
             menuId={menuId}
             dataCommonDic={dataCommonDic}
-            data={data}
             userInfo={userInfo}
-            setUserInfo={setUserInfo}
             selectedUserInfo={selectedUserInfo}
             setSelectedUserInfo={setSelectedUserInfo}
             dataDictionary={dataDictionary}
             setDataDictionary={setDataDictionary}
             supplyTab={supplyTab}
-            setSupplyTab={setSupplyTab}
             fetchData={fetchData}
-            fetchData65={fetchData65}
             areaCode={watch("areaCode")}
             selected={selected}
             isAddBtnClicked={isAddBtnClicked}
             setIsAddBtnClicked={setIsAddBtnClicked}
             prepareSearchFormValues={prepareSearchFormValues}
             clonedSelected={clonedSelected}
-            clonedUserInfo={clonedUserInfo}
           />
         </RightSide>
         {showDraggableLine()}

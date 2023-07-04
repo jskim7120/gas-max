@@ -42,46 +42,35 @@ const Form = React.forwardRef(
       ownAreaCode,
       menuId,
       dataCommonDic,
-      data,
       userInfo,
-      setUserInfo,
       selectedUserInfo,
       setSelectedUserInfo,
       dataDictionary,
       setDataDictionary,
       supplyTab,
-      setSupplyTab,
       fetchData,
-      fetchData65,
       areaCode,
       selected,
       isAddBtnClicked,
-      setIsAddBtnClicked,
       prepareSearchFormValues,
       clonedSelected,
-      clonedUserInfo,
     }: {
       ownAreaCode: string;
       menuId: string;
       dataCommonDic: any;
-      data: any;
       userInfo: any;
-      setUserInfo: Function;
       selectedUserInfo: any;
       setSelectedUserInfo: Function;
       dataDictionary: any;
       setDataDictionary: Function;
       supplyTab: any;
-      setSupplyTab: Function;
       fetchData: Function;
-      fetchData65: Function;
       areaCode: string;
       selected: any;
       isAddBtnClicked: boolean;
       setIsAddBtnClicked: Function;
       prepareSearchFormValues: Function;
       clonedSelected: any;
-      clonedUserInfo: any;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -90,6 +79,7 @@ const Form = React.forwardRef(
     const [tabId, setTabId] = useState<number>(0);
     const [addr, setAddress] = useState<string>("");
     const [cuAddr1, setCuAddr1] = useState("");
+    const [userData, setUserData] = useState([]);
 
     const {
       handleSubmit,
@@ -118,14 +108,20 @@ const Form = React.forwardRef(
     } = useRdanga();
 
     useEffect(() => {
-      if (Object.keys(selected)?.length > 0) {
-        resetForm("reset");
+      if (selected && Object.keys(selected)?.length > 0) {
+        resetForm("reset2");
         setRdangaType(selected?.cuRdangaType);
         setRdanga(selected?.cuRdanga);
         setRdangaSign(selected?.cuRdangaSign);
         setRdangaAmt(selected?.cuRdangaAmt);
       }
     }, [selected]);
+
+    useEffect(() => {
+      if (userInfo !== undefined) {
+        setUserData(userInfo);
+      }
+    }, [userInfo]);
 
     useEffect(() => {
       if (addr.length > 0) {
@@ -165,10 +161,38 @@ const Form = React.forwardRef(
           cuSwCode: res?.cuSwCode[0].code,
           cuCode: res?.tempCuCode[0]?.tempCuCode,
         });
-        setUserInfo([]);
+        setUserData([]);
         // setFocus("cuName")
         document.getElementsByName("cuName")[0]?.focus();
       }
+    };
+
+    const resetBasic = () => {
+      let tempData: any = { ...selected, ...supplyTab };
+
+      setCuAddr1(selected.cuAddr1 ? selected.cuAddr1 : "");
+
+      reset({
+        ...tempData,
+        cuAptnameYn: tempData?.cuAptnameYn === "Y",
+        cuBaGageYn: tempData?.cuBaGageYn === "Y",
+        chkCuZipCode: false,
+        chkCuRh20: false,
+        chkCuRdanga: false,
+        chkCuAnKum: false,
+        chkCuMeterKum: false,
+        chkCuPer: false,
+        chkCuCdc: false,
+        chkCuSukumtype: false,
+        chkCuGumTurm: false,
+        chkCuGumdate: false,
+        chkCuCno: false,
+      });
+      setRdangaType(selected?.cuRdangaType);
+      setRdanga(selected?.cuRdanga);
+      setRdangaSign(selected?.cuRdangaSign);
+      setRdangaAmt(selected?.cuRdangaAmt);
+      setTotalValue("");
     };
 
     const resetForm = async (type: string) => {
@@ -176,31 +200,12 @@ const Form = React.forwardRef(
         areaCode && (await codeChangeHandler(areaCode));
       } else if (type === "reset") {
         if (selected && Object.keys(selected)?.length > 0) {
-          let tempData: any = { ...selected, ...supplyTab };
-
-          setCuAddr1(selected.cuAddr1 ? selected.cuAddr1 : "");
-          // setUserInfo(clonedUserInfo);
-          reset({
-            ...tempData,
-            cuAptnameYn: tempData?.cuAptnameYn === "Y",
-            cuBaGageYn: tempData?.cuBaGageYn === "Y",
-            chkCuZipCode: false,
-            chkCuRh20: false,
-            chkCuRdanga: false,
-            chkCuAnKum: false,
-            chkCuMeterKum: false,
-            chkCuPer: false,
-            chkCuCdc: false,
-            chkCuSukumtype: false,
-            chkCuGumTurm: false,
-            chkCuGumdate: false,
-            chkCuCno: false,
-          });
-          setRdangaType(selected?.cuRdangaType);
-          setRdanga(selected?.cuRdanga);
-          setRdangaSign(selected?.cuRdangaSign);
-          setRdangaAmt(selected?.cuRdangaAmt);
-          setTotalValue("");
+          resetBasic();
+          setUserData(userInfo);
+        }
+      } else if (type === "reset2") {
+        if (selected && Object.keys(selected)?.length > 0) {
+          resetBasic();
         }
       }
     };
@@ -383,7 +388,11 @@ const Form = React.forwardRef(
         formValues.cuRdangaType !== "1" ? 0 : Number(formValues.cuRdangaAmt);
       formValues.cuRdanga = Number(formValues.cuRdanga);
       formValues.cuAddr1 = cuAddr1;
-
+      formValues.cuRdanga = 100;
+      formValues.cuRdangaAmt = 40;
+      formValues.cuRdangaSign = "+";
+      formValues.cuRdangaType = "0";
+      // formValues.cuRdangaType =
       const path = isAddBtnClicked ? CM1200INSERT : CM1200UPDATE;
 
       const res = await apiPost(path, formValues, "저장이 성공하였습니다");
@@ -569,12 +578,14 @@ const Form = React.forwardRef(
         </FormSectionTitle>
 
         <GridBottom
-          data={userInfo}
+          menuId={menuId}
+          data={userData}
           areaCode={ownAreaCode}
-          setSelectedUserInfo={setSelectedUserInfo}
+          setSelected={setSelectedUserInfo}
           openPopup={openPopup}
           selected={selected}
           rowIndex={userInfo?.length > 1 ? userInfo.length - 1 : 0}
+          gridNumber={1}
         />
       </div>
     );
