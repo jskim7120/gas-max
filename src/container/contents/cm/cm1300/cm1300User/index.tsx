@@ -7,12 +7,7 @@ import {
   CM1300CUSTOMERINSERT,
   CM1300CUSTOMERUPDATE,
 } from "app/path";
-import {
-  openModal,
-  closeModal,
-  addDeleteMenuId,
-  setIsDelete,
-} from "app/state/modal/modalSlice";
+import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import { ICM1300User, emptyObj } from "./model";
 import { columns, fields } from "./data";
 import { FormGroup, Input, Label } from "components/form/style";
@@ -61,12 +56,27 @@ function FormCM1300User({
     (item) => item.menuId === menuId
   )?.gridIndexes;
   const rowIndex = gridIndexes?.find((item) => item.grid === 1)?.row;
+  const [userData, setUserData] = useState<any[]>([]);
 
   //const { isDelete } = useSelector((state) => state.modal);
 
   const { register, handleSubmit, reset, getValues } = useForm<ICM1300User>({
     mode: "onChange",
   });
+
+  useEffect(() => {
+    if (data) {
+      setUserData(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (isAddBtnClicked) {
+      setUserData([]);
+    } else {
+      setUserData(data);
+    }
+  }, [isAddBtnClicked]);
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
@@ -193,7 +203,7 @@ function FormCM1300User({
           <PersonInfoText text="사용자" style={{ margin: "7px 10px" }} />
           <Grid
             areaCode={ownAreaCode}
-            data={data}
+            data={userData}
             setSelected={setSelected}
             fields={fields}
             columns={columns}
@@ -253,13 +263,7 @@ function FormCM1300User({
             </div>
           </SearchWrapper>
           <form onSubmit={handleSubmit(submit)} autoComplete="off">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "end",
-                alignItems: "center",
-              }}
-            >
+            <FormGroup>
               <Input
                 label="거래처코드"
                 register={register("cuCode1")}
@@ -271,30 +275,18 @@ function FormCM1300User({
                 inputSize={InputSize.i80}
                 readOnly
               />
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "end",
-                alignItems: "center",
-              }}
-            >
+            </FormGroup>
+            <FormGroup>
               <Label>건 물 명</Label>
               <Input register={register("cuName")} style={{ width: "146px" }} />
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "end",
-                alignItems: "center",
-              }}
-            >
+            </FormGroup>
+            <FormGroup>
               <Label>사용자명</Label>
               <Input
                 register={register("cuUsername")}
                 style={{ width: "146px" }}
               />
-            </div>
+            </FormGroup>
           </form>
         </div>
       </div>

@@ -1,25 +1,29 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { useDispatch } from "app/store";
-import { addCM1105 } from "app/state/modal/modalSlice";
+import { setRowIndex } from "app/state/tab/tabSlice";
 import { fields2, columns2, layout2 } from "./data";
 
 function GridTable({
   data,
   areaCode,
-  setSelectedUserInfo,
   openPopup,
   selected,
+  setSelected,
   rowIndex,
   style,
+  menuId,
+  gridNumber,
 }: {
   data: any;
   areaCode: string | undefined;
-  setSelectedUserInfo: Function;
   openPopup?: any;
   selected?: any;
+  setSelected?: Function;
   rowIndex: number | undefined;
   style?: any;
+  menuId: string;
+  gridNumber?: number | undefined;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -63,8 +67,14 @@ function GridTable({
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
-
-      setSelectedUserInfo(data[itemIndex]);
+      setSelected && setSelected(data[itemIndex]);
+      dispatch(
+        setRowIndex({
+          menuId: menuId,
+          grid: gridNumber ? gridNumber : 0,
+          row: itemIndex,
+        })
+      );
     };
 
     gv.onCellDblClicked = function (grid: any, e: any) {

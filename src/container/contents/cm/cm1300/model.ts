@@ -1,7 +1,7 @@
 export interface ISEARCH {
   areaCode: string;
   aptCode: string;
-  aptName: string;
+  aptNameS: string;
 }
 export interface ICM1300 {
   apt4F: string;
@@ -34,16 +34,15 @@ export interface ICM1300 {
   areaCode: string;
   // --------------
 
-  //
-  // chkAptZipCode: boolean;
-  // chkAptRh2o: boolean;
-  // chkAptRdangaType: boolean;
-  // chkAptAnkum: boolean;
-  // chkAptSisulkum: boolean;
-  // chkAptMeterkum: boolean;
-  // chkAptPer: boolean;
-  // chkAptGumdate: boolean;
-  // chkAptSukumtype: boolean;
+  chkAptZipCode: boolean;
+  chkAptRh2o: boolean;
+  chkAptRdangaType: boolean;
+  chkAptAnkum: boolean;
+  chkAptSisulkum: boolean;
+  chkAptMeterkum: boolean;
+  chkAptPer: boolean;
+  chkAptGumdate: boolean;
+  chkAptSukumtype: boolean;
 }
 
 export const emptyObj: any = {
@@ -75,4 +74,14 @@ export const emptyObj: any = {
   aptTypeName: null,
   aptZipcode: null,
   areaCode: null,
+
+  chkAptZipCode: false,
+  chkAptRh2o: false,
+  chkAptRdangaType: false,
+  chkAptAnkum: false,
+  chkAptSisulkum: false,
+  chkAptMeterkum: false,
+  chkAptPer: false,
+  chkAptGumdate: false,
+  chkAptSukumtype: false,
 };

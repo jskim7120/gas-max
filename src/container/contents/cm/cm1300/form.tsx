@@ -36,37 +36,14 @@ const radioOptions = [
   },
 ];
 
-const someStyle = {
-  paddingRight: "6px",
-  minWidth: "120px",
-  display: "flex",
-  justifyContent: "flex-end",
-};
-const someStyle2 = {
-  paddingRight: "6px",
-  minWidth: "162px",
-  display: "flex",
-  justifyContent: "flex-end",
-};
-const someStyle3 = {
-  minWidth: "100px",
-  display: "flex",
-  justifyContent: "flex-start",
-  paddingLeft: "2px",
-};
-
 interface IForm {
   areaCode: string;
   selected: any;
   setSelected: any;
   fetchData: any;
   setData: any;
-  aptGubun: Array<any>;
-  setAptGubun: Function;
-  aptJyCode: Array<any>;
-  setAptJyCode: Function;
-  aptSwCode: Array<any>;
-  setAptSwCode: Function;
+  dataDictionary: any;
+  setDataDictionary: Function;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
   dataCommonDic: any;
@@ -81,12 +58,8 @@ const Form = React.forwardRef(
       setSelected,
       fetchData,
       setData,
-      aptGubun,
-      setAptGubun,
-      aptJyCode,
-      setAptJyCode,
-      aptSwCode,
-      setAptSwCode,
+      dataDictionary,
+      setDataDictionary,
       isAddBtnClicked,
       setIsAddBtnClicked,
       dataCommonDic,
@@ -95,22 +68,19 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [addr, setAddress] = useState<string>("");
-
-    const [chkAptZipCode, setChkAptZipCode] = useState(false);
-    const [chkAptRh2o, setChkAptRh2o] = useState(false);
-    const [chkAptRdangaType, setChkAptRdangaType] = useState(false);
-    const [chkAptAnkum, setChkAptAnkum] = useState(false);
-    const [chkAptSisulkum, setChkAptSisulkum] = useState(false);
-    const [chkAptMeterkum, setChkAptMeterkum] = useState(false);
-    const [chkAptPer, setChkAptPer] = useState(false);
-    const [chkAptGumdate, setChkAptGumdate] = useState(false);
-    const [chkAptSukumtype, setChkAptSukumtype] = useState(false);
     const [aptAddr1, setAptAddr1] = useState("");
 
-    const { register, handleSubmit, reset, getValues, control, setFocus } =
-      useForm<ICM1300>({
-        mode: "onChange",
-      });
+    const {
+      register,
+      handleSubmit,
+      reset,
+      getValues,
+      control,
+      setFocus,
+      watch,
+    } = useForm<ICM1300>({
+      mode: "onChange",
+    });
 
     useEffect(() => {
       if (selected) {
@@ -154,9 +124,11 @@ const Form = React.forwardRef(
       });
 
       if (res) {
-        res?.aptGubun && setAptGubun(res.aptGubun);
-        res?.aptJyCode && setAptJyCode(res.aptJyCode);
-        res?.aptSwCode && setAptSwCode(res.aptSwCode);
+        setDataDictionary({
+          aptGubun: res?.aptGubun ? res.aptGubun : [],
+          aptJyCode: res?.aptJyCode ? res.aptJyCode : [],
+          aptSwCode: res?.aptSwCode ? res.aptSwCode : [],
+        });
 
         reset({
           ...emptyObj,
@@ -164,7 +136,8 @@ const Form = React.forwardRef(
           aptType: radioOptions[0].id,
         });
         setAptAddr1("");
-        setFocus("aptName");
+        //setFocus("aptName");
+        document.getElementsByName("aptName")[0]?.focus();
       }
     };
 
@@ -184,16 +157,6 @@ const Form = React.forwardRef(
           setAptAddr1("");
         }
       }
-
-      setChkAptZipCode(false);
-      setChkAptRh2o(false);
-      setChkAptRdangaType(false);
-      setChkAptAnkum(false);
-      setChkAptSisulkum(false);
-      setChkAptMeterkum(false);
-      setChkAptPer(false);
-      setChkAptGumdate(false);
-      setChkAptSukumtype(false);
 
       setRdangaType(selected?.aptRdangaType);
       setRdanga(selected?.aptRdanga);
@@ -239,7 +202,7 @@ const Form = React.forwardRef(
       //if (!chkAptRh2o) {
       //  delete formValues.aptRh2O;
       //}
-
+      /*------------------------------------------
       if (chkAptRdangaType) {
         formValues.aptRdangaType = rdangaType;
         formValues.aptRdanga = +rdanga;
@@ -249,7 +212,7 @@ const Form = React.forwardRef(
       } else {
         //end yu boloh n logic todorhoigui
       }
-
+----------------------------*/
       const res: any = await apiPost(path, formValues, "저장이 성공하였습니다");
       if (res) {
         const par = prepareSearchFormValues();
@@ -341,17 +304,16 @@ const Form = React.forwardRef(
             inputSize={InputSize.i120}
             readOnly
           />
-
           <Label>건물명</Label>
           <Input inputSize={InputSize.i120} register={register("aptName")} />
         </FormGroup>
+
         <FormGroup>
           <Input
             label="건물층수"
             register={register("aptF")}
             inputSize={InputSize.i120}
           />
-
           <Label style={{ marginRight: "10px" }}>건물 구조</Label>
           {radioOptions.map((option, index) => (
             <Item key={index}>
@@ -372,92 +334,93 @@ const Form = React.forwardRef(
             </Item>
           ))}
         </FormGroup>
-
         <FormGroup>
           <Input
             label="층당세대"
             register={register("aptS")}
             inputSize={InputSize.i120}
           />
-
           <Label style={{ marginRight: "10px" }}>호수포함</Label>
-
           <CheckBox
             title="4호포함"
             rtl
-            style={someStyle3}
+            style={{ width: "100px" }}
             register={{ ...register("apt4Ho") }}
           />
-
           <CheckBox
             title="4층포함"
             rtl
-            style={someStyle3}
+            style={{ width: "100px" }}
             register={{ ...register("apt4F") }}
           />
           <CheckBox
             title="지층포함"
             rtl
-            style={someStyle3}
+            style={{ width: "100px" }}
             register={{ ...register("aptBf") }}
           />
         </FormGroup>
         <Divider />
         <FormGroup>
-          <CheckBox
-            title="주 소"
-            checked={chkAptZipCode}
-            onChange={(e: any) => setChkAptZipCode(e.target.checked)}
-            style={someStyle}
+          <Controller
+            control={control}
+            name="chkAptZipCode"
+            render={({ field }) => (
+              <CheckBox
+                {...field}
+                checked={field.value}
+                title="주 소"
+                className="label-check"
+                style={{ width: "120px" }}
+              />
+            )}
           />
           <Input
             register={register("aptZipcode")}
             inputSize={InputSize.i80}
-            readOnly={!chkAptZipCode}
+            readOnly={!watch("chkAptZipCode")}
           />
           <DaumAddress
             setAddress={setAddress}
-            disabled={!chkAptZipCode}
+            disabled={!watch("chkAptZipCode")}
             defaultValue={aptAddr1}
             onClose={() => setFocus("aptAddr2")}
           />
           <Input
             style={{ width: "254px" }}
-            readOnly={!chkAptZipCode}
+            readOnly={!watch("chkAptZipCode")}
             value={aptAddr1}
             onChange={(e: any) => setAptAddr1(e.target.value)}
           />
           <Input
             register={register("aptAddr2")}
             style={{ width: "251px" }}
-            readOnly={!chkAptZipCode}
+            readOnly={!watch("chkAptZipCode")}
           />
         </FormGroup>
         <FormGroup>
           <Label>담당 사원</Label>
           <Select register={register("aptSwCode")} width={InputSize.i120}>
-            {aptSwCode?.map((obj: any, idx: number) => (
+            {dataDictionary?.aptSwCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
             ))}
           </Select>
-
           <Label>지역 분류</Label>
           <Select register={register("aptJyCode")} width={InputSize.i120}>
-            {aptJyCode?.map((obj: any, idx: number) => (
+            {dataDictionary?.aptJyCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
             ))}
           </Select>
-
           <Label>관리자</Label>
           <Select
             register={register("aptCustgubun")}
             style={{ width: "131px" }}
           >
-            {aptGubun?.map((obj: any, idx: number) => (
+            {dataDictionary?.aptGubun?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -466,15 +429,21 @@ const Form = React.forwardRef(
         </FormGroup>
         <Divider />
         <FormGroup>
-          <CheckBox
-            title="조 정 기"
-            checked={chkAptRh2o}
-            onChange={(e: any) => setChkAptRh2o(e.target.checked)}
-            style={someStyle}
+          <Controller
+            control={control}
+            name="chkAptRh2o"
+            render={({ field }) => (
+              <CheckBox
+                {...field}
+                checked={field.value}
+                title="조 정 기"
+                className="label-check"
+                style={{ width: "120px" }}
+              />
+            )}
           />
-
           <Select
-            disabled={!chkAptRh2o}
+            disabled={!watch("chkAptRh2o")}
             register={register("aptRh2O")}
             width={InputSize.i120}
             textAlign="right"
@@ -488,19 +457,24 @@ const Form = React.forwardRef(
             })}
           </Select>
           <p>mmH20</p>
-
-          <CheckBox
-            title="루베단가"
-            checked={chkAptRdangaType}
-            onChange={(e: any) => setChkAptRdangaType(e.target.checked)}
-            style={someStyle}
+          <Controller
+            control={control}
+            name="chkAptRdangaType"
+            render={({ field }) => (
+              <CheckBox
+                {...field}
+                checked={field.value}
+                title="루베단가"
+                className="label-check"
+                style={{ width: "119px" }}
+              />
+            )}
           />
-
           <Select
-            disabled={!chkAptRdangaType}
+            disabled={!watch("chkAptRdangaType")}
             width={InputSize.i120}
             value={rdangaType}
-            register={register("aptRdangaType")}
+            //register={register("aptRdangaType")}
             onChange={(e) => {
               setRdangaType(e.target.value);
               calcRdanga("rdangaType", e.target.value);
@@ -514,123 +488,151 @@ const Form = React.forwardRef(
               );
             })}
           </Select>
-
           {showRdanga()}
         </FormGroup>
         <FormGroup>
-          <CheckBox
-            title="관 리 비"
-            checked={chkAptAnkum}
-            onChange={(e: any) => setChkAptAnkum(e.target.checked)}
-            style={someStyle}
+          <Controller
+            control={control}
+            name="chkAptAnkum"
+            render={({ field }) => (
+              <CheckBox
+                {...field}
+                checked={field.value}
+                title="관 리 비"
+                className="label-check"
+                style={{ width: "120px" }}
+              />
+            )}
           />
           <Controller
             control={control}
-            {...register("aptAnkum")}
-            render={({ field: { onChange, value, name } }) => (
+            name="aptAnkum"
+            render={({ field }) => (
               <Input
-                value={value}
-                onChange={onChange}
+                {...field}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i120}
-                readOnly={!chkAptAnkum}
-                name={name}
+                readOnly={!watch("chkAptAnkum")}
               />
             )}
           />
           <p>{`원`}</p>
-
-          <CheckBox
-            title="시 설 비"
-            checked={chkAptSisulkum}
-            onChange={(e: any) => setChkAptSisulkum(e.target.checked)}
-            style={someStyle2}
+          <Controller
+            control={control}
+            name="chkAptSisulkum"
+            render={({ field }) => (
+              <CheckBox
+                {...field}
+                checked={field.value}
+                title="시 설 비"
+                className="label-check"
+                style={{ width: "160px" }}
+              />
+            )}
           />
           <Controller
             control={control}
-            {...register("aptSisulkum")}
-            render={({ field: { onChange, value, name } }) => (
+            name="aptSisulkum"
+            render={({ field }) => (
               <Input
-                value={value}
-                onChange={onChange}
+                {...field}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i120}
-                readOnly={!chkAptSisulkum}
-                name={name}
+                readOnly={!watch("chkAptSisulkum")}
               />
             )}
           />
           <p>{`원`}</p>
-
-          <CheckBox
-            title="계 량 기"
-            checked={chkAptMeterkum}
-            onChange={(e: any) => setChkAptMeterkum(e.target.checked)}
-            style={someStyle}
+          <Controller
+            control={control}
+            name="chkAptMeterkum"
+            render={({ field }) => (
+              <CheckBox
+                {...field}
+                checked={field.value}
+                title="계 량 기"
+                className="label-check"
+                style={{ width: "120px" }}
+              />
+            )}
           />
           <Controller
             control={control}
-            {...register("aptMeterkum")}
-            render={({ field: { onChange, value, name } }) => (
+            name="aptMeterkum"
+            render={({ field }) => (
               <Input
-                value={value}
-                onChange={onChange}
+                {...field}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i120}
-                readOnly={!chkAptMeterkum}
-                name={name}
+                readOnly={!watch("chkAptMeterkum")}
               />
             )}
           />
           <p>{`원`}</p>
         </FormGroup>
         <FormGroup>
-          <CheckBox
-            title="연 체 율"
-            checked={chkAptPer}
-            onChange={(e: any) => setChkAptPer(e.target.checked)}
-            style={someStyle}
+          <Controller
+            control={control}
+            name="chkAptPer"
+            render={({ field }) => (
+              <CheckBox
+                {...field}
+                checked={field.value}
+                title="연 체 율"
+                className="label-check"
+                style={{ width: "120px" }}
+              />
+            )}
           />
-
           <Input
             register={register("aptPer")}
             textAlign="right"
             inputSize={InputSize.i120}
             maxLength="3"
-            readOnly={!chkAptPer}
+            readOnly={!watch("chkAptPer")}
           />
           <p>{`%`}</p>
-
-          <CheckBox
-            title="검 침 일"
-            checked={chkAptGumdate}
-            onChange={(e: any) => setChkAptGumdate(e.target.checked)}
-            style={someStyle2}
+          <Controller
+            control={control}
+            name="chkAptGumdate"
+            render={({ field }) => (
+              <CheckBox
+                {...field}
+                checked={field.value}
+                title="검 침 일"
+                className="label-check"
+                style={{ width: "160px" }}
+              />
+            )}
           />
-
           <Input
             register={register("aptGumdate")}
             textAlign="right"
             inputSize={InputSize.i120}
             maxLength="2"
-            readOnly={!chkAptGumdate}
+            readOnly={!watch("chkAptGumdate")}
           />
           <p>{`일`}</p>
-
-          <CheckBox
-            title="수금 방법"
-            checked={chkAptSukumtype}
-            onChange={(e: any) => setChkAptSukumtype(e.target.checked)}
-            style={someStyle}
+          <Controller
+            control={control}
+            name="chkAptSukumtype"
+            render={({ field }) => (
+              <CheckBox
+                {...field}
+                checked={field.value}
+                title="수금 방법"
+                className="label-check"
+                style={{ width: "120px" }}
+              />
+            )}
           />
-
           <Select
             register={register("aptSukumtype")}
             width={InputSize.i120}
-            disabled={!chkAptSukumtype}
+            disabled={!watch("chkAptSukumtype")}
           >
             {dataCommonDic?.aptSukumtype?.map((option: any, index: number) => {
               return (

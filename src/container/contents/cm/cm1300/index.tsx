@@ -64,12 +64,10 @@ function CM1300({
     addBtnUnclick,
   } = CreateScreen("CM", "CM1300", menuId, CM1300SEARCH, leftSideWidth);
 
-  const [data65, setData65] = useState([]);
-  const [selected65, setSelected65] = useState<any>({});
+  const [userInfo, setUserInfo] = useState([]);
+  const [selectedUserInfo, setSelectedUserInfo] = useState<any>({});
   const [isAddBtnClicked2, setIsAddBtnClicked2] = useState<boolean>(false);
-  const [aptGubun, setAptGubun] = useState<any>([]);
-  const [aptJyCode, setAptJyCode] = useState<any>([]);
-  const [aptSwCode, setAptSwCode] = useState<any>([]);
+  const [dataDictionary, setDataDictionary] = useState({});
 
   const rowIndex0 = gridIndexes?.find((item) => item.grid === 0)?.row;
   const rowIndex1 = gridIndexes?.find((item) => item.grid === 1)?.row;
@@ -108,7 +106,7 @@ function CM1300({
   }, [selected]);
 
   const submit = async (params: ISEARCH) => {
-    fetchData(params);
+    fetchData({ ...params, aptName: params.aptNameS });
   };
 
   const fetchData65 = async (params: any, pos: string = "") => {
@@ -116,11 +114,13 @@ function CM1300({
 
     if (res) {
       if (res?.userCustomer && res?.userCustomer?.length > 0) {
-        setData65(res.userCustomer);
+        setUserInfo(res.userCustomer);
+
         const lastIndex =
-          res.userCustomer.length > 0 ? res.userCustomer.length - 1 : 0;
+          res.userCustomer.length > 1 ? res.userCustomer.length - 1 : 0;
+
         if (pos === "last") {
-          setSelected65(res.userCustomer[lastIndex]);
+          setSelectedUserInfo(res.userCustomer[lastIndex]);
           dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 1 }));
         } else {
           if (rowIndex1) {
@@ -128,40 +128,26 @@ function CM1300({
               dispatch(
                 setRowIndex({ menuId: menuId, row: lastIndex, grid: 1 })
               );
-              setSelected65(res.userCustomer[lastIndex]);
+              setSelectedUserInfo(res.userCustomer[lastIndex]);
             } else {
-              setSelected65(res.userCustomer[rowIndex1]);
+              setSelectedUserInfo(res.userCustomer[rowIndex1]);
             }
           }
         }
       } else {
-        setData65([]);
-        setSelected65({});
+        setUserInfo([]);
+        setSelectedUserInfo({});
       }
 
-      if (res?.aptGubun) {
-        setAptGubun(res?.aptGubun);
-      } else {
-        setAptGubun([]);
-      }
-
-      if (res?.aptJyCode) {
-        setAptJyCode(res?.aptJyCode);
-      } else {
-        setAptJyCode([]);
-      }
-
-      if (res?.aptSwCode) {
-        setAptSwCode(res?.aptSwCode);
-      } else {
-        setAptSwCode([]);
-      }
+      setDataDictionary({
+        aptGubun: res?.aptGubun ? res.aptGubun : [],
+        aptJyCode: res?.aptJyCode ? res.aptJyCode : [],
+        aptSwCode: res?.aptSwCode ? res.aptSwCode : [],
+      });
     } else {
-      setData65([]);
-      setSelected65({});
-      setAptSwCode([]);
-      setAptJyCode([]);
-      setAptGubun([]);
+      setUserInfo([]);
+      setSelectedUserInfo({});
+      setDataDictionary({});
     }
   };
 
@@ -211,7 +197,7 @@ function CM1300({
                 <Input
                   label="건물명"
                   labelStyle={{ minWidth: "80px" }}
-                  register={register("aptName")}
+                  register={register("aptNameS")}
                   inputSize={InputSize.i120}
                 />
                 <Button
@@ -269,12 +255,8 @@ function CM1300({
               setSelected={setSelected}
               isAddBtnClicked={isAddBtnClicked}
               setIsAddBtnClicked={setIsAddBtnClicked}
-              aptGubun={aptGubun}
-              setAptGubun={setAptGubun}
-              aptJyCode={aptJyCode}
-              setAptJyCode={setAptJyCode}
-              aptSwCode={aptSwCode}
-              setAptSwCode={setAptSwCode}
+              dataDictionary={dataDictionary}
+              setDataDictionary={setDataDictionary}
               prepareSearchFormValues={getValues}
             />
 
@@ -282,10 +264,10 @@ function CM1300({
 
             <CM1300User
               ownAreaCode={ownAreaCode}
-              data={data65}
+              data={userInfo}
               mainSelected={selected}
-              selected={selected65}
-              setSelected={setSelected65}
+              selected={selectedUserInfo}
+              setSelected={setSelectedUserInfo}
               fetchData={fetchData65}
               mainIsAddBtnClicked={isAddBtnClicked}
               isAddBtnClicked={isAddBtnClicked2}
