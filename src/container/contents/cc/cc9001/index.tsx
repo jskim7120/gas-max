@@ -4,7 +4,7 @@ import CreateReport from "app/hook/createReport";
 import { CC1100SEARCH } from "app/path";
 import { ICC9001SEARCH } from "./model";
 import BasicGrid from "components/basicGrid";
-import { MainWrapper, SearchWrapper, LeftSide } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
