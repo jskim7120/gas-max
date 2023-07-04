@@ -180,7 +180,6 @@ function AR9009({
       params.cuJyCode = params.cuJyCode4;
       params.cuCutype = params.cuCutype4;
     }
-    console.log("params >>>>>>>>>>>>>>>>>>", params);
     fetchData(params);
   };
 
@@ -287,9 +286,11 @@ function AR9009({
         fields={selectColumns()?.fields}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{
-          height: `calc(100% - 125px)`,
-        }}
+        style={
+          tabId === 0
+            ? { height: `calc(100% - 125px)` }
+            : { height: `calc(100% - 88px)` }
+        }
       />
     </>
   );

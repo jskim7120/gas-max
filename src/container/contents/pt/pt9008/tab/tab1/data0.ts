@@ -22,7 +22,7 @@ export const fields0 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "gslkumack",
+    fieldName: "gslKumack",
     dataType: ValueType.NUMBER,
   },
   {
@@ -106,8 +106,8 @@ export const columns0 = [
     },
   },
   {
-    name: "gslkumack",
-    fieldName: "gslkumack",
+    name: "gslKumack",
+    fieldName: "gslKumack",
     type: "data",
     width: "100",
     header: {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { AR9001SEARCH } from "app/path";
@@ -43,6 +43,8 @@ function AR9001({
     dataCommonDic,
   } = CreateReport("AR", "AR9001", menuId, AR9001SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
+
+  const [toggler, setToggler] = useState<boolean>(true);
 
   const { register, handleSubmit, reset, control, watch, getValues } =
     useForm<ISEARCH>({

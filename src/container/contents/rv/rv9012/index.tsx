@@ -64,7 +64,9 @@ function RV9012({
       `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
     );
   };
-  const submit = (params: ISEARCH) => {
+  const submit = (params: any) => {
+    params.gjMonth = DateWithoutDash(params.gjMonth);
+    params.sChk = params.sChk ? "Y" : "N";
     fetchData(params);
   };
 
@@ -76,6 +78,7 @@ function RV9012({
         gjMonth: init?.gjMonth,
         sSwCode: init?.sSwCode,
         sJyCode: init?.sJyCode,
+        sChk: init?.sChk === "Y",
       });
     }
   };

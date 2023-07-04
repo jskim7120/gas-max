@@ -76,6 +76,11 @@ export const columns1 = [
     header: {
       text: "영업소",
     },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("areaCode", "count");
+      },
+    },
   },
   {
     name: "swCode",

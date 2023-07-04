@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { RV9009SEARCH } from "app/path";
@@ -26,6 +26,21 @@ import {
   RadioButtonLabel,
 } from "components/radioButton/style";
 
+const radioOptions = [
+  {
+    label: "조회구분 ",
+    id: "1",
+  },
+  {
+    label: "이익(+)",
+    id: "2",
+  },
+  {
+    label: "손실(-)",
+    id: "3",
+  },
+];
+
 function RV9009({
   depthFullName,
   menuId,
@@ -51,6 +66,8 @@ function RV9009({
     mode: "onSubmit",
   });
 
+  const [sChk0, setSChk0] = useState(false);
+
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
       resetForm("reset");
@@ -69,7 +86,12 @@ function RV9009({
       `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
     );
   };
-  const submit = (params: ISEARCH) => {
+  const submit = (params: any) => {
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
+    params.sChk1 = params.sChk1 ? "Y" : "N";
+    params.sChk2 = params.sChk2 ? "Y" : "N";
+
     fetchData(params);
   };
 
@@ -81,10 +103,13 @@ function RV9009({
         sDate: init?.sDate,
         eDate: init?.eDate,
         sOrder: init?.sOrder,
-        cuName: init?.cuName,
+        cuCode: init?.cuCode,
         jyCode: init?.jyCode,
         cuType: init?.cuType,
         swCode: init?.swCode,
+        sChk0: init?.sChk0 === "0",
+        sChk1: init?.sChk1 === "Y",
+        sChk2: init?.sChk2 === "Y",
       });
     }
   };
@@ -183,10 +208,11 @@ function RV9009({
                 />
               )}
             />
+
             <Input
               label="건물명"
-              register={register("cuName")}
-              labelStyle={{ minWidth: "81px" }}
+              register={register("cuCode")}
+              labelStyle={{ minWidth: "93px" }}
               inputSize={InputSize.i160}
             />
 
@@ -207,42 +233,20 @@ function RV9009({
           </FormGroup>
           <FormGroup>
             <Label style={{ marginLeft: "-38px" }}>조회구분</Label>
-            <Item>
-              <RadioButtonLabel htmlFor={``} style={{ width: "32px" }}>
-                전체
-              </RadioButtonLabel>
-              <RadioButton
-                type="radio"
-                value="2"
-                {...register(`sChk0`)}
-                id="2"
-                //onChange={() => setSType2("2")}
-              />
-            </Item>
-            <Item>
-              <RadioButton
-                type="radio"
-                value="2"
-                {...register(`sChk0`)}
-                id="2"
-                //onChange={() => setSType2("2")}
-              />
-              <RadioButtonLabel htmlFor={``} style={{ width: "50px" }}>
-                이익(+)
-              </RadioButtonLabel>
-            </Item>
-            <Item>
-              <RadioButton
-                type="radio"
-                value="2"
-                {...register(`sChk0`)}
-                id="2"
-                //onChange={() => setSType2("2")}
-              />
-              <RadioButtonLabel htmlFor={``} style={{ width: "50px" }}>
-                손실(-)
-              </RadioButtonLabel>
-            </Item>
+            {radioOptions.map((option, index) => (
+              <Item key={index}>
+                <RadioButton
+                  type="radio"
+                  value={option.id}
+                  {...register(`sChk0`)}
+                  id={option.id}
+                  onChange={() => setSChk0(true)}
+                />
+                <RadioButtonLabel htmlFor={`${option.label}`}>
+                  {option.label}
+                </RadioButtonLabel>
+              </Item>
+            ))}
 
             <Label style={{ minWidth: "79px" }}>지역구분</Label>
             <Select register={register("jyCode")} width={InputSize.i120}>

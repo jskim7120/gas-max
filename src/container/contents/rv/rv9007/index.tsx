@@ -61,6 +61,9 @@ function RV9007({
       handleGjGumymChange(watch("gjGumym"));
       setToggler((prev) => !prev);
     }
+    if (watch("reportKind")) {
+      setData([]);
+    }
   }, [watch("reportKind"), watch("gjGumym")]);
 
   const handleGjGumymChange = (gjGumym: string) => {

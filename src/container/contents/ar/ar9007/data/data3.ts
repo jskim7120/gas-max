@@ -46,7 +46,7 @@ export const columns3 = [
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("jcBok", "count");
+        return grid.getSummary("areaCode", "count");
       },
     },
   },

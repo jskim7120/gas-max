@@ -101,6 +101,7 @@ function RV9010({
     );
   };
   const submit = (params: ISEARCH) => {
+    params.gjMonth = DateWithoutDash(params.gjMonth);
     fetchData(params);
   };
 

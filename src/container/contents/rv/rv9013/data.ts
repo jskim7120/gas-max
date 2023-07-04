@@ -18,7 +18,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuAddr",
+    fieldName: "cuAddr1",
     dataType: ValueType.TEXT,
   },
   {
@@ -26,7 +26,7 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "cuRh20",
+    fieldName: "cuRh2O",
     dataType: ValueType.NUMBER,
   },
   {
@@ -97,8 +97,8 @@ export const columns = [
     },
   },
   {
-    name: "cuAddr",
-    fieldName: "cuAddr",
+    name: "cuAddr1",
+    fieldName: "cuAddr1",
     type: "data",
     width: "250",
     styleName: "rg-left-column",
@@ -116,8 +116,8 @@ export const columns = [
     },
   },
   {
-    name: "cuRh20",
-    fieldName: "cuRh20",
+    name: "cuRh2O",
+    fieldName: "cuRh2O",
     type: "data",
     width: "60",
     header: {
