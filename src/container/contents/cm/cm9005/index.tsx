@@ -34,7 +34,7 @@ function CM9005({
   } = CreateReport("CM", "CM9005", menuId, CM9005SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const { register, handleSubmit, reset } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -47,6 +47,12 @@ function CM9005({
   useEffect(() => {
     resetForm();
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("cuJpGubun")) {
+      setData([]);
+    }
+  }, [watch("cuJpGubun")]);
 
   const resetForm = () => {
     if (dataCommonDic) {

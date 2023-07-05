@@ -12,7 +12,7 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import BasicGrid from "components/basicGrid";
-import { columns, fields } from "./data";
+import { columns, fields, layout } from "./data";
 
 function GR9004({
   depthFullName,
@@ -168,7 +168,8 @@ function GR9004({
           menuId={menuId}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: `calc(100% - 47px)` }}
-          evenFill
+          // evenFill
+          layout={layout}
         />
       </WrapperContent>
     </>

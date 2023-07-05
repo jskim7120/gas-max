@@ -3,7 +3,7 @@ export interface ISEARCH {
   reportKind: string;
   cuType: string;
   sDate: string;
-  eDate: string;
+  dDate: string;
   cuJyCode: string;
   swCode: string;
   cuCutype: string;

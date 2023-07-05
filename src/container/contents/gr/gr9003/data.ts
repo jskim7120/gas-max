@@ -68,7 +68,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "20",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -100,7 +100,7 @@ export const columns = [
     name: "bcBigo",
     fieldName: "bcBigo",
     type: "data",
-    width: "30",
+    width: "50",
     header: {
       text: "회차",
     },
@@ -109,7 +109,7 @@ export const columns = [
     name: "bcSawon",
     fieldName: "bcSawon",
     type: "data",
-    width: "40",
+    width: "50",
     header: {
       text: "비고",
     },
@@ -118,7 +118,7 @@ export const columns = [
     name: "bcCarno",
     fieldName: "bcCarno",
     type: "data",
-    width: "40",
+    width: "50",
     header: {
       text: "비고",
     },
@@ -127,7 +127,7 @@ export const columns = [
     name: "bcType",
     fieldName: "bcType",
     type: "data",
-    width: "80",
+    width: "100",
     styleName: "rg-left-column",
     header: {
       text: "수송기사/차량",
@@ -137,7 +137,7 @@ export const columns = [
     name: "bcTypeName",
     fieldName: "bcTypeName",
     type: "data",
-    width: "20",
+    width: "50",
     header: {
       text: "방법",
     },
@@ -146,7 +146,7 @@ export const columns = [
     name: "bcPin",
     fieldName: "bcPin",
     type: "data",
-    width: "40",
+    width: "90",
     styleName: "rg-right-column",
     header: {
       text: "프로판(kg)",
@@ -156,7 +156,7 @@ export const columns = [
     name: "bcBin",
     fieldName: "bcBin",
     type: "data",
-    width: "40",
+    width: "70",
     styleName: "rg-right-column",
     header: {
       text: "부탄(kg)",
@@ -166,7 +166,7 @@ export const columns = [
     name: "bcGin",
     fieldName: "bcGin",
     type: "data",
-    width: "40",
+    width: "70",
     styleName: "rg-right-column",
     header: {
       text: "기타(EA)",
@@ -176,7 +176,7 @@ export const columns = [
     name: "bcSumKum",
     fieldName: "bcSumKum",
     type: "data",
-    width: "50",
+    width: "70",
     styleName: "rg-right-column",
     header: {
       text: "매입금액",

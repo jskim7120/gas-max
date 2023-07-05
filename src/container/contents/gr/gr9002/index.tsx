@@ -173,7 +173,8 @@ function GR9002({
           menuId={menuId}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: `calc(100% - 47px)` }}
-          evenFill
+          // evenFill
+          layout={layout}
         />
       </WrapperContent>
     </>

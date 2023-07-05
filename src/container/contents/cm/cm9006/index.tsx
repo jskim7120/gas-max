@@ -69,7 +69,7 @@ function CM9003({
 
   const submit = (data: ISEARCH) => {
     data.sDate = DateWithoutDash(data.sDate);
-    data.eDate = DateWithoutDash(data.eDate);
+    data.dDate = DateWithoutDash(data.dDate);
     fetchData(data);
   };
 
@@ -85,6 +85,8 @@ function CM9003({
         cuCutype: dataCommonDic?.cuCutype[0].code,
         cuStae: dataCommonDic?.cuStae[0].code,
         cuSukumtype: dataCommonDic?.cuSukumtype[0].code,
+        sDate: dataCommonDic?.sDate[0].code,
+        dDate: dataCommonDic?.dDate[0].code,
       });
     }
   };
@@ -280,7 +282,7 @@ function CM9003({
                 />
                 <Controller
                   control={control}
-                  {...register("eDate")}
+                  {...register("dDate")}
                   render={({ field: { onChange, value } }) => (
                     <CustomDatePicker
                       value={value}

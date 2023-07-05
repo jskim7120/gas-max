@@ -45,9 +45,10 @@ function CM9002({
 
   const [dataChk, setDataChk] = useState(true);
 
-  const { register, handleSubmit, reset, control } = useForm<ICM9002SEARCH>({
-    mode: "onSubmit",
-  });
+  const { register, handleSubmit, reset, control, watch } =
+    useForm<ICM9002SEARCH>({
+      mode: "onSubmit",
+    });
 
   const resetForm = (type: string) => {
     if (type === "reset") {
@@ -82,6 +83,12 @@ function CM9002({
       resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("reportKind")) {
+      setData([]);
+    }
+  }, [watch("reportKind")]);
 
   const handleReset = () => {
     if (dataCommonDic?.dataInit) {

@@ -55,6 +55,8 @@ function CM9003({
         cuJyCode: dataCommonDic?.cuJyCode[0].code,
         swCode: dataCommonDic?.swCode[0].code,
         cuCutype: dataCommonDic?.cuCutype[0].code,
+        sDate: dataCommonDic?.sDate[0].code,
+        dDate: dataCommonDic?.dDate[0].code,
       });
     }
   };
@@ -82,8 +84,27 @@ function CM9003({
 
   const submit = (data: ISEARCH) => {
     data.sDate = DateWithoutDash(data.sDate);
-    data.eDate = DateWithoutDash(data.eDate);
+    data.dDate = DateWithoutDash(data.dDate);
     fetchData(data);
+  };
+
+  const selectColumns = () => {
+    switch (watch("reportKind")) {
+      case "0":
+        return { columns: columns0, fields: fields0 };
+      case "1":
+        return { columns: columns1, fields: fields1 };
+      case "2":
+        return { columns: columns0, fields: fields0 };
+      case "3":
+        return { columns: columns1, fields: fields1 };
+      case "4":
+        return { columns: columns0, fields: fields0 };
+      case "5":
+        return { columns: columns1, fields: fields1 };
+      case "6":
+        return { columns: columns1, fields: fields1 };
+    }
   };
 
   return (
@@ -181,7 +202,7 @@ function CM9003({
                 />
                 <Controller
                   control={control}
-                  {...register("eDate")}
+                  {...register("dDate")}
                   render={({ field: { onChange, onBlur, value, ref } }) => (
                     <CustomDatePicker value={value} onChange={onChange} />
                   )}
@@ -227,95 +248,18 @@ function CM9003({
           </div>
         </SearchWrapper>
       </form>
-      <WrapperContent>
-        {watch("reportKind") === "0" ? (
-          <BasicGrid
-            ref={gridRef}
-            areaCode={areaCode}
-            data={data}
-            fields={fields0}
-            columns={columns0}
-            menuId={menuId}
-            rowIndex={data?.length > 1 ? data.length - 1 : 0}
-            style={{ height: `calc(100% - 38px)` }}
-            //evenFill
-          />
-        ) : watch("reportKind") === "1" ? (
-          <BasicGrid
-            ref={gridRef}
-            areaCode={areaCode}
-            data={data}
-            fields={fields1}
-            columns={columns1}
-            menuId={menuId}
-            rowIndex={data?.length > 1 ? data.length - 1 : 0}
-            style={{ height: `calc(100% - 38px)` }}
-            //evenFill
-          />
-        ) : watch("reportKind") === "2" ? (
-          <BasicGrid
-            ref={gridRef}
-            areaCode={areaCode}
-            data={data}
-            fields={fields2}
-            columns={columns2}
-            menuId={menuId}
-            rowIndex={data?.length > 1 ? data.length - 1 : 0}
-            style={{ height: `calc(100% - 38px)` }}
-            //evenFill
-          />
-        ) : watch("reportKind") === "3" ? (
-          <BasicGrid
-            ref={gridRef}
-            areaCode={areaCode}
-            data={data}
-            fields={fields3}
-            columns={columns3}
-            menuId={menuId}
-            rowIndex={data?.length > 1 ? data.length - 1 : 0}
-            style={{ height: `calc(100% - 38px)` }}
-            //evenFill
-          />
-        ) : watch("reportKind") === "4" ? (
-          <BasicGrid
-            ref={gridRef}
-            areaCode={areaCode}
-            data={data}
-            fields={fields4}
-            columns={columns4}
-            menuId={menuId}
-            rowIndex={data?.length > 1 ? data.length - 1 : 0}
-            style={{ height: `calc(100% - 38px)` }}
-            // evenFill
-          />
-        ) : watch("reportKind") === "5" ? (
-          <BasicGrid
-            ref={gridRef}
-            areaCode={areaCode}
-            data={data}
-            fields={fields5}
-            columns={columns5}
-            menuId={menuId}
-            rowIndex={data?.length > 1 ? data.length - 1 : 0}
-            style={{ height: `calc(100% - 38px)` }}
-            // evenFill
-          />
-        ) : (
-          watch("reportKind") === "6" && (
-            <BasicGrid
-              ref={gridRef}
-              areaCode={areaCode}
-              data={data}
-              fields={fields6}
-              columns={columns6}
-              menuId={menuId}
-              rowIndex={data?.length > 1 ? data.length - 1 : 0}
-              style={{ height: `calc(100% - 36px)` }}
-              // evenFill
-            />
-          )
-        )}
-      </WrapperContent>
+      <BasicGrid
+        ref={gridRef}
+        areaCode={areaCode}
+        data={data}
+        columns={selectColumns()?.columns}
+        fields={selectColumns()?.fields}
+        menuId={menuId}
+        gridChangeField={watch("reportKind")}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
+        style={{ height: `calc(100% - 38px)` }}
+        //evenFill
+      />
     </>
   );
 }

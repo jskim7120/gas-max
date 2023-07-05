@@ -146,6 +146,7 @@ function GR9003({
                   value={value}
                   onChange={onChange}
                   name={name}
+                  showMonthYearPicker
                 />
               )}
             />
@@ -157,6 +158,7 @@ function GR9003({
                   value={value}
                   onChange={onChange}
                   name={name}
+                  showMonthYearPicker
                 />
               )}
             />
@@ -173,7 +175,7 @@ function GR9003({
           menuId={menuId}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: `calc(100% - 47px)` }}
-          evenFill
+          // evenFill
         />
       </WrapperContent>
     </>

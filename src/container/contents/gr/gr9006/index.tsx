@@ -12,6 +12,7 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import BasicGrid from "components/basicGrid";
 import { columns1, fields1 } from "./data/data1";
+import { DateWithoutDash } from "helpers/dateFormat";
 
 function GR9006({
   depthFullName,
@@ -42,15 +43,17 @@ function GR9006({
     resetForm();
   }, [dataCommonDic]);
 
-  const submit = (data: ISEARCH) => {
+  const submit = (data: any) => {
+    data.sDate = DateWithoutDash(data.sDate);
+    data.eDate = DateWithoutDash(data.eDate);
     fetchData(data);
   };
 
-  // useEffect(() => {
-  //   if (watch("reportKind")) {
-  //     setData([]);
-  //   }
-  // }, [watch("reportKind")]);
+  useEffect(() => {
+    if (watch("reportType")) {
+      setData([]);
+    }
+  }, [watch("reportType")]);
 
   const resetForm = () => {
     if (dataCommonDic !== undefined) {
@@ -121,6 +124,14 @@ function GR9006({
 
         <SearchWrapper className="h35">
           <FormGroup>
+            <Label style={{ minWidth: "90px" }}>보고서종류</Label>
+            <Select register={register("reportType")} width={InputSize.i200}>
+              {dataCommonDic?.reportType?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
             <Label style={{ minWidth: "80px" }}>매입처</Label>
             <Select register={register("bcBuCode")} width={InputSize.i150}>
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
@@ -166,7 +177,7 @@ function GR9006({
           menuId={menuId}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: `calc(100% - 47px)` }}
-          evenFill
+          // evenFill
         />
       </WrapperContent>
     </>

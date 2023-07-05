@@ -3,7 +3,7 @@ export interface ISEARCH {
   gjMonth: string;
   swCode: string;
   cuCustgubun: string;
-  sChk1: string;
-  sChk2: string;
+  sChk1: boolean;
+  sChk2: boolean;
   jyCode: string;
 }
