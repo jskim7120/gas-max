@@ -71,12 +71,14 @@ function FormCM1300User({
   }, [data]);
 
   useEffect(() => {
-    if (isAddBtnClicked) {
+    if (mainIsAddBtnClicked) {
+      resetForm("emptClear");
       setUserData([]);
     } else {
       setUserData(data);
+      resetForm("reset");
     }
-  }, [isAddBtnClicked]);
+  }, [mainIsAddBtnClicked]);
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
