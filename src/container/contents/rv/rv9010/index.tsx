@@ -100,8 +100,10 @@ function RV9010({
       `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
     );
   };
-  const submit = (params: ISEARCH) => {
+  const submit = (params: any) => {
     params.gjMonth = DateWithoutDash(params.gjMonth);
+    params.sChk1 = params.sChk1 ? "Y" : "N";
+    params.sChk2 = params.sChk2 ? "Y" : "N";
     fetchData(params);
   };
 
@@ -114,6 +116,8 @@ function RV9010({
         swCode: init?.swCode,
         cuCustgubun: init?.cuCustgubun,
         jyCode: init?.jyCode,
+        sChk1: init?.sChk1 === "Y",
+        sChk2: init?.sChk2 === "Y",
       });
     }
   };

@@ -127,7 +127,7 @@ function GR9009({
 
         <SearchWrapper className="h35">
           <FormGroup>
-            <Label style={{ minWidth: "auto" }}>충전소</Label>
+            <Label style={{ minWidth: "auto" }}>매입처</Label>
             <Select width={InputSize.i130} register={register("bcBuCode")}>
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -176,7 +176,7 @@ function GR9009({
           menuId={menuId}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: `calc(100% - 47px)` }}
-          evenFill
+          // evenFill
         />
       </WrapperContent>
     </>

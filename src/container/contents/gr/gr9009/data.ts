@@ -44,7 +44,7 @@ export const columns = [
     name: "areaCode",
     fieldName: "areaCode",
     type: "data",
-    width: "20",
+    width: "50",
     header: {
       text: "영업소",
     },
@@ -58,7 +58,7 @@ export const columns = [
     name: "bbDate",
     fieldName: "bbDate",
     type: "data",
-    width: "30",
+    width: "50",
     header: {
       text: "일자",
     },
@@ -67,7 +67,7 @@ export const columns = [
     name: "bbBuName",
     fieldName: "bbBuName",
     type: "data",
-    width: "60",
+    width: "200",
     header: {
       text: "매입처명",
     },
@@ -76,7 +76,7 @@ export const columns = [
     name: "bbBpCode",
     fieldName: "bbBpCode",
     type: "data",
-    width: "20",
+    width: "50",
     header: {
       text: "코드",
     },
@@ -85,7 +85,7 @@ export const columns = [
     name: "bbBpName",
     fieldName: "bbBpName",
     type: "data",
-    width: "60",
+    width: "150",
     header: {
       text: "품명",
     },
@@ -94,7 +94,7 @@ export const columns = [
     name: "bbQty",
     fieldName: "bbQty",
     type: "data",
-    width: "30",
+    width: "50",
     header: {
       text: "수량",
     },
@@ -103,7 +103,7 @@ export const columns = [
     name: "bbDanga",
     fieldName: "bbDanga",
     type: "data",
-    width: "30",
+    width: "50",
     header: {
       text: "단가",
     },
@@ -112,7 +112,7 @@ export const columns = [
     name: "bbKumack",
     fieldName: "bbKumack",
     type: "data",
-    width: "30",
+    width: "50",
     header: {
       text: "금액",
     },
@@ -121,7 +121,7 @@ export const columns = [
     name: "bbBigo",
     fieldName: "bbBigo",
     type: "data",
-    width: "60",
+    width: "100",
     header: {
       text: "비고",
     },
