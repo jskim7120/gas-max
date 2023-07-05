@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
+import React, { useImperativeHandle, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { InputSize } from "components/componentsType";
@@ -6,7 +6,7 @@ import CustomDatePicker from "components/customDatePicker";
 import { currencyMask } from "helpers/currency";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
-import { useDispatch, useSelector } from "app/store";
+import { useDispatch } from "app/store";
 import {
   Item,
   RadioButton,
@@ -16,12 +16,10 @@ import {
   Input,
   Select,
   FormGroup,
-  Wrapper,
-  Divider,
   Label,
   StcTable,
 } from "components/form/style";
-import { ICC1200SEARCH } from "./model";
+import { ICC1200, emptyObj } from "./model";
 import { addCC1100, openModal } from "app/state/modal/modalSlice";
 
 interface IForm {
@@ -31,6 +29,7 @@ interface IForm {
   setSelected: any;
   isAddBtnClicked: boolean;
   setIsAddBtnClicked: Function;
+  areaCode: string;
 }
 const radioOptions = [
   {
@@ -61,6 +60,7 @@ const Form = React.forwardRef(
       setSelected,
       isAddBtnClicked,
       setIsAddBtnClicked,
+      areaCode,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -69,18 +69,16 @@ const Form = React.forwardRef(
     const [getCommonDictionary, { data: dataCommonDic }] =
       useGetCommonDictionaryMutation();
 
-    const [radioChecked, setRadioChecked] = useState(0);
-    const [radioCheckedSecond, setRadioCheckedSecond] = useState(0);
-    const [acjType, setAcjType] = useState("");
-    const { register, handleSubmit, reset, getValues, control } =
-      useForm<ICC1200SEARCH>({ mode: "onChange" });
+    const { register, handleSubmit, reset, watch, control } = useForm<ICC1200>({
+      mode: "onChange",
+    });
 
     useEffect(() => {
       getCommonDictionary({ groupId: "CC", functionName: "CC1200" });
     }, []);
 
     useEffect(() => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && Object.keys(selected)?.length > 0) {
         resetForm("reset");
       }
     }, [selected]);
@@ -92,35 +90,21 @@ const Form = React.forwardRef(
     }));
 
     const resetForm = async (type: string) => {
-      if (selected !== undefined && Object.keys(selected)?.length > 0) {
-        let newData: any = {};
-        if (type === "clear") {
-          document.getElementById("acjDate")?.focus();
-
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          newData.areaCode = selected.areaCode;
-          reset(newData);
-        } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
-          reset({
-            ...newData,
-          });
-          setAcjType(selected.acjType);
-        }
+      if (type === "clear") {
+        document.getElementById("acjDate")?.focus();
+        reset({ ...emptyObj });
+      }
+      if (type === "reset") {
+        reset(selected);
       }
     };
-    const crud = async (type: string | null) => {};
 
-    const handleSelectCode = async (event: any) => {};
+    const crud = async (type: string | null) => {};
 
     const handleSearchBtnClick = () => {
       dispatch(
         addCC1100({
-          acjType: acjType,
+          acjType: watch("acjType"),
         })
       );
       dispatch(openModal({ type: "cc1200Modal" }));
@@ -132,39 +116,32 @@ const Form = React.forwardRef(
         autoComplete="off"
         style={{ width: "380px", padding: "20px 10px" }}
       >
-        <Wrapper>
-          <FormGroup>
-            <Label style={{ minWidth: "80px" }}>영 업 소</Label>
-            <Select
-              register={register("areaCode")}
-              onChange={handleSelectCode}
-              width={InputSize.i200}
-              disabled={!isAddBtnClicked}
-            >
-              {dataCommonDic?.cbareaCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        </Wrapper>
-        <Wrapper>
-          <FormGroup>
-            <Label style={{ minWidth: "80px" }}>일 자</Label>
-            <Controller
-              control={control}
-              {...register("acjDate")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "200px" }}
-                />
-              )}
-            />
-          </FormGroup>
-        </Wrapper>
+        <FormGroup>
+          <Label style={{ minWidth: "80px" }}>영 업 소</Label>
+          <Select
+            register={register("areaCode")}
+            width={InputSize.i200}
+            disabled={!isAddBtnClicked}
+          >
+            {dataCommonDic?.cbareaCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
+          <Label style={{ minWidth: "80px" }}>일 자</Label>
+          <Controller
+            control={control}
+            name="acjDate"
+            render={({ field }) => (
+              <CustomDatePicker {...field} style={{ width: "200px" }} />
+            )}
+          />
+        </FormGroup>
+
         <div
           style={{
             borderStyle: "groove",
@@ -173,36 +150,29 @@ const Form = React.forwardRef(
             padding: "7px 0",
           }}
         >
-          <Wrapper>
-            <FormGroup>
-              <Label style={{ minWidth: "80px" }}>차 변</Label>
-              {radioOptions.map((option, index) => (
-                <Item key={index} style={{ marginLeft: "2px" }}>
-                  <RadioButton
-                    type="radio"
-                    value={option.id}
-                    {...register(`chGubun`)}
-                    id={option.id}
-                    checked={radioChecked === index}
-                    onClick={(e: any) => {
-                      setRadioChecked(parseInt(e.target.value));
-                    }}
-                  />
-                  <RadioButtonLabel htmlFor={`${option.label}`}>
-                    {option.label}
-                  </RadioButtonLabel>
-                </Item>
-              ))}
-            </FormGroup>
-          </Wrapper>
-          <Wrapper>
-            <Input
-              label="계정과목"
-              labelStyle={{ minWidth: "80px" }}
-              register={register("acjAccCodeCh")}
-              inputSize={InputSize.i200}
-            />
-          </Wrapper>
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>차 변</Label>
+            {radioOptions.map((option, index) => (
+              <Item key={index} style={{ marginLeft: "2px" }}>
+                <RadioButton
+                  type="radio"
+                  value={option.id}
+                  {...register(`chGubun`)}
+                  id={option.id}
+                />
+                <RadioButtonLabel htmlFor={`${option.label}`}>
+                  {option.label}
+                </RadioButtonLabel>
+              </Item>
+            ))}
+          </FormGroup>
+
+          <Input
+            label="계정과목"
+            labelStyle={{ minWidth: "80px" }}
+            register={register("acjAccCodeCh")}
+            inputSize={InputSize.i200}
+          />
         </div>
         <div
           style={{
@@ -213,62 +183,53 @@ const Form = React.forwardRef(
             padding: "7px 0",
           }}
         >
-          <Wrapper>
-            <FormGroup>
-              <Label style={{ minWidth: "80px" }}>대변</Label>
-              {radioOptionsSecond.map((option, index) => (
-                <Item key={index} style={{ marginLeft: "2px" }}>
-                  <RadioButton
-                    type="radio"
-                    value={option.id}
-                    {...register(`chGubun`)}
-                    id={option.id}
-                    checked={radioChecked === index}
-                    onClick={(e: any) => {
-                      setRadioCheckedSecond(parseInt(e.target.value));
-                    }}
-                  />
-                  <RadioButtonLabel htmlFor={`${option.label}`}>
-                    {option.label}
-                  </RadioButtonLabel>
-                </Item>
-              ))}
-            </FormGroup>
-          </Wrapper>
-          <Wrapper>
-            <FormGroup>
-              <Input
-                label="계정과목"
-                labelStyle={{ minWidth: "80px" }}
-                register={register("acjAccCodeDa")}
-                style={{ width: "172px" }}
-              />
-              <SearchBtn type="button" onClick={handleSearchBtnClick}>
-                <MagnifyingGlass />
-              </SearchBtn>
-            </FormGroup>
-          </Wrapper>
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>대변</Label>
+            {radioOptionsSecond.map((option, index) => (
+              <Item key={index} style={{ marginLeft: "2px" }}>
+                <RadioButton
+                  type="radio"
+                  value={option.id}
+                  {...register(`daGubun`)}
+                  id={option.id}
+                />
+                <RadioButtonLabel htmlFor={`${option.label}`}>
+                  {option.label}
+                </RadioButtonLabel>
+              </Item>
+            ))}
+          </FormGroup>
+
+          <FormGroup>
+            <Input
+              label="계정과목"
+              labelStyle={{ minWidth: "80px" }}
+              register={register("acjAccCodeDa")}
+              style={{ width: "172px" }}
+            />
+            <SearchBtn type="button" onClick={handleSearchBtnClick}>
+              <MagnifyingGlass />
+            </SearchBtn>
+          </FormGroup>
         </div>
 
-        <Wrapper>
-          <Input
-            label="적 요"
-            labelStyle={{ minWidth: "80px" }}
-            register={register("acjBigo")}
-            inputSize={InputSize.i200}
-          />
-        </Wrapper>
-        <Wrapper>
-          <Input
-            label="금 액"
-            labelStyle={{ minWidth: "80px" }}
-            register={register("acjKumack")}
-            inputSize={InputSize.i200}
-            mask={currencyMask}
-            textAlign="right"
-          />
-        </Wrapper>
-        <StcTable>
+        <Input
+          label="적 요"
+          labelStyle={{ minWidth: "80px" }}
+          register={register("acjBigo")}
+          inputSize={InputSize.i200}
+        />
+
+        <Input
+          label="금 액"
+          labelStyle={{ minWidth: "80px" }}
+          register={register("acjKumack")}
+          inputSize={InputSize.i200}
+          mask={currencyMask}
+          textAlign="right"
+        />
+
+        <StcTable style={{ marginTop: "40px" }}>
           <tr>
             <th>차변</th>
             <th>대변</th>
