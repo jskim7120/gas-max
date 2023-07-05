@@ -304,8 +304,11 @@ const Form = React.forwardRef(
             inputSize={InputSize.i120}
             readOnly
           />
-          <Label>건물명</Label>
-          <Input inputSize={InputSize.i120} register={register("aptName")} />
+          <Input
+            label="건물명"
+            inputSize={InputSize.i120}
+            register={register("aptName")}
+          />
         </FormGroup>
 
         <FormGroup>
