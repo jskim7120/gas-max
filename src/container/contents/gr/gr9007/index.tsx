@@ -136,7 +136,7 @@ function GR9007({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "auto" }}>기간</Label>
+            <Label style={{ minWidth: "60px" }}>기간</Label>
 
             <Controller
               control={control}
