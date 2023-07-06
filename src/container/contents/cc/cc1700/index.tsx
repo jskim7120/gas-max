@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { apiGet } from "app/axios";
 import { useDispatch } from "app/store";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
@@ -11,24 +11,15 @@ import {
   LeftSide,
 } from "../../commonStyle";
 import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
-import CustomDatePicker from "components/customDatePicker";
-import {
-  MagnifyingGlass,
-  ResetGray,
-  Plus,
-  Trash,
-  Update,
-} from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
-import Loader from "components/loader";
-import Button from "components/button/button";
-import { ButtonColor, InputSize } from "components/componentsType";
 import GridLeft from "components/grid";
 import { fields, columns } from "./data";
 import { ICC1700SEARCH } from "./model";
 import Form from "./form";
-import FourButtons from "components/button/fourButtons";
-import { getValue } from "@testing-library/user-event/dist/utils";
+import useDrawLine from "app/hook/useDrawLine";
+import use4Btns from "app/hook/use4Btns";
+
+const leftSideWidth: number = 880;
 
 function CC1700({
   depthFullName,
@@ -40,13 +31,18 @@ function CC1700({
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const { showDraggableLine, linePos } = useDrawLine(leftSideWidth);
   const dispatch = useDispatch();
-  const [areaCode, setAreaCode] = useState("");
+
   const [data, setData] = useState([]);
   const [data65, setData65] = useState({});
-  const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<any>({});
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+
+  const { register, handleSubmit, reset, control, watch } =
+    useForm<ICC1700SEARCH>({
+      mode: "onSubmit",
+    });
 
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
@@ -55,15 +51,44 @@ function CC1700({
     getCommonDictionary({ groupId: "CC", functionName: "CC1700" });
   }, []);
 
+  const handleClickAdd = () => {
+    formRef.current.resetForm("clear");
+  };
+
+  const handleClickDelete = () => {
+    dispatch(openModal({ type: "delModal" }));
+    dispatch(addDeleteMenuId({ menuId: menuId }));
+  };
+
+  const handleClickUpdate = () => {
+    formRef.current.crud(null);
+  };
+
+  const handleClickReset = () => {
+    formRef.current.resetForm("reset");
+  };
+
+  const { show4Btns, addBtnUnclick } = use4Btns(
+    isAddBtnClicked,
+    setIsAddBtnClicked,
+    handleClickAdd,
+    handleClickDelete,
+    handleClickUpdate,
+    handleClickReset
+  );
+
   useEffect(() => {
     if (dataCommonDic) {
-      setAreaCode(dataCommonDic.areaCode[0].code);
       fetchData({ acbAreaCode: dataCommonDic.areaCode[0].code });
+      resetSearchForm();
     }
   }, [dataCommonDic]);
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
+      if (isAddBtnClicked) {
+        addBtnUnclick();
+      }
       fetchData65({
         acbAreaCode: selected.acbAreaCode,
         acbCode: selected.acbCode,
@@ -71,32 +96,15 @@ function CC1700({
     }
   }, [selected]);
 
-  const resetSearchForm = () => {};
-
-  const { register, handleSubmit, reset, control, getValues } =
-    useForm<ICC1700SEARCH>({
-      mode: "onSubmit",
+  const resetSearchForm = () => {
+    reset({
+      areaCode: dataCommonDic?.areaCode[0].code,
     });
+  };
 
   const submit = (params: any) => {};
 
   const fetchData = async (params: any) => {
-    // try {
-    //   const { data: datas } = await API.get(CC1700SEARCH, { params: params });
-
-    //   if (datas) {
-    //     setData(datas);
-    //     setSelected(datas[0]);
-    //   } else {
-    //     setData([]);
-    //     setSelected({});
-    //   }
-    // } catch (err) {
-    //   setData([]);
-    //   setSelected({});
-    //   console.log("CC1700 data search fetch error =======>", err);
-    // }
-
     const datas = await apiGet(CC1700SEARCH, params);
 
     if (datas) {
@@ -109,43 +117,12 @@ function CC1700({
   };
 
   const fetchData65 = async (params: any) => {
-    // try {
-    //   const { data: data65 } = await API.get(CC170065, { params: params });
-    //   if (data65 && data65?.length > 0) {
-    //     setData65(data65[0]);
-    //   } else {
-    //     setData65({});
-    //   }
-    // } catch (err) {
-    //   setData65({});
-
-    //   console.log("CC1700 data 65 fetch error =======>", err);
-    // }
-
     const data65 = await apiGet(CC170065, params);
     if (data65 && data65?.length > 0) {
       setData65(data65[0]);
     } else {
       setData65({});
     }
-  };
-
-  const onClickAdd = () => {
-    setIsAddBtnClicked(true);
-    formRef.current.resetForm("clear");
-  };
-
-  const onClickDelete = () => {
-    dispatch(openModal({ type: "delModal" }));
-    dispatch(addDeleteMenuId({ menuId: menuId }));
-  };
-  const onClickUpdate = () => {
-    formRef.current.crud(null);
-  };
-
-  const onClickReset = () => {
-    setIsAddBtnClicked(false);
-    formRef.current.resetForm("reset");
   };
 
   return (
@@ -155,10 +132,7 @@ function CC1700({
           {ownAreaCode === "00" && (
             <>
               <Label style={{ minWidth: "48px" }}>영업소</Label>
-              <Select
-                value={areaCode}
-                onChange={(e) => setAreaCode(e.target.value)}
-              >
+              <Select register={register("areaCode")}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -167,33 +141,38 @@ function CC1700({
               </Select>
             </>
           )}
-          <FourButtons
-            onClickAdd={onClickAdd}
-            onClickDelete={onClickDelete}
-            onClickUpdate={onClickUpdate}
-            onClickReset={onClickReset}
-            isAddBtnClicked={isAddBtnClicked}
-          />
+          <div className="buttons ml30">{show4Btns()}</div>
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
-        <LeftSide>
-          <GridLeft
-            areaCode={ownAreaCode}
-            data={data}
-            setSelected={setSelected}
-            setIsAddBtnClicked={setIsAddBtnClicked}
-            fields={fields}
-            columns={columns}
-            menuId={menuId}
-            rowIndex={0}
-            style={{ height: `100%` }}
-          />
+        <LeftSide style={{ width: `${linePos}px` }}>
+          <div
+            style={{
+              minWidth: leftSideWidth,
+              height: "100%",
+            }}
+          >
+            <GridLeft
+              areaCode={ownAreaCode}
+              data={data}
+              setSelected={setSelected}
+              setIsAddBtnClicked={setIsAddBtnClicked}
+              fields={fields}
+              columns={columns}
+              menuId={menuId}
+              rowIndex={0}
+              style={{ height: `100%` }}
+            />
+          </div>
         </LeftSide>
-        <RightSide>
+        <RightSide
+          style={{
+            width: `calc(100% - ${linePos}px)`,
+          }}
+        >
           <Form
-            areaCode={areaCode}
+            areaCode={watch("areaCode")}
             data65={data65}
             setData65={setData65}
             ref={formRef}
@@ -202,9 +181,9 @@ function CC1700({
             setSelected={setSelected}
             dataCommonDic={dataCommonDic}
             isAddBtnClicked={isAddBtnClicked}
-            setIsAddBtnClicked={setIsAddBtnClicked}
           />
         </RightSide>
+        {showDraggableLine()}
       </MainWrapper>
     </>
   );

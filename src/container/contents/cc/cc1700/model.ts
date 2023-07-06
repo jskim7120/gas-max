@@ -1,5 +1,5 @@
 export interface ICC1700SEARCH {
-  // areaCode: string;
+  areaCode: string;
 }
 
 export interface ICC1700 {}

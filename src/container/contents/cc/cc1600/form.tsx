@@ -1,15 +1,6 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import {
-  Input,
-  Select,
-  Field,
-  FormGroup,
-  Wrapper,
-  Divider,
-  Label,
-  DividerGray,
-} from "components/form/style";
+import React, { useImperativeHandle, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { Input, Select, FormGroup, Label } from "components/form/style";
 import { ICC1600FORM, emptyObj } from "./model";
 import { InputSize } from "components/componentsType";
 import {
@@ -22,28 +13,26 @@ interface IForm {
   data65: any;
   acsAccName: any;
   isAddBtnClicked: boolean;
-  setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
   (
-    { data65, acsAccName, isAddBtnClicked, setIsAddBtnClicked }: IForm,
+    { data65, acsAccName, isAddBtnClicked }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const { register, handleSubmit, control, reset, getValues } =
-      useForm<ICC1600FORM>({ mode: "onChange" });
+    const { register, handleSubmit, reset } = useForm<ICC1600FORM>({
+      mode: "onChange",
+    });
 
     useEffect(() => {
-      if (data65 !== undefined && JSON.stringify(data65) !== "{}") {
+      if (data65 !== undefined && Object.keys(data65)?.length > 0) {
         resetForm("reset");
       }
-      // setIsAddBtnClicked(false);
     }, [data65]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      // setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {
