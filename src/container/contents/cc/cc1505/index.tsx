@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useForm } from "react-hook-form";
 import { apiGet } from "app/axios";
 import { useDispatch } from "app/store";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
@@ -11,11 +10,13 @@ import {
 } from "../../commonStyle";
 import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import { fields, columns } from "./data";
-import { ICC1505SEARCH } from "./model";
 import GridLeft from "components/grid";
 import { CC1505SEARCH, CC150565 } from "app/path";
 import Form from "./form";
-import FourButtons from "components/button/fourButtons";
+import useDrawLine from "app/hook/useDrawLine";
+import use4Btns from "app/hook/use4Btns";
+
+const leftSideWidth: number = 500;
 
 function CC1505({
   depthFullName,
@@ -27,46 +28,63 @@ function CC1505({
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const { showDraggableLine, linePos } = useDrawLine(leftSideWidth);
   const dispatch = useDispatch();
+
   const [data, setData] = useState([]);
   const [data65, setData65] = useState<any>({});
   const [selected, setSelected] = useState<any>({});
-  const [loading, setLoading] = useState(false);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
 
+  const handleClickAdd = () => {
+    formRef.current.resetForm("clear");
+  };
+
+  const handleClickDelete = () => {
+    dispatch(openModal({ type: "delModal" }));
+    dispatch(addDeleteMenuId({ menuId: menuId }));
+  };
+  const handleClickUpdate = () => {
+    formRef.current.crud(null);
+  };
+
+  const handleClickReset = () => {
+    formRef.current.resetForm("reset");
+  };
+
+  const { show4Btns, addBtnUnclick } = use4Btns(
+    isAddBtnClicked,
+    setIsAddBtnClicked,
+    handleClickAdd,
+    handleClickDelete,
+    handleClickUpdate,
+    handleClickReset
+  );
+
   useEffect(() => {
     getCommonDictionary({ groupId: "CC", functionName: "CC1505" });
-    if (ownAreaCode) {
-      fetchData({ areaCode: ownAreaCode });
-    }
   }, []);
 
   useEffect(() => {
+    if (ownAreaCode) {
+      fetchData({ areaCode: ownAreaCode });
+    }
+  }, [ownAreaCode]);
+
+  useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
+      if (isAddBtnClicked) {
+        addBtnUnclick();
+      }
+
       fetchData65({ accCode: selected.accCode, areaCode: ownAreaCode });
     }
   }, [selected]);
 
   const fetchData = async (params: any) => {
-    // try {
-    //   const { data: datas } = await API.get(CC1505SEARCH, { params: params });
-
-    //   if (datas) {
-    //     setData(datas);
-    //     setSelected(datas[0]);
-    //   } else {
-    //     setData([]);
-    //     setSelected({});
-    //   }
-    // } catch (err) {
-    //   setData([]);
-    //   setSelected({});
-    //   console.log("CC1505 data search fetch error =======>", err);
-    // }
-
     const datas = await apiGet(CC1505SEARCH, params);
     if (datas) {
       setData(datas);
@@ -78,71 +96,46 @@ function CC1505({
   };
 
   const fetchData65 = async (params: any) => {
-    // try {
-    //   const { data: data65 } = await API.get(CC150565, { params: params });
-    //   if (data65) {
-    //     setData65(data65[0]);
-    //   } else {
-    //     setData65({});
-    //   }
-    // } catch (err) {
-    //   setData65({});
-    //   console.log("CC1505 data 65 fetch error =======>", err);
-    // }
-
-    const data65 = await apiGet(CC150565, params);
-    if (data65) {
-      setData65(data65[0]);
+    const res = await apiGet(CC150565, params);
+    if (res) {
+      setData65(res[0]);
     } else {
       setData65({});
     }
   };
 
-  const onClickAdd = () => {
-    setIsAddBtnClicked(true);
-    formRef.current.resetForm("clear");
-  };
-
-  const onClickDelete = () => {
-    dispatch(openModal({ type: "delModal" }));
-    dispatch(addDeleteMenuId({ menuId: menuId }));
-  };
-  const onClickUpdate = () => {
-    formRef.current.crud(null);
-  };
-
-  const onClickReset = () => {
-    setIsAddBtnClicked(false);
-    formRef.current.resetForm("reset");
-  };
-
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <FourButtons
-          onClickAdd={onClickAdd}
-          onClickDelete={onClickDelete}
-          onClickUpdate={onClickUpdate}
-          onClickReset={onClickReset}
-          isAddBtnClicked={isAddBtnClicked}
-        />
+        <div className="buttons ml30">{show4Btns()}</div>
         <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
-        <LeftSide>
-          <GridLeft
-            areaCode={ownAreaCode}
-            data={data}
-            setSelected={setSelected}
-            setIsAddBtnClicked={setIsAddBtnClicked}
-            fields={fields}
-            columns={columns}
-            menuId={menuId}
-            rowIndex={0}
-            style={{ height: `100%` }}
-          />
+        <LeftSide style={{ width: `${linePos}px` }}>
+          <div
+            style={{
+              minWidth: leftSideWidth,
+              height: "100%",
+            }}
+          >
+            <GridLeft
+              areaCode={ownAreaCode}
+              data={data}
+              setSelected={setSelected}
+              setIsAddBtnClicked={setIsAddBtnClicked}
+              fields={fields}
+              columns={columns}
+              menuId={menuId}
+              rowIndex={0}
+              style={{ height: `100%` }}
+            />
+          </div>
         </LeftSide>
-        <RightSide>
+        <RightSide
+          style={{
+            width: `calc(100% - ${linePos}px)`,
+          }}
+        >
           <Form
             ref={formRef}
             data={data65}
@@ -150,6 +143,7 @@ function CC1505({
             isAddBtnClicked={isAddBtnClicked}
           />
         </RightSide>
+        {showDraggableLine()}
       </MainWrapper>
     </>
   );

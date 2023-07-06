@@ -3,14 +3,11 @@ import { useForm, Controller } from "react-hook-form";
 import {
   Input,
   Select,
-  Field,
   FormGroup,
-  Wrapper,
-  Divider,
   Label,
   DividerGray,
 } from "components/form/style";
-import { ICC1500FORM } from "./model";
+import { ICC1500, emptyObj } from "./model";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { currencyMask } from "helpers/currency";
@@ -18,14 +15,12 @@ import { currencyMask } from "helpers/currency";
 interface IForm {
   data65: any;
   setData65: Function;
-  // selected: any;
   fetchData: any;
   setData: any;
   selected: any;
   setSelected: any;
   dataCommonDic: any;
   isAddBtnClicked: boolean;
-  setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
@@ -33,57 +28,41 @@ const Form = React.forwardRef(
     {
       data65,
       setData65,
-      // selected,
       fetchData,
       setData,
       selected,
       setSelected,
       dataCommonDic,
       isAddBtnClicked,
-      setIsAddBtnClicked,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const { register, handleSubmit, control, reset, getValues } =
-      useForm<ICC1500FORM>({ mode: "onChange" });
+    const { register, handleSubmit, control, reset } = useForm<ICC1500>({
+      mode: "onChange",
+    });
 
     useEffect(() => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && Object.keys(selected)?.length > 0) {
         resetForm("reset");
       }
-      setIsAddBtnClicked(false);
     }, [selected]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {
-      if (selected !== undefined && Object.keys(selected)?.length > 0) {
-        let newData: any = {};
-        if (type === "clear") {
-          document.getElementById("acjDate")?.focus();
-
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          newData.areaCode = selected.areaCode;
-          reset(newData);
-        } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
-          reset({
-            ...newData,
-          });
-        }
+      if (type === "clear") {
+        document.getElementById("acjDate")?.focus();
+        reset(emptyObj);
+      } else if (type === "reset") {
+        reset(selected);
       }
     };
     const crud = async (type: string | null) => {};
 
-    const submit = async (data: ICC1500FORM) => {};
+    const submit = async (data: ICC1500) => {};
 
     return (
       <form
@@ -118,13 +97,9 @@ const Form = React.forwardRef(
               <Label>일 자 </Label>
               <Controller
                 control={control}
-                {...register("cjDate")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    style={{ width: "150px" }}
-                    value={value}
-                    onChange={onChange}
-                  />
+                name="cjDate"
+                render={({ field }) => (
+                  <CustomDatePicker style={{ width: "150px" }} {...field} />
                 )}
               />
             </FormGroup>

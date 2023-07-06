@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
+import React, { useImperativeHandle, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Input, Select, FormGroup, Label } from "components/form/style";
 import { ICC1505FORM, emtyObj } from "./model";
@@ -15,8 +15,9 @@ const Form = React.forwardRef(
     { data, dataCommonDic, isAddBtnClicked }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const { register, handleSubmit, control, reset, getValues } =
-      useForm<ICC1505FORM>({ mode: "onChange" });
+    const { register, handleSubmit, reset } = useForm<ICC1505FORM>({
+      mode: "onChange",
+    });
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
