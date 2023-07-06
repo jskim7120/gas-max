@@ -7,22 +7,8 @@ export interface ICC1500SEARCH {
 
 export interface ICC1500 {
   areaCode: string;
-  cjBigo: string;
-  cjCaCode: string;
-  cjCaName: string;
-  cjCcCode: string;
-  cjCcName: string;
   cjDate: string;
-  cjKumack: number;
-  cjSno: string;
-  cjSwCode: string;
-  cjSwName: string;
-}
-
-export interface ICC1500FORM {
-  areaCode: string;
-  cjDate: string;
-  totGabul: string; //
+  totGabul: string;
 
   cjBigo: string;
   cjBigoOil: string;
@@ -40,3 +26,24 @@ export interface ICC1500FORM {
   cjSwCodeOil: string;
   cjSwName: string;
 }
+
+export const emptyObj = {
+  areaCode: "",
+  cjDate: "",
+  totGabul: "",
+  cjBigo: "",
+  cjBigoOil: "",
+  cjCaCode: "",
+  cjCaName: "",
+  cjCarKg: 0,
+  cjCcCode: "",
+  cjCcName: "",
+  cjKumack: 0,
+  cjKumackOil: 0,
+  cjOilDanga: 0,
+  cjOilL: 0,
+  cjOilType: "",
+  cjSwCode: "",
+  cjSwCodeOil: "",
+  cjSwName: "",
+};

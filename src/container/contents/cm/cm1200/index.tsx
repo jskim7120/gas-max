@@ -23,7 +23,7 @@ import { ISEARCH } from "./model";
 import Form from "./form";
 import { fields, columns } from "./data";
 
-const leftSideWidth: number = 450;
+const leftSideWidth: number = 520;
 let clonedSelected: any;
 
 function CM1200({
