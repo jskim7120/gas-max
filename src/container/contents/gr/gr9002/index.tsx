@@ -41,7 +41,9 @@ function GR9002({
     });
 
   useEffect(() => {
-    resetForm();
+    if (dataCommonDic?.initData) {
+      resetForm("reset");
+    }
   }, [dataCommonDic]);
 
   const submit = (data: ISEARCH) => {
@@ -50,21 +52,24 @@ function GR9002({
     fetchData(data);
   };
 
-  const resetForm = () => {
-    if (dataCommonDic !== undefined) {
+  const resetForm = (type: any) => {
+    if (type === "reset") {
+      const init = dataCommonDic.initData[0];
       reset({
         areaCode: dataCommonDic?.areaCode[0]?.code,
-        bcBuCode: dataCommonDic?.bcBuCode[0]?.code,
-        bcCsawon: dataCommonDic?.bcCsawon[0]?.code,
-        bcCtype: dataCommonDic?.bcCtype[0]?.code,
-        eDate: dataCommonDic?.eDate[0]?.code,
-        sDate: dataCommonDic?.sDate[0]?.code,
+        bcBuCode: init?.bcBuCode,
+        bcCsawon: init?.bcCsawon,
+        bcCtype: init?.bcCtype,
+        eDate: init?.eDate,
+        sDate: init?.sDate,
       });
     }
   };
 
   const handleReset = () => {
-    resetForm();
+    if (dataCommonDic?.initData) {
+      resetForm("reset");
+    }
     setData([]);
   };
 
@@ -131,15 +136,23 @@ function GR9002({
             <Controller
               control={control}
               {...register("sDate")}
-              render={({ field: { onChange, value } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                />
               )}
             />
             <Controller
               control={control}
               {...register("eDate")}
-              render={({ field: { onChange, value } }) => (
-                <CustomDatePicker value={value} onChange={onChange} />
+              render={({ field: { onChange, value, name } }) => (
+                <CustomDatePicker
+                  value={value}
+                  onChange={onChange}
+                  name={name}
+                />
               )}
             />
 

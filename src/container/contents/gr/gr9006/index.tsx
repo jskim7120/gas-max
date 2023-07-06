@@ -41,7 +41,9 @@ function GR9006({
   });
 
   useEffect(() => {
-    resetForm();
+    if (dataCommonDic?.initData) {
+      resetForm("reset");
+    }
   }, [dataCommonDic]);
 
   const submit = (data: any) => {
@@ -56,21 +58,23 @@ function GR9006({
     }
   }, [watch("reportType")]);
 
-  const resetForm = () => {
-    if (dataCommonDic !== undefined) {
-      console.log(dataCommonDic);
+  const resetForm = (type: any) => {
+    if (type === "reset") {
+      const init = dataCommonDic.initData[0];
       reset({
         areaCode: dataCommonDic?.areaCode[0]?.code,
-        bcBuCode: dataCommonDic?.bcBuCode[0]?.code,
-        reportType: dataCommonDic?.reportType[0]?.code,
-        eDate: dataCommonDic?.eDate[0]?.code,
-        sDate: dataCommonDic?.sDate[0]?.code,
+        bcBuCode: init?.bcBuCode,
+        reportType: init?.reportType,
+        eDate: init?.eDate,
+        sDate: init?.sDate,
       });
     }
   };
 
   const handleReset = () => {
-    resetForm();
+    if (dataCommonDic?.initData) {
+      resetForm("reset");
+    }
     setData([]);
   };
 

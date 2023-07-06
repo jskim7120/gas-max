@@ -39,28 +39,28 @@ function GR9003({
     mode: "onSubmit",
   });
 
-  const resetForm = () => {
-    if (dataCommonDic !== undefined) {
+  useEffect(() => {
+    if (dataCommonDic?.initData) {
+      resetForm("reset");
+    }
+  }, [dataCommonDic]);
+
+  const resetForm = (type: any) => {
+    if (type === "reset") {
+      const init = dataCommonDic.initData[0];
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
-        bcBuCode: dataCommonDic?.bcBuCode[0].code,
-        sDate: dataCommonDic?.sDate[0].code,
-        eDate: dataCommonDic?.eDate[0].code,
+        bcBuCode: init?.bcBuCode,
+        sDate: init?.sDate,
+        eDate: init?.eDate,
       });
     }
   };
 
-  useEffect(() => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-      bcBuCode: dataCommonDic?.bcBuCode[0].code,
-      sDate: dataCommonDic?.sDate[0].code,
-      eDate: dataCommonDic?.eDate[0].code,
-    });
-  }, [dataCommonDic]);
-
   const handleReset = () => {
-    resetForm();
+    if (dataCommonDic?.initData) {
+      resetForm("reset");
+    }
     setData([]);
   };
 
