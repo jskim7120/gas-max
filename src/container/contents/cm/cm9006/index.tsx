@@ -262,9 +262,11 @@ function CM9003({
                   marginLeft: "22px",
                 }}
               >
+                <Label style={{ marginLeft: "-60px", paddingRight: "10px" }}>
+                  등록기간
+                </Label>
                 <CheckBox
                   register={{ ...register("dataChk") }}
-                  title="등록기간"
                   onChange={(e: any) => setDataChk(e.target.checked)}
                   checked={dataChk}
                 />

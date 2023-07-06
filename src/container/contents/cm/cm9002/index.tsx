@@ -111,7 +111,7 @@ function CM9002({
           <FormGroup>
             {areaCode === "00" && (
               <>
-                <Label style={{ minWidth: "90px" }}>영업소</Label>
+                <Label style={{ minWidth: "80px" }}>영업소</Label>
 
                 <Select register={register("areaCode")}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
