@@ -67,6 +67,8 @@ function CM9002({
           cuSukumtype: init?.cuSukumtype,
           cuJangbu: init?.cuJangbu,
           cuMisu: init?.cuMisu,
+          sDate: init?.sDate,
+          dDate: init?.dDate,
         });
       }
     }
@@ -266,7 +268,7 @@ function CM9002({
             />
             <Controller
               control={control}
-              {...register("eDate")}
+              {...register("dDate")}
               render={({ field: { onChange, value } }) => (
                 <CustomDatePicker
                   value={value}

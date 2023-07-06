@@ -10,7 +10,7 @@ export interface ICM9002SEARCH {
   cuCutype: String;
   cuStae: String;
   sDate: String;
-  eDate: String;
+  dDate: String;
   cuJangbu: String;
   cuSukumtype: string;
   dataChk: string;

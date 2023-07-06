@@ -125,7 +125,7 @@ function GR9008({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "80px" }}>기간</Label>
+            <Label style={{ minWidth: "60px" }}>기간</Label>
             <Controller
               control={control}
               {...register("sDate")}
