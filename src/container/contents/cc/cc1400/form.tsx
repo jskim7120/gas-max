@@ -3,14 +3,11 @@ import { useForm, Controller } from "react-hook-form";
 import {
   Input,
   Select,
-  Field,
   FormGroup,
-  Wrapper,
-  Divider,
   Label,
   DividerGray,
 } from "components/form/style";
-import { ICC1400FORM } from "./model";
+import { ICC1400, emptyObj } from "./model";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
@@ -22,76 +19,54 @@ interface IForm {
   setData: any;
   setSelected: any;
   isAddBtnClicked: boolean;
-  setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
   (
-    {
-      selected,
-      fetchData,
-      setData,
-      setSelected,
-      isAddBtnClicked,
-      setIsAddBtnClicked,
-    }: IForm,
+    { selected, fetchData, setData, setSelected, isAddBtnClicked }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [getCommonDictionary, { data: dataCommonDic }] =
       useGetCommonDictionaryMutation();
 
-    const { register, handleSubmit, control, reset, getValues } =
-      useForm<ICC1400FORM>({ mode: "onChange" });
+    const { register, handleSubmit, control, reset, watch } = useForm<ICC1400>({
+      mode: "onChange",
+    });
 
     useEffect(() => {
       getCommonDictionary({ groupId: "CC", functionName: "CC1400" });
     }, []);
 
     useEffect(() => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && Object.keys(selected)?.length > 0) {
         resetForm("reset");
       }
-      setIsAddBtnClicked(false);
     }, [selected]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {
-      if (selected !== undefined && Object.keys(selected)?.length > 0) {
-        let newData: any = {};
-        if (type === "clear") {
-          document.getElementById("sgDate")?.focus();
+      if (type === "clear") {
+        document.getElementById("sgDate")?.focus();
 
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          newData.areaCode = selected.areaCode;
-          reset(newData);
-        } else if (type === "reset") {
-          if (selected !== undefined && Object.keys(selected)?.length > 0) {
-            for (const [key, value] of Object.entries(selected)) {
-              newData[key] = value;
-            }
-
-            reset({
-              ...newData,
-              saupStampQu: selected?.saupStampQu === "Y",
-              saupStampEs: selected?.saupStampEs === "Y",
-              saupStampSe: selected?.saupStampSe === "Y",
-              // saupDate: selected?.saupDate ? formatDate(selected.saupDate) : "",
-              // saupDate: selected?.saupDate ? DateWithDash(selected.saupDate) : "",
-            });
-          }
+        reset(emptyObj);
+      } else if (type === "reset") {
+        if (selected !== undefined && Object.keys(selected)?.length > 0) {
+          reset({
+            ...selected,
+            saupStampQu: selected?.saupStampQu === "Y",
+            saupStampEs: selected?.saupStampEs === "Y",
+            saupStampSe: selected?.saupStampSe === "Y",
+          });
         }
       }
     };
     const crud = async (type: string | null) => {};
 
-    const submit = async (data: ICC1400FORM) => {};
+    const submit = async (data: ICC1400) => {};
 
     return (
       <form
@@ -104,7 +79,7 @@ const Form = React.forwardRef(
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            height: "75vh",
+            height: "70vh",
           }}
         >
           <div>
@@ -123,17 +98,12 @@ const Form = React.forwardRef(
               </Select>
             </FormGroup>
             <FormGroup>
-              <Label>일 자 </Label>
+              <Label>일 자</Label>
               <Controller
                 control={control}
-                {...register("sgDate")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    style={{ width: "200px" }}
-                  />
+                name="sgDate"
+                render={({ field }) => (
+                  <CustomDatePicker {...field} style={{ width: "200px" }} />
                 )}
               />
             </FormGroup>

@@ -38,7 +38,6 @@ function CC1200({
   ownAreaCode: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-
   const { showDraggableLine, linePos } = useDrawLine(leftSideWidth);
   const dispatch = useDispatch();
 
@@ -48,7 +47,6 @@ function CC1200({
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
   const handleClickAdd = () => {
-    setIsAddBtnClicked(true);
     formRef.current.resetForm("clear");
   };
 
@@ -62,7 +60,6 @@ function CC1200({
   };
 
   const handleClickReset = () => {
-    setIsAddBtnClicked(false);
     formRef.current.resetForm("reset");
   };
 

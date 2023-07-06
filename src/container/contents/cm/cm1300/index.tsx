@@ -28,7 +28,7 @@ import Form from "./form";
 import CM1300User from "./cm1300User";
 import { ISEARCH } from "./model";
 
-const leftSideWidth: number = 840;
+const leftSideWidth: number = 910;
 
 function CM1300({
   depthFullName,
