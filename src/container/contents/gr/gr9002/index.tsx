@@ -75,7 +75,7 @@ function GR9002({
           <FormGroup>
             {areaCode === "00" && (
               <>
-                <Label style={{ minWidth: "48px" }}>영업소</Label>
+                <Label style={{ minWidth: "48px" }}>재고입고처</Label>
                 <Select register={register("areaCode")}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -118,7 +118,7 @@ function GR9002({
         </SearchWrapper>
         <SearchWrapper className="h35">
           <FormGroup>
-            <Label style={{ minWidth: "auto" }}>충전소</Label>
+            <Label style={{ minWidth: "76px" }}>충전소</Label>
             <Select register={register("bcBuCode")} width={InputSize.i150}>
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

@@ -95,15 +95,15 @@ function CM9003({
       case "1":
         return { columns: columns1, fields: fields1 };
       case "2":
-        return { columns: columns0, fields: fields0 };
+        return { columns: columns2, fields: fields2 };
       case "3":
-        return { columns: columns1, fields: fields1 };
+        return { columns: columns3, fields: fields3 };
       case "4":
-        return { columns: columns0, fields: fields0 };
+        return { columns: columns4, fields: fields4 };
       case "5":
-        return { columns: columns1, fields: fields1 };
+        return { columns: columns5, fields: fields5 };
       case "6":
-        return { columns: columns1, fields: fields1 };
+        return { columns: columns6, fields: fields6 };
     }
   };
 
@@ -257,7 +257,7 @@ function CM9003({
         menuId={menuId}
         gridChangeField={watch("reportKind")}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: `calc(100% - 38px)` }}
+        style={{ height: `calc(100% - 52px)` }}
         //evenFill
       />
     </>

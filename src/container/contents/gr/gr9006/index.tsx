@@ -11,6 +11,7 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import BasicGrid from "components/basicGrid";
+import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
 import { DateWithoutDash } from "helpers/dateFormat";
 
@@ -73,6 +74,14 @@ function GR9006({
     setData([]);
   };
 
+  const selectColumns = () => {
+    switch (watch("reportType")) {
+      case "0":
+        return { columns: columns0, fields: fields0 };
+      case "1":
+        return { columns: columns1, fields: fields1 };
+    }
+  };
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
@@ -124,7 +133,7 @@ function GR9006({
 
         <SearchWrapper className="h35">
           <FormGroup>
-            <Label style={{ minWidth: "90px" }}>보고서종류</Label>
+            <Label style={{ minWidth: "80px" }}>보고서종류</Label>
             <Select register={register("reportType")} width={InputSize.i200}>
               {dataCommonDic?.reportType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -172,8 +181,9 @@ function GR9006({
           ref={gridRef}
           areaCode={areaCode}
           data={data}
-          columns={columns1}
-          fields={fields1}
+          columns={selectColumns()?.columns}
+          fields={selectColumns()?.fields}
+          gridChangeField={watch("reportType")}
           menuId={menuId}
           rowIndex={data?.length > 1 ? data.length - 1 : 0}
           style={{ height: `calc(100% - 47px)` }}

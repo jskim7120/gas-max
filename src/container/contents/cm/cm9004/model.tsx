@@ -5,5 +5,5 @@ export interface ISEARCH {
   swCode: string;
   cuJyCode: string;
   cuStae: string;
-  cuSekumyn: string;
+  cuSekumyn: boolean;
 }

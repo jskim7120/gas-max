@@ -48,31 +48,33 @@ function CM9004({
   }, [selected]);
 
   useEffect(() => {
-    if (dataCommonDic?.dataInit) {
-      resetForm("reset");
-    }
+    resetForm("reset");
   }, [dataCommonDic]);
 
-  const submit = (data: ISEARCH) => {
-    fetchData(data);
+  const submit = (params: ISEARCH) => {
+    console.log("paramsparamsparams", params);
+    fetchData(params);
   };
 
-  const resetForm = (type: string) => {
+  const resetForm = (type: any) => {
     if (type === "reset") {
-      const init = dataCommonDic.dataInit[0];
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-        cuGong: dataCommonDic?.cuGong[0].code,
-        cuType: dataCommonDic?.cuType[0].code,
-        cuJyCode: dataCommonDic?.cuJyCode[0].code,
-        swCode: dataCommonDic?.swCode[0].code,
-        cuStae: dataCommonDic?.cuStae[0].code,
-      });
+      if (dataCommonDic !== undefined) {
+        reset({
+          areaCode: dataCommonDic?.areaCode[0].code,
+          cuGong: dataCommonDic?.cuGong[0].code,
+          cuType: dataCommonDic?.cuType[0].code,
+          cuJyCode: dataCommonDic?.cuJyCode[0].code,
+          swCode: dataCommonDic?.swCode[0].code,
+          cuStae: dataCommonDic?.cuStae[0].code,
+        });
+      }
     }
   };
 
   const handleReset = () => {
-    resetForm("reset");
+    if (dataCommonDic) {
+      resetForm("reset");
+    }
     setData([]);
   };
 
@@ -226,8 +228,8 @@ function CM9004({
         columns={columns}
         menuId={menuId}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: `calc(100% - 36px)` }}
-        // evenFill
+        style={{ height: `calc(100% - 52px)` }}
+        evenFill
       />
     </>
   );

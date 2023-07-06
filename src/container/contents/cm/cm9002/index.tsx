@@ -67,6 +67,8 @@ function CM9002({
           cuSukumtype: init?.cuSukumtype,
           cuJangbu: init?.cuJangbu,
           cuMisu: init?.cuMisu,
+          sDate: init?.sDate,
+          dDate: init?.dDate,
         });
       }
     }
@@ -109,7 +111,7 @@ function CM9002({
           <FormGroup>
             {areaCode === "00" && (
               <>
-                <Label style={{ minWidth: "90px" }}>영업소</Label>
+                <Label style={{ minWidth: "80px" }}>영업소</Label>
 
                 <Select register={register("areaCode")}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
@@ -266,7 +268,7 @@ function CM9002({
             />
             <Controller
               control={control}
-              {...register("eDate")}
+              {...register("dDate")}
               render={({ field: { onChange, value } }) => (
                 <CustomDatePicker
                   value={value}

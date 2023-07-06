@@ -6,14 +6,6 @@ export const fields1 = [
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bbDate",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "bbBuName",
-    dataType: ValueType.TEXT,
-  },
-  {
     fieldName: "bbBpName",
     dataType: ValueType.TEXT,
   },
@@ -21,6 +13,15 @@ export const fields1 = [
     fieldName: "bbBpType",
     dataType: ValueType.TEXT,
   },
+  {
+    fieldName: "bbDate",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "bbBuName",
+    dataType: ValueType.TEXT,
+  },
+
   {
     fieldName: "bbQty",
     dataType: ValueType.TEXT,
@@ -31,14 +32,6 @@ export const fields1 = [
   },
   {
     fieldName: "bbKumack",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "bbVat",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "bbSum",
     dataType: ValueType.TEXT,
   },
 ];
@@ -62,25 +55,6 @@ export const columns1 = [
     name: "bbDate",
     fieldName: "bbDate",
     type: "data",
-    width: "100",
-    header: {
-      text: "일자",
-    },
-  },
-  {
-    name: "bbBuName",
-    fieldName: "bbBuName",
-    type: "data",
-    width: "200",
-    styleName: "rg-left-column",
-    header: {
-      text: "매입처명",
-    },
-  },
-  {
-    name: "bbBpName",
-    fieldName: "bbBpName",
-    type: "data",
     width: "150",
     styleName: "rg-left-column",
     header: {
@@ -88,13 +62,33 @@ export const columns1 = [
     },
   },
   {
-    name: "bbBpType",
-    fieldName: "bbBpType",
+    name: "bbBuName",
+    fieldName: "bbBuName",
     type: "data",
     width: "100",
     styleName: "rg-left-column",
     header: {
       text: "규격",
+    },
+  },
+  {
+    name: "bbBpName",
+    fieldName: "bbBpName",
+    type: "data",
+    width: "100",
+    styleName: "rg-left-column",
+    header: {
+      text: "일자",
+    },
+  },
+  {
+    name: "bbBpType",
+    fieldName: "bbBpType",
+    type: "data",
+    width: "200",
+    styleName: "rg-left-column",
+    header: {
+      text: "매입처명",
     },
   },
   {
@@ -125,26 +119,6 @@ export const columns1 = [
     styleName: "rg-right-column",
     header: {
       text: "금액",
-    },
-  },
-  {
-    name: "bbVat",
-    fieldName: "bbVat",
-    type: "data",
-    width: "120",
-    styleName: "rg-right-column",
-    header: {
-      text: "세액",
-    },
-  },
-  {
-    name: "bbSum",
-    fieldName: "bbSum",
-    type: "data",
-    width: "120",
-    styleName: "rg-right-column",
-    header: {
-      text: "합계",
     },
   },
 ];
