@@ -1,3 +1,6 @@
+export interface ICC1600SEARCH {
+  areaCode: string;
+}
 export interface ICC1600FORM {
   acsAccCode: string;
   acsAccName: string;

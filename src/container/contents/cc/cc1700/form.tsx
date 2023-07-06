@@ -1,17 +1,7 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import {
-  Input,
-  Select,
-  Field,
-  FormGroup,
-  Wrapper,
-  Divider,
-  Label,
-  DividerGray,
-} from "components/form/style";
+import React, { useImperativeHandle, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { Input, Select, FormGroup, Label } from "components/form/style";
 import { ICC1700FORM } from "./model";
-import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import {
   Item,
@@ -29,7 +19,6 @@ interface IForm {
   setSelected: any;
   dataCommonDic: any;
   isAddBtnClicked: boolean;
-  setIsAddBtnClicked: Function;
 }
 
 const Form = React.forwardRef(
@@ -43,24 +32,22 @@ const Form = React.forwardRef(
       setSelected,
       dataCommonDic,
       isAddBtnClicked,
-      setIsAddBtnClicked,
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const { register, handleSubmit, control, reset, getValues } =
-      useForm<ICC1700FORM>({ mode: "onChange" });
+    const { register, handleSubmit, control, reset } = useForm<ICC1700FORM>({
+      mode: "onChange",
+    });
 
     useEffect(() => {
       if (data65 !== undefined && Object.keys(data65)?.length > 0) {
         resetForm("reset");
       }
-      setIsAddBtnClicked(false);
     }, [data65]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {
