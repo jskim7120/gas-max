@@ -100,17 +100,67 @@ function PT9004({
     );
   };
 
-  const selectColumns = () => {
-    switch (tabId) {
-      case 0:
-        return { columns: columns0, fields: fields0 };
-      case 1:
-        return { columns: columns1, fields: fields1 };
-      case 2:
-        return { columns: columns2, fields: fields2 };
-      default:
-        return { columns: columns0, fields: fields0 };
+  const submit = (params: any) => {
+    params.tabKind = tabId;
+    if (tabId === 0) {
+      delete params.cuCustgubun1;
+      delete params.cuSukumtype1;
+      delete params.swCode1;
+      delete params.cuJyCode1;
+      delete params.cuStae1;
+      delete params.sOrd1;
+      delete params.sChk1;
+
+      delete params.swCode2;
+      delete params.cuCustgubun2;
+      delete params.sOver2;
+      delete params.cuJyCode2;
+      delete params.cuSukumtype2;
+      delete params.cuStae2;
+      delete params.sOrd2;
+      params.sDate = DateWithoutDash(params.sDate);
+      params.eDate = DateWithoutDash(params.eDate);
+      params.dateChk = params.dateChk ? "Y" : "N";
+    } else if (tabId === 1) {
+      delete params.swCode;
+      delete params.cuJyCode;
+      delete params.dateChk;
+      delete params.sDate;
+      delete params.eDate;
+      delete params.cuStae;
+      delete params.sOrd;
+      delete params.sChk;
+      delete params.cuCustgubun;
+      delete params.cuSukumtype;
+
+      delete params.swCode2;
+      delete params.cuCustgubun2;
+      delete params.sOver2;
+      delete params.cuJyCode2;
+      delete params.cuSukumtype2;
+      delete params.cuStae2;
+      delete params.sOrd2;
+    } else if (tabId === 2) {
+      delete params.swCode;
+      delete params.cuJyCode;
+      delete params.dateChk;
+      delete params.sDate;
+      delete params.eDate;
+      delete params.cuStae;
+      delete params.sOrd;
+      delete params.sChk;
+      delete params.cuCustgubun;
+      delete params.cuSukumtype;
+
+      delete params.swCode1;
+      delete params.cuCustgubun1;
+      delete params.cuJyCode1;
+      delete params.cuSukumtype1;
+      delete params.cuStae1;
+      delete params.sOrd1;
+      delete params.sChk1;
     }
+    fetchData(params);
   };
 
   const resetForm = (type: string) => {
@@ -181,68 +231,19 @@ function PT9004({
     }
   };
 
-  const submit = (params: any) => {
-    params.tabKind = tabId;
-    if (tabId === 0) {
-      delete params.cuCustgubun1;
-      delete params.cuSukumtype1;
-      delete params.swCode1;
-      delete params.cuJyCode1;
-      delete params.cuStae1;
-      delete params.sOrd1;
-      delete params.sChk1;
-
-      delete params.swCode2;
-      delete params.cuCustgubun2;
-      delete params.sOver2;
-      delete params.cuJyCode2;
-      delete params.cuSukumtype2;
-      delete params.cuStae2;
-      delete params.sOrd2;
-      params.sDate = DateWithoutDash(params.sDate);
-      params.eDate = DateWithoutDash(params.eDate);
-      params.dateChk = params.dateChk ? "Y" : "N";
-    } else if (tabId === 1) {
-      delete params.swCode;
-      delete params.cuJyCode;
-      delete params.dateChk;
-      delete params.sDate;
-      delete params.eDate;
-      delete params.cuStae;
-      delete params.sOrd;
-      delete params.sChk;
-      delete params.cuCustgubun;
-      delete params.cuSukumtype;
-
-      delete params.swCode2;
-      delete params.cuCustgubun2;
-      delete params.sOver2;
-      delete params.cuJyCode2;
-      delete params.cuSukumtype2;
-      delete params.cuStae2;
-      delete params.sOrd2;
-    } else if (tabId === 2) {
-      delete params.swCode;
-      delete params.cuJyCode;
-      delete params.dateChk;
-      delete params.sDate;
-      delete params.eDate;
-      delete params.cuStae;
-      delete params.sOrd;
-      delete params.sChk;
-      delete params.cuCustgubun;
-      delete params.cuSukumtype;
-
-      delete params.swCode1;
-      delete params.cuCustgubun1;
-      delete params.cuJyCode1;
-      delete params.cuSukumtype1;
-      delete params.cuStae1;
-      delete params.sOrd1;
-      delete params.sChk1;
+  const selectColumns = () => {
+    switch (tabId) {
+      case 0:
+        return { columns: columns0, fields: fields0 };
+      case 1:
+        return { columns: columns1, fields: fields1 };
+      case 2:
+        return { columns: columns2, fields: fields2 };
+      default:
+        return { columns: columns0, fields: fields0 };
     }
-    fetchData(params);
   };
+
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
@@ -342,7 +343,7 @@ function PT9004({
         {...selectColumns()}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 52px)" }}
+        style={{ height: "calc(100% - 125px)" }}
       />
     </>
   );

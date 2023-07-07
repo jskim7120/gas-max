@@ -46,17 +46,17 @@ function GR9006({
     }
   }, [dataCommonDic]);
 
-  const submit = (data: any) => {
-    data.sDate = DateWithoutDash(data.sDate);
-    data.eDate = DateWithoutDash(data.eDate);
-    fetchData(data);
-  };
-
   useEffect(() => {
     if (watch("reportType")) {
       setData([]);
     }
   }, [watch("reportType")]);
+
+  const submit = (data: any) => {
+    data.sDate = DateWithoutDash(data.sDate);
+    data.eDate = DateWithoutDash(data.eDate);
+    fetchData(data);
+  };
 
   const resetForm = (type: any) => {
     if (type === "reset") {
@@ -180,20 +180,19 @@ function GR9006({
           </FormGroup>
         </SearchWrapper>
       </form>
-      <WrapperContent>
-        <BasicGrid
-          ref={gridRef}
-          areaCode={areaCode}
-          data={data}
-          columns={selectColumns()?.columns}
-          fields={selectColumns()?.fields}
-          gridChangeField={watch("reportType")}
-          menuId={menuId}
-          rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: `calc(100% - 47px)` }}
-          // evenFill
-        />
-      </WrapperContent>
+
+      <BasicGrid
+        ref={gridRef}
+        areaCode={areaCode}
+        data={data}
+        columns={selectColumns()?.columns}
+        fields={selectColumns()?.fields}
+        gridChangeField={watch("reportType")}
+        menuId={menuId}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
+        style={{ height: `calc(100% - 61px)` }}
+        // evenFill
+      />
     </>
   );
 }

@@ -53,16 +53,6 @@ function PT9005({
     }
   }, [dataCommonDic]);
 
-  const handleSOverChange = () => {
-    if (watch("sOver") !== undefined && watch("sOver") !== null) {
-      const today = new Date();
-      const newDate = new Date(
-        today.setMonth(today.getMonth() - +watch("sOver"))
-      );
-      return DateWithDashOnlyYearMonth(newDate);
-    }
-  };
-
   const openNewWindow = async () => {
     const width = 1500;
     const height = 2000;
@@ -96,6 +86,16 @@ function PT9005({
         prtCode: init?.prtCode,
         prtAddr: init?.prtAddr,
       });
+    }
+  };
+
+  const handleSOverChange = () => {
+    if (watch("sOver") !== undefined && watch("sOver") !== null) {
+      const today = new Date();
+      const newDate = new Date(
+        today.setMonth(today.getMonth() - +watch("sOver"))
+      );
+      return DateWithDashOnlyYearMonth(newDate);
     }
   };
 
@@ -267,7 +267,7 @@ function PT9005({
         fields={fields}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 52px)" }}
+        style={{ height: "calc(100% - 88px)" }}
       />
     </>
   );

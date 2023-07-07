@@ -78,9 +78,6 @@ function AR9003({
     params.eDate = DateWithoutDash(params.eDate);
     params.chkDate = params.chkDate ? "Y" : "N";
     params.chkSv = params.chkSv ? "Y" : "N";
-
-    console.log("params:::", params);
-
     fetchData(params);
   };
 
@@ -141,7 +138,6 @@ function AR9003({
                 </option>
               ))}
             </Select>
-
             <div className="buttons ml30">
               <Button
                 text="검색"
@@ -187,7 +183,6 @@ function AR9003({
               rtl
               style={{ marginLeft: "35px" }}
             />
-
             <Controller
               control={control}
               {...register("sDate")}
@@ -212,7 +207,6 @@ function AR9003({
                 />
               )}
             />
-
             <Input
               label="거래처명"
               labelStyle={{ minWidth: "90px" }}

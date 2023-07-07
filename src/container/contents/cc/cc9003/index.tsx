@@ -60,6 +60,10 @@ function CC9003({
     }
   }, [dataCommonDic]);
 
+  const submit = (data: ICC9003SEARCH) => {
+    fetchData(data);
+  };
+
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init: any = dataCommonDic.dataInit[0];
@@ -76,10 +80,6 @@ function CC9003({
       resetForm("reset");
     }
     setData([]);
-  };
-
-  const submit = (data: ICC9003SEARCH) => {
-    fetchData(data);
   };
 
   return (
@@ -140,7 +140,6 @@ function CC9003({
                   )}
                 />
               </FormGroup>
-
               <FormGroup>
                 <Label style={{ minWidth: "95px" }}>영업소</Label>
                 <Select register={register("areaCode")} width={InputSize.i120}>
@@ -151,7 +150,6 @@ function CC9003({
                   ))}
                 </Select>
               </FormGroup>
-
               <Button
                 text="검색"
                 icon={!loading && <MagnifyingGlass />}

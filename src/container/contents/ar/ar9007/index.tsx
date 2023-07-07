@@ -66,7 +66,6 @@ function AR9007({
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init = dataCommonDic.dataInit[0];
-
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
         reportKind: init?.reportKind,
@@ -173,7 +172,6 @@ function AR9007({
                 </option>
               ))}
             </Select>
-
             <Label style={{ minWidth: "80px" }}>담당사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
@@ -208,7 +206,6 @@ function AR9007({
                 </option>
               ))}
             </Select>
-
             <Label style={{ minWidth: "80px" }}>거래상태</Label>
             <Select register={register("cuStae")} width={InputSize.i120}>
               {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
@@ -228,7 +225,6 @@ function AR9007({
           </FormGroup>
         </SearchWrapper>
       </form>
-
       <BasicGrid
         menuId={menuId}
         ref={gridRef}

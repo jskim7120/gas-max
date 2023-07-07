@@ -193,7 +193,6 @@ function AR9004({
                 </option>
               ))}
             </Select>
-
             <Label style={{ minWidth: "80px" }}>품목</Label>
             <Select register={register("jpCode")} width={InputSize.i120}>
               {dataCommonDic?.jpCode?.map((obj: any, idx: number) => (

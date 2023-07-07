@@ -99,15 +99,11 @@ function PT9008({
     );
   };
 
-  const selectColumns = () => {
-    switch (tabId) {
-      case 0:
-        return { columns: columns0, fields: fields0 };
-      case 1:
-        return { columns: columns1, fields: fields1 };
-      default:
-        return { columns: columns0, fields: fields0 };
-    }
+  const submit = (params: any) => {
+    params.tabKind = tabId;
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
+    fetchData(params);
   };
 
   const resetForm = (type: string) => {
@@ -152,13 +148,16 @@ function PT9008({
     setData([]);
   };
 
-  const submit = (params: any) => {
-    params.tabKind = tabId;
-    params.sDate = DateWithoutDash(params.sDate);
-    params.eDate = DateWithoutDash(params.eDate);
-    fetchData(params);
+  const selectColumns = () => {
+    switch (tabId) {
+      case 0:
+        return { columns: columns0, fields: fields0 };
+      case 1:
+        return { columns: columns1, fields: fields1 };
+      default:
+        return { columns: columns0, fields: fields0 };
+    }
   };
-
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
@@ -258,7 +257,7 @@ function PT9008({
         {...selectColumns()}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 52px)" }}
+        style={{ height: "calc(100% - 125px)" }}
       />
     </>
   );

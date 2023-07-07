@@ -162,7 +162,6 @@ function AR9001({
                 </option>
               ))}
             </Select>
-
             <div className="buttons ml30">
               <Button
                 text="검색"
@@ -203,7 +202,6 @@ function AR9001({
                 type="button"
                 onClick={openNewWindow}
               />
-
               <Button
                 text="출력"
                 icon={<Print />}
@@ -267,7 +265,6 @@ function AR9001({
                 </option>
               ))}
             </Select>
-
             <Label style={{ minWidth: "90px" }}>지역구분</Label>
             <Select register={register("cuJyCode")} width={InputSize.i130}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
@@ -295,7 +292,6 @@ function AR9001({
           </FormGroup>
         </SearchWrapper>
       </form>
-
       <BasicGrid
         menuId={menuId}
         ref={gridRef}

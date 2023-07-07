@@ -26,6 +26,21 @@ import {
   RadioButtonLabel,
 } from "components/radioButton/style";
 
+const radioOptions = [
+  {
+    label: "전체",
+    id: "0",
+  },
+  {
+    label: "개별단가 지정 거래처",
+    id: "1",
+  },
+  {
+    label: "할인단가 지정 거래처",
+    id: "2",
+  },
+];
+
 function RV9013({
   depthFullName,
   menuId,
@@ -47,7 +62,7 @@ function RV9013({
   } = CreateReport("RV", "RV9013", menuId, RV9013SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -56,6 +71,12 @@ function RV9013({
       resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("sChk")) {
+      setData([]);
+    }
+  }, [watch("sChk")]);
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -96,6 +117,8 @@ function RV9013({
     }
     setData([]);
   };
+
+  const selectedOption = watch("sChk");
 
   return (
     <>
@@ -159,32 +182,42 @@ function RV9013({
         </SearchWrapper>
         <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
           <FormGroup>
-            <Label style={{ marginLeft: "-38px" }}>단가적용 구분</Label>
+            <Label style={{ paddingRight: "50px" }}>단가적용 구분</Label>
+
             <Item>
               <RadioButton
                 type="radio"
-                value="2"
+                value={radioOptions[0].id}
                 {...register(`sChk`)}
-                id="2"
-                //onChange={() => setSType2("2")}
+                id={radioOptions[0].id}
+                defaultChecked={radioOptions[0].id === "0"}
               />
-              <RadioButtonLabel htmlFor={``} style={{ width: "50px" }}>
+              {/* <RadioButtonLabel htmlFor={``} style={{ width: "50px" }}>
                 전체
+              </RadioButtonLabel> */}
+              <RadioButtonLabel htmlFor={`${radioOptions[0].label}`}>
+                {radioOptions[0].label}
               </RadioButtonLabel>
             </Item>
             <Item>
               <RadioButton
                 type="radio"
-                value="2"
-                {...register(`cuRdanga`)}
-                id="2"
-                //onChange={() => setSType2("2")}
+                value={radioOptions[1].id}
+                {...register(`sChk`)}
+                id={radioOptions[1].id}
               />
-              <RadioButtonLabel htmlFor={``} style={{ width: "133px" }}>
-                개별단가 지정 거래처
+              <RadioButtonLabel htmlFor={`${radioOptions[1].label}`}>
+                {radioOptions[1].label}
               </RadioButtonLabel>
             </Item>
-            <Select register={register("cuRdanga")} width={InputSize.i120}>
+            <Select
+              register={register("cuRdanga")}
+              width={InputSize.i120}
+              disabled={
+                selectedOption === radioOptions[2].id ||
+                selectedOption === radioOptions[0].id
+              }
+            >
               {dataCommonDic?.cuRdanga?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -195,16 +228,22 @@ function RV9013({
               <Label style={{ marginLeft: "-96px" }}></Label>
               <RadioButton
                 type="radio"
-                value="2"
-                {...register(`cuRdangaSign`)}
-                id="2"
-                //onChange={() => setSType2("2")}
+                value={radioOptions[2].id}
+                {...register(`sChk`)}
+                id={radioOptions[2].id}
               />
-              <RadioButtonLabel htmlFor={``} style={{ width: "133px" }}>
-                할인단가 지정 거래처
+              <RadioButtonLabel htmlFor={`${radioOptions[2].label}`}>
+                {radioOptions[2].label}
               </RadioButtonLabel>
             </Item>
-            <Select register={register("cuRdangaSign")} width={InputSize.i120}>
+            <Select
+              register={register("cuRdangaSign")}
+              width={InputSize.i120}
+              disabled={
+                selectedOption === radioOptions[0].id ||
+                selectedOption === radioOptions[1].id
+              }
+            >
               {dataCommonDic?.cuRdangaSign?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}

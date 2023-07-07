@@ -98,15 +98,35 @@ function PT9001({
     );
   };
 
-  const selectColumns = () => {
-    switch (tabId) {
-      case 0:
-        return { columns: columns0, fields: fields0 };
-      case 1:
-        return { columns: columns1, fields: fields1 };
-      default:
-        return { columns: columns0, fields: fields0 };
+  const submit = (params: any) => {
+    params.tabKind = tabId;
+    if (tabId === 0) {
+      delete params.swCode1;
+      delete params.cuCustgubun1;
+      delete params.cuJangbu1;
+      delete params.sOver1;
+      delete params.cuJyCode1;
+      delete params.cuSukumtype1;
+      delete params.cuStae1;
+      delete params.sOrd1;
+      params.sDate = DateWithoutDash(params.sDate);
+      params.eDate = DateWithoutDash(params.eDate);
+      params.dateChk = params.dateChk ? "Y" : "N";
+    } else if (tabId === 1) {
+      delete params.cuGubun;
+      delete params.cuJyCode;
+      delete params.cuStae;
+      delete params.sDate;
+      delete params.eDate;
+      delete params.cuJangbu;
+      delete params.swCode;
+      delete params.sOrd;
+      delete params.dateChk;
+      delete params.sDate;
+      delete params.eDate;
     }
+
+    fetchData(params);
   };
 
   const resetForm = (type: string) => {
@@ -158,35 +178,15 @@ function PT9001({
     }
   };
 
-  const submit = (params: any) => {
-    params.tabKind = tabId;
-    if (tabId === 0) {
-      delete params.swCode1;
-      delete params.cuCustgubun1;
-      delete params.cuJangbu1;
-      delete params.sOver1;
-      delete params.cuJyCode1;
-      delete params.cuSukumtype1;
-      delete params.cuStae1;
-      delete params.sOrd1;
-      params.sDate = DateWithoutDash(params.sDate);
-      params.eDate = DateWithoutDash(params.eDate);
-      params.dateChk = params.dateChk ? "Y" : "N";
-    } else if (tabId === 1) {
-      delete params.cuGubun;
-      delete params.cuJyCode;
-      delete params.cuStae;
-      delete params.sDate;
-      delete params.eDate;
-      delete params.cuJangbu;
-      delete params.swCode;
-      delete params.sOrd;
-      delete params.dateChk;
-      delete params.sDate;
-      delete params.eDate;
+  const selectColumns = () => {
+    switch (tabId) {
+      case 0:
+        return { columns: columns0, fields: fields0 };
+      case 1:
+        return { columns: columns1, fields: fields1 };
+      default:
+        return { columns: columns0, fields: fields0 };
     }
-
-    fetchData(params);
   };
 
   return (
@@ -289,7 +289,7 @@ function PT9001({
         {...selectColumns()}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 52px)" }}
+        style={{ height: "calc(100% - 125px)" }}
       />
     </>
   );
