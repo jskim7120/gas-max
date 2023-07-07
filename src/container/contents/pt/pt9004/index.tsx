@@ -134,6 +134,7 @@ function PT9004({
       if (tabId === 1) {
         const init = dataCommonDic.dataInit1[0];
         reset({
+          areaCode: dataCommonDic.areaCode[0].code,
           swCode1: init?.swCode1,
           cuCustgubun1: init?.cuCustgubun1,
           cuJyCode1: init?.cuJyCode1,
@@ -146,6 +147,7 @@ function PT9004({
       if (tabId === 2) {
         const init = dataCommonDic.dataInit2[0];
         reset({
+          areaCode: dataCommonDic.areaCode[0].code,
           swCode2: init?.swCode2,
           cuCustgubun2: init?.cuCustgubun2,
           sOver2: init?.sOver2,

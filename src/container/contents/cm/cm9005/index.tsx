@@ -45,7 +45,7 @@ function CM9005({
   }, [selected]);
 
   useEffect(() => {
-    resetForm("reset");
+    resetForm();
   }, [dataCommonDic]);
 
   useEffect(() => {
@@ -54,29 +54,24 @@ function CM9005({
     }
   }, [watch("cuJpGubun")]);
 
-  const resetForm = (type: any) => {
-    if (type === "reset") {
-      if (dataCommonDic !== undefined) {
-        reset({
-          areaCode: dataCommonDic?.areaCode[0].code,
-          cuJpGubun: dataCommonDic?.cuJpGubun[0].code,
-          cuJpCode: dataCommonDic?.cuJpCode[0].code,
-          cuType: dataCommonDic?.cuType[0].code,
-          cuJyCode: dataCommonDic?.cuJyCode[0].code,
-          swCode: dataCommonDic?.swCode[0].code,
-          cuStae: dataCommonDic?.cuStae[0].code,
-        });
-      }
+  const resetForm = () => {
+    if (dataCommonDic) {
+      reset({
+        areaCode: dataCommonDic?.areaCode[0].code,
+        cuJpGubun: dataCommonDic?.cuJpGubun[0].code,
+        cuJpCode: dataCommonDic?.cuJpCode[0].code,
+        cuType: dataCommonDic?.cuType[0].code,
+        cuJyCode: dataCommonDic?.cuJyCode[0].code,
+        swCode: dataCommonDic?.swCode[0].code,
+        cuStae: dataCommonDic?.cuStae[0].code,
+      });
     }
   };
 
   const handleReset = () => {
-    if (dataCommonDic) {
-      resetForm("reset");
-    }
+    resetForm();
     setData([]);
   };
-
   const submit = (data: ISEARCH) => {
     fetchData(data);
   };

@@ -40,7 +40,9 @@ function GR9008({
   });
 
   useEffect(() => {
-    resetForm();
+    if (dataCommonDic?.initData) {
+      resetForm("reset");
+    }
   }, [dataCommonDic]);
 
   const submit = (data: ISEARCH) => {
@@ -49,21 +51,25 @@ function GR9008({
     fetchData(data);
   };
 
-  const resetForm = () => {
-    if (dataCommonDic !== undefined) {
+  const resetForm = (type: any) => {
+    if (type === "reset") {
+      const init = dataCommonDic.initData[0];
       reset({
         areaCode: dataCommonDic?.areaCode[0]?.code,
-        bcBuCode: dataCommonDic?.bcBuCode[0]?.code,
-        eDate: dataCommonDic?.eDate[0]?.code,
-        sDate: dataCommonDic?.sDate[0]?.code,
+        bcBuCode: init?.bcBuCode,
+        eDate: init?.eDate,
+        sDate: init?.sDate,
       });
     }
   };
 
   const handleReset = () => {
-    resetForm();
+    if (dataCommonDic?.initData) {
+      resetForm("reset");
+    }
     setData([]);
   };
+
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
