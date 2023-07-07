@@ -8,7 +8,7 @@ import {
   Select,
 } from "components/form/style";
 import { useForm, Controller } from "react-hook-form";
-import { FieldKind, InputSize } from "components/componentsType";
+import { InputSize } from "components/componentsType";
 import { IPT1105 } from "./model";
 import CustomDatePicker from "components/customDatePicker";
 import { currencyMask } from "helpers/currency";
@@ -32,15 +32,12 @@ const FORMCM1105 = React.forwardRef(
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-
     const { register, handleSubmit, reset, getValues, control, watch } =
       useForm<IPT1105>();
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       resetForm,
       //   crud,
-      setIsAddBtnClicked,
     }));
 
     useEffect(() => {
@@ -111,7 +108,7 @@ const FORMCM1105 = React.forwardRef(
         </Field>
         <Controller
           control={control}
-          {...register("cuJmisu")}
+          name="cuJmisu"
           render={({ field: { onChange, value, name } }) => (
             <Input
               labelStyle={{ minWidth: "120px" }}
@@ -127,7 +124,7 @@ const FORMCM1105 = React.forwardRef(
         />
         <Controller
           control={control}
-          {...register("cuChkamt")}
+          name="cuChkamt"
           render={({ field: { onChange, value, name } }) => (
             <Input
               labelStyle={{ minWidth: "120px" }}
@@ -145,7 +142,7 @@ const FORMCM1105 = React.forwardRef(
 
         <Controller
           control={control}
-          {...register("msDc")}
+          name="msDc"
           render={({ field: { onChange, value, name } }) => (
             <Input
               labelStyle={{ minWidth: "120px" }}
@@ -161,7 +158,7 @@ const FORMCM1105 = React.forwardRef(
         />
         <Controller
           control={control}
-          {...register("msKumack")}
+          name="msKumack"
           render={({ field: { onChange, value, name } }) => (
             <Input
               labelStyle={{ minWidth: "120px" }}
@@ -177,7 +174,7 @@ const FORMCM1105 = React.forwardRef(
         />
         <Controller
           control={control}
-          {...register("msJanack")}
+          name="msJanack"
           render={({ field: { onChange, value, name } }) => (
             <Input
               labelStyle={{ minWidth: "120px" }}
@@ -197,11 +194,7 @@ const FORMCM1105 = React.forwardRef(
 
         <FormGroup>
           <Label>수금 방법</Label>
-          <Select
-            register={register("msSukumtype")}
-            kind={FieldKind.BORDER}
-            style={{ width: "175px" }}
-          >
+          <Select register={register("msSukumtype")} style={{ width: "175px" }}>
             {dataCommonDic?.msSukumtype?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
                 {obj.codeName}
@@ -211,11 +204,7 @@ const FORMCM1105 = React.forwardRef(
         </FormGroup>
         <FormGroup>
           <Label>사 원</Label>
-          <Select
-            register={register("msSwCode")}
-            kind={FieldKind.BORDER}
-            width={InputSize.i175}
-          >
+          <Select register={register("msSwCode")} width={InputSize.i175}>
             {dataCommonDic?.msSwCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
                 {obj.codeName}
@@ -225,7 +214,7 @@ const FORMCM1105 = React.forwardRef(
         </FormGroup>
         <Controller
           control={control}
-          {...register("msBigo")}
+          name="msBigo"
           render={({ field: { onChange, value, name } }) => (
             <Input
               labelStyle={{ minWidth: "120px" }}

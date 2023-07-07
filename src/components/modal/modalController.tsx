@@ -14,8 +14,8 @@ import DelModal from "./customModals/delModal";
 import CC1100Modal from "./customModals/cc1100Modal";
 import CC1200Modal from "./customModals/cc1200Modal";
 import EN1500Modal from "./customModals/en1500Modal";
-import PT1105Modal from "./../../container/contents/pt/pt1105";
-import PT1205Modal from "./../../container/contents/pt/pt1205";
+import PT1105Modal from "./customModals/pt1105Modal";
+import PT1205Modal from "./customModals/pt1205Modal";
 import ReLoginModal from "./customModals/reLoginModal";
 const PopupArea = styled.section`
   position: fixed;

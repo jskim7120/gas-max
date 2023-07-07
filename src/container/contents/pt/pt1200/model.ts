@@ -1,7 +1,7 @@
 export interface IPT1200SEARCH {
-  areaCode: String;
-  sCheck: String;
-  sCuName: String;
+  areaCode: string;
+  sCheck: string;
+  sCuName: string;
   sGsdateF: any;
   sGsdateT: any;
 }

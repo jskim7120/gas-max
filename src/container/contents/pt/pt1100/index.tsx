@@ -30,9 +30,11 @@ import {
 import CheckBox from "components/checkbox";
 import Form from "./form";
 import CustomDatePicker from "components/customDatePicker";
-import { FormGroup, Select, Label, Field, Input } from "components/form/style";
+import { FormGroup, Select, Label, Input } from "components/form/style";
 import { ButtonColor, InputSize } from "components/componentsType";
-import CustomTopPart from "container/contents/customTopPart";
+import useDrawLine from "app/hook/useDrawLine";
+
+const leftSideWidth: number = 1070;
 
 function PT1100({
   depthFullName,
@@ -43,19 +45,19 @@ function PT1100({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const [areaCode, setAreaCode] = useState("");
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
-  const [loading1, setLoading1] = useState(false);
+  const { showDraggableLine, linePos } = useDrawLine(leftSideWidth);
+
   const [loading2, setLoading2] = useState(false);
   const [data, setData] = useState([]);
   const [dataSecond, setDataSecond] = useState([]);
-  const [selected, setSelected] = useState<any>({});
-  const [secondGridSelected, setSecondGridSelected] = useState<any>({});
   const [data65, setData65] = useState([]);
-  const [totMisukum, setTotMisukun] = useState(0);
+  const [selected, setSelected] = useState<any>({});
+  // const [secondSelected, setSecondSelected] = useState<any>({});
+  const [totMisukum, setTotMisukum] = useState(0);
   const [totSukum, setTotSukum] = useState(0);
   const [totDc, setTotDc] = useState(0);
-  const [sCheck, setSCheck] = useState(false);
+
   const dispatch = useDispatch();
 
   const [getCommonDictionary, { data: dataCommonDic }] =
@@ -65,86 +67,44 @@ function PT1100({
     getCommonDictionary({ groupId: "PT", functionName: "PT1100" });
   }, []);
 
+  const { register, handleSubmit, control, reset, getValues, watch } =
+    useForm<IPT1100SEARCH>({
+      mode: "onSubmit",
+    });
+
   useEffect(() => {
     if (dataCommonDic) {
+      resetSearchForm();
       fetchDataSearch1({
         areaCode: dataCommonDic.areaCode[0].code,
         sCheck: "N",
         sCuName: "",
       });
-      resetSearchForm();
     }
   }, [dataCommonDic]);
 
   useEffect(() => {
-    fetch65Data(selected);
+    if (selected && Object.keys(selected)?.length > 0) {
+      fetch65Data(selected);
+    }
   }, [selected]);
 
   useEffect(() => {
-    if (!sCheck) {
-      resetCuName();
+    if (watch("sCheck") !== undefined) {
+      fetchDataSearch1({
+        areaCode: getValues("areaCode"),
+        sCheck: getValues("sCheck") ? "Y" : "N",
+        sCuName: getValues("sCuName"),
+      });
     }
-    fetchDataSearch1({
-      areaCode: getValues("areaCode"),
-      sCheck: sCheck,
-      sCuName: getValues("sCuName"),
+  }, [watch("sCheck")]);
+
+  const resetSearchForm = () => {
+    reset({
+      areaCode: dataCommonDic?.areaCode[0].code,
+      sMsdateF: dataCommonDic?.sMsdateF[0].code,
+      sMsdateT: dataCommonDic?.sMsdateT[0].code,
     });
-  }, [sCheck]);
-
-  const fetch65Data = async (params: any) => {
-    // try {
-    //   const { data } = await API.get(PT110065, {
-    //     params: { areaCode: params.areaCode, cuCode: params.cuCode },
-    //   });
-
-    //   if (data) {
-    //     setData65(data);
-    //   }
-    // } catch (err) {
-    //   console.log("PT110065 data search fetch error =======>", err);
-    // }
-
-    const data = await apiGet(PT110065, {
-      areaCode: params.areaCode,
-      cuCode: params.cuCode,
-    });
-
-    if (data) {
-      setData65(data);
-    }
-  };
-
-  const fetchDataSearch1 = async (params: any) => {
-    // try {
-    //   setLoading1(true);
-    //   if (params.sCheck) {
-    //     params.sCheck = "Y";
-    //   } else {
-    //     params.sCheck = "N";
-    //   }
-    //   const { data } = await API.get(PT1100SEARCH, { params: params });
-    //   if (data) {
-    //     setData(data);
-    //     setLoading1(false);
-    //     setSelectedRowIndex(0);
-    //     setTotMisukun(await calcTotal("cuJmisu", data));
-    //   }
-    // } catch (err) {
-    //   console.log("PT1100 data search fetch error =======>", err);
-    // }
-
-    setLoading1(true);
-    if (params.sCheck) {
-      params.sCheck = "Y";
-    } else {
-      params.sCheck = "N";
-    }
-    const data = await apiGet(PT1100SEARCH, params);
-    if (data) {
-      setData(data);
-      setLoading1(false);
-      setTotMisukun(await calcTotal("cuJmisu", data));
-    }
   };
 
   const calcTotal = async (fieldName: string, data: []) => {
@@ -153,43 +113,55 @@ function PT1100({
     return total;
   };
 
-  const fetchDataSearch2 = async (params: any) => {
-    params.sMsdateF = DateWithoutDash(params.sMsdateF);
-    params.sMsdateT = DateWithoutDash(params.sMsdateT);
-    // try {
-    //   setLoading2(true);
-    //   const { data } = await API.get(PT1100SEARCH62, { params: params });
-
-    //   if (data) {
-    //     setDataSecond(data);
-    //     setLoading2(false);
-    //     setSelectedRowIndex(0);
-    //     setTotSukum(await calcTotal("msKumack", data));
-    //     setTotDc(await calcTotal("msDc", data));
-    //   }
-    // } catch (err) {
-    //   console.log("PT110062 data search fetch error =======>", err);
-    // }
-
-    setLoading2(true);
-    const data = await apiGet(PT1100SEARCH62, params);
-
-    if (data) {
-      setDataSecond(data);
-      setLoading2(false);
-      setTotSukum(await calcTotal("msKumack", data));
-      setTotDc(await calcTotal("msDc", data));
+  const fetchDataSearch1 = async (params: any) => {
+    const res = await apiGet(PT1100SEARCH, params);
+    if (res) {
+      setData(res);
+      setSelected(res[0]);
+      setTotMisukum(await calcTotal("cuJmisu", res));
+    } else {
+      setData([]);
+      setSelected({});
+      setTotMisukum(0);
     }
   };
 
-  const submitSearch2 = (data: IPT1100SEARCH) => {
-    fetchDataSearch2(data);
+  const fetchDataSearch2 = async (params: any) => {
+    params.sMsdateF = DateWithoutDash(params.sMsdateF);
+    params.sMsdateT = DateWithoutDash(params.sMsdateT);
+
+    setLoading2(true);
+    const res = await apiGet(PT1100SEARCH62, params);
+    if (res) {
+      setDataSecond(res);
+      // setSecondSelected(res[0]);
+      setTotSukum(await calcTotal("msKumack", res));
+      setTotDc(await calcTotal("msDc", res));
+    } else {
+      setDataSecond([]);
+      // setSecondSelected({});
+      setTotSukum(0);
+      setTotDc(0);
+    }
+    setLoading2(false);
   };
 
-  const { register, handleSubmit, control, reset, getValues } =
-    useForm<IPT1100SEARCH>({
-      mode: "onSubmit",
+  const fetch65Data = async (params: any) => {
+    const res = await apiGet(PT110065, {
+      areaCode: params.areaCode,
+      cuCode: params.cuCode,
     });
+
+    if (res) {
+      setData65(res);
+    } else {
+      setData65([]);
+    }
+  };
+
+  const submitSearch2 = (params: IPT1100SEARCH) => {
+    fetchDataSearch2(params);
+  };
 
   const openPopupPT1105 = async () => {
     dispatch(openModal({ type: "pt1105Modal" }));
@@ -203,29 +175,20 @@ function PT1100({
     );
   };
 
-  const resetCuName = () => {
-    reset((formValues) => ({
-      ...formValues,
-      sCuName: "",
-    }));
-  };
-
-  const resetSearchForm = () => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-      sMsdateF: dataCommonDic?.sMsdateF[0].code,
-      sMsdateT: dataCommonDic?.sMsdateT[0].code,
-    });
-  };
+  // const resetCuName = () => {
+  //   reset((formValues) => ({
+  //     ...formValues,
+  //     sCuName: "",
+  //   }));
+  // };
 
   return (
     <>
       <SearchWrapper className="h35 mt5">
         <FormGroup>
-          {areaCode === "00" && (
+          {ownAreaCode === "00" && (
             <>
               <Label style={{ minWidth: "42px" }}>영업소</Label>
-
               <Select register={register("areaCode")}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -240,53 +203,43 @@ function PT1100({
               text="선택 수금"
               icon={<Plus />}
               onClick={openPopupPT1105}
-              style={{ marginRight: "5px" }}
             />
-            <Button
-              text="수금"
-              icon={<Plus />}
-              onClick={() => {}}
-              style={{ marginRight: "5px" }}
-            />
+            <Button text="수금" icon={<Plus />} />
             <Button
               text="저장"
               icon={<Update />}
               color={ButtonColor.SECONDARY}
               onClick={() => {}}
-              style={{ marginRight: "5px" }}
             />
-            <Button
-              text="취소"
-              icon={<Reset />}
-              onClick={() => {}}
-              style={{ padding: "0 3px" }}
-            />
+            <Button text="취소" icon={<Reset />} />
           </div>
         </FormGroup>
+        <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
-        <LeftSide>
-          <form autoComplete="off" style={{ minWidth: "1000px" }}>
+        <LeftSide style={{ width: `${linePos}px` }}>
+          <form autoComplete="off">
             <SearchWrapper className="h35">
-              <Field flex>
+              <FormGroup>
                 <PersonInfoText text="미수 현황" />
-                <FormGroup style={{ marginLeft: "7px" }}>
-                  <Input
-                    label="거래처"
-                    register={register("sCuName")}
-                    inputSize={InputSize.i140}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <CheckBox
-                    register={{ ...register("sCheck") }}
-                    title="조건 검색"
-                    rtl
-                    style={{ width: "80px" }}
-                    onChange={(e: any) => setSCheck(e.target.checked)}
-                  />
-                </FormGroup>
-              </Field>
+                <Input
+                  label="거래처"
+                  register={register("sCuName")}
+                  inputSize={InputSize.i140}
+                />
+                <Controller
+                  control={control}
+                  name="sCheck"
+                  render={({ field }) => (
+                    <CheckBox
+                      {...field}
+                      title="조건 검색"
+                      rtl
+                      style={{ marginLeft: "15px" }}
+                    />
+                  )}
+                />
+              </FormGroup>
             </SearchWrapper>
           </form>
 
@@ -298,47 +251,31 @@ function PT1100({
             rowIndex={0}
             menuId={menuId}
             setSelected={setSelected}
-            style={{ height: "45%", minWidth: "925px" }}
+            style={{ height: "35%" }}
           />
           <Grid
             areaCode={ownAreaCode}
             data={data65.length > 0 && data65}
             columns={columnsSecond}
             fields={fieldsSecond}
-            setSelected={setSelected}
             rowIndex={0}
             menuId={menuId}
-            style={{ height: "12%", minWidth: "925px", marginTop: "17px" }}
+            hideFooter
+            style={{ height: "22%", marginTop: "5px" }}
           />
-          <form
-            onSubmit={handleSubmit(submitSearch2)}
-            autoComplete="off"
-            style={{ minWidth: "925px" }}
-          >
+          <form onSubmit={handleSubmit(submitSearch2)} autoComplete="off">
             <SearchWrapper className="h35">
-              <div className="buttons">
+              <FormGroup>
                 <PersonInfoText text="수금 현황" />
                 <Controller
                   control={control}
-                  {...register("sMsdateF")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
+                  name="sMsdateF"
+                  render={({ field }) => <CustomDatePicker {...field} />}
                 />
                 <Controller
                   control={control}
-                  {...register("sMsdateT")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
+                  name="sMsdateT"
+                  render={({ field }) => <CustomDatePicker {...field} />}
                 />
                 <Button
                   text="검색"
@@ -357,11 +294,15 @@ function PT1100({
                       </>
                     )
                   }
+                  style={{ marginLeft: "30px" }}
                 />
-              </div>
-              <div className="buttons">
-                <Button text="수금취소" icon={<Trash />} />
-              </div>
+                <Button
+                  text="수금취소"
+                  icon={<Trash />}
+                  type="button"
+                  style={{ marginLeft: "15px" }}
+                />
+              </FormGroup>
             </SearchWrapper>
           </form>
 
@@ -370,26 +311,29 @@ function PT1100({
             data={dataSecond.length > 0 && dataSecond}
             columns={columnsThird}
             fields={fieldsThird}
-            setSelected={setSecondGridSelected}
+            // setSelected={setSecondSelected}
             rowIndex={0}
             menuId={menuId}
-            style={{ height: "43%", minWidth: "925px" }}
+            style={{ height: "30%" }}
           />
         </LeftSide>
 
-        <RightSide>
+        <RightSide
+          style={{
+            width: `calc(100% - ${linePos}px)`,
+          }}
+        >
           <Form
-            selected={selected}
             ref={formRef}
+            selected={selected}
             fetchData={fetchDataSearch1}
-            setData={setData}
-            setSelected={setSelected}
             dataCommonDic={dataCommonDic}
             totMisukum={totMisukum}
             totSukum={totSukum}
             totDc={totDc}
           />
         </RightSide>
+        {showDraggableLine()}
       </MainWrapper>
     </>
   );
