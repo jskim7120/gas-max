@@ -17,6 +17,7 @@ function Grid({
   gridNumber,
   setIsAddBtnClicked,
   setIsAddBtnClicked2,
+  hideFooter,
 }: {
   areaCode?: string;
   data: any;
@@ -31,6 +32,7 @@ function Grid({
   gridNumber?: number | undefined;
   setIsAddBtnClicked?: Function;
   setIsAddBtnClicked2?: Function;
+  hideFooter?: boolean;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -51,6 +53,7 @@ function Grid({
     }
     dp.setRows(data);
     gv.setHeader({ height: 35 });
+
     gv.setOptions({
       indicator: { visible: true },
       checkBar: { visible: false },
@@ -58,6 +61,10 @@ function Grid({
     });
     gv.sortingOptions.enabled = true;
     gv.displayOptions._selectionStyle = "singleRow";
+
+    if (hideFooter) {
+      gv.setFooter({ visible: false });
+    }
 
     if (evenFill) {
       gv.displayOptions.fitStyle = "evenFill";

@@ -1,36 +1,25 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
+import React, { useImperativeHandle, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet, apiPost } from "app/axios";
-import { EN1400DELETE, EN140011 } from "app/path";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import {
-  Item,
-  RadioButton,
-  RadioButtonLabel,
-} from "components/radioButton/style";
 import {
   Input,
   Select,
   FormGroup,
-  Divider,
   Label,
   BottomStyleDiv,
 } from "components/form/style";
-import { IPTFORMMODEL } from "./formModel";
+import { IPTFORMMODEL } from "./model";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { useDispatch, useSelector } from "app/store";
-import { addCC1100, openModal } from "app/state/modal/modalSlice";
 import { InfoText } from "components/text";
-import { RightSide } from "container/contents/commonStyle";
 import { currencyMask } from "helpers/currency";
 
 interface IForm {
   selected: any;
   fetchData: any;
-  setData: any;
-  setSelected: any;
   dataCommonDic: any;
   totMisukum?: number;
   totSukum?: number;
@@ -39,25 +28,16 @@ interface IForm {
 
 const Form = React.forwardRef(
   (
-    {
-      selected,
-      fetchData,
-      setData,
-      setSelected,
-      dataCommonDic,
-      totMisukum,
-      totSukum,
-      totDc,
-    }: IForm,
+    { selected, fetchData, dataCommonDic, totMisukum, totSukum, totDc }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
-    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
 
     const stateCC1100 = useSelector((state: any) => state.modal.cc1100);
 
-    const { register, handleSubmit, reset, getValues, control } =
-      useForm<IPTFORMMODEL>({ mode: "onChange" });
+    const { register, reset, control } = useForm<IPTFORMMODEL>({
+      mode: "onChange",
+    });
 
     useEffect(() => {
       if (selected !== undefined && Object.keys(selected)?.length > 0) {
@@ -70,72 +50,21 @@ const Form = React.forwardRef(
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
-      setIsAddBtnClicked,
     }));
 
     const resetForm = async (type: string) => {
-      let newData: any = {};
       if (type === "clear") {
-        document.getElementById("bpName")?.focus();
-        const path = EN140011;
-
-        // try {
-        //   const response: any = await API.get(path, {
-        //     params: { areaCode: selected.areaCode },
-        //   });
-        //   if (response.status === 200) {
-        //     for (const [key, value] of Object.entries(selected)) {
-        //       newData[key] = null;
-        //     }
-        //     newData.bpCode = response.data.tempCode;
-        //     newData.areaCode = selected.areaCode;
-        //     reset(newData);
-        //   } else {
-        //     toast.error(response.response.data?.message, {
-        //       autoClose: 500,
-        //     });
-        //   }
-        // } catch (err: any) {
-        //   console.log("areaCode select error", err);
-        // }
-
-        const res: any = await apiGet(path, { areaCode: selected.areaCode });
-        if (res.status === 200) {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          newData.bpCode = res.data.tempCode;
-          newData.areaCode = selected.areaCode;
-          reset(newData);
-        }
       } else if (type === "reset") {
-        if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-          reset({
-            ...selected,
-          });
-        }
+        reset({
+          ...selected,
+          msSwCode: selected?.cuSwCode,
+          msSukumType: selected?.cuSukumtype,
+        });
       }
     };
+
     const crud = async (type: string | null) => {
       if (type === "delete") {
-        const formValues = getValues();
-
-        // try {
-        //   const response = await API.post(EN1400DELETE, formValues);
-        //   if (response.status === 200) {
-        //     toast.success("삭제하였습니다", {
-        //       autoClose: 500,
-        //     });
-        //     await fetchData();
-        //   }
-        // } catch (err) {
-        //   toast.error("Couldn't delete", {
-        //     autoClose: 500,
-        //   });
-        // }
-
-        const res = await apiPost(EN1400DELETE, formValues, "삭제하였습니다");
-        res && (await fetchData());
       }
 
       if (type === null) {
@@ -145,11 +74,6 @@ const Form = React.forwardRef(
 
     const handleSelectCode = async (event: any) => {};
 
-    const handleSearchBtnClick = () => {
-      dispatch(addCC1100({}));
-      dispatch(openModal({ type: "cc1100Modal" }));
-    };
-
     return (
       <form
         // onSubmit={handleSubmit(submit)}
@@ -157,11 +81,11 @@ const Form = React.forwardRef(
         style={{ width: "320px", padding: "10px" }}
       >
         <FormGroup>
-          <Label style={{ minWidth: "80px" }}>일 자</Label>
+          <Label style={{ minWidth: "90px" }}>일 자</Label>
           <Controller
             control={control}
-            {...register("msDate")}
-            render={({ field: { onChange, onBlur, value, ref } }) => (
+            name="msDate"
+            render={({ field: { onChange, value } }) => (
               <CustomDatePicker
                 style={{ width: "130px" }}
                 value={value == null ? new Date() : value}
@@ -175,7 +99,7 @@ const Form = React.forwardRef(
           <FormGroup>
             <Input
               label="거 래 처"
-              labelStyle={{ minWidth: "80px" }}
+              labelStyle={{ minWidth: "90px" }}
               register={register("cuName")}
               inputSize={InputSize.i140}
             />
@@ -186,23 +110,21 @@ const Form = React.forwardRef(
 
           <Input
             label=""
-            labelStyle={{ minWidth: "80px" }}
+            labelStyle={{ minWidth: "90px" }}
             register={register("cuCode")}
             inputSize={InputSize.i140}
           />
           <Controller
             control={control}
-            {...register("cuJmisu")}
-            render={({ field: { onChange, value, name } }) => (
+            name="cuJmisu"
+            render={({ field }) => (
               <Input
-                labelStyle={{ minWidth: "80px" }}
+                {...field}
+                labelStyle={{ minWidth: "90px" }}
                 label="미수금액"
-                value={value}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i140}
-                name={name}
               />
             )}
           />
@@ -210,56 +132,51 @@ const Form = React.forwardRef(
         <br />
         <Controller
           control={control}
-          {...register("msDc")}
-          render={({ field: { onChange, value, name } }) => (
+          name="msDc"
+          render={({ field }) => (
             <Input
-              labelStyle={{ minWidth: "80px" }}
+              {...field}
+              labelStyle={{ minWidth: "90px" }}
               label="D / C"
-              value={value}
-              onChange={onChange}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i140}
-              name={name}
             />
           )}
         />
         <Controller
           control={control}
-          {...register("msKumack")}
-          render={({ field: { onChange, value, name } }) => (
+          name="msKumack"
+          render={({ field }) => (
             <Input
-              labelStyle={{ minWidth: "80px" }}
+              {...field}
+              labelStyle={{ minWidth: "90px" }}
               label="수 금 액"
-              value={value}
-              onChange={onChange}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i140}
-              name={name}
             />
           )}
         />
         <br />
         <Controller
           control={control}
-          {...register("msJanack")}
-          render={({ field: { onChange, value, name } }) => (
+          name="msJanack"
+          render={({ field }) => (
             <Input
-              labelStyle={{ minWidth: "80px" }}
+              {...field}
+              labelStyle={{ minWidth: "90px" }}
               label="수금 후 잔액"
-              value={value}
-              onChange={onChange}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i140}
-              name={name}
+              readOnly
             />
           )}
         />
         <br />
         <FormGroup>
-          <Label style={{ minWidth: "80px" }}>수금 방법</Label>
+          <Label style={{ minWidth: "90px" }}>수금 방법</Label>
           <Select
             register={register("msSukumtype")}
             onChange={handleSelectCode}
@@ -273,7 +190,7 @@ const Form = React.forwardRef(
           </Select>
         </FormGroup>
         <FormGroup>
-          <Label style={{ minWidth: "80px" }}>사 원</Label>
+          <Label style={{ minWidth: "90px" }}>사 원</Label>
           <Select
             register={register("msSwCode")}
             onChange={handleSelectCode}
@@ -289,69 +206,67 @@ const Form = React.forwardRef(
 
         <Controller
           control={control}
-          {...register("msBigo")}
-          render={({ field: { onChange, value, name } }) => (
+          name="msBigo"
+          render={({ field }) => (
             <Input
-              labelStyle={{ minWidth: "80px" }}
+              {...field}
+              labelStyle={{ minWidth: "90px" }}
               label="비 고"
-              value={value}
-              onChange={onChange}
               textAlign="right"
               inputSize={InputSize.i140}
-              name={name}
             />
           )}
         />
         <BottomStyleDiv bottomSize={InputSize.i80}>
           <InfoText
             text={"수금처리는 선입선출 방식으로 자동 처리됨"}
-            style={{ borderBottom: "1px solid" }}
+            style={{ borderBottom: "1px solid #707070" }}
           />
           <Controller
             control={control}
-            {...register("totMisukum")}
-            render={({ field: { onChange, value, name } }) => (
+            name="totMisukum"
+            render={({ field: { name } }) => (
               <Input
-                labelStyle={{ minWidth: "80px" }}
+                labelStyle={{ minWidth: "90px" }}
                 label="미수금 총계"
                 value={totMisukum}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i140}
                 name={name}
+                readOnly
               />
             )}
           />
           <Controller
             control={control}
-            {...register("totSukum")}
-            render={({ field: { onChange, value, name } }) => (
+            name="totSukum"
+            render={({ field: { name } }) => (
               <Input
-                labelStyle={{ minWidth: "80px" }}
+                labelStyle={{ minWidth: "90px" }}
                 label="수금 총계"
                 value={totSukum}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i140}
                 name={name}
+                readOnly
               />
             )}
           />
           <Controller
             control={control}
-            {...register("totDc")}
-            render={({ field: { onChange, value, name } }) => (
+            name="totDc"
+            render={({ field: { name } }) => (
               <Input
-                labelStyle={{ minWidth: "80px" }}
+                labelStyle={{ minWidth: "90px" }}
                 label="D/C 총계"
                 value={totDc}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i140}
                 name={name}
+                readOnly
               />
             )}
           />
