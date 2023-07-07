@@ -44,6 +44,10 @@ function CC9002({
     }
   }, [dataCommonDic]);
 
+  const submit = (data: ICC9002SEARCH) => {
+    fetchData(data);
+  };
+
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init: any = dataCommonDic.dataInit[0];
@@ -60,10 +64,6 @@ function CC9002({
       resetForm("reset");
     }
     setData([]);
-  };
-
-  const submit = (data: ICC9002SEARCH) => {
-    fetchData(data);
   };
 
   return (
@@ -90,7 +90,6 @@ function CC9002({
                   )}
                 />
                 <p>~</p>
-
                 <Controller
                   control={control}
                   {...register("sDateT")}
@@ -109,7 +108,6 @@ function CC9002({
                   <Label style={{ minWidth: "64px" }}>계정 과목</Label>
                 </FormGroup>
               </Field>
-
               <FormGroup>
                 <Select
                   register={register("acjAccCodeF")}
@@ -122,7 +120,6 @@ function CC9002({
                   ))}
                 </Select>
                 <p>~</p>
-
                 <Select
                   register={register("acjAccCodeT")}
                   width={InputSize.i120}
@@ -134,7 +131,6 @@ function CC9002({
                   ))}
                 </Select>
               </FormGroup>
-
               <div className="buttons">
                 <Button
                   text="검색"

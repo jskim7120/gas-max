@@ -50,6 +50,28 @@ function CM9002({
       mode: "onSubmit",
     });
 
+  useEffect(() => {
+    if (selected && Object.keys(selected)?.length > 0) {
+      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    if (dataCommonDic && dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+  }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("reportKind")) {
+      setData([]);
+    }
+  }, [watch("reportKind")]);
+
+  const submit = (data: ICM9002SEARCH) => {
+    fetchData(data);
+  };
+
   const resetForm = (type: string) => {
     if (type === "reset") {
       if (dataCommonDic) {
@@ -74,34 +96,12 @@ function CM9002({
     }
   };
 
-  useEffect(() => {
-    if (selected && Object.keys(selected)?.length > 0) {
-      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
-    }
-  }, [selected]);
-
-  useEffect(() => {
-    if (dataCommonDic && dataCommonDic?.dataInit) {
-      resetForm("reset");
-    }
-  }, [dataCommonDic]);
-
-  useEffect(() => {
-    if (watch("reportKind")) {
-      setData([]);
-    }
-  }, [watch("reportKind")]);
-
   const handleReset = () => {
     if (dataCommonDic?.dataInit) {
       resetForm("reset");
     }
     setData([]);
     setDataChk(true);
-  };
-
-  const submit = (data: ICM9002SEARCH) => {
-    fetchData(data);
   };
 
   return (
@@ -300,19 +300,17 @@ function CM9002({
         </SearchWrapper>
       </form>
 
-      <WrapperContent style={{ height: `calc(100% - 76px)` }}>
-        <BasicGrid
-          ref={gridRef}
-          areaCode={areaCode}
-          data={data}
-          columns={columns}
-          fields={fields}
-          menuId={menuId}
-          rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: `calc(100% - 12px)` }}
-          //evenFill
-        />
-      </WrapperContent>
+      <BasicGrid
+        ref={gridRef}
+        areaCode={areaCode}
+        data={data}
+        columns={columns}
+        fields={fields}
+        menuId={menuId}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
+        style={{ height: `calc(100% - 88px)` }}
+        //evenFill
+      />
     </>
   );
 }

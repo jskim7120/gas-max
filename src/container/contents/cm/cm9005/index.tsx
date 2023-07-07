@@ -54,6 +54,10 @@ function CM9005({
     }
   }, [watch("cuJpGubun")]);
 
+  const submit = (data: ISEARCH) => {
+    fetchData(data);
+  };
+
   const resetForm = () => {
     if (dataCommonDic) {
       reset({
@@ -71,9 +75,6 @@ function CM9005({
   const handleReset = () => {
     resetForm();
     setData([]);
-  };
-  const submit = (data: ISEARCH) => {
-    fetchData(data);
   };
 
   return (

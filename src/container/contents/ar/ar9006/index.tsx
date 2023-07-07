@@ -39,10 +39,15 @@ function AR9006({
     mode: "onSubmit",
   });
 
+  useEffect(() => {
+    if (dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+  }, [dataCommonDic]);
+
   const submit = (params: ISEARCH) => {
     params.sDate = DateWithoutDash(params.sDate);
     params.eDate = DateWithoutDash(params.eDate);
-
     fetchData(params);
   };
 
@@ -61,12 +66,6 @@ function AR9006({
       }
     }
   };
-
-  useEffect(() => {
-    if (dataCommonDic?.dataInit) {
-      resetForm("reset");
-    }
-  }, [dataCommonDic]);
 
   const handleReset = () => {
     if (dataCommonDic?.dataInit) {

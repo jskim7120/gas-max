@@ -44,6 +44,10 @@ function CC9001({
     }
   }, [dataCommonDic]);
 
+  const submit = (data: ICC9001SEARCH) => {
+    fetchData(data);
+  };
+
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init: any = dataCommonDic.dataInit[0];
@@ -62,10 +66,6 @@ function CC9001({
     setData([]);
   };
 
-  const submit = (data: ICC9001SEARCH) => {
-    fetchData(data);
-  };
-
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
@@ -73,7 +73,6 @@ function CC9001({
           <FormGroup></FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
-
         <SearchWrapper className="h35" style={{ justifyContent: "start" }}>
           <FormGroup>
             <Label style={{ minWidth: "62px" }}>계정 과목</Label>
@@ -84,7 +83,6 @@ function CC9001({
                 </option>
               ))}
             </Select>
-
             <Label style={{ minWidth: "60px" }}>기간</Label>
             <Controller
               control={control}
@@ -98,7 +96,6 @@ function CC9001({
               )}
             />
             <p>~</p>
-
             <Controller
               control={control}
               {...register("sDateT")}
@@ -111,8 +108,7 @@ function CC9001({
               )}
             />
           </FormGroup>
-
-          <div className="buttons" style={{ marginLeft: "30px" }}>
+          <div className="buttons ml30">
             <Button
               text="검색"
               icon={!loading && <MagnifyingGlass />}

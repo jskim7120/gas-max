@@ -97,6 +97,15 @@ function CM9003({
     setDataChk(true);
   };
 
+  const selectColumns = () => {
+    switch (watch("reportKind")) {
+      case "0":
+        return { columns: columns0, fields: fields0 };
+      case "1":
+        return { columns: columns1, fields: fields1 };
+    }
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
@@ -227,9 +236,7 @@ function CM9003({
                       {obj.codeName}
                     </option>
                   ))}
-                  <option key="sdcdcds00" value="">
-                    hooson
-                  </option>
+                  <option key="sdcdcds00" value=""></option>
                 </Select>
               </FormGroup>
               <FormGroup>
@@ -298,33 +305,18 @@ function CM9003({
           </div>
         </SearchWrapper>
       </form>
-      <WrapperContent style={{ height: `calc(100% - 76px)` }}>
-        {watch("reportKind") === "0" ? (
-          <BasicGrid
-            ref={gridRef}
-            areaCode={areaCode}
-            data={data}
-            fields={fields0}
-            columns={columns0}
-            menuId={menuId}
-            rowIndex={data?.length > 1 ? data.length - 1 : 0}
-            style={{ height: `calc(100% - 12px)` }}
-            // evenFill
-          />
-        ) : (
-          <BasicGrid
-            ref={gridRef}
-            areaCode={areaCode}
-            data={data}
-            fields={fields1}
-            columns={columns1}
-            menuId={menuId}
-            rowIndex={data?.length > 1 ? data.length - 1 : 0}
-            style={{ height: `calc(100% - 12px)` }}
-            // evenFill
-          />
-        )}
-      </WrapperContent>
+      <BasicGrid
+        ref={gridRef}
+        areaCode={areaCode}
+        data={data}
+        columns={selectColumns()?.columns}
+        fields={selectColumns()?.fields}
+        menuId={menuId}
+        gridChangeField={watch("reportKind")}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
+        style={{ height: `calc(100% - 88px)` }}
+        // evenFill
+      />
     </>
   );
 }

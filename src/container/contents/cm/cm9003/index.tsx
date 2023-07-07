@@ -46,21 +46,6 @@ function CM9003({
     mode: "onSubmit",
   });
 
-  const resetForm = () => {
-    if (dataCommonDic) {
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-        reportKind: dataCommonDic?.reportKind[0].code,
-        cuType: dataCommonDic?.cuType[0].code,
-        cuJyCode: dataCommonDic?.cuJyCode[0].code,
-        swCode: dataCommonDic?.swCode[0].code,
-        cuCutype: dataCommonDic?.cuCutype[0].code,
-        sDate: dataCommonDic?.sDate[0].code,
-        dDate: dataCommonDic?.dDate[0].code,
-      });
-    }
-  };
-
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
       setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
@@ -77,15 +62,30 @@ function CM9003({
     }
   }, [watch("reportKind")]);
 
-  const handleReset = () => {
-    resetForm();
-    setData([]);
-  };
-
   const submit = (data: ISEARCH) => {
     data.sDate = DateWithoutDash(data.sDate);
     data.dDate = DateWithoutDash(data.dDate);
     fetchData(data);
+  };
+
+  const resetForm = () => {
+    if (dataCommonDic) {
+      reset({
+        areaCode: dataCommonDic?.areaCode[0].code,
+        reportKind: dataCommonDic?.reportKind[0].code,
+        cuType: dataCommonDic?.cuType[0].code,
+        cuJyCode: dataCommonDic?.cuJyCode[0].code,
+        swCode: dataCommonDic?.swCode[0].code,
+        cuCutype: dataCommonDic?.cuCutype[0].code,
+        sDate: dataCommonDic?.sDate[0].code,
+        dDate: dataCommonDic?.dDate[0].code,
+      });
+    }
+  };
+
+  const handleReset = () => {
+    resetForm();
+    setData([]);
   };
 
   const selectColumns = () => {

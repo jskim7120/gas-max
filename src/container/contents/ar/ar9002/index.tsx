@@ -139,7 +139,6 @@ function AR9002({
                 </option>
               ))}
             </Select>
-
             <div className="buttons ml30">
               <Button
                 text="검색"
@@ -218,7 +217,6 @@ function AR9002({
               )}
             />
             <CheckBox title="공급사원" rtl style={{ marginLeft: "108px" }} />
-
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -244,7 +242,6 @@ function AR9002({
                 </option>
               ))}
             </Select>
-
             <Label style={{ minWidth: "90px" }}>지역구분</Label>
             <Select register={register("cuJyCode")} width={InputSize.i130}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
@@ -272,7 +269,6 @@ function AR9002({
           </FormGroup>
         </SearchWrapper>
       </form>
-
       <BasicGrid
         menuId={menuId}
         ref={gridRef}

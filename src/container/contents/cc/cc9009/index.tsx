@@ -38,6 +38,16 @@ function GR9009({
     mode: "onSubmit",
   });
 
+  useEffect(() => {
+    if (dataCommonDic && dataCommonDic?.dataInit) {
+      resetForm("reset");
+    }
+  }, [dataCommonDic]);
+
+  const submit = (data: ICC9009SEARCH) => {
+    fetchData(data);
+  };
+
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init: any = dataCommonDic.dataInit[0];
@@ -45,21 +55,11 @@ function GR9009({
     }
   };
 
-  useEffect(() => {
-    if (dataCommonDic && dataCommonDic?.dataInit) {
-      resetForm("reset");
-    }
-  }, [dataCommonDic]);
-
   const handleReset = () => {
     if (dataCommonDic?.dataInit) {
       resetForm("reset");
     }
     setData([]);
-  };
-
-  const submit = (data: ICC9009SEARCH) => {
-    fetchData(data);
   };
 
   return (
@@ -74,7 +74,6 @@ function GR9009({
           </FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
-
         <SearchWrapper
           className="h35"
           style={{ justifyContent: "flex-start", gap: "250px" }}
@@ -88,7 +87,6 @@ function GR9009({
                 </option>
               ))}
             </Select>
-
             <Label style={{ minWidth: "80px" }}>기간</Label>
             <Controller
               control={control}
@@ -101,7 +99,6 @@ function GR9009({
                 />
               )}
             />
-
             <Controller
               control={control}
               {...register("sDateT")}
@@ -113,7 +110,6 @@ function GR9009({
                 />
               )}
             />
-
             <Label style={{ minWidth: "70px" }}>차량</Label>
             <Select width={InputSize.i130} register={register("carCode")}>
               {dataCommonDic?.carCode?.map((obj: any, idx: number) => (
@@ -123,7 +119,6 @@ function GR9009({
               ))}
             </Select>
           </FormGroup>
-
           <div className="buttons">
             <Button
               text="검색"
@@ -153,7 +148,6 @@ function GR9009({
           </div>
         </SearchWrapper>
       </form>
-
       <BasicGrid
         ref={gridRef}
         areaCode={areaCode}

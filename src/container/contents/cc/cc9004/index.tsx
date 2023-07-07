@@ -44,6 +44,10 @@ function CC9004({
     }
   }, [dataCommonDic]);
 
+  const submit = (data: ICC9004SEARCH) => {
+    fetchData(data);
+  };
+
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init: any = dataCommonDic.dataInit[0];
@@ -59,10 +63,6 @@ function CC9004({
       resetForm("reset");
     }
     setData([]);
-  };
-
-  const submit = (data: ICC9004SEARCH) => {
-    fetchData(data);
   };
 
   return (
@@ -89,7 +89,6 @@ function CC9004({
                   )}
                 />
               </FormGroup>
-
               <FormGroup>
                 <Label style={{ minWidth: "95px" }}>영업소</Label>
                 <Select register={register("areaCode")} width={InputSize.i120}>

@@ -44,6 +44,10 @@ function GR9005({
     }
   }, [dataCommonDic]);
 
+  const submit = (data: IGR9005SEARCH) => {
+    fetchData(data);
+  };
+
   const resetForm = (type: any) => {
     if (type === "reset") {
       const init = dataCommonDic.initData[0];
@@ -61,10 +65,6 @@ function GR9005({
       resetForm("reset");
     }
     setData([]);
-  };
-
-  const submit = (data: IGR9005SEARCH) => {
-    fetchData(data);
   };
 
   return (
@@ -161,19 +161,17 @@ function GR9005({
           </FormGroup>
         </SearchWrapper>
       </form>
-      <WrapperContent>
-        <BasicGrid
-          ref={gridRef}
-          areaCode={areaCode}
-          data={data}
-          columns={columns}
-          fields={fields}
-          menuId={menuId}
-          rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: `calc(100% - 47px)` }}
-          // evenFill
-        />
-      </WrapperContent>
+      <BasicGrid
+        ref={gridRef}
+        areaCode={areaCode}
+        data={data}
+        columns={columns}
+        fields={fields}
+        menuId={menuId}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
+        style={{ height: `calc(100% - 61px)` }}
+        // evenFill
+      />
     </>
   );
 }

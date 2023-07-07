@@ -64,7 +64,6 @@ function AR9008({
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init = dataCommonDic.dataInit[0];
-
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
         swCode: init?.swCode,
@@ -140,13 +139,6 @@ function AR9008({
         <SearchWrapper>
           <FormGroup>
             <Label style={{ minWidth: "80px" }}>년 - 월</Label>
-            {/* <Select register={register("sMonth")} width={InputSize.i120}>
-              {dataCommonDic?.sMonth?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select> */}
             <Controller
               control={control}
               {...register("sMonth")}
@@ -159,7 +151,6 @@ function AR9008({
                 />
               )}
             />
-
             <Label style={{ minWidth: "80px" }}>담당사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
@@ -176,7 +167,6 @@ function AR9008({
                 </option>
               ))}
             </Select>
-
             <Label style={{ minWidth: "80px" }}>장부구분</Label>
             <Select register={register("cuJangbu")} width={InputSize.i120}>
               {dataCommonDic?.cuJangbu?.map((obj: any, idx: number) => (
