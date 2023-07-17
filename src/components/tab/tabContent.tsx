@@ -348,43 +348,83 @@ export const getContent = (
       );
     case "RV1100":
       return (
-        <RV1100 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <RV1100
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "RV9005":
       return (
-        <RV9005 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <RV9005
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "RV9006":
       return (
-        <RV9006 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <RV9006
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "RV9007":
       return (
-        <RV9007 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <RV9007
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "RV9008":
       return (
-        <RV9008 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <RV9008
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "RV9009":
       return (
-        <RV9009 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <RV9009
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "RV9010":
       return (
-        <RV9010 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <RV9010
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "RV9011":
       return (
-        <RV9011 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <RV9011
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "RV9012":
       return (
-        <RV9012 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <RV9012
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "RV9013":
       return (
-        <RV9013 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <RV9013
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC1100":
       return (

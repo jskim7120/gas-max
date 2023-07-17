@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { apiGet } from "app/axios";
+import CreateReport from "app/hook/createReport";
 import { RV9005SEARCH } from "app/path";
 import { IRV9005SEARCH } from "./model";
-import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
+import { SearchWrapper } from "../../commonStyle";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import {
@@ -28,6 +27,7 @@ import {
   DateWithoutDash,
   DateWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
+import BasicGrid from "components/basicGrid";
 import { PrintPreview, Print } from "components/allSvgIcon";
 
 const radioOptions = [
@@ -52,31 +52,34 @@ const radioOptions = [
 function RV9005({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("RV", "RV9005", menuId, RV9005SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
+
   const [sType1, setSType1] = useState(false);
   const [sType2, setSType2] = useState("0");
-
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
 
   const { register, handleSubmit, reset, control } = useForm<IRV9005SEARCH>({
     mode: "onSubmit",
   });
 
   useEffect(() => {
-    getCommonDictionary({ groupId: "RV", functionName: "RV9005" });
-  }, []);
-
-  useEffect(() => {
     if (dataCommonDic) {
-      resetSearchForm();
+      resetForm("reset");
     }
   }, [dataCommonDic]);
 
@@ -91,39 +94,6 @@ function RV9005({
       "",
       `width=${width},height=${height},left=${left},top=${top},resizable,scrollbars=yes,status=1`
     );
-  };
-
-  const resetSearchForm = () => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-      sType1: dataCommonDic?.sType1[0].code,
-      sGjGumymF: dataCommonDic?.sGjGumymF[0].code,
-      sGjSnoF: dataCommonDic?.sGjSnoF[0].code,
-      sGjGumymT: dataCommonDic?.sGjGumymT[0].code,
-      sGjSnoT: dataCommonDic?.sGjSnoT[0].code,
-      sType2: dataCommonDic?.sType2[0].code,
-      sSwCode: dataCommonDic?.sSwCode[0].code,
-      sCuSwCode: dataCommonDic?.sCuSwCode[0].code,
-      sCuCustgubun: dataCommonDic?.sCuCustgubun[0].code,
-      sJyCode: dataCommonDic?.sJyCode[0].code,
-      sSukumtype: dataCommonDic?.cuSukumtype[0].code,
-      sSort: dataCommonDic?.sSort[0].code,
-      sDateF: dataCommonDic?.sDateF[0].code,
-      sDateT: dataCommonDic?.sDateT[0].code,
-      sRh20: dataCommonDic?.sRh20[0].code,
-    });
-  };
-
-  const fetchData = async (params: any) => {
-    setLoading(true);
-    const dataRV9005 = await apiGet(RV9005SEARCH, params);
-
-    if (dataRV9005) {
-      setData(dataRV9005);
-    } else {
-      setData([]);
-    }
-    setLoading(false);
   };
 
   const submit = (params: any) => {
@@ -157,9 +127,35 @@ function RV9005({
     fetchData(params);
   };
 
+  const resetForm = (type: string) => {
+    if (type === "reset") {
+      if (dataCommonDic?.dataInit) {
+        const init = dataCommonDic.dataInit[0];
+        reset({
+          areaCode: dataCommonDic?.areaCode[0].code,
+          // sType1: init?.sType1,
+          sGjGumymF: init?.sDate,
+          sGjSnoF: init?.sDate,
+          sGjGumymT: init?.sDate,
+          sGjSnoT: init?.sDate,
+          // sType2: init?.sDate,
+          sSwCode: init?.sDate,
+          sCuSwCode: init?.sDate,
+          sCuCustgubun: init?.sDate,
+          sJyCode: init?.sDate,
+          sSukumtype: init?.sDate,
+          sSort: init?.sDate,
+          sDateF: init?.sDate,
+          sDateT: init?.sDate,
+          sRh20: init?.sDate,
+        });
+      }
+    }
+  };
+
   const handleReset = () => {
     if (dataCommonDic?.dataInit) {
-      resetSearchForm();
+      resetForm("reset");
     }
     setData([]);
   };
@@ -169,7 +165,7 @@ function RV9005({
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <SearchWrapper className="h35 mt5">
           <FormGroup>
-            {areaCode === "00" && (
+            {ownAreaCode === "00" && (
               <>
                 <Label style={{ minWidth: "72px" }}>영업소</Label>
                 <Select register={register("areaCode")}>
@@ -475,17 +471,16 @@ function RV9005({
           </div>
         </SearchWrapper>
       </form>
-      <WrapperContent>
-        <Grid
-          areaCode={areaCode}
-          data={data}
-          columns={columns}
-          fields={fields}
-          rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          menuId={menuId}
-          style={{ height: "calc(100% - 110px)" }}
-        />
-      </WrapperContent>
+      <BasicGrid
+        areaCode={ownAreaCode}
+        ref={gridRef}
+        data={data}
+        columns={columns}
+        fields={fields}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
+        menuId={menuId}
+        style={{ height: "calc(100% - 156px)" }}
+      />
     </>
   );
 }
