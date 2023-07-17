@@ -85,7 +85,7 @@ const Form = React.forwardRef(
       <form
         // onSubmit={handleSubmit(submit)}
         autoComplete="off"
-        style={{ width: "320px" }}
+        style={{ width: "330px" }}
       >
         <div style={{ padding: "10px" }}>
           <FormGroup>
@@ -246,10 +246,10 @@ const Form = React.forwardRef(
           />
         </div>
 
-        <BottomStyleDiv bottomSize={InputSize.i80}>
+        <BottomStyleDiv>
           <InfoText
             text={"수금처리는 선입선출 방식으로 자동 처리됨"}
-            style={{ borderBottom: "1px solid" }}
+            style={{ borderBottom: "1px solid #707070" }}
           />
           <Controller
             control={control}

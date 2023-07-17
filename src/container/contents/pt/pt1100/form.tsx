@@ -78,7 +78,7 @@ const Form = React.forwardRef(
       <form
         // onSubmit={handleSubmit(submit)}
         autoComplete="off"
-        style={{ width: "320px", padding: "10px" }}
+        style={{ width: "335px", padding: "10px" }}
       >
         <FormGroup>
           <Label style={{ minWidth: "90px" }}>일 자</Label>
@@ -94,7 +94,7 @@ const Form = React.forwardRef(
             )}
           />
         </FormGroup>
-        <br></br>
+        <br />
         <div style={{ borderStyle: "groove", alignItems: "center" }}>
           <FormGroup>
             <Input
@@ -189,6 +189,7 @@ const Form = React.forwardRef(
             ))}
           </Select>
         </FormGroup>
+
         <FormGroup>
           <Label style={{ minWidth: "90px" }}>사 원</Label>
           <Select
@@ -217,7 +218,7 @@ const Form = React.forwardRef(
             />
           )}
         />
-        <BottomStyleDiv bottomSize={InputSize.i80}>
+        <BottomStyleDiv>
           <InfoText
             text={"수금처리는 선입선출 방식으로 자동 처리됨"}
             style={{ borderBottom: "1px solid #707070" }}

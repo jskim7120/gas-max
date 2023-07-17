@@ -34,7 +34,7 @@ import { FormGroup, Select, Label, Input } from "components/form/style";
 import { ButtonColor, InputSize } from "components/componentsType";
 import useDrawLine from "app/hook/useDrawLine";
 
-const leftSideWidth: number = 1070;
+const leftSideWidth: number = 1010;
 
 function PT1100({
   depthFullName,
@@ -218,104 +218,111 @@ function PT1100({
       </SearchWrapper>
       <MainWrapper>
         <LeftSide style={{ width: `${linePos}px` }}>
-          <form autoComplete="off">
-            <SearchWrapper className="h35">
-              <FormGroup>
-                <PersonInfoText text="미수 현황" />
-                <Input
-                  label="거래처"
-                  register={register("sCuName")}
-                  inputSize={InputSize.i140}
-                />
-                <Controller
-                  control={control}
-                  name="sCheck"
-                  render={({ field }) => (
-                    <CheckBox
-                      {...field}
-                      title="조건 검색"
-                      rtl
-                      style={{ marginLeft: "15px" }}
-                    />
-                  )}
-                />
-              </FormGroup>
-            </SearchWrapper>
-          </form>
+          <div
+            style={{
+              minWidth: leftSideWidth,
+              height: "100%",
+            }}
+          >
+            <form autoComplete="off">
+              <SearchWrapper className="h35">
+                <FormGroup>
+                  <PersonInfoText text="미수 현황" />
+                  <Input
+                    label="거래처"
+                    register={register("sCuName")}
+                    inputSize={InputSize.i140}
+                  />
+                  <Controller
+                    control={control}
+                    name="sCheck"
+                    render={({ field }) => (
+                      <CheckBox
+                        {...field}
+                        title="조건 검색"
+                        rtl
+                        style={{ marginLeft: "15px" }}
+                      />
+                    )}
+                  />
+                </FormGroup>
+              </SearchWrapper>
+            </form>
 
-          <Grid
-            areaCode={ownAreaCode}
-            data={data.length > 0 && data}
-            columns={columns}
-            fields={fields}
-            rowIndex={0}
-            menuId={menuId}
-            setSelected={setSelected}
-            style={{ height: "35%" }}
-          />
-          <Grid
-            areaCode={ownAreaCode}
-            data={data65.length > 0 && data65}
-            columns={columnsSecond}
-            fields={fieldsSecond}
-            rowIndex={0}
-            menuId={menuId}
-            hideFooter
-            style={{ height: "22%", marginTop: "5px" }}
-          />
-          <form onSubmit={handleSubmit(submitSearch2)} autoComplete="off">
-            <SearchWrapper className="h35">
-              <FormGroup>
-                <PersonInfoText text="수금 현황" />
-                <Controller
-                  control={control}
-                  name="sMsdateF"
-                  render={({ field }) => <CustomDatePicker {...field} />}
-                />
-                <Controller
-                  control={control}
-                  name="sMsdateT"
-                  render={({ field }) => <CustomDatePicker {...field} />}
-                />
-                <Button
-                  text="검색"
-                  icon={!loading2 && <MagnifyingGlass />}
-                  color={ButtonColor.DANGER}
-                  type="submit"
-                  loader={
-                    loading2 && (
-                      <>
-                        <Loader
-                          color="white"
-                          size={13}
-                          borderWidth="2px"
-                          style={{ marginRight: "10px" }}
-                        />
-                      </>
-                    )
-                  }
-                  style={{ marginLeft: "30px" }}
-                />
-                <Button
-                  text="수금취소"
-                  icon={<Trash />}
-                  type="button"
-                  style={{ marginLeft: "15px" }}
-                />
-              </FormGroup>
-            </SearchWrapper>
-          </form>
+            <Grid
+              areaCode={ownAreaCode}
+              data={data.length > 0 && data}
+              columns={columns}
+              fields={fields}
+              rowIndex={0}
+              menuId={menuId}
+              setSelected={setSelected}
+              style={{ height: "34%" }}
+            />
+            <Grid
+              areaCode={ownAreaCode}
+              data={data65.length > 0 && data65}
+              columns={columnsSecond}
+              fields={fieldsSecond}
+              rowIndex={0}
+              menuId={menuId}
+              hideFooter
+              style={{ height: "22%", marginTop: "5px" }}
+            />
+            <form onSubmit={handleSubmit(submitSearch2)} autoComplete="off">
+              <SearchWrapper className="h35">
+                <FormGroup>
+                  <PersonInfoText text="수금 현황" />
+                  <Controller
+                    control={control}
+                    name="sMsdateF"
+                    render={({ field }) => <CustomDatePicker {...field} />}
+                  />
+                  <Controller
+                    control={control}
+                    name="sMsdateT"
+                    render={({ field }) => <CustomDatePicker {...field} />}
+                  />
+                  <Button
+                    text="검색"
+                    icon={!loading2 && <MagnifyingGlass />}
+                    color={ButtonColor.DANGER}
+                    type="submit"
+                    loader={
+                      loading2 && (
+                        <>
+                          <Loader
+                            color="white"
+                            size={13}
+                            borderWidth="2px"
+                            style={{ marginRight: "10px" }}
+                          />
+                        </>
+                      )
+                    }
+                    style={{ marginLeft: "30px" }}
+                  />
+                  <Button
+                    text="수금취소"
+                    icon={<Trash />}
+                    type="button"
+                    style={{ marginLeft: "15px" }}
+                  />
+                </FormGroup>
+              </SearchWrapper>
+            </form>
 
-          <Grid
-            areaCode={ownAreaCode}
-            data={dataSecond.length > 0 && dataSecond}
-            columns={columnsThird}
-            fields={fieldsThird}
-            // setSelected={setSecondSelected}
-            rowIndex={0}
-            menuId={menuId}
-            style={{ height: "30%" }}
-          />
+            <Grid
+              areaCode={ownAreaCode}
+              data={dataSecond.length > 0 && dataSecond}
+              columns={columnsThird}
+              fields={fieldsThird}
+              // setSelected={setSecondSelected}
+              rowIndex={0}
+              menuId={menuId}
+              style={{ height: "calc(31% - 2px)" }}
+            />
+          </div>
         </LeftSide>
 
         <RightSide
