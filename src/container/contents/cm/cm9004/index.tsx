@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CM9004SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import { SearchWrapper, WrapperContent } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CheckBox from "components/checkbox";
 import { Select, FormGroup, Wrapper, Label } from "components/form/style";

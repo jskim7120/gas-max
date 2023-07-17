@@ -37,10 +37,6 @@ export const SearchWrapper = styled.div`
     height: 47px;
   }
 
-  &.mt5 {
-    margin-top: 4px;
-  }
-
   .ml30 {
     margin-left: 30px;
   }
@@ -61,20 +57,19 @@ export const SearchWrapper = styled.div`
 export const MainWrapper = styled.div`
   display: flex;
   gap: 0;
-  height: calc(100% - 14px);
+  height: calc(100% - 47px);
   width: 100%;
 `;
 
 export const WrapperContent = styled.div`
   gap: 0px;
-  height: calc(100% - 14px);
+  height: calc(100% - 47px);
   width: 100%;
 `;
 
 export const LeftSide = styled.div<{ width?: string }>`
   flex-grow: 1;
   overflow-x: auto;
-  // border-right: 3px solid #707070;
 `;
 
 export const LeftSideEN = styled.div<{ width?: string }>`

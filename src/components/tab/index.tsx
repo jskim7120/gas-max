@@ -144,8 +144,9 @@ const Tab = (props: TabProps): JSX.Element => {
             <Close />
           </span>
         </div>
-        <TabBorderLine isHome={activeTabId === "HOME"} isOpen={isOpen} />
       </TabHeaderWrapper>
+
+      <TabBorderLine isHome={activeTabId === "HOME"} />
 
       {tabHeader?.map((tab: any, idx: number) => (
         <TabContentWrapper

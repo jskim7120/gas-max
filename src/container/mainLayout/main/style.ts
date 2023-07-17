@@ -56,5 +56,5 @@ export const UnOrderedList = styled.ul`
 export const Main = styled.div`
   display: flex;
   width: 100%;
-  height: calc(100vh - 113px);
+  height: calc(100vh - 115px);
 `;

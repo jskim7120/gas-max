@@ -5,7 +5,7 @@ import { RV9005SEARCH } from "app/path";
 import { IRV9005SEARCH } from "./model";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
-import { MagnifyingGlass, ResetGray, Document } from "components/allSvgIcon";
+import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import {
   Item,
@@ -18,12 +18,11 @@ import {
   Wrapper,
   Label,
   Input,
-  Field,
 } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import Grid from "./grid";
+import Grid from "components/grid";
 import { columns, fields } from "./data";
 import {
   DateWithoutDash,
@@ -116,24 +115,6 @@ function RV9005({
   };
 
   const fetchData = async (params: any) => {
-    // try {
-    //   setLoading(true);
-    //   const { data: dataRV9005 } = await API.get(RV9005SEARCH, {
-    //     params: params,
-    //   });
-
-    //   if (dataRV9005) {
-    //     setData(dataRV9005);
-    //   } else {
-    //     setData([]);
-    //   }
-    //   setLoading(false);
-    // } catch (err) {
-    //   setLoading(false);
-    //   setData([]);
-    //   console.log("RV9005 data search fetch error =======>", err);
-    // }
-
     setLoading(true);
     const dataRV9005 = await apiGet(RV9005SEARCH, params);
 
@@ -495,7 +476,15 @@ function RV9005({
         </SearchWrapper>
       </form>
       <WrapperContent>
-        <Grid data={data} columns={columns} fields={fields} />
+        <Grid
+          areaCode={areaCode}
+          data={data}
+          columns={columns}
+          fields={fields}
+          rowIndex={data?.length > 1 ? data.length - 1 : 0}
+          menuId={menuId}
+          style={{ height: "calc(100% - 110px)" }}
+        />
       </WrapperContent>
     </>
   );

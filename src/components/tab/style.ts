@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const TabContainer = styled.div`
-  height: 100%;
+  //height: 100%;
   border-left: 5px solid #707070;
   border-right: 5px solid #707070;
 `;
@@ -93,19 +93,14 @@ export const List = styled.li<{ isActive: boolean }>`
 
 export const TabContentWrapper = styled.div`
   width: 100%;
-  margin-top: 3px;
-  height: calc(100% - 70px);
+  height: calc(100% - 36px);
 `;
 
 export const TabBorderLine = styled.div<{
   isHome: boolean;
-  isOpen: boolean;
 }>`
-  position: absolute;
-  top: 66px;
-  left: ${(props) => (props.isOpen ? `86.5px` : `4.5px`)};
-  right: 5px;
   height: 4.5px;
+  width: 100%;
   background: ${(props) => (props.isHome ? `#8CB808;` : `#FC6767;`)};
   border-top: 1px solid #707070;
 `;

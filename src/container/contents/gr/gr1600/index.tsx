@@ -18,7 +18,6 @@ import GridLeft from "components/grid";
 import { ISEARCH } from "./model";
 import { fields, columns } from "./data";
 import Loader from "components/loader";
-import CustomTopPart from "container/contents/customTopPart";
 
 let values1: any;
 let labels1: any;

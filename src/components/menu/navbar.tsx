@@ -1,7 +1,7 @@
 import React from "react";
 import { getNestedChildren } from "helpers/nestedSort";
 import MenuItems from "./menuItems";
-import { Nav, EndLine } from "./style";
+import { Nav } from "./style";
 
 interface INavbar {
   data?: any;
@@ -21,7 +21,6 @@ const Navbar = (props: INavbar) => {
           <MenuItems key={idx} items={menu} />
         ))}
       </ul>
-      <EndLine />
     </Nav>
   );
 };
