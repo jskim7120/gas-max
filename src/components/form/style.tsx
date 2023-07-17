@@ -759,10 +759,8 @@ export const InputLogin = ({
   );
 };
 
-export const BottomStyleDiv = styled.div<{ bottomSize?: InputSize }>`
-  bottom: ${(props) =>
-    props.bottomSize ? getInputSize(props.bottomSize) : "80px"};
-  position: absolute;
+export const BottomStyleDiv = styled.div`
+  margin-top: 30px;
   padding: 10px;
 `;
 
