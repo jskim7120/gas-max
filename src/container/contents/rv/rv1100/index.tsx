@@ -39,11 +39,11 @@ import Footer from "./footer";
 function RV1100({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
@@ -175,7 +175,7 @@ function RV1100({
     <>
       <SearchWrapper className="h35 mt5">
         <FormGroup>
-          {areaCode === "00" && (
+          {ownAreaCode === "00" && (
             <>
               <Label style={{ minWidth: "90px" }}>영업소</Label>
               <Select register={register("areaCode")}>

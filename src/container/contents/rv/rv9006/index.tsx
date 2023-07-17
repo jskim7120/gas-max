@@ -43,11 +43,11 @@ const radioOptions = [
 function RV9006({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -163,7 +163,7 @@ function RV9006({
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <SearchWrapper className="h35 mt5">
           <FormGroup>
-            {areaCode === "00" && (
+            {ownAreaCode === "00" && (
               <>
                 <Label style={{ minWidth: "72px" }}>영업소</Label>
 
