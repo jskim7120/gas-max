@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const TabContainer = styled.div`
-  height: 100%;
+  //height: 100%;
   border-left: 5px solid #707070;
   border-right: 5px solid #707070;
 `;
@@ -93,7 +93,7 @@ export const List = styled.li<{ isActive: boolean }>`
 
 export const TabContentWrapper = styled.div`
   width: 100%;
-  height: calc(100% - 70px);
+  height: calc(100% - 36px);
 `;
 
 export const TabBorderLine = styled.div<{

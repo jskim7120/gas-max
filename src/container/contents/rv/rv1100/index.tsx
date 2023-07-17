@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet, apiPost } from "app/axios";
-import { toast } from "react-toastify";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { useDispatch } from "app/store";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
@@ -36,7 +35,6 @@ import {
   DateWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
 import Footer from "./footer";
-import { CustomAreaCodePart } from "container/contents/customTopPart";
 
 function RV1100({
   depthFullName,
@@ -99,19 +97,6 @@ function RV1100({
   };
 
   const fetchData = async (params: ISEARCH) => {
-    // try {
-    //   setLoading(true);
-    //   const { data } = await API.get(RV1100SEARCH, { params: params });
-
-    //   if (data.mainData.length > 0) {
-    //     setData(data.mainData);
-    //   } else {
-    //     setData([]);
-    //   }
-
-    //   setLoading(false);
-    // } catch (err) {}
-
     setLoading(true);
     const data = await apiGet(RV1100SEARCH, params);
 
@@ -130,16 +115,6 @@ function RV1100({
   };
 
   const search2 = async (params: ISEARCH) => {
-    // try {
-    //   const { data } = await API.get(RV1100SEARCH62, { params: params });
-
-    //   if (data.mainData.length > 0) {
-    //     setData(data.mainData);
-    //   } else {
-    //     setData([]);
-    //   }
-    // } catch (err) {}
-
     const data = await apiGet(RV1100SEARCH62, params);
     if (data.mainData.length > 0) {
       setData(data.mainData);
@@ -174,28 +149,6 @@ function RV1100({
       newData.gjDate = DateWithoutDash(newData.gjDate);
       newData.gjLdate = DateWithoutDash(newData.gjLdate);
       newData.gjSdate = DateWithoutDash(newData.gjSdate);
-
-      // try {
-      //   const response: any = await API.post(RV1100DELETE, newData);
-
-      //   if (response.status === 200) {
-      //     toast.success("삭제하였습니다", {
-      //       autoClose: 500,
-      //     });
-      //     params.sGjDate = DateWithoutDash(params.sGjDate);
-      //     params.sGjGumym = DateWithoutDashOnlyYearMonth(params.sGjGumym);
-      //     params.sGjPerDate = DateWithoutDash(params.sGjPerDate);
-      //     await fetchData(params);
-      //   } else {
-      //     toast.error(response?.response?.message, {
-      //       autoClose: 500,
-      //     });
-      //   }
-      // } catch (err) {
-      //   toast.error("Couldn't delete", {
-      //     autoClose: 500,
-      //   });
-      // }
 
       const res: any = await apiPost(RV1100DELETE, newData, "삭제하였습니다");
 
@@ -263,14 +216,9 @@ function RV1100({
                 <Label style={{ minWidth: "90px" }}>검침 년월</Label>
                 <Controller
                   control={control}
-                  {...register("sGjGumym")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                      showMonthYearPicker
-                    />
+                  name="sGjGumym"
+                  render={({ field }) => (
+                    <CustomDatePicker {...field} showMonthYearPicker />
                   )}
                 />
                 <Label style={{ minWidth: "41px" }}>회차</Label>
@@ -291,12 +239,10 @@ function RV1100({
                 <Label style={{ minWidth: "80px" }}>검침 일자</Label>
                 <Controller
                   control={control}
-                  {...register("sGjDate")}
-                  render={({ field: { onChange, value, name } }) => (
+                  name="sGjDate"
+                  render={({ field }) => (
                     <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
+                      {...field}
                       style={{ marginLeft: "0px" }}
                     />
                   )}
@@ -310,15 +256,8 @@ function RV1100({
                 />
                 <Controller
                   control={control}
-                  {...register("sGjPerDate")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      // onChange={gjPerDateChanged}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
+                  name="sGjPerDate"
+                  render={({ field }) => <CustomDatePicker {...field} />}
                 />
               </FormGroup>
               <Field flex>
@@ -327,7 +266,6 @@ function RV1100({
                   icon={!loading && <MagnifyingGlass />}
                   type="button"
                   color={ButtonColor.SECONDARY}
-                  //style={{ marginLeft: "8px" }}
                   onClick={handleSubmit(submit)}
                   loader={
                     loading && (

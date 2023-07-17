@@ -278,7 +278,7 @@ function AR9002({
         data={data}
         gridChangeField={watch("reportKind")}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 88px)" }}
+        style={{ height: "calc(100% - 121px)" }}
       />
     </>
   );

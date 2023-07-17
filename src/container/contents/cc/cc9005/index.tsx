@@ -13,7 +13,6 @@ import BasicGrid from "components/basicGrid";
 import { fields, columns } from "./data";
 import { ICC9005SEARCH } from "./model";
 import Form from "./form";
-import { CustomAreaCodePart } from "container/contents/customTopPart";
 import {
   MagnifyingGlass,
   ResetGray,

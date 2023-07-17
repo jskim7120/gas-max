@@ -288,8 +288,8 @@ function AR9009({
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={
           tabId === 0
-            ? { height: `calc(100% - 125px)` }
-            : { height: `calc(100% - 88px)` }
+            ? { height: `calc(100% - 158px)` }
+            : { height: `calc(100% - 122px)` }
         }
       />
     </>

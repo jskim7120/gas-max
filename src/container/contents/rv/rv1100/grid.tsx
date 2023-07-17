@@ -64,7 +64,7 @@ function Grid({
         style
           ? style
           : {
-              height: `calc(100% - 347px)`,
+              height: `calc(53%)`,
             }
       }
       ref={realgridElement}
