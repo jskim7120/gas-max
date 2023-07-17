@@ -5,7 +5,6 @@ import Navbar from "components/menu/navbar";
 import LogoImg from "assets/image/Logo.png";
 import { openModal } from "app/state/modal/modalSlice";
 import Footer from "../contents/footer";
-import { logout } from "app/state/auth/authSlice";
 import { useAreaNameMutation } from "app/api/auth";
 import { useEffect } from "react";
 
@@ -39,8 +38,6 @@ export default function AppLayout({ children }: { children: any }) {
           </div>
           <span
             onClick={() => {
-              // dispatch(logout());
-              // window.location.assign("/relogin");
               dispatch(openModal({ type: "reLoginModal" }));
             }}
           >
