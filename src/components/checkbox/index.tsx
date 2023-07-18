@@ -14,16 +14,21 @@ const CheckBoxWrapper = styled.div<{ rtl: boolean; gap?: string }>`
         : props.gap
         ? props.gap
         : "5px"};
+    margin-right: ${(props) => props.rtl && "7px"};
     font-family: "NotoSansKRRegular";
     font-size: 15px;
     font-weight: 400;
     width: max-content;
   }
 
-  input[type="checkbox"]:before {
+  input[type="checkbox"] {
     position: relative;
-    left: -5px;
-    top: -1px;
+  }
+
+  input[type="checkbox"]:before {
+    position: absolute;
+    left: -2px;
+    top: -2px;
     display: block;
     width: 14px;
     height: 14px;
@@ -36,10 +41,10 @@ const CheckBoxWrapper = styled.div<{ rtl: boolean; gap?: string }>`
   }
 
   input[type="checkbox"]:after {
-    position: relative;
+    position: absolute;
     display: block;
-    left: -2px;
-    top: -16px;
+    left: 1px;
+    top: 1px;
     width: 12px;
     height: 12px;
     content: "";

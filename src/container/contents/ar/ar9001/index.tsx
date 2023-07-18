@@ -239,7 +239,7 @@ function AR9001({
                 />
               )}
             />
-            <CheckBox title="공급사원" rtl style={{ marginLeft: "108px" }} />
+            <CheckBox title="공급사원" rtl style={{ marginLeft: "101px" }} />
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

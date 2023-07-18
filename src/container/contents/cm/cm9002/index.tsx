@@ -256,11 +256,10 @@ function CM9002({
             />
             <Controller
               control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value } }) => (
+              name="sDate"
+              render={({ field }) => (
                 <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
+                  {...field}
                   style={{ marginLeft: "0px", width: "120px" }}
                   readOnly={!dataChk}
                 />
@@ -268,11 +267,10 @@ function CM9002({
             />
             <Controller
               control={control}
-              {...register("dDate")}
-              render={({ field: { onChange, value } }) => (
+              name="dDate"
+              render={({ field }) => (
                 <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
+                  {...field}
                   readOnly={!dataChk}
                   style={{ width: "120px" }}
                 />

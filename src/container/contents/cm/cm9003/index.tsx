@@ -163,89 +163,68 @@ function CM9003({
           <p>{depthFullName}</p>
         </SearchWrapper>
 
-        <SearchWrapper style={{ alignItems: "baseline" }}>
-          <div style={{ width: "80%" }}>
-            <Wrapper grid col={6} style={{ justifyItems: "center" }}>
-              <FormGroup>
-                <Label style={{ minWidth: "90px" }}>보고서 종류</Label>
-                <Select
-                  register={register("reportKind")}
-                  width={InputSize.i130}
-                >
-                  {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+        <SearchWrapper>
+          <FormGroup>
+            <Label style={{ minWidth: "auto" }}>보고서 종류</Label>
+            <Select register={register("reportKind")} width={InputSize.i130}>
+              {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <FormGroup>
-                <Label style={{ minWidth: "auto" }}>거래 구분</Label>
-                <Select register={register("cuType")} width={InputSize.i130}>
-                  {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+            <Label style={{ minWidth: "90px" }}>거래 구분</Label>
+            <Select register={register("cuType")} width={InputSize.i130}>
+              {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <FormGroup>
-                <Label style={{ minWidth: "auto" }}>기간</Label>
-                <Controller
-                  control={control}
-                  {...register("sDate")}
-                  render={({ field: { onChange, onBlur, value, ref } }) => (
-                    <CustomDatePicker value={value} onChange={onChange} />
-                  )}
-                />
-                <Controller
-                  control={control}
-                  {...register("dDate")}
-                  render={({ field: { onChange, onBlur, value, ref } }) => (
-                    <CustomDatePicker value={value} onChange={onChange} />
-                  )}
-                />
-              </FormGroup>
+            <Label style={{ minWidth: "90px" }}>기간</Label>
+            <Controller
+              control={control}
+              name="sDate"
+              render={({ field }) => <CustomDatePicker {...field} />}
+            />
+            <Controller
+              control={control}
+              name="dDate"
+              render={({ field }) => <CustomDatePicker {...field} />}
+            />
 
-              <FormGroup>
-                <Label style={{ minWidth: "auto" }}>지역 분류</Label>
-                <Select register={register("cuJyCode")} width={InputSize.i130}>
-                  {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+            <Label style={{ minWidth: "90px" }}>지역 분류</Label>
+            <Select register={register("cuJyCode")} width={InputSize.i130}>
+              {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <FormGroup>
-                <Label style={{ minWidth: "auto" }}>담당 사원</Label>
-                <Select register={register("swCode")} width={InputSize.i130}>
-                  {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+            <Label style={{ minWidth: "90px" }}>담당 사원</Label>
+            <Select register={register("swCode")} width={InputSize.i130}>
+              {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <FormGroup>
-                <Label style={{ minWidth: "auto" }}>소비자 형태</Label>
-                <Select register={register("cuCutype")} width={InputSize.i130}>
-                  {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                  <option key="sdcdcds00" value="">
-                    hooson
-                  </option>
-                </Select>
-              </FormGroup>
-            </Wrapper>
-          </div>
+            <Label style={{ minWidth: "90px" }}>소비자 형태</Label>
+            <Select register={register("cuCutype")} width={InputSize.i130}>
+              {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+              <option key="sdcdcds00" value="">
+                hooson
+              </option>
+            </Select>
+          </FormGroup>
         </SearchWrapper>
       </form>
       <BasicGrid
@@ -258,7 +237,6 @@ function CM9003({
         gridChangeField={watch("reportKind")}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={{ height: `calc(100% - 52px)` }}
-        //evenFill
       />
     </>
   );

@@ -287,7 +287,7 @@ function AR9004({
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <SearchWrapper>
           <FormGroup>
-            <CheckBox rtl title="기간" style={{ margin: "0 5px 0 30px" }} />
+            <CheckBox rtl title="기간" style={{ margin: "0 5px 0 23px" }} />
             <Controller
               control={control}
               {...register("sDate")}

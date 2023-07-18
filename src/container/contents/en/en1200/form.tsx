@@ -4,7 +4,6 @@ import { apiGet, apiPost } from "app/axios";
 import {
   Input,
   Select,
-  Field,
   FormGroup,
   Wrapper,
   Divider,
@@ -409,32 +408,31 @@ const Form = React.forwardRef(
                     gap: "21px",
                   }}
                 >
-                  <FormGroup style={{ alignItems: "center" }}>
+                  <FormGroup>
                     <Label></Label>
                     <CheckBox
                       title="세금계산서 도장출력"
                       rtl
                       register={register("saupStampSe")}
+                      style={{ marginRight: "20px" }}
                     />
-                  </FormGroup>
 
-                  <Field>
                     <CheckBox
                       title="거래명세표 도장출력"
                       rtl
                       register={register("saupStampEs")}
+                      style={{ marginRight: "20px" }}
                     />
-                  </Field>
-                  <Field>
+
                     <CheckBox
                       title="견적서 도장출력"
                       rtl
                       register={register("saupStampQu")}
                     />
-                  </Field>
+                  </FormGroup>
                 </Wrapper>
                 <Wrapper style={{ alignItems: "center" }}>
-                  <Field flex style={{ alignItems: "center" }}>
+                  <FormGroup style={{ alignItems: "center" }}>
                     <Label>개업일</Label>
                     <Controller
                       control={control}
@@ -443,8 +441,7 @@ const Form = React.forwardRef(
                         <CustomDatePicker value={value} onChange={onChange} />
                       )}
                     />
-                  </Field>
-                  <Field>
+
                     <Controller
                       control={control}
                       {...register("saupJumin")}
@@ -474,7 +471,7 @@ const Form = React.forwardRef(
                         />
                       )}
                     />
-                  </Field>
+                  </FormGroup>
                 </Wrapper>
               </div>
               <ImageWrapper>{image64 && <img src={image64} />}</ImageWrapper>
