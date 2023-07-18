@@ -137,11 +137,7 @@ function CM9004({
         <SearchWrapper>
           <FormGroup>
             <Label style={{ minWidth: "auto" }}>공급 사업</Label>
-            <Select
-              register={register("cuGong")}
-              style={{ width: "100%" }}
-              // onChange={(e) => setReportKind(e.target.value)}
-            >
+            <Select register={register("cuGong")} style={{ width: "100%" }}>
               {dataCommonDic?.cuGong?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -205,7 +201,7 @@ function CM9004({
         columns={columns}
         menuId={menuId}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: `calc(100% - 52px)` }}
+        style={{ height: `calc(100% - 68px)` }}
       />
     </>
   );

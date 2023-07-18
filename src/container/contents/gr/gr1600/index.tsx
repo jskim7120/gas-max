@@ -192,7 +192,6 @@ function GR1600({
               height: `calc(100% - 47px)`,
               minWidth: `${leftSideWidth}px`,
             }}
-            //evenFill
           />
         </LeftSide>
         <RightSide

@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { GR9005SEARCH } from "app/path";
 import { IGR9005SEARCH } from "./model";
-import { SearchWrapper, WrapperContent } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
@@ -134,7 +134,7 @@ function GR9005({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "80px" }}>기간</Label>
+            <Label style={{ minWidth: "90px" }}>기간</Label>
 
             <Controller
               control={control}
@@ -169,8 +169,7 @@ function GR9005({
         fields={fields}
         menuId={menuId}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: `calc(100% - 61px)` }}
-        // evenFill
+        style={{ height: `calc(100% - 93px)` }}
       />
     </>
   );

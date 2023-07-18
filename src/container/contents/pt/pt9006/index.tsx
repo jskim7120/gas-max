@@ -228,7 +228,7 @@ function PT9006({
             <Label style={{ minWidth: "80px" }}>
               ({handleSMonthChangeGet()})
             </Label>
-            <Label style={{ minWidth: "80px" }}>담당사원</Label>
+            <Label style={{ minWidth: "90px" }}>담당사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -236,7 +236,7 @@ function PT9006({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>지역구분</Label>
+            <Label style={{ minWidth: "90px" }}>지역구분</Label>
             <Select register={register("cuJyCode")} width={InputSize.i120}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -252,7 +252,7 @@ function PT9006({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>거래상태</Label>
+            <Label style={{ minWidth: "90px" }}>거래상태</Label>
             <Select register={register("cuStae")} width={InputSize.i120}>
               {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -271,7 +271,7 @@ function PT9006({
         fields={fields}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 52px)" }}
+        style={{ height: "calc(100% - 84px)" }}
         layout={layout}
         gridChangeField={toggler}
       />

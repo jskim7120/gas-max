@@ -3,17 +3,10 @@ import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CM9002SEARCH } from "app/path";
 import { ICM9002SEARCH } from "./model";
-import { SearchWrapper, WrapperContent } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import CheckBox from "components/checkbox";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import {
-  Input,
-  Select,
-  FormGroup,
-  Wrapper,
-  Label,
-  Field,
-} from "components/form/style";
+import { Input, Select, FormGroup, Label, Field } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -307,7 +300,6 @@ function CM9002({
         menuId={menuId}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={{ height: `calc(100% - 88px)` }}
-        //evenFill
       />
     </>
   );

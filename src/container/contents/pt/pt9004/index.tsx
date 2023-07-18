@@ -343,7 +343,7 @@ function PT9004({
         {...selectColumns()}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 125px)" }}
+        style={{ height: "calc(100% - 157px)" }}
       />
     </>
   );

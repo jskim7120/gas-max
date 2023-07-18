@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import CreateReport from "app/hook/createReport";
 import { GR9004SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import { SearchWrapper, WrapperContent } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
@@ -135,7 +135,7 @@ function GR9004({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>기간</Label>
+            <Label style={{ minWidth: "90px" }}>기간</Label>
             <Controller
               control={control}
               {...register("sDate")}
@@ -172,8 +172,7 @@ function GR9004({
         fields={fields}
         menuId={menuId}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: `calc(100% - 61px)` }}
-        // evenFill
+        style={{ height: `calc(100% - 93px)` }}
         layout={layout}
       />
     </>

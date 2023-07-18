@@ -9,15 +9,9 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import CheckBox from "components/checkbox";
 import CustomDatePicker from "components/customDatePicker";
 import BasicGrid from "components/basicGrid";
-import {
-  Select,
-  FormGroup,
-  Wrapper,
-  Label,
-  Field,
-} from "components/form/style";
+import { Select, FormGroup, Label, Field } from "components/form/style";
 import { ResetGray, MagnifyingGlass, ExcelIcon } from "components/allSvgIcon";
-import { WrapperContent, SearchWrapper } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 import { columns0, fields0 } from "./data/data0";
@@ -275,7 +269,7 @@ function CM9003({
         menuId={menuId}
         gridChangeField={watch("reportKind")}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: `calc(100% - 88px)` }}
+        style={{ height: `calc(100% - 120px)` }}
       />
     </>
   );

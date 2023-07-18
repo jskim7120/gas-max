@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import CreateReport from "app/hook/createReport";
 import { GR9002SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import { WrapperContent, SearchWrapper } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
@@ -132,7 +132,7 @@ function GR9002({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "70px" }}>기간</Label>
+            <Label style={{ minWidth: "90px" }}>기간</Label>
             <Controller
               control={control}
               {...register("sDate")}
@@ -156,7 +156,7 @@ function GR9002({
               )}
             />
 
-            <Label style={{ minWidth: "80px" }}>수송 기사</Label>
+            <Label>수송 기사</Label>
             <Select register={register("bcCsawon")} width={InputSize.i110}>
               {dataCommonDic?.bcCsawon?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -165,7 +165,7 @@ function GR9002({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "80px" }}>수송 방법</Label>
+            <Label>수송 방법</Label>
             <Select register={register("bcCtype")} width={InputSize.i110}>
               {dataCommonDic?.bcCtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -184,8 +184,7 @@ function GR9002({
         fields={fields}
         menuId={menuId}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: `calc(100% - 61px)` }}
-        // evenFill
+        style={{ height: `calc(100% - 93px)` }}
         layout={layout}
       />
     </>

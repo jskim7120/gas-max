@@ -44,7 +44,7 @@ function Tab1({
         </Select>
       </FormGroup>
       <FormGroup>
-        <Label style={{ minWidth: "49px" }}>기간</Label>
+        <Label style={{ minWidth: "42px" }}>기간</Label>
         <CheckBox
           //title="기간"
           rtl

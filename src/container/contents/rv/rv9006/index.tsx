@@ -5,7 +5,7 @@ import { ISEARCH } from "./model";
 import { RV9006SEARCH } from "app/path";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
-import { SearchWrapper, WrapperContent } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import { Select, Label, FormGroup } from "components/form/style";
 import { fields, columns } from "./data";
 import Button from "components/button/button";
