@@ -21,7 +21,6 @@ import {
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import Grid from "components/grid";
 import { columns, fields } from "./data";
 import {
   DateWithoutDash,
@@ -133,21 +132,21 @@ function RV9005({
         const init = dataCommonDic.dataInit[0];
         reset({
           areaCode: dataCommonDic?.areaCode[0].code,
-          // sType1: init?.sType1,
-          sGjGumymF: init?.sDate,
-          sGjSnoF: init?.sDate,
-          sGjGumymT: init?.sDate,
-          sGjSnoT: init?.sDate,
-          // sType2: init?.sDate,
-          sSwCode: init?.sDate,
-          sCuSwCode: init?.sDate,
-          sCuCustgubun: init?.sDate,
-          sJyCode: init?.sDate,
-          sSukumtype: init?.sDate,
-          sSort: init?.sDate,
-          sDateF: init?.sDate,
-          sDateT: init?.sDate,
-          sRh20: init?.sDate,
+          sType1: init?.sType1,
+          sGjGumymF: init?.sGjGumymF,
+          sGjSnoF: init?.sGjSnoF,
+          sGjGumymT: init?.sGjGumymT,
+          sGjSnoT: init?.sGjSnoT,
+          sType2: init?.sType2,
+          sSwCode: init?.sSwCode,
+          sCuSwCode: init?.sCuSwCode,
+          sCuCustgubun: init?.sCuCustgubun,
+          sJyCode: init?.sJyCode,
+          sSukumtype: init?.sSukumtype,
+          sSort: init?.sSort,
+          sDateF: init?.sDateF,
+          sDateT: init?.sDateT,
+          sRh20: init?.sRh20,
         });
       }
     }

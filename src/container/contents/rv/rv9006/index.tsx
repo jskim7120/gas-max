@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
-import { apiGet } from "app/axios";
+import CreateReport from "app/hook/createReport";
 import { ISEARCH } from "./model";
 import { RV9006SEARCH } from "app/path";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
-import Grid from "./grid";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
-import {
-  Select,
-  Wrapper,
-  Label,
-  Field,
-  FormGroup,
-} from "components/form/style";
+import { Select, Label, FormGroup } from "components/form/style";
 import { fields, columns } from "./data";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
@@ -28,6 +20,7 @@ import {
   DateWithoutDash,
   DateWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
+import BasicGrid from "components/basicGrid";
 import { PrintPreview, Print } from "components/allSvgIcon";
 
 const radioOptions = [
@@ -49,74 +42,29 @@ function RV9006({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [sType1, setSType1] = useState(false);
+  const {
+    data,
+    setData,
+    selected,
+    setSelected,
+    loading,
+    fetchData,
+    dispatch,
+    dataCommonDic,
+  } = CreateReport("RV", "RV9006", menuId, RV9006SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const [getCommonDictionary, { data: dataCommonDic }] =
-    useGetCommonDictionaryMutation();
+  const [sType1, setSType1] = useState(false);
 
   const { register, control, reset, handleSubmit } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
   useEffect(() => {
-    getCommonDictionary({ groupId: "RV", functionName: "RV9006" });
-  }, []);
-
-  useEffect(() => {
     if (dataCommonDic) {
       resetSearchForm();
     }
   }, [dataCommonDic]);
-
-  const resetSearchForm = () => {
-    reset({
-      areaCode: dataCommonDic?.areaCode[0].code,
-      sType1: dataCommonDic?.sType1[0].code,
-      sGjGumymF: dataCommonDic?.sGjGumymF[0].code,
-      sGjGumymT: dataCommonDic?.sGjGumymT[0].code,
-      sGjSnoF: dataCommonDic?.sGjSnoF[0].code,
-      sGjSnoT: dataCommonDic?.sGjSnoT[0].code,
-      sDateF: dataCommonDic?.sDateF[0].code,
-      sDateT: dataCommonDic?.sDateT[0].code,
-      sSwCode: dataCommonDic?.sSwCode[0].code,
-      sJyCode: dataCommonDic?.sJyCode[0].code,
-      sRh20: dataCommonDic?.sRh20[0].code,
-      sOrder: dataCommonDic?.sOrder[0].code,
-    });
-  };
-
-  const fetchData = async (params: any) => {
-    // try {
-    //   setLoading(true);
-    //   const { data: dataRV9006 } = await API.get(RV9006SEARCH, {
-    //     params: params,
-    //   });
-
-    //   if (dataRV9006) {
-    //     setData(dataRV9006);
-    //   } else {
-    //     setData([]);
-    //   }
-
-    //   setLoading(false);
-    // } catch (err) {
-    //   setLoading(false);
-    //   setData([]);
-    // }
-
-    setLoading(true);
-    const dataRV9006 = await apiGet(RV9006SEARCH, params);
-
-    if (dataRV9006) {
-      setData(dataRV9006);
-    } else {
-      setData([]);
-    }
-
-    setLoading(false);
-  };
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -149,6 +97,23 @@ function RV9006({
     }
 
     fetchData(params);
+  };
+
+  const resetSearchForm = () => {
+    reset({
+      areaCode: dataCommonDic?.areaCode[0].code,
+      sType1: dataCommonDic?.sType1[0].code,
+      sGjGumymF: dataCommonDic?.sGjGumymF[0].code,
+      sGjGumymT: dataCommonDic?.sGjGumymT[0].code,
+      sGjSnoF: dataCommonDic?.sGjSnoF[0].code,
+      sGjSnoT: dataCommonDic?.sGjSnoT[0].code,
+      sDateF: dataCommonDic?.sDateF[0].code,
+      sDateT: dataCommonDic?.sDateT[0].code,
+      sSwCode: dataCommonDic?.sSwCode[0].code,
+      sJyCode: dataCommonDic?.sJyCode[0].code,
+      sRh20: dataCommonDic?.sRh20[0].code,
+      sOrder: dataCommonDic?.sOrder[0].code,
+    });
   };
 
   const handleReset = () => {
@@ -367,9 +332,15 @@ function RV9006({
           </FormGroup>
         </SearchWrapper>
       </form>
-      <WrapperContent>
-        <Grid fields={fields} columns={columns} data={data} />
-      </WrapperContent>
+      <BasicGrid
+        menuId={menuId}
+        ref={gridRef}
+        columns={columns}
+        fields={fields}
+        data={data}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
+        style={{ height: "calc(100% - 120px)" }}
+      />
     </>
   );
 }
