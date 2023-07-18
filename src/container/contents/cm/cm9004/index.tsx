@@ -6,7 +6,7 @@ import { ISEARCH } from "./model";
 import { SearchWrapper } from "../../commonStyle";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CheckBox from "components/checkbox";
-import { Select, FormGroup, Wrapper, Label } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
@@ -135,89 +135,66 @@ function CM9004({
         </SearchWrapper>
 
         <SearchWrapper>
-          <div style={{ width: "80%" }}>
-            <Wrapper grid col={6}>
-              <FormGroup>
-                <Label style={{ minWidth: "auto" }}>공급 사업</Label>
-                <Select
-                  register={register("cuGong")}
-                  style={{ width: "100%" }}
-                  // onChange={(e) => setReportKind(e.target.value)}
-                >
-                  {dataCommonDic?.cuGong?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+          <FormGroup>
+            <Label style={{ minWidth: "auto" }}>공급 사업</Label>
+            <Select
+              register={register("cuGong")}
+              style={{ width: "100%" }}
+              // onChange={(e) => setReportKind(e.target.value)}
+            >
+              {dataCommonDic?.cuGong?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <FormGroup>
-                <Label>거래 구분</Label>
-                <Select register={register("cuType")} style={{ width: "100%" }}>
-                  {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+            <Label>거래 구분</Label>
+            <Select register={register("cuType")} style={{ width: "100%" }}>
+              {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <FormGroup>
-                <Label>담당 사원</Label>
-                <Select register={register("swCode")} style={{ width: "100%" }}>
-                  {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+            <Label>담당 사원</Label>
+            <Select register={register("swCode")} style={{ width: "100%" }}>
+              {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <FormGroup>
-                <Label>지역 분류</Label>
-                <Select
-                  register={register("cuJyCode")}
-                  style={{ width: "100%" }}
-                >
-                  {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+            <Label>지역 분류</Label>
+            <Select register={register("cuJyCode")} style={{ width: "100%" }}>
+              {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <FormGroup>
-                <Label>거래 상태</Label>
-                <Select register={register("cuStae")} style={{ width: "100%" }}>
-                  {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-              <FormGroup style={{ marginLeft: "36px" }}>
-                <CheckBox
-                  title=""
-                  register={register("cuSekumyn")}
-                  rtl={false}
-                  onChange={(e: any) =>
-                    e.target.checked ? setCuSekyn("Y") : setCuSekyn("N")
-                  }
-                />
-                <p
-                  style={{
-                    fontSize: "15px",
-                    fontFamily: "NotoSansKRRegular",
-                  }}
-                >
-                  계산서 발행거래처만 보기
-                </p>
-              </FormGroup>
-            </Wrapper>
-          </div>
+            <Label>거래 상태</Label>
+            <Select register={register("cuStae")} style={{ width: "100%" }}>
+              {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+
+            <CheckBox
+              title="계산서 발행거래처만 보기"
+              register={register("cuSekumyn")}
+              rtl
+              onChange={(e: any) =>
+                e.target.checked ? setCuSekyn("Y") : setCuSekyn("N")
+              }
+              style={{ marginLeft: "20px" }}
+            />
+          </FormGroup>
         </SearchWrapper>
       </form>
       <BasicGrid
@@ -229,7 +206,6 @@ function CM9004({
         menuId={menuId}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={{ height: `calc(100% - 52px)` }}
-        evenFill
       />
     </>
   );

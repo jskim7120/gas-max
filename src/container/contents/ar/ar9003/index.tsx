@@ -181,7 +181,7 @@ function AR9003({
               register={register("chkDate")}
               title="기간"
               rtl
-              style={{ marginLeft: "35px" }}
+              style={{ marginLeft: "28px" }}
             />
             <Controller
               control={control}

@@ -326,7 +326,7 @@ function RV1100({
                 </Select>
               </FormGroup>
               <FormGroup>
-                <Label style={{ minWidth: "67px" }}>지역 분류</Label>
+                <Label style={{ minWidth: "71px" }}>지역 분류</Label>
                 <Select
                   register={register("sJyCode")}
                   style={{ width: "150px" }}
