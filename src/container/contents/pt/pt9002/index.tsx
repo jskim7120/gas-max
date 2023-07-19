@@ -171,27 +171,17 @@ function PT9002({
             <Label style={{ minWidth: "4px" }}></Label>
             <Controller
               control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="sDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <Label style={{ minWidth: "8px" }}></Label>
             <Controller
               control={control}
-              {...register("eDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="eDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
           </FormGroup>

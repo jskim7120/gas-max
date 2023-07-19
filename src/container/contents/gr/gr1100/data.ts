@@ -40,11 +40,6 @@ export const columns = [
     header: {
       text: "영업소",
     },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
-      },
-    },
   },
   {
     name: "buGubunName",
@@ -53,6 +48,11 @@ export const columns = [
     width: "60",
     header: {
       text: "구분",
+    },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("buGubunName", "count");
+      },
     },
   },
   {

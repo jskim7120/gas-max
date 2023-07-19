@@ -134,26 +134,16 @@ function GR9008({
             <Label style={{ minWidth: "90px" }}>기간</Label>
             <Controller
               control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  showMonthYearPicker
-                />
+              name="sDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} showMonthYearPicker />
               )}
             />
             <Controller
               control={control}
-              {...register("eDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  showMonthYearPicker
-                />
+              name="eDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} showMonthYearPicker />
               )}
             />
           </FormGroup>

@@ -272,13 +272,11 @@ const Form = React.forwardRef(
             <Wrapper grid col={2}>
               <Controller
                 control={control}
-                {...register("saupSsno")}
-                render={({ field: { onChange, value, name, onBlur } }) => (
+                name="saupSsno"
+                render={({ field }) => (
                   <Input
+                    {...field}
                     label="사업자 번호"
-                    value={value}
-                    name={name}
-                    onChange={onChange}
                     inputSize={InputSize.i150}
                     mask={[
                       /\d/,
@@ -294,7 +292,6 @@ const Form = React.forwardRef(
                       /\d/,
                       /\d/,
                     ]}
-                    onBlur={onBlur}
                     readOnly={!isAddBtnClicked}
                   />
                 )}
@@ -436,10 +433,8 @@ const Form = React.forwardRef(
                     <Label>개업일</Label>
                     <Controller
                       control={control}
-                      {...register("saupDate")}
-                      render={({ field: { onChange, onBlur, value, ref } }) => (
-                        <CustomDatePicker value={value} onChange={onChange} />
-                      )}
+                      name="saupDate"
+                      render={({ field }) => <CustomDatePicker {...field} />}
                     />
 
                     <Controller
@@ -510,13 +505,11 @@ const Form = React.forwardRef(
 
               <Controller
                 control={control}
-                {...register("saupEdiSmsNo")}
-                render={({ field: { onChange, value, name } }) => (
+                name="saupEdiSmsNo"
+                render={({ field }) => (
                   <Input
+                    {...field}
                     label="전화번호"
-                    value={value}
-                    name={name}
-                    onChange={onChange}
                     inputSize={InputSize.i175}
                     // mask={[
                     //   /\d/,

@@ -45,11 +45,6 @@ export const columns1 = [
     header: {
       text: "영업소",
     },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
-      },
-    },
   },
   {
     name: "bbDate",
@@ -59,6 +54,11 @@ export const columns1 = [
     styleName: "rg-left-column",
     header: {
       text: "품명",
+    },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("bbDate", "count");
+      },
     },
   },
   {

@@ -21,33 +21,23 @@ function Tab2({
         <Label style={{ minWidth: "80px" }}>기간</Label>
         <Controller
           control={control}
-          {...register("sDate")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker
-              value={value}
-              onChange={onChange}
-              name={name}
-              style={{ width: "120px" }}
-            />
+          name="sDate"
+          render={({ field }) => (
+            <CustomDatePicker {...field} style={{ width: "120px" }} />
           )}
         />
         <Controller
           control={control}
-          {...register("eDate")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker
-              value={value}
-              onChange={onChange}
-              name={name}
-              style={{ width: "120px" }}
-            />
+          name="eDate"
+          render={({ field }) => (
+            <CustomDatePicker {...field} style={{ width: "120px" }} />
           )}
         />
 
         <CheckBox
           //title="수금 사원"
           rtl
-          style={{ marginLeft: "30px" }}
+          style={{ marginLeft: "40px" }}
           register={register("sawonChk")}
         />
         <Label style={{ minWidth: "67px" }}>수금 사원</Label>
@@ -58,7 +48,7 @@ function Tab2({
             </option>
           ))}
         </Select>
-        <Label style={{ minWidth: "90px" }}>관리책임자</Label>
+        <Label style={{ minWidth: "110px" }}>관리책임자</Label>
         <Select register={register("cuCustgubun")} width={InputSize.i120}>
           {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
@@ -74,7 +64,7 @@ function Tab2({
           register={register("cuName")}
           inputSize={InputSize.i200}
         />
-        <Label style={{ minWidth: "169px" }}>수금 방법</Label>
+        <Label style={{ minWidth: "179px" }}>수금 방법</Label>
         <Select register={register("cuSukumtype")} width={InputSize.i120}>
           {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
@@ -82,7 +72,7 @@ function Tab2({
             </option>
           ))}
         </Select>
-        <Label style={{ minWidth: "90px" }}>지역구분</Label>
+        <Label style={{ minWidth: "110px" }}>지역구분</Label>
         <Select register={register("cuJyCode")} width={InputSize.i120}>
           {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>

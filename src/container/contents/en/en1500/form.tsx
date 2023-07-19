@@ -216,15 +216,13 @@ const Form = (
       jnCost280: (
         <Controller
           control={control}
-          {...register("jnCost280")}
-          render={({ field: { onChange, value, name } }) => (
+          name="jnCost280"
+          render={({ field }) => (
             <Input
-              value={value}
-              onChange={onChange}
+              {...field}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i70}
-              name={name}
             />
           )}
         />
@@ -237,15 +235,13 @@ const Form = (
       jnCost600: (
         <Controller
           control={control}
-          {...register("jnCost600")}
-          render={({ field: { onChange, value, name } }) => (
+          name="jnCost600"
+          render={({ field }) => (
             <Input
-              value={value}
-              onChange={onChange}
+              {...field}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i70}
-              name={name}
             />
           )}
         />
@@ -258,15 +254,13 @@ const Form = (
       jnCost1000: (
         <Controller
           control={control}
-          {...register("jnCost1000")}
-          render={({ field: { onChange, value, name } }) => (
+          name="jnCost1000"
+          render={({ field }) => (
             <Input
-              value={value}
-              onChange={onChange}
+              {...field}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i70}
-              name={name}
             />
           )}
         />
@@ -283,15 +277,13 @@ const Form = (
       jnCost1500: (
         <Controller
           control={control}
-          {...register("jnCost1500")}
-          render={({ field: { onChange, value, name } }) => (
+          name="jnCost1500"
+          render={({ field }) => (
             <Input
-              value={value}
-              onChange={onChange}
+              {...field}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i70}
-              name={name}
             />
           )}
         />
@@ -308,15 +300,13 @@ const Form = (
       jnCost2000: (
         <Controller
           control={control}
-          {...register("jnCost2000")}
-          render={({ field: { onChange, value, name } }) => (
+          name="jnCost2000"
+          render={({ field }) => (
             <Input
-              value={value}
-              onChange={onChange}
+              {...field}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i70}
-              name={name}
             />
           )}
         />
@@ -333,15 +323,13 @@ const Form = (
       jnCost2500: (
         <Controller
           control={control}
-          {...register("jnCost2500")}
-          render={({ field: { onChange, value, name } }) => (
+          name="jnCost2500"
+          render={({ field }) => (
             <Input
-              value={value}
-              onChange={onChange}
+              {...field}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i70}
-              name={name}
             />
           )}
         />
@@ -358,15 +346,13 @@ const Form = (
       jnCost7000: (
         <Controller
           control={control}
-          {...register("jnCost7000")}
-          render={({ field: { onChange, value, name } }) => (
+          name="jnCost7000"
+          render={({ field }) => (
             <Input
-              value={value}
-              onChange={onChange}
+              {...field}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i70}
-              name={name}
             />
           )}
         />
@@ -526,16 +512,14 @@ const Form = (
               <FormGroup>
                 <Controller
                   control={control}
-                  {...register("jnAnkum")}
-                  render={({ field: { onChange, value, name } }) => (
+                  name="jnAnkum"
+                  render={({ field }) => (
                     <Input
+                      {...field}
                       label="안전 관리비"
-                      value={value}
-                      onChange={onChange}
                       mask={currencyMask}
                       textAlign="right"
                       inputSize={InputSize.i85}
-                      name={name}
                     />
                   )}
                 />
@@ -547,16 +531,14 @@ const Form = (
               <FormGroup>
                 <Controller
                   control={control}
-                  {...register("jnGumdate")}
-                  render={({ field: { onChange, value, name } }) => (
+                  name="jnGumdate"
+                  render={({ field }) => (
                     <Input
+                      {...field}
                       label="정기 검침일"
-                      value={value}
-                      onChange={onChange}
                       mask={[/\d/, /\d/]}
                       textAlign="right"
                       inputSize={InputSize.i85}
-                      name={name}
                     />
                   )}
                 />
@@ -585,16 +567,14 @@ const Form = (
                 <FormGroup>
                   <Controller
                     control={control}
-                    {...register("jnPer")}
-                    render={({ field: { onChange, value, name } }) => (
+                    name="jnPer"
+                    render={({ field }) => (
                       <Input
+                        {...field}
                         label="연체율"
-                        value={value}
-                        onChange={onChange}
                         mask={[/\d/, /\d/, /\d/]}
                         textAlign="right"
                         inputSize={InputSize.i85}
-                        name={name}
                       />
                     )}
                   />

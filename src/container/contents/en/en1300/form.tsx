@@ -266,13 +266,11 @@ const Form = React.forwardRef(
         <FormGroup>
           <Controller
             control={control}
-            {...register("jpKg")}
-            render={({ field: { onChange, value, name } }) => (
+            name="jpKg"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="용 량"
-                value={value}
-                name={name}
-                onChange={onChange}
                 mask={[/\d/, /\d/, /\d/, /\d/, /\d/]}
                 textAlign="right"
                 inputSize={InputSize.i60}
@@ -356,16 +354,14 @@ const Form = React.forwardRef(
         <FormGroup>
           <Controller
             control={control}
-            {...register("jpOutdanga")}
-            render={({ field: { onChange, value, name } }) => (
+            name="jpOutdanga"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="가스판매 단가"
-                value={value}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i130}
-                name={name}
               />
             )}
           />
@@ -374,16 +370,14 @@ const Form = React.forwardRef(
         <FormGroup>
           <Controller
             control={control}
-            {...register("jpOuttong")}
-            render={({ field: { onChange, value, name } }) => (
+            name="jpOuttong"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="용기판매 단가"
-                value={value}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i130}
-                name={name}
               />
             )}
           />
@@ -392,16 +386,14 @@ const Form = React.forwardRef(
         <FormGroup>
           <Controller
             control={control}
-            {...register("jpIndanga")}
-            render={({ field: { onChange, value, name } }) => (
+            name="jpIndanga"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="가스매입 원가"
-                value={value}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i130}
-                name={name}
               />
             )}
           />
@@ -410,16 +402,14 @@ const Form = React.forwardRef(
         <FormGroup>
           <Controller
             control={control}
-            {...register("jpIntong")}
-            render={({ field: { onChange, value, name } }) => (
+            name="jpIntong"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="용기구입 단가"
-                value={value}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i130}
-                name={name}
               />
             )}
           />
@@ -428,16 +418,14 @@ const Form = React.forwardRef(
         <FormGroup>
           <Controller
             control={control}
-            {...register("jpBaedal")}
-            render={({ field: { onChange, value, name } }) => (
+            name="jpBaedal"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="사원 배달 수수료"
-                value={value}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i130}
-                name={name}
               />
             )}
           />

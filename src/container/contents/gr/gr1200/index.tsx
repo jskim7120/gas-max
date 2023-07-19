@@ -147,28 +147,16 @@ function GR1200({
               }}
             >
               <FormGroup>
-                <Label style={{ minWidth: "auto" }}>기간</Label>
+                <Label style={{ minWidth: "48px" }}>기간</Label>
                 <Controller
                   control={control}
-                  {...register("sDate")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
+                  name="sDate"
+                  render={({ field }) => <CustomDatePicker {...field} />}
                 />
                 <Controller
                   control={control}
-                  {...register("eDate")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
+                  name="eDate"
+                  render={({ field }) => <CustomDatePicker {...field} />}
                 />
 
                 <Label style={{ minWidth: "80px" }}>매입처</Label>

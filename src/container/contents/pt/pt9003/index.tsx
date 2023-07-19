@@ -115,7 +115,7 @@ function PT9003({
                 </Select>
               </>
             )}
-            <Label style={{ minWidth: "100px" }}>보고서종류</Label>
+            <Label style={{ minWidth: "110px" }}>보고서종류</Label>
             <Select register={register("reportKind")} width={InputSize.i160}>
               {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -171,29 +171,19 @@ function PT9003({
             <Label style={{ minWidth: "80px" }}>기간</Label>
             <Controller
               control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="sDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <Controller
               control={control}
-              {...register("eDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="eDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
-            <Label>담당사원</Label>
+            <Label style={{ minWidth: "90px" }}>담당사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -201,7 +191,7 @@ function PT9003({
                 </option>
               ))}
             </Select>
-            <Label>수금 방법</Label>
+            <Label style={{ minWidth: "90px" }}>수금 방법</Label>
             <Select register={register("cuSukumtype")} width={InputSize.i120}>
               {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -209,7 +199,7 @@ function PT9003({
                 </option>
               ))}
             </Select>
-            <Label>지역구분</Label>
+            <Label style={{ minWidth: "90px" }}>지역구분</Label>
             <Select register={register("cuJyCode")} width={InputSize.i120}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -219,7 +209,7 @@ function PT9003({
             </Select>
             <Input
               label="비고"
-              labelStyle={{ minWidth: "90px" }}
+              labelStyle={{ minWidth: "70px" }}
               register={register("sBigo")}
               inputSize={InputSize.i200}
             />

@@ -76,7 +76,7 @@ const FORMPT1205 = React.forwardRef(
           <Label>수금 일자</Label>
           <Controller
             control={control}
-            {...register("gsDate")}
+            name="gsDate"
             render={({ field: { onChange, value, name } }) => (
               <CustomDatePicker
                 style={{ width: "175px" }}
@@ -90,7 +90,7 @@ const FORMPT1205 = React.forwardRef(
         <div style={{ borderStyle: "groove", alignItems: "center" }}>
           <Controller
             control={control}
-            {...register("cuCmisu")}
+            name="cuCmisu"
             render={({ field: { onChange, value, name } }) => (
               <Input
                 labelStyle={{ minWidth: "120px" }}
@@ -106,7 +106,7 @@ const FORMPT1205 = React.forwardRef(
           />
           <Controller
             control={control}
-            {...register("guChkamt")}
+            name="guChkamt"
             render={({ field: { onChange, value, name } }) => (
               <Input
                 labelStyle={{ minWidth: "120px" }}
@@ -124,23 +124,21 @@ const FORMPT1205 = React.forwardRef(
         <br />
         <Controller
           control={control}
-          {...register("gsDc")}
-          render={({ field: { onChange, value, name } }) => (
+          name="gsDc"
+          render={({ field }) => (
             <Input
+              {...field}
               labelStyle={{ minWidth: "120px" }}
               label="D / C"
-              value={value}
-              onChange={onChange}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i175}
-              name={name}
             />
           )}
         />
         <Controller
           control={control}
-          {...register("gsKumack")}
+          name="gsKumack"
           render={({ field: { onChange, value, name } }) => (
             <Input
               labelStyle={{ minWidth: "120px" }}
@@ -157,7 +155,7 @@ const FORMPT1205 = React.forwardRef(
         <br />
         <Controller
           control={control}
-          {...register("gsJanack")}
+          name="gsJanack"
           render={({ field: { onChange, value, name } }) => (
             <Input
               labelStyle={{ minWidth: "120px" }}

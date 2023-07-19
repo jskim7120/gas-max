@@ -49,6 +49,11 @@ export const columns = [
     header: {
       text: "거래처코드",
     },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("cuCode", "count");
+      },
+    },
   },
   {
     name: "cuName",

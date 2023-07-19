@@ -42,7 +42,7 @@ function CommonFooterInfo({
               <CLabel>공급액</CLabel>
               <Controller
                 control={control}
-                {...register("bcSupplyAmt")}
+                name="bcSupplyAmt"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}
@@ -60,7 +60,7 @@ function CommonFooterInfo({
               <CLabel>세액</CLabel>
               <Controller
                 control={control}
-                {...register("bcVatAmt")}
+                name="bcVatAmt"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}
@@ -78,7 +78,7 @@ function CommonFooterInfo({
               <CLabel>합계금액</CLabel>
               <Controller
                 control={control}
-                {...register("bcInkum")}
+                name="bcInkum"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}
@@ -109,7 +109,7 @@ function CommonFooterInfo({
             <td>
               <Controller
                 control={control}
-                {...register("bcInkum1")}
+                name="bcInkum1"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}
@@ -166,7 +166,7 @@ function CommonFooterInfo({
             <td>
               <Controller
                 control={control}
-                {...register("bcMisu")}
+                name="bcMisu"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}

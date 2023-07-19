@@ -242,7 +242,7 @@ function PT9005({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "100px" }}>정렬순서</Label>
+            <Label style={{ minWidth: "84px" }}>정렬순서</Label>
             <Select register={register("sOrd")} width={InputSize.i120}>
               {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

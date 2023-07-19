@@ -168,31 +168,21 @@ function PT9009({
             />
             <Controller
               control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="sDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <Controller
               control={control}
-              {...register("eDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="eDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <Input
               label="찾 기"
-              labelStyle={{ minWidth: "80px" }}
+              labelStyle={{ minWidth: "70px" }}
               register={register("sSearch")}
               inputSize={InputSize.i200}
             />

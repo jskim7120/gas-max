@@ -35,32 +35,18 @@ function TableData({
       2: (
         <Controller
           control={control}
-          {...register("buPdanga")}
-          render={({ field: { onChange, value, name } }) => (
-            <Input
-              value={value}
-              onChange={onChange}
-              mask={currencyMask}
-              textAlign="right"
-              fullWidth
-              name={name}
-            />
+          name="buPdanga"
+          render={({ field }) => (
+            <Input {...field} mask={currencyMask} textAlign="right" fullWidth />
           )}
         />
       ),
       3: (
         <Controller
           control={control}
-          {...register("buPcost")}
-          render={({ field: { onChange, value, name } }) => (
-            <Input
-              value={value}
-              onChange={onChange}
-              mask={currencyMask}
-              textAlign="right"
-              fullWidth
-              name={name}
-            />
+          name="buPcost"
+          render={({ field }) => (
+            <Input {...field} mask={currencyMask} textAlign="right" fullWidth />
           )}
         />
       ),
@@ -71,16 +57,9 @@ function TableData({
       2: (
         <Controller
           control={control}
-          {...register("buBdanga")}
-          render={({ field: { onChange, value, name } }) => (
-            <Input
-              value={value}
-              onChange={onChange}
-              mask={currencyMask}
-              textAlign="right"
-              fullWidth
-              name={name}
-            />
+          name="buBdanga"
+          render={({ field }) => (
+            <Input {...field} mask={currencyMask} textAlign="right" fullWidth />
           )}
         />
       ),
@@ -88,16 +67,9 @@ function TableData({
       3: (
         <Controller
           control={control}
-          {...register("buBcost")}
-          render={({ field: { onChange, value, name } }) => (
-            <Input
-              value={value}
-              onChange={onChange}
-              mask={currencyMask}
-              textAlign="right"
-              fullWidth
-              name={name}
-            />
+          name="buBcost"
+          render={({ field }) => (
+            <Input {...field} mask={currencyMask} textAlign="right" fullWidth />
           )}
         />
       ),
@@ -108,32 +80,18 @@ function TableData({
       2: (
         <Controller
           control={control}
-          {...register("buBldanga")}
-          render={({ field: { onChange, value, name } }) => (
-            <Input
-              value={value}
-              onChange={onChange}
-              mask={currencyMask}
-              textAlign="right"
-              fullWidth
-              name={name}
-            />
+          name="buBldanga"
+          render={({ field }) => (
+            <Input {...field} mask={currencyMask} textAlign="right" fullWidth />
           )}
         />
       ),
       3: (
         <Controller
           control={control}
-          {...register("buBlcost")}
-          render={({ field: { onChange, value, name } }) => (
-            <Input
-              value={value}
-              onChange={onChange}
-              mask={currencyMask}
-              textAlign="right"
-              fullWidth
-              name={name}
-            />
+          name="buBlcost"
+          render={({ field }) => (
+            <Input {...field} mask={currencyMask} textAlign="right" fullWidth />
           )}
         />
       ),

@@ -67,7 +67,7 @@ export const columns = [
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("bcBuName", "count");
       },
     },
   },

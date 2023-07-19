@@ -707,13 +707,11 @@ const Form = ({
           <Label>입고 일자</Label>
           <Controller
             control={control}
-            {...register("bcDate")}
-            render={({ field: { onChange, value, name } }) => (
+            name="bcDate"
+            render={({ field }) => (
               <CustomDatePicker
+                {...field}
                 style={{ width: "130px" }}
-                value={value}
-                onChange={onChange}
-                name={name}
                 readOnly={!isAddBtnClicked}
               />
             )}

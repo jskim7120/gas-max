@@ -234,17 +234,15 @@ const Form = React.forwardRef(
         <FormGroup>
           <Controller
             control={control}
-            {...register("bpIndanga")}
-            render={({ field: { onChange, value, name } }) => (
+            name="bpIndanga"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="매입단가"
                 labelStyle={{ minWidth: "80px" }}
-                value={value}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i150}
-                name={name}
               />
             )}
           />
@@ -253,17 +251,15 @@ const Form = React.forwardRef(
         <FormGroup>
           <Controller
             control={control}
-            {...register("bpOutdanga")}
-            render={({ field: { onChange, value, name } }) => (
+            name="bpOutdanga"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="판매단가"
                 labelStyle={{ minWidth: "80px" }}
-                value={value}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i150}
-                name={name}
               />
             )}
           />
