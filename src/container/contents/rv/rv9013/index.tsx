@@ -12,14 +12,12 @@ import {
   PrintPreview,
   Print,
 } from "components/allSvgIcon";
-import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields } from "./data";
-import CheckBox from "components/checkbox";
+
 import {
   Item,
   RadioButton,
@@ -97,16 +95,10 @@ function RV9013({
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init = dataCommonDic.dataInit[0];
+
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        cuRdanga: init?.cuRdanga,
-        cuRdangaSign: init?.cuRdangaSign,
-        swCode: init?.swCode,
-        cuRh20: init?.cuRh20,
-        cuPer: init?.cuPer,
-        cuDc: init?.cuDc,
-        cuStae: init?.cuStae,
-        jyCode: init?.jyCode,
+        ...init,
       });
     }
   };
@@ -123,11 +115,11 @@ function RV9013({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
-                <Label style={{ minWidth: "80px" }}>영업소</Label>
+                <Label style={{ minWidth: "96px" }}>영업소</Label>
                 <Select register={register("areaCode")} width={InputSize.i120}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -182,21 +174,21 @@ function RV9013({
         </SearchWrapper>
         <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
           <FormGroup>
-            <Label style={{ paddingRight: "50px" }}>단가적용 구분</Label>
-
+            <Label style={{ minWidth: "96px", marginRight: "3px" }}>
+              단가적용 구분
+            </Label>
             <Item>
               <RadioButton
                 type="radio"
                 value={radioOptions[0].id}
                 {...register(`sChk`)}
                 id={radioOptions[0].id}
-                defaultChecked={radioOptions[0].id === "0"}
               />
               <RadioButtonLabel htmlFor={`${radioOptions[0].label}`}>
                 {radioOptions[0].label}
               </RadioButtonLabel>
             </Item>
-            <Item>
+            <Item style={{ marginRight: "5px" }}>
               <RadioButton
                 type="radio"
                 value={radioOptions[1].id}
@@ -221,8 +213,7 @@ function RV9013({
                 </option>
               ))}
             </Select>
-            <Item>
-              <Label style={{ marginLeft: "-96px" }}></Label>
+            <Item style={{ marginRight: "5px", marginLeft: "15px" }}>
               <RadioButton
                 type="radio"
                 value={radioOptions[2].id}
@@ -249,7 +240,7 @@ function RV9013({
             </Select>
           </FormGroup>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>담당사원</Label>
+            <Label style={{ minWidth: "96px" }}>담당사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -257,7 +248,7 @@ function RV9013({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "139px" }}>조정기 압력</Label>
+            <Label style={{ minWidth: "106px" }}>조정기 압력</Label>
             <Select register={register("cuRh20")} width={InputSize.i120}>
               {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

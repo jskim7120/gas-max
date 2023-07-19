@@ -16,12 +16,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import {
-  DateWithoutDash,
-  DateWithDashOnlyYearMonth,
-  GetYear,
-  GetMonth,
-} from "helpers/dateFormat";
+import { DateWithoutDash, GetYear, GetMonth } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields, layout } from "./data";
 import CheckBox from "components/checkbox";
@@ -112,10 +107,7 @@ function RV9010({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        gjMonth: init?.gjMonth,
-        swCode: init?.swCode,
-        cuCustgubun: init?.cuCustgubun,
-        jyCode: init?.jyCode,
+        ...init,
         sChk1: init?.sChk1 === "Y",
         sChk2: init?.sChk2 === "Y",
       });
@@ -132,7 +124,7 @@ function RV9010({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
@@ -212,7 +204,7 @@ function RV9010({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "80px" }}>관리책임자</Label>
+            <Label style={{ minWidth: "90px" }}>관리책임자</Label>
             <Select register={register("cuCustgubun")} width={InputSize.i120}>
               {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -223,7 +215,7 @@ function RV9010({
             <CheckBox
               title="사용기간 자동 적용"
               rtl
-              style={{ marginLeft: "50px" }}
+              style={{ marginLeft: "20px" }}
               register={register("sChk1")}
             />
           </FormGroup>
@@ -239,7 +231,7 @@ function RV9010({
             <CheckBox
               title="체적사용료 할인액차감"
               rtl
-              style={{ marginLeft: "256px" }}
+              style={{ marginLeft: "236px" }}
               register={register("sChk2")}
             />
           </FormGroup>

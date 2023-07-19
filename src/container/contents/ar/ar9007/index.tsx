@@ -1,18 +1,12 @@
 import React, { useEffect, useRef } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { AR9007SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import {
-  MagnifyingGlass,
-  ExcelIcon,
-  ResetGray,
-  PrintPreview,
-  Print,
-} from "components/allSvgIcon";
+import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
@@ -68,14 +62,7 @@ function AR9007({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        reportKind: init?.reportKind,
-        jpCode: init?.jpCode,
-        swCode: init?.swCode,
-        cuCustgubun: init?.cuCustgubun,
-        cuJyCode: init?.cuJyCode,
-        cuType: init?.cuType,
-        cuStae: init?.cuStae,
-        cuJangbu: init?.cuJangbu,
+        ...init,
       });
     }
   };
@@ -97,6 +84,8 @@ function AR9007({
         return { columns: columns2, fields: fields2 };
       case "3":
         return { columns: columns3, fields: fields3 };
+      default:
+        return { columns: columns0, fields: fields0 };
     }
   };
 
@@ -117,8 +106,8 @@ function AR9007({
                 </Select>
               </>
             )}
-            <Label style={{ minWidth: "90px" }}>보고서종류</Label>
-            <Select register={register("reportKind")} width={InputSize.i130}>
+            <Label style={{ minWidth: "80px" }}>보고서종류</Label>
+            <Select register={register("reportKind")} width={InputSize.i150}>
               {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -229,12 +218,11 @@ function AR9007({
         menuId={menuId}
         ref={gridRef}
         areaCode={ownAreaCode}
-        columns={selectColumns()?.columns}
-        fields={selectColumns()?.fields}
+        {...selectColumns()}
         data={data}
         gridChangeField={watch("reportKind")}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 121px)" }}
+        style={{ height: "calc(100% - 120px)" }}
       />
     </>
   );

@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CM9005SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import { SearchWrapper } from "../../commonStyle";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { Select, FormGroup, Wrapper, Label } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
+import { ButtonColor, InputSize } from "components/componentsType";
 import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
@@ -80,7 +80,7 @@ function CM9005({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {areaCode === "00" && (
               <>
@@ -134,83 +134,61 @@ function CM9005({
         </SearchWrapper>
 
         <SearchWrapper>
-          <div style={{ width: "80%" }}>
-            <Wrapper grid col={6}>
-              <FormGroup>
-                <Label style={{ minWidth: "auto" }}>사용 가스 구분</Label>
-                <Select
-                  register={register("cuJpGubun")}
-                  style={{ width: "100%" }}
-                >
-                  {dataCommonDic?.cuJpGubun?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+          <FormGroup>
+            <Label style={{ minWidth: "auto" }}>사용 가스 구분</Label>
+            <Select register={register("cuJpGubun")} width={InputSize.i100}>
+              {dataCommonDic?.cuJpGubun?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <FormGroup>
-                <Label>가스 품목</Label>
-                <Select
-                  register={register("cuJpCode")}
-                  style={{ width: "100%" }}
-                >
-                  {dataCommonDic?.cuJpCode?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+            <Label style={{ minWidth: "90px" }}>가스 품목</Label>
+            <Select register={register("cuJpCode")} width={InputSize.i100}>
+              {dataCommonDic?.cuJpCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <FormGroup>
-                <Label>거래 구분</Label>
-                <Select register={register("cuType")} style={{ width: "100%" }}>
-                  {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+            <Label style={{ minWidth: "90px" }}>거래 구분</Label>
+            <Select register={register("cuType")} width={InputSize.i100}>
+              {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <FormGroup>
-                <Label>지역 분류</Label>
-                <Select
-                  register={register("cuJyCode")}
-                  style={{ width: "100%" }}
-                >
-                  {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+            <Label style={{ minWidth: "90px" }}>지역 분류</Label>
+            <Select register={register("cuJyCode")} width={InputSize.i100}>
+              {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <FormGroup>
-                <Label>담당 사원</Label>
-                <Select register={register("swCode")} style={{ width: "100%" }}>
-                  {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-              <FormGroup>
-                <Label>거래 상태</Label>
-                <Select register={register("cuStae")} style={{ width: "100%" }}>
-                  {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-            </Wrapper>
-          </div>
+            <Label style={{ minWidth: "90px" }}>담당 사원</Label>
+            <Select register={register("swCode")} width={InputSize.i100}>
+              {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+
+            <Label style={{ minWidth: "90px" }}>거래 상태</Label>
+            <Select register={register("cuStae")} width={InputSize.i100}>
+              {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </SearchWrapper>
       </form>
       <BasicGrid

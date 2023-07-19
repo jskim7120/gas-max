@@ -80,11 +80,6 @@ export const columns = [
     header: {
       text: "영업소",
     },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
-      },
-    },
   },
   {
     name: "tsDate",
@@ -93,6 +88,11 @@ export const columns = [
     width: "100",
     header: {
       text: "일자",
+    },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("tsDate", "count");
+      },
     },
   },
   {

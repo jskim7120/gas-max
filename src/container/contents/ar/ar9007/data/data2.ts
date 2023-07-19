@@ -44,11 +44,6 @@ export const columns2 = [
     header: {
       text: "영업소",
     },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
-      },
-    },
   },
   {
     name: "jcCuCode",
@@ -57,6 +52,11 @@ export const columns2 = [
     width: "90",
     header: {
       text: "코드",
+    },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("jcCuCode", "count");
+      },
     },
   },
   {

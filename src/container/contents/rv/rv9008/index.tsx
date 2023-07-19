@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { RV9008SEARCH } from "app/path";
@@ -28,16 +28,16 @@ import {
 
 const radioOptions = [
   {
-    label: "조회구분 ",
-    id: "1",
+    label: "조회구분",
+    id: "0",
   },
   {
     label: "이익(+)",
-    id: "2",
+    id: "1",
   },
   {
     label: "손실(-)",
-    id: "3",
+    id: "2",
   },
 ];
 
@@ -66,8 +66,6 @@ function RV9008({
     mode: "onSubmit",
   });
 
-  const [sChk0, setSChk0] = useState(false);
-
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
       resetForm("reset");
@@ -92,7 +90,7 @@ function RV9008({
     params.sChk1 = params.sChk1 ? "Y" : "N";
     params.sChk2 = params.sChk2 ? "Y" : "N";
     params.sChk3 = params.sChk3 ? "Y" : "N";
-    params.sChk4 = params.sChk4 ? "N" : "Y";
+    params.sChk4 = params.sChk4 ? "Y" : "N";
     fetchData(params);
   };
 
@@ -101,18 +99,11 @@ function RV9008({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        sDate: init?.sDate,
-        eDate: init?.eDate,
-        sOrder: init?.sOrder,
-        cuName: init?.cuName,
-        jyCode: init?.jyCode,
-        cuType: init?.cuType,
-        swCode: init?.swCode,
-        sChk0: init?.sChk0 === "0",
+        ...init,
         sChk1: init?.sChk1 === "Y",
         sChk2: init?.sChk2 === "Y",
         sChk3: init?.sChk3 === "Y",
-        sChk4: init?.sChk4 === "N",
+        sChk4: init?.sChk4 === "Y",
         sDanga: init?.sDanga,
       });
     }
@@ -128,7 +119,7 @@ function RV9008({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
@@ -145,7 +136,7 @@ function RV9008({
             <CheckBox
               title="체적사용료 할인액차감"
               rtl
-              style={{ marginLeft: "16px" }}
+              style={{ marginLeft: "20px" }}
               register={register("sChk1")}
             />
             <div className="buttons ml30">
@@ -196,32 +187,22 @@ function RV9008({
             <Label style={{ minWidth: "80px" }}>검침기간</Label>
             <Controller
               control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="sDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <Controller
               control={control}
-              {...register("eDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="eDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <Input
               label="건물명"
               register={register("cuName")}
-              labelStyle={{ minWidth: "76px" }}
+              labelStyle={{ minWidth: "80px" }}
               inputSize={InputSize.i160}
             />
 
@@ -236,12 +217,14 @@ function RV9008({
             <CheckBox
               title="체적검침 내역별 조회"
               rtl
-              style={{ marginLeft: "30px" }}
+              style={{ marginLeft: "20px" }}
               register={register("sChk2")}
             />
           </FormGroup>
           <FormGroup>
-            <Label style={{ marginLeft: "-38px" }}>조회구분</Label>
+            <Label style={{ minWidth: "80px", marginRight: "3px" }}>
+              조회구분
+            </Label>
             {radioOptions.map((option, index) => (
               <Item key={index}>
                 <RadioButton
@@ -249,14 +232,13 @@ function RV9008({
                   value={option.id}
                   {...register(`sChk0`)}
                   id={option.id}
-                  onChange={() => setSChk0(true)}
                 />
                 <RadioButtonLabel htmlFor={`${option.label}`}>
                   {option.label}
                 </RadioButtonLabel>
               </Item>
             ))}
-            <Label style={{ minWidth: "48px" }}>지역구분</Label>
+            <Label style={{ minWidth: "65px" }}>지역구분</Label>
             <Select register={register("jyCode")} width={InputSize.i120}>
               {dataCommonDic?.jyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -283,13 +265,13 @@ function RV9008({
             <CheckBox
               title="검침사용기간 자동적용"
               rtl
-              style={{ marginLeft: "30px" }}
+              style={{ marginLeft: "20px" }}
               register={register("sChk3")}
             />
             <CheckBox
               title="Kg단가 지정"
               rtl
-              style={{ marginLeft: "30px" }}
+              style={{ marginLeft: "20px" }}
               register={register("sChk4")}
             />
             <Input

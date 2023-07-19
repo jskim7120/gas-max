@@ -32,7 +32,7 @@ function getTabContent(
               register={register("chkGubun")}
               title="당월 검수/수금 조회"
               rtl
-              style={{ marginLeft: "35px" }}
+              style={{ marginLeft: "20px" }}
             />
           </FormGroup>
           <FormGroup>
@@ -52,7 +52,7 @@ function getTabContent(
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "110px" }}>관리책임자</Label>
+            <Label style={{ minWidth: "98px" }}>관리책임자</Label>
             <Select register={register("cuCustgubun")} width={InputSize.i120}>
               {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

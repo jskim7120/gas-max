@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CM9004SEARCH } from "app/path";
@@ -9,7 +9,7 @@ import CheckBox from "components/checkbox";
 import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
+import { ButtonColor, InputSize } from "components/componentsType";
 import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
@@ -35,9 +35,7 @@ function CM9004({
   } = CreateReport("CM", "CM9004", menuId, CM9004SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const [cuSekyn, setCuSekyn] = useState("N");
-
-  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -51,8 +49,11 @@ function CM9004({
     resetForm("reset");
   }, [dataCommonDic]);
 
-  const submit = (params: ISEARCH) => {
-    console.log("paramsparamsparams", params);
+  const submit = (params: any) => {
+    params.cuSekumyn = params.cuSekumyn ? "Y" : "N";
+
+    console.log(params);
+
     fetchData(params);
   };
 
@@ -85,8 +86,7 @@ function CM9004({
           <FormGroup>
             {areaCode === "00" && (
               <>
-                <Label style={{ minWidth: "66px" }}>영업소</Label>
-
+                <Label style={{ minWidth: "70px" }}>영업소</Label>
                 <Select register={register("areaCode")}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -136,8 +136,8 @@ function CM9004({
 
         <SearchWrapper>
           <FormGroup>
-            <Label style={{ minWidth: "auto" }}>공급 사업</Label>
-            <Select register={register("cuGong")} style={{ width: "100%" }}>
+            <Label style={{ minWidth: "70px" }}>공급 사업</Label>
+            <Select register={register("cuGong")} width={InputSize.i100}>
               {dataCommonDic?.cuGong?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -145,8 +145,8 @@ function CM9004({
               ))}
             </Select>
 
-            <Label>거래 구분</Label>
-            <Select register={register("cuType")} style={{ width: "100%" }}>
+            <Label style={{ minWidth: "90px" }}>거래 구분</Label>
+            <Select register={register("cuType")} width={InputSize.i100}>
               {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -154,8 +154,8 @@ function CM9004({
               ))}
             </Select>
 
-            <Label>담당 사원</Label>
-            <Select register={register("swCode")} style={{ width: "100%" }}>
+            <Label style={{ minWidth: "90px" }}>담당 사원</Label>
+            <Select register={register("swCode")} width={InputSize.i100}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -163,8 +163,8 @@ function CM9004({
               ))}
             </Select>
 
-            <Label>지역 분류</Label>
-            <Select register={register("cuJyCode")} style={{ width: "100%" }}>
+            <Label style={{ minWidth: "90px" }}>지역 분류</Label>
+            <Select register={register("cuJyCode")} width={InputSize.i100}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -172,8 +172,8 @@ function CM9004({
               ))}
             </Select>
 
-            <Label>거래 상태</Label>
-            <Select register={register("cuStae")} style={{ width: "100%" }}>
+            <Label style={{ minWidth: "90px" }}>거래 상태</Label>
+            <Select register={register("cuStae")} width={InputSize.i100}>
               {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -185,9 +185,6 @@ function CM9004({
               title="계산서 발행거래처만 보기"
               register={register("cuSekumyn")}
               rtl
-              onChange={(e: any) =>
-                e.target.checked ? setCuSekyn("Y") : setCuSekyn("N")
-              }
               style={{ marginLeft: "20px" }}
             />
           </FormGroup>
@@ -201,7 +198,7 @@ function CM9004({
         columns={columns}
         menuId={menuId}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: `calc(100% - 68px)` }}
+        style={{ height: `calc(100% - 84px)` }}
       />
     </>
   );
