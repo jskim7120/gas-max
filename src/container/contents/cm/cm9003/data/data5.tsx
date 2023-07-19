@@ -52,11 +52,6 @@ export const columns5 = [
     header: {
       text: "영업소",
     },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
-      },
-    },
   },
   {
     name: "cuScheduleDate",
@@ -65,6 +60,11 @@ export const columns5 = [
     width: "100",
     header: {
       text: "검사 예정일",
+    },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("cuScheduleDate", "count");
+      },
     },
   },
   {

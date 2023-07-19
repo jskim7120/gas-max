@@ -10,7 +10,7 @@ import CustomDatePicker from "components/customDatePicker";
 import BasicGrid from "components/basicGrid";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { SearchWrapper } from "../../commonStyle";
-import { Select, FormGroup, Wrapper, Label } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
 import { columns2, fields2 } from "./data/data2";
@@ -114,7 +114,7 @@ function CM9003({
           <FormGroup>
             {areaCode === "00" && (
               <>
-                <Label style={{ minWidth: "93px" }}>영업소</Label>
+                <Label style={{ minWidth: "80px" }}>영업소</Label>
 
                 <Select register={register("areaCode")}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
@@ -166,7 +166,7 @@ function CM9003({
         <SearchWrapper>
           <FormGroup>
             <Label style={{ minWidth: "auto" }}>보고서 종류</Label>
-            <Select register={register("reportKind")} width={InputSize.i130}>
+            <Select register={register("reportKind")} width={InputSize.i180}>
               {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -175,7 +175,7 @@ function CM9003({
             </Select>
 
             <Label style={{ minWidth: "90px" }}>거래 구분</Label>
-            <Select register={register("cuType")} width={InputSize.i130}>
+            <Select register={register("cuType")} width={InputSize.i110}>
               {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -183,7 +183,7 @@ function CM9003({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "90px" }}>기간</Label>
+            <Label style={{ minWidth: "60px" }}>기간</Label>
             <Controller
               control={control}
               name="sDate"
@@ -196,7 +196,7 @@ function CM9003({
             />
 
             <Label style={{ minWidth: "90px" }}>지역 분류</Label>
-            <Select register={register("cuJyCode")} width={InputSize.i130}>
+            <Select register={register("cuJyCode")} width={InputSize.i110}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -205,7 +205,7 @@ function CM9003({
             </Select>
 
             <Label style={{ minWidth: "90px" }}>담당 사원</Label>
-            <Select register={register("swCode")} width={InputSize.i130}>
+            <Select register={register("swCode")} width={InputSize.i110}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -213,7 +213,7 @@ function CM9003({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "90px" }}>소비자 형태</Label>
+            <Label style={{ minWidth: "105px" }}>소비자 형태</Label>
             <Select register={register("cuCutype")} width={InputSize.i130}>
               {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -236,7 +236,7 @@ function CM9003({
         menuId={menuId}
         gridChangeField={watch("reportKind")}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: `calc(100% - 52px)` }}
+        style={{ height: `calc(100% - 84px)` }}
       />
     </>
   );

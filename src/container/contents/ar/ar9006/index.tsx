@@ -57,11 +57,8 @@ function AR9006({
         const init = dataCommonDic.dataInit[0];
         reset({
           areaCode: dataCommonDic?.areaCode[0].code,
-          sDate: init?.sDate,
-          eDate: init?.dDate,
-          jpCode: init?.jpCode,
-          swCode: init?.swCode,
-          cuGubun: init?.cuGubun,
+          ...init,
+          eDate: init.dDate,
         });
       }
     }
@@ -81,7 +78,7 @@ function AR9006({
           <FormGroup>
             {areaCode === "00" && (
               <>
-                <Label style={{ minWidth: "80px" }}>영업소</Label>
+                <Label style={{ minWidth: "70px" }}>영업소</Label>
                 <Select register={register("areaCode")} width={InputSize.i120}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -133,29 +130,19 @@ function AR9006({
         </SearchWrapper>
         <SearchWrapper>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>기간</Label>
+            <Label style={{ minWidth: "70px" }}>기간</Label>
             <Controller
               control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="sDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <Controller
               control={control}
-              {...register("eDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="eDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <Label style={{ minWidth: "80px" }}>사원</Label>
@@ -194,7 +181,7 @@ function AR9006({
         fields={fields}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 85px)" }}
+        style={{ height: "calc(100% - 84px)" }}
         layout={layout}
       />
     </>

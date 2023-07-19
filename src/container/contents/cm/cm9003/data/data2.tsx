@@ -52,11 +52,6 @@ export const columns2 = [
     header: {
       text: "영업소",
     },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
-      },
-    },
   },
   {
     name: "cuPdate",
@@ -65,6 +60,11 @@ export const columns2 = [
     width: "100",
     header: {
       text: "퓨즈콕 교체일",
+    },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("cuPdate", "count");
+      },
     },
   },
   {

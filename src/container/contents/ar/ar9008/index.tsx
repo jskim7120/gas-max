@@ -6,21 +6,12 @@ import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import {
-  MagnifyingGlass,
-  ExcelIcon,
-  ResetGray,
-  PrintPreview,
-  Print,
-} from "components/allSvgIcon";
+import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import {
-  DateWithoutDash,
-  DateWithoutDashOnlyYearMonth,
-} from "helpers/dateFormat";
+import { DateWithoutDashOnlyYearMonth } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields } from "./data";
 import CheckBox from "components/checkbox";
@@ -66,11 +57,7 @@ function AR9008({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        swCode: init?.swCode,
-        cuJyCode: init?.cuJyCode,
-        cuJangbu: init?.cuJangbu,
-        cuCustgubun: init?.cuCustgubun,
-        sMonth: init?.sMonth,
+        ...init,
       });
     }
   };
@@ -85,7 +72,7 @@ function AR9008({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
@@ -141,14 +128,9 @@ function AR9008({
             <Label style={{ minWidth: "80px" }}>년 - 월</Label>
             <Controller
               control={control}
-              {...register("sMonth")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  showMonthYearPicker
-                />
+              name="sMonth"
+              render={({ field }) => (
+                <CustomDatePicker {...field} showMonthYearPicker />
               )}
             />
             <Label style={{ minWidth: "80px" }}>담당사원</Label>
@@ -186,7 +168,7 @@ function AR9008({
             <CheckBox
               title="당월 매출/수금  조회"
               rtl
-              style={{ marginLeft: "61px" }}
+              style={{ marginLeft: "20px" }}
               register={register("chkGubun")}
             />
           </FormGroup>
@@ -200,7 +182,7 @@ function AR9008({
         fields={fields}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 85px)" }}
+        style={{ height: "calc(100% - 84px)" }}
       />
     </>
   );

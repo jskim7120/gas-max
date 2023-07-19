@@ -105,10 +105,7 @@ function RV9011({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        gjMonth: init?.gjMonth,
-        swCode: init?.swCode,
-        cuCustgubun: init?.cuCustgubun,
-        jyCode: init?.jyCode,
+        ...init,
       });
     }
   };
@@ -123,7 +120,7 @@ function RV9011({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
@@ -186,11 +183,9 @@ function RV9011({
             <Controller
               control={control}
               name="gjMonth"
-              render={({ field: { onChange, value, name } }) => (
+              render={({ field }) => (
                 <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
+                  {...field}
                   style={{ width: "120px" }}
                   showMonthYearPicker
                 />
@@ -205,7 +200,7 @@ function RV9011({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "96px" }}>관리책임자</Label>
+            <Label style={{ minWidth: "90px" }}>관리책임자</Label>
             <Select register={register("cuCustgubun")} width={InputSize.i120}>
               {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -224,7 +219,7 @@ function RV9011({
             <CheckBox
               title="사용기간 자동 적용"
               rtl
-              style={{ marginLeft: "42px" }}
+              style={{ marginLeft: "20px" }}
               register={register("sChk")}
             />
           </FormGroup>

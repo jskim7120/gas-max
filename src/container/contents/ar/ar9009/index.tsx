@@ -44,10 +44,9 @@ function AR9009({
   } = CreateReport("AR", "AR9009", menuId, AR9009SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const { register, handleSubmit, reset, control, getValues } =
-    useForm<ISEARCH>({
-      mode: "onSubmit",
-    });
+  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
+    mode: "onSubmit",
+  });
 
   const [tabId, setTabId] = useState(0);
 
@@ -91,6 +90,8 @@ function AR9009({
         return { columns: columns2, fields: fields2 };
       case 3:
         return { columns: columns3, fields: fields3 };
+      default:
+        return { columns: columns0, fields: fields0 };
     }
   };
 
@@ -99,11 +100,8 @@ function AR9009({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        sMonth: init?.sMonth,
+        ...init,
         chkGubun: init?.chkGubun === "Y",
-        cuCustgubun: init?.cuCustgubun,
-        cuCutype: init?.cuCutype,
-        swCode: init?.swCode,
       });
     }
   };
@@ -204,7 +202,7 @@ function AR9009({
             <Label style={{ minWidth: "80px" }}>년 - 월</Label>
             <Controller
               control={control}
-              {...register("sMonth")}
+              name="sMonth"
               render={({ field }) => (
                 <CustomDatePicker {...field} showMonthYearPicker />
               )}
@@ -282,14 +280,13 @@ function AR9009({
         ref={gridRef}
         gridChangeField={tabId}
         areaCode={ownAreaCode}
-        columns={selectColumns()?.columns}
-        fields={selectColumns()?.fields}
+        {...selectColumns()}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={
           tabId === 0
-            ? { height: `calc(100% - 158px)` }
-            : { height: `calc(100% - 122px)` }
+            ? { height: `calc(100% - 157px)` }
+            : { height: `calc(100% - 121px)` }
         }
       />
     </>

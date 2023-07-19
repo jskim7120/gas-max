@@ -11,18 +11,10 @@ import {
   Settings2,
   MagnifyingGlass,
   Users,
-  Reset,
   Trash,
 } from "components/allSvgIcon";
 import { ButtonColor, InputSize } from "components/componentsType";
-import {
-  Select,
-  Wrapper,
-  Label,
-  Field,
-  FormGroup,
-  Input,
-} from "components/form/style";
+import { Select, Label, FormGroup, Input } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
 import { RV1100SEARCH, RV1100SEARCH62, RV1100DELETE } from "app/path";
 import { ISEARCH } from "./model";
@@ -173,11 +165,11 @@ function RV1100({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
+      <SearchWrapper className="h35">
         <FormGroup>
           {ownAreaCode === "00" && (
             <>
-              <Label style={{ minWidth: "90px" }}>영업소</Label>
+              <Label style={{ minWidth: "70px" }}>영업소</Label>
               <Select register={register("areaCode")}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -199,7 +191,6 @@ function RV1100({
               icon={<Settings2 />}
               type="button"
               color={ButtonColor.LIGHT}
-              style={{ marginLeft: "7px" }}
               onClick={() => {
                 openPopupEN1500(selected);
               }}
@@ -209,163 +200,135 @@ function RV1100({
         <p>{depthFullName}</p>
       </SearchWrapper>
       <form autoComplete="off">
-        <SearchWrapper>
-          <div style={{ width: "70%" }}>
-            <Wrapper grid col={4} fields="0.7fr 0.5fr 0.6fr 1fr">
-              <FormGroup>
-                <Label style={{ minWidth: "90px" }}>검침 년월</Label>
-                <Controller
-                  control={control}
-                  name="sGjGumym"
-                  render={({ field }) => (
-                    <CustomDatePicker {...field} showMonthYearPicker />
-                  )}
+        <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
+          <FormGroup>
+            <Label style={{ minWidth: "70px" }}>검침 년월</Label>
+            <Controller
+              control={control}
+              name="sGjGumym"
+              render={({ field }) => (
+                <CustomDatePicker
+                  {...field}
+                  showMonthYearPicker
+                  style={{ width: "110px" }}
                 />
-                <Label style={{ minWidth: "41px" }}>회차</Label>
-                <Select
-                  register={register("sGjSno")}
-                  style={{ marginLeft: "0" }}
-                  onChange={(e: any) => setGjSno(e.target.value)}
-                >
-                  {dataCommonDic?.sGjSno?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+              )}
+            />
 
-              <FormGroup>
-                <Label style={{ minWidth: "80px" }}>검침 일자</Label>
-                <Controller
-                  control={control}
-                  name="sGjDate"
-                  render={({ field }) => (
-                    <CustomDatePicker
-                      {...field}
-                      style={{ marginLeft: "0px" }}
-                    />
-                  )}
-                />
-              </FormGroup>
+            <Label style={{ minWidth: "43px" }}>회차</Label>
+            <Select register={register("sGjSno")}>
+              {dataCommonDic?.sGjSno?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
 
-              <FormGroup style={{ gap: "8px" }}>
-                <CheckBox
-                  register={{ ...register("sGjPerYn") }}
-                  title="연체 적요일"
-                />
-                <Controller
-                  control={control}
-                  name="sGjPerDate"
-                  render={({ field }) => <CustomDatePicker {...field} />}
-                />
-              </FormGroup>
-              <Field flex>
-                <Button
-                  text="검색"
-                  icon={!loading && <MagnifyingGlass />}
-                  type="button"
-                  color={ButtonColor.SECONDARY}
-                  onClick={handleSubmit(submit)}
-                  loader={
-                    loading && (
-                      <>
-                        <Loader
-                          color="white"
-                          size={16}
-                          style={{ marginRight: "10px" }}
-                          borderWidth="2px"
-                        />
-                      </>
-                    )
-                  }
-                />
-                <Button
-                  text="회차별 미검침"
-                  icon={<Users />}
-                  type="button"
-                  color={ButtonColor.LIGHT}
-                  style={{ marginLeft: "6px" }}
-                  onClick={handleSubmit(submit2)}
-                />
-                <Button
-                  text="전체 미검침"
-                  icon={<Users />}
-                  type="button"
-                  color={ButtonColor.LIGHT}
-                  style={{ marginLeft: "6px" }}
-                />
-                <Button
-                  text="삭제"
-                  icon={<Trash />}
-                  type="button"
-                  color={ButtonColor.LIGHT}
-                  style={{ marginLeft: "6px" }}
-                  onClick={handleSubmit(deleteRow)}
-                />
-              </Field>
-            </Wrapper>
+            <Label style={{ minWidth: "90px" }}>검침 일자</Label>
+            <Controller
+              control={control}
+              name="sGjDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "110px" }} />
+              )}
+            />
 
-            <Wrapper grid col={4} fields="0.7fr 0.5fr 0.6fr 1fr">
-              <FormGroup>
-                <Input
-                  label="건물명"
-                  register={register("sCuName")}
-                  labelStyle={{ minWidth: "90px" }}
-                  inputSize={InputSize.i200}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label style={{ minWidth: "80px" }}>담당 사원</Label>
-                <Select register={register("sSwCode")}>
-                  {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-              <FormGroup>
-                <Label style={{ minWidth: "71px" }}>지역 분류</Label>
-                <Select
-                  register={register("sJyCode")}
-                  style={{ width: "150px" }}
-                >
-                  {dataCommonDic?.sJyCode?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+            <CheckBox
+              register={register("sGjPerYn")}
+              title="연체 적요일"
+              style={{ marginLeft: "20px" }}
+            />
+            <Controller
+              control={control}
+              name="sGjPerDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "110px" }} />
+              )}
+            />
 
-              <Field flex>
-                <FormGroup>
-                  <Label style={{ minWidth: "120px" }}>관리 책임자</Label>
-                  <Select register={register("sCuCustgubun")}>
-                    {dataCommonDic?.sCustgubun?.map((obj: any, idx: number) => (
-                      <option key={idx} value={obj.code}>
-                        {obj.codeName}
-                      </option>
-                    ))}
-                  </Select>
-                </FormGroup>
+            <div className="buttons ml30">
+              <Button
+                text="검색"
+                icon={!loading && <MagnifyingGlass />}
+                type="button"
+                color={ButtonColor.SECONDARY}
+                onClick={handleSubmit(submit)}
+                loader={
+                  loading && (
+                    <>
+                      <Loader color="white" size={16} borderWidth="2px" />
+                    </>
+                  )
+                }
+              />
 
-                <FormGroup>
-                  <Label>수금 방법</Label>
-                  <Select register={register("sSukumtype")}>
-                    {dataCommonDic?.cuSukumtype?.map(
-                      (obj: any, idx: number) => (
-                        <option key={idx} value={obj.code}>
-                          {obj.codeName}
-                        </option>
-                      )
-                    )}
-                  </Select>
-                </FormGroup>
-              </Field>
-            </Wrapper>
-          </div>
+              <Button
+                text="회차별 미검침"
+                icon={<Users />}
+                type="button"
+                color={ButtonColor.LIGHT}
+                onClick={handleSubmit(submit2)}
+              />
+              <Button
+                text="전체 미검침"
+                icon={<Users />}
+                type="button"
+                color={ButtonColor.LIGHT}
+              />
+              <Button
+                text="삭제"
+                icon={<Trash />}
+                type="button"
+                color={ButtonColor.LIGHT}
+                onClick={handleSubmit(deleteRow)}
+              />
+            </div>
+          </FormGroup>
+
+          <FormGroup>
+            <Input
+              label="건물명"
+              register={register("sCuName")}
+              labelStyle={{ minWidth: "70px" }}
+              inputSize={InputSize.i200}
+            />
+
+            <Label style={{ minWidth: "90px" }}>담당 사원</Label>
+            <Select register={register("sSwCode")} width={InputSize.i110}>
+              {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+
+            <Label style={{ minWidth: "117px" }}>지역 분류</Label>
+            <Select register={register("sJyCode")} width={InputSize.i110}>
+              {dataCommonDic?.sJyCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+
+            <Label style={{ minWidth: "110px" }}>관리 책임자</Label>
+            <Select register={register("sCuCustgubun")} width={InputSize.i110}>
+              {dataCommonDic?.sCustgubun?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+
+            <Label style={{ minWidth: "90px" }}>수금 방법</Label>
+            <Select register={register("sSukumtype")} width={InputSize.i110}>
+              {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
         </SearchWrapper>
       </form>
       <WrapperContent>

@@ -75,9 +75,7 @@ function RV9012({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        gjMonth: init?.gjMonth,
-        sSwCode: init?.sSwCode,
-        sJyCode: init?.sJyCode,
+        ...init,
         sChk: init?.sChk === "Y",
       });
     }
@@ -93,7 +91,7 @@ function RV9012({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
@@ -150,17 +148,15 @@ function RV9012({
           </FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
-        <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
+        <SearchWrapper>
           <FormGroup>
             <Label style={{ minWidth: "80px" }}>검침년월</Label>
             <Controller
               control={control}
-              {...register("gjMonth")}
-              render={({ field: { onChange, value, name } }) => (
+              name="gjMonth"
+              render={({ field }) => (
                 <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
+                  {...field}
                   style={{ width: "120px" }}
                   showMonthYearPicker
                 />
@@ -185,7 +181,7 @@ function RV9012({
             <CheckBox
               title="당월 미검침 거래처 포함"
               rtl
-              style={{ marginLeft: "30px" }}
+              style={{ marginLeft: "20px" }}
               register={register("sChk")}
             />
           </FormGroup>

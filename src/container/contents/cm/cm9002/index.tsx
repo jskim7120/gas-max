@@ -6,7 +6,7 @@ import { ICM9002SEARCH } from "./model";
 import { SearchWrapper } from "../../commonStyle";
 import CheckBox from "components/checkbox";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { Input, Select, FormGroup, Label, Field } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -241,7 +241,7 @@ function CM9002({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "72.5px" }}>등록기간</Label>
+            <Label style={{ minWidth: "71.5px" }}>등록기간</Label>
             <CheckBox
               register={register("dataChk")}
               onChange={(e: any) => setDataChk(e.target.checked)}
@@ -299,7 +299,7 @@ function CM9002({
         fields={fields}
         menuId={menuId}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: `calc(100% - 88px)` }}
+        style={{ height: `calc(100% - 120px)` }}
       />
     </>
   );

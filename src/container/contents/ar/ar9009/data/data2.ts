@@ -76,11 +76,6 @@ export const columns2 = [
     header: {
       text: "영업소",
     },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
-      },
-    },
   },
   {
     name: "cuApt",
@@ -89,6 +84,11 @@ export const columns2 = [
     width: "80",
     header: {
       text: "코드",
+    },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("cuApt", "count");
+      },
     },
   },
   {

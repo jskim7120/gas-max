@@ -9,7 +9,7 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import CheckBox from "components/checkbox";
 import CustomDatePicker from "components/customDatePicker";
 import BasicGrid from "components/basicGrid";
-import { Select, FormGroup, Label, Field } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import { ResetGray, MagnifyingGlass, ExcelIcon } from "components/allSvgIcon";
 import { SearchWrapper } from "../../commonStyle";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
@@ -194,7 +194,7 @@ function CM9003({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "90px" }}>관리 책임자</Label>
+            <Label style={{ minWidth: "105px" }}>관리 책임자</Label>
             <Select register={register("cuCustgubun")} width={InputSize.i130}>
               {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
