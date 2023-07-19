@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import CreateReport from "app/hook/createReport";
 import { GR9006SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import { SearchWrapper, WrapperContent } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
@@ -145,7 +145,7 @@ function GR9006({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>매입처</Label>
+            <Label style={{ minWidth: "90px" }}>매입처</Label>
             <Select register={register("bcBuCode")} width={InputSize.i150}>
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -190,8 +190,7 @@ function GR9006({
         gridChangeField={watch("reportType")}
         menuId={menuId}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: `calc(100% - 61px)` }}
-        // evenFill
+        style={{ height: `calc(100% - 93px)` }}
       />
     </>
   );

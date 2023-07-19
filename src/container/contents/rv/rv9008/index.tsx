@@ -308,7 +308,7 @@ function RV9008({
         fields={fields}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 52px)" }}
+        style={{ height: "calc(100% - 120px)" }}
         layout={layout}
       />
     </>

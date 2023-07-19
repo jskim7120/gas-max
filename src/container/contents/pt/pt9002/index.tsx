@@ -204,7 +204,7 @@ function PT9002({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>거래상태</Label>
+            <Label style={{ minWidth: "87px" }}>거래상태</Label>
             <Select register={register("cuStae")} width={InputSize.i120}>
               {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -212,7 +212,7 @@ function PT9002({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>장부구분</Label>
+            <Label style={{ minWidth: "90px" }}>장부구분</Label>
             <Select register={register("cuJangbu")} width={InputSize.i120}>
               {dataCommonDic?.cuJangbu?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -231,7 +231,7 @@ function PT9002({
         fields={fields}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 88px)" }}
+        style={{ height: "calc(100% - 120px)" }}
       />
     </>
   );

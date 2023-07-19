@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CM9005SEARCH } from "app/path";
 import { ISEARCH } from "./model";
-import { WrapperContent, SearchWrapper } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Wrapper, Label } from "components/form/style";
 import Loader from "components/loader";
@@ -213,18 +213,16 @@ function CM9005({
           </div>
         </SearchWrapper>
       </form>
-      <WrapperContent>
-        <BasicGrid
-          ref={gridRef}
-          areaCode={areaCode}
-          data={data}
-          fields={fields}
-          columns={columns}
-          menuId={menuId}
-          rowIndex={data?.length > 1 ? data.length - 1 : 0}
-          style={{ height: `calc(100% - 38px)` }}
-        />
-      </WrapperContent>
+      <BasicGrid
+        ref={gridRef}
+        areaCode={areaCode}
+        data={data}
+        fields={fields}
+        columns={columns}
+        menuId={menuId}
+        rowIndex={data?.length > 1 ? data.length - 1 : 0}
+        style={{ height: `calc(100% - 84px)` }}
+      />
     </>
   );
 }

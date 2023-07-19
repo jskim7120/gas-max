@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { GR9007SEARCH } from "app/path";
 import { IGR9007SEARCH } from "./model";
-import { SearchWrapper, WrapperContent } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
@@ -176,7 +176,6 @@ function GR9007({
         menuId={menuId}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
         style={{ height: `calc(100% - 61px)` }}
-        evenFill
       />
     </>
   );

@@ -9,7 +9,7 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import BasicGrid from "components/basicGrid";
 import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
-import { SearchWrapper, WrapperContent } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Wrapper, Label } from "components/form/style";
 import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";

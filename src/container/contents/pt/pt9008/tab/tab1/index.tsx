@@ -74,7 +74,7 @@ function Tab1({
           register={register("cuName")}
           inputSize={InputSize.i200}
         />
-        <Label style={{ minWidth: "162px" }}>수금 방법</Label>
+        <Label style={{ minWidth: "169px" }}>수금 방법</Label>
         <Select register={register("cuSukumtype")} width={InputSize.i120}>
           {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>

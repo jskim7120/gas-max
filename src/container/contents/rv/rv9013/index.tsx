@@ -192,9 +192,6 @@ function RV9013({
                 id={radioOptions[0].id}
                 defaultChecked={radioOptions[0].id === "0"}
               />
-              {/* <RadioButtonLabel htmlFor={``} style={{ width: "50px" }}>
-                전체
-              </RadioButtonLabel> */}
               <RadioButtonLabel htmlFor={`${radioOptions[0].label}`}>
                 {radioOptions[0].label}
               </RadioButtonLabel>
@@ -311,7 +308,7 @@ function RV9013({
         fields={fields}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 52px)" }}
+        style={{ height: "calc(100% - 120px)" }}
       />
     </>
   );

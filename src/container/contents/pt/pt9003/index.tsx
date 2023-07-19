@@ -193,7 +193,7 @@ function PT9003({
                 />
               )}
             />
-            <Label style={{ minWidth: "80px" }}>담당사원</Label>
+            <Label>담당사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -201,7 +201,7 @@ function PT9003({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>수금 방법</Label>
+            <Label>수금 방법</Label>
             <Select register={register("cuSukumtype")} width={InputSize.i120}>
               {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -209,7 +209,7 @@ function PT9003({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "80px" }}>지역구분</Label>
+            <Label>지역구분</Label>
             <Select register={register("cuJyCode")} width={InputSize.i120}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -219,7 +219,7 @@ function PT9003({
             </Select>
             <Input
               label="비고"
-              labelStyle={{ minWidth: "50px" }}
+              labelStyle={{ minWidth: "90px" }}
               register={register("sBigo")}
               inputSize={InputSize.i200}
             />
@@ -234,7 +234,7 @@ function PT9003({
         fields={fields}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 52px)" }}
+        style={{ height: "calc(100% - 84px)" }}
       />
     </>
   );

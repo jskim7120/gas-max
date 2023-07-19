@@ -234,7 +234,7 @@ function PT9007({
               register={register("cuName")}
               inputSize={InputSize.i200}
             />
-            <Label style={{ minWidth: "162px" }}>소비자 형태</Label>
+            <Label style={{ minWidth: "169px" }}>소비자 형태</Label>
             <Select register={register("cuCutype")} width={InputSize.i120}>
               {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -281,7 +281,7 @@ function PT9007({
         fields={fields}
         data={data}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 88px)" }}
+        style={{ height: "calc(100% - 120px)" }}
       />
     </>
   );
