@@ -63,12 +63,10 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcPin")}
-                render={({ field: { onChange, value, name } }) => (
+                name="bcPin"
+                render={({ field }) => (
                   <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
+                    {...field}
                     className="disabled"
                     mask={currencyMask}
                     textAlign="right"
@@ -92,12 +90,10 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcSumP")}
-                render={({ field: { onChange, value, name } }) => (
+                name="bcSumP"
+                render={({ field }) => (
                   <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
+                    {...field}
                     className="disabled"
                     textAlign="right"
                     mask={currencyMask}
@@ -121,12 +117,10 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcPkum")}
-                render={({ field: { onChange, value, name } }) => (
+                name="bcPkum"
+                render={({ field }) => (
                   <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
+                    {...field}
                     mask={currencyMask}
                     textAlign="right"
                     className="disabled"
@@ -150,12 +144,10 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcPsum")}
-                render={({ field: { onChange, value, name } }) => (
+                name="bcPsum"
+                render={({ field }) => (
                   <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
+                    {...field}
                     mask={currencyMask}
                     textAlign="right"
                     className="disabled"
@@ -170,12 +162,10 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcBin")}
-                render={({ field: { onChange, value, name } }) => (
+                name="bcBin"
+                render={({ field }) => (
                   <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
+                    {...field}
                     mask={currencyMask}
                     textAlign="right"
                     className="disabled"
@@ -199,12 +189,10 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcSumB")}
-                render={({ field: { onChange, value, name } }) => (
+                name="bcSumB"
+                render={({ field }) => (
                   <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
+                    {...field}
                     mask={currencyMask}
                     textAlign="right"
                     className="disabled"
@@ -228,12 +216,10 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcBkum")}
-                render={({ field: { onChange, value, name } }) => (
+                name="bcBkum"
+                render={({ field }) => (
                   <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
+                    {...field}
                     mask={currencyMask}
                     className="disabled"
                     textAlign="right"
@@ -257,12 +243,10 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcBsum")}
-                render={({ field: { onChange, value, name } }) => (
+                name="bcBsum"
+                render={({ field }) => (
                   <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
+                    {...field}
                     mask={currencyMask}
                     textAlign="right"
                     className="disabled"
@@ -277,7 +261,7 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcGin")}
+                name="bcGin"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}
@@ -297,7 +281,7 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcGkum")}
+                name="bcGkum"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}
@@ -326,7 +310,7 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcGsum")}
+                name="bcGsum"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}
@@ -346,7 +330,7 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcTotal")}
+                name="bcTotal"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}
@@ -363,7 +347,7 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcJTotal")}
+                name="bcJTotal"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}
@@ -380,7 +364,7 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcSumTotal")}
+                name="bcSumTotal"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}
@@ -398,7 +382,7 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcSumKum")}
+                name="bcSumKum"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}
@@ -415,7 +399,7 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcSumCost")}
+                name="bcSumCost"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}
@@ -432,7 +416,7 @@ function Tab1Footer({
             <td>
               <Controller
                 control={control}
-                {...register("bcSum")}
+                name="bcSum"
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     value={!isNaN(value) ? value : ""}

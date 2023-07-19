@@ -115,25 +115,13 @@ function GR1300({
                 <Label style={{ minWidth: "auto" }}>지급기간</Label>
                 <Controller
                   control={control}
-                  {...register("sDate")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
+                  name="sDate"
+                  render={({ field }) => <CustomDatePicker {...field} />}
                 />
                 <Controller
                   control={control}
-                  {...register("eDate")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
+                  name="eDate"
+                  render={({ field }) => <CustomDatePicker {...field} />}
                 />
 
                 <Label>매입처명</Label>

@@ -143,16 +143,14 @@ const FORMCM1105 = React.forwardRef(
         <Controller
           control={control}
           name="msDc"
-          render={({ field: { onChange, value, name } }) => (
+          render={({ field }) => (
             <Input
+              {...field}
               labelStyle={{ minWidth: "120px" }}
               label="D / C"
-              value={value}
-              onChange={onChange}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i175}
-              name={name}
             />
           )}
         />
@@ -215,16 +213,14 @@ const FORMCM1105 = React.forwardRef(
         <Controller
           control={control}
           name="msBigo"
-          render={({ field: { onChange, value, name } }) => (
+          render={({ field }) => (
             <Input
+              {...field}
               labelStyle={{ minWidth: "120px" }}
               label="비 고"
-              value={value}
-              onChange={onChange}
               // mask={currencyMask}
               textAlign="left"
               inputSize={InputSize.i175}
-              name={name}
             />
           )}
         />

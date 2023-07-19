@@ -346,13 +346,9 @@ const Form = React.forwardRef(
 
             <Controller
               control={control}
-              {...register("caSafeDate")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "150px" }}
-                />
+              name="caSafeDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "150px" }} />
               )}
             />
           </Field>
@@ -377,13 +373,11 @@ const Form = React.forwardRef(
             <Label>연 식</Label>
             <Controller
               control={control}
-              {...register("caYear")}
-              render={({ field: { onChange, onBlur, value, name } }) => (
+              name="caYear"
+              render={({ field }) => (
                 <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
+                  {...field}
                   style={{ width: "150px" }}
-                  name={name}
                   showMonthYearPicker
                 />
               )}
@@ -402,13 +396,9 @@ const Form = React.forwardRef(
             <Label>구입일자</Label>
             <Controller
               control={control}
-              {...register("caInDate")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "150px" }}
-                />
+              name="caInDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "150px" }} />
               )}
             />
           </Field>
@@ -423,13 +413,9 @@ const Form = React.forwardRef(
             <Label>리스기간</Label>
             <Controller
               control={control}
-              {...register("caRentDate")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "150px" }}
-                />
+              name="caRentDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "150px" }} />
               )}
             />
           </Field>
@@ -440,14 +426,9 @@ const Form = React.forwardRef(
 
             <Controller
               control={control}
-              {...register("caJdate1")}
-              render={({ field: { onChange, onBlur, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "150px" }}
-                  name={name}
-                />
+              name="caJdate1"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "150px" }} />
               )}
             />
           </Field>
@@ -456,14 +437,9 @@ const Form = React.forwardRef(
 
             <Controller
               control={control}
-              {...register("caJdate2")}
-              render={({ field: { onChange, onBlur, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "145px" }}
-                />
+              name="caJdate2"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "145px" }} />
               )}
             />
           </Field>
@@ -481,16 +457,14 @@ const Form = React.forwardRef(
           <Field flex>
             <Controller
               control={control}
-              {...register("caAmt")}
-              render={({ field: { onChange, value, name } }) => (
+              name="caAmt"
+              render={({ field }) => (
                 <Input
+                  {...field}
                   label="차량가액"
-                  value={value}
-                  onChange={onChange}
                   mask={currencyMask}
                   textAlign="right"
                   inputSize={InputSize.i150}
-                  name={name}
                 />
               )}
             />
@@ -512,16 +486,14 @@ const Form = React.forwardRef(
           <Field flex>
             <Controller
               control={control}
-              {...register("caMAmt")}
-              render={({ field: { onChange, value, name } }) => (
+              name="caMAmt"
+              render={({ field }) => (
                 <Input
+                  {...field}
                   label="월 리스료"
-                  value={value}
-                  onChange={onChange}
                   mask={currencyMask}
                   textAlign="right"
                   inputSize={InputSize.i150}
-                  name={name}
                 />
               )}
             />
@@ -530,16 +502,14 @@ const Form = React.forwardRef(
           <Field flex>
             <Controller
               control={control}
-              {...register("caDiscountAmt")}
-              render={({ field: { onChange, value, name } }) => (
+              name="caDiscountAmt"
+              render={({ field }) => (
                 <Input
+                  {...field}
                   label="월 감가상각비"
-                  value={value}
-                  onChange={onChange}
                   mask={currencyMask}
                   textAlign="right"
                   inputSize={InputSize.i150}
-                  name={name}
                 />
               )}
             />
@@ -579,13 +549,11 @@ const Form = React.forwardRef(
 
           <Controller
             control={control}
-            {...register("caBhp")}
-            render={({ field: { onChange, value, name } }) => (
+            name="caBhp"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="핸 드 폰"
-                value={value}
-                name={name}
-                onChange={onChange}
                 inputSize={InputSize.i150}
                 // mask={[
                 //   /\d/,
@@ -640,44 +608,32 @@ const Form = React.forwardRef(
           <Label>보험 기간</Label>
           <Controller
             control={control}
-            {...register("caBsdate")}
-            render={({ field: { onChange, onBlur, value, name } }) => (
-              <CustomDatePicker
-                value={value}
-                onChange={onChange}
-                style={{ width: "150px" }}
-                name={name}
-              />
+            name="caBsdate"
+            render={({ field }) => (
+              <CustomDatePicker {...field} style={{ width: "150px" }} />
             )}
           />
 
           <Label style={{ minWidth: "auto" }}>~</Label>
           <Controller
             control={control}
-            {...register("caBldate")}
-            render={({ field: { onChange, onBlur, value, name } }) => (
-              <CustomDatePicker
-                value={value}
-                onChange={onChange}
-                style={{ width: "150px" }}
-                name={name}
-              />
+            name="caBldate"
+            render={({ field }) => (
+              <CustomDatePicker {...field} style={{ width: "150px" }} />
             )}
           />
         </FormGroup>
         <FormGroup>
           <Controller
             control={control}
-            {...register("caInsuranceAmt")}
-            render={({ field: { onChange, value, name } }) => (
+            name="caInsuranceAmt"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="보 험 료"
-                value={value}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i150}
-                name={name}
               />
             )}
           />

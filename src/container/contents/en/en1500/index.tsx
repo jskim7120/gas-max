@@ -103,7 +103,7 @@ function EN1500({
         </div>
         <p>{depthFullName}</p>
       </SearchWrapper>
-      <MainWrapper style={{ height: `calc(100% - 7px)` }}>
+      <MainWrapper style={{ height: `calc(100% - 40px)` }}>
         <Grid
           data={data}
           fields={fields}

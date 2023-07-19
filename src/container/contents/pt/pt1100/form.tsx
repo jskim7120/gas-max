@@ -226,15 +226,15 @@ const Form = React.forwardRef(
           <Controller
             control={control}
             name="totMisukum"
-            render={({ field: { name } }) => (
+            render={({ field }) => (
               <Input
+                {...field}
                 labelStyle={{ minWidth: "90px" }}
                 label="미수금 총계"
                 value={totMisukum}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i140}
-                name={name}
                 readOnly
               />
             )}
@@ -242,15 +242,15 @@ const Form = React.forwardRef(
           <Controller
             control={control}
             name="totSukum"
-            render={({ field: { name } }) => (
+            render={({ field }) => (
               <Input
+                {...field}
                 labelStyle={{ minWidth: "90px" }}
                 label="수금 총계"
                 value={totSukum}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i140}
-                name={name}
                 readOnly
               />
             )}
@@ -258,15 +258,15 @@ const Form = React.forwardRef(
           <Controller
             control={control}
             name="totDc"
-            render={({ field: { name } }) => (
+            render={({ field }) => (
               <Input
+                {...field}
                 labelStyle={{ minWidth: "90px" }}
                 label="D/C 총계"
                 value={totDc}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i140}
-                name={name}
                 readOnly
               />
             )}

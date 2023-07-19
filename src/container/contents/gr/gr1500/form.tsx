@@ -337,13 +337,9 @@ const Form = React.forwardRef(
             <Label>지급 일자</Label>
             <Controller
               control={control}
-              {...register("bjDate")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "150px" }}
-                />
+              name="bjDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "150px" }} />
               )}
             />
           </Field>

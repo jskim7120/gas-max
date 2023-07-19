@@ -215,11 +215,9 @@ function PT9006({
             <Controller
               control={control}
               name="sMonth"
-              render={({ field: { onChange, value, name } }) => (
+              render={({ field }) => (
                 <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
+                  {...field}
                   style={{ width: "120px" }}
                   showMonthYearPicker
                 />

@@ -53,12 +53,10 @@ function Tab1({
         />
         <Controller
           control={control}
-          {...register("sDate")}
-          render={({ field: { onChange, value, name } }) => (
+          name="sDate"
+          render={({ field }) => (
             <CustomDatePicker
-              value={value}
-              onChange={onChange}
-              name={name}
+              {...field}
               style={{ width: "120px" }}
               showMonthYearPicker
             />
@@ -66,12 +64,10 @@ function Tab1({
         />
         <Controller
           control={control}
-          {...register("eDate")}
-          render={({ field: { onChange, value, name } }) => (
+          name="eDate"
+          render={({ field }) => (
             <CustomDatePicker
-              value={value}
-              onChange={onChange}
-              name={name}
+              {...field}
               style={{ width: "120px" }}
               showMonthYearPicker
             />

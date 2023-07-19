@@ -57,6 +57,11 @@ export const columnsThird = [
     header: {
       text: "수금일자",
     },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("gsDate", "count");
+      },
+    },
   },
   {
     name: "gsCuCode",

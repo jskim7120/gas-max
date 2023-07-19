@@ -49,6 +49,11 @@ export const columnsSecond = [
     header: {
       text: "지급일자",
     },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("bjDate", "count");
+      },
+    },
     styleName: "rg-left-column",
   },
   {

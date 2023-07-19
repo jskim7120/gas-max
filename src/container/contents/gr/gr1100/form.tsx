@@ -431,12 +431,11 @@ const Form = React.forwardRef(
         <Wrapper grid col={2}>
           <Controller
             control={control}
-            {...register("buNo")}
-            render={({ field: { onChange, value, name } }) => (
+            name="buNo"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="사업자번호"
-                value={value}
-                onChange={onChange}
                 mask={[
                   /\d/,
                   /\d/,
@@ -451,7 +450,6 @@ const Form = React.forwardRef(
                   /\d/,
                   /\d/,
                 ]}
-                name={name}
                 inputSize={InputSize.i150}
               />
             )}
@@ -561,14 +559,12 @@ const Form = React.forwardRef(
           />
           <Controller
             control={control}
-            {...register("buMisu")}
-            render={({ field: { onChange, value, name } }) => (
+            name="buMisu"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="미지급액"
-                value={value}
-                onChange={onChange}
                 mask={currencyMask}
-                name={name}
                 textAlign="right"
                 inputSize={InputSize.i130}
               />

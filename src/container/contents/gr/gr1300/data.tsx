@@ -57,6 +57,11 @@ export const columns = [
     header: {
       text: "매입일자",
     },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("bbDate", "count");
+      },
+    },
   },
   {
     name: "bbTypeName",

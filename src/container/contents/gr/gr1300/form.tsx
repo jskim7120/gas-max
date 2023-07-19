@@ -513,14 +513,9 @@ function Form({
             <Label>입고 일자</Label>
             <Controller
               control={control}
-              {...register("bbDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  readOnly={!isAddBtnClicked}
-                />
+              name="bbDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
               )}
             />
           </FormGroup>

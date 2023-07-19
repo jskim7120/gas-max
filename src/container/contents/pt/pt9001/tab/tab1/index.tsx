@@ -26,7 +26,7 @@ function Tab1({
             </option>
           ))}
         </Select>
-        <Label style={{ minWidth: "245px" }}>지역구분</Label>
+        <Label style={{ minWidth: "224px" }}>지역구분</Label>
         <Select register={register("cuJyCode")} width={InputSize.i120}>
           {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
@@ -34,7 +34,7 @@ function Tab1({
             </option>
           ))}
         </Select>
-        <Label style={{ minWidth: "80px" }}>거래상태</Label>
+        <Label style={{ minWidth: "90px" }}>거래상태</Label>
         <Select register={register("cuStae")} width={InputSize.i120}>
           {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
@@ -54,30 +54,20 @@ function Tab1({
         <Label style={{ minWidth: "4px" }}></Label>
         <Controller
           control={control}
-          {...register("sDate")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker
-              value={value}
-              onChange={onChange}
-              name={name}
-              style={{ width: "120px" }}
-            />
+          name="sDate"
+          render={({ field }) => (
+            <CustomDatePicker {...field} style={{ width: "120px" }} />
           )}
         />
         <Label style={{ minWidth: "8px" }}></Label>
         <Controller
           control={control}
-          {...register("eDate")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker
-              value={value}
-              onChange={onChange}
-              name={name}
-              style={{ width: "120px" }}
-            />
+          name="eDate"
+          render={({ field }) => (
+            <CustomDatePicker {...field} style={{ width: "120px" }} />
           )}
         />
-        <Label style={{ minWidth: "111px" }}>장부구분</Label>
+        <Label style={{ minWidth: "90px" }}>장부구분</Label>
         <Select register={register("cuJangbu")} width={InputSize.i120}>
           {dataCommonDic?.cuJangbu?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
@@ -85,7 +75,7 @@ function Tab1({
             </option>
           ))}
         </Select>
-        <Label style={{ minWidth: "80px" }}>담당사원</Label>
+        <Label style={{ minWidth: "90px" }}>담당사원</Label>
         <Select register={register("swCode")} width={InputSize.i120}>
           {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
@@ -93,7 +83,7 @@ function Tab1({
             </option>
           ))}
         </Select>
-        <Label style={{ minWidth: "80px" }}>정렬순서</Label>
+        <Label style={{ minWidth: "90px" }}>정렬순서</Label>
         <Select register={register("sOrd")} width={InputSize.i120}>
           {dataCommonDic?.sOrd?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>

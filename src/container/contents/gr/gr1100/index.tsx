@@ -204,7 +204,7 @@ function GR1100({
             setSelected={setSelected}
             setIsAddBtnClicked={setIsAddBtnClicked}
             style={{
-              height: `calc(100% - 140px)`,
+              height: `calc(100% - 43px)`,
               minWidth: `${leftSideWidth}px`,
             }}
           />

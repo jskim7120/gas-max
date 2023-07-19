@@ -135,28 +135,16 @@ function GR9002({
             <Label style={{ minWidth: "90px" }}>기간</Label>
             <Controller
               control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                />
-              )}
+              name="sDate"
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
             <Controller
               control={control}
-              {...register("eDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                />
-              )}
+              name="eDate"
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
 
-            <Label>수송 기사</Label>
+            <Label style={{ minWidth: "120px" }}>수송 기사</Label>
             <Select register={register("bcCsawon")} width={InputSize.i110}>
               {dataCommonDic?.bcCsawon?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -165,7 +153,7 @@ function GR9002({
               ))}
             </Select>
 
-            <Label>수송 방법</Label>
+            <Label style={{ minWidth: "120px" }}>수송 방법</Label>
             <Select register={register("bcCtype")} width={InputSize.i110}>
               {dataCommonDic?.bcCtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

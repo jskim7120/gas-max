@@ -166,13 +166,11 @@ const Form = React.forwardRef(
         <Wrapper grid col={3}>
           <Controller
             control={control}
-            {...register("jnSsno")}
-            render={({ field: { onChange, value, name, onBlur } }) => (
+            name="jnSsno"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="사업자 번호"
-                value={value}
-                onChange={onChange}
-                onBlur={onBlur}
                 mask={[
                   /\d/,
                   /\d/,
@@ -187,7 +185,6 @@ const Form = React.forwardRef(
                   /\d/,
                   /\d/,
                 ]}
-                name={name}
                 inputSize={InputSize.i150}
               />
             )}
@@ -283,15 +280,9 @@ const Form = React.forwardRef(
 
           <Controller
             control={control}
-            {...register("jnAntel1")}
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="전화"
-                value={value}
-                name={name}
-                inputSize={InputSize.i150}
-                onChange={onChange}
-              />
+            name="jnAntel1"
+            render={({ field }) => (
+              <Input {...field} label="전화" inputSize={InputSize.i150} />
             )}
           />
         </Wrapper>
@@ -306,15 +297,9 @@ const Form = React.forwardRef(
 
           <Controller
             control={control}
-            {...register("jnAntel2")}
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="전화"
-                value={value}
-                name={name}
-                onChange={onChange}
-                inputSize={InputSize.i150}
-              />
+            name="jnAntel2"
+            render={({ field }) => (
+              <Input {...field} label="전화" inputSize={InputSize.i150} />
             )}
           />
         </Wrapper>
@@ -371,15 +356,13 @@ const Form = React.forwardRef(
           <Field style={{ marginLeft: "35px" }}>
             <Controller
               control={control}
-              {...register("jnCMngNo")}
-              render={({ field: { onChange, value, name } }) => (
+              name="jnCMngNo"
+              render={({ field }) => (
                 <Input
+                  {...field}
                   label="탱크잔량/원격검침 발신기 업체번호"
-                  value={value}
-                  onChange={onChange}
                   mask={[/\d/, /\d/, /\d/, /\d/]}
                   inputSize={InputSize.i60}
-                  name={name}
                 />
               )}
             />
