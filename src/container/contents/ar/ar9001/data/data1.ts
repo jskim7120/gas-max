@@ -60,11 +60,6 @@ export const columns1 = [
     header: {
       text: "영업소",
     },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
-      },
-    },
   },
   {
     name: "pjCuCode",
@@ -73,6 +68,11 @@ export const columns1 = [
     width: "90",
     header: {
       text: "거래처코드",
+    },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("pjCuCode", "count");
+      },
     },
   },
   {

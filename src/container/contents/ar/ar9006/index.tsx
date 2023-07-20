@@ -58,7 +58,6 @@ function AR9006({
         reset({
           areaCode: dataCommonDic?.areaCode[0].code,
           ...init,
-          eDate: init.dDate,
         });
       }
     }
@@ -74,7 +73,7 @@ function AR9006({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35 ">
           <FormGroup>
             {areaCode === "00" && (
               <>

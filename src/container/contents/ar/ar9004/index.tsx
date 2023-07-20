@@ -76,10 +76,7 @@ function AR9004({
 
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        sDate: init?.sDate,
-        eDate: init?.dDate,
-        jpCode: init?.jpCode,
-        swCode: init?.swCode,
+        ...init,
       });
     }
   };
@@ -94,7 +91,7 @@ function AR9004({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
@@ -163,26 +160,16 @@ function AR9004({
             <Label style={{ minWidth: "80px" }}>기간</Label>
             <Controller
               control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="sDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <Controller
               control={control}
-              {...register("eDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="eDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <Label style={{ minWidth: "80px" }}>사원</Label>

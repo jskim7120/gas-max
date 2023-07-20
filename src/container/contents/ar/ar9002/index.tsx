@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { AR9002SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
-import { Select, FormGroup, Label, Input } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import {
@@ -85,15 +85,7 @@ function AR9002({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        sDate: init?.sDate,
-        eDate: init?.dDate,
-        cuCustgubun: init?.cuCustgubun,
-        cuJangbu: init?.cuJangbu,
-        cuJyCode: init?.cuJyCode,
-        cuStae: init?.cuStae,
-        jpCode: init?.jpCode,
-        reportKind: init?.reportKind,
-        swCode: init?.swCode,
+        ...init,
       });
     }
   };
@@ -111,13 +103,15 @@ function AR9002({
         return { columns: columns0, fields: fields0 };
       case "1":
         return { columns: columns1, fields: fields1 };
+      default:
+        return { columns: columns0, fields: fields0 };
     }
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
@@ -194,26 +188,16 @@ function AR9002({
             <Label style={{ minWidth: "90px" }}>기간</Label>
             <Controller
               control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="sDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <Controller
               control={control}
-              {...register("eDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="eDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <CheckBox title="공급사원" rtl style={{ marginLeft: "101px" }} />
@@ -273,12 +257,11 @@ function AR9002({
         menuId={menuId}
         ref={gridRef}
         areaCode={ownAreaCode}
-        columns={selectColumns()?.columns}
-        fields={selectColumns()?.fields}
+        {...selectColumns()}
         data={data}
         gridChangeField={watch("reportKind")}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 121px)" }}
+        style={{ height: "calc(100% - 120px)" }}
       />
     </>
   );
