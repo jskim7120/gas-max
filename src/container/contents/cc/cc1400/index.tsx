@@ -158,7 +158,7 @@ function CC1400({
               height: "100%",
             }}
           >
-            <SearchWrapper className="h35">
+            <SearchWrapper>
               <form onSubmit={handleSubmit(submit)} autoComplete="off">
                 <FormGroup>
                   <Label style={{ minWidth: "48px" }}>기간</Label>
@@ -174,7 +174,7 @@ function CC1400({
                     render={({ field }) => <CustomDatePicker {...field} />}
                   />
 
-                  <Label>사원</Label>
+                  <Label style={{ minWidth: "80px" }}>사원</Label>
                   <Select register={register("sSwCode")} width={InputSize.i120}>
                     {dataCommonDic?.sSwCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
@@ -200,7 +200,6 @@ function CC1400({
                         </>
                       )
                     }
-                    style={{ margin: "0 15px 0 50px" }}
                   />
                   <Button
                     text="취소"
@@ -223,7 +222,7 @@ function CC1400({
               menuId={menuId}
               rowIndex={0}
               setIsAddBtnClicked={setIsAddBtnClicked}
-              style={{ height: `calc(100% - 47px)` }}
+              style={{ height: `calc(100% - 37px)` }}
             />
           </div>
         </LeftSide>
