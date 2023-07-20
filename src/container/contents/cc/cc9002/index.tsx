@@ -5,9 +5,9 @@ import { CC1100SEARCH } from "app/path";
 import { ICC9002SEARCH } from "./model";
 import BasicGrid from "components/basicGrid";
 import CheckBox from "components/checkbox";
-import { MainWrapper, SearchWrapper, LeftSide } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
-import { Select, FormGroup, Label, Field } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -87,7 +87,7 @@ function CC9002({
             <CheckBox
               title="계정 과목"
               rtl
-              register={{ ...register("userChk") }}
+              register={register("userChk")}
               style={{ marginLeft: "50px" }}
             />
 
@@ -144,7 +144,7 @@ function CC9002({
         columns={columns}
         menuId={menuId}
         rowIndex={0}
-        style={{ height: `calc(100% - 92px)` }}
+        style={{ height: `calc(100% - 84px)` }}
       />
     </>
   );

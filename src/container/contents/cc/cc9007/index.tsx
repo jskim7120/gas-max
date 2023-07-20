@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CC1100SEARCH } from "app/path";
 import { ICC9009SEARCH } from "./model";
-import { SearchWrapper, WrapperContent } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
@@ -65,13 +65,13 @@ function GR9008({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup></FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
         <SearchWrapper>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>영업소</Label>
+            <Label style={{ minWidth: "70px" }}>영업소</Label>
             <Select width={InputSize.i130} register={register("areaCode")}>
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

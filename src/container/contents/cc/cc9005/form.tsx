@@ -1,22 +1,9 @@
-import React, { useImperativeHandle, useEffect, useState } from "react";
+import React, { useImperativeHandle, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import {
-  Input,
-  Select,
-  Field,
-  FormGroup,
-  Divider,
-  Label,
-  DividerGray,
-} from "components/form/style";
+import { Input, Select, FormGroup, Label } from "components/form/style";
 import { ICC9005FORM } from "./model";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import {
-  Item,
-  RadioButton,
-  RadioButtonLabel,
-} from "components/radioButton/style";
 
 interface IForm {
   data65: any;
@@ -85,13 +72,11 @@ const Form = React.forwardRef(
           <Label>일 자</Label>
           <Controller
             control={control}
-            {...register("baseDate")}
-            render={({ field: { onChange, value, name } }) => (
+            name="baseDate"
+            render={({ field }) => (
               <CustomDatePicker
+                {...field}
                 style={{ width: "200px" }}
-                value={value}
-                onChange={onChange}
-                name={name}
                 showMonthYearPicker
               />
             )}

@@ -127,7 +127,7 @@ function CC9001({
         rowIndex={0}
         fields={fields}
         columns={columns}
-        style={{ height: `calc(100% - 93px)` }}
+        style={{ height: `calc(100% - 84px)` }}
       />
     </>
   );
