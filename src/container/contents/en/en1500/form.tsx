@@ -11,13 +11,11 @@ import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { EN1500UPDATE, EN150065 } from "app/path";
 import { InputSize } from "components/componentsType";
 import Button from "components/button/button";
-import { ButtonColor } from "components/componentsType";
 import {
   Select,
   Field,
   FormGroup,
   Wrapper,
-  Divider,
   Label,
   Input,
 } from "components/form/style";
@@ -169,26 +167,6 @@ const Form = (
     updateParams.jnGumdate = formValues.jnGumdate;
     updateParams.jnSukumtype = formValues.jnSukumtype;
     updateParams.jnPer = formValues.jnPer;
-    // try {
-    //   const response: any = await API.post(EN1500UPDATE, updateParams);
-    //   if (response.status === 200) {
-    //     setData((prev: any) => {
-    //       prev[selectedRowIndex] = formValues;
-    //       return [...prev];
-    //     });
-
-    //     setSelected(formValues);
-    //     toast.success("저장이 성공하였습니다", {
-    //       autoClose: 500,
-    //     });
-    //   } else {
-    //     alert(response?.response?.data?.message);
-    //   }
-    // } catch (err: any) {
-    //   toast.error(err?.message, {
-    //     autoClose: 500,
-    //   });
-    // }
 
     const res: any = await apiPost(
       EN1500UPDATE,
@@ -372,19 +350,6 @@ const Form = (
     params.jnMpdanga = jnMpdanga;
     params.jnKgdanga = jnKgdanga;
     params.jnKgdangaMp = jnKgdangaMp;
-    // try {
-    //   const response = await API.get(EN150065, { params });
-
-    //   if (response.status === 200) {
-    //     setUnitPriceData(response.data[0]);
-    //   } else {
-    //     setUnitPriceData([]);
-    //     alert(response?.data?.message);
-    //   }
-    // } catch (err: any) {
-    //   setUnitPriceData([]);
-    //   console.log("error", err);
-    // }
 
     const res = await apiGet(EN150065, params);
 

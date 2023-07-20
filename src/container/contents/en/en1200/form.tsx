@@ -74,24 +74,6 @@ const Form = React.forwardRef(
       resetForm,
     }));
 
-    // const fetchCode11 = async (code: string) => {
-    //   try {
-    //     const response: any = await API.get(EN120011, {
-    //       params: { areaCode: code },
-    //     });
-
-    //     if (response.status === 200) {
-    //       return response?.data;
-    //     } else {
-    //       alert(response?.response?.data?.message);
-    //       resetButtonCombination();
-    //     }
-    //     return null;
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-
     const codeChangeHandler = async (aCode: string) => {
       const res = await apiGet(EN120011, { areaCode: aCode });
 
@@ -139,20 +121,6 @@ const Form = React.forwardRef(
       if (type === "delete") {
         const formValues = getValues();
 
-        // try {
-        //   const response: any = await API.post(EN1200DELETE, formValues);
-        //   if (response.status === 200) {
-        //     toast.success("삭제하였습니다", {
-        //       autoClose: 500,
-        //     });
-        //     await fetchData();
-        //   } else {
-        //     alert(response?.response?.data?.message);
-        //   }
-        // } catch (err) {
-        //   console.log(err);
-        // }
-
         const res = await apiPost(EN1200DELETE, formValues, "삭제하였습니다");
         res && (await fetchData());
       }
@@ -179,26 +147,6 @@ const Form = React.forwardRef(
         formValues.saupEdiEmail.trim() + "@" + formValues.emailKind;
 
       formValues.saupStampImg = image64 && image64;
-
-      // try {
-      //   const response: any = await API.post(path, formValues);
-      //   if (response.status === 200) {
-      //     if (isAddBtnClicked) {
-      //       setIsAddBtnClicked(false);
-      //       await fetchData("pos");
-      //     } else {
-      //       await fetchData();
-      //     }
-
-      //     toast.success("저장이 성공하였습니다", {
-      //       autoClose: 500,
-      //     });
-      //   } else {
-      //     alert(response?.response?.data?.message);
-      //   }
-      // } catch (err: any) {
-      //   console.log(err);
-      // }
 
       const res = await apiPost(path, formValues, "저장이 성공하였습니다");
 
@@ -439,13 +387,11 @@ const Form = React.forwardRef(
 
                     <Controller
                       control={control}
-                      {...register("saupJumin")}
-                      render={({ field: { onChange, value, name } }) => (
+                      name="saupJumin"
+                      render={({ field }) => (
                         <Input
+                          {...field}
                           label="주민번호/법인번호"
-                          value={value}
-                          name={name}
-                          onChange={onChange}
                           inputSize={InputSize.i150}
                           mask={[
                             /\d/,
@@ -511,21 +457,6 @@ const Form = React.forwardRef(
                     {...field}
                     label="전화번호"
                     inputSize={InputSize.i175}
-                    // mask={[
-                    //   /\d/,
-                    //   /\d/,
-                    //   /\d/,
-                    //   "-",
-                    //   /\d/,
-                    //   /\d/,
-                    //   /\d/,
-                    //   /\d/,
-                    //   "-",
-                    //   /\d/,
-                    //   /\d/,
-                    //   /\d/,
-                    //   /\d/,
-                    // ]}
                   />
                 )}
               />

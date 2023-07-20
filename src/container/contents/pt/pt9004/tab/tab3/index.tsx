@@ -1,16 +1,7 @@
 import React from "react";
-import { Controller } from "react-hook-form";
 import { SearchWrapper } from "container/contents/commonStyle";
-import {
-  FormGroup,
-  Input,
-  Label,
-  Select,
-  NumberInput,
-} from "components/form/style";
-import CheckBox from "components/checkbox";
+import { FormGroup, Label, Select, NumberInput } from "components/form/style";
 import { InputSize } from "components/componentsType";
-import CustomDatePicker from "components/customDatePicker";
 
 function Tab3({
   register,

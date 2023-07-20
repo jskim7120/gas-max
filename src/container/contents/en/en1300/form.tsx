@@ -68,24 +68,6 @@ const Form = React.forwardRef(
       getCommonDictionary({ groupId: "EN", functionName: "EN1300" });
     }, []);
 
-    // const fetchCode11 = async (code: string) => {
-    //   try {
-    //     const response: any = await API.get(EN130011, {
-    //       params: { areaCode: code },
-    //     });
-
-    //     if (response.status === 200) {
-    //       return response?.data;
-    //     } else {
-    //       alert(response?.response?.data?.message);
-    //       resetButtonCombination();
-    //     }
-    //     return null;
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-
     const codeChangeHandler = async (aCode: any) => {
       const res = await apiGet(EN130011, { areaCode: aCode });
       if (res) {
@@ -128,19 +110,6 @@ const Form = React.forwardRef(
         delete formValues.jpBaedal;
         delete formValues.jpOuttong;
 
-        // try {
-        //   const response: any = await API.post(EN1300DELETE, formValues);
-        //   if (response.status === 200) {
-        //     toast.success("삭제하였습니다", {
-        //       autoClose: 500,
-        //     });
-        //     await fetchData();
-        //   } else {
-        //     alert(response?.response?.data?.message);
-        //   }
-        // } catch (err) {
-        //   console.log(err);
-        // }
         const res = await apiPost(EN1300DELETE, formValues, "삭제하였습니다");
         res && (await fetchData());
       }
@@ -167,27 +136,6 @@ const Form = React.forwardRef(
       formValues.jpBaedal =
         formValues.jpBaedal && +removeCommas2(formValues.jpBaedal);
       formValues.jpSort = formValues.jpSort && +formValues.jpSort;
-
-      // try {
-      //   const response: any = await API.post(path, formValues);
-
-      //   if (response.status === 200) {
-      //     if (isAddBtnClicked) {
-      //       setIsAddBtnClicked(false);
-      //       await fetchData("pos");
-      //     } else {
-      //       await fetchData();
-      //     }
-
-      //     toast.success("저장이 성공하였습니다", {
-      //       autoClose: 500,
-      //     });
-      //   } else {
-      //     alert(response?.response?.data?.message);
-      //   }
-      // } catch (err: any) {
-      //   console.log(err);
-      // }
 
       const res = await apiPost(path, formValues, "저장이 성공하였습니다");
       if (res) {

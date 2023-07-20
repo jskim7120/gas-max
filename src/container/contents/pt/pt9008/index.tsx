@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import CreateReport from "app/hook/createReport";
+import { useForm } from "react-hook-form";
 import { useGetTabDictionaryMutation } from "app/api/commonDictionary";
 import { PT9008SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
-import { Select, FormGroup, Label, Input } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import {
@@ -15,7 +14,6 @@ import {
   PrintPreview,
   Print,
 } from "components/allSvgIcon";
-import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
@@ -23,7 +21,6 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns0, fields0 } from "./tab/tab1/data0";
 import { columns1, fields1 } from "./tab/tab2/data1";
-import CheckBox from "components/checkbox";
 import { useDispatch } from "app/store";
 import getTabContent from "./getTabContent";
 import { apiGet } from "app/axios";
@@ -48,7 +45,7 @@ function PT9008({
 
   const dispatch = useDispatch();
 
-  const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -161,7 +158,7 @@ function PT9008({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>

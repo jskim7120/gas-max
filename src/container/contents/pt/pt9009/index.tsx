@@ -16,10 +16,13 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields } from "./data";
-import CheckBox from "components/checkbox";
+import {
+  Item,
+  RadioButton,
+  RadioButtonLabel,
+} from "components/radioButton/style";
 
 function PT9009({
   depthFullName,
@@ -73,12 +76,7 @@ function PT9009({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        cuSukumtype: init?.cuSukumtype,
-        sGubun: init?.sGubun,
-        rabChk: init?.rabChk,
-        sDate: init?.sDate,
-        eDate: init?.eDate,
-        sSearch: init?.sSearch,
+        ...init,
       });
     }
   };
@@ -93,7 +91,7 @@ function PT9009({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
@@ -160,12 +158,15 @@ function PT9009({
                 </option>
               ))}
             </Select>
-            <CheckBox
-              title="수금 기간"
-              rtl
-              style={{ marginLeft: "30px" }}
-              register={register("rabChk")}
-            />
+            <Item style={{ marginLeft: "20px" }}>
+              <RadioButton
+                type="radio"
+                value="0"
+                {...register(`rabChk`)}
+                id="0"
+              />
+              <RadioButtonLabel htmlFor={`0`}>수금 기간</RadioButtonLabel>
+            </Item>
             <Controller
               control={control}
               name="sDate"
@@ -196,12 +197,15 @@ function PT9009({
                 </option>
               ))}
             </Select>
-            <CheckBox
-              title="만기 기간"
-              rtl
-              style={{ marginLeft: "30px" }}
-              register={register("rabChk")}
-            />
+            <Item style={{ marginLeft: "20px" }}>
+              <RadioButton
+                type="radio"
+                value="1"
+                {...register(`rabChk`)}
+                id="1"
+              />
+              <RadioButtonLabel htmlFor={`1`}>만기 기간</RadioButtonLabel>
+            </Item>
           </FormGroup>
         </SearchWrapper>
       </form>

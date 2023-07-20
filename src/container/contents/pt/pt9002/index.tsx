@@ -16,7 +16,6 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields } from "./data";
 import CheckBox from "components/checkbox";
@@ -73,13 +72,8 @@ function PT9002({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        rSwCode: init?.rSwCode,
-        sDate: init?.sDate,
-        eDate: init?.eDate,
-        swCode: init?.swCode,
-        cuStae: init?.cuStae,
-        cuJangbu: init?.cuJangbu,
-        dateChk: init?.dateChk === "N",
+        ...init,
+        dateChk: init?.dateChk === "Y",
       });
     }
   };
@@ -161,12 +155,11 @@ function PT9002({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "49px" }}>기간</Label>
+            <Label style={{ minWidth: "52px" }}>기간</Label>
             <CheckBox
-              //title="기간"
               rtl
               style={{ marginLeft: "5px" }}
-              //register={register("")}
+              register={register("dateChk")}
             />
             <Label style={{ minWidth: "4px" }}></Label>
             <Controller
@@ -176,7 +169,6 @@ function PT9002({
                 <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
-            <Label style={{ minWidth: "8px" }}></Label>
             <Controller
               control={control}
               name="eDate"
@@ -194,7 +186,7 @@ function PT9002({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "87px" }}>거래상태</Label>
+            <Label style={{ minWidth: "90px" }}>거래상태</Label>
             <Select register={register("cuStae")} width={InputSize.i120}>
               {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

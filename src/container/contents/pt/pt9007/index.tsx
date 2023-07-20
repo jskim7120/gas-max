@@ -16,7 +16,6 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields } from "./data";
 import CheckBox from "components/checkbox";
@@ -79,18 +78,9 @@ function PT9007({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        reportKind: init?.reportKind,
-        sDate: init?.sDate,
-        eDate: init?.eDate,
-        swCode: init?.swCode,
-        cuCustgubun: init?.cuCustgubun,
-        cuSukumtype: init?.cuSukumtype,
-        cuName: init?.cuName,
-        cuCutype: init?.cuCutype,
-        cuJyCode: init?.cuJyCode,
-        sBigo: init?.sBigo,
-        sOrd: init?.sOrd,
-        sChk: init?.sChk,
+        ...init,
+        sChk: init?.sChk === "Y",
+        sawonChk: init?.sawonChk === "Y",
       });
     }
   };
@@ -105,7 +95,7 @@ function PT9007({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
@@ -190,7 +180,7 @@ function PT9007({
             <CheckBox
               title="수금 사원"
               rtl
-              style={{ marginLeft: "30px" }}
+              style={{ marginLeft: "20px" }}
               register={register("sawonChk")}
             />
             <Select register={register("swCode")} width={InputSize.i120}>
@@ -200,7 +190,7 @@ function PT9007({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "100px" }}>관리책임자</Label>
+            <Label style={{ minWidth: "90px" }}>관리책임자</Label>
             <Select register={register("cuCustgubun")} width={InputSize.i120}>
               {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -224,7 +214,7 @@ function PT9007({
               register={register("cuName")}
               inputSize={InputSize.i200}
             />
-            <Label style={{ minWidth: "169px" }}>소비자 형태</Label>
+            <Label style={{ minWidth: "159px" }}>소비자 형태</Label>
             <Select register={register("cuCutype")} width={InputSize.i120}>
               {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -232,7 +222,7 @@ function PT9007({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "100px" }}>지역구분</Label>
+            <Label style={{ minWidth: "90px" }}>지역구분</Label>
             <Select register={register("cuJyCode")} width={InputSize.i120}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -257,7 +247,7 @@ function PT9007({
             <CheckBox
               title="D/C 자료만 조회"
               rtl
-              style={{ marginLeft: "30px" }}
+              style={{ marginLeft: "20px" }}
               register={register("sChk")}
             />
           </FormGroup>

@@ -51,23 +51,6 @@ const Form = React.forwardRef(
       getCommonDictionary({ groupId: "EN", functionName: "EN1900" });
     }, []);
 
-    // const fetchCode11 = async (code: string) => {
-    //   try {
-    //     const response: any = await API.get(EN190011, {
-    //       params: { areaCode: code },
-    //     });
-    //     if (response.status === 200) {
-    //       return response?.data;
-    //     } else {
-    //       alert(response?.response?.data?.message);
-    //       resetButtonCombination();
-    //     }
-    //     return null;
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-
     const codeChangeHandler = async (aCode: any) => {
       const res = await apiGet(EN190011, { areaCode: aCode });
       if (res !== null) {
@@ -98,20 +81,6 @@ const Form = React.forwardRef(
       if (type === "delete") {
         const formValues = getValues();
 
-        // try {
-        //   const response: any = await API.post(EN1900DELETE, formValues);
-        //   if (response.status === 200) {
-        //     toast.success("삭제하였습니다", {
-        //       autoClose: 500,
-        //     });
-        //     await fetchData();
-        //   } else {
-        //     alert(response?.response?.data?.message);
-        //   }
-        // } catch (err) {
-        //   console.log(err);
-        // }
-
         const res: any = await apiPost(
           EN1900DELETE,
           formValues,
@@ -130,25 +99,6 @@ const Form = React.forwardRef(
       const path = isAddBtnClicked ? EN1900INSERT : EN1900UPDATE;
       const formValues = getValues();
       isAddBtnClicked && (formValues.areaCode = areaCode);
-      // try {
-      //   const response: any = await API.post(path, formValues);
-      //   if (response.status === 200) {
-      //     if (isAddBtnClicked) {
-      //       setIsAddBtnClicked(false);
-      //       await fetchData("pos");
-      //     } else {
-      //       await fetchData();
-      //     }
-
-      //     toast.success("저장이 성공하였습니다", {
-      //       autoClose: 500,
-      //     });
-      //   } else {
-      //     alert(response?.response?.data?.message);
-      //   }
-      // } catch (err: any) {
-      //   console.log(err);
-      // }
 
       const res: any = await apiPost(path, formValues, "저장이 성공하였습니다");
       if (res) {
