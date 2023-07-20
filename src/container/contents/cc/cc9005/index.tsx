@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "app/store";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import {
@@ -13,17 +13,10 @@ import BasicGrid from "components/basicGrid";
 import { fields, columns } from "./data";
 import { ICC9005SEARCH } from "./model";
 import Form from "./form";
-import {
-  MagnifyingGlass,
-  ResetGray,
-  Plus,
-  Trash,
-  Update,
-} from "components/allSvgIcon";
+import { ResetGray, Trash, Update } from "components/allSvgIcon";
 import Button from "components/button/button";
-import { ButtonColor, InputSize } from "components/componentsType";
+import { ButtonColor } from "components/componentsType";
 import { FormGroup, Select, Label } from "components/form/style";
-import form from "container/contents/en/en1500/form";
 
 function CC9005({
   depthFullName,
@@ -85,11 +78,11 @@ function CC9005({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {areaCode === "00" && (
               <>
-                <Label style={{ minWidth: "48px" }}>영업소</Label>
+                <Label style={{ minWidth: "70px" }}>영업소</Label>
 
                 <Select register={register("areaCode")}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
@@ -101,16 +94,10 @@ function CC9005({
               </>
             )}
             <div className="buttons ml30">
-              <Button
-                text="삭제"
-                icon={<Trash />}
-                style={{ marginRight: "5px" }}
-                onClick={onClickDelete}
-              />
+              <Button text="삭제" icon={<Trash />} onClick={onClickDelete} />
               <Button
                 text="저장"
                 icon={<Update />}
-                style={{ marginRight: "5px" }}
                 color={ButtonColor.SECONDARY}
                 onClick={onClickUpdate}
               />
@@ -131,7 +118,6 @@ function CC9005({
             ref={gridRef}
             areaCode={areaCode}
             data={data}
-            //setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
             menuId={menuId}

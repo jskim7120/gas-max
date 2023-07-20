@@ -5,7 +5,7 @@ import { CC1100SEARCH } from "app/path";
 import { ICC9009SEARCH } from "./model";
 import { SearchWrapper } from "../../commonStyle";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
-import { Select, FormGroup, Field, Label } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -83,7 +83,7 @@ function GR9006({
         </SearchWrapper>
         <SearchWrapper>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>영업소</Label>
+            <Label style={{ minWidth: "70px" }}>영업소</Label>
             <Select width={InputSize.i130} register={register("areaCode")}>
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

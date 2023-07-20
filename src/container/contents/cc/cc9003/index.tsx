@@ -4,7 +4,7 @@ import CreateReport from "app/hook/createReport";
 import { CC1100SEARCH } from "app/path";
 import { ICC9003SEARCH } from "./model";
 import BasicGrid from "components/basicGrid";
-import { MainWrapper, SearchWrapper, LeftSide } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
@@ -67,11 +67,6 @@ function CC9003({
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init: any = dataCommonDic.dataInit[0];
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-        sDate: dataCommonDic?.sDate[0].code,
-        sMonth: dataCommonDic?.sMonth[0].code,
-      });
     }
   };
 
@@ -85,14 +80,13 @@ function CC9003({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35 ">
           <FormGroup></FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
 
         <SearchWrapper>
           <FormGroup>
-            <Label style={{ minWidth: "40px" }}></Label>
             <Item>
               <RadioButton
                 type="radio"
@@ -110,7 +104,7 @@ function CC9003({
               name="sDate"
               render={({ field }) => <CustomDatePicker {...field} />}
             />
-            <Label style={{ minWidth: "40px" }}></Label>
+            <Label style={{ minWidth: "30px" }}></Label>
             <Item>
               <RadioButton
                 type="radio"
@@ -127,7 +121,7 @@ function CC9003({
               name="sMonth"
               render={({ field }) => <CustomDatePicker {...field} />}
             />
-            <Label style={{ minWidth: "90px" }}>영업소</Label>
+            <Label style={{ minWidth: "80px" }}>영업소</Label>
             <Select register={register("areaCode")} width={InputSize.i120}>
               {dataCommonDic?.acjAccCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -174,7 +168,7 @@ function CC9003({
         columns={columns}
         menuId={menuId}
         rowIndex={0}
-        style={{ height: `calc(100% - 84px)` }}
+        style={{ height: `calc(100% - 83px)` }}
         layout={layout}
       />
     </>
