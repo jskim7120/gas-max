@@ -162,7 +162,7 @@ function AR9006({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "80px" }}>입출구분</Label>
+            <Label style={{ minWidth: "100px" }}>입출구분</Label>
             <Select register={register("cuGubun")} width={InputSize.i120}>
               {dataCommonDic?.cuGubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CC1100SEARCH } from "app/path";
@@ -10,7 +10,7 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import Grid from "components/grid";
+import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
 import CheckBox from "components/checkbox";
 
@@ -44,6 +44,7 @@ function GR9006({
     dispatch,
     dataCommonDic,
   } = CreateReport("CC", "CC9009", menuId, CC1100SEARCH);
+  const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ICC9009SEARCH>({
     mode: "onSubmit",
@@ -80,9 +81,9 @@ function GR9006({
           <FormGroup></FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
-        <SearchWrapper className="h35" style={{ justifyContent: "flex-start" }}>
+        <SearchWrapper>
           <FormGroup>
-            <Label style={{ minWidth: "auto" }}>영업소</Label>
+            <Label style={{ minWidth: "80px" }}>영업소</Label>
             <Select width={InputSize.i130} register={register("areaCode")}>
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -93,68 +94,68 @@ function GR9006({
             <Label style={{ minWidth: "80px" }}>기간</Label>
             <Controller
               control={control}
-              {...register("sDateF")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                />
-              )}
+              name="sDateF"
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
             <Controller
               control={control}
-              {...register("sDateT")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                />
-              )}
+              name="sDateT"
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
-            <Field style={{ width: "227px", marginLeft: "30px" }}>
-              <FormGroup>
-                <CheckBox register={{ ...register("sChk1") }} />
-                <Label>통장 입출금 자료조회 안함</Label>
-              </FormGroup>
-            </Field>
-            <Field style={{ width: "227px" }}>
-              <FormGroup>
-                <CheckBox register={{ ...register("sChk1") }} />
-                <Label>전체 영업소 현금 조회</Label>
-              </FormGroup>
-            </Field>
+
+            <CheckBox
+              title="통장 입출금 자료조회 안함"
+              rtl
+              style={{ marginLeft: "20px" }}
+              register={register("sChk1")}
+            />
+
+            <CheckBox
+              title="전체 영업소 현금 조회"
+              rtl
+              style={{ marginLeft: "20px" }}
+              register={register("sChk1")}
+            />
+
+            <div className="buttons ml30">
+              <Button
+                text="검색"
+                icon={!loading && <MagnifyingGlass />}
+                color={ButtonColor.DANGER}
+                type="submit"
+                loader={
+                  loading && (
+                    <>
+                      <Loader
+                        color="white"
+                        size={13}
+                        borderWidth="2px"
+                        style={{ marginRight: "10px" }}
+                      />
+                    </>
+                  )
+                }
+              />
+              <Button
+                text="취소"
+                icon={<ResetGray />}
+                color={ButtonColor.LIGHT}
+                type="button"
+              />
+            </div>
           </FormGroup>
-          <div className="buttons">
-            <Button
-              text="검색"
-              icon={!loading && <MagnifyingGlass />}
-              color={ButtonColor.DANGER}
-              type="submit"
-              loader={
-                loading && (
-                  <>
-                    <Loader
-                      color="white"
-                      size={13}
-                      borderWidth="2px"
-                      style={{ marginRight: "10px" }}
-                    />
-                  </>
-                )
-              }
-              style={{ marginRight: "5px" }}
-            />
-            <Button
-              text="취소"
-              icon={<ResetGray />}
-              color={ButtonColor.LIGHT}
-              type="button"
-            />
-          </div>
         </SearchWrapper>
       </form>
+      <BasicGrid
+        ref={gridRef}
+        areaCode={areaCode}
+        data={data}
+        columns={columns}
+        fields={fields}
+        menuId={menuId}
+        rowIndex={0}
+        style={{ height: `calc(100% - 84px)` }}
+      />
     </>
   );
 }

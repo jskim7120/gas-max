@@ -151,7 +151,7 @@ function CC1500({
     <>
       <SearchWrapper className="h35 mt5">
         <FormGroup>
-          {ownAreaCode === "00" && (
+          {ownAreaCode === "01" && (
             <>
               <Label style={{ minWidth: "48px" }}>영업소</Label>
               <Select register={register("areaCode")}>
@@ -191,7 +191,7 @@ function CC1500({
                     render={({ field }) => <CustomDatePicker {...field} />}
                   />
 
-                  <Label>차량</Label>
+                  <Label style={{ minWidth: "70px" }}>차량</Label>
                   <Select
                     register={register("cjCaCode")}
                     width={InputSize.i120}
