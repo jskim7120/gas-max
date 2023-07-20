@@ -69,12 +69,9 @@ function GR9008({
           <FormGroup></FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
-        <SearchWrapper
-          className="h35"
-          style={{ justifyContent: "flex-start", gap: "37px" }}
-        >
+        <SearchWrapper>
           <FormGroup>
-            <Label style={{ minWidth: "auto" }}>영업소</Label>
+            <Label style={{ minWidth: "80px" }}>영업소</Label>
             <Select width={InputSize.i130} register={register("areaCode")}>
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -85,25 +82,13 @@ function GR9008({
             <Label style={{ minWidth: "80px" }}>기간</Label>
             <Controller
               control={control}
-              {...register("sDateF")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                />
-              )}
+              name="sDateF"
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
             <Controller
               control={control}
-              {...register("sDateT")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                />
-              )}
+              name="sDateT"
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
             <Label style={{ minWidth: "80px" }}>차량</Label>
             <Select width={InputSize.i130} register={register("carCode")}>
@@ -113,7 +98,7 @@ function GR9008({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "70px" }}>정비명</Label>
+            <Label style={{ minWidth: "80px" }}>정비명</Label>
             <Select width={InputSize.i130} register={register("carJbc")}>
               {dataCommonDic?.carJbc?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -121,34 +106,34 @@ function GR9008({
                 </option>
               ))}
             </Select>
+
+            <div className="buttons ml30">
+              <Button
+                text="검색"
+                icon={!loading && <MagnifyingGlass />}
+                color={ButtonColor.DANGER}
+                type="submit"
+                loader={
+                  loading && (
+                    <>
+                      <Loader
+                        color="white"
+                        size={13}
+                        borderWidth="2px"
+                        style={{ marginRight: "10px" }}
+                      />
+                    </>
+                  )
+                }
+              />
+              <Button
+                text="취소"
+                icon={<ResetGray />}
+                color={ButtonColor.LIGHT}
+                type="button"
+              />
+            </div>
           </FormGroup>
-          <div className="buttons">
-            <Button
-              text="검색"
-              icon={!loading && <MagnifyingGlass />}
-              color={ButtonColor.DANGER}
-              type="submit"
-              loader={
-                loading && (
-                  <>
-                    <Loader
-                      color="white"
-                      size={13}
-                      borderWidth="2px"
-                      style={{ marginRight: "10px" }}
-                    />
-                  </>
-                )
-              }
-              style={{ marginRight: "5px" }}
-            />
-            <Button
-              text="취소"
-              icon={<ResetGray />}
-              color={ButtonColor.LIGHT}
-              type="button"
-            />
-          </div>
         </SearchWrapper>
       </form>
       <BasicGrid
@@ -159,7 +144,7 @@ function GR9008({
         fields={fields}
         menuId={menuId}
         rowIndex={0}
-        style={{ height: `calc(100% - 47px)` }}
+        style={{ height: `calc(100% - 84px)` }}
       />
     </>
   );

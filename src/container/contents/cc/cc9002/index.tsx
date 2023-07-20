@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CC1100SEARCH } from "app/path";
 import { ICC9002SEARCH } from "./model";
-import GridLeft from "components/grid";
+import BasicGrid from "components/basicGrid";
 import CheckBox from "components/checkbox";
 import { MainWrapper, SearchWrapper, LeftSide } from "../../commonStyle";
 import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
@@ -63,111 +63,89 @@ function CC9002({
 
   return (
     <>
-      <SearchWrapper className="h35">
-        <FormGroup></FormGroup>
-        <p>{depthFullName}</p>
-      </SearchWrapper>
-      <MainWrapper>
-        <LeftSide style={{ border: "none" }}>
-          <form onSubmit={handleSubmit(submit)} autoComplete="off">
-            <SearchWrapper className="h35" style={{ justifyContent: "start" }}>
-              <FormGroup>
-                <Label style={{ minWidth: "36px" }}>기간</Label>
-                <Controller
-                  control={control}
-                  {...register("sDateF")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
-                />
-                <p>~</p>
-                <Controller
-                  control={control}
-                  {...register("sDateT")}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CustomDatePicker
-                      value={value}
-                      onChange={onChange}
-                      name={name}
-                    />
-                  )}
-                />
-              </FormGroup>
-              <Field style={{ width: "83px", marginLeft: "63px" }}>
-                <FormGroup>
-                  <CheckBox register={{ ...register("userChk") }} />
-                  <Label style={{ minWidth: "64px" }}>계정 과목</Label>
-                </FormGroup>
-              </Field>
-              <FormGroup>
-                <Select
-                  register={register("acjAccCodeF")}
-                  width={InputSize.i120}
-                >
-                  {dataCommonDic?.acjAccCode?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-                <p>~</p>
-                <Select
-                  register={register("acjAccCodeT")}
-                  width={InputSize.i120}
-                >
-                  {dataCommonDic?.acjAccCode?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-              <div className="buttons">
-                <Button
-                  text="검색"
-                  icon={!loading && <MagnifyingGlass />}
-                  color={ButtonColor.DANGER}
-                  type="submit"
-                  loader={
-                    loading && (
-                      <>
-                        <Loader
-                          color="white"
-                          size={13}
-                          borderWidth="2px"
-                          style={{ marginRight: "10px" }}
-                        />
-                      </>
-                    )
-                  }
-                  style={{ margin: " 0 5px 0 170px" }}
-                />
-                <Button
-                  text="취소"
-                  icon={<ResetGray />}
-                  type="button"
-                  color={ButtonColor.LIGHT}
-                  onClick={handleReset}
-                />
-              </div>
-            </SearchWrapper>
-          </form>
-          <GridLeft
-            areaCode="00"
-            data={data}
-            setSelected={setSelected}
-            fields={fields}
-            columns={columns}
-            menuId={menuId}
-            rowIndex={0}
-            style={{ height: `calc(100% - 47px)` }}
-          />
-        </LeftSide>
-      </MainWrapper>
+      <form onSubmit={handleSubmit(submit)} autoComplete="off">
+        <SearchWrapper className="h35">
+          <FormGroup></FormGroup>
+          <p>{depthFullName}</p>
+        </SearchWrapper>
+
+        <SearchWrapper>
+          <FormGroup>
+            <Label style={{ minWidth: "80px" }}>기간</Label>
+            <Controller
+              control={control}
+              name="sDateF"
+              render={({ field }) => <CustomDatePicker {...field} />}
+            />
+            <p>~</p>
+            <Controller
+              control={control}
+              name="sDateT"
+              render={({ field }) => <CustomDatePicker {...field} />}
+            />
+
+            <CheckBox
+              title="계정 과목"
+              rtl
+              register={{ ...register("userChk") }}
+              style={{ marginLeft: "50px" }}
+            />
+
+            <Select register={register("acjAccCodeF")} width={InputSize.i120}>
+              {dataCommonDic?.acjAccCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+            <p>~</p>
+            <Select register={register("acjAccCodeT")} width={InputSize.i120}>
+              {dataCommonDic?.acjAccCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+
+            <div className="buttons ml30">
+              <Button
+                text="검색"
+                icon={!loading && <MagnifyingGlass />}
+                color={ButtonColor.DANGER}
+                type="submit"
+                loader={
+                  loading && (
+                    <>
+                      <Loader
+                        color="white"
+                        size={13}
+                        borderWidth="2px"
+                        style={{ marginRight: "10px" }}
+                      />
+                    </>
+                  )
+                }
+              />
+              <Button
+                text="취소"
+                icon={<ResetGray />}
+                type="button"
+                color={ButtonColor.LIGHT}
+                onClick={handleReset}
+              />
+            </div>
+          </FormGroup>
+        </SearchWrapper>
+      </form>
+      <BasicGrid
+        areaCode="00"
+        data={data}
+        fields={fields}
+        columns={columns}
+        menuId={menuId}
+        rowIndex={0}
+        style={{ height: `calc(100% - 92px)` }}
+      />
     </>
   );
 }
