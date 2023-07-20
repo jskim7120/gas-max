@@ -16,11 +16,11 @@ import { columns, fields } from "./data";
 function GR9007({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const {
     data,
@@ -70,7 +70,7 @@ function GR9007({
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <SearchWrapper className="h35">
           <FormGroup>
-            {areaCode === "00" && (
+            {ownAreaCode === "00" && (
               <>
                 <Label style={{ minWidth: "60px" }}>영업소</Label>
                 <Select register={register("areaCode")}>
@@ -151,7 +151,7 @@ function GR9007({
 
       <BasicGrid
         ref={gridRef}
-        areaCode={areaCode}
+        areaCode={ownAreaCode}
         data={data}
         columns={columns}
         fields={fields}

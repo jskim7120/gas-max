@@ -137,7 +137,11 @@ export const getContent = (
       );
     case "AR9006":
       return (
-        <AR9006 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <AR9006
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "AR9007":
       return (
@@ -256,7 +260,11 @@ export const getContent = (
       );
     case "CM9002":
       return (
-        <CM9002 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CM9002
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CM1300":
       return (
@@ -268,19 +276,35 @@ export const getContent = (
       );
     case "CM9003":
       return (
-        <CM9003 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CM9003
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CM9004":
       return (
-        <CM9004 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CM9004
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CM9005":
       return (
-        <CM9005 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CM9005
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CM9006":
       return (
-        <CM9006 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CM9006
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "GR1100":
       return (
@@ -292,7 +316,11 @@ export const getContent = (
       );
     case "GR1500":
       return (
-        <GR1500 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <GR1500
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "GR1200":
       return (
@@ -312,39 +340,75 @@ export const getContent = (
       );
     case "GR1600":
       return (
-        <GR1600 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <GR1600
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "GR9002":
       return (
-        <GR9002 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <GR9002
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "GR9003":
       return (
-        <GR9003 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <GR9003
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "GR9004":
       return (
-        <GR9004 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <GR9004
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "GR9005":
       return (
-        <GR9005 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <GR9005
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "GR9006":
       return (
-        <GR9006 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <GR9006
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "GR9007":
       return (
-        <GR9007 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <GR9007
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "GR9008":
       return (
-        <GR9008 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <GR9008
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "GR9009":
       return (
-        <GR9009 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <GR9009
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "RV1100":
       return (
@@ -484,39 +548,75 @@ export const getContent = (
       );
     case "CC9006":
       return (
-        <CC9006 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC9006
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC9007":
       return (
-        <CC9007 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC9007
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC9008":
       return (
-        <CC9008 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC9008
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC9009":
       return (
-        <CC9009 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC9009
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC9001":
       return (
-        <CC9001 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC9001
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC9002":
       return (
-        <CC9002 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC9002
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC9003":
       return (
-        <CC9003 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC9003
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC9004":
       return (
-        <CC9004 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC9004
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "CC9005":
       return (
-        <CC9005 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <CC9005
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
 
     case "PT1100":
@@ -529,7 +629,11 @@ export const getContent = (
       );
     case "PT1200":
       return (
-        <PT1200 depthFullName={depthFullName} menuId={id} areaCode={areaCode} />
+        <PT1200
+          depthFullName={depthFullName}
+          menuId={id}
+          ownAreaCode={areaCode}
+        />
       );
     case "PT9001":
       return (

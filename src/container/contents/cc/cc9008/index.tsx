@@ -16,11 +16,11 @@ import { columns, fields } from "./data";
 function GR9008({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const {
     data,
@@ -138,7 +138,7 @@ function GR9008({
       </form>
       <BasicGrid
         ref={gridRef}
-        areaCode={areaCode}
+        areaCode={ownAreaCode}
         data={data}
         columns={columns}
         fields={fields}

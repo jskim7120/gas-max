@@ -20,11 +20,11 @@ import { FormGroup, Select, Label } from "components/form/style";
 
 function CC9005({
   depthFullName,
-  areaCode,
+  ownAreaCode,
   menuId,
 }: {
   depthFullName: string;
-  areaCode: string;
+  ownAreaCode: string;
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
@@ -80,7 +80,7 @@ function CC9005({
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <SearchWrapper className="h35">
           <FormGroup>
-            {areaCode === "00" && (
+            {ownAreaCode === "00" && (
               <>
                 <Label style={{ minWidth: "70px" }}>영업소</Label>
 
@@ -116,7 +116,7 @@ function CC9005({
         <LeftSide>
           <BasicGrid
             ref={gridRef}
-            areaCode={areaCode}
+            areaCode={ownAreaCode}
             data={data}
             fields={fields}
             columns={columns}

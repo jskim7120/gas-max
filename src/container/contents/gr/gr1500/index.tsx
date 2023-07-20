@@ -28,11 +28,11 @@ const leftSideWidth: number = 940;
 function GR1500({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const { register, handleSubmit, control, reset, getValues } =
@@ -126,7 +126,7 @@ function GR1500({
     <>
       <SearchWrapper className="h35 mt5">
         <FormGroup>
-          {areaCode === "00" && (
+          {ownAreaCode === "00" && (
             <>
               <Label style={{ minWidth: "34px" }}>영업소</Label>
               <Select register={register("areaCode")}>
@@ -202,7 +202,7 @@ function GR1500({
             </SearchWrapper>
           </form>
           <GridLeft
-            areaCode={areaCode}
+            areaCode={ownAreaCode}
             data={data.length > 0 && data}
             setSelected={setSelected}
             fields={fields}
@@ -289,7 +289,7 @@ function GR1500({
           </form>
 
           <GridLeft
-            areaCode={areaCode}
+            areaCode={ownAreaCode}
             data={dataSecond.length > 0 && dataSecond}
             columns={columnsSecond}
             fields={fieldsSecond}
