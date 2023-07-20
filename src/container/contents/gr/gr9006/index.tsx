@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import CreateReport from "app/hook/createReport";
 import { GR9006SEARCH } from "app/path";
 import { ISEARCH } from "./model";
@@ -63,10 +63,7 @@ function GR9006({
       const init = dataCommonDic.initData[0];
       reset({
         areaCode: dataCommonDic?.areaCode[0]?.code,
-        bcBuCode: init?.bcBuCode,
-        reportType: init?.reportType,
-        eDate: init?.eDate,
-        sDate: init?.sDate,
+        ...init,
       });
     }
   };
@@ -84,17 +81,19 @@ function GR9006({
         return { columns: columns0, fields: fields0 };
       case "1":
         return { columns: columns1, fields: fields1 };
+      default:
+        return { columns: columns0, fields: fields0 };
     }
   };
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {areaCode === "00" && (
               <>
                 <Label style={{ minWidth: "80px" }}>재고입고처</Label>
-                <Select register={register("areaCode")}>
+                <Select register={register("areaCode")} width={InputSize.i150}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -121,7 +120,6 @@ function GR9006({
                     </>
                   )
                 }
-                style={{ marginRight: "5px" }}
               />
               <Button
                 text="취소"
@@ -138,14 +136,14 @@ function GR9006({
         <SearchWrapper className="h35">
           <FormGroup>
             <Label style={{ minWidth: "80px" }}>보고서종류</Label>
-            <Select register={register("reportType")} width={InputSize.i200}>
+            <Select register={register("reportType")} width={InputSize.i150}>
               {dataCommonDic?.reportType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "90px" }}>매입처</Label>
+            <Label style={{ minWidth: "80px" }}>매입처</Label>
             <Select register={register("bcBuCode")} width={InputSize.i150}>
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -173,8 +171,7 @@ function GR9006({
         ref={gridRef}
         areaCode={areaCode}
         data={data}
-        columns={selectColumns()?.columns}
-        fields={selectColumns()?.fields}
+        {...selectColumns()}
         gridChangeField={watch("reportType")}
         menuId={menuId}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
