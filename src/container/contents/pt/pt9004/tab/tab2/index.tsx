@@ -1,9 +1,8 @@
 import React from "react";
 import { SearchWrapper } from "container/contents/commonStyle";
-import { FormGroup, Input, Label, Select } from "components/form/style";
+import { FormGroup, Label, Select } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
-import CustomDatePicker from "components/customDatePicker";
 
 function Tab1({
   register,
@@ -70,7 +69,7 @@ function Tab1({
         <CheckBox
           title="세로양식 인쇄"
           rtl
-          style={{ marginLeft: "10px" }}
+          style={{ marginLeft: "20px" }}
           register={register("sChk1")}
         />
       </FormGroup>

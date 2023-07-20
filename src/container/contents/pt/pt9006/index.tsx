@@ -16,15 +16,9 @@ import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import {
-  DateWithoutDash,
-  GetYear,
-  GetMonth,
-  DateWithDashOnlyYearMonth,
-} from "helpers/dateFormat";
+import { DateWithoutDash, GetYear, GetMonth } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields, layout } from "./data";
-import CheckBox from "components/checkbox";
 
 function PT9006({
   depthFullName,
@@ -152,11 +146,11 @@ function PT9006({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
-                <Label style={{ minWidth: "80px" }}>영업소</Label>
+                <Label style={{ minWidth: "70px" }}>영업소</Label>
                 <Select register={register("areaCode")} width={InputSize.i120}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -209,9 +203,9 @@ function PT9006({
           </FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
-        <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
+        <SearchWrapper>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>시작월</Label>
+            <Label style={{ minWidth: "70px" }}>시작월</Label>
             <Controller
               control={control}
               name="sMonth"
@@ -242,7 +236,7 @@ function PT9006({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "100px" }}>소비자형태</Label>
+            <Label style={{ minWidth: "90px" }}>소비자형태</Label>
             <Select register={register("cuCutype")} width={InputSize.i120}>
               {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

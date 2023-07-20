@@ -19,7 +19,6 @@ import Viewer from "components/viewer";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields } from "./data";
-import { report } from "process";
 
 function PT9003({
   depthFullName,
@@ -81,12 +80,7 @@ function PT9003({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        reportKind: init?.reportKind,
-        sDate: init?.sDate,
-        eDate: init?.eDate,
-        swCode: init?.swCode,
-        cuSukumtype: init?.cuSukumtype,
-        cuJyCode: init?.cuJyCode,
+        ...init,
       });
     }
   };
@@ -101,11 +95,11 @@ function PT9003({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
-                <Label style={{ minWidth: "80px" }}>영업소</Label>
+                <Label style={{ minWidth: "85px" }}>영업소</Label>
                 <Select register={register("areaCode")} width={InputSize.i120}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -115,7 +109,7 @@ function PT9003({
                 </Select>
               </>
             )}
-            <Label style={{ minWidth: "110px" }}>보고서종류</Label>
+            <Label style={{ minWidth: "85px" }}>보고서종류</Label>
             <Select register={register("reportKind")} width={InputSize.i160}>
               {dataCommonDic?.reportKind?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -168,7 +162,7 @@ function PT9003({
         </SearchWrapper>
         <SearchWrapper style={{ flexDirection: "column", alignItems: "start" }}>
           <FormGroup>
-            <Label style={{ minWidth: "80px" }}>기간</Label>
+            <Label style={{ minWidth: "85px" }}>기간</Label>
             <Controller
               control={control}
               name="sDate"
@@ -183,7 +177,7 @@ function PT9003({
                 <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
-            <Label style={{ minWidth: "90px" }}>담당사원</Label>
+            <Label style={{ minWidth: "80px" }}>담당사원</Label>
             <Select register={register("swCode")} width={InputSize.i120}>
               {dataCommonDic?.swCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -191,7 +185,7 @@ function PT9003({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "90px" }}>수금 방법</Label>
+            <Label style={{ minWidth: "80px" }}>수금 방법</Label>
             <Select register={register("cuSukumtype")} width={InputSize.i120}>
               {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -199,7 +193,7 @@ function PT9003({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "90px" }}>지역구분</Label>
+            <Label style={{ minWidth: "80px" }}>지역구분</Label>
             <Select register={register("cuJyCode")} width={InputSize.i120}>
               {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { PT9005SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
-import { Select, FormGroup, Label, Input } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import {
@@ -12,11 +12,10 @@ import {
   PrintPreview,
   Print,
 } from "components/allSvgIcon";
-import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
-import { DateWithDashOnlyYearMonth, DateWithoutDash } from "helpers/dateFormat";
+import { DateWithDashOnlyYearMonth } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields } from "./data";
 import CheckBox from "components/checkbox";
@@ -109,11 +108,11 @@ function PT9005({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
-                <Label style={{ minWidth: "80px" }}>영업소</Label>
+                <Label style={{ minWidth: "70px" }}>영업소</Label>
                 <Select register={register("areaCode")} width={InputSize.i120}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -166,13 +165,13 @@ function PT9005({
             <CheckBox
               title="코드출력"
               rtl
-              style={{ marginLeft: "30px" }}
+              style={{ marginLeft: "20px" }}
               register={register("prtCode")}
             />
             <CheckBox
               title="주소출력"
               rtl
-              style={{ marginLeft: "30px" }}
+              style={{ marginLeft: "20px" }}
               register={register("prtAddr")}
             />
           </FormGroup>
@@ -200,7 +199,7 @@ function PT9005({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "94px" }}>관리책임자</Label>
+            <Label style={{ minWidth: "90px" }}>관리책임자</Label>
             <Select register={register("cuCustgubun")} width={InputSize.i120}>
               {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -208,7 +207,7 @@ function PT9005({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "100px" }}>소비자 형태</Label>
+            <Label style={{ minWidth: "90px" }}>소비자 형태</Label>
             <Select register={register("cuCutype")} width={InputSize.i120}>
               {dataCommonDic?.cuCutype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -226,7 +225,7 @@ function PT9005({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "94px" }}>수금 방법 </Label>
+            <Label style={{ minWidth: "90px" }}>수금 방법 </Label>
             <Select register={register("cuSukumtype")} width={InputSize.i120}>
               {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -234,7 +233,7 @@ function PT9005({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "100px" }}>수금 방법 </Label>
+            <Label style={{ minWidth: "90px" }}>수금 방법 </Label>
             <Select register={register("cuStae")} width={InputSize.i120}>
               {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -242,7 +241,7 @@ function PT9005({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "84px" }}>정렬순서</Label>
+            <Label style={{ minWidth: "80px" }}>정렬순서</Label>
             <Select register={register("sOrd")} width={InputSize.i120}>
               {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -253,7 +252,7 @@ function PT9005({
             <CheckBox
               title="내역별 조회"
               rtl
-              style={{ marginLeft: "30px" }}
+              style={{ marginLeft: "20px" }}
               register={register("sChk")}
             />
           </FormGroup>

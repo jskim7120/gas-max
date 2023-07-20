@@ -1,7 +1,7 @@
 import React from "react";
 import { Controller } from "react-hook-form";
 import { SearchWrapper } from "container/contents/commonStyle";
-import { FormGroup, Input, Label, Select } from "components/form/style";
+import { FormGroup, Label, Select } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
@@ -100,7 +100,7 @@ function Tab1({
         <CheckBox
           title="내역별 조회"
           rtl
-          style={{ marginLeft: "6px" }}
+          style={{ marginLeft: "20px" }}
           register={register("sChk")}
         />
       </FormGroup>

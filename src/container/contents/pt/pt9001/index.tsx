@@ -14,7 +14,6 @@ import {
   PrintPreview,
   Print,
 } from "components/allSvgIcon";
-import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import BasicGrid from "components/basicGrid";
 import Viewer from "components/viewer";
@@ -22,7 +21,6 @@ import { DateWithDashOnlyYearMonth, DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns0, fields0 } from "./tab/tab1/data0";
 import { columns1, fields1 } from "./tab/tab2/data1";
-import CheckBox from "components/checkbox";
 import { useDispatch } from "app/store";
 import getTabContent from "./getTabContent";
 import { apiGet } from "app/axios";
@@ -139,11 +137,12 @@ function PT9001({
           cuJangbu: init?.cuJangbu,
           cuJyCode: init?.cuJyCode,
           cuStae: init?.cuStae,
-          dateChk: init?.dateChk === "Y",
+
           eDate: init?.eDate,
           sDate: init?.sDate,
           sOrd: init?.sOrd,
           swCode: init?.swCode,
+          dateChk: init?.dateChk === "Y",
         });
       }
       if (tabId === 1) {
