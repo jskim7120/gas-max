@@ -50,12 +50,6 @@ function CC9001({
 
   const resetForm = (type: string) => {
     if (type === "reset") {
-      const init: any = dataCommonDic.dataInit[0];
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-        sDateT: dataCommonDic?.sDateT[0].code,
-        sDateF: dataCommonDic?.sDateF[0].code,
-      });
     }
   };
 
@@ -69,13 +63,13 @@ function CC9001({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup></FormGroup>
           <p>{depthFullName}</p>
         </SearchWrapper>
         <SearchWrapper className="h35" style={{ justifyContent: "start" }}>
           <FormGroup>
-            <Label style={{ minWidth: "62px" }}>계정 과목</Label>
+            <Label style={{ minWidth: "70px" }}>계정 과목</Label>
             <Select register={register("acjAccCode")} width={InputSize.i120}>
               {dataCommonDic?.acjAccCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -86,26 +80,14 @@ function CC9001({
             <Label style={{ minWidth: "60px" }}>기간</Label>
             <Controller
               control={control}
-              {...register("sDateF")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                />
-              )}
+              name="sDateF"
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
             <p>~</p>
             <Controller
               control={control}
-              {...register("sDateT")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                />
-              )}
+              name="sDateT"
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
           </FormGroup>
           <div className="buttons ml30">
@@ -145,7 +127,7 @@ function CC9001({
         rowIndex={0}
         fields={fields}
         columns={columns}
-        style={{ height: `calc(100% - 61px)` }}
+        style={{ height: `calc(100% - 93px)` }}
       />
     </>
   );

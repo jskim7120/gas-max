@@ -51,11 +51,6 @@ function CC9002({
   const resetForm = (type: string) => {
     if (type === "reset") {
       const init: any = dataCommonDic.dataInit[0];
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-        sDateT: dataCommonDic?.sDateT[0].code,
-        sDateF: dataCommonDic?.sDateF[0].code,
-      });
     }
   };
 
@@ -68,7 +63,7 @@ function CC9002({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
+      <SearchWrapper className="h35">
         <FormGroup></FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>

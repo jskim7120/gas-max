@@ -53,9 +53,7 @@ function GR9005({
       const init = dataCommonDic.initData[0];
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
-        bcBuCode: init?.bcBuCode,
-        sDate: init?.sDate,
-        eDate: init?.eDate,
+        ...init,
       });
     }
   };
@@ -70,11 +68,11 @@ function GR9005({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {areaCode === "00" && (
               <>
-                <Label style={{ minWidth: "47px" }}>재고입고처</Label>
+                <Label style={{ minWidth: "80px" }}>재고입고처</Label>
                 <Select register={register("areaCode")}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -102,12 +100,10 @@ function GR9005({
                     </>
                   )
                 }
-                style={{ marginRight: "5px" }}
               />
               <Button
                 text="취소"
                 icon={<ResetGray />}
-                style={{ marginRight: "5px" }}
                 type="button"
                 color={ButtonColor.LIGHT}
                 onClick={handleReset}
@@ -125,7 +121,7 @@ function GR9005({
         </SearchWrapper>
         <SearchWrapper className="h35">
           <FormGroup>
-            <Label style={{ minWidth: "76px" }}>충전소</Label>
+            <Label style={{ minWidth: "80px" }}>충전소</Label>
             <Select width={InputSize.i130} register={register("bcBuCode")}>
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -134,8 +130,7 @@ function GR9005({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "90px" }}>기간</Label>
-
+            <Label style={{ minWidth: "70px" }}>기간</Label>
             <Controller
               control={control}
               name="sDate"

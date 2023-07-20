@@ -56,9 +56,7 @@ function GR9008({
       const init = dataCommonDic.initData[0];
       reset({
         areaCode: dataCommonDic?.areaCode[0]?.code,
-        bcBuCode: init?.bcBuCode,
-        eDate: init?.eDate,
-        sDate: init?.sDate,
+        ...init,
       });
     }
   };
@@ -73,12 +71,11 @@ function GR9008({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {areaCode === "00" && (
               <>
-                <Label style={{ minWidth: "48px" }}>영업소</Label>
-
+                <Label style={{ minWidth: "60px" }}>영업소</Label>
                 <Select register={register("areaCode")}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -106,7 +103,6 @@ function GR9008({
                     </>
                   )
                 }
-                style={{ marginRight: "5px" }}
               />
               <Button
                 text="취소"
@@ -122,8 +118,8 @@ function GR9008({
 
         <SearchWrapper className="h35">
           <FormGroup>
-            <Label style={{ minWidth: "auto" }}>매입처</Label>
-            <Select register={register("bcBuCode")} width={InputSize.i150}>
+            <Label style={{ minWidth: "60px" }}>매입처</Label>
+            <Select register={register("bcBuCode")} width={InputSize.i200}>
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -131,7 +127,7 @@ function GR9008({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "90px" }}>기간</Label>
+            <Label style={{ minWidth: "70px" }}>기간</Label>
             <Controller
               control={control}
               name="sDate"

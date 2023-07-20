@@ -57,11 +57,7 @@ function GR9002({
       const init = dataCommonDic.initData[0];
       reset({
         areaCode: dataCommonDic?.areaCode[0]?.code,
-        bcBuCode: init?.bcBuCode,
-        bcCsawon: init?.bcCsawon,
-        bcCtype: init?.bcCtype,
-        eDate: init?.eDate,
-        sDate: init?.sDate,
+        ...init,
       });
     }
   };
@@ -76,12 +72,12 @@ function GR9002({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {areaCode === "00" && (
               <>
-                <Label style={{ minWidth: "48px" }}>재고입고처</Label>
-                <Select register={register("areaCode")}>
+                <Label style={{ minWidth: "80px" }}>재고입고처</Label>
+                <Select register={register("areaCode")} width={InputSize.i150}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -108,7 +104,6 @@ function GR9002({
                     </>
                   )
                 }
-                style={{ marginRight: "5px" }}
               />
               <Button
                 text="취소"
@@ -123,7 +118,7 @@ function GR9002({
         </SearchWrapper>
         <SearchWrapper className="h35">
           <FormGroup>
-            <Label style={{ minWidth: "76px" }}>충전소</Label>
+            <Label style={{ minWidth: "80px" }}>충전소</Label>
             <Select register={register("bcBuCode")} width={InputSize.i150}>
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -132,7 +127,7 @@ function GR9002({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "90px" }}>기간</Label>
+            <Label style={{ minWidth: "70px" }}>기간</Label>
             <Controller
               control={control}
               name="sDate"
@@ -144,7 +139,7 @@ function GR9002({
               render={({ field }) => <CustomDatePicker {...field} />}
             />
 
-            <Label style={{ minWidth: "120px" }}>수송 기사</Label>
+            <Label style={{ minWidth: "80px" }}>수송 기사</Label>
             <Select register={register("bcCsawon")} width={InputSize.i110}>
               {dataCommonDic?.bcCsawon?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -153,7 +148,7 @@ function GR9002({
               ))}
             </Select>
 
-            <Label style={{ minWidth: "120px" }}>수송 방법</Label>
+            <Label style={{ minWidth: "80px" }}>수송 방법</Label>
             <Select register={register("bcCtype")} width={InputSize.i110}>
               {dataCommonDic?.bcCtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
