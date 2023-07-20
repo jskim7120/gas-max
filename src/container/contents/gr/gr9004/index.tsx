@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import CreateReport from "app/hook/createReport";
 import { GR9004SEARCH } from "app/path";
 import { ISEARCH } from "./model";
@@ -35,13 +35,7 @@ function GR9004({
   } = CreateReport("GR", "GR9004", menuId, GR9004SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    control,
-  } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -62,9 +56,7 @@ function GR9004({
       const init = dataCommonDic.initData[0];
       reset({
         areaCode: dataCommonDic?.areaCode[0]?.code,
-        bcBuCode: init?.bcBuCode,
-        eDate: init?.eDate,
-        sDate: init?.sDate,
+        ...init,
       });
     }
   };
@@ -79,11 +71,11 @@ function GR9004({
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {areaCode === "00" && (
               <>
-                <Label style={{ minWidth: "72px" }}>재고입고처</Label>
+                <Label style={{ minWidth: "80px" }}>재고입고처</Label>
                 <Select register={register("areaCode")}>
                   {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -111,7 +103,6 @@ function GR9004({
                     </>
                   )
                 }
-                style={{ marginRight: "5px" }}
               />
               <Button
                 text="취소"
@@ -127,7 +118,7 @@ function GR9004({
 
         <SearchWrapper className="h35">
           <FormGroup>
-            <Label style={{ minWidth: "76px" }}>충전소</Label>
+            <Label style={{ minWidth: "80px" }}>충전소</Label>
             <Select register={register("bcBuCode")} width={InputSize.i150}>
               {dataCommonDic?.bcBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -135,7 +126,7 @@ function GR9004({
                 </option>
               ))}
             </Select>
-            <Label style={{ minWidth: "90px" }}>기간</Label>
+            <Label style={{ minWidth: "70px" }}>기간</Label>
             <Controller
               control={control}
               name="sDate"
