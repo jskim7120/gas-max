@@ -328,7 +328,7 @@ function AR1100({
                   register={register("sSalestate1")}
                   title="배송중"
                   rtl
-                  style={{ width: "80px" }}
+                  style={{ width: "90px" }}
                 />
                 <CheckBox
                   register={register("sSalestate2")}
