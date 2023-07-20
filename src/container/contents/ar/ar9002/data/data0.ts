@@ -60,11 +60,6 @@ export const columns0 = [
     header: {
       text: "영업소",
     },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
-      },
-    },
   },
   {
     name: "pcDate",
@@ -73,6 +68,11 @@ export const columns0 = [
     width: "100",
     header: {
       text: "일자",
+    },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("pcDate", "count");
+      },
     },
   },
   {

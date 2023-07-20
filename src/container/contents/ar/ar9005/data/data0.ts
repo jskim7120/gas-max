@@ -68,7 +68,7 @@ export const columns0 = [
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("jcBok", "count");
+        return grid.getSummary("jcJpCode", "count");
       },
     },
   },

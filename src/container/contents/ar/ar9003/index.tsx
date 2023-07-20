@@ -6,13 +6,7 @@ import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label, Input } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import {
-  MagnifyingGlass,
-  ExcelIcon,
-  ResetGray,
-  PrintPreview,
-  Print,
-} from "components/allSvgIcon";
+import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import CheckBox from "components/checkbox";
@@ -86,13 +80,9 @@ function AR9003({
       const init = dataCommonDic.dataInit[0];
       reset({
         areaCode: dataCommonDic.areaCode[0].code,
-        sDate: init?.sDate,
-        eDate: init?.dDate,
-        swCode: init?.swCode,
+        ...init,
         chkDate: init?.chkDate === "Y",
         chkSv: init?.chkSv === "Y",
-        cuJyCode: init?.cuJyCode,
-        reportKind: init?.reportKind,
       });
     }
   };
@@ -110,13 +100,15 @@ function AR9003({
         return { columns: columns0, fields: fields0 };
       case "1":
         return { columns: columns1, fields: fields1 };
+      default:
+        return { columns: columns0, fields: fields0 };
     }
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <FormGroup>
             {ownAreaCode === "00" && (
               <>
@@ -185,26 +177,16 @@ function AR9003({
             />
             <Controller
               control={control}
-              {...register("sDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="sDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <Controller
               control={control}
-              {...register("eDate")}
-              render={({ field: { onChange, value, name } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
-                  style={{ width: "120px" }}
-                />
+              name="eDate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "120px" }} />
               )}
             />
             <Input
@@ -234,8 +216,8 @@ function AR9003({
             <CheckBox
               title="무료시설 자료만 조회"
               rtl
-              style={{ marginLeft: "61px" }}
               register={register("chkSv")}
+              style={{ marginLeft: "20px" }}
             />
           </FormGroup>
         </SearchWrapper>
@@ -244,12 +226,11 @@ function AR9003({
         menuId={menuId}
         ref={gridRef}
         areaCode={ownAreaCode}
-        columns={selectColumns()?.columns}
-        fields={selectColumns()?.fields}
+        {...selectColumns()}
         data={data}
         gridChangeField={watch("reportKind")}
         rowIndex={data?.length > 1 ? data.length - 1 : 0}
-        style={{ height: "calc(100% - 121px)" }}
+        style={{ height: "calc(100% - 120px)" }}
       />
     </>
   );
