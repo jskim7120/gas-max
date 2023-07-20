@@ -21,11 +21,11 @@ import { DateWithoutDash } from "helpers/dateFormat";
 function CM9003({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const {
     data,
@@ -105,7 +105,7 @@ function CM9003({
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <SearchWrapper className="h35 mt5">
           <FormGroup>
-            {areaCode === "00" && (
+            {ownAreaCode === "00" && (
               <>
                 <Label style={{ minWidth: "90px" }}>영업소</Label>
 
@@ -262,7 +262,7 @@ function CM9003({
       </form>
       <BasicGrid
         ref={gridRef}
-        areaCode={areaCode}
+        areaCode={ownAreaCode}
         data={data}
         columns={selectColumns()?.columns}
         fields={selectColumns()?.fields}

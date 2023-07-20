@@ -29,11 +29,11 @@ const leftSideWidth: number = 850;
 function GR1600({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const { register, handleSubmit, reset } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -93,7 +93,7 @@ function GR1600({
     <>
       <SearchWrapper className="h35 mt5">
         <FormGroup>
-          {areaCode === "00" && (
+          {ownAreaCode === "00" && (
             <>
               <Label style={{ minWidth: "34px" }}>영업소</Label>
               <Select register={register("areaCode")}>
@@ -181,7 +181,7 @@ function GR1600({
           </form>
 
           <GridLeft
-            areaCode={areaCode}
+            areaCode={ownAreaCode}
             data={data}
             columns={columns}
             fields={fields}

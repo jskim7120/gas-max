@@ -18,11 +18,11 @@ import { DateWithoutDash } from "helpers/dateFormat";
 function GR9006({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const {
     data,
@@ -90,7 +90,7 @@ function GR9006({
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <SearchWrapper className="h35">
           <FormGroup>
-            {areaCode === "00" && (
+            {ownAreaCode === "00" && (
               <>
                 <Label style={{ minWidth: "80px" }}>재고입고처</Label>
                 <Select register={register("areaCode")} width={InputSize.i150}>
@@ -169,7 +169,7 @@ function GR9006({
 
       <BasicGrid
         ref={gridRef}
-        areaCode={areaCode}
+        areaCode={ownAreaCode}
         data={data}
         {...selectColumns()}
         gridChangeField={watch("reportType")}

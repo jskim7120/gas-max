@@ -16,11 +16,11 @@ import { columns, fields } from "./data";
 
 function CC9002({
   depthFullName,
-  areaCode,
+  ownAreaCode,
   menuId,
 }: {
   depthFullName: string;
-  areaCode: string;
+  ownAreaCode: string;
   menuId: string;
 }) {
   const {
@@ -138,7 +138,7 @@ function CC9002({
         </SearchWrapper>
       </form>
       <BasicGrid
-        areaCode="00"
+        areaCode={ownAreaCode}
         data={data}
         fields={fields}
         columns={columns}

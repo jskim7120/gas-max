@@ -18,11 +18,11 @@ import setFooterDetail from "container/contents/footer/footerDetailFunc";
 function CM9002({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const {
     data,
@@ -102,7 +102,7 @@ function CM9002({
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <SearchWrapper className="h35 mt5">
           <FormGroup>
-            {areaCode === "00" && (
+            {ownAreaCode === "00" && (
               <>
                 <Label style={{ minWidth: "80px" }}>영업소</Label>
 
@@ -293,7 +293,7 @@ function CM9002({
 
       <BasicGrid
         ref={gridRef}
-        areaCode={areaCode}
+        areaCode={ownAreaCode}
         data={data}
         columns={columns}
         fields={fields}

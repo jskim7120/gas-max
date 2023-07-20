@@ -39,11 +39,11 @@ const leftSideWidth: number = 1100;
 function PT1200({
   depthFullName,
   menuId,
-  areaCode,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
-  areaCode: string;
+  ownAreaCode: string;
 }) {
   const [loading1, setLoading1] = useState(false);
   const [loading2, setLoading2] = useState(false);
@@ -181,7 +181,7 @@ function PT1200({
     <>
       <SearchWrapper className="h35 mt5">
         <FormGroup>
-          {areaCode === "00" && (
+          {ownAreaCode === "00" && (
             <>
               <Label style={{ minWidth: "42px" }}>영업소</Label>
               <Select register={register("areaCode")}>
@@ -245,7 +245,7 @@ function PT1200({
             </form>
 
             <Grid
-              areaCode={areaCode}
+              areaCode={ownAreaCode}
               data={data.length > 0 && data}
               columns={columns}
               fields={fields}
@@ -255,7 +255,7 @@ function PT1200({
               style={{ height: "34%" }}
             />
             <Grid
-              areaCode={areaCode}
+              areaCode={ownAreaCode}
               data={data65.length > 0 && data65}
               columns={columnsSecond}
               fields={fieldsSecond}
@@ -303,7 +303,7 @@ function PT1200({
             </form>
 
             <Grid
-              areaCode={areaCode}
+              areaCode={ownAreaCode}
               data={dataSecond.length > 0 && dataSecond}
               columns={columnsThird}
               fields={fieldsThird}

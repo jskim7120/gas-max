@@ -15,11 +15,11 @@ import { columns, fields } from "./data";
 
 function CC9001({
   depthFullName,
-  areaCode,
+  ownAreaCode,
   menuId,
 }: {
   depthFullName: string;
-  areaCode: string;
+  ownAreaCode: string;
   menuId: string;
 }) {
   const {
@@ -121,7 +121,7 @@ function CC9001({
       </form>
       <BasicGrid
         ref={gridRef}
-        areaCode="00"
+        areaCode={ownAreaCode}
         data={data}
         menuId={menuId}
         rowIndex={0}

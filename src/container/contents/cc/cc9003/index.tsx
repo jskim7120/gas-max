@@ -31,11 +31,11 @@ const radioOptions = [
 
 function CC9003({
   depthFullName,
-  areaCode,
+  ownAreaCode,
   menuId,
 }: {
   depthFullName: string;
-  areaCode: string;
+  ownAreaCode: string;
   menuId: string;
 }) {
   const {
@@ -162,7 +162,7 @@ function CC9003({
       </form>
       <BasicGrid
         ref={gridRef}
-        areaCode="00"
+        areaCode={ownAreaCode}
         data={data}
         fields={fields}
         columns={columns}
