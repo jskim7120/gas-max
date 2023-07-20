@@ -50,24 +50,6 @@ const Form = React.forwardRef(
       getCommonDictionary({ groupId: "EN", functionName: "EN1400" });
     }, []);
 
-    // const fetchCode11 = async (code: string) => {
-    //   try {
-    //     const response: any = await API.get(EN140011, {
-    //       params: { areaCode: code },
-    //     });
-
-    //     if (response.status === 200) {
-    //       return response?.data;
-    //     } else {
-    //       alert(response?.response?.data?.message);
-    //       resetButtonCombination();
-    //     }
-    //     return null;
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-
     const codeChangeHandler = async (aCode: any) => {
       const res = await apiGet(EN140011, { areaCode: aCode });
 
@@ -105,20 +87,6 @@ const Form = React.forwardRef(
         delete formValues.bpIndanga;
         delete formValues.bpOutdanga;
 
-        // try {
-        //   const response: any = await API.post(EN1400DELETE, formValues);
-        //   if (response.status === 200) {
-        //     toast.success("삭제하였습니다", {
-        //       autoClose: 500,
-        //     });
-        //     await fetchData();
-        //   } else {
-        //     alert(response?.response?.data?.message);
-        //   }
-        // } catch (err) {
-        //   console.log(err);
-        // }
-
         const res = await apiPost(EN1400DELETE, formValues, "삭제하였습니다");
         res && (await fetchData());
       }
@@ -135,26 +103,6 @@ const Form = React.forwardRef(
       isAddBtnClicked && (formValues.areaCode = areaCode);
       formValues.bpIndanga = removeCommas(formValues.bpIndanga).toString();
       formValues.bpOutdanga = removeCommas(formValues.bpOutdanga).toString();
-
-      // try {
-      //   const response: any = await API.post(path, formValues);
-      //   if (response.status === 200) {
-      //     if (isAddBtnClicked) {
-      //       setIsAddBtnClicked(false);
-      //       await fetchData("pos");
-      //     } else {
-      //       await fetchData();
-      //     }
-
-      //     toast.success("저장이 성공하였습니다", {
-      //       autoClose: 500,
-      //     });
-      //   } else {
-      //     alert(response?.response?.data?.message);
-      //   }
-      // } catch (err: any) {
-      //   console.log(err);
-      // }
 
       const res = await apiPost(path, formValues, "저장이 성공하였습니다");
       if (res) {

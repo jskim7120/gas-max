@@ -55,23 +55,6 @@ function EN1500({
   }, [activeTabId]);
 
   const fetchData = async (params: any) => {
-    //const fetchData = async () => {
-    // try {
-    //   const { data: data1500 } = await API.get(EN1500LIST);
-    //   if (data1500) {
-    //     setData(data1500);
-    //     setSelected(data1500[0]);
-    //   } else {
-    //     setData([]);
-    //     setSelected({});
-    //   }
-    //   setSelectedRowIndex(0);
-    // } catch (err) {
-    //   setData([]);
-    //   setSelected({});
-    //   console.log("JNOTRY DATA fetch error =======>", err);
-    // }
-
     const data1500 = await apiGet(EN1500LIST, params);
     if (data1500) {
       setData(data1500);

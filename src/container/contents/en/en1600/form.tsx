@@ -78,24 +78,6 @@ const Form = React.forwardRef(
       setImage64,
     }));
 
-    // const fetchCode11 = async (code: string) => {
-    //   try {
-    //     const response: any = await API.get(EN160011, {
-    //       params: { areaCode: code },
-    //     });
-
-    //     if (response.status === 200) {
-    //       return response?.data;
-    //     } else {
-    //       alert(response.response.data?.message);
-    //       resetButtonCombination();
-    //     }
-    //     return null;
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-
     const codeChangeHandler = async (aCode: any) => {
       const res = await apiGet(EN160011, { areaCode: aCode });
 
@@ -148,23 +130,9 @@ const Form = React.forwardRef(
         const formValues: any = getValues();
         delete formValues.swPaykum;
 
-        // try {
-        //   const response: any = await API.post(EN1600DELETE, formValues);
-        //   if (response.status === 200) {
-        //     toast.success("삭제하였습니다", {
-        //       autoClose: 500,
-        //     });
-        //     await fetchData();
-        //   } else {
-        //     alert(response?.response?.data.message);
-        //   }
-        // } catch (err) {
-        //   console.log(err);
-        // }
-
         const res = await apiPost(EN1600DELETE, formValues, "삭제하였습니다");
         res && (await fetchData());
-        //return;
+        return;
       }
 
       if (type === null) {
@@ -196,27 +164,6 @@ const Form = React.forwardRef(
       formValues.swAddr1 = swAddr1;
 
       formValues.swStampFile = image64 && image64;
-
-      // try {
-      //   const response: any = await API.post(path, formValues);
-
-      //   if (response.status === 200) {
-      //     if (isAddBtnClicked) {
-      //       setIsAddBtnClicked(false);
-      //       await fetchData("pos");
-      //     } else {
-      //       await fetchData();
-      //     }
-
-      //     toast.success("저장이 성공하였습니다", {
-      //       autoClose: 500,
-      //     });
-      //   } else {
-      //     alert(response?.response?.data.message);
-      //   }
-      // } catch (err: any) {
-      //   console.log(err);
-      // }
 
       const res = await apiPost(path, formValues, "저장이 성공하였습니다");
 
@@ -288,7 +235,6 @@ const Form = React.forwardRef(
 
           <Controller
             control={control}
-            {...register("swJuminno")}
             name="swJuminno"
             render={({ field }) => (
               <Input
@@ -328,26 +274,7 @@ const Form = React.forwardRef(
             control={control}
             name="swHp"
             render={({ field }) => (
-              <Input
-                {...field}
-                label="핸드폰"
-                // mask={[
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   "-",
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   "-",
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                // ]}
-                inputSize={InputSize.i200}
-              />
+              <Input {...field} label="핸드폰" inputSize={InputSize.i200} />
             )}
           />
         </FormGroup>
@@ -540,7 +467,7 @@ const Form = React.forwardRef(
           <Label>적성검사</Label>
           <Controller
             control={control}
-            {...register("swJdate1")}
+            name="swJdate1"
             render={({ field }) => <CustomDatePicker {...field} />}
           />
 
