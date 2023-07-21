@@ -105,7 +105,7 @@ const Form = ({
     areaCode: areaCode2,
   });
 
-  const { register, handleSubmit, reset, control, getValues } =
+  const { register, handleSubmit, reset, control, getValues, watch } =
     useForm<IDATA65>({
       mode: "onSubmit",
     });
@@ -757,7 +757,9 @@ const Form = ({
           <Label>수송 기사</Label>
           <EditableSelect
             list={dataAdditionalDic?.bcCsawon}
+            reset={reset}
             register={register("bcCsawon")}
+            watch={watch("bcCsawon")}
             style={{ width: "130px" }}
           />
 

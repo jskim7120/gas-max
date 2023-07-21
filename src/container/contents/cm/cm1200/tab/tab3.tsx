@@ -6,7 +6,6 @@ import {
   RadioButtonLabel,
 } from "components/radioButton/style";
 import {
-  Field,
   FormGroup,
   Input,
   Label,
@@ -22,10 +21,14 @@ import Table from "components/table";
 
 function Tab3({
   register,
+  reset,
+  watch,
   dataCommonDic,
   control,
 }: {
   register: Function;
+  reset: Function;
+  watch: any;
   dataCommonDic: any;
   control: any;
 }) {
@@ -35,7 +38,9 @@ function Tab3({
       1: (
         <EditableSelect
           list={dataCommonDic?.gasifyCo1}
+          reset={reset}
           register={register("gasifyCo1")}
+          watch={watch("gasifyCo1")}
           textAlign={"left"}
           style={{ width: "115px", margin: "0 3px " }}
         />
@@ -56,14 +61,9 @@ function Tab3({
       4: (
         <Controller
           control={control}
-          {...register("gasifyMakeDate1")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker
-              value={value}
-              onChange={onChange}
-              name={name}
-              showMonthYearPicker
-            />
+          name="gasifyMakeDate1"
+          render={({ field }) => (
+            <CustomDatePicker {...field} showMonthYearPicker />
           )}
         />
       ),
@@ -71,10 +71,8 @@ function Tab3({
       6: (
         <Controller
           control={control}
-          {...register("gasifyCheckDate1")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker value={value} onChange={onChange} name={name} />
-          )}
+          name="gasifyCheckDate1"
+          render={({ field }) => <CustomDatePicker {...field} />}
         />
       ),
     },
@@ -83,7 +81,9 @@ function Tab3({
       1: (
         <EditableSelect
           list={dataCommonDic?.gasifyCo2}
+          reset={reset}
           register={register("gasifyCo2")}
+          watch={watch("gasifyCo2")}
           textAlign={"left"}
           style={{ width: "115px", margin: "0 3px " }}
         />
@@ -104,14 +104,9 @@ function Tab3({
       4: (
         <Controller
           control={control}
-          {...register("gasifyMakeDate2")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker
-              value={value}
-              onChange={onChange}
-              name={name}
-              showMonthYearPicker
-            />
+          name="gasifyMakeDate2"
+          render={({ field }) => (
+            <CustomDatePicker {...field} showMonthYearPicker />
           )}
         />
       ),
@@ -119,10 +114,8 @@ function Tab3({
       6: (
         <Controller
           control={control}
-          {...register("gasifyCheckDate2")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker value={value} onChange={onChange} name={name} />
-          )}
+          name="gasifyCheckDate2"
+          render={({ field }) => <CustomDatePicker {...field} />}
         />
       ),
     },
@@ -207,7 +200,6 @@ function Tab3({
           ]}
           style={{ overflowX: "visible" }}
           tableData={tableData}
-          onClick={(item) => console.log("table", item)}
         />
       </div>
     </form>

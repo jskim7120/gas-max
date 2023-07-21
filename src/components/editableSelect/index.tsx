@@ -4,20 +4,23 @@ import { DownArrow } from "components/allSvgIcon";
 
 function EditableSelect({
   list = [],
+  reset,
   register,
+  watch,
   textAlign,
   style,
 }: {
   list: Array<any>;
+  reset: Function;
   register: any;
+  watch: any;
   textAlign?: any;
   style?: any;
 }) {
-  const [text, setText] = useState("");
+  const divRef = useRef<HTMLDivElement>(null);
+
   const [suggestion, setSuggestion] = useState<Array<any>>([]);
   const [cursor, setCursor] = useState<number>(-1);
-
-  const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, true);
@@ -25,6 +28,19 @@ function EditableSelect({
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (watch !== undefined) {
+      onChangeHandler(watch);
+    }
+  }, [watch]);
+
+  const resetField = (text: string) => {
+    reset((formValues: any) => ({
+      ...formValues,
+      [register.name]: text,
+    }));
+  };
 
   const handleClickOutside = (e: any) => {
     if (!divRef.current?.contains(e.target)) {
@@ -50,7 +66,7 @@ function EditableSelect({
     }
 
     if (e.key === "Enter") {
-      setText(suggestion[cursor].codeName);
+      resetField(suggestion[cursor].codeName);
     }
 
     if (e.key === "Escape") {
@@ -68,12 +84,12 @@ function EditableSelect({
       });
     }
 
-    setText(text);
+    resetField(text);
     setSuggestion(matches);
   };
 
   const onSuggestHandler = (text: string) => {
-    setText(text);
+    resetField(text);
     setSuggestion([]);
   };
 
@@ -86,8 +102,6 @@ function EditableSelect({
       <input
         autoComplete="off"
         {...register}
-        value={text}
-        onChange={(e) => onChangeHandler(e.target.value)}
         onClick={onClickHandler}
         onKeyDown={(e) => handleKeyDown(e)}
       />

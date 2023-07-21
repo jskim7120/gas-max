@@ -5,6 +5,7 @@ import Tab3 from "./tab/tab3";
 function getTabContent(
   id: number,
   register: Function,
+  reset: Function,
   watch: Function,
   dataCommonDic: any,
   control: any,
@@ -45,6 +46,8 @@ function getTabContent(
       return (
         <Tab2
           register={register}
+          reset={reset}
+          watch={watch}
           dataCommonDic={dataCommonDic}
           control={control}
         />
@@ -53,6 +56,8 @@ function getTabContent(
       return (
         <Tab3
           register={register}
+          reset={reset}
+          watch={watch}
           dataCommonDic={dataCommonDic}
           control={control}
         />

@@ -1,12 +1,6 @@
 import React from "react";
 import { Controller } from "react-hook-form";
-import {
-  FormGroup,
-  Input,
-  Label,
-  Select,
-  Wrapper,
-} from "components/form/style";
+import { FormGroup, Input, Label, Select } from "components/form/style";
 import { InputSize } from "components/componentsType";
 import { currencyMask } from "helpers/currency";
 import CheckBox from "components/checkbox";

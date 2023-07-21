@@ -530,6 +530,7 @@ const Form = React.forwardRef(
               {getTabContent(
                 tabId,
                 register,
+                reset,
                 watch,
                 dataCommonDic,
                 control,
