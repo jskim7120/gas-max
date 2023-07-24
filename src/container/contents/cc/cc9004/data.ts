@@ -84,41 +84,17 @@ export const columns = [
 export const layout = [
   "accName",
   {
-    name: "someGroup",
-    direction: "vertical",
-    width: 250,
-    items: [
-      {
-        name: "someGroup",
-        direction: "horizontal",
-        hideChildHeaders: true,
-        items: ["toCha", "toDae"],
-        header: {
-          text: "금액",
-        },
-      },
-    ],
-    header: {
-      text: "당월(2023-01)",
-    },
+    name: "당월(2023-01)",
+    directions: "horizontal",
+    hideChildHeaders: false,
+    items: ["toCha", "toDae"],
+    header: { text: "" },
   },
   {
-    name: "someGroup",
-    direction: "vertical",
-    width: 250,
-    items: [
-      {
-        name: "someGroup",
-        direction: "horizontal",
-        hideChildHeaders: true,
-        items: ["befCha", "befDae"],
-        header: {
-          text: "금액",
-        },
-      },
-    ],
-    header: {
-      text: "전월(2022-12)",
-    },
+    name: "전월(2022-12)",
+    directions: "horizontal",
+    hideChildHeaders: false,
+    items: ["befCha", "befDae"],
+    header: { text: "" },
   },
 ];

@@ -185,33 +185,34 @@ function CC1200({
                     rtl
                     style={{ marginLeft: "20px" }}
                   />
-                  <Button
-                    text="검색"
-                    icon={!loading && <MagnifyingGlass />}
-                    color={ButtonColor.DANGER}
-                    type="submit"
-                    loader={
-                      loading && (
-                        <>
-                          <Loader
-                            color="white"
-                            size={13}
-                            borderWidth="2px"
-                            style={{ marginRight: "10px" }}
-                          />
-                        </>
-                      )
-                    }
-                    style={{ margin: "0 15px 0 50px" }}
-                  />
-                  <Button
-                    text="취소"
-                    icon={<ResetGray />}
-                    style={{ marginRight: "10px" }}
-                    type="button"
-                    color={ButtonColor.LIGHT}
-                    onClick={cancel}
-                  />
+                  <div className="buttons ml30">
+                    <Button
+                      text="검색"
+                      icon={!loading && <MagnifyingGlass />}
+                      color={ButtonColor.DANGER}
+                      type="submit"
+                      loader={
+                        loading && (
+                          <>
+                            <Loader
+                              color="white"
+                              size={13}
+                              borderWidth="2px"
+                              style={{ marginRight: "10px" }}
+                            />
+                          </>
+                        )
+                      }
+                    />
+                    <Button
+                      text="취소"
+                      icon={<ResetGray />}
+                      style={{ marginRight: "10px" }}
+                      type="button"
+                      color={ButtonColor.LIGHT}
+                      onClick={cancel}
+                    />
+                  </div>
                 </FormGroup>
               </form>
             </SearchWrapper>

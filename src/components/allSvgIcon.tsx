@@ -1076,9 +1076,9 @@ export const MagnifyingGlass = ({ color = "#fff" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="13.501"
-      height="13"
-      viewBox="0 0 13.501 13"
+      width="12.33"
+      height="14.495"
+      viewBox="0 0 12.33 14.495"
     >
       <g
         id="Icon_search"
