@@ -1072,12 +1072,16 @@ export const SearchIcon = ({
   );
 };
 
-export const MagnifyingGlass = ({ color = "#fff" }) => {
+export const MagnifyingGlass = ({
+  width = "12.33",
+  height = "14.495",
+  color = "#fff",
+}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="12.33"
-      height="14.495"
+      width={width}
+      height={height}
       viewBox="0 0 12.33 14.495"
     >
       <g
