@@ -112,7 +112,7 @@ export const FooterContainer = styled.div`
     }
 
     .big {
-      height: 21px;
+      height: 24px;
       font-size: 16px;
     }
 

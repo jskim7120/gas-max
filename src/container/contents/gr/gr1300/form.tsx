@@ -445,7 +445,7 @@ function Form({
             <PersonInfoText text="매입전표 등록" />
             <p className="big">영업소99</p>
             <Select
-              onChange={(e) => setAreaCode2(e.target.value)}
+              onChange={(e: any) => setAreaCode2(e.target.value)}
               value={areaCode2}
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (

@@ -52,7 +52,7 @@ const Form = React.forwardRef(
       useForm<IPTFORMMODEL>({ mode: "onChange" });
 
     useEffect(() => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
+      if (selected !== undefined && Object.keys(selected)?.length > 0) {
         resetForm("reset");
       }
     }, [selected]);
@@ -67,7 +67,10 @@ const Form = React.forwardRef(
     const resetForm = async (type: string) => {
       if (type === "clear") {
       } else if (type === "reset") {
-        reset(selected);
+        reset({
+          ...selected,
+          gsDate: selected?.gsDate ? selected.gsDate : new Date(),
+        });
       }
     };
     const crud = async (type: string | null) => {
@@ -93,12 +96,7 @@ const Form = React.forwardRef(
             <Controller
               control={control}
               name="gsDate"
-              render={({ field: { onChange, value } }) => (
-                <CustomDatePicker
-                  value={value == null ? new Date() : value}
-                  onChange={onChange}
-                />
-              )}
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
           </FormGroup>
           <br></br>

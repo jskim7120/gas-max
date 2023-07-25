@@ -192,14 +192,8 @@ function Footer({
                   <Label style={{ minWidth: "80px" }}>검침 년월</Label>
                   <Controller
                     control={control}
-                    {...register("gjDate")}
-                    render={({ field: { onChange, value, name } }) => (
-                      <CustomDatePicker
-                        value={value}
-                        onChange={onChange}
-                        name={name}
-                      />
-                    )}
+                    name="gjDate"
+                    render={({ field }) => <CustomDatePicker {...field} />}
                   />
                 </FormGroup>
                 <Input
@@ -240,14 +234,8 @@ function Footer({
                   <Label style={{ minWidth: "80px" }}>사용 시작일</Label>
                   <Controller
                     control={control}
-                    {...register("gjSdate")}
-                    render={({ field: { onChange, value, name } }) => (
-                      <CustomDatePicker
-                        value={value}
-                        onChange={onChange}
-                        name={name}
-                      />
-                    )}
+                    name="gjSdate"
+                    render={({ field }) => <CustomDatePicker {...field} />}
                   />
                 </FormGroup>
                 <Input
@@ -259,10 +247,7 @@ function Footer({
                   mask={currencyMask}
                 />
                 <FormGroup style={{ gap: "10px" }}>
-                  <CheckBox
-                    register={{ ...register("gjBaGageYn") }}
-                    title="기본료"
-                  />
+                  <CheckBox register={register("gjBaGageYn")} title="기본료" />
                   <Input
                     register={register("gjBaGageKum")}
                     inputSize={InputSize.i120}
@@ -326,7 +311,7 @@ function Footer({
                 />
                 <FormGroup style={{ gap: "10px" }}>
                   <CheckBox
-                    register={{ ...register("gjJmisuYn") }}
+                    register={register("gjJmisuYn")}
                     title="중량 금액"
                   />
                   <Input

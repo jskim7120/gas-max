@@ -59,6 +59,7 @@ const Form = React.forwardRef(
           ...selected,
           msSwCode: selected?.cuSwCode,
           msSukumType: selected?.cuSukumtype,
+          msDate: selected?.msDate ? selected?.msDate : new Date(),
         });
       }
     };
@@ -85,12 +86,8 @@ const Form = React.forwardRef(
           <Controller
             control={control}
             name="msDate"
-            render={({ field: { onChange, value } }) => (
-              <CustomDatePicker
-                style={{ width: "130px" }}
-                value={value == null ? new Date() : value}
-                onChange={onChange}
-              />
+            render={({ field }) => (
+              <CustomDatePicker {...field} style={{ width: "130px" }} />
             )}
           />
         </FormGroup>

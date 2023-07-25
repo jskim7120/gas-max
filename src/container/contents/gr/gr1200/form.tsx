@@ -684,7 +684,7 @@ const Form = ({
             <PersonInfoText text="가스매입등록" />
             <p className="big">영업소</p>
             <Select
-              onChange={(e) => setAreaCode2(e.target.value)}
+              onChange={(e: any) => setAreaCode2(e.target.value)}
               value={areaCode2}
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
@@ -723,7 +723,7 @@ const Form = ({
             value={bcBuCode}
             width={InputSize.i130}
             disabled={!isAddBtnClicked}
-            onChange={(e) => setBcBuCode(e.target.value)}
+            onChange={(e: any) => setBcBuCode(e.target.value)}
           >
             {dataAdditionalDic?.bcBuCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>

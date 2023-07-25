@@ -164,13 +164,13 @@ function CC1400({
                   <Label style={{ minWidth: "48px" }}>기간</Label>
                   <Controller
                     control={control}
-                    {...register("sDateF")}
+                    name="sDateF"
                     render={({ field }) => <CustomDatePicker {...field} />}
                   />
                   <p>~</p>
                   <Controller
                     control={control}
-                    {...register("sDateT")}
+                    name="sDateT"
                     render={({ field }) => <CustomDatePicker {...field} />}
                   />
 

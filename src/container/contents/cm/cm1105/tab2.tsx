@@ -146,13 +146,11 @@ function Tab2({
           <FormGroup>
             <Controller
               control={control}
-              {...register("cuPer")}
-              render={({ field: { onChange, value, name } }) => (
+              name="cuPer"
+              render={({ field }) => (
                 <Input
+                  {...field}
                   label="연체율"
-                  value={value}
-                  onChange={onChange}
-                  name={name}
                   mask={[/\d/, /\d/, /\d/]}
                   inputSize={InputSize.i130}
                   textAlign="right"
@@ -164,13 +162,11 @@ function Tab2({
 
             <Controller
               control={control}
-              {...register("cuCdc")}
-              render={({ field: { onChange, value, name } }) => (
+              name="cuCdc"
+              render={({ field }) => (
                 <Input
+                  {...field}
                   label="할인율"
-                  value={value}
-                  onChange={onChange}
-                  name={name}
                   mask={[/\d/, /\d/, /\d/]}
                   inputSize={InputSize.i130}
                   textAlign="right"
@@ -189,13 +185,11 @@ function Tab2({
           <FormGroup>
             <Controller
               control={control}
-              {...register("cuAnkum")}
-              render={({ field: { onChange, value, name } }) => (
+              name="cuAnkum"
+              render={({ field }) => (
                 <Input
+                  {...field}
                   label="관리비"
-                  value={value}
-                  onChange={onChange}
-                  name={name}
                   mask={currencyMask}
                   textAlign="right"
                   inputSize={InputSize.i130}
@@ -206,13 +200,11 @@ function Tab2({
 
             <Controller
               control={control}
-              {...register("cuSisulkum")}
-              render={({ field: { onChange, value, name } }) => (
+              name="cuSisulkum"
+              render={({ field }) => (
                 <Input
+                  {...field}
                   label="시설비"
-                  value={value}
-                  onChange={onChange}
-                  name={name}
                   mask={currencyMask}
                   textAlign="right"
                   inputSize={InputSize.i130}
@@ -223,13 +215,11 @@ function Tab2({
 
             <Controller
               control={control}
-              {...register("cuMeterkum")}
-              render={({ field: { onChange, value, name } }) => (
+              name="cuMeterkum"
+              render={({ field }) => (
                 <Input
+                  {...field}
                   label="계량기 교체비"
-                  value={value}
-                  onChange={onChange}
-                  name={name}
                   mask={currencyMask}
                   textAlign="right"
                   inputSize={InputSize.i110}
@@ -251,14 +241,12 @@ function Tab2({
 
             <Controller
               control={control}
-              {...register("cuGumdate")}
-              render={({ field: { onChange, value, name } }) => (
+              name="cuGumdate"
+              render={({ field }) => (
                 <Input
+                  {...field}
                   label="검침일"
                   labelStyle={{ marginLeft: "16px" }}
-                  value={value}
-                  onChange={onChange}
-                  name={name}
                   mask={[/\d/, /\d/]}
                   inputSize={InputSize.i130}
                 />
@@ -274,7 +262,7 @@ function Tab2({
                 marginLeft: "3px",
               }}
             >
-              <CheckBox title="적용" register={{ ...register("cuBaGageYn") }} />
+              <CheckBox title="적용" register={register("cuBaGageYn")} />
             </Label>
 
             <Input
@@ -285,12 +273,10 @@ function Tab2({
             <p>m3이하 일때</p>
             <Controller
               control={control}
-              {...register("cuBaGageKum")}
-              render={({ field: { onChange, value, name } }) => (
+              name="cuBaGageKum"
+              render={({ field }) => (
                 <Input
-                  value={value}
-                  onChange={onChange}
-                  name={name}
+                  {...field}
                   mask={currencyMask}
                   textAlign="right"
                   inputSize={InputSize.i80}
@@ -371,13 +357,9 @@ function Tab2({
 
             <Controller
               control={control}
-              {...register("cuMeterTurm")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "130px" }}
-                />
+              name="cuMeterTurm"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "130px" }} />
               )}
             />
 
@@ -401,14 +383,9 @@ function Tab2({
 
             <Controller
               control={control}
-              {...register("cuMeterDt")}
-              render={({ field: { onChange, name, value } }) => (
-                <CustomDatePicker
-                  value={value}
-                  name={name}
-                  onChange={onChange}
-                  style={{ width: "130px" }}
-                />
+              name="cuMeterDt"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "130px" }} />
               )}
             />
 
@@ -416,13 +393,9 @@ function Tab2({
 
             <Controller
               control={control}
-              {...register("cuMdate")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "130px" }}
-                />
+              name="cuMdate"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "130px" }} />
               )}
             />
 

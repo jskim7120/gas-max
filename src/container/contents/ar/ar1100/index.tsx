@@ -241,7 +241,7 @@ function AR1100({
                 <Label style={{ minWidth: "90px" }}>판매 일자</Label>
                 <Controller
                   control={control}
-                  {...register("sDate")}
+                  name="sDate"
                   render={({ field }) => <CustomDatePicker {...field} />}
                 />
                 <Input

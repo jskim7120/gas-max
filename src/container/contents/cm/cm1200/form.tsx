@@ -108,14 +108,18 @@ const Form = React.forwardRef(
     } = useRdanga();
 
     useEffect(() => {
-      if (selected && Object.keys(selected)?.length > 0) {
+      if (
+        supplyTab !== undefined &&
+        selected !== undefined &&
+        Object.keys(selected)?.length > 0
+      ) {
         resetForm("reset2");
         setRdangaType(selected?.cuRdangaType);
         setRdanga(selected?.cuRdanga);
         setRdangaSign(selected?.cuRdangaSign);
         setRdangaAmt(selected?.cuRdangaAmt);
       }
-    }, [selected]);
+    }, [supplyTab]);
 
     useEffect(() => {
       if (userInfo !== undefined) {
@@ -199,14 +203,10 @@ const Form = React.forwardRef(
       if (type === "clear") {
         areaCode && (await codeChangeHandler(areaCode));
       } else if (type === "reset") {
-        if (selected && Object.keys(selected)?.length > 0) {
-          resetBasic();
-          setUserData(userInfo);
-        }
+        resetBasic();
+        setUserData(userInfo);
       } else if (type === "reset2") {
-        if (selected && Object.keys(selected)?.length > 0) {
-          resetBasic();
-        }
+        resetBasic();
       }
     };
 
@@ -491,7 +491,7 @@ const Form = React.forwardRef(
 
           <FormGroup>
             <Label>담당 사원</Label>
-            <Select {...register("cuSwCode")} width={InputSize.i120}>
+            <Select register={register("cuSwCode")} width={InputSize.i120}>
               {dataDictionary?.cuSwCode?.map((obj: any, index: number) => (
                 <option key={index} value={obj.code}>
                   {obj.codeName}
@@ -499,11 +499,7 @@ const Form = React.forwardRef(
               ))}
             </Select>
             <Label style={{ minWidth: "96px" }}>지역 분류</Label>
-            <Select
-              {...register("cuJyCode")}
-              width={InputSize.i120}
-              style={{ marginRight: "3px" }}
-            >
+            <Select register={register("cuJyCode")} width={InputSize.i120}>
               {dataDictionary?.cuJyCode?.map((obj: any, index: number) => (
                 <option key={index} value={obj.code}>
                   {obj.codeName}
@@ -511,7 +507,7 @@ const Form = React.forwardRef(
               ))}
             </Select>
             <Label style={{ minWidth: "104px" }}>관리자 분류</Label>
-            <Select {...register("cuCustgubun")} width={InputSize.i120}>
+            <Select register={register("cuCustgubun")} width={InputSize.i120}>
               {dataDictionary?.cuCustgubun?.map((obj: any, index: number) => (
                 <option key={index} value={obj.code}>
                   {obj.codeName}

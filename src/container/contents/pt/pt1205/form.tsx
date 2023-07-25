@@ -47,23 +47,20 @@ const FORMPT1205 = React.forwardRef(
     }));
 
     useEffect(() => {
-      resetForm("reset");
+      if (selected !== undefined && Object.keys(selected)?.length > 0) {
+        resetForm("reset");
+      }
     }, [selected]);
-    const resetForm = (type: string | null) => {
-      if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-        let newData: any = {};
 
-        if (type === "clear") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = null;
-          }
-          reset(newData);
-        } else if (type === "reset") {
-          for (const [key, value] of Object.entries(selected)) {
-            newData[key] = value;
-          }
-          reset(newData);
-        }
+    const resetForm = (type: string | null) => {
+      if (type === "clear") {
+        reset();
+      } else if (type === "reset") {
+        console.log("selected");
+        reset({
+          ...selected,
+          gsDate: selected?.gsDate ? selected.gsDate : new Date(),
+        });
       }
     };
     return (
@@ -77,12 +74,13 @@ const FORMPT1205 = React.forwardRef(
           <Controller
             control={control}
             name="gsDate"
-            render={({ field: { onChange, value, name } }) => (
+            render={({ field }) => (
               <CustomDatePicker
+                {...field}
                 style={{ width: "175px" }}
-                value={value == null ? new Date() : value}
-                onChange={onChange}
-                name={name}
+                //value={value == null ? new Date() : value}
+                //onChange={onChange}
+                //name={name}
               />
             )}
           />
@@ -91,12 +89,11 @@ const FORMPT1205 = React.forwardRef(
           <Controller
             control={control}
             name="cuCmisu"
-            render={({ field: { onChange, value, name } }) => (
+            render={({ field: { name } }) => (
               <Input
                 labelStyle={{ minWidth: "120px" }}
                 label="미수 금액"
                 value={cuCmisu}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i175}
@@ -107,12 +104,11 @@ const FORMPT1205 = React.forwardRef(
           <Controller
             control={control}
             name="guChkamt"
-            render={({ field: { onChange, value, name } }) => (
+            render={({ field: { name } }) => (
               <Input
                 labelStyle={{ minWidth: "120px" }}
                 label="선택 금액"
                 value={totalGuAmount}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i175}
@@ -139,12 +135,11 @@ const FORMPT1205 = React.forwardRef(
         <Controller
           control={control}
           name="gsKumack"
-          render={({ field: { onChange, value, name } }) => (
+          render={({ field: { name } }) => (
             <Input
               labelStyle={{ minWidth: "120px" }}
               label="수 금 액"
               value={totalGuAmount}
-              onChange={onChange}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i175}
@@ -156,7 +151,7 @@ const FORMPT1205 = React.forwardRef(
         <Controller
           control={control}
           name="gsJanack"
-          render={({ field: { onChange, value, name } }) => (
+          render={({ field: { name } }) => (
             <Input
               labelStyle={{ minWidth: "120px" }}
               label="수금 후 잔액"
@@ -164,7 +159,6 @@ const FORMPT1205 = React.forwardRef(
                 cuCmisu &&
                 `${cuCmisu - (totalGuAmount + gsDcTotal ? gsDcTotal : 0)}`
               }
-              onChange={onChange}
               mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i175}

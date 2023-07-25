@@ -78,28 +78,22 @@ function Tab3({
           <Label style={{ minWidth: "100px" }}>완성 검사일</Label>
           <Controller
             control={control}
-            {...register("cuFinishDate")}
-            render={({ field: { onChange, onBlur, value, ref } }) => (
-              <CustomDatePicker value={value} onChange={onChange} />
-            )}
+            name="cuFinishDate"
+            render={({ field }) => <CustomDatePicker {...field} />}
           />
 
           <Label style={{ minWidth: "100px" }}>정기 검사일</Label>
           <Controller
             control={control}
-            {...register("cuCircuitDate")}
-            render={({ field: { onChange, onBlur, value, ref } }) => (
-              <CustomDatePicker value={value} onChange={onChange} />
-            )}
+            name="cuCircuitDate"
+            render={({ field }) => <CustomDatePicker {...field} />}
           />
 
           <Label style={{ minWidth: "100px" }}>검사 예정일</Label>
           <Controller
             control={control}
-            {...register("cuScheduleDate")}
-            render={({ field: { onChange, onBlur, value, ref } }) => (
-              <CustomDatePicker value={value} onChange={onChange} />
-            )}
+            name="cuScheduleDate"
+            render={({ field }) => <CustomDatePicker {...field} />}
           />
         </FormGroup>
       </Field>
@@ -234,12 +228,10 @@ function Tab3({
 
             <Controller
               control={control}
-              {...register("tankMakeDate1")}
-              render={({ field: { onChange, value, name } }) => (
+              name="tankMakeDate1"
+              render={({ field }) => (
                 <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
+                  {...field}
                   showMonthYearPicker
                   style={{ width: "110px" }}
                 />
@@ -248,45 +240,31 @@ function Tab3({
             <Input register={register("tankRcv1")} inputSize={InputSize.i80} />
             <Controller
               control={control}
-              {...register("tankFirstDate1")}
-              render={({ field: { onChange, value } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "110px" }}
-                />
+              name="tankFirstDate1"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "110px" }} />
               )}
             />
             <Controller
               control={control}
-              {...register("tankOutsideDate1")}
-              render={({ field: { onChange, value } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "110px" }}
-                />
+              name="tankOutsideDate1"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "110px" }} />
               )}
             />
             <Controller
               control={control}
-              {...register("tankInsideDate1")}
-              render={({ field: { onChange, value } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "110px" }}
-                />
+              name="tankInsideDate1"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "110px" }} />
               )}
             />
             <Controller
               control={control}
-              {...register("tankMax1")}
-              render={({ field: { onChange, value, name } }) => (
+              name="tankMax1"
+              render={({ field }) => (
                 <Input
-                  value={value}
-                  onChange={onChange}
-                  name={name}
+                  {...field}
                   mask={[/\d/, /\d/, /\d/]}
                   inputSize={InputSize.i50}
                 />
@@ -325,12 +303,10 @@ function Tab3({
             />
             <Controller
               control={control}
-              {...register("tankMakeDate2")}
-              render={({ field: { onChange, value, name } }) => (
+              name="tankMakeDate2"
+              render={({ field }) => (
                 <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
+                  {...field}
                   style={{ width: "110px" }}
                   showMonthYearPicker
                 />
@@ -339,45 +315,31 @@ function Tab3({
             <Input register={register("tankRcv2")} inputSize={InputSize.i80} />
             <Controller
               control={control}
-              {...register("tankFirstDate2")}
-              render={({ field: { onChange, value } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "110px" }}
-                />
+              name="tankFirstDate2"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "110px" }} />
               )}
             />
             <Controller
               control={control}
-              {...register("tankOutsideDate2")}
-              render={({ field: { onChange, value } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "110px" }}
-                />
+              name="tankOutsideDate2"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "110px" }} />
               )}
             />
             <Controller
               control={control}
-              {...register("tankInsideDate2")}
-              render={({ field: { onChange, value } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "110px" }}
-                />
+              name="tankInsideDate2"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "110px" }} />
               )}
             />
             <Controller
               control={control}
-              {...register("tankMax2")}
-              render={({ field: { onChange, value, name } }) => (
+              name="tankMax2"
+              render={({ field }) => (
                 <Input
-                  value={value}
-                  onChange={onChange}
-                  name={name}
+                  {...field}
                   mask={[/\d/, /\d/, /\d/]}
                   inputSize={InputSize.i50}
                 />
@@ -525,12 +487,10 @@ function Tab3({
             />
             <Controller
               control={control}
-              {...register("gasifyMakeDate1")}
-              render={({ field: { onChange, value, name } }) => (
+              name="gasifyMakeDate1"
+              render={({ field }) => (
                 <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
+                  {...field}
                   showMonthYearPicker
                   style={{ width: "130px" }}
                 />
@@ -542,13 +502,9 @@ function Tab3({
             />
             <Controller
               control={control}
-              {...register("gasifyCheckDate1")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "130px" }}
-                />
+              name="gasifyCheckDate1"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "130px" }} />
               )}
             />
           </FormGroup>
@@ -568,12 +524,10 @@ function Tab3({
             />
             <Controller
               control={control}
-              {...register("gasifyMakeDate2")}
-              render={({ field: { onChange, value, name } }) => (
+              name="gasifyMakeDate2"
+              render={({ field }) => (
                 <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  name={name}
+                  {...field}
                   showMonthYearPicker
                   style={{ width: "130px" }}
                 />
@@ -586,13 +540,9 @@ function Tab3({
 
             <Controller
               control={control}
-              {...register("gasifyCheckDate2")}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
-                <CustomDatePicker
-                  value={value}
-                  onChange={onChange}
-                  style={{ width: "130px" }}
-                />
+              name="gasifyCheckDate2"
+              render={({ field }) => (
+                <CustomDatePicker {...field} style={{ width: "130px" }} />
               )}
             />
           </FormGroup>

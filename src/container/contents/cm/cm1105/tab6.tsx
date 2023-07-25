@@ -27,7 +27,7 @@ function Tab6({ register, control }: { register: Function; control: any }) {
               <FormGroup>
                 <Label>SMS발행유무</Label>
                 &nbsp;
-                <CheckBox register={{ ...register("cuSmsYn") }} />
+                <CheckBox register={register("cuSmsYn")} />
               </FormGroup>
             </Field>
             <Input
@@ -42,14 +42,9 @@ function Tab6({ register, control }: { register: Function; control: any }) {
 
               <Controller
                 control={control}
-                {...register("cuSmsDate")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    style={{ width: "130px" }}
-                  />
+                name="cuSmsDate"
+                render={({ field }) => (
+                  <CustomDatePicker {...field} style={{ width: "130px" }} />
                 )}
               />
             </Field>
@@ -82,7 +77,7 @@ function Tab6({ register, control }: { register: Function; control: any }) {
               <FormGroup>
                 <Label>발행유무</Label>
                 &nbsp;
-                <CheckBox register={{ ...register("cuCashpayYn") }} />
+                <CheckBox register={register("cuCashpayYn")} />
               </FormGroup>
             </Field>
             <Input
@@ -97,14 +92,9 @@ function Tab6({ register, control }: { register: Function; control: any }) {
 
               <Controller
                 control={control}
-                {...register("cuCashpayDate")}
-                render={({ field: { onChange, value, name } }) => (
-                  <CustomDatePicker
-                    value={value}
-                    onChange={onChange}
-                    name={name}
-                    style={{ width: "130px" }}
-                  />
+                name="cuCashpayDate"
+                render={({ field }) => (
+                  <CustomDatePicker {...field} style={{ width: "130px" }} />
                 )}
               />
             </Field>

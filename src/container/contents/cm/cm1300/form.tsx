@@ -348,19 +348,19 @@ const Form = React.forwardRef(
             title="4호포함"
             rtl
             style={{ width: "100px" }}
-            register={{ ...register("apt4Ho") }}
+            register={register("apt4Ho")}
           />
           <CheckBox
             title="4층포함"
             rtl
             style={{ width: "100px" }}
-            register={{ ...register("apt4F") }}
+            register={register("apt4F")}
           />
           <CheckBox
             title="지층포함"
             rtl
             style={{ width: "100px" }}
-            register={{ ...register("aptBf") }}
+            register={register("aptBf")}
           />
         </FormGroup>
         <Divider />
@@ -478,7 +478,7 @@ const Form = React.forwardRef(
             width={InputSize.i120}
             value={rdangaType}
             //register={register("aptRdangaType")}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setRdangaType(e.target.value);
               calcRdanga("rdangaType", e.target.value);
             }}

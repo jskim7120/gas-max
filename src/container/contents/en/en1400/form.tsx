@@ -125,7 +125,7 @@ const Form = React.forwardRef(
           <Label style={{ minWidth: "80px" }}>영 업 소</Label>
           <Select
             value={areaCode}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setAreaCode(e.target.value);
               codeChangeHandler(e.target.value);
             }}

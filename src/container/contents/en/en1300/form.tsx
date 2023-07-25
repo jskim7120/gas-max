@@ -159,7 +159,7 @@ const Form = React.forwardRef(
           <Select
             width={InputSize.i130}
             value={areaCode}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setAreaCode(e.target.value);
               codeChangeHandler(e.target.value);
             }}

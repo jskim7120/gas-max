@@ -150,15 +150,15 @@ function Tab1({
       <Wrapper grid col={4}>
         <FormGroup>
           <Label>SMS전송 유무</Label>
-          <CheckBox register={{ ...register("cuSeSmsYn") }} />
+          <CheckBox register={register("cuSeSmsYn")} />
         </FormGroup>
         <FormGroup>
           <Label>거래명세표 첨부발행 유무</Label>
-          <CheckBox register={{ ...register("cuSeListYn") }} />
+          <CheckBox register={register("cuSeListYn")} />
         </FormGroup>
         <FormGroup>
           <Label>팩스 번호</Label>
-          <CheckBox register={{ ...register("cuSeFaxYn") }} />
+          <CheckBox register={register("cuSeFaxYn")} />
         </FormGroup>
       </Wrapper>
 
@@ -187,15 +187,9 @@ function Tab1({
 
         <Controller
           control={control}
-          {...register("cuSekumDate")}
-          render={({ field: { onChange, value, name } }) => (
-            <Input
-              value={value}
-              onChange={onChange}
-              name={name}
-              mask={[/\d/, /\d/]}
-              inputSize={InputSize.i40}
-            />
+          name="cuSekumDate"
+          render={({ field }) => (
+            <Input {...field} mask={[/\d/, /\d/]} inputSize={InputSize.i40} />
           )}
         />
         <p>일</p>

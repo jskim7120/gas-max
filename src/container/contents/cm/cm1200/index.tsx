@@ -42,13 +42,11 @@ function CM1200({
 
   const {
     data,
-    // setData,
     selected,
     setSelected,
     loading,
     isAddBtnClicked,
     setIsAddBtnClicked,
-    // activeTabId,
     fetchData,
     showDraggableLine,
     show4Btns,
@@ -152,6 +150,12 @@ function CM1200({
     const res = await apiGet(CM120065, params);
 
     if (res) {
+      setDataDictionary({
+        cuCustgubun: res?.cuCustgubun ? res.cuCustgubun : [],
+        cuJyCode: res?.cuJyCode ? res.cuJyCode : [],
+        cuSwCode: res?.cuSwCode ? res.cuSwCode : [],
+      });
+
       if (res?.userInfo) {
         setUserInfo(res.userInfo);
         if (pos === "last") {
@@ -163,16 +167,11 @@ function CM1200({
       }
 
       setSupplyTab(res?.supplyTab ? res?.supplyTab[0] : {});
-      setDataDictionary({
-        cuCustgubun: res?.cuCustgubun ? res.cuCustgubun : [],
-        cuJyCode: res?.cuJyCode ? res.cuJyCode : [],
-        cuSwCode: res?.cuSwCode ? res.cuSwCode : [],
-      });
     } else {
+      setDataDictionary({});
       setUserInfo([]);
       setSelectedUserInfo({});
       setSupplyTab({});
-      setDataDictionary({});
     }
   };
 

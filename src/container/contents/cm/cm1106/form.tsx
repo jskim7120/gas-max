@@ -186,17 +186,15 @@ const FORMCM1106 = React.forwardRef(
         <FormGroup>
           <Controller
             control={control}
-            {...register("jcJdcAmt")}
-            render={({ field: { onChange, value, name } }) => (
+            name="jcJdcAmt"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="할인액"
                 labelStyle={{ minWidth: "90px" }}
-                value={value}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i160}
-                name={name}
               />
             )}
           />
@@ -205,16 +203,14 @@ const FORMCM1106 = React.forwardRef(
         <FormGroup>
           <Controller
             control={control}
-            {...register("jcJdcPer")}
-            render={({ field: { onChange, value, name } }) => (
+            name="jcJdcPer"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="할인율"
                 labelStyle={{ minWidth: "90px" }}
-                value={value}
-                onChange={onChange}
                 mask={[/\d/, /\d/, /\d/]}
                 textAlign="right"
-                name={name}
                 inputSize={InputSize.i160}
               />
             )}
@@ -226,17 +222,15 @@ const FORMCM1106 = React.forwardRef(
         <FormGroup>
           <Controller
             control={control}
-            {...register("jcJpDanga")}
-            render={({ field: { onChange, value, name } }) => (
+            name="jcJpDanga"
+            render={({ field }) => (
               <Input
+                {...field}
                 label="적용단가"
                 labelStyle={{ minWidth: "90px" }}
-                value={value}
-                onChange={onChange}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i160}
-                name={name}
               />
             )}
           />

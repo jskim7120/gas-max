@@ -96,7 +96,7 @@ function GR1100({
               <Label style={{ minWidth: "50px" }}>영업소</Label>
               <Select
                 value={areaCode}
-                onChange={(e) => setAreaCode(e.target.value)}
+                onChange={(e: any) => setAreaCode(e.target.value)}
               >
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>

@@ -469,39 +469,23 @@ function FormCM1105() {
         <FormGroup>
           <Controller
             control={control}
-            {...register("cuHp")}
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="핸드폰"
-                value={value}
-                name={name}
-                onChange={onChange}
-                inputSize={InputSize.i120}
-              />
+            name="cuHp"
+            render={({ field }) => (
+              <Input {...field} label="핸드폰" inputSize={InputSize.i120} />
             )}
           />
           <Controller
             control={control}
-            {...register("cuTel23")}
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                value={value}
-                onChange={onChange}
-                name={name}
-                inputSize={InputSize.i150}
-              />
+            name="cuTel23"
+            render={({ field }) => (
+              <Input {...field} inputSize={InputSize.i150} />
             )}
           />
           <Controller
             control={control}
-            {...register("cuTel24")}
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                value={value}
-                onChange={onChange}
-                name={name}
-                inputSize={InputSize.i150}
-              />
+            name="cuTel24"
+            render={({ field }) => (
+              <Input {...field} inputSize={InputSize.i150} />
             )}
           />
 
@@ -652,7 +636,7 @@ function FormCM1105() {
               <FormGroup>
                 <Label>계산서 발행유무</Label>
                 <CheckBox
-                  register={{ ...register("cuSekumyn") }}
+                  register={register("cuSekumyn")}
                   rtl
                   style={{
                     marginLeft: "4px",
@@ -670,7 +654,7 @@ function FormCM1105() {
               </FormGroup>
               <Controller
                 control={control}
-                {...register("cuSvKumack")}
+                name="cuSvKumack"
                 render={({ field }) => (
                   <Input
                     label="무료시설 투자비"
@@ -691,12 +675,10 @@ function FormCM1105() {
               <label>용기보증금</label>
               <Controller
                 control={control}
-                {...register("cuTongkum")}
-                render={({ field: { onChange, value, name } }) => (
+                name="cuTongkum"
+                render={({ field }) => (
                   <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
+                    {...field}
                     inputSize={InputSize.i140}
                     mask={currencyMask}
                     textAlign="right"
@@ -708,12 +690,10 @@ function FormCM1105() {
               <label>중량미수</label>
               <Controller
                 control={control}
-                {...register("cuJmisu")}
-                render={({ field: { onChange, value, name } }) => (
+                name="cuJmisu"
+                render={({ field }) => (
                   <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
+                    {...field}
                     inputSize={InputSize.i140}
                     mask={currencyMask}
                     textAlign="right"
@@ -725,12 +705,10 @@ function FormCM1105() {
               <label>체적미수</label>
               <Controller
                 control={control}
-                {...register("cuCmisu")}
-                render={({ field: { onChange, value, name } }) => (
+                name="cuCmisu"
+                render={({ field }) => (
                   <Input
-                    value={value}
-                    onChange={onChange}
-                    name={name}
+                    {...field}
                     inputSize={InputSize.i140}
                     mask={currencyMask}
                     textAlign="right"

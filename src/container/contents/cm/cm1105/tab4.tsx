@@ -36,13 +36,11 @@ function Tab4({
 
         <Controller
           control={control}
-          {...register("cuJuminno")}
-          render={({ field: { onChange, value, name } }) => (
+          name="cuJuminno"
+          render={({ field }) => (
             <Input
               label="생년월일"
-              value={value}
-              onChange={onChange}
-              name={name}
+              {...field}
               mask={[/\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, "-", /\d/, /\d/]}
               inputSize={InputSize.i130}
             />
@@ -52,14 +50,9 @@ function Tab4({
         <Label>최종 점검일</Label>
         <Controller
           control={control}
-          {...register("cuHdate")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker
-              value={value}
-              name={name}
-              onChange={onChange}
-              style={{ width: "130px" }}
-            />
+          name="cuHdate"
+          render={({ field }) => (
+            <CustomDatePicker {...field} style={{ width: "130px" }} />
           )}
         />
       </FormGroup>
@@ -68,28 +61,18 @@ function Tab4({
         <Label>공급 계약일</Label>
         <Controller
           control={control}
-          {...register("cuGongdate")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker
-              value={value}
-              name={name}
-              onChange={onChange}
-              style={{ width: "130px" }}
-            />
+          name="cuGongdate"
+          render={({ field }) => (
+            <CustomDatePicker {...field} style={{ width: "130px" }} />
           )}
         />
 
         <Label>계약 만료일</Label>
         <Controller
           control={control}
-          {...register("cuGongdateT")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker
-              value={value}
-              name={name}
-              onChange={onChange}
-              style={{ width: "130px" }}
-            />
+          name="cuGongdateT"
+          render={({ field }) => (
+            <CustomDatePicker {...field} style={{ width: "130px" }} />
           )}
         />
 
@@ -105,14 +88,9 @@ function Tab4({
         <Label>계약 갱신일</Label>
         <Controller
           control={control}
-          {...register("cuExtendDate")}
-          render={({ field: { onChange, value, name } }) => (
-            <CustomDatePicker
-              value={value}
-              onChange={onChange}
-              name={name}
-              style={{ width: "130px" }}
-            />
+          name="cuExtendDate"
+          render={({ field }) => (
+            <CustomDatePicker {...field} style={{ width: "130px" }} />
           )}
         />
       </FormGroup>
@@ -198,14 +176,9 @@ function Tab4({
 
         <Controller
           control={control}
-          {...register("cuSisuldate")}
-          render={({ field: { onChange, name, value } }) => (
-            <CustomDatePicker
-              value={value}
-              onChange={onChange}
-              name={name}
-              style={{ width: "130px" }}
-            />
+          name="cuSisuldate"
+          render={({ field }) => (
+            <CustomDatePicker {...field} style={{ width: "130px" }} />
           )}
         />
 
@@ -213,14 +186,9 @@ function Tab4({
 
         <Controller
           control={control}
-          {...register("cuPdate")}
-          render={({ field: { onChange, name, value } }) => (
-            <CustomDatePicker
-              value={value}
-              onChange={onChange}
-              name={name}
-              style={{ width: "130px" }}
-            />
+          name="cuPdate"
+          render={({ field }) => (
+            <CustomDatePicker {...field} style={{ width: "130px" }} />
           )}
         />
       </FormGroup>

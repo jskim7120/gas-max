@@ -47,6 +47,16 @@ const Form = React.forwardRef(
         mode: "onChange",
       });
 
+    useEffect(() => {
+      if (
+        supplyTab !== undefined &&
+        selected &&
+        Object.keys(selected)?.length > 0
+      ) {
+        resetForm("reset");
+      }
+    }, [supplyTab]);
+
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       resetForm,
       crud,
@@ -57,7 +67,29 @@ const Form = React.forwardRef(
     }, []);
 
     const resetForm = async (type: string) => {
-      if (type === "clear") {
+      if (type === "reset") {
+        if (selected && Object.keys(selected)?.length > 0) {
+          let tempData: any = { ...selected, ...supplyTab };
+
+          console.log("supplyTab:::", supplyTab);
+
+          reset({
+            ...tempData,
+            cuAptnameYn: tempData?.cuAptnameYn === "Y",
+            cuBaGageYn: tempData?.cuBaGageYn === "Y",
+            chkCuZipCode: false,
+            chkCuRh20: false,
+            chkCuRdanga: false,
+            chkCuAnKum: false,
+            chkCuMeterKum: false,
+            chkCuPer: false,
+            chkCuCdc: false,
+            chkCuSukumtype: false,
+            chkCuGumTurm: false,
+            chkCuGumdate: false,
+            chkCuCno: false,
+          });
+        }
       }
     };
 

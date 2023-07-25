@@ -31,7 +31,7 @@ function EditableSelect({
 
   useEffect(() => {
     if (watch !== undefined) {
-      onChangeHandler(watch);
+      // onChangeHandler(watch);
     }
   }, [watch]);
 
@@ -67,6 +67,7 @@ function EditableSelect({
 
     if (e.key === "Enter") {
       resetField(suggestion[cursor].codeName);
+      setSuggestion([]);
     }
 
     if (e.key === "Escape") {
