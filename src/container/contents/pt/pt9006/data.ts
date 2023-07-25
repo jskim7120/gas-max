@@ -291,7 +291,7 @@ export const layout = [
     header: { text: "" },
   },
   {
-    name: " 2023-06월",
+    name: "2023-06월",
     directions: "horizontal",
     hideChildHeaders: false,
     items: ["gage03", "dang03", "sukum03", "sukum03D"],

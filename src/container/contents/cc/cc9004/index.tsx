@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateReport from "app/hook/createReport";
 import { CC1100SEARCH } from "app/path";
@@ -11,6 +11,7 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
+import { DateWithoutDash, GetYear, GetMonth } from "helpers/dateFormat";
 import { columns, fields, layout } from "./data";
 
 function CC9004({
@@ -34,15 +35,41 @@ function CC9004({
   } = CreateReport("CC", "CC9004", menuId, CC1100SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
-  const { register, handleSubmit, reset, control } = useForm<ICC9004SEARCH>({
-    mode: "onSubmit",
-  });
+  const [toggler, setToggler] = useState<boolean>(true);
+
+  const { register, handleSubmit, reset, control, watch } =
+    useForm<ICC9004SEARCH>({
+      mode: "onSubmit",
+    });
 
   useEffect(() => {
     if (dataCommonDic && dataCommonDic?.dataInit) {
       resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("sMonth")) {
+      handleSMonthChange(watch("sMonth"));
+      setToggler((prev) => !prev);
+    }
+  }, [watch("sMonth")]);
+
+  const handleSMonthChange = (sMonth: any) => {
+    let year = GetYear(sMonth);
+    const month = GetMonth(sMonth);
+    let tempMonth;
+    let tempYear = year;
+
+    for (let i = 0; i < 2; i++) {
+      tempMonth = +month - i;
+      if (tempMonth === 0) {
+        tempMonth = 12;
+        tempYear = +year - 1;
+      }
+      (layout[1 + i] as any).header.text = `당월${tempYear}-${tempMonth}`;
+    }
+  };
 
   const submit = (data: ICC9004SEARCH) => {
     fetchData(data);
@@ -74,7 +101,13 @@ function CC9004({
             <Controller
               control={control}
               name="sMonth"
-              render={({ field }) => <CustomDatePicker {...field} />}
+              render={({ field }) => (
+                <CustomDatePicker
+                  {...field}
+                  style={{ width: "120px" }}
+                  showMonthYearPicker
+                />
+              )}
             />
 
             <Label style={{ minWidth: "80px" }}>영업소</Label>
@@ -126,6 +159,7 @@ function CC9004({
         rowIndex={0}
         style={{ height: `calc(100% - 84px)` }}
         layout={layout}
+        gridChangeField={toggler}
       />
     </>
   );
