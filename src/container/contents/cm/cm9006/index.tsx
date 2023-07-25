@@ -10,7 +10,11 @@ import CheckBox from "components/checkbox";
 import CustomDatePicker from "components/customDatePicker";
 import BasicGrid from "components/basicGrid";
 import { Select, FormGroup, Label } from "components/form/style";
-import { ResetGray, MagnifyingGlass, ExcelIcon } from "components/allSvgIcon";
+import {
+  ResetGray,
+  MagnifyingGlassBig,
+  ExcelIcon,
+} from "components/allSvgIcon";
 import { SearchWrapper } from "../../commonStyle";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
@@ -121,19 +125,17 @@ function CM9003({
             <div className="buttons ml30">
               <Button
                 text="검색"
-                icon={!loading && <MagnifyingGlass />}
+                icon={!loading && <MagnifyingGlassBig width="15" />}
                 color={ButtonColor.DANGER}
                 type="submit"
                 loader={
                   loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={13}
-                        borderWidth="2px"
-                        style={{ marginRight: "10px" }}
-                      />
-                    </>
+                    <Loader
+                      size={16}
+                      style={{
+                        marginRight: "12px",
+                      }}
+                    />
                   )
                 }
               />

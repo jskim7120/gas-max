@@ -8,7 +8,11 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import BasicGrid from "components/basicGrid";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
+import {
+  MagnifyingGlassBig,
+  ExcelIcon,
+  ResetGray,
+} from "components/allSvgIcon";
 import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label } from "components/form/style";
 import { columns0, fields0 } from "./data/data0";
@@ -128,19 +132,12 @@ function CM9003({
             <div className="buttons ml30">
               <Button
                 text="검색"
-                icon={!loading && <MagnifyingGlass />}
+                icon={!loading && <MagnifyingGlassBig width="15" />}
                 color={ButtonColor.DANGER}
                 type="submit"
                 loader={
                   loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={13}
-                        borderWidth="2px"
-                        style={{ marginRight: "10px" }}
-                      />
-                    </>
+                    <Loader size={16} style={{ marginRight: "12px" }} />
                   )
                 }
               />

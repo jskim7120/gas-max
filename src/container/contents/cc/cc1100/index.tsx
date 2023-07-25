@@ -19,7 +19,7 @@ import {
   RadioButton,
   RadioButtonLabel,
 } from "components/radioButton/style";
-import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
+import { MagnifyingGlassBig, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label, Input } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
@@ -212,19 +212,17 @@ function CC1100({
                   <div className="buttons ml30">
                     <Button
                       text="검색"
-                      icon={!loading && <MagnifyingGlass />}
+                      icon={!loading && <MagnifyingGlassBig width="15" />}
                       color={ButtonColor.DANGER}
                       type="submit"
                       loader={
                         loading && (
-                          <>
-                            <Loader
-                              color="white"
-                              size={13}
-                              borderWidth="2px"
-                              style={{ marginRight: "10px" }}
-                            />
-                          </>
+                          <Loader
+                            size={16}
+                            style={{
+                              marginRight: "12px",
+                            }}
+                          />
                         )
                       }
                     />

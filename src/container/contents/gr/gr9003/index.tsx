@@ -4,7 +4,11 @@ import { GR9003SEARCH } from "app/path";
 import { IGR9003SEARCH } from "./model";
 import { SearchWrapper } from "../../commonStyle";
 import { useForm, Controller } from "react-hook-form";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
+import {
+  MagnifyingGlassBig,
+  ExcelIcon,
+  ResetGray,
+} from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
@@ -88,19 +92,17 @@ function GR9003({
             <div className="buttons ml30">
               <Button
                 text="검색"
-                icon={!loading && <MagnifyingGlass />}
+                icon={!loading && <MagnifyingGlassBig width="15" />}
                 color={ButtonColor.DANGER}
                 type="submit"
                 loader={
                   loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={13}
-                        borderWidth="2px"
-                        style={{ marginRight: "10px" }}
-                      />
-                    </>
+                    <Loader
+                      size={16}
+                      style={{
+                        marginRight: "12px",
+                      }}
+                    />
                   )
                 }
               />

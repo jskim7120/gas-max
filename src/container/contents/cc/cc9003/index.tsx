@@ -5,7 +5,7 @@ import { CC1100SEARCH } from "app/path";
 import { ICC9003SEARCH } from "./model";
 import BasicGrid from "components/basicGrid";
 import { SearchWrapper } from "../../commonStyle";
-import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
+import { MagnifyingGlassBig, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
@@ -133,19 +133,17 @@ function CC9003({
             <div className="buttons ml30">
               <Button
                 text="검색"
-                icon={!loading && <MagnifyingGlass />}
+                icon={!loading && <MagnifyingGlassBig width="15" />}
                 color={ButtonColor.DANGER}
                 type="submit"
                 loader={
                   loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={13}
-                        borderWidth="2px"
-                        style={{ marginRight: "10px" }}
-                      />
-                    </>
+                    <Loader
+                      size={16}
+                      style={{
+                        marginRight: "12px",
+                      }}
+                    />
                   )
                 }
               />

@@ -6,7 +6,11 @@ import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
+import {
+  MagnifyingGlassBig,
+  ExcelIcon,
+  ResetGray,
+} from "components/allSvgIcon";
 import CustomDatePicker from "components/customDatePicker";
 import { DateWithoutDash } from "helpers/dateFormat";
 import Loader from "components/loader";
@@ -90,19 +94,17 @@ function AR9006({
             <div className="buttons ml30">
               <Button
                 text="검색"
-                icon={!loading && <MagnifyingGlass />}
+                icon={!loading && <MagnifyingGlassBig width="15" />}
                 color={ButtonColor.DANGER}
                 type="submit"
                 loader={
                   loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={13}
-                        borderWidth="2px"
-                        style={{ marginRight: "10px" }}
-                      />
-                    </>
+                    <Loader
+                      size={16}
+                      style={{
+                        marginRight: "12px",
+                      }}
+                    />
                   )
                 }
                 style={{ minWidth: "max-content" }}

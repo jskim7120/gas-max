@@ -9,7 +9,7 @@ import {
   FormGroup,
   Input,
   Label,
-  Select as CSelect,
+  Select,
   Wrapper,
 } from "components/form/style";
 import { InputSize } from "components/componentsType";
@@ -47,8 +47,8 @@ function Tab2({
         />
       ),
       3: (
-        <CSelect
-          {...register("tankVol1")}
+        <Select
+          register={register("tankVol1")}
           width={InputSize.i80}
           textAlign="right"
           style={{ margin: "0 3px" }}
@@ -58,7 +58,7 @@ function Tab2({
               {obj.codeName}
             </option>
           ))}
-        </CSelect>
+        </Select>
       ),
       4: (
         <Input register={register("tankMakeSno1")} inputSize={InputSize.i110} />
@@ -143,8 +143,8 @@ function Tab2({
         />
       ),
       3: (
-        <CSelect
-          {...register("tankVol2")}
+        <Select
+          register={register("tankVol2")}
           width={InputSize.i80}
           textAlign="right"
           style={{ margin: "0 3px" }}
@@ -154,7 +154,7 @@ function Tab2({
               {obj.codeName}
             </option>
           ))}
-        </CSelect>
+        </Select>
       ),
       4: (
         <Input register={register("tankMakeSno2")} inputSize={InputSize.i110} />

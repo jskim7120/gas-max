@@ -14,7 +14,7 @@ import {
 import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
-import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
+import { MagnifyingGlassBig, ResetGray } from "components/allSvgIcon";
 import { FormGroup, Label, Select } from "components/form/style";
 import Form from "./form";
 import Loader from "components/loader";
@@ -188,19 +188,17 @@ function CC1200({
                   <div className="buttons ml30">
                     <Button
                       text="검색"
-                      icon={!loading && <MagnifyingGlass />}
+                      icon={!loading && <MagnifyingGlassBig width="15" />}
                       color={ButtonColor.DANGER}
                       type="submit"
                       loader={
                         loading && (
-                          <>
-                            <Loader
-                              color="white"
-                              size={13}
-                              borderWidth="2px"
-                              style={{ marginRight: "10px" }}
-                            />
-                          </>
+                          <Loader
+                            size={16}
+                            style={{
+                              marginRight: "12px",
+                            }}
+                          />
                         )
                       }
                     />

@@ -7,7 +7,7 @@ import { Select, FormGroup, Label } from "components/form/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import {
-  MagnifyingGlass,
+  MagnifyingGlassBig,
   ExcelIcon,
   ResetGray,
   PrintPreview,
@@ -159,22 +159,16 @@ function AR9001({
             <div className="buttons ml30">
               <Button
                 text="검색"
-                icon={!loading && <MagnifyingGlass />}
+                icon={!loading && <MagnifyingGlassBig width="15" />}
                 color={ButtonColor.DANGER}
                 type="submit"
                 loader={
                   loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={13}
-                        borderWidth="2px"
-                        style={{ marginRight: "10px" }}
-                      />
-                    </>
+                    <Loader size={16} style={{ marginRight: "12px" }} />
                   )
                 }
               />
+
               <Button
                 text="취소"
                 icon={<ResetGray />}

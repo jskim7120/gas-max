@@ -5,7 +5,11 @@ import { CM9002SEARCH } from "app/path";
 import { ICM9002SEARCH } from "./model";
 import { SearchWrapper } from "../../commonStyle";
 import CheckBox from "components/checkbox";
-import { MagnifyingGlass, ExcelIcon, ResetGray } from "components/allSvgIcon";
+import {
+  MagnifyingGlassBig,
+  ExcelIcon,
+  ResetGray,
+} from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
@@ -118,19 +122,17 @@ function CM9002({
             <div className="buttons ml30">
               <Button
                 text="검색"
-                icon={!loading && <MagnifyingGlass />}
+                icon={!loading && <MagnifyingGlassBig width="15" />}
                 color={ButtonColor.DANGER}
                 type="submit"
                 loader={
                   loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={13}
-                        borderWidth="2px"
-                        style={{ marginRight: "10px" }}
-                      />
-                    </>
+                    <Loader
+                      size={16}
+                      style={{
+                        marginRight: "12px",
+                      }}
+                    />
                   )
                 }
               />

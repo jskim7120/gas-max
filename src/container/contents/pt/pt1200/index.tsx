@@ -21,7 +21,7 @@ import Grid from "components/grid";
 import Loader from "components/loader";
 import { DateWithoutDash } from "helpers/dateFormat";
 import {
-  MagnifyingGlass,
+  MagnifyingGlassBig,
   Plus,
   Trash,
   Update,
@@ -279,25 +279,25 @@ function PT1200({
                     name="sGsdateT"
                     render={({ field }) => <CustomDatePicker {...field} />}
                   />
-                  <Button
-                    text="검색"
-                    icon={!loading2 && <MagnifyingGlass />}
-                    color={ButtonColor.DANGER}
-                    type="submit"
-                    loader={
-                      loading2 && (
-                        <>
+                  <div className="buttons ml30">
+                    <Button
+                      text="검색"
+                      icon={!loading2 && <MagnifyingGlassBig width="15" />}
+                      color={ButtonColor.DANGER}
+                      type="submit"
+                      loader={
+                        loading2 && (
                           <Loader
-                            color="white"
-                            size={13}
-                            borderWidth="2px"
-                            style={{ marginRight: "10px" }}
+                            size={16}
+                            style={{
+                              marginRight: "12px",
+                            }}
                           />
-                        </>
-                      )
-                    }
-                  />
-                  <Button text="수금취소" icon={<Trash />} />
+                        )
+                      }
+                    />
+                    <Button text="수금취소" icon={<Trash />} />
+                  </div>
                 </FormGroup>
               </SearchWrapper>
             </form>

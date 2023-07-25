@@ -13,7 +13,7 @@ import {
 import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
 import { ICC1400SEARCH } from "./model";
 import CustomDatePicker from "components/customDatePicker";
-import { MagnifyingGlass, ResetGray } from "components/allSvgIcon";
+import { MagnifyingGlassBig, ResetGray } from "components/allSvgIcon";
 import { Select, FormGroup, Label } from "components/form/style";
 import Loader from "components/loader";
 import Button from "components/button/button";
@@ -182,33 +182,31 @@ function CC1400({
                       </option>
                     ))}
                   </Select>
-
-                  <Button
-                    text="검색"
-                    icon={!loading && <MagnifyingGlass />}
-                    type="submit"
-                    color={ButtonColor.DANGER}
-                    loader={
-                      loading && (
-                        <>
+                  <div className="buttons ml30">
+                    <Button
+                      text="검색"
+                      icon={!loading && <MagnifyingGlassBig width="15" />}
+                      type="submit"
+                      color={ButtonColor.DANGER}
+                      loader={
+                        loading && (
                           <Loader
-                            color="white"
                             size={16}
-                            style={{ marginRight: "10px" }}
-                            borderWidth="2px"
+                            style={{
+                              marginRight: "12px",
+                            }}
                           />
-                        </>
-                      )
-                    }
-                  />
-                  <Button
-                    text="취소"
-                    type="button"
-                    icon={<ResetGray />}
-                    style={{ marginLeft: "5px" }}
-                    color={ButtonColor.LIGHT}
-                    onClick={cancel}
-                  />
+                        )
+                      }
+                    />
+                    <Button
+                      text="취소"
+                      type="button"
+                      icon={<ResetGray />}
+                      color={ButtonColor.LIGHT}
+                      onClick={cancel}
+                    />
+                  </div>
                 </FormGroup>
               </form>
             </SearchWrapper>

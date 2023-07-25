@@ -9,7 +9,7 @@ import {
   FormGroup,
   Input,
   Label,
-  Select as CSelect,
+  Select,
   Wrapper,
 } from "components/form/style";
 import { InputSize } from "components/componentsType";
@@ -46,8 +46,8 @@ function Tab3({
         />
       ),
       2: (
-        <CSelect
-          {...register("gasifyVol1")}
+        <Select
+          register={register("gasifyVol1")}
           style={{ width: "115px", margin: "0 3px " }}
         >
           {dataCommonDic?.gasifyVol1?.map((obj: any, idx: number) => (
@@ -55,7 +55,7 @@ function Tab3({
               {obj.codeName}
             </option>
           ))}
-        </CSelect>
+        </Select>
       ),
       3: <Input register={register("gasifySno1")} />,
       4: (
@@ -89,8 +89,8 @@ function Tab3({
         />
       ),
       2: (
-        <CSelect
-          {...register("gasifyVol2")}
+        <Select
+          register={register("gasifyVol2")}
           style={{ width: "115px", margin: "0 3px " }}
         >
           {dataCommonDic?.gasifyVol2?.map((obj: any, index: number) => (
@@ -98,7 +98,7 @@ function Tab3({
               {obj.codeName}
             </option>
           ))}
-        </CSelect>
+        </Select>
       ),
       3: <Input register={register("gasifySno2")} />,
       4: (
@@ -149,7 +149,10 @@ function Tab3({
 
             <FormGroup>
               <Label style={{ minWidth: "80px" }}>용기수량</Label>
-              <CSelect {...register("cuCylinderName")} width={InputSize.i100}>
+              <Select
+                register={register("cuCylinderName")}
+                width={InputSize.i100}
+              >
                 {dataCommonDic?.cuCylinderName?.map(
                   (obj: any, index: number) => (
                     <option key={index} value={obj.code}>
@@ -157,7 +160,7 @@ function Tab3({
                     </option>
                   )
                 )}
-              </CSelect>
+              </Select>
               <p>x</p>
               <Input
                 register={register("cuCylinderQty")}

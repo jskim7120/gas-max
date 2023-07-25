@@ -61,9 +61,9 @@ function Loader({
   return (
     <SpinnerWrap
       size={size && size}
-      color={color && color}
+      color={color ? color : "white"}
       style={style && style}
-      borderWidth={borderWidth ? borderWidth : "4px"}
+      borderWidth={borderWidth ? borderWidth : "2px"}
     >
       <div></div>
       <div></div>

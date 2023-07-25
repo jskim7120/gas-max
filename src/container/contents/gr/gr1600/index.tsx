@@ -143,39 +143,31 @@ function GR1600({
                   register={register("buName")}
                   inputSize={InputSize.i200}
                 />
-
-                <Button
-                  text="검색"
-                  icon={
-                    !loading && (
-                      <MagnifyingGlassBig width="17.188" height="17.141" />
-                    )
-                  }
-                  kind={ButtonType.ROUND}
-                  type="submit"
-                  style={{ marginRight: "5px", height: "26px" }}
-                  loader={
-                    loading && (
-                      <>
+                <div className="buttons ml30">
+                  <Button
+                    text="검색"
+                    icon={!loading && <MagnifyingGlassBig width="15" />}
+                    color={ButtonColor.DANGER}
+                    type="submit"
+                    loader={
+                      loading && (
                         <Loader
-                          color="white"
-                          size={17}
-                          style={{ marginRight: "10px" }}
-                          borderWidth="2px"
+                          size={16}
+                          style={{
+                            marginRight: "12px",
+                          }}
                         />
-                      </>
-                    )
-                  }
-                />
+                      )
+                    }
+                  />
 
-                <Button
-                  text="엑셀"
-                  icon={<ExcelIcon />}
-                  kind={ButtonType.ROUND}
-                  color={ButtonColor.SECONDARY}
-                  type="button"
-                  style={{ height: "26px" }}
-                />
+                  <Button
+                    text="엑셀"
+                    icon={<ExcelIcon />}
+                    color={ButtonColor.LIGHT}
+                    type="button"
+                  />
+                </div>
               </FormGroup>
             </SearchWrapper>
           </form>

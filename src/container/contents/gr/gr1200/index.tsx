@@ -4,9 +4,9 @@ import CreateScreen from "app/hook/createScreen";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import {
-  MagnifyingGlassBig,
   ResetGray,
   ExcelIcon,
+  MagnifyingGlassBig,
 } from "components/allSvgIcon";
 import { apiGet } from "app/axios";
 import { ISEARCH } from "./model";
@@ -143,7 +143,6 @@ function GR1200({
               style={{
                 minWidth: `${leftSideWidth}px`,
                 padding: "3px 15px",
-                justifyContent: "flex-start",
               }}
             >
               <FormGroup>
@@ -167,37 +166,34 @@ function GR1200({
                     </option>
                   ))}
                 </Select>
-
-                <Button
-                  text="검색"
-                  icon={!loading && <MagnifyingGlassBig width="15px" />}
-                  style={{ marginRight: "5px" }}
-                  color={ButtonColor.DANGER}
-                  type="submit"
-                  loader={
-                    loading && (
-                      <>
+                <div className="buttons ml30">
+                  <Button
+                    text="검색"
+                    icon={!loading && <MagnifyingGlassBig width="15" />}
+                    color={ButtonColor.DANGER}
+                    type="submit"
+                    loader={
+                      loading && (
                         <Loader
-                          color="white"
-                          size={15}
-                          borderWidth="2px"
-                          style={{ marginRight: "10px" }}
+                          size={16}
+                          style={{
+                            marginRight: "12px",
+                          }}
                         />
-                      </>
-                    )
-                  }
-                />
-                <Button
-                  text="취소"
-                  icon={<ResetGray />}
-                  style={{ marginRight: "5px" }}
-                  color={ButtonColor.LIGHT}
-                />
-                <Button
-                  text="엑셀"
-                  icon={<ExcelIcon width="18px" />}
-                  color={ButtonColor.LIGHT}
-                />
+                      )
+                    }
+                  />
+                  <Button
+                    text="취소"
+                    icon={<ResetGray />}
+                    color={ButtonColor.LIGHT}
+                  />
+                  <Button
+                    text="엑셀"
+                    icon={<ExcelIcon width="18px" />}
+                    color={ButtonColor.LIGHT}
+                  />
+                </div>
               </FormGroup>
             </SearchWrapper>
           </form>

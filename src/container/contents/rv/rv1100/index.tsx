@@ -9,7 +9,7 @@ import { openModal, rv1100Popup } from "app/state/modal/modalSlice";
 import {
   Document,
   Settings2,
-  MagnifyingGlass,
+  MagnifyingGlassBig,
   Users,
   Trash,
 } from "components/allSvgIcon";
@@ -249,15 +249,18 @@ function RV1100({
             <div className="buttons ml30">
               <Button
                 text="검색"
-                icon={!loading && <MagnifyingGlass />}
+                icon={!loading && <MagnifyingGlassBig width="15" />}
                 type="button"
-                color={ButtonColor.SECONDARY}
+                color={ButtonColor.DANGER}
                 onClick={handleSubmit(submit)}
                 loader={
                   loading && (
-                    <>
-                      <Loader color="white" size={16} borderWidth="2px" />
-                    </>
+                    <Loader
+                      size={16}
+                      style={{
+                        marginRight: "12px",
+                      }}
+                    />
                   )
                 }
               />

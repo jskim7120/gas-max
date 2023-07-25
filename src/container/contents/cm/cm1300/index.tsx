@@ -7,7 +7,7 @@ import { setRowIndex } from "app/state/tab/tabSlice";
 import Button from "components/button/button";
 import Loader from "components/loader";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
-import { ButtonType, InputSize } from "components/componentsType";
+import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import GridLeft from "components/grid";
 import { BuildingInfoText } from "components/text";
 import {
@@ -200,25 +200,24 @@ function CM1300({
                   register={register("aptNameS")}
                   inputSize={InputSize.i120}
                 />
-                <Button
-                  text="검색"
-                  icon={!loading && <MagnifyingGlassBig />}
-                  kind={ButtonType.ROUND}
-                  type="submit"
-                  style={{ minWidth: "80px", marginLeft: "15px" }}
-                  loader={
-                    loading && (
-                      <>
+                <div className="buttons ml30">
+                  <Button
+                    text="검색"
+                    icon={!loading && <MagnifyingGlassBig width="15" />}
+                    color={ButtonColor.DANGER}
+                    type="submit"
+                    loader={
+                      loading && (
                         <Loader
-                          color="white"
-                          size={19}
-                          style={{ marginRight: "10px" }}
-                          borderWidth="3px"
+                          size={16}
+                          style={{
+                            marginRight: "12px",
+                          }}
                         />
-                      </>
-                    )
-                  }
-                />
+                      )
+                    }
+                  />
+                </div>
               </FormGroup>
             </form>
           </SearchWrapper>

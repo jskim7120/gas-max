@@ -15,7 +15,7 @@ import { columns, fields } from "./data";
 import { columnsSecond, fieldsSecond } from "./secondData";
 import GridLeft from "components/grid";
 import Loader from "components/loader";
-import { MagnifyingGlass } from "components/allSvgIcon";
+import { MagnifyingGlassBig } from "components/allSvgIcon";
 import Form from "./form";
 import CustomDatePicker from "components/customDatePicker";
 import { FormGroup, Select, Label, Field, Input } from "components/form/style";
@@ -152,7 +152,6 @@ function GR1500({
               style={{
                 minWidth: `${leftSideWidth}px`,
                 padding: "3px 15px",
-                justifyContent: "flex-start",
               }}
             >
               <FormGroup>
@@ -179,25 +178,24 @@ function GR1500({
                     </option>
                   ))}
                 </Select>
-
-                <Button
-                  text="검색"
-                  icon={!loading && <MagnifyingGlass />}
-                  color={ButtonColor.DANGER}
-                  type="submit"
-                  loader={
-                    loading && (
-                      <>
+                <div className="buttons ml30">
+                  <Button
+                    text="검색"
+                    icon={!loading && <MagnifyingGlassBig width="15" />}
+                    color={ButtonColor.DANGER}
+                    type="submit"
+                    loader={
+                      loading && (
                         <Loader
-                          color="white"
-                          size={13}
-                          borderWidth="2px"
-                          style={{ marginRight: "10px" }}
+                          size={16}
+                          style={{
+                            marginRight: "12px",
+                          }}
                         />
-                      </>
-                    )
-                  }
-                />
+                      )
+                    }
+                  />
+                </div>
               </FormGroup>
             </SearchWrapper>
           </form>
@@ -249,12 +247,6 @@ function GR1500({
                   render={({ field }) => <CustomDatePicker {...field} />}
                 />
 
-                {/* <Input
-                  register={register("sBjBuName")}
-                  inputSize={InputSize.md}
-                  label="매입처명"
-                /> */}
-
                 <Label>매입처명</Label>
                 <Select width={InputSize.i130} register={register("sBjBuName")}>
                   {dataCommonDic?.sBjBuName?.map((obj: any, idx: number) => (
@@ -263,28 +255,26 @@ function GR1500({
                     </option>
                   ))}
                 </Select>
-              </FormGroup>
 
-              <div className="buttons">
-                <Button
-                  text="검색"
-                  icon={!loading2 && <MagnifyingGlass />}
-                  color={ButtonColor.DANGER}
-                  type="submit"
-                  loader={
-                    loading2 && (
-                      <>
+                <div className="buttons ml30">
+                  <Button
+                    text="검색"
+                    icon={!loading2 && <MagnifyingGlassBig width="15" />}
+                    color={ButtonColor.DANGER}
+                    type="submit"
+                    loader={
+                      loading2 && (
                         <Loader
-                          color="white"
-                          size={13}
-                          borderWidth="2px"
-                          style={{ marginRight: "10px" }}
+                          size={16}
+                          style={{
+                            marginRight: "12px",
+                          }}
                         />
-                      </>
-                    )
-                  }
-                />
-              </div>
+                      )
+                    }
+                  />
+                </div>
+              </FormGroup>
             </SearchWrapper>
           </form>
 

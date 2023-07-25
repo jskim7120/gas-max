@@ -198,10 +198,9 @@ function Tab2({
 
             <Button
               text="검색"
-              icon={<MagnifyingGlassBig width="17.188" height="17.141" />}
-              kind={ButtonType.ROUND}
+              icon={<MagnifyingGlassBig width="15" />}
+              color={ButtonColor.DANGER}
               type="button"
-              style={{ height: "26px", marginBottom: "1px" }}
               onClick={handleSubmit(submit)}
             />
           </Wrapper>

@@ -6,7 +6,7 @@ import { CM1200SEARCH, CM120065 } from "app/path";
 import { useSelector } from "app/store";
 import { addCM1105LoadStatus } from "app/state/modal/modalSlice";
 import GridLeft from "components/grid";
-import { ButtonType } from "components/componentsType";
+import { ButtonColor, ButtonType } from "components/componentsType";
 import { FormGroup, Input, Label, Select } from "components/form/style";
 import CheckBox from "components/checkbox";
 import Loader from "components/loader";
@@ -223,26 +223,24 @@ function CM1200({
                   register={register("sCuName")}
                   readOnly={!watch("dataChk")}
                 />
-
-                <Button
-                  text="검색"
-                  icon={!loading && <MagnifyingGlassBig />}
-                  kind={ButtonType.ROUND}
-                  type="submit"
-                  style={{ minWidth: "80px", marginLeft: "15px" }}
-                  loader={
-                    loading && (
-                      <>
+                <div className="buttons ml30">
+                  <Button
+                    text="검색"
+                    icon={!loading && <MagnifyingGlassBig width="15" />}
+                    color={ButtonColor.DANGER}
+                    type="submit"
+                    loader={
+                      loading && (
                         <Loader
-                          color="white"
-                          size={19}
-                          style={{ marginRight: "10px" }}
-                          borderWidth="3px"
+                          size={16}
+                          style={{
+                            marginRight: "12px",
+                          }}
                         />
-                      </>
-                    )
-                  }
-                />
+                      )
+                    }
+                  />
+                </div>
               </FormGroup>
             </form>
           </SearchWrapper>

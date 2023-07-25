@@ -8,7 +8,7 @@ import {
   Trash,
   Update,
   Reset,
-  MagnifyingGlass,
+  MagnifyingGlassBig,
   ResetGray,
 } from "components/allSvgIcon";
 import { addCM1106 } from "app/state/modal/modalSlice";
@@ -248,26 +248,19 @@ function AR1100({
                   register={register("sCustomer")}
                   inputSize={InputSize.i200}
                 />
-
-                <Button
-                  text="검색"
-                  icon={!loading && <MagnifyingGlass />}
-                  color={ButtonColor.DANGER}
-                  type="submit"
-                  loader={
-                    loading && (
-                      <>
-                        <Loader
-                          color="white"
-                          size={13}
-                          borderWidth="2px"
-                          style={{ marginRight: "10px" }}
-                        />
-                      </>
-                    )
-                  }
-                  style={{ marginRight: "10px" }}
-                />
+                <div className="buttons ml30">
+                  <Button
+                    text="검색"
+                    icon={!loading && <MagnifyingGlassBig width="15" />}
+                    color={ButtonColor.DANGER}
+                    type="submit"
+                    loader={
+                      loading && (
+                        <Loader size={16} style={{ marginRight: "12px" }} />
+                      )
+                    }
+                  />
+                </div>
 
                 <Label style={{ minWidth: "90px" }}>사원</Label>
                 <Select register={register("sSawon")} width={InputSize.i100}>

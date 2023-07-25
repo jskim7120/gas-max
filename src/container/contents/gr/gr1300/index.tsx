@@ -132,26 +132,24 @@ function GR1300({
                     </option>
                   ))}
                 </Select>
-
-                <Button
-                  text="검색"
-                  icon={!loading && <MagnifyingGlassBig width="15px" />}
-                  style={{ marginRight: "5px" }}
-                  color={ButtonColor.DANGER}
-                  type="submit"
-                  loader={
-                    loading && (
-                      <>
+                <div className="buttons ml30">
+                  <Button
+                    text="검색"
+                    icon={!loading && <MagnifyingGlassBig width="15px" />}
+                    color={ButtonColor.DANGER}
+                    type="submit"
+                    loader={
+                      loading && (
                         <Loader
-                          color="white"
-                          size={15}
-                          borderWidth="2px"
-                          style={{ marginRight: "10px" }}
+                          size={16}
+                          style={{
+                            marginRight: "12px",
+                          }}
                         />
-                      </>
-                    )
-                  }
-                />
+                      )
+                    }
+                  />
+                </div>
               </FormGroup>
             </SearchWrapper>
           </form>

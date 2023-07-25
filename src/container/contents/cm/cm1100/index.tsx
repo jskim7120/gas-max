@@ -359,28 +359,24 @@ function CM1100Page({
             >
               <Button
                 text="검색"
-                icon={!loading && <MagnifyingGlassBig />}
-                kind={ButtonType.ROUND}
-                style={{ width: "85px" }}
+                icon={!loading && <MagnifyingGlassBig width="15" />}
+                color={ButtonColor.DANGER}
                 type="submit"
                 loader={
                   loading && (
-                    <>
-                      <Loader
-                        color="white"
-                        size={19}
-                        style={{ marginRight: "10px" }}
-                        borderWidth="3px"
-                      />
-                    </>
+                    <Loader
+                      size={16}
+                      style={{
+                        marginRight: "12px",
+                      }}
+                    />
                   )
                 }
               />
               <Button
                 text="엑셀"
                 icon={<ExcelIcon />}
-                kind={ButtonType.ROUND}
-                color={ButtonColor.SECONDARY}
+                color={ButtonColor.LIGHT}
                 type="button"
                 onClick={() => gridRef.current.saveToExcel()}
               />
