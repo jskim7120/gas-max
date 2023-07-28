@@ -28,13 +28,14 @@ function CC1505({
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const { show4Btns, addBtnUnclick, isAddBtnClicked, setIsAddBtnClicked } =
+    use4Btns();
   const { showDraggableLine, linePos } = useDrawLine(leftSideWidth);
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
   const [data65, setData65] = useState<any>({});
   const [selected, setSelected] = useState<any>({});
-  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
@@ -54,15 +55,6 @@ function CC1505({
   const handleClickReset = () => {
     formRef.current.resetForm("reset");
   };
-
-  const { show4Btns, addBtnUnclick } = use4Btns(
-    isAddBtnClicked,
-    setIsAddBtnClicked,
-    handleClickAdd,
-    handleClickDelete,
-    handleClickUpdate,
-    handleClickReset
-  );
 
   useEffect(() => {
     getCommonDictionary({ groupId: "CC", functionName: "CC1505" });
@@ -107,7 +99,14 @@ function CC1505({
   return (
     <>
       <SearchWrapper className="h35 mt5">
-        <div className="buttons ml30">{show4Btns()}</div>
+        <div className="buttons ml30">
+          {show4Btns({
+            handleClickAdd,
+            handleClickDelete,
+            handleClickUpdate,
+            handleClickReset,
+          })}
+        </div>
         <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
@@ -122,7 +121,6 @@ function CC1505({
               areaCode={ownAreaCode}
               data={data}
               setSelected={setSelected}
-              setIsAddBtnClicked={setIsAddBtnClicked}
               fields={fields}
               columns={columns}
               menuId={menuId}

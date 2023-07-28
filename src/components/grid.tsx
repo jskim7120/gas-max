@@ -15,8 +15,6 @@ function Grid({
   menuId,
   rowIndex,
   gridNumber,
-  setIsAddBtnClicked,
-  setIsAddBtnClicked2,
   hideFooter,
 }: {
   areaCode?: string;
@@ -30,8 +28,6 @@ function Grid({
   menuId: string;
   rowIndex: number | undefined;
   gridNumber?: number | undefined;
-  setIsAddBtnClicked?: Function;
-  setIsAddBtnClicked2?: Function;
   hideFooter?: boolean;
 }) {
   let container: HTMLDivElement;

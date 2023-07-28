@@ -49,12 +49,9 @@ function GR1100({
     loading,
     isAddBtnClicked,
     setIsAddBtnClicked,
-    activeTabId,
     fetchData,
     showDraggableLine,
-    show4Btns,
-    gridIndexes,
-    dispatch,
+    showAll4Btns,
     dataCommonDic,
     linePos,
     formRef,
@@ -107,9 +104,7 @@ function GR1100({
             </>
           )}
 
-          {show4Btns({
-            style: { marginLeft: ownAreaCode === "00" ? "30px" : "55px" },
-          })}
+          <div className="buttons ml30">{showAll4Btns()}</div>
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
@@ -202,7 +197,6 @@ function GR1100({
             menuId={menuId}
             rowIndex={0}
             setSelected={setSelected}
-            setIsAddBtnClicked={setIsAddBtnClicked}
             style={{
               height: `calc(100% - 43px)`,
               minWidth: `${leftSideWidth}px`,

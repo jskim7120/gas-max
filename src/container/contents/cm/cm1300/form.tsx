@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet, apiPost } from "app/axios";
-import useRdanga from "app/hook/calcRdanga";
+import useRdanga from "app/hook/useCalcRdanga";
 import { CM1300INSERT, CM1300UPDATE, CM1300INSERTSEQ } from "app/path";
 import {
   Input,

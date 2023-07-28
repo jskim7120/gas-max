@@ -29,7 +29,7 @@ import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
 import { CM1105SEARCH, CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
-import useRdanga from "app/hook/calcRdanga";
+import useRdanga from "app/hook/useCalcRdanga";
 
 let IDCM1100 = "CM1100";
 let IDCM1200 = "CM1200";

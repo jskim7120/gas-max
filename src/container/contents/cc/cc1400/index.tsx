@@ -37,13 +37,14 @@ function CC1400({
   menuId: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const { show4Btns, addBtnUnclick, isAddBtnClicked, setIsAddBtnClicked } =
+    use4Btns();
   const { showDraggableLine, linePos } = useDrawLine(leftSideWidth);
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<any>({});
-  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
@@ -85,15 +86,6 @@ function CC1400({
   const handleClickReset = () => {
     formRef.current.resetForm("reset");
   };
-
-  const { show4Btns, addBtnUnclick } = use4Btns(
-    isAddBtnClicked,
-    setIsAddBtnClicked,
-    handleClickAdd,
-    handleClickDelete,
-    handleClickUpdate,
-    handleClickReset
-  );
 
   const resetSearchForm = () => {
     reset({
@@ -146,7 +138,14 @@ function CC1400({
               </Select>
             </>
           )}
-          <div className="buttons ml30">{show4Btns()}</div>
+          <div className="buttons ml30">
+            {show4Btns({
+              handleClickAdd,
+              handleClickDelete,
+              handleClickUpdate,
+              handleClickReset,
+            })}
+          </div>
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
@@ -219,7 +218,6 @@ function CC1400({
               setSelected={setSelected}
               menuId={menuId}
               rowIndex={0}
-              setIsAddBtnClicked={setIsAddBtnClicked}
               style={{ height: `calc(100% - 37px)` }}
             />
           </div>

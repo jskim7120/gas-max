@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import CreateReport from "app/hook/createReport";
+import getSimpleData from "app/hook/getSimpleData";
 import { CM9005SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import { SearchWrapper } from "../../commonStyle";
@@ -15,7 +15,7 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
-import setFooterDetail from "container/contents/footer/footerDetailFunc";
+// import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 function CM9005({
   depthFullName,
@@ -26,27 +26,22 @@ function CM9005({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    fetchData,
-    dispatch,
-    dataCommonDic,
-  } = CreateReport("CM", "CM9005", menuId, CM9005SEARCH);
+  const { data, setData, loading, fetchData, dataCommonDic } = getSimpleData(
+    "CM",
+    "CM9005",
+    CM9005SEARCH
+  );
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, watch } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  useEffect(() => {
-    if (selected && Object.keys(selected)?.length > 0) {
-      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
-    }
-  }, [selected]);
+  // useEffect(() => {
+  //   if (selected && Object.keys(selected)?.length > 0) {
+  //     setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
+  //   }
+  // }, [selected]);
 
   useEffect(() => {
     resetForm();

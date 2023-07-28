@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
-import CreateReport from "app/hook/createReport";
+import getSimpleData from "app/hook/getSimpleData";
 import { AR9002SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label } from "components/form/style";
@@ -32,16 +32,11 @@ function AR9002({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    fetchData,
-    dispatch,
-    dataCommonDic,
-  } = CreateReport("AR", "AR9002", menuId, AR9002SEARCH);
+  const { data, setData, loading, fetchData, dataCommonDic } = getSimpleData(
+    "AR",
+    "AR9002",
+    AR9002SEARCH
+  );
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({

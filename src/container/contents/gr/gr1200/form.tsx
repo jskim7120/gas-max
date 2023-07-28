@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
-import { apiGet, apiPost } from "app/axios";
+import { apiGet, apiPost, apiPostWithReturn } from "app/axios";
 import CustomDatePicker from "components/customDatePicker";
 import PlainTab from "components/plainTab";
 import EditableSelect from "components/editableSelect";
@@ -35,16 +35,16 @@ import {
   GR1200BLINSERT,
   GR1200BLDELETE,
 } from "app/path";
-import { useGetAreaCodeDictionaryQuery } from "app/api/commonDictionary";
+import { useGetAreaCodeDictionaryMutation } from "app/api/commonDictionary";
 import { calcFooterTab2Tab3 } from "./tabs/tab2and3CalculationHelper";
 import { SearchWrapper } from "container/contents/commonStyle";
-import FourButtons from "components/button/fourButtons";
 import Tab1Footer from "./tabs/tab1Footer";
 import {
-  calcByOnChange,
+  calcOnFieldChange,
   calcTab1GridChange,
 } from "./tabs/tab1CalculationHelper";
 import { removeCommas } from "helpers/currency";
+
 let clone: any[];
 
 const radioOptions = [
@@ -64,57 +64,55 @@ const Form = ({
   fetchData,
   menuId,
   isAddBtnClicked,
-  setIsAddBtnClicked,
+  addBtnUnclick,
+  show4Btns,
+  handleClickDelete,
 }: {
   dataCommonDic: any;
   selected: any;
   fetchData: Function;
   menuId: string;
   isAddBtnClicked: boolean;
-  setIsAddBtnClicked: Function;
+  addBtnUnclick: Function;
+  show4Btns: Function;
+  handleClickDelete: Function;
 }) => {
+  const { register, handleSubmit, reset, control, getValues, watch } =
+    useForm<IDATA65>({
+      mode: "onSubmit",
+    });
+
   const [tabId, setTabId] = useState(0);
   const [rowIndex, setRowIndex] = useState<number | null>(null);
-  const [radioChecked, setRadioChecked] = useState("0");
-  const [areaCode2, setAreaCode2] = useState("");
-  const [bcBuCode, setBcBuCode] = useState("");
+
   const [data65, setData65] = useState<any>({});
   const [data65Detail, setData65Detail] = useState<any[]>([]);
   const [deleteData65Detail, setDeleteData65Detail] = useState<any[]>([]);
-
   const [callCalc, setCallCalc] = useState(false);
-
-  const [bcPjan, setBcPjan] = useState<number>(0);
-  const [bcBjan, setBcBjan] = useState<number>(0);
-  const [bcPdanga, setBcPdanga] = useState<number>(0);
-  const [bcBdanga, setBcBdanga] = useState<number>(0);
-  const [bcPcost, setBcPcost] = useState<number>(0);
-  const [bcBcost, setBcBcost] = useState<number>(0);
-  const [bcGcost, setBcGcost] = useState<number>(0);
-  const [bcOutkum, setBcOutkum] = useState<number>(0);
-  const [bcDc, setBcDc] = useState<number>(0);
 
   const dispatch = useDispatch();
 
   const stateGR1200 = useSelector((state: any) => state.modal.gr1200);
   const { isDelete } = useSelector((state) => state.modal);
 
-  const { data: dataAdditionalDic } = useGetAreaCodeDictionaryQuery({
-    groupId: "GR",
-    functionName: "GR1200",
-    areaCode: areaCode2,
-  });
-
-  const { register, handleSubmit, reset, control, getValues, watch } =
-    useForm<IDATA65>({
-      mode: "onSubmit",
-    });
+  const [getAreaCodeDictionary, { data: dataAdditionalDic }] =
+    useGetAreaCodeDictionaryMutation();
 
   useEffect(() => {
-    if (dataCommonDic?.areaCode) {
-      setAreaCode2(dataCommonDic?.areaCode[0].code);
+    if (dataCommonDic) {
+      resetForm("areaCode");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (watch("areaCode2")) {
+      getAreaCodeDictionary({
+        groupId: "GR",
+        functionName: "GR1200",
+        areaCode: watch("areaCode2"),
+      });
+    }
+  }, [watch("areaCode2")]);
 
   useEffect(() => {
     if (dataAdditionalDic) {
@@ -139,13 +137,6 @@ const Form = ({
           ? dataAdditionalDic.bcSupplyType[0].code
           : "",
       }));
-
-      dataAdditionalDic?.bcBuCode &&
-        setBcBuCode(
-          dataAdditionalDic?.bcBuCode[0].code
-            ? dataAdditionalDic?.bcBuCode[0].code
-            : ""
-        );
     }
   }, [dataAdditionalDic]);
 
@@ -236,7 +227,7 @@ const Form = ({
 
   useEffect(() => {
     if (Object.keys(selected)?.length > 0) {
-      setAreaCode2(selected?.areaCode);
+      // setAreaCode2(selected?.areaCode);
       fetchData65();
     } else {
       resetForm("clear");
@@ -257,62 +248,90 @@ const Form = ({
 
   useEffect(() => {
     if (tabId === 0) {
-      calcTab1GridChange(
-        data65Detail,
-        getValues,
-        reset,
-        bcPjan,
-        bcBjan,
-        bcPdanga,
-        bcBdanga,
-        bcPcost,
-        bcBcost,
-        bcGcost,
-        bcOutkum,
-        bcDc
-      );
+      calcTab1GridChange(data65Detail, getValues, reset);
     }
     if (tabId === 1 || tabId === 2) {
-      calcFooterTab2Tab3(data65Detail, bcDc, bcOutkum, reset);
+      calcFooterTab2Tab3(
+        data65Detail,
+        getValues("bcDc"),
+        getValues("bcOutkum"),
+        reset
+      );
     }
 
-    clone = structuredClone(data65Detail);
+    // clone = structuredClone(data65Detail);
   }, [callCalc]);
 
-  useEffect(() => {
-    if (isAddBtnClicked === true) {
-      if (clone.length > 0) {
-        if (clone[0].tabId !== tabId) {
-          setData65Detail([
-            {
-              isNew: true,
-              tabId: tabId,
-            },
-          ]);
-        } else {
-          setData65Detail(clone);
-        }
-      }
-    }
-  }, [tabId]);
+  // useEffect(() => {
+  //   if (isAddBtnClicked === true) {
+  //     if (clone.length > 0) {
+  //       if (clone[0].tabId !== tabId) {
+  //         setData65Detail([
+  //           {
+  //             isNew: true,
+  //             tabId: tabId,
+  //           },
+  //         ]);
+  //       } else {
+  //         setData65Detail(clone);
+  //       }
+  //     }
+  //   }
+  // }, [tabId]);
 
-  const calcOnFieldChange = (name: string, num: number) => {
-    calcByOnChange(
-      name,
-      num,
-      reset,
-      getValues,
-      bcPjan,
-      bcBjan,
-      bcPdanga,
-      bcBdanga,
-      bcPcost,
-      bcBcost,
-      bcGcost,
-      bcOutkum,
-      bcDc
-    );
-  };
+  useEffect(() => {
+    if (watch("bcPjan")) {
+      calcOnFieldChange("bcPjan", watch("bcPjan"), reset, getValues);
+    }
+  }, [watch("bcPjan")]);
+
+  useEffect(() => {
+    if (watch("bcPdanga")) {
+      calcOnFieldChange("bcPdanga", watch("bcPdanga"), reset, getValues);
+    }
+  }, [watch("bcPdanga")]);
+
+  useEffect(() => {
+    if (watch("bcPcost")) {
+      calcOnFieldChange("bcPcost", watch("bcPcost"), reset, getValues);
+    }
+  }, [watch("bcPcost")]);
+
+  useEffect(() => {
+    if (watch("bcBjan")) {
+      calcOnFieldChange("bcBjan", watch("bcBjan"), reset, getValues);
+    }
+  }, [watch("bcBjan")]);
+
+  useEffect(() => {
+    if (watch("bcBdanga")) {
+      calcOnFieldChange("bcBdanga", watch("bcBdanga"), reset, getValues);
+    }
+  }, [watch("bcBdanga")]);
+
+  useEffect(() => {
+    if (watch("bcBcost")) {
+      calcOnFieldChange("bcBcost", watch("bcBcost"), reset, getValues);
+    }
+  }, [watch("bcBcost")]);
+
+  useEffect(() => {
+    if (watch("bcGcost")) {
+      calcOnFieldChange("bcGcost", watch("bcGcost"), reset, getValues);
+    }
+  }, [watch("bcGcost")]);
+
+  useEffect(() => {
+    if (watch("bcOutkum")) {
+      calcOnFieldChange("bcOutkum", watch("bcOutkum"), reset, getValues);
+    }
+  }, [watch("bcOutkum")]);
+
+  useEffect(() => {
+    if (watch("bcDc")) {
+      calcOnFieldChange("bcDc", watch("bcDc"), reset, getValues);
+    }
+  }, [watch("bcDc")]);
 
   const fetchData65 = async () => {
     const data = await apiGet(GR120065, {
@@ -338,8 +357,6 @@ const Form = ({
   const resetForm = async (type: string) => {
     if (type === "clear") {
       setTabId(0);
-      setRadioChecked(radioOptions[0].id);
-
       reset({
         bcBuCode: dataAdditionalDic?.bcBuCode
           ? dataAdditionalDic?.bcBuCode[0].code
@@ -363,6 +380,7 @@ const Form = ({
 
         bcDate: DateWithDash(new Date()),
         ...emptyObj,
+        bcCaCode: radioOptions[0].id,
       });
 
       setData65Detail([
@@ -372,36 +390,15 @@ const Form = ({
         },
       ]);
 
-      setBcPjan(0);
-      setBcBjan(0);
-      setBcPdanga(0);
-      setBcBdanga(0);
-      setBcPcost(0);
-      setBcBcost(0);
-      setBcGcost(0);
-      setBcOutkum(0);
-      setBcDc(0);
-
       document.getElementById("bcJunno")?.focus();
     }
     if (type === "reset") {
       setTabId(parseInt(data65?.bcChitType));
-      setRadioChecked(data65?.bcCaCode);
-      setIsAddBtnClicked(false);
       setRowIndex(null);
-      setBcBuCode(data65?.bcBuCode);
-
-      reset({ ...data65 });
-
-      setBcPjan(data65?.bcPjan);
-      setBcBjan(data65?.bcBjan);
-      setBcPdanga(data65?.bcPdanga);
-      setBcBdanga(data65?.bcBdanga);
-      setBcPcost(data65?.bcPcost);
-      setBcBcost(data65?.bcBcost);
-      setBcGcost(data65?.bcGcost);
-      setBcOutkum(data65?.bcOutkum);
-      setBcDc(data65?.bcDc);
+      reset({ ...data65, areaCode2: data65.areaCode });
+    }
+    if (type === "areaCode") {
+      reset({ areaCode2: dataCommonDic?.areaCode[0].code });
     }
   };
 
@@ -440,46 +437,43 @@ const Form = ({
       body = {
         ...formValues,
         bcDate: DateWithoutDash(formValues.bcDate),
-        areaCode: areaCode2,
-        bcBuCode: bcBuCode,
+        areaCode: watch("areaCode2"),
         bcChitType: `${tabId}`,
-        bcCaCode: radioChecked,
         bcSno: "",
-        bcPjan: +removeCommas(bcPjan),
-        bcBjan: +removeCommas(bcBjan),
-        bcPdanga: +removeCommas(bcPdanga),
-        bcBdanga: +removeCommas(bcBdanga),
-        bcPcost: +removeCommas(bcPcost),
-        bcBcost: +removeCommas(bcBcost),
-        bcGcost: +removeCommas(bcGcost),
-        bcOutkum: +removeCommas(bcOutkum),
-        bcDc: +removeCommas(bcDc),
+        bcPjan: +removeCommas(formValues.bcPjan),
+        bcBjan: +removeCommas(formValues.bcBjan),
+        bcPdanga: +removeCommas(formValues.bcPdanga),
+        bcBdanga: +removeCommas(formValues.bcBdanga),
+        bcPcost: +removeCommas(formValues.bcPcost),
+        bcBcost: +removeCommas(formValues.bcBcost),
+        bcGcost: +removeCommas(formValues.bcGcost),
+        bcOutkum: +removeCommas(formValues.bcOutkum),
+        bcDc: +removeCommas(formValues.bcDc),
       };
     } else {
       path = GR1200BUYUPDATE;
       body = {
         ...formValues,
         bcDate: DateWithoutDash(formValues.bcDate),
-        bcCaCode: radioChecked,
-        bcBuCode: bcBuCode,
-        bcPjan: +removeCommas(bcPjan),
-        bcBjan: +removeCommas(bcBjan),
-        bcPdanga: +removeCommas(bcPdanga),
-        bcBdanga: +removeCommas(bcBdanga),
-        bcPcost: +removeCommas(bcPcost),
-        bcBcost: +removeCommas(bcBcost),
-        bcGcost: +removeCommas(bcGcost),
-        bcOutkum: +removeCommas(bcOutkum),
-        bcDc: +removeCommas(bcDc),
+        bcPjan: +removeCommas(formValues.bcPjan),
+        bcBjan: +removeCommas(formValues.bcBjan),
+        bcPdanga: +removeCommas(formValues.bcPdanga),
+        bcBdanga: +removeCommas(formValues.bcBdanga),
+        bcPcost: +removeCommas(formValues.bcPcost),
+        bcBcost: +removeCommas(formValues.bcBcost),
+        bcGcost: +removeCommas(formValues.bcGcost),
+        bcOutkum: +removeCommas(formValues.bcOutkum),
+        bcDc: +removeCommas(formValues.bcDc),
       };
     }
 
     try {
-      const res: any = await apiPost(path, body);
+      const res: any = await apiPostWithReturn(path, body);
 
       if (res) {
         if (isAddBtnClicked) {
           const bcSno = res?.returnValue;
+
           if (bcSno && bcSno !== "" && data65Detail?.length > 0) {
             await Promise.all(
               data65Detail.map((item: any) => {
@@ -490,7 +484,7 @@ const Form = ({
                       inserted: [
                         {
                           ...item,
-                          areaCode: areaCode2,
+                          areaCode: watch("areaCode2"),
                           bcDate: DateWithoutDash(formValues.bcDate),
                           bcBuCode: data65.bcBuCode,
                           bcSno: bcSno,
@@ -513,7 +507,7 @@ const Form = ({
                     inserted: [
                       {
                         ...item,
-                        areaCode: areaCode2,
+                        areaCode: watch("areaCode2"),
                         bcDate: DateWithoutDash(formValues.bcDate),
                         bcBuCode: data65.bcBuCode,
                         bcSno: data65.bcSno,
@@ -625,12 +619,6 @@ const Form = ({
     }
   };
 
-  const onClickAdd = () => {
-    setIsAddBtnClicked(true);
-
-    resetForm("clear");
-  };
-
   function deleteRowGrid() {
     try {
       crud("delete");
@@ -640,23 +628,26 @@ const Form = ({
     } catch (error) {}
   }
 
-  const onClickDelete = () => {
-    if (Object.keys(selected)?.length > 0) {
-      dispatch(openModal({ type: "delModal" }));
-      dispatch(addDeleteMenuId({ menuId: menuId }));
-    } else {
-      toast.warning("no selected data to delete", {
-        autoClose: 500,
-      });
-    }
+  const handleClickAdd = () => {
+    resetForm("clear");
   };
-  const onClickUpdate = () => {
+
+  // const handleClickDelete = () => {
+  //   if (Object.keys(selected)?.length > 0) {
+  //     dispatch(openModal({ type: "delModal" }));
+  //     dispatch(addDeleteMenuId({ menuId: menuId }));
+  //   } else {
+  //     toast.warning("no selected data to delete", {
+  //       autoClose: 500,
+  //     });
+  //   }
+  // };
+  const handleClickUpdate = () => {
     crud(null);
+    addBtnUnclick();
   };
 
-  const onClickReset = () => {
-    setIsAddBtnClicked(false);
-
+  const handleClickReset = () => {
     resetForm("reset");
   };
 
@@ -677,15 +668,15 @@ const Form = ({
           className="h35"
           style={{
             background: "transparent",
-            borderBottom: "1px solid #707070",
+            borderBottom: "1px solid rgb(188,185 ,185)",
           }}
         >
           <FormGroup>
             <PersonInfoText text="가스매입등록" />
-            <p className="big">영업소</p>
+            <Label style={{ minWidth: "80px" }}>영업소</Label>
             <Select
-              onChange={(e: any) => setAreaCode2(e.target.value)}
-              value={areaCode2}
+              register={register("areaCode2")}
+              disabled={!isAddBtnClicked}
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -693,15 +684,15 @@ const Form = ({
                 </option>
               ))}
             </Select>
+            <div className="buttons ml30">
+              {show4Btns({
+                handleClickAdd,
+                handleClickDelete,
+                handleClickReset,
+                handleClickUpdate,
+              })}
+            </div>
           </FormGroup>
-
-          <FourButtons
-            onClickAdd={onClickAdd}
-            onClickDelete={onClickDelete}
-            onClickUpdate={onClickUpdate}
-            onClickReset={onClickReset}
-            isAddBtnClicked={isAddBtnClicked}
-          />
         </SearchWrapper>
         <FormGroup>
           <Label>입고 일자</Label>
@@ -719,11 +710,9 @@ const Form = ({
 
           <Label>매입처</Label>
           <Select
-            //{...register("bcBuCode")}
-            value={bcBuCode}
+            register={register("bcBuCode")}
             width={InputSize.i130}
             disabled={!isAddBtnClicked}
-            onChange={(e: any) => setBcBuCode(e.target.value)}
           >
             {dataAdditionalDic?.bcBuCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
@@ -779,12 +768,8 @@ const Form = ({
               <RadioButton
                 type="radio"
                 value={option.id}
-                name="bcCaCode"
                 id={option.id}
-                checked={radioChecked === option.id}
-                onChange={(e: any) => {
-                  setRadioChecked(option.id);
-                }}
+                {...register("bcCaCode")}
               />
               <RadioButtonLabel htmlFor={`${option.label}`}>
                 {option.label}
@@ -796,7 +781,7 @@ const Form = ({
           <Select
             register={register("bcCarno1")}
             width={InputSize.i130}
-            disabled={radioChecked === radioOptions[0].id}
+            disabled={watch("bcCaCode") === radioOptions[0].id}
           >
             {dataAdditionalDic?.bcCarno1?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
@@ -806,7 +791,7 @@ const Form = ({
           </Select>
         </FormGroup>
 
-        <div style={{ display: "flex", marginTop: "10px" }}>
+        <div style={{ display: "flex", marginTop: "7px" }}>
           <PlainTab
             tabHeader={["LP가스 매입", "일반가스 매입", "벌크 매입"]}
             onClick={(id) => {
@@ -824,59 +809,32 @@ const Form = ({
             -
           </CircleBtn>
         </div>
+
         <TabContentWrapper
           style={{
             padding: "0",
             border: "none",
-            borderTop: "1px solid #707070",
+            borderTop: "1px solid rgb(188,185 ,185)",
             boxShadow: "none",
             borderRadius: "0",
           }}
         >
           <TabGrid
-            areaCode={areaCode2}
-            //bcBuCode={getValues("bcBuCode") ? getValues("bcBuCode") : ""}
-            bcBuCode={bcBuCode}
+            areaCode={watch("areaCode2")}
+            bcBuCode={watch("bcBuCode")}
             data={data65Detail}
             setData={setData65Detail}
             tabId={tabId ? tabId : 0}
             setRowIndex={setRowIndex}
             setCallCalc={setCallCalc}
           />
-          {tabId === 0 && (
-            <Tab1Footer
-              register={register}
-              control={control}
-              calcOnFieldChange={calcOnFieldChange}
-              bcPjan={bcPjan}
-              setBcPjan={setBcPjan}
-              bcBjan={bcBjan}
-              setBcBjan={setBcBjan}
-              bcPdanga={bcPdanga}
-              setBcPdanga={setBcPdanga}
-              bcBdanga={bcBdanga}
-              setBcBdanga={setBcBdanga}
-              bcPcost={bcPcost}
-              setBcPcost={setBcPcost}
-              bcBcost={bcBcost}
-              setBcBcost={setBcBcost}
-              bcGcost={bcGcost}
-              setBcGcost={setBcGcost}
-            />
-          )}
+          {tabId === 0 && <Tab1Footer control={control} />}
         </TabContentWrapper>
       </form>
       <CommonFooterInfo
         register={register}
         dataAdditionalDic={dataAdditionalDic}
         control={control}
-        calcOnFieldChange={calcOnFieldChange}
-        bcOutkum={bcOutkum}
-        setBcOutkum={setBcOutkum}
-        bcDc={bcDc}
-        setBcDc={setBcDc}
-        // bcSupplyType={bcSupplyType}
-        // setBcSupplyType={setBcSupplyType}
       />
     </div>
   );

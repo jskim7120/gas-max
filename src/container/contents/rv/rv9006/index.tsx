@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
-import CreateReport from "app/hook/createReport";
+import getSimpleData from "app/hook/getSimpleData";
 import { ISEARCH } from "./model";
 import { RV9006SEARCH } from "app/path";
 import CustomDatePicker from "components/customDatePicker";
@@ -32,16 +32,11 @@ function RV9006({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    fetchData,
-    dispatch,
-    dataCommonDic,
-  } = CreateReport("RV", "RV9006", menuId, RV9006SEARCH);
+  const { data, setData, loading, fetchData, dataCommonDic } = getSimpleData(
+    "RV",
+    "RV9006",
+    RV9006SEARCH
+  );
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, control, reset, handleSubmit, watch } = useForm<ISEARCH>({

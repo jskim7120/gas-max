@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import CreateReport from "app/hook/createReport";
+import getSimpleData from "app/hook/getSimpleData";
 import { RV9011SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label } from "components/form/style";
@@ -30,16 +30,11 @@ function RV9011({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    fetchData,
-    dispatch,
-    dataCommonDic,
-  } = CreateReport("RV", "RV9011", menuId, RV9011SEARCH);
+  const { data, setData, loading, fetchData, dataCommonDic } = getSimpleData(
+    "RV",
+    "RV9011",
+    RV9011SEARCH
+  );
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const [toggler, setToggler] = useState<boolean>(true);

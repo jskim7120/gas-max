@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import CreateReport from "app/hook/createReport";
+import getSimpleData from "app/hook/getSimpleData";
 import { CC1100SEARCH } from "app/path";
 import { ICC9004SEARCH } from "./model";
 import BasicGrid from "components/basicGrid";
@@ -11,7 +11,7 @@ import Loader from "components/loader";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import { DateWithoutDash, GetYear, GetMonth } from "helpers/dateFormat";
+import { GetYear, GetMonth } from "helpers/dateFormat";
 import { columns, fields, layout } from "./data";
 
 function CC9004({
@@ -23,16 +23,11 @@ function CC9004({
   ownAreaCode: string;
   menuId: string;
 }) {
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    fetchData,
-    dispatch,
-    dataCommonDic,
-  } = CreateReport("CC", "CC9004", menuId, CC1100SEARCH);
+  const { data, setData, loading, fetchData, dataCommonDic } = getSimpleData(
+    "CC",
+    "CC9004",
+    CC1100SEARCH
+  );
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const [toggler, setToggler] = useState<boolean>(true);

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateScreen from "app/hook/createScreen";
+import { setRowIndex } from "app/state/tab/tabSlice";
+import { GR1200SEARCH } from "app/path";
+import { apiGet } from "app/axios";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import {
@@ -8,7 +11,6 @@ import {
   ExcelIcon,
   MagnifyingGlassBig,
 } from "components/allSvgIcon";
-import { apiGet } from "app/axios";
 import { ISEARCH } from "./model";
 import {
   MainWrapper,
@@ -20,7 +22,6 @@ import { Select, Label, FormGroup } from "components/form/style";
 import { ButtonColor, InputSize } from "components/componentsType";
 import GridLeft from "components/grid";
 import Form from "./form";
-import { GR1200SEARCH } from "app/path";
 import Loader from "components/loader";
 import { DateWithoutDash } from "helpers/dateFormat";
 import Table from "./table";
@@ -48,15 +49,17 @@ function GR1200({
     selected,
     setSelected,
     loading,
+    setLoading,
     isAddBtnClicked,
     setIsAddBtnClicked,
-    activeTabId,
-    showDraggableLine,
-    gridIndexes,
+    rowIndex,
     dispatch,
     dataCommonDic,
+    addBtnUnclick,
     linePos,
-    setLoading,
+    showDraggableLine,
+    show4Btns,
+    handleClickDelete,
   } = CreateScreen("GR", "GR1200", menuId, GR1200SEARCH, leftSideWidth);
 
   const [data2, setData2] = useState({});
@@ -69,16 +72,27 @@ function GR1200({
         sDate: dataCommonDic?.sDate[0].code,
         eDate: dataCommonDic?.eDate[0].code,
       });
-      fetchData({
-        areaCode: dataCommonDic?.areaCode[0].code,
-        sBcBuCode: dataCommonDic?.sBcBuCode[0].code,
-        sDate: dataCommonDic?.sDate[0].code,
-        eDate: dataCommonDic?.eDate[0].code,
-      });
+      fetchData(
+        {
+          areaCode: dataCommonDic?.areaCode[0].code,
+          sBcBuCode: dataCommonDic?.sBcBuCode[0].code,
+          sDate: dataCommonDic?.sDate[0].code,
+          eDate: dataCommonDic?.eDate[0].code,
+        },
+        "last"
+      );
     }
   }, [dataCommonDic]);
 
-  const fetchData = async (params: any) => {
+  useEffect(() => {
+    if (selected) {
+      if (isAddBtnClicked) {
+        addBtnUnclick();
+      }
+    }
+  }, [selected]);
+
+  const fetchData = async (params: any, pos: string = "") => {
     params.sDate = DateWithoutDash(params.sDate);
     params.eDate = DateWithoutDash(params.eDate);
 
@@ -87,8 +101,26 @@ function GR1200({
 
     if (res) {
       if (res?.realgridData) {
+        const lastIndex =
+          res?.realgridData?.length > 0 ? res.realgridData.length - 1 : 0;
         setData(res?.realgridData);
-        setSelected(res?.realgridData[0]);
+
+        if (pos === "last") {
+          setSelected(res.realgridData[lastIndex]);
+
+          dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 }));
+        } else {
+          if (rowIndex) {
+            if (rowIndex > lastIndex) {
+              dispatch(
+                setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 })
+              );
+              setSelected(res.realgridData[lastIndex]);
+            } else {
+              setSelected(res.realgridData[rowIndex]);
+            }
+          }
+        }
       } else {
         setData([]);
         setSelected({});
@@ -107,15 +139,15 @@ function GR1200({
     setIsAddBtnClicked(false);
   };
 
-  const submit = async (data: any) => {
-    data.sDate = DateWithoutDash(data.sDate);
-    data.eDate = DateWithoutDash(data.eDate);
-    fetchData(data);
+  const submit = async (params: any) => {
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
+    fetchData(params, "last");
   };
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
+      <SearchWrapper className="h35">
         <FormGroup>
           {ownAreaCode === "00" && (
             <>
@@ -140,9 +172,9 @@ function GR1200({
             style={{ minWidth: minWidth }}
           >
             <SearchWrapper
+              className="h35"
               style={{
                 minWidth: `${leftSideWidth}px`,
-                padding: "3px 15px",
               }}
             >
               <FormGroup>
@@ -204,11 +236,10 @@ function GR1200({
             fields={fields}
             columns={columns}
             menuId={menuId}
-            rowIndex={0}
+            rowIndex={rowIndex}
             setSelected={setSelected}
-            setIsAddBtnClicked={setIsAddBtnClicked}
             style={{
-              height: `calc(100% - 206px)`,
+              height: `calc(100% - 209px)`,
               minWidth: `${leftSideWidth}px`,
             }}
             layout={layout}
@@ -226,7 +257,9 @@ function GR1200({
             selected={selected}
             fetchData={handleSubmit(submit)}
             isAddBtnClicked={isAddBtnClicked}
-            setIsAddBtnClicked={setIsAddBtnClicked}
+            addBtnUnclick={addBtnUnclick}
+            show4Btns={show4Btns}
+            handleClickDelete={handleClickDelete}
           />
         </RightSide>
         {showDraggableLine()}

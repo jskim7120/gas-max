@@ -6,7 +6,7 @@ import { CM1200SEARCH, CM120065 } from "app/path";
 import { useSelector } from "app/store";
 import { addCM1105LoadStatus } from "app/state/modal/modalSlice";
 import GridLeft from "components/grid";
-import { ButtonColor, ButtonType } from "components/componentsType";
+import { ButtonColor } from "components/componentsType";
 import { FormGroup, Input, Label, Select } from "components/form/style";
 import CheckBox from "components/checkbox";
 import Loader from "components/loader";
@@ -45,17 +45,17 @@ function CM1200({
     selected,
     setSelected,
     loading,
-    isAddBtnClicked,
-    setIsAddBtnClicked,
     fetchData,
     showDraggableLine,
-    show4Btns,
     gridIndexes,
     dispatch,
     dataCommonDic,
     linePos,
     formRef,
+    isAddBtnClicked,
+    setIsAddBtnClicked,
     addBtnUnclick,
+    showAll4Btns,
   } = CreateScreen("CM", "CM1200", menuId, CM1200SEARCH, leftSideWidth);
 
   const cm1105 = useSelector((state) => state.modal.cm1105);
@@ -197,7 +197,7 @@ function CM1200({
             </>
           )}
 
-          {show4Btns({})}
+          <div className="buttons ml30">{showAll4Btns()}</div>
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
@@ -249,7 +249,6 @@ function CM1200({
             areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
-            setIsAddBtnClicked={setIsAddBtnClicked}
             fields={fields}
             columns={columns}
             menuId={menuId}

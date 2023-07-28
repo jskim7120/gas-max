@@ -38,13 +38,14 @@ function CC1200({
   ownAreaCode: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const { show4Btns, addBtnUnclick, isAddBtnClicked, setIsAddBtnClicked } =
+    use4Btns();
   const { showDraggableLine, linePos } = useDrawLine(leftSideWidth);
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
-  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
   const handleClickAdd = () => {
     formRef.current.resetForm("clear");
@@ -62,15 +63,6 @@ function CC1200({
   const handleClickReset = () => {
     formRef.current.resetForm("reset");
   };
-
-  const { show4Btns, addBtnUnclick } = use4Btns(
-    isAddBtnClicked,
-    setIsAddBtnClicked,
-    handleClickAdd,
-    handleClickDelete,
-    handleClickUpdate,
-    handleClickReset
-  );
 
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
@@ -152,7 +144,14 @@ function CC1200({
               </Select>
             </>
           )}
-          <div className="buttons ml30">{show4Btns()}</div>
+          <div className="buttons ml30">
+            {show4Btns({
+              handleClickAdd,
+              handleClickDelete,
+              handleClickUpdate,
+              handleClickReset,
+            })}
+          </div>
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>

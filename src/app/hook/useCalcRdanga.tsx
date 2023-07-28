@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { Input, Select, FormGroup } from "components/form/style";
-import { InputSize } from "components/componentsType";
 
 function useRdanga() {
   const [rdangaType, setRdangaType] = useState<string>("");

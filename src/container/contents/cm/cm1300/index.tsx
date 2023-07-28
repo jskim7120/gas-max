@@ -51,11 +51,9 @@ function CM1300({
     loading,
     isAddBtnClicked,
     setIsAddBtnClicked,
-    activeTabId,
     fetchData,
     showDraggableLine,
-    show4Btns,
-    isOpen,
+    showAll4Btns,
     gridIndexes,
     dispatch,
     dataCommonDic,
@@ -174,8 +172,7 @@ function CM1300({
               </Select>
             </>
           )}
-
-          {show4Btns({})}
+          <div className="buttons ml30">{showAll4Btns()}</div>
         </FormGroup>
         <p>{depthFullName}</p>
       </SearchWrapper>
@@ -226,8 +223,6 @@ function CM1300({
             areaCode={ownAreaCode}
             data={data}
             setSelected={setSelected}
-            setIsAddBtnClicked={setIsAddBtnClicked}
-            setIsAddBtnClicked2={setIsAddBtnClicked2}
             fields={fields}
             columns={columns}
             menuId={menuId}

@@ -34,7 +34,7 @@ import { formatCurrencyRemoveComma } from "helpers/currency";
 import getTabContent from "./getTabContent";
 import { useDispatch } from "app/store";
 import { openModal, addCM1105 } from "app/state/modal/modalSlice";
-import useRdanga from "app/hook/calcRdanga";
+import useRdanga from "app/hook/useCalcRdanga";
 
 const Form = React.forwardRef(
   (

@@ -146,7 +146,7 @@ const Form = React.forwardRef(
     }, [selected]);
 
     useEffect(() => {
-      if (addr.length > 0) {
+      if (addr?.length > 0) {
         reset((formValues: any) => ({
           ...formValues,
           buZipcode: addr ? addr?.split("/")[1] : "",
@@ -288,52 +288,8 @@ const Form = React.forwardRef(
 
       formValues.buAddr1 = buAddr1;
 
-      // try {
-      //   const response: any = await API.post(path, formValues);
-      //   if (response.status === 200) {
-      //     /*
-      //     if (isAddBtnClicked) {
-      //       //setData((prev: any) => [formValues, ...prev]);
-      //       setSelectedRowIndex(0);
-      //     } else {
-      //       setData((prev: any) => {
-      //         prev[selectedRowIndex] = formValues;
-      //         return [...prev];
-      //       });
-      //     }
-      //     */
-
-      //     fetchData({ areaCode: areaCode });
-      //     //setSelected(formValues);
-      //     toast.success("저장이 성공하였습니다", {
-      //       autoClose: 500,
-      //     });
-      //     setIsAddBtnClicked(false);
-      //   } else {
-      //     toast.error(response?.message, {
-      //       autoClose: 500,
-      //     });
-      //   }
-      // } catch (err: any) {
-      //   toast.error(err?.message, {
-      //     autoClose: 500,
-      //   });
-      // }
-
       const res = await apiPost(path, formValues, "저장이 성공하였습니다");
       if (res) {
-        /*
-          if (isAddBtnClicked) {
-            //setData((prev: any) => [formValues, ...prev]);
-            setSelectedRowIndex(0);
-          } else {
-            setData((prev: any) => {
-              prev[selectedRowIndex] = formValues;
-              return [...prev];
-            });
-          }
-          */
-
         fetchData({ areaCode: areaCode });
         setIsAddBtnClicked(false);
       }

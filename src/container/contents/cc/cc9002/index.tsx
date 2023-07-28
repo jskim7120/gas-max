@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import CreateReport from "app/hook/createReport";
+import getSimpleData from "app/hook/getSimpleData";
 import { CC1100SEARCH } from "app/path";
 import { ICC9002SEARCH } from "./model";
 import BasicGrid from "components/basicGrid";
@@ -23,16 +23,11 @@ function CC9002({
   ownAreaCode: string;
   menuId: string;
 }) {
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    fetchData,
-    dispatch,
-    dataCommonDic,
-  } = CreateReport("CC", "CC9002", menuId, CC1100SEARCH);
+  const { data, setData, loading, fetchData, dataCommonDic } = getSimpleData(
+    "CC",
+    "CC9002",
+    CC1100SEARCH
+  );
 
   const { register, handleSubmit, reset, control } = useForm<ICC9002SEARCH>({
     mode: "onSubmit",

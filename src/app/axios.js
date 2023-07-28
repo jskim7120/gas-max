@@ -44,6 +44,24 @@ export const apiPost = async (path, params, msg) => {
   }
 };
 
+export const apiPostWithReturn = async (path, params, msg) => {
+  try {
+    const res = await API.post(path, params);
+
+    if (res.status === 200) {
+      toast.success(msg, {
+        autoClose: 500,
+      });
+      return res.data;
+    } else {
+      alert(res?.response?.data?.message);
+    }
+    return false;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const apiGet = async (path, params) => {
   try {
     const res = await API.get(path, { params: params });

@@ -204,10 +204,8 @@ export const Input = ({
             className={className ? `${className} maskedInput` : "maskedInput"}
             maxLength={maxLength}
             type={type ? type : "text"}
-            // ref={refs}
             onChange={onChange}
             onKeyDown={handleKeyPress}
-            // onBlur={onBlur}
           />
         ) : (
           <InputForm
@@ -227,9 +225,7 @@ export const Input = ({
             textAlign={textAlign && textAlign}
             readOnly={readOnly}
             onChange={onChange}
-            // onBlur={onBlur}
             minWidth={minWidth && minWidth}
-            // ref={refs}
             onKeyDown={handleKeyPress}
           />
         )}
@@ -364,8 +360,9 @@ export const FormGroup = styled.div<{
   }
 
   .maskedInput.gray {
-    margin: 2px 5px;
-    background: rgba(104, 103, 103, 0.35);
+    margin: 1.5px 3px;
+    background: #d4d0d0;
+    border: 1px solid rgb(188, 185, 185);
     height: 20px;
     width: 120px;
   }
@@ -483,7 +480,7 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
 
 export const Divider = styled.div`
   height: 1px;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgb(188, 185, 185);
 `;
 export const DividerGray = styled.div`
   height: 1px;

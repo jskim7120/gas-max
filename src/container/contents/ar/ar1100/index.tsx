@@ -12,7 +12,7 @@ import {
   ResetGray,
 } from "components/allSvgIcon";
 import { addCM1106 } from "app/state/modal/modalSlice";
-import CreateReport from "app/hook/createReport";
+import useGetData from "app/hook/getSimpleData";
 import Button from "components/button/button";
 import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { Select, Label, FormGroup, Input } from "components/form/style";
@@ -38,21 +38,17 @@ function AR1100({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    fetchData,
-    dispatch,
-    dataCommonDic,
-  } = CreateReport("AR", "AR1100", menuId, AR1100SEARCH);
+  const { data, setData, loading, dataCommonDic, setLoading } = useGetData(
+    "AR",
+    "AR1100",
+    AR1100SEARCH
+  );
 
   const tabRef1 = useRef() as React.MutableRefObject<any>;
 
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
+  const [selected, setSelected] = useState<any>({});
   const [data65, setData65] = useState({});
   const [dataDictionary, setDataDictionary] = useState({});
   const [tabId, setTabId] = useState(0);
@@ -93,6 +89,21 @@ function AR1100({
       // );
     }
   }, [selected]);
+
+  const fetchData = async (params: any) => {
+    setLoading(true);
+    const dataS = await apiGet(AR1100SEARCH, params);
+
+    if (dataS && dataS?.length > 0) {
+      setData(dataS);
+      const lastIndex = dataS && dataS?.length > 1 ? dataS.length - 1 : 0;
+      setSelected(dataS[lastIndex]);
+    } else {
+      setData([]);
+      setSelected({});
+    }
+    setLoading(false);
+  };
 
   const fetchDataWithParams = () => {
     const params = getValues();

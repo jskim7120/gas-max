@@ -5,7 +5,7 @@ import CreateScreen from "app/hook/createScreen";
 import { GR1600SEARCH } from "app/path";
 import { InputSize, ButtonColor, ButtonType } from "components/componentsType";
 import Button from "components/button/button";
-import { Input, Select, Field, FormGroup, Label } from "components/form/style";
+import { Input, Select, FormGroup, Label } from "components/form/style";
 import { MagnifyingGlassBig, ExcelIcon } from "components/allSvgIcon";
 import {
   MainWrapper,
@@ -41,18 +41,11 @@ function GR1600({
 
   const {
     data,
-    setData,
     selected,
     setSelected,
     loading,
-    isAddBtnClicked,
-    setIsAddBtnClicked,
-    activeTabId,
     fetchData,
     showDraggableLine,
-    isOpen,
-    gridIndexes,
-    dispatch,
     dataCommonDic,
     linePos,
   } = CreateScreen("GR", "GR1600", menuId, GR1600SEARCH, leftSideWidth);

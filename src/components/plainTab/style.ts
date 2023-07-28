@@ -26,7 +26,7 @@ export const List = styled.li<{ isActive: boolean }>`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  border: 1px solid #00000033;
+  border: 1px solid rgb(188, 185, 185);
   border-bottom: none;
   border-radius: 8px 8px 0 0;
 
@@ -40,6 +40,6 @@ export const TabContentWrapper = styled.div`
   height: auto;
   padding: 20px 25px;
 
-  border: 1px solid #00000033;
+  border: 1px solid rgb(188, 185, 185);
   border-radius: 0 0 8px 8px;
 `;

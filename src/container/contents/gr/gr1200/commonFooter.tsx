@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Input, Field, Select } from "components/form/style";
 import { CTitle, CTextArea, CLabel, TabLikeHeader, CTable } from "./style";
 import { InputSize } from "components/componentsType";
@@ -7,26 +6,12 @@ import { currencyMask } from "helpers/currency";
 
 function CommonFooterInfo({
   register,
-  calcOnFieldChange,
   dataAdditionalDic,
   control,
-  bcOutkum,
-  bcDc,
-  // bcSupplyType,
-  setBcOutkum,
-  setBcDc,
-}: // setBcSupplyType,
-{
+}: {
   register: any;
-  calcOnFieldChange: Function;
   dataAdditionalDic: any;
   control: any;
-  bcOutkum: any;
-  bcDc: any;
-  // bcSupplyType: any;
-  setBcOutkum: Function;
-  setBcDc: Function;
-  // setBcSupplyType: Function;
 }) {
   return (
     <form autoComplete="off">
@@ -118,7 +103,6 @@ function CommonFooterInfo({
                     mask={currencyMask}
                     textAlign="right"
                     className="disabled"
-                    readOnly
                   />
                 )}
               />
@@ -128,7 +112,6 @@ function CommonFooterInfo({
                 register={register("bcSupplyType")}
                 className="h27"
                 width={InputSize.i110}
-                style={{ margin: "0px 3px" }}
               >
                 {dataAdditionalDic?.bcSupplyType?.map(
                   (obj: any, idx: number) => (
@@ -140,27 +123,31 @@ function CommonFooterInfo({
               </Select>
             </td>
             <td>
-              <Input
-                value={bcOutkum}
-                onChange={(e: any) => {
-                  setBcOutkum(e.target.value);
-                  calcOnFieldChange("bcOutkum", e.target.value);
-                }}
-                mask={currencyMask}
-                textAlign="right"
-                className="h27"
+              <Controller
+                control={control}
+                name="bcOutkum"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="h27"
+                  />
+                )}
               />
             </td>
             <td>
-              <Input
-                value={bcDc}
-                onChange={(e: any) => {
-                  setBcDc(e.target.value);
-                  calcOnFieldChange("bcDc", e.target.value);
-                }}
-                mask={currencyMask}
-                textAlign="right"
-                className="h27"
+              <Controller
+                control={control}
+                name="bcDc"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="h27"
+                  />
+                )}
               />
             </td>
             <td>

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "app/store";
+import { useSelector, useDispatch } from "app/store";
 import { apiGet, apiPost } from "app/axios";
 import { CM1100SEARCH, CM110065, CM1100DELETE } from "app/path";
 import { ICM1100SEARCH } from "./model";
@@ -13,7 +13,7 @@ import {
   setIsDelete,
 } from "app/state/modal/modalSlice";
 import Button from "components/button/button";
-import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
+import { ButtonColor, InputSize } from "components/componentsType";
 import {
   Plus,
   Trash,
@@ -28,7 +28,7 @@ import { columns, fields } from "./data";
 import CM1100Footer from "./footer";
 import Loader from "components/loader";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
-import CreateReport from "app/hook/createReport";
+import getSimpleData from "app/hook/getSimpleData";
 
 function CM1100Page({
   depthFullName,
@@ -39,23 +39,18 @@ function CM1100Page({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    fetchData,
-    dispatch,
-    dataCommonDic,
-    setLoading,
-  } = CreateReport("CM", "CM1100", menuId, CM1100SEARCH);
+  const { data, setData, loading, dataCommonDic, setLoading } = getSimpleData(
+    "CM",
+    "CM1100",
+    CM1100SEARCH
+  );
 
   const gridRef = useRef() as React.MutableRefObject<any>;
-
+  const [selected, setSelected] = useState<any>({});
   const [data65, setData65] = useState<any>({});
   const { isDelete } = useSelector((state) => state.modal);
 
+  const dispatch = useDispatch();
   const { register, handleSubmit, reset, getValues } = useForm<ICM1100SEARCH>({
     mode: "onSubmit",
   });
@@ -84,6 +79,21 @@ function CM1100Page({
 
   const submit = async (data: ICM1100SEARCH) => {
     fetchData(data);
+  };
+
+  const fetchData = async (params: any) => {
+    setLoading(true);
+    const dataS = await apiGet(CM1100SEARCH, params);
+
+    if (dataS && dataS?.length > 0) {
+      setData(dataS);
+      const lastIndex = dataS && dataS?.length > 1 ? dataS.length - 1 : 0;
+      setSelected(dataS[lastIndex]);
+    } else {
+      setData([]);
+      setSelected({});
+    }
+    setLoading(false);
   };
 
   const deleteRowGrid = async () => {

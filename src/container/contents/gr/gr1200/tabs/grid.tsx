@@ -5,7 +5,6 @@ import { fields2, columns2, layout2 } from "./data2";
 import { fields3, columns3 } from "./data3";
 import { useDispatch } from "app/store";
 import { addGR1200Popup, openModal } from "app/state/modal/modalSlice";
-import { calcFooterTab2Tab3 } from "./tab2and3CalculationHelper";
 
 function Grid({
   areaCode,

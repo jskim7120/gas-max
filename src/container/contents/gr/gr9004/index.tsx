@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import CreateReport from "app/hook/createReport";
+import getSimpleData from "app/hook/getSimpleData";
 import { GR9004SEARCH } from "app/path";
 import { ISEARCH } from "./model";
 import { SearchWrapper } from "../../commonStyle";
@@ -23,16 +23,11 @@ function GR9004({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    fetchData,
-    dispatch,
-    dataCommonDic,
-  } = CreateReport("GR", "GR9004", menuId, GR9004SEARCH);
+  const { data, setData, loading, fetchData, dataCommonDic } = getSimpleData(
+    "GR",
+    "GR9004",
+    GR9004SEARCH
+  );
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({

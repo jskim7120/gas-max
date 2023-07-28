@@ -1,19 +1,10 @@
 import { removeCommas } from "helpers/currency";
 
-export const calcByOnChange = (
+export const calcOnFieldChange = (
   name: string,
   num: any,
   reset: Function,
-  getValues: Function,
-  bcPjan: any,
-  bcBjan: any,
-  bcPdanga: any,
-  bcBdanga: any,
-  bcPcost: any,
-  bcBcost: any,
-  bcGcost: any,
-  bcOutkum: any,
-  bcDc: any
+  getValues: Function
 ) => {
   if (name === "bcPjan") {
     const { bcPin, bcSumB, bcBkum, bcGkum, bcBsum, bcGsum } = getValues();
@@ -32,11 +23,19 @@ export const calcByOnChange = (
     bcSumP =
       (bcPin ? +removeCommas(bcPin, "number") : 0) -
       +removeCommas(num, "number");
-    bcPkum = bcSumP * (bcPdanga ? +removeCommas(bcPdanga, "number") : 0);
-    bcPsum = bcPkum + (bcPcost ? +removeCommas(bcPcost, "number") : 0);
+    bcPkum =
+      bcSumP *
+      (getValues("bcPdanga")
+        ? +removeCommas(getValues("bcPdanga"), "number")
+        : 0);
+    bcPsum =
+      bcPkum +
+      (getValues("bcPcost")
+        ? +removeCommas(getValues("bcPcost"), "number")
+        : 0);
     bcJTotal =
       +removeCommas(num, "number") +
-      (bcBjan ? +removeCommas(bcBjan, "number") : 0);
+      (getValues("bcBjan") ? +removeCommas(getValues("bcBjan"), "number") : 0);
 
     bcSumTotal = bcSumP + (bcSumB ? +removeCommas(bcSumB, "number") : 0);
     bcSumKum =
@@ -54,8 +53,10 @@ export const calcByOnChange = (
 
     bcMisu =
       bcSum -
-      (bcOutkum ? +removeCommas(bcOutkum, "number") : 0) -
-      (bcDc ? +removeCommas(bcDc, "number") : 0);
+      (getValues("bcOutkum")
+        ? +removeCommas(getValues("bcOutkum"), "number")
+        : 0) -
+      (getValues("bcDc") ? +removeCommas(getValues("bcDc"), "number") : 0);
 
     reset((formValues: any) => ({
       ...formValues,
@@ -90,11 +91,19 @@ export const calcByOnChange = (
     bcSumB =
       (bcBin ? +removeCommas(bcBin, "number") : 0) -
       +removeCommas(num, "number");
-    bcBkum = bcSumB * (bcBdanga ? +removeCommas(bcBdanga, "number") : 0);
-    bcBsum = bcBkum + (bcBcost ? +removeCommas(bcBcost, "number") : 0);
+    bcBkum =
+      bcSumB *
+      (getValues("bcBdanga")
+        ? +removeCommas(getValues("bcBdanga"), "number")
+        : 0);
+    bcBsum =
+      bcBkum +
+      (getValues("bcBcost")
+        ? +removeCommas(getValues("bcBcost"), "number")
+        : 0);
     bcJTotal =
       +removeCommas(num, "number") +
-      (bcPjan ? +removeCommas(bcPjan, "number") : 0);
+      (getValues("bcPjan") ? +removeCommas(getValues("bcPjan"), "number") : 0);
     bcSumTotal = bcSumB + (bcSumP ? +removeCommas(bcSumP, "number") : 0);
     bcSumKum =
       bcBkum +
@@ -111,8 +120,10 @@ export const calcByOnChange = (
 
     bcMisu =
       bcSum -
-      (bcOutkum ? +removeCommas(bcOutkum, "number") : 0) -
-      (bcDc ? +removeCommas(bcDc, "number") : 0);
+      (getValues("bcOutkum")
+        ? +removeCommas(getValues("bcOutkum"), "number")
+        : 0) -
+      (getValues("bcDc") ? +removeCommas(getValues("bcDc"), "number") : 0);
 
     reset((formValues: any) => ({
       ...formValues,
@@ -142,7 +153,11 @@ export const calcByOnChange = (
     let bcMisu: number = 0;
 
     bcPkum = bcSumP * (num ? +removeCommas(num, "number") : 0);
-    bcPsum = bcPkum + (bcPcost ? +removeCommas(bcPcost, "number") : 0);
+    bcPsum =
+      bcPkum +
+      (getValues("bcPcost")
+        ? +removeCommas(getValues("bcPcost"), "number")
+        : 0);
     bcSumKum =
       bcPkum +
       (bcBkum ? +removeCommas(bcBkum, "number") : 0) +
@@ -157,8 +172,10 @@ export const calcByOnChange = (
 
     bcMisu =
       bcSum -
-      (bcOutkum ? +removeCommas(bcOutkum, "number") : 0) -
-      (bcDc ? +removeCommas(bcDc, "number") : 0);
+      (getValues("bcOutkum")
+        ? +removeCommas(getValues("bcOutkum"), "number")
+        : 0) -
+      (getValues("bcDc") ? +removeCommas(getValues("bcDc"), "number") : 0);
 
     reset((formValues: any) => ({
       ...formValues,
@@ -185,7 +202,11 @@ export const calcByOnChange = (
     let bcMisu: number = 0;
 
     bcBkum = bcSumB * (num ? +removeCommas(num, "number") : 0);
-    bcBsum = bcBkum + (bcBcost ? +removeCommas(bcBcost, "number") : 0);
+    bcBsum =
+      bcBkum +
+      (getValues("bcBcost")
+        ? +removeCommas(getValues("bcBcost"), "number")
+        : 0);
 
     bcSumKum =
       bcBkum +
@@ -201,8 +222,10 @@ export const calcByOnChange = (
 
     bcMisu =
       bcSum -
-      (bcOutkum ? +removeCommas(bcOutkum, "number") : 0) -
-      (bcDc ? +removeCommas(bcDc, "number") : 0);
+      (getValues("bcOutkum")
+        ? +removeCommas(getValues("bcOutkum"), "number")
+        : 0) -
+      (getValues("bcDc") ? +removeCommas(getValues("bcDc"), "number") : 0);
 
     reset((formValues: any) => ({
       ...formValues,
@@ -229,8 +252,12 @@ export const calcByOnChange = (
     let bcPsum = bcPkum + (num ? +removeCommas(num, "number") : 0);
     bcSumCost =
       (num ? +removeCommas(num, "number") : 0) +
-      (bcBcost ? +removeCommas(bcBcost, "number") : 0) +
-      (bcGcost ? +removeCommas(bcGcost, "number") : 0);
+      (getValues("bcBcost")
+        ? +removeCommas(getValues("bcBcost"), "number")
+        : 0) +
+      (getValues("bcGcost")
+        ? +removeCommas(getValues("bcGcost"), "number")
+        : 0);
 
     bcSum =
       bcPsum +
@@ -241,8 +268,10 @@ export const calcByOnChange = (
 
     bcMisu =
       bcSum -
-      (bcOutkum ? +removeCommas(bcOutkum, "number") : 0) -
-      (bcDc ? +removeCommas(bcDc, "number") : 0);
+      (getValues("bcOutkum")
+        ? +removeCommas(getValues("bcOutkum"), "number")
+        : 0) -
+      (getValues("bcDc") ? +removeCommas(getValues("bcDc"), "number") : 0);
 
     reset((formValues: any) => ({
       ...formValues,
@@ -268,8 +297,12 @@ export const calcByOnChange = (
     let bcBsum = bcBkum + (num ? +removeCommas(num, "number") : 0);
     bcSumCost =
       (num ? +removeCommas(num, "number") : 0) +
-      (bcPcost ? +removeCommas(bcPcost, "number") : 0) +
-      (bcGcost ? +removeCommas(bcGcost, "number") : 0);
+      (getValues("bcPcost")
+        ? +removeCommas(getValues("bcPcost"), "number")
+        : 0) +
+      (getValues("bcGcost")
+        ? +removeCommas(getValues("bcGcost"), "number")
+        : 0);
 
     bcSum =
       bcBsum +
@@ -280,8 +313,10 @@ export const calcByOnChange = (
 
     bcMisu =
       bcSum -
-      (bcOutkum ? +removeCommas(bcOutkum, "number") : 0) -
-      (bcDc ? +removeCommas(bcDc, "number") : 0);
+      (getValues("bcOutkum")
+        ? +removeCommas(getValues("bcOutkum"), "number")
+        : 0) -
+      (getValues("bcDc") ? +removeCommas(getValues("bcDc"), "number") : 0);
 
     reset((formValues: any) => ({
       ...formValues,
@@ -310,8 +345,12 @@ export const calcByOnChange = (
 
     bcSumCost =
       (num ? +removeCommas(num, "number") : 0) +
-      (bcPcost ? +removeCommas(bcPcost, "number") : 0) +
-      (bcBcost ? +removeCommas(bcBcost, "number") : 0);
+      (getValues("bcPcost")
+        ? +removeCommas(getValues("bcPcost"), "number")
+        : 0) +
+      (getValues("bcBcost")
+        ? +removeCommas(getValues("bcBcost"), "number")
+        : 0);
 
     bcSum =
       bcGsum +
@@ -323,8 +362,10 @@ export const calcByOnChange = (
 
     bcMisu =
       bcSum -
-      (bcOutkum ? +removeCommas(bcOutkum, "number") : 0) -
-      (bcDc ? +removeCommas(bcDc, "number") : 0);
+      (getValues("bcOutkum")
+        ? +removeCommas(getValues("bcOutkum"), "number")
+        : 0) -
+      (getValues("bcDc") ? +removeCommas(getValues("bcDc"), "number") : 0);
 
     reset((formValues: any) => ({
       ...formValues,
@@ -346,7 +387,7 @@ export const calcByOnChange = (
     bcMisu =
       bcInkum1 -
       (num ? +removeCommas(num, "number") : 0) -
-      (bcDc ? +removeCommas(bcDc, "number") : 0);
+      (getValues("bcDc") ? +removeCommas(getValues("bcDc"), "number") : 0);
 
     reset((formValues: any) => ({
       ...formValues,
@@ -360,7 +401,9 @@ export const calcByOnChange = (
     bcMisu =
       bcInkum1 -
       (num ? +removeCommas(num, "number") : 0) -
-      (bcOutkum ? +removeCommas(bcOutkum, "number") : 0);
+      (getValues("bcOutkum")
+        ? +removeCommas(getValues("bcOutkum"), "number")
+        : 0);
 
     reset((formValues: any) => ({
       ...formValues,
@@ -372,16 +415,7 @@ export const calcByOnChange = (
 export const calcTab1GridChange = (
   data65Detail: any,
   getValues: any,
-  reset: any,
-  bcPjan: any,
-  bcBjan: any,
-  bcPdanga: any,
-  bcBdanga: any,
-  bcPcost: any,
-  bcBcost: any,
-  bcGcost: any,
-  bcOutkum: any,
-  bcDc: any
+  reset: any
 ) => {
   if (data65Detail) {
     let bcPin: number = 0;
@@ -418,34 +452,62 @@ export const calcTab1GridChange = (
     });
     const { bcGin, bcGkum, bcGsum } = getValues();
 
-    bcSumP = bcSumP - (bcPjan ? +removeCommas(bcPjan, "number") : 0);
-    bcSumB = bcSumB - (bcBjan ? +removeCommas(bcBjan, "number") : 0);
-    bcPkum = bcSumP * (bcPdanga ? +removeCommas(bcPdanga, "number") : 0);
-    bcBkum = bcSumB * (bcBdanga ? +removeCommas(bcBdanga, "number") : 0);
-    bcPsum = bcPkum + (bcPcost ? +removeCommas(bcPcost, "number") : 0);
-    bcBsum = bcBkum + (bcBcost ? +removeCommas(bcBcost, "number") : 0);
+    bcSumP =
+      bcSumP -
+      (getValues("bcPjan") ? +removeCommas(getValues("bcPjan"), "number") : 0);
+    bcSumB =
+      bcSumB -
+      (getValues("bcBjan") ? +removeCommas(getValues("bcBjan"), "number") : 0);
+    bcPkum =
+      bcSumP *
+      (getValues("bcPdanga")
+        ? +removeCommas(getValues("bcPdanga"), "number")
+        : 0);
+    bcBkum =
+      bcSumB *
+      (getValues("bcBdanga")
+        ? +removeCommas(getValues("bcBdanga"), "number")
+        : 0);
+    bcPsum =
+      bcPkum +
+      (getValues("bcPcost")
+        ? +removeCommas(getValues("bcPcost"), "number")
+        : 0);
+    bcBsum =
+      bcBkum +
+      (getValues("bcBcost")
+        ? +removeCommas(getValues("bcBcost"), "number")
+        : 0);
 
     bcTotal =
       (isNaN(bcPin) ? 0 : +bcPin) +
       (isNaN(bcBin) ? 0 : +bcBin) +
       (bcGin ? +removeCommas(bcGin, "number") : 0);
     bcJTotal =
-      (bcPjan ? +removeCommas(bcPjan, "number") : 0) +
-      (bcBjan ? +removeCommas(bcBjan, "number") : 0);
+      (getValues("bcPjan") ? +removeCommas(getValues("bcPjan"), "number") : 0) +
+      (getValues("bcBjan") ? +removeCommas(getValues("bcBjan"), "number") : 0);
     bcSumTotal = bcSumP + bcSumB;
     bcSumKum = bcPkum + bcBkum + (bcGkum ? +removeCommas(bcGkum, "number") : 0);
     bcSumCost =
-      (bcPcost ? +removeCommas(bcPcost, "number") : 0) +
-      (bcBcost ? +removeCommas(bcBcost, "number") : 0) +
-      (bcGcost ? +removeCommas(bcGcost, "number") : 0);
+      (getValues("bcPcost")
+        ? +removeCommas(getValues("bcPcost"), "number")
+        : 0) +
+      (getValues("bcBcost")
+        ? +removeCommas(getValues("bcBcost"), "number")
+        : 0) +
+      (getValues("bcGcost")
+        ? +removeCommas(getValues("bcGcost"), "number")
+        : 0);
     bcSum = bcPsum + bcBsum + (bcGsum ? +removeCommas(bcGsum, "number") : 0);
 
     const bcSupplyAmt = Math.round(bcSum / 1.1);
     const bcVatAmt = bcSum - bcSupplyAmt;
     const bcMisu =
       bcSum -
-      (bcDc ? +removeCommas(bcDc, "number") : 0) -
-      (bcOutkum ? +removeCommas(bcOutkum, "number") : 0);
+      (getValues("bcDc") ? +removeCommas(getValues("bcDc"), "number") : 0) -
+      (getValues("bcOutkum")
+        ? +removeCommas(getValues("bcOutkum"), "number")
+        : 0);
 
     reset((formValues: any) => ({
       ...formValues,

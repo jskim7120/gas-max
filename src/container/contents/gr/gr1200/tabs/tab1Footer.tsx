@@ -1,46 +1,9 @@
-import { useState } from "react";
 import { TabLikeHeader, CTable2 } from "../style";
 import { Input } from "components/form/style";
 import { Controller } from "react-hook-form";
 import { currencyMask } from "helpers/currency";
 
-function Tab1Footer({
-  register,
-  control,
-  calcOnFieldChange,
-  bcPjan,
-  setBcPjan,
-  bcBjan,
-  setBcBjan,
-  bcPdanga,
-  setBcPdanga,
-  bcBdanga,
-  setBcBdanga,
-  bcPcost,
-  setBcPcost,
-  bcBcost,
-  setBcBcost,
-  bcGcost,
-  setBcGcost,
-}: {
-  register: Function;
-  control: any;
-  calcOnFieldChange: Function;
-  bcPjan: any;
-  setBcPjan: Function;
-  bcBjan: any;
-  setBcBjan: Function;
-  bcPdanga: any;
-  setBcPdanga: Function;
-  bcBdanga: any;
-  setBcBdanga: Function;
-  bcPcost: any;
-  setBcPcost: Function;
-  bcBcost: any;
-  setBcBcost: Function;
-  bcGcost: any;
-  setBcGcost: Function;
-}) {
+function Tab1Footer({ control }: { control: any }) {
   return (
     <div>
       <TabLikeHeader>매입량</TabLikeHeader>
@@ -76,15 +39,17 @@ function Tab1Footer({
               />
             </td>
             <td>
-              <Input
-                value={bcPjan}
-                onChange={(e: any) => {
-                  setBcPjan(e.target.value);
-                  calcOnFieldChange("bcPjan", e.target.value);
-                }}
-                textAlign="right"
-                mask={currencyMask}
-                className="h27"
+              <Controller
+                control={control}
+                name="bcPjan"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    textAlign="right"
+                    mask={currencyMask}
+                    className="h27"
+                  />
+                )}
               />
             </td>
             <td>
@@ -103,15 +68,17 @@ function Tab1Footer({
               />
             </td>
             <td>
-              <Input
-                value={bcPdanga}
-                onChange={(e: any) => {
-                  setBcPdanga(e.target.value);
-                  calcOnFieldChange("bcPdanga", e.target.value);
-                }}
-                mask={currencyMask}
-                textAlign="right"
-                className="h27"
+              <Controller
+                control={control}
+                name="bcPdanga"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="h27"
+                  />
+                )}
               />
             </td>
             <td>
@@ -130,15 +97,17 @@ function Tab1Footer({
               />
             </td>
             <td>
-              <Input
-                value={bcPcost}
-                onChange={(e: any) => {
-                  setBcPcost(e.target.value);
-                  calcOnFieldChange("bcPcost", e.target.value);
-                }}
-                mask={currencyMask}
-                textAlign="right"
-                className="h27"
+              <Controller
+                control={control}
+                name="bcPcost"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="h27"
+                  />
+                )}
               />
             </td>
             <td>
@@ -175,15 +144,17 @@ function Tab1Footer({
               />
             </td>
             <td>
-              <Input
-                value={bcBjan}
-                onChange={(e: any) => {
-                  setBcBjan(e.target.value);
-                  calcOnFieldChange("bcBjan", e.target.value);
-                }}
-                mask={currencyMask}
-                textAlign="right"
-                className="h27"
+              <Controller
+                control={control}
+                name="bcBjan"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="h27"
+                  />
+                )}
               />
             </td>
             <td>
@@ -202,15 +173,17 @@ function Tab1Footer({
               />
             </td>
             <td>
-              <Input
-                value={bcBdanga}
-                onChange={(e: any) => {
-                  setBcBdanga(e.target.value);
-                  calcOnFieldChange("bcBdanga", e.target.value);
-                }}
-                mask={currencyMask}
-                textAlign="right"
-                className="h27"
+              <Controller
+                control={control}
+                name="bcBdanga"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="h27"
+                  />
+                )}
               />
             </td>
             <td>
@@ -229,15 +202,17 @@ function Tab1Footer({
               />
             </td>
             <td>
-              <Input
-                value={bcBcost}
-                onChange={(e: any) => {
-                  setBcBcost(e.target.value);
-                  calcOnFieldChange("bcBcost", e.target.value);
-                }}
-                mask={currencyMask}
-                textAlign="right"
-                className="h27"
+              <Controller
+                control={control}
+                name="bcBcost"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="h27"
+                  />
+                )}
               />
             </td>
             <td>
@@ -296,15 +271,17 @@ function Tab1Footer({
               />
             </td>
             <td>
-              <Input
-                value={bcGcost}
-                onChange={(e: any) => {
-                  setBcGcost(e.target.value);
-                  calcOnFieldChange("bcGcost", e.target.value);
-                }}
-                mask={currencyMask}
-                textAlign="right"
-                className="h27"
+              <Controller
+                control={control}
+                name="bcGcost"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="h27"
+                  />
+                )}
               />
             </td>
             <td>

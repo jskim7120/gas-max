@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { useForm, Controller } from "react-hook-form";
-import CreateReport from "app/hook/createReport";
+import { useForm } from "react-hook-form";
+import getSimpleData from "app/hook/getSimpleData";
 import { RV9013SEARCH } from "app/path";
 import { SearchWrapper } from "../../commonStyle";
 import { Select, FormGroup, Label } from "components/form/style";
@@ -48,16 +48,11 @@ function RV9013({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    fetchData,
-    dispatch,
-    dataCommonDic,
-  } = CreateReport("RV", "RV9013", menuId, RV9013SEARCH);
+  const { data, setData, loading, fetchData, dataCommonDic } = getSimpleData(
+    "RV",
+    "RV9013",
+    RV9013SEARCH
+  );
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({

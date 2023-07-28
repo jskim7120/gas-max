@@ -1,20 +1,15 @@
-import { useRef, MouseEventHandler } from "react";
+import { useRef, MouseEventHandler, useState } from "react";
 import { Update, Plus, Trash, Reset } from "components/allSvgIcon";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 
-function use4Btns(
-  isAddBtnClicked: boolean,
-  setIsAddBtnClicked: Function,
-  handleClickAdd: MouseEventHandler,
-  handleClickDelete: MouseEventHandler,
-  handleClickUpdate: MouseEventHandler,
-  handleClickReset: MouseEventHandler
-) {
+function use4Btns() {
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const btnRef2 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const btnRef3 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const btnRef4 = useRef() as React.MutableRefObject<HTMLButtonElement>;
+
+  const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
   const addBtnClick = () => {
     btnRef1.current.classList.add("active");
@@ -26,7 +21,17 @@ function use4Btns(
     setIsAddBtnClicked(false);
   };
 
-  const show4Btns = () => {
+  const show4Btns = ({
+    handleClickAdd,
+    handleClickDelete,
+    handleClickUpdate,
+    handleClickReset,
+  }: {
+    handleClickAdd: MouseEventHandler;
+    handleClickDelete: MouseEventHandler;
+    handleClickUpdate: MouseEventHandler;
+    handleClickReset: MouseEventHandler;
+  }) => {
     return (
       <>
         <Button
@@ -73,10 +78,12 @@ function use4Btns(
     show4Btns,
     addBtnClick,
     addBtnUnclick,
-    btnRef1,
-    btnRef2,
-    btnRef3,
-    btnRef4,
+    isAddBtnClicked,
+    setIsAddBtnClicked,
+    // btnRef1,
+    // btnRef2,
+    // btnRef3,
+    // btnRef4,
   };
 }
 

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
-import CreateReport from "app/hook/createReport";
+import getSimpleData from "app/hook/getSimpleData";
 import { CM9002SEARCH } from "app/path";
 import { ICM9002SEARCH } from "./model";
 import { SearchWrapper } from "../../commonStyle";
@@ -17,7 +17,7 @@ import { ButtonColor, InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import BasicGrid from "components/basicGrid";
 import { columns, fields } from "./data";
-import setFooterDetail from "container/contents/footer/footerDetailFunc";
+// import setFooterDetail from "container/contents/footer/footerDetailFunc";
 
 function CM9002({
   depthFullName,
@@ -28,16 +28,11 @@ function CM9002({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    fetchData,
-    dispatch,
-    dataCommonDic,
-  } = CreateReport("CM", "CM9002", menuId, CM9002SEARCH);
+  const { data, setData, loading, fetchData, dataCommonDic } = getSimpleData(
+    "CM",
+    "CM9002",
+    CM9002SEARCH
+  );
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const [dataChk, setDataChk] = useState(true);
@@ -47,11 +42,11 @@ function CM9002({
       mode: "onSubmit",
     });
 
-  useEffect(() => {
-    if (selected && Object.keys(selected)?.length > 0) {
-      setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
-    }
-  }, [selected]);
+  // useEffect(() => {
+  //   if (selected && Object.keys(selected)?.length > 0) {
+  //     setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
+  //   }
+  // }, [selected]);
 
   useEffect(() => {
     if (dataCommonDic && dataCommonDic?.dataInit) {
