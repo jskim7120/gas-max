@@ -52,7 +52,7 @@ export const apiPostWithReturn = async (path, params, msg) => {
       toast.success(msg, {
         autoClose: 500,
       });
-      return res.data;
+      return res?.data ? res.data : true;
     } else {
       alert(res?.response?.data?.message);
     }

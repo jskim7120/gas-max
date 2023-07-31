@@ -13,7 +13,6 @@ import {
 } from "components/radioButton/style";
 import { Input, Select, FormGroup, Label } from "components/form/style";
 import {
-  openModal,
   addDeleteMenuId,
   setIsDelete,
   closeModal,
@@ -226,11 +225,8 @@ const Form = ({
   }, [stateGR1200]);
 
   useEffect(() => {
-    if (Object.keys(selected)?.length > 0) {
-      // setAreaCode2(selected?.areaCode);
+    if (selected && Object.keys(selected)?.length > 0) {
       fetchData65();
-    } else {
-      resetForm("clear");
     }
   }, [selected]);
 
@@ -262,22 +258,23 @@ const Form = ({
     // clone = structuredClone(data65Detail);
   }, [callCalc]);
 
-  // useEffect(() => {
-  //   if (isAddBtnClicked === true) {
-  //     if (clone.length > 0) {
-  //       if (clone[0].tabId !== tabId) {
-  //         setData65Detail([
-  //           {
-  //             isNew: true,
-  //             tabId: tabId,
-  //           },
-  //         ]);
-  //       } else {
-  //         setData65Detail(clone);
-  //       }
-  //     }
-  //   }
-  // }, [tabId]);
+  useEffect(() => {
+    //   if (isAddBtnClicked === true) {
+    //     if (clone.length > 0) {
+    //       if (clone[0].tabId !== tabId) {
+    //         setData65Detail([
+    //           {
+    //             isNew: true,
+    //             tabId: tabId,
+    //           },
+    //         ]);
+    //       } else {
+    //         setData65Detail(clone);
+    //       }
+    //     }
+    //   }
+    setData65Detail([]);
+  }, [tabId]);
 
   useEffect(() => {
     if (watch("bcPjan")) {
@@ -334,7 +331,7 @@ const Form = ({
   }, [watch("bcDc")]);
 
   const fetchData65 = async () => {
-    const data = await apiGet(GR120065, {
+    const res = await apiGet(GR120065, {
       areaCode: selected?.areaCode,
       bcDate: DateWithoutDash(selected?.bcDate),
       sBcBuCode: selected?.bcBuCode,
@@ -342,11 +339,9 @@ const Form = ({
       bcChitType: selected?.bcChitType,
     });
 
-    if (data) {
-      data?.mainData ? setData65(data?.mainData[0]) : setData65({});
-      data?.detailData
-        ? setData65Detail([...data?.detailData])
-        : setData65Detail([]);
+    if (res) {
+      setData65(res?.mainData ? res?.mainData[0] : {});
+      setData65Detail(res?.detailData ? res?.detailData : []);
     } else {
       setData65({});
       setData65Detail([]);
@@ -377,7 +372,6 @@ const Form = ({
         bcSupplyType: dataAdditionalDic?.bcSupplyType
           ? dataAdditionalDic.bcSupplyType[0].code
           : "",
-
         bcDate: DateWithDash(new Date()),
         ...emptyObj,
         bcCaCode: radioOptions[0].id,
@@ -394,7 +388,6 @@ const Form = ({
     }
     if (type === "reset") {
       setTabId(parseInt(data65?.bcChitType));
-      setRowIndex(null);
       reset({ ...data65, areaCode2: data65.areaCode });
     }
     if (type === "areaCode") {
@@ -650,8 +643,6 @@ const Form = ({
   const handleClickReset = () => {
     resetForm("reset");
   };
-
-  // console.log("data65Detail :::::::", data65Detail);
 
   return (
     <div

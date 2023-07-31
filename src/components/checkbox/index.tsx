@@ -18,11 +18,12 @@ const CheckBoxWrapper = styled.div<{ rtl: boolean; gap?: string }>`
     font-family: "NotoSansKRRegular";
     font-size: 15px;
     font-weight: 400;
-    width: max-content;
   }
 
   input[type="checkbox"] {
     position: relative;
+    outline: none;
+    border: none;
   }
 
   input[type="checkbox"]:before {
@@ -56,15 +57,9 @@ const CheckBoxWrapper = styled.div<{ rtl: boolean; gap?: string }>`
     background-image: url(${Checked});
   }
 
+  input[type="checkbox"]:focus:before,
   input[type="checkbox"]:not(:disabled):hover:before {
     border-color: #707070;
-  }
-
-  // input[type="checkbox"]:focus {
-  //   outline: none;
-  // }
-
-  input[type="checkbox"]:focus:before {
     background: #fffacd;
   }
 

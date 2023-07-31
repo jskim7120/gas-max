@@ -27,8 +27,7 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import Table from "./table";
 import { fields, columns, layout } from "./data";
 
-const minWidth = "925px";
-const leftSideWidth: number = 942;
+const leftSideWidth: number = 920;
 
 function GR1200({
   depthFullName,
@@ -107,7 +106,6 @@ function GR1200({
 
         if (pos === "last") {
           setSelected(res.realgridData[lastIndex]);
-
           dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 }));
         } else {
           if (rowIndex) {
@@ -136,7 +134,6 @@ function GR1200({
       setSelected({});
     }
     setLoading(false);
-    setIsAddBtnClicked(false);
   };
 
   const submit = async (params: any) => {
@@ -169,14 +166,9 @@ function GR1200({
           <form
             onSubmit={handleSubmit(submit)}
             autoComplete="off"
-            style={{ minWidth: minWidth }}
+            style={{ minWidth: leftSideWidth }}
           >
-            <SearchWrapper
-              className="h35"
-              style={{
-                minWidth: `${leftSideWidth}px`,
-              }}
-            >
+            <SearchWrapper className="h35">
               <FormGroup>
                 <Label style={{ minWidth: "48px" }}>기간</Label>
                 <Controller
@@ -244,7 +236,7 @@ function GR1200({
             }}
             layout={layout}
           />
-          <Table data={data2} style={{ minWidth: minWidth, width: "942px" }} />
+          <Table data={data2} style={{ width: leftSideWidth - 18 }} />
         </LeftSide>
         <RightSide
           style={{
