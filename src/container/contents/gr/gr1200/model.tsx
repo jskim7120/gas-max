@@ -4,23 +4,23 @@ export interface ISEARCH {
   eDate: string;
   sBcBuCode: string;
 }
-export interface IGR1200 {
-  areaCode: string;
-  bcBin: number;
-  bcBuCode: string;
-  bcBuName: string;
-  bcChitType: string;
-  bcChitTypeName: string;
-  bcCtypeName: string;
-  bcDate: string;
-  bcDateno: string;
-  bcGin: number;
-  bcInkum: number;
-  bcJTotal: number;
-  bcPin: number;
-  bcSno: string;
-  queryType: string;
-}
+// export interface IGR1200 {
+//   areaCode: string;
+//   bcBin: number;
+//   bcBuCode: string;
+//   bcBuName: string;
+//   bcChitType: string;
+//   bcChitTypeName: string;
+//   bcCtypeName: string;
+//   bcDate: string;
+//   bcDateno: string;
+//   bcGin: number;
+//   bcInkum: number;
+//   bcJTotal: number;
+//   bcPin: number;
+//   bcSno: string;
+//   queryType: string;
+// }
 
 export interface IDATA65 {
   areaCode: string;

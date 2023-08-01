@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateScreen from "app/hook/createScreen";
+import { apiGet } from "app/axios";
+import { setRowIndex } from "app/state/tab/tabSlice";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
-import { apiGet } from "app/axios";
 import { ISEARCH } from "./model";
 import {
   MainWrapper,
@@ -22,8 +23,7 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import Table from "./table";
 import { fields, columns } from "./data";
 
-const minWidth = "905px";
-const leftSideWidth: number = 960;
+const leftSideWidth: number = 920;
 
 function GR1300({
   depthFullName,
@@ -44,18 +44,25 @@ function GR1300({
     selected,
     setSelected,
     loading,
+    setLoading,
     isAddBtnClicked,
     setIsAddBtnClicked,
-    fetchData,
     showDraggableLine,
     gridIndexes,
     dispatch,
     dataCommonDic,
     linePos,
+    show4Btns,
+    addBtnUnclick,
+    rowIndex,
   } = CreateScreen("GR", "GR1300", menuId, GR1300SEARCH, leftSideWidth);
+
+  const [data2, setData2] = useState({});
+  const [bbBuCode, setBbBuCode] = useState([]);
 
   useEffect(() => {
     if (dataCommonDic) {
+      setBbBuCode(dataCommonDic?.bbBuCode);
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
         sBuCode: dataCommonDic?.sBuCode[0].code,
@@ -65,24 +72,68 @@ function GR1300({
     }
   }, [dataCommonDic]);
 
-  const submit = async (data: any) => {
-    if (data.sDate !== undefined) {
-      data.sDate = DateWithoutDash(data.sDate);
+  const fetchData = async (params: any, pos: string = "") => {
+    params.sDate = DateWithoutDash(params.sDate);
+    params.eDate = DateWithoutDash(params.eDate);
+
+    setLoading(true);
+    const res = await apiGet(GR1300SEARCH, params);
+
+    if (res) {
+      if (res?.dataMain) {
+        const lastIndex =
+          res?.dataMain?.length > 0 ? res.dataMain.length - 1 : 0;
+        setData(res?.dataMain);
+
+        if (pos === "last") {
+          setSelected(res.dataMain[lastIndex]);
+          dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 }));
+        } else {
+          if (rowIndex) {
+            if (rowIndex > lastIndex) {
+              dispatch(
+                setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 })
+              );
+              setSelected(res.dataMain[lastIndex]);
+            } else {
+              setSelected(res.dataMain[rowIndex]);
+            }
+          }
+        }
+      } else {
+        setData([]);
+        setSelected({});
+      }
+      if (res?.totalData) {
+        setData2(res?.totalData[0]);
+      } else {
+        setData2([]);
+      }
+    } else {
+      setData([]);
+      setData2([]);
+      setSelected({});
     }
-    if (data.eDate !== undefined) {
-      data.eDate = DateWithoutDash(data.eDate);
+    setLoading(false);
+  };
+
+  const submit = async (params: any) => {
+    if (params.sDate !== undefined) {
+      params.sDate = DateWithoutDash(params.sDate);
     }
-    fetchData(data);
+    if (params.eDate !== undefined) {
+      params.eDate = DateWithoutDash(params.eDate);
+    }
+    fetchData(params);
   };
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
+      <SearchWrapper className="h35">
         <FormGroup>
           {ownAreaCode === "00" && (
             <>
-              <Label style={{ minWidth: "62px" }}>영업소</Label>
-
+              <Label style={{ minWidth: "70px" }}>영업소</Label>
               <Select register={register("areaCode")}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -100,7 +151,7 @@ function GR1300({
           <form
             onSubmit={handleSubmit(submit)}
             autoComplete="off"
-            style={{ minWidth: minWidth }}
+            style={{ minWidth: leftSideWidth }}
           >
             <SearchWrapper
               style={{
@@ -110,7 +161,7 @@ function GR1300({
               }}
             >
               <FormGroup>
-                <Label style={{ minWidth: "auto" }}>지급기간</Label>
+                <Label style={{ minWidth: "70px" }}>지급기간</Label>
                 <Controller
                   control={control}
                   name="sDate"
@@ -122,7 +173,7 @@ function GR1300({
                   render={({ field }) => <CustomDatePicker {...field} />}
                 />
 
-                <Label>매입처명</Label>
+                <Label style={{ minWidth: "90px" }}>매입처명</Label>
                 <Select register={register("sBuCode")}>
                   {dataCommonDic?.sBuCode?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
@@ -164,7 +215,7 @@ function GR1300({
               minWidth: `${leftSideWidth}px`,
             }}
           />
-          <Table data={data} style={{ minWidth: minWidth, width: "960px" }} />
+          <Table data={data} style={{ width: leftSideWidth - 8 }} />
         </LeftSide>
         <RightSide
           style={{
@@ -177,7 +228,10 @@ function GR1300({
             selected={selected}
             fetchData={handleSubmit(submit)}
             isAddBtnClicked={isAddBtnClicked}
-            setIsAddBtnClicked={setIsAddBtnClicked}
+            addBtnUnclick={addBtnUnclick}
+            show4Btns={show4Btns}
+            bbBuCode={bbBuCode}
+            setBbBuCode={setBbBuCode}
           />
         </RightSide>
         {showDraggableLine()}

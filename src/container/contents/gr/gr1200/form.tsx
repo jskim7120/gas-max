@@ -227,6 +227,9 @@ const Form = ({
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
       fetchData65();
+      if (isAddBtnClicked) {
+        addBtnUnclick();
+      }
     }
   }, [selected]);
 
@@ -477,7 +480,7 @@ const Form = ({
                       inserted: [
                         {
                           ...item,
-                          areaCode: watch("areaCode2"),
+                          areaCode: getValues("areaCode2"),
                           bcDate: DateWithoutDash(formValues.bcDate),
                           bcBuCode: data65.bcBuCode,
                           bcSno: bcSno,
@@ -786,9 +789,7 @@ const Form = ({
           <PlainTab
             tabHeader={["LP가스 매입", "일반가스 매입", "벌크 매입"]}
             onClick={(id) => {
-              isAddBtnClicked
-                ? setTabId(id)
-                : setTabId(parseInt(data65?.bcChitType));
+              isAddBtnClicked && setTabId(id);
             }}
             tabId={tabId}
           />

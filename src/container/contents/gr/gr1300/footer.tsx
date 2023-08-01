@@ -1,16 +1,26 @@
 import { useState } from "react";
+import { Controller } from "react-hook-form";
 import { Input, Field, Select } from "components/form/style";
-import { CTitle, CTextArea, CLabel, TabLikeHeader, CTable } from "./style";
+import {
+  CTitle,
+  CTextArea,
+  CLabel,
+  TabLikeHeader,
+  CTable,
+} from "../gr1200/style";
 import { InputSize } from "components/componentsType";
+import { currencyMask } from "helpers/currency";
 
 function FooterInfo({
   data,
   register,
   calcTab1FooterChange,
+  control,
 }: {
   data: any;
   register: any;
   calcTab1FooterChange: Function;
+  control: any;
 }) {
   const [bcOutkum, setBcOutkum] = useState<string | undefined>(undefined);
   const [bcDc, setBcDc] = useState<string | undefined>(undefined);
@@ -26,7 +36,7 @@ function FooterInfo({
           <Field style={{ width: "22%" }}>
             <Field flex style={{ alignItems: "center" }}>
               <CLabel>공급액</CLabel>
-              <Input
+              {/* <Input
                 register={register("bbSum")}
                 style={{
                   margin: "2px 5px",
@@ -34,11 +44,24 @@ function FooterInfo({
                   height: "20px",
                   width: "120px",
                 }}
+              /> */}
+              <Controller
+                control={control}
+                name="bbSum"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="gray"
+                    readOnly
+                  />
+                )}
               />
             </Field>
             <Field flex style={{ alignItems: "center" }}>
               <CLabel>세액</CLabel>
-              <Input
+              {/* <Input
                 register={register("bbVat")}
                 style={{
                   margin: "2px 5px",
@@ -46,11 +69,24 @@ function FooterInfo({
                   height: "20px",
                   width: "120px",
                 }}
+              /> */}
+              <Controller
+                control={control}
+                name="bbVat"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="gray"
+                    readOnly
+                  />
+                )}
               />
             </Field>
             <Field flex style={{ alignItems: "center" }}>
               <CLabel>합계금액</CLabel>
-              <Input
+              {/* <Input
                 register={register("bbTotal")}
                 style={{
                   margin: "2px 5px",
@@ -58,6 +94,19 @@ function FooterInfo({
                   height: "20px",
                   width: "120px",
                 }}
+              /> */}
+              <Controller
+                control={control}
+                name="bbTotal"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="gray"
+                    readOnly
+                  />
+                )}
               />
             </Field>
           </Field>

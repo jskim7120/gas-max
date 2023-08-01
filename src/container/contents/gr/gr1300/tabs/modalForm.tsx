@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "app/store";
-import { apiGet, apiPost } from "app/axios";
+import { apiGet } from "app/axios";
 import { GR130012 } from "app/path";
-import { CTable2 } from "../style";
+import { CTable2 } from "../../gr1200/style";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { addGR1300, closeModal } from "app/state/modal/modalSlice";
@@ -22,34 +22,14 @@ function GR1300Modal() {
   }, []);
 
   const fetchData = async () => {
-    // try {
-    //   const res = await API.get(GR130012, {
-    //     params: {
-    //       areaCode: state.areaCode,
-    //       bbBuCode: state.bbBuCode,
-    //       bbType: state.bbType,
-    //     },
-    //   });
-
-    //   if (res.status === 200) {
-    //     setData(res.data);
-    //   } else {
-    //     alert("error");
-    //   }
-    // } catch (err) {
-    //   console.log("error fetching GR1300 Modal data");
-    // }
-
-    const response = await apiGet(GR130012, {
+    const res = await apiGet(GR130012, {
       areaCode: state.areaCode,
       bbBuCode: state.bbBuCode,
       bbType: state.bbType,
     });
 
-    if (response) {
-      setData(response);
-    } else {
-      alert("error");
+    if (res) {
+      setData(res);
     }
   };
 

@@ -59,7 +59,7 @@ function Grid({
     };
 
     gv.onCellButtonClicked = function (grid: any, index: any, column: any) {
-      if (Object.keys(data2)?.length > 0) {
+      if (data2 && Object.keys(data2)?.length > 0) {
         dispatch(
           addGR1300({
             index: index.dataRow,

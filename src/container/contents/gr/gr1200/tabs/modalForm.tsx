@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "app/store";
-import { apiGet, apiPost } from "app/axios";
+import { apiGet } from "app/axios";
 import { GR120012 } from "app/path";
 import { CTable2 } from "../style";
 import Button from "components/button/button";
@@ -22,34 +22,14 @@ function GR1200Modal() {
   }, []);
 
   const fetchData = async () => {
-    // try {
-    //   const res = await API.get(GR120012, {
-    //     params: {
-    //       areaCode: state.areaCode,
-    //       bcBuCode: state.bcBuCode,
-    //       bcChitType: state.bcChitType,
-    //     },
-    //   });
-
-    //   if (res.status === 200) {
-    //     setData(res.data);
-    //   } else {
-    //     alert("error");
-    //   }
-    // } catch (err) {
-    //   console.log("error fetching GR1200 Modal data");
-    // }
-
-    const response = await apiGet(GR120012, {
+    const res = await apiGet(GR120012, {
       areaCode: state.areaCode,
       bcBuCode: state.bcBuCode,
       bcChitType: state.bcChitType,
     });
 
-    if (response) {
-      setData(response);
-    } else {
-      alert("error");
+    if (res) {
+      setData(res);
     }
   };
 

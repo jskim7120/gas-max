@@ -52,7 +52,7 @@ export const columns = [
   {
     name: "bbDate",
     fieldName: "bbDate",
-    width: "70",
+    width: "90",
     type: "data",
     header: {
       text: "매입일자",
@@ -66,7 +66,7 @@ export const columns = [
   {
     name: "bbTypeName",
     fieldName: "bbTypeName",
-    width: "58",
+    width: "60",
     type: "data",
     header: {
       text: "구분",
@@ -75,7 +75,7 @@ export const columns = [
   {
     name: "bbBuName",
     fieldName: "bbBuName",
-    width: "200",
+    width: "180",
     type: "data",
     styleName: "rg-left-column",
     header: {
@@ -95,7 +95,7 @@ export const columns = [
   {
     name: "bbSum",
     fieldName: "bbSum",
-    width: "90",
+    width: "80",
     type: "data",
     styleName: "rg-right-column",
     header: {
@@ -105,7 +105,7 @@ export const columns = [
   {
     name: "bbVat",
     fieldName: "bbVat",
-    width: "90",
+    width: "80",
     type: "data",
     styleName: "rg-right-column",
     header: {
@@ -115,7 +115,7 @@ export const columns = [
   {
     name: "bbTotal",
     fieldName: "bbTotal",
-    width: "90",
+    width: "80",
     type: "data",
     styleName: "rg-right-column",
     header: {
@@ -125,7 +125,7 @@ export const columns = [
   {
     name: "bbSupplyTypeName",
     fieldName: "bbSupplyTypeName",
-    width: "90",
+    width: "70",
     type: "data",
     header: {
       text: "지급",

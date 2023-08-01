@@ -83,14 +83,6 @@ function GR1200({
     }
   }, [dataCommonDic]);
 
-  useEffect(() => {
-    if (selected) {
-      if (isAddBtnClicked) {
-        addBtnUnclick();
-      }
-    }
-  }, [selected]);
-
   const fetchData = async (params: any, pos: string = "") => {
     params.sDate = DateWithoutDash(params.sDate);
     params.eDate = DateWithoutDash(params.eDate);
@@ -148,7 +140,7 @@ function GR1200({
         <FormGroup>
           {ownAreaCode === "00" && (
             <>
-              <Label style={{ minWidth: "40px" }}>영업소</Label>
+              <Label style={{ minWidth: "60px" }}>영업소</Label>
               <Select register={register("areaCode")}>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -170,7 +162,7 @@ function GR1200({
           >
             <SearchWrapper className="h35">
               <FormGroup>
-                <Label style={{ minWidth: "48px" }}>기간</Label>
+                <Label style={{ minWidth: "60px" }}>기간</Label>
                 <Controller
                   control={control}
                   name="sDate"
@@ -230,11 +222,11 @@ function GR1200({
             menuId={menuId}
             rowIndex={rowIndex}
             setSelected={setSelected}
+            layout={layout}
             style={{
               height: `calc(100% - 209px)`,
               minWidth: `${leftSideWidth}px`,
             }}
-            layout={layout}
           />
           <Table data={data2} style={{ width: leftSideWidth - 18 }} />
         </LeftSide>

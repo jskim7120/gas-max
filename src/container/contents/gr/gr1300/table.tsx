@@ -1,5 +1,5 @@
 import React from "react";
-import { CustomTable } from "./style";
+import { CustomTable } from "../gr1200/style";
 
 function Table({ data, style }: { data: any; style?: any }) {
   const total = (

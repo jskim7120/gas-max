@@ -18,7 +18,7 @@ import { IGR1300 } from "./model";
 import TabGrid from "./tabs/grid";
 import { useDispatch, useSelector } from "app/store";
 import FooterInfo from "./footer";
-import { CircleBtn } from "./style";
+import { CircleBtn } from "../gr1200/style";
 import { PersonInfoText } from "components/text";
 import { DateWithoutDash } from "helpers/dateFormat";
 import {
@@ -46,18 +46,25 @@ function Form({
   fetchData,
   menuId,
   isAddBtnClicked,
-  setIsAddBtnClicked,
+  // setIsAddBtnClicked,
+  addBtnUnclick,
+  show4Btns,
+  bbBuCode,
+  setBbBuCode,
 }: {
   dataCommonDic: any;
   selected: any;
   fetchData: Function;
   menuId: string;
   isAddBtnClicked: boolean;
-  setIsAddBtnClicked: Function;
+  // setIsAddBtnClicked: Function;
+  addBtnUnclick: Function;
+  show4Btns: Function;
+  bbBuCode: any;
+  setBbBuCode: Function;
 }) {
-  const [tabId, setTabId] = useState(0);
+  const [tabId, setTabId] = useState(-1);
   const [rowIndex, setRowIndex] = useState<number | null>(null);
-  const [areaCode2, setAreaCode2] = useState("");
 
   const [data65, setData65] = useState<any>({});
   const [deleteData65, setDeleteData65] = useState<any[]>([]);
@@ -67,7 +74,7 @@ function Form({
 
   const dispatch = useDispatch();
 
-  const { register, handleSubmit, reset, control, getValues } =
+  const { register, handleSubmit, reset, control, getValues, watch } =
     useForm<IGR1300>({
       mode: "onSubmit",
     });
@@ -109,12 +116,14 @@ function Form({
   //     setRowIndex(null);
   //   }
   // }, [selected]);
+
   useEffect(() => {
-    if (Object.keys(selected)?.length > 0) {
-      setAreaCode2(selected?.areaCode);
+    if (selected && Object.keys(selected)?.length > 0) {
       fetchData65();
-    } else {
-      resetForm("clear");
+      if (isAddBtnClicked) {
+        addBtnUnclick();
+      }
+      resetForm("reset");
     }
   }, [selected]);
 
@@ -129,7 +138,7 @@ function Form({
   const calcTab1GridChange = () => {
     if (Object.keys(data65)?.length > 0) {
       let bbTotal = 0;
-      data65.forEach((obj: any) => (bbTotal += obj.bblKumack ?? 0));
+      data65?.map((obj: any) => (bbTotal += obj.bblKumack ?? 0));
 
       const bbSum = Math.round(bbTotal / 1.1);
       const bbVat = bbTotal - bbSum;
@@ -209,9 +218,9 @@ function Form({
       bbSno: selected?.bbSno,
     });
 
-    if (data) {
-      setData65(data);
-      data65Orig = JSON.parse(JSON.stringify(data));
+    if (data?.dataDetail) {
+      setData65(data.dataDetail);
+      data65Orig = JSON.parse(JSON.stringify(data.dataDetail));
     } else {
       setData65({});
       data65Orig = {};
@@ -246,6 +255,9 @@ function Form({
     if (type === "clear") {
     }
     if (type === "reset") {
+      console.log("selected>>>", selected);
+      setTabId(parseInt(selected?.bbType));
+      reset({ ...selected, areaCode2: selected.areaCode });
     }
   };
 
@@ -307,7 +319,7 @@ function Form({
                     inserted: [
                       {
                         ...item,
-                        areaCode: areaCode2,
+                        areaCode: getValues("areaCode2"),
                         bbBuCode: formValues.bbBuCode,
                         bbDate: formValues.bbDate,
                         bbSno: bbSno,
@@ -390,11 +402,6 @@ function Form({
     } catch (err) {}
   };
 
-  const onClickAdd = () => {
-    setIsAddBtnClicked(true);
-    resetForm("clear");
-  };
-
   function deleteRowGrid() {
     try {
       crud("delete");
@@ -403,9 +410,12 @@ function Form({
       dispatch(closeModal());
     } catch (error) {}
   }
+  const handleClickAdd = () => {
+    resetForm("clear");
+  };
 
-  const onClickDelete = () => {
-    if (Object.keys(selected)?.length > 0) {
+  const handleClickDelete = () => {
+    if (selected && Object.keys(selected)?.length > 0) {
       dispatch(openModal({ type: "delModal" }));
       dispatch(addDeleteMenuId({ menuId: menuId }));
     } else {
@@ -414,12 +424,11 @@ function Form({
       });
     }
   };
-  const onClickUpdate = () => {
+  const handleClickUpdate = () => {
     crud(null);
   };
 
-  const onClickReset = () => {
-    setIsAddBtnClicked(false);
+  const handleClickReset = () => {
     resetForm("reset");
   };
 
@@ -438,15 +447,15 @@ function Form({
           className="h35"
           style={{
             background: "transparent",
-            borderBottom: "1px solid #707070",
+            borderBottom: "1px solid rgb(188,185 ,185)",
           }}
         >
           <FormGroup>
             <PersonInfoText text="매입전표 등록" />
-            <p className="big">영업소99</p>
+            <Label style={{ minWidth: "80px" }}>영업소</Label>
             <Select
-              onChange={(e: any) => setAreaCode2(e.target.value)}
-              value={areaCode2}
+              register={register("areaCode2")}
+              disabled={!isAddBtnClicked}
             >
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -454,59 +463,15 @@ function Form({
                 </option>
               ))}
             </Select>
+            <div className="buttons ml30">
+              {show4Btns({
+                handleClickAdd,
+                handleClickDelete,
+                handleClickReset,
+                handleClickUpdate,
+              })}
+            </div>
           </FormGroup>
-          <FourButtons
-            onClickAdd={onClickAdd}
-            onClickDelete={onClickDelete}
-            onClickUpdate={onClickUpdate}
-            onClickReset={onClickReset}
-            isAddBtnClicked={isAddBtnClicked}
-          />
-          {/* <FormGroup>
-            <Button
-              type="button"
-              text="등록"
-              icon={<Plus />}
-              style={{ marginRight: "5px" }}
-              onClick={() => {
-                setAddBtnClicked(true);
-                clear();
-              }}
-            />
-            <Button
-              type="button"
-              text="삭제"
-              icon={<Trash />}
-              style={{ marginRight: "5px" }}
-              onClick={() => {
-                setAddBtnClicked(false);
-                crud("delete");
-              }}
-            />
-            <Button
-              type="button"
-              text="저장"
-              icon={<Update />}
-              style={{ marginRight: "5px" }}
-              color={ButtonColor.SUCCESS}
-              onClick={() => {
-                setAddBtnClicked(false);
-                crud(null);
-              }}
-            />
-            <Button
-              type="button"
-              text="취소"
-              icon={<ResetGray />}
-              onClick={() => {
-                setAddBtnClicked(false);
-                setData65(data65Orig);
-                reset(selected);
-                setRowIndex(null);
-              }}
-              color={ButtonColor.LIGHT}
-            />
-          </FormGroup> */}
         </SearchWrapper>
         <Wrapper>
           <FormGroup>
@@ -547,9 +512,7 @@ function Form({
           <PlainTab
             tabHeader={["부품 매입", "용기매입(공병)"]}
             onClick={(id) => {
-              isAddBtnClicked
-                ? setTabId(id)
-                : setTabId(parseInt(selected?.bbType));
+              isAddBtnClicked && setTabId(id);
             }}
             tabId={tabId}
           />
@@ -563,7 +526,7 @@ function Form({
           style={{
             padding: "0",
             border: "none",
-            borderTop: "1px solid #707070",
+            borderTop: "1px solid rgb(188,185 ,185)",
             boxShadow: "none",
             borderRadius: "0",
           }}
@@ -583,6 +546,7 @@ function Form({
         data={data65}
         register={register}
         calcTab1FooterChange={calcTab1FooterChange}
+        control={control}
       />
     </div>
   );

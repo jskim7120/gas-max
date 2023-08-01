@@ -5,6 +5,7 @@ export interface ISEARCH {
   sBuCode: string;
 }
 export interface IGR1300 {
+  areaCode2: string;
   areaCode: string;
   bbDate: string;
   bbTypeName: string;
@@ -28,16 +29,16 @@ export interface IGR1300 {
 
 // -------------------------------------------
 
-export interface IDATA65 {
-  bblBpCode: string;
-  bblBpName: string;
-  bblBpSno: string;
-  bblDanga: number;
-  bblKumack: number;
-  bblQty: number;
-  bblType: string;
-  bblVatType: string;
-}
+// export interface IDATA65 {
+//   bblBpCode: string;
+//   bblBpName: string;
+//   bblBpSno: string;
+//   bblDanga: number;
+//   bblKumack: number;
+//   bblQty: number;
+//   bblType: string;
+//   bblVatType: string;
+// }
 
 //12--o irj bgaa data type
 // bpCode: "111";
