@@ -35,6 +35,8 @@ export const apiPost = async (path, params, msg) => {
         autoClose: 500,
       });
       return true;
+    } else if (res.status === 401) {
+      return false;
     } else {
       alert(res?.response?.data?.message);
     }
@@ -53,6 +55,8 @@ export const apiPostWithReturn = async (path, params, msg) => {
         autoClose: 500,
       });
       return res?.data ? res.data : true;
+    } else if (res.status === 401) {
+      return false;
     } else {
       alert(res?.response?.data?.message);
     }
@@ -68,6 +72,8 @@ export const apiGet = async (path, params) => {
 
     if (res.status === 200) {
       return res.data;
+    } else if (res.status === 401) {
+      return null;
     } else {
       alert(res?.response?.data?.message);
     }

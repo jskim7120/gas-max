@@ -1,29 +1,33 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import CreateScreen from "app/hook/createScreen";
+import useMidLine from "app/hook/useMidLine";
+import useDictionary from "app/hook/useDictionary";
+import useRowIndex from "app/hook/useRowIndex";
+import use4Btns from "app/hook/use4Btns";
+import { GR1300SEARCH } from "app/path";
+import { useDispatch } from "app/store";
 import { apiGet } from "app/axios";
 import { setRowIndex } from "app/state/tab/tabSlice";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
-import { ISEARCH } from "./model";
+import { Select, Label, FormGroup } from "components/form/style";
+import { ButtonColor } from "components/componentsType";
+import GridLeft from "components/grid";
+import Loader from "components/loader";
 import {
   MainWrapper,
   LeftSide,
   RightSide,
   SearchWrapper,
 } from "../../commonStyle";
-import { Select, Label, FormGroup } from "components/form/style";
-import { ButtonColor } from "components/componentsType";
-import GridLeft from "components/grid";
-import Form from "./form";
-import { GR1300SEARCH } from "app/path";
-import Loader from "components/loader";
 import { DateWithoutDash } from "helpers/dateFormat";
-import Table from "./table";
+import { ISEARCH } from "./model";
+import Form from "./form";
 import { fields, columns } from "./data";
+import Table from "./table";
 
-const leftSideWidth: number = 920;
+const leftSideWidth: number = 880;
 
 function GR1300({
   depthFullName,
@@ -34,32 +38,22 @@ function GR1300({
   ownAreaCode: string;
   menuId: string;
 }) {
+  const dispatch = useDispatch();
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
-  const {
-    data,
-    setData,
-    selected,
-    setSelected,
-    loading,
-    setLoading,
-    isAddBtnClicked,
-    setIsAddBtnClicked,
-    showDraggableLine,
-    gridIndexes,
-    dispatch,
-    dataCommonDic,
-    linePos,
-    show4Btns,
-    addBtnUnclick,
-    rowIndex,
-  } = CreateScreen("GR", "GR1300", menuId, GR1300SEARCH, leftSideWidth);
+  const { showDraggableLine, linePos } = useMidLine(leftSideWidth);
+  const { dataCommonDic } = useDictionary("GR", "GR1300");
+  const { rowIndex } = useRowIndex(menuId, 0);
+  const { show4Btns, addBtnUnclick, isAddBtnClicked } = use4Btns();
 
-  const [data2, setData2] = useState({});
-  const [bbBuCode, setBbBuCode] = useState([]);
-  const [bbSupplyType, setBbSupplyType] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<Array<any>>([]);
+  const [selected, setSelected] = useState<any>({});
+  const [data2, setData2] = useState<any>({});
+  const [bbBuCode, setBbBuCode] = useState<Array<any>>([]);
+  const [bbSupplyType, setBbSupplyType] = useState<Array<any>>([]);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -76,6 +70,13 @@ function GR1300({
     }
   }, [dataCommonDic]);
 
+  const getMin = (num1: number, num2: number) => {
+    if (num1 > num2) {
+      return num2;
+    }
+    return num1;
+  };
+
   const fetchData = async (params: any, pos: string = "") => {
     params.sDate = DateWithoutDash(params.sDate);
     params.eDate = DateWithoutDash(params.eDate);
@@ -86,7 +87,7 @@ function GR1300({
     if (res) {
       if (res?.dataMain) {
         const lastIndex =
-          res?.dataMain?.length > 0 ? res.dataMain.length - 1 : 0;
+          res?.dataMain?.length > 1 ? res.dataMain.length - 1 : 0;
         setData(res?.dataMain);
 
         if (pos === "last") {
@@ -214,11 +215,11 @@ function GR1300({
             menuId={menuId}
             rowIndex={rowIndex}
             style={{
-              height: `calc(100% - 91px)`,
+              height: `calc(100% - 88px)`,
               minWidth: `${leftSideWidth}px`,
             }}
           />
-          <Table data={data2} style={{ width: leftSideWidth - 8 }} />
+          <Table data={data2} style={{ width: leftSideWidth }} />
         </LeftSide>
         <RightSide
           style={{

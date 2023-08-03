@@ -17,7 +17,7 @@ import { MagnifyingGlass } from "components/allSvgIcon";
 import { useDispatch, useSelector } from "app/store";
 import { addCC1100, openModal } from "app/state/modal/modalSlice";
 import { InfoText } from "components/text";
-import { currencyMask } from "helpers/currency";
+import { currencyMask, removeCommas } from "helpers/currency";
 
 interface IForm {
   selected: any;
@@ -48,7 +48,7 @@ const Form = React.forwardRef(
 
     const stateCC1100 = useSelector((state: any) => state.modal.cc1100);
 
-    const { register, handleSubmit, reset, getValues, control } =
+    const { register, handleSubmit, reset, getValues, control, watch } =
       useForm<IPTFORMMODEL>({ mode: "onChange" });
 
     useEffect(() => {
@@ -57,12 +57,30 @@ const Form = React.forwardRef(
       }
     }, [selected]);
 
-    useEffect(() => {}, [stateCC1100]);
+    useEffect(() => {
+      if (watch("gsKumack") !== undefined && watch("gsDc") !== undefined) {
+        calc();
+      }
+    }, [watch("gsKumack"), watch("gsDc")]);
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
       resetForm,
     }));
+
+    const calc = () => {
+      const calc =
+        (getValues("cuCmisu")
+          ? +removeCommas(getValues("cuCmisu"), "number")
+          : 0) -
+        (watch("gsKumack") ? +removeCommas(watch("gsKumack"), "number") : 0) -
+        (watch("gsDc") ? +removeCommas(watch("gsDc"), "number") : 0);
+
+      reset((formValues: any) => ({
+        ...formValues,
+        gsJanack: calc,
+      }));
+    };
 
     const resetForm = async (type: string) => {
       if (type === "clear") {
@@ -70,6 +88,9 @@ const Form = React.forwardRef(
         reset({
           ...selected,
           gsDate: selected?.gsDate ? selected.gsDate : new Date(),
+          gsKumack: 0,
+          gsDc: 0,
+          gsJanack: selected?.cuCmisu,
         });
       }
     };
@@ -88,9 +109,9 @@ const Form = React.forwardRef(
       <form
         // onSubmit={handleSubmit(submit)}
         autoComplete="off"
-        style={{ width: "330px" }}
+        style={{ width: "330px", padding: "10px" }}
       >
-        <div style={{ padding: "10px" }}>
+        <div>
           <FormGroup>
             <Label style={{ minWidth: "80px" }}>일 자</Label>
             <Controller
@@ -100,7 +121,12 @@ const Form = React.forwardRef(
             />
           </FormGroup>
           <br></br>
-          <div style={{ borderStyle: "groove", alignItems: "center" }}>
+          <div
+            style={{
+              border: "2px solid rgb(188,185 ,185)",
+              marginLeft: "-2px",
+            }}
+          >
             <FormGroup>
               <Controller
                 control={control}
@@ -247,7 +273,7 @@ const Form = React.forwardRef(
         <BottomStyleDiv>
           <InfoText
             text={"수금처리는 선입선출 방식으로 자동 처리됨"}
-            style={{ borderBottom: "1px solid #707070" }}
+            style={{ borderBottom: "1px solid rgb(188,185 ,185)" }}
           />
           <Controller
             control={control}

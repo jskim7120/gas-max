@@ -73,6 +73,7 @@ function Form({
   const [bclInqtyLPG, setBclInqtyLPG] = useState(false);
 
   const stateGR1300 = useSelector((state: any) => state.modal.gr1300);
+  const stateDeleteRowGrid = useSelector((state: any) => state.modal.isDelete);
 
   const dispatch = useDispatch();
 
@@ -86,6 +87,15 @@ function Form({
       resetForm("areaCode");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    if (
+      stateDeleteRowGrid.menuId === menuId &&
+      stateDeleteRowGrid.isDelete === true
+    ) {
+      deleteRowGrid();
+    }
+  }, [stateDeleteRowGrid.isDelete]);
 
   useEffect(() => {
     if (stateGR1300.index !== undefined && stateGR1300.bpName) {
@@ -120,8 +130,9 @@ function Form({
         addBtnUnclick();
       }
 
-      resetForm("reset");
-      fetchData65();
+      fetchData65().then((res) => {
+        resetForm("reset");
+      });
     }
   }, [selected]);
 
@@ -227,59 +238,73 @@ function Form({
       bbDate: DateWithoutDash(selected?.bbDate),
       bbSno: selected?.bbSno,
     });
+    if (res) {
+      setBbBuCode(res?.bbBuCode ? res.bbBuCode : []);
 
-    res?.bbBuCode && setBbBuCode(res.bbBuCode);
-
-    if (res?.dataDetail) {
-      setData65(res.dataDetail);
-      data65Orig = JSON.parse(JSON.stringify(res.dataDetail));
-    } else {
-      setData65([]);
-      data65Orig = {};
+      if (res?.dataDetail) {
+        setData65(res.dataDetail);
+        data65Orig = JSON.parse(JSON.stringify(res.dataDetail));
+      } else {
+        setData65([]);
+        data65Orig = {};
+      }
+      setDeleteData65([]);
     }
-    setDeleteData65([]);
   };
 
-  // const clear = () => {
-  //   reset({
-  //     areaCode: areaCode2,
-  //     // bbDate: formatDateToString(new Date()),
-  //     // bbDate: DateWithDash(new Date()),
-  //     bbBuCode: dataCommonDic?.bbBuCode[0].code,
-  //     bbSno: "",
-  //   });
-  //   document.getElementById("bbSno")?.focus();
-  //   setData65([
-  //     {
-  //       bblBpCode: "",
-  //       bblBpName: "",
-  //       bblType: "",
-  //       bblQty: "",
-  //       bblDanga: "",
-  //       bblVatType: "",
-  //       bblKumack: "",
-  //       isNew: true,
-  //     },
-  //   ]);
-  // };
   const fetchData11 = async () => {
     const res = await apiGet(GR130011, { areaCode: getValues("areaCode") });
     if (res) {
-      res?.bcBuCode && setBbBuCode(res.bcBuCode);
+      res?.bbBuCode && setBbBuCode(res.bbBuCode);
       res?.bbSupplyType && setBbSupplyType(res.bbSupplyType);
       return res;
     }
     return null;
   };
 
+  function deleteRowGrid() {
+    try {
+      crud("delete");
+      dispatch(addDeleteMenuId({ menuId: "" }));
+      dispatch(setIsDelete({ isDelete: false }));
+      dispatch(closeModal());
+    } catch (error) {}
+  }
+  const handleClickAdd = () => {
+    resetForm("clear");
+  };
+
+  const handleClickDelete = () => {
+    if (selected && Object.keys(selected)?.length > 0) {
+      dispatch(openModal({ type: "delModal" }));
+      dispatch(addDeleteMenuId({ menuId: menuId }));
+    } else {
+      toast.warning("no selected data to delete", {
+        autoClose: 500,
+      });
+    }
+  };
+  const handleClickUpdate = () => {
+    crud(null);
+  };
+
+  const handleClickReset = () => {
+    if (selected && Object.keys(selected)?.length > 0) {
+      resetForm("reset");
+    } else {
+      addBtnUnclick();
+    }
+  };
+
   const resetForm = async (type: string) => {
     if (type === "clear") {
       const res: any = await fetchData11();
       if (res) {
+        setTabId(0);
         reset((formValues: any) => ({
           ...emptyObj,
           bbSno: res?.bbSno[0].bcDateno,
-          bbDate: res?.bcDate[0].code,
+          bbDate: res?.bbDate[0].code,
           areaCode: formValues.areaCode,
         }));
       }
@@ -303,7 +328,6 @@ function Form({
           {
             areaCode: selected.areaCode,
             bbBuCode: selected.bbBuCode,
-            // bbDate: formatDateByRemoveDash(selected.bbDate),
             bbDate: DateWithoutDash(selected.bbDate),
             bbSno: selected.bbSno,
           },
@@ -322,10 +346,6 @@ function Form({
   const submit = async (data: any) => {
     const formValues = getValues();
 
-    // formValues.bbDate =
-    //   typeof formValues.bbDate === "string"
-    //     ? formatDateByRemoveDash(formValues.bbDate)
-    //     : formatDateToStringWithoutDash(formValues.bbDate);
     formValues.bbDate = DateWithoutDash(formValues.bbDate);
 
     let path: string;
@@ -343,6 +363,9 @@ function Form({
       });
 
       if (res) {
+        toast.success("success msg", {
+          autoClose: 500,
+        });
         const bbSno = res?.returnValue;
         if (isAddBtnClicked) {
           if (bbSno && bbSno !== "" && data65?.length > 0) {
@@ -429,45 +452,11 @@ function Form({
           }
         }
         fetchData();
-        //     //fetchData65();
+        //fetchData65();
         setRowIndex(null);
         setDeleteData65([]);
       }
     } catch (err) {}
-  };
-
-  function deleteRowGrid() {
-    try {
-      crud("delete");
-      dispatch(addDeleteMenuId({ menuId: "" }));
-      dispatch(setIsDelete({ isDelete: false }));
-      dispatch(closeModal());
-    } catch (error) {}
-  }
-  const handleClickAdd = () => {
-    resetForm("clear");
-  };
-
-  const handleClickDelete = () => {
-    if (selected && Object.keys(selected)?.length > 0) {
-      dispatch(openModal({ type: "delModal" }));
-      dispatch(addDeleteMenuId({ menuId: menuId }));
-    } else {
-      toast.warning("no selected data to delete", {
-        autoClose: 500,
-      });
-    }
-  };
-  const handleClickUpdate = () => {
-    crud(null);
-  };
-
-  const handleClickReset = () => {
-    if (selected && Object.keys(selected)?.length > 0) {
-      resetForm("reset");
-    } else {
-      addBtnUnclick();
-    }
   };
 
   return (

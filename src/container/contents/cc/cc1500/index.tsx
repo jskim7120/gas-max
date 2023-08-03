@@ -22,7 +22,7 @@ import { fields, columns } from "./data";
 import { ICC1500SEARCH } from "./model";
 import Form from "./form";
 import { DateWithoutDash } from "helpers/dateFormat";
-import useDrawLine from "app/hook/useDrawLine";
+import useDrawLine from "app/hook/useMidLine";
 import use4Btns from "app/hook/use4Btns";
 
 const leftSideWidth: number = 880;

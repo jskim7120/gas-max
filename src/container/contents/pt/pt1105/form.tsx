@@ -4,7 +4,6 @@ import {
   FormGroup,
   Label,
   DividerGray,
-  Field,
   Select,
 } from "components/form/style";
 import { useForm, Controller } from "react-hook-form";
@@ -82,21 +81,20 @@ const FORMCM1105 = React.forwardRef(
         autoComplete="off"
         style={{ margin: "30px 30px 0 0" }}
       >
-        <Field flex style={{ alignItems: "center" }}>
+        <FormGroup>
           <Label>수금 일자</Label>
           <Controller
             control={control}
             name="msDate"
-            render={({ field: { onChange, value, name } }) => (
+            render={({ field }) => (
               <CustomDatePicker
+                {...field}
                 style={{ width: "175px" }}
-                value={value == null ? new Date() : value}
-                onChange={onChange}
-                name={name}
+                // value={value == null ? new Date() : value}
               />
             )}
           />
-        </Field>
+        </FormGroup>
         <Controller
           control={control}
           name="cuJmisu"
@@ -109,6 +107,7 @@ const FORMCM1105 = React.forwardRef(
               textAlign="right"
               inputSize={InputSize.i175}
               name={name}
+              readOnly
             />
           )}
         />

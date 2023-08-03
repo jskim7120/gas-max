@@ -80,10 +80,6 @@ function use4Btns() {
     addBtnUnclick,
     isAddBtnClicked,
     setIsAddBtnClicked,
-    // btnRef1,
-    // btnRef2,
-    // btnRef3,
-    // btnRef4,
   };
 }
 

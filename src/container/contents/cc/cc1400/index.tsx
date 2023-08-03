@@ -22,7 +22,7 @@ import { fields, columns } from "./data";
 import Form from "./form";
 import { CC1400SEARCH } from "app/path";
 import { DateWithoutDash } from "helpers/dateFormat";
-import useDrawLine from "app/hook/useDrawLine";
+import useDrawLine from "app/hook/useMidLine";
 import use4Btns from "app/hook/use4Btns";
 
 const leftSideWidth: number = 800;

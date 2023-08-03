@@ -2,7 +2,7 @@ import { useState } from "react";
 import Draggable from "react-draggable";
 import { useSelector } from "app/store";
 
-function useDrawLine(leftSideWidth: number) {
+function useMidLine(leftSideWidth: number) {
   const isOpen = useSelector((state) => state.sidebar);
   const [linePos, setLinePos] = useState<number>(leftSideWidth);
 
@@ -42,4 +42,4 @@ function useDrawLine(leftSideWidth: number) {
   };
 }
 
-export default useDrawLine;
+export default useMidLine;

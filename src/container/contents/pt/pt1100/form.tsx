@@ -10,12 +10,13 @@ import {
   Label,
   BottomStyleDiv,
 } from "components/form/style";
+import { PersonInfoText } from "components/text";
 import { IPTFORMMODEL } from "./model";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { useDispatch, useSelector } from "app/store";
 import { InfoText } from "components/text";
-import { currencyMask } from "helpers/currency";
+import { currencyMask, removeCommas } from "helpers/currency";
 
 interface IForm {
   selected: any;
@@ -35,9 +36,10 @@ const Form = React.forwardRef(
 
     const stateCC1100 = useSelector((state: any) => state.modal.cc1100);
 
-    const { register, reset, control } = useForm<IPTFORMMODEL>({
-      mode: "onChange",
-    });
+    const { register, reset, control, watch, getValues } =
+      useForm<IPTFORMMODEL>({
+        mode: "onChange",
+      });
 
     useEffect(() => {
       if (selected !== undefined && Object.keys(selected)?.length > 0) {
@@ -45,7 +47,27 @@ const Form = React.forwardRef(
       }
     }, [selected]);
 
-    useEffect(() => {}, [stateCC1100]);
+    useEffect(() => {
+      if (watch("msKumack") !== undefined && watch("msDc") !== undefined) {
+        calc();
+      }
+    }, [watch("msKumack"), watch("msDc")]);
+
+    // useEffect(() => {}, [stateCC1100]);
+
+    const calc = () => {
+      const calc =
+        (getValues("cuJmisu")
+          ? +removeCommas(getValues("cuJmisu"), "number")
+          : 0) -
+        (watch("msKumack") ? +removeCommas(watch("msKumack"), "number") : 0) -
+        (watch("msDc") ? +removeCommas(watch("msDc"), "number") : 0);
+
+      reset((formValues: any) => ({
+        ...formValues,
+        msJanack: calc,
+      }));
+    };
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
       crud,
@@ -60,6 +82,9 @@ const Form = React.forwardRef(
           msSwCode: selected?.cuSwCode,
           msSukumType: selected?.cuSukumtype,
           msDate: selected?.msDate ? selected?.msDate : new Date(),
+          msKumack: 0,
+          msDc: 0,
+          msJanack: selected?.cuJmisu,
         });
       }
     };
@@ -81,6 +106,7 @@ const Form = React.forwardRef(
         autoComplete="off"
         style={{ width: "335px", padding: "10px" }}
       >
+        <PersonInfoText text="수금 처리" />
         <FormGroup>
           <Label style={{ minWidth: "90px" }}>일 자</Label>
           <Controller
@@ -92,7 +118,12 @@ const Form = React.forwardRef(
           />
         </FormGroup>
         <br />
-        <div style={{ borderStyle: "groove", alignItems: "center" }}>
+        <div
+          style={{
+            border: "2px solid rgb(188,185 ,185)",
+            marginLeft: "-2px",
+          }}
+        >
           <FormGroup>
             <Input
               label="거 래 처"
@@ -110,6 +141,7 @@ const Form = React.forwardRef(
             labelStyle={{ minWidth: "90px" }}
             register={register("cuCode")}
             inputSize={InputSize.i140}
+            readOnly
           />
           <Controller
             control={control}
@@ -117,11 +149,12 @@ const Form = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
+                mask={currencyMask}
                 labelStyle={{ minWidth: "90px" }}
                 label="미수금액"
-                mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i140}
+                readOnly
               />
             )}
           />
@@ -133,9 +166,9 @@ const Form = React.forwardRef(
           render={({ field }) => (
             <Input
               {...field}
+              mask={currencyMask}
               labelStyle={{ minWidth: "90px" }}
               label="D / C"
-              mask={currencyMask}
               textAlign="right"
               inputSize={InputSize.i140}
             />
@@ -218,7 +251,7 @@ const Form = React.forwardRef(
         <BottomStyleDiv>
           <InfoText
             text={"수금처리는 선입선출 방식으로 자동 처리됨"}
-            style={{ borderBottom: "1px solid #707070" }}
+            style={{ borderBottom: "1px solid rgb(188,185 ,185)" }}
           />
           <Controller
             control={control}

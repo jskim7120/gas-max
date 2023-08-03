@@ -16,7 +16,7 @@ import GridLeft from "components/grid";
 import { fields, columns } from "./data";
 import { ICC1700SEARCH } from "./model";
 import Form from "./form";
-import useDrawLine from "app/hook/useDrawLine";
+import useDrawLine from "app/hook/useMidLine";
 import use4Btns from "app/hook/use4Btns";
 
 const leftSideWidth: number = 880;

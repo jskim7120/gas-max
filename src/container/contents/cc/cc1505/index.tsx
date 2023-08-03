@@ -13,7 +13,7 @@ import { fields, columns } from "./data";
 import GridLeft from "components/grid";
 import { CC1505SEARCH, CC150565 } from "app/path";
 import Form from "./form";
-import useDrawLine from "app/hook/useDrawLine";
+import useDrawLine from "app/hook/useMidLine";
 import use4Btns from "app/hook/use4Btns";
 
 const leftSideWidth: number = 500;

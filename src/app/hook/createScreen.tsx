@@ -11,7 +11,7 @@ import {
 } from "app/state/modal/modalSlice";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import use4Btns from "./use4Btns";
-import useDrawLine from "./useDrawLine";
+import useDrawLine from "./useMidLine";
 import useRowIndex from "./useRowIndex";
 
 function CreateScreen(

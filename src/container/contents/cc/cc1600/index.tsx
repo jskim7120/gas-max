@@ -16,7 +16,7 @@ import { ICC1600SEARCH } from "./model";
 import { fields, columns } from "./data";
 import Form from "./form";
 import { Select, FormGroup, Label } from "components/form/style";
-import useDrawLine from "app/hook/useDrawLine";
+import useDrawLine from "app/hook/useMidLine";
 import use4Btns from "app/hook/use4Btns";
 
 const leftSideWidth: number = 550;
