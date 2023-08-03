@@ -5,7 +5,6 @@ export interface ISEARCH {
   sBuCode: string;
 }
 export interface IGR1300 {
-  areaCode2: string;
   areaCode: string;
   bbDate: string;
   bbTypeName: string;
@@ -49,3 +48,25 @@ export interface IGR1300 {
 // jbuChangedate: "20221130";
 // jbuDangaType: "0";
 // jbuVatKind: "0";
+
+export const emptyObj = {
+  areaCode: "",
+  bbDate: "",
+  bbTypeName: "",
+  bbBuName: "",
+  bbBpName: "",
+  bbSum: 0,
+  bbVat: 0,
+  bbTotal: 0,
+  bbSupplyTypeName: "",
+  bbOutkum: 0,
+  bbDc: 0,
+  bbCredit: 0,
+  bbType: "",
+  bbSupplyType: "",
+  bbBuCode: "",
+  bbSno: "",
+  bbMemo: "",
+  bbMisu: 0,
+  bbBigo: "",
+};

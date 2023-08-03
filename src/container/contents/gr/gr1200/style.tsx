@@ -148,9 +148,7 @@ export const CTitle = styled.div`
   width: 35px;
   height: 68px;
   background-color: #d4d0d0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 22px 0 15px 5.5px;
   color: #4e545f;
   border-top: 1px solid rgb(188, 185, 185);
   border-bottom: 1px solid rgb(188, 185, 185);

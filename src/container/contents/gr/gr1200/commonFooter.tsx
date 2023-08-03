@@ -1,4 +1,4 @@
-import { Input, Field, Select } from "components/form/style";
+import { Input, FormGroup, Select } from "components/form/style";
 import { CTitle, CTextArea, CLabel, TabLikeHeader, CTable } from "./style";
 import { InputSize } from "components/componentsType";
 import { Controller } from "react-hook-form";
@@ -16,14 +16,13 @@ function CommonFooterInfo({
   return (
     <form autoComplete="off">
       <div>
-        <Field flex style={{ alignItems: "center" }}>
-          <Field flex style={{ width: "80%" }}>
+        <FormGroup style={{ justifyContent: "space-between" }}>
+          <div style={{ display: "flex", width: "100%" }}>
             <CTitle>메모</CTitle>
             <CTextArea {...register("bcMemo")} />
-          </Field>
-
-          <Field style={{ width: "22%" }}>
-            <Field flex style={{ alignItems: "center" }}>
+          </div>
+          <div>
+            <FormGroup>
               <CLabel>공급액</CLabel>
               <Controller
                 control={control}
@@ -40,8 +39,8 @@ function CommonFooterInfo({
                   />
                 )}
               />
-            </Field>
-            <Field flex style={{ alignItems: "center" }}>
+            </FormGroup>
+            <FormGroup>
               <CLabel>세액</CLabel>
               <Controller
                 control={control}
@@ -58,8 +57,8 @@ function CommonFooterInfo({
                   />
                 )}
               />
-            </Field>
-            <Field flex style={{ alignItems: "center" }}>
+            </FormGroup>
+            <FormGroup>
               <CLabel>합계금액</CLabel>
               <Controller
                 control={control}
@@ -76,9 +75,9 @@ function CommonFooterInfo({
                   />
                 )}
               />
-            </Field>
-          </Field>
-        </Field>
+            </FormGroup>
+          </div>
+        </FormGroup>
 
         <TabLikeHeader>매입액</TabLikeHeader>
         <CTable>

@@ -25,6 +25,7 @@ function Table({ data, style }: { data: any; style?: any }) {
     if (Object.keys(data)?.length === 0) return null;
     return Number(field).toLocaleString("en-US");
   };
+
   return (
     <CustomTable style={style}>
       <tr>

@@ -1,6 +1,7 @@
-import { useState } from "react";
 import { Controller } from "react-hook-form";
-import { Input, Field, Select } from "components/form/style";
+import { Input, Select, FormGroup } from "components/form/style";
+import { InputSize } from "components/componentsType";
+import { currencyMask } from "helpers/currency";
 import {
   CTitle,
   CTextArea,
@@ -8,43 +9,27 @@ import {
   TabLikeHeader,
   CTable,
 } from "../gr1200/style";
-import { InputSize } from "components/componentsType";
-import { currencyMask } from "helpers/currency";
 
 function FooterInfo({
-  data,
   register,
-  calcTab1FooterChange,
   control,
+  bbSupplyType,
 }: {
-  data: any;
   register: any;
-  calcTab1FooterChange: Function;
   control: any;
+  bbSupplyType: any;
 }) {
-  const [bcOutkum, setBcOutkum] = useState<string | undefined>(undefined);
-  const [bcDc, setBcDc] = useState<string | undefined>(undefined);
   return (
     <form autoComplete="off">
       <div>
-        <Field flex style={{ alignItems: "center" }}>
-          <Field flex style={{ width: "80%" }}>
+        <FormGroup style={{ justifyContent: "space-between" }}>
+          <div style={{ display: "flex", width: "100%" }}>
             <CTitle>메모</CTitle>
             <CTextArea {...register("bbMemo")} />
-          </Field>
-
-          <Field style={{ width: "22%" }}>
-            <Field flex style={{ alignItems: "center" }}>
+          </div>
+          <div>
+            <FormGroup>
               <CLabel>공급액</CLabel>
-              {/* <Input
-                register={register("bbSum")}
-                style={{
-                  margin: "2px 5px",
-                  background: `rgba(104,103,103,0.35)`,
-                  height: "20px",
-                  width: "120px",
-                }}
-              /> */}
               <Controller
                 control={control}
                 name="bbSum"
@@ -54,22 +39,12 @@ function FooterInfo({
                     mask={currencyMask}
                     textAlign="right"
                     className="gray"
-                    readOnly
                   />
                 )}
               />
-            </Field>
-            <Field flex style={{ alignItems: "center" }}>
+            </FormGroup>
+            <FormGroup>
               <CLabel>세액</CLabel>
-              {/* <Input
-                register={register("bbVat")}
-                style={{
-                  margin: "2px 5px",
-                  background: `rgba(104,103,103,0.35)`,
-                  height: "20px",
-                  width: "120px",
-                }}
-              /> */}
               <Controller
                 control={control}
                 name="bbVat"
@@ -79,22 +54,12 @@ function FooterInfo({
                     mask={currencyMask}
                     textAlign="right"
                     className="gray"
-                    readOnly
                   />
                 )}
               />
-            </Field>
-            <Field flex style={{ alignItems: "center" }}>
+            </FormGroup>
+            <FormGroup>
               <CLabel>합계금액</CLabel>
-              {/* <Input
-                register={register("bbTotal")}
-                style={{
-                  margin: "2px 5px",
-                  background: `rgba(104,103,103,0.35)`,
-                  height: "20px",
-                  width: "120px",
-                }}
-              /> */}
               <Controller
                 control={control}
                 name="bbTotal"
@@ -104,13 +69,12 @@ function FooterInfo({
                     mask={currencyMask}
                     textAlign="right"
                     className="gray"
-                    readOnly
                   />
                 )}
               />
-            </Field>
-          </Field>
-        </Field>
+            </FormGroup>
+          </div>
+        </FormGroup>
         <TabLikeHeader>매입액</TabLikeHeader>
 
         <CTable>
@@ -124,43 +88,73 @@ function FooterInfo({
           </tr>
           <tr>
             <td>
-              <Input register={register("bbTotal")} readOnly className="h27" />
+              <Controller
+                control={control}
+                name="bbTotal"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="h27 disabled"
+                  />
+                )}
+              />
             </td>
             <td>
               <Select
                 register={register("bbSupplyType")}
                 className="h27"
                 width={InputSize.i110}
-                style={{ margin: "0px 3px" }}
               >
-                <option value="A">외상</option>
-                <option value="0">현금</option>
+                {bbSupplyType?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
               </Select>
             </td>
             <td>
-              <Input
-                register={register("bbOutkum")}
-                onChange={(e: any) => {
-                  setBcOutkum(e.target.value);
-                  calcTab1FooterChange(e.target.value, "bbOutkum");
-                }}
-                value={bcOutkum}
-                className="h27"
+              <Controller
+                control={control}
+                name="bbOutkum"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="h27"
+                  />
+                )}
               />
             </td>
             <td>
-              <Input
-                register={register("bbDc")}
-                onChange={(e: any) => {
-                  setBcDc(e.target.value);
-                  calcTab1FooterChange(e.target.value, "bbDc");
-                }}
-                value={bcDc}
-                className="h27"
+              <Controller
+                control={control}
+                name="bbDc"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="h27"
+                  />
+                )}
               />
             </td>
             <td>
-              <Input register={register("bbMisu")} className="h27" />
+              <Controller
+                control={control}
+                name="bbMisu"
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    mask={currencyMask}
+                    textAlign="right"
+                    className="h27 disabled"
+                  />
+                )}
+              />
             </td>
             <td>
               <Input register={register("bbBigo")} className="h27" />

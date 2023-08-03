@@ -12,9 +12,8 @@ import {
   Label,
 } from "components/form/style";
 import { SearchWrapper } from "container/contents/commonStyle";
-import FourButtons from "components/button/fourButtons";
 import { InputSize } from "components/componentsType";
-import { IGR1300 } from "./model";
+import { IGR1300, emptyObj } from "./model";
 import TabGrid from "./tabs/grid";
 import { useDispatch, useSelector } from "app/store";
 import FooterInfo from "./footer";
@@ -29,6 +28,7 @@ import {
 } from "app/state/modal/modalSlice";
 import {
   GR130065,
+  GR130011,
   GR1300BUYINSERT,
   GR1300BUYUPDATE,
   GR1300BUYDELETE,
@@ -46,27 +46,29 @@ function Form({
   fetchData,
   menuId,
   isAddBtnClicked,
-  // setIsAddBtnClicked,
   addBtnUnclick,
   show4Btns,
   bbBuCode,
   setBbBuCode,
+  bbSupplyType,
+  setBbSupplyType,
 }: {
   dataCommonDic: any;
   selected: any;
   fetchData: Function;
   menuId: string;
   isAddBtnClicked: boolean;
-  // setIsAddBtnClicked: Function;
   addBtnUnclick: Function;
   show4Btns: Function;
   bbBuCode: any;
   setBbBuCode: Function;
+  bbSupplyType: any;
+  setBbSupplyType: Function;
 }) {
   const [tabId, setTabId] = useState(-1);
   const [rowIndex, setRowIndex] = useState<number | null>(null);
 
-  const [data65, setData65] = useState<any>({});
+  const [data65, setData65] = useState<any>([]);
   const [deleteData65, setDeleteData65] = useState<any[]>([]);
   const [bclInqtyLPG, setBclInqtyLPG] = useState(false);
 
@@ -78,6 +80,12 @@ function Form({
     useForm<IGR1300>({
       mode: "onSubmit",
     });
+
+  useEffect(() => {
+    if (dataCommonDic) {
+      resetForm("areaCode");
+    }
+  }, [dataCommonDic]);
 
   useEffect(() => {
     if (stateGR1300.index !== undefined && stateGR1300.bpName) {
@@ -98,34 +106,36 @@ function Form({
       );
     }
   }, [stateGR1300]);
-
-  // useEffect(() => {
-  //   if (selected) {
-  //     fetchData65();
-  //     reset({
-  //       areaCode: selected.areaCode,
-  //       bbDate: selected.bbDate,
-  //       bbBuCode: selected.bbBuCode,
-  //       bbSno: selected.bbSno,
-  //       bbDc: selected.bbDc,
-  //       bbOutkum: selected.bbOutkum,
-  //     });
-
-  //     setTabId(parseInt(selected.bbType));
-  //     setIsAddBtnClicked(false);
-  //     setRowIndex(null);
-  //   }
-  // }, [selected]);
+  useEffect(() => {
+    if (watch("areaCode")) {
+      if (isAddBtnClicked) {
+        resetForm("clear");
+      }
+    }
+  }, [watch("areaCode")]);
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
-      fetchData65();
       if (isAddBtnClicked) {
         addBtnUnclick();
       }
+
       resetForm("reset");
+      fetchData65();
     }
   }, [selected]);
+
+  useEffect(() => {
+    if (watch("bbOutkum")) {
+      calcTab1FooterChange(watch("bbOutkum"), "bbOutkum");
+    }
+  }, [watch("bbOutkum")]);
+
+  useEffect(() => {
+    if (watch("bbDc")) {
+      calcTab1FooterChange(watch("bbDc"), "bbDc");
+    }
+  }, [watch("bbDc")]);
 
   useEffect(() => {
     calcTab1GridChange();
@@ -211,18 +221,20 @@ function Form({
   };
 
   const fetchData65 = async () => {
-    const data = await apiGet(GR130065, {
+    const res = await apiGet(GR130065, {
       areaCode: selected?.areaCode,
       bbBuCode: selected?.bbBuCode,
       bbDate: DateWithoutDash(selected?.bbDate),
       bbSno: selected?.bbSno,
     });
 
-    if (data?.dataDetail) {
-      setData65(data.dataDetail);
-      data65Orig = JSON.parse(JSON.stringify(data.dataDetail));
+    res?.bbBuCode && setBbBuCode(res.bbBuCode);
+
+    if (res?.dataDetail) {
+      setData65(res.dataDetail);
+      data65Orig = JSON.parse(JSON.stringify(res.dataDetail));
     } else {
-      setData65({});
+      setData65([]);
       data65Orig = {};
     }
     setDeleteData65([]);
@@ -250,14 +262,36 @@ function Form({
   //     },
   //   ]);
   // };
+  const fetchData11 = async () => {
+    const res = await apiGet(GR130011, { areaCode: getValues("areaCode") });
+    if (res) {
+      res?.bcBuCode && setBbBuCode(res.bcBuCode);
+      res?.bbSupplyType && setBbSupplyType(res.bbSupplyType);
+      return res;
+    }
+    return null;
+  };
 
   const resetForm = async (type: string) => {
     if (type === "clear") {
+      const res: any = await fetchData11();
+      if (res) {
+        reset((formValues: any) => ({
+          ...emptyObj,
+          bbSno: res?.bbSno[0].bcDateno,
+          bbDate: res?.bcDate[0].code,
+          areaCode: formValues.areaCode,
+        }));
+      }
     }
+
     if (type === "reset") {
-      console.log("selected>>>", selected);
-      setTabId(parseInt(selected?.bbType));
-      reset({ ...selected, areaCode2: selected.areaCode });
+      selected?.bbType && setTabId(parseInt(selected.bbType));
+      reset({ ...selected, areaCode: selected.areaCode });
+    }
+
+    if (type === "areaCode") {
+      reset({ areaCode: dataCommonDic?.areaCode[0]?.code });
     }
   };
 
@@ -319,7 +353,7 @@ function Form({
                     inserted: [
                       {
                         ...item,
-                        areaCode: getValues("areaCode2"),
+                        areaCode: getValues("areaCode"),
                         bbBuCode: formValues.bbBuCode,
                         bbDate: formValues.bbDate,
                         bbSno: bbSno,
@@ -429,7 +463,11 @@ function Form({
   };
 
   const handleClickReset = () => {
-    resetForm("reset");
+    if (selected && Object.keys(selected)?.length > 0) {
+      resetForm("reset");
+    } else {
+      addBtnUnclick();
+    }
   };
 
   return (
@@ -453,10 +491,7 @@ function Form({
           <FormGroup>
             <PersonInfoText text="매입전표 등록" />
             <Label style={{ minWidth: "80px" }}>영업소</Label>
-            <Select
-              register={register("areaCode2")}
-              disabled={!isAddBtnClicked}
-            >
+            <Select register={register("areaCode")} disabled={!isAddBtnClicked}>
               {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -493,7 +528,7 @@ function Form({
               width={InputSize.i120}
               disabled={!isAddBtnClicked}
             >
-              {dataCommonDic?.bbBuCode?.map((obj: any, idx: number) => (
+              {bbBuCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -543,10 +578,9 @@ function Form({
         </TabContentWrapper>
       </form>
       <FooterInfo
-        data={data65}
         register={register}
-        calcTab1FooterChange={calcTab1FooterChange}
         control={control}
+        bbSupplyType={bbSupplyType}
       />
     </div>
   );

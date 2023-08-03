@@ -59,10 +59,14 @@ function GR1300({
 
   const [data2, setData2] = useState({});
   const [bbBuCode, setBbBuCode] = useState([]);
+  const [bbSupplyType, setBbSupplyType] = useState([]);
 
   useEffect(() => {
     if (dataCommonDic) {
-      setBbBuCode(dataCommonDic?.bbBuCode);
+      dataCommonDic?.bbBuCode && setBbBuCode(dataCommonDic?.bbBuCode);
+      dataCommonDic?.bbSupplyType &&
+        setBbSupplyType(dataCommonDic?.bbSupplyType);
+
       reset({
         areaCode: dataCommonDic?.areaCode[0].code,
         sBuCode: dataCommonDic?.sBuCode[0].code,
@@ -118,13 +122,13 @@ function GR1300({
   };
 
   const submit = async (params: any) => {
-    if (params.sDate !== undefined) {
+    if (params?.sDate) {
       params.sDate = DateWithoutDash(params.sDate);
     }
-    if (params.eDate !== undefined) {
+    if (params?.eDate) {
       params.eDate = DateWithoutDash(params.eDate);
     }
-    fetchData(params);
+    fetchData(params, "last");
   };
 
   return (
@@ -154,10 +158,9 @@ function GR1300({
             style={{ minWidth: leftSideWidth }}
           >
             <SearchWrapper
+              className="h35"
               style={{
                 minWidth: `${leftSideWidth}px`,
-                padding: "3px 15px",
-                justifyContent: "flex-start",
               }}
             >
               <FormGroup>
@@ -209,13 +212,13 @@ function GR1300({
             columns={columns}
             setSelected={setSelected}
             menuId={menuId}
-            rowIndex={0}
+            rowIndex={rowIndex}
             style={{
               height: `calc(100% - 91px)`,
               minWidth: `${leftSideWidth}px`,
             }}
           />
-          <Table data={data} style={{ width: leftSideWidth - 8 }} />
+          <Table data={data2} style={{ width: leftSideWidth - 8 }} />
         </LeftSide>
         <RightSide
           style={{
@@ -232,6 +235,8 @@ function GR1300({
             show4Btns={show4Btns}
             bbBuCode={bbBuCode}
             setBbBuCode={setBbBuCode}
+            bbSupplyType={bbSupplyType}
+            setBbSupplyType={setBbSupplyType}
           />
         </RightSide>
         {showDraggableLine()}

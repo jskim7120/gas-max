@@ -350,7 +350,7 @@ export const FormGroup = styled.div<{
   }
 
   .maskedInput.h27 {
-    height: 25px;
+    height: 27px;
   }
 
   .maskedInput.disabled {
