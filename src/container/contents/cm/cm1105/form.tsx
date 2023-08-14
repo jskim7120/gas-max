@@ -93,12 +93,6 @@ function FormCM1105() {
   }, [watch("cuName")]);
 
   useEffect(() => {
-    if (dataCommonDic) {
-      resetForm("init");
-    }
-  }, [dataCommonDic]);
-
-  useEffect(() => {
     if (data) {
       resetForm("reset");
     }
@@ -156,6 +150,7 @@ function FormCM1105() {
           cuCutype: res[0].cuCutype,
           cuStae: res[0].cuStae,
           cuType: res[0].cuType,
+          areaCode: cm1105.areaCode,
         }));
       }
     }
@@ -168,11 +163,6 @@ function FormCM1105() {
         cuCode: cm1105.cuCode.substring(0, 3),
       });
       setFocus("cuName");
-    } else if (type === "init") {
-      reset((formValues: any) => ({
-        ...formValues,
-        areaCode: dataCommonDic?.areaCode[0].code,
-      }));
     } else if (type === "reset") {
       if (data && data?.customerInfo) {
         const customerInfo = data.customerInfo;
@@ -368,12 +358,12 @@ function FormCM1105() {
     <form onSubmit={handleSubmit(submit)} autoComplete="off">
       <ModalHeader className="handle">
         <FormGroup>
-          <Label style={{ minWidth: "114px", color: "white" }}>영업소</Label>
+          <Label style={{ minWidth: "115px", color: "white" }}>영업소</Label>
           <Controller
             control={control}
             name="areaCode"
             render={({ field }) => (
-              <Select {...field} width={InputSize.i120}>
+              <Select {...field} width={InputSize.i120} disabled>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
@@ -382,11 +372,10 @@ function FormCM1105() {
               </Select>
             )}
           />
-          <div style={{ marginLeft: "30px" }}>
+          <div className="buttons ml30">
             <Button
               text="연속등록"
               icon={<Plus />}
-              style={{ marginRight: "5px" }}
               type="button"
               onClick={handleSubmit(submitAgain)}
               ref={btnRef1}
@@ -394,7 +383,6 @@ function FormCM1105() {
             <Button
               text="저장"
               icon={<Update />}
-              style={{ marginRight: "5px" }}
               color={ButtonColor.SECONDARY}
               type="submit"
             />

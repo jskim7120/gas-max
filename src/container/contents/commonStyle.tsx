@@ -37,6 +37,10 @@ export const SearchWrapper = styled.div`
     height: 47px;
   }
 
+  &.bgtr {
+    background: transparent;
+  }
+
   .ml30 {
     margin-left: 30px;
   }
@@ -96,25 +100,6 @@ export const ImageWrapper = styled.div`
     width: 100%;
     height: 100%;
     object-fit: contain;
-  }
-`;
-
-export const FormSeaction = styled.div<{ topBorder: boolean }>`
-  border-top: ${(props) => (props.topBorder ? "3px solid #707070;" : "none")};
-  padding: 0px 10px 20px 10px;
-`;
-
-export const FormSectionTitle = styled.div`
-  padding: 10px 0 10px 10px;
-  display: flex;
-  justify-content: space-between;
-
-  h4 {
-    img {
-      padding-right: 10px;
-    }
-    display: flex;
-    color: #1b8c8e;
   }
 `;
 

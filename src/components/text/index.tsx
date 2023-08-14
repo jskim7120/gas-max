@@ -2,7 +2,6 @@ import styled from "styled-components";
 import IconInfo from "assets/image/Icon-info.png";
 import PersonIconSvg from "assets/image/person-info.svg";
 import BuildingIconSvg from "assets/image/building-info.svg";
-import { IconInfo as IconInfoComp } from "components/allSvgIcon";
 
 const InfoDiv = styled.div`
   display: flex;
@@ -65,16 +64,28 @@ function PersonInfoText({
   return (
     <PersonInfoDiv style={style}>
       <img src={PersonIconSvg} alt="person-icon" />
-      <p style={textStyle && textStyle}>{text}</p>
+      <p style={{ color: "#1b8c8e", fontWeight: "bold", ...textStyle }}>
+        {text}
+      </p>
     </PersonInfoDiv>
   );
 }
 
-function BuildingInfoText({ text, style }: { text: string; style?: any }) {
+function BuildingInfoText({
+  text,
+  style,
+  textStyle,
+}: {
+  text: string;
+  style?: any;
+  textStyle?: any;
+}) {
   return (
     <BuildingDiv style={style}>
       <img src={BuildingIconSvg} alt="building-icon" />
-      <p>{text}</p>
+      <p style={{ color: "#1b8c8e", fontWeight: "bold", ...textStyle }}>
+        {text}
+      </p>
     </BuildingDiv>
   );
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useSelector, useDispatch } from "app/store";
 import { apiGet, apiPost } from "app/axios";
 import { CM1100SEARCH, CM110065, CM1100DELETE } from "app/path";
@@ -51,9 +51,10 @@ function CM1100Page({
   const { isDelete } = useSelector((state) => state.modal);
 
   const dispatch = useDispatch();
-  const { register, handleSubmit, reset, getValues } = useForm<ICM1100SEARCH>({
-    mode: "onSubmit",
-  });
+  const { register, handleSubmit, reset, getValues, control } =
+    useForm<ICM1100SEARCH>({
+      mode: "onSubmit",
+    });
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -148,7 +149,7 @@ function CM1100Page({
     } else {
       openPopup({
         cuCode: "",
-        areaCode: ownAreaCode,
+        areaCode: getValues("areaCode"),
         status: "INSERT",
         source: "CM1100",
       });
@@ -185,18 +186,24 @@ function CM1100Page({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
+      <SearchWrapper className="h35">
         <FormGroup>
           {ownAreaCode === "00" && (
             <>
               <Label style={{ minWidth: "70px" }}>영업소</Label>
-              <Select register={register("areaCode")} width={InputSize.i150}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
+              <Controller
+                control={control}
+                name="areaCode"
+                render={({ field }) => (
+                  <Select {...field} width={InputSize.i150}>
+                    {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                      <option key={idx} value={obj.code}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+                )}
+              />
             </>
           )}
           <div

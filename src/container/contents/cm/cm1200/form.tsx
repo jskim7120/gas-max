@@ -8,7 +8,7 @@ import { InputSize } from "components/componentsType";
 import { PersonInfoText, BuildingInfoText } from "components/text";
 import Button from "components/button/button";
 import { Plus, Trash, Update } from "components/allSvgIcon";
-import { FormSectionTitle } from "../../commonStyle";
+import { SearchWrapper } from "../../commonStyle";
 import {
   FormGroup,
   Input,
@@ -413,9 +413,7 @@ const Form = React.forwardRef(
           padding: "0 10px 0 0",
         }}
       >
-        <FormSectionTitle>
-          <BuildingInfoText text="건물 정보" />
-        </FormSectionTitle>
+        <BuildingInfoText text="건물 정보" style={{ padding: "11px 15px" }} />
         <Divider />
 
         <form onSubmit={handleSubmit(submit)} autoComplete="off">
@@ -467,7 +465,6 @@ const Form = React.forwardRef(
               register={register("cuZipcode")}
               inputSize={InputSize.i60}
               readOnly={!watch("chkCuZipCode")}
-              style={{ marginRight: "3px" }}
             />
             <DaumAddress
               setAddress={setAddress}
@@ -477,14 +474,13 @@ const Form = React.forwardRef(
             />
             <Input
               inputSize={InputSize.md}
-              style={{ marginRight: "0px" }}
               value={cuAddr1}
               onChange={(e: any) => setCuAddr1(e.target.value)}
               readOnly={!watch("chkCuZipCode")}
             />
             <Input
               register={register("cuAddr2")}
-              style={{ marginLeft: "5px", width: "225px" }}
+              style={{ width: "225px" }}
               readOnly={!watch("chkCuZipCode")}
             />
           </FormGroup>
@@ -546,33 +542,27 @@ const Form = React.forwardRef(
           </div>
         </form>
 
-        <FormSectionTitle>
-          <PersonInfoText
-            text="사용자 정보"
-            textStyle={{
-              color: "#1b8c8e",
-              fontWeight: "bold",
-              marginLeft: "1.2px",
-            }}
-          />
+        <SearchWrapper
+          className="h35 bgtr"
+          style={{ border: "none", paddingRight: 0 }}
+        >
+          <PersonInfoText text="사용자 정보" />
           <div className="buttons">
             <Button
               text="사용자 추가"
               icon={<Plus />}
-              style={{ marginRight: "5px" }}
               onClick={openPopupCM1105Insert}
               disabled={isAddBtnClicked}
             />
             <Button
               text="사용자 수정"
               icon={<Update />}
-              style={{ marginRight: "5px" }}
               onClick={openPopupCM1105Update}
               disabled={isAddBtnClicked}
             />
             <Button text="삭제" icon={<Trash />} disabled={isAddBtnClicked} />
           </div>
-        </FormSectionTitle>
+        </SearchWrapper>
 
         <GridBottom
           menuId={menuId}

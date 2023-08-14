@@ -17,4 +17,14 @@ export const ModalHeader = styled.div`
   label {
     background: transparent;
   }
+
+  div.buttons {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .ml30 {
+    margin-left: 30px;
+  }
 `;
