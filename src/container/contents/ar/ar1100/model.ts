@@ -1,6 +1,7 @@
 export interface IAR1100SEARCH {
   areaCode: string;
   sDate: string;
+  dDate: string;
   sCustomer: string;
   sSawon: string;
   sInkumtype: string;
@@ -49,3 +50,36 @@ export interface IAR1100GRID {
   swName: string;
   vatDiv: null;
 }
+
+export const emtObj = {
+  areaCode: "",
+  bigo: null,
+  cuCode: "",
+  cuName: "",
+  dc: 0,
+  inkum: 0,
+  inkumType: "",
+  inkumtypeName: "",
+  insertType: " ",
+  insertypeName: null,
+  jpCode: "",
+  jpName: "",
+  kumack: 0,
+  misukum: 0,
+  pjCuName: "",
+  pjDate: "",
+  pjSno: "",
+  pjTime: "",
+  pjType: "",
+  pjUserId: "",
+  pjtypeName: "",
+  proxyType: "",
+  proxytypeName: null,
+  qty: 0,
+  reqty: 0,
+  saleState: "",
+  salestateName: "",
+  swCode: "",
+  swName: "",
+  vatDiv: "",
+};
