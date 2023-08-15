@@ -144,14 +144,14 @@ function CM1100Page({
         cuCode: selected.cuCode,
         areaCode: selected.areaCode,
         status: "INSERT",
-        source: "CM1100",
+        source: menuId,
       });
     } else {
       openPopup({
         cuCode: "",
         areaCode: getValues("areaCode"),
         status: "INSERT",
-        source: "CM1100",
+        source: menuId,
       });
     }
   };

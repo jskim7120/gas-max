@@ -185,7 +185,7 @@ const modalSlice = createSlice({
 
     addCM1105: (state, action) => {
       state.cm1105 = {
-        ...state.cm1105,
+        //...state.cm1105,
         ...action.payload,
       };
     },

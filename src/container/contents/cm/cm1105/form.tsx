@@ -31,9 +31,6 @@ import getTabContent from "./getTabContent";
 import { CM1105SEARCH, CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
 import useRdanga from "app/hook/useCalcRdanga";
 
-let IDCM1100 = "CM1100";
-let IDCM1200 = "CM1200";
-
 function FormCM1105() {
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const [data, setData] = useState<any>(null);
@@ -131,28 +128,17 @@ function FormCM1105() {
     if (res) {
       setIsAddBtnClicked(true);
       setData(null);
-      if (cm1105?.source === IDCM1200 && cm1105?.cuName !== "") {
-        reset((formValues: any) => ({
-          ...formValues,
-          ...emptyObj,
-          cuCode: res[0].cuCode,
-          cuCutype: res[0].cuCutype,
-          cuStae: res[0].cuStae,
-          cuType: res[0].cuType,
-          cuName: cm1105.cuName,
-        }));
-      }
-      if (cm1105?.source === IDCM1100) {
-        reset((formValues: any) => ({
-          ...formValues,
-          ...emptyObj,
-          cuCode: res[0].cuCode,
-          cuCutype: res[0].cuCutype,
-          cuStae: res[0].cuStae,
-          cuType: res[0].cuType,
-          areaCode: cm1105.areaCode,
-        }));
-      }
+
+      reset((formValues: any) => ({
+        ...formValues,
+        ...emptyObj,
+        cuCode: res[0].cuCode,
+        cuCutype: res[0].cuCutype,
+        cuStae: res[0].cuStae,
+        cuType: res[0].cuType,
+        cuName: cm1105?.cuName && cm1105.cuName,
+        areaCode: cm1105.areaCode,
+      }));
     }
   };
 
@@ -393,7 +379,6 @@ function FormCM1105() {
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
-              // dispatch(addCM1105({ cuCode: "", areaCode: "" }));
               dispatch(closeModal());
             }}
           >
