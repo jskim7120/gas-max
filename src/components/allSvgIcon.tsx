@@ -1881,3 +1881,122 @@ export const Print = () => {
     </svg>
   );
 };
+
+export const Truck = () => {
+  return (
+    <svg
+      id="Icon_delivery-truck"
+      data-name="Icon/delivery-truck"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path id="Path_53" data-name="Path 53" d="M0,0H24V24H0Z" fill="none" />
+      <circle
+        id="Ellipse_4"
+        data-name="Ellipse 4"
+        cx="2"
+        cy="2"
+        r="2"
+        transform="translate(5 15)"
+        fill="none"
+        stroke="rgba(252,13,220,0.54)"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+      <circle
+        id="Ellipse_5"
+        data-name="Ellipse 5"
+        cx="2"
+        cy="2"
+        r="2"
+        transform="translate(15 15)"
+        fill="none"
+        stroke="rgba(252,13,220,0.54)"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+      <path
+        id="Path_54"
+        data-name="Path 54"
+        d="M5,17H3V13M2,5H13V17M9,17h6m4,0h2V11H13m0-5h5l3,5"
+        fill="none"
+        stroke="rgba(252,13,220,0.54)"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+      <line
+        id="Line_18"
+        data-name="Line 18"
+        x2="4"
+        transform="translate(3 9)"
+        fill="none"
+        stroke="rgba(252,13,220,0.54)"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+};
+
+export const File = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="17"
+      viewBox="0 0 24 17"
+    >
+      <g id="Icon_File" data-name="Icon/File" transform="translate(0 0.224)">
+        <rect
+          id="Container"
+          width="24"
+          height="17"
+          transform="translate(0 -0.224)"
+          fill="none"
+        />
+        <path
+          id="Path_2795"
+          data-name="Path 2795"
+          d="M79.942,0H66.058C64.922,0,64,.545,64,1.216V13.284c0,.671.922,1.215,2.058,1.216H79.942c1.136,0,2.056-.545,2.058-1.216V1.216C82,.545,81.078,0,79.942,0Zm1.24,13.284c0,.4-.555.732-1.24.732H66.058c-.684,0-1.239-.328-1.24-.732V1.216c0-.4.555-.732,1.24-.732H79.942c.684,0,1.239.328,1.24.732Z"
+          transform="translate(-61 1)"
+          fill="rgba(252,13,220,0.54)"
+          stroke="rgba(252,13,220,0.54)"
+          strokeWidth="0.8"
+        />
+        <path
+          id="Path_2796"
+          data-name="Path 2796"
+          d="M146.1,232h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
+          transform="translate(-129.253 -224.154)"
+          fill="rgba(252,13,220,0.54)"
+          stroke="rgba(252,13,220,0.54)"
+          strokeWidth="0.8"
+        />
+        <path
+          id="Path_2797"
+          data-name="Path 2797"
+          d="M146.1,328h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
+          transform="translate(-129.253 -317.187)"
+          fill="rgba(252,13,220,0.54)"
+          stroke="rgba(252,13,220,0.54)"
+          strokeWidth="0.8"
+        />
+        <path
+          id="Path_2798"
+          data-name="Path 2798"
+          d="M146.1,136h-9.7a.4.4,0,0,0,0,.808h9.7a.4.4,0,0,0,0-.808Z"
+          transform="translate(-129.253 -131.121)"
+          fill="rgba(252,13,220,0.54)"
+          stroke="rgba(252,13,220,0.54)"
+          strokeWidth="0.8"
+        />
+      </g>
+    </svg>
+  );
+};

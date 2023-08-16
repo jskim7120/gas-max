@@ -13,11 +13,13 @@ export interface IAR1100SEARCH {
   sSalestate3: boolean;
   sSalestate4: boolean;
   sSalestate5: boolean;
+  sSalestate6: boolean;
   sSalegubun0: boolean;
   sSalegubun1: boolean;
   sSalegubun2: boolean;
   sSalegubun3: boolean;
   sSalegubun4: boolean;
+  sSalegubun5: boolean;
 }
 
 export interface IAR1100GRID {

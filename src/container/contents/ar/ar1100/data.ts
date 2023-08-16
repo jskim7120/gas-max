@@ -2,11 +2,15 @@ import { ValueType } from "realgrid";
 
 export const fields = [
   {
+    fieldName: "order",
+    dataType: ValueType.TEXT,
+  },
+  {
     fieldName: "salestateName",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "pjtypeName",
+    fieldName: "pjDate",
     dataType: ValueType.TEXT,
   },
   {
@@ -22,6 +26,10 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
+    fieldName: "pjtypeName",
+    dataType: ValueType.TEXT,
+  },
+  {
     fieldName: "jpName",
     dataType: ValueType.TEXT,
   },
@@ -34,6 +42,10 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
+    fieldName: "swName",
+    dataType: ValueType.TEXT,
+  },
+  {
     fieldName: "vatDiv",
     dataType: ValueType.NUMBER,
   },
@@ -42,11 +54,15 @@ export const fields = [
     dataType: ValueType.NUMBER,
   },
   {
-    fieldName: "dc",
-    dataType: ValueType.NUMBER,
+    fieldName: "inkumtypeName",
+    dataType: ValueType.TEXT,
   },
   {
     fieldName: "inkum",
+    dataType: ValueType.NUMBER,
+  },
+  {
+    fieldName: "dc",
     dataType: ValueType.NUMBER,
   },
   {
@@ -54,15 +70,7 @@ export const fields = [
     dataType: ValueType.NUMBER,
   },
   {
-    fieldName: "swName",
-    dataType: ValueType.TEXT,
-  },
-  {
     fieldName: "bigo",
-    dataType: ValueType.TEXT,
-  },
-  {
-    fieldName: "inkumtypeName",
     dataType: ValueType.TEXT,
   },
   {
@@ -77,6 +85,20 @@ export const fields = [
 
 export const columns = [
   {
+    name: "order",
+    fieldName: "order",
+    type: "data",
+    width: "70",
+    header: {
+      text: "접수일자",
+    },
+    footer: {
+      valueCallback: function (grid: any) {
+        return grid.getSummary("order", "count");
+      },
+    },
+  },
+  {
     name: "salestateName",
     fieldName: "salestateName",
     type: "data",
@@ -84,19 +106,14 @@ export const columns = [
     header: {
       text: "상태",
     },
-    footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("salestateName", "count");
-      },
-    },
   },
   {
-    name: "pjtypeName",
-    fieldName: "pjtypeName",
+    name: "pjDate",
+    fieldName: "pjDate",
     type: "data",
     width: "50",
     header: {
-      text: "구분",
+      text: "판매일",
     },
   },
   {
@@ -125,6 +142,15 @@ export const columns = [
     styleName: "rg-left-column",
     header: {
       text: "거래처명",
+    },
+  },
+  {
+    name: "pjtypeName",
+    fieldName: "pjtypeName",
+    type: "data",
+    width: "50",
+    header: {
+      text: "구분",
     },
   },
   {
@@ -158,6 +184,16 @@ export const columns = [
     },
   },
   {
+    name: "swName",
+    fieldName: "swName",
+    type: "data",
+    width: "100",
+    styleName: "rg-left-column",
+    header: {
+      text: "사원",
+    },
+  },
+  {
     name: "vatDiv",
     fieldName: "vatDiv",
     type: "data",
@@ -180,15 +216,13 @@ export const columns = [
     numberFormat: "#,##0",
   },
   {
-    name: "dc",
-    fieldName: "dc",
+    name: "inkumtypeName",
+    fieldName: "inkumtypeName",
     type: "data",
-    width: "100",
-    styleName: "rg-right-column",
+    width: "80",
     header: {
-      text: "D/C",
+      text: "방법",
     },
-    numberFormat: "#,##0",
   },
   {
     name: "inkum",
@@ -198,6 +232,17 @@ export const columns = [
     styleName: "rg-right-column",
     header: {
       text: "입금액",
+    },
+    numberFormat: "#,##0",
+  },
+  {
+    name: "dc",
+    fieldName: "dc",
+    type: "data",
+    width: "100",
+    styleName: "rg-right-column",
+    header: {
+      text: "D/C",
     },
     numberFormat: "#,##0",
   },
@@ -213,16 +258,6 @@ export const columns = [
     numberFormat: "#,##0",
   },
   {
-    name: "swName",
-    fieldName: "swName",
-    type: "data",
-    width: "100",
-    styleName: "rg-left-column",
-    header: {
-      text: "사원",
-    },
-  },
-  {
     name: "bigo",
     fieldName: "bigo",
     type: "data",
@@ -230,15 +265,6 @@ export const columns = [
     styleName: "rg-left-column",
     header: {
       text: "비고",
-    },
-  },
-  {
-    name: "inkumtypeName",
-    fieldName: "inkumtypeName",
-    type: "data",
-    width: "80",
-    header: {
-      text: "입금",
     },
   },
   {
@@ -256,7 +282,7 @@ export const columns = [
     type: "data",
     width: "100",
     header: {
-      text: "등록",
+      text: "등록구분",
     },
   },
 ];

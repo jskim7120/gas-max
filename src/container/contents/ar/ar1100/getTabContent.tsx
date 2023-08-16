@@ -30,22 +30,22 @@ function getTabContent(
         />
       );
     case 1:
-      return <>1</>;
+      return <>2</>;
     case 2:
       //   return <Tab3 data={data} />;
-      return <>2</>;
+      return <>3</>;
     case 3:
       //   return <Tab3 data={data} />;
-      return <>3</>;
+      return <>4</>;
     case 4:
       //   return <Tab3 data={data} />;
-      return <>4</>;
+      return <>5</>;
     case 5:
       //   return <Tab3 data={data} />;
-      return <>5</>;
+      return <>6</>;
     case 6:
       //   return <Tab3 data={data} />;
-      return <>6</>;
+      return <>7</>;
   }
   return null;
 }
