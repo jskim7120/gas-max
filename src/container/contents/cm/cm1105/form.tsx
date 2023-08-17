@@ -31,7 +31,7 @@ import getTabContent from "./getTabContent";
 import { CM1105SEARCH, CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
 import useRdanga from "app/hook/useCalcRdanga";
 
-function FormCM1105() {
+function FormCM1105({ setIsOpen }: { setIsOpen: Function }) {
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const [data, setData] = useState<any>(null);
   const [addr, setAddress] = useState<string>("");
@@ -379,7 +379,8 @@ function FormCM1105() {
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
-              dispatch(closeModal());
+              // dispatch(closeModal());
+              setIsOpen(false);
             }}
           >
             <WhiteClose />

@@ -155,7 +155,7 @@ interface ISEARCH {
   sCuAddr: string;
 }
 
-function Form() {
+function Form({ onClose, setIsOpen }: { onClose: any; setIsOpen: Function }) {
   const dispatch = useDispatch();
   const [areaCode, setAreaCode] = useState<
     Array<{ code: string; codeName: string }>
@@ -243,7 +243,8 @@ function Form() {
   };
 
   const handleCancel = () => {
-    dispatch(closeModal());
+    // dispatch(closeModal());
+    setIsOpen(false);
   };
 
   const submit = async (data: ISEARCH) => {
@@ -389,6 +390,7 @@ function Form() {
             icon={<Plus />}
             type="button"
             color={ButtonColor.WARNING}
+            onClick={onClose}
           />
           <div className="buttons">
             <Button

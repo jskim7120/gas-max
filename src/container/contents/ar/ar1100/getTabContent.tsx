@@ -1,4 +1,5 @@
-import Tab1 from "./tabs/tab1/tab1";
+import Tab1 from "./tabs/tab1";
+import Tab2 from "./tabs/tab2";
 
 function getTabContent(
   id: number,
@@ -11,6 +12,7 @@ function getTabContent(
   fetchData: Function,
   menuId: string,
   tabRef1: any,
+  tabRef2: any,
   addBtnUnClick: Function
 ) {
   switch (id) {
@@ -30,7 +32,20 @@ function getTabContent(
         />
       );
     case 1:
-      return <>2</>;
+      return (
+        <Tab2
+          areaCode={areaCode}
+          data={data}
+          dictionary={dictionary}
+          isAddBtnClicked={isAddBtnClicked}
+          setIsAddBtnClicked={setIsAddBtnClicked}
+          fetchData={fetchData}
+          selected={selected}
+          menuId={menuId}
+          ref={tabRef2}
+          addBtnUnClick={addBtnUnClick}
+        />
+      );
     case 2:
       //   return <Tab3 data={data} />;
       return <>3</>;

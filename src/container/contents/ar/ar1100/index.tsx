@@ -26,6 +26,7 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { fields, columns } from "./data";
 import { IAR1100SEARCH, emtObj } from "./model";
 import getTabContent from "./getTabContent";
+import Modal from "components/modal/modal";
 
 function AR1100({
   depthFullName,
@@ -44,6 +45,7 @@ function AR1100({
 
   const dispatch = useDispatch();
   const tabRef1 = useRef() as React.MutableRefObject<any>;
+  const tabRef2 = useRef() as React.MutableRefObject<any>;
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
   const [selected, setSelected] = useState<any>({});
@@ -51,6 +53,8 @@ function AR1100({
   const [dataDictionary, setDataDictionary] = useState({});
   const [tabId, setTabId] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen2, setIsModalOpen2] = useState(false);
 
   const { register, handleSubmit, reset, control, getValues } =
     useForm<IAR1100SEARCH>({
@@ -199,8 +203,9 @@ function AR1100({
     btnRef1.current.classList.add("active");
     setIsAddBtnClicked(true);
     //document.getElementById("footerSearchId")?.focus();
-    setData((prev) => [...prev, emtObj]);
-    dispatch(openModal({ type: "customerModal" }));
+    // setData((prev) => [...prev, emtObj]);
+    // dispatch(openModal({ type: "customerModal" }));
+    setIsModalOpen(true);
   };
 
   const handleClickBtnDel = () => {
@@ -214,8 +219,25 @@ function AR1100({
     setData([]);
   };
 
+  const onCloseModal = () => {
+    console.log("duudagdav");
+    setIsModalOpen(false);
+    setIsModalOpen2(true);
+  };
+
   return (
     <>
+      <Modal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        type="customerModal"
+        onClose={onCloseModal}
+      />
+      <Modal
+        isOpen={isModalOpen2}
+        setIsOpen={setIsModalOpen2}
+        type="cm1105Modal"
+      />
       <SearchWrapper className="h35">
         <FormGroup>
           {ownAreaCode === "00" && (
@@ -231,6 +253,11 @@ function AR1100({
             </>
           )}
           <div className="buttons ml30">
+            {/* <Button
+              text="test2"
+              icon={<Plus />}
+              onClick={(e) => setIsModalOpen2(true)}
+            /> */}
             <Button
               text="등록"
               icon={<Plus />}
@@ -483,6 +510,7 @@ function AR1100({
             fetchDataWithParams,
             menuId,
             tabRef1,
+            tabRef2,
             addBtnUnClick
           )}
         </TabContentWrapper>

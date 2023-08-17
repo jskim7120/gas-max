@@ -13,11 +13,11 @@ const ModalWrapper = styled.div`
   -moz-box-shadow: 3px 5px 9px -3px rgba(0, 0, 0, 0.7);
 `;
 
-function CM1105Modal() {
+function CM1105Modal({ setIsOpen }: { setIsOpen: Function }) {
   return (
     <Draggable handle=".handle">
       <ModalWrapper>
-        <FormCM1105 />
+        <FormCM1105 setIsOpen={setIsOpen} />
       </ModalWrapper>
     </Draggable>
   );

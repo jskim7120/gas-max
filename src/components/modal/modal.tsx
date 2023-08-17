@@ -1,7 +1,5 @@
 import React, { Suspense } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "app/store";
-import { closeModal } from "app/state/modal/modalSlice";
 import CustomerModal from "./customModals/customerModal";
 import MenuModal from "./customModals/menuModal";
 import InfoModal from "./customModals/infoModal";
@@ -76,42 +74,54 @@ const PopupContiner = styled.div<{ type: string }>`
     `}
 `;
 
-function Popup() {
-  const dispatch = useDispatch();
-  const { modalIsOpen, type } = useSelector((state) => state.modal);
-
+function Popup({
+  isOpen,
+  setIsOpen,
+  type,
+  onClose,
+}: {
+  isOpen: boolean;
+  setIsOpen: Function;
+  type: string;
+  onClose?: any;
+}) {
   const modalClose = () => {
     if (type !== "customerModal" && type !== "delModal") {
-      dispatch(closeModal());
+      setIsOpen(false);
     }
   };
 
-  if (modalIsOpen)
-    return (
-      <PopupArea>
-        <PopupBack onClick={modalClose} />
-        <PopupContiner type={type}>
-          <Suspense fallback={<div>...loading</div>}>
-            {/* {type === "customerModal" && <CustomerModal />}
-            {type === "menuModal" && <MenuModal />}
-            {type === "accountModal" && <AccountModal />}
-            {type === "infoModal" && <InfoModal />}
-            {type === "cm1105Modal" && <CM1105Modal />}
-            {type === "cm1106Modal" && <CM1106Modal />}
-            {type === "gr1200Modal" && <GR1200Modal />}
-            {type === "gr1300Modal" && <GR1300Modal />}
-            {type === "delModal" && <DelModal />}
-            {type === "cc1100Modal" && <CC1100Modal />}
-            {type === "cc1200Modal" && <CC1200Modal />}
-            {type === "en1500Modal" && <EN1500Modal />}
-            {type === "pt1105Modal" && <PT1105Modal />}
-            {type === "pt1205Modal" && <PT1205Modal />}
-            {type === "reLoginModal" && <ReLoginModal />} */}
-          </Suspense>
-        </PopupContiner>
-      </PopupArea>
-    );
-  else return <></>;
+  if (!isOpen) return null;
+
+  return (
+    <PopupArea>
+      <PopupBack onClick={modalClose} />
+      <PopupContiner type={type}>
+        <Suspense fallback={<div>...loading</div>}>
+          {type === "customerModal" && (
+            <CustomerModal
+              setIsOpen={setIsOpen}
+              onClose={onClose ? onClose : () => console.log("modal")}
+            />
+          )}
+          {type === "menuModal" && <MenuModal />}
+          {type === "accountModal" && <AccountModal />}
+          {type === "infoModal" && <InfoModal />}
+          {type === "cm1105Modal" && <CM1105Modal setIsOpen={setIsOpen} />}
+          {type === "cm1106Modal" && <CM1106Modal />}
+          {type === "gr1200Modal" && <GR1200Modal />}
+          {type === "gr1300Modal" && <GR1300Modal />}
+          {type === "delModal" && <DelModal />}
+          {type === "cc1100Modal" && <CC1100Modal />}
+          {type === "cc1200Modal" && <CC1200Modal />}
+          {type === "en1500Modal" && <EN1500Modal />}
+          {type === "pt1105Modal" && <PT1105Modal />}
+          {type === "pt1205Modal" && <PT1205Modal />}
+          {type === "reLoginModal" && <ReLoginModal />}
+        </Suspense>
+      </PopupContiner>
+    </PopupArea>
+  );
 }
 
 export default Popup;
