@@ -4,7 +4,7 @@ import { fields1, columns1, layout1 } from "./data1";
 import { fields2, columns2, layout2 } from "./data2";
 import { fields3, columns3 } from "./data3";
 import { useDispatch } from "app/store";
-import { addGR1200Popup, openModal } from "app/state/modal/modalSlice";
+import { addGR1200Popup } from "app/state/modal/modalSlice";
 
 function Grid({
   areaCode,
@@ -14,6 +14,7 @@ function Grid({
   tabId,
   setRowIndex,
   setCallCalc,
+  setIsModalOpen,
 }: {
   areaCode: string;
   bcBuCode: any;
@@ -22,6 +23,7 @@ function Grid({
   tabId: number;
   setRowIndex: Function;
   setCallCalc: Function;
+  setIsModalOpen: Function;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
@@ -83,7 +85,8 @@ function Grid({
           bcChitType: tabId,
         })
       );
-      dispatch(openModal({ type: "gr1200Modal" }));
+
+      setIsModalOpen(true);
     };
 
     gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {

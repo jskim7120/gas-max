@@ -2,7 +2,7 @@ import React, { useEffect, useState, useImperativeHandle } from "react";
 import { useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "app/store";
-import { openModal } from "app/state/modal/modalSlice";
+import {} from "app/state/modal/modalSlice";
 import { AR1100INSERT, AR1100UPDATE, AR1100DELETE } from "app/path";
 import Table from "components/table";
 import { Input, Select, FormGroup } from "components/form/style";
@@ -14,6 +14,7 @@ import { IAR110065DETAIL, emptyObj } from "./model";
 import { apiPost } from "app/axios";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { currencyMask, removeCommas } from "helpers/currency";
+import Modal from "components/modal/modal";
 
 const Tab1 = React.forwardRef(
   (
@@ -45,10 +46,11 @@ const Tab1 = React.forwardRef(
         mode: "onSubmit",
       });
 
-    const dispatch = useDispatch();
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const footerState = useSelector((state: any) => state.footer);
     const [pjJago, setPjJago] = useState<number>(0);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     let calcPjJago = 0;
     let pjKumSup = 0;
     let pjKumVat = 0;
@@ -222,7 +224,7 @@ const Tab1 = React.forwardRef(
     }, [watch("pjVatDiv")]);
 
     const openPopupCM1106 = async () => {
-      dispatch(openModal({ type: "cm1106Modal" }));
+      setIsModalOpen(true);
     };
 
     const crud = async (type: string | null) => {
@@ -582,72 +584,79 @@ const Tab1 = React.forwardRef(
     ];
 
     return (
-      <form autoComplete="off" onSubmit={handleSubmit(submit)}>
-        <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
-          <div className="tab1">
-            <Table
-              className="no-space"
-              tableHeader={[
-                "판매일자",
-                "품  명",
-                data?.jpKind === "4" ? "매출량(kg)" : "판매수량",
-                data?.jpKind === "4" ? "매출량(ℓ)" : "공병회수",
-                data?.jpKind === "4" ? "비중(kg/ℓ)" : "재고",
-                "단가",
-                "VAT",
-                "공급가액",
-                "세액",
-                " 합계금액",
-              ]}
-              tableData={data1}
-              style={{ marginBottom: "2px" }}
-            />
-            <Table
-              className="no-space"
-              tableHeader={[
-                "거래상태",
-                "대납구분",
-                "매입처명",
-                "입금방법",
-                "입금액",
-                "D/C",
-                "미입금액",
-                "사원",
-                "비고",
-                "확인자 서명",
-              ]}
-              tableData={data2}
-            />
-          </div>
+      <>
+        <Modal
+          type="cm1106Modal"
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+        />
+        <form autoComplete="off" onSubmit={handleSubmit(submit)}>
+          <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
+            <div className="tab1">
+              <Table
+                className="no-space"
+                tableHeader={[
+                  "판매일자",
+                  "품  명",
+                  data?.jpKind === "4" ? "매출량(kg)" : "판매수량",
+                  data?.jpKind === "4" ? "매출량(ℓ)" : "공병회수",
+                  data?.jpKind === "4" ? "비중(kg/ℓ)" : "재고",
+                  "단가",
+                  "VAT",
+                  "공급가액",
+                  "세액",
+                  " 합계금액",
+                ]}
+                tableData={data1}
+                style={{ marginBottom: "2px" }}
+              />
+              <Table
+                className="no-space"
+                tableHeader={[
+                  "거래상태",
+                  "대납구분",
+                  "매입처명",
+                  "입금방법",
+                  "입금액",
+                  "D/C",
+                  "미입금액",
+                  "사원",
+                  "비고",
+                  "확인자 서명",
+                ]}
+                tableData={data2}
+              />
+            </div>
 
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-          >
-            <Button
-              text="저장"
-              icon={<Update />}
-              color={ButtonColor.SECONDARY}
-              onClick={() => {}}
-              type="submit"
-              disabled={
-                isAddBtnClicked &&
-                (footerState?.source !== menuId ||
-                  footerState?.info?.cuCode === "")
-              }
-            />
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+            >
+              <Button
+                text="저장"
+                icon={<Update />}
+                color={ButtonColor.SECONDARY}
+                onClick={() => {}}
+                type="submit"
+                disabled={
+                  isAddBtnClicked &&
+                  (footerState?.source !== menuId ||
+                    footerState?.info?.cuCode === "")
+                }
+              />
 
-            <Button
-              text="취소"
-              icon={<Reset />}
-              type="button"
-              onClick={() => {
-                resetForm("reset");
-                addBtnUnClick();
-              }}
-            />
+              <Button
+                text="취소"
+                icon={<Reset />}
+                type="button"
+                onClick={() => {
+                  resetForm("reset");
+                  addBtnUnClick();
+                }}
+              />
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </>
     );
   }
 );

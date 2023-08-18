@@ -1,12 +1,13 @@
-import React, { useImperativeHandle, useEffect } from "react";
+import React, { useImperativeHandle, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useDispatch } from "app/store";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
+import { addCC1100 } from "app/state/modal/modalSlice";
+import Modal from "components/modal/modal";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
-import { currencyMask } from "helpers/currency";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
-import { useDispatch } from "app/store";
 import {
   Item,
   RadioButton,
@@ -19,8 +20,8 @@ import {
   Label,
   StcTable,
 } from "components/form/style";
+import { currencyMask } from "helpers/currency";
 import { ICC1200, emptyObj } from "./model";
-import { addCC1100, openModal } from "app/state/modal/modalSlice";
 
 interface IForm {
   selected: any;
@@ -65,6 +66,7 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [getCommonDictionary, { data: dataCommonDic }] =
       useGetCommonDictionaryMutation();
@@ -107,7 +109,7 @@ const Form = React.forwardRef(
           acjType: watch("acjType"),
         })
       );
-      dispatch(openModal({ type: "cc1200Modal" }));
+      setIsModalOpen(true);
     };
 
     return (
@@ -116,6 +118,11 @@ const Form = React.forwardRef(
         autoComplete="off"
         style={{ width: "380px", padding: "20px 10px" }}
       >
+        <Modal
+          type="cc1200Modal"
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+        />
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>영 업 소</Label>
           <Select

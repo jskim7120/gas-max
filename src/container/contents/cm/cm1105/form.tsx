@@ -13,7 +13,7 @@ import {
   DateWithoutDash,
   DateWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
-import { closeModal, addCM1105LoadStatus } from "app/state/modal/modalSlice";
+import { addCM1105LoadStatus } from "app/state/modal/modalSlice";
 import {
   Input,
   Select,
@@ -31,7 +31,7 @@ import getTabContent from "./getTabContent";
 import { CM1105SEARCH, CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
 import useRdanga from "app/hook/useCalcRdanga";
 
-function FormCM1105({ setIsOpen }: { setIsOpen: Function }) {
+function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const [data, setData] = useState<any>(null);
   const [addr, setAddress] = useState<string>("");
@@ -324,7 +324,7 @@ function FormCM1105({ setIsOpen }: { setIsOpen: Function }) {
       dispatch(addCM1105LoadStatus({ loadStatus: true }));
       setIsAddBtnClicked(false);
       setTimeout(() => {
-        dispatch(closeModal());
+        setIsModalOpen(false);
       }, 1800);
     }
   };
@@ -379,8 +379,7 @@ function FormCM1105({ setIsOpen }: { setIsOpen: Function }) {
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
-              // dispatch(closeModal());
-              setIsOpen(false);
+              setIsModalOpen(false);
             }}
           >
             <WhiteClose />

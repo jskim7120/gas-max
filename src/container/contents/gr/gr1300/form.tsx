@@ -37,6 +37,7 @@ import {
   GR1300BLDELETE,
 } from "app/path";
 import { apiGet, apiPost } from "app/axios";
+import Modal from "components/modal/modal";
 
 let data65Orig: any = {};
 
@@ -71,6 +72,7 @@ function Form({
   const [data65, setData65] = useState<any>([]);
   const [deleteData65, setDeleteData65] = useState<any[]>([]);
   const [bclInqtyLPG, setBclInqtyLPG] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const stateGR1300 = useSelector((state: any) => state.modal.gr1300);
   const stateDeleteRowGrid = useSelector((state: any) => state.modal.isDelete);
@@ -469,6 +471,11 @@ function Form({
         width: "900px",
       }}
     >
+      <Modal
+        type="gr1300Modal"
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+      />
       <form autoComplete="off">
         <SearchWrapper
           className="h35"
@@ -563,6 +570,7 @@ function Form({
             setRowIndex={setRowIndex}
             setBclInqtyLPG={setBclInqtyLPG}
             calcTab1FooterChange={calcTab1FooterChange}
+            setIsModalOpen={setIsModalOpen}
           />
         </TabContentWrapper>
       </form>

@@ -12,7 +12,6 @@ import {
   MagnifyingGlassBig,
 } from "components/allSvgIcon";
 import Grid from "components/grid2";
-import { closeModal } from "app/state/modal/modalSlice";
 import { FormGroup, Input } from "components/form/style";
 import { PT1205SEARCH } from "app/path";
 import { SearchWrapper } from "container/contents/commonStyle";
@@ -20,7 +19,7 @@ import { IPT1205 } from "./model";
 import { columns, fields } from "./data";
 import Form from "./form";
 
-function FormIP1205() {
+function FormIP1205({ setModalOpen }: { setModalOpen: Function }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
   const { register, handleSubmit, reset, getValues } = useForm<IPT1205>();
@@ -167,7 +166,7 @@ function FormIP1205() {
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
-              dispatch(closeModal());
+              setModalOpen(false);
             }}
           >
             <WhiteClose />

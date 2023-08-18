@@ -16,7 +16,7 @@ import {
 import SEARCH_RED from "assets/image/search_red.png";
 import Grid from "components/grid";
 import Form from "./form";
-import { addCM1106AR1100Tick, closeModal } from "app/state/modal/modalSlice";
+import { addCM1106AR1100Tick } from "app/state/modal/modalSlice";
 import { Select, FormGroup } from "components/form/style";
 import { CM1106LIST } from "app/path";
 import { ISEARCH } from "./model";
@@ -43,7 +43,7 @@ const FFormGroup = styled.div`
   margin-right: 3px;
 `;
 
-function FormCM1106() {
+function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
   const cm1106 = useSelector((state) => state.modal.cm1106);
   const areaCode = useSelector((state) => state.auth.areaCode);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
@@ -104,7 +104,8 @@ function FormCM1106() {
           jcJpDanga: selected?.jcJpDanga,
         })
       );
-      dispatch(closeModal());
+
+      setIsModalOpen(false);
     }
   };
 
@@ -154,7 +155,6 @@ function FormCM1106() {
               type="button"
               onClick={() => {
                 formRef.current.resetForm("clear");
-
                 setIsAddBtnClicked(true);
               }}
             />
@@ -195,7 +195,7 @@ function FormCM1106() {
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
-              dispatch(closeModal());
+              setIsModalOpen(false);
             }}
           >
             <WhiteClose />

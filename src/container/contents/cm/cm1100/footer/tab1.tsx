@@ -4,16 +4,15 @@ import { columns, fields } from "./data";
 import Button from "components/button/button";
 import { ButtonType } from "components/componentsType";
 import { Notebook, Edit2, WhiteCloseCircle } from "components/allSvgIcon";
-import { useDispatch } from "app/store";
-import { openModal } from "app/state/modal/modalSlice";
+import Modal from "components/modal/modal";
 
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
 
 function Tab1({ data }: { data: any }) {
-  const dispatch = useDispatch();
   const [gridData, setGridData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const realgridElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -61,58 +60,64 @@ function Tab1({ data }: { data: any }) {
   }, [gridData]);
 
   const openPopupCM1106 = async () => {
-    dispatch(openModal({ type: "cm1106Modal" }));
+    setIsModalOpen(true);
   };
 
   return (
-    <div style={{ display: "flex" }}>
-      <div
-        style={{ width: "100%", height: "160px" }}
-        ref={realgridElement}
-      ></div>
-      <div
-        style={{
-          width: "100px",
-          margin: "10px 0 0 10px",
-        }}
-      >
-        <Button
-          text="품목추가"
-          icon={<Notebook />}
-          withoutLine
+    <>
+      <Modal
+        type="cm1106Modal"
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+      />
+      <div style={{ display: "flex" }}>
+        <div
+          style={{ width: "100%", height: "160px" }}
+          ref={realgridElement}
+        ></div>
+        <div
           style={{
-            marginBottom: "7px",
-            width: "130px",
+            width: "100px",
+            margin: "10px 0 0 10px",
           }}
-          kind={ButtonType.SQUARE_BIG}
-          type="button"
-          onClick={openPopupCM1106}
-        />
+        >
+          <Button
+            text="품목추가"
+            icon={<Notebook />}
+            withoutLine
+            style={{
+              marginBottom: "7px",
+              width: "130px",
+            }}
+            kind={ButtonType.SQUARE_BIG}
+            type="button"
+            onClick={openPopupCM1106}
+          />
+          <Button
+            text="품목수정"
+            icon={<Edit2 />}
+            withoutLine
+            style={{
+              marginBottom: "7px",
+              width: "130px",
+            }}
+            kind={ButtonType.SQUARE_BIG}
+            type="button"
+          />
 
-        <Button
-          text="품목수정"
-          icon={<Edit2 />}
-          withoutLine
-          style={{
-            marginBottom: "7px",
-            width: "130px",
-          }}
-          kind={ButtonType.SQUARE_BIG}
-          type="button"
-        />
-
-        <Button
-          text="품목삭제"
-          icon={<WhiteCloseCircle />}
-          withoutLine
-          style={{
-            width: "130px",
-          }}
-          kind={ButtonType.SQUARE_BIG}
-          type="button"
-        />
+          <Button
+            text="품목삭제"
+            icon={<WhiteCloseCircle />}
+            withoutLine
+            style={{
+              width: "130px",
+            }}
+            kind={ButtonType.SQUARE_BIG}
+            type="button"
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

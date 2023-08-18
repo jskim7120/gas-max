@@ -33,8 +33,9 @@ import {
 import { formatCurrencyRemoveComma } from "helpers/currency";
 import getTabContent from "./getTabContent";
 import { useDispatch } from "app/store";
-import { openModal, addCM1105 } from "app/state/modal/modalSlice";
+import { addCM1105 } from "app/state/modal/modalSlice";
 import useRdanga from "app/hook/useCalcRdanga";
+import Modal from "components/modal/modal";
 
 const Form = React.forwardRef(
   (
@@ -80,6 +81,7 @@ const Form = React.forwardRef(
     const [addr, setAddress] = useState<string>("");
     const [cuAddr1, setCuAddr1] = useState("");
     const [userData, setUserData] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const {
       handleSubmit,
@@ -239,7 +241,7 @@ const Form = React.forwardRef(
 
     const openPopup = (params: any) => {
       dispatch(addCM1105(params));
-      dispatch(openModal({ type: "cm1105Modal" }));
+      setIsModalOpen(true);
     };
 
     const crud = async (type: string | null) => {
@@ -413,6 +415,11 @@ const Form = React.forwardRef(
           padding: "0 10px 0 0",
         }}
       >
+        <Modal
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+          type="cm1105Modal"
+        />
         <BuildingInfoText text="건물 정보" style={{ padding: "11px 15px" }} />
         <Divider />
 

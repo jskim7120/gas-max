@@ -13,15 +13,13 @@ import {
 } from "components/allSvgIcon";
 import Grid from "components/grid2";
 import Form from "./form";
-import { closeModal } from "app/state/modal/modalSlice";
-import { Select, FormGroup, Label, Input } from "components/form/style";
+import { FormGroup, Input } from "components/form/style";
 import { PT1105SEARCH } from "app/path";
 import { IPT1105 } from "./model";
-import styled from "styled-components";
 import { SearchWrapper } from "container/contents/commonStyle";
 import { columns, fields } from "./data";
 
-function FormIP1105() {
+function FormIP1105({ setModalOpen }: { setModalOpen: Function }) {
   const [loading, setLoading] = useState(false);
   const areaCode = useSelector((state) => state.auth.areaCode);
   const ptAreaCode = useSelector((state) => state.modal.pt1105.areaCode);
@@ -163,7 +161,7 @@ function FormIP1105() {
           <span
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
-              dispatch(closeModal());
+              setModalOpen(false);
             }}
           >
             <WhiteClose />

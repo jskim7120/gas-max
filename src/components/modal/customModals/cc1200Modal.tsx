@@ -1,15 +1,14 @@
 import React from "react";
-import styled from "styled-components";
+import { ModalWrapper } from "./style";
 import Form from "container/contents/cc/cc1200/modalForm";
-const ModalWrapper = styled.div`
-  width: 305px;
-  background: #fff;
-`;
 
-function CC1200Modal() {
+const customStyle = {
+  width: "305px",
+};
+function CC1200Modal({ setIsOpen }: { setIsOpen: Function }) {
   return (
-    <ModalWrapper>
-      <Form />
+    <ModalWrapper style={{ ...customStyle }}>
+      <Form setModalOpen={setIsOpen} />
     </ModalWrapper>
   );
 }

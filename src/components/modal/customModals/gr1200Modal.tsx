@@ -1,16 +1,16 @@
 import React from "react";
-import styled from "styled-components";
 import Form from "container/contents/gr/gr1200/tabs/modalForm";
-const ModalWrapper = styled.div`
-  width: 254px;
-  height: 387px;
-  background: #fff;
-`;
+import { ModalWrapper } from "./style";
 
-function GR1200Modal() {
+const customStyle = {
+  width: "254px",
+  height: "387px",
+};
+
+function GR1200Modal({ setIsOpen }: { setIsOpen: Function }) {
   return (
-    <ModalWrapper>
-      <Form />
+    <ModalWrapper style={{ ...customStyle }}>
+      <Form setModalOpen={setIsOpen} />
     </ModalWrapper>
   );
 }

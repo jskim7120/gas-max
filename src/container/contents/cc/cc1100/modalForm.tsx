@@ -5,9 +5,9 @@ import { CC110080 } from "app/path";
 import { CTable2 } from "container/contents/gr/gr1200/style";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import { addCC1100, closeModal } from "app/state/modal/modalSlice";
+import { addCC1100 } from "app/state/modal/modalSlice";
 
-function CC1100Modal() {
+function CC1100Modal({ setModalOpen }: { setModalOpen: Function }) {
   const [data, setData] = useState<any[]>();
   const [selected, setSelected] = useState<any>(null);
 
@@ -90,7 +90,7 @@ function CC1100Modal() {
               })
             );
 
-            dispatch(closeModal());
+            setModalOpen(false);
           }}
         />
         <Button
@@ -98,7 +98,7 @@ function CC1100Modal() {
           text="취소(Esc)"
           color={ButtonColor.LIGHT}
           onClick={() => {
-            dispatch(closeModal());
+            setModalOpen(false);
           }}
         />
       </div>

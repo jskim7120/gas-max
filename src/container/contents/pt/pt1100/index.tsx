@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
-import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { useDispatch } from "app/store";
-import { openModal, ptAreaCode } from "app/state/modal/modalSlice";
+import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
+import { ptAreaCode } from "app/state/modal/modalSlice";
+import useDrawLine from "app/hook/useMidLine";
 import { PT1100SEARCH, PT1100SEARCH62, PT110065 } from "app/path";
 import {
   SearchWrapper,
@@ -12,14 +13,9 @@ import {
   RightSide,
 } from "../../commonStyle";
 import { PersonInfoText } from "components/text";
-import { IPT1100SEARCH } from "./model";
 import Button from "components/button/button";
-import { columns, fields } from "./data";
-import { columnsSecond, fieldsSecond } from "./secondData";
-import { columnsThird, fieldsThird } from "./thirdData";
 import Grid from "components/grid";
 import Loader from "components/loader";
-import { DateWithoutDash } from "helpers/dateFormat";
 import {
   MagnifyingGlassBig,
   Plus,
@@ -28,11 +24,16 @@ import {
   Trash,
 } from "components/allSvgIcon";
 import CheckBox from "components/checkbox";
-import Form from "./form";
 import CustomDatePicker from "components/customDatePicker";
 import { FormGroup, Select, Label, Input } from "components/form/style";
 import { ButtonColor, InputSize } from "components/componentsType";
-import useDrawLine from "app/hook/useMidLine";
+import Modal from "components/modal/modal";
+import { DateWithoutDash } from "helpers/dateFormat";
+import { columns, fields } from "./data";
+import { IPT1100SEARCH } from "./model";
+import { columnsSecond, fieldsSecond } from "./secondData";
+import { columnsThird, fieldsThird } from "./thirdData";
+import Form from "./form";
 
 const leftSideWidth: number = 1010;
 
@@ -57,6 +58,7 @@ function PT1100({
   const [totMisukum, setTotMisukum] = useState(0);
   const [totSukum, setTotSukum] = useState(0);
   const [totDc, setTotDc] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -164,7 +166,7 @@ function PT1100({
   };
 
   const openPopupPT1105 = async () => {
-    dispatch(openModal({ type: "pt1105Modal" }));
+    setIsModalOpen(true);
     dispatch(
       ptAreaCode({
         areaCode: selected.areaCode,
@@ -184,7 +186,12 @@ function PT1100({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
+      <Modal
+        type="pt1105Modal"
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+      />
+      <SearchWrapper className="h35">
         <FormGroup>
           {ownAreaCode === "00" && (
             <>

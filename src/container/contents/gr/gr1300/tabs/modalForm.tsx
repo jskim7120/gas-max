@@ -2,17 +2,16 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "app/store";
 import { apiGet } from "app/axios";
 import { GR130012 } from "app/path";
+import { addGR1300 } from "app/state/modal/modalSlice";
 import { CTable2 } from "../../gr1200/style";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import { addGR1300, closeModal } from "app/state/modal/modalSlice";
 
-function GR1300Modal() {
+function GR1300Modal({ setModalOpen }: { setModalOpen: Function }) {
   const [data, setData] = useState<any[]>();
   const [selected, setSelected] = useState<any>(null);
 
   const dispatch = useDispatch();
-
   const state = useSelector((state) => state.modal.gr1300);
 
   useEffect(() => {
@@ -87,7 +86,7 @@ function GR1300Modal() {
               })
             );
 
-            dispatch(closeModal());
+            setModalOpen(false);
           }}
         />
         <Button
@@ -95,7 +94,7 @@ function GR1300Modal() {
           text="esc"
           color={ButtonColor.LIGHT}
           onClick={() => {
-            dispatch(closeModal());
+            setModalOpen(false);
           }}
         />
       </div>

@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "app/store";
 import { apiGet } from "app/axios";
 import { GR120012 } from "app/path";
+import { addGR1200 } from "app/state/modal/modalSlice";
 import { CTable2 } from "../style";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import { addGR1200, closeModal } from "app/state/modal/modalSlice";
 
-function GR1200Modal() {
+function GR1200Modal({ setModalOpen }: { setModalOpen: Function }) {
   const [data, setData] = useState<any[]>();
   const [selected, setSelected] = useState<any>(null);
 
   const dispatch = useDispatch();
-
   const state = useSelector((state) => state.modal.gr1200Popup);
 
   useEffect(() => {
@@ -90,7 +89,7 @@ function GR1200Modal() {
               })
             );
 
-            dispatch(closeModal());
+            setModalOpen(false);
           }}
         />
         <Button
@@ -98,7 +97,7 @@ function GR1200Modal() {
           text="취소"
           color={ButtonColor.LIGHT}
           onClick={() => {
-            dispatch(closeModal());
+            setModalOpen(false);
           }}
         />
       </div>

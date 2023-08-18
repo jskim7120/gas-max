@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useDispatch } from "app/store";
 import { GridView, LocalDataProvider } from "realgrid";
 import { fields, columns } from "./data";
-import { addGR1300, openModal } from "app/state/modal/modalSlice";
+import { addGR1300 } from "app/state/modal/modalSlice";
 
 function Grid({
   data,
@@ -12,6 +12,7 @@ function Grid({
   setRowIndex,
   setBclInqtyLPG,
   calcTab1FooterChange,
+  setIsModalOpen,
 }: {
   data: any;
   setData: Function;
@@ -20,6 +21,7 @@ function Grid({
   setRowIndex: Function;
   setBclInqtyLPG: Function;
   calcTab1FooterChange: Function;
+  setIsModalOpen: Function;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
@@ -68,7 +70,7 @@ function Grid({
             bbType: data2?.bbType,
           })
         );
-        dispatch(openModal({ type: "gr1300Modal" }));
+        setIsModalOpen(true);
       }
     };
 

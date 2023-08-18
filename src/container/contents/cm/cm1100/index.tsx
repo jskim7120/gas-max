@@ -12,6 +12,7 @@ import {
   addDeleteMenuId,
   setIsDelete,
 } from "app/state/modal/modalSlice";
+import Modal from "components/modal/modal";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import {
@@ -49,6 +50,7 @@ function CM1100Page({
   const [selected, setSelected] = useState<any>({});
   const [data65, setData65] = useState<any>({});
   const { isDelete } = useSelector((state) => state.modal);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
   const { register, handleSubmit, reset, getValues, control } =
@@ -167,7 +169,7 @@ function CM1100Page({
 
   const openPopup = (params: any) => {
     dispatch(addCM1105(params));
-    dispatch(openModal({ type: "cm1105Modal" }));
+    setIsModalOpen(true);
   };
 
   const resetSearchForm = () => {
@@ -186,6 +188,11 @@ function CM1100Page({
 
   return (
     <>
+      <Modal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        type="cm1105Modal"
+      />
       <SearchWrapper className="h35">
         <FormGroup>
           {ownAreaCode === "00" && (

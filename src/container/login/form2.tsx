@@ -7,7 +7,7 @@ import { ReLoginSchema } from "./validation";
 import { ILoginFormProps2 } from "./type";
 import { useSelector, useDispatch } from "app/store";
 import { setReloginInfo } from "app/state/auth/authSlice";
-import { closeModal } from "app/state/modal/modalSlice";
+
 import {
   useLoginInfoMutation,
   useReLoginMutation,
@@ -19,7 +19,7 @@ import { ButtonType, ButtonColor } from "components/componentsType";
 import Button from "components/button/button";
 import Loader from "components/loader";
 
-function Login() {
+function Login({ setIsModalOpen }: { setIsModalOpen: Function }) {
   const [checked, setChecked] = useState(false);
   const authState = useSelector((state) => state.auth);
   const {
@@ -98,7 +98,7 @@ function Login() {
         })
       );
       dispatch(removeAllTabs());
-      dispatch(closeModal());
+      setIsModalOpen(false);
     }
   }, [isSuccess3]);
 

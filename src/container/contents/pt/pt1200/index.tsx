@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { useDispatch } from "app/store";
-import { openModal, pt1205Popup } from "app/state/modal/modalSlice";
+import { pt1205Popup } from "app/state/modal/modalSlice";
 import { PT1200SEARCH, PT1200SEARCH62, PT120065 } from "app/path";
 import {
   SearchWrapper,
@@ -30,9 +30,10 @@ import {
 import CheckBox from "components/checkbox";
 import Form from "./form";
 import CustomDatePicker from "components/customDatePicker";
-import { FormGroup, Select, Label, Field, Input } from "components/form/style";
+import { FormGroup, Select, Label, Input } from "components/form/style";
 import { ButtonColor, InputSize } from "components/componentsType";
 import useDrawLine from "app/hook/useMidLine";
+import Modal from "components/modal/modal";
 
 const leftSideWidth: number = 1100;
 
@@ -56,6 +57,7 @@ function PT1200({
   const [totMisukum, setTotMisukun] = useState(0);
   const [totSukum, setTotSukum] = useState(0);
   const [totDc, setTotDc] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const dispatch = useDispatch();
@@ -166,7 +168,7 @@ function PT1200({
   };
 
   const openPopupPT1205 = async () => {
-    dispatch(openModal({ type: "pt1205Modal" }));
+    setIsModalOpen(true);
     dispatch(
       pt1205Popup({
         areaCode: selected.areaCode,
@@ -179,7 +181,12 @@ function PT1200({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
+      <Modal
+        type="pt1205Modal"
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+      />
+      <SearchWrapper className="h35">
         <FormGroup>
           {ownAreaCode === "00" && (
             <>

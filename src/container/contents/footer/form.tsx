@@ -12,7 +12,7 @@ import {
 import { FormGroup, Select, Label } from "components/form/style";
 import { FOOT61, FOOTER } from "app/path";
 import Loader from "components/loader";
-import { apiGet, apiPost } from "app/axios";
+import { apiGet } from "app/axios";
 import Grid from "./grid";
 import { closeModal, addCM1106 } from "app/state/modal/modalSlice";
 import { addInfo } from "app/state/footer/footerSlice";

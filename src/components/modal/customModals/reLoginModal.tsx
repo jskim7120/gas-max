@@ -14,12 +14,12 @@ const ModalWrapper = styled.div`
   -moz-box-shadow: 3px 5px 9px -3px rgba(0, 0, 0, 0.7);
 `;
 
-function ReLoginModal() {
+function ReLoginModal({ setIsOpen }: { setIsOpen: Function }) {
   return (
     <Draggable handle=".handle">
       <ModalWrapper>
         <AuthenticationLayout>
-          <ReLoginForm />
+          <ReLoginForm setIsModalOpen={setIsOpen} />
         </AuthenticationLayout>
       </ModalWrapper>
     </Draggable>

@@ -43,6 +43,7 @@ import {
   calcTab1GridChange,
 } from "./tabs/tab1CalculationHelper";
 import { removeCommas } from "helpers/currency";
+import Modal from "components/modal/modal";
 
 let clone: any[];
 
@@ -88,6 +89,7 @@ const Form = ({
   const [data65Detail, setData65Detail] = useState<any[]>([]);
   const [deleteData65Detail, setDeleteData65Detail] = useState<any[]>([]);
   const [callCalc, setCallCalc] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -657,6 +659,11 @@ const Form = ({
         width: "900px",
       }}
     >
+      <Modal
+        type="gr1200Modal"
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+      />
       <form autoComplete="off">
         <SearchWrapper
           className="h35"
@@ -819,6 +826,7 @@ const Form = ({
             tabId={tabId ? tabId : 0}
             setRowIndex={setRowIndex}
             setCallCalc={setCallCalc}
+            setIsModalOpen={setIsModalOpen}
           />
           {tabId === 0 && <Tab1Footer control={control} />}
         </TabContentWrapper>

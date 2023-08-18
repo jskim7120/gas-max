@@ -19,7 +19,8 @@ import { ICC1100, emptyObj } from "./model";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { useDispatch, useSelector } from "app/store";
-import { addCC1100, openModal } from "app/state/modal/modalSlice";
+import { addCC1100 } from "app/state/modal/modalSlice";
+import Modal from "components/modal/modal";
 
 interface IForm {
   areaCode: string;
@@ -45,6 +46,7 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const dispatch = useDispatch();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const stateCC1100 = useSelector((state: any) => state.modal.cc1100);
 
@@ -94,11 +96,17 @@ const Form = React.forwardRef(
           acjType: watch("acjType"),
         })
       );
-      dispatch(openModal({ type: "cc1100Modal" }));
+
+      setIsModalOpen(true);
     };
 
     return (
       <form autoComplete="off" style={{ width: "380px", padding: "10px" }}>
+        <Modal
+          type="cc1100Modal"
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+        />
         <FormGroup>
           <Label style={{ minWidth: "80px" }}>영 업 소</Label>
           <Select

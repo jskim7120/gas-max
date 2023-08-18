@@ -17,20 +17,20 @@ import PT1205Modal from "./customModals/pt1205Modal";
 import ReLoginModal from "./customModals/reLoginModal";
 const PopupArea = styled.section`
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 9999;
 `;
 
 const PopupBack = styled.div`
-  position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #000000;
-  opacity: 0.2;
+  background-color: rgba(0, 0, 0, 0.3);
 `;
 
-const PopupContiner = styled.div<{ type: string }>`
+const PopupContainer = styled.div<{ type: string }>`
   z-index: 1;
   position: fixed;
 
@@ -96,7 +96,7 @@ function Popup({
   return (
     <PopupArea>
       <PopupBack onClick={modalClose} />
-      <PopupContiner type={type}>
+      <PopupContainer type={type}>
         <Suspense fallback={<div>...loading</div>}>
           {type === "customerModal" && (
             <CustomerModal
@@ -107,19 +107,19 @@ function Popup({
           {type === "menuModal" && <MenuModal />}
           {type === "accountModal" && <AccountModal />}
           {type === "infoModal" && <InfoModal />}
-          {type === "cm1105Modal" && <CM1105Modal setIsOpen={setIsOpen} />}
-          {type === "cm1106Modal" && <CM1106Modal />}
-          {type === "gr1200Modal" && <GR1200Modal />}
-          {type === "gr1300Modal" && <GR1300Modal />}
           {type === "delModal" && <DelModal />}
-          {type === "cc1100Modal" && <CC1100Modal />}
-          {type === "cc1200Modal" && <CC1200Modal />}
+          {type === "cm1105Modal" && <CM1105Modal setIsOpen={setIsOpen} />}
+          {type === "cm1106Modal" && <CM1106Modal setIsOpen={setIsOpen} />}
+          {type === "gr1200Modal" && <GR1200Modal setIsOpen={setIsOpen} />}
+          {type === "gr1300Modal" && <GR1300Modal setIsOpen={setIsOpen} />}
+          {type === "cc1100Modal" && <CC1100Modal setIsOpen={setIsOpen} />}
+          {type === "cc1200Modal" && <CC1200Modal setIsOpen={setIsOpen} />}
           {type === "en1500Modal" && <EN1500Modal />}
-          {type === "pt1105Modal" && <PT1105Modal />}
-          {type === "pt1205Modal" && <PT1205Modal />}
-          {type === "reLoginModal" && <ReLoginModal />}
+          {type === "pt1105Modal" && <PT1105Modal setIsOpen={setIsOpen} />}
+          {type === "pt1205Modal" && <PT1205Modal setIsOpen={setIsOpen} />}
+          {type === "reLoginModal" && <ReLoginModal setIsOpen={setIsOpen} />}
         </Suspense>
-      </PopupContiner>
+      </PopupContainer>
     </PopupArea>
   );
 }

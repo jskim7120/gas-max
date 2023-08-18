@@ -11,7 +11,6 @@ import {
   ExcelIcon,
 } from "components/allSvgIcon";
 import useGetData from "app/hook/getSimpleData";
-import { openModal } from "app/state/modal/modalSlice";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import { Select, Label, FormGroup, Input } from "components/form/style";

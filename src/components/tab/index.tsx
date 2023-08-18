@@ -1,4 +1,4 @@
-import React, { useEffect, BaseSyntheticEvent } from "react";
+import React, { useEffect, BaseSyntheticEvent, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { useSelector, useDispatch } from "app/store";
 import {
@@ -8,8 +8,6 @@ import {
   removeAllTabs,
   refreshTabs,
 } from "app/state/tab/tabSlice";
-
-import { openModal } from "app/state/modal/modalSlice";
 import { toggleSidebar } from "app/state/sidebar/sidebarSlice";
 import { getContent } from "./tabContent";
 import {
@@ -28,6 +26,7 @@ import {
   Refresh,
   Close,
 } from "components/allSvgIcon";
+import Modal from "components/modal/modal";
 
 interface TabProps {
   className?: string;
@@ -78,6 +77,7 @@ const Tab = (props: TabProps): JSX.Element => {
   let tabState = useSelector((state) => state.tab);
   const areaCode = useSelector((state) => state.auth.areaCode);
   const { isOpen } = useSelector((state) => state.sidebar);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (tabState.tabs.length <= 2 && sessionStorage.getItem("active-tab")) {
@@ -99,69 +99,72 @@ const Tab = (props: TabProps): JSX.Element => {
   };
 
   return (
-    <TabContainer
-      style={{
-        width: isOpen ? "calc(100% - 82px)" : "100%",
-      }}
-    >
-      <TabHeaderWrapper>
-        <div className="sideBar" onClick={() => dispatch(toggleSidebar())}>
-          {isOpen ? <SidebarClose /> : <SidebarOpen />}
-        </div>
-        <ul>
-          {tabHeader?.map((header: any, index: number) => (
-            <TabHeader
-              key={index}
-              header={header}
-              isActive={activeTabId === header.menuId}
-              onClick={() => changeTab(header.menuId)}
-              closeTab={closeTab}
-            />
-          ))}
-        </ul>
-        <div className="subIconCnt">
-          <span onClick={() => dispatch(openModal({ type: "infoModal" }))}>
-            <Info />
-          </span>
-          <span
-            onClick={() => {
-              dispatch(refreshTabs());
-            }}
+    <>
+      <Modal type="infoModal" isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+      <TabContainer
+        style={{
+          width: isOpen ? "calc(100% - 82px)" : "100%",
+        }}
+      >
+        <TabHeaderWrapper>
+          <div className="sideBar" onClick={() => dispatch(toggleSidebar())}>
+            {isOpen ? <SidebarClose /> : <SidebarOpen />}
+          </div>
+          <ul>
+            {tabHeader?.map((header: any, index: number) => (
+              <TabHeader
+                key={index}
+                header={header}
+                isActive={activeTabId === header.menuId}
+                onClick={() => changeTab(header.menuId)}
+                closeTab={closeTab}
+              />
+            ))}
+          </ul>
+          <div className="subIconCnt">
+            <span onClick={() => setIsModalOpen(true)}>
+              <Info />
+            </span>
+            <span
+              onClick={() => {
+                dispatch(refreshTabs());
+              }}
+              style={{
+                marginLeft: "8px",
+              }}
+            >
+              <Refresh />
+            </span>
+            <span
+              onClick={() => {
+                dispatch(removeAllTabs());
+              }}
+              style={{
+                marginLeft: "8px",
+              }}
+            >
+              <Close />
+            </span>
+          </div>
+        </TabHeaderWrapper>
+
+        <TabBorderLine isHome={activeTabId === "HOME"} />
+
+        {tabHeader?.map((tab: any, idx: number) => (
+          <TabContentWrapper
+            key={idx}
+            className="tab-content"
             style={{
-              marginLeft: "8px",
+              visibility: tab.menuId === activeTabId ? "visible" : "hidden",
+              display: tab.menuId === activeTabId ? "block" : "none",
             }}
           >
-            <Refresh />
-          </span>
-          <span
-            onClick={() => {
-              dispatch(removeAllTabs());
-            }}
-            style={{
-              marginLeft: "8px",
-            }}
-          >
-            <Close />
-          </span>
-        </div>
-      </TabHeaderWrapper>
-
-      <TabBorderLine isHome={activeTabId === "HOME"} />
-
-      {tabHeader?.map((tab: any, idx: number) => (
-        <TabContentWrapper
-          key={idx}
-          className="tab-content"
-          style={{
-            visibility: tab.menuId === activeTabId ? "visible" : "hidden",
-            display: tab.menuId === activeTabId ? "block" : "none",
-          }}
-        >
-          {getContent(tab.menuId, tab.depthFullName, areaCode)}
-        </TabContentWrapper>
-      ))}
-      <ToastContainer />
-    </TabContainer>
+            {getContent(tab.menuId, tab.depthFullName, areaCode)}
+          </TabContentWrapper>
+        ))}
+        <ToastContainer />
+      </TabContainer>
+    </>
   );
 };
 
