@@ -25,7 +25,8 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { fields, columns } from "./data";
 import { IAR1100SEARCH, emtObj } from "./model";
 import getTabContent from "./getTabContent";
-import Modal from "components/modal/modal";
+import useModal from "app/hook/useModal";
+import { addSource } from "app/state/footer/footerSlice";
 
 function AR1100({
   depthFullName,
@@ -52,8 +53,18 @@ function AR1100({
   const [dataDictionary, setDataDictionary] = useState({});
   const [tabId, setTabId] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalOpen2, setIsModalOpen2] = useState(false);
+
+  const {
+    showCM1105Modal,
+    // closeModal: closeCM1105Modal,
+    openModal: openCM1105Modal,
+  } = useModal();
+
+  const {
+    showCustomerModal,
+    closeModal: closeCustomerModal,
+    openModal: openCustomerModal,
+  } = useModal();
 
   const { register, handleSubmit, reset, control, getValues } =
     useForm<IAR1100SEARCH>({
@@ -201,10 +212,9 @@ function AR1100({
     fetchData11({ areaCode: getValues("areaCode"), pjType: 0 });
     btnRef1.current.classList.add("active");
     setIsAddBtnClicked(true);
-    //document.getElementById("footerSearchId")?.focus();
     // setData((prev) => [...prev, emtObj]);
-    // dispatch(openModal({ type: "customerModal" }));
-    setIsModalOpen(true);
+    dispatch(addSource({ source: menuId }));
+    openCustomerModal();
   };
 
   const handleClickBtnDel = () => {
@@ -220,23 +230,14 @@ function AR1100({
 
   const onCloseModal = () => {
     console.log("duudagdav");
-    setIsModalOpen(false);
-    setIsModalOpen2(true);
+    closeCustomerModal();
+    openCM1105Modal();
   };
 
   return (
     <>
-      <Modal
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
-        type="customerModal"
-        onClose={onCloseModal}
-      />
-      <Modal
-        isOpen={isModalOpen2}
-        setIsOpen={setIsModalOpen2}
-        type="cm1105Modal"
-      />
+      {showCustomerModal({ onClose: onCloseModal })}
+      {showCM1105Modal()}
       <SearchWrapper className="h35">
         <FormGroup>
           {ownAreaCode === "00" && (
@@ -252,11 +253,6 @@ function AR1100({
             </>
           )}
           <div className="buttons ml30">
-            {/* <Button
-              text="test2"
-              icon={<Plus />}
-              onClick={(e) => setIsModalOpen2(true)}
-            /> */}
             <Button
               text="등록"
               icon={<Plus />}

@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { MouseEventHandler, Suspense } from "react";
 import styled from "styled-components";
 import CustomerModal from "./customModals/customerModal";
 import MenuModal from "./customModals/menuModal";
@@ -53,11 +53,18 @@ const PopupContainer = styled.div<{ type: string }>`
     `}
 
   ${(props) =>
+    props.type === "delModal" &&
+    `       
+      top: 25%;
+      left: 50%;
+    `}
+
+  ${(props) =>
     props.type === "menuModal" &&
     `
       bottom: 80px;
       right: 0;
-      `}
+    `}
 
   ${(props) =>
     props.type === "infoModal" &&
@@ -83,7 +90,7 @@ function Popup({
   isOpen: boolean;
   setIsOpen: Function;
   type: string;
-  onClose?: any;
+  onClose?: MouseEventHandler;
 }) {
   const modalClose = () => {
     if (type !== "customerModal" && type !== "delModal") {
@@ -98,26 +105,26 @@ function Popup({
       <PopupBack onClick={modalClose} />
       <PopupContainer type={type}>
         <Suspense fallback={<div>...loading</div>}>
+          {type === "menuModal" && <MenuModal />}
+          {type === "accountModal" && <AccountModal />}
+          {type === "infoModal" && <InfoModal />}
           {type === "customerModal" && (
             <CustomerModal
               setIsOpen={setIsOpen}
               onClose={onClose ? onClose : () => console.log("modal")}
             />
           )}
-          {type === "menuModal" && <MenuModal />}
-          {type === "accountModal" && <AccountModal />}
-          {type === "infoModal" && <InfoModal />}
-          {type === "delModal" && <DelModal />}
+          {type === "delModal" && <DelModal setIsOpen={setIsOpen} />}
+          {type === "reLoginModal" && <ReLoginModal setIsOpen={setIsOpen} />}
           {type === "cm1105Modal" && <CM1105Modal setIsOpen={setIsOpen} />}
           {type === "cm1106Modal" && <CM1106Modal setIsOpen={setIsOpen} />}
           {type === "gr1200Modal" && <GR1200Modal setIsOpen={setIsOpen} />}
           {type === "gr1300Modal" && <GR1300Modal setIsOpen={setIsOpen} />}
           {type === "cc1100Modal" && <CC1100Modal setIsOpen={setIsOpen} />}
           {type === "cc1200Modal" && <CC1200Modal setIsOpen={setIsOpen} />}
-          {type === "en1500Modal" && <EN1500Modal />}
           {type === "pt1105Modal" && <PT1105Modal setIsOpen={setIsOpen} />}
           {type === "pt1205Modal" && <PT1205Modal setIsOpen={setIsOpen} />}
-          {type === "reLoginModal" && <ReLoginModal setIsOpen={setIsOpen} />}
+          {type === "en1500Modal" && <EN1500Modal />}
         </Suspense>
       </PopupContainer>
     </PopupArea>

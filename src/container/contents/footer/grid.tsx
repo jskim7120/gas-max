@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { useDispatch } from "app/store";
 import { GridView, LocalDataProvider } from "realgrid";
 import { fields, columns } from "./data";
-import { closeModal } from "app/state/modal/modalSlice";
 import { addInfo } from "app/state/footer/footerSlice";
 
 function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
@@ -44,7 +43,7 @@ function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
       const itemIndex: any = gv.getCurrent().dataRow;
       if (JSON.stringify(data[itemIndex]) !== "{}") {
         dispatch(addInfo({ info: data[itemIndex] }));
-        dispatch(closeModal());
+        // dispatch(closeModal());
       } else {
         alert("please choose row from grid ");
       }

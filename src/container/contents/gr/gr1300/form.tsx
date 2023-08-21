@@ -20,12 +20,7 @@ import FooterInfo from "./footer";
 import { CircleBtn } from "../gr1200/style";
 import { PersonInfoText } from "components/text";
 import { DateWithoutDash } from "helpers/dateFormat";
-import {
-  openModal,
-  addDeleteMenuId,
-  setIsDelete,
-  closeModal,
-} from "app/state/modal/modalSlice";
+import { addDeleteMenuId, setIsDelete } from "app/state/modal/modalSlice";
 import {
   GR130065,
   GR130011,
@@ -37,7 +32,7 @@ import {
   GR1300BLDELETE,
 } from "app/path";
 import { apiGet, apiPost } from "app/axios";
-import Modal from "components/modal/modal";
+import useModal from "app/hook/useModal";
 
 let data65Orig: any = {};
 
@@ -78,6 +73,8 @@ function Form({
   const stateDeleteRowGrid = useSelector((state: any) => state.modal.isDelete);
 
   const dispatch = useDispatch();
+  const { showDeleteModal, openModal, closeModal } = useModal();
+  const { showGR1300Modal } = useModal();
 
   const { register, handleSubmit, reset, control, getValues, watch } =
     useForm<IGR1300>({
@@ -269,7 +266,7 @@ function Form({
       crud("delete");
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
-      dispatch(closeModal());
+      closeModal();
     } catch (error) {}
   }
   const handleClickAdd = () => {
@@ -278,7 +275,7 @@ function Form({
 
   const handleClickDelete = () => {
     if (selected && Object.keys(selected)?.length > 0) {
-      dispatch(openModal({ type: "delModal" }));
+      openModal();
       dispatch(addDeleteMenuId({ menuId: menuId }));
     } else {
       toast.warning("no selected data to delete", {
@@ -471,11 +468,8 @@ function Form({
         width: "900px",
       }}
     >
-      <Modal
-        type="gr1300Modal"
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
-      />
+      {showDeleteModal()}
+      {showGR1300Modal()}
       <form autoComplete="off">
         <SearchWrapper
           className="h35"

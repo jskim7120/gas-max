@@ -14,7 +14,7 @@ import { IAR110065DETAIL, emptyObj } from "./model";
 import { apiPost } from "app/axios";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { currencyMask, removeCommas } from "helpers/currency";
-import Modal from "components/modal/modal";
+import useModal from "app/hook/useModal";
 
 const Tab1 = React.forwardRef(
   (
@@ -49,7 +49,7 @@ const Tab1 = React.forwardRef(
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const footerState = useSelector((state: any) => state.footer);
     const [pjJago, setPjJago] = useState<number>(0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { showCM1106Modal, openModal } = useModal();
 
     let calcPjJago = 0;
     let pjKumSup = 0;
@@ -224,7 +224,7 @@ const Tab1 = React.forwardRef(
     }, [watch("pjVatDiv")]);
 
     const openPopupCM1106 = async () => {
-      setIsModalOpen(true);
+      openModal();
     };
 
     const crud = async (type: string | null) => {
@@ -585,11 +585,7 @@ const Tab1 = React.forwardRef(
 
     return (
       <>
-        <Modal
-          type="cm1106Modal"
-          isOpen={isModalOpen}
-          setIsOpen={setIsModalOpen}
-        />
+        {showCM1106Modal()}
         <form autoComplete="off" onSubmit={handleSubmit(submit)}>
           <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
             <div className="tab1">

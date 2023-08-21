@@ -8,12 +8,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "app/store";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import CustomDatePicker from "components/customDatePicker";
-import {
-  openModal,
-  closeModal,
-  addDeleteMenuId,
-  setIsDelete,
-} from "app/state/modal/modalSlice";
+import { addDeleteMenuId, setIsDelete } from "app/state/modal/modalSlice";
 import {
   Plus,
   ResetGray,
@@ -38,6 +33,7 @@ import { InputSize, ButtonColor } from "components/componentsType";
 import { currencyMask } from "helpers/currency";
 import FourButtons from "components/button/fourButtons";
 import { SearchBtn } from "components/daum";
+import useModal from "app/hook/useModal";
 
 interface IForm {
   selected: any;
@@ -71,6 +67,7 @@ const Form = React.forwardRef(
     const [bjDc, setBjDc] = useState();
     const [baNow, setBaNow] = useState();
     const dispatch = useDispatch();
+    const { showDeleteModal, openModal, closeModal } = useModal();
 
     const [getCommonDictionary, { data: dataCommonDic }] =
       useGetCommonDictionaryMutation();
@@ -221,7 +218,7 @@ const Form = React.forwardRef(
         crud("delete");
         dispatch(addDeleteMenuId({ menuId: "" }));
         dispatch(setIsDelete({ isDelete: false }));
-        dispatch(closeModal());
+        closeModal();
       } catch (error) {}
     }
 
@@ -231,7 +228,7 @@ const Form = React.forwardRef(
       //resetForm("clear");
     };
     const onClickDelete = () => {
-      dispatch(openModal({ type: "delModal" }));
+      openModal();
       dispatch(addDeleteMenuId({ menuId: menuId }));
     };
     const onClickReset = () => {
@@ -244,6 +241,7 @@ const Form = React.forwardRef(
 
     return (
       <div style={{ minWidth: "350px" }}>
+        {showDeleteModal()}
         <FormHeadCnt>
           <FourButtons
             style={{

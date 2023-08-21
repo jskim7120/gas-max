@@ -12,11 +12,7 @@ import {
   RadioButtonLabel,
 } from "components/radioButton/style";
 import { Input, Select, FormGroup, Label } from "components/form/style";
-import {
-  addDeleteMenuId,
-  setIsDelete,
-  closeModal,
-} from "app/state/modal/modalSlice";
+import { addDeleteMenuId, setIsDelete } from "app/state/modal/modalSlice";
 import { InputSize } from "components/componentsType";
 import { emptyObj, IDATA65 } from "./model";
 import TabGrid from "./tabs/grid";
@@ -43,7 +39,7 @@ import {
   calcTab1GridChange,
 } from "./tabs/tab1CalculationHelper";
 import { removeCommas } from "helpers/currency";
-import Modal from "components/modal/modal";
+import useModal from "app/hook/useModal";
 
 let clone: any[];
 
@@ -81,6 +77,8 @@ const Form = ({
     useForm<IDATA65>({
       mode: "onSubmit",
     });
+
+  const { showGR1200Modal, openModal, closeModal } = useModal();
 
   const [tabId, setTabId] = useState(0);
   const [rowIndex, setRowIndex] = useState<number | null>(null);
@@ -622,7 +620,7 @@ const Form = ({
       crud("delete");
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
-      dispatch(closeModal());
+      // dispatch(closeModal());
     } catch (error) {}
   }
 
@@ -659,11 +657,7 @@ const Form = ({
         width: "900px",
       }}
     >
-      <Modal
-        type="gr1200Modal"
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
-      />
+      {showGR1200Modal()}
       <form autoComplete="off">
         <SearchWrapper
           className="h35"

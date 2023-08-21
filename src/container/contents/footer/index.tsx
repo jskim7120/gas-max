@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "app/store";
-import { openModal } from "app/state/modal/modalSlice";
 import { addSearchText, removeSearchText } from "app/state/footer/footerSlice";
 import { apiGet } from "app/axios";
 import { FOOTHISTORY } from "app/path";
@@ -10,12 +9,14 @@ import { getCuType, getCuStae, getCircleBadge } from "./helper";
 import Badge from "components/badge";
 import { BadgeColor, BadgeSize } from "components/componentsType";
 import PartnerImg from "assets/image/company_partners.png";
+import useModal from "app/hook/useModal";
 
 function Footer() {
   const dispatch = useDispatch();
 
   const [info, setInfo] = useState<any>({});
   const [searchText, setSearchText] = useState("");
+  const { showCustomerModal, openModal } = useModal();
 
   const infoState = useSelector((state) => state.footer.info);
 
@@ -41,6 +42,7 @@ function Footer() {
 
   return (
     <FooterContainer>
+      {showCustomerModal({})}
       <div style={{ display: "flex" }}>
         <div className="bussiness_partner_cnt">
           <img src={PartnerImg} />
@@ -87,7 +89,8 @@ function Footer() {
                   dispatch(removeSearchText({}));
                 }
 
-                dispatch(openModal({ type: "customerModal" }));
+                // dispatch(openModal({ type: "customerModal" }));
+                openModal();
               }}
             >
               <SearchIcon />

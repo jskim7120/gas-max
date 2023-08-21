@@ -7,7 +7,7 @@ import {
   CM1300CUSTOMERINSERT,
   CM1300CUSTOMERUPDATE,
 } from "app/path";
-import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
+import { addDeleteMenuId } from "app/state/modal/modalSlice";
 import { ICM1300User, emptyObj } from "./model";
 import { columns, fields } from "./data";
 import { FormGroup, Input, Label } from "components/form/style";
@@ -19,6 +19,7 @@ import { ButtonColor } from "components/componentsType";
 import { Plus, Trash, Update, Reset } from "components/allSvgIcon";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
 import { SearchWrapper } from "container/contents/commonStyle";
+import useModal from "app/hook/useModal";
 
 const DELETECONSTANT = "CM1300USERDELETE";
 
@@ -51,6 +52,7 @@ function FormCM1300User({
   const btnRef4 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
   const dispatch = useDispatch();
+  const { showDeleteModal, openModal } = useModal();
   const tabState = useSelector((state) => state.tab.tabs);
   const gridIndexes = tabState.find(
     (item) => item.menuId === menuId
@@ -119,7 +121,7 @@ function FormCM1300User({
   };
 
   const onClickDelete = () => {
-    dispatch(openModal({ type: "delModal" }));
+    openModal();
     dispatch(addDeleteMenuId({ menuId: DELETECONSTANT }));
   };
 
@@ -200,6 +202,7 @@ function FormCM1300User({
 
   return (
     <>
+      {showDeleteModal()}
       <div style={{ display: "flex" }}>
         <div style={{ width: "50%", flexGrow: 1 }}>
           <PersonInfoText text="사용자" style={{ margin: "7px 10px" }} />

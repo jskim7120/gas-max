@@ -23,7 +23,7 @@ import {
   Divider,
   Label,
 } from "components/form/style";
-import { ModalHeader } from "./style";
+import { ModalBlueHeader } from "components/modal/customModals/style";
 import CheckBox from "components/checkbox";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
@@ -342,7 +342,7 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
 
   return (
     <form onSubmit={handleSubmit(submit)} autoComplete="off">
-      <ModalHeader className="handle">
+      <ModalBlueHeader className="handle h40">
         <FormGroup>
           <Label style={{ minWidth: "115px", color: "white" }}>영업소</Label>
           <Controller
@@ -377,6 +377,7 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
         <FormGroup>
           <Label style={{ color: "white" }}>거래처 정보</Label>
           <span
+            className="close_btn"
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
               setIsModalOpen(false);
@@ -385,7 +386,7 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
             <WhiteClose />
           </span>
         </FormGroup>
-      </ModalHeader>
+      </ModalBlueHeader>
       <div style={{ padding: "5px 10px" }}>
         <FormGroup>
           <Input

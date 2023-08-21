@@ -5,14 +5,11 @@ import { apiGet, apiPost } from "app/axios";
 import { CM1100SEARCH, CM110065, CM1100DELETE } from "app/path";
 import { ICM1100SEARCH } from "./model";
 import {
-  openModal,
   addCM1105,
   addCM1106,
-  closeModal,
   addDeleteMenuId,
   setIsDelete,
 } from "app/state/modal/modalSlice";
-import Modal from "components/modal/modal";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import {
@@ -30,6 +27,7 @@ import CM1100Footer from "./footer";
 import Loader from "components/loader";
 import setFooterDetail from "container/contents/footer/footerDetailFunc";
 import getSimpleData from "app/hook/getSimpleData";
+import useModal from "app/hook/useModal";
 
 function CM1100Page({
   depthFullName,
@@ -50,9 +48,16 @@ function CM1100Page({
   const [selected, setSelected] = useState<any>({});
   const [data65, setData65] = useState<any>({});
   const { isDelete } = useSelector((state) => state.modal);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { showCM1105Modal, openModal: openCM1105Modal } = useModal();
+  const {
+    showDeleteModal,
+    openModal: openDeleteModal,
+    closeModal: closeDeleteModal,
+  } = useModal();
 
   const dispatch = useDispatch();
+
   const { register, handleSubmit, reset, getValues, control } =
     useForm<ICM1100SEARCH>({
       mode: "onSubmit",
@@ -111,7 +116,7 @@ function CM1100Page({
     }
     dispatch(addDeleteMenuId({ menuId: "" }));
     dispatch(setIsDelete({ isDelete: false }));
-    dispatch(closeModal());
+    closeDeleteModal();
   };
 
   const fetchData65 = async () => {
@@ -160,7 +165,7 @@ function CM1100Page({
 
   const onClickDelete = () => {
     if (selected && Object.keys(selected)?.length > 0) {
-      dispatch(openModal({ type: "delModal" }));
+      openDeleteModal();
       dispatch(addDeleteMenuId({ menuId: menuId }));
     } else {
       alert("등록 거래처를 선택하세요");
@@ -169,7 +174,7 @@ function CM1100Page({
 
   const openPopup = (params: any) => {
     dispatch(addCM1105(params));
-    setIsModalOpen(true);
+    openCM1105Modal();
   };
 
   const resetSearchForm = () => {
@@ -188,11 +193,8 @@ function CM1100Page({
 
   return (
     <>
-      <Modal
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
-        type="cm1105Modal"
-      />
+      {showCM1105Modal()}
+      {showDeleteModal()}
       <SearchWrapper className="h35">
         <FormGroup>
           {ownAreaCode === "00" && (

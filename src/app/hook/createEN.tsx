@@ -11,13 +11,15 @@ import {
   SearchWrapper,
 } from "container/contents/commonStyle";
 import {
-  openModal,
-  closeModal,
+  // openModal,
+  // closeModal,
   addDeleteMenuId,
   setIsDelete,
 } from "app/state/modal/modalSlice";
 import { setRowIndex } from "app/state/tab/tabSlice";
 import { apiGet } from "app/axios";
+import Modal from "components/modal/modal";
+import useModal from "./useModal";
 
 function CreateEN(
   depthFullName: string,
@@ -51,6 +53,7 @@ function CreateEN(
   const [selected, setSelected] = useState<any>({});
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [linePos, setLinePos] = useState(leftSideWidth);
+  const { showDeleteModal, closeModal, openModal } = useModal();
 
   useEffect(() => {
     fetchData("last");
@@ -135,7 +138,7 @@ function CreateEN(
       formRef.current.crud("delete");
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
-      dispatch(closeModal());
+      closeModal();
     } catch (error) {}
   }
 
@@ -152,7 +155,7 @@ function CreateEN(
   };
 
   const handleClickBtn2 = () => {
-    dispatch(openModal({ type: "delModal" }));
+    openModal();
     dispatch(addDeleteMenuId({ menuId: menuId }));
   };
 
@@ -175,6 +178,7 @@ function CreateEN(
   const showScreen = () => {
     return (
       <>
+        {showDeleteModal()}
         <SearchWrapper className="h35 mt5">
           <div className="buttons">
             <Button

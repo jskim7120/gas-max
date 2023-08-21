@@ -8,13 +8,14 @@ import {
   RightSide,
   LeftSide,
 } from "../../commonStyle";
-import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
+import { addDeleteMenuId } from "app/state/modal/modalSlice";
 import { fields, columns } from "./data";
 import GridLeft from "components/grid";
 import { CC1505SEARCH, CC150565 } from "app/path";
 import Form from "./form";
 import useDrawLine from "app/hook/useMidLine";
 import use4Btns from "app/hook/use4Btns";
+import useModal from "app/hook/useModal";
 
 const leftSideWidth: number = 500;
 
@@ -31,6 +32,7 @@ function CC1505({
   const { show4Btns, addBtnUnclick, isAddBtnClicked, setIsAddBtnClicked } =
     use4Btns();
   const { showDraggableLine, linePos } = useDrawLine(leftSideWidth);
+  const { showDeleteModal, openModal } = useModal();
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
@@ -45,7 +47,7 @@ function CC1505({
   };
 
   const handleClickDelete = () => {
-    dispatch(openModal({ type: "delModal" }));
+    openModal();
     dispatch(addDeleteMenuId({ menuId: menuId }));
   };
   const handleClickUpdate = () => {
@@ -98,6 +100,7 @@ function CC1505({
 
   return (
     <>
+      {showDeleteModal()}
       <SearchWrapper className="h35 mt5">
         <div className="buttons ml30">
           {show4Btns({

@@ -10,7 +10,7 @@ import {
   RightSide,
   LeftSide,
 } from "../../commonStyle";
-import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
+import { addDeleteMenuId } from "app/state/modal/modalSlice";
 import GridLeft from "components/grid";
 import { ICC1600SEARCH } from "./model";
 import { fields, columns } from "./data";
@@ -18,6 +18,7 @@ import Form from "./form";
 import { Select, FormGroup, Label } from "components/form/style";
 import useDrawLine from "app/hook/useMidLine";
 import use4Btns from "app/hook/use4Btns";
+import useModal from "app/hook/useModal";
 
 const leftSideWidth: number = 550;
 
@@ -34,6 +35,7 @@ function CC1600({
   const { show4Btns, addBtnUnclick, isAddBtnClicked, setIsAddBtnClicked } =
     use4Btns();
   const { showDraggableLine, linePos } = useDrawLine(leftSideWidth);
+  const { showDeleteModal, openModal } = useModal();
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [data65, setData65] = useState({});
@@ -53,7 +55,7 @@ function CC1600({
   };
 
   const handleClickDelete = () => {
-    dispatch(openModal({ type: "delModal" }));
+    openModal();
     dispatch(addDeleteMenuId({ menuId: menuId }));
   };
   const handleClickUpdate = () => {
@@ -123,6 +125,7 @@ function CC1600({
 
   return (
     <>
+      {showDeleteModal()}
       <SearchWrapper className="h35 mt5">
         <FormGroup>
           {ownAreaCode === "00" && (

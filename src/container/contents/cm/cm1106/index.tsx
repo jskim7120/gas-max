@@ -17,11 +17,12 @@ import SEARCH_RED from "assets/image/search_red.png";
 import Grid from "components/grid";
 import Form from "./form";
 import { addCM1106AR1100Tick } from "app/state/modal/modalSlice";
-import { Select, FormGroup } from "components/form/style";
+import { Select, FormGroup, Label } from "components/form/style";
 import { CM1106LIST } from "app/path";
 import { ISEARCH } from "./model";
 import styled from "styled-components";
 import { SearchWrapper } from "container/contents/commonStyle";
+import { ModalBlueHeader } from "components/modal/customModals/style";
 import { columns, fields } from "./data";
 
 const LLabel = styled.label`
@@ -127,17 +128,11 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
 
   return (
     <>
-      <SearchWrapper
-        style={{ background: "#0B97F6", height: "40px", borderBottom: "none" }}
-        className="handle"
-      >
+      <ModalBlueHeader className="handle h40">
         <FormGroup>
           {areaCode === "00" && (
             <>
-              <p className="big" style={{ color: "white" }}>
-                영업소
-              </p>
-
+              <Label style={{ minWidth: "80px", color: "white" }}>영업소</Label>
               <Select register={register("areaCode")} disabled>
                 {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -191,8 +186,9 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
           </div>
         </FormGroup>
         <FormGroup>
-          <p style={{ color: "#fff" }}>거래처 사용품목</p>
+          <Label style={{ color: "white" }}>거래처 사용품목</Label>
           <span
+            className="close_btn"
             style={{ marginLeft: "10px", marginTop: "1px" }}
             onClick={() => {
               setIsModalOpen(false);
@@ -201,7 +197,7 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
             <WhiteClose />
           </span>
         </FormGroup>
-      </SearchWrapper>
+      </ModalBlueHeader>
 
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <div

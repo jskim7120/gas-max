@@ -1,35 +1,22 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "app/store";
-import {
-  closeModal,
-  setIsDelete,
-  addDeleteMenuId,
-} from "app/state/modal/modalSlice";
+import { setIsDelete, addDeleteMenuId } from "app/state/modal/modalSlice";
 import Draggable from "react-draggable";
 import { WhiteClose } from "components/allSvgIcon";
+import { ModalWrapper } from "./style";
+
+const customStyle = {
+  width: "300px",
+  height: "150px",
+};
 
 const Container = styled.div`
-  z-index: 1;
-  position: fixed;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  width: 300px;
-  height: 150px;
-  border: 2px solid #ccc;
-  box-shadow: 3px 5px 9px -3px rgba(0, 0, 0, 0.7);
-  -webkit-box-shadow: 3px 5px 9px -3px rgba(0, 0, 0, 0.7);
-  -moz-box-shadow: 3px 5px 9px -3px rgba(0, 0, 0, 0.7);
-
-  .modal_header {
-    width: 100%;
-    height: 25px;
-    background: #0b97f6;
+  .custom_header {
     display: flex;
     justify-content: flex-end;
   }
+
   .modal_title {
     font-size: 15px;
     font-weight: 400;
@@ -75,7 +62,7 @@ const Container = styled.div`
   }
 `;
 
-function DelModal() {
+function DelModal({ setIsOpen }: { setIsOpen: Function }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -95,39 +82,42 @@ function DelModal() {
 
   const handleClickDel = () => {
     dispatch(setIsDelete({ isDelete: true }));
-    dispatch(closeModal());
+    setIsOpen(false);
   };
 
   const handleClickClose = () => {
     dispatch(addDeleteMenuId({ menuId: "" }));
-    dispatch(closeModal());
+    setIsOpen(false);
   };
 
   return (
     <Draggable handle=".handle">
-      <Container>
-        <div className="modal_header handle">
-          <span
-            style={{
-              marginRight: "4px",
-              marginTop: "2px",
-            }}
-            onClick={handleClickClose}
-          >
-            <WhiteClose />
-          </span>
-        </div>
-        <div className="modal_title">삭제하시겠습니까?</div>
+      <ModalWrapper style={{ ...customStyle }}>
+        <Container>
+          <div className="handle modal_header custom_header h20">
+            <span
+              className="close_btn"
+              style={{
+                marginRight: "4px",
+                marginTop: "2px",
+              }}
+              onClick={handleClickClose}
+            >
+              <WhiteClose />
+            </span>
+          </div>
+          <div className="modal_title">삭제하시겠습니까?</div>
 
-        <div className="btn_cnt">
-          <button onClick={handleClickDel} className="modal_btn del">
-            삭제
-          </button>
-          <button onClick={handleClickClose} className="modal_btn close">
-            취소
-          </button>
-        </div>
-      </Container>
+          <div className="btn_cnt">
+            <button onClick={handleClickDel} className="modal_btn del">
+              삭제
+            </button>
+            <button onClick={handleClickClose} className="modal_btn close">
+              취소
+            </button>
+          </div>
+        </Container>
+      </ModalWrapper>
     </Draggable>
   );
 }

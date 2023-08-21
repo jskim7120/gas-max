@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch } from "app/store";
-import { closeModal } from "app/state/modal/modalSlice";
 import styled from "styled-components";
 import { User, MenuModalBtn } from "components/allSvgIcon";
 import {

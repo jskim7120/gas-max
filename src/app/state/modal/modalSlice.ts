@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface initialStateType {
-  modalIsOpen: boolean;
-  menu: any;
-  type: string;
+  // modalIsOpen: boolean;
+  // menu: any;
+  // type: string;
   cm1105: {
     cuCode: string;
     areaCode: string;
@@ -86,9 +86,9 @@ export interface initialStateType {
 }
 
 const initialState: initialStateType = {
-  modalIsOpen: false,
-  menu: [],
-  type: "",
+  // modalIsOpen: false,
+  // menu: [],
+  // type: "",
   cm1105: {
     cuCode: "",
     areaCode: "",
@@ -173,15 +173,15 @@ const modalSlice = createSlice({
   initialState: initialState,
 
   reducers: {
-    openModal: (state, actions) => {
-      state.modalIsOpen = true;
-      state.type = actions.payload.type;
-    },
+    // openModal: (state, actions) => {
+    //   state.modalIsOpen = true;
+    //   state.type = actions.payload.type;
+    // },
 
-    closeModal: (state) => {
-      state.modalIsOpen = false;
-      state.type = "";
-    },
+    // closeModal: (state) => {
+    //   state.modalIsOpen = false;
+    //   state.type = "";
+    // },
 
     addCM1105: (state, action) => {
       state.cm1105 = {
@@ -274,8 +274,8 @@ const modalSlice = createSlice({
 });
 
 export const {
-  openModal,
-  closeModal,
+  // openModal,
+  // closeModal,
   addCM1105,
   addCM1105LoadStatus,
   addCM1106,

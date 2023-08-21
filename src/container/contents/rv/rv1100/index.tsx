@@ -5,7 +5,7 @@ import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { useDispatch } from "app/store";
 import { SearchWrapper, WrapperContent } from "../../commonStyle";
 import Button from "components/button/button";
-import { openModal, rv1100Popup } from "app/state/modal/modalSlice";
+import { rv1100Popup } from "app/state/modal/modalSlice";
 import {
   Document,
   Settings2,
@@ -27,6 +27,7 @@ import {
   DateWithoutDashOnlyYearMonth,
 } from "helpers/dateFormat";
 import Footer from "./footer";
+import useModal from "app/hook/useModal";
 
 function RV1100({
   depthFullName,
@@ -38,6 +39,7 @@ function RV1100({
   ownAreaCode: string;
 }) {
   const dispatch = useDispatch();
+  const {} = useModal();
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
@@ -102,7 +104,7 @@ function RV1100({
   };
 
   const openPopupEN1500 = async (selected: any) => {
-    dispatch(openModal({ type: "en1500Modal" }));
+    // dispatch(openModal({ type: "en1500Modal" }));
     dispatch(rv1100Popup({ areaCode: selected.areaCode }));
   };
 

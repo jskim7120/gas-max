@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { apiGet, apiPost } from "app/axios";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 
@@ -15,7 +14,6 @@ import { IPTFORMMODEL } from "./formModel";
 import { SearchBtn } from "components/daum";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { useDispatch, useSelector } from "app/store";
-import { addCC1100, openModal } from "app/state/modal/modalSlice";
 import { InfoText } from "components/text";
 import { currencyMask, removeCommas } from "helpers/currency";
 

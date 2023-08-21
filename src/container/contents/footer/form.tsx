@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, MouseEventHandler } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "app/store";
 import { useForm } from "react-hook-form";
@@ -14,7 +14,7 @@ import { FOOT61, FOOTER } from "app/path";
 import Loader from "components/loader";
 import { apiGet } from "app/axios";
 import Grid from "./grid";
-import { closeModal, addCM1106 } from "app/state/modal/modalSlice";
+import { addCM1106 } from "app/state/modal/modalSlice";
 import { addInfo } from "app/state/footer/footerSlice";
 import Button from "components/button/button";
 import {
@@ -155,7 +155,13 @@ interface ISEARCH {
   sCuAddr: string;
 }
 
-function Form({ onClose, setIsOpen }: { onClose: any; setIsOpen: Function }) {
+function Form({
+  setIsOpen,
+  onClose,
+}: {
+  setIsOpen: Function;
+  onClose: MouseEventHandler;
+}) {
   const dispatch = useDispatch();
   const [areaCode, setAreaCode] = useState<
     Array<{ code: string; codeName: string }>
@@ -170,11 +176,18 @@ function Form({ onClose, setIsOpen }: { onClose: any; setIsOpen: Function }) {
   const [loading, setLoading] = useState(false);
 
   const searchState = useSelector((state) => state.footer.search);
+  const source = useSelector((state) => state.footer.source);
   const activeTabId = useSelector((state) => state.tab.activeTabId);
 
   useEffect(() => {
     fetchAreaCode();
   }, []);
+
+  useEffect(() => {
+    if (source === "AR1100") {
+      setFocus("sCuName");
+    }
+  }, [source]);
 
   useEffect(() => {
     if (searchState !== undefined && JSON.stringify(searchState) !== "{}") {
@@ -185,7 +198,7 @@ function Form({ onClose, setIsOpen }: { onClose: any; setIsOpen: Function }) {
     }
   }, [searchState]);
 
-  const { register, handleSubmit, reset } = useForm<ISEARCH>({
+  const { register, handleSubmit, reset, setFocus } = useForm<ISEARCH>({
     mode: "onSubmit",
   });
 
@@ -236,14 +249,13 @@ function Form({ onClose, setIsOpen }: { onClose: any; setIsOpen: Function }) {
           })
         );
 
-      dispatch(closeModal());
+      setIsOpen(false);
     } else {
       alert("please choose row from grid ");
     }
   };
 
   const handleCancel = () => {
-    // dispatch(closeModal());
     setIsOpen(false);
   };
 

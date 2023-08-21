@@ -1,3 +1,4 @@
+import { MouseEventHandler } from "react";
 import Draggable from "react-draggable";
 import FooterModal from "container/contents/footer/form";
 import { ModalWrapper } from "./style";
@@ -8,16 +9,16 @@ const customStyle = {
 };
 
 function CustomerModal({
-  onClose,
   setIsOpen,
+  onClose,
 }: {
-  onClose: Function;
   setIsOpen: Function;
+  onClose: MouseEventHandler;
 }) {
   return (
     <Draggable handle=".handle">
       <ModalWrapper style={{ ...customStyle }}>
-        <FooterModal onClose={onClose} setIsOpen={setIsOpen} />
+        <FooterModal setIsOpen={setIsOpen} onClose={onClose} />
       </ModalWrapper>
     </Draggable>
   );

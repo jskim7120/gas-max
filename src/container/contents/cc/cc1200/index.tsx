@@ -11,7 +11,7 @@ import {
   LeftSide,
   RightSide,
 } from "../../commonStyle";
-import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
+import { addDeleteMenuId } from "app/state/modal/modalSlice";
 import { useForm, Controller } from "react-hook-form";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { MagnifyingGlassBig, ResetGray } from "components/allSvgIcon";
@@ -25,6 +25,7 @@ import { columns, fields } from "./data";
 import useDrawLine from "app/hook/useMidLine";
 import use4Btns from "app/hook/use4Btns";
 import { DateWithoutDash } from "helpers/dateFormat";
+import useModal from "app/hook/useModal";
 
 const leftSideWidth: number = 800;
 
@@ -41,6 +42,7 @@ function CC1200({
   const { show4Btns, addBtnUnclick, isAddBtnClicked, setIsAddBtnClicked } =
     use4Btns();
   const { showDraggableLine, linePos } = useDrawLine(leftSideWidth);
+  const { showDeleteModal, openModal } = useModal();
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
@@ -52,7 +54,7 @@ function CC1200({
   };
 
   const handleClickDelete = () => {
-    dispatch(openModal({ type: "delModal" }));
+    openModal();
     dispatch(addDeleteMenuId({ menuId: menuId }));
   };
 
@@ -130,6 +132,7 @@ function CC1200({
 
   return (
     <>
+      {showDeleteModal()}
       <SearchWrapper className="h35 mt5">
         <FormGroup>
           {ownAreaCode === "00" && (

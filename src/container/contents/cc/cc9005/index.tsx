@@ -8,7 +8,7 @@ import {
   RightSide,
   LeftSide,
 } from "../../commonStyle";
-import { openModal, addDeleteMenuId } from "app/state/modal/modalSlice";
+import { addDeleteMenuId } from "app/state/modal/modalSlice";
 import BasicGrid from "components/basicGrid";
 import { fields, columns } from "./data";
 import { ICC9005SEARCH } from "./model";
@@ -17,6 +17,7 @@ import { ResetGray, Trash, Update } from "components/allSvgIcon";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { FormGroup, Select, Label } from "components/form/style";
+import useModal from "app/hook/useModal";
 
 function CC9005({
   depthFullName,
@@ -38,6 +39,8 @@ function CC9005({
 
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
+
+  const { showDeleteModal, openModal } = useModal();
 
   useEffect(() => {
     getCommonDictionary({ groupId: "CC", functionName: "CC9005" });
@@ -63,7 +66,7 @@ function CC9005({
   const fetchData65 = async (params: any) => {};
 
   const onClickDelete = () => {
-    dispatch(openModal({ type: "delModal" }));
+    openModal();
     dispatch(addDeleteMenuId({ menuId: menuId }));
   };
   const onClickUpdate = () => {
@@ -77,6 +80,7 @@ function CC9005({
 
   return (
     <>
+      {showDeleteModal()}
       <form onSubmit={handleSubmit(submit)} autoComplete="off">
         <SearchWrapper className="h35">
           <FormGroup>

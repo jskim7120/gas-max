@@ -3,16 +3,12 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "app/store";
 import { setRowIndex } from "app/state/tab/tabSlice";
 import { apiGet } from "app/axios";
-import {
-  openModal,
-  addDeleteMenuId,
-  closeModal,
-  setIsDelete,
-} from "app/state/modal/modalSlice";
+import { addDeleteMenuId, setIsDelete } from "app/state/modal/modalSlice";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import use4Btns from "./use4Btns";
 import useDrawLine from "./useMidLine";
 import useRowIndex from "./useRowIndex";
+import useModal from "./useModal";
 
 function CreateScreen(
   groupId: string,
@@ -33,6 +29,7 @@ function CreateScreen(
 
   const { showDraggableLine, linePos } = useDrawLine(leftSideWidth);
   const { rowIndex, gridIndexes } = useRowIndex(menuId, 0);
+  const { showDeleteModal, openModal, closeModal } = useModal();
 
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
@@ -88,13 +85,13 @@ function CreateScreen(
       formRef.current.crud("delete");
       dispatch(addDeleteMenuId({ menuId: "" }));
       dispatch(setIsDelete({ isDelete: false }));
-      dispatch(closeModal());
+      closeModal();
     } catch (error) {}
   }
 
   const handleClickDelete = () => {
     if (selected && Object.keys(selected)?.length > 0) {
-      dispatch(openModal({ type: "delModal" }));
+      openModal();
       dispatch(addDeleteMenuId({ menuId: menuId }));
     } else {
       toast.warning("no selected data to delete", {
