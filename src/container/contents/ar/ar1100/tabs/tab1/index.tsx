@@ -169,12 +169,12 @@ const Tab1 = React.forwardRef(
     };
 
     const handlePjDangaChange = () => {
-      console.log("watch 3------->>>>>>>", getValues("pjDanga"));
+      // console.log("watch 3------->>>>>>>", getValues("pjDanga"));
       pjDanga = +removeCommas(getValues("pjDanga"))
         ? +removeCommas(getValues("pjDanga"), "number")
         : 0;
 
-      console.log(">>>>>>>>>>", pjDanga);
+      // console.log(">>>>>>>>>>", pjDanga);
       pjQty = getValues("pjQty") ? +getValues("pjQty") : 0;
       pjKumSup = pjDanga * pjQty;
 

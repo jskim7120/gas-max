@@ -157,6 +157,7 @@ function AR1100({
   const fetchDataWithParams = () => {
     const params = getValues();
     params.sDate = DateWithoutDash(params.sDate);
+    params.dDate = DateWithoutDash(params.dDate);
     fetchData(params);
   };
 
@@ -248,7 +249,6 @@ function AR1100({
     fetchData11({ areaCode: getValues("areaCode"), pjType: 0 });
     btnRef1.current.classList.add("active");
     setIsAddBtnClicked(true);
-    // setData((prev) => [...prev, emtObj]);
     dispatch(addSource({ source: menuId }));
     openCustomerModal();
   };
