@@ -34,7 +34,7 @@ function CreateScreen(
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
 
-  const { isDelete } = useSelector((state: any) => state.modal);
+  const { delete: deleteState } = useSelector((state: any) => state.modal);
 
   const [data, setData] = useState<Array<any>>([]);
   const [selected, setSelected] = useState<any>({});
@@ -46,10 +46,10 @@ function CreateScreen(
   }, []);
 
   useEffect(() => {
-    if (isDelete.menuId === menuId && isDelete.isDelete) {
+    if (deleteState.menuId === menuId && deleteState.isDelete) {
       deleteRowGrid();
     }
-  }, [isDelete.isDelete]);
+  }, [deleteState.isDelete]);
 
   const fetchData = async (params: any, pos: string = "") => {
     setLoading(true);

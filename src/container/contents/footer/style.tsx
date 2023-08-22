@@ -220,36 +220,12 @@ export const FooterContainer = styled.div`
     }
   }
 
-  .carBtns {
+  .sysBtns {
     display: flex;
+    align-items: center;
 
-    div.grayBox {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      width: 56px;
-      height: 56px;
-      background: rgba(104, 103, 103, 0.35);
-      border-radius: 11px;
-      padding: 5px 0px 6px 0px;
-      margin-right: 7px;
-    }
-
-    p {
-      color: #3440e6;
-      font-family: "NotoSansKRRegular";
-      font-size: 12px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    @media only screen and (max-width: 1490px) {
+    img {
       margin-left: 10px;
-
-      img {
-        width: 30px;
-      }
     }
   }
 `;

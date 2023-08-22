@@ -5,7 +5,6 @@ import { ModalWrapper } from "./style";
 
 const customStyle = {
   width: "1200px",
-  height: "610px",
 };
 
 function CM1106Modal({ setIsOpen }: { setIsOpen: Function }) {

@@ -47,7 +47,7 @@ function CM1100Page({
   const gridRef = useRef() as React.MutableRefObject<any>;
   const [selected, setSelected] = useState<any>({});
   const [data65, setData65] = useState<any>({});
-  const { isDelete } = useSelector((state) => state.modal);
+  const { delete: deleteState } = useSelector((state) => state.modal);
 
   const { showCM1105Modal, openModal: openCM1105Modal } = useModal();
   const {
@@ -80,10 +80,10 @@ function CM1100Page({
   }, [selected]);
 
   useEffect(() => {
-    if (isDelete.menuId === menuId && isDelete.isDelete) {
+    if (deleteState.menuId === menuId && deleteState.isDelete) {
       deleteRowGrid();
     }
-  }, [isDelete.isDelete]);
+  }, [deleteState.isDelete]);
 
   const submit = async (data: ICM1100SEARCH) => {
     fetchData(data);

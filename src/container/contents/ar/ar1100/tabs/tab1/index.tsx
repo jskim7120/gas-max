@@ -48,6 +48,7 @@ const Tab1 = React.forwardRef(
 
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const footerState = useSelector((state: any) => state.footer);
+
     const [pjJago, setPjJago] = useState<number>(0);
     const { showCM1106Modal, openModal } = useModal();
 
@@ -246,14 +247,10 @@ const Tab1 = React.forwardRef(
       const path = isAddBtnClicked ? AR1100INSERT : AR1100UPDATE;
 
       if (isAddBtnClicked) {
-        if (
-          footerState?.source === menuId &&
-          footerState?.info?.cuCode &&
-          footerState?.info?.cuCode !== ""
-        ) {
+        if (footerState?.source === menuId) {
           params.areaCode = areaCode;
           params.pjCuCode = footerState?.info?.cuCode;
-          params.pjCuName = footerState?.info?.cuViewName;
+          params.pjCuName = footerState?.info?.cuName;
         }
       }
 

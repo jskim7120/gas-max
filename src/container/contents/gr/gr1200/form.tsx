@@ -92,7 +92,7 @@ const Form = ({
   const dispatch = useDispatch();
 
   const stateGR1200 = useSelector((state: any) => state.modal.gr1200);
-  const { isDelete } = useSelector((state) => state.modal);
+  const { delete: deleteState } = useSelector((state) => state.modal);
 
   const [getAreaCodeDictionary, { data: dataAdditionalDic }] =
     useGetAreaCodeDictionaryMutation();
@@ -240,10 +240,10 @@ const Form = ({
   }, [data65]);
 
   useEffect(() => {
-    if (isDelete.menuId === menuId && isDelete.isDelete) {
+    if (deleteState.menuId === menuId && deleteState.isDelete) {
       deleteRowGrid();
     }
-  }, [isDelete.isDelete]);
+  }, [deleteState.isDelete]);
 
   useEffect(() => {
     if (tabId === 0) {

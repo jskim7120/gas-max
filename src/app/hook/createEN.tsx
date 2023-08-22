@@ -38,7 +38,7 @@ function CreateEN(
   const btnRef4 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
   const dispatch = useDispatch();
-  const { isDelete } = useSelector((state) => state.modal);
+  const { delete: deleteState } = useSelector((state) => state.modal);
   const activeTabId = useSelector((state) => state.tab.activeTabId);
   const tabState = useSelector((state) => state.tab.tabs);
   const isOpen = useSelector((state) => state.sidebar);
@@ -82,10 +82,10 @@ function CreateEN(
   }
 
   useEffect(() => {
-    if (isDelete.menuId === menuId && isDelete.isDelete) {
+    if (deleteState.menuId === menuId && deleteState.isDelete) {
       deleteRowGrid();
     }
-  }, [isDelete.isDelete]);
+  }, [deleteState.isDelete]);
 
   useEffect(() => {
     if (activeTabId) {

@@ -2,12 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { apiGet } from "app/axios";
 
 export interface initialStateType {
-  loading: boolean;
   menu: any;
 }
 
 const initialState: initialStateType = {
-  loading: false,
   menu: [],
 };
 
@@ -27,7 +25,6 @@ const menuSlice = createSlice({
     builder.addCase(
       getMenu.fulfilled,
       (state: initialStateType, action: any) => {
-        state.loading = true;
         state.menu = action.payload;
       }
     );

@@ -3,13 +3,16 @@ import { useDispatch, useSelector } from "app/store";
 import { addSearchText, removeSearchText } from "app/state/footer/footerSlice";
 import { apiGet } from "app/axios";
 import { FOOTHISTORY } from "app/path";
+import useModal from "app/hook/useModal";
 import { FooterContainer } from "./style";
 import { SearchIcon, Truck, File } from "components/allSvgIcon";
 import { getCuType, getCuStae, getCircleBadge } from "./helper";
 import Badge from "components/badge";
 import { BadgeColor, BadgeSize } from "components/componentsType";
 import PartnerImg from "assets/image/company_partners.png";
-import useModal from "app/hook/useModal";
+import btn1 from "assets/image/1btn.png";
+import btn2 from "assets/image/2btn.png";
+import btn3 from "assets/image/3btn.png";
 
 function Footer() {
   const dispatch = useDispatch();
@@ -205,19 +208,10 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div className="carBtns">
-        <div className="grayBox">
-          <Truck />
-          <p>판매</p>
-        </div>
-        <div className="grayBox">
-          <Truck />
-          <p>수금</p>
-        </div>
-        <div className="grayBox" style={{ paddingTop: "8px" }}>
-          <File />
-          <p>장부</p>
-        </div>
+      <div className="sysBtns">
+        <img src={btn1} />
+        <img src={btn2} />
+        <img src={btn3} />
       </div>
     </FooterContainer>
   );

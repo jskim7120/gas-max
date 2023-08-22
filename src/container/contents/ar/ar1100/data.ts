@@ -2,7 +2,7 @@ import { ValueType } from "realgrid";
 
 export const fields = [
   {
-    fieldName: "order",
+    fieldName: "orderDate",
     dataType: ValueType.TEXT,
   },
   {
@@ -85,16 +85,16 @@ export const fields = [
 
 export const columns = [
   {
-    name: "order",
-    fieldName: "order",
+    name: "orderDate",
+    fieldName: "orderDate",
     type: "data",
-    width: "70",
+    width: "120",
     header: {
       text: "접수일자",
     },
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("order", "count");
+        return grid.getSummary("orderDate", "count");
       },
     },
   },
@@ -111,7 +111,7 @@ export const columns = [
     name: "pjDate",
     fieldName: "pjDate",
     type: "data",
-    width: "50",
+    width: "90",
     header: {
       text: "판매일",
     },

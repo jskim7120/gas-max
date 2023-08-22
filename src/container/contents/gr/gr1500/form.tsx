@@ -72,7 +72,7 @@ const Form = React.forwardRef(
     const [getCommonDictionary, { data: dataCommonDic }] =
       useGetCommonDictionaryMutation();
 
-    const { isDelete } = useSelector((state) => state.modal);
+    const { delete: deleteState } = useSelector((state) => state.modal);
     useEffect(() => {
       getCommonDictionary({ groupId: "GR", functionName: "GR1500" });
     }, []);
@@ -92,10 +92,10 @@ const Form = React.forwardRef(
     }, [selected2]);
 
     useEffect(() => {
-      if (isDelete.menuId === menuId && isDelete.isDelete) {
+      if (deleteState.menuId === menuId && deleteState.isDelete) {
         deleteRowGrid();
       }
-    }, [isDelete.isDelete]);
+    }, [deleteState.isDelete]);
 
     const { register, handleSubmit, reset, control, getValues } =
       useForm<IGR1500SEARCH>({

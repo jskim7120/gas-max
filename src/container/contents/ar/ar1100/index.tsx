@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
 import { AR1100SEARCH, AR1100SELECT, AR1100INIT } from "app/path";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import {
   Plus,
   Trash,
@@ -54,6 +54,8 @@ function AR1100({
   const [tabId, setTabId] = useState(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
+  const { info, source } = useSelector((state) => state.footer);
+
   const {
     showCM1105Modal,
     // closeModal: closeCM1105Modal,
@@ -102,6 +104,40 @@ function AR1100({
       // );
     }
   }, [selected]);
+
+  useEffect(() => {
+    if (source === menuId && info) {
+      addToData(info);
+    }
+  }, [info]);
+
+  const addToData = (info: any) => {
+    if (data?.length > 0) {
+      if (data[data?.length - 1]?.orderDate) {
+        setData((prev) => [
+          ...prev,
+          { emtObj, cuName: info?.cuName, cuCode: info?.cuCode },
+        ]);
+      } else {
+        setData((prev: any) =>
+          prev.map((object: any, idx: number) => {
+            if (idx === data?.length - 1) {
+              return {
+                ...object,
+                cuName: info?.cuName,
+                cuCode: info?.cuCode,
+              };
+            } else return object;
+          })
+        );
+      }
+    } else {
+      setData((prev) => [
+        ...prev,
+        { emtObj, cuName: info?.cuName, cuCode: info?.cuCode },
+      ]);
+    }
+  };
 
   const fetchData = async (params: any) => {
     setLoading(true);
@@ -229,7 +265,6 @@ function AR1100({
   };
 
   const onCloseModal = () => {
-    console.log("duudagdav");
     closeCustomerModal();
     openCM1105Modal();
   };
@@ -477,7 +512,6 @@ function AR1100({
             borderBottom: "1px solid #707070",
             marginBottom: "3px",
           }}
-          evenFill
         />
         <PlainTab
           tabHeader={[
@@ -496,6 +530,7 @@ function AR1100({
         <TabContentWrapper>
           {getTabContent(
             tabId,
+            data,
             data65,
             selected,
             dataDictionary,

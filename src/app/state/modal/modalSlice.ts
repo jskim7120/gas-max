@@ -30,20 +30,6 @@ export interface initialStateType {
     bcChitType: number | undefined;
   };
   gr1200: any;
-  // {
-  // index: number | undefined;
-  // areaCode: string;
-  // bcBuCode: string;
-  // bcChitType: string;
-  // jpCode: string | undefined;
-  // jpCost: number | undefined;
-  // jpDanga: number | undefined;
-  // jpGubun: string | undefined;
-  // jpKg: number | undefined;
-  // jpName: string | undefined;
-  // jpSvyn: string | undefined;
-  // isProductNameSelected: string | undefined;
-  // };
   gr1300: {
     index: number | undefined;
     areaCode: string;
@@ -63,11 +49,6 @@ export interface initialStateType {
     acsCode: string | undefined;
     acsName: string | undefined;
   };
-
-  isDelete: {
-    menuId: string;
-    isDelete: boolean;
-  };
   rv1100: {
     areaCode: string | undefined;
   };
@@ -82,6 +63,10 @@ export interface initialStateType {
     cuCode: string | undefined;
     cuName: string | undefined;
     cuCmisu: number | undefined;
+  };
+  delete: {
+    menuId: string;
+    isDelete: boolean;
   };
 }
 
@@ -114,20 +99,7 @@ const initialState: initialStateType = {
     bcBuCode: "",
     bcChitType: undefined,
   },
-  gr1200: {
-    // index: undefined,
-    // areaCode: "",
-    // bcBuCode: "",
-    // bcChitType: "",
-    // jpCode: undefined,
-    // jpCost: undefined,
-    // jpDanga: undefined,
-    // jpGubun: undefined,
-    // jpKg: undefined,
-    // jpName: undefined,
-    // jpSvyn: undefined,
-    // isProductNameSelected: undefined,
-  },
+  gr1200: {},
   gr1300: {
     index: undefined,
     areaCode: "",
@@ -147,10 +119,7 @@ const initialState: initialStateType = {
     acsCode: undefined,
     acsName: undefined,
   },
-  isDelete: {
-    menuId: "",
-    isDelete: false,
-  },
+
   rv1100: {
     areaCode: undefined,
   },
@@ -165,6 +134,10 @@ const initialState: initialStateType = {
     cuCode: "",
     cuName: "",
     cuCmisu: 0,
+  },
+  delete: {
+    menuId: "",
+    isDelete: false,
   },
 };
 
@@ -219,14 +192,6 @@ const modalSlice = createSlice({
     },
 
     addGR1200: (state, action) => {
-      // state.gr1200.jpCode = action.payload.jpCode;
-      // state.gr1200.jpCost = action.payload.jpCost;
-      // state.gr1200.jpDanga = action.payload.jpDanga;
-      // state.gr1200.jpGubun = action.payload.jpGubun;
-      // state.gr1200.jpKg = action.payload.jpKg;
-      // state.gr1200.jpName = action.payload.jpName;
-      // state.gr1200.jpSvyn = action.payload.jpSvyn;
-      // state.gr1200.isProductNameSelected = action.payload.isProductNameSelected;
       state.gr1200 = { ...action.payload };
     },
 
@@ -250,10 +215,10 @@ const modalSlice = createSlice({
       state.cc1100.acsName = action.payload.acsName;
     },
     addDeleteMenuId: (state, action) => {
-      state.isDelete.menuId = action.payload.menuId;
+      state.delete.menuId = action.payload.menuId;
     },
     setIsDelete: (state, action) => {
-      state.isDelete.isDelete = action.payload.isDelete;
+      state.delete.isDelete = action.payload.isDelete;
     },
     rv1100Popup: (state, actions) => {
       state.rv1100.areaCode = actions.payload.areaCode;
