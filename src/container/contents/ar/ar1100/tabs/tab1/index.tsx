@@ -303,7 +303,11 @@ const Tab1 = React.forwardRef(
               control={control}
               name="pjJpName"
               render={({ field }) => (
-                <Input {...field} readOnly={!isAddBtnClicked} />
+                <Input
+                  {...field}
+                  readOnly={!isAddBtnClicked}
+                  style={{ width: "230px" }}
+                />
               )}
             />
 

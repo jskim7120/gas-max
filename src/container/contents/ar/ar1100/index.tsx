@@ -85,7 +85,13 @@ function AR1100({
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
-      addBtnUnClick();
+      if (isAddBtnClicked) {
+        addBtnUnClick();
+      }
+
+      if (Number(selected?.pjType) !== tabId) {
+        setTabId(Number(selected?.pjType));
+      }
 
       fetchData65({
         areaCode: selected?.areaCode,
