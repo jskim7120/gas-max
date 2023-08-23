@@ -26,7 +26,7 @@ export const FooterContainer = styled.div`
       font-weight: 600;
     }
   }
-  form {
+  form.footer_form {
     margin-left: 13px;
     display: flex;
     flex-direction: column;

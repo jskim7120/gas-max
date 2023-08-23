@@ -70,7 +70,7 @@ function Form({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const stateGR1300 = useSelector((state: any) => state.modal.gr1300);
-  const stateDeleteRowGrid = useSelector((state: any) => state.modal.isDelete);
+  const { delete: deleteState } = useSelector((state: any) => state.modal);
 
   const dispatch = useDispatch();
   const { showDeleteModal, openModal, closeModal } = useModal();
@@ -88,13 +88,10 @@ function Form({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (
-      stateDeleteRowGrid.menuId === menuId &&
-      stateDeleteRowGrid.isDelete === true
-    ) {
+    if (deleteState.menuId === menuId && deleteState.isDelete === true) {
       deleteRowGrid();
     }
-  }, [stateDeleteRowGrid.isDelete]);
+  }, [deleteState.isDelete]);
 
   useEffect(() => {
     if (stateGR1300.index !== undefined && stateGR1300.bpName) {

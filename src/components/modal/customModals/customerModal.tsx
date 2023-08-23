@@ -5,7 +5,6 @@ import { ModalWrapper } from "./style";
 
 const customStyle = {
   width: "923px",
-  height: "650px",
 };
 
 function CustomerModal({

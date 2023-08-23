@@ -15,7 +15,6 @@ const Tab2 = React.forwardRef(
       data,
       dictionary,
       isAddBtnClicked,
-      setIsAddBtnClicked,
       fetchData,
       selected,
       menuId,
@@ -25,7 +24,6 @@ const Tab2 = React.forwardRef(
       data: any;
       dictionary: any;
       isAddBtnClicked: boolean;
-      setIsAddBtnClicked: Function;
       fetchData: Function;
       selected: any;
       menuId: string;
@@ -46,23 +44,6 @@ const Tab2 = React.forwardRef(
     const data1 = [
       {
         1: (
-          <FormGroup>
-            <Controller
-              control={control}
-              name="saleState"
-              render={({ field }) => (
-                <Select {...field} width={InputSize.i100}>
-                  {dictionary?.saleType?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              )}
-            />
-          </FormGroup>
-        ),
-        2: (
           <Controller
             control={control}
             name="pcDate"
@@ -75,7 +56,7 @@ const Tab2 = React.forwardRef(
             )}
           />
         ),
-        3: (
+        2: (
           <FormGroup style={{ position: "relative" }}>
             <Input
               register={register("pcJpCode")}
@@ -110,7 +91,7 @@ const Tab2 = React.forwardRef(
             </span>
           </FormGroup>
         ),
-        4: (
+        3: (
           <Controller
             control={control}
             name="pcQty"
@@ -119,7 +100,7 @@ const Tab2 = React.forwardRef(
             )}
           />
         ),
-        5: (
+        4: (
           <Controller
             control={control}
             name="pcReqty"
@@ -128,10 +109,19 @@ const Tab2 = React.forwardRef(
             )}
           />
         ),
+        5: (
+          <Controller
+            control={control}
+            name="pcJaego"
+            render={({ field }) => (
+              <Input {...field} inputSize={InputSize.i100} textAlign="right" />
+            )}
+          />
+        ),
         6: (
           <Controller
             control={control}
-            name="junJaego"
+            name="pcDanga"
             render={({ field }) => (
               <Input {...field} inputSize={InputSize.i100} textAlign="right" />
             )}
@@ -140,7 +130,7 @@ const Tab2 = React.forwardRef(
         7: (
           <Controller
             control={control}
-            name="nergui"
+            name="pcKumack"
             render={({ field }) => (
               <Input {...field} inputSize={InputSize.i100} textAlign="right" />
             )}
@@ -149,22 +139,13 @@ const Tab2 = React.forwardRef(
         8: (
           <Controller
             control={control}
-            name="pcKumack"
-            render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} textAlign="right" />
-            )}
-          />
-        ),
-        9: (
-          <Controller
-            control={control}
             name="pcGum"
             render={({ field }) => (
               <Input {...field} inputSize={InputSize.i100} textAlign="right" />
             )}
           />
         ),
-        10: (
+        9: (
           <Controller
             control={control}
             name="pcSwName"
@@ -179,16 +160,34 @@ const Tab2 = React.forwardRef(
             )}
           />
         ),
-        11: <Input register={register("pcBigo")} inputSize={InputSize.i100} />,
+        10: <Input register={register("pcBigo")} inputSize={InputSize.i100} />,
       },
     ];
 
     const data2 = [
       {
         1: (
+          <FormGroup>
+            <Controller
+              control={control}
+              name="cSaleType"
+              render={({ field }) => (
+                <Select {...field} width={InputSize.i100}>
+                  {dictionary?.saleType?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            />
+          </FormGroup>
+        ),
+
+        2: (
           <Controller
             control={control}
-            name="proxyType"
+            name="cProxyType"
             render={({ field }) => (
               <Select {...field} width={InputSize.i100}>
                 {dictionary?.sProxytype?.map((obj: any, idx: number) => (
@@ -200,12 +199,12 @@ const Tab2 = React.forwardRef(
             )}
           />
         ),
-        2: (
+        3: (
           <FormGroup style={{ position: "relative" }}>
-            <Input register={register("buCode")} inputSize={InputSize.i100} />
+            <Input register={register("cBuCode")} inputSize={InputSize.i100} />
             <Controller
               control={control}
-              name="buName"
+              name="cBuName"
               render={({ field }) => (
                 <Select {...field} width={InputSize.i100}>
                   {dictionary?.sProxytype?.map((obj: any, idx: number) => (
@@ -246,10 +245,9 @@ const Tab2 = React.forwardRef(
             <Table
               className="no-space"
               tableHeader={[
-                "",
                 "공급일자",
                 "품  명",
-                "공급수량",
+                "공급량",
                 "공병회수",
                 "재고",
                 "공급단가",
@@ -263,7 +261,7 @@ const Tab2 = React.forwardRef(
             />
             <Table
               className="no-space"
-              tableHeader={["공급구분", "매입처명", ""]}
+              tableHeader={["거래상태", "공급구분", "매입처"]}
               tableData={data2}
             />
           </div>

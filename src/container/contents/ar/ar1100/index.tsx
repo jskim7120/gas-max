@@ -55,13 +55,7 @@ function AR1100({
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
   const { info, source } = useSelector((state) => state.footer);
-
-  const {
-    showCM1105Modal,
-    // closeModal: closeCM1105Modal,
-    openModal: openCM1105Modal,
-  } = useModal();
-
+  const { showCM1105Modal, openModal: openCM1105Modal } = useModal();
   const {
     showCustomerModal,
     closeModal: closeCustomerModal,
@@ -76,7 +70,7 @@ function AR1100({
   useEffect(() => {
     if (dataCommonDic?.dataInit) {
       resetSearchForm("reset");
-      const params = prepareParams();
+      const params = prepareParamsForReset();
       params.sDate = DateWithoutDash(params.sDate);
       params.dDate = DateWithoutDash(params.dDate);
       fetchData(params);
@@ -85,9 +79,7 @@ function AR1100({
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
-      if (isAddBtnClicked) {
-        addBtnUnClick();
-      }
+      addBtnUnClick();
 
       if (Number(selected?.pjType) !== tabId) {
         setTabId(Number(selected?.pjType));
@@ -160,13 +152,6 @@ function AR1100({
     setLoading(false);
   };
 
-  const fetchDataWithParams = () => {
-    const params = getValues();
-    params.sDate = DateWithoutDash(params.sDate);
-    params.dDate = DateWithoutDash(params.dDate);
-    fetchData(params);
-  };
-
   const fetchData65 = async (params: any) => {
     const res = await apiGet(AR1100SELECT, params);
 
@@ -204,7 +189,7 @@ function AR1100({
     }
   };
 
-  const prepareParams = () => {
+  const prepareParamsForReset = () => {
     const init = dataCommonDic.dataInit[0];
     return {
       areaCode: dataCommonDic.areaCode[0].code,
@@ -231,6 +216,48 @@ function AR1100({
     };
   };
 
+  const prepareParamsForSearch = (params: any) => {
+    params.sDate = DateWithoutDash(params.sDate);
+    params.dDate = DateWithoutDash(params.dDate);
+    params.sSalegubun =
+      (params.sSalegubun0 ? "Y" : "N") +
+      (params.sSalegubun1 ? "Y" : "N") +
+      (params.sSalegubun2 ? "Y" : "N") +
+      (params.sSalegubun3 ? "Y" : "N") +
+      (params.sSalegubun4 ? "Y" : "N") +
+      (params.sSalegubun5 ? "Y" : "N");
+    params.sSalestate =
+      (params.sSalestate0 ? "Y" : "N") +
+      (params.sSalestate1 ? "Y" : "N") +
+      (params.sSalestate2 ? "Y" : "N") +
+      (params.sSalestate3 ? "Y" : "N") +
+      (params.sSalestate4 ? "Y" : "N") +
+      (params.sSalestate5 ? "Y" : "N") +
+      (params.sSalestate6 ? "Y" : "N");
+
+    delete params.sSalegubun0;
+    delete params.sSalegubun1;
+    delete params.sSalegubun2;
+    delete params.sSalegubun3;
+    delete params.sSalegubun4;
+    delete params.sSalegubun5;
+
+    delete params.sSalestate0;
+    delete params.sSalestate1;
+    delete params.sSalestate2;
+    delete params.sSalestate3;
+    delete params.sSalestate4;
+    delete params.sSalestate5;
+    delete params.sSalestate6;
+  };
+
+  const addBtnClick = () => {
+    if (!isAddBtnClicked) {
+      btnRef1.current.classList.add("active");
+      setIsAddBtnClicked(true);
+    }
+  };
+
   const addBtnUnClick = () => {
     if (isAddBtnClicked) {
       btnRef1.current.classList.remove("active");
@@ -240,21 +267,20 @@ function AR1100({
 
   const resetSearchForm = (type: string) => {
     if (type === "reset") {
-      const params = prepareParams();
+      const params = prepareParamsForReset();
       reset(params);
     }
   };
 
-  const submit = async (params: IAR1100SEARCH) => {
-    params.sDate = DateWithoutDash(params.sDate);
-    params.dDate = DateWithoutDash(params.dDate);
+  const submit = async (params: any) => {
+    addBtnUnClick();
+    prepareParamsForSearch(params);
     fetchData(params);
   };
 
   const handleClickBtnAdd = () => {
+    addBtnClick();
     fetchData11({ areaCode: getValues("areaCode"), pjType: 0 });
-    btnRef1.current.classList.add("active");
-    setIsAddBtnClicked(true);
     dispatch(addSource({ source: menuId }));
     openCustomerModal();
   };
@@ -541,9 +567,8 @@ function AR1100({
             selected,
             dataDictionary,
             isAddBtnClicked,
-            setIsAddBtnClicked,
             getValues("areaCode"),
-            fetchDataWithParams,
+            handleSubmit(submit),
             menuId,
             tabRef1,
             tabRef2,

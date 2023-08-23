@@ -69,7 +69,7 @@ function useModal() {
         type="customerModal"
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        onClose={onClose}
+        onClose={onClose && onClose}
       />
     );
   };

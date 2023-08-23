@@ -8,7 +8,6 @@ function getTabContent(
   selected: any,
   dictionary: any,
   isAddBtnClicked: boolean,
-  setIsAddBtnClicked: Function,
   areaCode: string,
   fetchData: Function,
   menuId: string,
@@ -24,7 +23,6 @@ function getTabContent(
           data={data65}
           dictionary={dictionary}
           isAddBtnClicked={isAddBtnClicked}
-          setIsAddBtnClicked={setIsAddBtnClicked}
           fetchData={fetchData}
           selected={selected}
           menuId={menuId}
@@ -39,7 +37,6 @@ function getTabContent(
           data={data65}
           dictionary={dictionary}
           isAddBtnClicked={isAddBtnClicked}
-          setIsAddBtnClicked={setIsAddBtnClicked}
           fetchData={fetchData}
           selected={selected}
           menuId={menuId}

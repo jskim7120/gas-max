@@ -5,16 +5,16 @@ export interface IAR1100TAB2 {
   pcJpName: string;
   pcQty: string;
   pcReqty: string;
-  junJaego: string;
-  nergui: string;
+  pcJaego: string;
+  pcDanga: string;
   pcKumack: string;
   pcGum: string;
   pcSwCode: string;
   pcSwName: string;
   pcBigo: string;
 
-  proxyType: string;
-
-  buCode: string;
-  buName: string;
+  cSaleType: string;
+  cProxyType: string;
+  cBuCode: string;
+  cBuName: string;
 }

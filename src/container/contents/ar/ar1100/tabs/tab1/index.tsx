@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useImperativeHandle } from "react";
 import { useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch } from "app/store";
-import {} from "app/state/modal/modalSlice";
 import { AR1100INSERT, AR1100UPDATE, AR1100DELETE } from "app/path";
 import Table from "components/table";
 import { Input, Select, FormGroup } from "components/form/style";
@@ -23,7 +21,6 @@ const Tab1 = React.forwardRef(
       data,
       dictionary,
       isAddBtnClicked,
-      setIsAddBtnClicked,
       fetchData,
       selected,
       menuId,
@@ -33,7 +30,6 @@ const Tab1 = React.forwardRef(
       data: any;
       dictionary: any;
       isAddBtnClicked: boolean;
-      setIsAddBtnClicked: Function;
       fetchData: Function;
       selected: any;
       menuId: string;
@@ -659,16 +655,3 @@ const Tab1 = React.forwardRef(
 );
 
 export default Tab1;
-
-// pjReqtySil
-// pjCuSite
-// pjCuName
-// pjCuCode
-// pjAppUser
-// opt
-// junNo
-// junJaego
-// gpsLong
-// gpsLat
-// carNo
-// carCd

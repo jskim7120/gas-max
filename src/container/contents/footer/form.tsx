@@ -344,25 +344,11 @@ function Form({
           <div>
             <Button
               text="검색"
-              icon={
-                !loading && (
-                  <MagnifyingGlassBig width="17.188" height="17.141" />
-                )
-              }
-              kind={ButtonType.ROUND}
+              icon={!loading && <MagnifyingGlassBig width="15" />}
+              color={ButtonColor.DANGER}
               type="submit"
-              style={{ height: "26px" }}
               loader={
-                loading && (
-                  <>
-                    <Loader
-                      color="white"
-                      size={19}
-                      style={{ marginRight: "10px" }}
-                      borderWidth="3px"
-                    />
-                  </>
-                )
+                loading && <Loader size={16} style={{ marginRight: "12px" }} />
               }
             />
           </div>

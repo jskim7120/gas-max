@@ -51,7 +51,7 @@ function Footer() {
           <img src={PartnerImg} />
           <p>최근거래처</p>
         </div>
-        <form>
+        <form className="footer_form">
           <div className="search_wrapper">
             <input
               type="text"
