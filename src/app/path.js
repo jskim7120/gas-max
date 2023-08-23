@@ -5,6 +5,10 @@ export const AR1100INSERT = "/app/AR1100/insert";
 export const AR1100UPDATE = "/app/AR1100/update";
 export const AR1100DELETE = "/app/AR1100/delete";
 
+export const AR1100CJSALEINSERT = "/app/AR1100/CJSALE/insert";
+export const AR1100CJSALEUPDATE = "/app/AR1100/CJSALE/update";
+export const AR1100CJSALEDELETE = "/app/AR1100/CJSALE/delete";
+
 export const AR9001SEARCH = "/app/AR9001/search";
 export const AR9002SEARCH = "/app/AR9002/search";
 export const AR9003SEARCH = "/app/AR9003/search";

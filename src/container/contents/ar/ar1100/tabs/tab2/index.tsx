@@ -7,6 +7,14 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
 import { IAR1100TAB2 } from "./model";
+import {
+  AR1100CJSALEINSERT,
+  AR1100CJSALEUPDATE,
+  AR1100CJSALEDELETE,
+} from "app/path";
+import { apiPost } from "app/axios";
+import { useSelector } from "app/store";
+import useModal from "app/hook/useModal";
 
 const Tab2 = React.forwardRef(
   (
@@ -36,10 +44,35 @@ const Tab2 = React.forwardRef(
         mode: "onSubmit",
       });
 
+    const cm1106 = useSelector((state: any) => state.modal.cm1106);
+    const footerState = useSelector((state: any) => state.footer);
+
+    const { showCM1106Modal, openModal } = useModal();
+
     useImperativeHandle<any, any>(ref, () => ({
       reset,
     }));
-    const submit = () => {};
+
+    const submit = async (params: any) => {
+      const path = isAddBtnClicked ? AR1100CJSALEINSERT : AR1100CJSALEUPDATE;
+      console.log("params>>>>", params);
+      if (isAddBtnClicked) {
+        if (footerState?.source === menuId) {
+          params.areaCode = areaCode;
+          params.pcJpCode = footerState?.info?.cuCode;
+          params.pcJpName = footerState?.info?.cuName;
+        }
+      }
+
+      // const res = await apiPost(path, params, "저장이 성공하였습니다");
+      // if (res) {
+      //   await fetchData();
+      // }
+    };
+
+    const openPopupCM1106 = async () => {
+      openModal();
+    };
 
     const data1 = [
       {
@@ -85,7 +118,7 @@ const Tab2 = React.forwardRef(
                 alignItems: "center",
                 paddingLeft: "3px",
               }}
-              // onClick={isAddBtnClicked ? openPopupCM1106 : undefined}
+              onClick={isAddBtnClicked ? openPopupCM1106 : undefined}
             >
               <MagnifyingGlass />
             </span>
@@ -151,7 +184,7 @@ const Tab2 = React.forwardRef(
             name="pcSwName"
             render={({ field }) => (
               <Select {...field} width={InputSize.i100}>
-                {dictionary?.saleType?.map((obj: any, idx: number) => (
+                {dictionary?.sSawon?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
@@ -239,53 +272,56 @@ const Tab2 = React.forwardRef(
     ];
 
     return (
-      <form autoComplete="off" onSubmit={handleSubmit(submit)}>
-        <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
-          <div className="tab1">
-            <Table
-              className="no-space"
-              tableHeader={[
-                "공급일자",
-                "품  명",
-                "공급량",
-                "공병회수",
-                "재고",
-                "공급단가",
-                "공급액",
-                "배달검침",
-                "사원",
-                "비고",
-              ]}
-              tableData={data1}
-              style={{ marginBottom: "2px" }}
-            />
-            <Table
-              className="no-space"
-              tableHeader={["거래상태", "공급구분", "매입처"]}
-              tableData={data2}
-            />
-          </div>
+      <>
+        {showCM1106Modal()}
+        <form autoComplete="off" onSubmit={handleSubmit(submit)}>
+          <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
+            <div className="tab1">
+              <Table
+                className="no-space"
+                tableHeader={[
+                  "공급일자",
+                  "품  명",
+                  "공급량",
+                  "공병회수",
+                  "재고",
+                  "공급단가",
+                  "공급액",
+                  "배달검침",
+                  "사원",
+                  "비고",
+                ]}
+                tableData={data1}
+                style={{ marginBottom: "2px" }}
+              />
+              <Table
+                className="no-space"
+                tableHeader={["거래상태", "공급구분", "매입처"]}
+                tableData={data2}
+              />
+            </div>
 
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-          >
-            <Button
-              text="저장"
-              icon={<Update />}
-              color={ButtonColor.SECONDARY}
-              onClick={() => {}}
-              type="submit"
-            />
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+            >
+              <Button
+                text="저장"
+                icon={<Update />}
+                color={ButtonColor.SECONDARY}
+                onClick={() => {}}
+                type="submit"
+              />
 
-            <Button
-              text="취소"
-              icon={<Reset />}
-              type="button"
-              onClick={() => {}}
-            />
+              <Button
+                text="취소"
+                icon={<Reset />}
+                type="button"
+                onClick={() => {}}
+              />
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </>
     );
   }
 );

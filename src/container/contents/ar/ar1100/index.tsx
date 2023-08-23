@@ -68,12 +68,9 @@ function AR1100({
     });
 
   useEffect(() => {
-    if (dataCommonDic?.dataInit) {
+    if (dataCommonDic && dataCommonDic?.dataInit) {
       resetSearchForm("reset");
-      const params = prepareParamsForReset();
-      params.sDate = DateWithoutDash(params.sDate);
-      params.dDate = DateWithoutDash(params.dDate);
-      fetchData(params);
+      fetchData(prepareParamsInit());
     }
   }, [dataCommonDic]);
 
@@ -189,30 +186,33 @@ function AR1100({
     }
   };
 
-  const prepareParamsForReset = () => {
+  const prepareParamsInit = () => {
     const init = dataCommonDic.dataInit[0];
     return {
-      areaCode: dataCommonDic.areaCode[0].code,
-      sDate: init.sDate,
-      dDate: init.dDate,
-      sInkumtype: init.sInkumtype,
-      sInserttype: init.sInserttype,
-      sProxytype: init.sProxytype,
-      sSawon: init.sSawon,
-      sSalestate0: init.sSalesatae.charAt(0) === "Y",
-      sSalestate1: init.sSalesatae.charAt(1) === "Y",
-      sSalestate2: init.sSalesatae.charAt(2) === "Y",
-      sSalestate3: init.sSalesatae.charAt(3) === "Y",
-      sSalestate4: init.sSalesatae.charAt(4) === "Y",
-      sSalestate5: init.sSalesatae.charAt(5) === "Y",
-      sSalestate6: init.sSalesatae.charAt(6) === "Y",
+      ...init,
+      areaCode: dataCommonDic.areaCode[0]?.code,
+      sDate: DateWithoutDash(init.sDate),
+      dDate: DateWithoutDash(init.dDate),
+      // sCustomer: "",
+    };
+  };
 
-      sSalegubun0: init.sSalegubun.charAt(0) === "Y",
-      sSalegubun1: init.sSalegubun.charAt(1) === "Y",
-      sSalegubun2: init.sSalegubun.charAt(2) === "Y",
-      sSalegubun3: init.sSalegubun.charAt(3) === "Y",
-      sSalegubun4: init.sSalegubun.charAt(4) === "Y",
-      sSalegubun5: init.sSalegubun.charAt(5) === "Y",
+  const getCheckboxVal = (salestate: string, salegubun: string) => {
+    return {
+      sSalestate0: salestate?.charAt(0) === "Y",
+      sSalestate1: salestate?.charAt(1) === "Y",
+      sSalestate2: salestate?.charAt(2) === "Y",
+      sSalestate3: salestate?.charAt(3) === "Y",
+      sSalestate4: salestate?.charAt(4) === "Y",
+      sSalestate5: salestate?.charAt(5) === "Y",
+      sSalestate6: salestate?.charAt(6) === "Y",
+
+      sSalegubun0: salegubun?.charAt(0) === "Y",
+      sSalegubun1: salegubun?.charAt(1) === "Y",
+      sSalegubun2: salegubun?.charAt(2) === "Y",
+      sSalegubun3: salegubun?.charAt(3) === "Y",
+      sSalegubun4: salegubun?.charAt(4) === "Y",
+      sSalegubun5: salegubun?.charAt(5) === "Y",
     };
   };
 
@@ -267,8 +267,13 @@ function AR1100({
 
   const resetSearchForm = (type: string) => {
     if (type === "reset") {
-      const params = prepareParamsForReset();
-      reset(params);
+      reset({
+        ...prepareParamsInit(),
+        ...getCheckboxVal(
+          dataCommonDic.dataInit[0].sSalestate,
+          dataCommonDic.dataInit[0].sSalegubun
+        ),
+      });
     }
   };
 

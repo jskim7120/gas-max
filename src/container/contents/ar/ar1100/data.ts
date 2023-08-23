@@ -183,16 +183,7 @@ export const columns = [
       text: "회수",
     },
   },
-  {
-    name: "swName",
-    fieldName: "swName",
-    type: "data",
-    width: "100",
-    styleName: "rg-left-column",
-    header: {
-      text: "사원",
-    },
-  },
+
   {
     name: "vatDiv",
     fieldName: "vatDiv",
@@ -216,13 +207,15 @@ export const columns = [
     numberFormat: "#,##0",
   },
   {
-    name: "inkumtypeName",
-    fieldName: "inkumtypeName",
+    name: "dc",
+    fieldName: "dc",
     type: "data",
-    width: "80",
+    width: "100",
+    styleName: "rg-right-column",
     header: {
-      text: "방법",
+      text: "D/C",
     },
+    numberFormat: "#,##0",
   },
   {
     name: "inkum",
@@ -236,17 +229,6 @@ export const columns = [
     numberFormat: "#,##0",
   },
   {
-    name: "dc",
-    fieldName: "dc",
-    type: "data",
-    width: "100",
-    styleName: "rg-right-column",
-    header: {
-      text: "D/C",
-    },
-    numberFormat: "#,##0",
-  },
-  {
     name: "misukum",
     fieldName: "misukum",
     type: "data",
@@ -256,6 +238,25 @@ export const columns = [
       text: "미입금액",
     },
     numberFormat: "#,##0",
+  },
+  {
+    name: "inkumtypeName",
+    fieldName: "inkumtypeName",
+    type: "data",
+    width: "80",
+    header: {
+      text: "방법",
+    },
+  },
+  {
+    name: "swName",
+    fieldName: "swName",
+    type: "data",
+    width: "100",
+    styleName: "rg-left-column",
+    header: {
+      text: "사원",
+    },
   },
   {
     name: "bigo",
