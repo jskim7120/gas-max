@@ -17,6 +17,7 @@ import { currencyMask, removeCommas } from "helpers/currency";
 const Tab1 = React.forwardRef(
   (
     {
+      tabId,
       areaCode,
       data,
       dictionary,
@@ -26,6 +27,7 @@ const Tab1 = React.forwardRef(
       menuId,
       addBtnUnClick,
     }: {
+      tabId: number;
       areaCode: string;
       data: any;
       dictionary: any;
@@ -57,7 +59,7 @@ const Tab1 = React.forwardRef(
     let pjReqty = 0;
 
     useEffect(() => {
-      if (cm1106.source === "AR1100" && cm1106.jpCode && cm1106.jpName) {
+      if (cm1106.source === "AR11000" && cm1106.jpCode && cm1106.jpName) {
         resetForm("jpName");
       }
     }, [cm1106.jpCode, cm1106.jpName, cm1106.tick]);
@@ -67,6 +69,30 @@ const Tab1 = React.forwardRef(
         resetForm("reset");
       }
     }, [data]);
+
+    useEffect(() => {
+      if (watch("pjQty") !== undefined) {
+        handlePjQtyChange();
+      }
+    }, [watch("pjQty")]);
+
+    useEffect(() => {
+      if (watch("pjReqty") !== undefined) {
+        handlePjReqtyChange();
+      }
+    }, [watch("pjReqty")]);
+
+    useEffect(() => {
+      if (watch("pjDanga") !== undefined) {
+        handlePjDangaChange();
+      }
+    }, [watch("pjDanga")]);
+
+    useEffect(() => {
+      if (watch("pjVatDiv") !== undefined) {
+        handlePjVatDivChange();
+      }
+    }, [watch("pjVatDiv")]);
 
     useImperativeHandle<any, any>(ref, () => ({
       reset,
@@ -139,7 +165,6 @@ const Tab1 = React.forwardRef(
     };
 
     const handlePjQtyChange = () => {
-      // console.log("watch 1---------->>>>>>>");
       pjDanga = getValues("pjDanga") ? +removeCommas(getValues("pjDanga")) : 0;
       pjQty = getValues("pjQty") ? +getValues("pjQty") : 0;
       pjKumSup = pjDanga * pjQty;
@@ -154,7 +179,6 @@ const Tab1 = React.forwardRef(
     };
 
     const handlePjReqtyChange = () => {
-      // console.log("watch 2--------->>>>>>>");
       pjQty = getValues("pjQty") ? +getValues("pjQty") : 0;
       pjReqty = getValues("pjReqty") ? +getValues("pjReqty") : 0;
       calcPjJago = pjJago + pjQty - pjReqty;
@@ -165,12 +189,10 @@ const Tab1 = React.forwardRef(
     };
 
     const handlePjDangaChange = () => {
-      // console.log("watch 3------->>>>>>>", getValues("pjDanga"));
       pjDanga = +removeCommas(getValues("pjDanga"))
         ? +removeCommas(getValues("pjDanga"), "number")
         : 0;
 
-      // console.log(">>>>>>>>>>", pjDanga);
       pjQty = getValues("pjQty") ? +getValues("pjQty") : 0;
       pjKumSup = pjDanga * pjQty;
 
@@ -184,7 +206,6 @@ const Tab1 = React.forwardRef(
     };
 
     const handlePjVatDivChange = () => {
-      // console.log("watch 4------->>>>>>>");
       pjKumSup = getValues("pjKumSup")
         ? +removeCommas(getValues("pjKumSup"), "number")
         : 0;
@@ -195,30 +216,6 @@ const Tab1 = React.forwardRef(
         pjKumack: pjKumack,
       }));
     };
-
-    useEffect(() => {
-      if (watch("pjQty") !== undefined) {
-        handlePjQtyChange();
-      }
-    }, [watch("pjQty")]);
-
-    useEffect(() => {
-      if (watch("pjReqty") !== undefined) {
-        handlePjReqtyChange();
-      }
-    }, [watch("pjReqty")]);
-
-    useEffect(() => {
-      if (watch("pjDanga") !== undefined) {
-        handlePjDangaChange();
-      }
-    }, [watch("pjDanga")]);
-
-    useEffect(() => {
-      if (watch("pjVatDiv") !== undefined) {
-        handlePjVatDivChange();
-      }
-    }, [watch("pjVatDiv")]);
 
     const openPopupCM1106 = async () => {
       openModal();
@@ -243,7 +240,7 @@ const Tab1 = React.forwardRef(
       const path = isAddBtnClicked ? AR1100INSERT : AR1100UPDATE;
 
       if (isAddBtnClicked) {
-        if (footerState?.source === menuId) {
+        if (footerState?.source === menuId + tabId.toString()) {
           params.areaCode = areaCode;
           params.pjCuCode = footerState?.info?.cuCode;
           params.pjCuName = footerState?.info?.cuName;

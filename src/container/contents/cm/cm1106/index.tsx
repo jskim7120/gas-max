@@ -245,7 +245,7 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
               width: "100%",
             }}
           />
-          {cm1106.source === "AR1100" && (
+          {cm1106.source.substring(0, 6) === "AR1100" && (
             <div
               style={{
                 background: "rgba(104,103,103,0.35)",

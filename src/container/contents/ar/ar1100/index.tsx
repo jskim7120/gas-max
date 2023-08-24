@@ -285,8 +285,8 @@ function AR1100({
 
   const handleClickBtnAdd = () => {
     addBtnClick();
+    dispatch(addSource({ source: menuId + tabId.toString() }));
     fetchData11({ areaCode: getValues("areaCode"), pjType: 0 });
-    dispatch(addSource({ source: menuId }));
     openCustomerModal();
   };
 

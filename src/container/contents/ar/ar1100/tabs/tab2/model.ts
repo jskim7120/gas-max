@@ -5,9 +5,9 @@ export interface IAR1100TAB2 {
   pcJpName: string;
   pcQty: string;
   pcReqty: string;
-  pcJaego: string;
+  pcJaego: number;
   pcDanga: string;
-  pcKumack: string;
+  pcKumack: number;
   pcGum: string;
   pcSwCode: string;
   pcSwName: string;

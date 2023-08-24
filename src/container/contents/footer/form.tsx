@@ -184,7 +184,7 @@ function Form({
   }, []);
 
   useEffect(() => {
-    if (source === "AR1100") {
+    if (source === "AR11000") {
       setFocus("sCuName");
     }
   }, [source]);
@@ -238,14 +238,14 @@ function Form({
 
   const handleChoose = () => {
     if (Object.keys(selected)?.length > 0) {
-      dispatch(addInfo({ info: selected, source: activeTabId }));
+      dispatch(addInfo({ info: selected }));
 
       activeTabId === "AR1100" &&
         dispatch(
           addCM1106({
             areaCode: selected?.areaCode,
             cuCode: selected?.cuCode,
-            source: activeTabId,
+            source: source,
           })
         );
 

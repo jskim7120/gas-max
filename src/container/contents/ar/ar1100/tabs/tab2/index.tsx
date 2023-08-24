@@ -1,4 +1,4 @@
-import React, { useImperativeHandle } from "react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Table from "components/table";
 import { Input, Select, FormGroup } from "components/form/style";
@@ -15,10 +15,13 @@ import {
 import { apiPost } from "app/axios";
 import { useSelector } from "app/store";
 import useModal from "app/hook/useModal";
+import { currencyMask, removeCommas } from "helpers/currency";
+import { DateWithoutDash } from "helpers/dateFormat";
 
 const Tab2 = React.forwardRef(
   (
     {
+      tabId,
       areaCode,
       data,
       dictionary,
@@ -28,6 +31,7 @@ const Tab2 = React.forwardRef(
       menuId,
       addBtnUnClick,
     }: {
+      tabId: number;
       areaCode: string;
       data: any;
       dictionary: any;
@@ -53,21 +57,117 @@ const Tab2 = React.forwardRef(
       reset,
     }));
 
+    useEffect(() => {
+      if (cm1106.source === "AR11001") {
+        console.log("cm1106:", cm1106);
+
+        resetForm("jpName");
+      }
+    }, [cm1106.tick]);
+
+    useEffect(() => {
+      if (watch("pcQty") !== undefined) {
+        handlePcQtyChange();
+      }
+    }, [watch("pcQty")]);
+
+    useEffect(() => {
+      if (watch("pcReqty") !== undefined) {
+        handlePcReqtyChange();
+      }
+    }, [watch("pcReqty")]);
+
+    useEffect(() => {
+      if (watch("pcDanga") !== undefined) {
+        handlePcDangaChange();
+      }
+    }, [watch("pcDanga")]);
+
+    const handlePcQtyChange = () => {
+      const pcJaego =
+        cm1106?.jcBasicJaego !== null
+          ? +removeCommas(cm1106.jcBasicJaego, "number")
+          : 0;
+
+      const pcKumack =
+        +removeCommas(watch("pcQty"), "number") *
+        (getValues("pcDanga")
+          ? +removeCommas(getValues("pcDanga"), "number")
+          : 0);
+
+      reset((formValues) => ({
+        ...formValues,
+        pcReqty: watch("pcQty"),
+        pcJaego: pcJaego,
+        pcKumack: pcKumack,
+      }));
+    };
+
+    const handlePcReqtyChange = () => {
+      const pcJaego =
+        (cm1106?.jcBasicJaego !== null
+          ? +removeCommas(cm1106.jcBasicJaego, "number")
+          : 0) +
+        (getValues("pcQty") ? +removeCommas(getValues("pcQty"), "number") : 0) -
+        (getValues("pcReqty")
+          ? +removeCommas(getValues("pcReqty"), "number")
+          : 0);
+
+      reset((formValues) => ({
+        ...formValues,
+        pcJaego: pcJaego,
+      }));
+    };
+
+    const handlePcDangaChange = () => {
+      const pcKumack =
+        +removeCommas(watch("pcQty"), "number") *
+        (getValues("pcDanga")
+          ? +removeCommas(getValues("pcDanga"), "number")
+          : 0);
+
+      reset((formValues) => ({
+        ...formValues,
+        pcKumack: pcKumack,
+      }));
+    };
+
     const submit = async (params: any) => {
       const path = isAddBtnClicked ? AR1100CJSALEINSERT : AR1100CJSALEUPDATE;
-      console.log("params>>>>", params);
+
       if (isAddBtnClicked) {
-        if (footerState?.source === menuId) {
+        if (footerState?.source === menuId + tabId.toString()) {
           params.areaCode = areaCode;
           params.pcJpCode = footerState?.info?.cuCode;
           params.pcJpName = footerState?.info?.cuName;
         }
       }
 
-      // const res = await apiPost(path, params, "저장이 성공하였습니다");
-      // if (res) {
-      //   await fetchData();
-      // }
+      params.pcDate = DateWithoutDash(params.pcDate);
+
+      params.pcDanga = +removeCommas(params.pcDanga, "number");
+      params.pcQty = +removeCommas(params.pcQty, "number");
+      params.pcReqty = +removeCommas(params.pcReqty, "number");
+      params.pcJaego = +removeCommas(params.pcJaego, "number");
+      params.pcKumack = +removeCommas(params.pcKumack, "number");
+      params.pcGum = +removeCommas(params.pcGum, "number");
+
+      const res = await apiPost(path, params, "저장이 성공하였습니다");
+      if (res) {
+        await fetchData();
+      }
+    };
+
+    const resetForm = (type: string) => {
+      if (type === "reset") {
+      } else if (type === "jpName") {
+        reset((formValues) => ({
+          ...formValues,
+          pcJpName: cm1106.jpName,
+          pcJpCode: cm1106.jpCode,
+          pcDanga: cm1106.jcJpDanga,
+        }));
+      }
     };
 
     const openPopupCM1106 = async () => {
@@ -129,7 +229,12 @@ const Tab2 = React.forwardRef(
             control={control}
             name="pcQty"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} textAlign="right" />
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                textAlign="right"
+                mask={currencyMask}
+              />
             )}
           />
         ),
@@ -138,7 +243,12 @@ const Tab2 = React.forwardRef(
             control={control}
             name="pcReqty"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} textAlign="right" />
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                textAlign="right"
+                mask={currencyMask}
+              />
             )}
           />
         ),
@@ -147,7 +257,13 @@ const Tab2 = React.forwardRef(
             control={control}
             name="pcJaego"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} textAlign="right" />
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                textAlign="right"
+                mask={currencyMask}
+                readOnly
+              />
             )}
           />
         ),
@@ -156,7 +272,12 @@ const Tab2 = React.forwardRef(
             control={control}
             name="pcDanga"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} textAlign="right" />
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                textAlign="right"
+                mask={currencyMask}
+              />
             )}
           />
         ),
@@ -165,7 +286,12 @@ const Tab2 = React.forwardRef(
             control={control}
             name="pcKumack"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} textAlign="right" />
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                textAlign="right"
+                mask={currencyMask}
+              />
             )}
           />
         ),
@@ -174,7 +300,12 @@ const Tab2 = React.forwardRef(
             control={control}
             name="pcGum"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} textAlign="right" />
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                textAlign="right"
+                mask={currencyMask}
+              />
             )}
           />
         ),

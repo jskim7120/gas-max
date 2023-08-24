@@ -28,7 +28,6 @@ const footerSlice = createSlice({
     },
     addInfo: (state, action) => {
       state.info = action.payload.info;
-      state.source = action.payload.source;
     },
     removeInfo: (state, action) => {
       state.info = initialState.info;

@@ -2,7 +2,7 @@ import Tab1 from "./tabs/tab1";
 import Tab2 from "./tabs/tab2";
 
 function getTabContent(
-  id: number,
+  tabId: number,
   data: any,
   data65: any,
   selected: any,
@@ -15,10 +15,11 @@ function getTabContent(
   tabRef2: any,
   addBtnUnClick: Function
 ) {
-  switch (id) {
+  switch (tabId) {
     case 0:
       return (
         <Tab1
+          tabId={tabId}
           areaCode={areaCode}
           data={data65}
           dictionary={dictionary}
@@ -33,6 +34,7 @@ function getTabContent(
     case 1:
       return (
         <Tab2
+          tabId={tabId}
           areaCode={areaCode}
           data={data65}
           dictionary={dictionary}
