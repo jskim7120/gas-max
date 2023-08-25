@@ -237,7 +237,7 @@ function Form({
   };
 
   const handleChoose = () => {
-    if (Object.keys(selected)?.length > 0) {
+    if (selected && Object.keys(selected)?.length > 0) {
       dispatch(addInfo({ info: selected }));
 
       activeTabId === "AR1100" &&

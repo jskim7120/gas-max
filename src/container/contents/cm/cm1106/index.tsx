@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "app/store";
 import { apiGet } from "app/axios";
 import Button from "components/button/button";
-import { ButtonColor, ButtonType } from "components/componentsType";
+import { ButtonColor } from "components/componentsType";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import {
   Plus,
@@ -11,17 +11,16 @@ import {
   Update,
   Reset,
   WhiteClose,
-  Tick,
+  TickInCircle,
 } from "components/allSvgIcon";
 import SEARCH_RED from "assets/image/search_red.png";
 import Grid from "components/grid";
 import Form from "./form";
 import { addCM1106AR1100Tick } from "app/state/modal/modalSlice";
 import { Select, FormGroup, Label } from "components/form/style";
-import { CM1106LIST } from "app/path";
+import { CM1106LIST, CM110665 } from "app/path";
 import { ISEARCH } from "./model";
 import styled from "styled-components";
-import { SearchWrapper } from "container/contents/commonStyle";
 import { ModalBlueHeader } from "components/modal/customModals/style";
 import { columns, fields } from "./data";
 
@@ -56,11 +55,15 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (cm1106.areaCode && cm1106.cuCode) {
+    if (cm1106.areaCode && cm1106.cuCode && cm1106.source === "AR11000") {
       fetchData();
       resetForm("resetAreaCode");
     }
-  }, [cm1106.areaCode, cm1106.cuCode]);
+    if (cm1106.areaCode && cm1106.cuCode && cm1106.source === "AR11001") {
+      fetchData65();
+      resetForm("resetAreaCode");
+    }
+  }, [cm1106.areaCode, cm1106.cuCode, cm1106.tick]);
 
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
@@ -91,9 +94,24 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
     }
   };
 
+  const fetchData65 = async () => {
+    const data65 = await apiGet(CM110665, {
+      jcCuCode: cm1106.cuCode,
+      areaCode: cm1106.areaCode,
+    });
+
+    if (data65) {
+      setData(data65);
+      setSelected(data65[0]);
+    } else {
+      setData([]);
+      setSelected({});
+    }
+  };
+
   const submit = async (data: ISEARCH) => {};
 
-  const handleClickTick = () => {
+  const handleChoose = () => {
     if (selected && Object.keys(selected)?.length > 0) {
       dispatch(
         addCM1106AR1100Tick({
@@ -248,38 +266,21 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
           {cm1106.source.substring(0, 6) === "AR1100" && (
             <div
               style={{
-                background: "rgba(104,103,103,0.35)",
+                background: "#CDE7EB",
                 padding: "5px",
-                margin: "5px",
                 display: "flex",
                 justifyContent: "end",
+                gap: "7px",
               }}
             >
               <Button
                 text="선택"
-                icon={<Tick />}
-                withoutLine
-                style={{
-                  width: "110px",
-                  marginRight: "10px",
-                }}
-                kind={ButtonType.ROUND}
-                color={ButtonColor.BLUE}
+                icon={<TickInCircle />}
                 type="button"
-                onClick={handleClickTick}
+                color={ButtonColor.SUCCESS}
+                onClick={handleChoose}
               />
-
-              <Button
-                text="취소"
-                icon={<WhiteClose width="11" height="11" />}
-                withoutLine
-                style={{
-                  width: "80px",
-                }}
-                kind={ButtonType.ROUND}
-                color={ButtonColor.BLUE}
-                type="button"
-              />
+              <Button text="취소" icon={<Reset />} type="button" />
             </div>
           )}
         </div>

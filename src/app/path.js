@@ -111,6 +111,7 @@ export const CM1106LIST = "/app/CM1106/list";
 export const CM1106INSERT = "/app/CM1106/insert";
 export const CM1106UPDATE = "/app/CM1106/update";
 export const CM1106DELETE = "/app/CM1106/delete";
+export const CM110665 = "/app/CM1106/65";
 
 export const CM9001SEARCH = "/app/CM9001/search";
 export const CM9002SEARCH = "/app/CM9002/search";
