@@ -101,7 +101,7 @@ function AR1100({
   }, [selected]);
 
   useEffect(() => {
-    if (source === menuId && info) {
+    if (source.substring(0, 6) === menuId && info) {
       addToData(info);
     }
   }, [info]);
