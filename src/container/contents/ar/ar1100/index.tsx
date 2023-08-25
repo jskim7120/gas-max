@@ -3,6 +3,9 @@ import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
 import { AR1100SEARCH, AR1100SELECT, AR1100INIT } from "app/path";
 import { useDispatch, useSelector } from "app/store";
+import useModal from "app/hook/useModal";
+import { addSource } from "app/state/footer/footerSlice";
+import useGetData from "app/hook/getSimpleData";
 import {
   Plus,
   Trash,
@@ -10,14 +13,12 @@ import {
   MagnifyingGlassBig,
   ExcelIcon,
 } from "components/allSvgIcon";
-import useGetData from "app/hook/getSimpleData";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import { Select, Label, FormGroup, Input } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
 import Loader from "components/loader";
 import CheckBox from "components/checkbox";
-import Grid from "components/grid";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
@@ -25,8 +26,7 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { fields, columns } from "./data";
 import { IAR1100SEARCH, emtObj } from "./model";
 import getTabContent from "./getTabContent";
-import useModal from "app/hook/useModal";
-import { addSource } from "app/state/footer/footerSlice";
+import Grid from "./grid";
 
 function AR1100({
   depthFullName,
@@ -285,9 +285,10 @@ function AR1100({
 
   const handleClickBtnAdd = () => {
     addBtnClick();
+    setData((prev) => [...prev, { emtObj }]);
     dispatch(addSource({ source: menuId + tabId.toString() }));
-    fetchData11({ areaCode: getValues("areaCode"), pjType: 0 });
-    openCustomerModal();
+    // fetchData11({ areaCode: getValues("areaCode"), pjType: 0 });
+    // openCustomerModal();
   };
 
   const handleClickBtnDel = () => {
@@ -549,6 +550,7 @@ function AR1100({
             borderBottom: "1px solid #707070",
             marginBottom: "3px",
           }}
+          openModal={openCustomerModal}
         />
         <PlainTab
           tabHeader={[
