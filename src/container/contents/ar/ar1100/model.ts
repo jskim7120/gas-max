@@ -85,6 +85,7 @@ export const emtObj = {
   swCode: "",
   swName: "",
   vatDiv: "",
+  isNew: true,
 };
 
 // {"pjJpCode":"20",

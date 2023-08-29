@@ -192,24 +192,18 @@ function Form({
   }, [footerState.source]);
 
   useEffect(() => {
-    if (
-      footerState.search !== undefined &&
-      JSON.stringify(footerState.search) !== "{}" &&
-      footerState.search.text !== ""
-    ) {
-    }
-  }, [footerState.search]);
-
-  useEffect(() => {
     if (areaCode !== undefined && areaCode?.length > 0) {
-      if (footerState.search.text !== "") {
+      if (
+        footerState.search !== undefined &&
+        JSON.stringify(footerState.search) !== "{}"
+      ) {
         reset({
           areaCode: areaCode[0].code,
           ...getParams(footerState.search.fieldName, footerState.search.text),
         });
 
         fetchData({
-          areaCode: areaCode[0],
+          areaCode: areaCode[0].code,
           ...getParams(footerState.search.fieldName, footerState.search.text),
         });
       }

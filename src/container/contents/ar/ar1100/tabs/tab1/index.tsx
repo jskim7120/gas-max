@@ -475,7 +475,7 @@ const Tab1 = React.forwardRef(
         1: (
           <FormGroup>
             <Select register={register("saleState")} width={InputSize.i100}>
-              {dictionary?.saleType?.map((obj: any, idx: number) => (
+              {dictionary?.saleState?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>

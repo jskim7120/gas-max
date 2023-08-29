@@ -334,10 +334,10 @@ const Tab2 = React.forwardRef(
           <FormGroup>
             <Controller
               control={control}
-              name="cSaleType"
+              name="cSaleState"
               render={({ field }) => (
                 <Select {...field} width={InputSize.i100}>
-                  {dictionary?.csaleType?.map((obj: any, idx: number) => (
+                  {dictionary?.cSaleState?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
@@ -354,7 +354,7 @@ const Tab2 = React.forwardRef(
             name="cProxyType"
             render={({ field }) => (
               <Select {...field} width={InputSize.i100}>
-                {dictionary?.cproxyType?.map((obj: any, idx: number) => (
+                {dictionary?.cProxyType?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>

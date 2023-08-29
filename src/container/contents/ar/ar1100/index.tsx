@@ -29,6 +29,10 @@ import getTabContent from "./getTabContent";
 import Grid from "./grid";
 import { addCM1106AR1100Tick } from "app/state/modal/modalSlice";
 
+let currentDate;
+let dateWithTime: string;
+let dateOnly: string;
+
 function AR1100({
   depthFullName,
   menuId,
@@ -97,20 +101,12 @@ function AR1100({
           pjType: selected?.pjType,
         });
       }
-
-      // dispatch(
-      //   addCM1106({
-      //     areaCode: selected.areaCode,
-      //     cuCode: selected.cuCode,
-      //     source: "AR1100",
-      //   })
-      // );
     }
   }, [selected]);
 
   useEffect(() => {
     if (source.substring(0, 6) === menuId && info) {
-      addToData(info);
+      addToCodeAndNameToLastRow(info);
     }
   }, [info]);
 
@@ -128,36 +124,56 @@ function AR1100({
       })
     );
 
+    currentDate = new Date();
+    dateOnly =
+      currentDate.getFullYear() +
+      "-" +
+      (currentDate.getMonth() + 1 < 10
+        ? "0" + (currentDate.getMonth() + 1)
+        : currentDate.getMonth() + 1) +
+      "-" +
+      (currentDate.getDate() < 10
+        ? "0" + currentDate.getDate()
+        : currentDate.getDate());
+    dateWithTime =
+      dateOnly +
+      " " +
+      (currentDate.getHours() < 10
+        ? "0" + currentDate.getHours()
+        : currentDate.getHours()) +
+      ":" +
+      (currentDate.getMinutes() < 10
+        ? "0" + currentDate.getMinutes()
+        : currentDate.getMinutes());
+
+    const obj = {
+      orderDate: dateWithTime,
+      salestateName: "완료",
+      pjDate: dateOnly,
+    };
+
     if (data?.length > 0) {
-      if (
-        !data[data?.length - 1]?.orderDate &&
-        !data[data?.length - 1]?.areaCode
-      ) {
+      if ("isNew" in data[data?.length - 1]) {
         setData((prev: any) =>
           prev.map((object: any, idx: number) => {
             if (idx === data?.length - 1) {
-              return emtObj;
+              return { ...emtObj, ...obj };
             } else return object;
           })
         );
       } else {
-        setData((prev) => [...prev, emtObj]);
+        setData((prev) => [...prev, { ...emtObj, ...obj }]);
       }
     } else {
-      setData((prev) => [...prev, emtObj]);
+      setData((prev) => [...prev, { ...emtObj, ...obj }]);
     }
 
     fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
   };
 
-  const addToData = (info: any) => {
+  const addToCodeAndNameToLastRow = (info: any) => {
     if (data?.length > 0) {
-      if (data[data?.length - 1]?.orderDate) {
-        setData((prev) => [
-          ...prev,
-          { emtObj, cuName: info?.cuName, cuCode: info?.cuCode },
-        ]);
-      } else {
+      if ("isNew" in data[data?.length - 1]) {
         setData((prev: any) =>
           prev.map((object: any, idx: number) => {
             if (idx === data?.length - 1) {
@@ -170,11 +186,6 @@ function AR1100({
           })
         );
       }
-    } else {
-      setData((prev) => [
-        ...prev,
-        { emtObj, cuName: info?.cuName, cuCode: info?.cuCode },
-      ]);
     }
   };
 
@@ -221,15 +232,15 @@ function AR1100({
           pjSwCode: res?.pjSwCode,
           pjVatDiv: res?.pjVatDiv,
           proxyType: res?.proxyType,
-          saleType: res?.saleType,
+          saleState: res?.saleState,
         });
         if (res?.initData?.length > 0) {
           tabRef1?.current?.reset({ ...res.initData[0] });
         }
       } else if (tabId === 1) {
         setDataDictionary({
-          cproxyType: res?.cproxyType,
-          csaleType: res?.csaleType,
+          cProxyType: res?.cProxyType,
+          cSaleState: res?.cSaleState,
           pcSwCode: res?.pcSwCode,
         });
         if (res?.initData?.length > 0) {
@@ -616,7 +627,7 @@ function AR1100({
             "A/S",
             "수금",
           ]}
-          onClick={(id) => setTabId(id)}
+          onClick={(id) => (isAddBtnClicked ? setTabId(id) : null)}
           tabId={tabId}
         />
 
