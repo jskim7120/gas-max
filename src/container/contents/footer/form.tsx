@@ -72,7 +72,6 @@ const FooterWrapper = styled.div`
         font-size: 14px;
         color: #0a0a0a;
         width: 90px;
-        // border: 1px solid red;
         text-align: end;
         padding-right: 5px;
       }
@@ -140,6 +139,15 @@ const FooterWrapper = styled.div`
   }
 `;
 
+const emtObj = {
+  sCuCode: "",
+  sCuName: "",
+  sCuTel: "",
+  sCuNo: "",
+  sCuAddr: "",
+  sCuUsername: "",
+};
+
 interface ISEARCH {
   areaCode: string;
   sCuCode: string;
@@ -158,20 +166,20 @@ function Form({
   onClose: MouseEventHandler;
 }) {
   const dispatch = useDispatch();
+
   const [areaCode, setAreaCode] = useState<
     Array<{ code: string; codeName: string }>
   >([]);
-
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
-  const [sCuCode, setSCuCode] = useState("");
-  const [sCuAddr, setSCuAddr] = useState("");
-  const [sCuTel, setSCuTel] = useState("");
-  const [sCuName, setSCuName] = useState("");
   const [loading, setLoading] = useState(false);
 
   const footerState = useSelector((state) => state.footer);
   const activeTabId = useSelector((state) => state.tab.activeTabId);
+
+  const { register, handleSubmit, reset, setFocus } = useForm<ISEARCH>({
+    mode: "onSubmit",
+  });
 
   useEffect(() => {
     fetchAreaCode();
@@ -186,39 +194,23 @@ function Form({
   useEffect(() => {
     if (
       footerState.search !== undefined &&
-      JSON.stringify(footerState.search) !== "{}"
+      JSON.stringify(footerState.search) !== "{}" &&
+      footerState.search.text !== ""
     ) {
-      footerState.search.fieldName === "sCuAddr" &&
-        setSCuAddr(footerState.search.text);
-      footerState.search.fieldName === "sCuTel" &&
-        setSCuTel(footerState.search.text);
-      footerState.search.fieldName === "sCuCode" &&
-        setSCuCode(footerState.search.text);
-      footerState.search.fieldName === "sCuName" &&
-        setSCuName(footerState.search.text);
     }
   }, [footerState.search]);
 
-  const { register, handleSubmit, reset, setFocus } = useForm<ISEARCH>({
-    mode: "onSubmit",
-  });
-
   useEffect(() => {
-    if (areaCode.length > 0) {
-      reset({ areaCode: areaCode[0].code });
-      if (
-        footerState.search !== undefined &&
-        JSON.stringify(footerState.search) !== "{}" &&
-        footerState.search.text !== ""
-      ) {
-        fetchData({
+    if (areaCode !== undefined && areaCode?.length > 0) {
+      if (footerState.search.text !== "") {
+        reset({
           areaCode: areaCode[0].code,
-          sCuCode: sCuCode,
-          sCuName: sCuName,
-          sCuUsername: "",
-          sCuTel: sCuTel,
-          sCuNo: "",
-          sCuAddr: sCuAddr,
+          ...getParams(footerState.search.fieldName, footerState.search.text),
+        });
+
+        fetchData({
+          areaCode: areaCode[0],
+          ...getParams(footerState.search.fieldName, footerState.search.text),
         });
       }
     }
@@ -226,10 +218,14 @@ function Form({
 
   const fetchAreaCode = async () => {
     const data = await apiGet(FOOT61);
-    data?.areaCode && setAreaCode(data.areaCode);
+    if (data && data?.areaCode) {
+      setAreaCode(data.areaCode);
+    } else {
+      setAreaCode([]);
+    }
   };
 
-  const fetchData = async (params: ISEARCH) => {
+  const fetchData = async (params: any) => {
     setLoading(true);
     const res = await apiGet(FOOTER, params);
     if (res && res?.length > 0) {
@@ -240,6 +236,21 @@ function Form({
       setSelected({});
     }
     setLoading(false);
+  };
+
+  const getParams = (fieldName: string, value: string) => {
+    switch (fieldName) {
+      case "sCuName":
+        return { ...emtObj, sCuName: value };
+      case "sCuCode":
+        return { ...emtObj, sCuCode: value };
+      case "sCuTel":
+        return { ...emtObj, sCuTel: value };
+      case "sCuAddr":
+        return { ...emtObj, sCuAddr: value };
+      default:
+        return { ...emtObj, sCuName: value };
+    }
   };
 
   const handleChoose = () => {
@@ -271,7 +282,7 @@ function Form({
 
   return (
     <FooterWrapper>
-      <form onSubmit={handleSubmit(submit)}>
+      <form>
         <div className="top handle">
           <div className="top__left">
             <UserWhite />
@@ -302,21 +313,11 @@ function Form({
           <div className="search-form__grid">
             <div className="form-group">
               <label>거래처코드</label>
-              <input
-                type="text"
-                {...register("sCuCode")}
-                value={sCuCode}
-                onChange={(e: any) => setSCuCode(e.target.value)}
-              />
+              <input type="text" {...register("sCuCode")} />
             </div>
             <div className="form-group">
               <label>거래처명,성명</label>
-              <input
-                type="text"
-                {...register("sCuName")}
-                value={sCuName}
-                onChange={(e: any) => setSCuName(e.target.value)}
-              />
+              <input type="text" {...register("sCuName")} />
             </div>
             <div className="form-group">
               <label>사용자명</label>
@@ -325,12 +326,7 @@ function Form({
 
             <div className="form-group">
               <label>전화번호</label>
-              <input
-                type="text"
-                {...register("sCuTel")}
-                value={sCuTel}
-                onChange={(e: any) => setSCuTel(e.target.value)}
-              />
+              <input type="text" {...register("sCuTel")} />
             </div>
 
             <div className="form-group">
@@ -339,12 +335,7 @@ function Form({
             </div>
             <div className="form-group">
               <label>주소 /비고</label>
-              <input
-                type="text"
-                {...register("sCuAddr")}
-                value={sCuAddr}
-                onChange={(e: any) => setSCuAddr(e.target.value)}
-              />
+              <input type="text" {...register("sCuAddr")} />
             </div>
           </div>
           <div>
@@ -352,7 +343,8 @@ function Form({
               text="검색"
               icon={!loading && <MagnifyingGlassBig width="15" />}
               color={ButtonColor.DANGER}
-              type="submit"
+              type="button"
+              onClick={handleSubmit(submit)}
               loader={
                 loading && <Loader size={16} style={{ marginRight: "12px" }} />
               }

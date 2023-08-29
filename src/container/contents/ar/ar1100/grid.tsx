@@ -79,15 +79,17 @@ function Grid({
       dataRow: rowIndex,
     });
 
-    gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
-      dispatch(
-        addSearchText({
-          search: {
-            fieldName: "sCuName",
-            text: newValue,
-          },
-        })
-      );
+    gv.onEditChange = function (grid: any, index: any, value: any) {
+      if (index.column === "cuName") {
+        dispatch(
+          addSearchText({
+            search: {
+              fieldName: "sCuName",
+              text: value,
+            },
+          })
+        );
+      }
     };
 
     gv.onSelectionChanged = () => {
