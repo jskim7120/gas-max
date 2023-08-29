@@ -398,7 +398,6 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
-                // value={field.value ? field.value : ""}
                 inputSize={InputSize.i100}
                 textAlign="right"
                 mask={currencyMask}
@@ -430,7 +429,6 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
-                // value={!isNaN(field.value) ? field.value : ""}
                 inputSize={InputSize.i100}
                 readOnly
                 textAlign="right"
@@ -446,7 +444,6 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
-                // value={!isNaN(field.value) ? field.value : ""}
                 inputSize={InputSize.i100}
                 readOnly
                 textAlign="right"
@@ -462,7 +459,6 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
-                // value={!isNaN(field.value) ? field.value : ""}
                 inputSize={InputSize.i100}
                 readOnly
                 textAlign="right"
@@ -517,7 +513,6 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
-                // value={!isNaN(field.value) ? field.value : ""}
                 inputSize={InputSize.i100}
                 textAlign="right"
                 mask={currencyMask}
@@ -533,7 +528,6 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
-                // value={!isNaN(field.value) ? field.value : ""}
                 inputSize={InputSize.i100}
                 textAlign="right"
                 mask={currencyMask}
@@ -548,7 +542,6 @@ const Tab1 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
-                // value={!isNaN(field.value) ? field.value : ""}
                 inputSize={InputSize.i100}
                 textAlign="right"
                 mask={currencyMask}

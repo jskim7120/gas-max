@@ -27,6 +27,7 @@ import { fields, columns } from "./data";
 import { IAR1100SEARCH, emtObj } from "./model";
 import getTabContent from "./getTabContent";
 import Grid from "./grid";
+import { addCM1106AR1100Tick } from "app/state/modal/modalSlice";
 
 function AR1100({
   depthFullName,
@@ -75,20 +76,27 @@ function AR1100({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (selected && Object.keys(selected)?.length > 0) {
-      addBtnUnClick();
+    if (tabId !== undefined && isAddBtnClicked === true) {
+      onTabChangeOnAdd();
+    }
+  }, [tabId, isAddBtnClicked]);
 
-      if (Number(selected?.pjType) !== tabId) {
+  useEffect(() => {
+    if (selected && Object.keys(selected)?.length > 0) {
+      if (selected?.pjType && Number(selected?.pjType) !== tabId) {
         setTabId(Number(selected?.pjType));
       }
 
-      fetchData65({
-        areaCode: selected?.areaCode,
-        pjCuCode: selected?.cuCode,
-        pjDate: DateWithoutDash(selected?.pjDate),
-        pjSno: selected?.pjSno,
-        pjType: selected?.pjType,
-      });
+      if (selected?.pjDate && selected?.areaCode) {
+        addBtnUnClick();
+        fetchData65({
+          areaCode: selected?.areaCode,
+          pjCuCode: selected?.cuCode,
+          pjDate: DateWithoutDash(selected?.pjDate),
+          pjSno: selected?.pjSno,
+          pjType: selected?.pjType,
+        });
+      }
 
       // dispatch(
       //   addCM1106({
@@ -105,6 +113,42 @@ function AR1100({
       addToData(info);
     }
   }, [info]);
+
+  const onTabChangeOnAdd = () => {
+    dispatch(addSource({ source: menuId + tabId.toString() }));
+    dispatch(
+      addCM1106AR1100Tick({
+        source: menuId + tabId.toString(),
+        jpName: "",
+        jpCode: "",
+        custIn: 0,
+        custOut: 0,
+        jcBasicJaego: 0,
+        jcJpDanga: 0,
+      })
+    );
+
+    if (data?.length > 0) {
+      if (
+        !data[data?.length - 1]?.orderDate &&
+        !data[data?.length - 1]?.areaCode
+      ) {
+        setData((prev: any) =>
+          prev.map((object: any, idx: number) => {
+            if (idx === data?.length - 1) {
+              return emtObj;
+            } else return object;
+          })
+        );
+      } else {
+        setData((prev) => [...prev, emtObj]);
+      }
+    } else {
+      setData((prev) => [...prev, emtObj]);
+    }
+
+    fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
+  };
 
   const addToData = (info: any) => {
     if (data?.length > 0) {
@@ -171,16 +215,25 @@ function AR1100({
     const res = await apiGet(AR1100INIT, params);
 
     if (res && Object.keys(res)?.length > 0) {
-      setDataDictionary({
-        pjInkumtype: res?.pjInkumtype,
-        pjSwCode: res?.pjSwCode,
-        pjVatDiv: res?.pjVatDiv,
-        proxyType: res?.proxyType,
-        saleType: res?.saleType,
-      });
       if (tabId === 0) {
+        setDataDictionary({
+          pjInkumtype: res?.pjInkumtype,
+          pjSwCode: res?.pjSwCode,
+          pjVatDiv: res?.pjVatDiv,
+          proxyType: res?.proxyType,
+          saleType: res?.saleType,
+        });
         if (res?.initData?.length > 0) {
-          tabRef1.current.reset({ ...res.initData[0] });
+          tabRef1?.current?.reset({ ...res.initData[0] });
+        }
+      } else if (tabId === 1) {
+        setDataDictionary({
+          cproxyType: res?.cproxyType,
+          csaleType: res?.csaleType,
+          pcSwCode: res?.pcSwCode,
+        });
+        if (res?.initData?.length > 0) {
+          tabRef2?.current?.reset({ ...res.initData[0] });
         }
       }
     }
@@ -285,8 +338,9 @@ function AR1100({
 
   const handleClickBtnAdd = () => {
     addBtnClick();
-    setData((prev) => [...prev, { emtObj }]);
-    dispatch(addSource({ source: menuId + tabId.toString() }));
+    // setData((prev) => [...prev, { emtObj }]);
+
+    // dispatch(addSource({ source: menuId + tabId.toString() }));
     // fetchData11({ areaCode: getValues("areaCode"), pjType: 0 });
     // openCustomerModal();
   };

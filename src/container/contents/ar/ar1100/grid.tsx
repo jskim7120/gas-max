@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { setRowIndex } from "app/state/tab/tabSlice";
 import { useDispatch } from "app/store";
@@ -79,9 +79,6 @@ function Grid({
       dataRow: rowIndex,
     });
 
-    // gv.setCellPos(3);
-    // gv.showEditor(true);
-
     gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
       dispatch(
         addSearchText({
@@ -92,7 +89,6 @@ function Grid({
         })
       );
     };
-    console.log(gv);
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
@@ -106,14 +102,14 @@ function Grid({
       );
     };
 
-    gv.onKeyDown = function (grid: any, key: any) {
+    gv.onKeyDown = function (grid: any, key: any, t: any) {
       if (key.code === "Enter") {
-        console.log("Enter daragdlaa::", grid);
         openModal();
       }
     };
 
     return () => {
+      gv.commit();
       dp.clearRows();
       gv.destroy();
       dp.destroy();

@@ -4,7 +4,15 @@ import { GridView, LocalDataProvider } from "realgrid";
 import { fields, columns } from "./data";
 import { addInfo } from "app/state/footer/footerSlice";
 
-function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
+function Grid({
+  data,
+  setSelected,
+  rowIndex,
+}: {
+  data: any;
+  setSelected: Function;
+  rowIndex: number;
+}) {
   let container: HTMLDivElement;
   let dp: any;
   let gv: any;
@@ -34,6 +42,11 @@ function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
     gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
 
+    gv.displayOptions.useFocusClass = true;
+    gv.setCurrent({
+      dataRow: rowIndex,
+    });
+
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected(data[itemIndex]);
@@ -43,7 +56,6 @@ function Grid({ data, setSelected }: { data: any; setSelected: Function }) {
       const itemIndex: any = gv.getCurrent().dataRow;
       if (JSON.stringify(data[itemIndex]) !== "{}") {
         dispatch(addInfo({ info: data[itemIndex] }));
-        // dispatch(closeModal());
       } else {
         alert("please choose row from grid ");
       }

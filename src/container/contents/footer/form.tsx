@@ -17,12 +17,7 @@ import Grid from "./grid";
 import { addCM1106 } from "app/state/modal/modalSlice";
 import { addInfo } from "app/state/footer/footerSlice";
 import Button from "components/button/button";
-import {
-  ButtonColor,
-  ButtonType,
-  BadgeColor,
-  BadgeSize,
-} from "components/componentsType";
+import { ButtonColor, BadgeColor, BadgeSize } from "components/componentsType";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
 import Badge from "components/badge";
 
@@ -167,7 +162,7 @@ function Form({
     Array<{ code: string; codeName: string }>
   >([]);
 
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [selected, setSelected] = useState<any>({});
   const [sCuCode, setSCuCode] = useState("");
   const [sCuAddr, setSCuAddr] = useState("");
@@ -175,8 +170,7 @@ function Form({
   const [sCuName, setSCuName] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const searchState = useSelector((state) => state.footer.search);
-  const source = useSelector((state) => state.footer.source);
+  const footerState = useSelector((state) => state.footer);
   const activeTabId = useSelector((state) => state.tab.activeTabId);
 
   useEffect(() => {
@@ -184,19 +178,26 @@ function Form({
   }, []);
 
   useEffect(() => {
-    if (source === "AR11000") {
+    if (footerState.source === "AR11000" || footerState.source === "AR11001") {
       setFocus("sCuName");
     }
-  }, [source]);
+  }, [footerState.source]);
 
   useEffect(() => {
-    if (searchState !== undefined && JSON.stringify(searchState) !== "{}") {
-      searchState.fieldName === "sCuAddr" && setSCuAddr(searchState.text);
-      searchState.fieldName === "sCuTel" && setSCuTel(searchState.text);
-      searchState.fieldName === "sCuCode" && setSCuCode(searchState.text);
-      searchState.fieldName === "sCuName" && setSCuName(searchState.text);
+    if (
+      footerState.search !== undefined &&
+      JSON.stringify(footerState.search) !== "{}"
+    ) {
+      footerState.search.fieldName === "sCuAddr" &&
+        setSCuAddr(footerState.search.text);
+      footerState.search.fieldName === "sCuTel" &&
+        setSCuTel(footerState.search.text);
+      footerState.search.fieldName === "sCuCode" &&
+        setSCuCode(footerState.search.text);
+      footerState.search.fieldName === "sCuName" &&
+        setSCuName(footerState.search.text);
     }
-  }, [searchState]);
+  }, [footerState.search]);
 
   const { register, handleSubmit, reset, setFocus } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -206,9 +207,9 @@ function Form({
     if (areaCode.length > 0) {
       reset({ areaCode: areaCode[0].code });
       if (
-        searchState !== undefined &&
-        JSON.stringify(searchState) !== "{}" &&
-        searchState.text !== ""
+        footerState.search !== undefined &&
+        JSON.stringify(footerState.search) !== "{}" &&
+        footerState.search.text !== ""
       ) {
         fetchData({
           areaCode: areaCode[0].code,
@@ -230,9 +231,14 @@ function Form({
 
   const fetchData = async (params: ISEARCH) => {
     setLoading(true);
-    const SEARCHDATA = await apiGet(FOOTER, params);
-
-    setData(SEARCHDATA);
+    const res = await apiGet(FOOTER, params);
+    if (res && res?.length > 0) {
+      setData(res);
+      setSelected(res[0]);
+    } else {
+      setData([]);
+      setSelected({});
+    }
     setLoading(false);
   };
 
@@ -245,7 +251,7 @@ function Form({
           addCM1106({
             areaCode: selected?.areaCode,
             cuCode: selected?.cuCode,
-            source: source,
+            source: footerState.source,
           })
         );
 
@@ -355,7 +361,7 @@ function Form({
         </div>
       </form>
 
-      <Grid data={data} setSelected={setSelected} />
+      <Grid data={data} setSelected={setSelected} rowIndex={0} />
       <div className="bottom">
         <div className="bottom__upper">
           <Badge

@@ -163,9 +163,9 @@ const Tab2 = React.forwardRef(
       } else if (type === "jpName") {
         reset((formValues) => ({
           ...formValues,
-          pcJpName: cm1106.jpName,
-          pcJpCode: cm1106.jpCode,
-          pcDanga: cm1106.jcJpDanga,
+          pcJpName: cm1106?.jpName,
+          pcJpCode: cm1106?.jpCode,
+          // pcDanga: cm1106?.jcJpDanga, ar1100 -aas bolood aldaa garaad bsan bolohoor tur comment bolgov
         }));
       }
     };
@@ -315,7 +315,7 @@ const Tab2 = React.forwardRef(
             name="pcSwName"
             render={({ field }) => (
               <Select {...field} width={InputSize.i100}>
-                {dictionary?.sSawon?.map((obj: any, idx: number) => (
+                {dictionary?.pcSwCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
@@ -337,7 +337,7 @@ const Tab2 = React.forwardRef(
               name="cSaleType"
               render={({ field }) => (
                 <Select {...field} width={InputSize.i100}>
-                  {dictionary?.saleType?.map((obj: any, idx: number) => (
+                  {dictionary?.csaleType?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
@@ -354,7 +354,7 @@ const Tab2 = React.forwardRef(
             name="cProxyType"
             render={({ field }) => (
               <Select {...field} width={InputSize.i100}>
-                {dictionary?.sProxytype?.map((obj: any, idx: number) => (
+                {dictionary?.cproxyType?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
