@@ -620,11 +620,6 @@ const Tab1 = React.forwardRef(
                 color={ButtonColor.SECONDARY}
                 onClick={() => {}}
                 type="submit"
-                disabled={
-                  isAddBtnClicked &&
-                  (footerState?.source !== menuId ||
-                    footerState?.info?.cuCode === "")
-                }
               />
 
               <Button

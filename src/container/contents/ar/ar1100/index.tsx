@@ -208,14 +208,24 @@ function AR1100({
     const res = await apiGet(AR1100SELECT, params);
 
     if (res && Object.keys(res)?.length > 0) {
-      setData65(res?.detailData[0]);
-      setDataDictionary({
-        pjVatDiv: res?.pjVatDiv,
-        pjSwCode: res?.pjSwCode,
-        proxyType: res?.proxyType,
-        pjInkumtype: res?.pjInkumtype,
-        saleType: res?.saleType,
-      });
+      if (selected?.pjType === "0") {
+        setData65(res?.detailData[0]);
+        setDataDictionary({
+          pjVatDiv: res?.pjVatDiv,
+          pjSwCode: res?.pjSwCode,
+          proxyType: res?.proxyType,
+          pjInkumtype: res?.pjInkumtype,
+          saleType: res?.saleType,
+        });
+      }
+      if (selected?.pjType === "1") {
+        setData65(res?.detailData[0]);
+        setDataDictionary({
+          cProxyType: res?.cProxyType,
+          cSaleState: res?.cSaleState,
+          pcSwCode: res?.pcSwCode,
+        });
+      }
     } else {
       setData65({});
       setDataDictionary({});

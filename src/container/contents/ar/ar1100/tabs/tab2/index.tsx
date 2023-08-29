@@ -66,6 +66,12 @@ const Tab2 = React.forwardRef(
     }, [cm1106.tick]);
 
     useEffect(() => {
+      if (data && Object.keys(data)?.length > 0) {
+        resetForm("reset");
+      }
+    }, [data]);
+
+    useEffect(() => {
       if (watch("pcQty") !== undefined) {
         handlePcQtyChange();
       }
@@ -160,6 +166,21 @@ const Tab2 = React.forwardRef(
 
     const resetForm = (type: string) => {
       if (type === "reset") {
+        reset({
+          pcDate: data?.pcDate,
+          pcJpCode: data?.pcJpCode,
+          pcJpName: data?.pcJpName,
+          pcQty: data?.pcQty,
+          pcReqty: data?.pcReqty,
+          pcDanga: data?.pcDanga,
+          pcKumack: data?.pcKumack,
+          pcSwCode: data?.pcSwCode,
+          pcBigo: data?.pcBigo,
+          cProxyType: data?.cProxyType,
+          cSaleState: data?.cSaleState,
+          cBuCode: data?.cBuCode,
+          cBuName: data?.cBuName,
+        });
       } else if (type === "jpName") {
         reset((formValues) => ({
           ...formValues,
@@ -312,7 +333,7 @@ const Tab2 = React.forwardRef(
         9: (
           <Controller
             control={control}
-            name="pcSwName"
+            name="pcSwCode"
             render={({ field }) => (
               <Select {...field} width={InputSize.i100}>
                 {dictionary?.pcSwCode?.map((obj: any, idx: number) => (
