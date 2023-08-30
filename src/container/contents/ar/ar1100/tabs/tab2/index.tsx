@@ -24,6 +24,8 @@ const Tab2 = React.forwardRef(
       tabId,
       areaCode,
       data,
+      setData,
+      data65,
       dictionary,
       isAddBtnClicked,
       fetchData,
@@ -34,6 +36,8 @@ const Tab2 = React.forwardRef(
       tabId: number;
       areaCode: string;
       data: any;
+      setData: Function;
+      data65: any;
       dictionary: any;
       isAddBtnClicked: boolean;
       fetchData: Function;
@@ -59,17 +63,15 @@ const Tab2 = React.forwardRef(
 
     useEffect(() => {
       if (cm1106.source === "AR11001") {
-        console.log("cm1106:", cm1106);
-
         resetForm("jpName");
       }
     }, [cm1106.tick]);
 
     useEffect(() => {
-      if (data && Object.keys(data)?.length > 0) {
+      if (data65 && Object.keys(data65)?.length > 0) {
         resetForm("reset");
       }
-    }, [data]);
+    }, [data65]);
 
     useEffect(() => {
       if (watch("pcQty") !== undefined) {
@@ -138,6 +140,15 @@ const Tab2 = React.forwardRef(
       }));
     };
 
+    const handleClickReset = () => {
+      if (isAddBtnClicked) {
+        fetchData();
+        addBtnUnClick();
+      } else {
+        resetForm("reset");
+      }
+    };
+
     const submit = async (params: any) => {
       const path = isAddBtnClicked ? AR1100CJSALEINSERT : AR1100CJSALEUPDATE;
 
@@ -167,19 +178,19 @@ const Tab2 = React.forwardRef(
     const resetForm = (type: string) => {
       if (type === "reset") {
         reset({
-          pcDate: data?.pcDate,
-          pcJpCode: data?.pcJpCode,
-          pcJpName: data?.pcJpName,
-          pcQty: data?.pcQty,
-          pcReqty: data?.pcReqty,
-          pcDanga: data?.pcDanga,
-          pcKumack: data?.pcKumack,
-          pcSwCode: data?.pcSwCode,
-          pcBigo: data?.pcBigo,
-          cProxyType: data?.cProxyType,
-          cSaleState: data?.cSaleState,
-          cBuCode: data?.cBuCode,
-          cBuName: data?.cBuName,
+          pcDate: data65?.pcDate,
+          pcJpCode: data65?.pcJpCode,
+          pcJpName: data65?.pcJpName,
+          pcQty: data65?.pcQty,
+          pcReqty: data65?.pcReqty,
+          pcDanga: data65?.pcDanga,
+          pcKumack: data65?.pcKumack,
+          pcSwCode: data65?.pcSwCode,
+          pcBigo: data65?.pcBigo,
+          cProxyType: data65?.cProxyType,
+          cSaleState: data65?.cSaleState,
+          cBuCode: data65?.cBuCode,
+          cBuName: data65?.cBuName,
         });
       } else if (type === "jpName") {
         reset((formValues) => ({
@@ -195,7 +206,7 @@ const Tab2 = React.forwardRef(
       openModal();
     };
 
-    const data1 = [
+    const tableData1 = [
       {
         1: (
           <Controller
@@ -349,7 +360,7 @@ const Tab2 = React.forwardRef(
       },
     ];
 
-    const data2 = [
+    const tableData2 = [
       {
         1: (
           <FormGroup>
@@ -414,7 +425,6 @@ const Tab2 = React.forwardRef(
                 alignItems: "center",
                 paddingLeft: "3px",
               }}
-              // onClick={isAddBtnClicked ? openPopupCM1106 : undefined}
             >
               <MagnifyingGlass />
             </span>
@@ -443,13 +453,13 @@ const Tab2 = React.forwardRef(
                   "사원",
                   "비고",
                 ]}
-                tableData={data1}
+                tableData={tableData1}
                 style={{ marginBottom: "2px" }}
               />
               <Table
                 className="no-space"
                 tableHeader={["거래상태", "공급구분", "매입처"]}
-                tableData={data2}
+                tableData={tableData2}
               />
             </div>
 
@@ -460,7 +470,6 @@ const Tab2 = React.forwardRef(
                 text="저장"
                 icon={<Update />}
                 color={ButtonColor.SECONDARY}
-                onClick={() => {}}
                 type="submit"
               />
 
@@ -468,7 +477,7 @@ const Tab2 = React.forwardRef(
                 text="취소"
                 icon={<Reset />}
                 type="button"
-                onClick={() => {}}
+                onClick={handleClickReset}
               />
             </div>
           </div>

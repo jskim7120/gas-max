@@ -56,7 +56,7 @@ function AR1100({
   const [selected, setSelected] = useState<any>({});
   const [data65, setData65] = useState({});
   const [dataDictionary, setDataDictionary] = useState({});
-  const [tabId, setTabId] = useState(0);
+  const [tabId, setTabId] = useState<number>(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
 
   const { info, source } = useSelector((state) => state.footer);
@@ -106,7 +106,12 @@ function AR1100({
 
   useEffect(() => {
     if (source.substring(0, 6) === menuId && info) {
-      addToCodeAndNameToLastRow(info);
+      addCodeAndNameToLastRow(info);
+      if (info?.cuType === "0") {
+        tabId !== 0 && setTabId(0);
+      } else {
+        tabId !== 1 && setTabId(1);
+      }
     }
   }, [info]);
 
@@ -123,7 +128,29 @@ function AR1100({
         jcJpDanga: 0,
       })
     );
+    // addEmptyRow();
+    fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
+  };
 
+  const addCodeAndNameToLastRow = (info: any) => {
+    if (data?.length > 0) {
+      if ("isNew" in data[data?.length - 1]) {
+        setData((prev: any) =>
+          prev.map((object: any, idx: number) => {
+            if (idx === data?.length - 1) {
+              return {
+                ...object,
+                cuName: info?.cuName,
+                cuCode: info?.cuCode,
+              };
+            } else return object;
+          })
+        );
+      }
+    }
+  };
+
+  const addEmptyRow = () => {
     currentDate = new Date();
     dateOnly =
       currentDate.getFullYear() +
@@ -150,6 +177,7 @@ function AR1100({
       orderDate: dateWithTime,
       salestateName: "완료",
       pjDate: dateOnly,
+      isNew: true,
     };
 
     if (data?.length > 0) {
@@ -166,26 +194,6 @@ function AR1100({
       }
     } else {
       setData((prev) => [...prev, { ...emtObj, ...obj }]);
-    }
-
-    fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
-  };
-
-  const addToCodeAndNameToLastRow = (info: any) => {
-    if (data?.length > 0) {
-      if ("isNew" in data[data?.length - 1]) {
-        setData((prev: any) =>
-          prev.map((object: any, idx: number) => {
-            if (idx === data?.length - 1) {
-              return {
-                ...object,
-                cuName: info?.cuName,
-                cuCode: info?.cuCode,
-              };
-            } else return object;
-          })
-        );
-      }
     }
   };
 
@@ -359,11 +367,7 @@ function AR1100({
 
   const handleClickBtnAdd = () => {
     addBtnClick();
-    // setData((prev) => [...prev, { emtObj }]);
-
-    // dispatch(addSource({ source: menuId + tabId.toString() }));
-    // fetchData11({ areaCode: getValues("areaCode"), pjType: 0 });
-    // openCustomerModal();
+    addEmptyRow();
   };
 
   const handleClickBtnDel = () => {
@@ -374,7 +378,7 @@ function AR1100({
   const handleReset = () => {
     resetSearchForm("reset");
     addBtnUnClick();
-    setData([]);
+    handleSubmit(submit)();
   };
 
   const onCloseModal = () => {
@@ -645,6 +649,7 @@ function AR1100({
           {getTabContent(
             tabId,
             data,
+            setData,
             data65,
             selected,
             dataDictionary,

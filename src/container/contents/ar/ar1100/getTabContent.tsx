@@ -4,6 +4,7 @@ import Tab2 from "./tabs/tab2";
 function getTabContent(
   tabId: number,
   data: any,
+  setData: Function,
   data65: any,
   selected: any,
   dictionary: any,
@@ -21,7 +22,9 @@ function getTabContent(
         <Tab1
           tabId={tabId}
           areaCode={areaCode}
-          data={data65}
+          data={data}
+          setData={setData}
+          data65={data65}
           dictionary={dictionary}
           isAddBtnClicked={isAddBtnClicked}
           fetchData={fetchData}
@@ -36,7 +39,9 @@ function getTabContent(
         <Tab2
           tabId={tabId}
           areaCode={areaCode}
-          data={data65}
+          data={data}
+          setData={setData}
+          data65={data65}
           dictionary={dictionary}
           isAddBtnClicked={isAddBtnClicked}
           fetchData={fetchData}

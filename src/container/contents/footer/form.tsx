@@ -201,11 +201,12 @@ function Form({
           areaCode: areaCode[0].code,
           ...getParams(footerState.search.fieldName, footerState.search.text),
         });
-
-        fetchData({
-          areaCode: areaCode[0].code,
-          ...getParams(footerState.search.fieldName, footerState.search.text),
-        });
+        if (footerState.search.text !== "") {
+          fetchData({
+            areaCode: areaCode[0].code,
+            ...getParams(footerState.search.fieldName, footerState.search.text),
+          });
+        }
       }
     }
   }, [areaCode]);

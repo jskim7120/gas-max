@@ -10,7 +10,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
-import { IAR110065DETAIL, emptyObj } from "./model";
+import { IAR110065DETAIL } from "./model";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { currencyMask, removeCommas } from "helpers/currency";
 
@@ -20,6 +20,8 @@ const Tab1 = React.forwardRef(
       tabId,
       areaCode,
       data,
+      setData,
+      data65,
       dictionary,
       isAddBtnClicked,
       fetchData,
@@ -30,6 +32,8 @@ const Tab1 = React.forwardRef(
       tabId: number;
       areaCode: string;
       data: any;
+      setData: Function;
+      data65: any;
       dictionary: any;
       isAddBtnClicked: boolean;
       fetchData: Function;
@@ -65,10 +69,10 @@ const Tab1 = React.forwardRef(
     }, [cm1106.jpCode, cm1106.jpName, cm1106.tick]);
 
     useEffect(() => {
-      if (data && Object.keys(data)?.length > 0) {
+      if (data65 && Object.keys(data65)?.length > 0) {
         resetForm("reset");
       }
-    }, [data]);
+    }, [data65]);
 
     useEffect(() => {
       if (watch("pjQty") !== undefined) {
@@ -104,29 +108,29 @@ const Tab1 = React.forwardRef(
         reset({
           pjCuCode: selected?.cuCode,
           pjCuName: selected?.cuName,
-          areaCode: data?.areaCode,
-          pjSno: data?.pjSno,
-          pjDate: data?.pjDate,
-          pjJpCode: data?.pjJpCode,
-          pjJpName: data?.pjJpName,
-          pjQty: data?.pjQty,
-          pjReqty: data?.pjReqty,
-          pjDanga: data?.pjDanga,
-          pjVatDiv: data?.pjVatDiv,
-          pjKumVat: data?.pjKumVat,
-          pjKumack: data?.pjKumack,
-          saleState: data?.saleState,
-          proxyType: data?.proxyType,
-          buName: data?.buName,
-          pjInkumtype: data?.pjInkumtype,
-          pjInkum: data?.pjInkum,
-          pjDc: data?.pjDc,
-          pjMisukum: data?.pjMisukum,
-          pjSwCode: data?.pjSwCode,
-          pjBigo: data?.pjBigo,
-          qtyKg: data?.qtyKg,
-          qtyL: data?.qtyL,
-          jpSpecific: data?.jpSpecific,
+          areaCode: data65?.areaCode,
+          pjSno: data65?.pjSno,
+          pjDate: data65?.pjDate,
+          pjJpCode: data65?.pjJpCode,
+          pjJpName: data65?.pjJpName,
+          pjQty: data65?.pjQty,
+          pjReqty: data65?.pjReqty,
+          pjDanga: data65?.pjDanga,
+          pjVatDiv: data65?.pjVatDiv,
+          pjKumVat: data65?.pjKumVat,
+          pjKumack: data65?.pjKumack,
+          saleState: data65?.saleState,
+          proxyType: data65?.proxyType,
+          buName: data65?.buName,
+          pjInkumtype: data65?.pjInkumtype,
+          pjInkum: data65?.pjInkum,
+          pjDc: data65?.pjDc,
+          pjMisukum: data65?.pjMisukum,
+          pjSwCode: data65?.pjSwCode,
+          pjBigo: data65?.pjBigo,
+          qtyKg: data65?.qtyKg,
+          qtyL: data65?.qtyL,
+          jpSpecific: data65?.jpSpecific,
         });
       } else if (type === "jpName") {
         const pjJago =
@@ -236,6 +240,15 @@ const Tab1 = React.forwardRef(
       }
     };
 
+    const handleClickReset = () => {
+      if (isAddBtnClicked) {
+        fetchData();
+        addBtnUnClick();
+      } else {
+        resetForm("reset");
+      }
+    };
+
     const submit = async (params: any) => {
       const path = isAddBtnClicked ? AR1100INSERT : AR1100UPDATE;
 
@@ -270,7 +283,7 @@ const Tab1 = React.forwardRef(
       }
     };
 
-    const data1 = [
+    const tableData1 = [
       {
         1: (
           <Controller
@@ -325,7 +338,7 @@ const Tab1 = React.forwardRef(
           </FormGroup>
         ),
         3:
-          data?.jpKind === "4" ? (
+          data65?.jpKind === "4" ? (
             <Controller
               control={control}
               name="qtyKg"
@@ -352,7 +365,7 @@ const Tab1 = React.forwardRef(
           ),
 
         4:
-          data?.jpKind === "4" ? (
+          data65?.jpKind === "4" ? (
             <Controller
               control={control}
               name="qtyL"
@@ -378,7 +391,7 @@ const Tab1 = React.forwardRef(
             />
           ),
         5:
-          data?.jpKind === "4" ? (
+          data65?.jpKind === "4" ? (
             <Input
               register={register("jpSpecific")}
               inputSize={InputSize.i100}
@@ -470,7 +483,7 @@ const Tab1 = React.forwardRef(
       },
     ];
 
-    const data2 = [
+    const tableData2 = [
       {
         1: (
           <FormGroup>
@@ -581,16 +594,16 @@ const Tab1 = React.forwardRef(
                 tableHeader={[
                   "판매일자",
                   "품  명",
-                  data?.jpKind === "4" ? "매출량(kg)" : "판매수량",
-                  data?.jpKind === "4" ? "매출량(ℓ)" : "공병회수",
-                  data?.jpKind === "4" ? "비중(kg/ℓ)" : "재고",
+                  data65?.jpKind === "4" ? "매출량(kg)" : "판매수량",
+                  data65?.jpKind === "4" ? "매출량(ℓ)" : "공병회수",
+                  data65?.jpKind === "4" ? "비중(kg/ℓ)" : "재고",
                   "단가",
                   "VAT",
                   "공급가액",
                   "세액",
                   " 합계금액",
                 ]}
-                tableData={data1}
+                tableData={tableData1}
                 style={{ marginBottom: "2px" }}
               />
               <Table
@@ -607,7 +620,7 @@ const Tab1 = React.forwardRef(
                   "비고",
                   "확인자 서명",
                 ]}
-                tableData={data2}
+                tableData={tableData2}
               />
             </div>
 
@@ -618,18 +631,13 @@ const Tab1 = React.forwardRef(
                 text="저장"
                 icon={<Update />}
                 color={ButtonColor.SECONDARY}
-                onClick={() => {}}
                 type="submit"
               />
-
               <Button
                 text="취소"
                 icon={<Reset />}
                 type="button"
-                onClick={() => {
-                  resetForm("reset");
-                  addBtnUnClick();
-                }}
+                onClick={handleClickReset}
               />
             </div>
           </div>
