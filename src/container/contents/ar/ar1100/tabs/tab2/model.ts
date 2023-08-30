@@ -12,9 +12,7 @@ export interface IAR1100TAB2 {
   pcSwCode: string;
   pcSwName: string;
   pcBigo: string;
-
-  cSaleState: string;
-  cProxyType: string;
+  proxyType: string;
   cBuCode: string;
   cBuName: string;
 }

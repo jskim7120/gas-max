@@ -149,14 +149,31 @@ const Tab2 = React.forwardRef(
       }
     };
 
+    const openPopupCM1106 = async () => {
+      openModal();
+    };
+
+    const resetForm = (type: string) => {
+      if (type === "reset") {
+        reset(data65);
+      } else if (type === "jpName") {
+        reset((formValues) => ({
+          ...formValues,
+          pcJpName: cm1106?.jpName,
+          pcJpCode: cm1106?.jpCode,
+          // pcDanga: cm1106?.jcJpDanga, ar1100 -aas bolood aldaa garaad bsan bolohoor tur comment bolgov
+        }));
+      }
+    };
+
     const submit = async (params: any) => {
       const path = isAddBtnClicked ? AR1100CJSALEINSERT : AR1100CJSALEUPDATE;
 
       if (isAddBtnClicked) {
         if (footerState?.source === menuId + tabId.toString()) {
           params.areaCode = areaCode;
-          params.pcJpCode = footerState?.info?.cuCode;
-          params.pcJpName = footerState?.info?.cuName;
+          params.pcCuCode = footerState?.info?.cuCode;
+          params.pcCuName = footerState?.info?.cuName;
         }
       }
 
@@ -173,37 +190,6 @@ const Tab2 = React.forwardRef(
       if (res) {
         await fetchData();
       }
-    };
-
-    const resetForm = (type: string) => {
-      if (type === "reset") {
-        reset({
-          pcDate: data65?.pcDate,
-          pcJpCode: data65?.pcJpCode,
-          pcJpName: data65?.pcJpName,
-          pcQty: data65?.pcQty,
-          pcReqty: data65?.pcReqty,
-          pcDanga: data65?.pcDanga,
-          pcKumack: data65?.pcKumack,
-          pcSwCode: data65?.pcSwCode,
-          pcBigo: data65?.pcBigo,
-          cProxyType: data65?.cProxyType,
-          cSaleState: data65?.cSaleState,
-          cBuCode: data65?.cBuCode,
-          cBuName: data65?.cBuName,
-        });
-      } else if (type === "jpName") {
-        reset((formValues) => ({
-          ...formValues,
-          pcJpName: cm1106?.jpName,
-          pcJpCode: cm1106?.jpCode,
-          // pcDanga: cm1106?.jcJpDanga, ar1100 -aas bolood aldaa garaad bsan bolohoor tur comment bolgov
-        }));
-      }
-    };
-
-    const openPopupCM1106 = async () => {
-      openModal();
     };
 
     const tableData1 = [
@@ -366,10 +352,10 @@ const Tab2 = React.forwardRef(
           <FormGroup>
             <Controller
               control={control}
-              name="cSaleState"
+              name="saleState"
               render={({ field }) => (
                 <Select {...field} width={InputSize.i100}>
-                  {dictionary?.cSaleState?.map((obj: any, idx: number) => (
+                  {dictionary?.saleState?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
@@ -383,10 +369,10 @@ const Tab2 = React.forwardRef(
         2: (
           <Controller
             control={control}
-            name="cProxyType"
+            name="proxyType"
             render={({ field }) => (
               <Select {...field} width={InputSize.i100}>
-                {dictionary?.cProxyType?.map((obj: any, idx: number) => (
+                {dictionary?.proxyType?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>

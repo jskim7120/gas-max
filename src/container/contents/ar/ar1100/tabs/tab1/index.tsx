@@ -108,29 +108,7 @@ const Tab1 = React.forwardRef(
         reset({
           pjCuCode: selected?.cuCode,
           pjCuName: selected?.cuName,
-          areaCode: data65?.areaCode,
-          pjSno: data65?.pjSno,
-          pjDate: data65?.pjDate,
-          pjJpCode: data65?.pjJpCode,
-          pjJpName: data65?.pjJpName,
-          pjQty: data65?.pjQty,
-          pjReqty: data65?.pjReqty,
-          pjDanga: data65?.pjDanga,
-          pjVatDiv: data65?.pjVatDiv,
-          pjKumVat: data65?.pjKumVat,
-          pjKumack: data65?.pjKumack,
-          saleState: data65?.saleState,
-          proxyType: data65?.proxyType,
-          buName: data65?.buName,
-          pjInkumtype: data65?.pjInkumtype,
-          pjInkum: data65?.pjInkum,
-          pjDc: data65?.pjDc,
-          pjMisukum: data65?.pjMisukum,
-          pjSwCode: data65?.pjSwCode,
-          pjBigo: data65?.pjBigo,
-          qtyKg: data65?.qtyKg,
-          qtyL: data65?.qtyL,
-          jpSpecific: data65?.jpSpecific,
+          ...data65,
         });
       } else if (type === "jpName") {
         const pjJago =
@@ -558,6 +536,7 @@ const Tab1 = React.forwardRef(
                 inputSize={InputSize.i100}
                 textAlign="right"
                 mask={currencyMask}
+                readOnly
               />
             )}
           />

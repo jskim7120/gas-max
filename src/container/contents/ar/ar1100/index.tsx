@@ -229,8 +229,8 @@ function AR1100({
       if (selected?.pjType === "1") {
         setData65(res?.detailData[0]);
         setDataDictionary({
-          cProxyType: res?.cProxyType,
-          cSaleState: res?.cSaleState,
+          proxyType: res?.proxyType,
+          saleState: res?.saleState,
           pcSwCode: res?.pcSwCode,
         });
       }
@@ -257,8 +257,8 @@ function AR1100({
         }
       } else if (tabId === 1) {
         setDataDictionary({
-          cProxyType: res?.cProxyType,
-          cSaleState: res?.cSaleState,
+          proxyType: res?.proxyType,
+          saleState: res?.saleState,
           pcSwCode: res?.pcSwCode,
         });
         if (res?.initData?.length > 0) {
@@ -275,7 +275,7 @@ function AR1100({
       areaCode: dataCommonDic.areaCode[0]?.code,
       sDate: DateWithoutDash(init.sDate),
       dDate: DateWithoutDash(init.dDate),
-      // sCustomer: "",
+      sCustomer: "",
     };
   };
 
