@@ -215,7 +215,7 @@ function AR1100({
           pjSwCode: res?.pjSwCode,
           proxyType: res?.proxyType,
           pjInkumtype: res?.pjInkumtype,
-          saleType: res?.saleType,
+          saleState: res?.saleState,
         });
       }
       if (selected?.pjType === "1") {
