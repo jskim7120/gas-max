@@ -126,6 +126,7 @@ const Tab1 = React.forwardRef(
           ...formValues,
           pjJpName: cm1106.jpName,
           pjJpCode: cm1106.jpCode,
+          pjJpSpec: cm1106?.jpSpec,
           pjJago: pjJago,
           pjDanga: cm1106.jcJpDanga,
           pjKumSup: pjKumSup,

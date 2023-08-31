@@ -161,6 +161,7 @@ const Tab2 = React.forwardRef(
           ...formValues,
           pcJpName: cm1106?.jpName,
           pcJpCode: cm1106?.jpCode,
+          pcJpSpec: cm1106?.jpSpec,
           // pcDanga: cm1106?.jcJpDanga, ar1100 -aas bolood aldaa garaad bsan bolohoor tur comment bolgov
         }));
       }

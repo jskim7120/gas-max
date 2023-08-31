@@ -77,6 +77,7 @@ function Grid({
 
     gv.setCurrent({
       dataRow: rowIndex,
+      fieldName: "cuName",
     });
 
     gv.onEditChange = function (grid: any, index: any, value: any) {
@@ -118,7 +119,7 @@ function Grid({
     };
   }, [data]);
 
-  return <div style={style} ref={realgridElement}></div>;
+  return <div style={style} className="AR1100" ref={realgridElement}></div>;
 }
 
 export default Grid;

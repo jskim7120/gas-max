@@ -117,6 +117,7 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
         addCM1106AR1100Tick({
           jpName: selected?.jcJpName,
           jpCode: selected?.jcJpCode,
+          jpSpec: selected?.jcJpSpec,
           custIn: selected?.custIn,
           custOut: selected?.custOut,
           jcBasicJaego: selected?.jcBasicJaego,

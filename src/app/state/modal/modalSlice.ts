@@ -18,6 +18,7 @@ export interface initialStateType {
     source: string;
     jpName: string;
     jpCode: string;
+    jpSpec: string;
     custIn: string;
     custOut: string;
     jcBasicJaego: string;
@@ -88,6 +89,7 @@ const initialState: initialStateType = {
     source: "",
     jpName: "",
     jpCode: "",
+    jpSpec: "",
     custIn: "0",
     custOut: "0",
     jcBasicJaego: "0",

@@ -26,3 +26,7 @@
 .rg-focused-row {
   background: #f9d2b9;
 }
+
+.AR1100 .rg-focused-cell {
+  background: aliceblue;
+}
