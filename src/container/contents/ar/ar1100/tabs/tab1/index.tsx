@@ -61,6 +61,9 @@ const Tab1 = React.forwardRef(
     let pjDanga = 0;
     let pjQty = 0;
     let pjReqty = 0;
+    let pjMisukum = 0;
+    let pjInkum = 0;
+    let pjDc = 0;
 
     useEffect(() => {
       if (cm1106.source === "AR11000" && cm1106.jpCode && cm1106.jpName) {
@@ -97,6 +100,18 @@ const Tab1 = React.forwardRef(
         handlePjVatDivChange();
       }
     }, [watch("pjVatDiv")]);
+
+    useEffect(() => {
+      if (watch("pjInkum") !== undefined) {
+        handlePjInkumPjDcChange();
+      }
+    }, [watch("pjInkum")]);
+
+    useEffect(() => {
+      if (watch("pjDc") !== undefined) {
+        handlePjInkumPjDcChange();
+      }
+    }, [watch("pjDc")]);
 
     useImperativeHandle<any, any>(ref, () => ({
       reset,
@@ -197,6 +212,23 @@ const Tab1 = React.forwardRef(
         ...formValues,
         pjKumVat: pjKumVat,
         pjKumack: pjKumack,
+      }));
+    };
+
+    const handlePjInkumPjDcChange = () => {
+      pjKumack = getValues("pjKumack")
+        ? +removeCommas(getValues("pjKumack"), "number")
+        : 0;
+
+      pjDc = getValues("pjDc") ? +removeCommas(getValues("pjDc"), "number") : 0;
+      pjInkum = getValues("pjInkum")
+        ? +removeCommas(getValues("pjInkum"), "number")
+        : 0;
+
+      pjMisukum = pjKumack - pjDc - pjInkum;
+      reset((formValues) => ({
+        ...formValues,
+        pjMisukum: pjMisukum,
       }));
     };
 
@@ -523,7 +555,6 @@ const Tab1 = React.forwardRef(
             )}
           />
         ),
-
         7: (
           <Controller
             control={control}
