@@ -195,6 +195,23 @@ const Tab2 = React.forwardRef(
 
     const tableData1 = [
       {
+        0: (
+          <FormGroup>
+            <Controller
+              control={control}
+              name="saleState"
+              render={({ field }) => (
+                <Select {...field} width={InputSize.i100}>
+                  {dictionary?.saleState?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            />
+          </FormGroup>
+        ),
         1: (
           <Controller
             control={control}
@@ -343,31 +360,13 @@ const Tab2 = React.forwardRef(
             )}
           />
         ),
-        10: <Input register={register("pcBigo")} inputSize={InputSize.i100} />,
+        10: <Input register={register("pcBigo")} inputSize={InputSize.i200} />,
       },
     ];
 
     const tableData2 = [
       {
-        1: (
-          <FormGroup>
-            <Controller
-              control={control}
-              name="saleState"
-              render={({ field }) => (
-                <Select {...field} width={InputSize.i100}>
-                  {dictionary?.saleState?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              )}
-            />
-          </FormGroup>
-        ),
-
-        2: (
+        0: (
           <Controller
             control={control}
             name="proxyType"
@@ -382,9 +381,9 @@ const Tab2 = React.forwardRef(
             )}
           />
         ),
-        3: (
+        1: (
           <FormGroup style={{ position: "relative" }}>
-            <Input register={register("cBuCode")} inputSize={InputSize.i100} />
+            <Input register={register("cBuCode")} inputSize={InputSize.i60} />
             <Controller
               control={control}
               name="cBuName"
@@ -429,6 +428,7 @@ const Tab2 = React.forwardRef(
               <Table
                 className="no-space"
                 tableHeader={[
+                  "거래상태",
                   "공급일자",
                   "품  명",
                   "공급량",
@@ -445,7 +445,7 @@ const Tab2 = React.forwardRef(
               />
               <Table
                 className="no-space"
-                tableHeader={["거래상태", "공급구분", "매입처"]}
+                tableHeader={["공급구분", "매입처"]}
                 tableData={tableData2}
               />
             </div>

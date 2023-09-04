@@ -1,5 +1,6 @@
 import Tab1 from "./tabs/tab1";
 import Tab2 from "./tabs/tab2";
+import Tab3 from "./tabs/tab3";
 
 function getTabContent(
   tabId: number,
@@ -52,8 +53,22 @@ function getTabContent(
         />
       );
     case 2:
-      //   return <Tab3 data={data} />;
-      return <>3</>;
+      return (
+        <Tab3
+          tabId={tabId}
+          areaCode={areaCode}
+          data={data}
+          setData={setData}
+          data65={data65}
+          dictionary={dictionary}
+          isAddBtnClicked={isAddBtnClicked}
+          fetchData={fetchData}
+          selected={selected}
+          menuId={menuId}
+          ref={tabRef2}
+          addBtnUnClick={addBtnUnClick}
+        />
+      );
     case 3:
       //   return <Tab3 data={data} />;
       return <>4</>;

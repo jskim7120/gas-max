@@ -32,6 +32,7 @@ export interface IAR110065DETAIL {
   saleState: string;
   signkey: string;
   signuser: string;
+  pacbCode: string;
 }
 
 export const emptyObj = {

@@ -264,6 +264,17 @@ const Tab1 = React.forwardRef(
 
     const tableData1 = [
       {
+        0: (
+          <FormGroup>
+            <Select register={register("saleState")} width={InputSize.i100}>
+              {dictionary?.saleState?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        ),
         1: (
           <Controller
             control={control}
@@ -464,17 +475,6 @@ const Tab1 = React.forwardRef(
 
     const tableData2 = [
       {
-        1: (
-          <FormGroup>
-            <Select register={register("saleState")} width={InputSize.i100}>
-              {dictionary?.saleState?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
         2: (
           <FormGroup>
             <Select register={register("proxyType")} width={InputSize.i100}>
@@ -499,6 +499,17 @@ const Tab1 = React.forwardRef(
           </FormGroup>
         ),
         5: (
+          <FormGroup>
+            <Select register={register("pacbCode")} width={InputSize.i150}>
+              {dictionary?.pjInkumtype?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        ),
+        6: (
           <Controller
             control={control}
             name="pjInkum"
@@ -513,7 +524,7 @@ const Tab1 = React.forwardRef(
           />
         ),
 
-        6: (
+        7: (
           <Controller
             control={control}
             name="pjDc"
@@ -527,7 +538,7 @@ const Tab1 = React.forwardRef(
             )}
           />
         ),
-        7: (
+        8: (
           <Controller
             control={control}
             name="pjMisukum"
@@ -542,7 +553,7 @@ const Tab1 = React.forwardRef(
             )}
           />
         ),
-        8: (
+        9: (
           <FormGroup>
             <Select register={register("pjSwCode")} width={InputSize.i100}>
               {dictionary?.pjSwCode?.map((obj: any, idx: number) => (
@@ -553,8 +564,8 @@ const Tab1 = React.forwardRef(
             </Select>
           </FormGroup>
         ),
-        9: <Input register={register("pjBigo")} inputSize={InputSize.i100} />,
-        10: (
+        10: <Input register={register("pjBigo")} inputSize={InputSize.i200} />,
+        11: (
           <FormGroup>
             <Input register={register("signuser")} inputSize={InputSize.i100} />
             <Input register={register("signkey")} inputSize={InputSize.i100} />
@@ -572,6 +583,7 @@ const Tab1 = React.forwardRef(
               <Table
                 className="no-space"
                 tableHeader={[
+                  "거래상태",
                   "판매일자",
                   "품  명",
                   data65?.jpKind === "4" ? "매출량(kg)" : "판매수량",
@@ -589,10 +601,10 @@ const Tab1 = React.forwardRef(
               <Table
                 className="no-space"
                 tableHeader={[
-                  "거래상태",
                   "대납구분",
                   "매입처명",
                   "입금방법",
+                  "입금  계좌",
                   "입금액",
                   "D/C",
                   "미입금액",
