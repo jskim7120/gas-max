@@ -51,6 +51,7 @@ function AR1100({
   const dispatch = useDispatch();
   const tabRef1 = useRef() as React.MutableRefObject<any>;
   const tabRef2 = useRef() as React.MutableRefObject<any>;
+  const tabRef3 = useRef() as React.MutableRefObject<any>;
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
   const [selected, setSelected] = useState<any>({});
@@ -234,6 +235,18 @@ function AR1100({
           pcSwCode: res?.pcSwCode,
         });
       }
+      if (selected?.pjType === "2") {
+        setData65(res?.detailData[0]);
+        setDataDictionary({
+          tsAbcCode: res?.tsAbcCode,
+          tsGubun: res?.tsGubun,
+          tsInkumtype: res?.tsInkumtype,
+          tsSaleState: res?.tsSaleState,
+          tsSwCode: res?.tsSwCode,
+          tsTonggubun: res?.tsTonggubun,
+          tsVatDiv: res?.tsVatDiv,
+        });
+      }
     } else {
       setData65({});
       setDataDictionary({});
@@ -252,7 +265,7 @@ function AR1100({
           proxyType: res?.proxyType,
           saleState: res?.saleState,
         });
-        if (res?.initData?.length > 0) {
+        if (res?.initData && res?.initData?.length > 0) {
           tabRef1?.current?.reset({ ...res.initData[0] });
         }
       } else if (tabId === 1) {
@@ -261,8 +274,21 @@ function AR1100({
           saleState: res?.saleState,
           pcSwCode: res?.pcSwCode,
         });
-        if (res?.initData?.length > 0) {
+        if (res?.initData && res?.initData?.length > 0) {
           tabRef2?.current?.reset({ ...res.initData[0] });
+        }
+      } else if (tabId === 2) {
+        setDataDictionary({
+          tsAbcCode: res?.tsAbcCode,
+          tsGubun: res?.tsGubun,
+          tsInkumtype: res?.tsInkumtype,
+          tsSaleState: res?.tsSaleState,
+          tsSwCode: res?.tsSwCode,
+          tsTonggubun: res?.tsTonggubun,
+          tsVatDiv: res?.tsVatDiv,
+        });
+        if (res?.initData && res?.initData?.length > 0) {
+          tabRef3?.current?.reset({ ...res.initData[0] });
         }
       }
     }
@@ -659,6 +685,7 @@ function AR1100({
             menuId,
             tabRef1,
             tabRef2,
+            tabRef3,
             addBtnUnClick
           )}
         </TabContentWrapper>

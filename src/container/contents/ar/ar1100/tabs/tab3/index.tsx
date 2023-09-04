@@ -10,7 +10,7 @@ import Table3 from "./table3";
 import Table4 from "./table4";
 import Table5 from "./table5";
 
-const Tab1 = React.forwardRef(
+const Tab3 = React.forwardRef(
   (
     {
       tabId,
@@ -106,4 +106,4 @@ const Tab1 = React.forwardRef(
   }
 );
 
-export default Tab1;
+export default Tab3;

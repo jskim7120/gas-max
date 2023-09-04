@@ -15,6 +15,7 @@ function getTabContent(
   menuId: string,
   tabRef1: any,
   tabRef2: any,
+  tabRef3: any,
   addBtnUnClick: Function
 ) {
   switch (tabId) {
@@ -65,7 +66,7 @@ function getTabContent(
           fetchData={fetchData}
           selected={selected}
           menuId={menuId}
-          ref={tabRef2}
+          ref={tabRef3}
           addBtnUnClick={addBtnUnClick}
         />
       );

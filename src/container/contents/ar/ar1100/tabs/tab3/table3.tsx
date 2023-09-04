@@ -7,7 +7,7 @@ import CustomDatePicker from "components/customDatePicker";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { currencyMask } from "helpers/currency";
 
-function Table1({
+function Table3({
   register,
   dictionary,
   control,
@@ -25,7 +25,7 @@ function Table1({
       0: (
         <FormGroup>
           <Select register={register("tsSaleState")} width={InputSize.i100}>
-            {dictionary?.saleState?.map((obj: any, idx: number) => (
+            {dictionary?.tsSaleState?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -49,7 +49,7 @@ function Table1({
       2: (
         <FormGroup>
           <Select register={register("tsGubun")} width={InputSize.i100}>
-            {dictionary?.gubun?.map((obj: any, idx: number) => (
+            {dictionary?.tsGubun?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -95,7 +95,7 @@ function Table1({
       4: (
         <FormGroup>
           <Select register={register("tsTonggubun")} width={InputSize.i100}>
-            {dictionary?.gubun?.map((obj: any, idx: number) => (
+            {dictionary?.tsTonggubun?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -139,7 +139,7 @@ function Table1({
       0: (
         <FormGroup>
           <Select register={register("tsInkumtype")} width={InputSize.i100}>
-            {dictionary?.proxyType?.map((obj: any, idx: number) => (
+            {dictionary?.tsInkumtype?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -150,7 +150,7 @@ function Table1({
       1: (
         <FormGroup>
           <Select register={register("tsAbcCode")} width={InputSize.i150}>
-            {dictionary?.proxyType?.map((obj: any, idx: number) => (
+            {dictionary?.tsAbcCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -203,7 +203,7 @@ function Table1({
       5: (
         <FormGroup>
           <Select register={register("tsSwCode")} width={InputSize.i100}>
-            {dictionary?.proxyType?.map((obj: any, idx: number) => (
+            {dictionary?.tsSwCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -275,4 +275,4 @@ function Table1({
   );
 }
 
-export default Table1;
+export default Table3;
