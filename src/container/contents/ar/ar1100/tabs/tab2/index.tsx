@@ -1,12 +1,5 @@
-import React, { useEffect, useImperativeHandle, useState } from "react";
+import React, { useEffect, useImperativeHandle } from "react";
 import { Controller, useForm } from "react-hook-form";
-import Table from "components/table";
-import { Input, Select, FormGroup } from "components/form/style";
-import CustomDatePicker from "components/customDatePicker";
-import Button from "components/button/button";
-import { ButtonColor, InputSize } from "components/componentsType";
-import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
-import { IAR1100TAB2 } from "./model";
 import {
   AR1100CJSALEINSERT,
   AR1100CJSALEUPDATE,
@@ -15,8 +8,16 @@ import {
 import { apiPost } from "app/axios";
 import { useSelector } from "app/store";
 import useModal from "app/hook/useModal";
+import Table from "components/table";
+import { Input, Select, FormGroup } from "components/form/style";
+import CustomDatePicker from "components/customDatePicker";
+import Button from "components/button/button";
+import { ButtonColor, InputSize } from "components/componentsType";
+import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
+import EditableSelect from "components/editableSelect";
 import { currencyMask, removeCommas } from "helpers/currency";
 import { DateWithoutDash } from "helpers/dateFormat";
+import { IAR1100TAB2 } from "./model";
 
 const Tab2 = React.forwardRef(
   (
@@ -351,40 +352,53 @@ const Tab2 = React.forwardRef(
           />
         ),
         9: (
-          <Controller
-            control={control}
-            name="pcSwCode"
-            render={({ field }) => (
-              <Select {...field} width={InputSize.i100}>
-                {dictionary?.pcSwCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            )}
+          <FormGroup>
+            <Controller
+              control={control}
+              name="pcSwCode"
+              render={({ field }) => (
+                <Select {...field} width={InputSize.i100}>
+                  {dictionary?.pcSwCode?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            />
+          </FormGroup>
+        ),
+        10: (
+          <EditableSelect
+            list={dictionary?.pcBigo}
+            reset={reset}
+            register={register("pcBigo")}
+            watch={watch("pcBigo")}
+            textAlign={"left"}
+            style={{ width: "200px" }}
           />
         ),
-        10: <Input register={register("pcBigo")} inputSize={InputSize.i200} />,
       },
     ];
 
     const tableData2 = [
       {
         0: (
-          <Controller
-            control={control}
-            name="proxyType"
-            render={({ field }) => (
-              <Select {...field} width={InputSize.i100}>
-                {dictionary?.proxyType?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            )}
-          />
+          <FormGroup>
+            <Controller
+              control={control}
+              name="proxyType"
+              render={({ field }) => (
+                <Select {...field} width={InputSize.i100}>
+                  {dictionary?.proxyType?.map((obj: any, idx: number) => (
+                    <option key={idx} value={obj.code}>
+                      {obj.codeName}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            />
+          </FormGroup>
         ),
         1: (
           <FormGroup style={{ position: "relative" }}>

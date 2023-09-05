@@ -9,10 +9,11 @@ import { Input, Select, FormGroup } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
+import EditableSelect from "components/editableSelect";
 import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
-import { IAR110065DETAIL } from "./model";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { currencyMask, removeCommas } from "helpers/currency";
+import { IAR110065DETAIL } from "./model";
 
 const Tab1 = React.forwardRef(
   (
@@ -595,7 +596,16 @@ const Tab1 = React.forwardRef(
             </Select>
           </FormGroup>
         ),
-        10: <Input register={register("pjBigo")} inputSize={InputSize.i200} />,
+        10: (
+          <EditableSelect
+            list={dictionary?.pjBigo}
+            reset={reset}
+            register={register("pjBigo")}
+            watch={watch("pjBigo")}
+            textAlign={"left"}
+            style={{ width: "200px" }}
+          />
+        ),
         11: (
           <FormGroup>
             <Input register={register("signuser")} inputSize={InputSize.i100} />

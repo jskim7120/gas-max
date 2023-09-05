@@ -1,14 +1,13 @@
 import React, { useEffect, useImperativeHandle } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { Reset, Update } from "components/allSvgIcon";
-import { IAR1100TAB3 } from "./model";
 import Table from "components/table";
-import { Controller } from "react-hook-form";
 import { Input, Select, FormGroup } from "components/form/style";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
+import EditableSelect from "components/editableSelect";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { currencyMask, removeCommas } from "helpers/currency";
 import {
@@ -22,6 +21,7 @@ import {
   tableHeader4b,
   tableHeader5,
 } from "./tableHeader";
+import { IAR1100TAB3 } from "./model";
 
 const Tab3 = React.forwardRef(
   (
@@ -377,17 +377,13 @@ const Tab3 = React.forwardRef(
         </FormGroup>
       ),
       12: (
-        <Controller
-          control={control}
-          name="tsBigo"
-          render={({ field }) => (
-            <Input
-              {...field}
-              inputSize={InputSize.i200}
-              textAlign="right"
-              mask={currencyMask}
-            />
-          )}
+        <EditableSelect
+          list={dictionary?.tsBigo}
+          reset={reset}
+          register={register("tsBigo")}
+          watch={watch("tsBigo")}
+          textAlign={"left"}
+          style={{ width: "200px" }}
         />
       ),
       13: (
@@ -484,19 +480,16 @@ const Tab3 = React.forwardRef(
           </FormGroup>
         ),
         6: (
-          <Controller
-            control={control}
-            name="tsBigo"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i200}
-                textAlign="right"
-                mask={currencyMask}
-              />
-            )}
+          <EditableSelect
+            list={dictionary?.tsBigo}
+            reset={reset}
+            register={register("tsBigo")}
+            watch={watch("tsBigo")}
+            textAlign={"left"}
+            style={{ width: "199px" }}
           />
         ),
+
         7: (
           <Controller
             control={control}
