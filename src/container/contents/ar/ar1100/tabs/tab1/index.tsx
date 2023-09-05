@@ -48,6 +48,11 @@ const Tab1 = React.forwardRef(
         mode: "onSubmit",
       });
 
+    useImperativeHandle<any, any>(ref, () => ({
+      reset,
+      crud,
+    }));
+
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const footerState = useSelector((state: any) => state.footer);
 
@@ -112,42 +117,6 @@ const Tab1 = React.forwardRef(
         handlePjInkumPjDcChange();
       }
     }, [watch("pjDc")]);
-
-    useImperativeHandle<any, any>(ref, () => ({
-      reset,
-      crud,
-    }));
-
-    const resetForm = (type: string) => {
-      if (type === "reset") {
-        reset({
-          pjCuCode: selected?.cuCode,
-          pjCuName: selected?.cuName,
-          ...data65,
-        });
-      } else if (type === "jpName") {
-        const pjJago =
-          (cm1106?.jcBasicJaego ? +cm1106.jcBasicJaego : 0) +
-          (cm1106?.custOut ? +cm1106.custOut : 0) -
-          (cm1106?.custIn ? +cm1106.custIn : 0);
-
-        const pjKumSup =
-          (cm1106?.jcJpDanga ? +removeCommas(cm1106.jcJpDanga, "number") : 0) *
-          (getValues("pjQty") ? +getValues("pjQty") : 0);
-
-        setPjJago(pjJago);
-
-        reset((formValues) => ({
-          ...formValues,
-          pjJpName: cm1106.jpName,
-          pjJpCode: cm1106.jpCode,
-          pjJpSpec: cm1106?.jpSpec,
-          pjJago: pjJago,
-          pjDanga: cm1106.jcJpDanga,
-          pjKumSup: pjKumSup,
-        }));
-      }
-    };
 
     const calcLast2field = () => {
       if (getValues("pjVatDiv") === "0") {
@@ -230,6 +199,37 @@ const Tab1 = React.forwardRef(
         ...formValues,
         pjMisukum: pjMisukum,
       }));
+    };
+
+    const resetForm = (type: string) => {
+      if (type === "reset") {
+        reset({
+          pjCuCode: selected?.cuCode,
+          pjCuName: selected?.cuName,
+          ...data65,
+        });
+      } else if (type === "jpName") {
+        const pjJago =
+          (cm1106?.jcBasicJaego ? +cm1106.jcBasicJaego : 0) +
+          (cm1106?.custOut ? +cm1106.custOut : 0) -
+          (cm1106?.custIn ? +cm1106.custIn : 0);
+
+        const pjKumSup =
+          (cm1106?.jcJpDanga ? +removeCommas(cm1106.jcJpDanga, "number") : 0) *
+          (getValues("pjQty") ? +getValues("pjQty") : 0);
+
+        setPjJago(pjJago);
+
+        reset((formValues) => ({
+          ...formValues,
+          pjJpName: cm1106.jpName,
+          pjJpCode: cm1106.jpCode,
+          pjJpSpec: cm1106?.jpSpec,
+          pjJago: pjJago,
+          pjDanga: cm1106.jcJpDanga,
+          pjKumSup: pjKumSup,
+        }));
+      }
     };
 
     const openPopupCM1106 = async () => {

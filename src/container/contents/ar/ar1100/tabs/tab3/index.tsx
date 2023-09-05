@@ -10,7 +10,7 @@ import { Input, Select, FormGroup } from "components/form/style";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import { MagnifyingGlass } from "components/allSvgIcon";
-import { currencyMask } from "helpers/currency";
+import { currencyMask, removeCommas } from "helpers/currency";
 import {
   tableHeader1a,
   tableHeader1b,
@@ -57,16 +57,126 @@ const Tab3 = React.forwardRef(
         mode: "onSubmit",
       });
 
+    useImperativeHandle<any, any>(ref, () => ({
+      reset,
+      crud,
+    }));
+
+    let tsKumSup = 0;
+    let tsKumVat = 0;
+    let tsKumack = 0;
+    let tsDanga = 0;
+    let tsQty = 0;
+    let tsMisu = 0;
+    let tsInkum = 0;
+    let tsDc = 0;
+
     useEffect(() => {
       if (data65 && Object.keys(data65)?.length > 0) {
         resetForm("reset");
       }
     }, [data65]);
+    useEffect(() => {
+      if (watch("tsQty") !== undefined) {
+        handleTsQtyChange();
+      }
+    }, [watch("tsQty")]);
 
-    useImperativeHandle<any, any>(ref, () => ({
-      reset,
-      crud,
-    }));
+    useEffect(() => {
+      if (watch("tsDanga") !== undefined) {
+        handleTsDangaChange();
+      }
+    }, [watch("tsDanga")]);
+
+    useEffect(() => {
+      if (watch("tsVatDiv") !== undefined) {
+        handleTsVatDivChange();
+      }
+    }, [watch("tsVatDiv")]);
+
+    useEffect(() => {
+      if (watch("tsInkum") !== undefined) {
+        handleTsInkumTsDcChange();
+      }
+    }, [watch("tsInkum")]);
+
+    useEffect(() => {
+      if (watch("tsDc") !== undefined) {
+        handleTsInkumTsDcChange();
+      }
+    }, [watch("tsDc")]);
+
+    const calcLast2field = () => {
+      if (getValues("tsVatDiv") === "0") {
+        tsKumVat = 0;
+        tsKumack = tsKumSup;
+      } else if (
+        getValues("tsVatDiv") === "1" ||
+        getValues("tsVatDiv") === "2"
+      ) {
+        tsKumVat = Math.round(tsKumSup * 0.1);
+        tsKumack = tsKumVat + tsKumSup;
+      }
+    };
+
+    const handleTsQtyChange = () => {
+      tsDanga = getValues("tsDanga") ? +removeCommas(getValues("tsDanga")) : 0;
+      tsQty = getValues("tsQty") ? +getValues("tsQty") : 0;
+      tsKumSup = tsDanga * tsQty;
+      calcLast2field();
+      reset((formValues) => ({
+        ...formValues,
+        tsKumSup: tsKumSup,
+        tsKumVat: tsKumVat,
+        tsKumack: tsKumack,
+      }));
+    };
+
+    const handleTsDangaChange = () => {
+      tsDanga = +removeCommas(getValues("tsDanga"))
+        ? +removeCommas(getValues("tsDanga"), "number")
+        : 0;
+
+      tsQty = getValues("tsQty") ? +getValues("tsQty") : 0;
+      tsKumSup = tsDanga * tsQty;
+
+      calcLast2field();
+      reset((formValues) => ({
+        ...formValues,
+        tsKumSup: tsKumSup,
+        tsKumVat: tsKumVat,
+        tsKumack: tsKumack,
+      }));
+    };
+
+    const handleTsVatDivChange = () => {
+      tsKumSup = getValues("tsKumSup")
+        ? +removeCommas(getValues("tsKumSup"), "number")
+        : 0;
+      calcLast2field();
+      reset((formValues) => ({
+        ...formValues,
+        tsKumVat: tsKumVat,
+        tsKumack: tsKumack,
+      }));
+    };
+
+    const handleTsInkumTsDcChange = () => {
+      tsKumack = getValues("tsKumack")
+        ? +removeCommas(getValues("tsKumack"), "number")
+        : 0;
+
+      tsDc = getValues("tsDc") ? +removeCommas(getValues("tsDc"), "number") : 0;
+      tsInkum = getValues("tsInkum")
+        ? +removeCommas(getValues("tsInkum"), "number")
+        : 0;
+
+      tsMisu = tsKumack - tsDc - tsInkum;
+      reset((formValues) => ({
+        ...formValues,
+        tsMisu: tsMisu,
+      }));
+    };
 
     const resetForm = (type: string) => {
       if (type === "reset") {
@@ -245,7 +355,7 @@ const Tab3 = React.forwardRef(
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i100}
+              inputSize={InputSize.i150}
               textAlign="right"
               mask={currencyMask}
             />

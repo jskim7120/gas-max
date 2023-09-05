@@ -186,6 +186,11 @@ const Tab2 = React.forwardRef(
       params.pcJaego = +removeCommas(params.pcJaego, "number");
       params.pcKumack = +removeCommas(params.pcKumack, "number");
       params.pcGum = +removeCommas(params.pcGum, "number");
+      if (params?.pcSwCode) {
+        params.pcSwName = dictionary?.pcSwCode?.find(
+          (item: any) => item.code === params.pcSwCode
+        ).codeName;
+      }
 
       const res = await apiPost(path, params, "저장이 성공하였습니다");
       if (res) {
