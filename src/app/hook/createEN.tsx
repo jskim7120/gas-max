@@ -10,16 +10,11 @@ import {
   RightSide,
   SearchWrapper,
 } from "container/contents/commonStyle";
-import {
-  // openModal,
-  // closeModal,
-  addDeleteMenuId,
-  setIsDelete,
-} from "app/state/modal/modalSlice";
-import { setRowIndex } from "app/state/tab/tabSlice";
+import { addDeleteMenuId, setIsDelete } from "app/state/modal/modalSlice";
 import { apiGet } from "app/axios";
 import Modal from "components/modal/modal";
 import useModal from "./useModal";
+import useRowIndex from "./useRowIndex";
 
 function CreateEN(
   depthFullName: string,
@@ -40,14 +35,11 @@ function CreateEN(
   const dispatch = useDispatch();
   const { delete: deleteState } = useSelector((state) => state.modal);
   const activeTabId = useSelector((state) => state.tab.activeTabId);
-  const tabState = useSelector((state) => state.tab.tabs);
   const isOpen = useSelector((state) => state.sidebar);
 
-  const gridIndexes = tabState.find(
-    (item: any) => item.menuId === menuId
-  )?.gridIndexes;
+  const { getRowIndex, setRowIndex } = useRowIndex();
 
-  const rowIndex = gridIndexes?.find((item) => item.grid === 0)?.row;
+  const rowIndex = getRowIndex(menuId, 0);
 
   const [data, setData] = useState<Array<any>>([]);
   const [selected, setSelected] = useState<any>({});
@@ -115,11 +107,11 @@ function CreateEN(
 
       if (func === "last") {
         setSelected(dataS[lastIndex]);
-        dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 }));
+        setRowIndex(menuId, 0, lastIndex);
       } else {
         if (rowIndex) {
           if (rowIndex > lastIndex) {
-            dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 }));
+            setRowIndex(menuId, 0, lastIndex);
             setSelected(dataS[lastIndex]);
           } else {
             setSelected(dataS[rowIndex]);

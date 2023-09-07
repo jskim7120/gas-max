@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface initialStateType {
-  // modalIsOpen: boolean;
-  // menu: any;
-  // type: string;
   cm1105: {
     cuCode: string;
     areaCode: string;
@@ -72,9 +69,6 @@ export interface initialStateType {
 }
 
 const initialState: initialStateType = {
-  // modalIsOpen: false,
-  // menu: [],
-  // type: "",
   cm1105: {
     cuCode: "",
     areaCode: "",
@@ -148,19 +142,8 @@ const modalSlice = createSlice({
   initialState: initialState,
 
   reducers: {
-    // openModal: (state, actions) => {
-    //   state.modalIsOpen = true;
-    //   state.type = actions.payload.type;
-    // },
-
-    // closeModal: (state) => {
-    //   state.modalIsOpen = false;
-    //   state.type = "";
-    // },
-
     addCM1105: (state, action) => {
       state.cm1105 = {
-        //...state.cm1105,
         ...action.payload,
       };
     },
@@ -173,9 +156,12 @@ const modalSlice = createSlice({
     },
 
     addCM1106: (state, action) => {
-      state.cm1106.cuCode = action.payload.cuCode;
-      state.cm1106.areaCode = action.payload.areaCode;
-      state.cm1106.source = action.payload?.source && action.payload.source;
+      //state.cm1106.cuCode = action.payload.cuCode;
+      //state.cm1106.areaCode = action.payload.areaCode;
+      //state.cm1106.source = action.payload?.source && action.payload.source;
+      state.cm1106 = {
+        ...action.payload,
+      };
     },
 
     addCM1106AR1100Tick: (state, action) => {

@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { apiGet } from "app/axios";
 import CreateScreen from "app/hook/createScreen";
 import { CM1300SEARCH, CM130065 } from "app/path";
-import { setRowIndex } from "app/state/tab/tabSlice";
 import Button from "components/button/button";
 import Loader from "components/loader";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
@@ -27,6 +26,7 @@ import { columns, fields } from "./data";
 import Form from "./form";
 import CM1300User from "./cm1300User";
 import { ISEARCH } from "./model";
+import useRowIndex from "app/hook/useRowIndex";
 
 const leftSideWidth: number = 910;
 
@@ -54,21 +54,21 @@ function CM1300({
     fetchData,
     showDraggableLine,
     showAll4Btns,
-    gridIndexes,
     dispatch,
     dataCommonDic,
     linePos,
     formRef,
     addBtnUnclick,
   } = CreateScreen("CM", "CM1300", menuId, CM1300SEARCH, leftSideWidth);
+  const { getRowIndex, setRowIndex } = useRowIndex();
 
   const [userInfo, setUserInfo] = useState([]);
   const [selectedUserInfo, setSelectedUserInfo] = useState<any>({});
   const [isAddBtnClicked2, setIsAddBtnClicked2] = useState<boolean>(false);
   const [dataDictionary, setDataDictionary] = useState({});
 
-  const rowIndex0 = gridIndexes?.find((item) => item.grid === 0)?.row;
-  const rowIndex1 = gridIndexes?.find((item) => item.grid === 1)?.row;
+  const rowIndex0 = getRowIndex(menuId, 0);
+  const rowIndex1 = getRowIndex(menuId, 1);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -119,13 +119,11 @@ function CM1300({
 
         if (pos === "last") {
           setSelectedUserInfo(res.userCustomer[lastIndex]);
-          dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 1 }));
+          setRowIndex(menuId, 1, lastIndex);
         } else {
           if (rowIndex1) {
             if (rowIndex1 > lastIndex) {
-              dispatch(
-                setRowIndex({ menuId: menuId, row: lastIndex, grid: 1 })
-              );
+              setRowIndex(menuId, 1, lastIndex);
               setSelectedUserInfo(res.userCustomer[lastIndex]);
             } else {
               setSelectedUserInfo(res.userCustomer[rowIndex1]);

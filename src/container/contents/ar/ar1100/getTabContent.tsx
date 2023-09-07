@@ -16,7 +16,9 @@ function getTabContent(
   tabRef1: any,
   tabRef2: any,
   tabRef3: any,
-  addBtnUnClick: Function
+  addBtnUnClick: Function,
+  jpKind: any,
+  setJpKind: Function
 ) {
   switch (tabId) {
     case 0:
@@ -34,6 +36,8 @@ function getTabContent(
           menuId={menuId}
           ref={tabRef1}
           addBtnUnClick={addBtnUnClick}
+          jpKind={jpKind}
+          setJpKind={setJpKind}
         />
       );
     case 1:

@@ -19,8 +19,8 @@ export interface IAR110065DETAIL {
   pjKumVat: number;
   pjKumack: number;
   pjMisukum: number;
-  pjQty: string;
-  pjReqty: string;
+  pjQty: number;
+  pjReqty: number;
   pjSno: string;
   pjSwCode: string;
   pjSwName: string;
@@ -39,8 +39,8 @@ export const emptyObj = {
   pjDate: "",
   pjJpCode: "",
   pjJpName: "",
-  pjQty: "",
-  pjReqty: "",
+  pjQty: 0,
+  pjReqty: 0,
   pjDanga: 0,
   pjVatDiv: "",
   pjKumVat: 0,

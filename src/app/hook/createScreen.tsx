@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "app/store";
-import { setRowIndex } from "app/state/tab/tabSlice";
 import { apiGet } from "app/axios";
 import { addDeleteMenuId, setIsDelete } from "app/state/modal/modalSlice";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
@@ -28,7 +27,8 @@ function CreateScreen(
   } = use4Btns();
 
   const { showDraggableLine, linePos } = useDrawLine(leftSideWidth);
-  const { rowIndex, gridIndexes } = useRowIndex(menuId, 0);
+
+  const { getRowIndex, setRowIndex } = useRowIndex();
   const { showDeleteModal, openModal, closeModal } = useModal();
 
   const [getCommonDictionary, { data: dataCommonDic }] =
@@ -40,6 +40,7 @@ function CreateScreen(
   const [selected, setSelected] = useState<any>({});
 
   const [loading, setLoading] = useState<boolean>(false);
+  const rowIndex = getRowIndex(menuId, 0);
 
   useEffect(() => {
     getCommonDictionary({ groupId: groupId, functionName: functionName });
@@ -62,11 +63,11 @@ function CreateScreen(
 
       if (pos === "last") {
         setSelected(dataS[lastIndex]);
-        dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 }));
+        setRowIndex(menuId, 0, lastIndex);
       } else {
         if (rowIndex) {
           if (rowIndex > lastIndex) {
-            dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 }));
+            setRowIndex(menuId, 0, lastIndex);
             setSelected(dataS[lastIndex]);
           } else {
             setSelected(dataS[rowIndex]);
@@ -135,8 +136,6 @@ function CreateScreen(
     showDraggableLine,
     showAll4Btns,
     show4Btns,
-    gridIndexes,
-    rowIndex,
     dispatch,
     dataCommonDic,
     linePos,

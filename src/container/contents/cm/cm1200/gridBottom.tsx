@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { useDispatch } from "app/store";
-import { setRowIndex } from "app/state/tab/tabSlice";
+import { addRowIndex } from "app/state/tab/tabSlice";
 import { fields2, columns2, layout2 } from "./data";
 
 function GridTable({
@@ -69,7 +69,7 @@ function GridTable({
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected && setSelected(data[itemIndex]);
       dispatch(
-        setRowIndex({
+        addRowIndex({
           menuId: menuId,
           grid: gridNumber ? gridNumber : 0,
           row: itemIndex,

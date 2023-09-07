@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { LeftSideEN } from "../commonStyle";
-import { setRowIndex } from "app/state/tab/tabSlice";
+import { addRowIndex } from "app/state/tab/tabSlice";
 import { useDispatch } from "app/store";
 
 function Grid({
@@ -60,7 +60,7 @@ function Grid({
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected(data[itemIndex]);
       setIsAddBtnClicked && setIsAddBtnClicked(false);
-      dispatch(setRowIndex({ menuId: menuId, row: itemIndex, grid: 0 }));
+      dispatch(addRowIndex({ menuId: menuId, row: itemIndex, grid: 0 }));
     };
 
     return () => {

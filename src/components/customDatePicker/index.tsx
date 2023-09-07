@@ -92,7 +92,7 @@ const InputWrapper = styled.div`
   }
 
   .customMaskInput {
-    width: calc(100% - 2px);
+    width: calc(100% - 20px);
     height: 28px;
     position: absolute;
     margin: 0;
@@ -117,12 +117,14 @@ const InputWrapper = styled.div`
     top: 0px;
     height: 100%;
     width: 20px;
-    padding: 2px 0 0 3px;
     border-left: 1px solid rgb(188, 185, 185);
 
     img {
       width: 13px;
       height: 14px;
+      position: absolute;
+      top: 6px;
+      right: 3px;
     }
   }
 `;

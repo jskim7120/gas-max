@@ -122,6 +122,7 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
           custOut: selected?.custOut,
           jcBasicJaego: selected?.jcBasicJaego,
           jcJpDanga: selected?.jcJpDanga,
+          jpKind: selected?.jpKind,
         })
       );
 

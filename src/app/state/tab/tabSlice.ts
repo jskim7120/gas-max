@@ -96,7 +96,7 @@ const tabSlice = createSlice({
       window.location.reload();
     },
 
-    setRowIndex: (state, action) => {
+    addRowIndex: (state, action) => {
       const tab = state.tabs.find(
         (tab) => tab.menuId === action.payload.menuId
       );
@@ -119,7 +119,7 @@ export const {
   setActiveTab,
   setTabs,
   refreshTabs,
-  setRowIndex,
+  addRowIndex,
 } = tabSlice.actions;
 
 export default tabSlice.reducer;

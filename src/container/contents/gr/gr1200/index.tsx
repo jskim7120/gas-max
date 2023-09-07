@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CreateScreen from "app/hook/createScreen";
-import { setRowIndex } from "app/state/tab/tabSlice";
 import { GR1200SEARCH } from "app/path";
 import { apiGet } from "app/axios";
 import CustomDatePicker from "components/customDatePicker";
@@ -26,6 +25,7 @@ import Loader from "components/loader";
 import { DateWithoutDash } from "helpers/dateFormat";
 import Table from "./table";
 import { fields, columns, layout } from "./data";
+import useRowIndex from "app/hook/useRowIndex";
 
 const leftSideWidth: number = 920;
 
@@ -51,7 +51,6 @@ function GR1200({
     setLoading,
     isAddBtnClicked,
     setIsAddBtnClicked,
-    rowIndex,
     dispatch,
     dataCommonDic,
     addBtnUnclick,
@@ -61,7 +60,11 @@ function GR1200({
     handleClickDelete,
   } = CreateScreen("GR", "GR1200", menuId, GR1200SEARCH, leftSideWidth);
 
+  const { getRowIndex, setRowIndex } = useRowIndex();
+
   const [data2, setData2] = useState({});
+
+  const rowIndex = getRowIndex(menuId, 0);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -98,13 +101,11 @@ function GR1200({
 
         if (pos === "last") {
           setSelected(res.realgridData[lastIndex]);
-          dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 }));
+          setRowIndex(menuId, 0, lastIndex);
         } else {
           if (rowIndex) {
             if (rowIndex > lastIndex) {
-              dispatch(
-                setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 })
-              );
+              setRowIndex(menuId, 0, lastIndex);
               setSelected(res.realgridData[lastIndex]);
             } else {
               setSelected(res.realgridData[rowIndex]);

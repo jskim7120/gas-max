@@ -27,7 +27,8 @@ import { fields, columns } from "./data";
 import { IAR1100SEARCH, emtObj } from "./model";
 import getTabContent from "./getTabContent";
 import Grid from "./grid";
-import { addCM1106AR1100Tick } from "app/state/modal/modalSlice";
+import { addCM1106 } from "app/state/modal/modalSlice";
+import useRowIndex from "app/hook/useRowIndex";
 
 let currentDate;
 let dateWithTime: string;
@@ -59,8 +60,10 @@ function AR1100({
   const [dataDictionary, setDataDictionary] = useState({});
   const [tabId, setTabId] = useState<number>(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [jpKind, setJpKind] = useState();
 
-  const { info, source } = useSelector((state) => state.footer);
+  const { info, source } = useSelector((state: any) => state.footer);
+  const { getRowIndex, setRowIndex } = useRowIndex();
   const { showCM1105Modal, openModal: openCM1105Modal } = useModal();
   const {
     showCustomerModal,
@@ -72,6 +75,8 @@ function AR1100({
     useForm<IAR1100SEARCH>({
       mode: "onSubmit",
     });
+
+  let rowIndex = getRowIndex(menuId, 0);
 
   useEffect(() => {
     if (dataCommonDic && dataCommonDic?.dataInit) {
@@ -119,7 +124,7 @@ function AR1100({
   const onTabChangeOnAdd = () => {
     dispatch(addSource({ source: menuId + tabId.toString() }));
     dispatch(
-      addCM1106AR1100Tick({
+      addCM1106({
         source: menuId + tabId.toString(),
         jpName: "",
         jpCode: "",
@@ -129,7 +134,6 @@ function AR1100({
         jcJpDanga: 0,
       })
     );
-    // addEmptyRow();
     fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
   };
 
@@ -183,6 +187,7 @@ function AR1100({
 
     if (data?.length > 0) {
       if ("isNew" in data[data?.length - 1]) {
+        setRowIndex(menuId, 0, data?.length - 1);
         setData((prev: any) =>
           prev.map((object: any, idx: number) => {
             if (idx === data?.length - 1) {
@@ -191,21 +196,36 @@ function AR1100({
           })
         );
       } else {
+        setRowIndex(menuId, 0, data?.length);
         setData((prev) => [...prev, { ...emtObj, ...obj }]);
       }
     } else {
+      setRowIndex(menuId, 0, 0);
       setData((prev) => [...prev, { ...emtObj, ...obj }]);
     }
   };
 
-  const fetchData = async (params: any) => {
+  const fetchData = async (params: any, pos: string = "") => {
     setLoading(true);
     const dataS = await apiGet(AR1100SEARCH, params);
 
     if (dataS && dataS?.length > 0) {
       setData(dataS);
       const lastIndex = dataS && dataS?.length > 1 ? dataS.length - 1 : 0;
-      setSelected(dataS[lastIndex]);
+
+      if (pos === "last") {
+        setSelected(dataS[lastIndex]);
+        setRowIndex(menuId, 0, lastIndex);
+      } else {
+        if (rowIndex) {
+          if (rowIndex > lastIndex) {
+            setRowIndex(menuId, 0, lastIndex);
+            setSelected(dataS[lastIndex]);
+          } else {
+            setSelected(dataS[rowIndex]);
+          }
+        }
+      }
     } else {
       setData([]);
       setSelected({});
@@ -217,8 +237,11 @@ function AR1100({
     const res = await apiGet(AR1100SELECT, params);
 
     if (res && Object.keys(res)?.length > 0) {
-      if (selected?.pjType === "0") {
+      if (res?.detailData && res?.detailData?.length > 0) {
+        setJpKind(res?.detailData[0]?.jpKind);
         setData65(res?.detailData[0]);
+      }
+      if (selected?.pjType === "0") {
         setDataDictionary({
           pjVatDiv: res?.pjVatDiv,
           pjSwCode: res?.pjSwCode,
@@ -228,7 +251,6 @@ function AR1100({
         });
       }
       if (selected?.pjType === "1") {
-        setData65(res?.detailData[0]);
         setDataDictionary({
           proxyType: res?.proxyType,
           saleState: res?.saleState,
@@ -236,7 +258,6 @@ function AR1100({
         });
       }
       if (selected?.pjType === "2") {
-        setData65(res?.detailData[0]);
         setDataDictionary({
           tsAbcCode: res?.tsAbcCode,
           tsGubun: res?.tsGubun,
@@ -388,7 +409,7 @@ function AR1100({
   const submit = async (params: any) => {
     addBtnUnClick();
     prepareParamsForSearch(params);
-    fetchData(params);
+    fetchData(params, "last");
   };
 
   const handleClickBtnAdd = () => {
@@ -649,10 +670,10 @@ function AR1100({
           columns={columns}
           setSelected={setSelected}
           menuId={menuId}
-          rowIndex={data?.length > 1 ? data.length - 1 : 0}
+          rowIndex={rowIndex}
           style={{
             height: `calc(50%)`,
-            borderBottom: "1px solid #707070",
+            borderBottom: "1px solid rgb(188,185,185)",
             marginBottom: "3px",
           }}
           openModal={openCustomerModal}
@@ -686,7 +707,9 @@ function AR1100({
             tabRef1,
             tabRef2,
             tabRef3,
-            addBtnUnClick
+            addBtnUnClick,
+            jpKind,
+            setJpKind
           )}
         </TabContentWrapper>
       </WrapperContent>

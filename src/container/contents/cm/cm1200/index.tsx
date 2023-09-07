@@ -22,6 +22,7 @@ import setFooterDetail from "container/contents/footer/footerDetailFunc";
 import { ISEARCH } from "./model";
 import Form from "./form";
 import { fields, columns } from "./data";
+import useRowIndex from "app/hook/useRowIndex";
 
 const leftSideWidth: number = 520;
 let clonedSelected: any;
@@ -47,7 +48,6 @@ function CM1200({
     loading,
     fetchData,
     showDraggableLine,
-    gridIndexes,
     dispatch,
     dataCommonDic,
     linePos,
@@ -58,14 +58,16 @@ function CM1200({
     showAll4Btns,
   } = CreateScreen("CM", "CM1200", menuId, CM1200SEARCH, leftSideWidth);
 
+  const { getRowIndex } = useRowIndex();
   const cm1105 = useSelector((state) => state.modal.cm1105);
 
   const [userInfo, setUserInfo] = useState<any[]>([]);
   const [selectedUserInfo, setSelectedUserInfo] = useState<any>({});
   const [supplyTab, setSupplyTab] = useState<any>({});
   const [dataDictionary, setDataDictionary] = useState({});
-  const rowIndex0 = gridIndexes?.find((item) => item.grid === 0)?.row;
-  const rowIndex1 = gridIndexes?.find((item) => item.grid === 1)?.row;
+
+  const rowIndex0 = getRowIndex(menuId, 0);
+  const rowIndex1 = getRowIndex(menuId, 1);
 
   useEffect(() => {
     if (dataCommonDic) {

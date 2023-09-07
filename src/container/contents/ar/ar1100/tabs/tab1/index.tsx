@@ -14,7 +14,7 @@ import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { currencyMask, removeCommas } from "helpers/currency";
 import { IAR110065DETAIL } from "./model";
-
+import { tableHeader11, tableHeader12, tableHeader2 } from "./tableHeader";
 const Tab1 = React.forwardRef(
   (
     {
@@ -29,6 +29,8 @@ const Tab1 = React.forwardRef(
       selected,
       menuId,
       addBtnUnClick,
+      jpKind,
+      setJpKind,
     }: {
       tabId: number;
       areaCode: string;
@@ -41,6 +43,8 @@ const Tab1 = React.forwardRef(
       selected: any;
       menuId: string;
       addBtnUnClick: Function;
+      jpKind: any;
+      setJpKind: Function;
     },
     ref: React.ForwardedRef<any>
   ) => {
@@ -58,6 +62,8 @@ const Tab1 = React.forwardRef(
     const footerState = useSelector((state: any) => state.footer);
 
     const [pjJago, setPjJago] = useState<number>(0);
+    const [pjQty, setPjQty] = useState<number>(0);
+
     const { showCM1106Modal, openModal } = useModal();
 
     let calcPjJago = 0;
@@ -65,29 +71,23 @@ const Tab1 = React.forwardRef(
     let pjKumVat = 0;
     let pjKumack = 0;
     let pjDanga = 0;
-    let pjQty = 0;
     let pjReqty = 0;
     let pjMisukum = 0;
     let pjInkum = 0;
     let pjDc = 0;
 
     useEffect(() => {
-      if (cm1106.source === "AR11000" && cm1106.jpCode && cm1106.jpName) {
+      if (cm1106.source === "AR11000") {
+        setJpKind(cm1106.jpKind);
         resetForm("jpName");
       }
-    }, [cm1106.jpCode, cm1106.jpName, cm1106.tick]);
+    }, [cm1106.tick]);
 
     useEffect(() => {
       if (data65 && Object.keys(data65)?.length > 0) {
         resetForm("reset");
       }
     }, [data65]);
-
-    useEffect(() => {
-      if (watch("pjQty") !== undefined) {
-        handlePjQtyChange();
-      }
-    }, [watch("pjQty")]);
 
     useEffect(() => {
       if (watch("pjReqty") !== undefined) {
@@ -132,14 +132,14 @@ const Tab1 = React.forwardRef(
       }
     };
 
-    const handlePjQtyChange = () => {
+    const handlePjQtyChange = (value: number) => {
+      setPjQty(value);
       pjDanga = getValues("pjDanga") ? +removeCommas(getValues("pjDanga")) : 0;
-      pjQty = getValues("pjQty") ? +getValues("pjQty") : 0;
-      pjKumSup = pjDanga * pjQty;
+      pjKumSup = pjDanga * value;
       calcLast2field();
       reset((formValues) => ({
         ...formValues,
-        pjReqty: watch("pjQty"),
+        pjReqty: value,
         pjKumSup: pjKumSup,
         pjKumVat: pjKumVat,
         pjKumack: pjKumack,
@@ -147,7 +147,6 @@ const Tab1 = React.forwardRef(
     };
 
     const handlePjReqtyChange = () => {
-      pjQty = getValues("pjQty") ? +getValues("pjQty") : 0;
       pjReqty = getValues("pjReqty") ? +getValues("pjReqty") : 0;
       calcPjJago = pjJago + pjQty - pjReqty;
       reset((formValues) => ({
@@ -161,9 +160,7 @@ const Tab1 = React.forwardRef(
         ? +removeCommas(getValues("pjDanga"), "number")
         : 0;
 
-      pjQty = getValues("pjQty") ? +getValues("pjQty") : 0;
       pjKumSup = pjDanga * pjQty;
-
       calcLast2field();
       reset((formValues) => ({
         ...formValues,
@@ -204,10 +201,11 @@ const Tab1 = React.forwardRef(
 
     const resetForm = (type: string) => {
       if (type === "reset") {
+        setPjQty(data65?.pjQty);
         reset({
-          pjCuCode: selected?.cuCode,
-          pjCuName: selected?.cuName,
           ...data65,
+          pjJpCode: data65?.pjJpCode ? data65?.pjJpCode : "",
+          pjJpName: data65?.pjJpName ? data65?.pjJpName : "",
         });
       } else if (type === "jpName") {
         const pjJago =
@@ -281,11 +279,12 @@ const Tab1 = React.forwardRef(
       params.pjInkum = removeCommas(params.pjInkum, "number");
       params.pjDc = removeCommas(params.pjDc, "number");
       params.pjMisukum = removeCommas(params.pjMisukum, "number");
+      params.pjQty = pjQty;
 
       if (params.pjSwCode) {
         const pjSwName = dictionary?.pjSwCode?.find(
           (item: any) => item.code === params.pjSwCode
-        ).codeName;
+        )?.codeName;
         params.pjSwName = pjSwName;
       }
 
@@ -295,216 +294,211 @@ const Tab1 = React.forwardRef(
       }
     };
 
-    const tableData1 = [
-      {
-        0: (
-          <FormGroup>
-            <Select register={register("saleState")} width={InputSize.i100}>
-              {dictionary?.saleState?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
-        1: (
+    const td1 = {
+      0: (
+        <FormGroup>
+          <Select register={register("saleState")} width={InputSize.i100}>
+            {dictionary?.saleState?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+      ),
+      1: (
+        <Controller
+          control={control}
+          name="pjDate"
+          render={({ field }) => (
+            <CustomDatePicker
+              {...field}
+              readOnly={!isAddBtnClicked}
+              style={{ margin: "1px 0 0 0" }}
+            />
+          )}
+        />
+      ),
+      2: (
+        <FormGroup style={{ position: "relative" }}>
+          <Input
+            register={register("pjJpCode")}
+            inputSize={InputSize.i70}
+            readOnly={!isAddBtnClicked}
+          />
           <Controller
             control={control}
-            name="pjDate"
+            name="pjJpName"
             render={({ field }) => (
-              <CustomDatePicker
+              <Input
                 {...field}
                 readOnly={!isAddBtnClicked}
-                style={{ margin: "1px 0 0 0" }}
+                style={{ width: "230px" }}
               />
             )}
           />
-        ),
-        2: (
-          <FormGroup style={{ position: "relative" }}>
-            <Input
-              register={register("pjJpCode")}
-              inputSize={InputSize.i70}
-              readOnly={!isAddBtnClicked}
-            />
-            <Controller
-              control={control}
-              name="pjJpName"
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  readOnly={!isAddBtnClicked}
-                  style={{ width: "230px" }}
-                />
-              )}
-            />
 
-            <span
-              style={{
-                width: "22px",
-                height: "22px",
-                borderRadius: "50%",
-                background: "#686767",
-                position: "absolute",
-                right: "6px",
-                bottom: "6px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingLeft: "3px",
-              }}
-              onClick={isAddBtnClicked ? openPopupCM1106 : undefined}
-            >
-              <MagnifyingGlass />
-            </span>
-          </FormGroup>
-        ),
-        3:
-          data65?.jpKind === "4" ? (
-            <Controller
-              control={control}
-              name="qtyKg"
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  inputSize={InputSize.i100}
-                  textAlign="right"
-                />
-              )}
-            />
-          ) : (
-            <Controller
-              control={control}
-              name="pjQty"
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  inputSize={InputSize.i100}
-                  textAlign="right"
-                />
-              )}
-            />
-          ),
+          <span
+            style={{
+              width: "22px",
+              height: "22px",
+              borderRadius: "50%",
+              background: "#686767",
+              position: "absolute",
+              right: "6px",
+              bottom: "6px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingLeft: "3px",
+            }}
+            onClick={isAddBtnClicked ? openPopupCM1106 : undefined}
+          >
+            <MagnifyingGlass />
+          </span>
+        </FormGroup>
+      ),
+    };
 
-        4:
-          data65?.jpKind === "4" ? (
-            <Controller
-              control={control}
-              name="qtyL"
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  inputSize={InputSize.i100}
-                  textAlign="right"
-                />
-              )}
-            />
-          ) : (
-            <Controller
-              control={control}
-              name="pjReqty"
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  inputSize={InputSize.i100}
-                  textAlign="right"
-                />
-              )}
-            />
-          ),
-        5:
-          data65?.jpKind === "4" ? (
+    const td21 = {
+      3: (
+        <Controller
+          control={control}
+          name="qtyKg"
+          render={({ field }) => (
+            <Input {...field} inputSize={InputSize.i100} textAlign="right" />
+          )}
+        />
+      ),
+      4: (
+        <Controller
+          control={control}
+          name="qtyL"
+          render={({ field }) => (
+            <Input {...field} inputSize={InputSize.i100} textAlign="right" />
+          )}
+        />
+      ),
+      5: (
+        <Input
+          register={register("jpSpecific")}
+          inputSize={InputSize.i100}
+          textAlign="right"
+        />
+      ),
+    };
+
+    const td22 = {
+      3: (
+        <Input
+          type="number"
+          name="pjQty"
+          value={pjQty}
+          onChange={(e: any) => {
+            handlePjQtyChange(e.target.value);
+          }}
+          inputSize={InputSize.i100}
+          textAlign="right"
+        />
+      ),
+
+      4: (
+        <Controller
+          control={control}
+          name="pjReqty"
+          render={({ field }) => (
+            <Input {...field} inputSize={InputSize.i100} textAlign="right" />
+          )}
+        />
+      ),
+
+      5: (
+        <Input
+          register={register("pjJago")}
+          inputSize={InputSize.i100}
+          textAlign="right"
+        />
+      ),
+    };
+
+    const td3 = {
+      6: (
+        <Controller
+          control={control}
+          name="pjDanga"
+          render={({ field }) => (
             <Input
-              register={register("jpSpecific")}
+              {...field}
               inputSize={InputSize.i100}
               textAlign="right"
+              mask={currencyMask}
             />
-          ) : (
+          )}
+        />
+      ),
+      7: (
+        <FormGroup>
+          <Controller
+            control={control}
+            name="pjVatDiv"
+            render={({ field }) => (
+              <Select {...field} width={InputSize.i100}>
+                {dictionary?.pjVatDiv?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            )}
+          />
+        </FormGroup>
+      ),
+      8: (
+        <Controller
+          control={control}
+          name="pjKumSup"
+          render={({ field }) => (
             <Input
-              register={register("pjJago")}
+              {...field}
               inputSize={InputSize.i100}
+              readOnly
               textAlign="right"
+              mask={currencyMask}
             />
-          ),
-        6: (
-          <Controller
-            control={control}
-            name="pjDanga"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                textAlign="right"
-                mask={currencyMask}
-              />
-            )}
-          />
-        ),
-        7: (
-          <FormGroup>
-            <Controller
-              control={control}
-              name="pjVatDiv"
-              render={({ field }) => (
-                <Select {...field} width={InputSize.i100}>
-                  {dictionary?.pjVatDiv?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              )}
+          )}
+        />
+      ),
+      9: (
+        <Controller
+          control={control}
+          name="pjKumVat"
+          render={({ field }) => (
+            <Input
+              {...field}
+              inputSize={InputSize.i100}
+              readOnly
+              textAlign="right"
+              mask={currencyMask}
             />
-          </FormGroup>
-        ),
-        8: (
-          <Controller
-            control={control}
-            name="pjKumSup"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                readOnly
-                textAlign="right"
-                mask={currencyMask}
-              />
-            )}
-          />
-        ),
-        9: (
-          <Controller
-            control={control}
-            name="pjKumVat"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                readOnly
-                textAlign="right"
-                mask={currencyMask}
-              />
-            )}
-          />
-        ),
-        10: (
-          <Controller
-            control={control}
-            name="pjKumack"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                readOnly
-                textAlign="right"
-                mask={currencyMask}
-              />
-            )}
-          />
-        ),
-      },
-    ];
+          )}
+        />
+      ),
+      10: (
+        <Controller
+          control={control}
+          name="pjKumack"
+          render={({ field }) => (
+            <Input
+              {...field}
+              inputSize={InputSize.i100}
+              readOnly
+              textAlign="right"
+              mask={currencyMask}
+            />
+          )}
+        />
+      ),
+    };
 
     const tableData2 = [
       {
@@ -615,6 +609,21 @@ const Tab1 = React.forwardRef(
       },
     ];
 
+    const getTableInfo = () => {
+      switch (jpKind) {
+        case "4":
+          return {
+            tableHeader: tableHeader11,
+            tableData: [{ ...td1, ...td21, ...td3 }],
+          };
+        default:
+          return {
+            tableHeader: tableHeader12,
+            tableData: [{ ...td1, ...td22, ...td3 }],
+          };
+      }
+    };
+
     return (
       <>
         {showCM1106Modal()}
@@ -623,36 +632,13 @@ const Tab1 = React.forwardRef(
             <div className="tab1">
               <Table
                 className="no-space"
-                tableHeader={[
-                  "거래상태",
-                  "판매일자",
-                  "품  명",
-                  data65?.jpKind === "4" ? "매출량(kg)" : "판매수량",
-                  data65?.jpKind === "4" ? "매출량(ℓ)" : "공병회수",
-                  data65?.jpKind === "4" ? "비중(kg/ℓ)" : "재고",
-                  "단가",
-                  "VAT",
-                  "공급가액",
-                  "세액",
-                  " 합계금액",
-                ]}
-                tableData={tableData1}
+                tableHeader={getTableInfo().tableHeader}
+                tableData={getTableInfo().tableData}
                 style={{ marginBottom: "2px" }}
               />
               <Table
                 className="no-space"
-                tableHeader={[
-                  "대납구분",
-                  "매입처명",
-                  "입금방법",
-                  "입금  계좌",
-                  "입금액",
-                  "D/C",
-                  "미입금액",
-                  "사원",
-                  "비고",
-                  "확인자 서명",
-                ]}
+                tableHeader={tableHeader2}
                 tableData={tableData2}
               />
             </div>

@@ -49,7 +49,6 @@ function GR1500({
     setIsAddBtnClicked,
     fetchData,
     showDraggableLine,
-    gridIndexes,
     dispatch,
     dataCommonDic,
     linePos,

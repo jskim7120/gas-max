@@ -7,7 +7,6 @@ import use4Btns from "app/hook/use4Btns";
 import { GR1300SEARCH } from "app/path";
 import { useDispatch } from "app/store";
 import { apiGet } from "app/axios";
-import { setRowIndex } from "app/state/tab/tabSlice";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
@@ -45,7 +44,7 @@ function GR1300({
 
   const { showDraggableLine, linePos } = useMidLine(leftSideWidth);
   const { dataCommonDic } = useDictionary("GR", "GR1300");
-  const { rowIndex } = useRowIndex(menuId, 0);
+  const { getRowIndex, setRowIndex } = useRowIndex();
   const { show4Btns, addBtnUnclick, isAddBtnClicked } = use4Btns();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -54,6 +53,8 @@ function GR1300({
   const [data2, setData2] = useState<any>({});
   const [bbBuCode, setBbBuCode] = useState<Array<any>>([]);
   const [bbSupplyType, setBbSupplyType] = useState<Array<any>>([]);
+
+  const rowIndex = getRowIndex(menuId, 0);
 
   useEffect(() => {
     if (dataCommonDic) {
@@ -92,13 +93,11 @@ function GR1300({
 
         if (pos === "last") {
           setSelected(res.dataMain[lastIndex]);
-          dispatch(setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 }));
+          setRowIndex(menuId, 0, lastIndex);
         } else {
           if (rowIndex) {
             if (rowIndex > lastIndex) {
-              dispatch(
-                setRowIndex({ menuId: menuId, row: lastIndex, grid: 0 })
-              );
+              setRowIndex(menuId, 0, lastIndex);
               setSelected(res.dataMain[lastIndex]);
             } else {
               setSelected(res.dataMain[rowIndex]);

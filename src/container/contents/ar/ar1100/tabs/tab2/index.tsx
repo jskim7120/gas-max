@@ -156,7 +156,11 @@ const Tab2 = React.forwardRef(
 
     const resetForm = (type: string) => {
       if (type === "reset") {
-        reset(data65);
+        reset({
+          ...data65,
+          pcJpCode: data65?.pcJpCode ? data65?.pcJpCode : "",
+          pcJpName: data65?.pcJpName ? data65?.pcJpName : "",
+        });
       } else if (type === "jpName") {
         reset((formValues) => ({
           ...formValues,
