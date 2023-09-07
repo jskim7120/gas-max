@@ -63,6 +63,10 @@ function useModal() {
     return <Modal type="reLoginModal" isOpen={isOpen} setIsOpen={setIsOpen} />;
   };
 
+  const showEN1500Modal = () => {
+    return <Modal type="en1500Modal" isOpen={isOpen} setIsOpen={setIsOpen} />;
+  };
+
   const showCustomerModal = ({ onClose }: { onClose?: MouseEventHandler }) => {
     return (
       <Modal
@@ -91,6 +95,7 @@ function useModal() {
     showDeleteModal,
     showReLoginModal,
     showCustomerModal,
+    showEN1500Modal,
   };
 }
 

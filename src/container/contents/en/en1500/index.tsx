@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "app/store";
 import Draggable from "react-draggable";
-import { apiGet, apiPost } from "app/axios";
+import { apiGet } from "app/axios";
 import { EN1500LIST } from "app/path";
 
 import Button from "components/button/button";
@@ -26,7 +26,7 @@ function EN1500({
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
-  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+
   const [linePos, setLinePos] = useState(420);
 
   useEffect(() => {
@@ -63,7 +63,6 @@ function EN1500({
       setData([]);
       setSelected({});
     }
-    setSelectedRowIndex(0);
   };
   const handleDrag = (event: any, ui: any) => {
     setLinePos(ui.x);
@@ -101,15 +100,7 @@ function EN1500({
             width: `calc(100% - ${linePos}px)`,
           }}
         >
-          <Form
-            selected={selected}
-            ref={formRef}
-            fetchData={fetchData}
-            setData={setData}
-            selectedRowIndex={selectedRowIndex}
-            setSelectedRowIndex={setSelectedRowIndex}
-            setSelected={setSelected}
-          />
+          <Form ref={formRef} selected={selected} setSelected={setSelected} />
         </RightSide>
 
         <Draggable

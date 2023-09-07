@@ -124,7 +124,7 @@ function Popup({
           {type === "cc1200Modal" && <CC1200Modal setIsOpen={setIsOpen} />}
           {type === "pt1105Modal" && <PT1105Modal setIsOpen={setIsOpen} />}
           {type === "pt1205Modal" && <PT1205Modal setIsOpen={setIsOpen} />}
-          {type === "en1500Modal" && <EN1500Modal />}
+          {type === "en1500Modal" && <EN1500Modal setIsOpen={setIsOpen} />}
         </Suspense>
       </PopupContainer>
     </PopupArea>

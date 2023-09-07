@@ -39,7 +39,7 @@ function RV1100({
   ownAreaCode: string;
 }) {
   const dispatch = useDispatch();
-  const {} = useModal();
+  const { showEN1500Modal, openModal } = useModal();
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
   const [selectedRowIndex, setSelectedRowIndex] = useState(0);
@@ -106,6 +106,7 @@ function RV1100({
   const openPopupEN1500 = async (selected: any) => {
     // dispatch(openModal({ type: "en1500Modal" }));
     dispatch(rv1100Popup({ areaCode: selected.areaCode }));
+    openModal();
   };
 
   const search2 = async (params: ISEARCH) => {
@@ -167,6 +168,7 @@ function RV1100({
 
   return (
     <>
+      {showEN1500Modal()}
       <SearchWrapper className="h35">
         <FormGroup>
           {ownAreaCode === "00" && (
