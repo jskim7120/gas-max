@@ -11,13 +11,7 @@ import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { EN1500UPDATE, EN150065 } from "app/path";
 import { InputSize } from "components/componentsType";
 import Button from "components/button/button";
-import {
-  Select,
-  FormGroup,
-  Wrapper,
-  Label,
-  Input,
-} from "components/form/style";
+import { Select, FormGroup, Label, Input } from "components/form/style";
 import { IJNOTRY2 } from "./model";
 import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
 import { VolReading } from "../en1500/style";
@@ -72,9 +66,7 @@ const Form = (
       let newData: any = {};
 
       if (type === "reset") {
-        for (const [key, value] of Object.entries(selected)) {
-          newData[key] = value;
-        }
+        reset(selected);
       }
       if (type === "upReset") {
         for (const [key, value] of Object.entries(selected)) {
@@ -99,8 +91,8 @@ const Form = (
         newData.jnMpdanga = jnMpdanga;
         newData.jnKgdanga = jnKgdanga;
         newData.jnKgdangaMp = jnKgdangaMp;
+        reset(newData);
       }
-      reset(newData);
     }
   };
   const update = async (data: IJNOTRY2) => {

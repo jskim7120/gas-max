@@ -12,7 +12,6 @@ import {
 } from "container/contents/commonStyle";
 import { addDeleteMenuId, setIsDelete } from "app/state/modal/modalSlice";
 import { apiGet } from "app/axios";
-import Modal from "components/modal/modal";
 import useModal from "./useModal";
 import useRowIndex from "./useRowIndex";
 
@@ -171,7 +170,7 @@ function CreateEN(
     return (
       <>
         {showDeleteModal()}
-        <SearchWrapper className="h35 mt5">
+        <SearchWrapper className="h35">
           <div className="buttons">
             <Button
               text="등록 (F1)"

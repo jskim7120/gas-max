@@ -248,22 +248,22 @@ function Form({
     }
   };
 
-  const handleChoose = () => {
-    if (selected && Object.keys(selected)?.length > 0) {
-      dispatch(addInfo({ info: selected }));
+  const handleChoose = (obj: any, isClose: boolean = false) => {
+    if (obj && Object.keys(obj)?.length > 0) {
+      dispatch(addInfo({ info: obj }));
 
       activeTabId === "AR1100" &&
         dispatch(
           addCM1106({
-            areaCode: selected?.areaCode,
-            cuCode: selected?.cuCode,
+            areaCode: obj?.areaCode,
+            cuCode: obj?.cuCode,
             source: footerState.source,
           })
         );
 
-      setIsOpen(false);
+      isClose && setIsOpen(false);
     } else {
-      alert("please choose row from grid ");
+      alert("please choose row from table ");
     }
   };
 
@@ -348,7 +348,12 @@ function Form({
         </div>
       </form>
 
-      <Grid data={data} setSelected={setSelected} rowIndex={0} />
+      <Grid
+        data={data}
+        setSelected={setSelected}
+        rowIndex={0}
+        handleChoose={handleChoose}
+      />
       <div className="bottom">
         <div className="bottom__upper">
           <Badge
@@ -390,7 +395,7 @@ function Form({
               icon={<TickInCircle />}
               type="button"
               color={ButtonColor.SUCCESS}
-              onClick={handleChoose}
+              onClick={() => handleChoose(selected, true)}
             />
             <Button
               text="취소"

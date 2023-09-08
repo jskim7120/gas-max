@@ -1,16 +1,17 @@
 import { useState, useEffect, useRef } from "react";
-import { useSelector } from "app/store";
-import Draggable from "react-draggable";
 import { apiGet } from "app/axios";
 import { EN1500LIST } from "app/path";
-
+import { useSelector } from "app/store";
+import useMidLine from "app/hook/useMidLine";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import { Update } from "components/allSvgIcon";
+import { Update, Reset } from "components/allSvgIcon";
 import Form from "./form";
 import Grid from "../grid";
 import { columns, fields } from "./data";
 import { MainWrapper, RightSide, SearchWrapper } from "../../commonStyle";
+
+const leftSideWidth: number = 500;
 
 function EN1500({
   depthFullName,
@@ -21,17 +22,17 @@ function EN1500({
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
-  const isOpen = useSelector((state) => state.sidebar);
+  const btnRef2 = useRef() as React.MutableRefObject<HTMLButtonElement>;
+
   const activeTabId = useSelector((state) => state.tab.activeTabId);
+
+  const { showDraggableLine, linePos } = useMidLine(leftSideWidth);
 
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
 
-  const [linePos, setLinePos] = useState(420);
-
   useEffect(() => {
-    //fetchData();
-    fetchData(data);
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -54,8 +55,8 @@ function EN1500({
     }
   }, [activeTabId]);
 
-  const fetchData = async (params: any) => {
-    const data1500 = await apiGet(EN1500LIST, params);
+  const fetchData = async () => {
+    const data1500 = await apiGet(EN1500LIST);
     if (data1500) {
       setData(data1500);
       setSelected(data1500[0]);
@@ -64,28 +65,36 @@ function EN1500({
       setSelected({});
     }
   };
-  const handleDrag = (event: any, ui: any) => {
-    setLinePos(ui.x);
+
+  const handleClickBtn1 = () => {
+    formRef.current.update();
+  };
+
+  const handleClickBtn2 = () => {
+    formRef.current.resetForm("reset");
   };
 
   return (
     <>
-      <SearchWrapper className=" mt5" style={{ height: "40px" }}>
+      <SearchWrapper className="h35">
         <div className="buttons">
           <Button
             text="저장 (F7)"
             icon={<Update />}
-            style={{ marginRight: "5px" }}
-            onClick={() => {
-              formRef.current.update();
-            }}
+            onClick={handleClickBtn1}
             color={ButtonColor.SECONDARY}
             ref={btnRef1}
+          />
+          <Button
+            text="취소 (F9)"
+            icon={<Reset />}
+            onClick={handleClickBtn2}
+            ref={btnRef2}
           />
         </div>
         <p>{depthFullName}</p>
       </SearchWrapper>
-      <MainWrapper style={{ height: `calc(100% - 40px)` }}>
+      <MainWrapper>
         <Grid
           data={data}
           fields={fields}
@@ -102,25 +111,7 @@ function EN1500({
         >
           <Form ref={formRef} selected={selected} setSelected={setSelected} />
         </RightSide>
-
-        <Draggable
-          axis="x"
-          bounds={{ left: 0, right: window.innerWidth }}
-          position={{ x: linePos, y: 0 }}
-          onDrag={handleDrag}
-        >
-          <div
-            style={{
-              position: "absolute",
-              top: "110px",
-              left: `${isOpen} ? 87px : 5px`,
-              width: "4px",
-              height: "calc(100% - 190px)",
-              backgroundColor: "#707070",
-              cursor: "col-resize",
-            }}
-          ></div>
-        </Draggable>
+        {showDraggableLine()}
       </MainWrapper>
     </>
   );

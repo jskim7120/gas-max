@@ -5,7 +5,7 @@ import { apiGet } from "app/axios";
 import { FOOTHISTORY } from "app/path";
 import useModal from "app/hook/useModal";
 import { FooterContainer } from "./style";
-import { SearchIcon, Truck, File } from "components/allSvgIcon";
+import { SearchIcon } from "components/allSvgIcon";
 import { getCuType, getCuStae, getCircleBadge } from "./helper";
 import Badge from "components/badge";
 import { BadgeColor, BadgeSize } from "components/componentsType";

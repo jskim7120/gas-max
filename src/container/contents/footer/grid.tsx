@@ -8,10 +8,12 @@ function Grid({
   data,
   setSelected,
   rowIndex,
+  handleChoose,
 }: {
   data: any;
   setSelected: Function;
   rowIndex: number;
+  handleChoose: Function;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -54,11 +56,7 @@ function Grid({
 
     gv.onCellDblClicked = function (grid: any, e: any) {
       const itemIndex: any = gv.getCurrent().dataRow;
-      if (JSON.stringify(data[itemIndex]) !== "{}") {
-        dispatch(addInfo({ info: data[itemIndex] }));
-      } else {
-        alert("please choose row from grid ");
-      }
+      handleChoose(data[itemIndex], true);
     };
 
     return () => {

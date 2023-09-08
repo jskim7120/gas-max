@@ -60,6 +60,7 @@ function AR1100({
   const [dataDictionary, setDataDictionary] = useState({});
   const [tabId, setTabId] = useState<number>(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
+  const [isInfoSelected, setIsInfoSelected] = useState<boolean>(false);
   const [jpKind, setJpKind] = useState();
 
   const { info, source } = useSelector((state: any) => state.footer);
@@ -93,6 +94,7 @@ function AR1100({
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
+      setIsInfoSelected(false);
       if (selected?.pjType && Number(selected?.pjType) !== tabId) {
         setTabId(Number(selected?.pjType));
       }
@@ -111,12 +113,15 @@ function AR1100({
   }, [selected]);
 
   useEffect(() => {
-    if (source.substring(0, 6) === menuId && info) {
-      addCodeAndNameToLastRow(info);
-      if (info?.cuType === "0") {
-        tabId !== 0 && setTabId(0);
-      } else {
-        tabId !== 1 && setTabId(1);
+    if (source.substring(0, 6) === menuId) {
+      if (info) {
+        addCodeAndNameToLastRow(info);
+        setIsInfoSelected(true);
+        if (info?.cuType === "0") {
+          tabId !== 0 && setTabId(0);
+        } else {
+          tabId !== 1 && setTabId(1);
+        }
       }
     }
   }, [info]);
@@ -408,6 +413,7 @@ function AR1100({
 
   const submit = async (params: any) => {
     addBtnUnClick();
+    setIsInfoSelected(false);
     prepareParamsForSearch(params);
     fetchData(params, "last");
   };
@@ -425,6 +431,7 @@ function AR1100({
   const handleReset = () => {
     resetSearchForm("reset");
     addBtnUnClick();
+    setIsInfoSelected(false);
     handleSubmit(submit)();
   };
 
@@ -688,7 +695,9 @@ function AR1100({
             "A/S",
             "수금",
           ]}
-          onClick={(id) => (isAddBtnClicked ? setTabId(id) : null)}
+          onClick={(id) =>
+            isAddBtnClicked ? (isInfoSelected ? null : setTabId(id)) : null
+          }
           tabId={tabId}
         />
 
