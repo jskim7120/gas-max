@@ -284,12 +284,7 @@ const Tab2 = React.forwardRef(
             control={control}
             name="pcReqty"
             render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                textAlign="right"
-                mask={currencyMask}
-              />
+              <Input {...field} inputSize={InputSize.i100} textAlign="right" />
             )}
           />
         ),
@@ -330,6 +325,7 @@ const Tab2 = React.forwardRef(
               <Input
                 {...field}
                 inputSize={InputSize.i100}
+                readOnly
                 textAlign="right"
                 mask={currencyMask}
               />

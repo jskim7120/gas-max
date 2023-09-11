@@ -287,12 +287,7 @@ const Tab3 = React.forwardRef(
           control={control}
           name="tsQty"
           render={({ field }) => (
-            <Input
-              {...field}
-              inputSize={InputSize.i100}
-              textAlign="right"
-              mask={currencyMask}
-            />
+            <Input {...field} inputSize={InputSize.i100} textAlign="right" />
           )}
         />
       ),
@@ -333,6 +328,7 @@ const Tab3 = React.forwardRef(
             <Input
               {...field}
               inputSize={InputSize.i100}
+              readOnly
               textAlign="right"
               mask={currencyMask}
             />
@@ -347,6 +343,7 @@ const Tab3 = React.forwardRef(
             <Input
               {...field}
               inputSize={InputSize.i100}
+              readOnly
               textAlign="right"
               mask={currencyMask}
             />
@@ -364,6 +361,7 @@ const Tab3 = React.forwardRef(
             <Input
               {...field}
               inputSize={InputSize.i150}
+              readOnly
               textAlign="right"
               mask={currencyMask}
             />
@@ -470,6 +468,7 @@ const Tab3 = React.forwardRef(
               <Input
                 {...field}
                 inputSize={InputSize.i100}
+                readOnly
                 textAlign="right"
                 mask={currencyMask}
               />
