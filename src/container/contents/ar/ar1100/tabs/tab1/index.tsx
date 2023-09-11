@@ -119,7 +119,14 @@ const Tab1 = React.forwardRef(
       }
     }, [watch("pjDc")]);
 
-    const calcLast2field = () => {
+    const calcKumSup = (qty: number = pjQty) => {
+      pjDanga = +removeCommas(getValues("pjDanga"))
+        ? +removeCommas(getValues("pjDanga"), "number")
+        : 0;
+      pjKumSup = pjDanga * qty;
+    };
+
+    const calcKumackKumVat = () => {
       if (getValues("pjVatDiv") === "0") {
         pjKumVat = 0;
         pjKumack = pjKumSup;
@@ -132,17 +139,26 @@ const Tab1 = React.forwardRef(
       }
     };
 
+    const calcMisukum = () => {
+      pjDc = getValues("pjDc") ? +removeCommas(getValues("pjDc"), "number") : 0;
+      pjInkum = getValues("pjInkum")
+        ? +removeCommas(getValues("pjInkum"), "number")
+        : 0;
+      pjMisukum = pjKumack - pjDc - pjInkum;
+    };
+
     const handlePjQtyChange = (value: number) => {
       setPjQty(value);
-      pjDanga = getValues("pjDanga") ? +removeCommas(getValues("pjDanga")) : 0;
-      pjKumSup = pjDanga * value;
-      calcLast2field();
+      calcKumSup(value);
+      calcKumackKumVat();
+      calcMisukum();
       reset((formValues) => ({
         ...formValues,
         pjReqty: value,
         pjKumSup: pjKumSup,
         pjKumVat: pjKumVat,
         pjKumack: pjKumack,
+        pjMisukum: pjMisukum,
       }));
     };
 
@@ -156,29 +172,27 @@ const Tab1 = React.forwardRef(
     };
 
     const handlePjDangaChange = () => {
-      pjDanga = +removeCommas(getValues("pjDanga"))
-        ? +removeCommas(getValues("pjDanga"), "number")
-        : 0;
-
-      pjKumSup = pjDanga * pjQty;
-      calcLast2field();
+      calcKumSup();
+      calcKumackKumVat();
+      calcMisukum();
       reset((formValues) => ({
         ...formValues,
         pjKumSup: pjKumSup,
         pjKumVat: pjKumVat,
         pjKumack: pjKumack,
+        pjMisukum: pjMisukum,
       }));
     };
 
     const handlePjVatDivChange = () => {
-      pjKumSup = getValues("pjKumSup")
-        ? +removeCommas(getValues("pjKumSup"), "number")
-        : 0;
-      calcLast2field();
+      pjKumSup = getValues("pjKumSup") ? +getValues("pjKumSup") : 0;
+      calcKumackKumVat();
+      calcMisukum();
       reset((formValues) => ({
         ...formValues,
         pjKumVat: pjKumVat,
         pjKumack: pjKumack,
+        pjMisukum: pjMisukum,
       }));
     };
 
@@ -186,13 +200,7 @@ const Tab1 = React.forwardRef(
       pjKumack = getValues("pjKumack")
         ? +removeCommas(getValues("pjKumack"), "number")
         : 0;
-
-      pjDc = getValues("pjDc") ? +removeCommas(getValues("pjDc"), "number") : 0;
-      pjInkum = getValues("pjInkum")
-        ? +removeCommas(getValues("pjInkum"), "number")
-        : 0;
-
-      pjMisukum = pjKumack - pjDc - pjInkum;
+      calcMisukum();
       reset((formValues) => ({
         ...formValues,
         pjMisukum: pjMisukum,

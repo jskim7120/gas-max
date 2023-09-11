@@ -106,7 +106,17 @@ const Tab3 = React.forwardRef(
       }
     }, [watch("tsDc")]);
 
-    const calcLast2field = () => {
+    const calcKumSup = () => {
+      tsDanga = +removeCommas(getValues("tsDanga"))
+        ? +removeCommas(getValues("tsDanga"), "number")
+        : 0;
+      tsQty = +removeCommas(getValues("tsQty"))
+        ? +removeCommas(getValues("tsQty"), "number")
+        : 0;
+      tsKumSup = tsDanga * tsQty;
+    };
+
+    const calcKumackKumVat = () => {
       if (getValues("tsVatDiv") === "0") {
         tsKumVat = 0;
         tsKumack = tsKumSup;
@@ -119,45 +129,49 @@ const Tab3 = React.forwardRef(
       }
     };
 
+    const calcMisukum = () => {
+      tsDc = getValues("tsDc") ? +removeCommas(getValues("tsDc"), "number") : 0;
+      tsInkum = getValues("tsInkum")
+        ? +removeCommas(getValues("tsInkum"), "number")
+        : 0;
+      tsMisu = tsKumack - tsDc - tsInkum;
+    };
+
     const handleTsQtyChange = () => {
-      tsDanga = getValues("tsDanga") ? +removeCommas(getValues("tsDanga")) : 0;
-      tsQty = getValues("tsQty") ? +getValues("tsQty") : 0;
-      tsKumSup = tsDanga * tsQty;
-      calcLast2field();
+      calcKumSup();
+      calcKumackKumVat();
+      calcMisukum();
       reset((formValues) => ({
         ...formValues,
         tsKumSup: tsKumSup,
         tsKumVat: tsKumVat,
         tsKumack: tsKumack,
+        tsMisu: tsMisu,
       }));
     };
 
     const handleTsDangaChange = () => {
-      tsDanga = +removeCommas(getValues("tsDanga"))
-        ? +removeCommas(getValues("tsDanga"), "number")
-        : 0;
-
-      tsQty = getValues("tsQty") ? +getValues("tsQty") : 0;
-      tsKumSup = tsDanga * tsQty;
-
-      calcLast2field();
+      calcKumSup();
+      calcKumackKumVat();
+      calcMisukum();
       reset((formValues) => ({
         ...formValues,
         tsKumSup: tsKumSup,
         tsKumVat: tsKumVat,
         tsKumack: tsKumack,
+        tsMisu: tsMisu,
       }));
     };
 
     const handleTsVatDivChange = () => {
-      tsKumSup = getValues("tsKumSup")
-        ? +removeCommas(getValues("tsKumSup"), "number")
-        : 0;
-      calcLast2field();
+      tsKumSup = getValues("tsKumSup") ? +getValues("tsKumSup") : 0;
+      calcKumackKumVat();
+      calcMisukum();
       reset((formValues) => ({
         ...formValues,
         tsKumVat: tsKumVat,
         tsKumack: tsKumack,
+        tsMisu: tsMisu,
       }));
     };
 
@@ -165,13 +179,7 @@ const Tab3 = React.forwardRef(
       tsKumack = getValues("tsKumack")
         ? +removeCommas(getValues("tsKumack"), "number")
         : 0;
-
-      tsDc = getValues("tsDc") ? +removeCommas(getValues("tsDc"), "number") : 0;
-      tsInkum = getValues("tsInkum")
-        ? +removeCommas(getValues("tsInkum"), "number")
-        : 0;
-
-      tsMisu = tsKumack - tsDc - tsInkum;
+      calcMisukum();
       reset((formValues) => ({
         ...formValues,
         tsMisu: tsMisu,
