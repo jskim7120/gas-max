@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle } from "react";
+import React, { useEffect, useState, useImperativeHandle } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   AR1100CJSALEINSERT,
@@ -55,8 +55,10 @@ const Tab2 = React.forwardRef(
 
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const footerState = useSelector((state: any) => state.footer);
+    const [pcQty, setPcQty] = useState<number>(0);
 
     const { showCM1106Modal, openModal } = useModal();
+    let pcKumack = 0;
 
     useImperativeHandle<any, any>(ref, () => ({
       reset,
@@ -75,12 +77,6 @@ const Tab2 = React.forwardRef(
     }, [data65]);
 
     useEffect(() => {
-      if (watch("pcQty") !== undefined) {
-        handlePcQtyChange();
-      }
-    }, [watch("pcQty")]);
-
-    useEffect(() => {
       if (watch("pcReqty") !== undefined) {
         handlePcReqtyChange();
       }
@@ -92,21 +88,24 @@ const Tab2 = React.forwardRef(
       }
     }, [watch("pcDanga")]);
 
-    const handlePcQtyChange = () => {
+    const calcKumack = (value: number = pcQty) => {
+      pcKumack =
+        value *
+        (getValues("pcDanga")
+          ? +removeCommas(getValues("pcDanga"), "number")
+          : 0);
+    };
+
+    const handlePcQtyChange = (value: number) => {
+      setPcQty(value);
       const pcJaego =
         cm1106?.jcBasicJaego !== null
           ? +removeCommas(cm1106.jcBasicJaego, "number")
           : 0;
-
-      const pcKumack =
-        +removeCommas(watch("pcQty"), "number") *
-        (getValues("pcDanga")
-          ? +removeCommas(getValues("pcDanga"), "number")
-          : 0);
-
+      calcKumack(value);
       reset((formValues) => ({
         ...formValues,
-        pcReqty: watch("pcQty"),
+        pcReqty: value,
         pcJaego: pcJaego,
         pcKumack: pcKumack,
       }));
@@ -117,7 +116,7 @@ const Tab2 = React.forwardRef(
         (cm1106?.jcBasicJaego !== null
           ? +removeCommas(cm1106.jcBasicJaego, "number")
           : 0) +
-        (getValues("pcQty") ? +removeCommas(getValues("pcQty"), "number") : 0) -
+        pcQty -
         (getValues("pcReqty")
           ? +removeCommas(getValues("pcReqty"), "number")
           : 0);
@@ -129,12 +128,7 @@ const Tab2 = React.forwardRef(
     };
 
     const handlePcDangaChange = () => {
-      const pcKumack =
-        +removeCommas(watch("pcQty"), "number") *
-        (getValues("pcDanga")
-          ? +removeCommas(getValues("pcDanga"), "number")
-          : 0);
-
+      calcKumack();
       reset((formValues) => ({
         ...formValues,
         pcKumack: pcKumack,
@@ -156,6 +150,7 @@ const Tab2 = React.forwardRef(
 
     const resetForm = (type: string) => {
       if (type === "reset") {
+        setPcQty(data65?.pcQty);
         reset({
           ...data65,
           pcJpCode: data65?.pcJpCode ? data65?.pcJpCode : "",
@@ -191,6 +186,8 @@ const Tab2 = React.forwardRef(
       params.pcJaego = +removeCommas(params.pcJaego, "number");
       params.pcKumack = +removeCommas(params.pcKumack, "number");
       params.pcGum = +removeCommas(params.pcGum, "number");
+      params.pcQty = pcQty;
+
       if (params?.pcSwCode) {
         params.pcSwName = dictionary?.pcSwCode?.find(
           (item: any) => item.code === params.pcSwCode
@@ -271,17 +268,15 @@ const Tab2 = React.forwardRef(
           </FormGroup>
         ),
         3: (
-          <Controller
-            control={control}
+          <Input
+            type="number"
             name="pcQty"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                textAlign="right"
-                mask={currencyMask}
-              />
-            )}
+            value={pcQty}
+            onChange={(e: any) => {
+              handlePcQtyChange(e.target.value);
+            }}
+            inputSize={InputSize.i100}
+            textAlign="right"
           />
         ),
         4: (

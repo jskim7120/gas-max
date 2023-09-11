@@ -3,10 +3,10 @@ export interface IAR1100TAB2 {
   pcDate: string;
   pcJpCode: string;
   pcJpName: string;
-  pcQty: string;
-  pcReqty: string;
+  pcQty: number;
+  pcReqty: number;
   pcJaego: number;
-  pcDanga: string;
+  pcDanga: number;
   pcKumack: number;
   pcGum: string;
   pcSwCode: string;
