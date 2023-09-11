@@ -206,6 +206,9 @@ export const Input = ({
             type={type ? type : "text"}
             onChange={onChange}
             onKeyDown={handleKeyPress}
+            onFocus={(e) => {
+              e.currentTarget.select();
+            }}
           />
         ) : (
           <InputForm
@@ -227,6 +230,9 @@ export const Input = ({
             onChange={onChange}
             minWidth={minWidth && minWidth}
             onKeyDown={handleKeyPress}
+            onFocus={(e) => {
+              e.currentTarget.select();
+            }}
           />
         )}
       </FormGroup>

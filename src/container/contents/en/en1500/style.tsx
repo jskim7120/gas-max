@@ -1,16 +1,17 @@
 import styled from "styled-components";
 
 export const VolReading = styled.div`
-  border: 1px solid rgb(188, 185, 185);
-  margin-top: 5px;
-  border-radius: 8px;
-  box-shadow: 0px 3px 6px rgba(104, 103, 103, 0.35);
-
   width: 100%;
-  padding-bottom: 7px;
+  border: 1px solid rgb(188, 185, 185);
+  border-radius: 8px;
+  padding-bottom: 5px;
 
   &.ml5 {
-    margin-left: 5px;
+    margin-left: 7px;
+  }
+
+  &.mt3 {
+    margin-top: 3px;
   }
 
   .title {

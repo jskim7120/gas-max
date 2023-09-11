@@ -69,7 +69,7 @@ const EN1500Modal = ({ setModalOpen }: { setModalOpen: Function }) => {
         </FormGroup>
       </ModalBlueHeader>
 
-      <Form ref={formRef} selected={selected} setSelected={setSelected} />
+      <Form ref={formRef} selected={selected} />
     </form>
   );
 };

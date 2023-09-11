@@ -54,7 +54,6 @@ const Form = React.forwardRef(
       selected,
       isAddBtnClicked,
       prepareSearchFormValues,
-      clonedSelected,
     }: {
       ownAreaCode: string;
       menuId: string;
@@ -71,7 +70,6 @@ const Form = React.forwardRef(
       isAddBtnClicked: boolean;
       setIsAddBtnClicked: Function;
       prepareSearchFormValues: Function;
-      clonedSelected: any;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -307,38 +305,38 @@ const Form = React.forwardRef(
         }
       } else {
         if (!formValues.chkCuRh20) {
-          formValues.cuRh2O = clonedSelected.cuRh2O;
+          formValues.cuRh2O = selected.cuRh2O;
         }
         if (!formValues.chkCuAnKum) {
-          formValues.cuAnkum = clonedSelected.cuAnkum;
+          formValues.cuAnkum = selected.cuAnkum;
         }
         if (!formValues.chkCuMeterKum) {
-          formValues.cuMeterkum = clonedSelected.cuMeterkum;
+          formValues.cuMeterkum = selected.cuMeterkum;
         }
         if (!formValues.chkCuPer) {
-          formValues.cuPer = clonedSelected.cuPer;
+          formValues.cuPer = selected.cuPer;
         }
         if (!formValues.chkCuCdc) {
-          formValues.cuCdc = clonedSelected.cuCdc;
+          formValues.cuCdc = selected.cuCdc;
         }
         if (!formValues.chkCuSukumtype) {
-          formValues.cuSukumtype = clonedSelected.cuSukumtype;
+          formValues.cuSukumtype = selected.cuSukumtype;
         }
         if (!formValues.chkCuGumTurm) {
-          formValues.cuGumTurm = clonedSelected.cuGumTurm;
+          formValues.cuGumTurm = selected.cuGumTurm;
         }
         if (!formValues.chkCuGumdate) {
-          formValues.cuGumdate = clonedSelected.cuGumdate;
+          formValues.cuGumdate = selected.cuGumdate;
         }
         if (!formValues.chkCuCno) {
-          formValues.cuCno = clonedSelected.cuCno;
+          formValues.cuCno = selected.cuCno;
         }
 
         if (!formValues.chkCuRdanga) {
-          formValues.cuRdanga = clonedSelected.cuRdanga;
-          formValues.cuRdangaAmt = clonedSelected.cuRdangaAmt;
-          formValues.cuRdangaSign = clonedSelected.cuRdangaSign;
-          formValues.cuRdangaType = clonedSelected.cuRdangaType;
+          formValues.cuRdanga = selected.cuRdanga;
+          formValues.cuRdangaAmt = selected.cuRdangaAmt;
+          formValues.cuRdangaSign = selected.cuRdangaSign;
+          formValues.cuRdangaType = selected.cuRdangaType;
         }
       }
 

@@ -94,7 +94,7 @@ function RV1100({
     setLoading(true);
     const data = await apiGet(RV1100SEARCH, params);
 
-    if (data.mainData.length > 0) {
+    if (data?.mainData?.length > 0) {
       setData(data.mainData);
     } else {
       setData([]);
@@ -104,7 +104,6 @@ function RV1100({
   };
 
   const openPopupEN1500 = async (selected: any) => {
-    // dispatch(openModal({ type: "en1500Modal" }));
     dispatch(rv1100Popup({ areaCode: selected.areaCode }));
     openModal();
   };

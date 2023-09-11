@@ -6,55 +6,48 @@ import React, {
 } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet, apiPost } from "app/axios";
-import Table from "components/table";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { EN1500UPDATE, EN150065 } from "app/path";
 import { InputSize } from "components/componentsType";
 import Button from "components/button/button";
 import { Select, FormGroup, Label, Input } from "components/form/style";
-import { IJNOTRY2 } from "./model";
-import { currencyMask, formatCurrencyRemoveComma } from "helpers/currency";
-import { VolReading } from "../en1500/style";
 import { InfoText } from "components/text";
+import Table from "components/table";
+import { currencyMask, removeCommas } from "helpers/currency";
+import { IJNOTRY2 } from "./model";
+import { VolReading } from "./style";
 
 interface IForm {
   selected: any;
-  setSelected: any;
+  fetchData?: Function;
 }
 
-const Form = (
-  { selected, setSelected }: IForm,
-  ref: React.ForwardedRef<any>
-) => {
+const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
   const [getCommonDictionary, { data: dataCommonDic }] =
     useGetCommonDictionaryMutation();
 
-  const [unitPriceData, setUnitPriceData] = useState<any>([]);
-  const [jnMpdanga, setJnMpdanga] = useState<number>(selected.jnMpdanga);
-  const [jnKgdanga, setJnKgdanga] = useState<number>(selected.jnKgdanga);
-  const [jnKgdangaMp, setJnKgdangaMp] = useState<number>(selected.jnKgdangaMp);
+  const { register, handleSubmit, reset, getValues, control } =
+    useForm<IJNOTRY2>({
+      mode: "onChange",
+    });
+
+  const [unitPriceData, setUnitPriceData] = useState<any>({});
 
   useEffect(() => {
     getCommonDictionary({ groupId: "EN", functionName: "EN1500" });
   }, []);
 
   useEffect(() => {
-    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-      reset(selected);
-      setJnMpdanga(selected.jnMpdanga);
-      setJnKgdanga(selected.jnKgdanga);
-      setJnKgdangaMp(selected.jnKgdangaMp);
+    if (selected && Object.keys(selected)?.length > 0) {
+      resetForm("reset");
     }
   }, [selected]);
 
   useEffect(() => {
-    resetForm("upReset");
+    if (selected && Object.keys(selected)?.length > 0) {
+      resetForm("upReset");
+    }
   }, [unitPriceData]);
-
-  const { register, handleSubmit, reset, getValues, control } =
-    useForm<IJNOTRY2>({
-      mode: "onChange",
-    });
 
   useImperativeHandle<HTMLFormElement, any>(ref, () => ({
     update,
@@ -62,109 +55,53 @@ const Form = (
   }));
 
   const resetForm = (type: string) => {
-    if (selected !== undefined && JSON.stringify(selected) !== "{}") {
-      let newData: any = {};
-
-      if (type === "reset") {
-        reset(selected);
-      }
-      if (type === "upReset") {
-        for (const [key, value] of Object.entries(selected)) {
-          newData[key] = value;
-        }
-
-        newData.tempJn280Mp = unitPriceData.tempJn280Mp;
-        newData.tempJn600Mp = unitPriceData.tempJn600Mp;
-        newData.tempJn1000Mp = unitPriceData.tempJn1000Mp;
-        newData.tempJn1500Mp = unitPriceData.tempJn1500Mp;
-        newData.tempJn2000Mp = unitPriceData.tempJn2000Mp;
-        newData.tempJn2500Mp = unitPriceData.tempJn2500Mp;
-        newData.tempJn7000Mp = unitPriceData.tempJn7000Mp;
-        newData.tempJnKgdanga280 = unitPriceData.tempJnKgdanga280;
-        newData.tempJnKgdanga600 = unitPriceData.tempJnKgdanga600;
-        newData.tempJnKgdanga1000 = unitPriceData.tempJnKgdanga1000;
-        newData.tempJnKgdanga1500 = unitPriceData.tempJnKgdanga1500;
-        newData.tempJnKgdanga2000 = unitPriceData.tempJnKgdanga2000;
-        newData.tempJnKgdanga2500 = unitPriceData.tempJnKgdanga2500;
-        newData.tempJnKgdanga7000 = unitPriceData.tempJnKgdanga7000;
-
-        newData.jnMpdanga = jnMpdanga;
-        newData.jnKgdanga = jnKgdanga;
-        newData.jnKgdangaMp = jnKgdangaMp;
-        reset(newData);
-      }
+    if (type === "reset") {
+      reset(selected);
+    } else if (type === "upReset") {
+      reset((formValues) => ({
+        ...formValues,
+        ...unitPriceData,
+      }));
     }
   };
+
+  const calcUnitPrice = async () => {
+    let params: any = {};
+    params.areaCode = selected.areaCode;
+    params.jnKgdangaMp = getValues("jnKgdangaMp");
+    params.jnKgdanga = getValues("jnKgdanga");
+
+    const res = await apiGet(EN150065, params);
+
+    if (res) {
+      setUnitPriceData(res[0]);
+    } else {
+      setUnitPriceData({});
+    }
+  };
+
   const update = async (data: IJNOTRY2) => {
-    let updateParams: any = {};
     const formValues = getValues();
-    if (typeof formValues.jnCost280 === "string") {
-      formValues.jnCost280 = Number(formValues.jnCost280.replaceAll(",", ""));
-    }
-    if (typeof formValues.jnCost600 === "string") {
-      formValues.jnCost600 = Number(formValues.jnCost600.replaceAll(",", ""));
-    }
-    if (typeof formValues.jnCost1000 === "string") {
-      formValues.jnCost1000 = Number(formValues.jnCost1000.replaceAll(",", ""));
-    }
-    if (typeof formValues.jnCost1500 === "string") {
-      formValues.jnCost1500 = Number(formValues.jnCost1500.replaceAll(",", ""));
-    }
-    if (typeof formValues.jnCost2000 === "string") {
-      formValues.jnCost2000 = Number(formValues.jnCost2000.replaceAll(",", ""));
-    }
-    if (typeof formValues.jnCost2500 === "string") {
-      formValues.jnCost2500 = Number(formValues.jnCost2500.replaceAll(",", ""));
-    }
-    if (typeof formValues.jnCost7000 === "string") {
-      formValues.jnCost7000 = Number(formValues.jnCost7000.replaceAll(",", ""));
-    }
-    if (typeof formValues.jnMpdanga === "string") {
-      formValues.jnMpdanga = Number(formValues.jnMpdanga);
-    }
-    if (typeof formValues.jnKgdanga === "string") {
-      formValues.jnKgdanga = Number(formValues.jnKgdanga);
-    }
-    if (typeof formValues.jnKgdangaMp === "string") {
-      formValues.jnKgdangaMp = Number(formValues.jnKgdangaMp);
-    }
-    formValues.jnAnkum = formValues.jnAnkum
-      ? formatCurrencyRemoveComma(formValues.jnAnkum)
-      : "";
 
-    updateParams.areaCode = formValues.areaCode;
-    updateParams.areaName = formValues.areaName;
-    updateParams.jnPerMeth = formValues.jnPerMeth;
-    updateParams.jnMpdanga = formValues.jnMpdanga;
-    updateParams.jnKgdangaMp = formValues.jnKgdangaMp;
-    updateParams.jnKgdanga = formValues.jnKgdanga * 10000;
-    updateParams.jnChekum = formValues.jnChekum;
-    updateParams.jnJiroPrint = formValues.jnJiroPrint;
-    updateParams.jnCost280 = formValues.jnCost280;
-    updateParams.jnCost600 = formValues.jnCost600;
-    updateParams.jnCost1000 = formValues.jnCost1000;
-    updateParams.jnCost1500 = formValues.jnCost1500;
-    updateParams.jnCost2000 = formValues.jnCost2000;
-    updateParams.jnCost2500 = formValues.jnCost2500;
-    updateParams.jnCost7000 = formValues.jnCost7000;
-    updateParams.jnR = formValues.jnR;
-    updateParams.jnAnkum = formValues.jnAnkum;
-    updateParams.jnGumdate = formValues.jnGumdate;
-    updateParams.jnSukumtype = formValues.jnSukumtype;
-    updateParams.jnPer = formValues.jnPer;
+    formValues.jnCost280 = +removeCommas(formValues.jnCost280, "number");
+    formValues.jnCost600 = +removeCommas(formValues.jnCost600, "number");
+    formValues.jnCost1000 = +removeCommas(formValues.jnCost1000, "number");
+    formValues.jnCost1500 = +removeCommas(formValues.jnCost1500, "number");
+    formValues.jnCost2000 = +removeCommas(formValues.jnCost2000, "number");
+    formValues.jnCost2500 = +removeCommas(formValues.jnCost2500, "number");
+    formValues.jnCost7000 = +removeCommas(formValues.jnCost7000, "number");
+    formValues.jnAnkum = +removeCommas(formValues.jnAnkum, "number");
+    formValues.jnMpdanga = +formValues.jnMpdanga;
+    formValues.jnKgdangaMp = +formValues.jnKgdangaMp;
+    formValues.jnKgdanga = +formValues.jnKgdanga;
 
-    const res: any = await apiPost(
+    const res = await apiPost(
       EN1500UPDATE,
-      updateParams,
+      formValues,
       "저장이 성공하였습니다"
     );
     if (res) {
-      //setData((prev: any) => {
-      //  prev[selectedRowIndex] = formValues;
-      //  return [...prev];
-      //});
-
-      setSelected(formValues);
+      fetchData && fetchData();
     }
   };
 
@@ -185,8 +122,20 @@ const Form = (
           )}
         />
       ),
-      unitPrice: <Input register={register("tempJn280Mp")} textAlign="right" />,
-      rate: <Input register={register("tempJnKgdanga280")} textAlign="right" />,
+      unitPrice: (
+        <Input
+          type="number"
+          register={register("tempJn280Mp")}
+          textAlign="right"
+        />
+      ),
+      rate: (
+        <Input
+          type="number"
+          register={register("tempJnKgdanga280")}
+          textAlign="right"
+        />
+      ),
     },
     {
       title: "600 mmH2O",
@@ -204,8 +153,20 @@ const Form = (
           )}
         />
       ),
-      unitPrice: <Input register={register("tempJn600Mp")} textAlign="right" />,
-      rate: <Input register={register("tempJnKgdanga600")} textAlign="right" />,
+      unitPrice: (
+        <Input
+          type="number"
+          register={register("tempJn600Mp")}
+          textAlign="right"
+        />
+      ),
+      rate: (
+        <Input
+          type="number"
+          register={register("tempJnKgdanga600")}
+          textAlign="right"
+        />
+      ),
     },
     {
       title: "1000 mmH2O",
@@ -224,10 +185,18 @@ const Form = (
         />
       ),
       unitPrice: (
-        <Input register={register("tempJn1000Mp")} textAlign="right" />
+        <Input
+          type="number"
+          register={register("tempJn1000Mp")}
+          textAlign="right"
+        />
       ),
       rate: (
-        <Input register={register("tempJnKgdanga1000")} textAlign="right" />
+        <Input
+          type="number"
+          register={register("tempJnKgdanga1000")}
+          textAlign="right"
+        />
       ),
     },
     {
@@ -247,10 +216,18 @@ const Form = (
         />
       ),
       unitPrice: (
-        <Input register={register("tempJn1500Mp")} textAlign="right" />
+        <Input
+          type="number"
+          register={register("tempJn1500Mp")}
+          textAlign="right"
+        />
       ),
       rate: (
-        <Input register={register("tempJnKgdanga1500")} textAlign="right" />
+        <Input
+          type="number"
+          register={register("tempJnKgdanga1500")}
+          textAlign="right"
+        />
       ),
     },
     {
@@ -270,10 +247,18 @@ const Form = (
         />
       ),
       unitPrice: (
-        <Input register={register("tempJn2000Mp")} textAlign="right" />
+        <Input
+          type="number"
+          register={register("tempJn2000Mp")}
+          textAlign="right"
+        />
       ),
       rate: (
-        <Input register={register("tempJnKgdanga2000")} textAlign="right" />
+        <Input
+          type="number"
+          register={register("tempJnKgdanga2000")}
+          textAlign="right"
+        />
       ),
     },
     {
@@ -293,10 +278,18 @@ const Form = (
         />
       ),
       unitPrice: (
-        <Input register={register("tempJn2500Mp")} textAlign="right" />
+        <Input
+          type="number"
+          register={register("tempJn2500Mp")}
+          textAlign="right"
+        />
       ),
       rate: (
-        <Input register={register("tempJnKgdanga2500")} textAlign="right" />
+        <Input
+          type="number"
+          register={register("tempJnKgdanga2500")}
+          textAlign="right"
+        />
       ),
     },
     {
@@ -316,41 +309,33 @@ const Form = (
         />
       ),
       unitPrice: (
-        <Input register={register("tempJn7000Mp")} textAlign="right" />
+        <Input
+          type="number"
+          register={register("tempJn7000Mp")}
+          textAlign="right"
+        />
       ),
       rate: (
-        <Input register={register("tempJnKgdanga7000")} textAlign="right" />
+        <Input
+          type="number"
+          register={register("tempJnKgdanga7000")}
+          textAlign="right"
+        />
       ),
     },
   ];
-
-  const calcUnitPrice = async () => {
-    let params: any = {};
-    params.areaCode = selected.areaCode;
-    params.jnMpdanga = jnMpdanga;
-    params.jnKgdanga = jnKgdanga;
-    params.jnKgdangaMp = jnKgdangaMp;
-
-    const res = await apiGet(EN150065, params);
-
-    if (res) {
-      setUnitPriceData(res[0]);
-    } else {
-      setUnitPriceData([]);
-    }
-  };
 
   return (
     <form
       // onSubmit={handleSubmit(submit)}
       style={{
         width: "890px",
-        padding: "5px 10px 10px",
+        padding: "0px 10px 10px",
       }}
       autoComplete="off"
     >
       <FormGroup>
-        <Input label="코 드" register={register("areaCode")} maxLength="2" />
+        <Input label="코 드" register={register("areaCode")} />
         <Input
           label="영업소명"
           register={register("areaName")}
@@ -363,31 +348,25 @@ const Form = (
         <FormGroup>
           <Input
             label="MP  단가(kg)"
+            type="number"
             register={register("jnMpdanga")}
             inputSize={InputSize.i85}
             textAlign="right"
-            onChange={(e: any) => {
-              setJnMpdanga(e.target.value);
-            }}
           />
           <Input
             label="kg 공급단가"
+            type="number"
             register={register("jnKgdangaMp")}
             inputSize={InputSize.i85}
             textAlign="right"
-            onChange={(e: any) => {
-              setJnKgdangaMp(e.target.value);
-            }}
           />
 
           <Input
             label="지역 표준기화율"
+            type="number"
             register={register("jnKgdanga")}
-            inputSize={InputSize.i85}
             textAlign="right"
-            onChange={(e: any) => {
-              setJnKgdanga(e.target.value);
-            }}
+            inputSize={InputSize.i85}
           />
           <Button
             text="㎥ 표준단가 계산"
@@ -408,7 +387,7 @@ const Form = (
         />
       </VolReading>
       <FormGroup style={{ alignItems: "stretch" }}>
-        <VolReading>
+        <VolReading className="mt3">
           <div className="title">압력별 환경 루베단가 설정</div>
           <div style={{ padding: "0 5px 5px 5px" }}>
             <Table
@@ -426,7 +405,7 @@ const Form = (
             style={{ marginLeft: "30px" }}
           />
         </VolReading>
-        <VolReading className="ml5">
+        <VolReading className="ml5 mt3">
           <div className="title">신규거래처 기본설정 항목</div>
           <FormGroup>
             <Label>조정기 압력</Label>
@@ -507,7 +486,7 @@ const Form = (
           />
         </VolReading>
       </FormGroup>
-      <VolReading>
+      <VolReading className="mt3">
         <div className="title">체적검침 환경</div>
         <FormGroup>
           <Label>루베단가 계산</Label>

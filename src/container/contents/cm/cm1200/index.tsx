@@ -25,7 +25,6 @@ import { fields, columns } from "./data";
 import useRowIndex from "app/hook/useRowIndex";
 
 const leftSideWidth: number = 520;
-let clonedSelected: any;
 
 function CM1200({
   depthFullName,
@@ -89,8 +88,6 @@ function CM1200({
       if (isAddBtnClicked) {
         addBtnUnclick();
       }
-
-      clonedSelected = structuredClone(selected);
 
       if (selected.cuCode && selected.areaCode) {
         fetchData65(
@@ -184,7 +181,7 @@ function CM1200({
 
   return (
     <>
-      <SearchWrapper className="h35 mt5">
+      <SearchWrapper className="h35">
         <FormGroup>
           {ownAreaCode === "00" && (
             <>
@@ -283,7 +280,6 @@ function CM1200({
             isAddBtnClicked={isAddBtnClicked}
             setIsAddBtnClicked={setIsAddBtnClicked}
             prepareSearchFormValues={prepareSearchFormValues}
-            clonedSelected={clonedSelected}
           />
         </RightSide>
         {showDraggableLine()}

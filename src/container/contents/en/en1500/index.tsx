@@ -39,8 +39,6 @@ function EN1500({
     function handleKeyDown(event: any) {
       if (event.key === "F7") {
         event.preventDefault();
-        btnRef1.current.focus();
-        // formRef.current.crud(null);
         formRef.current.update();
       }
     }
@@ -102,14 +100,14 @@ function EN1500({
           setSelected={setSelected}
           style={{ width: `${linePos}px` }}
           menuId={menuId}
-          rowIndex={0}
+          rowIndex={data ? data?.length - 1 : 0}
         />
         <RightSide
           style={{
             width: `calc(100% - ${linePos}px)`,
           }}
         >
-          <Form ref={formRef} selected={selected} setSelected={setSelected} />
+          <Form ref={formRef} selected={selected} fetchData={fetchData} />
         </RightSide>
         {showDraggableLine()}
       </MainWrapper>
