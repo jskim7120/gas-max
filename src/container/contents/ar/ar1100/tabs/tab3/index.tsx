@@ -583,6 +583,7 @@ const Tab3 = React.forwardRef(
                 icon={<Update />}
                 color={ButtonColor.SECONDARY}
                 type="submit"
+                disabled={data?.length === 0}
               />
               <Button
                 text="취소"

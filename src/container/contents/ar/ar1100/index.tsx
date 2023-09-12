@@ -479,7 +479,12 @@ function AR1100({
               onClick={handleClickBtnAdd}
               ref={btnRef1}
             />
-            <Button text="삭제" icon={<Trash />} onClick={handleClickBtnDel} />
+            <Button
+              text="삭제"
+              icon={<Trash />}
+              onClick={handleClickBtnDel}
+              disabled={data?.length === 0 || isAddBtnClicked}
+            />
             <Button text="취소" icon={<Reset />} onClick={handleReset} />
           </div>
         </FormGroup>

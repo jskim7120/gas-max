@@ -192,7 +192,7 @@ const Tab2 = React.forwardRef(
       if (params?.pcSwCode) {
         params.pcSwName = dictionary?.pcSwCode?.find(
           (item: any) => item.code === params.pcSwCode
-        ).codeName;
+        )?.codeName;
       }
 
       const res = await apiPost(path, params, "저장이 성공하였습니다");
@@ -473,6 +473,7 @@ const Tab2 = React.forwardRef(
                 icon={<Update />}
                 color={ButtonColor.SECONDARY}
                 type="submit"
+                disabled={data?.length === 0}
               />
 
               <Button
