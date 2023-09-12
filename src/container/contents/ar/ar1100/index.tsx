@@ -236,6 +236,8 @@ function AR1100({
       setData([]);
       setSelected({});
       tabId !== 0 && setTabId(0);
+      tabRef1?.current?.setPjQty(0);
+      tabRef1?.current?.setPjJago(0);
       tabRef1?.current?.reset({ ...emtObjTab1 });
     }
     setLoading(false);

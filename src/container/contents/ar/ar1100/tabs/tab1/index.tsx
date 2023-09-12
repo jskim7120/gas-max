@@ -57,6 +57,7 @@ const Tab1 = React.forwardRef(
       reset,
       crud,
       setPjQty,
+      setPjJago,
     }));
 
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
