@@ -25,6 +25,7 @@ import { WrapperContent, SearchWrapper } from "../../commonStyle";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { fields, columns } from "./data";
 import { IAR1100SEARCH, emtObj } from "./model";
+import { emtObjTab1 } from "./tabs/tab1/model";
 import getTabContent from "./getTabContent";
 import Grid from "./grid";
 import { addCM1106 } from "app/state/modal/modalSlice";
@@ -234,6 +235,8 @@ function AR1100({
     } else {
       setData([]);
       setSelected({});
+      tabId !== 0 && setTabId(0);
+      tabRef1?.current?.reset({ ...emtObjTab1 });
     }
     setLoading(false);
   };
@@ -254,6 +257,10 @@ function AR1100({
           pjInkumtype: res?.pjInkumtype,
           saleState: res?.saleState,
         });
+        if (res?.detailData && res?.detailData?.length > 0) {
+          tabRef1.current.reset(res?.detailData[0]);
+          tabRef1.current.setPjQty(res?.detailData[0]?.pjQty);
+        }
       }
       if (selected?.pjType === "1") {
         setDataDictionary({
@@ -261,6 +268,10 @@ function AR1100({
           saleState: res?.saleState,
           pcSwCode: res?.pcSwCode,
         });
+        if (res?.detailData && res?.detailData?.length > 0) {
+          tabRef2.current.reset(res?.detailData[0]);
+          tabRef2.current.setPcQty(res?.detailData[0]?.pcQty);
+        }
       }
       if (selected?.pjType === "2") {
         setDataDictionary({
@@ -272,6 +283,9 @@ function AR1100({
           tsTonggubun: res?.tsTonggubun,
           tsVatDiv: res?.tsVatDiv,
         });
+        if (res?.detailData && res?.detailData?.length > 0) {
+          tabRef3.current.reset(res?.detailData[0]);
+        }
       }
     } else {
       setData65({});
@@ -293,6 +307,7 @@ function AR1100({
         });
         if (res?.initData && res?.initData?.length > 0) {
           tabRef1?.current?.reset({ ...res.initData[0] });
+          tabRef1?.current?.setPjQty(res.initData[0]?.pjQty);
         }
       } else if (tabId === 1) {
         setDataDictionary({
@@ -302,6 +317,7 @@ function AR1100({
         });
         if (res?.initData && res?.initData?.length > 0) {
           tabRef2?.current?.reset({ ...res.initData[0] });
+          tabRef2.current?.setPcQty(res.initData[0]?.pcQty);
         }
       } else if (tabId === 2) {
         setDataDictionary({
@@ -430,8 +446,6 @@ function AR1100({
 
   const handleReset = () => {
     resetSearchForm("reset");
-    addBtnUnClick();
-    setIsInfoSelected(false);
     handleSubmit(submit)();
   };
 

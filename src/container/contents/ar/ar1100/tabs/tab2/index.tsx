@@ -62,6 +62,7 @@ const Tab2 = React.forwardRef(
 
     useImperativeHandle<any, any>(ref, () => ({
       reset,
+      setPcQty,
     }));
 
     useEffect(() => {
@@ -70,11 +71,11 @@ const Tab2 = React.forwardRef(
       }
     }, [cm1106.tick]);
 
-    useEffect(() => {
-      if (data65 && Object.keys(data65)?.length > 0) {
-        resetForm("reset");
-      }
-    }, [data65]);
+    // useEffect(() => {
+    // if (data65 && Object.keys(data65)?.length > 0) {
+    // resetForm("reset");
+    // }
+    // }, [data65]);
 
     useEffect(() => {
       if (watch("pcReqty") !== undefined) {

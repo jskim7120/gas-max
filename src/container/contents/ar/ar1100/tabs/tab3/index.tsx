@@ -71,11 +71,12 @@ const Tab3 = React.forwardRef(
     let tsInkum = 0;
     let tsDc = 0;
 
-    useEffect(() => {
-      if (data65 && Object.keys(data65)?.length > 0) {
-        resetForm("reset");
-      }
-    }, [data65]);
+    // useEffect(() => {
+    // if (data65 && Object.keys(data65)?.length > 0) {
+    // resetForm("reset");
+    // }
+    // }, [data65]);
+
     useEffect(() => {
       if (watch("tsQty") !== undefined) {
         handleTsQtyChange();

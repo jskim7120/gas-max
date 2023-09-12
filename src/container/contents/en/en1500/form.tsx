@@ -117,7 +117,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
               {...field}
               mask={currencyMask}
               textAlign="right"
-              inputSize={InputSize.i70}
+              inputSize={InputSize.i85}
             />
           )}
         />
@@ -127,6 +127,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJn280Mp")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
       rate: (
@@ -134,6 +135,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJnKgdanga280")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
     },
@@ -148,7 +150,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
               {...field}
               mask={currencyMask}
               textAlign="right"
-              inputSize={InputSize.i70}
+              inputSize={InputSize.i85}
             />
           )}
         />
@@ -158,6 +160,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJn600Mp")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
       rate: (
@@ -165,6 +168,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJnKgdanga600")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
     },
@@ -179,7 +183,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
               {...field}
               mask={currencyMask}
               textAlign="right"
-              inputSize={InputSize.i70}
+              inputSize={InputSize.i85}
             />
           )}
         />
@@ -189,6 +193,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJn1000Mp")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
       rate: (
@@ -196,6 +201,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJnKgdanga1000")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
     },
@@ -210,7 +216,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
               {...field}
               mask={currencyMask}
               textAlign="right"
-              inputSize={InputSize.i70}
+              inputSize={InputSize.i85}
             />
           )}
         />
@@ -220,6 +226,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJn1500Mp")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
       rate: (
@@ -227,6 +234,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJnKgdanga1500")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
     },
@@ -241,7 +249,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
               {...field}
               mask={currencyMask}
               textAlign="right"
-              inputSize={InputSize.i70}
+              inputSize={InputSize.i85}
             />
           )}
         />
@@ -251,6 +259,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJn2000Mp")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
       rate: (
@@ -258,6 +267,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJnKgdanga2000")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
     },
@@ -272,7 +282,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
               {...field}
               mask={currencyMask}
               textAlign="right"
-              inputSize={InputSize.i70}
+              inputSize={InputSize.i85}
             />
           )}
         />
@@ -282,6 +292,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJn2500Mp")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
       rate: (
@@ -289,6 +300,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJnKgdanga2500")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
     },
@@ -303,7 +315,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
               {...field}
               mask={currencyMask}
               textAlign="right"
-              inputSize={InputSize.i70}
+              inputSize={InputSize.i85}
             />
           )}
         />
@@ -313,6 +325,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJn7000Mp")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
       rate: (
@@ -320,6 +333,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           type="number"
           register={register("tempJnKgdanga7000")}
           textAlign="right"
+          inputSize={InputSize.i85}
         />
       ),
     },
@@ -335,11 +349,16 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
       autoComplete="off"
     >
       <FormGroup>
-        <Input label="코 드" register={register("areaCode")} />
+        <Input
+          label="코 드"
+          register={register("areaCode")}
+          inputSize={InputSize.i85}
+        />
         <Input
           label="영업소명"
           register={register("areaName")}
           maxLength="20"
+          inputSize={InputSize.i200}
         />
       </FormGroup>
 

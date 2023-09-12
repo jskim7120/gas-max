@@ -35,7 +35,7 @@ export interface IAR110065DETAIL {
   pacbCode: string;
 }
 
-export const emptyObj = {
+export const emtObjTab1 = {
   pjDate: "",
   pjJpCode: "",
   pjJpName: "",

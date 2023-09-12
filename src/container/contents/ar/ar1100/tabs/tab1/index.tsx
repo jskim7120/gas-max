@@ -56,13 +56,14 @@ const Tab1 = React.forwardRef(
     useImperativeHandle<any, any>(ref, () => ({
       reset,
       crud,
+      setPjQty,
     }));
 
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const footerState = useSelector((state: any) => state.footer);
 
-    const [pjJago, setPjJago] = useState<number>(0);
     const [pjQty, setPjQty] = useState<number>(0);
+    const [pjJago, setPjJago] = useState<number>(0);
 
     const { showCM1106Modal, openModal } = useModal();
 
@@ -83,11 +84,11 @@ const Tab1 = React.forwardRef(
       }
     }, [cm1106.tick]);
 
-    useEffect(() => {
-      if (data65 && Object.keys(data65)?.length > 0) {
-        resetForm("reset");
-      }
-    }, [data65]);
+    // useEffect(() => {
+    // if (data65 && Object.keys(data65)?.length > 0) {
+    // resetForm("reset");
+    // }
+    // }, [data65]);
 
     useEffect(() => {
       if (watch("pjReqty") !== undefined) {
