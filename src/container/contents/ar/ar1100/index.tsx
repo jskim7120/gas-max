@@ -83,7 +83,7 @@ function AR1100({
   useEffect(() => {
     if (dataCommonDic && dataCommonDic?.dataInit) {
       resetSearchForm("reset");
-      fetchData(prepareParamsInit());
+      fetchData(prepareParamsInit(), "last");
     }
   }, [dataCommonDic]);
 
@@ -209,6 +209,83 @@ function AR1100({
       setRowIndex(menuId, 0, 0);
       setData((prev) => [...prev, { ...emtObj, ...obj }]);
     }
+  };
+
+  const prepareParamsInit = () => {
+    const init = dataCommonDic.dataInit[0];
+    return {
+      ...init,
+      areaCode: dataCommonDic.areaCode[0]?.code,
+      sDate: DateWithoutDash(init.sDate),
+      dDate: DateWithoutDash(init.dDate),
+      sCustomer: "",
+    };
+  };
+
+  const resetSearchForm = (type: string) => {
+    if (type === "reset") {
+      reset({
+        ...prepareParamsInit(),
+        ...getCheckboxVal(
+          dataCommonDic.dataInit[0].sSalestate,
+          dataCommonDic.dataInit[0].sSalegubun
+        ),
+      });
+    }
+  };
+
+  const getCheckboxVal = (salestate: string, salegubun: string) => {
+    return {
+      sSalestate0: salestate?.charAt(0) === "Y",
+      sSalestate1: salestate?.charAt(1) === "Y",
+      sSalestate2: salestate?.charAt(2) === "Y",
+      sSalestate3: salestate?.charAt(3) === "Y",
+      sSalestate4: salestate?.charAt(4) === "Y",
+      sSalestate5: salestate?.charAt(5) === "Y",
+      sSalestate6: salestate?.charAt(6) === "Y",
+
+      sSalegubun0: salegubun?.charAt(0) === "Y",
+      sSalegubun1: salegubun?.charAt(1) === "Y",
+      sSalegubun2: salegubun?.charAt(2) === "Y",
+      sSalegubun3: salegubun?.charAt(3) === "Y",
+      sSalegubun4: salegubun?.charAt(4) === "Y",
+      sSalegubun5: salegubun?.charAt(5) === "Y",
+    };
+  };
+
+  const prepareParamsForSearch = (params: any) => {
+    params.sDate = DateWithoutDash(params.sDate);
+    params.dDate = DateWithoutDash(params.dDate);
+    params.sSalegubun =
+      (params.sSalegubun0 ? "Y" : "N") +
+      (params.sSalegubun1 ? "Y" : "N") +
+      (params.sSalegubun2 ? "Y" : "N") +
+      (params.sSalegubun3 ? "Y" : "N") +
+      (params.sSalegubun4 ? "Y" : "N") +
+      (params.sSalegubun5 ? "Y" : "N");
+    params.sSalestate =
+      (params.sSalestate0 ? "Y" : "N") +
+      (params.sSalestate1 ? "Y" : "N") +
+      (params.sSalestate2 ? "Y" : "N") +
+      (params.sSalestate3 ? "Y" : "N") +
+      (params.sSalestate4 ? "Y" : "N") +
+      (params.sSalestate5 ? "Y" : "N") +
+      (params.sSalestate6 ? "Y" : "N");
+
+    delete params.sSalegubun0;
+    delete params.sSalegubun1;
+    delete params.sSalegubun2;
+    delete params.sSalegubun3;
+    delete params.sSalegubun4;
+    delete params.sSalegubun5;
+
+    delete params.sSalestate0;
+    delete params.sSalestate1;
+    delete params.sSalestate2;
+    delete params.sSalestate3;
+    delete params.sSalestate4;
+    delete params.sSalestate5;
+    delete params.sSalestate6;
   };
 
   const fetchData = async (params: any, pos: string = "") => {
@@ -338,71 +415,6 @@ function AR1100({
     }
   };
 
-  const prepareParamsInit = () => {
-    const init = dataCommonDic.dataInit[0];
-    return {
-      ...init,
-      areaCode: dataCommonDic.areaCode[0]?.code,
-      sDate: DateWithoutDash(init.sDate),
-      dDate: DateWithoutDash(init.dDate),
-      sCustomer: "",
-    };
-  };
-
-  const getCheckboxVal = (salestate: string, salegubun: string) => {
-    return {
-      sSalestate0: salestate?.charAt(0) === "Y",
-      sSalestate1: salestate?.charAt(1) === "Y",
-      sSalestate2: salestate?.charAt(2) === "Y",
-      sSalestate3: salestate?.charAt(3) === "Y",
-      sSalestate4: salestate?.charAt(4) === "Y",
-      sSalestate5: salestate?.charAt(5) === "Y",
-      sSalestate6: salestate?.charAt(6) === "Y",
-
-      sSalegubun0: salegubun?.charAt(0) === "Y",
-      sSalegubun1: salegubun?.charAt(1) === "Y",
-      sSalegubun2: salegubun?.charAt(2) === "Y",
-      sSalegubun3: salegubun?.charAt(3) === "Y",
-      sSalegubun4: salegubun?.charAt(4) === "Y",
-      sSalegubun5: salegubun?.charAt(5) === "Y",
-    };
-  };
-
-  const prepareParamsForSearch = (params: any) => {
-    params.sDate = DateWithoutDash(params.sDate);
-    params.dDate = DateWithoutDash(params.dDate);
-    params.sSalegubun =
-      (params.sSalegubun0 ? "Y" : "N") +
-      (params.sSalegubun1 ? "Y" : "N") +
-      (params.sSalegubun2 ? "Y" : "N") +
-      (params.sSalegubun3 ? "Y" : "N") +
-      (params.sSalegubun4 ? "Y" : "N") +
-      (params.sSalegubun5 ? "Y" : "N");
-    params.sSalestate =
-      (params.sSalestate0 ? "Y" : "N") +
-      (params.sSalestate1 ? "Y" : "N") +
-      (params.sSalestate2 ? "Y" : "N") +
-      (params.sSalestate3 ? "Y" : "N") +
-      (params.sSalestate4 ? "Y" : "N") +
-      (params.sSalestate5 ? "Y" : "N") +
-      (params.sSalestate6 ? "Y" : "N");
-
-    delete params.sSalegubun0;
-    delete params.sSalegubun1;
-    delete params.sSalegubun2;
-    delete params.sSalegubun3;
-    delete params.sSalegubun4;
-    delete params.sSalegubun5;
-
-    delete params.sSalestate0;
-    delete params.sSalestate1;
-    delete params.sSalestate2;
-    delete params.sSalestate3;
-    delete params.sSalestate4;
-    delete params.sSalestate5;
-    delete params.sSalestate6;
-  };
-
   const addBtnClick = () => {
     if (!isAddBtnClicked) {
       btnRef1.current.classList.add("active");
@@ -417,23 +429,12 @@ function AR1100({
     }
   };
 
-  const resetSearchForm = (type: string) => {
-    if (type === "reset") {
-      reset({
-        ...prepareParamsInit(),
-        ...getCheckboxVal(
-          dataCommonDic.dataInit[0].sSalestate,
-          dataCommonDic.dataInit[0].sSalegubun
-        ),
-      });
-    }
-  };
-
-  const submit = async (params: any) => {
+  const submit = async (d: any, pos: string = "") => {
     addBtnUnClick();
-    setIsInfoSelected(false);
+    isInfoSelected && setIsInfoSelected(false);
+    const params = getValues();
     prepareParamsForSearch(params);
-    fetchData(params, "last");
+    fetchData(params, pos);
   };
 
   const handleClickBtnAdd = () => {
@@ -448,7 +449,7 @@ function AR1100({
 
   const handleReset = () => {
     resetSearchForm("reset");
-    handleSubmit(submit)();
+    handleSubmit((data) => submit(data))();
   };
 
   const onCloseModal = () => {
@@ -493,7 +494,10 @@ function AR1100({
         <p>{depthFullName}</p>
       </SearchWrapper>
       <WrapperContent>
-        <form onSubmit={handleSubmit(submit)} autoComplete="off">
+        <form
+          onSubmit={handleSubmit((data) => submit(data, "last"))}
+          autoComplete="off"
+        >
           <SearchWrapper>
             <div className="buttons" style={{ gap: 0 }}>
               <div>
@@ -732,7 +736,8 @@ function AR1100({
             dataDictionary,
             isAddBtnClicked,
             getValues("areaCode"),
-            handleSubmit(submit),
+            handleSubmit,
+            submit,
             menuId,
             tabRef1,
             tabRef2,

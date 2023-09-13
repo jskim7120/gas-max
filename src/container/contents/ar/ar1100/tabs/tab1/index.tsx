@@ -25,7 +25,8 @@ const Tab1 = React.forwardRef(
       data65,
       dictionary,
       isAddBtnClicked,
-      fetchData,
+      handleSubmitParent,
+      submitParent,
       selected,
       menuId,
       addBtnUnClick,
@@ -39,7 +40,8 @@ const Tab1 = React.forwardRef(
       data65: any;
       dictionary: any;
       isAddBtnClicked: boolean;
-      fetchData: Function;
+      handleSubmitParent: Function;
+      submitParent: Function;
       selected: any;
       menuId: string;
       addBtnUnClick: Function;
@@ -251,7 +253,10 @@ const Tab1 = React.forwardRef(
 
         const res = await apiPost(AR1100DELETE, formValues, "삭제했습니다");
 
-        res && (await fetchData());
+        if (res) {
+          await handleSubmitParent((d: any) => submitParent(d))();
+        }
+
         return;
       }
 
@@ -260,9 +265,9 @@ const Tab1 = React.forwardRef(
       }
     };
 
-    const handleClickReset = () => {
+    const handleClickReset = async () => {
       if (isAddBtnClicked) {
-        fetchData();
+        await handleSubmitParent((dat: any) => submitParent(dat, "last"))();
         addBtnUnClick();
       } else {
         resetForm("reset");
@@ -300,7 +305,11 @@ const Tab1 = React.forwardRef(
 
       const res = await apiPost(path, params, "저장이 성공하였습니다");
       if (res) {
-        await fetchData();
+        if (isAddBtnClicked) {
+          await handleSubmitParent((d: any) => submitParent(d, "last"))();
+        } else {
+          await handleSubmitParent((d: any) => submitParent(d))();
+        }
       }
     };
 

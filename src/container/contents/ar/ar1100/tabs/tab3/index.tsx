@@ -33,7 +33,8 @@ const Tab3 = React.forwardRef(
       data65,
       dictionary,
       isAddBtnClicked,
-      fetchData,
+      handleSubmitParent,
+      submitParent,
       selected,
       menuId,
       addBtnUnClick,
@@ -45,7 +46,8 @@ const Tab3 = React.forwardRef(
       data65: any;
       dictionary: any;
       isAddBtnClicked: boolean;
-      fetchData: Function;
+      handleSubmitParent: Function;
+      submitParent: Function;
       selected: any;
       menuId: string;
       addBtnUnClick: Function;

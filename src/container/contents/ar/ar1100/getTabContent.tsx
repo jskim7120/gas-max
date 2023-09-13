@@ -11,7 +11,8 @@ function getTabContent(
   dictionary: any,
   isAddBtnClicked: boolean,
   areaCode: string,
-  fetchData: Function,
+  handleSubmit: Function,
+  submit: Function,
   menuId: string,
   tabRef1: any,
   tabRef2: any,
@@ -31,7 +32,8 @@ function getTabContent(
           data65={data65}
           dictionary={dictionary}
           isAddBtnClicked={isAddBtnClicked}
-          fetchData={fetchData}
+          handleSubmitParent={handleSubmit}
+          submitParent={submit}
           selected={selected}
           menuId={menuId}
           ref={tabRef1}
@@ -50,7 +52,8 @@ function getTabContent(
           data65={data65}
           dictionary={dictionary}
           isAddBtnClicked={isAddBtnClicked}
-          fetchData={fetchData}
+          handleSubmitParent={handleSubmit}
+          submitParent={submit}
           selected={selected}
           menuId={menuId}
           ref={tabRef2}
@@ -67,7 +70,8 @@ function getTabContent(
           data65={data65}
           dictionary={dictionary}
           isAddBtnClicked={isAddBtnClicked}
-          fetchData={fetchData}
+          handleSubmitParent={handleSubmit}
+          submitParent={submit}
           selected={selected}
           menuId={menuId}
           ref={tabRef3}
