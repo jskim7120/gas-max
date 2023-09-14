@@ -68,7 +68,6 @@ const Form = React.forwardRef(
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
     const [addr, setAddress] = useState<string>("");
-    const [aptAddr1, setAptAddr1] = useState("");
 
     const {
       register,
@@ -93,9 +92,9 @@ const Form = React.forwardRef(
         reset((formValues: any) => ({
           ...formValues,
           aptZipcode: addr ? addr?.split("/")[1] : "",
+          aptAddr1: addr ? addr?.split("/")[0] : "",
           aptAddr2: "",
         }));
-        setAptAddr1(addr ? addr?.split("/")[0] : "");
       }
     }, [addr]);
 
@@ -135,7 +134,6 @@ const Form = React.forwardRef(
           aptCode: res?.tempAptCode[0]?.tempAptCode,
           aptType: radioOptions[0].id,
         });
-        setAptAddr1("");
         //setFocus("aptName");
         document.getElementsByName("aptName")[0]?.focus();
       }
@@ -153,8 +151,16 @@ const Form = React.forwardRef(
             apt4F: selected?.apt4F === "Y",
             apt4Ho: selected?.apt4Ho === "Y",
             aptBf: selected?.aptBf === "Y",
+            chkAptAnkum: false,
+            chkAptGumdate: false,
+            chkAptMeterkum: false,
+            chkAptPer: false,
+            chkAptRdangaType: false,
+            chkAptRh2o: false,
+            chkAptSisulkum: false,
+            chkAptSukumtype: false,
+            chkAptZipCode: false,
           });
-          setAptAddr1("");
         }
       }
 
@@ -179,6 +185,7 @@ const Form = React.forwardRef(
       //form aldaagui uyd ajillana
       const path = isAddBtnClicked ? CM1300INSERT : CM1300UPDATE;
       const formValues: any = getValues();
+
       formValues.areaCode = isAddBtnClicked ? areaCode : selected.areaCode;
 
       formValues.apt4F = formValues?.apt4F ? "Y" : "N";
@@ -199,9 +206,64 @@ const Form = React.forwardRef(
         ? removeCommas(formValues.aptSisulkum)
         : 0;
 
-      //if (!chkAptRh2o) {
-      //  delete formValues.aptRh2O;
-      //}
+      // chkAptRdangaType: false,
+
+      if (isAddBtnClicked) {
+        if (!formValues.chkAptZipCode) {
+          formValues.aptZipcode = "";
+          formValues.aptAddr1 = "";
+          formValues.aptAddr2 = "";
+        }
+        if (!formValues.chkAptSukumtype) {
+          formValues.aptSukumtype = "";
+        }
+        if (!formValues.chkAptSisulkum) {
+          formValues.aptSisulkum = "";
+        }
+        if (!formValues.chkAptRh2o) {
+          formValues.aptRh2O = "";
+        }
+        if (!formValues.chkAptAnkum) {
+          formValues.aptAnkum = "";
+        }
+        if (!formValues.chkAptGumdate) {
+          formValues.aptGumdate = "";
+        }
+        if (!formValues.chkAptMeterkum) {
+          formValues.aptMeterkum = "";
+        }
+        if (!formValues.chkAptPer) {
+          formValues.aptPer = "";
+        }
+      } else {
+        if (!formValues.chkAptZipCode) {
+          formValues.aptZipcode = selected?.aptZipcode;
+          formValues.aptAddr1 = selected?.aptAddr1;
+          formValues.aptAddr2 = selected?.aptAddr2;
+        }
+        if (!formValues.chkAptSukumtype) {
+          formValues.aptSukumtype = selected?.aptSukumtype;
+        }
+        if (!formValues.chkAptSisulkum) {
+          formValues.aptSisulkum = selected?.aptSisulkum;
+        }
+        if (!formValues.chkAptRh2o) {
+          formValues.aptRh2O = selected?.aptRh2O;
+        }
+        if (!formValues.chkAptAnkum) {
+          formValues.aptAnkum = selected?.aptAnkum;
+        }
+        if (!formValues.chkAptGumdate) {
+          formValues.aptGumdate = selected?.aptGumdate;
+        }
+        if (!formValues.chkAptMeterkum) {
+          formValues.aptMeterkum = selected?.aptMeterkum;
+        }
+        if (!formValues.chkAptPer) {
+          formValues.aptPer = selected?.aptPer;
+        }
+      }
+
       /*------------------------------------------
       if (chkAptRdangaType) {
         formValues.aptRdangaType = rdangaType;
@@ -386,14 +448,19 @@ const Form = React.forwardRef(
           <DaumAddress
             setAddress={setAddress}
             disabled={!watch("chkAptZipCode")}
-            defaultValue={aptAddr1}
+            defaultValue={watch("aptAddr1")}
             onClose={() => setFocus("aptAddr2")}
           />
-          <Input
-            style={{ width: "254px" }}
-            readOnly={!watch("chkAptZipCode")}
-            value={aptAddr1}
-            onChange={(e: any) => setAptAddr1(e.target.value)}
+          <Controller
+            control={control}
+            name="aptAddr1"
+            render={({ field }) => (
+              <Input
+                {...field}
+                style={{ width: "254px" }}
+                readOnly={!watch("chkAptZipCode")}
+              />
+            )}
           />
           <Input
             register={register("aptAddr2")}

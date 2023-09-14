@@ -186,7 +186,7 @@ function Form({
   }, []);
 
   useEffect(() => {
-    if (footerState.source === "AR11000" || footerState.source === "AR11001") {
+    if (footerState.source === "AR1100") {
       setFocus("sCuName");
     }
   }, [footerState.source]);

@@ -77,7 +77,6 @@ const Form = React.forwardRef(
 
     const [tabId, setTabId] = useState<number>(0);
     const [addr, setAddress] = useState<string>("");
-    const [cuAddr1, setCuAddr1] = useState("");
     const [userData, setUserData] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -132,10 +131,9 @@ const Form = React.forwardRef(
         reset((formValues: any) => ({
           ...formValues,
           cuZipcode: addr ? addr?.split("/")[1] : "",
+          cuAddr1: addr ? addr?.split("/")[0] : "",
           cuAddr2: "",
         }));
-
-        setCuAddr1(addr ? addr?.split("/")[0] : "");
       }
     }, [addr]);
 
@@ -150,8 +148,6 @@ const Form = React.forwardRef(
       });
 
       if (res) {
-        setCuAddr1("");
-
         setDataDictionary({
           cuCustgubun: res?.cuCustgubun ? res.cuCustgubun : [],
           cuJyCode: res?.cuJyCode ? res.cuJyCode : [],
@@ -173,8 +169,6 @@ const Form = React.forwardRef(
 
     const resetBasic = () => {
       let tempData: any = { ...selected, ...supplyTab };
-
-      setCuAddr1(selected.cuAddr1 ? selected.cuAddr1 : "");
 
       reset({
         ...tempData,
@@ -387,7 +381,6 @@ const Form = React.forwardRef(
       formValues.cuRdangaAmt =
         formValues.cuRdangaType !== "1" ? 0 : Number(formValues.cuRdangaAmt);
       formValues.cuRdanga = Number(formValues.cuRdanga);
-      formValues.cuAddr1 = cuAddr1;
       formValues.cuRdanga = 100;
       formValues.cuRdangaAmt = 40;
       formValues.cuRdangaSign = "+";
@@ -474,14 +467,19 @@ const Form = React.forwardRef(
             <DaumAddress
               setAddress={setAddress}
               disabled={!watch("chkCuZipCode")}
-              defaultValue={cuAddr1}
+              defaultValue={watch("cuAddr1")}
               onClose={() => setFocus("cuAddr2")}
             />
-            <Input
-              inputSize={InputSize.md}
-              value={cuAddr1}
-              onChange={(e: any) => setCuAddr1(e.target.value)}
-              readOnly={!watch("chkCuZipCode")}
+            <Controller
+              control={control}
+              name="cuAddr1"
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  inputSize={InputSize.md}
+                  readOnly={!watch("chkCuZipCode")}
+                />
+              )}
             />
             <Input
               register={register("cuAddr2")}

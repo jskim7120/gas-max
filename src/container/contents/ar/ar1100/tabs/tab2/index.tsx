@@ -6,7 +6,7 @@ import {
   AR1100CJSALEDELETE,
 } from "app/path";
 import { apiPost } from "app/axios";
-import { useSelector } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import useModal from "app/hook/useModal";
 import Table from "components/table";
 import { Input, Select, FormGroup } from "components/form/style";
@@ -18,6 +18,7 @@ import EditableSelect from "components/editableSelect";
 import { currencyMask, removeCommas } from "helpers/currency";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { IAR1100TAB2 } from "./model";
+import { addCM1106Second } from "app/state/modal/modalSlice";
 
 const Tab2 = React.forwardRef(
   (
@@ -55,17 +56,19 @@ const Tab2 = React.forwardRef(
         mode: "onSubmit",
       });
 
+    useImperativeHandle<any, any>(ref, () => ({
+      reset,
+      setPcQty,
+    }));
+
+    const dispatch = useDispatch();
+
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const footerState = useSelector((state: any) => state.footer);
     const [pcQty, setPcQty] = useState<number>(0);
 
     const { showCM1106Modal, openModal } = useModal();
     let pcKumack = 0;
-
-    useImperativeHandle<any, any>(ref, () => ({
-      reset,
-      setPcQty,
-    }));
 
     useEffect(() => {
       if (cm1106.source === "AR11001") {
@@ -148,6 +151,7 @@ const Tab2 = React.forwardRef(
     };
 
     const openPopupCM1106 = async () => {
+      dispatch(addCM1106Second({ source: "AR11001" }));
       openModal();
     };
 

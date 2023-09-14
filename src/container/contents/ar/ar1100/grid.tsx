@@ -17,8 +17,8 @@ function Grid({
   rowIndex,
   gridNumber,
   hideFooter,
-  openModal,
-}: {
+}: //openModal,
+{
   areaCode?: string;
   data: any;
   fields: any;
@@ -31,7 +31,7 @@ function Grid({
   rowIndex: number | undefined;
   gridNumber?: number | undefined;
   hideFooter?: boolean;
-  openModal: Function;
+  //openModal: Function;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -78,9 +78,9 @@ function Grid({
 
     gv.setCurrent({
       dataRow: rowIndex,
-      fieldName: "cuName",
+      //fieldName: "cuName",
     });
-
+    /*
     gv.onEditChange = function (grid: any, index: any, value: any) {
       if (index.column === "cuName") {
         dispatch(
@@ -93,6 +93,7 @@ function Grid({
         );
       }
     };
+    */
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
@@ -105,12 +106,13 @@ function Grid({
         })
       );
     };
-
+    /*
     gv.onKeyDown = function (grid: any, key: any, t: any) {
       if (key.code === "Enter") {
         openModal();
       }
     };
+    */
 
     return () => {
       gv.commit();

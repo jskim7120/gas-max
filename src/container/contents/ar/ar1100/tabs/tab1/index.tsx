@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useImperativeHandle } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { AR1100INSERT, AR1100UPDATE, AR1100DELETE } from "app/path";
-import { useSelector } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import { apiPost } from "app/axios";
 import useModal from "app/hook/useModal";
 import Table from "components/table";
@@ -15,6 +15,7 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { currencyMask, removeCommas } from "helpers/currency";
 import { IAR110065DETAIL } from "./model";
 import { tableHeader11, tableHeader12, tableHeader2 } from "./tableHeader";
+import { addCM1106Second } from "app/state/modal/modalSlice";
 const Tab1 = React.forwardRef(
   (
     {
@@ -61,6 +62,8 @@ const Tab1 = React.forwardRef(
       setPjQty,
       setPjJago,
     }));
+
+    const dispatch = useDispatch();
 
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const footerState = useSelector((state: any) => state.footer);
@@ -244,6 +247,7 @@ const Tab1 = React.forwardRef(
     };
 
     const openPopupCM1106 = async () => {
+      dispatch(addCM1106Second({ source: "AR11000" }));
       openModal();
     };
 

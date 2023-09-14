@@ -6,7 +6,7 @@ import { CM1300SEARCH, CM130065 } from "app/path";
 import Button from "components/button/button";
 import Loader from "components/loader";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
-import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
+import { ButtonColor, InputSize } from "components/componentsType";
 import GridLeft from "components/grid";
 import { BuildingInfoText } from "components/text";
 import {

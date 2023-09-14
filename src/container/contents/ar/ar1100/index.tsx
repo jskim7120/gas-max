@@ -1,7 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { apiGet } from "app/axios";
-import { AR1100SEARCH, AR1100SELECT, AR1100INIT } from "app/path";
+import {
+  AR1100SEARCH,
+  AR1100SELECT,
+  AR1100INIT,
+  AR1100SELECT41,
+} from "app/path";
 import { useDispatch, useSelector } from "app/store";
 import useModal from "app/hook/useModal";
 import { addSource } from "app/state/footer/footerSlice";
@@ -91,7 +96,7 @@ function AR1100({
     if (tabId !== undefined && isAddBtnClicked === true) {
       onTabChangeOnAdd();
     }
-  }, [tabId, isAddBtnClicked]);
+  }, [isAddBtnClicked]);
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
@@ -114,12 +119,17 @@ function AR1100({
   }, [selected]);
 
   useEffect(() => {
-    if (source.substring(0, 6) === menuId) {
+    if (source === menuId) {
       if (info) {
         addCodeAndNameToLastRow(info);
         setIsInfoSelected(true);
         if (info?.cuType === "0") {
           tabId !== 0 && setTabId(0);
+          fetchData41({
+            areaCode: getValues("areaCode"),
+            cuCode: info?.cuCode,
+            saleType: 5,
+          });
         } else {
           tabId !== 1 && setTabId(1);
         }
@@ -128,7 +138,8 @@ function AR1100({
   }, [info]);
 
   const onTabChangeOnAdd = () => {
-    dispatch(addSource({ source: menuId + tabId.toString() }));
+    //dispatch(addSource({ source: menuId + tabId.toString() }));
+    dispatch(addSource({ source: menuId }));
     dispatch(
       addCM1106({
         source: menuId + tabId.toString(),
@@ -415,6 +426,16 @@ function AR1100({
     }
   };
 
+  const fetchData41 = async (params: any) => {
+    const res = await apiGet(AR1100SELECT41, params);
+
+    if (res && res?.length > 0) {
+      console.log(res[0]);
+      tabRef1?.current?.reset({ ...res[0], pjDate: new Date() });
+      tabRef1?.current?.setPjQty(res[0]?.pjQty);
+    }
+  };
+
   const addBtnClick = () => {
     if (!isAddBtnClicked) {
       btnRef1.current.classList.add("active");
@@ -440,6 +461,7 @@ function AR1100({
   const handleClickBtnAdd = () => {
     addBtnClick();
     addEmptyRow();
+    openCustomerModal();
   };
 
   const handleClickBtnDel = () => {
@@ -449,7 +471,7 @@ function AR1100({
 
   const handleReset = () => {
     resetSearchForm("reset");
-    handleSubmit((data) => submit(data))();
+    handleSubmit((d) => submit(d, "last"))();
   };
 
   const onCloseModal = () => {
@@ -708,7 +730,7 @@ function AR1100({
             borderBottom: "1px solid rgb(188,185,185)",
             marginBottom: "3px",
           }}
-          openModal={openCustomerModal}
+          // openModal={openCustomerModal}
         />
         <PlainTab
           tabHeader={[

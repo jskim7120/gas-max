@@ -4,6 +4,7 @@ export const AR1100INIT = "/app/AR1100/init";
 export const AR1100INSERT = "/app/AR1100/insert";
 export const AR1100UPDATE = "/app/AR1100/update";
 export const AR1100DELETE = "/app/AR1100/delete";
+export const AR1100SELECT41 = "/app/AR1100/select41";
 
 export const AR1100CJSALEINSERT = "/app/AR1100/CJSALE/insert";
 export const AR1100CJSALEUPDATE = "/app/AR1100/CJSALE/update";

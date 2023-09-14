@@ -55,6 +55,11 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (cm1106.areaCode && cm1106.cuCode) {
+      fetchData();
+      resetForm("resetAreaCode");
+    }
+    /*
     if (cm1106.areaCode && cm1106.cuCode && cm1106.source === "AR11000") {
       fetchData();
       resetForm("resetAreaCode");
@@ -63,6 +68,7 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
       fetchData65();
       resetForm("resetAreaCode");
     }
+    */
   }, [cm1106.areaCode, cm1106.cuCode, cm1106.tick]);
 
   const [getCommonDictionary, { data: dataCommonDic }] =
@@ -265,7 +271,8 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
               width: "100%",
             }}
           />
-          {cm1106.source.substring(0, 6) === "AR1100" && (
+          {(cm1106.source === "AR1100" ||
+            cm1106.source.substring(0, 6) === "AR1100") && (
             <div
               style={{
                 background: "#CDE7EB",

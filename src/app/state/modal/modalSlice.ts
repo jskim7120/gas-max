@@ -163,6 +163,12 @@ const modalSlice = createSlice({
         ...action.payload,
       };
     },
+    addCM1106Second: (state, action) => {
+      state.cm1106 = {
+        ...state.cm1106,
+        ...action.payload,
+      };
+    },
 
     addCM1106AR1100Tick: (state, action) => {
       state.cm1106 = {
@@ -232,6 +238,7 @@ export const {
   addCM1105,
   addCM1105LoadStatus,
   addCM1106,
+  addCM1106Second,
   addCM1106AR1100Tick,
   addGR1200Popup,
   addGR1200,
