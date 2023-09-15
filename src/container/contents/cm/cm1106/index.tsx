@@ -185,8 +185,6 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
               style={{ marginRight: "5px" }}
               type="button"
               onClick={() => {
-                // dispatch(openModal({ type: "delModal" }));
-                // dispatch(addDeleteMenuId({ menuId: "CM1106" }));
                 formRef.current.crud("delete");
               }}
               disabled={isAddBtnClicked}
@@ -298,12 +296,9 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
           selected={selected}
           ref={formRef}
           fetchData={fetchData}
-          setData={setData}
-          setSelected={setSelected}
           dataCommonDic={dataCommonDic}
           areaCode={getValues("areaCode")}
           isAddBtnClicked={isAddBtnClicked}
-          setIsAddBtnClicked={setIsAddBtnClicked}
         />
       </div>
     </>

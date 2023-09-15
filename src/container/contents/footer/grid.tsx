@@ -1,8 +1,6 @@
 import { useEffect, useRef } from "react";
-import { useDispatch } from "app/store";
 import { GridView, LocalDataProvider } from "realgrid";
 import { fields, columns } from "./data";
-import { addInfo } from "app/state/footer/footerSlice";
 
 function Grid({
   data,
@@ -19,7 +17,6 @@ function Grid({
   let dp: any;
   let gv: any;
   const realgridElement = useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     container = realgridElement.current as HTMLDivElement;

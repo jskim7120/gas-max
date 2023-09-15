@@ -1,25 +1,25 @@
 import React, { useState, useEffect, MouseEventHandler } from "react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "app/store";
-import { useForm } from "react-hook-form";
+import { apiGet } from "app/axios";
+import { FOOT61, FOOTER } from "app/path";
+import { addCM1106 } from "app/state/modal/modalSlice";
+import { addInfo } from "app/state/footer/footerSlice";
 import {
   WhiteClose,
   Plus,
   UserWhite,
   Reset,
   TickInCircle,
+  MagnifyingGlassBig,
 } from "components/allSvgIcon";
 import { FormGroup, Select, Label } from "components/form/style";
-import { FOOT61, FOOTER } from "app/path";
 import Loader from "components/loader";
-import { apiGet } from "app/axios";
-import Grid from "./grid";
-import { addCM1106 } from "app/state/modal/modalSlice";
-import { addInfo } from "app/state/footer/footerSlice";
 import Button from "components/button/button";
 import { ButtonColor, BadgeColor, BadgeSize } from "components/componentsType";
-import { MagnifyingGlassBig } from "components/allSvgIcon";
 import Badge from "components/badge";
+import Grid from "./grid";
 
 const FooterWrapper = styled.div`
   .top {
@@ -165,8 +165,6 @@ function Form({
   setIsOpen: Function;
   onClose: MouseEventHandler;
 }) {
-  const dispatch = useDispatch();
-
   const [areaCode, setAreaCode] = useState<
     Array<{ code: string; codeName: string }>
   >([]);
@@ -174,8 +172,9 @@ function Form({
   const [selected, setSelected] = useState<any>({});
   const [loading, setLoading] = useState(false);
 
+  const dispatch = useDispatch();
+
   const footerState = useSelector((state) => state.footer);
-  const activeTabId = useSelector((state) => state.tab.activeTabId);
 
   const { register, handleSubmit, reset, setFocus } = useForm<ISEARCH>({
     mode: "onSubmit",
@@ -252,7 +251,7 @@ function Form({
     if (obj && Object.keys(obj)?.length > 0) {
       dispatch(addInfo({ info: obj }));
 
-      activeTabId === "AR1100" &&
+      footerState.source === "AR1100" &&
         dispatch(
           addCM1106({
             areaCode: obj?.areaCode,

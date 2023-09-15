@@ -22,7 +22,6 @@ const Tab1 = React.forwardRef(
       tabId,
       areaCode,
       data,
-      setData,
       data65,
       dictionary,
       isAddBtnClicked,
@@ -37,7 +36,6 @@ const Tab1 = React.forwardRef(
       tabId: number;
       areaCode: string;
       data: any;
-      setData: Function;
       data65: any;
       dictionary: any;
       isAddBtnClicked: boolean;

@@ -26,6 +26,9 @@ const footerSlice = createSlice({
     addSource: (state, action) => {
       state.source = action.payload.source;
     },
+    removeSource: (state, action) => {
+      state.source = initialState.source;
+    },
     addInfo: (state, action) => {
       state.info = action.payload.info;
     },
@@ -43,6 +46,7 @@ const footerSlice = createSlice({
 
 export const {
   addSource,
+  removeSource,
   addInfo,
   removeInfo,
   addSearchText,

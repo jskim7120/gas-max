@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "app/store";
-import { addSearchText, removeSearchText } from "app/state/footer/footerSlice";
+import {
+  addSearchText,
+  removeSearchText,
+  addSource,
+  removeSource,
+  addInfo,
+  removeInfo,
+} from "app/state/footer/footerSlice";
 import { apiGet } from "app/axios";
 import { FOOTHISTORY } from "app/path";
 import useModal from "app/hook/useModal";
@@ -92,7 +99,8 @@ function Footer() {
                   dispatch(removeSearchText({}));
                 }
 
-                // dispatch(openModal({ type: "customerModal" }));
+                dispatch(removeSource({}));
+                // dispatch(removeInfo({}));
                 openModal();
               }}
             >

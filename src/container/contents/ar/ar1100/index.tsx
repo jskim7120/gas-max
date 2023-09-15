@@ -9,7 +9,7 @@ import {
 } from "app/path";
 import { useDispatch, useSelector } from "app/store";
 import useModal from "app/hook/useModal";
-import { addSource } from "app/state/footer/footerSlice";
+import { addSource, removeSearchText } from "app/state/footer/footerSlice";
 import useGetData from "app/hook/getSimpleData";
 import {
   Plus,
@@ -92,11 +92,11 @@ function AR1100({
     }
   }, [dataCommonDic]);
 
-  useEffect(() => {
-    if (tabId !== undefined && isAddBtnClicked === true) {
-      onTabChangeOnAdd();
-    }
-  }, [isAddBtnClicked]);
+  // useEffect(() => {
+  //   if (tabId !== undefined && isAddBtnClicked === true) {
+  //     onTabChangeOnAdd();
+  //   }
+  // }, [isAddBtnClicked]);
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
@@ -139,7 +139,7 @@ function AR1100({
 
   const onTabChangeOnAdd = () => {
     //dispatch(addSource({ source: menuId + tabId.toString() }));
-    dispatch(addSource({ source: menuId }));
+    //dispatch(addSource({ source: menuId }));
     dispatch(
       addCM1106({
         source: menuId + tabId.toString(),
@@ -433,6 +433,9 @@ function AR1100({
       console.log(res[0]);
       tabRef1?.current?.reset({ ...res[0], pjDate: new Date() });
       tabRef1?.current?.setPjQty(res[0]?.pjQty);
+    } else {
+      tabRef1?.current?.reset(emtObjTab1);
+      tabRef1?.current?.setPjQty(0);
     }
   };
 
@@ -459,6 +462,8 @@ function AR1100({
   };
 
   const handleClickBtnAdd = () => {
+    dispatch(addSource({ source: menuId }));
+    dispatch(removeSearchText({}));
     addBtnClick();
     addEmptyRow();
     openCustomerModal();

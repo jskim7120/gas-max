@@ -28,7 +28,6 @@ function getTabContent(
           tabId={tabId}
           areaCode={areaCode}
           data={data}
-          setData={setData}
           data65={data65}
           dictionary={dictionary}
           isAddBtnClicked={isAddBtnClicked}
@@ -48,7 +47,6 @@ function getTabContent(
           tabId={tabId}
           areaCode={areaCode}
           data={data}
-          setData={setData}
           data65={data65}
           dictionary={dictionary}
           isAddBtnClicked={isAddBtnClicked}
@@ -66,7 +64,6 @@ function getTabContent(
           tabId={tabId}
           areaCode={areaCode}
           data={data}
-          setData={setData}
           data65={data65}
           dictionary={dictionary}
           isAddBtnClicked={isAddBtnClicked}

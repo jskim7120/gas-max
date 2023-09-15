@@ -26,7 +26,6 @@ const Tab2 = React.forwardRef(
       tabId,
       areaCode,
       data,
-      setData,
       data65,
       dictionary,
       isAddBtnClicked,
@@ -39,7 +38,6 @@ const Tab2 = React.forwardRef(
       tabId: number;
       areaCode: string;
       data: any;
-      setData: Function;
       data65: any;
       dictionary: any;
       isAddBtnClicked: boolean;
@@ -104,10 +102,9 @@ const Tab2 = React.forwardRef(
 
     const handlePcQtyChange = (value: number) => {
       setPcQty(value);
-      const pcJaego =
-        cm1106?.jcBasicJaego !== null
-          ? +removeCommas(cm1106.jcBasicJaego, "number")
-          : 0;
+      const pcJaego = cm1106?.jcBasicJaego
+        ? +removeCommas(cm1106.jcBasicJaego, "number")
+        : 0;
       calcKumack(value);
       reset((formValues) => ({
         ...formValues,
@@ -119,7 +116,7 @@ const Tab2 = React.forwardRef(
 
     const handlePcReqtyChange = () => {
       const pcJaego =
-        (cm1106?.jcBasicJaego !== null
+        (cm1106?.jcBasicJaego
           ? +removeCommas(cm1106.jcBasicJaego, "number")
           : 0) +
         pcQty -

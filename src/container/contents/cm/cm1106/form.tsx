@@ -1,44 +1,35 @@
-import React, { useState, useEffect, useImperativeHandle } from "react";
+import React, { useEffect, useImperativeHandle } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { apiPost } from "app/axios";
+import { CM1106INSERT, CM1106UPDATE, CM1106DELETE } from "app/path";
 import {
   Input,
   FormGroup,
   Label,
   DividerGray,
-  Field,
   Select,
 } from "components/form/style";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { SearchBtn } from "components/daum";
-import { useForm, Controller } from "react-hook-form";
-import { FieldKind, InputSize } from "components/componentsType";
-import Button from "components/button/button";
-import { ICM1106 } from "./model";
-import { CM1106INSERT, CM1106UPDATE, CM1106DELETE } from "app/path";
+import { InputSize } from "components/componentsType";
 import { currencyMask } from "helpers/currency";
-import { apiPost } from "app/axios";
 import { formatCurrencyRemoveComma } from "helpers/currency";
-import { emptyObj } from "./model";
+import { ICM1106, emptyObj } from "./model";
 
 const FORMCM1106 = React.forwardRef(
   (
     {
       selected,
       fetchData,
-      setData,
-      setSelected,
       dataCommonDic,
       areaCode,
       isAddBtnClicked,
-      setIsAddBtnClicked,
     }: {
       selected: any;
       fetchData: Function;
-      setData: Function;
-      setSelected: Function;
       dataCommonDic: any;
       areaCode: string;
       isAddBtnClicked: boolean;
-      setIsAddBtnClicked: Function;
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
@@ -89,21 +80,6 @@ const FORMCM1106 = React.forwardRef(
       formValues.jcJpDanga = formatCurrencyRemoveComma(formValues.jcJpDanga);
 
       const res = await apiPost(path, formValues, "저장이 성공하였습니다");
-      if (res) {
-        if (isAddBtnClicked) {
-          setData((prev: any) => [formValues, ...prev]);
-
-          setIsAddBtnClicked(true);
-          setIsAddBtnClicked(false);
-        } else {
-          // setData((prev: any) => {
-          //   prev[selectedRowIndex] = formValues;
-          //   return [...prev];
-          // });
-        }
-        // setSelected(formValues);
-        setIsAddBtnClicked(false);
-      }
     };
 
     return (
@@ -121,7 +97,6 @@ const FORMCM1106 = React.forwardRef(
             labelStyle={{ minWidth: "90px" }}
             register={register("jcJpCode")}
             inputSize={InputSize.i160}
-            kind={FieldKind.BORDER}
           />
           <SearchBtn type="button" onClick={() => alert("dsdsds")}>
             <MagnifyingGlass />
@@ -132,7 +107,6 @@ const FORMCM1106 = React.forwardRef(
             label="품 명"
             labelStyle={{ minWidth: "90px" }}
             register={register("jcJpName")}
-            kind={FieldKind.BORDER}
             inputSize={InputSize.i160}
           />
         </FormGroup>
@@ -141,25 +115,17 @@ const FORMCM1106 = React.forwardRef(
             label="규 격"
             labelStyle={{ minWidth: "90px" }}
             register={register("jcJpSpec")}
-            kind={FieldKind.BORDER}
             inputSize={InputSize.i160}
           />
         </FormGroup>
-
         <FormGroup>
           <Label style={{ minWidth: "90px" }}></Label>
           <p style={{ marginLeft: "5px" }}>환경단가 : 25,000 원 (Vat포함)</p>
         </FormGroup>
-
         <DividerGray />
-
         <FormGroup>
           <Label style={{ minWidth: "90px" }}>적용구분</Label>
-          <Select
-            register={register("jcDangaType")}
-            kind={FieldKind.BORDER}
-            width={InputSize.i160}
-          >
+          <Select register={register("jcDangaType")} width={InputSize.i160}>
             {dataCommonDic?.jcDangaType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
                 {obj.codeName}
@@ -167,14 +133,9 @@ const FORMCM1106 = React.forwardRef(
             ))}
           </Select>
         </FormGroup>
-
         <FormGroup>
           <Label style={{ minWidth: "90px" }}>Vat구분</Label>
-          <Select
-            register={register("jcVatKind")}
-            kind={FieldKind.BORDER}
-            width={InputSize.i160}
-          >
+          <Select register={register("jcVatKind")} width={InputSize.i160}>
             {dataCommonDic?.jcVatKind?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
                 {obj.codeName}
@@ -182,7 +143,6 @@ const FORMCM1106 = React.forwardRef(
             ))}
           </Select>
         </FormGroup>
-
         <FormGroup>
           <Controller
             control={control}
@@ -215,10 +175,8 @@ const FORMCM1106 = React.forwardRef(
               />
             )}
           />
-
           <p>%</p>
         </FormGroup>
-
         <FormGroup>
           <Controller
             control={control}
@@ -242,7 +200,6 @@ const FORMCM1106 = React.forwardRef(
             label="기초재고"
             labelStyle={{ minWidth: "90px" }}
             register={register("jcBasicJaego")}
-            kind={FieldKind.BORDER}
             inputSize={InputSize.i160}
             textAlign="right"
           />
@@ -250,11 +207,7 @@ const FORMCM1106 = React.forwardRef(
         </FormGroup>
         <FormGroup>
           <Label style={{ minWidth: "90px" }}>사용상태</Label>
-          <Select
-            register={register("jcJpState")}
-            kind={FieldKind.BORDER}
-            width={InputSize.i160}
-          >
+          <Select register={register("jcJpState")} width={InputSize.i160}>
             {dataCommonDic?.jcJpState?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code1}>
                 {obj.codeName}
