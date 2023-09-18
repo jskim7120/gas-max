@@ -9,8 +9,10 @@ import {
 } from "app/path";
 import { useDispatch, useSelector } from "app/store";
 import useModal from "app/hook/useModal";
-import { addSource, removeSearchText } from "app/state/footer/footerSlice";
+import useRowIndex from "app/hook/useRowIndex";
 import useGetData from "app/hook/getSimpleData";
+import { addSource, removeSearchText } from "app/state/footer/footerSlice";
+import { addCM1106 } from "app/state/modal/modalSlice";
 import {
   Plus,
   Trash,
@@ -33,8 +35,6 @@ import { IAR1100SEARCH, emtObj } from "./model";
 import { emtObjTab1 } from "./tabs/tab1/model";
 import getTabContent from "./getTabContent";
 import Grid from "./grid";
-import { addCM1106 } from "app/state/modal/modalSlice";
-import useRowIndex from "app/hook/useRowIndex";
 
 let currentDate;
 let dateWithTime: string;
