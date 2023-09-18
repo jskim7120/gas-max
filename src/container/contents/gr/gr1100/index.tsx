@@ -198,7 +198,7 @@ function GR1100({
             rowIndex={0}
             setSelected={setSelected}
             style={{
-              height: `calc(100% - 43px)`,
+              height: `calc(100% - 44px)`,
               minWidth: `${leftSideWidth}px`,
             }}
           />

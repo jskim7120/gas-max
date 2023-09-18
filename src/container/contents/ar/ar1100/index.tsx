@@ -137,22 +137,22 @@ function AR1100({
     }
   }, [info]);
 
-  const onTabChangeOnAdd = () => {
-    //dispatch(addSource({ source: menuId + tabId.toString() }));
-    //dispatch(addSource({ source: menuId }));
-    dispatch(
-      addCM1106({
-        source: menuId + tabId.toString(),
-        jpName: "",
-        jpCode: "",
-        custIn: 0,
-        custOut: 0,
-        jcBasicJaego: 0,
-        jcJpDanga: 0,
-      })
-    );
-    fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
-  };
+  // const onTabChangeOnAdd = () => {
+  //dispatch(addSource({ source: menuId + tabId.toString() }));
+  //dispatch(addSource({ source: menuId }));
+  // dispatch(
+  //   addCM1106({
+  //     source: menuId + tabId.toString(),
+  //     jpName: "",
+  //     jpCode: "",
+  //     custIn: 0,
+  //     custOut: 0,
+  //     jcBasicJaego: 0,
+  //     jcJpDanga: 0,
+  //   })
+  // );
+  //fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
+  // };
 
   const addCodeAndNameToLastRow = (info: any) => {
     if (data?.length > 0) {
@@ -464,6 +464,7 @@ function AR1100({
   const handleClickBtnAdd = () => {
     dispatch(addSource({ source: menuId }));
     dispatch(removeSearchText({}));
+    fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
     addBtnClick();
     addEmptyRow();
     openCustomerModal();

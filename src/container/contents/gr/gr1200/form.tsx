@@ -87,7 +87,6 @@ const Form = ({
   const [data65Detail, setData65Detail] = useState<any[]>([]);
   const [deleteData65Detail, setDeleteData65Detail] = useState<any[]>([]);
   const [callCalc, setCallCalc] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -820,7 +819,7 @@ const Form = ({
             tabId={tabId ? tabId : 0}
             setRowIndex={setRowIndex}
             setCallCalc={setCallCalc}
-            setIsModalOpen={setIsModalOpen}
+            openModal={openModal}
           />
           {tabId === 0 && <Tab1Footer control={control} />}
         </TabContentWrapper>

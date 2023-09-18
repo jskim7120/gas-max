@@ -14,7 +14,7 @@ function Grid({
   tabId,
   setRowIndex,
   setCallCalc,
-  setIsModalOpen,
+  openModal,
 }: {
   areaCode: string;
   bcBuCode: any;
@@ -23,7 +23,7 @@ function Grid({
   tabId: number;
   setRowIndex: Function;
   setCallCalc: Function;
-  setIsModalOpen: Function;
+  openModal: Function;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
@@ -86,7 +86,7 @@ function Grid({
         })
       );
 
-      setIsModalOpen(true);
+      openModal();
     };
 
     gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {

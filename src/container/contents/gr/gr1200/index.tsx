@@ -68,12 +68,6 @@ function GR1200({
 
   useEffect(() => {
     if (dataCommonDic) {
-      reset({
-        areaCode: dataCommonDic?.areaCode[0].code,
-        sBcBuCode: dataCommonDic?.sBcBuCode[0].code,
-        sDate: dataCommonDic?.sDate[0].code,
-        eDate: dataCommonDic?.eDate[0].code,
-      });
       fetchData(
         {
           areaCode: dataCommonDic?.areaCode[0].code,
@@ -83,6 +77,12 @@ function GR1200({
         },
         "last"
       );
+      reset({
+        areaCode: dataCommonDic?.areaCode[0].code,
+        sBcBuCode: dataCommonDic?.sBcBuCode[0].code,
+        sDate: dataCommonDic?.sDate[0].code,
+        eDate: dataCommonDic?.eDate[0].code,
+      });
     }
   }, [dataCommonDic]);
 
@@ -138,20 +138,18 @@ function GR1200({
   return (
     <>
       <SearchWrapper className="h35">
-        <FormGroup>
-          {ownAreaCode === "00" && (
-            <>
-              <Label style={{ minWidth: "60px" }}>영업소</Label>
-              <Select register={register("areaCode")}>
-                {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </>
-          )}
-        </FormGroup>
+        {ownAreaCode === "00" && (
+          <FormGroup>
+            <Label style={{ minWidth: "60px" }}>영업소</Label>
+            <Select register={register("areaCode")}>
+              {dataCommonDic?.areaCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        )}
         <p>{depthFullName}</p>
       </SearchWrapper>
       <MainWrapper>
