@@ -433,10 +433,11 @@ function AR1100({
       console.log(res[0]);
       tabRef1?.current?.reset({ ...res[0], pjDate: new Date() });
       tabRef1?.current?.setPjQty(res[0]?.pjQty);
-    } else {
-      tabRef1?.current?.reset(emtObjTab1);
-      tabRef1?.current?.setPjQty(0);
     }
+    //else {
+    //  tabRef1?.current?.reset({ ...emtObjTab1, pjDate: new Date() });
+    //  tabRef1?.current?.setPjQty(0);
+    //}
   };
 
   const addBtnClick = () => {
