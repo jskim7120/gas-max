@@ -26,7 +26,7 @@ import Form from "./form";
 import { fields, columns } from "./data";
 import Table from "./table";
 
-const leftSideWidth: number = 880;
+const leftSideWidth: number = 930;
 
 function GR1300({
   depthFullName,
@@ -214,11 +214,11 @@ function GR1300({
             menuId={menuId}
             rowIndex={rowIndex}
             style={{
-              height: `calc(100% - 88px)`,
+              height: `calc(100% - 94px)`,
               minWidth: `${leftSideWidth}px`,
             }}
           />
-          <Table data={data2} style={{ width: leftSideWidth }} />
+          <Table data={data2} style={{ width: leftSideWidth - 18 }} />
         </LeftSide>
         <RightSide
           style={{

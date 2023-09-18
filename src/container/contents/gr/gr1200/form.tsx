@@ -96,11 +96,13 @@ const Form = ({
   const [getAreaCodeDictionary, { data: dataAdditionalDic }] =
     useGetAreaCodeDictionaryMutation();
 
+  /*
   useEffect(() => {
     if (dataCommonDic) {
       resetForm("areaCode");
     }
   }, [dataCommonDic]);
+  */
 
   useEffect(() => {
     if (watch("areaCode2")) {
@@ -233,12 +235,6 @@ const Form = ({
   }, [selected]);
 
   useEffect(() => {
-    if (Object.keys(data65)?.length) {
-      resetForm("reset");
-    }
-  }, [data65]);
-
-  useEffect(() => {
     if (deleteState.menuId === menuId && deleteState.isDelete) {
       deleteRowGrid();
     }
@@ -259,24 +255,6 @@ const Form = ({
 
     // clone = structuredClone(data65Detail);
   }, [callCalc]);
-
-  useEffect(() => {
-    //   if (isAddBtnClicked === true) {
-    //     if (clone.length > 0) {
-    //       if (clone[0].tabId !== tabId) {
-    //         setData65Detail([
-    //           {
-    //             isNew: true,
-    //             tabId: tabId,
-    //           },
-    //         ]);
-    //       } else {
-    //         setData65Detail(clone);
-    //       }
-    //     }
-    //   }
-    setData65Detail([]);
-  }, [tabId]);
 
   useEffect(() => {
     if (watch("bcPjan")) {
@@ -342,7 +320,14 @@ const Form = ({
     });
 
     if (res) {
-      setData65(res?.mainData ? res?.mainData[0] : {});
+      if (res?.mainData) {
+        setTabId(Number(res?.mainData[0]?.bcChitType));
+        setData65(res?.mainData[0]);
+        reset({ ...res?.mainData[0], areaCode2: res?.mainData[0]?.areaCode });
+      } else {
+        setData65({});
+      }
+
       setData65Detail(res?.detailData ? res?.detailData : []);
     } else {
       setData65({});
@@ -389,7 +374,7 @@ const Form = ({
       document.getElementById("bcJunno")?.focus();
     }
     if (type === "reset") {
-      setTabId(parseInt(data65?.bcChitType));
+      setTabId(Number(data65?.bcChitType));
       reset({ ...data65, areaCode2: data65.areaCode });
     }
     if (type === "areaCode") {
