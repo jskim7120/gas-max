@@ -26,7 +26,6 @@ function getTabContent(
       return (
         <Tab1
           tabId={tabId}
-          areaCode={areaCode}
           data={data}
           data65={data65}
           dictionary={dictionary}
@@ -45,7 +44,6 @@ function getTabContent(
       return (
         <Tab2
           tabId={tabId}
-          areaCode={areaCode}
           data={data}
           data65={data65}
           dictionary={dictionary}
@@ -62,7 +60,6 @@ function getTabContent(
       return (
         <Tab3
           tabId={tabId}
-          areaCode={areaCode}
           data={data}
           data65={data65}
           dictionary={dictionary}

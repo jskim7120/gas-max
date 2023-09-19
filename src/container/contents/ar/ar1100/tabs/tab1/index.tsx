@@ -20,7 +20,6 @@ const Tab1 = React.forwardRef(
   (
     {
       tabId,
-      areaCode,
       data,
       data65,
       dictionary,
@@ -34,7 +33,6 @@ const Tab1 = React.forwardRef(
       setJpKind,
     }: {
       tabId: number;
-      areaCode: string;
       data: any;
       data65: any;
       dictionary: any;
@@ -64,7 +62,7 @@ const Tab1 = React.forwardRef(
     const dispatch = useDispatch();
 
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
-    const footerState = useSelector((state: any) => state.footer);
+    const { info, source } = useSelector((state: any) => state.footer);
 
     const [pjQty, setPjQty] = useState<number>(0);
     const [pjJago, setPjJago] = useState<number>(0);
@@ -280,11 +278,11 @@ const Tab1 = React.forwardRef(
       const path = isAddBtnClicked ? AR1100INSERT : AR1100UPDATE;
 
       if (isAddBtnClicked) {
-        if (footerState?.source === menuId + tabId.toString()) {
-          params.areaCode = areaCode;
-          params.pjCuCode = footerState?.info?.cuCode;
-          params.pjCuName = footerState?.info?.cuName;
-        }
+        // if (source === menuId + tabId.toString()) {
+        params.areaCode = info?.areaCode;
+        params.pjCuCode = info?.cuCode;
+        params.pjCuName = info?.cuName;
+        // }
       }
 
       params.pjDate = DateWithoutDash(params.pjDate);

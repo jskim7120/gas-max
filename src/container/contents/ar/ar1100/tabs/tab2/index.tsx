@@ -24,7 +24,6 @@ const Tab2 = React.forwardRef(
   (
     {
       tabId,
-      areaCode,
       data,
       data65,
       dictionary,
@@ -36,7 +35,6 @@ const Tab2 = React.forwardRef(
       addBtnUnClick,
     }: {
       tabId: number;
-      areaCode: string;
       data: any;
       data65: any;
       dictionary: any;
@@ -62,7 +60,7 @@ const Tab2 = React.forwardRef(
     const dispatch = useDispatch();
 
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
-    const footerState = useSelector((state: any) => state.footer);
+    const { info, source } = useSelector((state: any) => state.footer);
     const [pcQty, setPcQty] = useState<number>(0);
 
     const { showCM1106Modal, openModal } = useModal();
@@ -73,12 +71,6 @@ const Tab2 = React.forwardRef(
         resetForm("jpName");
       }
     }, [cm1106.tick]);
-
-    // useEffect(() => {
-    // if (data65 && Object.keys(data65)?.length > 0) {
-    // resetForm("reset");
-    // }
-    // }, [data65]);
 
     useEffect(() => {
       if (watch("pcReqty") !== undefined) {
@@ -175,11 +167,11 @@ const Tab2 = React.forwardRef(
       const path = isAddBtnClicked ? AR1100CJSALEINSERT : AR1100CJSALEUPDATE;
 
       if (isAddBtnClicked) {
-        if (footerState?.source === menuId + tabId.toString()) {
-          params.areaCode = areaCode;
-          params.pcCuCode = footerState?.info?.cuCode;
-          params.pcCuName = footerState?.info?.cuName;
-        }
+        // if (source === menuId + tabId.toString()) {
+        params.areaCode = info?.areaCode;
+        params.pcCuCode = info?.cuCode;
+        params.pcCuName = info?.cuName;
+        // }
       }
 
       params.pcDate = DateWithoutDash(params.pcDate);

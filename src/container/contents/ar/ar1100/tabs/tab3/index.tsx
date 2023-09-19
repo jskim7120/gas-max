@@ -1,5 +1,9 @@
 import React, { useEffect, useImperativeHandle } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { AR1100TONGSALEINSERT, AR1100TONGSALEUPDATE } from "app/path";
+import { useSelector, useDispatch } from "app/store";
+import useModal from "app/hook/useModal";
+import { addCM1106Second } from "app/state/modal/modalSlice";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { Reset, Update } from "components/allSvgIcon";
@@ -22,12 +26,13 @@ import {
   tableHeader5,
 } from "./tableHeader";
 import { IAR1100TAB3 } from "./model";
+import { DateWithoutDash } from "helpers/dateFormat";
+import { apiPost } from "app/axios";
 
 const Tab3 = React.forwardRef(
   (
     {
       tabId,
-      areaCode,
       data,
       data65,
       dictionary,
@@ -39,7 +44,6 @@ const Tab3 = React.forwardRef(
       addBtnUnClick,
     }: {
       tabId: number;
-      areaCode: string;
       data: any;
       data65: any;
       dictionary: any;
@@ -52,6 +56,8 @@ const Tab3 = React.forwardRef(
     },
     ref: React.ForwardedRef<any>
   ) => {
+    const { info, source } = useSelector((state: any) => state.footer);
+    const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const { register, handleSubmit, reset, control, getValues, watch } =
       useForm<IAR1100TAB3>({
         mode: "onSubmit",
@@ -61,6 +67,8 @@ const Tab3 = React.forwardRef(
       reset,
       crud,
     }));
+    const dispatch = useDispatch();
+    const { showCM1106Modal, openModal } = useModal();
 
     let tsKumSup = 0;
     let tsKumVat = 0;
@@ -71,11 +79,11 @@ const Tab3 = React.forwardRef(
     let tsInkum = 0;
     let tsDc = 0;
 
-    // useEffect(() => {
-    // if (data65 && Object.keys(data65)?.length > 0) {
-    // resetForm("reset");
-    // }
-    // }, [data65]);
+    useEffect(() => {
+      if (cm1106.source === "AR11002") {
+        resetForm("jpName");
+      }
+    }, [cm1106.tick]);
 
     useEffect(() => {
       if (watch("tsQty") !== undefined) {
@@ -190,6 +198,12 @@ const Tab3 = React.forwardRef(
     const resetForm = (type: string) => {
       if (type === "reset") {
       } else if (type === "jpName") {
+        reset((formValues) => ({
+          ...formValues,
+          tsJpName: cm1106?.jpName ? cm1106?.jpName : "",
+          tsJpCode: cm1106?.jpCode ? cm1106?.jpCode : "",
+          tsJpSpec: cm1106?.jpSpec,
+        }));
       }
     };
 
@@ -197,15 +211,54 @@ const Tab3 = React.forwardRef(
 
     const handleClickReset = () => {};
 
-    const submit = async (params: any) => {};
+    const submit = async (params: any) => {
+      const path = isAddBtnClicked
+        ? AR1100TONGSALEINSERT
+        : AR1100TONGSALEUPDATE;
+      if (isAddBtnClicked) {
+        // if (source === menuId + tabId.toString()) {
+        params.areaCode = info?.areaCode;
+        params.tsCuCode = info?.cuCode;
+        params.tsCuName = info?.cuName;
+        // }
+      }
 
-    const openPopupCM1106 = async () => {};
+      params.tsDate = DateWithoutDash(params.tsDate);
+      params.tsDanga = removeCommas(params.tsDanga, "number");
+      params.tsKumack = removeCommas(params.tsKumack, "number");
+      params.tsKumVat = removeCommas(params.tsKumVat, "number");
+      params.tsKumSup = removeCommas(params.tsKumSup, "number");
+      params.tsInkum = removeCommas(params.tsInkum, "number");
+      params.tsDc = removeCommas(params.tsDc, "number");
+      params.tsMisu = removeCommas(params.tsMisu, "number");
+
+      if (params.tsSwCode) {
+        const pjSwName = dictionary?.tsSwCode?.find(
+          (item: any) => item.code === params.tsSwCode
+        )?.codeName;
+        params.pjSwName = pjSwName;
+      }
+
+      const res = await apiPost(path, params, "저장이 성공하였습니다");
+      if (res) {
+        if (isAddBtnClicked) {
+          await handleSubmitParent((d: any) => submitParent(d, "last"))();
+        } else {
+          await handleSubmitParent((d: any) => submitParent(d))();
+        }
+      }
+    };
+
+    const openPopupCM1106 = async () => {
+      dispatch(addCM1106Second({ source: "AR11002" }));
+      openModal();
+    };
 
     const t11 = {
       0: (
         <FormGroup>
-          <Select register={register("tsSaleState")} width={InputSize.i100}>
-            {dictionary?.tsSaleState?.map((obj: any, idx: number) => (
+          <Select register={register("saleState")} width={InputSize.i100}>
+            {dictionary?.saleState?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -274,8 +327,8 @@ const Tab3 = React.forwardRef(
       ),
       4: (
         <FormGroup>
-          <Select register={register("tsTonggubun")} width={InputSize.i100}>
-            {dictionary?.tsTonggubun?.map((obj: any, idx: number) => (
+          <Select register={register("tsTongGubun")} width={InputSize.i100}>
+            {dictionary?.tsTongGubun?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -396,14 +449,9 @@ const Tab3 = React.forwardRef(
       13: (
         <Controller
           control={control}
-          name="signuser"
+          name="signUser"
           render={({ field }) => (
-            <Input
-              {...field}
-              inputSize={InputSize.i100}
-              textAlign="right"
-              mask={currencyMask}
-            />
+            <Input {...field} inputSize={InputSize.i100} />
           )}
         />
       ),
@@ -413,8 +461,8 @@ const Tab3 = React.forwardRef(
       {
         0: (
           <FormGroup>
-            <Select register={register("tsInkumtype")} width={InputSize.i100}>
-              {dictionary?.tsInkumtype?.map((obj: any, idx: number) => (
+            <Select register={register("tsInkumType")} width={InputSize.i100}>
+              {dictionary?.tsInkumType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -424,8 +472,8 @@ const Tab3 = React.forwardRef(
         ),
         1: (
           <FormGroup>
-            <Select register={register("tsAbcCode")} width={InputSize.i150}>
-              {dictionary?.tsAbcCode?.map((obj: any, idx: number) => (
+            <Select register={register("abcCode")} width={InputSize.i150}>
+              {dictionary?.abcCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -501,14 +549,9 @@ const Tab3 = React.forwardRef(
         7: (
           <Controller
             control={control}
-            name="signuser"
+            name="signUser"
             render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                textAlign="right"
-                mask={currencyMask}
-              />
+              <Input {...field} inputSize={InputSize.i100} />
             )}
           />
         ),
@@ -557,6 +600,7 @@ const Tab3 = React.forwardRef(
 
     return (
       <>
+        {showCM1106Modal()}
         <form autoComplete="off" onSubmit={handleSubmit(submit)}>
           <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
             <div className="tab2">

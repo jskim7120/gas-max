@@ -6,6 +6,7 @@ import {
   AR1100SELECT,
   AR1100INIT,
   AR1100SELECT41,
+  AR1100SELECT51,
 } from "app/path";
 import { useDispatch, useSelector } from "app/store";
 import useModal from "app/hook/useModal";
@@ -54,6 +55,7 @@ function AR1100({
     "AR1100",
     AR1100SEARCH
   );
+  const { info, source } = useSelector((state: any) => state.footer);
 
   const dispatch = useDispatch();
   const tabRef1 = useRef() as React.MutableRefObject<any>;
@@ -66,10 +68,9 @@ function AR1100({
   const [dataDictionary, setDataDictionary] = useState({});
   const [tabId, setTabId] = useState<number>(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
-  const [isInfoSelected, setIsInfoSelected] = useState<boolean>(false);
+  const [toggler, setToggler] = useState<boolean>(false);
   const [jpKind, setJpKind] = useState();
 
-  const { info, source } = useSelector((state: any) => state.footer);
   const { getRowIndex, setRowIndex } = useRowIndex();
   const { showCM1105Modal, openModal: openCM1105Modal } = useModal();
   const {
@@ -92,15 +93,8 @@ function AR1100({
     }
   }, [dataCommonDic]);
 
-  // useEffect(() => {
-  //   if (tabId !== undefined && isAddBtnClicked === true) {
-  //     onTabChangeOnAdd();
-  //   }
-  // }, [isAddBtnClicked]);
-
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
-      setIsInfoSelected(false);
       if (selected?.pjType && Number(selected?.pjType) !== tabId) {
         setTabId(Number(selected?.pjType));
       }
@@ -122,20 +116,68 @@ function AR1100({
     if (source === menuId) {
       if (info) {
         addCodeAndNameToLastRow(info);
-        setIsInfoSelected(true);
         if (info?.cuType === "0") {
-          tabId !== 0 && setTabId(0);
-          fetchData41({
-            areaCode: getValues("areaCode"),
-            cuCode: info?.cuCode,
-            saleType: 5,
-          });
+          tabId !== 0 ? setTabId(0) : setToggler((prev) => !prev);
         } else {
-          tabId !== 1 && setTabId(1);
+          tabId !== 1 ? setTabId(1) : setToggler((prev) => !prev);
         }
       }
     }
   }, [info]);
+
+  useEffect(() => {
+    if (isAddBtnClicked === true && tabId !== undefined) {
+      onTabChangeonAdd();
+    }
+  }, [tabId, toggler]);
+
+  const onTabChangeonAdd = async () => {
+    if (tabId === 0) {
+      const res: any = await fetchData41({
+        areaCode: getValues("areaCode"),
+        cuCode: info?.cuCode,
+        saleType: 5,
+      });
+
+      if (res && Object.keys(res)?.length > 0) {
+        setDataDictionary({
+          pjVatDiv: res?.pjVatDiv,
+          pjSwCode: res?.pjSwCode,
+          proxyType: res?.proxyType,
+          pjInkumtype: res?.pjInkumtype,
+          saleState: res?.saleState,
+        });
+        if (res?.detailData) {
+          tabRef1.current.reset({ ...res?.detailData[0], pjDate: new Date() });
+          tabRef1.current.setPjQty(res?.detailData[0]?.pjQty);
+        } else if (res?.initData) {
+          tabRef1.current.reset({ ...res?.initData[0] });
+          tabRef1.current.setPjQty(res?.initData[0]?.pjQty);
+        }
+      }
+    } else if (tabId === 1) {
+      const res: any = await fetchData51({
+        areaCode: getValues("areaCode"),
+        cuCode: info?.cuCode,
+        saleType: 5,
+      });
+
+      if (res && Object.keys(res)?.length > 0) {
+        setDataDictionary({
+          proxyType: res?.proxyType,
+          saleState: res?.saleState,
+          pcSwCode: res?.pcSwCode,
+        });
+        if (res?.detailData) {
+          tabRef2.current.reset({ ...res?.detailData[0], pcDate: new Date() });
+          tabRef2.current.setPcQty(res?.detailData[0]?.pcQty);
+        } else if (res?.initData) {
+          tabRef2.current.reset({ ...res?.initData[0] });
+          tabRef2.current.setPcQty(res?.initData[0]?.pcQty);
+        }
+      }
+    }
+  };
 
   // const onTabChangeOnAdd = () => {
   //dispatch(addSource({ source: menuId + tabId.toString() }));
@@ -151,7 +193,7 @@ function AR1100({
   //     jcJpDanga: 0,
   //   })
   // );
-  //fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
+  // fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
   // };
 
   const addCodeAndNameToLastRow = (info: any) => {
@@ -411,12 +453,12 @@ function AR1100({
         }
       } else if (tabId === 2) {
         setDataDictionary({
-          tsAbcCode: res?.tsAbcCode,
+          abcCode: res?.abcCode,
           tsGubun: res?.tsGubun,
-          tsInkumtype: res?.tsInkumtype,
-          tsSaleState: res?.tsSaleState,
+          tsInkumType: res?.tsInkumType,
+          saleState: res?.saleState,
           tsSwCode: res?.tsSwCode,
-          tsTonggubun: res?.tsTonggubun,
+          tsTongGubun: res?.tsTongGubun,
           tsVatDiv: res?.tsVatDiv,
         });
         if (res?.initData && res?.initData?.length > 0) {
@@ -428,16 +470,12 @@ function AR1100({
 
   const fetchData41 = async (params: any) => {
     const res = await apiGet(AR1100SELECT41, params);
+    return res;
+  };
 
-    if (res && res?.length > 0) {
-      console.log(res[0]);
-      tabRef1?.current?.reset({ ...res[0], pjDate: new Date() });
-      tabRef1?.current?.setPjQty(res[0]?.pjQty);
-    }
-    //else {
-    //  tabRef1?.current?.reset({ ...emtObjTab1, pjDate: new Date() });
-    //  tabRef1?.current?.setPjQty(0);
-    //}
+  const fetchData51 = async (params: any) => {
+    const res = await apiGet(AR1100SELECT51, params);
+    return res;
   };
 
   const addBtnClick = () => {
@@ -456,7 +494,7 @@ function AR1100({
 
   const submit = async (d: any, pos: string = "") => {
     addBtnUnClick();
-    isInfoSelected && setIsInfoSelected(false);
+    // isInfoSelected && setIsInfoSelected(false);
     const params = getValues();
     prepareParamsForSearch(params);
     fetchData(params, pos);
@@ -465,7 +503,7 @@ function AR1100({
   const handleClickBtnAdd = () => {
     dispatch(addSource({ source: menuId }));
     dispatch(removeSearchText({}));
-    fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
+    //fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
     addBtnClick();
     addEmptyRow();
     openCustomerModal();
@@ -749,9 +787,7 @@ function AR1100({
             "A/S",
             "수금",
           ]}
-          onClick={(id) =>
-            isAddBtnClicked ? (isInfoSelected ? null : setTabId(id)) : null
-          }
+          onClick={(id) => (isAddBtnClicked ? setTabId(id) : null)}
           tabId={tabId}
         />
 
