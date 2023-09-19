@@ -282,6 +282,7 @@ const Tab1 = React.forwardRef(
         params.areaCode = info?.areaCode;
         params.pjCuCode = info?.cuCode;
         params.pjCuName = info?.cuName;
+        params.pjSno = "";
         // }
       }
 

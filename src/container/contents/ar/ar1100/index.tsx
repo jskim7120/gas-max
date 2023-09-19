@@ -95,6 +95,15 @@ function AR1100({
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
+      setData((prevState) =>
+        prevState.filter((item) => {
+          if ("isNew" in item) {
+            return false;
+          }
+          return true;
+        })
+      );
+
       if (selected?.pjType && Number(selected?.pjType) !== tabId) {
         setTabId(Number(selected?.pjType));
       }

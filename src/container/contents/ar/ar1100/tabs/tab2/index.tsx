@@ -171,6 +171,7 @@ const Tab2 = React.forwardRef(
         params.areaCode = info?.areaCode;
         params.pcCuCode = info?.cuCode;
         params.pcCuName = info?.cuName;
+        params.pcSno = "";
         // }
       }
 
