@@ -7,6 +7,7 @@ import {
   AR1100INIT,
   AR1100SELECT41,
   AR1100SELECT51,
+  AR1100SELECT61,
 } from "app/path";
 import { useDispatch, useSelector } from "app/store";
 import useModal from "app/hook/useModal";
@@ -143,7 +144,7 @@ function AR1100({
   const onTabChangeonAdd = async () => {
     if (tabId === 0) {
       const res: any = await fetchData41({
-        areaCode: getValues("areaCode"),
+        areaCode: info?.areaCode,
         cuCode: info?.cuCode,
         saleType: 5,
       });
@@ -169,7 +170,7 @@ function AR1100({
       }
     } else if (tabId === 1) {
       const res: any = await fetchData51({
-        areaCode: getValues("areaCode"),
+        areaCode: info?.areaCode,
         cuCode: info?.cuCode,
         saleType: 5,
       });
@@ -188,6 +189,31 @@ function AR1100({
           setData65(res?.initData[0]);
           tabRef2.current.reset({ ...res?.initData[0] });
           tabRef2.current.setPcQty(res?.initData[0]?.pcQty);
+        }
+      }
+    } else if (tabId === 2) {
+      const res: any = await fetchData61({
+        areaCode: info?.areaCode,
+        cuCode: info?.cuCode,
+        saleType: 5,
+      });
+      if (res && Object.keys(res)?.length > 0) {
+        console.log("tab3>>>", res);
+        setDataDictionary({
+          abcCode: res?.abcCode,
+          saleState: res?.saleState,
+          tsGubun: res?.tsGubun,
+          tsInkumType: res?.tsInkumType,
+          tsSwCode: res?.tsSwCode,
+          tsTongGubun: res?.tsTongGubun,
+          tsVatDiv: res?.tsVatDiv,
+        });
+        if (res?.detailData) {
+          setData65(res?.detailData[0]);
+          tabRef3.current.reset({ ...res?.detailData[0], tsDate: new Date() });
+        } else if (res?.initData) {
+          setData65(res?.initData[0]);
+          tabRef3.current.reset({ ...res?.initData[0] });
         }
       }
     }
@@ -493,6 +519,11 @@ function AR1100({
     return res;
   };
 
+  const fetchData61 = async (params: any) => {
+    const res = await apiGet(AR1100SELECT61, params);
+    return res;
+  };
+
   const addBtnClick = () => {
     if (!isAddBtnClicked) {
       btnRef1.current.classList.add("active");
@@ -786,7 +817,7 @@ function AR1100({
           menuId={menuId}
           rowIndex={rowIndex}
           style={{
-            height: `calc(50%)`,
+            height: `calc(100% - 282px)`,
             borderBottom: "1px solid rgb(188,185,185)",
             marginBottom: "3px",
           }}
@@ -806,7 +837,14 @@ function AR1100({
           tabId={tabId}
         />
 
-        <TabContentWrapper>
+        <TabContentWrapper
+          style={{
+            minHeight: "170px",
+            borderBottom: "none",
+            borderRight: "none",
+            borderLeft: "none",
+          }}
+        >
           {getTabContent(
             tabId,
             data,

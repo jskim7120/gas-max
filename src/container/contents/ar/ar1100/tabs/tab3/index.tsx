@@ -215,11 +215,13 @@ const Tab3 = React.forwardRef(
       const path = isAddBtnClicked
         ? AR1100TONGSALEINSERT
         : AR1100TONGSALEUPDATE;
+
       if (isAddBtnClicked) {
         // if (source === menuId + tabId.toString()) {
         params.areaCode = info?.areaCode;
         params.tsCuCode = info?.cuCode;
         params.tsCuName = info?.cuName;
+        params.tsSno = "";
         // }
       }
 

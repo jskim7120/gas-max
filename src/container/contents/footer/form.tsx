@@ -276,7 +276,7 @@ function Form({
 
   return (
     <FooterWrapper>
-      <form>
+      <form onSubmit={handleSubmit(submit)}>
         <div className="top handle">
           <div className="top__left">
             <UserWhite />
@@ -337,8 +337,7 @@ function Form({
               text="검색"
               icon={!loading && <MagnifyingGlassBig width="15" />}
               color={ButtonColor.DANGER}
-              type="button"
-              onClick={handleSubmit(submit)}
+              type="submit"
               loader={
                 loading && <Loader size={16} style={{ marginRight: "12px" }} />
               }
