@@ -64,7 +64,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@svgr/webpack": "^6.5.1",
     "@types/react-datepicker": "^4.4.2",
     "@types/react-text-mask": "^5.4.11"
