@@ -155,11 +155,14 @@ function AR1100({
           proxyType: res?.proxyType,
           pjInkumtype: res?.pjInkumtype,
           saleState: res?.saleState,
+          pabcCode: res?.pabcCode,
         });
         if (res?.detailData) {
+          setData65(res?.detailData[0]);
           tabRef1.current.reset({ ...res?.detailData[0], pjDate: new Date() });
           tabRef1.current.setPjQty(res?.detailData[0]?.pjQty);
         } else if (res?.initData) {
+          setData65(res?.initData[0]);
           tabRef1.current.reset({ ...res?.initData[0] });
           tabRef1.current.setPjQty(res?.initData[0]?.pjQty);
         }
@@ -178,9 +181,11 @@ function AR1100({
           pcSwCode: res?.pcSwCode,
         });
         if (res?.detailData) {
+          setData65(res?.detailData[0]);
           tabRef2.current.reset({ ...res?.detailData[0], pcDate: new Date() });
           tabRef2.current.setPcQty(res?.detailData[0]?.pcQty);
         } else if (res?.initData) {
+          setData65(res?.initData[0]);
           tabRef2.current.reset({ ...res?.initData[0] });
           tabRef2.current.setPcQty(res?.initData[0]?.pcQty);
         }
@@ -397,6 +402,7 @@ function AR1100({
           proxyType: res?.proxyType,
           pjInkumtype: res?.pjInkumtype,
           saleState: res?.saleState,
+          pabcCode: res?.pabcCode,
         });
         if (res?.detailData && res?.detailData?.length > 0) {
           tabRef1.current.reset(res?.detailData[0]);

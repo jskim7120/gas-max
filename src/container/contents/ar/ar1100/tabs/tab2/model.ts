@@ -15,4 +15,6 @@ export interface IAR1100TAB2 {
   proxyType: string;
   cBuCode: string;
   cBuName: string;
+  junJaego: number;
+  signuser: string;
 }

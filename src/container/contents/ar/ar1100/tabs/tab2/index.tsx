@@ -94,9 +94,13 @@ const Tab2 = React.forwardRef(
 
     const handlePcQtyChange = (value: number) => {
       setPcQty(value);
-      const pcJaego = cm1106?.jcBasicJaego
-        ? +removeCommas(cm1106.jcBasicJaego, "number")
-        : 0;
+      const pcJaego =
+        (data65?.junJaego !== undefined ? data65?.junJaego : 0) +
+        pcQty -
+        (getValues("pcReqty")
+          ? +removeCommas(getValues("pcReqty"), "number")
+          : 0);
+
       calcKumack(value);
       reset((formValues) => ({
         ...formValues,
@@ -108,9 +112,7 @@ const Tab2 = React.forwardRef(
 
     const handlePcReqtyChange = () => {
       const pcJaego =
-        (cm1106?.jcBasicJaego
-          ? +removeCommas(cm1106.jcBasicJaego, "number")
-          : 0) +
+        (data65?.junJaego !== undefined ? data65?.junJaego : 0) +
         pcQty -
         (getValues("pcReqty")
           ? +removeCommas(getValues("pcReqty"), "number")
@@ -431,6 +433,11 @@ const Tab2 = React.forwardRef(
             </span>
           </FormGroup>
         ),
+        2: (
+          <FormGroup>
+            <Input register={register("signuser")} inputSize={InputSize.i100} />
+          </FormGroup>
+        ),
       },
     ];
 
@@ -460,7 +467,7 @@ const Tab2 = React.forwardRef(
               />
               <Table
                 className="no-space"
-                tableHeader={["공급구분", "매입처"]}
+                tableHeader={["공급구분", "매입처", "확인"]}
                 tableData={tableData2}
               />
             </div>

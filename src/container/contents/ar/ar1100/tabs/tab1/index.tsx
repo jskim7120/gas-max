@@ -86,12 +86,6 @@ const Tab1 = React.forwardRef(
       }
     }, [cm1106.tick]);
 
-    // useEffect(() => {
-    // if (data65 && Object.keys(data65)?.length > 0) {
-    // resetForm("reset");
-    // }
-    // }, [data65]);
-
     useEffect(() => {
       if (watch("pjReqty") !== undefined) {
         handlePjReqtyChange();
@@ -548,7 +542,7 @@ const Tab1 = React.forwardRef(
         5: (
           <FormGroup>
             <Select register={register("pacbCode")} width={InputSize.i150}>
-              {dictionary?.pjInkumtype?.map((obj: any, idx: number) => (
+              {dictionary?.pabcCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
