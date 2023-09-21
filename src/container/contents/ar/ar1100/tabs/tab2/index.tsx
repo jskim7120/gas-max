@@ -1,10 +1,6 @@
 import React, { useEffect, useState, useImperativeHandle } from "react";
 import { Controller, useForm } from "react-hook-form";
-import {
-  AR1100CJSALEINSERT,
-  AR1100CJSALEUPDATE,
-  AR1100CJSALEDELETE,
-} from "app/path";
+import { AR1100CJSALEINSERT, AR1100CJSALEUPDATE } from "app/path";
 import { apiPost } from "app/axios";
 import { useDispatch, useSelector } from "app/store";
 import useModal from "app/hook/useModal";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { apiGet } from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import {
   AR1100SEARCH,
   AR1100SELECT,
@@ -8,13 +8,15 @@ import {
   AR1100SELECT41,
   AR1100SELECT51,
   AR1100SELECT61,
+  AR1100DELETE,
+  AR1100CJSALEDELETE,
+  AR1100TONGSALEDELETE,
 } from "app/path";
 import { useDispatch, useSelector } from "app/store";
 import useModal from "app/hook/useModal";
 import useRowIndex from "app/hook/useRowIndex";
 import useGetData from "app/hook/getSimpleData";
 import { addSource, removeSearchText } from "app/state/footer/footerSlice";
-import { addCM1106 } from "app/state/modal/modalSlice";
 import {
   Plus,
   Trash,
@@ -98,14 +100,12 @@ function AR1100({
     if (selected && Object.keys(selected)?.length > 0) {
       /*
       setData((prevState) =>
-        prevState.filter((item: any) => {
-          if ("isNew" in item) {
-            return false;
-          }
+        prevState?.filter((item: any) => {
           return true;
         })
       );
       */
+
       if (selected?.pjType && Number(selected?.pjType) !== tabId) {
         setTabId(Number(selected?.pjType));
       }
@@ -384,22 +384,22 @@ function AR1100({
 
   const fetchData = async (params: any, pos: string = "") => {
     setLoading(true);
-    const dataS = await apiGet(AR1100SEARCH, params);
+    const res = await apiGet(AR1100SEARCH, params);
 
-    if (dataS && dataS?.length > 0) {
-      setData(dataS);
-      const lastIndex = dataS && dataS?.length > 1 ? dataS.length - 1 : 0;
+    if (res && res?.length > 0) {
+      setData(res);
+      const lastIndex = res && res?.length > 1 ? res.length - 1 : 0;
 
       if (pos === "last") {
-        setSelected(dataS[lastIndex]);
+        setSelected(res[lastIndex]);
         setRowIndex(menuId, 0, lastIndex);
       } else {
         if (rowIndex) {
           if (rowIndex > lastIndex) {
             setRowIndex(menuId, 0, lastIndex);
-            setSelected(dataS[lastIndex]);
+            setSelected(res[lastIndex]);
           } else {
-            setSelected(dataS[rowIndex]);
+            setSelected(res[rowIndex]);
           }
         }
       }
@@ -449,12 +449,12 @@ function AR1100({
       }
       if (selected?.pjType === "2") {
         setDataDictionary({
-          tsAbcCode: res?.tsAbcCode,
+          abcCode: res?.abcCode,
           tsGubun: res?.tsGubun,
-          tsInkumtype: res?.tsInkumtype,
-          tsSaleState: res?.tsSaleState,
+          tsInkumType: res?.tsInkumType,
+          saleState: res?.saleState,
           tsSwCode: res?.tsSwCode,
-          tsTonggubun: res?.tsTonggubun,
+          tsTongGubun: res?.tsTongGubun,
           tsVatDiv: res?.tsVatDiv,
         });
         if (res?.detailData && res?.detailData?.length > 0) {
@@ -556,9 +556,53 @@ function AR1100({
     openCustomerModal();
   };
 
-  const handleClickBtnDel = () => {
+  const handleClickBtnDel = async () => {
     addBtnUnClick();
-    tabRef1.current.crud("delete");
+
+    let res = null;
+    if (selected) {
+      if (selected?.pjType === "0") {
+        res = await apiPost(
+          AR1100DELETE,
+          {
+            areaCode: selected?.areaCode,
+            pjCuCode: selected?.cuCode,
+            pjCuName: selected?.cuName,
+            pjJpCode: selected?.jpCode,
+            pjSno: selected?.pjSno,
+            pjDate: DateWithoutDash(selected?.pjDate),
+          },
+          "삭제했습니다"
+        );
+      } else if (selected?.pjType === "1") {
+        res = await apiPost(
+          AR1100CJSALEDELETE,
+          {
+            areaCode: selected?.areaCode,
+            pcCuCode: selected?.cuCode,
+            pcCuName: selected?.cuName,
+            pcJpCode: selected?.jpCode,
+            pcSno: selected?.pjSno,
+            pcDate: DateWithoutDash(selected?.pjDate),
+          },
+          "삭제했습니다"
+        );
+      } else if (selected?.pjType === "2") {
+        res = await apiPost(
+          AR1100TONGSALEDELETE,
+          {
+            areaCode: selected?.areaCode,
+            tsCuCode: selected?.cuCode,
+            tsCuName: selected?.cuName,
+            tsJpCode: selected?.jpCode,
+            tsSno: selected?.pjSno,
+            tsDate: DateWithoutDash(selected?.pjDate),
+          },
+          "삭제했습니다"
+        );
+      }
+      res && handleSubmit((d) => submit(d))();
+    }
   };
 
   const handleReset = () => {

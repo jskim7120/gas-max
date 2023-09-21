@@ -65,7 +65,6 @@ const Tab3 = React.forwardRef(
 
     useImperativeHandle<any, any>(ref, () => ({
       reset,
-      crud,
     }));
     const dispatch = useDispatch();
     const { showCM1106Modal, openModal } = useModal();
@@ -207,8 +206,6 @@ const Tab3 = React.forwardRef(
       }
     };
 
-    const crud = async (type: string | null) => {};
-
     const handleClickReset = () => {};
 
     const submit = async (params: any) => {
@@ -235,10 +232,10 @@ const Tab3 = React.forwardRef(
       params.tsMisu = removeCommas(params.tsMisu, "number");
 
       if (params.tsSwCode) {
-        const pjSwName = dictionary?.tsSwCode?.find(
+        const tsSwName = dictionary?.tsSwCode?.find(
           (item: any) => item.code === params.tsSwCode
         )?.codeName;
-        params.pjSwName = pjSwName;
+        params.tsSwName = tsSwName;
       }
 
       const res = await apiPost(path, params, "저장이 성공하였습니다");

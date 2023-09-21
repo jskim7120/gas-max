@@ -54,7 +54,6 @@ const Tab1 = React.forwardRef(
 
     useImperativeHandle<any, any>(ref, () => ({
       reset,
-      crud,
       setPjQty,
       setPjJago,
     }));
@@ -239,24 +238,6 @@ const Tab1 = React.forwardRef(
     const openPopupCM1106 = async () => {
       dispatch(addCM1106Second({ source: "AR11000" }));
       openModal();
-    };
-
-    const crud = async (type: string | null) => {
-      if (type === "delete") {
-        const formValues = getValues();
-
-        const res = await apiPost(AR1100DELETE, formValues, "삭제했습니다");
-
-        if (res) {
-          await handleSubmitParent((d: any) => submitParent(d))();
-        }
-
-        return;
-      }
-
-      if (type === null) {
-        handleSubmit(submit)();
-      }
     };
 
     const handleClickReset = async () => {
