@@ -26,8 +26,6 @@ const Tab2 = React.forwardRef(
       isAddBtnClicked,
       handleSubmitParent,
       submitParent,
-      selected,
-      menuId,
       addBtnUnClick,
     }: {
       tabId: number;
@@ -37,8 +35,6 @@ const Tab2 = React.forwardRef(
       isAddBtnClicked: boolean;
       handleSubmitParent: Function;
       submitParent: Function;
-      selected: any;
-      menuId: string;
       addBtnUnClick: Function;
     },
     ref: React.ForwardedRef<any>
@@ -60,6 +56,7 @@ const Tab2 = React.forwardRef(
     const [pcQty, setPcQty] = useState<number>(0);
 
     const { showCM1106Modal, openModal } = useModal();
+
     let pcKumack = 0;
 
     useEffect(() => {
@@ -128,20 +125,6 @@ const Tab2 = React.forwardRef(
       }));
     };
 
-    const handleClickReset = async () => {
-      if (isAddBtnClicked) {
-        await handleSubmitParent((dat: any) => submitParent(dat, "last"))();
-        addBtnUnClick();
-      } else {
-        resetForm("reset");
-      }
-    };
-
-    const openPopupCM1106 = async () => {
-      dispatch(addCM1106Second({ source: "AR11001" }));
-      openModal();
-    };
-
     const resetForm = (type: string) => {
       if (type === "reset") {
         setPcQty(data65?.pcQty);
@@ -158,6 +141,20 @@ const Tab2 = React.forwardRef(
           pcJpSpec: cm1106?.jpSpec,
           // pcDanga: cm1106?.jcJpDanga, ar1100 -aas bolood aldaa garaad bsan bolohoor tur comment bolgov
         }));
+      }
+    };
+
+    const openPopupCM1106 = async () => {
+      dispatch(addCM1106Second({ source: "AR11001" }));
+      openModal();
+    };
+
+    const handleClickReset = async () => {
+      if (isAddBtnClicked) {
+        await handleSubmitParent((dat: any) => submitParent(dat, "last"))();
+        addBtnUnClick();
+      } else {
+        resetForm("reset");
       }
     };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useImperativeHandle } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { AR1100INSERT, AR1100UPDATE, AR1100DELETE } from "app/path";
+import { AR1100INSERT, AR1100UPDATE } from "app/path";
 import { useDispatch, useSelector } from "app/store";
 import { apiPost } from "app/axios";
 import useModal from "app/hook/useModal";
@@ -26,8 +26,6 @@ const Tab1 = React.forwardRef(
       isAddBtnClicked,
       handleSubmitParent,
       submitParent,
-      selected,
-      menuId,
       addBtnUnClick,
       jpKind,
       setJpKind,
@@ -39,8 +37,6 @@ const Tab1 = React.forwardRef(
       isAddBtnClicked: boolean;
       handleSubmitParent: Function;
       submitParent: Function;
-      selected: any;
-      menuId: string;
       addBtnUnClick: Function;
       jpKind: any;
       setJpKind: Function;

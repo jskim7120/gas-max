@@ -4,7 +4,6 @@ import { apiGet, apiPost } from "app/axios";
 import {
   AR1100SEARCH,
   AR1100SELECT,
-  AR1100INIT,
   AR1100SELECT41,
   AR1100SELECT51,
   AR1100SELECT61,
@@ -199,9 +198,8 @@ function AR1100({
         saleType: 5,
       });
       if (res && Object.keys(res)?.length > 0) {
-        console.log("tab3>>>", res);
         setDataDictionary({
-          abcCode: res?.abcCode,
+          acbCode: res?.acbCode,
           saleState: res?.saleState,
           tsGubun: res?.tsGubun,
           tsInkumType: res?.tsInkumType,
@@ -449,7 +447,7 @@ function AR1100({
       }
       if (selected?.pjType === "2") {
         setDataDictionary({
-          abcCode: res?.abcCode,
+          acbCode: res?.acbCode,
           tsGubun: res?.tsGubun,
           tsInkumType: res?.tsInkumType,
           saleState: res?.saleState,
@@ -464,49 +462,6 @@ function AR1100({
     } else {
       setData65({});
       setDataDictionary({});
-    }
-  };
-
-  const fetchData11 = async (params: any) => {
-    const res = await apiGet(AR1100INIT, params);
-
-    if (res && Object.keys(res)?.length > 0) {
-      if (tabId === 0) {
-        setDataDictionary({
-          pjInkumtype: res?.pjInkumtype,
-          pjSwCode: res?.pjSwCode,
-          pjVatDiv: res?.pjVatDiv,
-          proxyType: res?.proxyType,
-          saleState: res?.saleState,
-        });
-        if (res?.initData && res?.initData?.length > 0) {
-          tabRef1?.current?.reset({ ...res.initData[0] });
-          tabRef1?.current?.setPjQty(res.initData[0]?.pjQty);
-        }
-      } else if (tabId === 1) {
-        setDataDictionary({
-          proxyType: res?.proxyType,
-          saleState: res?.saleState,
-          pcSwCode: res?.pcSwCode,
-        });
-        if (res?.initData && res?.initData?.length > 0) {
-          tabRef2?.current?.reset({ ...res.initData[0] });
-          tabRef2.current?.setPcQty(res.initData[0]?.pcQty);
-        }
-      } else if (tabId === 2) {
-        setDataDictionary({
-          abcCode: res?.abcCode,
-          tsGubun: res?.tsGubun,
-          tsInkumType: res?.tsInkumType,
-          saleState: res?.saleState,
-          tsSwCode: res?.tsSwCode,
-          tsTongGubun: res?.tsTongGubun,
-          tsVatDiv: res?.tsVatDiv,
-        });
-        if (res?.initData && res?.initData?.length > 0) {
-          tabRef3?.current?.reset({ ...res.initData[0] });
-        }
-      }
     }
   };
 
@@ -541,7 +496,6 @@ function AR1100({
 
   const submit = async (d: any, pos: string = "") => {
     addBtnUnClick();
-    // isInfoSelected && setIsInfoSelected(false);
     const params = getValues();
     prepareParamsForSearch(params);
     fetchData(params, pos);
@@ -550,7 +504,7 @@ function AR1100({
   const handleClickBtnAdd = () => {
     dispatch(addSource({ source: menuId }));
     dispatch(removeSearchText({}));
-    //fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
+
     addBtnClick();
     addEmptyRow();
     openCustomerModal();
@@ -866,7 +820,6 @@ function AR1100({
             borderBottom: "1px solid rgb(188,185,185)",
             marginBottom: "3px",
           }}
-          // openModal={openCustomerModal}
         />
         <PlainTab
           tabHeader={[
@@ -893,12 +846,9 @@ function AR1100({
           {getTabContent(
             tabId,
             data,
-            setData,
             data65,
-            selected,
             dataDictionary,
             isAddBtnClicked,
-            getValues("areaCode"),
             handleSubmit,
             submit,
             menuId,

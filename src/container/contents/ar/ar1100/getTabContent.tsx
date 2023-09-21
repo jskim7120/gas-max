@@ -5,12 +5,9 @@ import Tab3 from "./tabs/tab3";
 function getTabContent(
   tabId: number,
   data: any,
-  setData: Function,
   data65: any,
-  selected: any,
   dictionary: any,
   isAddBtnClicked: boolean,
-  areaCode: string,
   handleSubmit: Function,
   submit: Function,
   menuId: string,
@@ -32,8 +29,6 @@ function getTabContent(
           isAddBtnClicked={isAddBtnClicked}
           handleSubmitParent={handleSubmit}
           submitParent={submit}
-          selected={selected}
-          menuId={menuId}
           ref={tabRef1}
           addBtnUnClick={addBtnUnClick}
           jpKind={jpKind}
@@ -50,8 +45,6 @@ function getTabContent(
           isAddBtnClicked={isAddBtnClicked}
           handleSubmitParent={handleSubmit}
           submitParent={submit}
-          selected={selected}
-          menuId={menuId}
           ref={tabRef2}
           addBtnUnClick={addBtnUnClick}
         />
@@ -66,8 +59,6 @@ function getTabContent(
           isAddBtnClicked={isAddBtnClicked}
           handleSubmitParent={handleSubmit}
           submitParent={submit}
-          selected={selected}
-          menuId={menuId}
           ref={tabRef3}
           addBtnUnClick={addBtnUnClick}
         />

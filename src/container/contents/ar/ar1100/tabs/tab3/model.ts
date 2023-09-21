@@ -12,7 +12,7 @@ export interface IAR1100TAB3 {
   tsKumVat: number;
   tsKumack: number;
   tsInkumType: string;
-  abcCode: string;
+  acbCode: string;
   tsInkum: number;
   tsDc: number;
   tsMisu: number;

@@ -39,8 +39,6 @@ const Tab3 = React.forwardRef(
       isAddBtnClicked,
       handleSubmitParent,
       submitParent,
-      selected,
-      menuId,
       addBtnUnClick,
     }: {
       tabId: number;
@@ -50,8 +48,6 @@ const Tab3 = React.forwardRef(
       isAddBtnClicked: boolean;
       handleSubmitParent: Function;
       submitParent: Function;
-      selected: any;
-      menuId: string;
       addBtnUnClick: Function;
     },
     ref: React.ForwardedRef<any>
@@ -196,6 +192,11 @@ const Tab3 = React.forwardRef(
 
     const resetForm = (type: string) => {
       if (type === "reset") {
+        reset({
+          ...data65,
+          tsJpCode: data65?.tsJpCode ? data65?.tsJpCode : "",
+          tsJpName: data65?.tsJpName ? data65?.tsJpName : "",
+        });
       } else if (type === "jpName") {
         reset((formValues) => ({
           ...formValues,
@@ -206,7 +207,19 @@ const Tab3 = React.forwardRef(
       }
     };
 
-    const handleClickReset = () => {};
+    const openPopupCM1106 = async () => {
+      dispatch(addCM1106Second({ source: "AR11002" }));
+      openModal();
+    };
+
+    const handleClickReset = async () => {
+      if (isAddBtnClicked) {
+        await handleSubmitParent((dat: any) => submitParent(dat, "last"))();
+        addBtnUnClick();
+      } else {
+        resetForm("reset");
+      }
+    };
 
     const submit = async (params: any) => {
       const path = isAddBtnClicked
@@ -246,11 +259,6 @@ const Tab3 = React.forwardRef(
           await handleSubmitParent((d: any) => submitParent(d))();
         }
       }
-    };
-
-    const openPopupCM1106 = async () => {
-      dispatch(addCM1106Second({ source: "AR11002" }));
-      openModal();
     };
 
     const t11 = {
@@ -471,8 +479,8 @@ const Tab3 = React.forwardRef(
         ),
         1: (
           <FormGroup>
-            <Select register={register("abcCode")} width={InputSize.i150}>
-              {dictionary?.abcCode?.map((obj: any, idx: number) => (
+            <Select register={register("acbCode")} width={InputSize.i150}>
+              {dictionary?.acbCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
