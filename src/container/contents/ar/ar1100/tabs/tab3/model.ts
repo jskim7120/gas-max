@@ -19,4 +19,12 @@ export interface IAR1100TAB3 {
   tsSwCode: string;
   tsBigo: string;
   signUser: string;
+
+  tsPayType: string;
+  tsPayAmt: number;
+  tsPayDc: number;
+  tsPayMisu: number;
+  tsGukum: number;
+  tsBkum: number;
+  tsBoutkum: number;
 }

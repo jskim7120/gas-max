@@ -569,6 +569,12 @@ function AR1100({
     openCM1105Modal();
   };
 
+  const testFunc = (value: string) => {
+    console.log("duudagdav", value);
+    //console.log("selected::", selected);
+    //console.log("data65::", data65);
+  };
+
   return (
     <>
       {showCustomerModal({ onClose: onCloseModal })}
@@ -815,6 +821,7 @@ function AR1100({
           setSelected={setSelected}
           menuId={menuId}
           rowIndex={rowIndex}
+          testFunc={testFunc}
           style={{
             height: `calc(100% - 282px)`,
             borderBottom: "1px solid rgb(188,185,185)",

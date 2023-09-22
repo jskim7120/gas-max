@@ -17,8 +17,8 @@ function Grid({
   rowIndex,
   gridNumber,
   hideFooter,
-}: //openModal,
-{
+  testFunc,
+}: {
   areaCode?: string;
   data: any;
   fields: any;
@@ -31,7 +31,7 @@ function Grid({
   rowIndex: number | undefined;
   gridNumber?: number | undefined;
   hideFooter?: boolean;
-  //openModal: Function;
+  testFunc: Function;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -80,6 +80,12 @@ function Grid({
       dataRow: rowIndex,
       //fieldName: "cuName",
     });
+    gv.onEditChange = function (grid: any, index: any, value: any) {
+      if (index.column === "salestateName") {
+        console.log(value);
+        testFunc(value);
+      }
+    };
     /*
     gv.onEditChange = function (grid: any, index: any, value: any) {
       if (index.column === "cuName") {
