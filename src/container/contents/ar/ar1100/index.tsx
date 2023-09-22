@@ -7,6 +7,7 @@ import {
   AR1100SELECT41,
   AR1100SELECT51,
   AR1100SELECT61,
+  AR1100STATE,
   AR1100DELETE,
   AR1100CJSALEDELETE,
   AR1100TONGSALEDELETE,
@@ -569,10 +570,16 @@ function AR1100({
     openCM1105Modal();
   };
 
-  const testFunc = (value: string) => {
-    console.log("duudagdav", value);
-    //console.log("selected::", selected);
-    //console.log("data65::", data65);
+  const testFunc = async (value: string, dataRow: number) => {
+    const res = await apiGet(AR1100STATE, {
+      areaCode: data[dataRow].areaCode,
+      cuCode: data[dataRow]?.cuCode,
+      pjDate: DateWithoutDash(data[dataRow]?.pjDate),
+      pjSno: data[dataRow]?.pjSno,
+      pjType: data[dataRow]?.pjType,
+      saleState: value,
+    });
+    console.log(res);
   };
 
   return (

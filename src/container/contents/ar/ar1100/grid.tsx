@@ -23,7 +23,7 @@ function Grid({
   data: any;
   fields: any;
   columns: any;
-  setSelected?: Function;
+  setSelected: Function;
   style?: any;
   evenFill?: boolean;
   layout?: any;
@@ -78,32 +78,11 @@ function Grid({
 
     gv.setCurrent({
       dataRow: rowIndex,
-      //fieldName: "cuName",
     });
-    gv.onEditChange = function (grid: any, index: any, value: any) {
-      if (index.column === "salestateName") {
-        console.log(value);
-        testFunc(value);
-      }
-    };
-    /*
-    gv.onEditChange = function (grid: any, index: any, value: any) {
-      if (index.column === "cuName") {
-        dispatch(
-          addSearchText({
-            search: {
-              fieldName: "sCuName",
-              text: value,
-            },
-          })
-        );
-      }
-    };
-    */
 
-    gv.onSelectionChanged = () => {
+    gv.onSelectionChanged = (grid: any, index: any) => {
       const itemIndex: any = gv.getCurrent().dataRow;
-      setSelected && setSelected(data[itemIndex]);
+      setSelected(data[itemIndex]);
       dispatch(
         addRowIndex({
           menuId: menuId,
@@ -112,13 +91,11 @@ function Grid({
         })
       );
     };
-    /*
-    gv.onKeyDown = function (grid: any, key: any, t: any) {
-      if (key.code === "Enter") {
-        openModal();
+    gv.onEditChange = function (grid: any, index: any, value: any) {
+      if (index.column === "salestateName") {
+        testFunc(value, index.dataRow);
       }
     };
-    */
 
     return () => {
       gv.commit();

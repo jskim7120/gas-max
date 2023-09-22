@@ -69,6 +69,11 @@ const Tab3 = React.forwardRef(
     const [inkum, setInkum] = useState<number>(0);
     const [dc, setDc] = useState<number>(0);
     const [misu, setMisu] = useState<number>(0);
+    const [payAmt, setPayAmt] = useState<number>(0);
+    const [payDc, setPayDc] = useState<number>(0);
+    const [payMisu, setPayMisu] = useState<number>(0);
+    const [bkum, setBkum] = useState<number>(0);
+    const [boutKum, setBoutKum] = useState<number>(0);
 
     const { register, handleSubmit, reset, control, getValues, watch } =
       useForm<IAR1100TAB3>({
@@ -149,11 +154,32 @@ const Tab3 = React.forwardRef(
       if (type === "inkum") {
         setInkum(+removeCommas(val, "number"));
         tempMisu = kumack - dc - +removeCommas(val, "number");
+        setMisu(tempMisu);
       } else if (type === "dc") {
         setDc(+removeCommas(val, "number"));
         tempMisu = kumack - inkum - +removeCommas(val, "number");
+        setMisu(tempMisu);
+      } else if (type === "payAmt") {
+        setPayAmt(+removeCommas(val, "number"));
+        tempMisu = kumack - payDc - +removeCommas(val, "number");
+        setPayMisu(tempMisu);
+      } else if (type === "payDc") {
+        setPayDc(+removeCommas(val, "number"));
+        tempMisu = kumack - payAmt - +removeCommas(val, "number");
+        setPayMisu(tempMisu);
       }
-      setMisu(tempMisu);
+    };
+
+    const handleBkumOrBoutKumChange = (val: string, type: string) => {
+      if (type === "bkum") {
+        setBkum(+removeCommas(val, "number"));
+        let tempMisu = +removeCommas(val, "number") - inkum - dc;
+        setMisu(tempMisu);
+      } else if (type === "boutKum") {
+        setBoutKum(+removeCommas(val, "number"));
+        let tempPayMisu = +removeCommas(val, "number") - payAmt - payDc;
+        setPayMisu(tempPayMisu);
+      }
     };
 
     const resetForm = (type: string) => {
@@ -382,40 +408,36 @@ const Tab3 = React.forwardRef(
     };
 
     const t15 = {
-      10: (
-        <Controller
-          control={control}
+      11: (
+        <Input
           name="tsBkum"
-          render={({ field }) => (
-            <Input
-              {...field}
-              inputSize={InputSize.i150}
-              textAlign="right"
-              mask={currencyMask}
-            />
-          )}
+          value={bkum}
+          onChange={(e: BaseSyntheticEvent) =>
+            handleBkumOrBoutKumChange(e.target.value, "bkum")
+          }
+          inputSize={InputSize.i150}
+          textAlign="right"
+          mask={currencyMask}
         />
       ),
     };
     const t16 = {
-      10: (
-        <Controller
-          control={control}
+      12: (
+        <Input
           name="tsBoutkum"
-          render={({ field }) => (
-            <Input
-              {...field}
-              inputSize={InputSize.i150}
-              textAlign="right"
-              mask={currencyMask}
-            />
-          )}
+          value={boutKum}
+          onChange={(e: BaseSyntheticEvent) =>
+            handleBkumOrBoutKumChange(e.target.value, "boutKum")
+          }
+          inputSize={InputSize.i150}
+          textAlign="right"
+          mask={currencyMask}
         />
       ),
     };
 
     const t17 = {
-      11: (
+      130: (
         <FormGroup>
           <Select register={register("tsSwCode")} width={InputSize.i100}>
             {dictionary?.tsSwCode?.map((obj: any, idx: number) => (
@@ -426,7 +448,7 @@ const Tab3 = React.forwardRef(
           </Select>
         </FormGroup>
       ),
-      12: (
+      140: (
         <EditableSelect
           list={dictionary?.tsBigo}
           reset={reset}
@@ -436,7 +458,7 @@ const Tab3 = React.forwardRef(
           style={{ width: "200px" }}
         />
       ),
-      13: (
+      150: (
         <Controller
           control={control}
           name="signUser"
@@ -447,197 +469,123 @@ const Tab3 = React.forwardRef(
       ),
     };
 
-    const t21 = [
-      {
-        0: (
-          <FormGroup>
-            <Select register={register("tsInkumType")} width={InputSize.i100}>
-              {dictionary?.tsInkumType?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
-        1: (
-          <FormGroup>
-            <Select register={register("acbCode")} width={InputSize.i150}>
-              {dictionary?.acbCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
-        2: (
-          <Input
-            name="tsInkum"
-            value={inkum}
-            onChange={(e: BaseSyntheticEvent) =>
-              handleInkumOrDcChange(e.target.value, "inkum")
-            }
-            inputSize={InputSize.i100}
-            textAlign="right"
-            mask={currencyMask}
-          />
-        ),
-        3: (
-          <Input
-            name="tsDc"
-            value={dc}
-            onChange={(e: BaseSyntheticEvent) =>
-              handleInkumOrDcChange(e.target.value, "dc")
-            }
-            inputSize={InputSize.i100}
-            textAlign="right"
-            mask={currencyMask}
-          />
-        ),
-        4: (
-          <Input
-            name="tsMisu"
-            value={misu}
-            readOnly
-            inputSize={InputSize.i100}
-            textAlign="right"
-            mask={currencyMask}
-          />
-        ),
-        5: (
-          <FormGroup>
-            <Select register={register("tsSwCode")} width={InputSize.i100}>
-              {dictionary?.tsSwCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
-        6: (
-          <EditableSelect
-            list={dictionary?.tsBigo}
-            reset={reset}
-            register={register("tsBigo")}
-            watch={watch("tsBigo")}
-            textAlign={"left"}
-            style={{ width: "199px" }}
-          />
-        ),
+    const t21 = {
+      16: (
+        <FormGroup>
+          <Select register={register("tsInkumType")} width={InputSize.i100}>
+            {dictionary?.tsInkumType?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+      ),
+      17: (
+        <FormGroup>
+          <Select register={register("acbCode")} width={InputSize.i150}>
+            {dictionary?.acbCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+      ),
+      18: (
+        <Input
+          name="tsInkum"
+          value={inkum}
+          onChange={(e: BaseSyntheticEvent) =>
+            handleInkumOrDcChange(e.target.value, "inkum")
+          }
+          inputSize={InputSize.i100}
+          textAlign="right"
+          mask={currencyMask}
+        />
+      ),
+      19: (
+        <Input
+          name="tsDc"
+          value={dc}
+          onChange={(e: BaseSyntheticEvent) =>
+            handleInkumOrDcChange(e.target.value, "dc")
+          }
+          inputSize={InputSize.i100}
+          textAlign="right"
+          mask={currencyMask}
+        />
+      ),
+      20: (
+        <Input
+          name="tsMisu"
+          value={misu}
+          readOnly
+          inputSize={InputSize.i100}
+          textAlign="right"
+          mask={currencyMask}
+        />
+      ),
+    };
 
-        7: (
-          <Controller
-            control={control}
-            name="signUser"
-            render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} />
-            )}
-          />
-        ),
-      },
-    ];
-    const t22 = [
-      {
-        0: (
-          <FormGroup>
-            <Select register={register("tsPayType")} width={InputSize.i100}>
-              {dictionary?.tsPayType?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
-        1: (
-          <FormGroup>
-            <Select register={register("acbCode")} width={InputSize.i150}>
-              {dictionary?.acbCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
-        2: (
-          <Controller
-            control={control}
-            name="tsPayAmt"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                textAlign="right"
-                mask={currencyMask}
-              />
-            )}
-          />
-        ),
-        3: (
-          <Controller
-            control={control}
-            name="tsPayDc"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                textAlign="right"
-                mask={currencyMask}
-              />
-            )}
-          />
-        ),
-        4: (
-          <Controller
-            control={control}
-            name="tsPayMisu"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                // readOnly
-                textAlign="right"
-                mask={currencyMask}
-              />
-            )}
-          />
-        ),
-        5: (
-          <FormGroup>
-            <Select register={register("tsSwCode")} width={InputSize.i100}>
-              {dictionary?.tsSwCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
-        6: (
-          <EditableSelect
-            list={dictionary?.tsBigo}
-            reset={reset}
-            register={register("tsBigo")}
-            watch={watch("tsBigo")}
-            textAlign={"left"}
-            style={{ width: "199px" }}
-          />
-        ),
-
-        7: (
-          <Controller
-            control={control}
-            name="signUser"
-            render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} />
-            )}
-          />
-        ),
-      },
-    ];
+    const t22 = {
+      21: (
+        <FormGroup>
+          <Select register={register("tsPayType")} width={InputSize.i100}>
+            {dictionary?.tsPayType?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+      ),
+      22: (
+        <FormGroup>
+          <Select register={register("acbCode")} width={InputSize.i150}>
+            {dictionary?.acbCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+      ),
+      23: (
+        <Input
+          name="tsPayAmt"
+          value={payAmt}
+          onChange={(e: BaseSyntheticEvent) =>
+            handleInkumOrDcChange(e.target.value, "payAmt")
+          }
+          inputSize={InputSize.i100}
+          textAlign="right"
+          mask={currencyMask}
+        />
+      ),
+      24: (
+        <Input
+          name="tsPayDc"
+          value={payDc}
+          onChange={(e: BaseSyntheticEvent) =>
+            handleInkumOrDcChange(e.target.value, "payDc")
+          }
+          inputSize={InputSize.i100}
+          textAlign="right"
+          mask={currencyMask}
+        />
+      ),
+      25: (
+        <Input
+          name="tsPayMisu"
+          value={payMisu}
+          readOnly
+          inputSize={InputSize.i100}
+          textAlign="right"
+          mask={currencyMask}
+        />
+      ),
+    };
 
     const getTableInfo = () => {
       switch (watch("tsGubun")) {
@@ -646,42 +594,42 @@ const Tab3 = React.forwardRef(
             tableHeader1: tableHeader1a,
             tableHeader2: tableHeader1b,
             tableData1: [{ ...t11, ...t12 }],
-            tableData2: t21,
+            tableData2: [{ ...t21, ...t17 }],
           };
         case "1":
           return {
             tableHeader1: tableHeader2a,
             tableHeader2: tableHeader2b,
             tableData1: [{ ...t11, ...t12 }],
-            tableData2: t21,
+            tableData2: [{ ...t22, ...t17 }],
           };
         case "2":
           return {
             tableHeader1: tableHeader3a,
             tableHeader2: tableHeader3b,
             tableData1: [{ ...t11, ...t15 }],
-            tableData2: t21,
+            tableData2: [{ ...t21, ...t17 }],
           };
         case "3":
           return {
             tableHeader1: tableHeader4a,
             tableHeader2: tableHeader4b,
             tableData1: [{ ...t11, ...t16 }],
-            tableData2: t21,
+            tableData2: [{ ...t22, ...t17 }],
           };
         case "9":
           return {
             tableHeader1: tableHeader1a,
             tableHeader2: tableHeader1b,
             tableData1: [{ ...t11, ...t12 }],
-            tableData2: t21,
+            tableData2: [{ ...t21, ...t17 }],
           };
         default:
           return {
             tableHeader1: tableHeader5,
             tableHeader2: null,
             tableData1: [{ ...t11, ...t17 }],
-            tableData2: t21,
+            tableData2: [{ ...t21, ...t17 }],
           };
       }
     };
