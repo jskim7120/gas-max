@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { addRowIndex } from "app/state/tab/tabSlice";
 import { useDispatch } from "app/store";
-import { addSearchText } from "app/state/footer/footerSlice";
 
 function Grid({
   areaCode,
@@ -17,7 +16,7 @@ function Grid({
   rowIndex,
   gridNumber,
   hideFooter,
-  testFunc,
+  changeState,
 }: {
   areaCode?: string;
   data: any;
@@ -31,7 +30,7 @@ function Grid({
   rowIndex: number | undefined;
   gridNumber?: number | undefined;
   hideFooter?: boolean;
-  testFunc: Function;
+  changeState: Function;
 }) {
   let container: HTMLDivElement;
   let dp: any;
@@ -93,7 +92,7 @@ function Grid({
     };
     gv.onEditChange = function (grid: any, index: any, value: any) {
       if (index.column === "salestateName") {
-        testFunc(value, index.dataRow);
+        changeState(value, index.dataRow);
       }
     };
 

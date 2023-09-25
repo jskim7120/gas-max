@@ -2,7 +2,6 @@ import React, {
   BaseSyntheticEvent,
   useEffect,
   useImperativeHandle,
-  useState,
 } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { AR1100TONGSALEINSERT, AR1100TONGSALEUPDATE } from "app/path";
@@ -45,6 +44,26 @@ const Tab3 = React.forwardRef(
       handleSubmitParent,
       submitParent,
       addBtnUnClick,
+      qty,
+      setQty,
+      danga,
+      setDanga,
+      vatDiv,
+      setVatDiv,
+      kumSup,
+      setKumSup,
+      kumVat,
+      setKumVat,
+      kumack,
+      setKumack,
+      inkum,
+      setInkum,
+      dc,
+      setDc,
+      misu,
+      setMisu,
+      gubun,
+      setGubun,
     }: {
       tabId: number;
       data: any;
@@ -54,26 +73,31 @@ const Tab3 = React.forwardRef(
       handleSubmitParent: Function;
       submitParent: Function;
       addBtnUnClick: Function;
+      qty: number;
+      setQty: Function;
+      danga: number;
+      setDanga: Function;
+      vatDiv: string;
+      setVatDiv: Function;
+      kumSup: number;
+      setKumSup: Function;
+      kumVat: number;
+      setKumVat: Function;
+      kumack: number;
+      setKumack: Function;
+      inkum: number;
+      setInkum: Function;
+      dc: number;
+      setDc: Function;
+      misu: number;
+      setMisu: Function;
+      gubun: string;
+      setGubun: Function;
     },
     ref: React.ForwardedRef<any>
   ) => {
     const { info, source } = useSelector((state: any) => state.footer);
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
-
-    const [qty, setQty] = useState<number>(0);
-    const [danga, setDanga] = useState<number>(0);
-    const [vatDiv, setVatDiv] = useState<string>("0");
-    const [kumSup, setKumSup] = useState<number>(0);
-    const [kumVat, setKumVat] = useState<number>(0);
-    const [kumack, setKumack] = useState<number>(0);
-    const [inkum, setInkum] = useState<number>(0);
-    const [dc, setDc] = useState<number>(0);
-    const [misu, setMisu] = useState<number>(0);
-    const [payAmt, setPayAmt] = useState<number>(0);
-    const [payDc, setPayDc] = useState<number>(0);
-    const [payMisu, setPayMisu] = useState<number>(0);
-    const [bkum, setBkum] = useState<number>(0);
-    const [boutKum, setBoutKum] = useState<number>(0);
 
     const { register, handleSubmit, reset, control, getValues, watch } =
       useForm<IAR1100TAB3>({
@@ -99,18 +123,19 @@ const Tab3 = React.forwardRef(
       let tempKumVat = 0;
       let tempKumack = tempKumSup;
       let tempMisu = 0;
+      if (Number(gubun) < 2) {
+        if (vatDiv !== "0") {
+          tempKumVat = Math.round(tempKumSup * 0.1);
+          tempKumack = tempKumSup + tempKumVat;
+        }
 
-      if (vatDiv !== "0") {
-        tempKumVat = Math.round(tempKumSup * 0.1);
-        tempKumack = tempKumSup + tempKumVat;
+        tempMisu = tempKumack - dc - inkum;
+
+        setKumSup(tempKumSup);
+        setKumVat(tempKumVat);
+        setKumack(tempKumack);
+        setMisu(tempMisu);
       }
-
-      tempMisu = tempKumack - dc - inkum;
-
-      setKumSup(tempKumSup);
-      setKumVat(tempKumVat);
-      setKumack(tempKumack);
-      setMisu(tempMisu);
     };
 
     const handleDangaChange = (val: string) => {
@@ -159,26 +184,35 @@ const Tab3 = React.forwardRef(
         setDc(+removeCommas(val, "number"));
         tempMisu = kumack - inkum - +removeCommas(val, "number");
         setMisu(tempMisu);
-      } else if (type === "payAmt") {
-        setPayAmt(+removeCommas(val, "number"));
-        tempMisu = kumack - payDc - +removeCommas(val, "number");
-        setPayMisu(tempMisu);
-      } else if (type === "payDc") {
-        setPayDc(+removeCommas(val, "number"));
-        tempMisu = kumack - payAmt - +removeCommas(val, "number");
-        setPayMisu(tempMisu);
       }
     };
 
-    const handleBkumOrBoutKumChange = (val: string, type: string) => {
-      if (type === "bkum") {
-        setBkum(+removeCommas(val, "number"));
-        let tempMisu = +removeCommas(val, "number") - inkum - dc;
-        setMisu(tempMisu);
-      } else if (type === "boutKum") {
-        setBoutKum(+removeCommas(val, "number"));
-        let tempPayMisu = +removeCommas(val, "number") - payAmt - payDc;
-        setPayMisu(tempPayMisu);
+    const handleChangeKumack = (val: string) => {
+      setKumack(+removeCommas(val, "number"));
+      let tempMisu = +removeCommas(val, "number") - inkum - dc;
+      setMisu(tempMisu);
+    };
+
+    const handleGubunChange = (val: string) => {
+      setGubun(val);
+      if (isAddBtnClicked) {
+        setQty(0);
+        setDanga(0);
+        setVatDiv("0");
+        setKumSup(0);
+        setKumVat(0);
+        setKumack(0);
+        setInkum(0);
+        setDc(0);
+        setMisu(0);
+
+        reset((formValues) => ({
+          ...formValues,
+          tsSwCode: "",
+          tsBigo: "",
+          signUser: "",
+          acbCode: "",
+        }));
       }
     };
 
@@ -228,13 +262,37 @@ const Tab3 = React.forwardRef(
       }
 
       params.tsDate = DateWithoutDash(params.tsDate);
-      params.tsDanga = removeCommas(params.tsDanga, "number");
-      params.tsKumack = removeCommas(params.tsKumack, "number");
-      params.tsKumVat = removeCommas(params.tsKumVat, "number");
-      params.tsKumSup = removeCommas(params.tsKumSup, "number");
-      params.tsInkum = removeCommas(params.tsInkum, "number");
-      params.tsDc = removeCommas(params.tsDc, "number");
-      params.tsMisu = removeCommas(params.tsMisu, "number");
+      params.tsGubun = gubun;
+      params.tsQty = qty;
+      if (gubun === ("0" || "9")) {
+        params.tsVatDiv = vatDiv;
+        params.tsDanga = danga;
+        params.tsKumSup = kumSup;
+        params.tsKumVat = kumVat;
+        params.tsKumack = kumack;
+        params.tsInkum = inkum;
+        params.tsDc = dc;
+        params.tsMisu = misu;
+      } else if (gubun === "1") {
+        params.tsVatDiv = vatDiv;
+        params.tsDanga = danga;
+        params.tsKumSup = kumSup;
+        params.tsKumVat = kumVat;
+        params.tsPayAmt = inkum;
+        params.tsPayDc = dc;
+        params.tsPayMisu = misu;
+        params.tsGukum = kumack;
+      } else if (gubun === "2") {
+        params.tsBkum = kumack;
+        params.tsInkum = inkum;
+        params.tsDc = dc;
+        params.tsMisu = misu;
+      } else if (gubun === "3") {
+        params.tsBoutKum = kumack;
+        params.tsPayAmt = inkum;
+        params.tsPayDc = dc;
+        params.tsPayMisu = misu;
+      }
 
       if (params.tsSwCode) {
         const tsSwName = dictionary?.tsSwCode?.find(
@@ -280,7 +338,13 @@ const Tab3 = React.forwardRef(
       ),
       2: (
         <FormGroup>
-          <Select register={register("tsGubun")} width={InputSize.i100}>
+          <Select
+            value={gubun}
+            width={InputSize.i100}
+            onChange={(e) => {
+              handleGubunChange(e.target.value);
+            }}
+          >
             {dictionary?.tsGubun?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -395,11 +459,17 @@ const Tab3 = React.forwardRef(
           mask={currencyMask}
         />
       ),
+    };
+
+    const t13 = {
       10: (
         <Input
           name="tsKumack"
           value={kumack}
-          readOnly
+          readOnly={gubun === "0" || gubun === "1" || gubun === "9"}
+          onChange={(e: BaseSyntheticEvent) =>
+            handleChangeKumack(e.target.value)
+          }
           inputSize={InputSize.i100}
           textAlign="right"
           mask={currencyMask}
@@ -408,35 +478,6 @@ const Tab3 = React.forwardRef(
     };
 
     const t15 = {
-      11: (
-        <Input
-          name="tsBkum"
-          value={bkum}
-          onChange={(e: BaseSyntheticEvent) =>
-            handleBkumOrBoutKumChange(e.target.value, "bkum")
-          }
-          inputSize={InputSize.i150}
-          textAlign="right"
-          mask={currencyMask}
-        />
-      ),
-    };
-    const t16 = {
-      12: (
-        <Input
-          name="tsBoutkum"
-          value={boutKum}
-          onChange={(e: BaseSyntheticEvent) =>
-            handleBkumOrBoutKumChange(e.target.value, "boutKum")
-          }
-          inputSize={InputSize.i150}
-          textAlign="right"
-          mask={currencyMask}
-        />
-      ),
-    };
-
-    const t17 = {
       130: (
         <FormGroup>
           <Select register={register("tsSwCode")} width={InputSize.i100}>
@@ -470,7 +511,7 @@ const Tab3 = React.forwardRef(
     };
 
     const t21 = {
-      16: (
+      20: (
         <FormGroup>
           <Select register={register("tsInkumType")} width={InputSize.i100}>
             {dictionary?.tsInkumType?.map((obj: any, idx: number) => (
@@ -481,58 +522,12 @@ const Tab3 = React.forwardRef(
           </Select>
         </FormGroup>
       ),
-      17: (
-        <FormGroup>
-          <Select register={register("acbCode")} width={InputSize.i150}>
-            {dictionary?.acbCode?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </FormGroup>
-      ),
-      18: (
-        <Input
-          name="tsInkum"
-          value={inkum}
-          onChange={(e: BaseSyntheticEvent) =>
-            handleInkumOrDcChange(e.target.value, "inkum")
-          }
-          inputSize={InputSize.i100}
-          textAlign="right"
-          mask={currencyMask}
-        />
-      ),
-      19: (
-        <Input
-          name="tsDc"
-          value={dc}
-          onChange={(e: BaseSyntheticEvent) =>
-            handleInkumOrDcChange(e.target.value, "dc")
-          }
-          inputSize={InputSize.i100}
-          textAlign="right"
-          mask={currencyMask}
-        />
-      ),
-      20: (
-        <Input
-          name="tsMisu"
-          value={misu}
-          readOnly
-          inputSize={InputSize.i100}
-          textAlign="right"
-          mask={currencyMask}
-        />
-      ),
     };
-
     const t22 = {
       21: (
         <FormGroup>
-          <Select register={register("tsPayType")} width={InputSize.i100}>
-            {dictionary?.tsPayType?.map((obj: any, idx: number) => (
+          <Select register={register("tsPaytype")} width={InputSize.i100}>
+            {dictionary?.tsPaytype?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -540,6 +535,9 @@ const Tab3 = React.forwardRef(
           </Select>
         </FormGroup>
       ),
+    };
+
+    const t23 = {
       22: (
         <FormGroup>
           <Select register={register("acbCode")} width={InputSize.i150}>
@@ -553,10 +551,10 @@ const Tab3 = React.forwardRef(
       ),
       23: (
         <Input
-          name="tsPayAmt"
-          value={payAmt}
+          name="tsInkum"
+          value={inkum}
           onChange={(e: BaseSyntheticEvent) =>
-            handleInkumOrDcChange(e.target.value, "payAmt")
+            handleInkumOrDcChange(e.target.value, "inkum")
           }
           inputSize={InputSize.i100}
           textAlign="right"
@@ -565,10 +563,10 @@ const Tab3 = React.forwardRef(
       ),
       24: (
         <Input
-          name="tsPayDc"
-          value={payDc}
+          name="tsDc"
+          value={dc}
           onChange={(e: BaseSyntheticEvent) =>
-            handleInkumOrDcChange(e.target.value, "payDc")
+            handleInkumOrDcChange(e.target.value, "dc")
           }
           inputSize={InputSize.i100}
           textAlign="right"
@@ -577,8 +575,8 @@ const Tab3 = React.forwardRef(
       ),
       25: (
         <Input
-          name="tsPayMisu"
-          value={payMisu}
+          name="tsMisu"
+          value={misu}
           readOnly
           inputSize={InputSize.i100}
           textAlign="right"
@@ -588,48 +586,48 @@ const Tab3 = React.forwardRef(
     };
 
     const getTableInfo = () => {
-      switch (watch("tsGubun")) {
+      switch (gubun) {
         case "0":
           return {
             tableHeader1: tableHeader1a,
             tableHeader2: tableHeader1b,
-            tableData1: [{ ...t11, ...t12 }],
-            tableData2: [{ ...t21, ...t17 }],
+            tableData1: [{ ...t11, ...t12, ...t13 }],
+            tableData2: [{ ...t21, ...t23, ...t15 }],
           };
         case "1":
           return {
             tableHeader1: tableHeader2a,
             tableHeader2: tableHeader2b,
-            tableData1: [{ ...t11, ...t12 }],
-            tableData2: [{ ...t22, ...t17 }],
+            tableData1: [{ ...t11, ...t12, ...t13 }],
+            tableData2: [{ ...t22, ...t23, ...t15 }],
           };
         case "2":
           return {
             tableHeader1: tableHeader3a,
             tableHeader2: tableHeader3b,
-            tableData1: [{ ...t11, ...t15 }],
-            tableData2: [{ ...t21, ...t17 }],
+            tableData1: [{ ...t11, ...t13 }],
+            tableData2: [{ ...t21, ...t23, ...t15 }],
           };
         case "3":
           return {
             tableHeader1: tableHeader4a,
             tableHeader2: tableHeader4b,
-            tableData1: [{ ...t11, ...t16 }],
-            tableData2: [{ ...t22, ...t17 }],
+            tableData1: [{ ...t11, ...t13 }],
+            tableData2: [{ ...t22, ...t23, ...t15 }],
           };
         case "9":
           return {
             tableHeader1: tableHeader1a,
             tableHeader2: tableHeader1b,
-            tableData1: [{ ...t11, ...t12 }],
-            tableData2: [{ ...t21, ...t17 }],
+            tableData1: [{ ...t11, ...t12, ...t13 }],
+            tableData2: [{ ...t21, ...t23, ...t15 }],
           };
         default:
           return {
             tableHeader1: tableHeader5,
             tableHeader2: null,
-            tableData1: [{ ...t11, ...t17 }],
-            tableData2: [{ ...t21, ...t17 }],
+            tableData1: [{ ...t11, ...t15 }],
+            tableData2: [],
           };
       }
     };
@@ -647,8 +645,7 @@ const Tab3 = React.forwardRef(
                 tableData={getTableInfo().tableData1}
                 style={{ marginBottom: "2px" }}
               />
-              {(Number(watch("tsGubun")) < 4 ||
-                Number(watch("tsGubun")) === 9) && (
+              {(Number(gubun) < 4 || Number(gubun) === 9) && (
                 <Table
                   className="no-space"
                   tableHeader={getTableInfo().tableHeader2}

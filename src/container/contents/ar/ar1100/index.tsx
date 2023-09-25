@@ -74,6 +74,17 @@ function AR1100({
   const [toggler, setToggler] = useState<boolean>(false);
   const [jpKind, setJpKind] = useState();
 
+  const [qty, setQty] = useState<number>(0);
+  const [danga, setDanga] = useState<number>(0);
+  const [kumSup, setKumSup] = useState<number>(0);
+  const [kumVat, setKumVat] = useState<number>(0);
+  const [kumack, setKumack] = useState<number>(0);
+  const [inkum, setInkum] = useState<number>(0);
+  const [dc, setDc] = useState<number>(0);
+  const [misu, setMisu] = useState<number>(0);
+  const [vatDiv, setVatDiv] = useState<string>("0");
+  const [gubun, setGubun] = useState<string>("0");
+
   const { getRowIndex, setRowIndex } = useRowIndex();
   const { showCM1105Modal, openModal: openCM1105Modal } = useModal();
   const {
@@ -201,9 +212,10 @@ function AR1100({
       if (res && Object.keys(res)?.length > 0) {
         setDataDictionary({
           acbCode: res?.acbCode,
-          saleState: res?.saleState,
           tsGubun: res?.tsGubun,
-          tsInkumType: res?.tsInkumType,
+          tsInkumType: res?.tsInkumtype,
+          tsPaytype: res?.tsPaytype,
+          saleState: res?.tsSaleState,
           tsSwCode: res?.tsSwCode,
           tsTongGubun: res?.tsTongGubun,
           tsVatDiv: res?.tsVatDiv,
@@ -213,6 +225,15 @@ function AR1100({
           tabRef3.current.reset({ ...res?.detailData[0], tsDate: new Date() });
         } else if (res?.initData) {
           setData65(res?.initData[0]);
+          setGubun(res?.initData[0]?.tsGubun);
+          setQty(res?.initData[0]?.tsQty);
+          setDanga(res?.initData[0]?.tsDanga);
+          setInkum(res?.initData[0]?.tsInkum);
+          setKumSup(res?.initData[0]?.tsKumSup);
+          setKumVat(res?.initData[0]?.tsKumVat);
+          setKumack(res?.initData[0]?.tsKumack);
+          setMisu(res?.initData[0]?.tsMisu);
+          setVatDiv(res?.initData[0]?.tsVatDiv);
           tabRef3.current.reset({ ...res?.initData[0] });
         }
       }
@@ -448,7 +469,7 @@ function AR1100({
       }
       if (selected?.pjType === "2") {
         setDataDictionary({
-          acbCode: res?.acbCode,
+          acbCode: res?.tsAcbCode,
           tsGubun: res?.tsGubun,
           tsInkumType: res?.tsInkumType,
           saleState: res?.saleState,
@@ -457,6 +478,27 @@ function AR1100({
           tsVatDiv: res?.tsVatDiv,
         });
         if (res?.detailData && res?.detailData?.length > 0) {
+          setGubun(res?.detailData[0]?.tsGubun);
+          setQty(res?.detailData[0]?.tsQty);
+          if (res?.detailData[0].tsGubun === "0") {
+            setDanga(res?.detailData[0]?.tsDanga);
+            setVatDiv(res?.detailData[0]?.tsVatDiv);
+            setKumSup(res?.detailData[0]?.tsKumSup);
+            setKumVat(res?.detailData[0]?.tsKumVat);
+            setKumack(res?.detailData[0]?.tsKumack);
+            setInkum(res?.detailData[0]?.tsInkum);
+            setDc(res?.detailData[0]?.tsDc);
+            setMisu(res?.detailData[0]?.tsMisu);
+          } else if (res?.detailData[0].tsGubun === "1") {
+            setDanga(res?.detailData[0]?.tsDanga);
+            setVatDiv(res?.detailData[0]?.tsVatDiv);
+            setKumSup(res?.detailData[0]?.tsKumSup);
+            setKumVat(res?.detailData[0]?.tsKumVat);
+            setInkum(res?.detailData[0]?.tsPayamt);
+            setKumack(res?.detailData[0]?.tsGukum); //----------tsGukum irehgui bn
+            setMisu(res?.detailData[0]?.tsMisu);
+          }
+
           tabRef3.current.reset(res?.detailData[0]);
         }
       }
@@ -570,7 +612,7 @@ function AR1100({
     openCM1105Modal();
   };
 
-  const testFunc = async (value: string, dataRow: number) => {
+  const changeState = async (value: string, dataRow: number) => {
     const res = await apiGet(AR1100STATE, {
       areaCode: data[dataRow].areaCode,
       cuCode: data[dataRow]?.cuCode,
@@ -579,7 +621,7 @@ function AR1100({
       pjType: data[dataRow]?.pjType,
       saleState: value,
     });
-    console.log(res);
+    res && handleSubmit((d) => submit(d))();
   };
 
   return (
@@ -828,7 +870,7 @@ function AR1100({
           setSelected={setSelected}
           menuId={menuId}
           rowIndex={rowIndex}
-          testFunc={testFunc}
+          changeState={changeState}
           style={{
             height: `calc(100% - 282px)`,
             borderBottom: "1px solid rgb(188,185,185)",
@@ -871,7 +913,27 @@ function AR1100({
             tabRef3,
             addBtnUnClick,
             jpKind,
-            setJpKind
+            setJpKind,
+            qty,
+            setQty,
+            danga,
+            setDanga,
+            vatDiv,
+            setVatDiv,
+            kumSup,
+            setKumSup,
+            kumVat,
+            setKumVat,
+            kumack,
+            setKumack,
+            inkum,
+            setInkum,
+            dc,
+            setDc,
+            misu,
+            setMisu,
+            gubun,
+            setGubun
           )}
         </TabContentWrapper>
       </WrapperContent>

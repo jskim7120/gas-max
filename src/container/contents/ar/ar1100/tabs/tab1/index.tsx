@@ -136,7 +136,9 @@ const Tab1 = React.forwardRef(
       pjInkum = getValues("pjInkum")
         ? +removeCommas(getValues("pjInkum"), "number")
         : 0;
-      pjMisukum = pjKumack - pjDc - pjInkum;
+
+      pjMisukum =
+        +pjKumack - (isNaN(pjDc) ? 0 : +pjDc) - (isNaN(pjInkum) ? 0 : +pjInkum);
     };
 
     const handlePjQtyChange = (value: number) => {
@@ -156,7 +158,7 @@ const Tab1 = React.forwardRef(
 
     const handlePjReqtyChange = () => {
       pjReqty = getValues("pjReqty") ? +getValues("pjReqty") : 0;
-      calcPjJago = pjJago + pjQty - pjReqty;
+      calcPjJago = +pjJago + +pjQty - +pjReqty;
       reset((formValues) => ({
         ...formValues,
         pjJago: calcPjJago,
@@ -594,7 +596,6 @@ const Tab1 = React.forwardRef(
         11: (
           <FormGroup>
             <Input register={register("signuser")} inputSize={InputSize.i100} />
-            <Input register={register("signkey")} inputSize={InputSize.i100} />
           </FormGroup>
         ),
       },

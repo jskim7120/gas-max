@@ -16,7 +16,27 @@ function getTabContent(
   tabRef3: any,
   addBtnUnClick: Function,
   jpKind: any,
-  setJpKind: Function
+  setJpKind: Function,
+  qty: number,
+  setQty: Function,
+  danga: number,
+  setDanga: Function,
+  vatDiv: string,
+  setVatDiv: Function,
+  kumSup: number,
+  setKumSup: Function,
+  kumVat: number,
+  setKumVat: Function,
+  kumack: number,
+  setKumack: Function,
+  inkum: number,
+  setInkum: Function,
+  dc: number,
+  setDc: Function,
+  misu: number,
+  setMisu: Function,
+  gubun: string,
+  setGubun: Function
 ) {
   switch (tabId) {
     case 0:
@@ -61,6 +81,26 @@ function getTabContent(
           submitParent={submit}
           ref={tabRef3}
           addBtnUnClick={addBtnUnClick}
+          qty={qty}
+          setQty={setQty}
+          danga={danga}
+          setDanga={setDanga}
+          vatDiv={vatDiv}
+          setVatDiv={setVatDiv}
+          kumSup={kumSup}
+          setKumSup={setKumSup}
+          kumVat={kumVat}
+          setKumVat={setKumVat}
+          kumack={kumack}
+          setKumack={setKumack}
+          inkum={inkum}
+          setInkum={setInkum}
+          dc={dc}
+          setDc={setDc}
+          misu={misu}
+          setMisu={setMisu}
+          gubun={gubun}
+          setGubun={setGubun}
         />
       );
     case 3:

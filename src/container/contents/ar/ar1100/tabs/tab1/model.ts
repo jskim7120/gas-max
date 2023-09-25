@@ -30,7 +30,6 @@ export interface IAR110065DETAIL {
   qtyL: string;
   queryType: string;
   saleState: string;
-  signkey: string;
   signuser: string;
   pacbCode: string;
 }
