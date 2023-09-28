@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useImperativeHandle } from "react";
+import React, { useEffect, useImperativeHandle } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { AR1100CJSALEINSERT, AR1100CJSALEUPDATE } from "app/path";
 import { apiPost } from "app/axios";
@@ -27,6 +27,12 @@ const Tab2 = React.forwardRef(
       handleSubmitParent,
       submitParent,
       addBtnUnClick,
+      qty,
+      setQty,
+      jaego,
+      setJaego,
+      danga,
+      setDanga,
     }: {
       tabId: number;
       data: any;
@@ -36,28 +42,28 @@ const Tab2 = React.forwardRef(
       handleSubmitParent: Function;
       submitParent: Function;
       addBtnUnClick: Function;
+      qty: number;
+      setQty: Function;
+      jaego: number;
+      setJaego: Function;
+      danga: number;
+      setDanga: Function;
     },
     ref: React.ForwardedRef<any>
   ) => {
-    const { register, handleSubmit, reset, control, getValues, watch } =
+    const { register, handleSubmit, reset, control, watch } =
       useForm<IAR1100TAB2>({
         mode: "onSubmit",
       });
 
     useImperativeHandle<any, any>(ref, () => ({
       reset,
-      setPcQty,
     }));
 
     const dispatch = useDispatch();
-
+    const { showCM1106Modal, openModal } = useModal();
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const { info, source } = useSelector((state: any) => state.footer);
-    const [pcQty, setPcQty] = useState<number>(0);
-
-    const { showCM1106Modal, openModal } = useModal();
-
-    let pcKumack = 0;
 
     useEffect(() => {
       if (cm1106.source === "AR11001") {
@@ -65,69 +71,33 @@ const Tab2 = React.forwardRef(
       }
     }, [cm1106.tick]);
 
-    useEffect(() => {
-      if (watch("pcReqty") !== undefined) {
-        handlePcReqtyChange();
-      }
-    }, [watch("pcReqty")]);
+    const handleQtyChange = (val: number) => {
+      setQty(val);
+      const tempDanga = danga ? +removeCommas(danga, "number") : 0;
+      const tempKumack = (isNaN(tempDanga) ? 0 : tempDanga) * val;
 
-    useEffect(() => {
-      if (watch("pcDanga") !== undefined) {
-        handlePcDangaChange();
-      }
-    }, [watch("pcDanga")]);
-
-    const calcKumack = (value: number = pcQty) => {
-      pcKumack =
-        value *
-        (getValues("pcDanga")
-          ? +removeCommas(getValues("pcDanga"), "number")
-          : 0);
-    };
-
-    const handlePcQtyChange = (value: number) => {
-      setPcQty(value);
-      const pcJaego =
-        (data65?.junJaego !== undefined ? data65?.junJaego : 0) +
-        pcQty -
-        (getValues("pcReqty")
-          ? +removeCommas(getValues("pcReqty"), "number")
-          : 0);
-
-      calcKumack(value);
       reset((formValues) => ({
         ...formValues,
-        pcReqty: value,
-        pcJaego: pcJaego,
-        pcKumack: pcKumack,
+        pcReqty: val,
+        pcKumack: tempKumack,
       }));
     };
 
-    const handlePcReqtyChange = () => {
-      const pcJaego =
-        (data65?.junJaego !== undefined ? data65?.junJaego : 0) +
-        pcQty -
-        (getValues("pcReqty")
-          ? +removeCommas(getValues("pcReqty"), "number")
-          : 0);
+    const handleDangaChange = (val: number) => {
+      setDanga(val);
+      const tempVal = val ? +removeCommas(val, "number") : 0;
+      const tempKumack = (isNaN(tempVal) ? 0 : tempVal) * qty;
 
       reset((formValues) => ({
         ...formValues,
-        pcJaego: pcJaego,
-      }));
-    };
-
-    const handlePcDangaChange = () => {
-      calcKumack();
-      reset((formValues) => ({
-        ...formValues,
-        pcKumack: pcKumack,
+        pcKumack: tempKumack,
       }));
     };
 
     const resetForm = (type: string) => {
       if (type === "reset") {
-        setPcQty(data65?.pcQty);
+        setQty(data65?.pcQty);
+        setDanga(data65?.pcDanga);
         reset({
           ...data65,
           pcJpCode: data65?.pcJpCode ? data65?.pcJpCode : "",
@@ -175,10 +145,11 @@ const Tab2 = React.forwardRef(
       params.pcDanga = +removeCommas(params.pcDanga, "number");
       params.pcQty = +removeCommas(params.pcQty, "number");
       params.pcReqty = +removeCommas(params.pcReqty, "number");
-      params.pcJaego = +removeCommas(params.pcJaego, "number");
       params.pcKumack = +removeCommas(params.pcKumack, "number");
       params.pcGum = +removeCommas(params.pcGum, "number");
-      params.pcQty = pcQty;
+      params.pcQty = qty;
+      params.pcDanga = +removeCommas(danga, "number");
+      params.pcJaego = +removeCommas(jaego, "number");
 
       if (params?.pcSwCode) {
         params.pcSwName = dictionary?.pcSwCode?.find(
@@ -267,9 +238,9 @@ const Tab2 = React.forwardRef(
           <Input
             type="number"
             name="pcQty"
-            value={pcQty}
+            value={qty}
             onChange={(e: any) => {
-              handlePcQtyChange(e.target.value);
+              handleQtyChange(e.target.value);
             }}
             inputSize={InputSize.i100}
             textAlign="right"
@@ -285,32 +256,25 @@ const Tab2 = React.forwardRef(
           />
         ),
         5: (
-          <Controller
-            control={control}
+          <Input
             name="pcJaego"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                textAlign="right"
-                mask={currencyMask}
-                readOnly
-              />
-            )}
+            value={jaego}
+            readOnly
+            mask={currencyMask}
+            inputSize={InputSize.i100}
+            textAlign="right"
           />
         ),
         6: (
-          <Controller
-            control={control}
+          <Input
             name="pcDanga"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                textAlign="right"
-                mask={currencyMask}
-              />
-            )}
+            value={danga}
+            onChange={(e: any) => {
+              handleDangaChange(e.target.value);
+            }}
+            inputSize={InputSize.i100}
+            textAlign="right"
+            mask={currencyMask}
           />
         ),
         7: (

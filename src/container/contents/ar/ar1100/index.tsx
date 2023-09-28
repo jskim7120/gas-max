@@ -75,6 +75,7 @@ function AR1100({
   const [jpKind, setJpKind] = useState();
 
   const [qty, setQty] = useState<number>(0);
+  const [jaego, setJaego] = useState<number>(0);
   const [danga, setDanga] = useState<number>(0);
   const [kumSup, setKumSup] = useState<number>(0);
   const [kumVat, setKumVat] = useState<number>(0);
@@ -189,18 +190,36 @@ function AR1100({
 
       if (res && Object.keys(res)?.length > 0) {
         setDataDictionary({
-          proxyType: res?.proxyType,
-          saleState: res?.saleState,
+          proxyType: res?.cproxyType,
+          saleState: res?.csaleState,
           pcSwCode: res?.pcSwCode,
         });
         if (res?.detailData) {
-          setData65(res?.detailData[0]);
-          tabRef2.current.reset({ ...res?.detailData[0], pcDate: new Date() });
-          tabRef2.current.setPcQty(res?.detailData[0]?.pcQty);
+          let detail = res?.detailData[0];
+          let tempJaego =
+            (detail?.junJaego ? detail?.junJaego : 0) +
+            (detail?.pcQty ? detail?.pcQty : 0) -
+            (detail?.pcReqty ? detail?.pcReqty : 0);
+
+          setQty(detail?.pcQty);
+          setDanga(detail?.pcDanga);
+          setJaego(tempJaego);
+
+          setData65(detail);
+          tabRef2.current.reset({ ...detail, pcDate: new Date() });
         } else if (res?.initData) {
-          setData65(res?.initData[0]);
-          tabRef2.current.reset({ ...res?.initData[0] });
-          tabRef2.current.setPcQty(res?.initData[0]?.pcQty);
+          let init = res?.initData[0];
+          let tempJaego =
+            (init?.junJaego ? init?.junJaego : 0) +
+            (init?.pcQty ? init?.pcQty : 0) -
+            (init?.pcReqty ? init?.pcReqty : 0);
+
+          setQty(init?.pcQty);
+          setDanga(init?.pcDanga);
+          setJaego(tempJaego);
+
+          setData65(init);
+          tabRef2.current.reset({ ...init });
         }
       }
     } else if (tabId === 2) {
@@ -221,20 +240,22 @@ function AR1100({
           tsVatDiv: res?.tsVatDiv,
         });
         if (res?.detailData) {
-          setData65(res?.detailData[0]);
-          tabRef3.current.reset({ ...res?.detailData[0], tsDate: new Date() });
+          let detail = res?.detailData[0];
+          setData65(detail);
+          tabRef3.current.reset({ ...detail, tsDate: new Date() });
         } else if (res?.initData) {
-          setData65(res?.initData[0]);
-          setGubun(res?.initData[0]?.tsGubun);
-          setQty(res?.initData[0]?.tsQty);
-          setDanga(res?.initData[0]?.tsDanga);
-          setInkum(res?.initData[0]?.tsInkum);
-          setKumSup(res?.initData[0]?.tsKumSup);
-          setKumVat(res?.initData[0]?.tsKumVat);
-          setKumack(res?.initData[0]?.tsKumack);
-          setMisu(res?.initData[0]?.tsMisu);
-          setVatDiv(res?.initData[0]?.tsVatDiv);
-          tabRef3.current.reset({ ...res?.initData[0] });
+          let init = res?.initData[0];
+          setData65(init);
+          setGubun(init?.tsGubun);
+          setQty(init?.tsQty);
+          setDanga(init?.tsDanga);
+          setInkum(init?.tsInkum);
+          setKumSup(init?.tsKumSup);
+          setKumVat(init?.tsKumVat);
+          setKumack(init?.tsKumack);
+          setMisu(init?.tsMisu);
+          setVatDiv(init?.tsVatDiv);
+          tabRef3.current.reset({ ...init });
         }
       }
     }
@@ -463,8 +484,16 @@ function AR1100({
           pcSwCode: res?.pcSwCode,
         });
         if (res?.detailData && res?.detailData?.length > 0) {
-          tabRef2.current.reset(res?.detailData[0]);
-          tabRef2.current.setPcQty(res?.detailData[0]?.pcQty);
+          let detail = res?.detailData[0];
+          let tempJaego =
+            (detail?.junJaego ? detail?.junJaego : 0) +
+            (detail?.pcQty ? detail?.pcQty : 0) -
+            (detail?.pcReqty ? detail?.pcReqty : 0);
+
+          setQty(detail?.pcQty);
+          setDanga(detail?.pcDanga);
+          setJaego(tempJaego);
+          tabRef2.current.reset(detail);
         }
       }
       if (selected?.pjType === "2") {
@@ -478,25 +507,25 @@ function AR1100({
           tsVatDiv: res?.tsVatDiv,
         });
         if (res?.detailData && res?.detailData?.length > 0) {
-          setGubun(res?.detailData[0]?.tsGubun);
-          setQty(res?.detailData[0]?.tsQty);
-          if (res?.detailData[0].tsGubun === "0") {
-            setDanga(res?.detailData[0]?.tsDanga);
-            setVatDiv(res?.detailData[0]?.tsVatDiv);
-            setKumSup(res?.detailData[0]?.tsKumSup);
-            setKumVat(res?.detailData[0]?.tsKumVat);
-            setKumack(res?.detailData[0]?.tsKumack);
-            setInkum(res?.detailData[0]?.tsInkum);
-            setDc(res?.detailData[0]?.tsDc);
-            setMisu(res?.detailData[0]?.tsMisu);
-          } else if (res?.detailData[0].tsGubun === "1") {
-            setDanga(res?.detailData[0]?.tsDanga);
-            setVatDiv(res?.detailData[0]?.tsVatDiv);
-            setKumSup(res?.detailData[0]?.tsKumSup);
-            setKumVat(res?.detailData[0]?.tsKumVat);
-            setInkum(res?.detailData[0]?.tsPayamt);
-            setKumack(res?.detailData[0]?.tsGukum); //----------tsGukum irehgui bn
-            setMisu(res?.detailData[0]?.tsMisu);
+          let detail = res?.detailData[0];
+
+          if (detail.tsGubun === "0") {
+            setDanga(detail?.tsDanga);
+            setVatDiv(detail?.tsVatDiv);
+            setKumSup(detail?.tsKumSup);
+            setKumVat(detail?.tsKumVat);
+            setKumack(detail?.tsKumack);
+            setInkum(detail?.tsInkum);
+            setDc(detail?.tsDc);
+            setMisu(detail?.tsMisu);
+          } else if (detail.tsGubun === "1") {
+            setDanga(detail?.tsDanga);
+            setVatDiv(detail?.tsVatDiv);
+            setKumSup(detail?.tsKumSup);
+            setKumVat(detail?.tsKumVat);
+            setInkum(detail?.tsPayamt);
+            setKumack(detail?.tsGukum); //----------tsGukum irehgui bn
+            setMisu(detail?.tsMisu);
           }
 
           tabRef3.current.reset(res?.detailData[0]);
@@ -916,6 +945,8 @@ function AR1100({
             setJpKind,
             qty,
             setQty,
+            jaego,
+            setJaego,
             danga,
             setDanga,
             vatDiv,
