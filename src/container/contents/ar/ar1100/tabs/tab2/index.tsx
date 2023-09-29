@@ -27,10 +27,12 @@ const Tab2 = React.forwardRef(
       handleSubmitParent,
       submitParent,
       addBtnUnClick,
+      junJaego,
+      setJunJaego,
       qty,
       setQty,
-      jaego,
-      setJaego,
+      reqty,
+      setReqty,
       danga,
       setDanga,
     }: {
@@ -42,10 +44,12 @@ const Tab2 = React.forwardRef(
       handleSubmitParent: Function;
       submitParent: Function;
       addBtnUnClick: Function;
+      junJaego: number;
+      setJunJaego: Function;
       qty: number;
       setQty: Function;
-      jaego: number;
-      setJaego: Function;
+      reqty: number;
+      setReqty: Function;
       danga: number;
       setDanga: Function;
     },
@@ -73,13 +77,24 @@ const Tab2 = React.forwardRef(
 
     const handleQtyChange = (val: number) => {
       setQty(val);
+      setReqty(val);
       const tempDanga = danga ? +removeCommas(danga, "number") : 0;
-      const tempKumack = (isNaN(tempDanga) ? 0 : tempDanga) * val;
+      const tempKumack = (isNaN(tempDanga) ? 0 : tempDanga) * +val;
 
       reset((formValues) => ({
         ...formValues,
-        pcReqty: val,
+        pcJaego: junJaego,
         pcKumack: tempKumack,
+      }));
+    };
+
+    const handleReqtyChange = (val: number) => {
+      setReqty(val);
+      let tempPcJaego = +junJaego + +qty - +val;
+
+      reset((formValues) => ({
+        ...formValues,
+        pcJaego: tempPcJaego,
       }));
     };
 
@@ -96,7 +111,9 @@ const Tab2 = React.forwardRef(
 
     const resetForm = (type: string) => {
       if (type === "reset") {
+        setJunJaego(data65?.junJaego);
         setQty(data65?.pcQty);
+        setReqty(data65?.pcReqty);
         setDanga(data65?.pcDanga);
         reset({
           ...data65,
@@ -104,6 +121,13 @@ const Tab2 = React.forwardRef(
           pcJpName: data65?.pcJpName ? data65?.pcJpName : "",
         });
       } else if (type === "jpName") {
+        const tempJunJaego =
+          (cm1106?.jcBasicJaego ? +cm1106?.jcBasicJaego : 0) +
+          (cm1106?.custOut ? +cm1106?.custOut : 0) -
+          (cm1106?.custIn ? +cm1106?.custIn : 0);
+
+        setJunJaego(tempJunJaego);
+
         reset((formValues) => ({
           ...formValues,
           pcJpName: cm1106?.jpName,
@@ -141,15 +165,12 @@ const Tab2 = React.forwardRef(
       }
 
       params.pcDate = DateWithoutDash(params.pcDate);
-
-      params.pcDanga = +removeCommas(params.pcDanga, "number");
-      params.pcQty = +removeCommas(params.pcQty, "number");
-      params.pcReqty = +removeCommas(params.pcReqty, "number");
       params.pcKumack = +removeCommas(params.pcKumack, "number");
       params.pcGum = +removeCommas(params.pcGum, "number");
       params.pcQty = qty;
+      params.pcReqty = reqty;
       params.pcDanga = +removeCommas(danga, "number");
-      params.pcJaego = +removeCommas(jaego, "number");
+      params.pcJaego = +removeCommas(params.pcJaego, "number");
 
       if (params?.pcSwCode) {
         params.pcSwName = dictionary?.pcSwCode?.find(
@@ -247,22 +268,29 @@ const Tab2 = React.forwardRef(
           />
         ),
         4: (
-          <Controller
-            control={control}
+          <Input
+            type="number"
             name="pcReqty"
-            render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} textAlign="right" />
-            )}
+            value={reqty}
+            onChange={(e: any) => {
+              handleReqtyChange(e.target.value);
+            }}
+            inputSize={InputSize.i100}
+            textAlign="right"
           />
         ),
         5: (
-          <Input
+          <Controller
+            control={control}
             name="pcJaego"
-            value={jaego}
-            readOnly
-            mask={currencyMask}
-            inputSize={InputSize.i100}
-            textAlign="right"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                readOnly
+                textAlign="right"
+              />
+            )}
           />
         ),
         6: (

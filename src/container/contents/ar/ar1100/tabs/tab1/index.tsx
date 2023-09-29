@@ -29,6 +29,14 @@ const Tab1 = React.forwardRef(
       addBtnUnClick,
       jpKind,
       setJpKind,
+      junJaego,
+      setJunJaego,
+      qty,
+      setQty,
+      reqty,
+      setReqty,
+      danga,
+      setDanga,
     }: {
       tabId: number;
       data: any;
@@ -40,6 +48,14 @@ const Tab1 = React.forwardRef(
       addBtnUnClick: Function;
       jpKind: any;
       setJpKind: Function;
+      junJaego: number;
+      setJunJaego: Function;
+      qty: number;
+      setQty: Function;
+      reqty: number;
+      setReqty: Function;
+      danga: number;
+      setDanga: Function;
     },
     ref: React.ForwardedRef<any>
   ) => {
@@ -50,8 +66,8 @@ const Tab1 = React.forwardRef(
 
     useImperativeHandle<any, any>(ref, () => ({
       reset,
-      setPjQty,
-      setPjJago,
+      //setPjQty,
+      //setPjJago,
     }));
 
     const dispatch = useDispatch();
@@ -59,20 +75,20 @@ const Tab1 = React.forwardRef(
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const { info, source } = useSelector((state: any) => state.footer);
 
-    const [pjQty, setPjQty] = useState<number>(0);
-    const [pjJago, setPjJago] = useState<number>(0);
+    //const [pjQty, setPjQty] = useState<number>(0);
+    //const [pjJago, setPjJago] = useState<number>(0);
 
     const { showCM1106Modal, openModal } = useModal();
 
-    let calcPjJago = 0;
-    let pjKumSup = 0;
-    let pjKumVat = 0;
-    let pjKumack = 0;
-    let pjDanga = 0;
-    let pjReqty = 0;
-    let pjMisukum = 0;
-    let pjInkum = 0;
-    let pjDc = 0;
+    // let calcPjJago = 0;
+    // let pjKumSup = 0;
+    // let pjKumVat = 0;
+    // let pjKumack = 0;
+    // let pjDanga = 0;
+    // let pjReqty = 0;
+    // let pjMisukum = 0;
+    // let pjInkum = 0;
+    // let pjDc = 0;
 
     useEffect(() => {
       if (cm1106.source === "AR11000") {
@@ -81,6 +97,7 @@ const Tab1 = React.forwardRef(
       }
     }, [cm1106.tick]);
 
+    /*
     useEffect(() => {
       if (watch("pjReqty") !== undefined) {
         handlePjReqtyChange();
@@ -140,6 +157,7 @@ const Tab1 = React.forwardRef(
       pjMisukum =
         +pjKumack - (isNaN(pjDc) ? 0 : +pjDc) - (isNaN(pjInkum) ? 0 : +pjInkum);
     };
+    
 
     const handlePjQtyChange = (value: number) => {
       setPjQty(value);
@@ -200,33 +218,71 @@ const Tab1 = React.forwardRef(
         pjMisukum: pjMisukum,
       }));
     };
+    */
+
+    const handleQtyChange = (val: number) => {
+      setQty(val);
+      setReqty(val);
+      const tempDanga = danga ? +removeCommas(danga, "number") : 0;
+      const tempKumSup = (isNaN(tempDanga) ? 0 : tempDanga) * +val;
+
+      reset((formValues) => ({
+        ...formValues,
+        pjJago: junJaego,
+        pjKumSup: tempKumSup,
+      }));
+    };
+
+    const handleReqtyChange = (val: number) => {
+      setReqty(val);
+      let tempPcJaego = +junJaego + +qty - +val;
+
+      reset((formValues) => ({
+        ...formValues,
+        pcJaego: tempPcJaego,
+      }));
+    };
+
+    const handleDangaChange = (val: number) => {
+      setDanga(val);
+      const tempVal = val ? +removeCommas(val, "number") : 0;
+      const tempKumSup = (isNaN(tempVal) ? 0 : tempVal) * qty;
+
+      reset((formValues) => ({
+        ...formValues,
+        pjKumSup: tempKumSup,
+      }));
+    };
 
     const resetForm = (type: string) => {
       if (type === "reset") {
-        setPjQty(data65?.pjQty);
+        setJunJaego(data65?.junJaego);
+        setQty(data65?.pjQty);
+        setReqty(data65?.pjReqty);
+        setDanga(data65?.pjDanga);
         reset({
           ...data65,
           pjJpCode: data65?.pjJpCode ? data65?.pjJpCode : "",
           pjJpName: data65?.pjJpName ? data65?.pjJpName : "",
         });
       } else if (type === "jpName") {
-        const pjJago =
-          (cm1106?.jcBasicJaego ? +cm1106.jcBasicJaego : 0) +
-          (cm1106?.custOut ? +cm1106.custOut : 0) -
-          (cm1106?.custIn ? +cm1106.custIn : 0);
+        const tempJunJaego =
+          (cm1106?.jcBasicJaego ? +cm1106?.jcBasicJaego : 0) +
+          (cm1106?.custOut ? +cm1106?.custOut : 0) -
+          (cm1106?.custIn ? +cm1106?.custIn : 0);
 
         const pjKumSup =
           (cm1106?.jcJpDanga ? +removeCommas(cm1106.jcJpDanga, "number") : 0) *
           (getValues("pjQty") ? +getValues("pjQty") : 0);
 
-        setPjJago(pjJago);
+        setJunJaego(tempJunJaego);
 
         reset((formValues) => ({
           ...formValues,
           pjJpName: cm1106.jpName,
           pjJpCode: cm1106.jpCode,
           pjJpSpec: cm1106?.jpSpec,
-          pjJago: pjJago,
+          //pjJago: pjJago,
           pjDanga: cm1106.jcJpDanga,
           pjKumSup: pjKumSup,
         }));
@@ -260,15 +316,16 @@ const Tab1 = React.forwardRef(
       }
 
       params.pjDate = DateWithoutDash(params.pjDate);
-
-      params.pjDanga = removeCommas(params.pjDanga, "number");
       params.pjKumSup = removeCommas(params.pjKumSup, "number");
       params.pjKumVat = removeCommas(params.pjKumVat, "number");
       params.pjKumack = removeCommas(params.pjKumack, "number");
       params.pjInkum = removeCommas(params.pjInkum, "number");
       params.pjDc = removeCommas(params.pjDc, "number");
       params.pjMisukum = removeCommas(params.pjMisukum, "number");
-      params.pjQty = pjQty;
+      params.pjQty = qty;
+      params.pjReqty = reqty;
+      params.pjDanga = +removeCommas(danga, "number");
+      params.pjJago = +removeCommas(params.pjJago, "number");
 
       if (params.pjSwCode) {
         const pjSwName = dictionary?.pjSwCode?.find(
@@ -386,9 +443,9 @@ const Tab1 = React.forwardRef(
         <Input
           type="number"
           name="pjQty"
-          value={pjQty}
+          value={qty}
           onChange={(e: any) => {
-            handlePjQtyChange(e.target.value);
+            handleQtyChange(e.target.value);
           }}
           inputSize={InputSize.i100}
           textAlign="right"
@@ -396,37 +453,45 @@ const Tab1 = React.forwardRef(
       ),
 
       4: (
-        <Controller
-          control={control}
-          name="pjReqty"
-          render={({ field }) => (
-            <Input {...field} inputSize={InputSize.i100} textAlign="right" />
-          )}
+        <Input
+          type="number"
+          name="pcReqty"
+          value={reqty}
+          onChange={(e: any) => {
+            handleReqtyChange(e.target.value);
+          }}
+          inputSize={InputSize.i100}
+          textAlign="right"
         />
       ),
 
       5: (
-        <Input
-          register={register("pjJago")}
-          inputSize={InputSize.i100}
-          textAlign="right"
+        <Controller
+          control={control}
+          name="pjJago"
+          render={({ field }) => (
+            <Input
+              {...field}
+              inputSize={InputSize.i100}
+              readOnly
+              textAlign="right"
+            />
+          )}
         />
       ),
     };
 
     const td3 = {
       6: (
-        <Controller
-          control={control}
+        <Input
           name="pjDanga"
-          render={({ field }) => (
-            <Input
-              {...field}
-              inputSize={InputSize.i100}
-              textAlign="right"
-              mask={currencyMask}
-            />
-          )}
+          value={danga}
+          onChange={(e: any) => {
+            handleDangaChange(e.target.value);
+          }}
+          inputSize={InputSize.i100}
+          textAlign="right"
+          mask={currencyMask}
         />
       ),
       7: (

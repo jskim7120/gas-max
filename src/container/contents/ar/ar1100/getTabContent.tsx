@@ -17,10 +17,12 @@ function getTabContent(
   addBtnUnClick: Function,
   jpKind: any,
   setJpKind: Function,
+  junJaego: number,
+  setJunJaego: Function,
   qty: number,
   setQty: Function,
-  jaego: number,
-  setJaego: Function,
+  reqty: number,
+  setReqty: Function,
   danga: number,
   setDanga: Function,
   vatDiv: string,
@@ -55,6 +57,14 @@ function getTabContent(
           addBtnUnClick={addBtnUnClick}
           jpKind={jpKind}
           setJpKind={setJpKind}
+          junJaego={junJaego}
+          setJunJaego={setJunJaego}
+          qty={qty}
+          setQty={setQty}
+          reqty={reqty}
+          setReqty={setReqty}
+          danga={danga}
+          setDanga={setDanga}
         />
       );
     case 1:
@@ -69,10 +79,12 @@ function getTabContent(
           submitParent={submit}
           ref={tabRef2}
           addBtnUnClick={addBtnUnClick}
+          junJaego={junJaego}
+          setJunJaego={setJunJaego}
           qty={qty}
           setQty={setQty}
-          jaego={jaego}
-          setJaego={setJaego}
+          reqty={reqty}
+          setReqty={setReqty}
           danga={danga}
           setDanga={setDanga}
         />

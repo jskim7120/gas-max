@@ -74,8 +74,10 @@ function AR1100({
   const [toggler, setToggler] = useState<boolean>(false);
   const [jpKind, setJpKind] = useState();
 
+  const [junJaego, setJunJaego] = useState<number>(0);
   const [qty, setQty] = useState<number>(0);
-  const [jaego, setJaego] = useState<number>(0);
+  const [reqty, setReqty] = useState<number>(0);
+  //const [jaego, setJaego] = useState<number>(0);
   const [danga, setDanga] = useState<number>(0);
   const [kumSup, setKumSup] = useState<number>(0);
   const [kumVat, setKumVat] = useState<number>(0);
@@ -172,13 +174,18 @@ function AR1100({
           pabcCode: res?.pabcCode,
         });
         if (res?.detailData) {
-          setData65(res?.detailData[0]);
-          tabRef1.current.reset({ ...res?.detailData[0], pjDate: new Date() });
-          tabRef1.current.setPjQty(res?.detailData[0]?.pjQty);
+          let detail = res?.detailData[0];
+
+          setData65(detail);
+          setJunJaego(detail?.junJaego); // ene irehgui bgaa
+          setQty(detail?.pjQty);
+          setReqty(detail?.pjReqty);
+          setDanga(detail?.pjDanga);
+
+          tabRef1.current.reset({ ...detail, pjDate: new Date() });
         } else if (res?.initData) {
           setData65(res?.initData[0]);
           tabRef1.current.reset({ ...res?.initData[0] });
-          tabRef1.current.setPjQty(res?.initData[0]?.pjQty);
         }
       }
     } else if (tabId === 1) {
@@ -201,25 +208,32 @@ function AR1100({
             (detail?.pcQty ? detail?.pcQty : 0) -
             (detail?.pcReqty ? detail?.pcReqty : 0);
 
-          setQty(detail?.pcQty);
-          setDanga(detail?.pcDanga);
-          setJaego(tempJaego);
-
           setData65(detail);
-          tabRef2.current.reset({ ...detail, pcDate: new Date() });
+          setJunJaego(detail?.junJaego);
+          setQty(detail?.pcQty);
+          setReqty(detail?.pcReqty);
+          setDanga(detail?.pcDanga);
+
+          tabRef2.current.reset({
+            ...detail,
+            pcDate: new Date(),
+            pcJaego: tempJaego,
+          });
         } else if (res?.initData) {
           let init = res?.initData[0];
+
           let tempJaego =
             (init?.junJaego ? init?.junJaego : 0) +
             (init?.pcQty ? init?.pcQty : 0) -
             (init?.pcReqty ? init?.pcReqty : 0);
 
+          setJunJaego(init?.junJaego ? init?.junJaego : 0);
           setQty(init?.pcQty);
+          setReqty(init?.pcReqty);
           setDanga(init?.pcDanga);
-          setJaego(tempJaego);
 
           setData65(init);
-          tabRef2.current.reset({ ...init });
+          tabRef2.current.reset({ ...init, pcJaego: tempJaego });
         }
       }
     } else if (tabId === 2) {
@@ -448,8 +462,8 @@ function AR1100({
       setData([]);
       setSelected({});
       tabId !== 0 && setTabId(0);
-      tabRef1?.current?.setPjQty(0);
-      tabRef1?.current?.setPjJago(0);
+      //tabRef1?.current?.setPjQty(0);
+      //tabRef1?.current?.setPjJago(0); ------end state-uudiig set hiih
       tabRef1?.current?.reset({ ...emtObjTab1 });
     }
     setLoading(false);
@@ -464,6 +478,7 @@ function AR1100({
         setData65(res?.detailData[0]);
       }
       if (selected?.pjType === "0") {
+        //1-r tab------------------------
         setDataDictionary({
           pjVatDiv: res?.pjVatDiv,
           pjSwCode: res?.pjSwCode,
@@ -473,11 +488,17 @@ function AR1100({
           pabcCode: res?.pabcCode,
         });
         if (res?.detailData && res?.detailData?.length > 0) {
-          tabRef1.current.reset(res?.detailData[0]);
-          tabRef1.current.setPjQty(res?.detailData[0]?.pjQty);
+          let detail = res?.detailData[0];
+          setJunJaego(detail?.junJaego); // irehgui bn ene talbar
+          setQty(detail?.pjQty);
+          setReqty(detail?.pjReqty);
+          setDanga(detail?.pjDanga);
+
+          tabRef1.current.reset(detail);
         }
       }
       if (selected?.pjType === "1") {
+        //2-r tab------------------------
         setDataDictionary({
           proxyType: res?.proxyType,
           saleState: res?.saleState,
@@ -489,14 +510,16 @@ function AR1100({
             (detail?.junJaego ? detail?.junJaego : 0) +
             (detail?.pcQty ? detail?.pcQty : 0) -
             (detail?.pcReqty ? detail?.pcReqty : 0);
-
+          setJunJaego(detail?.junJaego);
           setQty(detail?.pcQty);
+          setReqty(detail?.pcReqty);
           setDanga(detail?.pcDanga);
-          setJaego(tempJaego);
-          tabRef2.current.reset(detail);
+
+          tabRef2.current.reset({ ...detail, pcJaego: tempJaego });
         }
       }
       if (selected?.pjType === "2") {
+        //3-r tab------------------------
         setDataDictionary({
           acbCode: res?.tsAcbCode,
           tsGubun: res?.tsGubun,
@@ -943,10 +966,12 @@ function AR1100({
             addBtnUnClick,
             jpKind,
             setJpKind,
+            junJaego,
+            setJunJaego,
             qty,
             setQty,
-            jaego,
-            setJaego,
+            reqty,
+            setReqty,
             danga,
             setDanga,
             vatDiv,
