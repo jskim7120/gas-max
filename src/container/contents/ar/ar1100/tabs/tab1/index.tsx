@@ -302,12 +302,13 @@ const Tab1 = React.forwardRef(
       params.pjKumSup = removeCommas(params.pjKumSup, "number");
       params.pjKumVat = removeCommas(params.pjKumVat, "number");
       params.pjKumack = removeCommas(params.pjKumack, "number");
-      params.pjInkum = removeCommas(params.pjInkum, "number");
-      params.pjDc = removeCommas(params.pjDc, "number");
       params.pjMisukum = removeCommas(params.pjMisukum, "number");
       params.pjQty = qty;
       params.pjReqty = reqty;
+      params.pjVatDiv = vatDiv;
       params.pjDanga = +removeCommas(danga, "number");
+      params.pjInkum = +removeCommas(inkum, "number");
+      params.pjDc = +removeCommas(dc, "number");
       params.pjJago = +removeCommas(params.pjJago, "number");
 
       if (params.pjSwCode) {
