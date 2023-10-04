@@ -181,6 +181,9 @@ function AR1100({
           setQty(detail?.pjQty);
           setReqty(detail?.pjReqty);
           setDanga(detail?.pjDanga);
+          setVatDiv(detail?.pjVatDiv);
+          setInkum(detail?.pjInkum);
+          setDc(detail?.pjDc);
 
           tabRef1.current.reset({ ...detail, pjDate: new Date() });
         } else if (res?.initData) {
@@ -489,11 +492,14 @@ function AR1100({
         });
         if (res?.detailData && res?.detailData?.length > 0) {
           let detail = res?.detailData[0];
-          setJunJaego(detail?.junJaego); // irehgui bn ene talbar
+          //setJunJaego(detail?.junJaego); // irehgui bn ene talbar
+          setJunJaego(0); //turdee ingeed tavichihyaa daraa ustga
           setQty(detail?.pjQty);
           setReqty(detail?.pjReqty);
           setDanga(detail?.pjDanga);
-
+          setVatDiv(detail?.pjVatDiv);
+          setInkum(detail?.pjInkum);
+          setDc(detail?.pjDc);
           tabRef1.current.reset(detail);
         }
       }

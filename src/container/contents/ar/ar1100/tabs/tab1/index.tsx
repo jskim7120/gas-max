@@ -1,4 +1,8 @@
-import React, { useEffect, useState, useImperativeHandle } from "react";
+import React, {
+  useEffect,
+  useImperativeHandle,
+  BaseSyntheticEvent,
+} from "react";
 import { Controller, useForm } from "react-hook-form";
 import { AR1100INSERT, AR1100UPDATE } from "app/path";
 import { useDispatch, useSelector } from "app/store";
@@ -37,6 +41,12 @@ const Tab1 = React.forwardRef(
       setReqty,
       danga,
       setDanga,
+      vatDiv,
+      setVatDiv,
+      inkum,
+      setInkum,
+      dc,
+      setDc,
     }: {
       tabId: number;
       data: any;
@@ -56,6 +66,12 @@ const Tab1 = React.forwardRef(
       setReqty: Function;
       danga: number;
       setDanga: Function;
+      vatDiv: string;
+      setVatDiv: Function;
+      inkum: number;
+      setInkum: Function;
+      dc: number;
+      setDc: Function;
     },
     ref: React.ForwardedRef<any>
   ) => {
@@ -66,8 +82,6 @@ const Tab1 = React.forwardRef(
 
     useImperativeHandle<any, any>(ref, () => ({
       reset,
-      //setPjQty,
-      //setPjJago,
     }));
 
     const dispatch = useDispatch();
@@ -75,20 +89,7 @@ const Tab1 = React.forwardRef(
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const { info, source } = useSelector((state: any) => state.footer);
 
-    //const [pjQty, setPjQty] = useState<number>(0);
-    //const [pjJago, setPjJago] = useState<number>(0);
-
     const { showCM1106Modal, openModal } = useModal();
-
-    // let calcPjJago = 0;
-    // let pjKumSup = 0;
-    // let pjKumVat = 0;
-    // let pjKumack = 0;
-    // let pjDanga = 0;
-    // let pjReqty = 0;
-    // let pjMisukum = 0;
-    // let pjInkum = 0;
-    // let pjDc = 0;
 
     useEffect(() => {
       if (cm1106.source === "AR11000") {
@@ -97,160 +98,138 @@ const Tab1 = React.forwardRef(
       }
     }, [cm1106.tick]);
 
-    /*
-    useEffect(() => {
-      if (watch("pjReqty") !== undefined) {
-        handlePjReqtyChange();
-      }
-    }, [watch("pjReqty")]);
-
-    useEffect(() => {
-      if (watch("pjDanga") !== undefined) {
-        handlePjDangaChange();
-      }
-    }, [watch("pjDanga")]);
-
-    useEffect(() => {
-      if (watch("pjVatDiv") !== undefined) {
-        handlePjVatDivChange();
-      }
-    }, [watch("pjVatDiv")]);
-
-    useEffect(() => {
-      if (watch("pjInkum") !== undefined) {
-        handlePjInkumPjDcChange();
-      }
-    }, [watch("pjInkum")]);
-
-    useEffect(() => {
-      if (watch("pjDc") !== undefined) {
-        handlePjInkumPjDcChange();
-      }
-    }, [watch("pjDc")]);
-
-    const calcKumSup = (qty: number = pjQty) => {
-      pjDanga = +removeCommas(getValues("pjDanga"))
-        ? +removeCommas(getValues("pjDanga"), "number")
-        : 0;
-      pjKumSup = pjDanga * qty;
-    };
-
-    const calcKumackKumVat = () => {
-      if (getValues("pjVatDiv") === "0") {
-        pjKumVat = 0;
-        pjKumack = pjKumSup;
-      } else if (
-        getValues("pjVatDiv") === "1" ||
-        getValues("pjVatDiv") === "2"
-      ) {
-        pjKumVat = Math.round(pjKumSup * 0.1);
-        pjKumack = pjKumVat + pjKumSup;
-      }
-    };
-
-    const calcMisukum = () => {
-      pjDc = getValues("pjDc") ? +removeCommas(getValues("pjDc"), "number") : 0;
-      pjInkum = getValues("pjInkum")
-        ? +removeCommas(getValues("pjInkum"), "number")
-        : 0;
-
-      pjMisukum =
-        +pjKumack - (isNaN(pjDc) ? 0 : +pjDc) - (isNaN(pjInkum) ? 0 : +pjInkum);
-    };
-    
-
-    const handlePjQtyChange = (value: number) => {
-      setPjQty(value);
-      calcKumSup(value);
-      calcKumackKumVat();
-      calcMisukum();
-      reset((formValues) => ({
-        ...formValues,
-        pjReqty: value,
-        pjKumSup: pjKumSup,
-        pjKumVat: pjKumVat,
-        pjKumack: pjKumack,
-        pjMisukum: pjMisukum,
-      }));
-    };
-
-    const handlePjReqtyChange = () => {
-      pjReqty = getValues("pjReqty") ? +getValues("pjReqty") : 0;
-      calcPjJago = +pjJago + +pjQty - +pjReqty;
-      reset((formValues) => ({
-        ...formValues,
-        pjJago: calcPjJago,
-      }));
-    };
-
-    const handlePjDangaChange = () => {
-      calcKumSup();
-      calcKumackKumVat();
-      calcMisukum();
-      reset((formValues) => ({
-        ...formValues,
-        pjKumSup: pjKumSup,
-        pjKumVat: pjKumVat,
-        pjKumack: pjKumack,
-        pjMisukum: pjMisukum,
-      }));
-    };
-
-    const handlePjVatDivChange = () => {
-      pjKumSup = getValues("pjKumSup") ? +getValues("pjKumSup") : 0;
-      calcKumackKumVat();
-      calcMisukum();
-      reset((formValues) => ({
-        ...formValues,
-        pjKumVat: pjKumVat,
-        pjKumack: pjKumack,
-        pjMisukum: pjMisukum,
-      }));
-    };
-
-    const handlePjInkumPjDcChange = () => {
-      pjKumack = getValues("pjKumack")
-        ? +removeCommas(getValues("pjKumack"), "number")
-        : 0;
-      calcMisukum();
-      reset((formValues) => ({
-        ...formValues,
-        pjMisukum: pjMisukum,
-      }));
-    };
-    */
-
     const handleQtyChange = (val: number) => {
       setQty(val);
       setReqty(val);
-      const tempDanga = danga ? +removeCommas(danga, "number") : 0;
-      const tempKumSup = (isNaN(tempDanga) ? 0 : tempDanga) * +val;
+
+      let tempDanga = danga ? +removeCommas(danga, "number") : 0;
+      tempDanga = isNaN(tempDanga) ? 0 : tempDanga;
+
+      const tempKumSup = tempDanga * +val;
+      let tempKumVat: number = 0;
+      let tempKumack: number = 0;
+      let tempMisukum: number = 0;
+
+      if (vatDiv === "0") {
+        tempKumVat = 0;
+        tempKumack = tempKumSup;
+      } else if (vatDiv === "1" || vatDiv === "2") {
+        tempKumVat = Math.round(tempKumSup * 0.1);
+        tempKumack = tempKumSup + tempKumVat;
+      }
+
+      let tempInkum: number = inkum ? +removeCommas(inkum, "number") : 0;
+      tempInkum = isNaN(tempInkum) ? 0 : tempInkum;
+      let tempDc: number = dc ? +removeCommas(dc, "number") : 0;
+      tempDc = isNaN(tempDc) ? 0 : tempDc;
+
+      tempMisukum = tempKumack - tempInkum - tempDc;
 
       reset((formValues) => ({
         ...formValues,
         pjJago: junJaego,
         pjKumSup: tempKumSup,
+        pjKumVat: tempKumVat,
+        pjKumack: tempKumack,
+        pjMisukum: tempMisukum,
       }));
     };
 
     const handleReqtyChange = (val: number) => {
       setReqty(val);
       let tempPcJaego = +junJaego + +qty - +val;
-
       reset((formValues) => ({
         ...formValues,
-        pcJaego: tempPcJaego,
+        pjJago: tempPcJaego,
       }));
     };
 
-    const handleDangaChange = (val: number) => {
+    const handleDangaChange = (val: any) => {
       setDanga(val);
       const tempVal = val ? +removeCommas(val, "number") : 0;
       const tempKumSup = (isNaN(tempVal) ? 0 : tempVal) * qty;
 
+      let tempKumVat: number = 0;
+      let tempKumack: number = 0;
+      let tempMisukum: number = 0;
+
+      if (vatDiv === "0") {
+        tempKumVat = 0;
+        tempKumack = tempKumSup;
+      } else if (vatDiv === "1" || vatDiv === "2") {
+        tempKumVat = Math.round(tempKumSup * 0.1);
+        tempKumack = tempKumSup + tempKumVat;
+      }
+
+      let tempInkum: number = inkum ? +removeCommas(inkum, "number") : 0;
+      tempInkum = isNaN(tempInkum) ? 0 : tempInkum;
+      let tempDc: number = dc ? +removeCommas(dc, "number") : 0;
+      tempDc = isNaN(tempDc) ? 0 : tempDc;
+
+      tempMisukum = tempKumack - tempInkum - tempDc;
+
       reset((formValues) => ({
         ...formValues,
         pjKumSup: tempKumSup,
+        pjKumVat: tempKumVat,
+        pjKumack: tempKumack,
+        pjMisukum: tempMisukum,
+      }));
+    };
+
+    const handleChangeVatDiv = (val: string) => {
+      let tempKumVat: number = 0;
+      let tempKumack: number = 0;
+      let tempMisukum: number = 0;
+      let tempKumSup: number = getValues("pjKumSup")
+        ? +removeCommas(getValues("pjKumSup"), "number")
+        : 0;
+
+      let tempInkum = inkum ? +removeCommas(inkum, "number") : 0;
+      let tempDc = dc ? +removeCommas(dc, "number") : 0;
+
+      setVatDiv(val);
+      if (val === "0") {
+        tempKumVat = 0;
+        tempKumack = tempKumSup;
+      } else if (val === "1" || val === "2") {
+        tempKumVat = Math.round(tempKumSup * 0.1);
+        tempKumack = tempKumSup + tempKumVat;
+      }
+
+      tempMisukum = tempKumack - tempInkum - tempDc;
+
+      reset((formValues) => ({
+        ...formValues,
+        pjKumVat: tempKumVat,
+        pjKumack: tempKumack,
+        pjMisukum: tempMisukum,
+      }));
+    };
+
+    const handleChangeInkumOrDc = (val: number, type: string) => {
+      let pjInkum: number = 0;
+      let pjDc: number = 0;
+
+      if (type === "inkum") {
+        setInkum(val);
+        pjDc = isNaN(dc) ? 0 : +removeCommas(dc, "number");
+        pjInkum = isNaN(val) ? 0 : +removeCommas(val, "number");
+      } else if (type === "dc") {
+        setDc(val);
+        pjInkum = isNaN(inkum) ? 0 : +removeCommas(inkum, "number");
+        pjDc = isNaN(val) ? 0 : +removeCommas(val, "number");
+      }
+
+      let pjKumack: number = getValues("pjKumack")
+        ? +removeCommas(getValues("pjKumack"), "number")
+        : 0;
+      let pjMisukum: number = 0;
+      pjMisukum = pjKumack - pjDc - pjInkum;
+
+      reset((formValues) => ({
+        ...formValues,
+        pjMisukum: pjMisukum,
       }));
     };
 
@@ -496,19 +475,18 @@ const Tab1 = React.forwardRef(
       ),
       7: (
         <FormGroup>
-          <Controller
-            control={control}
+          <Select
             name="pjVatDiv"
-            render={({ field }) => (
-              <Select {...field} width={InputSize.i100}>
-                {dictionary?.pjVatDiv?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            )}
-          />
+            value={vatDiv}
+            width={InputSize.i100}
+            onChange={(e) => handleChangeVatDiv(e.target.value)}
+          >
+            {dictionary?.pjVatDiv?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
         </FormGroup>
       ),
       8: (
@@ -595,31 +573,27 @@ const Tab1 = React.forwardRef(
           </FormGroup>
         ),
         6: (
-          <Controller
-            control={control}
+          <Input
             name="pjInkum"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                textAlign="right"
-                mask={currencyMask}
-              />
-            )}
+            value={inkum}
+            onChange={(e: BaseSyntheticEvent) =>
+              handleChangeInkumOrDc(e.target.value, "inkum")
+            }
+            inputSize={InputSize.i100}
+            textAlign="right"
+            mask={currencyMask}
           />
         ),
         7: (
-          <Controller
-            control={control}
+          <Input
             name="pjDc"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i100}
-                textAlign="right"
-                mask={currencyMask}
-              />
-            )}
+            value={dc}
+            onChange={(e: BaseSyntheticEvent) =>
+              handleChangeInkumOrDc(e.target.value, "dc")
+            }
+            inputSize={InputSize.i100}
+            textAlign="right"
+            mask={currencyMask}
           />
         ),
         8: (

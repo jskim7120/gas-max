@@ -65,6 +65,12 @@ function getTabContent(
           setReqty={setReqty}
           danga={danga}
           setDanga={setDanga}
+          vatDiv={vatDiv}
+          setVatDiv={setVatDiv}
+          inkum={inkum}
+          setInkum={setInkum}
+          dc={dc}
+          setDc={setDc}
         />
       );
     case 1:
