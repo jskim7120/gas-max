@@ -77,16 +77,15 @@ function AR1100({
   const [junJaego, setJunJaego] = useState<number>(0);
   const [qty, setQty] = useState<number>(0);
   const [reqty, setReqty] = useState<number>(0);
-  //const [jaego, setJaego] = useState<number>(0);
   const [danga, setDanga] = useState<number>(0);
+  const [inkum, setInkum] = useState<number>(0);
+  const [dc, setDc] = useState<number>(0);
+  const [vatDiv, setVatDiv] = useState<string>("0");
+  const [gubun, setGubun] = useState<string>("0");
   const [kumSup, setKumSup] = useState<number>(0);
   const [kumVat, setKumVat] = useState<number>(0);
   const [kumack, setKumack] = useState<number>(0);
-  const [inkum, setInkum] = useState<number>(0);
-  const [dc, setDc] = useState<number>(0);
   const [misu, setMisu] = useState<number>(0);
-  const [vatDiv, setVatDiv] = useState<string>("0");
-  const [gubun, setGubun] = useState<string>("0");
 
   const { getRowIndex, setRowIndex } = useRowIndex();
   const { showCM1105Modal, openModal: openCM1105Modal } = useModal();
@@ -488,7 +487,7 @@ function AR1100({
           proxyType: res?.proxyType,
           pjInkumtype: res?.pjInkumtype,
           saleState: res?.saleState,
-          pabcCode: res?.pabcCode,
+          pacbCode: res?.pacbCode,
         });
         if (res?.detailData && res?.detailData?.length > 0) {
           let detail = res?.detailData[0];

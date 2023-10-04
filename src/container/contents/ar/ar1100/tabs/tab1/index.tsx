@@ -178,6 +178,7 @@ const Tab1 = React.forwardRef(
     };
 
     const handleChangeVatDiv = (val: string) => {
+      setVatDiv(val);
       let tempKumVat: number = 0;
       let tempKumack: number = 0;
       let tempMisukum: number = 0;
@@ -188,7 +189,6 @@ const Tab1 = React.forwardRef(
       let tempInkum = inkum ? +removeCommas(inkum, "number") : 0;
       let tempDc = dc ? +removeCommas(dc, "number") : 0;
 
-      setVatDiv(val);
       if (val === "0") {
         tempKumVat = 0;
         tempKumack = tempKumSup;
@@ -208,24 +208,28 @@ const Tab1 = React.forwardRef(
     };
 
     const handleChangeInkumOrDc = (val: number, type: string) => {
-      let pjInkum: number = 0;
-      let pjDc: number = 0;
+      let tempInkum: number = 0;
+      let tempDc: number = 0;
 
       if (type === "inkum") {
         setInkum(val);
-        pjDc = isNaN(dc) ? 0 : +removeCommas(dc, "number");
-        pjInkum = isNaN(val) ? 0 : +removeCommas(val, "number");
+        tempDc = dc ? +removeCommas(dc, "number") : 0;
+        tempDc = isNaN(tempDc) ? 0 : tempDc;
+        tempInkum = val ? +removeCommas(val, "number") : 0;
+        tempInkum = isNaN(tempInkum) ? 0 : tempInkum;
       } else if (type === "dc") {
         setDc(val);
-        pjInkum = isNaN(inkum) ? 0 : +removeCommas(inkum, "number");
-        pjDc = isNaN(val) ? 0 : +removeCommas(val, "number");
+        tempInkum = inkum ? +removeCommas(inkum, "number") : 0;
+        tempInkum = isNaN(tempInkum) ? 0 : tempInkum;
+        tempDc = val ? +removeCommas(val, "number") : 0;
+        tempDc = isNaN(tempDc) ? 0 : tempDc;
       }
 
       let pjKumack: number = getValues("pjKumack")
         ? +removeCommas(getValues("pjKumack"), "number")
         : 0;
       let pjMisukum: number = 0;
-      pjMisukum = pjKumack - pjDc - pjInkum;
+      pjMisukum = pjKumack - tempDc - tempInkum;
 
       reset((formValues) => ({
         ...formValues,
@@ -564,7 +568,7 @@ const Tab1 = React.forwardRef(
         5: (
           <FormGroup>
             <Select register={register("pacbCode")} width={InputSize.i150}>
-              {dictionary?.pabcCode?.map((obj: any, idx: number) => (
+              {dictionary?.pacbCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
