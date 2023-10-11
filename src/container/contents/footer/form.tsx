@@ -116,6 +116,12 @@ const FooterWrapper = styled.div`
           font-size: 14px;
           &:first-child {
             margin-right: 10px;
+            white-space: nowrap;
+          };
+          &:last-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       }
