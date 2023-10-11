@@ -29,11 +29,11 @@ function EditableSelect({
     };
   }, []);
 
-  useEffect(() => {
-    if (watch !== undefined) {
-      // onChangeHandler(watch);
-    }
-  }, [watch]);
+  //useEffect(() => {
+  //if (watch !== undefined) {
+  // onChangeHandler(watch);
+  //}
+  //}, [watch]);
 
   const resetField = (text: string) => {
     reset((formValues: any) => ({
@@ -66,7 +66,7 @@ function EditableSelect({
     }
 
     if (e.key === "Enter") {
-      resetField(suggestion[cursor].codeName);
+      suggestion[cursor]?.codeName && resetField(suggestion[cursor]?.codeName);
       setSuggestion([]);
     }
 

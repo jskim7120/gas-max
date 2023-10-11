@@ -246,7 +246,7 @@ function AR1100({
       });
       if (res && Object.keys(res)?.length > 0) {
         setDataDictionary({
-          acbCode: res?.acbCode,
+          acbCode: res?.tsAcbCode,
           tsGubun: res?.tsGubun,
           tsInkumType: res?.tsInkumtype,
           tsPaytype: res?.tsPaytype,
@@ -536,7 +536,7 @@ function AR1100({
         });
         if (res?.detailData && res?.detailData?.length > 0) {
           let detail = res?.detailData[0];
-
+          setGubun(detail.tsGubun);
           if (detail.tsGubun === "0") {
             setDanga(detail?.tsDanga);
             setVatDiv(detail?.tsVatDiv);
