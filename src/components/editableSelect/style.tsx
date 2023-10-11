@@ -59,7 +59,8 @@ export const Editable = styled.div<{ textAlign: string }>`
     text-align: ${(props) =>
       props.textAlign && props.textAlign === "right" && `right`};
 
-    &:hover {
+    &:hover,
+    &:focus {
       background: #fffacd;
     }
   }

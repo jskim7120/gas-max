@@ -154,7 +154,7 @@ const Tab2 = React.forwardRef(
 
     const submit = async (params: any) => {
       const path = isAddBtnClicked ? AR1100CJSALEINSERT : AR1100CJSALEUPDATE;
-
+      params.insertType = "0";
       if (isAddBtnClicked) {
         // if (source === menuId + tabId.toString()) {
         params.areaCode = info?.areaCode;
@@ -212,11 +212,7 @@ const Tab2 = React.forwardRef(
             control={control}
             name="pcDate"
             render={({ field }) => (
-              <CustomDatePicker
-                {...field}
-                readOnly={!isAddBtnClicked}
-                style={{ margin: "1px 0 0 0" }}
-              />
+              <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
             )}
           />
         ),

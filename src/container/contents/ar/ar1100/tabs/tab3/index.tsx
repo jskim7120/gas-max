@@ -116,6 +116,15 @@ const Tab3 = React.forwardRef(
       }
     }, [cm1106.tick]);
 
+    useEffect(() => {
+      if (watch("tsInkumType") !== "2") {
+        reset((formValues) => ({
+          ...formValues,
+          acbCode: "",
+        }));
+      }
+    }, [watch("tsInkumType")]);
+
     const handleQtyChange = (val: string) => {
       setQty(+val);
 
@@ -252,6 +261,8 @@ const Tab3 = React.forwardRef(
         ? AR1100TONGSALEINSERT
         : AR1100TONGSALEUPDATE;
 
+      params.insertType = "0";
+
       if (isAddBtnClicked) {
         // if (source === menuId + tabId.toString()) {
         params.areaCode = info?.areaCode;
@@ -339,6 +350,8 @@ const Tab3 = React.forwardRef(
       2: (
         <FormGroup>
           <Select
+            disabled={!isAddBtnClicked}
+            name="tsGubun"
             value={gubun}
             width={InputSize.i100}
             onChange={(e) => {
@@ -425,6 +438,7 @@ const Tab3 = React.forwardRef(
       ),
       7: (
         <Select
+          name="tsVatDiv"
           value={vatDiv}
           width={InputSize.i100}
           onChange={(e: BaseSyntheticEvent) =>
@@ -540,7 +554,11 @@ const Tab3 = React.forwardRef(
     const t23 = {
       22: (
         <FormGroup>
-          <Select register={register("acbCode")} width={InputSize.i150}>
+          <Select
+            register={register("acbCode")}
+            width={InputSize.i150}
+            disabled={watch("tsInkumType") !== "2"}
+          >
             {dictionary?.acbCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}

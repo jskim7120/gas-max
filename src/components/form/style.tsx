@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEventHandler, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { InputSize, FieldKind } from "components/componentsType";
 import MaskedInput from "react-text-mask";
@@ -134,6 +134,62 @@ interface IInputProps {
   refs?: any;
 }
 
+export const CustomForm = ({
+  autoComplete,
+  onSubmit,
+  noEnter,
+  children,
+  style,
+}: {
+  autoComplete?: string;
+  onSubmit?: FormEventHandler;
+  noEnter?: boolean;
+  children?: any;
+  style?: any;
+}) => {
+  function handleKeyDown(event: any) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const element = event.target;
+      const form = element.form;
+
+      if (form) {
+        const index = Array.prototype.indexOf.call(form, element);
+
+        let cursor = 1;
+        while (form.elements[index + cursor] !== undefined) {
+          if (
+            form.elements[index + cursor].readOnly ||
+            form.elements[index + cursor].disabled
+          ) {
+            cursor += 1;
+          } else {
+            form.elements[index + cursor].focus();
+            break;
+          }
+        }
+      }
+    }
+  }
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  return (
+    <form
+      autoComplete={autoComplete && autoComplete}
+      onSubmit={onSubmit}
+      style={style}
+    >
+      {children}
+    </form>
+  );
+};
+
 export const Input = ({
   type,
   label,
@@ -160,18 +216,6 @@ export const Input = ({
   onKeyDown,
   refs,
 }: IInputProps) => {
-  const handleKeyPress = (event: any) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      const element = event.target;
-      const form = element.form;
-      const index = Array.prototype.indexOf.call(form, element);
-      if (form.elements[index + 1] !== undefined) {
-        form.elements[index + 1].focus();
-      }
-    }
-  };
-
   return (
     <InputWrapper fullWidth={fullWidth}>
       <FormGroup
@@ -205,7 +249,6 @@ export const Input = ({
             maxLength={maxLength}
             type={type ? type : "text"}
             onChange={onChange}
-            onKeyDown={handleKeyPress}
             onFocus={(e) => {
               e.currentTarget.select();
             }}
@@ -229,7 +272,6 @@ export const Input = ({
             readOnly={readOnly}
             onChange={onChange}
             minWidth={minWidth && minWidth}
-            onKeyDown={handleKeyPress}
             onFocus={(e) => {
               e.currentTarget.select();
             }}
@@ -553,23 +595,12 @@ export const Select = ({
   name?: string;
   className?: any;
 }) => {
-  const handleKeyPress = (event: any) => {
-    if (event.key === "Enter") {
-      // event.preventDefault();
-      const element = event.target;
-      const form = element.form;
-      const index = Array.prototype.indexOf.call(form, element);
-      form.elements[index + 1].focus();
-      event.preventDefault();
-    }
-  };
   return (
     <FormSelect
       kind={kind && kind}
       width={width && width}
       fullWidth={fullWidth && fullWidth}
       textAlign={textAlign && textAlign}
-      onKeyDown={handleKeyPress}
       onChange={onChange && onChange}
       name={name && name}
       {...register}

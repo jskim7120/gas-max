@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "app/store";
 import { apiPost } from "app/axios";
 import useModal from "app/hook/useModal";
 import Table from "components/table";
-import { Input, Select, FormGroup } from "components/form/style";
+import { Input, Select, FormGroup, CustomForm } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -97,6 +97,15 @@ const Tab1 = React.forwardRef(
         resetForm("jpName");
       }
     }, [cm1106.tick]);
+
+    useEffect(() => {
+      if (watch("pjInkumtype") !== "2") {
+        //reset((formValues) => ({
+        //          ...formValues,
+        //         pacbCode: "",
+        //      }));
+      }
+    }, [watch("pjInkumtype")]);
 
     const handleQtyChange = (val: number) => {
       setQty(val);
@@ -288,6 +297,7 @@ const Tab1 = React.forwardRef(
 
     const submit = async (params: any) => {
       const path = isAddBtnClicked ? AR1100INSERT : AR1100UPDATE;
+      params.insertType = "0";
 
       if (isAddBtnClicked) {
         // if (source === menuId + tabId.toString()) {
@@ -345,11 +355,7 @@ const Tab1 = React.forwardRef(
           control={control}
           name="pjDate"
           render={({ field }) => (
-            <CustomDatePicker
-              {...field}
-              readOnly={!isAddBtnClicked}
-              style={{ margin: "1px 0 0 0" }}
-            />
+            <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
           )}
         />
       ),
@@ -568,7 +574,11 @@ const Tab1 = React.forwardRef(
         ),
         5: (
           <FormGroup>
-            <Select register={register("pacbCode")} width={InputSize.i150}>
+            <Select
+              register={register("pacbCode")}
+              width={InputSize.i150}
+              disabled={watch("pjInkumtype") !== "2"}
+            >
               {dictionary?.pacbCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -663,7 +673,11 @@ const Tab1 = React.forwardRef(
     return (
       <>
         {showCM1106Modal()}
-        <form autoComplete="off" onSubmit={handleSubmit(submit)}>
+        <CustomForm
+          autoComplete="off"
+          onSubmit={handleSubmit(submit)}
+          noEnter={false}
+        >
           <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
             <div className="tab1">
               <Table
@@ -697,7 +711,7 @@ const Tab1 = React.forwardRef(
               />
             </div>
           </div>
-        </form>
+        </CustomForm>
       </>
     );
   }
