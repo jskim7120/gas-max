@@ -747,6 +747,7 @@ function AR1100({
                   <Input
                     register={register("sCustomer")}
                     inputSize={InputSize.i200}
+                    placeholder="거래처명으로 검색"
                   />
 
                   <Label style={{ minWidth: "202px" }}>사원</Label>
