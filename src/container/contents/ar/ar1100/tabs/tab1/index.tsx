@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "app/store";
 import { apiPost } from "app/axios";
 import useModal from "app/hook/useModal";
 import Table from "components/table";
-import { Input, Select, FormGroup, CustomForm } from "components/form/style";
+import { Input, Select, FormGroup } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -673,11 +673,7 @@ const Tab1 = React.forwardRef(
     return (
       <>
         {showCM1106Modal()}
-        <CustomForm
-          autoComplete="off"
-          onSubmit={handleSubmit(submit)}
-          noEnter={false}
-        >
+        <form autoComplete="off" onSubmit={handleSubmit(submit)}>
           <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
             <div className="tab1">
               <Table
@@ -711,7 +707,7 @@ const Tab1 = React.forwardRef(
               />
             </div>
           </div>
-        </CustomForm>
+        </form>
       </>
     );
   }

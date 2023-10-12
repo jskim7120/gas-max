@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Checked from "assets/image/checked.png";
+import { handleKeyDown } from "helpers/handleKeyDown";
 
 const CheckBoxWrapper = styled.div<{ rtl: boolean; gap?: string }>`
   label {
@@ -93,6 +94,7 @@ function CheckBox(props: {
           {...props.register}
           onChange={props.onChange}
           checked={props.checked && props.checked}
+          onKeyDown={handleKeyDown}
         />
         {props.title && props.title}
       </label>
