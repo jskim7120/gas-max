@@ -60,7 +60,7 @@ const tabSlice = createSlice({
       }
     },
     removeTab: (state, action) => {
-      if (state.tabs.length > 1) {
+      if (state.tabs?.length > 1) {
         state.tabs = state.tabs.filter(
           (tab) => tab.menuId !== action.payload.menuId
         );

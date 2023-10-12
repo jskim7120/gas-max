@@ -437,20 +437,22 @@ const Tab3 = React.forwardRef(
         />
       ),
       7: (
-        <Select
-          name="tsVatDiv"
-          value={vatDiv}
-          width={InputSize.i100}
-          onChange={(e: BaseSyntheticEvent) =>
-            handleVatDivChange(e.target.value)
-          }
-        >
-          {dictionary?.tsVatDiv?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
+        <FormGroup>
+          <Select
+            name="tsVatDiv"
+            value={vatDiv}
+            width={InputSize.i100}
+            onChange={(e: BaseSyntheticEvent) =>
+              handleVatDivChange(e.target.value)
+            }
+          >
+            {dictionary?.tsVatDiv?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
       ),
 
       8: (

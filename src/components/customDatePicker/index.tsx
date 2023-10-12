@@ -22,10 +22,42 @@ function CustomDatePicker({
   name?: string;
   showMonthYearPicker?: boolean;
 }) {
+  function handleKeyDown(event: any) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const element = event.target;
+      const form = element.form;
+
+      if (form) {
+        const index = Array.prototype.indexOf.call(form, element);
+
+        let cursor = 1;
+
+        while (form.elements[index + cursor] !== undefined) {
+          if (
+            form.elements[index + cursor].readOnly ||
+            form.elements[index + cursor].disabled
+          ) {
+            cursor += 1;
+          } else if (
+            form.elements[index + cursor].classList.contains(
+              "react-datepicker__navigation"
+            )
+          ) {
+            cursor += 2;
+          } else {
+            form.elements[index + cursor].focus();
+            break;
+          }
+        }
+      }
+    }
+  }
   return (
     <DatePicker
       readOnly={readOnly}
       onChange={onChange}
+      onKeyDown={handleKeyDown}
       showMonthDropdown
       showYearDropdown
       showMonthYearPicker={showMonthYearPicker && showMonthYearPicker}

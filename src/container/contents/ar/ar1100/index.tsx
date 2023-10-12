@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "app/store";
 import useModal from "app/hook/useModal";
 import useRowIndex from "app/hook/useRowIndex";
 import useGetData from "app/hook/getSimpleData";
+import { addCM1105 } from "app/state/modal/modalSlice";
 import { addSource, removeSearchText } from "app/state/footer/footerSlice";
 import {
   Plus,
@@ -172,23 +173,24 @@ function AR1100({
           saleState: res?.saleState,
           pabcCode: res?.pabcCode,
         });
+        let ddat: any;
+
         if (res?.detailData) {
-          let detail = res?.detailData[0];
-
-          setData65(detail);
-          setJunJaego(detail?.junJaego); // ene irehgui bgaa
-          setQty(detail?.pjQty);
-          setReqty(detail?.pjReqty);
-          setDanga(detail?.pjDanga);
-          setVatDiv(detail?.pjVatDiv);
-          setInkum(detail?.pjInkum);
-          setDc(detail?.pjDc);
-
-          tabRef1.current.reset({ ...detail, pjDate: new Date() });
+          ddat = res?.detailData[0];
+          tabRef1.current.reset({ ...ddat, pjDate: new Date() });
         } else if (res?.initData) {
-          setData65(res?.initData[0]);
-          tabRef1.current.reset({ ...res?.initData[0] });
+          ddat = res?.initData[0];
+          tabRef1.current.reset({ ...ddat });
         }
+
+        setData65(ddat);
+        setJunJaego(ddat?.junJaego ? ddat?.junJaego : 0); // ene irehgui bgaa
+        setQty(ddat?.pjQty);
+        setReqty(ddat?.pjReqty);
+        setDanga(ddat?.pjDanga);
+        setVatDiv(ddat?.pjVatDiv);
+        setInkum(ddat?.pjInkum);
+        setDc(ddat?.pjDc);
       }
     } else if (tabId === 1) {
       const res: any = await fetchData51({
@@ -203,40 +205,36 @@ function AR1100({
           saleState: res?.csaleState,
           pcSwCode: res?.pcSwCode,
         });
-        if (res?.detailData) {
-          let detail = res?.detailData[0];
-          let tempJaego =
-            (detail?.junJaego ? detail?.junJaego : 0) +
-            (detail?.pcQty ? detail?.pcQty : 0) -
-            (detail?.pcReqty ? detail?.pcReqty : 0);
 
-          setData65(detail);
-          setJunJaego(detail?.junJaego);
-          setQty(detail?.pcQty);
-          setReqty(detail?.pcReqty);
-          setDanga(detail?.pcDanga);
+        let ddat: any;
+        if (res?.detailData) {
+          ddat = res?.detailData[0];
+          let tempJaego =
+            (ddat?.junJaego ? ddat?.junJaego : 0) +
+            (ddat?.pcQty ? ddat?.pcQty : 0) -
+            (ddat?.pcReqty ? ddat?.pcReqty : 0);
 
           tabRef2.current.reset({
-            ...detail,
+            ...ddat,
             pcDate: new Date(),
             pcJaego: tempJaego,
           });
         } else if (res?.initData) {
-          let init = res?.initData[0];
+          ddat = res?.initData[0];
 
           let tempJaego =
-            (init?.junJaego ? init?.junJaego : 0) +
-            (init?.pcQty ? init?.pcQty : 0) -
-            (init?.pcReqty ? init?.pcReqty : 0);
+            (ddat?.junJaego ? ddat?.junJaego : 0) +
+            (ddat?.pcQty ? ddat?.pcQty : 0) -
+            (ddat?.pcReqty ? ddat?.pcReqty : 0);
 
-          setJunJaego(init?.junJaego ? init?.junJaego : 0);
-          setQty(init?.pcQty);
-          setReqty(init?.pcReqty);
-          setDanga(init?.pcDanga);
-
-          setData65(init);
-          tabRef2.current.reset({ ...init, pcJaego: tempJaego });
+          tabRef2.current.reset({ ...ddat, pcJaego: tempJaego });
         }
+
+        setData65(ddat);
+        setJunJaego(ddat?.junJaego);
+        setQty(ddat?.pcQty);
+        setReqty(ddat?.pcReqty);
+        setDanga(ddat?.pcDanga);
       }
     } else if (tabId === 2) {
       const res: any = await fetchData61({
@@ -665,6 +663,14 @@ function AR1100({
   };
 
   const onCloseModal = () => {
+    dispatch(
+      addCM1105({
+        areaCode: getValues("areaCode"),
+        cuCode: "",
+        status: "INSERT",
+        source: menuId,
+      })
+    );
     closeCustomerModal();
     openCM1105Modal();
   };

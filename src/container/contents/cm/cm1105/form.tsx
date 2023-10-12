@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "app/store";
 import { apiGet, apiPost } from "app/axios";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
-import { Plus, Update, WhiteClose } from "components/allSvgIcon";
+import { Plus, Update, WhiteClose, Reset } from "components/allSvgIcon";
 import { ICM1105SEARCH, emptyObj } from "./model";
 import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { currencyMask, removeCommas } from "helpers/currency";
@@ -145,8 +145,8 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
   const resetForm = (type: string) => {
     if (type === "clear") {
       fetchCuCode({
-        areaCode: cm1105.areaCode,
-        cuCode: cm1105.cuCode.substring(0, 3),
+        areaCode: cm1105?.areaCode,
+        cuCode: cm1105?.cuCode?.substring(0, 3),
       });
       setFocus("cuName");
     } else if (type === "reset") {
@@ -340,6 +340,10 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
     }
   };
 
+  const handleReset = () => {
+    //alert("취소하시겠습니까?");
+  };
+
   return (
     <form onSubmit={handleSubmit(submit)} autoComplete="off">
       <ModalBlueHeader className="handle h40">
@@ -359,19 +363,30 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
             )}
           />
           <div className="buttons ml30">
-            <Button
-              text="연속등록"
-              icon={<Plus />}
-              type="button"
-              onClick={handleSubmit(submitAgain)}
-              ref={btnRef1}
-            />
-            <Button
-              text="저장"
-              icon={<Update />}
-              color={ButtonColor.SECONDARY}
-              type="submit"
-            />
+            {cm1105?.source === "AR1100" ? (
+              <>
+                <Button
+                  text="저장"
+                  icon={<Update />}
+                  color={ButtonColor.SECONDARY}
+                  type="submit"
+                />
+                <Button
+                  type="button"
+                  text="취소"
+                  icon={<Reset />}
+                  onClick={handleReset}
+                />
+              </>
+            ) : (
+              <Button
+                text="연속등록"
+                icon={<Plus />}
+                type="button"
+                onClick={handleSubmit(submitAgain)}
+                ref={btnRef1}
+              />
+            )}
           </div>
         </FormGroup>
         <FormGroup>
@@ -426,9 +441,10 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
             label="전화번호"
             register={register("cuTel")}
             inputSize={InputSize.i120}
+            type="Number"
           />
-          <Input register={register("cuTel21")} inputSize={InputSize.i150} />
-          <Input register={register("cuTel22")} inputSize={InputSize.i150} />
+          <Input register={register("cuTel21")} inputSize={InputSize.i150} type="Number"/>
+          <Input register={register("cuTel22")} inputSize={InputSize.i150} type="Number"/>
 
           <Label style={{ minWidth: "114px" }}>거래구분</Label>
           <Select register={register("cuType")} width={InputSize.i150}>
@@ -445,21 +461,21 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
             control={control}
             name="cuHp"
             render={({ field }) => (
-              <Input {...field} label="핸드폰" inputSize={InputSize.i120} />
+              <Input {...field} label="핸드폰" inputSize={InputSize.i120} type="Number" />
             )}
           />
           <Controller
             control={control}
             name="cuTel23"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i150} />
+              <Input {...field} inputSize={InputSize.i150} type="Number" />
             )}
           />
           <Controller
             control={control}
             name="cuTel24"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i150} />
+              <Input {...field} inputSize={InputSize.i150} type="Number"/>
             )}
           />
 

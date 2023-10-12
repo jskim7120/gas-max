@@ -117,7 +117,7 @@ const FooterWrapper = styled.div`
           &:first-child {
             margin-right: 10px;
             white-space: nowrap;
-          };
+          }
           &:last-child {
             overflow: hidden;
             text-overflow: ellipsis;
@@ -384,14 +384,19 @@ function Form({
           </span>
         </div>
         <div className="bottom__lower">
-          <Button
-            text="신규거래등록 (F12)"
-            style={{ marginRight: "5px" }}
-            icon={<Plus />}
-            type="button"
-            color={ButtonColor.WARNING}
-            onClick={onClose}
-          />
+          {footerState.source === "AR1100" ? (
+            <Button
+              text="신규거래등록 (F12)"
+              style={{ marginRight: "5px" }}
+              icon={<Plus />}
+              type="button"
+              color={ButtonColor.WARNING}
+              onClick={onClose}
+            />
+          ) : (
+            <div></div>
+          )}
+
           <div className="buttons">
             <Button
               text="선택"
