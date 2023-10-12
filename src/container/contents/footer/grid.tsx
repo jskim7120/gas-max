@@ -41,6 +41,7 @@ function Grid({
     gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
 
+    gv.setFocus(rowIndex);
     gv.displayOptions.useFocusClass = true;
     gv.setCurrent({
       dataRow: rowIndex,
@@ -51,7 +52,23 @@ function Grid({
       setSelected(data[itemIndex]);
     };
 
+    gv.onKeyDown = function (
+      grid: any,
+      key: any,
+      ctrl: any,
+      shift: any,
+      alt: any
+    ) {
+      if (key.code === "Enter") {
+        chooseCurrentData();
+      }
+    };
+
     gv.onCellDblClicked = function (grid: any, e: any) {
+      chooseCurrentData();
+    };
+
+    const chooseCurrentData = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
       handleChoose(data[itemIndex], true);
     };

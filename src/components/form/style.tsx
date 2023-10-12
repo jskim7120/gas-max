@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { InputSize, FieldKind } from "components/componentsType";
 import MaskedInput from "react-text-mask";
 import { MagnifyingGlassBig } from "components/allSvgIcon";
+import { handleKeyDown } from "helpers/handleKeyDown";
 
 export const getInputSize = (size?: InputSize) => {
   switch (size) {
@@ -134,61 +135,70 @@ interface IInputProps {
   refs?: any;
 }
 
-export const CustomForm = ({
-  autoComplete,
-  onSubmit,
-  noEnter,
-  children,
-  style,
-}: {
-  autoComplete?: string;
-  onSubmit?: FormEventHandler;
-  noEnter?: boolean;
-  children?: any;
-  style?: any;
-}) => {
-  function handleKeyDown(event: any) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      const element = event.target;
-      const form = element.form;
+// export const CustomForm = ({
+//   autoComplete,
+//   onSubmit,
+//   noEnter,
+//   children,
+//   style,
+// }: {
+//   autoComplete?: string;
+//   onSubmit?: FormEventHandler;
+//   noEnter?: boolean;
+//   children?: any;
+//   style?: any;
+// }) => {
+//   function handleKeyDown(event: any) {
+//     if (event.key === "Enter") {
+//       event.preventDefault();
+//       const element = event.target;
+//       const form = element.form;
 
-      if (form) {
-        const index = Array.prototype.indexOf.call(form, element);
+//       if (form) {
+//         const index = Array.prototype.indexOf.call(form, element);
 
-        let cursor = 1;
-        while (form.elements[index + cursor] !== undefined) {
-          if (
-            form.elements[index + cursor].readOnly ||
-            form.elements[index + cursor].disabled
-          ) {
-            cursor += 1;
-          } else {
-            form.elements[index + cursor].focus();
-            break;
-          }
-        }
-      }
-    }
-  }
-  useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
+//         let cursor = 1;
 
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+//         while (form.elements[index + cursor] !== undefined) {
+//           if (
+//             form.elements[index + cursor].readOnly ||
+//             form.elements[index + cursor].disabled
+//           ) {
+//             cursor += 1;
+//           } else if (
+//             form.elements[index + cursor].classList.contains(
+//               "react-datepicker__navigation"
+//             )
+//           ) {
+//             cursor += 2;
+//           } else {
+//             form.elements[index + cursor].focus();
+//             break;
+//           }
+//         }
+//       }
+//     }
+//   }
 
-  return (
-    <form
-      autoComplete={autoComplete && autoComplete}
-      onSubmit={onSubmit}
-      style={style}
-    >
-      {children}
-    </form>
-  );
-};
+//   // useEffect(() => {
+//   //   document.addEventListener("keydown", handleKeyDown);
+
+//   //   return () => {
+//   //     document.removeEventListener("keydown", handleKeyDown);
+//   //   };
+//   // }, []);
+
+//   return (
+//     <form
+//       autoComplete={autoComplete && autoComplete}
+//       onSubmit={onSubmit}
+//       onKeyDown={handleKeyDown}
+//       style={style}
+//     >
+//       {children}
+//     </form>
+//   );
+// };
 
 export const Input = ({
   type,
@@ -248,6 +258,7 @@ export const Input = ({
             className={className ? `${className} maskedInput` : "maskedInput"}
             maxLength={maxLength}
             type={type ? type : "text"}
+            onKeyDown={handleKeyDown}
             onChange={onChange}
             onFocus={(e) => {
               e.currentTarget.select();
@@ -270,6 +281,7 @@ export const Input = ({
             kind={kind && kind}
             textAlign={textAlign && textAlign}
             readOnly={readOnly}
+            onKeyDown={handleKeyDown}
             onChange={onChange}
             minWidth={minWidth && minWidth}
             onFocus={(e) => {
@@ -601,6 +613,7 @@ export const Select = ({
       width={width && width}
       fullWidth={fullWidth && fullWidth}
       textAlign={textAlign && textAlign}
+      onKeyDown={handleKeyDown}
       onChange={onChange && onChange}
       name={name && name}
       {...register}
