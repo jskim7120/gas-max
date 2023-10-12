@@ -441,9 +441,10 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
             label="전화번호"
             register={register("cuTel")}
             inputSize={InputSize.i120}
+            type="Number"
           />
-          <Input register={register("cuTel21")} inputSize={InputSize.i150} />
-          <Input register={register("cuTel22")} inputSize={InputSize.i150} />
+          <Input register={register("cuTel21")} inputSize={InputSize.i150} type="Number"/>
+          <Input register={register("cuTel22")} inputSize={InputSize.i150} type="Number"/>
 
           <Label style={{ minWidth: "114px" }}>거래구분</Label>
           <Select register={register("cuType")} width={InputSize.i150}>
@@ -460,21 +461,21 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
             control={control}
             name="cuHp"
             render={({ field }) => (
-              <Input {...field} label="핸드폰" inputSize={InputSize.i120} />
+              <Input {...field} label="핸드폰" inputSize={InputSize.i120} type="Number" />
             )}
           />
           <Controller
             control={control}
             name="cuTel23"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i150} />
+              <Input {...field} inputSize={InputSize.i150} type="Number" />
             )}
           />
           <Controller
             control={control}
             name="cuTel24"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i150} />
+              <Input {...field} inputSize={InputSize.i150} type="Number"/>
             )}
           />
 
