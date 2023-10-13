@@ -266,7 +266,7 @@ export const Input = ({
           />
         ) : (
           <InputForm
-            id={register?.name}
+            id={register?.name ? register?.name : name}
             name={name && name}
             type={type ? type : "text"}
             inputSize={inputSize && inputSize}

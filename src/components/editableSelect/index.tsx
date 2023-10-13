@@ -84,14 +84,16 @@ function EditableSelect({
         let cursor = 1;
 
         while (form.elements[index + cursor] !== undefined) {
-          console.log(form.elements[index + cursor]);
-          if (
-            form.elements[index + cursor].readOnly ||
-            form.elements[index + cursor].disabled
-          ) {
+          const nextElement = form.elements[index + cursor];
+
+          if (nextElement.readOnly || nextElement.disabled) {
             cursor += 1;
           } else {
-            form.elements[index + cursor].focus();
+            if (nextElement.type === "submit") {
+              nextElement.click();
+            } else {
+              nextElement.focus();
+            }
             break;
           }
         }
