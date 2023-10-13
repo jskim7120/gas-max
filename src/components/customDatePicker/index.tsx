@@ -34,19 +34,22 @@ function CustomDatePicker({
         let cursor = 1;
 
         while (form.elements[index + cursor] !== undefined) {
-          if (
-            form.elements[index + cursor].readOnly ||
-            form.elements[index + cursor].disabled
-          ) {
+          console.log(form.elements[index + cursor]);
+
+          const nextElement = form.elements[index + cursor];
+
+          if (nextElement.readOnly || nextElement.disabled) {
             cursor += 1;
           } else if (
-            form.elements[index + cursor].classList.contains(
-              "react-datepicker__navigation"
-            )
+            nextElement.classList.contains("react-datepicker__navigation")
           ) {
             cursor += 2;
           } else {
-            form.elements[index + cursor].focus();
+            if (nextElement.type === "submit") {
+              nextElement.click();
+            } else {
+              nextElement.focus();
+            }
             break;
           }
         }
