@@ -16,7 +16,11 @@ import { useDispatch, useSelector } from "app/store";
 import useModal from "app/hook/useModal";
 import useRowIndex from "app/hook/useRowIndex";
 import useGetData from "app/hook/getSimpleData";
-import { addCM1105 } from "app/state/modal/modalSlice";
+import {
+  addCM1105,
+  addDeleteMenuId,
+  setIsDelete,
+} from "app/state/modal/modalSlice";
 import { addSource, removeSearchText } from "app/state/footer/footerSlice";
 import {
   Plus,
@@ -60,6 +64,7 @@ function AR1100({
     AR1100SEARCH
   );
   const { info, source } = useSelector((state: any) => state.footer);
+  const { delete: deleteState } = useSelector((state) => state.modal);
 
   const dispatch = useDispatch();
   const tabRef1 = useRef() as React.MutableRefObject<any>;
@@ -94,6 +99,11 @@ function AR1100({
     showCustomerModal,
     closeModal: closeCustomerModal,
     openModal: openCustomerModal,
+  } = useModal();
+  const {
+    showDeleteModal,
+    closeModal: closeDeleteModal,
+    openModal: openDeleteModal,
   } = useModal();
 
   const { register, handleSubmit, reset, control, getValues } =
@@ -156,6 +166,12 @@ function AR1100({
     }
   }, [tabId, toggler]);
 
+  useEffect(() => {
+    if (deleteState.menuId === menuId && deleteState.isDelete) {
+      deleteRowGrid();
+    }
+  }, [deleteState.isDelete]);
+
   const onTabChangeonAdd = async () => {
     if (tabId === 0) {
       const res: any = await fetchData41({
@@ -191,6 +207,12 @@ function AR1100({
         setVatDiv(ddat?.pjVatDiv);
         setInkum(ddat?.pjInkum);
         setDc(ddat?.pjDc);
+
+        if (res?.detailData) {
+          document.getElementById("pjQty")?.focus();
+        } else if (res?.initData) {
+          document.getElementById("pjJpCode")?.focus();
+        }
       }
     } else if (tabId === 1) {
       const res: any = await fetchData51({
@@ -235,6 +257,12 @@ function AR1100({
         setQty(ddat?.pcQty);
         setReqty(ddat?.pcReqty);
         setDanga(ddat?.pcDanga);
+
+        if (res?.detailData) {
+          document.getElementById("pcQty")?.focus();
+        } else if (res?.initData) {
+          document.getElementById("pcJpCode")?.focus();
+        }
       }
     } else if (tabId === 2) {
       const res: any = await fetchData61({
@@ -274,23 +302,6 @@ function AR1100({
       }
     }
   };
-
-  // const onTabChangeOnAdd = () => {
-  //dispatch(addSource({ source: menuId + tabId.toString() }));
-  //dispatch(addSource({ source: menuId }));
-  // dispatch(
-  //   addCM1106({
-  //     source: menuId + tabId.toString(),
-  //     jpName: "",
-  //     jpCode: "",
-  //     custIn: 0,
-  //     custOut: 0,
-  //     jcBasicJaego: 0,
-  //     jcJpDanga: 0,
-  //   })
-  // );
-  // fetchData11({ areaCode: getValues("areaCode"), pjType: tabId });
-  // };
 
   const addCodeAndNameToLastRow = (info: any) => {
     if (data?.length > 0) {
@@ -609,8 +620,12 @@ function AR1100({
   };
 
   const handleClickBtnDel = async () => {
-    addBtnUnClick();
+    openDeleteModal();
+    dispatch(addDeleteMenuId({ menuId: menuId }));
+  };
 
+  async function deleteRowGrid() {
+    addBtnUnClick();
     let res = null;
     if (selected) {
       if (selected?.pjType === "0") {
@@ -655,7 +670,10 @@ function AR1100({
       }
       res && handleSubmit((d) => submit(d))();
     }
-  };
+    dispatch(addDeleteMenuId({ menuId: "" }));
+    dispatch(setIsDelete({ isDelete: false }));
+    closeDeleteModal();
+  }
 
   const handleReset = () => {
     resetSearchForm("reset");
@@ -691,6 +709,7 @@ function AR1100({
     <>
       {showCustomerModal({ onClose: onCloseModal })}
       {showCM1105Modal()}
+      {showDeleteModal()}
       <SearchWrapper className="h35">
         <FormGroup>
           {ownAreaCode === "00" && (
