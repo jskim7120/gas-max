@@ -171,7 +171,7 @@ function AR1100({
           proxyType: res?.proxyType,
           pjInkumtype: res?.pjInkumtype,
           saleState: res?.saleState,
-          pabcCode: res?.pabcCode,
+          pacbCode: res?.pacbCode,
         });
         let ddat: any;
 
