@@ -107,33 +107,53 @@ const Tab1 = React.forwardRef(
       }
     }, [watch("pjInkumtype")]);
 
-    const handleQtyChange = (val: number) => {
-      setQty(val);
-      setReqty(val);
-
-      let tempDanga = danga ? +removeCommas(danga, "number") : 0;
-      tempDanga = isNaN(tempDanga) ? 0 : tempDanga;
-
-      const tempKumSup = tempDanga * +val;
+    const calculationOfVat = (price: number, vatDivVal: string) => {
+      let tempKumSup: number = 0;
       let tempKumVat: number = 0;
       let tempKumack: number = 0;
-      let tempMisukum: number = 0;
 
-      if (vatDiv === "0") {
-        tempKumVat = 0;
-        tempKumack = tempKumSup;
-      } else if (vatDiv === "1" || vatDiv === "2") {
-        tempKumVat = Math.round(tempKumSup * 0.1);
+      if (vatDivVal === "0") {
+        tempKumSup = Math.round(price / 1.1);
+        tempKumVat = price - tempKumSup;
+        tempKumack = price;
+      } else if (vatDivVal === "1") {
+        tempKumSup = price;
+        tempKumVat = Math.round(price * 0.1);
         tempKumack = tempKumSup + tempKumVat;
+      } else if (vatDivVal === "2") {
+        tempKumSup = price;
+        tempKumVat = 0;
+        tempKumack = price;
       }
+      return {
+        tempKumSup,
+        tempKumVat,
+        tempKumack,
+      };
+    };
 
+    const calculationOfMisukum = (tempKumack: number) => {
+      let tempMisukum: number = 0;
       let tempInkum: number = inkum ? +removeCommas(inkum, "number") : 0;
       tempInkum = isNaN(tempInkum) ? 0 : tempInkum;
       let tempDc: number = dc ? +removeCommas(dc, "number") : 0;
       tempDc = isNaN(tempDc) ? 0 : tempDc;
 
       tempMisukum = tempKumack - tempInkum - tempDc;
+      return tempMisukum;
+    };
 
+    const handleQtyChange = (val: number) => {
+      setQty(val);
+      setReqty(val);
+      let tempDanga = danga ? +removeCommas(danga, "number") : 0;
+      tempDanga = isNaN(tempDanga) ? 0 : tempDanga;
+      const price = tempDanga * +val;
+      let { tempKumSup, tempKumVat, tempKumack } = calculationOfVat(
+        price,
+        vatDiv
+      );
+      const tempMisukum = calculationOfMisukum(tempKumack);
       reset((formValues) => ({
         ...formValues,
         pjJago: junJaego,
@@ -156,27 +176,12 @@ const Tab1 = React.forwardRef(
     const handleDangaChange = (val: any) => {
       setDanga(val);
       const tempVal = val ? +removeCommas(val, "number") : 0;
-      const tempKumSup = (isNaN(tempVal) ? 0 : tempVal) * qty;
-
-      let tempKumVat: number = 0;
-      let tempKumack: number = 0;
-      let tempMisukum: number = 0;
-
-      if (vatDiv === "0") {
-        tempKumVat = 0;
-        tempKumack = tempKumSup;
-      } else if (vatDiv === "1" || vatDiv === "2") {
-        tempKumVat = Math.round(tempKumSup * 0.1);
-        tempKumack = tempKumSup + tempKumVat;
-      }
-
-      let tempInkum: number = inkum ? +removeCommas(inkum, "number") : 0;
-      tempInkum = isNaN(tempInkum) ? 0 : tempInkum;
-      let tempDc: number = dc ? +removeCommas(dc, "number") : 0;
-      tempDc = isNaN(tempDc) ? 0 : tempDc;
-
-      tempMisukum = tempKumack - tempInkum - tempDc;
-
+      const price = (isNaN(tempVal) ? 0 : tempVal) * qty;
+      let { tempKumSup, tempKumVat, tempKumack } = calculationOfVat(
+        price,
+        vatDiv
+      );
+      const tempMisukum = calculationOfMisukum(tempKumack);
       reset((formValues) => ({
         ...formValues,
         pjKumSup: tempKumSup,
@@ -188,28 +193,14 @@ const Tab1 = React.forwardRef(
 
     const handleChangeVatDiv = (val: string) => {
       setVatDiv(val);
-      let tempKumVat: number = 0;
-      let tempKumack: number = 0;
-      let tempMisukum: number = 0;
-      let tempKumSup: number = getValues("pjKumSup")
-        ? +removeCommas(getValues("pjKumSup"), "number")
-        : 0;
-
-      let tempInkum = inkum ? +removeCommas(inkum, "number") : 0;
-      let tempDc = dc ? +removeCommas(dc, "number") : 0;
-
-      if (val === "0") {
-        tempKumVat = 0;
-        tempKumack = tempKumSup;
-      } else if (val === "1" || val === "2") {
-        tempKumVat = Math.round(tempKumSup * 0.1);
-        tempKumack = tempKumSup + tempKumVat;
-      }
-
-      tempMisukum = tempKumack - tempInkum - tempDc;
+      let tempDanga = danga ? +removeCommas(danga, "number") : 0;
+      const price = (isNaN(tempDanga) ? 0 : tempDanga) * qty;
+      let { tempKumSup, tempKumVat, tempKumack } = calculationOfVat(price, val);
+      const tempMisukum = calculationOfMisukum(tempKumack);
 
       reset((formValues) => ({
         ...formValues,
+        pjKumSup: tempKumSup,
         pjKumVat: tempKumVat,
         pjKumack: tempKumack,
         pjMisukum: tempMisukum,
