@@ -99,11 +99,20 @@ const Tab1 = React.forwardRef(
     }, [cm1106.tick]);
 
     useEffect(() => {
-      if (watch("pjInkumtype") !== "2") {
-        reset((formValues) => ({
-          ...formValues,
-          pacbCode: "",
-        }));
+      if (watch("pjInkumtype") !== undefined) {
+        if (watch("pjInkumtype") === "A") {
+          setInkum(0);
+          setDc(0);
+        } else {
+          setInkum(data65?.pjInkum);
+          setDc(data65?.pjDc);
+        }
+        if (watch("pjInkumtype") !== "2") {
+          reset((formValues) => ({
+            ...formValues,
+            pacbCode: "",
+          }));
+        }
       }
     }, [watch("pjInkumtype")]);
 
