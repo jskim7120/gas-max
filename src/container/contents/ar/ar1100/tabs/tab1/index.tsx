@@ -100,10 +100,10 @@ const Tab1 = React.forwardRef(
 
     useEffect(() => {
       if (watch("pjInkumtype") !== "2") {
-        //reset((formValues) => ({
-        //          ...formValues,
-        //         pacbCode: "",
-        //      }));
+        reset((formValues) => ({
+          ...formValues,
+          pacbCode: "",
+        }));
       }
     }, [watch("pjInkumtype")]);
 
