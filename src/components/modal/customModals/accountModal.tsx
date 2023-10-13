@@ -32,7 +32,7 @@ function AccountModal() {
         className="logoutBtn"
         onClick={() => {
           dispatch(logout());
-          window.location.assign("/login");
+          window.location.assign("/");
         }}
       >
         로그아웃

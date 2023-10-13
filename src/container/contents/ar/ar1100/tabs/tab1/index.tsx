@@ -99,13 +99,34 @@ const Tab1 = React.forwardRef(
     }, [cm1106.tick]);
 
     useEffect(() => {
+      if(watch("pjInkumtype") !== undefined){
+      if(watch("pjInkumtype") === "A"){
+        setInkum(0);
+        setDc(0);
+      }else{
+        setInkum(data65?.pjInkum);
+        setDc(data65?.pjDc);
+      }
       if (watch("pjInkumtype") !== "2") {
         reset((formValues) => ({
           ...formValues,
           pacbCode: "",
         }));
       }
+      
+    }
+    
     }, [watch("pjInkumtype")]);
+
+    // useEffect(() => {
+    //   if(watch("pjInkumtype") === "A"){
+    //     reset((formValues) => ({
+    //       ...formValues,
+    //       pjInkum : 0,
+    //       pjDC : 0
+    //     }));
+    //   }
+    // }, [watch("pjInkumtype")])
 
     const handleQtyChange = (val: number) => {
       setQty(val);
