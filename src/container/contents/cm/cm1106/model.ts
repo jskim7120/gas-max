@@ -8,7 +8,7 @@ export interface ICM1106 {
   jcCuName: string;
   jcDangaType: string;
   jcDangaTypeName: string;
-  jcJdcAmt: string;
+  jcJdcAmt: number;
   jcJdcPer: string;
   jcJpCode: string;
   jcJpDanga: number;
@@ -36,7 +36,7 @@ export const emptyObj = {
   jcCuName: "",
   jcDangaType: "",
   jcDangaTypeName: "",
-  jcJdcAmt: "",
+  jcJdcAmt: 0,
   jcJdcPer: "",
   jcJpCode: "",
   jcJpDanga: 0,

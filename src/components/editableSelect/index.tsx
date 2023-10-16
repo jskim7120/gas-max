@@ -64,41 +64,41 @@ function EditableSelect({
         setCursor(cursor - 1);
       }
     }
-    //huuchin iim baiv
-    // if (e.key === "Enter") {
-    //   suggestion[cursor]?.codeName && resetField(suggestion[cursor]?.codeName);
-    //   setSuggestion([]);
-    // }
 
     if (e.key === "Enter") {
-      e.preventDefault();
       suggestion[cursor]?.codeName && resetField(suggestion[cursor]?.codeName);
       setSuggestion([]);
-
-      const element = e.target;
-      const form = element.form;
-
-      if (form) {
-        const index = Array.prototype.indexOf.call(form, element);
-
-        let cursor = 1;
-
-        while (form.elements[index + cursor] !== undefined) {
-          const nextElement = form.elements[index + cursor];
-
-          if (nextElement.readOnly || nextElement.disabled) {
-            cursor += 1;
-          } else {
-            if (nextElement.type === "submit") {
-              nextElement.click();
-            } else {
-              nextElement.focus();
-            }
-            break;
-          }
-        }
-      }
     }
+
+    // if (e.key === "Enter") {
+    //   e.preventDefault();
+    //   suggestion[cursor]?.codeName && resetField(suggestion[cursor]?.codeName);
+    //   setSuggestion([]);
+
+    //   const element = e.target;
+    //   const form = element.form;
+
+    //   if (form) {
+    //     const index = Array.prototype.indexOf.call(form, element);
+
+    //     let cursor = 1;
+
+    //     while (form.elements[index + cursor] !== undefined) {
+    //       const nextElement = form.elements[index + cursor];
+
+    //       if (nextElement.readOnly || nextElement.disabled) {
+    //         cursor += 1;
+    //       } else {
+    //         if (nextElement.type === "submit") {
+    //           nextElement.click();
+    //         } else {
+    //           nextElement.focus();
+    //         }
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
 
     if (e.key === "Escape") {
       setSuggestion([]);
