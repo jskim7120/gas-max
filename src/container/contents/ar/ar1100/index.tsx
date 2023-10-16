@@ -135,7 +135,7 @@ function AR1100({
         setTabId(Number(selected?.pjType));
       }
 
-      if (selected.areaCode && selected.cuCode) {
+      if (selected?.areaCode && selected?.cuCode) {
         setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
       }
 
