@@ -49,6 +49,7 @@ import { IAR1100SEARCH, emtObj } from "./model";
 import { emtObjTab1 } from "./tabs/tab1/model";
 import { emtObjTab2 } from "./tabs/tab2/model";
 import { emtObjTab3 } from "./tabs/tab3/model";
+import { emtObjTab4 } from "./tabs/tab4/model";
 import getTabContent from "./getTabContent";
 import Grid from "./grid";
 
@@ -417,6 +418,8 @@ function AR1100({
           tabRef2.current.reset(emtObjTab2);
         } else if (tabId === 2) {
           tabRef2.current.reset(emtObjTab3);
+        } else if (tabId === 3) {
+          tabRef2.current.reset(emtObjTab4);
         }
       }
     }
