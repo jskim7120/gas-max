@@ -35,11 +35,11 @@ export const fields = [
   },
   {
     fieldName: "qty",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "reqty",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "swName",
@@ -93,9 +93,8 @@ export const columns = [
       text: "접수일자",
     },
     footer: {
-      valueCallback: function (grid: any) {
-        return grid.getSummary("orderDate", "count");
-      },
+      numberFormat: "#,##0",
+      expression: "count",
     },
   },
   {
@@ -182,8 +181,13 @@ export const columns = [
     type: "data",
     width: "60",
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
     header: {
       text: "납품",
+    },
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
     },
   },
   {
@@ -192,8 +196,13 @@ export const columns = [
     type: "data",
     width: "60",
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
     header: {
       text: "회수",
+    },
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
     },
   },
 
@@ -207,6 +216,10 @@ export const columns = [
       text: "VAT",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "kumack",
@@ -218,6 +231,10 @@ export const columns = [
       text: "금액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "dc",
@@ -229,6 +246,10 @@ export const columns = [
       text: "D/C",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "inkum",
@@ -240,6 +261,10 @@ export const columns = [
       text: "입금액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "misukum",
@@ -251,6 +276,10 @@ export const columns = [
       text: "미입금액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "inkumtypeName",
