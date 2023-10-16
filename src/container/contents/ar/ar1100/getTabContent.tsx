@@ -138,9 +138,6 @@ function getTabContent(
     case 5:
       //   return <Tab3 data={data} />;
       return <>6</>;
-    case 6:
-      //   return <Tab3 data={data} />;
-      return <>7</>;
   }
   return null;
 }

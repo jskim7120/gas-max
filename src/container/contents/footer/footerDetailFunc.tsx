@@ -41,21 +41,6 @@ const setFooterDetail = async (
     tTransYn: "",
   };
 
-  // try {
-  //   const res = await API.get(FOOTDETAIL, {
-  //     params: { areaCode: areaCode, sCuCode: sCuCode },
-  //   });
-
-  //   if (res.data && res.data?.length > 0) {
-  //     dispatch(addInfo({ info: res.data[0] }));
-  //   } else {
-  //     dispatch(addInfo({ info: emptyFooterObj }));
-  //   }
-  // } catch (err) {
-  //   dispatch(addInfo({ info: emptyFooterObj }));
-  //   console.log("fetch footer detail err:::", err);
-  // }
-
   const response = await apiGet(FOOTDETAIL, {
     areaCode: areaCode,
     sCuCode: sCuCode,

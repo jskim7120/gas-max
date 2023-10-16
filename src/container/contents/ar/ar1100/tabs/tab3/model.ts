@@ -28,3 +28,17 @@ export interface IAR1100TAB3 {
   //tsBkum: number;
   //tsBoutkum: number;
 }
+
+export const emtObjTab3 = {
+  saleState: "",
+  tsDate: "",
+  tsJpCode: "",
+  tsJpName: "",
+  tsTongGubun: "",
+  tsInkumType: "",
+  acbCode: "",
+  tsSwCode: "",
+  tsBigo: "",
+  signUser: "",
+  tsPaytype: "",
+};

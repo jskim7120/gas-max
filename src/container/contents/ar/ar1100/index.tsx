@@ -22,6 +22,7 @@ import {
   setIsDelete,
 } from "app/state/modal/modalSlice";
 import { addSource, removeSearchText } from "app/state/footer/footerSlice";
+import setFooterDetail from "container/contents/footer/footerDetailFunc";
 import {
   Plus,
   Trash,
@@ -42,6 +43,8 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { fields, columns } from "./data";
 import { IAR1100SEARCH, emtObj } from "./model";
 import { emtObjTab1 } from "./tabs/tab1/model";
+import { emtObjTab2 } from "./tabs/tab2/model";
+import { emtObjTab3 } from "./tabs/tab3/model";
 import getTabContent from "./getTabContent";
 import Grid from "./grid";
 
@@ -122,20 +125,21 @@ function AR1100({
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
-      /*
-      setData((prevState) =>
-        prevState?.filter((item: any) => {
-          return true;
-        })
-      );
-      */
+      if (isAddBtnClicked) {
+        removeEmptyRow();
+      }
+
+      addBtnUnClick();
 
       if (selected?.pjType && Number(selected?.pjType) !== tabId) {
         setTabId(Number(selected?.pjType));
       }
 
+      if (selected.areaCode && selected.cuCode) {
+        setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
+      }
+
       if (selected?.pjDate && selected?.areaCode) {
-        addBtnUnClick();
         fetchData65({
           areaCode: selected?.areaCode,
           pjCuCode: selected?.cuCode,
@@ -150,11 +154,15 @@ function AR1100({
   useEffect(() => {
     if (source === menuId) {
       if (info) {
-        addCodeAndNameToLastRow(info);
-        if (info?.cuType === "0") {
-          tabId !== 0 ? setTabId(0) : setToggler((prev) => !prev);
+        if (Object.keys(info)?.length === 0) {
+          removeEmptyRow();
         } else {
-          tabId !== 1 ? setTabId(1) : setToggler((prev) => !prev);
+          addCodeAndNameToLastRow(info);
+          if (info?.cuType === "0") {
+            tabId !== 0 ? setTabId(0) : setToggler((prev) => !prev);
+          } else {
+            tabId !== 1 ? setTabId(1) : setToggler((prev) => !prev);
+          }
         }
       }
     }
@@ -368,6 +376,45 @@ function AR1100({
     } else {
       setRowIndex(menuId, 0, 0);
       setData((prev) => [...prev, { ...emtObj, ...obj }]);
+    }
+  };
+
+  const removeEmptyRow = () => {
+    if (data && data?.length > 0 && "isNew" in data[data?.length - 1]) {
+      setData((prev: any) =>
+        prev.filter((obj: any, idx: number) => {
+          if (idx === data?.length - 1) {
+            return false;
+          }
+          return true;
+        })
+      );
+
+      addBtnUnClick();
+      setQty(0);
+      setReqty(0);
+      setDanga(0);
+      setVatDiv("0");
+      setInkum(0);
+      setDc(0);
+
+      if (data?.length > 2) {
+        setSelected(data[data?.length - 2]);
+        setRowIndex(menuId, 0, data?.length - 2);
+      } else if (data?.length > 1) {
+        setSelected(data[0]);
+        setRowIndex(menuId, 0, 0);
+      } else if (data?.length > 0) {
+        setSelected({});
+        setRowIndex(menuId, 0, 0);
+        if (tabId === 0) {
+          tabRef1.current.reset(emtObjTab1);
+        } else if (tabId === 1) {
+          tabRef2.current.reset(emtObjTab2);
+        } else if (tabId === 2) {
+          tabRef2.current.reset(emtObjTab3);
+        }
+      }
     }
   };
 
@@ -965,8 +1012,7 @@ function AR1100({
             "중량 판매",
             "체적 공급",
             "용기 입출",
-            "부품 판매",
-            "시설 판매",
+            "시설 부품 판매",
             "A/S",
             "수금",
           ]}
