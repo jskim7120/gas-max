@@ -39,7 +39,11 @@ import CheckBox from "components/checkbox";
 import PlainTab from "components/plainTab";
 import { TabContentWrapper } from "components/plainTab/style";
 import { WrapperContent, SearchWrapper } from "../../commonStyle";
-import { DateWithoutDash } from "helpers/dateFormat";
+import {
+  DateWithoutDash,
+  dateToTimestamp,
+  getPreviousMonthDate,
+} from "helpers/dateFormat";
 import { fields, columns } from "./data";
 import { IAR1100SEARCH, emtObj } from "./model";
 import { emtObjTab1 } from "./tabs/tab1/model";
@@ -653,8 +657,15 @@ function AR1100({
   const submit = async (d: any, pos: string = "") => {
     addBtnUnClick();
     const params = getValues();
-    prepareParamsForSearch(params);
-    fetchData(params, pos);
+    const date = dateToTimestamp(getPreviousMonthDate(params.dDate));
+    const sDate = dateToTimestamp(DateWithoutDash(params.sDate));
+    const dDate = dateToTimestamp(DateWithoutDash(params.dDate));
+    if (sDate >= date && date <= dDate) {
+      prepareParamsForSearch(params);
+      fetchData(params, pos);
+    } else {
+      alert("한 달 이내에 검색 가능합니다.");
+    }
   };
 
   const handleClickBtnAdd = () => {

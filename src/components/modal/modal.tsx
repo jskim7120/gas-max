@@ -93,7 +93,11 @@ function Popup({
   onClose?: MouseEventHandler;
 }) {
   const modalClose = () => {
-    if (type !== "customerModal" && type !== "delModal") {
+    if (
+      type !== "customerModal" &&
+      type !== "delModal" &&
+      type !== "cm1105Modal"
+    ) {
       setIsOpen(false);
     }
   };
