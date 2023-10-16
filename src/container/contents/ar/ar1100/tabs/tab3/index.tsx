@@ -4,7 +4,11 @@ import React, {
   useImperativeHandle,
 } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { AR1100TONGSALEINSERT, AR1100TONGSALEUPDATE } from "app/path";
+import {
+  AR1100TONGSALEINSERT,
+  AR1100TONGSALEUPDATE,
+  AR1100SANGPUM,
+} from "app/path";
 import { useSelector, useDispatch } from "app/store";
 import useModal from "app/hook/useModal";
 import { addCM1106Second } from "app/state/modal/modalSlice";
@@ -12,7 +16,7 @@ import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
 import { Reset, Update } from "components/allSvgIcon";
 import Table from "components/table";
-import { Input, Select, FormGroup } from "components/form/style";
+import { Input, Select, FormGroup, CustomForm } from "components/form/style";
 import { InputSize } from "components/componentsType";
 import CustomDatePicker from "components/customDatePicker";
 import EditableSelect from "components/editableSelect";
@@ -31,7 +35,7 @@ import {
 } from "./tableHeader";
 import { IAR1100TAB3 } from "./model";
 import { DateWithoutDash } from "helpers/dateFormat";
-import { apiPost } from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 
 const Tab3 = React.forwardRef(
   (
@@ -255,6 +259,36 @@ const Tab3 = React.forwardRef(
         resetForm("reset");
       }
     };
+    async function handleKeyDown(event: any) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+
+        const res = await fetchDataSangpum({
+          areaCode: cm1106?.areaCode,
+          cuCode: cm1106?.cuCode,
+          jpCode: event.target.value,
+          pjType: 1,
+        });
+
+        if (Object.keys(res)?.length > 0) {
+          setDanga(res[0]?.jcJpDanga);
+          handleDangaChange(res[0]?.jcJpDanga);
+          reset((formValues) => ({
+            ...formValues,
+            tsJpName: res[0]?.jcJpName,
+          }));
+
+          document.getElementById("tsJpCode")?.focus();
+        } else {
+          openPopupCM1106();
+        }
+      }
+    }
+
+    const fetchDataSangpum = async (params: any) => {
+      const res = await apiGet(AR1100SANGPUM, params);
+      return res;
+    };
 
     const submit = async (params: any) => {
       const path = isAddBtnClicked
@@ -371,7 +405,7 @@ const Tab3 = React.forwardRef(
           <Input
             register={register("tsJpCode")}
             inputSize={InputSize.i70}
-            //readOnly={!isAddBtnClicked}
+            onKeyDown={handleKeyDown}
           />
           <Controller
             control={control}
@@ -659,7 +693,7 @@ const Tab3 = React.forwardRef(
       <>
         {showCM1106Modal()}
 
-        <form autoComplete="off" onSubmit={handleSubmit(submit)}>
+        <CustomForm autoComplete="off" onSubmit={handleSubmit(submit)}>
           <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
             <div>
               <Table
@@ -695,7 +729,7 @@ const Tab3 = React.forwardRef(
               />
             </div>
           </div>
-        </form>
+        </CustomForm>
       </>
     );
   }

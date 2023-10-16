@@ -4,12 +4,12 @@ import React, {
   BaseSyntheticEvent,
 } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { AR1100INSERT, AR1100UPDATE } from "app/path";
+import { AR1100INSERT, AR1100UPDATE, AR1100SANGPUM } from "app/path";
 import { useDispatch, useSelector } from "app/store";
-import { apiPost } from "app/axios";
+import { apiGet, apiPost } from "app/axios";
 import useModal from "app/hook/useModal";
 import Table from "components/table";
-import { Input, Select, FormGroup } from "components/form/style";
+import { Input, Select, FormGroup, CustomForm } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -88,7 +88,6 @@ const Tab1 = React.forwardRef(
 
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const { info, source } = useSelector((state: any) => state.footer);
-
     const { showCM1106Modal, openModal } = useModal();
 
     useEffect(() => {
@@ -246,6 +245,37 @@ const Tab1 = React.forwardRef(
       }));
     };
 
+    async function handleKeyDown(event: any) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+
+        const res = await fetchDataSangpum({
+          areaCode: cm1106?.areaCode,
+          cuCode: cm1106?.cuCode,
+          jpCode: event.target.value,
+          pjType: 0,
+        });
+
+        if (Object.keys(res)?.length > 0) {
+          setDanga(res[0]?.jcJpDanga);
+          handleDangaChange(res[0]?.jcJpDanga);
+          reset((formValues) => ({
+            ...formValues,
+            pjJpName: res[0]?.jcJpName,
+          }));
+
+          document.getElementById("pjQty")?.focus();
+        } else {
+          openPopupCM1106();
+        }
+      }
+    }
+
+    const fetchDataSangpum = async (params: any) => {
+      const res = await apiGet(AR1100SANGPUM, params);
+      return res;
+    };
+
     const resetForm = (type: string) => {
       if (type === "reset") {
         setJunJaego(data65?.junJaego);
@@ -365,6 +395,7 @@ const Tab1 = React.forwardRef(
             register={register("pjJpCode")}
             inputSize={InputSize.i70}
             readOnly={!isAddBtnClicked}
+            onKeyDown={handleKeyDown}
           />
           <Controller
             control={control}
@@ -673,7 +704,7 @@ const Tab1 = React.forwardRef(
     return (
       <>
         {showCM1106Modal()}
-        <form autoComplete="off" onSubmit={handleSubmit(submit)}>
+        <CustomForm autoComplete="off" onSubmit={handleSubmit(submit)}>
           <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
             <div className="tab1">
               <Table
@@ -707,7 +738,7 @@ const Tab1 = React.forwardRef(
               />
             </div>
           </div>
-        </form>
+        </CustomForm>
       </>
     );
   }

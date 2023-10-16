@@ -1,11 +1,15 @@
 import React, { useEffect, useImperativeHandle } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { AR1100CJSALEINSERT, AR1100CJSALEUPDATE } from "app/path";
-import { apiPost } from "app/axios";
+import {
+  AR1100CJSALEINSERT,
+  AR1100CJSALEUPDATE,
+  AR1100SANGPUM,
+} from "app/path";
+import { apiGet, apiPost } from "app/axios";
 import { useDispatch, useSelector } from "app/store";
 import useModal from "app/hook/useModal";
 import Table from "components/table";
-import { Input, Select, FormGroup } from "components/form/style";
+import { Input, Select, FormGroup, CustomForm } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -152,6 +156,37 @@ const Tab2 = React.forwardRef(
       }
     };
 
+    async function handleKeyDown(event: any) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+
+        const res = await fetchDataSangpum({
+          areaCode: cm1106?.areaCode,
+          cuCode: cm1106?.cuCode,
+          jpCode: event.target.value,
+          pjType: 1,
+        });
+
+        if (Object.keys(res)?.length > 0) {
+          setDanga(res[0]?.jcJpDanga);
+          handleDangaChange(res[0]?.jcJpDanga);
+          reset((formValues) => ({
+            ...formValues,
+            pcJpName: res[0]?.jcJpName,
+          }));
+
+          document.getElementById("pcQty")?.focus();
+        } else {
+          openPopupCM1106();
+        }
+      }
+    }
+
+    const fetchDataSangpum = async (params: any) => {
+      const res = await apiGet(AR1100SANGPUM, params);
+      return res;
+    };
+
     const submit = async (params: any) => {
       const path = isAddBtnClicked ? AR1100CJSALEINSERT : AR1100CJSALEUPDATE;
       params.insertType = "0";
@@ -222,6 +257,7 @@ const Tab2 = React.forwardRef(
               register={register("pcJpCode")}
               inputSize={InputSize.i70}
               readOnly={!isAddBtnClicked}
+              onKeyDown={handleKeyDown}
             />
             <Controller
               control={control}
@@ -425,7 +461,7 @@ const Tab2 = React.forwardRef(
     return (
       <>
         {showCM1106Modal()}
-        <form autoComplete="off" onSubmit={handleSubmit(submit)}>
+        <CustomForm autoComplete="off" onSubmit={handleSubmit(submit)}>
           <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
             <div className="tab1">
               <Table
@@ -472,7 +508,7 @@ const Tab2 = React.forwardRef(
               />
             </div>
           </div>
-        </form>
+        </CustomForm>
       </>
     );
   }

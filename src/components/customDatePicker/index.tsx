@@ -60,7 +60,8 @@ function CustomDatePicker({
     <DatePicker
       readOnly={readOnly}
       onChange={onChange}
-      onKeyDown={handleKeyDown}
+      // onKeyDown={handleKeyDown}
+
       showMonthDropdown
       showYearDropdown
       showMonthYearPicker={showMonthYearPicker && showMonthYearPicker}

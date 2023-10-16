@@ -258,7 +258,8 @@ export const Input = ({
             className={className ? `${className} maskedInput` : "maskedInput"}
             maxLength={maxLength}
             type={type ? type : "text"}
-            onKeyDown={handleKeyDown}
+            //onKeyDown={handleKeyDown}
+            onKeyDown={onKeyDown}
             onChange={onChange}
             onFocus={(e) => {
               e.currentTarget.select();
@@ -281,7 +282,8 @@ export const Input = ({
             kind={kind && kind}
             textAlign={textAlign && textAlign}
             readOnly={readOnly}
-            onKeyDown={handleKeyDown}
+            //onKeyDown={handleKeyDown}
+            onKeyDown={onKeyDown}
             onChange={onChange}
             minWidth={minWidth && minWidth}
             onFocus={(e) => {
@@ -916,3 +918,52 @@ export const NumberInputForm = styled.input<{
     background: #ebeae6;
   }
 `;
+
+export const CustomForm = ({
+  children,
+  autoComplete,
+  onSubmit,
+}: {
+  children?: any;
+  autoComplete?: string;
+  onSubmit?: FormEventHandler;
+}) => {
+  function handleKeyDown(event: any) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const element = event.target;
+      const form = element.form;
+
+      if (form) {
+        const index = Array.prototype.indexOf.call(form, element);
+
+        let cursor = 1;
+
+        while (form.elements[index + cursor] !== undefined) {
+          const nextElement = form.elements[index + cursor];
+
+          if (nextElement.readOnly || nextElement.disabled) {
+            cursor += 1;
+          } else {
+            if (nextElement.type === "submit") {
+              nextElement.click();
+            } else {
+              nextElement.focus();
+            }
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  return (
+    <form
+      onKeyDown={handleKeyDown}
+      autoComplete={autoComplete}
+      onSubmit={onSubmit && onSubmit}
+    >
+      {children}
+    </form>
+  );
+};

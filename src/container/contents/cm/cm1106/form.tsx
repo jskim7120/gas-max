@@ -12,8 +12,7 @@ import {
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { SearchBtn } from "components/daum";
 import { InputSize } from "components/componentsType";
-import { currencyMask } from "helpers/currency";
-import { formatCurrencyRemoveComma } from "helpers/currency";
+import { currencyMask, removeCommas } from "helpers/currency";
 import { ICM1106, emptyObj } from "./model";
 
 const FORMCM1106 = React.forwardRef(
@@ -76,8 +75,8 @@ const FORMCM1106 = React.forwardRef(
       const formValues = getValues();
       isAddBtnClicked && (formValues.areaCode = areaCode);
 
-      formValues.jcJdcAmt = formatCurrencyRemoveComma(formValues.jcJdcAmt);
-      formValues.jcJpDanga = formatCurrencyRemoveComma(formValues.jcJpDanga);
+      formValues.jcJdcAmt = +removeCommas(formValues.jcJdcAmt, "string");
+      formValues.jcJpDanga = +removeCommas(formValues.jcJpDanga, "number");
 
       const res = await apiPost(path, formValues, "저장이 성공하였습니다");
     };
