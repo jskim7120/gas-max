@@ -350,7 +350,7 @@ const Tab3 = React.forwardRef(
       2: (
         <FormGroup>
           <Select
-            disabled={!isAddBtnClicked}
+            //disabled={!isAddBtnClicked}
             name="tsGubun"
             value={gubun}
             width={InputSize.i100}
@@ -371,13 +371,16 @@ const Tab3 = React.forwardRef(
           <Input
             register={register("tsJpCode")}
             inputSize={InputSize.i70}
-            readOnly={!isAddBtnClicked}
+            //readOnly={!isAddBtnClicked}
           />
           <Controller
             control={control}
             name="tsJpName"
             render={({ field }) => (
-              <Input {...field} readOnly={!isAddBtnClicked} />
+              <Input
+                {...field}
+                // readOnly={!isAddBtnClicked}
+              />
             )}
           />
 

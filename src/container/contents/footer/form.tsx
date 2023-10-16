@@ -273,6 +273,7 @@ function Form({
   };
 
   const handleCancel = () => {
+    dispatch(addInfo({ info: {} }));
     setIsOpen(false);
   };
 

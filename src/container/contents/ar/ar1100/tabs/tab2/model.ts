@@ -18,3 +18,21 @@ export interface IAR1100TAB2 {
   junJaego: number;
   signuser: string;
 }
+
+export const emtObjTab2 = {
+  saleState: "",
+  pcDate: "",
+  pcJpCode: "",
+  pcJpName: "",
+  pcReqty: "",
+  pcJaego: 0,
+  pcKumack: 0,
+  pcGum: "",
+  pcSwCode: "",
+  pcSwName: "",
+  pcBigo: "",
+  proxyType: "",
+  cBuCode: "",
+  cBuName: "",
+  signuser: "",
+};
