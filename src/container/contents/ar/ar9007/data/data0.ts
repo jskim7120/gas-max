@@ -113,6 +113,10 @@ export const columns0 = [
       text: "수량",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "cuTongKum",
@@ -124,6 +128,10 @@ export const columns0 = [
       text: "대여보증금",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "jcLastdate5",

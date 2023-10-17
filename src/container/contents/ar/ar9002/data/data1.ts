@@ -19,7 +19,7 @@ export const fields1 = [
   },
   {
     fieldName: "pcQty",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "pcDanga",
@@ -94,6 +94,11 @@ export const columns1 = [
       text: "수량",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pcDanga",
@@ -105,6 +110,10 @@ export const columns1 = [
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pcKumack",
@@ -116,6 +125,10 @@ export const columns1 = [
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pcDate",

@@ -126,6 +126,10 @@ export const columns0 = [
       text: "전월미수",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "gjKumack",
@@ -137,6 +141,10 @@ export const columns0 = [
       text: "사용료",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "gjAnkum",
@@ -148,6 +156,10 @@ export const columns0 = [
       text: "관리비",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "gjDc",
@@ -159,6 +171,10 @@ export const columns0 = [
       text: "할인액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "gjPerkum",
@@ -170,6 +186,10 @@ export const columns0 = [
       text: "연체료",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "gjTotal",
@@ -181,6 +201,10 @@ export const columns0 = [
       text: "당월금액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "gsKumack",
@@ -192,6 +216,10 @@ export const columns0 = [
       text: "수금액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "gsDc",
@@ -203,6 +231,10 @@ export const columns0 = [
       text: "D/C",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "dangmisu",
@@ -214,6 +246,10 @@ export const columns0 = [
       text: "당월미수",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "rowchk",

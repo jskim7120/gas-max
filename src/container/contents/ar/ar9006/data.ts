@@ -27,11 +27,11 @@ export const fields = [
   },
   {
     fieldName: "tsInqty",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "tsOutqty",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "tsKumack",
@@ -142,6 +142,11 @@ export const columns = [
     header: {
       text: "입고",
     },
+    numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "tsOutqty",
@@ -151,6 +156,11 @@ export const columns = [
     styleName: "rg-right-column",
     header: {
       text: "출고",
+    },
+    numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
     },
   },
   {
@@ -163,6 +173,10 @@ export const columns = [
       text: "판매액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "tsBkum",
@@ -174,6 +188,10 @@ export const columns = [
       text: "보증금",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "tsInkum",
@@ -185,6 +203,10 @@ export const columns = [
       text: "입금액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "tsDc",
@@ -196,6 +218,10 @@ export const columns = [
       text: " D/C",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "tsMisu",
@@ -207,6 +233,10 @@ export const columns = [
       text: "미수액 ",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "tsGukum",
@@ -218,6 +248,10 @@ export const columns = [
       text: "구입액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "tsBoutkum",
@@ -229,6 +263,10 @@ export const columns = [
       text: "환불액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "tsSwName",
