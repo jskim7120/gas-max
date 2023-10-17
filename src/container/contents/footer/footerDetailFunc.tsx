@@ -47,12 +47,20 @@ const setFooterDetail = async (
   });
 
   if (response && response?.length > 0) {
-    dispatch(addInfo({ info: response[0] }));
+    await dispatch(addInfo({ info: response[0] }));
   } else {
-    dispatch(addInfo({ info: emptyFooterObj }));
+    await dispatch(addInfo({ info: {} }));
   }
 
   return null;
+};
+
+export const fetchFooterData = async (areaCode: string, cuCode: string) => {
+  const res = await apiGet(FOOTDETAIL, {
+    areaCode: areaCode,
+    sCuCode: cuCode,
+  });
+  return Object.keys(res)?.length > 0 ? res[0] : {};
 };
 
 export default setFooterDetail;
