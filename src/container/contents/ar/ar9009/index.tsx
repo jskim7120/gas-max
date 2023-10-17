@@ -56,7 +56,7 @@ function AR9009({
 
   useEffect(() => {
     if (tabId !== undefined) {
-      // setData([]);
+      setData([]);
     }
   }, [tabId]);
 
