@@ -23,7 +23,7 @@ export const fields0 = [
   },
   {
     fieldName: "pcQty",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "pcDanga",
@@ -35,11 +35,11 @@ export const fields0 = [
   },
   {
     fieldName: "pcGum",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "pcGage",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "pcBigo",
@@ -114,6 +114,11 @@ export const columns0 = [
       text: "수량",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pcDanga",
@@ -125,6 +130,10 @@ export const columns0 = [
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pcKumack",
@@ -136,6 +145,10 @@ export const columns0 = [
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pcGum",
@@ -146,6 +159,11 @@ export const columns0 = [
       text: "배달검침",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pcGage",
@@ -156,6 +174,11 @@ export const columns0 = [
       text: "사용량",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pcBigo",

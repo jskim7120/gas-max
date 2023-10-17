@@ -109,6 +109,10 @@ export const columns3 = [
       text: "수량",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "jcLastdate5",
