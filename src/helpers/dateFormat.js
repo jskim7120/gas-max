@@ -141,9 +141,9 @@ export function dateToTimestamp(dateString) {
 
   console.log(typeof dateString, "this is what i recieved on");
 
-  const year = parseInt(dateString.substr(0, 4), 10);
-  const month = parseInt(dateString.substr(4, 2) - 1, 10); // Months are 0-based (0 = January)
-  const day = parseInt(dateString.substr(6, 2), 10);
+  const year = parseInt(dateString?.substr(0, 4), 10);
+  const month = parseInt(dateString?.substr(4, 2) - 1, 10); // Months are 0-based (0 = January)
+  const day = parseInt(dateString?.substr(6, 2), 10);
 
   // Create a Date object from the parsed components
   const date = new Date(year, month, day);
@@ -155,9 +155,9 @@ export function dateToTimestamp(dateString) {
 
 export function getPreviousMonthDate(dateString) {
   // Parse the "yyyyMMdd" format date string
-  const year = parseInt(dateString.substr(0, 4), 10);
-  const month = parseInt(dateString.substr(4, 2), 10) - 1; // Subtract 1 to use 0-based months
-  const day = parseInt(dateString.substr(6, 2), 10);
+  const year = parseInt(dateString?.substr(0, 4), 10);
+  const month = parseInt(dateString?.substr(4, 2), 10) - 1; // Subtract 1 to use 0-based months
+  const day = parseInt(dateString?.substr(6, 2), 10);
 
   // Create a Date object using the parsed values
   const date = new Date(year, month, day);

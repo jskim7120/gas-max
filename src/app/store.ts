@@ -12,6 +12,7 @@ import authReducer from "app/state/auth/authSlice";
 import { commonGubunApi } from "app/api/commonGubun";
 import { authApi, reLoginApi } from "app/api/auth";
 import { commonDictionaryApi } from "app/api/commonDictionary";
+import { footerApi } from "app/api/footer";
 
 export const store = configureStore({
   reducer: {
@@ -25,13 +26,15 @@ export const store = configureStore({
     [reLoginApi.reducerPath]: reLoginApi.reducer,
     [commonGubunApi.reducerPath]: commonGubunApi.reducer,
     [commonDictionaryApi.reducerPath]: commonDictionaryApi.reducer,
+    [footerApi.reducerPath]: footerApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(authApi.middleware)
       .concat(reLoginApi.middleware)
       .concat(commonGubunApi.middleware)
-      .concat(commonDictionaryApi.middleware),
+      .concat(commonDictionaryApi.middleware)
+      .concat(footerApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;
