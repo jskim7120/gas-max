@@ -13,6 +13,7 @@ import {
   AR1100TONGSALEDELETE,
 } from "app/path";
 import { useDispatch, useSelector } from "app/store";
+import { useGetFooterInfoQuery } from "app/api/footer";
 import useModal from "app/hook/useModal";
 import useRowIndex from "app/hook/useRowIndex";
 import useGetData from "app/hook/getSimpleData";
@@ -21,8 +22,11 @@ import {
   addDeleteMenuId,
   setIsDelete,
 } from "app/state/modal/modalSlice";
-import { addSource, removeSearchText } from "app/state/footer/footerSlice";
-import setFooterDetail from "container/contents/footer/footerDetailFunc";
+import {
+  addSource,
+  removeSearchText,
+  addInfo,
+} from "app/state/footer/footerSlice";
 import {
   Plus,
   Trash,
@@ -114,6 +118,11 @@ function AR1100({
     openModal: openDeleteModal,
   } = useModal();
 
+  const { data: footerInfoData } = useGetFooterInfoQuery({
+    areaCode: selected?.areaCode,
+    cuCode: selected?.cuCode,
+  });
+
   const { register, handleSubmit, reset, control, getValues } =
     useForm<IAR1100SEARCH>({
       mode: "onSubmit",
@@ -129,19 +138,22 @@ function AR1100({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (selected && Object.keys(selected)?.length > 0) {
-      if (isAddBtnClicked) {
-        removeEmptyRow();
-      }
+    if (footerInfoData && Object.keys(footerInfoData)?.length > 0) {
+      dispatch(addInfo({ info: { ...footerInfoData[0] } }));
+    }
+  }, [footerInfoData]);
 
-      addBtnUnClick();
+  useEffect(() => {
+    if (selected && Object.keys(selected)?.length > 0) {
+      if (isAddBtnClicked === true) {
+        removeEmptyRow();
+        const newArray = data.slice(0, -1);
+        setData(newArray);
+        addBtnUnClick();
+      }
 
       if (selected?.pjType && Number(selected?.pjType) !== tabId) {
         setTabId(Number(selected?.pjType));
-      }
-
-      if (selected?.areaCode && selected?.cuCode) {
-        setFooterDetail(selected.areaCode, selected.cuCode, dispatch);
       }
 
       if (selected?.pjDate && selected?.areaCode) {
