@@ -63,9 +63,11 @@ const Grid = React.forwardRef(
       }
 
       gv.displayOptions.useFocusClass = true;
-      gv.setCurrent({
-        dataRow: rowIndex,
-      });
+      gv.onScrollToBottom = () => {
+        gv.setCurrent({
+          dataRow: rowIndex,
+        });
+      }
 
       gv.onSelectionChanged = () => {};
 
