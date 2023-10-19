@@ -113,6 +113,10 @@ export const columns = [
       text: "공급량",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "junMisu",
@@ -124,6 +128,10 @@ export const columns = [
       text: "전월미수",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "kumack",
@@ -135,6 +143,10 @@ export const columns = [
       text: "매출액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "DC",
@@ -146,6 +158,10 @@ export const columns = [
       text: "D/C",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "inkum",
@@ -157,6 +173,10 @@ export const columns = [
       text: "입금액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "misukum",
@@ -168,6 +188,10 @@ export const columns = [
       text: "미수금액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "suKum",
@@ -179,6 +203,10 @@ export const columns = [
       text: "수금액",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "suDC",
@@ -190,6 +218,10 @@ export const columns = [
       text: "D/C",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "dangMisu",
@@ -201,6 +233,10 @@ export const columns = [
       text: "당월미수",
     },
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "chkYn",

@@ -23,7 +23,7 @@ export const fields0 = [
   },
   {
     fieldName: "pjQty",
-    dataType: ValueType.TEXT,
+    dataType: ValueType.NUMBER,
   },
   {
     fieldName: "pjDanga",
@@ -117,6 +117,11 @@ export const columns0 = [
       text: "수량",
     },
     styleName: "rg-right-column",
+    numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pjDanga",
@@ -128,6 +133,10 @@ export const columns0 = [
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pjKumack",
@@ -139,6 +148,10 @@ export const columns0 = [
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pjInkum",
@@ -150,6 +163,10 @@ export const columns0 = [
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pjDc",
@@ -161,6 +178,10 @@ export const columns0 = [
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pjMisukum",
@@ -172,6 +193,10 @@ export const columns0 = [
     },
     styleName: "rg-right-column",
     numberFormat: "#,##0",
+    footer: {
+      numberFormat: "#,##0",
+      expression: "sum",
+    },
   },
   {
     name: "pjSwName",
