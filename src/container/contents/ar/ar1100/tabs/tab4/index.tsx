@@ -4,12 +4,16 @@ import React, {
   BaseSyntheticEvent,
 } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { AR1100INSERT, AR1100UPDATE } from "app/path";
+import {
+  AR1100BPSALEINSERT,
+  AR1100BPSALEUPDATE,
+  AR1100SANGPUM,
+} from "app/path";
 import { useDispatch, useSelector } from "app/store";
-import { apiPost } from "app/axios";
+import { apiPost, apiGet } from "app/axios";
 import useModal from "app/hook/useModal";
 import Table from "components/table";
-import { Input, Select, FormGroup } from "components/form/style";
+import { Input, Select, FormGroup, CustomForm } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -19,7 +23,8 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { currencyMask, removeCommas } from "helpers/currency";
 import { IAR110065DETAIL } from "./model";
 import { tableHeader1, tableHeader2 } from "./tableHeader";
-import { addCM1106Second } from "app/state/modal/modalSlice";
+import { addBupum } from "app/state/modal/modalSlice";
+
 const Tab4 = React.forwardRef(
   (
     {
@@ -31,13 +36,9 @@ const Tab4 = React.forwardRef(
       handleSubmitParent,
       submitParent,
       addBtnUnClick,
-      jpKind,
       setJpKind,
-      junJaego,
-      setJunJaego,
       qty,
       setQty,
-      reqty,
       setReqty,
       danga,
       setDanga,
@@ -56,13 +57,9 @@ const Tab4 = React.forwardRef(
       handleSubmitParent: Function;
       submitParent: Function;
       addBtnUnClick: Function;
-      jpKind: any;
       setJpKind: Function;
-      junJaego: number;
-      setJunJaego: Function;
       qty: number;
       setQty: Function;
-      reqty: number;
       setReqty: Function;
       danga: number;
       setDanga: Function;
@@ -89,7 +86,9 @@ const Tab4 = React.forwardRef(
     const cm1106 = useSelector((state: any) => state.modal.cm1106);
     const { info, source } = useSelector((state: any) => state.footer);
 
-    const { showCM1106Modal, openModal } = useModal();
+    // const { showCM1106Modal, openModal } = useModal();
+    const { showAR1100BupumModal, openModal: openBupumModal } = useModal();
+    const { showAR1100BpSaleModal, openModal: openAR1100Modal } = useModal();
 
     useEffect(() => {
       if (cm1106.source === "AR11000") {
@@ -99,49 +98,49 @@ const Tab4 = React.forwardRef(
     }, [cm1106.tick]);
 
     useEffect(() => {
-      if (watch("bgInkumtype") !== undefined) {
-        if (watch("bgInkumtype") === "A") {
+      if (watch("bgInkumType") !== undefined) {
+        if (watch("bgInkumType") === "A") {
           setInkum(0);
           setDc(0);
         } else {
-          setInkum(data65?.pjInkum);
-          setDc(data65?.pjDc);
+          setInkum(data65?.bgInkum);
+          setDc(data65?.bgDc);
         }
-        if (watch("bgInkumtype") !== "2") {
+        if (watch("bgInkumType") !== "2") {
           reset((formValues) => ({
             ...formValues,
-            pacbCode: "",
+            acbCode: "",
           }));
         }
       }
-    }, [watch("bgInkumtype")]);
+    }, [watch("bgInkumType")]);
 
     const calculationOfVat = (price: number, vatDivVal: string) => {
       let tempKumSup: number = 0;
       let tempKumVat: number = 0;
-      let tempKumack: number = 0;
+      let tempTotal: number = 0;
 
       if (vatDivVal === "0") {
         tempKumSup = Math.round(price / 1.1);
         tempKumVat = price - tempKumSup;
-        tempKumack = price;
+        tempTotal = price;
       } else if (vatDivVal === "1") {
         tempKumSup = price;
         tempKumVat = Math.round(price * 0.1);
-        tempKumack = tempKumSup + tempKumVat;
+        tempTotal = tempKumSup + tempKumVat;
       } else if (vatDivVal === "2") {
         tempKumSup = price;
         tempKumVat = 0;
-        tempKumack = price;
+        tempTotal = price;
       }
       return {
         tempKumSup,
         tempKumVat,
-        tempKumack,
+        tempTotal,
       };
     };
 
-    const calculationOfMisukum = (tempKumack: number) => {
+    const calculationOfMisu = (tempKumack: number) => {
       let tempMisukum: number = 0;
       let tempInkum: number = inkum ? +removeCommas(inkum, "number") : 0;
       tempInkum = isNaN(tempInkum) ? 0 : tempInkum;
@@ -152,51 +151,41 @@ const Tab4 = React.forwardRef(
       return tempMisukum;
     };
 
-    const handleQtyChange = (val: number) => {
+    const handleChangeQty = (val: number) => {
       setQty(val);
-      setReqty(val);
       let tempDanga = danga ? +removeCommas(danga, "number") : 0;
       tempDanga = isNaN(tempDanga) ? 0 : tempDanga;
       const price = tempDanga * +val;
-      let { tempKumSup, tempKumVat, tempKumack } = calculationOfVat(
+      let { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(
         price,
         vatDiv
       );
-      const tempMisukum = calculationOfMisukum(tempKumack);
+
+      const tempMisu = calculationOfMisu(tempTotal);
       reset((formValues) => ({
         ...formValues,
-        pjJago: junJaego,
-        pjKumSup: tempKumSup,
-        pjKumVat: tempKumVat,
-        bgTotal: tempKumack,
-        pjMisukum: tempMisukum,
+        bgKumSup: tempKumSup,
+        bgKumVat: tempKumVat,
+        bgTotal: tempTotal,
+        bgMisu: tempMisu,
       }));
     };
 
-    const handleReqtyChange = (val: number) => {
-      setReqty(val);
-      let tempPcJaego = +junJaego + +qty - +val;
-      reset((formValues) => ({
-        ...formValues,
-        pjJago: tempPcJaego,
-      }));
-    };
-
-    const handleDangaChange = (val: any) => {
+    const handleChangeDanga = (val: any) => {
       setDanga(val);
       const tempVal = val ? +removeCommas(val, "number") : 0;
       const price = (isNaN(tempVal) ? 0 : tempVal) * qty;
-      let { tempKumSup, tempKumVat, tempKumack } = calculationOfVat(
+      let { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(
         price,
         vatDiv
       );
-      const tempMisukum = calculationOfMisukum(tempKumack);
+      const tempMisukum = calculationOfMisu(tempTotal);
       reset((formValues) => ({
         ...formValues,
-        pjKumSup: tempKumSup,
-        pjKumVat: tempKumVat,
-        bgTotal: tempKumack,
-        pjMisukum: tempMisukum,
+        bgKumSup: tempKumSup,
+        bgKumVat: tempKumVat,
+        bgTotal: tempTotal,
+        bgMisu: tempMisukum,
       }));
     };
 
@@ -204,15 +193,15 @@ const Tab4 = React.forwardRef(
       setVatDiv(val);
       let tempDanga = danga ? +removeCommas(danga, "number") : 0;
       const price = (isNaN(tempDanga) ? 0 : tempDanga) * qty;
-      let { tempKumSup, tempKumVat, tempKumack } = calculationOfVat(price, val);
-      const tempMisukum = calculationOfMisukum(tempKumack);
+      let { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(price, val);
+      const tempMisukum = calculationOfMisu(tempTotal);
 
       reset((formValues) => ({
         ...formValues,
-        pjKumSup: tempKumSup,
-        pjKumVat: tempKumVat,
-        bgTotal: tempKumack,
-        pjMisukum: tempMisukum,
+        bgKumSup: tempKumSup,
+        bgKumVat: tempKumVat,
+        bgTotal: tempTotal,
+        bgMisu: tempMisukum,
       }));
     };
 
@@ -237,53 +226,79 @@ const Tab4 = React.forwardRef(
       let bgTotal: number = getValues("bgTotal")
         ? +removeCommas(getValues("bgTotal"), "number")
         : 0;
-      let pjMisukum: number = 0;
-      pjMisukum = bgTotal - tempDc - tempInkum;
+      let tempBgMisu: number = 0;
+      tempBgMisu = bgTotal - tempDc - tempInkum;
 
       reset((formValues) => ({
         ...formValues,
-        pjMisukum: pjMisukum,
+        bgMisu: tempBgMisu,
       }));
     };
 
+    const fetchDataSangpum = async (params: any) => {
+      const res = await apiGet(AR1100SANGPUM, params);
+      return res;
+    };
+
+    async function handleKeyDown(event: any) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+
+        const res = await fetchDataSangpum({
+          areaCode: cm1106?.areaCode,
+          cuCode: cm1106?.cuCode,
+          jpCode: event.target.value,
+          pjType: 0,
+        });
+
+        if (Object.keys(res)?.length > 0) {
+          setDanga(res[0]?.jcJpDanga);
+          handleChangeDanga(res[0]?.jcJpDanga);
+          reset((formValues) => ({
+            ...formValues,
+            bgBpName: res[0]?.jcJpName,
+          }));
+
+          document.getElementById("bgQty")?.focus();
+        } else {
+          openModalCM1106();
+        }
+      }
+    }
+
     const resetForm = (type: string) => {
       if (type === "reset") {
-        setJunJaego(data65?.junJaego);
         setQty(data65?.bgQty);
-        setReqty(data65?.pjReqty);
-        setDanga(data65?.pjDanga);
+        setDanga(data65?.bgDanga);
         reset({
           ...data65,
-          pjJpCode: data65?.pjJpCode ? data65?.pjJpCode : "",
-          pjJpName: data65?.pjJpName ? data65?.pjJpName : "",
+          bgBpCode: data65?.bgBpCode ? data65?.bgBpCode : "",
+          bgBpName: data65?.bgBpName ? data65?.bgBpName : "",
         });
       } else if (type === "jpName") {
-        const tempJunJaego =
-          (cm1106?.jcBasicJaego ? +cm1106?.jcBasicJaego : 0) +
-          (cm1106?.custOut ? +cm1106?.custOut : 0) -
-          (cm1106?.custIn ? +cm1106?.custIn : 0);
-
-        const pjKumSup =
+        const bgKumSup =
           (cm1106?.jcJpDanga ? +removeCommas(cm1106.jcJpDanga, "number") : 0) *
           (getValues("bgQty") ? +getValues("bgQty") : 0);
 
-        setJunJaego(tempJunJaego);
-
         reset((formValues) => ({
           ...formValues,
-          pjJpName: cm1106.jpName,
-          pjJpCode: cm1106.jpCode,
-          pjJpSpec: cm1106?.jpSpec,
-          //pjJago: pjJago,
-          pjDanga: cm1106.jcJpDanga,
-          pjKumSup: pjKumSup,
+          bgBpName: cm1106.jpName,
+          bgBpCode: cm1106.jpCode,
+          //pjJpSpec: cm1106?.jpSpec,
+          bgDanga: cm1106.jcJpDanga,
+          bgKumSup: bgKumSup,
         }));
       }
     };
 
-    const openPopupCM1106 = async () => {
-      dispatch(addCM1106Second({ source: "AR11000" }));
-      openModal();
+    const openModalCM1106 = async () => {
+      console.log("data65>>>>>>>>>>", data65);
+      dispatch(addBupum({ areaCode: data65?.areaCode }));
+      openBupumModal();
+    };
+
+    const openModalAR1100BpSale = () => {
+      openAR1100Modal();
     };
 
     const handleClickReset = async () => {
@@ -296,37 +311,37 @@ const Tab4 = React.forwardRef(
     };
 
     const submit = async (params: any) => {
-      const path = isAddBtnClicked ? AR1100INSERT : AR1100UPDATE;
+      const path = isAddBtnClicked ? AR1100BPSALEINSERT : AR1100BPSALEUPDATE;
       params.insertType = "0";
 
       if (isAddBtnClicked) {
         // if (source === menuId + tabId.toString()) {
         params.areaCode = info?.areaCode;
-        params.pjCuCode = info?.cuCode;
-        params.pjCuName = info?.cuName;
-        params.pjSno = "";
+        params.bgCuCode = info?.cuCode;
+        params.bgCuName = info?.cuName;
+        params.bgSno = "";
         // }
       }
 
-      params.pjDate = DateWithoutDash(params.pjDate);
-      params.pjKumSup = removeCommas(params.pjKumSup, "number");
-      params.pjKumVat = removeCommas(params.pjKumVat, "number");
+      params.bgDate = DateWithoutDash(params.bgDate);
+      params.bgKumSup = removeCommas(params.bgKumSup, "number");
+      params.bgKumVat = removeCommas(params.bgKumVat, "number");
       params.bgTotal = removeCommas(params.bgTotal, "number");
-      params.pjMisukum = removeCommas(params.pjMisukum, "number");
-      params.bgQty = qty;
-      params.pjReqty = reqty;
-      params.pjVatDiv = vatDiv;
-      params.pjDanga = +removeCommas(danga, "number");
-      params.pjInkum = +removeCommas(inkum, "number");
-      params.pjDc = +removeCommas(dc, "number");
-      params.pjJago = +removeCommas(params.pjJago, "number");
+      params.bgMisu = removeCommas(params.bgMisu, "number");
+      params.bgQty = +qty;
+      params.bgVatDiv = vatDiv;
+      params.bgDanga = +removeCommas(danga, "number");
+      params.bgInkum = +removeCommas(inkum, "number");
+      params.bgDc = +removeCommas(dc, "number");
 
-      if (params.pjSwCode) {
-        const pjSwName = dictionary?.pjSwCode?.find(
-          (item: any) => item.code === params.pjSwCode
+      if (params.bgSwCode) {
+        const bgSwName = dictionary?.bgSwCode?.find(
+          (item: any) => item.code === params.bgSwCode
         )?.codeName;
-        params.pjSwName = pjSwName;
+        params.bgSwName = bgSwName;
       }
+
+      params.jsonItemList = [];
 
       const res = await apiPost(path, params, "저장이 성공하였습니다");
       if (res) {
@@ -342,7 +357,7 @@ const Tab4 = React.forwardRef(
       {
         0: (
           <FormGroup>
-            <Select register={register("bgSaleState")} width={InputSize.i100}>
+            <Select register={register("saleState")} width={InputSize.i100}>
               {dictionary?.bgSaleState?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -363,13 +378,14 @@ const Tab4 = React.forwardRef(
         2: (
           <FormGroup style={{ position: "relative" }}>
             <Input
-              register={register("bgCuCode")}
+              register={register("bgBpCode")}
               inputSize={InputSize.i70}
               readOnly={!isAddBtnClicked}
+              onKeyDown={handleKeyDown}
             />
             <Controller
               control={control}
-              name="bgCuName"
+              name="bgBpName"
               render={({ field }) => (
                 <Input
                   {...field}
@@ -393,7 +409,7 @@ const Tab4 = React.forwardRef(
                 alignItems: "center",
                 paddingLeft: "3px",
               }}
-              onClick={isAddBtnClicked ? openPopupCM1106 : undefined}
+              onClick={isAddBtnClicked ? openModalCM1106 : undefined}
             >
               <MagnifyingGlass />
             </span>
@@ -405,24 +421,34 @@ const Tab4 = React.forwardRef(
             name="bgQty"
             value={qty}
             onChange={(e: any) => {
-              handleQtyChange(e.target.value);
+              handleChangeQty(e.target.value);
             }}
             inputSize={InputSize.i100}
             textAlign="right"
           />
         ),
         4: (
-          <Controller
-            control={control}
+          <Input
             name="bgDanga"
-            render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} textAlign="right" />
-            )}
+            value={danga}
+            onChange={(e: BaseSyntheticEvent) =>
+              handleChangeDanga(e.target.value)
+            }
+            inputSize={InputSize.i100}
+            textAlign="right"
+            mask={currencyMask}
           />
         ),
         5: (
           <FormGroup>
-            <Select register={register("bgVatDiv")} width={InputSize.i100}>
+            <Select
+              name="bgVatDiv"
+              value={vatDiv}
+              width={InputSize.i100}
+              onChange={(e: BaseSyntheticEvent) =>
+                handleChangeVatDiv(e.target.value)
+              }
+            >
               {dictionary?.bgVatDiv?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -434,13 +460,14 @@ const Tab4 = React.forwardRef(
         6: (
           <Controller
             control={control}
-            name="bgSum"
+            name="bgKumSup"
             render={({ field }) => (
               <Input
                 {...field}
                 inputSize={InputSize.i100}
                 readOnly
                 textAlign="right"
+                mask={currencyMask}
               />
             )}
           />
@@ -448,13 +475,14 @@ const Tab4 = React.forwardRef(
         7: (
           <Controller
             control={control}
-            name="bgVat"
+            name="bgKumVat"
             render={({ field }) => (
               <Input
                 {...field}
                 inputSize={InputSize.i100}
                 readOnly
                 textAlign="right"
+                mask={currencyMask}
               />
             )}
           />
@@ -469,6 +497,21 @@ const Tab4 = React.forwardRef(
                 inputSize={InputSize.i100}
                 readOnly
                 textAlign="right"
+                mask={currencyMask}
+              />
+            )}
+          />
+        ),
+        9: (
+          <Controller
+            control={control}
+            name="bgSvKumack"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                textAlign="right"
+                mask={currencyMask}
               />
             )}
           />
@@ -480,8 +523,8 @@ const Tab4 = React.forwardRef(
       {
         0: (
           <FormGroup>
-            <Select register={register("bgInkumtype")} width={InputSize.i100}>
-              {dictionary?.bgInkumtype?.map((obj: any, idx: number) => (
+            <Select register={register("bgInkumType")} width={InputSize.i100}>
+              {dictionary?.bgInkumType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -492,11 +535,11 @@ const Tab4 = React.forwardRef(
         1: (
           <FormGroup>
             <Select
-              register={register("bgAcbCode")}
+              register={register("acbCode")}
               width={InputSize.i150}
-              disabled={watch("bgInkumtype") !== "2"}
+              disabled={watch("bgInkumType") !== "2"}
             >
-              {dictionary?.pacbCode?.map((obj: any, idx: number) => (
+              {dictionary?.bgAcbCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -545,8 +588,8 @@ const Tab4 = React.forwardRef(
         ),
         5: (
           <FormGroup>
-            <Select register={register("bgSwName")} width={InputSize.i100}>
-              {dictionary?.pjSwCode?.map((obj: any, idx: number) => (
+            <Select register={register("bgSwCode")} width={InputSize.i100}>
+              {dictionary?.bgSwCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -556,7 +599,7 @@ const Tab4 = React.forwardRef(
         ),
         6: (
           <EditableSelect
-            list={dictionary?.pjBigo}
+            list={dictionary?.bgBigo}
             reset={reset}
             register={register("bgBigo")}
             watch={watch("bgBigo")}
@@ -566,10 +609,7 @@ const Tab4 = React.forwardRef(
         ),
         7: (
           <FormGroup>
-            <Input
-              register={register("bgSignuser")}
-              inputSize={InputSize.i100}
-            />
+            <Input register={register("signUser")} inputSize={InputSize.i100} />
           </FormGroup>
         ),
       },
@@ -577,8 +617,10 @@ const Tab4 = React.forwardRef(
 
     return (
       <>
-        {showCM1106Modal()}
-        <form autoComplete="off" onSubmit={handleSubmit(submit)}>
+        {showAR1100BupumModal()}
+        {showAR1100BpSaleModal()}
+
+        <CustomForm autoComplete="off" onSubmit={handleSubmit(submit)}>
           <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
             <div className="tab1">
               <Table
@@ -597,6 +639,20 @@ const Tab4 = React.forwardRef(
             <div
               style={{ display: "flex", flexDirection: "column", gap: "10px" }}
             >
+              <div
+                style={{
+                  width: "80px",
+                  height: "30px",
+                  borderRadius: "15px",
+                  background: "rgb(104, 103, 103)",
+                  color: "#fff",
+                  textAlign: "center",
+                }}
+                onClick={openModalAR1100BpSale}
+              >
+                + 상세
+              </div>
+
               <Button
                 text="저장"
                 icon={<Update />}
@@ -612,7 +668,7 @@ const Tab4 = React.forwardRef(
               />
             </div>
           </div>
-        </form>
+        </CustomForm>
       </>
     );
   }

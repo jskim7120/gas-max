@@ -21,3 +21,21 @@ export const tableHeader2 = [
   "비고",
   "확인자",
 ];
+
+export const tableHeader3 = [
+  "VAT",
+  "공급액",
+  "세액",
+  "합계",
+  "무료 시설액",
+  "비고",
+];
+
+export const tableHeader4 = [
+  "입금방법",
+  "입금  계좌",
+  "입금액",
+  "D/C",
+  "미입금액",
+  "사원",
+];
