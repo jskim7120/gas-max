@@ -102,7 +102,7 @@ function CreateEN(
 
     if (dataS) {
       setData(dataS);
-      const lastIndex = dataS && dataS.length > 0 ? dataS.length - 1 : 0;
+      const lastIndex = dataS && dataS?.length > 0 ? dataS?.length - 1 : 0;
 
       if (func === "last") {
         setSelected(dataS[lastIndex]);

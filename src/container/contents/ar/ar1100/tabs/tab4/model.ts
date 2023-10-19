@@ -1,47 +1,49 @@
 export interface IAR110065DETAIL {
-  bgSaleState: string;
+  saleState: string;
   bgDate: string;
-  bgCuCode: string;
-  bgCuName: string;
+  bgBpCode: string;
+  bgBpName: string;
   bgQty: number;
   bgDanga: number;
   bgVatDiv: string;
-  bgSum: number;
-  bgVat: number;
+  bgKumSup: number;
+  bgKumVat: number;
   bgTotal: number;
+  bgSvKumack: number;
 
-  bgInkumtype: string;
-  bgAcbCode: string;
+  bgInkumType: string;
+  acbCode: string;
   bgInkum: number;
   bgDc: number;
   bgMisu: number;
   bgSwCode: string;
   bgSwName: string;
   bgBigo: string;
-  bgSignuser: string;
-  bgSignkey: string;
+  signUser: string;
+  signKey: string;
 }
 
 export const emtObjTab4 = {
-  bgSaleState: "",
+  saleState: "",
   bgDate: "",
-  bgCuCode: "",
-  bgCuName: "",
+  bgBpCode: "",
+  bgBpName: "",
   bgQty: 0,
   bgDanga: 0,
   bgVatDiv: "",
-  bgSum: 0,
-  bgVat: 0,
+  bgKumSup: 0,
+  bgKumVat: 0,
   bgTotal: 0,
+  bgSvKumack: 0,
 
-  bgInkumtype: "",
-  bgAcbCode: "",
+  bgInkumType: "",
+  acbCode: "",
   bgInkum: 0,
   bgDc: 0,
   bgMisu: 0,
   bgSwCode: "",
   bgSwName: "",
   bgBigo: "",
-  bgSignuser: "",
-  bgSignkey: "",
+  signUser: "",
+  signKey: "",
 };

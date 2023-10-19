@@ -1,3 +1,4 @@
+import { ForwardedRef, MutableRefObject } from "react";
 import Tab1 from "./tabs/tab1";
 import Tab2 from "./tabs/tab2";
 import Tab3 from "./tabs/tab3";
@@ -15,6 +16,7 @@ function getTabContent(
   tabRef1: any,
   tabRef2: any,
   tabRef3: any,
+  tabRef4: any,
   addBtnUnClick: Function,
   jpKind: any,
   setJpKind: Function,
@@ -140,15 +142,11 @@ function getTabContent(
           isAddBtnClicked={isAddBtnClicked}
           handleSubmitParent={handleSubmit}
           submitParent={submit}
-          ref={tabRef1}
+          ref={tabRef4}
           addBtnUnClick={addBtnUnClick}
-          jpKind={jpKind}
           setJpKind={setJpKind}
-          junJaego={junJaego}
-          setJunJaego={setJunJaego}
           qty={qty}
           setQty={setQty}
-          reqty={reqty}
           setReqty={setReqty}
           danga={danga}
           setDanga={setDanga}

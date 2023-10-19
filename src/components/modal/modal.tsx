@@ -15,6 +15,9 @@ import EN1500Modal from "./customModals/en1500Modal";
 import PT1105Modal from "./customModals/pt1105Modal";
 import PT1205Modal from "./customModals/pt1205Modal";
 import ReLoginModal from "./customModals/reLoginModal";
+import AR1100BpSaleModal from "./customModals/ar1100BpSaleModal";
+import AR1100BupumModal from "./customModals/ar1100BupumModal";
+
 const PopupArea = styled.section`
   position: fixed;
   top: 0;
@@ -45,7 +48,9 @@ const PopupContainer = styled.div<{ type: string }>`
       props.type === "pt1105Modal" ||
       props.type === "pt1205Modal" ||
       props.type === "cc1200Modal" ||
-      props.type === "reLoginModal") &&
+      props.type === "reLoginModal" ||
+      props.type === "ar1100BpSaleModal" ||
+      props.type === "ar1100BupumModal") &&
     `
       top: 50%;
       left: 50%;  
@@ -129,6 +134,12 @@ function Popup({
           {type === "pt1105Modal" && <PT1105Modal setIsOpen={setIsOpen} />}
           {type === "pt1205Modal" && <PT1205Modal setIsOpen={setIsOpen} />}
           {type === "en1500Modal" && <EN1500Modal setIsOpen={setIsOpen} />}
+          {type === "ar1100BpSaleModal" && (
+            <AR1100BpSaleModal setIsOpen={setIsOpen} />
+          )}
+          {type === "ar1100BupumModal" && (
+            <AR1100BupumModal setIsOpen={setIsOpen} />
+          )}
         </Suspense>
       </PopupContainer>
     </PopupArea>

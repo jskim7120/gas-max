@@ -7,10 +7,12 @@ import {
   AR1100SELECT41,
   AR1100SELECT51,
   AR1100SELECT61,
+  AR1100SELECT71,
   AR1100STATE,
   AR1100DELETE,
   AR1100CJSALEDELETE,
   AR1100TONGSALEDELETE,
+  AR1100BPSALEDELETE,
 } from "app/path";
 import { useDispatch, useSelector } from "app/store";
 import { fetchFooterData } from "container/contents/footer/footerDetailFunc";
@@ -82,9 +84,10 @@ function AR1100({
   const tabRef1 = useRef() as React.MutableRefObject<any>;
   const tabRef2 = useRef() as React.MutableRefObject<any>;
   const tabRef3 = useRef() as React.MutableRefObject<any>;
+  const tabRef4 = useRef() as React.MutableRefObject<any>;
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
-  const [selected, setSelected] = useState<any>({});
+  const [selected, setSelected] = useState<number>(0);
   const [data65, setData65] = useState({});
   const [dataDictionary, setDataDictionary] = useState({});
   const [tabId, setTabId] = useState<number>(0);
@@ -118,12 +121,12 @@ function AR1100({
     openModal: openDeleteModal,
   } = useModal();
 
+  let rowIndex = getRowIndex(menuId, 0);
+
   const { register, handleSubmit, reset, control, getValues } =
     useForm<IAR1100SEARCH>({
       mode: "onSubmit",
     });
-
-  let rowIndex = getRowIndex(menuId, 0);
 
   useEffect(() => {
     if (dataCommonDic && dataCommonDic?.dataInit) {
@@ -133,36 +136,33 @@ function AR1100({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (selected && Object.keys(selected)?.length > 0) {
+    if (selected !== undefined) {
       if (isAddBtnClicked === true) {
         removeEmptyRow();
         addBtnUnClick();
       }
-
-      if (selected?.pjType && Number(selected?.pjType) !== tabId) {
-        setTabId(Number(selected?.pjType));
+      if (data[selected]?.pjType) {
+        const pjType = data[selected]?.pjType;
+        if (pjType === "3" || pjType === "4") {
+          setTabId(3);
+        } else {
+          setTabId(Number(pjType));
+        }
       }
-
-      if (selected?.areaCode && selected?.cuCode) {
+      if (data[selected]?.areaCode && data[selected]?.cuCode) {
         getFooterData();
       }
-
-      if (selected?.pjDate && selected?.areaCode) {
+      if (data[selected]?.pjDate && data[selected]?.areaCode) {
         fetchData65({
-          areaCode: selected?.areaCode,
-          pjCuCode: selected?.cuCode,
-          pjDate: DateWithoutDash(selected?.pjDate),
-          pjSno: selected?.pjSno,
-          pjType: selected?.pjType,
+          areaCode: data[selected]?.areaCode,
+          pjCuCode: data[selected]?.cuCode,
+          pjDate: DateWithoutDash(data[selected]?.pjDate),
+          pjSno: data[selected]?.pjSno,
+          pjType: data[selected]?.pjType,
         });
       }
     }
   }, [selected]);
-
-  const getFooterData = async () => {
-    const res = await fetchFooterData(selected?.areaCode, selected?.cuCode);
-    dispatch(addInfo({ info: res }));
-  };
 
   useEffect(() => {
     if (source === menuId) {
@@ -196,6 +196,14 @@ function AR1100({
     }
   }, [deleteState.isDelete]);
 
+  const getFooterData = async () => {
+    const res = await fetchFooterData(
+      data[selected]?.areaCode,
+      data[selected]?.cuCode
+    );
+    dispatch(addInfo({ info: res }));
+  };
+
   const onTabChangeonAdd = async () => {
     if (tabId === 0) {
       const res: any = await fetchData41({
@@ -217,10 +225,10 @@ function AR1100({
 
         if (res?.detailData) {
           ddat = res?.detailData[0];
-          tabRef1.current.reset({ ...ddat, pjDate: new Date() });
+          tabRef1?.current?.reset({ ...ddat, pjDate: new Date() });
         } else if (res?.initData) {
           ddat = res?.initData[0];
-          tabRef1.current.reset({ ...ddat });
+          tabRef1?.current?.reset({ ...ddat });
         }
 
         setData65(ddat);
@@ -260,7 +268,7 @@ function AR1100({
             (ddat?.pcQty ? ddat?.pcQty : 0) -
             (ddat?.pcReqty ? ddat?.pcReqty : 0);
 
-          tabRef2.current.reset({
+          tabRef2?.current?.reset({
             ...ddat,
             pcDate: new Date(),
             pcJaego: tempJaego,
@@ -273,7 +281,7 @@ function AR1100({
             (ddat?.pcQty ? ddat?.pcQty : 0) -
             (ddat?.pcReqty ? ddat?.pcReqty : 0);
 
-          tabRef2.current.reset({ ...ddat, pcJaego: tempJaego });
+          tabRef2?.current?.reset({ ...ddat, pcJaego: tempJaego });
         }
 
         setData65(ddat);
@@ -308,7 +316,7 @@ function AR1100({
         if (res?.detailData) {
           let detail = res?.detailData[0];
           setData65(detail);
-          tabRef3.current.reset({ ...detail, tsDate: new Date() });
+          tabRef3?.current?.reset({ ...detail, tsDate: new Date() });
         } else if (res?.initData) {
           let init = res?.initData[0];
           setData65(init);
@@ -321,7 +329,45 @@ function AR1100({
           setKumack(init?.tsKumack);
           setMisu(init?.tsMisu);
           setVatDiv(init?.tsVatDiv);
-          tabRef3.current.reset({ ...init });
+          tabRef3?.current?.reset({ ...init });
+        }
+      }
+    } else if (tabId === 3) {
+      const res: any = await fetchData71({
+        areaCode: info?.areaCode,
+        cuCode: info?.cuCode,
+        saleType: 5,
+      });
+      if (res && Object.keys(res)?.length > 0) {
+        setDataDictionary({
+          bgAcbCode: res?.bgAcbCode,
+          bgInkumType: res?.bgInkumType,
+          bgSaleState: res?.bgSaleState,
+          bgSwCode: res?.bgSwCode,
+          bgVatDiv: res?.bgVatDiv,
+        });
+
+        let ddat: any;
+
+        if (res?.detailData) {
+          ddat = res?.detailData[0];
+          tabRef4?.current?.reset({ ...ddat, bgDate: new Date() });
+        } else if (res?.initData) {
+          ddat = res?.initData[0];
+          tabRef4?.current?.reset({ ...ddat });
+        }
+
+        setData65(ddat);
+        setQty(ddat?.bgQty);
+        setDanga(ddat?.bgDanga);
+        setVatDiv(ddat?.bgVatDiv);
+        setInkum(ddat?.bgInkum);
+        setDc(ddat?.bgDc);
+
+        if (res?.detailData) {
+          document.getElementById("bgQty")?.focus();
+        } else if (res?.initData) {
+          document.getElementById("bgBpCode")?.focus();
         }
       }
     }
@@ -377,26 +423,7 @@ function AR1100({
 
     setData((prev) => [...prev, { ...emtObj, ...obj }]);
     setRowIndex(menuId, 0, data?.length);
-    setSelected({});
-
-    // if (data?.length > 0) {
-    //   if ("isNew" in data[data?.length - 1]) {
-    //     setRowIndex(menuId, 0, data?.length - 1);
-    //     setData((prev: any) =>
-    //       prev.map((object: any, idx: number) => {
-    //         if (idx === data?.length - 1) {
-    //           return { ...emtObj, ...obj };
-    //         } else return object;
-    //       })
-    //     );
-    //   } else {
-    //     setRowIndex(menuId, 0, data?.length);
-    //     setData((prev) => [...prev, { ...emtObj, ...obj }]);
-    //   }
-    // } else {
-    //   setRowIndex(menuId, 0, 0);
-    //   setData((prev) => [...prev, { ...emtObj, ...obj }]);
-    // }
+    //setSelected(0); -------------------------
   };
 
   const removeEmptyRow = () => {
@@ -413,10 +440,11 @@ function AR1100({
       setDc(0);
 
       if (len > 0) {
-        setSelected(data[len - 1]);
+        setSelected(len - 1);
         setRowIndex(menuId, 0, len - 1);
       } else {
-        setSelected({});
+        // setSelected({}); -----------------
+        setSelected(-1);
         setRowIndex(menuId, 0, 0);
         //   if (tabId === 0) {
         //     tabRef1.current.reset(emtObjTab1);
@@ -518,21 +546,21 @@ function AR1100({
       const lastIndex = res && res?.length > 1 ? res.length - 1 : 0;
 
       if (pos === "last") {
-        setSelected(res[lastIndex]);
+        setSelected(lastIndex);
         setRowIndex(menuId, 0, lastIndex);
       } else {
         if (rowIndex) {
           if (rowIndex > lastIndex) {
             setRowIndex(menuId, 0, lastIndex);
-            setSelected(res[lastIndex]);
+            setSelected(lastIndex);
           } else {
-            setSelected(res[rowIndex]);
+            setSelected(rowIndex);
           }
         }
       }
     } else {
       setData([]);
-      setSelected({});
+      setSelected(-1);
       tabId !== 0 && setTabId(0);
       //tabRef1?.current?.setPjQty(0);
       //tabRef1?.current?.setPjJago(0); ------end state-uudiig set hiih
@@ -549,7 +577,7 @@ function AR1100({
         setJpKind(res?.detailData[0]?.jpKind);
         setData65(res?.detailData[0]);
       }
-      if (selected?.pjType === "0") {
+      if (data[selected]?.pjType === "0") {
         //1-r tab------------------------
         setDataDictionary({
           pjVatDiv: res?.pjVatDiv,
@@ -572,7 +600,7 @@ function AR1100({
           tabRef1?.current?.reset(detail);
         }
       }
-      if (selected?.pjType === "1") {
+      if (data[selected]?.pjType === "1") {
         //2-r tab------------------------
         setDataDictionary({
           proxyType: res?.proxyType,
@@ -592,7 +620,7 @@ function AR1100({
           tabRef2?.current?.reset({ ...detail, pcJaego: tempJaego });
         }
       }
-      if (selected?.pjType === "2") {
+      if (data[selected]?.pjType === "2") {
         //3-r tab------------------------
         setDataDictionary({
           acbCode: res?.tsAcbCode,
@@ -627,6 +655,25 @@ function AR1100({
           tabRef3?.current?.reset(detail);
         }
       }
+      if (data[selected]?.pjType === "3" || data[selected]?.pjType === "4") {
+        setDataDictionary({
+          bgAcbCode: res?.bgAcbCode,
+          bgInkumType: res?.bgInkumType,
+          bgSaleState: res?.bgSaleState,
+          bgSwCode: res?.bgSwCode,
+          bgVatDiv: res?.bgVatDiv,
+        });
+        if (res?.detailData && Object.keys(res?.detailData)?.length > 0) {
+          let detail = res?.detailData[0];
+          setQty(detail?.bgQty);
+          setDanga(detail?.bgDanga);
+          setVatDiv(detail?.bgVatDiv);
+          setInkum(detail?.bgInkum);
+          setDc(detail?.bgDc);
+
+          tabRef4?.current?.reset(detail);
+        }
+      }
     } else {
       setData65({});
       setDataDictionary({});
@@ -648,6 +695,11 @@ function AR1100({
     return res;
   };
 
+  const fetchData71 = async (params: any) => {
+    const res = await apiGet(AR1100SELECT71, params);
+    return res;
+  };
+
   const addBtnClick = () => {
     if (!isAddBtnClicked) {
       btnRef1.current.classList.add("active");
@@ -665,7 +717,9 @@ function AR1100({
   const submit = async (d: any, pos: string = "") => {
     addBtnUnClick();
     const params = getValues();
-    const date = dateToTimestamp(getPreviousMonthDate(params.dDate));
+    const date = dateToTimestamp(
+      getPreviousMonthDate(DateWithoutDash(params.dDate))
+    );
     const sDate = dateToTimestamp(DateWithoutDash(params.sDate));
     const dDate = dateToTimestamp(DateWithoutDash(params.dDate));
     if (sDate >= date && date <= dDate) {
@@ -694,48 +748,54 @@ function AR1100({
 
   async function deleteRowGrid() {
     addBtnUnClick();
-    let res = null;
-    if (selected) {
-      if (selected?.pjType === "0") {
-        res = await apiPost(
-          AR1100DELETE,
-          {
-            areaCode: selected?.areaCode,
-            pjCuCode: selected?.cuCode,
-            pjCuName: selected?.cuName,
-            pjJpCode: selected?.jpCode,
-            pjSno: selected?.pjSno,
-            pjDate: DateWithoutDash(selected?.pjDate),
-          },
-          "삭제했습니다"
-        );
-      } else if (selected?.pjType === "1") {
-        res = await apiPost(
-          AR1100CJSALEDELETE,
-          {
-            areaCode: selected?.areaCode,
-            pcCuCode: selected?.cuCode,
-            pcCuName: selected?.cuName,
-            pcJpCode: selected?.jpCode,
-            pcSno: selected?.pjSno,
-            pcDate: DateWithoutDash(selected?.pjDate),
-          },
-          "삭제했습니다"
-        );
-      } else if (selected?.pjType === "2") {
-        res = await apiPost(
-          AR1100TONGSALEDELETE,
-          {
-            areaCode: selected?.areaCode,
-            tsCuCode: selected?.cuCode,
-            tsCuName: selected?.cuName,
-            tsJpCode: selected?.jpCode,
-            tsSno: selected?.pjSno,
-            tsDate: DateWithoutDash(selected?.pjDate),
-          },
-          "삭제했습니다"
-        );
+    if (selected !== undefined) {
+      let delPath = "";
+      let params = {};
+      if (data[selected]?.pjType === "0") {
+        delPath = AR1100DELETE;
+        params = {
+          areaCode: data[selected]?.areaCode,
+          pjCuCode: data[selected]?.cuCode,
+          pjCuName: data[selected]?.cuName,
+          pjJpCode: data[selected]?.jpCode,
+          pjSno: data[selected]?.pjSno,
+          pjDate: DateWithoutDash(data[selected]?.pjDate),
+        };
+      } else if (data[selected]?.pjType === "1") {
+        delPath = AR1100CJSALEDELETE;
+        params = {
+          areaCode: data[selected]?.areaCode,
+          pcCuCode: data[selected]?.cuCode,
+          pcCuName: data[selected]?.cuName,
+          pcJpCode: data[selected]?.jpCode,
+          pcSno: data[selected]?.pjSno,
+          pcDate: DateWithoutDash(data[selected]?.pjDate),
+        };
+      } else if (data[selected]?.pjType === "2") {
+        delPath = AR1100TONGSALEDELETE;
+        params = {
+          areaCode: data[selected]?.areaCode,
+          tsCuCode: data[selected]?.cuCode,
+          tsCuName: data[selected]?.cuName,
+          tsJpCode: data[selected]?.jpCode,
+          tsSno: data[selected]?.pjSno,
+          tsDate: DateWithoutDash(data[selected]?.pjDate),
+        };
+      } else if (
+        data[selected]?.pjType === "3" ||
+        data[selected]?.pjType === "4"
+      ) {
+        delPath = AR1100BPSALEDELETE;
+        params = {
+          areaCode: data[selected]?.areaCode,
+          bgCuCode: data[selected]?.cuCode,
+          bgCuName: data[selected]?.cuName,
+          bgJpCode: data[selected]?.jpCode,
+          bgSno: data[selected]?.pjSno,
+          bgDate: DateWithoutDash(data[selected]?.pjDate),
+        };
       }
+      const res = await apiPost(delPath, params, "삭제했습니다");
       res && handleSubmit((d) => submit(d))();
     }
     dispatch(addDeleteMenuId({ menuId: "" }));
@@ -1061,6 +1121,7 @@ function AR1100({
             tabRef1,
             tabRef2,
             tabRef3,
+            tabRef4,
             addBtnUnClick,
             jpKind,
             setJpKind,

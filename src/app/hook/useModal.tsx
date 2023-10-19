@@ -78,6 +78,18 @@ function useModal() {
     );
   };
 
+  const showAR1100BpSaleModal = () => {
+    return (
+      <Modal type="ar1100BpSaleModal" isOpen={isOpen} setIsOpen={setIsOpen} />
+    );
+  };
+
+  const showAR1100BupumModal = () => {
+    return (
+      <Modal type="ar1100BupumModal" isOpen={isOpen} setIsOpen={setIsOpen} />
+    );
+  };
+
   return {
     closeModal,
     openModal,
@@ -96,6 +108,8 @@ function useModal() {
     showReLoginModal,
     showCustomerModal,
     showEN1500Modal,
+    showAR1100BpSaleModal,
+    showAR1100BupumModal,
   };
 }
 

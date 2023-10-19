@@ -66,6 +66,7 @@ export interface initialStateType {
     menuId: string;
     isDelete: boolean;
   };
+  bupum: any;
 }
 
 const initialState: initialStateType = {
@@ -135,6 +136,7 @@ const initialState: initialStateType = {
     menuId: "",
     isDelete: false,
   },
+  bupum: {},
 };
 
 const modalSlice = createSlice({
@@ -229,6 +231,12 @@ const modalSlice = createSlice({
       state.pt1205.cuName = action.payload.cuName;
       state.pt1205.cuCmisu = action.payload.cuCmisu;
     },
+    addBupum: (state, action) => {
+      state.bupum = {
+        ...state.bupum,
+        ...action.payload,
+      };
+    },
   },
 });
 
@@ -249,6 +257,7 @@ export const {
   rv1100Popup,
   ptAreaCode,
   pt1205Popup,
+  addBupum,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

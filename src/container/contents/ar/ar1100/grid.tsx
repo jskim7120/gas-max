@@ -81,7 +81,7 @@ function Grid({
 
     gv.onSelectionChanged = (grid: any, index: any) => {
       const itemIndex: any = gv.getCurrent().dataRow;
-      setSelected(data[itemIndex]);
+      setSelected(itemIndex);
       dispatch(
         addRowIndex({
           menuId: menuId,

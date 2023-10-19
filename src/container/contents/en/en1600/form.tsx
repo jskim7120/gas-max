@@ -61,7 +61,7 @@ const Form = React.forwardRef(
     }, []);
 
     useEffect(() => {
-      if (addr.length > 0) {
+      if (addr?.length > 0) {
         reset((formValues: any) => ({
           ...formValues,
           swZipcode: addr ? addr?.split("/")[1] : "",
