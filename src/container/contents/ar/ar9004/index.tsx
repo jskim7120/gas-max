@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import getSimpleData from "app/hook/getSimpleData";
 import { AR9004SEARCH } from "app/path";
@@ -20,6 +20,9 @@ import Viewer from "components/viewer";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns, fields } from "./data";
+import { fetchFooterData } from "container/contents/footer/footerDetailFunc";
+import { useDispatch } from "app/store";
+import { addInfo } from "app/state/footer/footerSlice";
 
 function AR9004({
   depthFullName,
@@ -30,11 +33,17 @@ function AR9004({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const { data, setData, loading, fetchData, dataCommonDic } = getSimpleData(
-    "AR",
-    "AR9004",
-    AR9004SEARCH
-  );
+  const dispatch = useDispatch();
+
+  const {
+    data,
+    setData,
+    loading,
+    fetchData,
+    dataCommonDic,
+    selected,
+    setSelected,
+  } = getSimpleData("AR", "AR9004", AR9004SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
@@ -46,6 +55,20 @@ function AR9004({
       resetForm("reset");
     }
   }, [dataCommonDic]);
+
+  useEffect(() => {
+    console.log("selected", selected);
+    if (selected && Object.keys(selected)?.length > 0) {
+      if (selected?.areaCode && selected?.pjCuCode) {
+        getFooterData();
+      }
+    }
+  }, [selected]);
+
+  const getFooterData = async () => {
+    const res = await fetchFooterData(selected?.areaCode, selected?.pjCuCode);
+    dispatch(addInfo({ info: res }));
+  };
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -185,6 +208,7 @@ function AR9004({
         </SearchWrapper>
       </form>
       <BasicGrid
+        setSelected={setSelected}
         menuId={menuId}
         ref={gridRef}
         areaCode={ownAreaCode}

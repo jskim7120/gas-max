@@ -23,6 +23,9 @@ import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
 import { columns2, fields2 } from "./data/data2";
 import { columns3, fields3 } from "./data/data3";
+import { fetchFooterData } from "container/contents/footer/footerDetailFunc";
+import { useDispatch } from "app/store";
+import { addInfo } from "app/state/footer/footerSlice";
 
 import getTabContent from "./getTabContent";
 
@@ -35,11 +38,17 @@ function AR9009({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const { data, setData, loading, setLoading, dataCommonDic } = getSimpleData(
-    "AR",
-    "AR9009",
-    AR9009SEARCH
-  );
+  const dispatch = useDispatch();
+
+  const {
+    data,
+    setData,
+    loading,
+    setLoading,
+    dataCommonDic,
+    selected,
+    setSelected,
+  } = getSimpleData("AR", "AR9009", AR9009SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control } = useForm<ISEARCH>({
@@ -59,6 +68,20 @@ function AR9009({
       setData([]);
     }
   }, [tabId]);
+
+  useEffect(() => {
+    console.log(selected);
+    if (selected && Object.keys(selected)?.length > 0) {
+      if (selected?.areaCode && selected?.cuCode) {
+        getFooterData();
+      }
+    }
+  }, [selected]);
+
+  const getFooterData = async () => {
+    const res = await fetchFooterData(selected?.areaCode, selected?.cuCode);
+    dispatch(addInfo({ info: res }));
+  };
 
   const fetchData = async (params: any) => {
     setLoading(true);
@@ -267,6 +290,7 @@ function AR9009({
       </div>
 
       <BasicGrid
+        setSelected={setSelected}
         menuId={menuId}
         ref={gridRef}
         gridChangeField={tabId}
