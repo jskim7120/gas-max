@@ -72,98 +72,95 @@ function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
       </ModalBlueHeader>
       <div
         style={{
-          padding: "7px",
+          background: "rgba(101, 84, 255, 0.1)",
+          fontSize: "14px",
+          padding: "5px 10px",
+          display: "flex",
+          alignItems: "center",
         }}
       >
-        <div
+        <label>부품명</label>
+        <input
           style={{
-            fontSize: "14px",
-            padding: "0px 2px 6px",
-            display: "flex",
-            alignItems: "center",
+            height: "25px",
+            borderRadius: "15px",
+            border: "1px solid rgb(188, 185, 185)",
+            outline: "none",
+            padding: "0 10px 0 15px",
+            margin: " 0 20px 0 10px",
           }}
-        >
-          <label>부품명</label>
-          <input
-            style={{
-              height: "25px",
-              borderRadius: "15px",
-              border: "1px solid rgb(188, 185, 185)",
-              outline: "none",
-              padding: "0 10px 0 15px",
-              margin: " 0 20px 0 10px",
-            }}
-          />
-          <Button
-            text="검색"
-            icon={!loading && <MagnifyingGlassBig width="15" />}
-            color={ButtonColor.DANGER}
-            type="submit"
-            loader={
-              loading && <Loader size={16} style={{ marginRight: "12px" }} />
-            }
-          />
-        </div>
-        <div
-          style={{
-            height: "376px",
-            overflowY: "auto",
-          }}
-        >
-          <CTable2>
-            <tr>
-              <th>영업소</th>
-              <th>코드</th>
-              <th>부품명</th>
-              <th>규격</th>
-              <th>단위</th>
-              <th>판매단가</th>
+        />
+        <Button
+          text="검색"
+          icon={!loading && <MagnifyingGlassBig width="15" />}
+          color={ButtonColor.DANGER}
+          type="submit"
+          loader={
+            loading && <Loader size={16} style={{ marginRight: "12px" }} />
+          }
+        />
+      </div>
+
+      <div
+        style={{
+          padding: " 0 7px",
+          height: "376px",
+          overflowY: "auto",
+        }}
+      >
+        <CTable2>
+          <tr>
+            <th>영업소</th>
+            <th>코드</th>
+            <th>부품명</th>
+            <th>규격</th>
+            <th>단위</th>
+            <th>판매단가</th>
+          </tr>
+          {data?.map((item, idx) => (
+            <tr
+              onClick={() => setSelected(idx)}
+              onDoubleClick={() => handleChoose(item)}
+              className={
+                selected !== undefined && selected === idx
+                  ? "active"
+                  : undefined
+              }
+            >
+              <td style={{ textAlign: "center" }}>{item.areaCode}</td>
+              <td style={{ textAlign: "center" }}>{item.bgBpCode}</td>
+              <td style={{ textAlign: "center" }}>{item.bgBpName}</td>
+              <td style={{ textAlign: "center" }}>{item.bgBpDanwi}</td>
+              <td style={{ textAlign: "center" }}>{item.bgBpType}</td>
+              <td style={{ textAlign: "center" }}>{item.bgBpDanga}</td>
             </tr>
-            {data?.map((item, idx) => (
-              <tr
-                onClick={() => setSelected(idx)}
-                onDoubleClick={() => handleChoose(item)}
-                className={
-                  selected !== undefined && selected === idx
-                    ? "active"
-                    : undefined
-                }
-              >
-                <td style={{ textAlign: "center" }}>{item.areaCode}</td>
-                <td style={{ textAlign: "center" }}>{item.bgBpCode}</td>
-                <td style={{ textAlign: "center" }}>{item.bgBpName}</td>
-                <td style={{ textAlign: "center" }}>{item.bgBpDanwi}</td>
-                <td style={{ textAlign: "center" }}>{item.bgBpType}</td>
-                <td style={{ textAlign: "center" }}>{item.bgBpDanga}</td>
-              </tr>
-            ))}
-          </CTable2>
-        </div>
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "end",
-            marginTop: "10px",
-            gap: "10px",
+          ))}
+        </CTable2>
+      </div>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "end",
+          marginTop: "10px",
+          gap: "10px",
+        }}
+      >
+        <Button
+          text="선택"
+          icon={<TickInCircle />}
+          type="button"
+          color={ButtonColor.SUCCESS}
+          onClick={(e) => data && handleChoose(data[selected])}
+        />
+        <Button
+          text="취소"
+          icon={<Reset />}
+          type="button"
+          onClick={() => {
+            setModalOpen(false);
           }}
-        >
-          <Button
-            text="선택"
-            icon={<TickInCircle />}
-            type="button"
-            color={ButtonColor.SUCCESS}
-            onClick={(e) => data && handleChoose(data[selected])}
-          />
-          <Button
-            text="취소"
-            icon={<Reset />}
-            type="button"
-            onClick={() => {
-              setModalOpen(false);
-            }}
-          />
-        </div>
+        />
       </div>
     </>
   );
