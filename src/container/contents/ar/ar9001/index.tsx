@@ -22,6 +22,9 @@ import { DateWithDash, DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
+import { fetchFooterData } from "container/contents/footer/footerDetailFunc";
+import { useDispatch } from "app/store";
+import { addInfo } from "app/state/footer/footerSlice";
 
 function AR9001({
   depthFullName,
@@ -32,11 +35,17 @@ function AR9001({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const { dataCommonDic, data, setData, loading, fetchData } = getSimpleData(
-    "AR",
-    "AR9001",
-    AR9001SEARCH
-  );
+  const dispatch = useDispatch();
+
+  const {
+    dataCommonDic,
+    data,
+    setData,
+    loading,
+    fetchData,
+    selected,
+    setSelected,
+  } = getSimpleData("AR", "AR9001", AR9001SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const [toggler, setToggler] = useState<boolean>(true);
@@ -45,6 +54,19 @@ function AR9001({
     useForm<ISEARCH>({
       mode: "onSubmit",
     });
+
+  useEffect(() => {
+    if (selected && Object.keys(selected)?.length > 0) {
+      if (selected?.areaCode && selected?.pjCuCode) {
+        getFooterData();
+      }
+    }
+  }, [selected]);
+
+  const getFooterData = async () => {
+    const res = await fetchFooterData(selected?.areaCode, selected?.pjCuCode);
+    dispatch(addInfo({ info: res }));
+  };
 
   useEffect(() => {
     if (dataCommonDic && dataCommonDic?.dataInit) {
@@ -266,6 +288,7 @@ function AR9001({
         </SearchWrapper>
       </form>
       <BasicGrid
+        setSelected={setSelected}
         menuId={menuId}
         ref={gridRef}
         areaCode={ownAreaCode}

@@ -14,6 +14,7 @@ const Grid = React.forwardRef(
       rowIndex,
       gridChangeField,
       menuId,
+      setSelected,
     }: {
       areaCode?: string;
       data: any;
@@ -25,6 +26,7 @@ const Grid = React.forwardRef(
       rowIndex: number | undefined;
       gridChangeField?: any;
       menuId: string;
+      setSelected?: Function;
     },
     ref: any
   ) => {
@@ -67,7 +69,10 @@ const Grid = React.forwardRef(
         dataRow: rowIndex,
       });
 
-      gv.onSelectionChanged = () => {};
+      gv.onSelectionChanged = () => {
+        const itemIndex: any = gv.getCurrent().dataRow;
+        setSelected && setSelected(data[itemIndex]);
+      };
 
       return () => {
         dp.clearRows();

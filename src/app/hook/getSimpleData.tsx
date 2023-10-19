@@ -11,6 +11,7 @@ function GetSimpleData(
     useGetCommonDictionaryMutation();
 
   const [data, setData] = useState<Array<any>>([]);
+  const [selected, setSelected] = useState<any>({});
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -25,8 +26,10 @@ function GetSimpleData(
 
     if (dataS && dataS?.length > 0) {
       setData(dataS);
+      setSelected(dataS?.length > 0 ? data[data?.length] : {});
     } else {
       setData([]);
+      setSelected({});
     }
     setLoading(false);
   };
@@ -35,6 +38,8 @@ function GetSimpleData(
     dataCommonDic,
     data,
     setData,
+    selected,
+    setSelected,
     loading,
     fetchData,
     setLoading,

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import getSimpleData from "app/hook/getSimpleData";
 import { AR9002SEARCH } from "app/path";
@@ -22,6 +22,9 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { ISEARCH } from "./model";
 import { columns0, fields0 } from "./data/data0";
 import { columns1, fields1 } from "./data/data1";
+import { fetchFooterData } from "container/contents/footer/footerDetailFunc";
+import { useDispatch } from "app/store";
+import { addInfo } from "app/state/footer/footerSlice";
 
 function AR9002({
   depthFullName,
@@ -32,11 +35,17 @@ function AR9002({
   menuId: string;
   ownAreaCode: string;
 }) {
-  const { data, setData, loading, fetchData, dataCommonDic } = getSimpleData(
-    "AR",
-    "AR9002",
-    AR9002SEARCH
-  );
+  const dispatch = useDispatch();
+
+  const {
+    data,
+    setData,
+    loading,
+    fetchData,
+    dataCommonDic,
+    selected,
+    setSelected,
+  } = getSimpleData("AR", "AR9002", AR9002SEARCH);
   const gridRef = useRef() as React.MutableRefObject<any>;
 
   const { register, handleSubmit, reset, control, watch } = useForm<ISEARCH>({
@@ -54,6 +63,19 @@ function AR9002({
       setData([]);
     }
   }, [watch("reportKind")]);
+
+  useEffect(() => {
+    if (selected && Object.keys(selected)?.length > 0) {
+      if (selected?.areaCode && selected?.pcCuCode) {
+        getFooterData();
+      }
+    }
+  }, [selected]);
+
+  const getFooterData = async () => {
+    const res = await fetchFooterData(selected?.areaCode, selected?.pcCuCode);
+    dispatch(addInfo({ info: res }));
+  };
 
   const openNewWindow = async () => {
     const width = 1500;
@@ -247,6 +269,7 @@ function AR9002({
         </SearchWrapper>
       </form>
       <BasicGrid
+        setSelected={setSelected}
         menuId={menuId}
         ref={gridRef}
         areaCode={ownAreaCode}
