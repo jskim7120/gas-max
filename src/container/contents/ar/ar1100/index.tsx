@@ -717,7 +717,9 @@ function AR1100({
   const submit = async (d: any, pos: string = "") => {
     addBtnUnClick();
     const params = getValues();
-    const date = dateToTimestamp(getPreviousMonthDate(params.dDate));
+    const date = dateToTimestamp(
+      getPreviousMonthDate(DateWithoutDash(params.dDate))
+    );
     const sDate = dateToTimestamp(DateWithoutDash(params.sDate));
     const dDate = dateToTimestamp(DateWithoutDash(params.dDate));
     if (sDate >= date && date <= dDate) {

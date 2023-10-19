@@ -36,6 +36,7 @@ export function DateWithDashOnlyYearMonth(date) {
   if (date === null || date === undefined || date === "") {
     return "";
   }
+  console.log(date instanceof Date, "really true or false of date");
   if (date instanceof Date) {
     return (
       date.getFullYear() +
@@ -155,6 +156,15 @@ export function dateToTimestamp(dateString) {
 
 export function getPreviousMonthDate(dateString) {
   // Parse the "yyyyMMdd" format date string
+
+  if (dateString === null || dateString === undefined || dateString === "") {
+    return "";
+  }
+
+  if (typeof dateString === "string") {
+    dateString = dateString?.replace(/-/g, "");
+  }
+
   const year = parseInt(dateString?.substr(0, 4), 10);
   const month = parseInt(dateString?.substr(4, 2), 10) - 1; // Subtract 1 to use 0-based months
   const day = parseInt(dateString?.substr(6, 2), 10);
