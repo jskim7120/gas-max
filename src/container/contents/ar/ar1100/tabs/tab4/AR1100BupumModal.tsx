@@ -155,7 +155,23 @@ function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
             background: "#b9b9b9",
             padding: "10px",
           }}
-        />
+        >
+          <Button
+            text="선택"
+            icon={<TickInCircle />}
+            type="button"
+            color={ButtonColor.SUCCESS}
+            onClick={(e) => data && handleChoose(data[selected])}
+          />
+          <Button
+            text="취소"
+            icon={<Reset />}
+            type="button"
+            onClick={() => {
+              setModalOpen(false);
+            }}
+          />
+        </div>
       </div>
     </>
   );
