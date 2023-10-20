@@ -33,7 +33,6 @@ function Grid({
     container = realgridElement.current as HTMLDivElement;
     dp = new LocalDataProvider(true);
     gv = new GridView(container);
-
     gv.setDataSource(dp);
     dp.setFields(fields);
     gv.setColumns(columns);
@@ -52,15 +51,19 @@ function Grid({
     gv.setEditOptions({ editable: false });
 
     gv.displayOptions.useFocusClass = true;
-    gv.setCurrent({
-      dataRow: rowIndex,
-    });
+    gv.onScrollToBottom = () => {
+      if (rowIndex != null) {
+        gv.setCurrent({
+          dataRow: rowIndex,
+        });
+      }
+    };
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected(data[itemIndex]);
       setIsAddBtnClicked && setIsAddBtnClicked(false);
-      dispatch(addRowIndex({ menuId: menuId, row: itemIndex, grid: 0 }));
+      dispatch(addRowIndex({ menuId: menuId, row: itemIndex, grid: 1 }));
     };
 
     return () => {

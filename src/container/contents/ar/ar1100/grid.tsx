@@ -75,9 +75,11 @@ function Grid({
 
     gv.displayOptions.useFocusClass = true;
 
-    gv.setCurrent({
-      dataRow: rowIndex,
-    });
+    gv.onScrollToBottom = () => {
+      gv.setCurrent({
+        dataRow: rowIndex,
+      });
+    }
 
     gv.onSelectionChanged = (grid: any, index: any) => {
       const itemIndex: any = gv.getCurrent().dataRow;

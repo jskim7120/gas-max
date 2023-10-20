@@ -45,9 +45,11 @@ function Grid({
     //gv.displayOptions.fitStyle = "evenFill";
     gv.setEditOptions({ editable: false });
 
-    gv.setCurrent({
-      dataRow: selectedRowIndex,
-    });
+    gv.onScrollToBottom = () => {
+      gv.setCurrent({
+        dataRow: selectedRowIndex,
+      });
+    }
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;
