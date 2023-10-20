@@ -111,6 +111,7 @@ export const CTable2 = styled.table`
       top: 0;
       background-color: #d4d0d0;
       border-bottom: 1px solid rgb(188, 185, 185);
+      border-top: 1px solid rgb(188, 185, 185);
 
       &.light-gray {
         background-color: #ececec;

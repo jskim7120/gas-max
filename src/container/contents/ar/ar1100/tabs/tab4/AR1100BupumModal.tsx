@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "app/store";
 import { apiGet } from "app/axios";
 import { AR1100BUPUMSEARCH } from "app/path";
@@ -15,6 +15,7 @@ import {
 } from "components/allSvgIcon";
 import Loader from "components/loader";
 import { FormGroup } from "components/form/style";
+import { handleKeyDown } from "helpers/handleKeyDown";
 
 function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -51,13 +52,15 @@ function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
     setModalOpen(false);
   };
 
+  const handleTrKeyDown = (e: any) => {};
+
   return (
     <>
       <ModalBlueHeader
         className="handle h25"
-        style={{ background: "rgba(101, 84, 255, 0.37)" }}
+        style={{ background: "rgba(101, 84, 255, 0.37)", height: "40px" }}
       >
-        <FormGroup></FormGroup>
+        <FormGroup>시설 부품</FormGroup>
         <FormGroup>
           <span
             className="close_btn"
@@ -70,17 +73,14 @@ function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
           </span>
         </FormGroup>
       </ModalBlueHeader>
-      <div
-        style={{
-          padding: "7px",
-        }}
-      >
+      <div>
         <div
           style={{
             fontSize: "14px",
-            padding: "0px 2px 6px",
+            padding: "10px 15px",
             display: "flex",
             alignItems: "center",
+            background: "#eceaff",
           }}
         >
           <label>부품명</label>
@@ -108,28 +108,38 @@ function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
           style={{
             height: "376px",
             overflowY: "auto",
+            padding: "0 10px",
+            margin: "10px 0",
           }}
         >
           <CTable2>
-            <tr>
-              <th>영업소</th>
-              <th>코드</th>
-              <th>부품명</th>
-              <th>규격</th>
-              <th>단위</th>
-              <th>판매단가</th>
+            <colgroup>
+              <col width="15%" />
+              <col width="50%" />
+              <col width="20%" />
+              <col width="20%" />
+              <col width="20%" />
+            </colgroup>
+            <tr style={{ height: "40px" }}>
+              <th style={{ background: "#bbf7b5" }}>코드</th>
+              <th style={{ background: "#bbf7b5" }}>부품명</th>
+              <th style={{ background: "#bbf7b5" }}>규격</th>
+              <th style={{ background: "#bbf7b5" }}>단위</th>
+              <th style={{ background: "#bbf7b5" }}>판매단가</th>
             </tr>
             {data?.map((item, idx) => (
               <tr
+                key={idx}
                 onClick={() => setSelected(idx)}
                 onDoubleClick={() => handleChoose(item)}
+                onKeyDown={(e) => handleTrKeyDown(e)}
                 className={
                   selected !== undefined && selected === idx
                     ? "active"
                     : undefined
                 }
+                style={{ height: "40px" }}
               >
-                <td style={{ textAlign: "center" }}>{item.areaCode}</td>
                 <td style={{ textAlign: "center" }}>{item.bgBpCode}</td>
                 <td style={{ textAlign: "center" }}>{item.bgBpName}</td>
                 <td style={{ textAlign: "center" }}>{item.bgBpDanwi}</td>
@@ -144,8 +154,9 @@ function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
             width: "100%",
             display: "flex",
             justifyContent: "end",
-            marginTop: "10px",
             gap: "10px",
+            background: "#b9b9b9",
+            padding: "10px",
           }}
         >
           <Button
