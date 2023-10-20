@@ -83,7 +83,7 @@ const Tab4 = React.forwardRef(
 
     const dispatch = useDispatch();
 
-    const cm1106 = useSelector((state: any) => state.modal.cm1106);
+    const bupumState = useSelector((state: any) => state.modal.bupum);
     const { info, source } = useSelector((state: any) => state.footer);
 
     // const { showCM1106Modal, openModal } = useModal();
@@ -91,11 +91,11 @@ const Tab4 = React.forwardRef(
     const { showAR1100BpSaleModal, openModal: openAR1100Modal } = useModal();
 
     useEffect(() => {
-      if (cm1106.source === "AR11000") {
-        setJpKind(cm1106.jpKind);
-        resetForm("jpName");
+      if (bupumState.source === "AR11003") {
+        //setJpKind(cm1106.jpKind);
+        resetForm("bpName");
       }
-    }, [cm1106.tick]);
+    }, [bupumState.tick]);
 
     useEffect(() => {
       if (watch("bgInkumType") !== undefined) {
@@ -245,23 +245,23 @@ const Tab4 = React.forwardRef(
         event.preventDefault();
 
         const res = await fetchDataSangpum({
-          areaCode: cm1106?.areaCode,
-          cuCode: cm1106?.cuCode,
+          areaCode: info?.areaCode,
+          cuCode: info?.cuCode,
           jpCode: event.target.value,
-          pjType: 0,
+          pjType: 3,
         });
 
         if (Object.keys(res)?.length > 0) {
-          setDanga(res[0]?.jcJpDanga);
-          handleChangeDanga(res[0]?.jcJpDanga);
+          setDanga(res[0]?.bgBpDanga);
+          handleChangeDanga(res[0]?.bgBpDanga);
           reset((formValues) => ({
             ...formValues,
-            bgBpName: res[0]?.jcJpName,
+            ...res[0],
           }));
 
           document.getElementById("bgQty")?.focus();
         } else {
-          openModalCM1106();
+          openModalBupum();
         }
       }
     }
@@ -275,25 +275,23 @@ const Tab4 = React.forwardRef(
           bgBpCode: data65?.bgBpCode ? data65?.bgBpCode : "",
           bgBpName: data65?.bgBpName ? data65?.bgBpName : "",
         });
-      } else if (type === "jpName") {
-        const bgKumSup =
-          (cm1106?.jcJpDanga ? +removeCommas(cm1106.jcJpDanga, "number") : 0) *
-          (getValues("bgQty") ? +getValues("bgQty") : 0);
-
-        reset((formValues) => ({
-          ...formValues,
-          bgBpName: cm1106.jpName,
-          bgBpCode: cm1106.jpCode,
-          //pjJpSpec: cm1106?.jpSpec,
-          bgDanga: cm1106.jcJpDanga,
-          bgKumSup: bgKumSup,
-        }));
+      } else if (type === "bpName") {
+        // const bgKumSup =
+        //   (cm1106?.jcJpDanga ? +removeCommas(cm1106.jcJpDanga, "number") : 0) *
+        //   (getValues("bgQty") ? +getValues("bgQty") : 0);
+        // reset((formValues) => ({
+        //   ...formValues,
+        //   bgBpName: cm1106.jpName,
+        //   bgBpCode: cm1106.jpCode,
+        //   //pjJpSpec: cm1106?.jpSpec,
+        //   bgDanga: cm1106.jcJpDanga,
+        //   bgKumSup: bgKumSup,
+        // }));
       }
     };
 
-    const openModalCM1106 = async () => {
-      console.log("data65>>>>>>>>>>", data65);
-      dispatch(addBupum({ areaCode: data65?.areaCode }));
+    const openModalBupum = async () => {
+      //dispatch(addBupum({ areaCode: "01", pjType: 3, source: "AR11003" }));
       openBupumModal();
     };
 
@@ -321,6 +319,11 @@ const Tab4 = React.forwardRef(
         params.bgCuName = info?.cuName;
         params.bgSno = "";
         // }
+      } else {
+        params.areaCode = data65?.areaCode;
+        params.bgCuCode = data65?.bgCuCode;
+        params.bgCuName = data65?.bgCuName;
+        params.bgSno = data65?.bgSno;
       }
 
       params.bgDate = DateWithoutDash(params.bgDate);
@@ -358,7 +361,7 @@ const Tab4 = React.forwardRef(
         0: (
           <FormGroup>
             <Select register={register("saleState")} width={InputSize.i100}>
-              {dictionary?.bgSaleState?.map((obj: any, idx: number) => (
+              {dictionary?.saleState?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -409,7 +412,7 @@ const Tab4 = React.forwardRef(
                 alignItems: "center",
                 paddingLeft: "3px",
               }}
-              onClick={isAddBtnClicked ? openModalCM1106 : undefined}
+              onClick={isAddBtnClicked ? openModalBupum : undefined}
             >
               <MagnifyingGlass />
             </span>
@@ -558,6 +561,19 @@ const Tab4 = React.forwardRef(
             textAlign="right"
             mask={currencyMask}
           />
+          // <Controller
+          //   control={control}
+          //   name="bgInkum"
+          //   render={({ field }) => (
+          //     <Input
+          //       {...field}
+          //       inputSize={InputSize.i100}
+          //       textAlign="right"
+          //       mask={currencyMask}
+          //       readOnly
+          //     />
+          //   )}
+          // />
         ),
         3: (
           <Input
@@ -570,6 +586,19 @@ const Tab4 = React.forwardRef(
             textAlign="right"
             mask={currencyMask}
           />
+          // <Controller
+          //   control={control}
+          //   name="bgInkum"
+          //   render={({ field }) => (
+          //     <Input
+          //       {...field}
+          //       inputSize={InputSize.i100}
+          //       textAlign="right"
+          //       mask={currencyMask}
+          //       readOnly
+          //     />
+          //   )}
+          // />
         ),
         4: (
           <Controller

@@ -20,6 +20,8 @@ import useModal from "app/hook/useModal";
 import useRowIndex from "app/hook/useRowIndex";
 import useGetData from "app/hook/getSimpleData";
 import {
+  addAR1100Tab4Multiple,
+  addBupum,
   addCM1105,
   addDeleteMenuId,
   setIsDelete,
@@ -342,7 +344,7 @@ function AR1100({
         setDataDictionary({
           bgAcbCode: res?.bgAcbCode,
           bgInkumType: res?.bgInkumType,
-          bgSaleState: res?.bgSaleState,
+          saleState: res?.saleState,
           bgSwCode: res?.bgSwCode,
           bgVatDiv: res?.bgVatDiv,
         });
@@ -570,6 +572,7 @@ function AR1100({
   };
 
   const fetchData65 = async (params: any) => {
+    console.log("params>>>>>>>>", params);
     const res = await apiGet(AR1100SELECT, params);
 
     if (res && Object.keys(res)?.length > 0) {
@@ -659,20 +662,29 @@ function AR1100({
         setDataDictionary({
           bgAcbCode: res?.bgAcbCode,
           bgInkumType: res?.bgInkumType,
-          bgSaleState: res?.bgSaleState,
+          saleState: res?.saleState,
           bgSwCode: res?.bgSwCode,
           bgVatDiv: res?.bgVatDiv,
         });
         if (res?.detailData && Object.keys(res?.detailData)?.length > 0) {
           let detail = res?.detailData[0];
+          setInkum(detail?.bgInkum);
+          setDc(detail?.bgDc);
           setQty(detail?.bgQty);
           setDanga(detail?.bgDanga);
           setVatDiv(detail?.bgVatDiv);
-          setInkum(detail?.bgInkum);
-          setDc(detail?.bgDc);
 
           tabRef4?.current?.reset(detail);
+          dispatch(
+            addBupum({
+              areaCode: data[selected]?.areaCode,
+              pjType: data[selected]?.pjType,
+            })
+          );
         }
+      }
+      if (data[selected]?.pjType === "4") {
+        dispatch(addAR1100Tab4Multiple(res));
       }
     } else {
       setData65({});
