@@ -52,8 +52,6 @@ function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
     setModalOpen(false);
   };
 
-  const handleTrKeyDown = (e: any) => {};
-
   return (
     <>
       <ModalBlueHeader
@@ -132,7 +130,6 @@ function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
                 key={idx}
                 onClick={() => setSelected(idx)}
                 onDoubleClick={() => handleChoose(item)}
-                onKeyDown={(e) => handleTrKeyDown(e)}
                 className={
                   selected !== undefined && selected === idx
                     ? "active"
@@ -158,23 +155,7 @@ function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
             background: "#b9b9b9",
             padding: "10px",
           }}
-        >
-          <Button
-            text="선택"
-            icon={<TickInCircle />}
-            type="button"
-            color={ButtonColor.SUCCESS}
-            onClick={(e) => data && handleChoose(data[selected])}
-          />
-          <Button
-            text="취소"
-            icon={<Reset />}
-            type="button"
-            onClick={() => {
-              setModalOpen(false);
-            }}
-          />
-        </div>
+        />
       </div>
     </>
   );
