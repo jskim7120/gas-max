@@ -78,7 +78,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
   const state: any = useSelector((state) => state.modal.ar1100Tab4Multiple);
 
   useEffect(() => {
-    if (state) {
+    if (state && Object.keys(state)?.length > 0) {
       reset(state?.detailData[0]);
       setQty(state?.detailData[0].bgQty);
       setDanga(state?.detailData[0].bgDanga);

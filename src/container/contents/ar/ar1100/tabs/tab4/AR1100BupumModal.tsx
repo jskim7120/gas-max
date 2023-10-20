@@ -137,11 +137,21 @@ function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
                 }
                 style={{ height: "40px" }}
               >
-                <td style={{ textAlign: "center" }}>{item.bgBpCode}</td>
-                <td style={{ textAlign: "center" }}>{item.bgBpName}</td>
-                <td style={{ textAlign: "center" }}>{item.bgBpDanwi}</td>
-                <td style={{ textAlign: "center" }}>{item.bgBpType}</td>
-                <td style={{ textAlign: "center" }}>{item.bgBpDanga}</td>
+                <td style={{ textAlign: "center" }}>
+                  {state?.pjType === "3" ? item.bgBpCode : item.bglBpCode}
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  {state?.pjType === "3" ? item.bgBpName : item.bglBpName}
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  {state?.pjType === "3" ? item.bgBpDanwi : item.bglBpDanwi}
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  {state?.pjType === "3" ? item.bgBpType : item.bglBpType}
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  {state?.pjType === "3" ? item.bgBpDanga : item.bglBpDanga}
+                </td>
               </tr>
             ))}
           </CTable2>

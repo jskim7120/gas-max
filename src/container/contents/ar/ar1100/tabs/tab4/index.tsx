@@ -319,6 +319,11 @@ const Tab4 = React.forwardRef(
         params.bgCuName = info?.cuName;
         params.bgSno = "";
         // }
+      } else {
+        params.areaCode = data65?.areaCode;
+        params.bgCuCode = data65?.bgCuCode;
+        params.bgCuName = data65?.bgCuName;
+        params.bgSno = data65?.bgSno;
       }
 
       params.bgDate = DateWithoutDash(params.bgDate);
