@@ -4,7 +4,7 @@ import Form from "container/contents/ar/ar1100/tabs/tab4/AR1100BupumModal";
 import { ModalWrapper } from "./style";
 
 const customStyle = {
-  width: "400px",
+  width: "500px",
 };
 
 function AR1100BupumModal({ setIsOpen }: { setIsOpen: Function }) {
