@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "app/store";
 import { Update, Reset, WhiteClose } from "components/allSvgIcon";
 import { FormGroup, Select, Label, Input } from "components/form/style";
 import { ModalBlueHeader } from "components/modal/customModals/style";
@@ -63,11 +64,29 @@ const rawData = [
 
 function Modal({ setModalOpen }: { setModalOpen: Function }) {
   const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
+  const [qty, setQty] = useState<number>(0);
+  const [danga, setDanga] = useState<number>(0);
+  const [dc, setDc] = useState<number>(0);
+  const [inkum, setInkum] = useState<number>(0);
+  const [vatDiv, setVatDiv] = useState<string>("0");
 
   const { register, handleSubmit, reset, setFocus, control, watch } =
     useForm<IAR110065DETAIL>({
       mode: "onSubmit",
     });
+
+  const state: any = useSelector((state) => state.modal.ar1100Tab4Multiple);
+
+  useEffect(() => {
+    if (state) {
+      reset(state?.detailData[0]);
+      setQty(state?.detailData[0].bgQty);
+      setDanga(state?.detailData[0].bgDanga);
+      setVatDiv(state?.detailData[0].bgVatDiv);
+      setInkum(state?.detailData[0].bgInkum);
+      setDc(state?.detailData[0].bgDc);
+    }
+  }, [state]);
 
   const { showAR1100BupumModal, openModal: openModalBupum } = useModal();
 
@@ -79,21 +98,33 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
     openModalBupum();
   };
 
+  const handleChangeVatDiv = (val: string) => {
+    setVatDiv(val);
+  };
+
+  const handleChangeInkumOrDc = (val: number, type: string) => {
+    if (type === "inkum") {
+      setInkum(val);
+    } else if (type === "dc") {
+      setDc(val);
+    }
+  };
+
   const tableData1 = [
     {
       0: (
         <FormGroup>
           <Select
-            name="pjVatDiv"
-            // value={vatDiv}
+            name="bgVatDiv"
+            value={vatDiv}
             width={InputSize.i70}
-            // onChange={(e) => handleChangeVatDiv(e.target.value)}
+            onChange={(e) => handleChangeVatDiv(e.target.value)}
           >
-            {/* {dictionary?.pjVatDiv?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code}>
-              {obj.codeName}
-            </option>
-          ))} */}
+            {state?.bgVatDiv?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
           </Select>
         </FormGroup>
       ),
@@ -174,11 +205,11 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
       0: (
         <FormGroup>
           <Select register={register("bgInkumType")} width={InputSize.i100}>
-            {/* {dictionary?.bgInkumType?.map((obj: any, idx: number) => (
+            {state?.bgInkumType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
-            ))} */}
+            ))}
           </Select>
         </FormGroup>
       ),
@@ -189,22 +220,19 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
             style={{ width: "284px" }}
             disabled={watch("bgInkumType") !== "2"}
           >
-            {/* {dictionary?.bgAcbCode?.map((obj: any, idx: number) => (
+            {state?.bgAcbCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
-            ))} */}
+            ))}
           </Select>
         </FormGroup>
       ),
       2: (
         <Input
           name="bgInkum"
-          //value={inkum}
-          onChange={(e: any) =>
-            // handleChangeInkumOrDc(e.target.value, "inkum")
-            console.log("")
-          }
+          value={inkum}
+          onChange={(e: any) => handleChangeInkumOrDc(e.target.value, "inkum")}
           inputSize={InputSize.i100}
           textAlign="right"
           mask={currencyMask}
@@ -213,11 +241,8 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
       3: (
         <Input
           name="bgDc"
-          // value={dc}
-          onChange={(e: any) =>
-            //handleChangeInkumOrDc(e.target.value, "dc")
-            console.log("")
-          }
+          value={dc}
+          onChange={(e: any) => handleChangeInkumOrDc(e.target.value, "dc")}
           inputSize={InputSize.i100}
           textAlign="right"
           mask={currencyMask}
@@ -241,11 +266,11 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
       5: (
         <FormGroup>
           <Select register={register("bgSwCode")} width={InputSize.i100}>
-            {/* {dictionary?.bgSwCode?.map((obj: any, idx: number) => (
+            {state?.bgSwCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
-            ))} */}
+            ))}
           </Select>
         </FormGroup>
       ),
@@ -311,7 +336,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
           name="bgDate"
           render={({ field }) => <CustomDatePicker {...field} />}
         />
-        <Grid data={rawData} openModal={handleOpenModalBupum} />
+        <Grid data={state?.gridData} openModal={handleOpenModalBupum} />
         <Table
           className="no-space"
           tableHeader={tableHeader3}

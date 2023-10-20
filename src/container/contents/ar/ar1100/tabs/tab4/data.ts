@@ -11,7 +11,7 @@ export const fields = [
   },
   {
     fieldName: "bglBpType",
-    dataType: ValueType.NUMBER,
+    dataType: ValueType.TEXT,
   },
   {
     fieldName: "bglQty",

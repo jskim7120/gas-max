@@ -66,7 +66,11 @@ export interface initialStateType {
     menuId: string;
     isDelete: boolean;
   };
-  bupum: any;
+  bupum: {
+    source: string;
+    tick: boolean;
+  };
+  ar1100Tab4Multiple: any;
 }
 
 const initialState: initialStateType = {
@@ -136,7 +140,11 @@ const initialState: initialStateType = {
     menuId: "",
     isDelete: false,
   },
-  bupum: {},
+  bupum: {
+    source: "",
+    tick: false,
+  },
+  ar1100Tab4Multiple: {},
 };
 
 const modalSlice = createSlice({
@@ -237,6 +245,16 @@ const modalSlice = createSlice({
         ...action.payload,
       };
     },
+    addBupumTick: (state, action) => {
+      state.bupum = {
+        ...state.bupum,
+        ...action.payload,
+        tick: !state.bupum.tick,
+      };
+    },
+    addAR1100Tab4Multiple: (state, action) => {
+      state.ar1100Tab4Multiple = action.payload;
+    },
   },
 });
 
@@ -258,6 +276,8 @@ export const {
   ptAreaCode,
   pt1205Popup,
   addBupum,
+  addBupumTick,
+  addAR1100Tab4Multiple,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

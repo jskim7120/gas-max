@@ -5,7 +5,7 @@ import { AR1100BUPUMSEARCH } from "app/path";
 import { CTable2 } from "container/contents/gr/gr1200/style";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import { addBupum } from "app/state/modal/modalSlice";
+import { addBupumTick } from "app/state/modal/modalSlice";
 import { ModalBlueHeader } from "components/modal/customModals/style";
 import {
   MagnifyingGlassBig,
@@ -22,21 +22,21 @@ function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
   const [selected, setSelected] = useState<number>(0);
   const dispatch = useDispatch();
 
-  const state = useSelector((state) => state.modal.bupum);
+  const state: any = useSelector((state) => state.modal.bupum);
 
   useEffect(() => {
-    if (state) {
+    if (state?.areaCode && state?.pjType) {
       fetchData();
     }
   }, []);
 
   const fetchData = async () => {
     const response = await apiGet(AR1100BUPUMSEARCH, {
-      areaCode: "01",
-      bpCode: "",
-      bpName: "",
-      bpSearch: "",
-      pjType: "3",
+      areaCode: state?.areaCode,
+      bpCode: state?.bpCode ? state?.bpCode : "",
+      bpName: state?.bpName ? state?.bpName : "",
+      bpSearch: state?.bpSearch ? state?.bpSearch : "",
+      pjType: state?.pjType,
     });
 
     if (response) {
@@ -47,7 +47,7 @@ function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
   };
 
   const handleChoose = (obj: any) => {
-    dispatch(addBupum(obj));
+    dispatch(addBupumTick(obj));
     setModalOpen(false);
   };
 
