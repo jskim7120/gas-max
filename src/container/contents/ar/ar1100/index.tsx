@@ -87,6 +87,7 @@ function AR1100({
   const tabRef2 = useRef() as React.MutableRefObject<any>;
   const tabRef3 = useRef() as React.MutableRefObject<any>;
   const tabRef4 = useRef() as React.MutableRefObject<any>;
+  const tabRef5 = useRef() as React.MutableRefObject<any>;
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
   const [selected, setSelected] = useState<number>(-1);
@@ -344,6 +345,25 @@ function AR1100({
 
         setData65(res?.detailData[0]);
         tabRef4?.current?.reset({ ...res?.detailData[0], bgDate: new Date() });
+        document.getElementById("bgBpCode")?.focus();
+      }
+    } else if (tabId === 4) {
+      const res: any = await fetchData71({
+        areaCode: info?.areaCode,
+        cuCode: info?.cuCode,
+        saleType: 5,
+      });
+      if (res && Object.keys(res)?.length > 0) {
+        setDataDictionary({
+          bgAcbCode: res?.bgAcbCode,
+          bgInkumType: res?.bgInkumType,
+          bgSwCode: res?.bgSwCode,
+          bgVatDiv: res?.bgVatDiv,
+          saleState: res?.saleState,
+        });
+
+        setData65(res?.detailData[0]);
+        tabRef5?.current?.reset({ ...res?.detailData[0], bgDate: new Date() });
         document.getElementById("bgBpCode")?.focus();
       }
     }
@@ -653,6 +673,9 @@ function AR1100({
             })
           );
         }
+      }
+      if (data[selected]?.pjType === "5") {
+        dispatch(addAR1100Tab4Multiple(res));
       }
     } else {
       setData65({});
@@ -1102,6 +1125,7 @@ function AR1100({
             tabRef2,
             tabRef3,
             tabRef4,
+            tabRef5,
             addBtnUnClick,
             jpKind,
             setJpKind,
