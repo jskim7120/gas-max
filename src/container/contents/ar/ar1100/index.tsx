@@ -89,7 +89,7 @@ function AR1100({
   const tabRef4 = useRef() as React.MutableRefObject<any>;
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
-  const [selected, setSelected] = useState<number>(0);
+  const [selected, setSelected] = useState<number>(-1);
   const [data65, setData65] = useState({});
   const [dataDictionary, setDataDictionary] = useState({});
   const [tabId, setTabId] = useState<number>(0);
@@ -138,7 +138,7 @@ function AR1100({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (selected !== undefined) {
+    if (selected !== undefined && selected > -1) {
       if (isAddBtnClicked === true) {
         removeEmptyRow();
         addBtnUnClick();
@@ -152,7 +152,7 @@ function AR1100({
         }
       }
       if (data[selected]?.areaCode && data[selected]?.cuCode) {
-        getFooterData();
+        getFooterData(data[selected]?.areaCode, data[selected]?.cuCode);
       }
       if (data[selected]?.pjDate && data[selected]?.areaCode) {
         fetchData65({
@@ -167,20 +167,16 @@ function AR1100({
   }, [selected]);
 
   useEffect(() => {
-    if (source === menuId) {
-      if (info) {
-        if (Object.keys(info)?.length === 0) {
-          if (isAddBtnClicked) {
-            removeEmptyRow();
-            addBtnUnClick();
-          }
+    if (source === menuId && isAddBtnClicked === true && info !== undefined) {
+      if (Object.keys(info)?.length === 0) {
+        removeEmptyRow();
+        addBtnUnClick();
+      } else {
+        addCodeAndNameToLastRow(info);
+        if (info?.cuType === "0") {
+          tabId !== 0 ? setTabId(0) : setToggler((prev) => !prev);
         } else {
-          addCodeAndNameToLastRow(info);
-          if (info?.cuType === "0") {
-            tabId !== 0 ? setTabId(0) : setToggler((prev) => !prev);
-          } else {
-            tabId !== 1 ? setTabId(1) : setToggler((prev) => !prev);
-          }
+          tabId !== 1 ? setTabId(1) : setToggler((prev) => !prev);
         }
       }
     }
@@ -198,11 +194,8 @@ function AR1100({
     }
   }, [deleteState.isDelete]);
 
-  const getFooterData = async () => {
-    const res = await fetchFooterData(
-      data[selected]?.areaCode,
-      data[selected]?.cuCode
-    );
+  const getFooterData = async (areaCode: string, cuCode: string) => {
+    const res = await fetchFooterData(areaCode, cuCode);
     dispatch(addInfo({ info: res }));
   };
 
@@ -344,52 +337,34 @@ function AR1100({
         setDataDictionary({
           bgAcbCode: res?.bgAcbCode,
           bgInkumType: res?.bgInkumType,
-          saleState: res?.saleState,
           bgSwCode: res?.bgSwCode,
           bgVatDiv: res?.bgVatDiv,
+          saleState: res?.saleState,
         });
 
-        let ddat: any;
-
-        if (res?.detailData) {
-          ddat = res?.detailData[0];
-          tabRef4?.current?.reset({ ...ddat, bgDate: new Date() });
-        } else if (res?.initData) {
-          ddat = res?.initData[0];
-          tabRef4?.current?.reset({ ...ddat });
-        }
-
-        setData65(ddat);
-        setQty(ddat?.bgQty);
-        setDanga(ddat?.bgDanga);
-        setVatDiv(ddat?.bgVatDiv);
-        setInkum(ddat?.bgInkum);
-        setDc(ddat?.bgDc);
-
-        if (res?.detailData) {
-          document.getElementById("bgQty")?.focus();
-        } else if (res?.initData) {
-          document.getElementById("bgBpCode")?.focus();
-        }
+        setData65(res?.detailData[0]);
+        tabRef4?.current?.reset({ ...res?.detailData[0], bgDate: new Date() });
+        document.getElementById("bgBpCode")?.focus();
       }
     }
   };
 
   const addCodeAndNameToLastRow = (info: any) => {
     if (data?.length > 0) {
-      if ("isNew" in data[data?.length - 1]) {
-        setData((prev: any) =>
-          prev.map((object: any, idx: number) => {
-            if (idx === data?.length - 1) {
-              return {
-                ...object,
-                cuName: info?.cuName,
-                cuCode: info?.cuCode,
-              };
-            } else return object;
-          })
-        );
-      }
+      // if ("isNew" in data[data?.length - 1]) {
+
+      setData((prev: any) =>
+        prev.map((object: any, idx: number) => {
+          if (idx === data?.length - 1) {
+            return {
+              ...object,
+              cuName: info?.cuName,
+              cuCode: info?.cuCode,
+            };
+          } else return object;
+        })
+      );
+      // }
     }
   };
 
@@ -420,7 +395,7 @@ function AR1100({
       orderDate: dateWithTime,
       salestateName: "완료",
       pjDate: dateOnly,
-      isNew: true,
+      //isNew: true,
     };
 
     setData((prev) => [...prev, { ...emtObj, ...obj }]);
@@ -429,7 +404,8 @@ function AR1100({
   };
 
   const removeEmptyRow = () => {
-    if (data && data?.length > 0 && "isNew" in data[data?.length - 1]) {
+    // if (data && data?.length > 0 && "isNew" in data[data?.length - 1]) {
+    if (data && data?.length > 0) {
       const len = data?.length - 1;
       const tempdata = data.slice(0, -1);
       setData(tempdata);
@@ -563,7 +539,7 @@ function AR1100({
     } else {
       setData([]);
       setSelected(-1);
-      tabId !== 0 && setTabId(0);
+      //tabId !== 0 && setTabId(0);
       //tabRef1?.current?.setPjQty(0);
       //tabRef1?.current?.setPjJago(0); ------end state-uudiig set hiih
       tabRef1?.current?.reset({ ...emtObjTab1 });
@@ -572,7 +548,6 @@ function AR1100({
   };
 
   const fetchData65 = async (params: any) => {
-    console.log("params>>>>>>>>", params);
     const res = await apiGet(AR1100SELECT, params);
 
     if (res && Object.keys(res)?.length > 0) {
@@ -658,23 +633,19 @@ function AR1100({
           tabRef3?.current?.reset(detail);
         }
       }
+      if (data[selected]?.pjType === "4") {
+        dispatch(addAR1100Tab4Multiple(res));
+      }
       if (data[selected]?.pjType === "3" || data[selected]?.pjType === "4") {
         setDataDictionary({
           bgAcbCode: res?.bgAcbCode,
           bgInkumType: res?.bgInkumType,
-          saleState: res?.saleState,
           bgSwCode: res?.bgSwCode,
           bgVatDiv: res?.bgVatDiv,
+          saleState: res?.saleState,
         });
         if (res?.detailData && Object.keys(res?.detailData)?.length > 0) {
-          let detail = res?.detailData[0];
-          setInkum(detail?.bgInkum);
-          setDc(detail?.bgDc);
-          setQty(detail?.bgQty);
-          setDanga(detail?.bgDanga);
-          setVatDiv(detail?.bgVatDiv);
-
-          tabRef4?.current?.reset(detail);
+          tabRef4?.current?.reset(res?.detailData[0]);
           dispatch(
             addBupum({
               areaCode: data[selected]?.areaCode,
@@ -682,9 +653,6 @@ function AR1100({
             })
           );
         }
-      }
-      if (data[selected]?.pjType === "4") {
-        dispatch(addAR1100Tab4Multiple(res));
       }
     } else {
       setData65({});

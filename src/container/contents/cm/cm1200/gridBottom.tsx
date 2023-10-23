@@ -61,9 +61,11 @@ function GridTable({
     gv.setEditOptions({ editable: false });
 
     gv.displayOptions.useFocusClass = true;
-    gv.setCurrent({
-      dataRow: rowIndex,
-    });
+    gv.onScrollToBottom = () => {
+      gv.setCurrent({
+        dataRow: rowIndex,
+      });
+    }
 
     gv.onSelectionChanged = () => {
       const itemIndex: any = gv.getCurrent().dataRow;

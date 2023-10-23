@@ -944,6 +944,10 @@ export const CustomForm = ({
 
           if (nextElement.readOnly || nextElement.disabled) {
             cursor += 1;
+          } else if (
+            nextElement.classList.contains("react-datepicker__navigation")
+          ) {
+            cursor += 2;
           } else {
             if (nextElement.type === "submit") {
               nextElement.click();

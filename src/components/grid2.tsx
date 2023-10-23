@@ -79,9 +79,11 @@ function Grid({
     gv.setOptions(options);
 
     gv.displayOptions.useFocusClass = true;
-    gv.setCurrent({
-      dataRow: selectedRowIndex,
-    });
+    gv.onScrollToBottom = () => {
+      gv.setCurrent({
+        dataRow: selectedRowIndex,
+      });
+    }
 
     gv.onCellClicked = (grid: GridView, itemIndex: any, column: any) => {
       if (

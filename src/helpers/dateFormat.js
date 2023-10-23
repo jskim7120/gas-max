@@ -138,9 +138,9 @@ export function GetYear(date) {
 }
 export function dateToTimestamp(dateString) {
   // Parse the input string as "yyyyMMdd"
-  console.log("Input string", dateString);
+  //console.log("Input string", dateString);
 
-  console.log(typeof dateString, "this is what i recieved on");
+  //console.log(typeof dateString, "this is what i recieved on");
 
   const year = parseInt(dateString?.substr(0, 4), 10);
   const month = parseInt(dateString?.substr(4, 2) - 1, 10); // Months are 0-based (0 = January)
@@ -150,7 +150,7 @@ export function dateToTimestamp(dateString) {
   const date = new Date(year, month, day);
 
   // Get the timestamp
-  console.log(date.getTime(), "timestamp result ");
+  //console.log(date.getTime(), "timestamp result ");
   return date.getTime();
 }
 
