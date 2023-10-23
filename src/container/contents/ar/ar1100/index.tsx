@@ -152,7 +152,7 @@ function AR1100({
         }
       }
       if (data[selected]?.areaCode && data[selected]?.cuCode) {
-        getFooterData();
+        getFooterData(data[selected]?.areaCode, data[selected]?.cuCode);
       }
       if (data[selected]?.pjDate && data[selected]?.areaCode) {
         fetchData65({
@@ -167,20 +167,16 @@ function AR1100({
   }, [selected]);
 
   useEffect(() => {
-    if (source === menuId) {
-      if (info) {
-        if (Object.keys(info)?.length === 0) {
-          if (isAddBtnClicked) {
-            removeEmptyRow();
-            addBtnUnClick();
-          }
+    if (source === menuId && isAddBtnClicked === true && info !== undefined) {
+      if (Object.keys(info)?.length === 0) {
+        removeEmptyRow();
+        addBtnUnClick();
+      } else {
+        addCodeAndNameToLastRow(info);
+        if (info?.cuType === "0") {
+          tabId !== 0 ? setTabId(0) : setToggler((prev) => !prev);
         } else {
-          addCodeAndNameToLastRow(info);
-          if (info?.cuType === "0") {
-            tabId !== 0 ? setTabId(0) : setToggler((prev) => !prev);
-          } else {
-            tabId !== 1 ? setTabId(1) : setToggler((prev) => !prev);
-          }
+          tabId !== 1 ? setTabId(1) : setToggler((prev) => !prev);
         }
       }
     }
@@ -198,11 +194,8 @@ function AR1100({
     }
   }, [deleteState.isDelete]);
 
-  const getFooterData = async () => {
-    const res = await fetchFooterData(
-      data[selected]?.areaCode,
-      data[selected]?.cuCode
-    );
+  const getFooterData = async (areaCode: string, cuCode: string) => {
+    const res = await fetchFooterData(areaCode, cuCode);
     dispatch(addInfo({ info: res }));
   };
 
@@ -358,19 +351,20 @@ function AR1100({
 
   const addCodeAndNameToLastRow = (info: any) => {
     if (data?.length > 0) {
-      if ("isNew" in data[data?.length - 1]) {
-        setData((prev: any) =>
-          prev.map((object: any, idx: number) => {
-            if (idx === data?.length - 1) {
-              return {
-                ...object,
-                cuName: info?.cuName,
-                cuCode: info?.cuCode,
-              };
-            } else return object;
-          })
-        );
-      }
+      // if ("isNew" in data[data?.length - 1]) {
+
+      setData((prev: any) =>
+        prev.map((object: any, idx: number) => {
+          if (idx === data?.length - 1) {
+            return {
+              ...object,
+              cuName: info?.cuName,
+              cuCode: info?.cuCode,
+            };
+          } else return object;
+        })
+      );
+      // }
     }
   };
 
@@ -401,7 +395,7 @@ function AR1100({
       orderDate: dateWithTime,
       salestateName: "완료",
       pjDate: dateOnly,
-      isNew: true,
+      //isNew: true,
     };
 
     setData((prev) => [...prev, { ...emtObj, ...obj }]);
@@ -410,7 +404,8 @@ function AR1100({
   };
 
   const removeEmptyRow = () => {
-    if (data && data?.length > 0 && "isNew" in data[data?.length - 1]) {
+    // if (data && data?.length > 0 && "isNew" in data[data?.length - 1]) {
+    if (data && data?.length > 0) {
       const len = data?.length - 1;
       const tempdata = data.slice(0, -1);
       setData(tempdata);
