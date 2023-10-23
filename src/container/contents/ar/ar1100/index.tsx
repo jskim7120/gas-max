@@ -20,7 +20,7 @@ import useModal from "app/hook/useModal";
 import useRowIndex from "app/hook/useRowIndex";
 import useGetData from "app/hook/getSimpleData";
 import {
-  addAR1100Tab4Multiple,
+  addAR1100Tab4Params,
   addBupum,
   addCM1105,
   addDeleteMenuId,
@@ -654,7 +654,15 @@ function AR1100({
         }
       }
       if (data[selected]?.pjType === "4") {
-        dispatch(addAR1100Tab4Multiple(res));
+        dispatch(
+          addAR1100Tab4Params({
+            areaCode: data[selected]?.areaCode,
+            pjCuCode: data[selected]?.cuCode,
+            pjDate: DateWithoutDash(data[selected]?.pjDate),
+            pjSno: data[selected]?.pjSno,
+            pjType: data[selected]?.pjType,
+          })
+        );
       }
       if (data[selected]?.pjType === "3" || data[selected]?.pjType === "4") {
         setDataDictionary({
@@ -673,9 +681,6 @@ function AR1100({
             })
           );
         }
-      }
-      if (data[selected]?.pjType === "5") {
-        dispatch(addAR1100Tab4Multiple(res));
       }
     } else {
       setData65({});

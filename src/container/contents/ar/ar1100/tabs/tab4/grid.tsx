@@ -2,15 +2,18 @@ import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { useDispatch } from "app/store";
 import { fields, columns } from "./data";
+import { addBupum } from "app/state/modal/modalSlice";
 
 function Grid({
   data,
   openModal,
   setToggler,
+  calculate,
 }: {
   data: any;
   openModal: Function;
   setToggler: Function;
+  calculate: Function;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
@@ -32,9 +35,10 @@ function Grid({
 
       gv.setFooter({ visible: false });
 
-      gv.onGridActivated = () => {
-        dp.setRows(data);
-      };
+      dp.setRows(data);
+      // gv.onGridActivated = () => {
+      //   dp.setRows(data);
+      // };
 
       gv.setOptions({
         indicator: { visible: true },
@@ -52,10 +56,14 @@ function Grid({
       };
 
       gv.onCellButtonClicked = function (grid: any, index: any, column: any) {
+        dispatch(addBupum({ index: index.dataRow }));
         openModal();
       };
 
       gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
+        if (index.fieldName === "bglQty" || index.fieldName === "bglDanga") {
+          calculate(index.dataRow, index.fieldName, newValue);
+        }
         gv.cancel();
       };
       return () => {

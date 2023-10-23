@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useForm, Controller } from "react-hook-form";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "app/store";
@@ -15,6 +15,10 @@ import { currencyMask } from "helpers/currency";
 import Table from "components/table";
 import EditableSelect from "components/editableSelect";
 import useModal from "app/hook/useModal";
+
+//import { addAR1100Tab4MultipleGrid } from "app/state/modal/modalSlice";
+import { AR1100SELECT } from "app/path";
+import { apiGet } from "app/axios";
 
 const LLabel = styled.label`
   background: rgba(104, 103, 103, 0.35);
@@ -71,28 +75,47 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
   const [vatDiv, setVatDiv] = useState<string>("0");
   const [toggler, setToggler] = useState<boolean>(false);
 
-  const { register, handleSubmit, reset, setFocus, control, watch } =
+  const { register, handleSubmit, reset, setFocus, control, watch, getValues } =
     useForm<IAR110065DETAIL>({
       mode: "onSubmit",
     });
 
-  const state: any = useSelector((state) => state.modal.ar1100Tab4Multiple);
-  const detailData = state?.detailData ? state?.detailData[0] : {};
+  const dispatch = useDispatch();
+
+  const paramState = useSelector((state) => state.modal.ar1100Tab4Params);
+  const bupum: any = useSelector((state) => state.modal.bupum);
+
+  const [data, setData] = useState<any>({});
+  const [dictionary, setDictionary] = useState<any>({});
+  const [gridData, setGridData] = useState<Array<any>>([]);
 
   useEffect(() => {
-    if (
-      state &&
-      Object.keys(state)?.length > 0 &&
-      Object.keys(state.detailData)?.length > 0
-    ) {
-      reset(detailData);
-      //setQty(state?.detailData[0].bgQty);
-      //setDanga(state?.detailData[0].bgDanga);
-      //setVatDiv(state?.detailData[0].bgVatDiv);
-      //setInkum(state?.detailData[0].bgInkum);
-      //setDc(state?.detailData[0].bgDc);
+    fetchData65({
+      ...paramState,
+    });
+  }, [paramState]);
+
+  useEffect(() => {
+    if (bupum.tick !== undefined && bupum?.index) {
+      setGridData((prev: any) =>
+        prev.map((object: any, idx: number) => {
+          if (idx === bupum.index) {
+            return {
+              bglBpCode: bupum?.bglBpCode,
+              bglBpName: bupum?.bglBpName,
+              bglBpType: bupum?.bglBpType,
+              bglQty: 0,
+              bglDanga: bupum?.bglBpDanga,
+              bglKumack: 0,
+              bglBigo: "",
+            };
+          } else return object;
+        })
+      );
+
+      setGridData((prev) => [...prev, emtObjBpSaleModal]);
     }
-  }, [detailData]);
+  }, [bupum.tick]);
 
   useEffect(() => {
     if (toggler !== undefined) {
@@ -121,6 +144,94 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
     }
   };
 
+  const fetchData65 = async (params: any) => {
+    const res = await apiGet(AR1100SELECT, params);
+    if (res && Object.keys(res)?.length > 0) {
+      reset(res?.detailData[0]);
+      setData(res?.detailData ? res?.detailData[0] : {});
+      setGridData(
+        res?.gridData
+          ? [...res?.gridData, emtObjBpSaleModal]
+          : [emtObjBpSaleModal]
+      );
+      setDictionary({
+        bgAcbCode: res?.bgAcbCode,
+        bgInkumType: res?.bgInkumType,
+        bgSwCode: res?.bgSwCode,
+        bgVatDiv: res?.bgVatDiv,
+        saleState: res?.saleState,
+      });
+    }
+    setData(res);
+  };
+
+  const calculate = (index: number, fieldName: string, value: number) => {
+    let price: number = 0;
+    let sumPrice: number = 0;
+
+    if (fieldName === "bglQty") {
+      price = +gridData[index].bglDanga * (isNaN(value) ? 0 : +value);
+    } else if (fieldName === "bglDanga") {
+      price = +gridData[index].bglQty * (isNaN(value) ? 0 : +value);
+    }
+
+    setGridData((prev: any) =>
+      prev.map((object: any, idx: number) => {
+        if (idx === index) {
+          sumPrice += price;
+          return {
+            ...object,
+            [fieldName]: value,
+            bglKumack: price,
+          };
+        } else {
+          sumPrice += object.bglKumack;
+          return object;
+        }
+      })
+    );
+    let bgKumSup: number = 0;
+    let bgKumVat: number = 0;
+    let bgTotal: number = 0;
+
+    const { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(
+      sumPrice,
+      getValues("bgVatDiv")
+    );
+
+    reset((formValues) => ({
+      ...formValues,
+      bgKumSup: tempKumSup,
+      bgKumVat: tempKumVat,
+      bgTotal: tempTotal,
+    }));
+  };
+
+  const calculationOfVat = (price: number, vatDivVal: string) => {
+    let tempKumSup: number = 0;
+    let tempKumVat: number = 0;
+    let tempTotal: number = 0;
+
+    if (vatDivVal === "0") {
+      tempKumSup = Math.round(price / 1.1);
+      tempKumVat = price - tempKumSup;
+      tempTotal = price;
+    } else if (vatDivVal === "1") {
+      tempKumSup = price;
+      tempKumVat = Math.round(price * 0.1);
+      tempTotal = tempKumSup + tempKumVat;
+    } else if (vatDivVal === "2") {
+      tempKumSup = price;
+      tempKumVat = 0;
+      tempTotal = price;
+    }
+    return {
+      tempKumSup,
+      tempKumVat,
+      tempTotal,
+    };
+  };
+
   const tableData1 = [
     {
       0: (
@@ -131,7 +242,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
             width={InputSize.i70}
             onChange={(e) => handleChangeVatDiv(e.target.value)}
           >
-            {state?.bgVatDiv?.map((obj: any, idx: number) => (
+            {dictionary?.bgVatDiv?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -216,7 +327,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
       0: (
         <FormGroup>
           <Select register={register("bgInkumType")} width={InputSize.i100}>
-            {state?.bgInkumType?.map((obj: any, idx: number) => (
+            {dictionary?.bgInkumType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -231,7 +342,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
             style={{ width: "284px" }}
             disabled={watch("bgInkumType") !== "2"}
           >
-            {state?.bgAcbCode?.map((obj: any, idx: number) => (
+            {dictionary?.bgAcbCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -277,7 +388,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
       5: (
         <FormGroup>
           <Select register={register("bgSwCode")} width={InputSize.i100}>
-            {state?.bgSwCode?.map((obj: any, idx: number) => (
+            {dictionary?.bgSwCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -348,9 +459,10 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
           render={({ field }) => <CustomDatePicker {...field} />}
         />
         <Grid
-          data={[...state?.gridData, emtObjBpSaleModal]}
+          data={gridData}
           openModal={handleOpenModalBupum}
           setToggler={setToggler}
+          calculate={calculate}
         />
         <Table
           className="no-space"
