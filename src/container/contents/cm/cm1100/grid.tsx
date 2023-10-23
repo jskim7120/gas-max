@@ -58,9 +58,11 @@ const Grid = React.forwardRef(
       gv.displayOptions.fitStyle = "evenFill";
       gv.setEditOptions({ editable: false });
       gv.displayOptions.useFocusClass = true;
-      gv.setCurrent({
-        dataRow: rowIndex,
-      });
+      gv.onScrollToBottom = () => {
+        gv.setCurrent({
+          dataRow: rowIndex,
+        });
+      }
 
       if (areaCode !== "00") {
         gv.removeColumn("areaCode");
