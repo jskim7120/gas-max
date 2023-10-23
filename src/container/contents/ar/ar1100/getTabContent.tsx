@@ -3,6 +3,7 @@ import Tab1 from "./tabs/tab1";
 import Tab2 from "./tabs/tab2";
 import Tab3 from "./tabs/tab3";
 import Tab4 from "./tabs/tab4";
+import Tab5 from "./tabs/tab5";
 
 function getTabContent(
   tabId: number,
@@ -17,6 +18,7 @@ function getTabContent(
   tabRef2: any,
   tabRef3: any,
   tabRef4: any,
+  tabRef5: any,
   addBtnUnClick: Function,
   jpKind: any,
   setJpKind: Function,
@@ -159,8 +161,35 @@ function getTabContent(
         />
       );
     case 4:
-      //   return <Tab3 data={data} />;
-      return <>5</>;
+      return (
+        <Tab5
+          tabId={tabId}
+          data={data}
+          data65={data65}
+          dictionary={dictionary}
+          isAddBtnClicked={isAddBtnClicked}
+          handleSubmitParent={handleSubmit}
+          submitParent={submit}
+          ref={tabRef5}
+          addBtnUnClick={addBtnUnClick}
+          jpKind={jpKind}
+          setJpKind={setJpKind}
+          junJaego={junJaego}
+          setJunJaego={setJunJaego}
+          qty={qty}
+          setQty={setQty}
+          reqty={reqty}
+          setReqty={setReqty}
+          danga={danga}
+          setDanga={setDanga}
+          vatDiv={vatDiv}
+          setVatDiv={setVatDiv}
+          inkum={inkum}
+          setInkum={setInkum}
+          dc={dc}
+          setDc={setDc}
+        />
+      );
     case 5:
       //   return <Tab3 data={data} />;
       return <>6</>;
