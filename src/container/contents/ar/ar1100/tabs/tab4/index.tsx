@@ -372,9 +372,8 @@ const Tab4 = React.forwardRef(
         params.bgCuName = data65?.bgCuName;
         params.bgSno = data65?.bgSno;
       }
-
+      params.bgQty = +params?.bgQty;
       params.bgDate = DateWithoutDash(params.bgDate);
-      //params.bgDateB = DateWithoutDash(params.bgDate);
       params.bgKumSup = removeCommas(params.bgKumSup, "number");
       params.bgKumVat = removeCommas(params.bgKumVat, "number");
       params.bgTotal = removeCommas(params.bgTotal, "number");

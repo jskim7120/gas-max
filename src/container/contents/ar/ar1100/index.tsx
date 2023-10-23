@@ -141,8 +141,8 @@ function AR1100({
   useEffect(() => {
     if (selected !== undefined && selected > -1) {
       if (isAddBtnClicked === true) {
-        removeEmptyRow();
-        addBtnUnClick();
+        //removeEmptyRow();
+        //addBtnUnClick();
       }
       if (data[selected]?.pjType) {
         const pjType = data[selected]?.pjType;
@@ -334,7 +334,7 @@ function AR1100({
         cuCode: info?.cuCode,
         saleType: 5,
       });
-      if (res && Object.keys(res)?.length > 0) {
+      if (res !== undefined && Object.keys(res)?.length > 0) {
         setDataDictionary({
           bgAcbCode: res?.bgAcbCode,
           bgInkumType: res?.bgInkumType,
