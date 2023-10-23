@@ -47,3 +47,14 @@ export const emtObjTab4 = {
   signUser: "",
   signKey: "",
 };
+
+export const emtObjBpSaleModal = {
+  bglBigo: "",
+  bglBpCode: "",
+  bglBpName: "",
+  bglBpSno: "",
+  bglBpType: "",
+  bglDanga: 0,
+  bglKumack: 0,
+  bglQty: 0,
+};

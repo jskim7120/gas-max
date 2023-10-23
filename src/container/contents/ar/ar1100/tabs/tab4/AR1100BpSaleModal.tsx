@@ -9,7 +9,7 @@ import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import Grid from "./grid";
 import { tableHeader3, tableHeader4 } from "./tableHeader";
-import { IAR110065DETAIL } from "./model";
+import { IAR110065DETAIL, emtObjBpSaleModal } from "./model";
 import CustomDatePicker from "components/customDatePicker";
 import { currencyMask } from "helpers/currency";
 import Table from "components/table";
@@ -69,6 +69,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
   const [dc, setDc] = useState<number>(0);
   const [inkum, setInkum] = useState<number>(0);
   const [vatDiv, setVatDiv] = useState<string>("0");
+  const [toggler, setToggler] = useState<boolean>(false);
 
   const { register, handleSubmit, reset, setFocus, control, watch } =
     useForm<IAR110065DETAIL>({
@@ -76,17 +77,27 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
     });
 
   const state: any = useSelector((state) => state.modal.ar1100Tab4Multiple);
+  const detailData = state?.detailData ? state?.detailData[0] : {};
 
   useEffect(() => {
-    if (state && Object.keys(state)?.length > 0) {
-      reset(state?.detailData[0]);
-      setQty(state?.detailData[0].bgQty);
-      setDanga(state?.detailData[0].bgDanga);
-      setVatDiv(state?.detailData[0].bgVatDiv);
-      setInkum(state?.detailData[0].bgInkum);
-      setDc(state?.detailData[0].bgDc);
+    if (
+      state &&
+      Object.keys(state)?.length > 0 &&
+      Object.keys(state.detailData)?.length > 0
+    ) {
+      reset(detailData);
+      //setQty(state?.detailData[0].bgQty);
+      //setDanga(state?.detailData[0].bgDanga);
+      //setVatDiv(state?.detailData[0].bgVatDiv);
+      //setInkum(state?.detailData[0].bgInkum);
+      //setDc(state?.detailData[0].bgDc);
     }
-  }, [state]);
+  }, [detailData]);
+
+  useEffect(() => {
+    if (toggler !== undefined) {
+    }
+  }, [toggler]);
 
   const { showAR1100BupumModal, openModal: openModalBupum } = useModal();
 
@@ -336,7 +347,11 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
           name="bgDate"
           render={({ field }) => <CustomDatePicker {...field} />}
         />
-        <Grid data={state?.gridData} openModal={handleOpenModalBupum} />
+        <Grid
+          data={[...state?.gridData, emtObjBpSaleModal]}
+          openModal={handleOpenModalBupum}
+          setToggler={setToggler}
+        />
         <Table
           className="no-space"
           tableHeader={tableHeader3}
