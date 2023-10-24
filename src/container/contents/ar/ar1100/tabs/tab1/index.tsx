@@ -336,6 +336,8 @@ const Tab1 = React.forwardRef(
         params.pjCuName = info?.cuName;
         params.pjSno = "";
         // }
+      } else {
+        params.pjDateB = DateWithoutDash(params.pjDate);
       }
 
       params.pjDate = DateWithoutDash(params.pjDate);

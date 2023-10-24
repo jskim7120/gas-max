@@ -164,6 +164,16 @@ function AR1100({
           pjType: data[selected]?.pjType,
           orderDate: DateWithoutDash(data[selected]?.orderDate),
         });
+        // if (pjType === "5") {
+        // } else {
+        //   fetchData65({
+        //     areaCode: data[selected]?.areaCode,
+        //     pjCuCode: data[selected]?.cuCode,
+        //     pjDate: DateWithoutDash(data[selected]?.pjDate),
+        //     pjSno: data[selected]?.pjSno,
+        //     pjType: data[selected]?.pjType,
+        //   });
+        // }
       }
 
       if (data[selected]?.areaCode && data[selected]?.cuCode) {

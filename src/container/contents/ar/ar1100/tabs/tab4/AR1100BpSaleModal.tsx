@@ -22,7 +22,12 @@ import Table from "components/table";
 import EditableSelect from "components/editableSelect";
 import useModal from "app/hook/useModal";
 //import { addAR1100Tab4MultipleGrid } from "app/state/modal/modalSlice";
-import { AR1100BPSALEINSERT, AR1100BPSALEUPDATE, AR1100SELECT } from "app/path";
+import {
+  AR1100BPSALEINSERT,
+  AR1100BPSALEUPDATE,
+  AR1100BUPUMSEARCH,
+  AR1100SELECT,
+} from "app/path";
 import { apiGet, apiPost } from "app/axios";
 import { calculationOfVat, prepVal } from "../../helper";
 import { DateWithoutDash } from "helpers/dateFormat";
@@ -263,6 +268,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
     const res = await apiGet(AR1100SELECT, params);
     if (res && Object.keys(res)?.length > 0) {
       reset(res?.detailData[0]);
+      console.log("65 aar irev::", res?.detailData[0]);
       setData(res?.detailData ? res?.detailData[0] : {});
       setGridData(
         res?.gridData
@@ -360,6 +366,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
       }
 
       params.areaCode = "01"; //----------------------tur zuur
+      params.saleState = "5";
       params.bgDate = DateWithoutDash(params?.bgDate);
       params.bgQty = +params?.bgQty;
       params.bgKumSup = +removeCommas(params.bgKumSup, "number");
@@ -378,22 +385,56 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
         params.bgSwName = bgSwName;
       }
 
-      const jsonItemList = gridData.filter((obj: any) => obj.bglBpCode !== "");
+      console.log("params::::::::::::::", params);
 
-      params.jsonItemList = jsonItemList;
+      // const jsonItemList = gridData.filter(
+      //   (obj: any) => obj.hasOwnProperty("bglQty") && obj.bglBpCode !== ""
+      // );
 
-      // console.log("modal params>>>>>>>>>>>>", params);
-      // console.log(" josn list >>>>>>>>>>>>", jsonItemList);
+      // const tempjson = jsonItemList.map((obj: any, idx: number) => {
+      //   if (idx < 9) {
+      //     return { ...obj, bglBpSno: `0${idx + 1}` };
+      //   } else {
+      //     return { ...obj, bglBpSno: `${idx + 1}` };
+      //   }
+      // });
 
-      const res = await apiPost(path, params, "저장이 성공하였습니다");
-      if (res) {
-        if (paramState?.isAddBtnClicked) {
-          //await handleSubmitParent((d: any) => submitParent(d, "last"))();
-        } else {
-          //await handleSubmitParent((d: any) => submitParent(d))();
-        }
-      }
+      // params.jsonItemList = tempjson;
+
+      // const res = await apiPost(path, params, "저장이 성공하였습니다");
+      // if (res) {
+      //   if (paramState?.isAddBtnClicked) {
+      //     //await handleSubmitParent((d: any) => submitParent(d, "last"))();
+      //   } else {
+      //     //await handleSubmitParent((d: any) => submitParent(d))();
+      //   }
+      // }
     }
+  };
+
+  const getAllBupum = () => {
+    fetchData();
+  };
+
+  const fetchData = async () => {
+    const response = await apiGet(AR1100BUPUMSEARCH, {
+      areaCode: "01",
+      bpCode: "",
+      bpName: "",
+      bpSearch: "",
+      pjType: "4",
+    });
+
+    console.log("response>>>>>>>>>>", response);
+
+    const tempGridData = response.map((obj: any) => ({
+      bglBpCode: obj.bglBpCode,
+      bglBpName: obj.bglBpName,
+      bglDanga: obj.bglBpDanga,
+      bglBpType: obj.bglBpType,
+      bglBigo: "",
+    }));
+    setGridData(tempGridData);
   };
 
   const tableData1 = [
@@ -622,11 +663,29 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
           padding: "0px 30px",
         }}
       >
-        <Controller
-          control={control}
-          name="bgDate"
-          render={({ field }) => <CustomDatePicker {...field} />}
-        />
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Controller
+            control={control}
+            name="bgDate"
+            render={({ field }) => <CustomDatePicker {...field} />}
+          />
+          <div
+            style={{
+              width: "110px",
+              height: "30px",
+              borderRadius: "15px",
+              background: "rgb(104, 103, 103)",
+              color: "#fff",
+              fontSize: "14px",
+              textAlign: "center",
+              paddingTop: "3px",
+            }}
+            onClick={getAllBupum}
+          >
+            모든품목조회
+          </div>
+        </div>
+
         <Grid
           data={gridData}
           openModal={handleOpenModalBupum}
