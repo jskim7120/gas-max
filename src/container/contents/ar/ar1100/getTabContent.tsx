@@ -162,22 +162,6 @@ function getTabContent(
           submitParent={submit}
           ref={tabRef5}
           addBtnUnClick={addBtnUnClick}
-          jpKind={jpKind}
-          setJpKind={setJpKind}
-          junJaego={junJaego}
-          setJunJaego={setJunJaego}
-          qty={qty}
-          setQty={setQty}
-          reqty={reqty}
-          setReqty={setReqty}
-          danga={danga}
-          setDanga={setDanga}
-          vatDiv={vatDiv}
-          setVatDiv={setVatDiv}
-          inkum={inkum}
-          setInkum={setInkum}
-          dc={dc}
-          setDc={setDc}
         />
       );
     case 5:
