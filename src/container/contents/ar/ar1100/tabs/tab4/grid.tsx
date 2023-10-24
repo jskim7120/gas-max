@@ -61,12 +61,17 @@ function Grid({
       };
 
       gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
-        if (index.fieldName === "bglQty" || index.fieldName === "bglDanga") {
+        if (
+          index.fieldName === "bglQty" ||
+          index.fieldName === "bglDanga" ||
+          index.fieldName === "bglBigo"
+        ) {
           calculate(index.dataRow, index.fieldName, newValue);
         }
         gv.cancel();
       };
       return () => {
+        gv.commit();
         dp.clearRows();
         gv.destroy();
         dp.destroy();

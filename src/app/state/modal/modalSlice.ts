@@ -72,12 +72,14 @@ export interface initialStateType {
     tick: boolean;
   };
   ar1100Tab4Params: {
+    isAddBtnClicked: boolean;
     areaCode: string;
     pjCuCode: string;
     pjDate: string;
     pjSno: string;
     pjType: string;
   };
+  ar1100Tab4Data71: any;
 }
 
 const initialState: initialStateType = {
@@ -153,12 +155,15 @@ const initialState: initialStateType = {
     tick: false,
   },
   ar1100Tab4Params: {
+    isAddBtnClicked: false,
     areaCode: "",
     pjCuCode: "",
     pjDate: "",
     pjSno: "",
     pjType: "",
   },
+
+  ar1100Tab4Data71: {},
 };
 
 const modalSlice = createSlice({
@@ -269,6 +274,7 @@ const modalSlice = createSlice({
 
     addAR1100Tab4Params: (state, action) => {
       state.ar1100Tab4Params = {
+        ...state.ar1100Tab4Params,
         ...action.payload,
       };
     },
@@ -278,6 +284,10 @@ const modalSlice = createSlice({
     //     gridData: [...state.ar1100Tab4Multiple.gridData, action.payload],
     //   };
     // },
+
+    addAR1100Tab4Data71: (state, action) => {
+      state.ar1100Tab4Data71 = action.payload;
+    },
   },
 });
 
@@ -302,6 +312,7 @@ export const {
   addBupumTick,
   addAR1100Tab4Params,
   //addAR1100Tab4MultipleGrid,
+  addAR1100Tab4Data71,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

@@ -4,7 +4,7 @@ import Form from "container/contents/ar/ar1100/tabs/tab4/AR1100BpSaleModal";
 import { ModalWrapper } from "./style";
 
 const customStyle = {
-  width: "900px",
+  width: "921px",
 };
 
 function AR1100BpSaleModal({ setIsOpen }: { setIsOpen: Function }) {

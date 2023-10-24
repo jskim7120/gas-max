@@ -20,6 +20,7 @@ import { currencyMask, removeCommas } from "helpers/currency";
 import { IAR110065DETAIL } from "./model";
 import { tableHeader1, tableHeader2 } from "./tableHeader";
 import { prepVal, calculationOfVat } from "../../helper";
+import { addAR1100Tab4Params } from "app/state/modal/modalSlice";
 
 const Tab4 = React.forwardRef(
   (
@@ -87,7 +88,7 @@ const Tab4 = React.forwardRef(
     }, [watch("bgDanga")]);
 
     useEffect(() => {
-      if (watch("bgVatDiv")) {
+      if (watch("bgVatDiv") !== undefined && watch("bgVatDiv") !== "") {
         handleChangeVatDiv(watch("bgVatDiv"));
       }
     }, [watch("bgVatDiv")]);
@@ -269,6 +270,7 @@ const Tab4 = React.forwardRef(
     };
 
     const openModalAR1100BpSale = () => {
+      dispatch(addAR1100Tab4Params({ isAddBtnClicked: isAddBtnClicked }));
       openAR1100Modal();
     };
 
