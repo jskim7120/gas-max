@@ -14,6 +14,7 @@ import {
   AR1100CJSALEDELETE,
   AR1100TONGSALEDELETE,
   AR1100BPSALEDELETE,
+  AR1100ASCUSTDELETE,
 } from "app/path";
 import { useDispatch, useSelector } from "app/store";
 import { fetchFooterData } from "container/contents/footer/footerDetailFunc";
@@ -145,13 +146,12 @@ function AR1100({
         //removeEmptyRow(); enenees bolj neg asuudal uuseed bsan shuu
         //addBtnUnClick();
       }
-      if (data[selected]?.pjType) {
-        const pjType = data[selected]?.pjType;
-        if (pjType === "3" || pjType === "4") {
-          setTabId(3);
-        } else {
-          setTabId(Number(pjType));
-        }
+      const pjType = data[selected]?.pjType;
+
+      if (Number(pjType) < 4) {
+        setTabId(Number(pjType));
+      } else {
+        setTabId(Number(pjType) - 1);
       }
 
       if (data[selected]?.pjDate && data[selected]?.areaCode) {
@@ -161,6 +161,7 @@ function AR1100({
           pjDate: DateWithoutDash(data[selected]?.pjDate),
           pjSno: data[selected]?.pjSno,
           pjType: data[selected]?.pjType,
+          orderDate: DateWithoutDash(data[selected]?.orderDate),
         });
       }
 
@@ -690,6 +691,26 @@ function AR1100({
           );
         }
       }
+      if (data[selected]?.pjType === "5") {
+        //5-r tab------------------------
+        console.log("this is 5tab", res);
+
+        setDataDictionary({
+          asAcbCode: res?.asAcbCode,
+          asInSwCode: res?.asInSwCode,
+          asInTel: res?.asInTel,
+          asInkumType: res?.asInkumType,
+          asPSwCode: res?.asPSwCode,
+          asSwCode: res?.asSwCode,
+          asTagName: res?.asTagName,
+          asVatDiv: res?.asVatDiv,
+          saleState: res?.saleState,
+        });
+        if (res?.detailData && Object.keys(res?.detailData)?.length > 0) {
+          let detail = res?.detailData[0];
+          tabRef5?.current?.reset(detail);
+        }
+      }
     } else {
       setData65({});
       setDataDictionary({});
@@ -814,6 +835,16 @@ function AR1100({
           bgJpCode: data[selected]?.jpCode,
           bgSno: data[selected]?.pjSno,
           bgDate: DateWithoutDash(data[selected]?.pjDate),
+        };
+      } else if (data[selected]?.pjType === "5") {
+        delPath = AR1100ASCUSTDELETE;
+        params = {
+          areaCode: data[selected]?.areaCode,
+          asCuCode: data[selected]?.cuCode,
+          asCuName: data[selected]?.cuName,
+          asJpCode: data[selected]?.jpCode,
+          asSno: data[selected]?.pjSno,
+          asDate: DateWithoutDash(data[selected]?.pjDate),
         };
       }
       const res = await apiPost(delPath, params, "삭제했습니다");

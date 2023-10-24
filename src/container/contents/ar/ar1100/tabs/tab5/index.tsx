@@ -2,7 +2,7 @@ import React, { useEffect, useImperativeHandle } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { AR1100ASCUSTINSERT, AR1100ASCUSTUPDATE } from "app/path";
 import { useDispatch, useSelector } from "app/store";
-import { apiGet, apiPost } from "app/axios";
+import { apiPost } from "app/axios";
 import useModal from "app/hook/useModal";
 import Table from "components/table";
 import { Input, Select, FormGroup, CustomForm } from "components/form/style";
@@ -10,7 +10,7 @@ import CustomDatePicker from "components/customDatePicker";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import EditableSelect from "components/editableSelect";
-import { Reset, MagnifyingGlass, Update } from "components/allSvgIcon";
+import { Reset, Update } from "components/allSvgIcon";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { currencyMask, removeCommas } from "helpers/currency";
 import { AR1100MODELDETAIL } from "./model";
@@ -74,6 +74,11 @@ const Tab5 = React.forwardRef(
         }
       }
     }, [watch("asInkumtype")]);
+    useEffect(() => {
+      if (watch("asSurikum") !== undefined) {
+        handleChangeSurikum(watch("asSurikum"));
+      }
+    }, [watch("asSurikum")]);
 
     useEffect(() => {
       if (watch("asInkum") !== undefined) {
@@ -92,29 +97,14 @@ const Tab5 = React.forwardRef(
       return isNaN(tempVal) ? 0 : tempVal;
     };
 
-    const calculationOfVat = (price: number, vatDivVal: string) => {
-      let tempKumSup: number = 0;
-      let tempKumVat: number = 0;
-      let tempTotal: number = 0;
-
-      if (vatDivVal === "0") {
-        tempKumSup = Math.round(price / 1.1);
-        tempKumVat = price - tempKumSup;
-        tempTotal = price;
-      } else if (vatDivVal === "1") {
-        tempKumSup = price;
-        tempKumVat = Math.round(price * 0.1);
-        tempTotal = tempKumSup + tempKumVat;
-      } else if (vatDivVal === "2") {
-        tempKumSup = price;
-        tempKumVat = 0;
-        tempTotal = price;
-      }
-      return {
-        tempKumSup,
-        tempKumVat,
-        tempTotal,
-      };
+    const handleChangeSurikum = (val: number) => {
+      let tempDc = prepVal(getValues("asDc"));
+      let tempInkum = prepVal(getValues("asInkum"));
+      const tempMisuKum = prepVal(val) - tempDc - tempInkum;
+      reset((formValues) => ({
+        ...formValues,
+        asMisukum: tempMisuKum,
+      }));
     };
 
     const handleChangefields = (val: number, type: string) => {
@@ -147,24 +137,6 @@ const Tab5 = React.forwardRef(
 
       const tempMisu = tempTotal - tempInkum - tempDc;
       return tempMisu;
-    };
-
-    const handleChangeKum = (val: number) => {
-      const tempVatDiv = getValues("asVatDiv") ? getValues("asVatDiv") : "0";
-
-      const price = watch("asSurikum");
-      let { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(
-        price,
-        tempVatDiv
-      );
-      const tempMisu = calculationOfMisu(tempTotal);
-      reset((formValues) => ({
-        ...formValues,
-        asKumSup: tempKumSup,
-        asKumVat: tempKumVat,
-        asSurikum: tempTotal,
-        asMisukum: tempMisu,
-      }));
     };
 
     const resetForm = (type: string) => {
@@ -205,7 +177,10 @@ const Tab5 = React.forwardRef(
       if (isAddBtnClicked) {
         //params.asCuUserName = info?.cuUsername;
         params.asSno = "";
+      } else {
+        params.asDateB = DateWithoutDash(params.asDate);
       }
+
       params.areaCode = areaCode;
       params.asDate = DateWithoutDash(params.asDate);
       params.asPdate = DateWithoutDash(params.asPdate);

@@ -125,7 +125,7 @@ export const columns = [
     type: "data",
     width: "90",
     header: {
-      text: "판매일",
+      text: "일자",
     },
   },
   {
