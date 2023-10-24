@@ -141,7 +141,7 @@ function AR1100({
   useEffect(() => {
     if (selected !== undefined && selected > -1) {
       if (isAddBtnClicked === true) {
-        //removeEmptyRow();
+        //removeEmptyRow(); enenees bolj neg asuudal uuseed bsan shuu
         //addBtnUnClick();
       }
       if (data[selected]?.pjType) {
@@ -152,9 +152,7 @@ function AR1100({
           setTabId(Number(pjType));
         }
       }
-      if (data[selected]?.areaCode && data[selected]?.cuCode) {
-        getFooterData(data[selected]?.areaCode, data[selected]?.cuCode);
-      }
+
       if (data[selected]?.pjDate && data[selected]?.areaCode) {
         fetchData65({
           areaCode: data[selected]?.areaCode,
@@ -163,6 +161,10 @@ function AR1100({
           pjSno: data[selected]?.pjSno,
           pjType: data[selected]?.pjType,
         });
+      }
+
+      if (data[selected]?.areaCode && data[selected]?.cuCode) {
+        getFooterData(data[selected]?.areaCode, data[selected]?.cuCode);
       }
     }
   }, [selected]);

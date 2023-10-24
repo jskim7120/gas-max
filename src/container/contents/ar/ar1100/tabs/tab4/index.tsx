@@ -19,6 +19,7 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { currencyMask, removeCommas } from "helpers/currency";
 import { IAR110065DETAIL } from "./model";
 import { tableHeader1, tableHeader2 } from "./tableHeader";
+import { prepVal, calculationOfVat } from "../../helper";
 
 const Tab4 = React.forwardRef(
   (
@@ -69,19 +70,7 @@ const Tab4 = React.forwardRef(
 
     useEffect(() => {
       if (watch("bgInkumType") !== undefined) {
-        if (watch("bgInkumType") === "A") {
-          reset((formValues) => ({
-            ...formValues,
-            bgInkum: 0,
-            bgDc: 0,
-          }));
-        }
-        if (watch("bgInkumType") !== "2") {
-          reset((formValues) => ({
-            ...formValues,
-            acbCode: "",
-          }));
-        }
+        handleChangeInkumType(watch("bgInkumType"));
       }
     }, [watch("bgInkumType")]);
 
@@ -120,36 +109,6 @@ const Tab4 = React.forwardRef(
         handleChangefields(watch("bgDc"), "dc");
       }
     }, [watch("bgDc")]);
-
-    const prepVal = (val: number) => {
-      let tempVal = val ? +removeCommas(val, "number") : 0;
-      return isNaN(tempVal) ? 0 : tempVal;
-    };
-
-    const calculationOfVat = (price: number, vatDivVal: string) => {
-      let tempKumSup: number = 0;
-      let tempKumVat: number = 0;
-      let tempTotal: number = 0;
-
-      if (vatDivVal === "0") {
-        tempKumSup = Math.round(price / 1.1);
-        tempKumVat = price - tempKumSup;
-        tempTotal = price;
-      } else if (vatDivVal === "1") {
-        tempKumSup = price;
-        tempKumVat = Math.round(price * 0.1);
-        tempTotal = tempKumSup + tempKumVat;
-      } else if (vatDivVal === "2") {
-        tempKumSup = price;
-        tempKumVat = 0;
-        tempTotal = price;
-      }
-      return {
-        tempKumSup,
-        tempKumVat,
-        tempTotal,
-      };
-    };
 
     const calculationOfMisu = (tempTotal: number) => {
       let tempInkum = prepVal(getValues("bgInkum"));
@@ -248,6 +207,22 @@ const Tab4 = React.forwardRef(
       }));
     };
 
+    const handleChangeInkumType = (val: string) => {
+      if (val === "A") {
+        reset((formValues) => ({
+          ...formValues,
+          bgInkum: 0,
+          bgDc: 0,
+        }));
+      }
+      if (val !== "2") {
+        reset((formValues) => ({
+          ...formValues,
+          acbCode: "",
+        }));
+      }
+    };
+
     const fetchDataSangpum = async (params: any) => {
       const res = await apiGet(AR1100SANGPUM, params);
       return res;
@@ -313,19 +288,16 @@ const Tab4 = React.forwardRef(
       if (isAddBtnClicked) {
         params.bgSno = "";
       } else {
-        params.areaCode = data65?.areaCode;
-        params.bgCuCode = data65?.bgCuCode;
-        params.bgCuName = data65?.bgCuName;
-        params.bgSno = data65?.bgSno;
         params.bgDateB = DateWithoutDash(params.bgDate);
-        params.bgDate = DateWithoutDash(data65?.bgDate);
       }
+
       params.areaCode = areaCode;
+      params.bgDate = DateWithoutDash(params?.bgDate);
       params.bgQty = +params?.bgQty;
-      params.bgKumSup = removeCommas(params.bgKumSup, "number");
-      params.bgKumVat = removeCommas(params.bgKumVat, "number");
-      params.bgTotal = removeCommas(params.bgTotal, "number");
-      params.bgMisu = removeCommas(params.bgMisu, "number");
+      params.bgKumSup = +removeCommas(params.bgKumSup, "number");
+      params.bgKumVat = +removeCommas(params.bgKumVat, "number");
+      params.bgTotal = +removeCommas(params.bgTotal, "number");
+      params.bgMisu = +removeCommas(params.bgMisu, "number");
       params.bgDanga = +removeCommas(params.bgDanga, "number");
       params.bgInkum = +removeCommas(params.bgInkum, "number");
       params.bgDc = +removeCommas(params.bgDc, "number");
@@ -339,6 +311,8 @@ const Tab4 = React.forwardRef(
       }
 
       params.jsonItemList = [];
+
+      console.log("params>>>>>>>>>>>>", params);
 
       const res = await apiPost(path, params, "저장이 성공하였습니다");
       if (res) {
@@ -617,7 +591,7 @@ const Tab4 = React.forwardRef(
 
         <CustomForm autoComplete="off" onSubmit={handleSubmit(submit)}>
           <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
-            <div className="tab1">
+            <div className="tab4">
               <Table
                 className="no-space"
                 tableHeader={tableHeader1}
