@@ -138,6 +138,7 @@ function getTabContent(
     case 3:
       return (
         <Tab4
+          ref={tabRef4}
           tabId={tabId}
           data={data}
           data65={data65}
@@ -145,7 +146,6 @@ function getTabContent(
           isAddBtnClicked={isAddBtnClicked}
           handleSubmitParent={handleSubmit}
           submitParent={submit}
-          ref={tabRef4}
           addBtnUnClick={addBtnUnClick}
           areaCode={areaCode}
         />
@@ -153,6 +153,7 @@ function getTabContent(
     case 4:
       return (
         <Tab5
+          ref={tabRef5}
           tabId={tabId}
           data={data}
           data65={data65}
@@ -160,8 +161,8 @@ function getTabContent(
           isAddBtnClicked={isAddBtnClicked}
           handleSubmitParent={handleSubmit}
           submitParent={submit}
-          ref={tabRef5}
           addBtnUnClick={addBtnUnClick}
+          areaCode={areaCode}
         />
       );
     case 5:
