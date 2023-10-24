@@ -68,9 +68,16 @@ export interface initialStateType {
   };
   bupum: {
     source: string;
+    index: number | undefined;
     tick: boolean;
   };
-  ar1100Tab4Multiple: any;
+  ar1100Tab4Params: {
+    areaCode: string;
+    pjCuCode: string;
+    pjDate: string;
+    pjSno: string;
+    pjType: string;
+  };
 }
 
 const initialState: initialStateType = {
@@ -142,9 +149,16 @@ const initialState: initialStateType = {
   },
   bupum: {
     source: "",
+    index: undefined,
     tick: false,
   },
-  ar1100Tab4Multiple: {},
+  ar1100Tab4Params: {
+    areaCode: "",
+    pjCuCode: "",
+    pjDate: "",
+    pjSno: "",
+    pjType: "",
+  },
 };
 
 const modalSlice = createSlice({
@@ -252,9 +266,18 @@ const modalSlice = createSlice({
         tick: !state.bupum.tick,
       };
     },
-    addAR1100Tab4Multiple: (state, action) => {
-      state.ar1100Tab4Multiple = action.payload;
+
+    addAR1100Tab4Params: (state, action) => {
+      state.ar1100Tab4Params = {
+        ...action.payload,
+      };
     },
+    // addAR1100Tab4MultipleGrid: (state, action) => {
+    //   state.ar1100Tab4Multiple = {
+    //     ...state.ar1100Tab4Multiple,
+    //     gridData: [...state.ar1100Tab4Multiple.gridData, action.payload],
+    //   };
+    // },
   },
 });
 
@@ -277,7 +300,8 @@ export const {
   pt1205Popup,
   addBupum,
   addBupumTick,
-  addAR1100Tab4Multiple,
+  addAR1100Tab4Params,
+  //addAR1100Tab4MultipleGrid,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;
