@@ -11,7 +11,7 @@ import Grid from "./grid";
 import { tableHeader3, tableHeader4 } from "./tableHeader";
 import { IAR110065DETAIL, emtObjBpSaleModal } from "./model";
 import CustomDatePicker from "components/customDatePicker";
-import { currencyMask } from "helpers/currency";
+import { currencyMask, removeCommas } from "helpers/currency";
 import Table from "components/table";
 import EditableSelect from "components/editableSelect";
 import useModal from "app/hook/useModal";
@@ -207,6 +207,11 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
     }));
   };
 
+  const prepVal = (val: number) => {
+    let tempVal = val ? +removeCommas(val, "number") : 0;
+    return isNaN(tempVal) ? 0 : tempVal;
+  };
+
   const calculationOfVat = (price: number, vatDivVal: string) => {
     let tempKumSup: number = 0;
     let tempKumVat: number = 0;
@@ -230,6 +235,15 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
       tempKumVat,
       tempTotal,
     };
+  };
+
+  const calculationOfMisu = (tempTotal: number) => {
+    let tempInkum = prepVal(getValues("bgInkum"));
+    let tempKumack = prepVal(getValues("bgSvKumack"));
+    let tempDc = prepVal(getValues("bgDc"));
+
+    const tempMisu = tempTotal - tempInkum - tempDc - tempKumack;
+    return tempMisu;
   };
 
   const tableData1 = [

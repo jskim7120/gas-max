@@ -7,6 +7,7 @@ import Tab5 from "./tabs/tab5";
 
 function getTabContent(
   tabId: number,
+  areaCode: string,
   data: any,
   data65: any,
   dictionary: any,
@@ -146,18 +147,7 @@ function getTabContent(
           submitParent={submit}
           ref={tabRef4}
           addBtnUnClick={addBtnUnClick}
-          setJpKind={setJpKind}
-          qty={qty}
-          setQty={setQty}
-          setReqty={setReqty}
-          danga={danga}
-          setDanga={setDanga}
-          vatDiv={vatDiv}
-          setVatDiv={setVatDiv}
-          inkum={inkum}
-          setInkum={setInkum}
-          dc={dc}
-          setDc={setDc}
+          areaCode={areaCode}
         />
       );
     case 4:

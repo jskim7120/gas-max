@@ -1,8 +1,4 @@
-import React, {
-  useEffect,
-  useImperativeHandle,
-  BaseSyntheticEvent,
-} from "react";
+import React, { useEffect, useImperativeHandle } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   AR1100BPSALEINSERT,
@@ -23,7 +19,6 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { currencyMask, removeCommas } from "helpers/currency";
 import { IAR110065DETAIL } from "./model";
 import { tableHeader1, tableHeader2 } from "./tableHeader";
-import { addBupum } from "app/state/modal/modalSlice";
 
 const Tab4 = React.forwardRef(
   (
@@ -36,18 +31,7 @@ const Tab4 = React.forwardRef(
       handleSubmitParent,
       submitParent,
       addBtnUnClick,
-      setJpKind,
-      qty,
-      setQty,
-      setReqty,
-      danga,
-      setDanga,
-      vatDiv,
-      setVatDiv,
-      inkum,
-      setInkum,
-      dc,
-      setDc,
+      areaCode,
     }: {
       tabId: number;
       data: any;
@@ -57,18 +41,7 @@ const Tab4 = React.forwardRef(
       handleSubmitParent: Function;
       submitParent: Function;
       addBtnUnClick: Function;
-      setJpKind: Function;
-      qty: number;
-      setQty: Function;
-      setReqty: Function;
-      danga: number;
-      setDanga: Function;
-      vatDiv: string;
-      setVatDiv: Function;
-      inkum: number;
-      setInkum: Function;
-      dc: number;
-      setDc: Function;
+      areaCode: string;
     },
     ref: React.ForwardedRef<any>
   ) => {
@@ -101,12 +74,6 @@ const Tab4 = React.forwardRef(
             ...formValues,
             bgInkum: 0,
             bgDc: 0,
-          }));
-        } else {
-          reset((formValues) => ({
-            ...formValues,
-            bgInkum: data65?.bgInkum,
-            bgDc: data65?.bgDc,
           }));
         }
         if (watch("bgInkumType") !== "2") {
@@ -298,7 +265,6 @@ const Tab4 = React.forwardRef(
         });
 
         if (Object.keys(res)?.length > 0) {
-          //setDanga(res[0]?.bgBpDanga);
           handleChangeDanga(res[0]?.bgBpDanga);
           reset((formValues) => ({
             ...formValues,
@@ -314,30 +280,16 @@ const Tab4 = React.forwardRef(
 
     const resetForm = (type: string) => {
       if (type === "reset") {
-        //setQty(data65?.bgQty);
-        //setDanga(data65?.bgDanga);
         reset({
           ...data65,
           bgBpCode: data65?.bgBpCode ? data65?.bgBpCode : "",
           bgBpName: data65?.bgBpName ? data65?.bgBpName : "",
         });
       } else if (type === "bpName") {
-        // const bgKumSup =
-        //   (cm1106?.jcJpDanga ? +removeCommas(cm1106.jcJpDanga, "number") : 0) *
-        //   (getValues("bgQty") ? +getValues("bgQty") : 0);
-        // reset((formValues) => ({
-        //   ...formValues,
-        //   bgBpName: cm1106.jpName,
-        //   bgBpCode: cm1106.jpCode,
-        //   //pjJpSpec: cm1106?.jpSpec,
-        //   bgDanga: cm1106.jcJpDanga,
-        //   bgKumSup: bgKumSup,
-        // }));
       }
     };
 
     const openModalBupum = async () => {
-      //dispatch(addBupum({ areaCode: "01", pjType: 3, source: "AR11003" }));
       openBupumModal();
     };
 
@@ -359,21 +311,17 @@ const Tab4 = React.forwardRef(
       params.insertType = "0";
 
       if (isAddBtnClicked) {
-        // if (source === menuId + tabId.toString()) {
-        params.areaCode = info?.areaCode;
-        params.bgCuCode = info?.cuCode;
-        params.bgCuName = info?.cuName;
-        //params.bgCuUserName = info?.cuViewName;
         params.bgSno = "";
-        // }
       } else {
         params.areaCode = data65?.areaCode;
         params.bgCuCode = data65?.bgCuCode;
         params.bgCuName = data65?.bgCuName;
         params.bgSno = data65?.bgSno;
+        params.bgDateB = DateWithoutDash(params.bgDate);
+        params.bgDate = DateWithoutDash(data65?.bgDate);
       }
+      params.areaCode = areaCode;
       params.bgQty = +params?.bgQty;
-      params.bgDate = DateWithoutDash(params.bgDate);
       params.bgKumSup = removeCommas(params.bgKumSup, "number");
       params.bgKumVat = removeCommas(params.bgKumVat, "number");
       params.bgTotal = removeCommas(params.bgTotal, "number");
@@ -598,6 +546,7 @@ const Tab4 = React.forwardRef(
                 inputSize={InputSize.i100}
                 textAlign="right"
                 mask={currencyMask}
+                readOnly={watch("bgInkumType") === "A"}
               />
             )}
           />
@@ -612,6 +561,7 @@ const Tab4 = React.forwardRef(
                 inputSize={InputSize.i100}
                 textAlign="right"
                 mask={currencyMask}
+                readOnly={watch("bgInkumType") === "A"}
               />
             )}
           />

@@ -1119,6 +1119,7 @@ function AR1100({
         >
           {getTabContent(
             tabId,
+            getValues("areaCode"),
             data,
             data65,
             dataDictionary,
