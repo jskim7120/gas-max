@@ -1,24 +1,31 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "app/store";
 import { Update, Reset, WhiteClose } from "components/allSvgIcon";
-import { FormGroup, Select, Label, Input } from "components/form/style";
+import {
+  FormGroup,
+  Select,
+  Label,
+  Input,
+  CustomForm,
+} from "components/form/style";
 import { ModalBlueHeader } from "components/modal/customModals/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
 import Grid from "./grid";
 import { tableHeader3, tableHeader4 } from "./tableHeader";
-import { IAR110065DETAIL, emtObjBpSaleModal } from "./model";
+import { IAR110065DETAIL, emtObjBpSaleModal, emtObjTab4 } from "./model";
 import CustomDatePicker from "components/customDatePicker";
 import { currencyMask, removeCommas } from "helpers/currency";
 import Table from "components/table";
 import EditableSelect from "components/editableSelect";
 import useModal from "app/hook/useModal";
-
 //import { addAR1100Tab4MultipleGrid } from "app/state/modal/modalSlice";
-import { AR1100SELECT } from "app/path";
-import { apiGet } from "app/axios";
+import { AR1100BPSALEINSERT, AR1100BPSALEUPDATE, AR1100SELECT } from "app/path";
+import { apiGet, apiPost } from "app/axios";
+import { calculationOfVat, prepVal } from "../../helper";
+import { DateWithoutDash } from "helpers/dateFormat";
 
 const LLabel = styled.label`
   background: rgba(104, 103, 103, 0.35);
@@ -67,12 +74,6 @@ const rawData = [
 ];
 
 function Modal({ setModalOpen }: { setModalOpen: Function }) {
-  const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-  const [qty, setQty] = useState<number>(0);
-  const [danga, setDanga] = useState<number>(0);
-  const [dc, setDc] = useState<number>(0);
-  const [inkum, setInkum] = useState<number>(0);
-  const [vatDiv, setVatDiv] = useState<string>("0");
   const [toggler, setToggler] = useState<boolean>(false);
 
   const { register, handleSubmit, reset, setFocus, control, watch, getValues } =
@@ -80,9 +81,11 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
       mode: "onSubmit",
     });
 
+  const { showAR1100BupumModal, openModal: openModalBupum } = useModal();
   const dispatch = useDispatch();
 
   const paramState = useSelector((state) => state.modal.ar1100Tab4Params);
+  const data71State = useSelector((state) => state.modal.ar1100Tab4Data71);
   const bupum: any = useSelector((state) => state.modal.bupum);
 
   const [data, setData] = useState<any>({});
@@ -90,13 +93,29 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
   const [gridData, setGridData] = useState<Array<any>>([]);
 
   useEffect(() => {
-    fetchData65({
-      ...paramState,
-    });
+    if (paramState?.isAddBtnClicked !== undefined) {
+      if (paramState?.isAddBtnClicked === false) {
+        fetchData65({
+          ...paramState,
+        });
+      }
+      if (paramState?.isAddBtnClicked === true) {
+        reset(data71State.detailData[0]);
+        setData(data71State.detailData[0]);
+        setGridData([emtObjBpSaleModal]);
+        setDictionary({
+          bgAcbCode: data71State?.bgAcbCode,
+          bgInkumType: data71State?.bgInkumType,
+          bgSwCode: data71State?.bgSwCode,
+          bgVatDiv: data71State?.bgVatDiv,
+          saleState: data71State?.saleState,
+        });
+      }
+    }
   }, [paramState]);
 
   useEffect(() => {
-    if (bupum.tick !== undefined && bupum?.index) {
+    if (bupum.tick !== undefined && bupum?.index !== undefined) {
       setGridData((prev: any) =>
         prev.map((object: any, idx: number) => {
           if (idx === bupum.index) {
@@ -118,11 +137,34 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
   }, [bupum.tick]);
 
   useEffect(() => {
-    if (toggler !== undefined) {
+    if (watch("bgVatDiv") !== undefined && watch("bgVatDiv") !== "") {
+      handleChangeVatDiv(watch("bgVatDiv"));
     }
-  }, [toggler]);
+  }, [watch("bgVatDiv")]);
 
-  const { showAR1100BupumModal, openModal: openModalBupum } = useModal();
+  useEffect(() => {
+    if (watch("bgSvKumack") !== undefined) {
+      handleChangefields(watch("bgSvKumack"), "kumack");
+    }
+  }, [watch("bgSvKumack")]);
+
+  useEffect(() => {
+    if (watch("bgInkum") !== undefined) {
+      handleChangefields(watch("bgInkum"), "inkum");
+    }
+  }, [watch("bgInkum")]);
+
+  useEffect(() => {
+    if (watch("bgDc") !== undefined) {
+      handleChangefields(watch("bgDc"), "dc");
+    }
+  }, [watch("bgDc")]);
+
+  useEffect(() => {
+    if (watch("bgInkumType") !== undefined) {
+      handleChangeInkumType(watch("bgInkumType"));
+    }
+  }, [watch("bgInkumType")]);
 
   const handleCancel = () => {
     setModalOpen(false);
@@ -133,15 +175,88 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
   };
 
   const handleChangeVatDiv = (val: string) => {
-    setVatDiv(val);
+    let sumPrice = calculateSumPrice();
+
+    const { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(
+      sumPrice,
+      watch("bgVatDiv")
+    );
+    const tempMisu = calculationOfMisu(sumPrice);
+
+    reset((formValues) => ({
+      ...formValues,
+      bgKumSup: tempKumSup,
+      bgKumVat: tempKumVat,
+      bgTotal: tempTotal,
+      bgMisu: tempMisu,
+    }));
   };
 
-  const handleChangeInkumOrDc = (val: number, type: string) => {
-    if (type === "inkum") {
-      setInkum(val);
-    } else if (type === "dc") {
-      setDc(val);
+  const handleChangeInkumType = (val: string) => {
+    if (val === "A") {
+      reset((formValues) => ({
+        ...formValues,
+        bgInkum: 0,
+        bgDc: 0,
+      }));
     }
+    if (val !== "2") {
+      reset((formValues) => ({
+        ...formValues,
+        acbCode: "",
+      }));
+    }
+  };
+
+  const calculateSumPrice = () => {
+    let sumPrice: number = 0;
+
+    if (gridData?.length > 0) {
+      gridData.map((object: any) => {
+        sumPrice += object.bglKumack ? object.bglKumack : 0;
+      });
+    }
+    return sumPrice;
+  };
+
+  const calculationOfMisu = (tempTotal: number) => {
+    let tempInkum = prepVal(getValues("bgInkum"));
+    let tempKumack = prepVal(getValues("bgSvKumack"));
+    let tempDc = prepVal(getValues("bgDc"));
+
+    const tempMisu = tempTotal - tempInkum - tempDc - tempKumack;
+    return tempMisu;
+  };
+
+  const handleChangefields = (val: number, type: string) => {
+    let tempInkum: number = 0;
+    let tempDc: number = 0;
+    let tempKumack: number = 0;
+
+    if (type === "inkum") {
+      tempDc = prepVal(getValues("bgDc"));
+      tempKumack = prepVal(getValues("bgSvKumack"));
+      tempInkum = prepVal(val);
+    } else if (type === "dc") {
+      tempInkum = prepVal(getValues("bgInkum"));
+      tempKumack = prepVal(getValues("bgSvKumack"));
+      tempDc = prepVal(val);
+    } else if (type === "kumack") {
+      tempInkum = prepVal(getValues("bgInkum"));
+      tempDc = prepVal(getValues("bgDc"));
+      tempKumack = prepVal(val);
+    }
+
+    let bgTotal: number = getValues("bgTotal")
+      ? +removeCommas(getValues("bgTotal"), "number")
+      : 0;
+
+    const tempMisu: number = bgTotal - tempDc - tempInkum - tempKumack;
+
+    reset((formValues) => ({
+      ...formValues,
+      bgMisu: tempMisu,
+    }));
   };
 
   const fetchData65 = async (params: any) => {
@@ -154,6 +269,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
           ? [...res?.gridData, emtObjBpSaleModal]
           : [emtObjBpSaleModal]
       );
+
       setDictionary({
         bgAcbCode: res?.bgAcbCode,
         bgInkumType: res?.bgInkumType,
@@ -161,101 +277,130 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
         bgVatDiv: res?.bgVatDiv,
         saleState: res?.saleState,
       });
+    } else {
+      reset(emtObjTab4);
+      setData([]);
+      setGridData([emtObjBpSaleModal]);
+      setDictionary({});
     }
-    setData(res);
   };
 
-  const calculate = (index: number, fieldName: string, value: number) => {
+  const calculateFromGrid = (
+    index: number,
+    fieldName: string,
+    value: number
+  ) => {
     let price: number = 0;
     let sumPrice: number = 0;
 
-    if (fieldName === "bglQty") {
-      price = +gridData[index].bglDanga * (isNaN(value) ? 0 : +value);
-    } else if (fieldName === "bglDanga") {
-      price = +gridData[index].bglQty * (isNaN(value) ? 0 : +value);
-    }
+    if (fieldName === "bglQty" || fieldName === "bglDanga") {
+      if (fieldName === "bglQty") {
+        price = +gridData[index].bglDanga * (isNaN(value) ? 0 : +value);
+      } else if (fieldName === "bglDanga") {
+        price = +gridData[index].bglQty * (isNaN(value) ? 0 : +value);
+      }
 
-    setGridData((prev: any) =>
-      prev.map((object: any, idx: number) => {
-        if (idx === index) {
-          sumPrice += price;
-          return {
-            ...object,
-            [fieldName]: value,
-            bglKumack: price,
-          };
+      setGridData((prev: any) =>
+        prev.map((object: any, idx: number) => {
+          if (idx === index) {
+            sumPrice += price;
+            return {
+              ...object,
+              [fieldName]: value,
+              bglKumack: price,
+            };
+          } else {
+            sumPrice += object.bglKumack ? object.bglKumack : 0;
+            return object;
+          }
+        })
+      );
+
+      const { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(
+        sumPrice,
+        getValues("bgVatDiv")
+      );
+      const tempMisu = calculationOfMisu(sumPrice);
+
+      reset((formValues) => ({
+        ...formValues,
+        bgKumSup: tempKumSup,
+        bgKumVat: tempKumVat,
+        bgTotal: tempTotal,
+        bgMisu: tempMisu,
+      }));
+    } else {
+      setGridData((prev: any) =>
+        prev.map((object: any, idx: number) => {
+          if (idx === index) {
+            return {
+              ...object,
+              [fieldName]: value,
+            };
+          } else {
+            return object;
+          }
+        })
+      );
+    }
+  };
+
+  const submit = async (params: any) => {
+    if (paramState?.isAddBtnClicked !== undefined) {
+      const path =
+        paramState?.isAddBtnClicked === true
+          ? AR1100BPSALEINSERT
+          : AR1100BPSALEUPDATE;
+
+      params.insertType = "0";
+      if (paramState?.isAddBtnClicked === true) {
+        params.bgSno = "";
+      } else {
+        params.bgDateB = DateWithoutDash(params.bgDate);
+      }
+
+      params.areaCode = "01"; //----------------------tur zuur
+      params.bgDate = DateWithoutDash(params?.bgDate);
+      params.bgQty = +params?.bgQty;
+      params.bgKumSup = +removeCommas(params.bgKumSup, "number");
+      params.bgKumVat = +removeCommas(params.bgKumVat, "number");
+      params.bgTotal = +removeCommas(params.bgTotal, "number");
+      params.bgMisu = +removeCommas(params.bgMisu, "number");
+      params.bgDanga = +removeCommas(params.bgDanga, "number");
+      params.bgInkum = +removeCommas(params.bgInkum, "number");
+      params.bgDc = +removeCommas(params.bgDc, "number");
+      params.bgSvKumack = +removeCommas(params.bgSvKumack, "number");
+
+      if (params.bgSwCode) {
+        const bgSwName = dictionary?.bgSwCode?.find(
+          (item: any) => item.code === params.bgSwCode
+        )?.codeName;
+        params.bgSwName = bgSwName;
+      }
+
+      const jsonItemList = gridData.filter((obj: any) => obj.bglBpCode !== "");
+
+      params.jsonItemList = jsonItemList;
+
+      // console.log("modal params>>>>>>>>>>>>", params);
+      // console.log(" josn list >>>>>>>>>>>>", jsonItemList);
+
+      const res = await apiPost(path, params, "저장이 성공하였습니다");
+      if (res) {
+        if (paramState?.isAddBtnClicked) {
+          //await handleSubmitParent((d: any) => submitParent(d, "last"))();
         } else {
-          sumPrice += object.bglKumack;
-          return object;
+          //await handleSubmitParent((d: any) => submitParent(d))();
         }
-      })
-    );
-    let bgKumSup: number = 0;
-    let bgKumVat: number = 0;
-    let bgTotal: number = 0;
-
-    const { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(
-      sumPrice,
-      getValues("bgVatDiv")
-    );
-
-    reset((formValues) => ({
-      ...formValues,
-      bgKumSup: tempKumSup,
-      bgKumVat: tempKumVat,
-      bgTotal: tempTotal,
-    }));
-  };
-
-  const prepVal = (val: number) => {
-    let tempVal = val ? +removeCommas(val, "number") : 0;
-    return isNaN(tempVal) ? 0 : tempVal;
-  };
-
-  const calculationOfVat = (price: number, vatDivVal: string) => {
-    let tempKumSup: number = 0;
-    let tempKumVat: number = 0;
-    let tempTotal: number = 0;
-
-    if (vatDivVal === "0") {
-      tempKumSup = Math.round(price / 1.1);
-      tempKumVat = price - tempKumSup;
-      tempTotal = price;
-    } else if (vatDivVal === "1") {
-      tempKumSup = price;
-      tempKumVat = Math.round(price * 0.1);
-      tempTotal = tempKumSup + tempKumVat;
-    } else if (vatDivVal === "2") {
-      tempKumSup = price;
-      tempKumVat = 0;
-      tempTotal = price;
+      }
     }
-    return {
-      tempKumSup,
-      tempKumVat,
-      tempTotal,
-    };
-  };
-
-  const calculationOfMisu = (tempTotal: number) => {
-    let tempInkum = prepVal(getValues("bgInkum"));
-    let tempKumack = prepVal(getValues("bgSvKumack"));
-    let tempDc = prepVal(getValues("bgDc"));
-
-    const tempMisu = tempTotal - tempInkum - tempDc - tempKumack;
-    return tempMisu;
   };
 
   const tableData1 = [
     {
       0: (
         <FormGroup>
-          <Select
-            name="bgVatDiv"
-            value={vatDiv}
-            width={InputSize.i70}
-            onChange={(e) => handleChangeVatDiv(e.target.value)}
-          >
+          <Select register={register("bgVatDiv")} width={InputSize.i100}>
             {dictionary?.bgVatDiv?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -353,7 +498,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
         <FormGroup>
           <Select
             register={register("acbCode")}
-            style={{ width: "284px" }}
+            style={{ width: "314px" }}
             disabled={watch("bgInkumType") !== "2"}
           >
             {dictionary?.bgAcbCode?.map((obj: any, idx: number) => (
@@ -365,23 +510,33 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
         </FormGroup>
       ),
       2: (
-        <Input
+        <Controller
+          control={control}
           name="bgInkum"
-          value={inkum}
-          onChange={(e: any) => handleChangeInkumOrDc(e.target.value, "inkum")}
-          inputSize={InputSize.i100}
-          textAlign="right"
-          mask={currencyMask}
+          render={({ field }) => (
+            <Input
+              {...field}
+              inputSize={InputSize.i100}
+              textAlign="right"
+              mask={currencyMask}
+              readOnly={watch("bgInkumType") === "A"}
+            />
+          )}
         />
       ),
       3: (
-        <Input
+        <Controller
+          control={control}
           name="bgDc"
-          value={dc}
-          onChange={(e: any) => handleChangeInkumOrDc(e.target.value, "dc")}
-          inputSize={InputSize.i100}
-          textAlign="right"
-          mask={currencyMask}
+          render={({ field }) => (
+            <Input
+              {...field}
+              inputSize={InputSize.i100}
+              textAlign="right"
+              mask={currencyMask}
+              readOnly={watch("bgInkumType") === "A"}
+            />
+          )}
         />
       ),
       4: (
@@ -414,7 +569,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
   ];
 
   return (
-    <form autoComplete="off">
+    <CustomForm autoComplete="off" onSubmit={handleSubmit(submit)}>
       {showAR1100BupumModal()}
       <ModalBlueHeader
         className="handle "
@@ -476,7 +631,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
           data={gridData}
           openModal={handleOpenModalBupum}
           setToggler={setToggler}
-          calculate={calculate}
+          calculate={calculateFromGrid}
         />
         <Table
           className="no-space"
@@ -502,7 +657,6 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
             icon={<Update />}
             color={ButtonColor.SECONDARY}
             type="submit"
-            //disabled={data?.length === 0}
           />
           <Button
             text="취소"
@@ -512,7 +666,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
           />
         </div>
       </div>
-    </form>
+    </CustomForm>
   );
 }
 

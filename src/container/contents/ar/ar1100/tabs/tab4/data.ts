@@ -27,7 +27,7 @@ export const fields = [
   },
   {
     fieldName: "bglBigo",
-    dataType: ValueType.NUMBER,
+    dataType: ValueType.TEXT,
   },
 ];
 

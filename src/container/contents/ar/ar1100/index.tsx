@@ -22,6 +22,7 @@ import useRowIndex from "app/hook/useRowIndex";
 import useGetData from "app/hook/getSimpleData";
 import {
   addAR1100Tab4Params,
+  addAR1100Tab4Data71,
   addBupum,
   addCM1105,
   addDeleteMenuId,
@@ -338,6 +339,7 @@ function AR1100({
         saleType: 5,
       });
       if (res !== undefined && Object.keys(res)?.length > 0) {
+        dispatch(addAR1100Tab4Data71(res));
         setDataDictionary({
           bgAcbCode: res?.bgAcbCode,
           bgInkumType: res?.bgInkumType,
