@@ -11,7 +11,7 @@ export interface AR1100MODELDETAIL {
   asYdate: string;
   asSwCode: string;
   asVatDiv: number;
-  asSumkum: number;
+  asSurikum: number;
   asInkumtype: string;
   acbCode: string;
   asInkum: number;
@@ -33,7 +33,7 @@ export const emtObjTab5 = {
   asYdate: "",
   asSwCode: "",
   asVatDiv: 0,
-  asSumkum: 0,
+  asSurikum: 0,
   asInkumtype: "",
   acbCode: "",
   asInkum: 0,

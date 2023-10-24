@@ -90,6 +90,10 @@ function useModal() {
     );
   };
 
+  const showAR1100AsModal = () => {
+    return <Modal type="ar1100AsModal" isOpen={isOpen} setIsOpen={setIsOpen} />;
+  };
+
   return {
     closeModal,
     openModal,
@@ -110,6 +114,7 @@ function useModal() {
     showEN1500Modal,
     showAR1100BpSaleModal,
     showAR1100BupumModal,
+    showAR1100AsModal,
   };
 }
 
