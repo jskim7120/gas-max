@@ -10,7 +10,7 @@ export interface AR1100MODELDETAIL {
   asPtime: string;
   asYdate: string;
   asSwCode: string;
-  asVatDiv: number;
+  asVatDiv: string;
   asSurikum: number;
   asInkumtype: string;
   acbCode: string;
@@ -18,6 +18,10 @@ export interface AR1100MODELDETAIL {
   asDc: number;
   asMisukum: number;
   signuser: string;
+
+  // Modal
+  asKumSup: number;
+  asKumVat: number;
 }
 
 export const emtObjTab5 = {
@@ -32,7 +36,7 @@ export const emtObjTab5 = {
   asPtime: "",
   asYdate: "",
   asSwCode: "",
-  asVatDiv: 0,
+  asVatDiv: "0",
   asSurikum: 0,
   asInkumtype: "",
   acbCode: "",
@@ -40,4 +44,8 @@ export const emtObjTab5 = {
   asDc: 0,
   asMisukum: 0,
   signuser: "",
+
+  // Modal
+  asKumSup: 0,
+  asKumVat: 0,
 };

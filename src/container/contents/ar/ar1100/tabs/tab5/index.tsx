@@ -1,10 +1,6 @@
 import React, { useEffect, useImperativeHandle } from "react";
 import { Controller, useForm } from "react-hook-form";
-import {
-  AR1100ASCUSTINSERT,
-  AR1100ASCUSTUPDATE,
-  AR1100SANGPUM,
-} from "app/path";
+import { AR1100ASCUSTINSERT, AR1100ASCUSTUPDATE } from "app/path";
 import { useDispatch, useSelector } from "app/store";
 import { apiGet, apiPost } from "app/axios";
 import useModal from "app/hook/useModal";
@@ -19,11 +15,12 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { currencyMask, removeCommas } from "helpers/currency";
 import { AR1100MODELDETAIL } from "./model";
 import { tableHeader1, tableHeader2 } from "./tableHeader";
-import { addCM1106Second } from "app/state/modal/modalSlice";
+
 const Tab5 = React.forwardRef(
   (
     {
       tabId,
+      areaCode,
       data,
       data65,
       dictionary,
@@ -33,6 +30,7 @@ const Tab5 = React.forwardRef(
       addBtnUnClick,
     }: {
       tabId: number;
+      areaCode: string;
       data: any;
       data65: any;
       dictionary: any;
@@ -58,6 +56,24 @@ const Tab5 = React.forwardRef(
     const openModalAR1100As = () => {
       openAR1100AsModal();
     };
+
+    useEffect(() => {
+      if (watch("asInkumtype") !== undefined) {
+        if (watch("asInkumtype") === "A") {
+          reset((formValues) => ({
+            ...formValues,
+            asInkum: 0,
+            asDc: 0,
+          }));
+        }
+        if (watch("asInkumtype") !== "2") {
+          reset((formValues) => ({
+            ...formValues,
+            acbCode: "",
+          }));
+        }
+      }
+    }, [watch("asInkumtype")]);
 
     useEffect(() => {
       if (watch("asInkum") !== undefined) {
@@ -125,6 +141,32 @@ const Tab5 = React.forwardRef(
       }));
     };
 
+    const calculationOfMisu = (tempTotal: number) => {
+      let tempInkum = prepVal(getValues("asInkum"));
+      let tempDc = prepVal(getValues("asDc"));
+
+      const tempMisu = tempTotal - tempInkum - tempDc;
+      return tempMisu;
+    };
+
+    const handleChangeKum = (val: number) => {
+      const tempVatDiv = getValues("asVatDiv") ? getValues("asVatDiv") : "0";
+
+      const price = watch("asSurikum");
+      let { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(
+        price,
+        tempVatDiv
+      );
+      const tempMisu = calculationOfMisu(tempTotal);
+      reset((formValues) => ({
+        ...formValues,
+        asKumSup: tempKumSup,
+        asKumVat: tempKumVat,
+        asSurikum: tempTotal,
+        asMisukum: tempMisu,
+      }));
+    };
+
     const resetForm = (type: string) => {
       if (type === "reset") {
         reset({
@@ -161,15 +203,10 @@ const Tab5 = React.forwardRef(
       params.insertType = "0";
 
       if (isAddBtnClicked) {
-        // if (source === menuId + tabId.toString()) {
-        params.areaCode = info?.areaCode;
-        params.asCuCode = info?.cuCode;
-        params.asCuName = info?.cuName;
-        params.asCuUserName = info?.cuUsername;
+        //params.asCuUserName = info?.cuUsername;
         params.asSno = "";
-        // }
       }
-
+      params.areaCode = areaCode;
       params.asDate = DateWithoutDash(params.asDate);
       params.asPdate = DateWithoutDash(params.asPdate);
       params.asPtime = DateWithoutDash(params.asPtime);
@@ -364,6 +401,7 @@ const Tab5 = React.forwardRef(
                 inputSize={InputSize.i120}
                 textAlign="right"
                 mask={currencyMask}
+                readOnly={watch("asInkumtype") === "A"}
               />
             )}
           />
@@ -378,6 +416,7 @@ const Tab5 = React.forwardRef(
                 inputSize={InputSize.i120}
                 textAlign="right"
                 mask={currencyMask}
+                readOnly={watch("asInkumtype") === "A"}
               />
             )}
           />
