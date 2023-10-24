@@ -5,6 +5,7 @@ export const AR1100SELECT41 = "/app/AR1100/select41";
 export const AR1100SELECT51 = "/app/AR1100/select51";
 export const AR1100SELECT61 = "/app/AR1100/select61";
 export const AR1100SELECT71 = "/app/AR1100/select71";
+export const AR1100SELECT81 = "/app/AR1100/select81";
 export const AR1100STATE = "/app/AR1100/state";
 export const AR1100SANGPUM = "/app/AR1100/sangpum";
 export const AR1100BUPUMSEARCH = "/app/AR1100/bupum/search";
@@ -24,6 +25,10 @@ export const AR1100TONGSALEDELETE = "/app/AR1100/TONGSALE/delete";
 export const AR1100BPSALEINSERT = "/app/AR1100/BPSALE/insert";
 export const AR1100BPSALEUPDATE = "/app/AR1100/BPSALE/update";
 export const AR1100BPSALEDELETE = "/app/AR1100/BPSALE/delete";
+
+export const AR1100ASCUSTINSERT = "/app/AR1100/ASCUST/insert";
+export const AR1100ASCUSTUPDATE = "/app/AR1100/ASCUST/update";
+export const AR1100ASCUSTDELETE = "/app/AR1100/ASCUST/delete";
 
 export const AR9001SEARCH = "/app/AR9001/search";
 export const AR9002SEARCH = "/app/AR9002/search";

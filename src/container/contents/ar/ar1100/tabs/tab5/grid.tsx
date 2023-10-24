@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { useDispatch } from "app/store";
-import { fields, columns } from "./data";
 
 function Grid({ data, openModal }: { data: any; openModal: Function }) {
   const realgridElement = useRef<HTMLDivElement>(null);
@@ -17,9 +16,6 @@ function Grid({ data, openModal }: { data: any; openModal: Function }) {
     gv = new GridView(container);
 
     gv.setDataSource(dp);
-
-    dp.setFields(fields);
-    gv.setColumns(columns);
 
     gv.setFooter({ visible: false });
 

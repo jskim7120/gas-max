@@ -17,6 +17,7 @@ import PT1205Modal from "./customModals/pt1205Modal";
 import ReLoginModal from "./customModals/reLoginModal";
 import AR1100BpSaleModal from "./customModals/ar1100BpSaleModal";
 import AR1100BupumModal from "./customModals/ar1100BupumModal";
+import AR1100AsModal from "./customModals/ar1100AsModal";
 
 const PopupArea = styled.section`
   position: fixed;
@@ -50,7 +51,8 @@ const PopupContainer = styled.div<{ type: string }>`
       props.type === "cc1200Modal" ||
       props.type === "reLoginModal" ||
       props.type === "ar1100BpSaleModal" ||
-      props.type === "ar1100BupumModal") &&
+      props.type === "ar1100BupumModal" ||
+      props.type === "ar1100AsModal") &&
     `
       top: 50%;
       left: 50%;  
@@ -140,6 +142,7 @@ function Popup({
           {type === "ar1100BupumModal" && (
             <AR1100BupumModal setIsOpen={setIsOpen} />
           )}
+          {type === "ar1100AsModal" && <AR1100AsModal setIsOpen={setIsOpen} />}
         </Suspense>
       </PopupContainer>
     </PopupArea>

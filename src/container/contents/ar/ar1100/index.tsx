@@ -8,6 +8,7 @@ import {
   AR1100SELECT51,
   AR1100SELECT61,
   AR1100SELECT71,
+  AR1100SELECT81,
   AR1100STATE,
   AR1100DELETE,
   AR1100CJSALEDELETE,
@@ -348,17 +349,22 @@ function AR1100({
         document.getElementById("bgBpCode")?.focus();
       }
     } else if (tabId === 4) {
-      const res: any = await fetchData71({
+      const res: any = await fetchData81({
         areaCode: info?.areaCode,
         cuCode: info?.cuCode,
         saleType: 5,
       });
+
       if (res && Object.keys(res)?.length > 0) {
         setDataDictionary({
-          bgAcbCode: res?.bgAcbCode,
-          bgInkumType: res?.bgInkumType,
-          bgSwCode: res?.bgSwCode,
-          bgVatDiv: res?.bgVatDiv,
+          asAcbCode: res?.asAcbCode,
+          asInSwCode: res?.asInSwCode,
+          asInTel: res?.asInTel,
+          asInkumType: res?.asInkumType,
+          asPSwCode: res?.asPSwCode,
+          asSwCode: res?.asSwCode,
+          asTagName: res?.asTagName,
+          asVatDiv: res?.asVatDiv,
           saleState: res?.saleState,
         });
 
@@ -700,6 +706,11 @@ function AR1100({
 
   const fetchData71 = async (params: any) => {
     const res = await apiGet(AR1100SELECT71, params);
+    return res;
+  };
+
+  const fetchData81 = async (params: any) => {
+    const res = await apiGet(AR1100SELECT81, params);
     return res;
   };
 
