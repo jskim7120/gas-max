@@ -3,13 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "app/store";
 import { Update, Reset, WhiteClose, List } from "components/allSvgIcon";
-import {
-  FormGroup,
-  Select,
-  Label,
-  Input,
-  CustomForm,
-} from "components/form/style";
+import { FormGroup, Select, Input, CustomForm } from "components/form/style";
 import { ModalBlueHeader } from "components/modal/customModals/style";
 import Button from "components/button/button";
 import { ButtonColor, InputSize } from "components/componentsType";
@@ -21,12 +15,10 @@ import { currencyMask, removeCommas } from "helpers/currency";
 import Table from "components/table";
 import EditableSelect from "components/editableSelect";
 import useModal from "app/hook/useModal";
-
 import {
   AR1100BPSALEINSERT,
   AR1100BPSALEUPDATE,
   AR1100BUPUMSEARCH,
-  AR1100SELECT,
 } from "app/path";
 import { apiGet, apiPost } from "app/axios";
 import { calculationOfVat, prepVal } from "../../helper";
@@ -67,14 +59,12 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
   );
 
   const bupum: any = useSelector((state) => state.modal.bupum);
-
   const [data, setData] = useState<any>({});
   const [dictionary, setDictionary] = useState<any>({});
   const [gridData, setGridData] = useState<Array<any>>([]);
 
   useEffect(() => {
     if (Object.keys(paramState)?.length > 0) {
-      console.log("paramState>>>>>>>>>>>>>>>>>", paramState);
       setDictionary({
         bgAcbCode: paramState?.bgAcbCode,
         bgInkumType: paramState?.bgInkumType,
@@ -240,33 +230,6 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
     }));
   };
 
-  const fetchData65 = async (params: any) => {
-    const res = await apiGet(AR1100SELECT, params);
-    if (res && Object.keys(res)?.length > 0) {
-      reset(res?.detailData[0]);
-
-      setData(res?.detailData ? res?.detailData[0] : {});
-      setGridData(
-        res?.gridData
-          ? [...res?.gridData, emtObjBpSaleModal]
-          : [emtObjBpSaleModal]
-      );
-
-      setDictionary({
-        bgAcbCode: res?.bgAcbCode,
-        bgInkumType: res?.bgInkumType,
-        bgSwCode: res?.bgSwCode,
-        bgVatDiv: res?.bgVatDiv,
-        saleState: res?.saleState,
-      });
-    } else {
-      reset(emtObjTab4);
-      setData([]);
-      setGridData([emtObjBpSaleModal]);
-      setDictionary({});
-    }
-  };
-
   const calculateFromGrid = (
     index: number,
     fieldName: string,
@@ -398,8 +361,6 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
       bpSearch: "",
       pjType: "4",
     });
-
-    console.log("response>>>>>>>>>>", response);
 
     const tempGridData = response.map((obj: any) => ({
       bglBpCode: obj.bglBpCode,
