@@ -304,7 +304,7 @@ export const columns = [
     name: "bigo",
     fieldName: "bigo",
     type: "data",
-    width: "130",
+    width: "200",
     styleName: "rg-left-column",
     header: {
       text: "비고",
