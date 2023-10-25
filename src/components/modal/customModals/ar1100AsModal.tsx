@@ -4,7 +4,7 @@ import Form from "container/contents/ar/ar1100/tabs/tab5/AR1100AsModal";
 import { ModalWrapper } from "./style";
 
 const customStyle = {
-  width: "900px",
+  width: "1150px",
 };
 
 function AR1100AsModal({ setIsOpen }: { setIsOpen: Function }) {

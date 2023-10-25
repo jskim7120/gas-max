@@ -23,6 +23,7 @@ import useRowIndex from "app/hook/useRowIndex";
 import useGetData from "app/hook/getSimpleData";
 import {
   addAR1100Tab4Params,
+  addAR1100Tab5Params,
   addAR1100Tab4Data71,
   addBupum,
   addCM1105,
@@ -61,6 +62,7 @@ import { emtObjTab1 } from "./tabs/tab1/model";
 import { emtObjTab2 } from "./tabs/tab2/model";
 import { emtObjTab3 } from "./tabs/tab3/model";
 import { emtObjTab4 } from "./tabs/tab4/model";
+import { emtObjTab5 } from "./tabs/tab5/model";
 import getTabContent from "./getTabContent";
 import Grid from "./grid";
 
@@ -695,8 +697,6 @@ function AR1100({
       }
       if (data[selected]?.pjType === "5") {
         //5-r tab------------------------
-        console.log("this is 5tab", res);
-
         setDataDictionary({
           asAcbCode: res?.asAcbCode,
           asInSwCode: res?.asInSwCode,
@@ -712,6 +712,15 @@ function AR1100({
           let detail = res?.detailData[0];
           tabRef5?.current?.reset(detail);
         }
+        dispatch(
+          addAR1100Tab5Params({
+            areaCode: data[selected]?.areaCode,
+            asCuCode: data[selected]?.cuCode,
+            asDate: DateWithoutDash(data[selected]?.pjDate),
+            asSno: data[selected]?.pjSno,
+            pjType: data[selected]?.pjType,
+          })
+        );
       }
     } else {
       setData65({});
