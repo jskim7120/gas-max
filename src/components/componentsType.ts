@@ -7,6 +7,7 @@ export enum ButtonColor {
   DANGER = "danger",
   PURPLE = "purple",
   BLUE = "blue",
+  SMS_SEND = "pink",
 }
 
 export enum ButtonSize {

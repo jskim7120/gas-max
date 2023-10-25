@@ -24,6 +24,8 @@ import useGetData from "app/hook/getSimpleData";
 import {
   addAR1100Tab4Multiple,
   setAR1100Tab4Multiple,
+  addAR1100Tab4Params,
+  addAR1100Tab5Params,
   addBupum,
   addCM1105,
   addDeleteMenuId,
@@ -61,6 +63,7 @@ import { emtObjTab1 } from "./tabs/tab1/model";
 import { emtObjTab2 } from "./tabs/tab2/model";
 import { emtObjTab3 } from "./tabs/tab3/model";
 import { emtObjTab4 } from "./tabs/tab4/model";
+import { emtObjTab5 } from "./tabs/tab5/model";
 import getTabContent from "./getTabContent";
 import Grid from "./grid";
 
@@ -698,6 +701,15 @@ function AR1100({
         if (res?.detailData && Object.keys(res?.detailData)?.length > 0) {
           tabRef5?.current?.reset(res?.detailData[0]);
         }
+        dispatch(
+          addAR1100Tab5Params({
+            areaCode: data[selected]?.areaCode,
+            asCuCode: data[selected]?.cuCode,
+            asDate: DateWithoutDash(data[selected]?.pjDate),
+            asSno: data[selected]?.pjSno,
+            pjType: data[selected]?.pjType,
+          })
+        );
       }
     } else {
       setData65({});

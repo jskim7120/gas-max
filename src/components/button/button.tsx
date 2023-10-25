@@ -61,6 +61,12 @@ const BtnAttribute = (kind: ButtonType, color: ButtonColor) => {
       attributes.color = "#FFF";
       attributes.lineColor = "#FFF";
     }
+    if (color === ButtonColor.SMS_SEND) {
+      attributes.bg = "#ffc7f7";
+      attributes.border = "#c6a0c1";
+      attributes.color = "#000";
+      attributes.lineColor = "#000";
+    }
   } else if (kind === ButtonType.LOGIN) {
     attributes = {
       borderRad: "4px",

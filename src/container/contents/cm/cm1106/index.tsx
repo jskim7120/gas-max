@@ -287,7 +287,12 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
                 color={ButtonColor.SUCCESS}
                 onClick={handleChoose}
               />
-              <Button text="취소" icon={<Reset />} type="button" />
+              <Button
+                text="취소"
+                icon={<Reset />}
+                onClick={() => setIsModalOpen(false)}
+                type="button"
+              />
             </div>
           )}
         </div>

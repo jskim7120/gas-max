@@ -71,7 +71,18 @@ export interface initialStateType {
     index: number | undefined;
     tick: boolean;
   };
+
   ar1100Tab4Multiple: {};
+  ar1100Tab5Params: {
+    isAddBtnClicked: boolean;
+    areaCode: string;
+    asCuCode: string;
+    asDate: string;
+    asSno: string;
+    asType: string;
+  };
+  
+
 }
 
 const initialState: initialStateType = {
@@ -146,7 +157,19 @@ const initialState: initialStateType = {
     index: undefined,
     tick: false,
   },
+
   ar1100Tab4Multiple: {},
+  ar1100Tab5Params: {
+    isAddBtnClicked: false,
+    areaCode: "",
+    asCuCode: "",
+    asDate: "",
+    asSno: "",
+    asType: "",
+  },
+
+  
+
 };
 
 const modalSlice = createSlice({
@@ -261,7 +284,12 @@ const modalSlice = createSlice({
     setAR1100Tab4Multiple: (state, action) => {
       state.ar1100Tab4Multiple = action.payload;
     },
-
+    addAR1100Tab5Params: (state, action) => {
+      state.ar1100Tab5Params = {
+        ...state.ar1100Tab5Params,
+        ...action.payload,
+      };
+    },
     addAR1100Tab4Multiple: (state, action) => {
       state.ar1100Tab4Multiple = {
         ...state.ar1100Tab4Multiple,
