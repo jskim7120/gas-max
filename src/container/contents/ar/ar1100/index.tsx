@@ -22,9 +22,10 @@ import useModal from "app/hook/useModal";
 import useRowIndex from "app/hook/useRowIndex";
 import useGetData from "app/hook/getSimpleData";
 import {
+  addAR1100Tab4Multiple,
+  setAR1100Tab4Multiple,
   addAR1100Tab4Params,
   addAR1100Tab5Params,
-  addAR1100Tab4Data71,
   addBupum,
   addCM1105,
   addDeleteMenuId,
@@ -342,7 +343,8 @@ function AR1100({
         saleType: 5,
       });
       if (res !== undefined && Object.keys(res)?.length > 0) {
-        dispatch(addAR1100Tab4Data71(res));
+        // dispatch(addAR1100Tab4Data71(res));
+        dispatch(setAR1100Tab4Multiple({ ...res, isAddBtnClicked: true }));
         setDataDictionary({
           bgAcbCode: res?.bgAcbCode,
           bgInkumType: res?.bgInkumType,
@@ -589,7 +591,6 @@ function AR1100({
         setData65(res?.detailData[0]);
       }
       if (data[selected]?.pjType === "0") {
-        //1-r tab------------------------
         setDataDictionary({
           pjVatDiv: res?.pjVatDiv,
           pjSwCode: res?.pjSwCode,
@@ -612,7 +613,6 @@ function AR1100({
         }
       }
       if (data[selected]?.pjType === "1") {
-        //2-r tab------------------------
         setDataDictionary({
           proxyType: res?.proxyType,
           saleState: res?.saleState,
@@ -632,7 +632,6 @@ function AR1100({
         }
       }
       if (data[selected]?.pjType === "2") {
-        //3-r tab------------------------
         setDataDictionary({
           acbCode: res?.tsAcbCode,
           tsGubun: res?.tsGubun,
@@ -667,15 +666,7 @@ function AR1100({
         }
       }
       if (data[selected]?.pjType === "4") {
-        dispatch(
-          addAR1100Tab4Params({
-            areaCode: data[selected]?.areaCode,
-            pjCuCode: data[selected]?.cuCode,
-            pjDate: DateWithoutDash(data[selected]?.pjDate),
-            pjSno: data[selected]?.pjSno,
-            pjType: data[selected]?.pjType,
-          })
-        );
+        dispatch(setAR1100Tab4Multiple({ ...res, isAddBtnClicked: false }));
       }
       if (data[selected]?.pjType === "3" || data[selected]?.pjType === "4") {
         setDataDictionary({
@@ -696,7 +687,6 @@ function AR1100({
         }
       }
       if (data[selected]?.pjType === "5") {
-        //5-r tab------------------------
         setDataDictionary({
           asAcbCode: res?.asAcbCode,
           asInSwCode: res?.asInSwCode,
@@ -709,8 +699,7 @@ function AR1100({
           saleState: res?.saleState,
         });
         if (res?.detailData && Object.keys(res?.detailData)?.length > 0) {
-          let detail = res?.detailData[0];
-          tabRef5?.current?.reset(detail);
+          tabRef5?.current?.reset(res?.detailData[0]);
         }
         dispatch(
           addAR1100Tab5Params({
@@ -1181,6 +1170,7 @@ function AR1100({
             isAddBtnClicked,
             handleSubmit,
             submit,
+            selected,
             menuId,
             tabRef1,
             tabRef2,

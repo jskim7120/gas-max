@@ -71,14 +71,8 @@ export interface initialStateType {
     index: number | undefined;
     tick: boolean;
   };
-  ar1100Tab4Params: {
-    isAddBtnClicked: boolean;
-    areaCode: string;
-    pjCuCode: string;
-    pjDate: string;
-    pjSno: string;
-    pjType: string;
-  };
+
+  ar1100Tab4Multiple: {};
   ar1100Tab5Params: {
     isAddBtnClicked: boolean;
     areaCode: string;
@@ -87,7 +81,8 @@ export interface initialStateType {
     asSno: string;
     asType: string;
   };
-  ar1100Tab4Data71: any;
+  
+
 }
 
 const initialState: initialStateType = {
@@ -162,14 +157,8 @@ const initialState: initialStateType = {
     index: undefined,
     tick: false,
   },
-  ar1100Tab4Params: {
-    isAddBtnClicked: false,
-    areaCode: "",
-    pjCuCode: "",
-    pjDate: "",
-    pjSno: "",
-    pjType: "",
-  },
+
+  ar1100Tab4Multiple: {},
   ar1100Tab5Params: {
     isAddBtnClicked: false,
     areaCode: "",
@@ -179,7 +168,8 @@ const initialState: initialStateType = {
     asType: "",
   },
 
-  ar1100Tab4Data71: {},
+  
+
 };
 
 const modalSlice = createSlice({
@@ -280,6 +270,9 @@ const modalSlice = createSlice({
         ...action.payload,
       };
     },
+    setBupum: (state, action) => {
+      state.bupum = action.payload;
+    },
     addBupumTick: (state, action) => {
       state.bupum = {
         ...state.bupum,
@@ -288,11 +281,8 @@ const modalSlice = createSlice({
       };
     },
 
-    addAR1100Tab4Params: (state, action) => {
-      state.ar1100Tab4Params = {
-        ...state.ar1100Tab4Params,
-        ...action.payload,
-      };
+    setAR1100Tab4Multiple: (state, action) => {
+      state.ar1100Tab4Multiple = action.payload;
     },
     addAR1100Tab5Params: (state, action) => {
       state.ar1100Tab5Params = {
@@ -300,22 +290,16 @@ const modalSlice = createSlice({
         ...action.payload,
       };
     },
-    // addAR1100Tab4MultipleGrid: (state, action) => {
-    //   state.ar1100Tab4Multiple = {
-    //     ...state.ar1100Tab4Multiple,
-    //     gridData: [...state.ar1100Tab4Multiple.gridData, action.payload],
-    //   };
-    // },
-
-    addAR1100Tab4Data71: (state, action) => {
-      state.ar1100Tab4Data71 = action.payload;
+    addAR1100Tab4Multiple: (state, action) => {
+      state.ar1100Tab4Multiple = {
+        ...state.ar1100Tab4Multiple,
+        ...action.payload,
+      };
     },
   },
 });
 
 export const {
-  // openModal,
-  // closeModal,
   addCM1105,
   addCM1105LoadStatus,
   addCM1106,
@@ -330,12 +314,11 @@ export const {
   rv1100Popup,
   ptAreaCode,
   pt1205Popup,
+  setBupum,
   addBupum,
   addBupumTick,
-  addAR1100Tab4Params,
-  addAR1100Tab5Params,
-  //addAR1100Tab4MultipleGrid,
-  addAR1100Tab4Data71,
+  addAR1100Tab4Multiple,
+  setAR1100Tab4Multiple,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

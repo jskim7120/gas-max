@@ -14,6 +14,7 @@ function getTabContent(
   isAddBtnClicked: boolean,
   handleSubmit: Function,
   submit: Function,
+  selected: number,
   menuId: string,
   tabRef1: any,
   tabRef2: any,
@@ -148,6 +149,7 @@ function getTabContent(
           submitParent={submit}
           addBtnUnClick={addBtnUnClick}
           areaCode={areaCode}
+          selected={selected}
         />
       );
     case 4:
