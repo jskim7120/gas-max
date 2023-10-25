@@ -24,7 +24,6 @@ import useGetData from "app/hook/getSimpleData";
 import {
   addAR1100Tab4Multiple,
   setAR1100Tab4Multiple,
-  addAR1100Tab4Params,
   addAR1100Tab5Params,
   addBupum,
   addCM1105,

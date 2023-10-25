@@ -74,7 +74,7 @@ const DDivTh = styled.div`
 
 function AsModal({ setModalOpen }: { setModalOpen: Function }) {
   const paramState = useSelector((state) => state.modal.ar1100Tab5Params);
-  const data71State = useSelector((state) => state.modal.ar1100Tab4Data71);
+  //const data71State = useSelector((state) => state.modal.ar1100Tab4Data71);
 
   const { register, handleSubmit, reset, setFocus, control, watch, getValues } =
     useForm<AR1100MODELDETAIL>({
@@ -88,28 +88,6 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
   const [selected, setSelected] = useState<number>(0);
   const state: any = useSelector((state) => state.modal.bupum);
   const [gridData, setGridData] = useState<Array<any>>([]);
-
-  useEffect(() => {
-    if (paramState?.isAddBtnClicked !== undefined) {
-      if (paramState?.isAddBtnClicked === false) {
-        fetchData65({
-          ...paramState,
-        });
-      }
-      if (paramState?.isAddBtnClicked === true) {
-        reset(data71State.detailData[0]);
-        setData(data71State.detailData[0]);
-        setGridData([emtObjTab5]);
-        setDictionary({
-          bgAcbCode: data71State?.bgAcbCode,
-          bgInkumType: data71State?.bgInkumType,
-          bgSwCode: data71State?.bgSwCode,
-          bgVatDiv: data71State?.bgVatDiv,
-          saleState: data71State?.saleState,
-        });
-      }
-    }
-  }, [paramState]);
 
   const fetchData65 = async (params: any) => {
     const res = await apiGet(AR1100SELECT, params);

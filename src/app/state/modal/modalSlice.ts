@@ -81,8 +81,6 @@ export interface initialStateType {
     asSno: string;
     asType: string;
   };
-  
-
 }
 
 const initialState: initialStateType = {
@@ -167,9 +165,6 @@ const initialState: initialStateType = {
     asSno: "",
     asType: "",
   },
-
-  
-
 };
 
 const modalSlice = createSlice({
@@ -319,6 +314,7 @@ export const {
   addBupumTick,
   addAR1100Tab4Multiple,
   setAR1100Tab4Multiple,
+  addAR1100Tab5Params,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;
