@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "app/store";
-import { Update, Reset, WhiteClose } from "components/allSvgIcon";
+import { Update, Reset, WhiteClose, List } from "components/allSvgIcon";
 import {
   FormGroup,
   Select,
@@ -21,7 +21,7 @@ import { currencyMask, removeCommas } from "helpers/currency";
 import Table from "components/table";
 import EditableSelect from "components/editableSelect";
 import useModal from "app/hook/useModal";
-//import { addAR1100Tab4MultipleGrid } from "app/state/modal/modalSlice";
+
 import {
   AR1100BPSALEINSERT,
   AR1100BPSALEUPDATE,
@@ -51,37 +51,10 @@ const FFormGroup = styled.div`
   margin-right: 3px;
 `;
 
-const rawData = [
-  {
-    no: 1,
-    jpCode: "001",
-    jpName: "test1",
-    qty: 1,
-    danga: 5000,
-    bigo: "bigo1",
-  },
-  {
-    no: 2,
-    jpCode: "002",
-    jpName: "test2",
-    qty: 1,
-    danga: 6000,
-    bigo: "bigo2",
-  },
-  {
-    no: 3,
-    jpCode: "003",
-    jpName: "test3",
-    qty: 1,
-    danga: 2000,
-    bigo: "bigo3",
-  },
-];
-
 function Modal({ setModalOpen }: { setModalOpen: Function }) {
   const [toggler, setToggler] = useState<boolean>(false);
 
-  const { register, handleSubmit, reset, setFocus, control, watch, getValues } =
+  const { register, handleSubmit, reset, control, watch, getValues } =
     useForm<IAR110065DETAIL>({
       mode: "onSubmit",
     });
@@ -89,8 +62,10 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
   const { showAR1100BupumModal, openModal: openModalBupum } = useModal();
   const dispatch = useDispatch();
 
-  const paramState = useSelector((state) => state.modal.ar1100Tab4Params);
-  const data71State = useSelector((state) => state.modal.ar1100Tab4Data71);
+  const paramState: any = useSelector(
+    (state) => state.modal.ar1100Tab4Multiple
+  );
+
   const bupum: any = useSelector((state) => state.modal.bupum);
 
   const [data, setData] = useState<any>({});
@@ -98,24 +73,24 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
   const [gridData, setGridData] = useState<Array<any>>([]);
 
   useEffect(() => {
-    if (paramState?.isAddBtnClicked !== undefined) {
+    if (Object.keys(paramState)?.length > 0) {
+      console.log("paramState>>>>>>>>>>>>>>>>>", paramState);
+      setDictionary({
+        bgAcbCode: paramState?.bgAcbCode,
+        bgInkumType: paramState?.bgInkumType,
+        bgSwCode: paramState?.bgSwCode,
+        bgVatDiv: paramState?.bgVatDiv,
+        saleState: paramState?.saleState,
+      });
+      reset(paramState?.detailData[0]);
+      setData(paramState?.detailData[0]);
+
       if (paramState?.isAddBtnClicked === false) {
-        fetchData65({
-          ...paramState,
-        });
-      }
-      if (paramState?.isAddBtnClicked === true) {
-        reset(data71State.detailData[0]);
-        setData(data71State.detailData[0]);
+        setGridData([...paramState?.gridData, emtObjBpSaleModal]);
+      } else if (paramState?.isAddBtnClicked === true) {
         setGridData([emtObjBpSaleModal]);
-        setDictionary({
-          bgAcbCode: data71State?.bgAcbCode,
-          bgInkumType: data71State?.bgInkumType,
-          bgSwCode: data71State?.bgSwCode,
-          bgVatDiv: data71State?.bgVatDiv,
-          saleState: data71State?.saleState,
-        });
       }
+      setToggler((prev) => !prev);
     }
   }, [paramState]);
 
@@ -136,8 +111,9 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
           } else return object;
         })
       );
-
-      setGridData((prev) => [...prev, emtObjBpSaleModal]);
+      if (gridData?.length - 1 === bupum.index) {
+        setGridData((prev) => [...prev, emtObjBpSaleModal]);
+      }
     }
   }, [bupum.tick]);
 
@@ -268,7 +244,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
     const res = await apiGet(AR1100SELECT, params);
     if (res && Object.keys(res)?.length > 0) {
       reset(res?.detailData[0]);
-      console.log("65 aar irev::", res?.detailData[0]);
+
       setData(res?.detailData ? res?.detailData[0] : {});
       setGridData(
         res?.gridData
@@ -385,30 +361,28 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
         params.bgSwName = bgSwName;
       }
 
-      console.log("params::::::::::::::", params);
+      const jsonItemList = gridData.filter(
+        (obj: any) => obj.hasOwnProperty("bglQty") && obj.bglBpCode !== ""
+      );
 
-      // const jsonItemList = gridData.filter(
-      //   (obj: any) => obj.hasOwnProperty("bglQty") && obj.bglBpCode !== ""
-      // );
+      const tempjson = jsonItemList.map((obj: any, idx: number) => {
+        if (idx < 9) {
+          return { ...obj, bglBpSno: `0${idx + 1}` };
+        } else {
+          return { ...obj, bglBpSno: `${idx + 1}` };
+        }
+      });
 
-      // const tempjson = jsonItemList.map((obj: any, idx: number) => {
-      //   if (idx < 9) {
-      //     return { ...obj, bglBpSno: `0${idx + 1}` };
-      //   } else {
-      //     return { ...obj, bglBpSno: `${idx + 1}` };
-      //   }
-      // });
+      params.jsonItemList = tempjson;
 
-      // params.jsonItemList = tempjson;
-
-      // const res = await apiPost(path, params, "저장이 성공하였습니다");
-      // if (res) {
-      //   if (paramState?.isAddBtnClicked) {
-      //     //await handleSubmitParent((d: any) => submitParent(d, "last"))();
-      //   } else {
-      //     //await handleSubmitParent((d: any) => submitParent(d))();
-      //   }
-      // }
+      const res = await apiPost(path, params, "저장이 성공하였습니다");
+      if (res) {
+        if (paramState?.isAddBtnClicked) {
+          //await handleSubmitParent((d: any) => submitParent(d, "last"))();
+        } else {
+          //await handleSubmitParent((d: any) => submitParent(d))();
+        }
+      }
     }
   };
 
@@ -664,25 +638,43 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
         }}
       >
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Controller
-            control={control}
-            name="bgDate"
-            render={({ field }) => <CustomDatePicker {...field} />}
-          />
+          <FormGroup>
+            <label
+              style={{
+                background: "#ccc",
+                height: "30px",
+                width: "80px",
+                borderRadius: "5px",
+                fontSize: "15px",
+                paddingTop: "3px",
+                textAlign: "center",
+              }}
+            >
+              일자
+            </label>
+            <Controller
+              control={control}
+              name="bgDate"
+              render={({ field }) => <CustomDatePicker {...field} />}
+            />
+          </FormGroup>
           <div
             style={{
-              width: "110px",
+              width: "130px",
               height: "30px",
               borderRadius: "15px",
               background: "rgb(104, 103, 103)",
               color: "#fff",
               fontSize: "14px",
               textAlign: "center",
-              paddingTop: "3px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "6px",
             }}
             onClick={getAllBupum}
           >
-            모든품목조회
+            <List /> 모든품목조회
           </div>
         </div>
 
@@ -691,6 +683,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
           openModal={handleOpenModalBupum}
           setToggler={setToggler}
           calculate={calculateFromGrid}
+          toggler={toggler}
         />
         <Table
           className="no-space"

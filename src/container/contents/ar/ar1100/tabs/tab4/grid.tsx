@@ -8,11 +8,13 @@ function Grid({
   data,
   openModal,
   setToggler,
+  toggler,
   calculate,
 }: {
   data: any;
   openModal: Function;
   setToggler: Function;
+  toggler: boolean;
   calculate: Function;
 }) {
   const realgridElement = useRef<HTMLDivElement>(null);
@@ -35,6 +37,7 @@ function Grid({
 
       gv.setFooter({ visible: false });
 
+      console.log("irj bgaa dataa ", data);
       dp.setRows(data);
       // gv.onGridActivated = () => {
       //   dp.setRows(data);
@@ -77,7 +80,7 @@ function Grid({
         dp.destroy();
       };
     }
-  }, [data]);
+  }, [data, toggler]);
   return (
     <>
       <div

@@ -2000,3 +2000,27 @@ export const File = () => {
     </svg>
   );
 };
+
+export const List = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="feather feather-list"
+    >
+      <line x1="8" y1="6" x2="21" y2="6"></line>
+      <line x1="8" y1="10" x2="21" y2="10"></line>
+      <line x1="8" y1="14" x2="21" y2="14"></line>
+      <line x1="3" y1="6" x2="3.01" y2="6"></line>
+      <line x1="3" y1="10" x2="3.01" y2="10"></line>
+      <line x1="3" y1="14" x2="3.01" y2="14"></line>
+    </svg>
+  );
+};

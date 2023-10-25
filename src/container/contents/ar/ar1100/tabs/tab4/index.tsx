@@ -20,7 +20,7 @@ import { currencyMask, removeCommas } from "helpers/currency";
 import { IAR110065DETAIL } from "./model";
 import { tableHeader1, tableHeader2 } from "./tableHeader";
 import { prepVal, calculationOfVat } from "../../helper";
-import { addAR1100Tab4Params } from "app/state/modal/modalSlice";
+import { setBupum } from "app/state/modal/modalSlice";
 
 const Tab4 = React.forwardRef(
   (
@@ -34,6 +34,7 @@ const Tab4 = React.forwardRef(
       submitParent,
       addBtnUnClick,
       areaCode,
+      selected,
     }: {
       tabId: number;
       data: any;
@@ -44,6 +45,7 @@ const Tab4 = React.forwardRef(
       submitParent: Function;
       addBtnUnClick: Function;
       areaCode: string;
+      selected: number;
     },
     ref: React.ForwardedRef<any>
   ) => {
@@ -270,7 +272,14 @@ const Tab4 = React.forwardRef(
     };
 
     const openModalAR1100BpSale = () => {
-      dispatch(addAR1100Tab4Params({ isAddBtnClicked: isAddBtnClicked }));
+      // dispatch(addAR1100Tab4Params({ isAddBtnClicked: isAddBtnClicked }));
+
+      dispatch(
+        setBupum({
+          areaCode: "01",
+          pjType: "4",
+        })
+      );
       openAR1100Modal();
     };
 
@@ -313,8 +322,6 @@ const Tab4 = React.forwardRef(
       }
 
       params.jsonItemList = [];
-
-      console.log("params>>>>>>>>>>>>", params);
 
       const res = await apiPost(path, params, "저장이 성공하였습니다");
       if (res) {
@@ -610,19 +617,23 @@ const Tab4 = React.forwardRef(
             <div
               style={{ display: "flex", flexDirection: "column", gap: "10px" }}
             >
-              <div
-                style={{
-                  width: "80px",
-                  height: "30px",
-                  borderRadius: "15px",
-                  background: "rgb(104, 103, 103)",
-                  color: "#fff",
-                  textAlign: "center",
-                }}
-                onClick={openModalAR1100BpSale}
-              >
-                + 상세
-              </div>
+              {isAddBtnClicked || data[selected]?.pjType === "4" ? (
+                <div
+                  style={{
+                    width: "80px",
+                    height: "30px",
+                    borderRadius: "15px",
+                    background: "rgb(104, 103, 103)",
+                    color: "#fff",
+                    textAlign: "center",
+                  }}
+                  onClick={openModalAR1100BpSale}
+                >
+                  + 상세
+                </div>
+              ) : (
+                <div style={{ height: "30px", width: "80px" }}></div>
+              )}
 
               <Button
                 text="저장"
