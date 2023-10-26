@@ -10,6 +10,8 @@ import {
   TickInCircle,
   WhiteClose,
   Sms_Send,
+  Update,
+  Settings,
 } from "components/allSvgIcon";
 import styled from "styled-components";
 import { Input, Select, FormGroup, CustomForm } from "components/form/style";
@@ -686,27 +688,39 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
           style={{
             width: "100%",
             display: "flex",
-            justifyContent: "end",
+            justifyContent: "space-between",
             gap: "10px",
+
             background: "#b9b9b9",
             padding: "10px",
           }}
         >
           <Button
-            text="선택"
-            icon={<TickInCircle />}
-            type="button"
-            color={ButtonColor.SUCCESS}
-            onClick={(e) => data && handleChoose(data[selected])}
+            text="문자전송 환경"
+            icon={<Settings />}
+            color={ButtonColor.LIGHT}
+            type="submit"
+            style={{ padding: "20px 10px" }}
+            onClick={() => alert("odoohndoo hiigdeegui bga")}
           />
-          <Button
-            text="취소"
-            icon={<Reset />}
-            type="button"
-            onClick={() => {
-              setModalOpen(false);
-            }}
-          />
+          <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+            <Button
+              text="저장"
+              icon={<Update />}
+              color={ButtonColor.SECONDARY}
+              type="submit"
+              style={{ padding: "18px 16px" }}
+            />
+            <Button
+              text="취소"
+              icon={<Reset />}
+              type="button"
+              onClick={() => {
+                setModalOpen(false);
+              }}
+              style={{ padding: "18px 16px" }}
+            />
+          </div>
         </div>
       </div>
     </>

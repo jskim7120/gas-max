@@ -9,6 +9,7 @@ import {
   AR1100SELECT61,
   AR1100SELECT71,
   AR1100SELECT81,
+  AR1100SELECT91,
   AR1100STATE,
   AR1100DELETE,
   AR1100CJSALEDELETE,
@@ -63,6 +64,7 @@ import { emtObjTab2 } from "./tabs/tab2/model";
 import { emtObjTab3 } from "./tabs/tab3/model";
 import { emtObjTab4 } from "./tabs/tab4/model";
 import { emtObjTab5 } from "./tabs/tab5/model";
+import { emtObjTab6 } from "./tabs/tab6/model";
 import getTabContent from "./getTabContent";
 import Grid from "./grid";
 
@@ -93,6 +95,7 @@ function AR1100({
   const tabRef3 = useRef() as React.MutableRefObject<any>;
   const tabRef4 = useRef() as React.MutableRefObject<any>;
   const tabRef5 = useRef() as React.MutableRefObject<any>;
+  const tabRef6 = useRef() as React.MutableRefObject<any>;
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
   const [selected, setSelected] = useState<number>(-1);
@@ -164,6 +167,7 @@ function AR1100({
           pjDate: DateWithoutDash(data[selected]?.pjDate),
           pjSno: data[selected]?.pjSno,
           pjType: data[selected]?.pjType,
+          jpCode: data[selected]?.jpCode,
           orderDate: DateWithoutDash(data[selected]?.orderDate),
         });
       }
@@ -218,6 +222,8 @@ function AR1100({
       insertIntoTab4();
     } else if (tabId === 4) {
       insertIntoTab5();
+    } else if (tabId === 5) {
+      insertIntoTab6();
     }
   };
 
@@ -377,6 +383,32 @@ function AR1100({
       if (res?.detailData) {
         const detail = res?.detailData[0];
         tabRef5?.current?.reset({ ...detail, bgDate: new Date() });
+        setData65(detail);
+        document.getElementById("bgBpCode")?.focus();
+      }
+    }
+  };
+
+  const insertIntoTab6 = async () => {
+    const res: any = await fetchData91({
+      areaCode: info?.areaCode,
+      suCuCode: info?.suCuCode,
+      saleType: 5,
+    });
+
+    console.log("res?.detailData[0]", res?.detailData[0]);
+
+    if (res && Object.keys(res)?.length > 0) {
+      dispatch(setAR1100Tab4Multiple({}));
+      setDataDictionary({
+        suAcbCode: res?.suAcbCode,
+        suKumtype: res?.suKumtype,
+        suGubun: res?.suGubun,
+        suSwCode: res?.suSwCode,
+      });
+      if (res?.detailData) {
+        const detail = res?.detailData[0];
+        tabRef6?.current?.reset({ ...detail, bgDate: new Date() });
         setData65(detail);
         document.getElementById("bgBpCode")?.focus();
       }
@@ -710,6 +742,23 @@ function AR1100({
           })
         );
       }
+      if (data[selected]?.pjType === "6") {
+        setDataDictionary({
+          suAcbCode: res?.suAcbCode,
+          suKumtype: res?.suKumtype,
+          suGubun: res?.suGubun,
+          suSwCode: res?.suSwCode,
+        });
+        if (res?.detailData && Object.keys(res?.detailData)?.length > 0) {
+          tabRef6?.current?.reset(res?.detailData[0]);
+          dispatch(
+            addBupum({
+              areaCode: data[selected]?.areaCode,
+              pjType: data[selected]?.pjType,
+            })
+          );
+        }
+      }
     } else {
       setData65({});
       setDataDictionary({});
@@ -738,6 +787,11 @@ function AR1100({
 
   const fetchData81 = async (params: any) => {
     const res = await apiGet(AR1100SELECT81, params);
+    return res;
+  };
+
+  const fetchData91 = async (params: any) => {
+    const res = await apiGet(AR1100SELECT91, params);
     return res;
   };
 
@@ -1176,6 +1230,7 @@ function AR1100({
             tabRef3,
             tabRef4,
             tabRef5,
+            tabRef6,
             addBtnUnClick,
             jpKind,
             setJpKind,

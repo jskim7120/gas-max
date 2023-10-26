@@ -57,86 +57,9 @@ const Tab5 = React.forwardRef(
       openAR1100AsModal();
     };
 
-    useEffect(() => {
-      if (watch("asInkumtype") !== undefined) {
-        if (watch("asInkumtype") === "A") {
-          reset((formValues) => ({
-            ...formValues,
-            asInkum: 0,
-            asDc: 0,
-          }));
-        }
-        if (watch("asInkumtype") !== "2") {
-          reset((formValues) => ({
-            ...formValues,
-            acbCode: "",
-          }));
-        }
-      }
-    }, [watch("asInkumtype")]);
-    useEffect(() => {
-      if (watch("asSurikum") !== undefined) {
-        handleChangeSurikum(watch("asSurikum"));
-      }
-    }, [watch("asSurikum")]);
-
-    useEffect(() => {
-      if (watch("asInkum") !== undefined) {
-        handleChangefields(watch("asInkum"), "inkum");
-      }
-    }, [watch("asInkum")]);
-
-    useEffect(() => {
-      if (watch("asDc") !== undefined) {
-        handleChangefields(watch("asDc"), "dc");
-      }
-    }, [watch("asDc")]);
-
     const prepVal = (val: number) => {
       let tempVal = val ? +removeCommas(val, "number") : 0;
       return isNaN(tempVal) ? 0 : tempVal;
-    };
-
-    const handleChangeSurikum = (val: number) => {
-      let tempDc = prepVal(getValues("asDc"));
-      let tempInkum = prepVal(getValues("asInkum"));
-      const tempMisuKum = prepVal(val) - tempDc - tempInkum;
-      reset((formValues) => ({
-        ...formValues,
-        asMisukum: tempMisuKum,
-      }));
-    };
-
-    const handleChangefields = (val: number, type: string) => {
-      let tempInkum: number = 0;
-      let tempDc: number = 0;
-
-      if (type === "inkum") {
-        tempDc = prepVal(getValues("asDc"));
-        tempInkum = prepVal(val);
-      } else if (type === "dc") {
-        tempInkum = prepVal(getValues("asInkum"));
-        tempDc = prepVal(val);
-      }
-
-      let asTotal: number = getValues("asSurikum")
-        ? +removeCommas(getValues("asSurikum"), "number")
-        : 0;
-
-      const tempMisu: number = asTotal - tempDc - tempInkum;
-
-      reset((formValues) => ({
-        ...formValues,
-        asMisukum: tempMisu,
-      }));
-    };
-
-    const calculationOfMisu = (tempTotal: number) => {
-      let tempInkum = prepVal(getValues("asInkum"));
-      let tempDc = prepVal(getValues("asDc"));
-
-      const tempMisu = tempTotal - tempInkum - tempDc;
-      return tempMisu;
     };
 
     const resetForm = (type: string) => {
@@ -176,10 +99,12 @@ const Tab5 = React.forwardRef(
 
       if (isAddBtnClicked) {
         //params.asCuUserName = info?.cuUsername;
-        params.asSno = "";
+        params.msSno = "";
       } else {
         params.asDateB = DateWithoutDash(params.asDate);
       }
+
+      console.log("params: -----> ", params);
 
       params.areaCode = areaCode;
       params.asDate = DateWithoutDash(params.asDate);
@@ -213,8 +138,8 @@ const Tab5 = React.forwardRef(
       {
         0: (
           <FormGroup>
-            <Select register={register("saleState")} width={InputSize.i120}>
-              {dictionary?.saleState?.map((obj: any, idx: number) => (
+            <Select register={register("suGubun")} width={InputSize.i80}>
+              {dictionary?.suGubun?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -225,181 +150,25 @@ const Tab5 = React.forwardRef(
         1: (
           <Controller
             control={control}
-            name="asDate"
+            name="suDate"
             render={({ field }) => (
               <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
             )}
           />
         ),
         2: (
-          <FormGroup>
-            <Select register={register("asInSwCode")} width={InputSize.i120}>
-              {dictionary?.asInSwCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
+          <Controller
+            control={control}
+            name="ikDate"
+            render={({ field }) => (
+              <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
+            )}
+          />
         ),
         3: (
-          <FormGroup>
-            <Select register={register("asInTel")} width={InputSize.i200}>
-              {dictionary?.asInTel?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
-        4: (
-          <FormGroup>
-            <Select register={register("asTagName")} width={InputSize.i120}>
-              {dictionary?.asTagName?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
-        5: (
-          <EditableSelect
-            list={dictionary?.asIn}
-            reset={reset}
-            register={register("asIn")}
-            watch={watch("asIn")}
-            textAlign={"left"}
-            style={{ width: "300px" }}
-          />
-        ),
-      },
-    ];
-
-    const tableData2 = [
-      {
-        6: (
           <Controller
             control={control}
-            name="asPdate"
-            render={({ field }) => (
-              <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
-            )}
-          />
-        ),
-        7: (
-          <Input
-            register={register("asPtime")}
-            inputSize={InputSize.i100}
-            textAlign="right"
-          />
-        ),
-        8: (
-          <Controller
-            control={control}
-            name="asYdate"
-            render={({ field }) => (
-              <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
-            )}
-          />
-        ),
-        9: (
-          <FormGroup>
-            <Select register={register("asSwCode")} width={InputSize.i120}>
-              {dictionary?.asSwCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
-        10: (
-          <FormGroup>
-            <Select register={register("asVatDiv")} width={InputSize.i120}>
-              {dictionary?.asVatDiv?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
-        11: (
-          <Controller
-            control={control}
-            name="asSurikum"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i120}
-                textAlign="right"
-                mask={currencyMask}
-              />
-            )}
-          />
-        ),
-        12: (
-          <FormGroup>
-            <Select register={register("asInkumtype")} width={InputSize.i100}>
-              {dictionary?.asInkumType?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
-        13: (
-          <FormGroup>
-            <Select
-              register={register("acbCode")}
-              width={InputSize.i170}
-              disabled={watch("asInkumtype") !== "2"}
-            >
-              {dictionary?.acbCode?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
-        ),
-        14: (
-          <Controller
-            control={control}
-            name="asInkum"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i120}
-                textAlign="right"
-                mask={currencyMask}
-                readOnly={watch("asInkumtype") === "A"}
-              />
-            )}
-          />
-        ),
-        15: (
-          <Controller
-            control={control}
-            name="asDc"
-            render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i120}
-                textAlign="right"
-                mask={currencyMask}
-                readOnly={watch("asInkumtype") === "A"}
-              />
-            )}
-          />
-        ),
-        16: (
-          <Controller
-            control={control}
-            name="asMisukum"
+            name="misu"
             render={({ field }) => (
               <Input
                 {...field}
@@ -411,10 +180,164 @@ const Tab5 = React.forwardRef(
             )}
           />
         ),
-        17: (
+        4: (
+          <Controller
+            control={control}
+            name="suKumack"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i120}
+                textAlign="right"
+                mask={currencyMask}
+              />
+            )}
+          />
+        ),
+        5: (
+          <Controller
+            control={control}
+            name="suDc"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i90}
+                textAlign="right"
+                mask={currencyMask}
+              />
+            )}
+          />
+        ),
+        6: (
+          <Controller
+            control={control}
+            name="suAfmisu"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i120}
+                textAlign="right"
+                mask={currencyMask}
+                readOnly
+              />
+            )}
+          />
+        ),
+        7: (
           <FormGroup>
-            <Input register={register("signuser")} inputSize={InputSize.i120} />
+            <Select register={register("suKumtype")} width={InputSize.i100}>
+              {dictionary?.suKumtype?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
           </FormGroup>
+        ),
+        8: (
+          <FormGroup>
+            <Select register={register("suAcbcode")} width={InputSize.i150}>
+              {dictionary?.suAcbcode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        ),
+        9: (
+          <FormGroup>
+            <Select register={register("suSwCode")} width={InputSize.i120}>
+              {dictionary?.suSwCode?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        ),
+        10: (
+          <EditableSelect
+            list={dictionary?.asIn}
+            reset={reset}
+            register={register("suBigo")}
+            watch={watch("suBigo")}
+            textAlign={"left"}
+            style={{ width: "200px" }}
+          />
+        ),
+        11: (
+          <Button
+            text="저장"
+            color={ButtonColor.LIGHT}
+            onClick={() => alert("modal haruulah")}
+            style={{ margin: "0 15px" }}
+          />
+        ),
+      },
+    ];
+
+    const tableData2 = [
+      {
+        12: (
+          <Controller
+            control={control}
+            name="msCdBank"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i120}
+                textAlign="center"
+                mask={currencyMask}
+              />
+            )}
+          />
+        ),
+        13: (
+          <Controller
+            control={control}
+            name="msCdDate"
+            render={({ field }) => (
+              <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
+            )}
+          />
+        ),
+        14: (
+          <Controller
+            control={control}
+            name="msCdLastDate"
+            render={({ field }) => (
+              <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
+            )}
+          />
+        ),
+        15: (
+          <Controller
+            control={control}
+            name="msCdNo"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i120}
+                textAlign="center"
+                mask={currencyMask}
+              />
+            )}
+          />
+        ),
+        16: (
+          <Controller
+            control={control}
+            name="msCdBigo"
+            render={({ field }) => (
+              <Input
+                {...field}
+                inputSize={InputSize.i120}
+                textAlign="center"
+                mask={currencyMask}
+              />
+            )}
+          />
         ),
       },
     ];
@@ -441,21 +364,6 @@ const Tab5 = React.forwardRef(
             <div
               style={{ display: "flex", flexDirection: "column", gap: "10px" }}
             >
-              <div
-                style={{
-                  width: "80px",
-                  height: "30px",
-                  borderRadius: "15px",
-                  background: "rgb(104, 103, 103)",
-                  color: "#fff",
-                  textAlign: "center",
-                  cursor: "pointer",
-                  paddingTop: "2px",
-                }}
-                onClick={openModalAR1100As}
-              >
-                + 상세
-              </div>
               <Button
                 text="저장"
                 icon={<Update />}
