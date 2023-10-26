@@ -37,7 +37,6 @@ function Grid({
 
       gv.setFooter({ visible: false });
 
-      console.log("irj bgaa dataa ", data);
       dp.setRows(data);
       // gv.onGridActivated = () => {
       //   dp.setRows(data);

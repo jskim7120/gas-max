@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "app/store";
 import { apiGet } from "app/axios";
 import { AR1100BUPUMSEARCH } from "app/path";
+import { addBupumTick } from "app/state/modal/modalSlice";
 import { CTable2 } from "container/contents/gr/gr1200/style";
 import Button from "components/button/button";
 import { ButtonColor } from "components/componentsType";
-import { addBupumTick } from "app/state/modal/modalSlice";
 import { ModalBlueHeader } from "components/modal/customModals/style";
 import {
   MagnifyingGlassBig,
@@ -15,7 +15,6 @@ import {
 } from "components/allSvgIcon";
 import Loader from "components/loader";
 import { FormGroup } from "components/form/style";
-import { handleKeyDown } from "helpers/handleKeyDown";
 
 function BupumModal({ setModalOpen }: { setModalOpen: Function }) {
   const [loading, setLoading] = useState<boolean>(false);

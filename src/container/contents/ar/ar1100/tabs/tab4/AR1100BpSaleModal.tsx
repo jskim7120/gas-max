@@ -1,19 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import styled from "styled-components";
 import { useSelector, useDispatch } from "app/store";
-import { Update, Reset, WhiteClose, List } from "components/allSvgIcon";
-import { FormGroup, Select, Input, CustomForm } from "components/form/style";
-import { ModalBlueHeader } from "components/modal/customModals/style";
-import Button from "components/button/button";
-import { ButtonColor, InputSize } from "components/componentsType";
-import Grid from "./grid";
-import { tableHeader3, tableHeader4 } from "./tableHeader";
-import { IAR110065DETAIL, emtObjBpSaleModal, emtObjTab4 } from "./model";
-import CustomDatePicker from "components/customDatePicker";
-import { currencyMask, removeCommas } from "helpers/currency";
-import Table from "components/table";
-import EditableSelect from "components/editableSelect";
 import useModal from "app/hook/useModal";
 import {
   AR1100BPSALEINSERT,
@@ -21,27 +8,22 @@ import {
   AR1100BUPUMSEARCH,
 } from "app/path";
 import { apiGet, apiPost } from "app/axios";
-import { calculationOfVat, prepVal } from "../../helper";
+import { Update, Reset, WhiteClose, List } from "components/allSvgIcon";
+import { FormGroup, Select, Input, CustomForm } from "components/form/style";
+import { setAR1100Tab4BpSale } from "app/state/modal/modalSlice";
+import { ModalBlueHeader } from "components/modal/customModals/style";
+import Button from "components/button/button";
+import { ButtonColor, InputSize } from "components/componentsType";
+import CustomDatePicker from "components/customDatePicker";
+import Table from "components/table";
+import EditableSelect from "components/editableSelect";
 import { DateWithoutDash } from "helpers/dateFormat";
-
-const LLabel = styled.label`
-  background: rgba(104, 103, 103, 0.35);
-  width: 80px;
-  font-size: 14px;
-  text-align: right;
-  padding: 2px 10px 0 0;
-`;
-const IInput = styled.input`
-  border: 1px solid #bbbbbb;
-  outline: none;
-  padding: 0 5px;
-`;
-
-const FFormGroup = styled.div`
-  height: 25px;
-  display: flex;
-  margin-right: 3px;
-`;
+import { currencyMask, removeCommas } from "helpers/currency";
+import { calculationOfVat, prepVal } from "../../helper";
+import Grid from "./grid";
+import { LLabel, IInput, FFormGroup } from "./style";
+import { tableHeader3, tableHeader4 } from "./tableHeader";
+import { IAR110065DETAIL, emtObjBpSaleModal } from "./model";
 
 function Modal({ setModalOpen }: { setModalOpen: Function }) {
   const [toggler, setToggler] = useState<boolean>(false);
@@ -58,7 +40,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
     (state) => state.modal.ar1100Tab4Multiple
   );
 
-  const bupum: any = useSelector((state) => state.modal.bupum);
+  const bupumState: any = useSelector((state) => state.modal.bupum);
   const [data, setData] = useState<any>({});
   const [dictionary, setDictionary] = useState<any>({});
   const [gridData, setGridData] = useState<Array<any>>([]);
@@ -85,27 +67,29 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
   }, [paramState]);
 
   useEffect(() => {
-    if (bupum.tick !== undefined && bupum?.index !== undefined) {
-      setGridData((prev: any) =>
-        prev.map((object: any, idx: number) => {
-          if (idx === bupum.index) {
-            return {
-              bglBpCode: bupum?.bglBpCode,
-              bglBpName: bupum?.bglBpName,
-              bglBpType: bupum?.bglBpType,
-              bglQty: 0,
-              bglDanga: bupum?.bglBpDanga,
-              bglKumack: 0,
-              bglBigo: "",
-            };
-          } else return object;
-        })
-      );
-      if (gridData?.length - 1 === bupum.index) {
-        setGridData((prev) => [...prev, emtObjBpSaleModal]);
+    if (bupumState?.source === "AR1100-4-2") {
+      if (bupumState?.tick !== undefined && bupumState?.index !== undefined) {
+        setGridData((prev: any) =>
+          prev.map((object: any, idx: number) => {
+            if (idx === bupumState.index) {
+              return {
+                bglBpCode: bupumState?.bglBpCode,
+                bglBpName: bupumState?.bglBpName,
+                bglBpType: bupumState?.bglBpType,
+                bglQty: 0,
+                bglDanga: bupumState?.bglBpDanga,
+                bglKumack: 0,
+                bglBigo: "",
+              };
+            } else return object;
+          })
+        );
+        if (gridData?.length - 1 === bupumState.index) {
+          setGridData((prev) => [...prev, emtObjBpSaleModal]);
+        }
       }
     }
-  }, [bupum.tick]);
+  }, [bupumState.tick]);
 
   useEffect(() => {
     if (watch("bgVatDiv") !== undefined && watch("bgVatDiv") !== "") {
@@ -340,11 +324,10 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
 
       const res = await apiPost(path, params, "저장이 성공하였습니다");
       if (res) {
-        if (paramState?.isAddBtnClicked) {
-          //await handleSubmitParent((d: any) => submitParent(d, "last"))();
-        } else {
-          //await handleSubmitParent((d: any) => submitParent(d))();
-        }
+        dispatch(setAR1100Tab4BpSale({ loadStatus: true, source: "AR1100" }));
+        setTimeout(() => {
+          setModalOpen(false);
+        }, 1000);
       }
     }
   };
@@ -355,11 +338,11 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
 
   const fetchData = async () => {
     const response = await apiGet(AR1100BUPUMSEARCH, {
-      areaCode: "01",
+      areaCode: bupumState?.areaCode,
       bpCode: "",
       bpName: "",
       bpSearch: "",
-      pjType: "4",
+      pjType: bupumState?.pjType,
     });
 
     const tempGridData = response.map((obj: any) => ({

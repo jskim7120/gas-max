@@ -8,6 +8,7 @@ import {
 import { useDispatch, useSelector } from "app/store";
 import { apiPost, apiGet } from "app/axios";
 import useModal from "app/hook/useModal";
+import { setAR1100Tab4BpSale, setBupum } from "app/state/modal/modalSlice";
 import Table from "components/table";
 import { Input, Select, FormGroup, CustomForm } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
@@ -20,7 +21,6 @@ import { currencyMask, removeCommas } from "helpers/currency";
 import { IAR110065DETAIL } from "./model";
 import { tableHeader1, tableHeader2 } from "./tableHeader";
 import { prepVal, calculationOfVat } from "../../helper";
-import { setBupum } from "app/state/modal/modalSlice";
 
 const Tab4 = React.forwardRef(
   (
@@ -63,11 +63,23 @@ const Tab4 = React.forwardRef(
     const { showAR1100BpSaleModal, openModal: openAR1100Modal } = useModal();
 
     const bupumState = useSelector((state: any) => state.modal.bupum);
+    const bpSaleState = useSelector(
+      (state: any) => state.modal.ar1100Tab4BpSale
+    );
+
     const { info, source } = useSelector((state: any) => state.footer);
 
     useEffect(() => {
-      if (bupumState.source === "AR11003") {
-        resetForm("bpName");
+      if (bpSaleState?.source === "AR1100" && bpSaleState.loadStatus === true) {
+        loadParentSubmit();
+      }
+    }, [bpSaleState.loadStatus]);
+    useEffect(() => {
+      if (
+        bupumState?.source === "AR1100-4-1" &&
+        bupumState?.tick !== undefined
+      ) {
+        resetForm("bgBpName");
       }
     }, [bupumState.tick]);
 
@@ -79,19 +91,37 @@ const Tab4 = React.forwardRef(
 
     useEffect(() => {
       if (watch("bgQty") !== undefined) {
-        handleChangeQty(watch("bgQty"));
+        if (isAddBtnClicked) {
+          handleChangeQty(watch("bgQty"));
+        } else {
+          if (data[selected]?.pjType === "3") {
+            handleChangeQty(watch("bgQty"));
+          }
+        }
       }
     }, [watch("bgQty")]);
 
     useEffect(() => {
       if (watch("bgDanga") !== undefined) {
-        handleChangeDanga(watch("bgDanga"));
+        if (isAddBtnClicked) {
+          handleChangeDanga(watch("bgDanga"));
+        } else {
+          if (data[selected]?.pjType === "3") {
+            handleChangeDanga(watch("bgDanga"));
+          }
+        }
       }
     }, [watch("bgDanga")]);
 
     useEffect(() => {
       if (watch("bgVatDiv") !== undefined && watch("bgVatDiv") !== "") {
-        handleChangeVatDiv(watch("bgVatDiv"));
+        if (isAddBtnClicked) {
+          handleChangeVatDiv(watch("bgVatDiv"));
+        } else {
+          if (data[selected]?.pjType === "3") {
+            handleChangeVatDiv(watch("bgVatDiv"));
+          }
+        }
       }
     }, [watch("bgVatDiv")]);
 
@@ -112,6 +142,11 @@ const Tab4 = React.forwardRef(
         handleChangefields(watch("bgDc"), "dc");
       }
     }, [watch("bgDc")]);
+
+    const loadParentSubmit = async () => {
+      await handleSubmitParent((d: any) => submitParent(d, "last"))();
+      dispatch(setAR1100Tab4BpSale({ loadStatus: false, source: "" }));
+    };
 
     const calculationOfMisu = (tempTotal: number) => {
       let tempInkum = prepVal(getValues("bgInkum"));
@@ -263,21 +298,33 @@ const Tab4 = React.forwardRef(
           bgBpCode: data65?.bgBpCode ? data65?.bgBpCode : "",
           bgBpName: data65?.bgBpName ? data65?.bgBpName : "",
         });
-      } else if (type === "bpName") {
+      } else if (type === "bgBpName") {
+        reset((formValues) => ({
+          ...formValues,
+          bgBpCode: bupumState?.bgBpCode,
+          bgBpName: bupumState?.bgBpName,
+          bgDanga: bupumState?.bgBpDanga,
+        }));
       }
     };
 
     const openModalBupum = async () => {
+      dispatch(
+        setBupum({
+          areaCode: areaCode,
+          pjType: "3",
+          source: "AR1100-4-1",
+        })
+      );
       openBupumModal();
     };
 
     const openModalAR1100BpSale = () => {
-      // dispatch(addAR1100Tab4Params({ isAddBtnClicked: isAddBtnClicked }));
-
       dispatch(
         setBupum({
-          areaCode: "01",
+          areaCode: areaCode,
           pjType: "4",
+          source: "AR1100-4-2",
         })
       );
       openAR1100Modal();
@@ -400,7 +447,12 @@ const Tab4 = React.forwardRef(
             control={control}
             name="bgQty"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i100} textAlign="right" />
+              <Input
+                {...field}
+                inputSize={InputSize.i100}
+                textAlign="right"
+                readOnly={data[selected]?.pjType === "4"}
+              />
             )}
           />
         ),
@@ -414,6 +466,7 @@ const Tab4 = React.forwardRef(
                 inputSize={InputSize.i100}
                 textAlign="right"
                 mask={currencyMask}
+                readOnly={data[selected]?.pjType === "4"}
               />
             )}
           />
