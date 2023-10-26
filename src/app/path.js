@@ -6,6 +6,7 @@ export const AR1100SELECT51 = "/app/AR1100/select51";
 export const AR1100SELECT61 = "/app/AR1100/select61";
 export const AR1100SELECT71 = "/app/AR1100/select71";
 export const AR1100SELECT81 = "/app/AR1100/select81";
+export const AR1100SELECT91 = "/app/AR1100/select91";
 export const AR1100STATE = "/app/AR1100/state";
 export const AR1100SANGPUM = "/app/AR1100/sangpum";
 export const AR1100BUPUMSEARCH = "/app/AR1100/bupum/search";

@@ -4,6 +4,7 @@ import Tab2 from "./tabs/tab2";
 import Tab3 from "./tabs/tab3";
 import Tab4 from "./tabs/tab4";
 import Tab5 from "./tabs/tab5";
+import Tab6 from "./tabs/tab6";
 
 function getTabContent(
   tabId: number,
@@ -21,6 +22,7 @@ function getTabContent(
   tabRef3: any,
   tabRef4: any,
   tabRef5: any,
+  tabRef6: any,
   addBtnUnClick: Function,
   jpKind: any,
   setJpKind: Function,
@@ -168,8 +170,20 @@ function getTabContent(
         />
       );
     case 5:
-      //   return <Tab3 data={data} />;
-      return <>6</>;
+      return (
+        <Tab6
+          ref={tabRef6}
+          tabId={tabId}
+          data={data}
+          data65={data65}
+          dictionary={dictionary}
+          isAddBtnClicked={isAddBtnClicked}
+          handleSubmitParent={handleSubmit}
+          submitParent={submit}
+          addBtnUnClick={addBtnUnClick}
+          areaCode={areaCode}
+        />
+      );
   }
   return null;
 }
