@@ -23,13 +23,12 @@ import useModal from "app/hook/useModal";
 import useRowIndex from "app/hook/useRowIndex";
 import useGetData from "app/hook/getSimpleData";
 import {
-  addAR1100Tab4Multiple,
   setAR1100Tab4Multiple,
   addAR1100Tab5Params,
-  addBupum,
   addCM1105,
   addDeleteMenuId,
   setIsDelete,
+  // setBupum,
 } from "app/state/modal/modalSlice";
 import {
   addSource,
@@ -60,11 +59,6 @@ import {
 import { fields, columns } from "./data";
 import { IAR1100SEARCH, emtObj } from "./model";
 import { emtObjTab1 } from "./tabs/tab1/model";
-import { emtObjTab2 } from "./tabs/tab2/model";
-import { emtObjTab3 } from "./tabs/tab3/model";
-import { emtObjTab4 } from "./tabs/tab4/model";
-import { emtObjTab5 } from "./tabs/tab5/model";
-import { emtObjTab6 } from "./tabs/tab6/model";
 import getTabContent from "./getTabContent";
 import Grid from "./grid";
 
@@ -343,6 +337,13 @@ function AR1100({
       saleType: 5,
     });
     if (res !== undefined && Object.keys(res)?.length > 0) {
+      // dispatch(
+      //   setBupum({
+      //     areaCode: getValues("areaCode"),
+      //     pjType: "3",
+      //     source: "AR1100-4-1",
+      //   })
+      // );
       dispatch(setAR1100Tab4Multiple({ ...res, isAddBtnClicked: true }));
       setDataDictionary({
         bgAcbCode: res?.bgAcbCode,
@@ -617,10 +618,17 @@ function AR1100({
     const res = await apiGet(AR1100SELECT, params);
 
     if (res && Object.keys(res)?.length > 0) {
+      if (data[selected]?.pjType === "4") {
+        dispatch(setAR1100Tab4Multiple({ ...res, isAddBtnClicked: false }));
+      } else {
+        dispatch(setAR1100Tab4Multiple({}));
+      }
+
       if (res?.detailData && res?.detailData?.length > 0) {
         setJpKind(res?.detailData[0]?.jpKind);
         setData65(res?.detailData[0]);
       }
+
       if (data[selected]?.pjType === "0") {
         setDataDictionary({
           pjVatDiv: res?.pjVatDiv,
@@ -696,9 +704,7 @@ function AR1100({
           tabRef3?.current?.reset(detail);
         }
       }
-      if (data[selected]?.pjType === "4") {
-        dispatch(setAR1100Tab4Multiple({ ...res, isAddBtnClicked: false }));
-      }
+
       if (data[selected]?.pjType === "3" || data[selected]?.pjType === "4") {
         setDataDictionary({
           bgAcbCode: res?.bgAcbCode,
@@ -709,12 +715,6 @@ function AR1100({
         });
         if (res?.detailData && Object.keys(res?.detailData)?.length > 0) {
           tabRef4?.current?.reset(res?.detailData[0]);
-          dispatch(
-            addBupum({
-              areaCode: data[selected]?.areaCode,
-              pjType: data[selected]?.pjType,
-            })
-          );
         }
       }
       if (data[selected]?.pjType === "5") {

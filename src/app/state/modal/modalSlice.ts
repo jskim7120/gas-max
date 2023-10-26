@@ -71,7 +71,10 @@ export interface initialStateType {
     index: number | undefined;
     tick: boolean;
   };
-
+  ar1100Tab4BpSale: {
+    source: string;
+    loadStatus: boolean;
+  };
   ar1100Tab4Multiple: {};
   ar1100Tab5Params: {
     isAddBtnClicked: boolean;
@@ -155,7 +158,10 @@ const initialState: initialStateType = {
     index: undefined,
     tick: false,
   },
-
+  ar1100Tab4BpSale: {
+    source: "",
+    loadStatus: false,
+  },
   ar1100Tab4Multiple: {},
   ar1100Tab5Params: {
     isAddBtnClicked: false,
@@ -268,6 +274,10 @@ const modalSlice = createSlice({
     setBupum: (state, action) => {
       state.bupum = action.payload;
     },
+
+    setAR1100Tab4BpSale: (state, action) => {
+      state.ar1100Tab4BpSale = action.payload;
+    },
     addBupumTick: (state, action) => {
       state.bupum = {
         ...state.bupum,
@@ -314,6 +324,7 @@ export const {
   addBupumTick,
   addAR1100Tab4Multiple,
   setAR1100Tab4Multiple,
+  setAR1100Tab4BpSale,
   addAR1100Tab5Params,
 } = modalSlice.actions;
 
