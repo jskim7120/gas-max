@@ -76,13 +76,10 @@ export interface initialStateType {
     loadStatus: boolean;
   };
   ar1100Tab4Multiple: {};
-  ar1100Tab5Params: {
-    isAddBtnClicked: boolean;
-    areaCode: string;
-    asCuCode: string;
-    asDate: string;
-    asSno: string;
-    asType: string;
+  ar1100Tab5Data: {};
+  ar1100Tab5AsCust: {
+    source: string;
+    loadStatus: boolean;
   };
 }
 
@@ -163,13 +160,10 @@ const initialState: initialStateType = {
     loadStatus: false,
   },
   ar1100Tab4Multiple: {},
-  ar1100Tab5Params: {
-    isAddBtnClicked: false,
-    areaCode: "",
-    asCuCode: "",
-    asDate: "",
-    asSno: "",
-    asType: "",
+  ar1100Tab5Data: {},
+  ar1100Tab5AsCust: {
+    source: "",
+    loadStatus: false,
   },
 };
 
@@ -285,21 +279,23 @@ const modalSlice = createSlice({
         tick: !state.bupum.tick,
       };
     },
-
     setAR1100Tab4Multiple: (state, action) => {
       state.ar1100Tab4Multiple = action.payload;
     },
-    addAR1100Tab5Params: (state, action) => {
-      state.ar1100Tab5Params = {
-        ...state.ar1100Tab5Params,
-        ...action.payload,
-      };
-    },
+
     addAR1100Tab4Multiple: (state, action) => {
       state.ar1100Tab4Multiple = {
         ...state.ar1100Tab4Multiple,
         ...action.payload,
       };
+    },
+
+    setAR1100Tab5Data: (state, action) => {
+      state.ar1100Tab5Data = action.payload;
+    },
+
+    setAR1100Tab5AsCust: (state, action) => {
+      state.ar1100Tab5AsCust = action.payload;
     },
   },
 });
@@ -325,7 +321,8 @@ export const {
   addAR1100Tab4Multiple,
   setAR1100Tab4Multiple,
   setAR1100Tab4BpSale,
-  addAR1100Tab5Params,
+  setAR1100Tab5Data,
+  setAR1100Tab5AsCust,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

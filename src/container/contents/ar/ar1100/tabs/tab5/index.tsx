@@ -147,17 +147,6 @@ const Tab5 = React.forwardRef(
           bgBpName: data65?.bgBpName ? data65?.bgBpName : "",
         });
       } else if (type === "bpName") {
-        // const bgKumSup =
-        //   (cm1106?.jcJpDanga ? +removeCommas(cm1106.jcJpDanga, "number") : 0) *
-        //   (getValues("bgQty") ? +getValues("bgQty") : 0);
-        // reset((formValues) => ({
-        //   ...formValues,
-        //   bgBpName: cm1106.jpName,
-        //   bgBpCode: cm1106.jpCode,
-        //   //pjJpSpec: cm1106?.jpSpec,
-        //   bgDanga: cm1106.jcJpDanga,
-        //   bgKumSup: bgKumSup,
-        // }));
       }
     };
 
@@ -171,16 +160,16 @@ const Tab5 = React.forwardRef(
     };
 
     const submit = async (params: any) => {
-      const path = isAddBtnClicked ? AR1100ASCUSTINSERT : AR1100ASCUSTUPDATE;
-      params.insertType = "0";
+      let path: string = "";
 
       if (isAddBtnClicked) {
-        //params.asCuUserName = info?.cuUsername;
+        path = AR1100ASCUSTINSERT;
         params.asSno = "";
       } else {
+        path = AR1100ASCUSTUPDATE;
         params.asDateB = DateWithoutDash(params.asDate);
       }
-
+      params.insertType = "0";
       params.areaCode = areaCode;
       params.asDate = DateWithoutDash(params.asDate);
       params.asPdate = DateWithoutDash(params.asPdate);
@@ -358,7 +347,7 @@ const Tab5 = React.forwardRef(
               width={InputSize.i170}
               disabled={watch("asInkumtype") !== "2"}
             >
-              {dictionary?.acbCode?.map((obj: any, idx: number) => (
+              {dictionary?.asAcbCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>

@@ -1,82 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector, useDispatch } from "app/store";
-import { apiGet } from "app/axios";
+import { apiPost } from "app/axios";
+import { AR1100ASCUSTINSERT, AR1100ASCUSTUPDATE } from "app/path";
+import { setAR1100Tab5AsCust } from "app/state/modal/modalSlice";
 import Button from "components/button/button";
-import { addBupumTick } from "app/state/modal/modalSlice";
 import { ModalBlueHeader } from "components/modal/customModals/style";
 import {
   Reset,
-  TickInCircle,
   WhiteClose,
   Sms_Send,
   Update,
-  Settings,
+  Settings2,
 } from "components/allSvgIcon";
-import styled from "styled-components";
 import { Input, Select, FormGroup, CustomForm } from "components/form/style";
 import { ButtonColor, InputSize } from "components/componentsType";
-import { AR1100MODELDETAIL, emtObjTab5 } from "./model";
-import { AR1100ASCUSTINSERT, AR1100ASCUSTUPDATE, AR1100SELECT } from "app/path";
+import Table from "components/table";
 import CustomDatePicker from "components/customDatePicker";
 import { currencyMask, removeCommas } from "helpers/currency";
-import Table from "components/table";
+import { DateWithoutDash } from "helpers/dateFormat";
+import { AR1100MODELDETAIL } from "./model";
 import { modalTableHeader } from "./tableHeader";
-
-const LLabel = styled.label`
-  background: rgba(104, 103, 103, 0.35);
-  width: 80px;
-  font-size: 14px;
-  text-align: right;
-  padding: 2px 10px 0 0;
-`;
-const IInput = styled.input`
-  border: 1px solid #bbbbbb;
-  outline: none;
-  padding: 0 5px;
-`;
-
-const FFormGroup = styled.div`
-  height: 25px;
-  display: flex;
-  margin-right: 3px;
-`;
-const SSpan = styled.span`
-  width: 94px;
-  height: 28px;
-  border-radius: 3px;
-  font-size: 13px;
-  background: #cacaca;
-  border: 1px solid #a6a6a6;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 3px;
-`;
-const DDiv = styled.div`
-  width: 100%;
-`;
-const DDivInner = styled.div`
-  width: 100%;
-  display: flex;
-  margin-bottom: 12px;
-`;
-const DDivTh = styled.div`
-  width: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 3px;
-  font-size: 13px;
-  background: #cacaca;
-  border: 1px solid #a6a6a6;
-  margin: 3px;
-`;
+import {
+  FFormGroup,
+  LLabel,
+  IInput,
+  SSpan,
+  DDiv,
+  DDivInner,
+  DDivTh,
+} from "./style";
 
 function AsModal({ setModalOpen }: { setModalOpen: Function }) {
-  const paramState = useSelector((state) => state.modal.ar1100Tab5Params);
-  //const data71State = useSelector((state) => state.modal.ar1100Tab4Data71);
+  const dataState: any = useSelector((state) => state.modal.ar1100Tab5Data);
 
   const { register, handleSubmit, reset, setFocus, control, watch, getValues } =
     useForm<AR1100MODELDETAIL>({
@@ -84,62 +40,55 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
     });
 
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [dictionary, setDictionary] = useState<any>({});
-  const [data, setData] = useState<any[]>();
-  const [selected, setSelected] = useState<number>(0);
-  const state: any = useSelector((state) => state.modal.bupum);
-  const [gridData, setGridData] = useState<Array<any>>([]);
 
-  const fetchData65 = async (params: any) => {
-    const res = await apiGet(AR1100SELECT, params);
-    if (res && Object.keys(res)?.length > 0) {
-      reset(res?.detailData[0]);
-      setData(res?.detailData ? res?.detailData[0] : {});
-      setGridData(
-        res?.gridData ? [...res?.gridData, emtObjTab5] : [emtObjTab5]
-      );
-
-      setDictionary({
-        bgAcbCode: res?.bgAcbCode,
-        bgInkumType: res?.bgInkumType,
-        bgSwCode: res?.bgSwCode,
-        bgVatDiv: res?.bgVatDiv,
-        saleState: res?.saleState,
-      });
-    } else {
-      reset(emtObjTab5);
-      setData([]);
-      setGridData([emtObjTab5]);
-      setDictionary({});
+  useEffect(() => {
+    if (dataState) {
+      if (
+        dataState?.detailData &&
+        Object.keys(dataState?.detailData)?.length > 0
+      ) {
+        reset(dataState?.detailData[0]);
+      }
     }
-  };
+  }, [dataState]);
 
-  // useEffect(() => {
-  //   if (state?.areaCode && state?.pjType) {
-  //     fetchData();
-  //   }
-  // }, []);
+  const submit = async (params: any) => {
+    if (dataState?.isAddBtnClicked !== undefined) {
+      let path: string = "";
+      if (dataState?.isAddBtnClicked) {
+        path = AR1100ASCUSTINSERT;
+        params.asSno = "";
+      } else {
+        path = AR1100ASCUSTUPDATE;
+        params.asDateB = DateWithoutDash(params.asDate);
+      }
+      params.insertType = "0";
+      params.areaCode = dataState?.areaCode;
+      params.asDate = DateWithoutDash(params.asDate);
+      params.asPdate = DateWithoutDash(params.asPdate);
+      params.asPtime = DateWithoutDash(params.asPtime);
+      params.asYdate = DateWithoutDash(params.asYdate);
 
-  // const fetchData = async () => {
-  //   const response = await apiGet(AR1100BUPUMSEARCH, {
-  //     areaCode: state?.areaCode,
-  //     bpCode: state?.bpCode ? state?.bpCode : "",
-  //     bpName: state?.bpName ? state?.bpName : "",
-  //     bpSearch: state?.bpSearch ? state?.bpSearch : "",
-  //     pjType: state?.pjType,
-  //   });
+      params.asSurikum = +removeCommas(params.asSurikum, "number");
+      params.asMisukum = +removeCommas(params.asMisukum, "number");
+      params.asInkum = +removeCommas(params.asInkum, "number");
+      params.asDc = +removeCommas(params.asDc, "number");
 
-  //   if (response) {
-  //     setData(response);
-  //   } else {
-  //     setData([]);
-  //   }
-  // };
+      if (params.asInSwCode) {
+        const asSwName = dataState?.asInSwCode?.find(
+          (item: any) => item.code === params.asInSwCode
+        )?.codeName;
+        params.asSwName = asSwName;
+      }
 
-  const handleChoose = (obj: any) => {
-    dispatch(addBupumTick(obj));
-    setModalOpen(false);
+      const res = await apiPost(path, params, "저장이 성공하였습니다");
+      if (res) {
+        dispatch(setAR1100Tab5AsCust({ loadStatus: true, source: "AR1100" }));
+        setTimeout(() => {
+          setModalOpen(false);
+        }, 1000);
+      }
+    }
   };
 
   const tableData2 = [
@@ -147,7 +96,7 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
       0: (
         <FormGroup>
           <Select register={register("asVatDiv")} width={InputSize.i120}>
-            {dictionary?.asVatDiv?.map((obj: any, idx: number) => (
+            {dataState?.asVatDiv?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -202,7 +151,7 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
       4: (
         <FormGroup>
           <Select register={register("asInkumtype")} width={InputSize.i100}>
-            {dictionary?.asInkumType?.map((obj: any, idx: number) => (
+            {dataState?.asInkumType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -217,7 +166,7 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
             width={InputSize.i170}
             disabled={watch("asInkumtype") !== "2"}
           >
-            {dictionary?.acbCode?.map((obj: any, idx: number) => (
+            {dataState?.acbCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -274,7 +223,7 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
   ];
 
   return (
-    <>
+    <CustomForm autoComplete="off" onSubmit={handleSubmit(submit)}>
       <ModalBlueHeader
         className="handle h25"
         style={{ background: "rgba(101, 84, 255, 0.37)", height: "40px" }}
@@ -324,7 +273,7 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
           }}
         >
           <div>
-            <div style={{ display: "flex", gap: "15", alignItems: "center" }}>
+            <FormGroup>
               <span
                 style={{
                   width: "94px",
@@ -346,30 +295,27 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
                   register={register("saleState")}
                   style={{ width: "217px" }}
                 >
-                  {dictionary?.saleState?.map((obj: any, idx: number) => (
+                  {dataState?.saleState?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
                   ))}
                 </Select>
               </FormGroup>
-            </div>
-            <div style={{ display: "flex", gap: "15", alignItems: "center" }}>
+            </FormGroup>
+
+            <FormGroup>
               <SSpan>전화번호</SSpan>
-              <FormGroup>
-                <Select
-                  register={register("asInTel")}
-                  style={{ width: "217px" }}
-                >
-                  {dictionary?.asInTel?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-            </div>
-            <div style={{ display: "flex", gap: "15", alignItems: "center" }}>
+              <Select register={register("asInTel")} style={{ width: "217px" }}>
+                {dataState?.asInTel?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+
+            <FormGroup>
               <div>
                 <SSpan style={{ width: "115px" }}>접수일자</SSpan>
                 <Controller
@@ -396,19 +342,20 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
               </div>
               <div>
                 <SSpan style={{ width: "100px" }}>접수 사원</SSpan>
-                <Controller
-                  control={control}
-                  name="asInSwCode"
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      inputSize={InputSize.i100}
-                      textAlign="right"
-                    />
-                  )}
-                />
+                <FormGroup>
+                  <Select
+                    register={register("asInSwCode")}
+                    width={InputSize.i100}
+                  >
+                    {dataState?.asInSwCode?.map((obj: any, idx: number) => (
+                      <option key={idx} value={obj.code}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
               </div>
-            </div>
+            </FormGroup>
             {/* SMS_SEND_0 YN, SMS_SEND_0 DT  */}
             <div
               style={{
@@ -430,7 +377,7 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
               </span>
             </div>
 
-            <div style={{ display: "flex", gap: "15", alignItems: "center" }}>
+            <FormGroup>
               <div>
                 <SSpan style={{ width: "115px" }}>처리예정일</SSpan>
                 <Controller
@@ -459,10 +406,10 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
                 <SSpan style={{ width: "100px" }}>처리 예정 사원</SSpan>
                 <FormGroup>
                   <Select
-                    register={register("asPSwName")}
+                    register={register("asPSwCode")}
                     width={InputSize.i100}
                   >
-                    {dictionary?.asPSwName?.map((obj: any, idx: number) => (
+                    {dataState?.asPSwCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
                       </option>
@@ -470,7 +417,7 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
                   </Select>
                 </FormGroup>
               </div>
-            </div>
+            </FormGroup>
             {/* SMS_SEND_1 YN, SMS_SEND_1 DT  */}
             <div
               style={{
@@ -496,7 +443,7 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
                 <SSpan style={{ width: "115px" }}>처리예정일</SSpan>
                 <Controller
                   control={control}
-                  name="asPdate"
+                  name="asYdate"
                   render={({ field }) => (
                     <CustomDatePicker {...field} style={{ margin: "0" }} />
                   )}
@@ -520,10 +467,10 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
                 <SSpan style={{ width: "100px" }}>처리 사원</SSpan>
                 <FormGroup>
                   <Select
-                    register={register("asSwName")}
+                    register={register("asSwCode")}
                     width={InputSize.i100}
                   >
-                    {dictionary?.asSwName?.map((obj: any, idx: number) => (
+                    {dataState?.asSwCode?.map((obj: any, idx: number) => (
                       <option key={idx} value={obj.code}>
                         {obj.codeName}
                       </option>
@@ -573,10 +520,10 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
               </span>
               <FormGroup style={{ width: "100%" }}>
                 <Select
-                  register={register("saleState")}
+                  register={register("asTagName")}
                   style={{ width: "100%" }}
                 >
-                  {dictionary?.saleState?.map((obj: any, idx: number) => (
+                  {dataState?.asTagName?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
@@ -697,10 +644,9 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
         >
           <Button
             text="문자전송 환경"
-            icon={<Settings />}
+            icon={<Settings2 />}
             color={ButtonColor.LIGHT}
-            type="submit"
-            style={{ padding: "20px 10px" }}
+            type="button"
             onClick={() => alert("odoohndoo hiigdeegui bga")}
           />
           <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
@@ -709,7 +655,6 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
               icon={<Update />}
               color={ButtonColor.SECONDARY}
               type="submit"
-              style={{ padding: "18px 16px" }}
             />
             <Button
               text="취소"
@@ -718,12 +663,11 @@ function AsModal({ setModalOpen }: { setModalOpen: Function }) {
               onClick={() => {
                 setModalOpen(false);
               }}
-              style={{ padding: "18px 16px" }}
             />
           </div>
         </div>
       </div>
-    </>
+    </CustomForm>
   );
 }
 
