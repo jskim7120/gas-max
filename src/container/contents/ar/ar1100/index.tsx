@@ -751,12 +751,6 @@ function AR1100({
         });
         if (res?.detailData && Object.keys(res?.detailData)?.length > 0) {
           tabRef6?.current?.reset(res?.detailData[0]);
-          dispatch(
-            addBupum({
-              areaCode: data[selected]?.areaCode,
-              pjType: data[selected]?.pjType,
-            })
-          );
         }
       }
     } else {
