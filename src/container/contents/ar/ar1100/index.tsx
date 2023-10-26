@@ -209,175 +209,175 @@ function AR1100({
 
   const onTabChangeonAdd = async () => {
     if (tabId === 0) {
-      const res: any = await fetchData41({
-        areaCode: info?.areaCode,
-        cuCode: info?.cuCode,
-        saleType: 5,
-      });
-
-      if (res && Object.keys(res)?.length > 0) {
-        setDataDictionary({
-          pjVatDiv: res?.pjVatDiv,
-          pjSwCode: res?.pjSwCode,
-          proxyType: res?.proxyType,
-          pjInkumtype: res?.pjInkumtype,
-          saleState: res?.saleState,
-          pacbCode: res?.pacbCode,
-        });
-        let ddat: any;
-
-        if (res?.detailData) {
-          ddat = res?.detailData[0];
-          tabRef1?.current?.reset({ ...ddat, pjDate: new Date() });
-        } else if (res?.initData) {
-          ddat = res?.initData[0];
-          tabRef1?.current?.reset({ ...ddat });
-        }
-
-        setData65(ddat);
-        setJunJaego(ddat?.junJaego ? ddat?.junJaego : 0); // ene irehgui bgaa
-        setQty(ddat?.pjQty);
-        setReqty(ddat?.pjReqty);
-        setDanga(ddat?.pjDanga);
-        setVatDiv(ddat?.pjVatDiv);
-        setInkum(ddat?.pjInkum);
-        setDc(ddat?.pjDc);
-
-        if (res?.detailData) {
-          document.getElementById("pjQty")?.focus();
-        } else if (res?.initData) {
-          document.getElementById("pjJpCode")?.focus();
-        }
-      }
+      insertIntoTab1();
     } else if (tabId === 1) {
-      const res: any = await fetchData51({
-        areaCode: info?.areaCode,
-        cuCode: info?.cuCode,
-        saleType: 5,
-      });
-
-      if (res && Object.keys(res)?.length > 0) {
-        setDataDictionary({
-          proxyType: res?.cproxyType,
-          saleState: res?.csaleState,
-          pcSwCode: res?.pcSwCode,
-        });
-
-        let ddat: any;
-        if (res?.detailData) {
-          ddat = res?.detailData[0];
-          let tempJaego =
-            (ddat?.junJaego ? ddat?.junJaego : 0) +
-            (ddat?.pcQty ? ddat?.pcQty : 0) -
-            (ddat?.pcReqty ? ddat?.pcReqty : 0);
-
-          tabRef2?.current?.reset({
-            ...ddat,
-            pcDate: new Date(),
-            pcJaego: tempJaego,
-          });
-        } else if (res?.initData) {
-          ddat = res?.initData[0];
-
-          let tempJaego =
-            (ddat?.junJaego ? ddat?.junJaego : 0) +
-            (ddat?.pcQty ? ddat?.pcQty : 0) -
-            (ddat?.pcReqty ? ddat?.pcReqty : 0);
-
-          tabRef2?.current?.reset({ ...ddat, pcJaego: tempJaego });
-        }
-
-        setData65(ddat);
-        setJunJaego(ddat?.junJaego);
-        setQty(ddat?.pcQty);
-        setReqty(ddat?.pcReqty);
-        setDanga(ddat?.pcDanga);
-
-        if (res?.detailData) {
-          document.getElementById("pcQty")?.focus();
-        } else if (res?.initData) {
-          document.getElementById("pcJpCode")?.focus();
-        }
-      }
+      insertIntoTab2();
     } else if (tabId === 2) {
-      const res: any = await fetchData61({
-        areaCode: info?.areaCode,
-        cuCode: info?.cuCode,
-        saleType: 5,
-      });
-      if (res && Object.keys(res)?.length > 0) {
-        setDataDictionary({
-          acbCode: res?.tsAcbCode,
-          tsGubun: res?.tsGubun,
-          tsInkumType: res?.tsInkumtype,
-          tsPaytype: res?.tsPaytype,
-          saleState: res?.tsSaleState,
-          tsSwCode: res?.tsSwCode,
-          tsTongGubun: res?.tsTongGubun,
-          tsVatDiv: res?.tsVatDiv,
-        });
-        if (res?.detailData) {
-          let detail = res?.detailData[0];
-          setData65(detail);
-          tabRef3?.current?.reset({ ...detail, tsDate: new Date() });
-        } else if (res?.initData) {
-          let init = res?.initData[0];
-          setData65(init);
-          setGubun(init?.tsGubun);
-          setQty(init?.tsQty);
-          setDanga(init?.tsDanga);
-          setInkum(init?.tsInkum);
-          setKumSup(init?.tsKumSup);
-          setKumVat(init?.tsKumVat);
-          setKumack(init?.tsKumack);
-          setMisu(init?.tsMisu);
-          setVatDiv(init?.tsVatDiv);
-          tabRef3?.current?.reset({ ...init });
-        }
-      }
+      insertIntoTab3();
     } else if (tabId === 3) {
-      const res: any = await fetchData71({
-        areaCode: info?.areaCode,
-        cuCode: info?.cuCode,
-        saleType: 5,
-      });
-      if (res !== undefined && Object.keys(res)?.length > 0) {
-        // dispatch(addAR1100Tab4Data71(res));
-        dispatch(setAR1100Tab4Multiple({ ...res, isAddBtnClicked: true }));
-        setDataDictionary({
-          bgAcbCode: res?.bgAcbCode,
-          bgInkumType: res?.bgInkumType,
-          bgSwCode: res?.bgSwCode,
-          bgVatDiv: res?.bgVatDiv,
-          saleState: res?.saleState,
-        });
+      insertIntoTab4();
+    } else if (tabId === 4) {
+      insertIntoTab5();
+    }
+  };
 
-        setData65(res?.detailData[0]);
-        tabRef4?.current?.reset({ ...res?.detailData[0], bgDate: new Date() });
+  const insertIntoTab1 = async () => {
+    const res: any = await fetchData41({
+      areaCode: info?.areaCode,
+      cuCode: info?.cuCode,
+      saleType: 5,
+    });
+
+    if (res !== undefined && Object.keys(res)?.length > 0) {
+      dispatch(setAR1100Tab4Multiple({}));
+      setDataDictionary({
+        pjVatDiv: res?.pjVatDiv,
+        pjSwCode: res?.pjSwCode,
+        proxyType: res?.proxyType,
+        pjInkumtype: res?.pjInkumtype,
+        saleState: res?.saleState,
+        pacbCode: res?.pacbCode,
+      });
+
+      if (res?.detailData) {
+        const detail = res?.detailData[0];
+        tabRef1?.current?.reset({ ...detail, pjDate: new Date() });
+
+        setData65(detail);
+        setJunJaego(detail?.junJaego ? detail?.junJaego : 0); // ene irehgui bgaa
+        setQty(detail?.pjQty);
+        setReqty(detail?.pjReqty);
+        setDanga(detail?.pjDanga);
+        setVatDiv(detail?.pjVatDiv);
+        setInkum(detail?.pjInkum);
+        setDc(detail?.pjDc);
+
+        document.getElementById("pjQty")?.focus();
+      }
+    }
+  };
+
+  const insertIntoTab2 = async () => {
+    const res: any = await fetchData51({
+      areaCode: info?.areaCode,
+      cuCode: info?.cuCode,
+      saleType: 5,
+    });
+
+    if (res !== undefined && Object.keys(res)?.length > 0) {
+      dispatch(setAR1100Tab4Multiple({}));
+      setDataDictionary({
+        proxyType: res?.cproxyType,
+        saleState: res?.csaleState,
+        pcSwCode: res?.pcSwCode,
+      });
+
+      if (res?.detailData) {
+        const detail = res?.detailData[0];
+        const tempJaego =
+          (detail?.junJaego ? detail?.junJaego : 0) +
+          (detail?.pcQty ? detail?.pcQty : 0) -
+          (detail?.pcReqty ? detail?.pcReqty : 0);
+
+        tabRef2?.current?.reset({
+          ...detail,
+          pcDate: new Date(),
+          pcJaego: tempJaego,
+        });
+        setData65(detail);
+        setJunJaego(detail?.junJaego);
+        setQty(detail?.pcQty);
+        setReqty(detail?.pcReqty);
+        setDanga(detail?.pcDanga);
+
+        document.getElementById("pcQty")?.focus();
+      }
+    }
+  };
+
+  const insertIntoTab3 = async () => {
+    const res: any = await fetchData61({
+      areaCode: info?.areaCode,
+      cuCode: info?.cuCode,
+      saleType: 5,
+    });
+    if (res !== undefined && Object.keys(res)?.length > 0) {
+      dispatch(setAR1100Tab4Multiple({}));
+      setDataDictionary({
+        acbCode: res?.tsAcbCode,
+        tsGubun: res?.tsGubun,
+        tsInkumType: res?.tsInkumtype,
+        tsPaytype: res?.tsPaytype,
+        saleState: res?.tsSaleState,
+        tsSwCode: res?.tsSwCode,
+        tsTongGubun: res?.tsTongGubun,
+        tsVatDiv: res?.tsVatDiv,
+      });
+      if (res?.detailData) {
+        const detail = res?.detailData[0];
+        tabRef3?.current?.reset({ ...detail, tsDate: new Date() });
+        setData65(detail);
+        setGubun(detail?.tsGubun);
+        setQty(detail?.tsQty);
+        setDanga(detail?.tsDanga);
+        setInkum(detail?.tsInkum);
+        setKumSup(detail?.tsKumSup);
+        setKumVat(detail?.tsKumVat);
+        setKumack(detail?.tsKumack);
+        setMisu(detail?.tsMisu);
+        setVatDiv(detail?.tsVatDiv);
+      }
+    }
+  };
+
+  const insertIntoTab4 = async () => {
+    const res: any = await fetchData71({
+      areaCode: info?.areaCode,
+      cuCode: info?.cuCode,
+      saleType: 5,
+    });
+    if (res !== undefined && Object.keys(res)?.length > 0) {
+      dispatch(setAR1100Tab4Multiple({ ...res, isAddBtnClicked: true }));
+      setDataDictionary({
+        bgAcbCode: res?.bgAcbCode,
+        bgInkumType: res?.bgInkumType,
+        bgSwCode: res?.bgSwCode,
+        bgVatDiv: res?.bgVatDiv,
+        saleState: res?.saleState,
+      });
+      if (res?.detailData) {
+        const detail = res?.detailData[0];
+        tabRef4?.current?.reset({ ...detail, bgDate: new Date() });
+        setData65(detail);
         document.getElementById("bgBpCode")?.focus();
       }
-    } else if (tabId === 4) {
-      const res: any = await fetchData81({
-        areaCode: info?.areaCode,
-        cuCode: info?.cuCode,
-        saleType: 5,
+    }
+  };
+
+  const insertIntoTab5 = async () => {
+    const res: any = await fetchData81({
+      areaCode: info?.areaCode,
+      cuCode: info?.cuCode,
+      saleType: 5,
+    });
+
+    if (res && Object.keys(res)?.length > 0) {
+      dispatch(setAR1100Tab4Multiple({}));
+      setDataDictionary({
+        asAcbCode: res?.asAcbCode,
+        asInSwCode: res?.asInSwCode,
+        asInTel: res?.asInTel,
+        asInkumType: res?.asInkumType,
+        asPSwCode: res?.asPSwCode,
+        asSwCode: res?.asSwCode,
+        asTagName: res?.asTagName,
+        asVatDiv: res?.asVatDiv,
+        saleState: res?.saleState,
       });
-
-      if (res && Object.keys(res)?.length > 0) {
-        setDataDictionary({
-          asAcbCode: res?.asAcbCode,
-          asInSwCode: res?.asInSwCode,
-          asInTel: res?.asInTel,
-          asInkumType: res?.asInkumType,
-          asPSwCode: res?.asPSwCode,
-          asSwCode: res?.asSwCode,
-          asTagName: res?.asTagName,
-          asVatDiv: res?.asVatDiv,
-          saleState: res?.saleState,
-        });
-
-        setData65(res?.detailData[0]);
-        tabRef5?.current?.reset({ ...res?.detailData[0], bgDate: new Date() });
+      if (res?.detailData) {
+        const detail = res?.detailData[0];
+        tabRef5?.current?.reset({ ...detail, bgDate: new Date() });
+        setData65(detail);
         document.getElementById("bgBpCode")?.focus();
       }
     }
