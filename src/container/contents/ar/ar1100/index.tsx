@@ -27,7 +27,7 @@ import {
   addCM1105,
   addDeleteMenuId,
   setIsDelete,
-  setAR1100Tab5Data,
+  //setAR1100Tab5Data,
 } from "app/state/modal/modalSlice";
 import {
   addSource,
@@ -112,6 +112,8 @@ function AR1100({
   const [kumack, setKumack] = useState<number>(0);
   const [misu, setMisu] = useState<number>(0);
 
+  const [toggler2, setToggler2] = useState<boolean>(false);
+
   const { getRowIndex, setRowIndex } = useRowIndex();
   const { showCM1105Modal, openModal: openCM1105Modal } = useModal();
   const {
@@ -140,7 +142,7 @@ function AR1100({
   }, [dataCommonDic]);
 
   useEffect(() => {
-    if (selected !== undefined && selected > -1) {
+    if (selected !== undefined && selected > -1 && toggler2 !== undefined) {
       if (isAddBtnClicked === true) {
         //removeEmptyRow(); enenees bolj neg asuudal uuseed bsan shuu
         //addBtnUnClick();
@@ -169,7 +171,7 @@ function AR1100({
         getFooterData(data[selected]?.areaCode, data[selected]?.cuCode);
       }
     }
-  }, [selected]);
+  }, [selected, toggler2]);
 
   useEffect(() => {
     if (source === menuId && isAddBtnClicked === true && info !== undefined) {
@@ -229,7 +231,7 @@ function AR1100({
 
     if (res !== undefined && Object.keys(res)?.length > 0) {
       dispatch(setAR1100Tab4Multiple({}));
-      dispatch(setAR1100Tab5Data({}));
+      // dispatch(setAR1100Tab5Data({}));
       setDataDictionary({
         pjVatDiv: res?.pjVatDiv,
         pjSwCode: res?.pjSwCode,
@@ -266,7 +268,7 @@ function AR1100({
 
     if (res !== undefined && Object.keys(res)?.length > 0) {
       dispatch(setAR1100Tab4Multiple({}));
-      dispatch(setAR1100Tab5Data({}));
+      // dispatch(setAR1100Tab5Data({}));
       setDataDictionary({
         proxyType: res?.cproxyType,
         saleState: res?.csaleState,
@@ -304,7 +306,7 @@ function AR1100({
     });
     if (res !== undefined && Object.keys(res)?.length > 0) {
       dispatch(setAR1100Tab4Multiple({}));
-      dispatch(setAR1100Tab5Data({}));
+      // dispatch(setAR1100Tab5Data({}));
       setDataDictionary({
         acbCode: res?.tsAcbCode,
         tsGubun: res?.tsGubun,
@@ -353,7 +355,7 @@ function AR1100({
           areaCode: getValues("areaCode"),
         })
       );
-      dispatch(setAR1100Tab5Data({}));
+      // dispatch(setAR1100Tab5Data({}));
       setDataDictionary({
         bgAcbCode: res?.bgAcbCode,
         bgInkumType: res?.bgInkumType,
@@ -379,13 +381,13 @@ function AR1100({
 
     if (res && Object.keys(res)?.length > 0) {
       dispatch(setAR1100Tab4Multiple({}));
-      dispatch(
-        setAR1100Tab5Data({
-          ...res,
-          isAddBtnClicked: true,
-          areaCode: getValues("areaCode"),
-        })
-      );
+      // dispatch(
+      //   setAR1100Tab5Data({
+      //     ...res,
+      //     isAddBtnClicked: true,
+      //     areaCode: getValues("areaCode"),
+      //   })
+      // );
       setDataDictionary({
         asAcbCode: res?.asAcbCode,
         asInSwCode: res?.asInSwCode,
@@ -417,7 +419,7 @@ function AR1100({
 
     if (res && Object.keys(res)?.length > 0) {
       dispatch(setAR1100Tab4Multiple({}));
-      dispatch(setAR1100Tab5Data({}));
+      // dispatch(setAR1100Tab5Data({}));
       setDataDictionary({
         suAcbCode: res?.suAcbCode,
         suKumtype: res?.suKumtype,
@@ -610,6 +612,7 @@ function AR1100({
       if (pos === "last") {
         setSelected(lastIndex);
         setRowIndex(menuId, 0, lastIndex);
+        setToggler2((prev) => !prev);
       } else {
         if (rowIndex) {
           if (rowIndex > lastIndex) {
@@ -618,6 +621,7 @@ function AR1100({
           } else {
             setSelected(rowIndex);
           }
+          setToggler2((prev) => !prev);
         }
       }
     } else {
@@ -643,19 +647,19 @@ function AR1100({
             areaCode: getValues("areaCode"),
           })
         );
-        dispatch(setAR1100Tab5Data({}));
+        // dispatch(setAR1100Tab5Data({}));
       } else if (data[selected]?.pjType === "5") {
-        dispatch(
-          setAR1100Tab5Data({
-            ...res,
-            isAddBtnClicked: false,
-            areaCode: getValues("areaCode"),
-          })
-        );
+        // dispatch(
+        //   setAR1100Tab5Data({
+        //     ...res,
+        //     isAddBtnClicked: false,
+        //     areaCode: getValues("areaCode"),
+        //   })
+        // );
         dispatch(setAR1100Tab4Multiple({}));
       } else {
         dispatch(setAR1100Tab4Multiple({}));
-        dispatch(setAR1100Tab5Data({}));
+        // dispatch(setAR1100Tab5Data({}));
       }
 
       if (res?.detailData && res?.detailData?.length > 0) {

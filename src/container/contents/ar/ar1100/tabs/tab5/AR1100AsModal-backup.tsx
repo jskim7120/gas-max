@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useDispatch } from "app/store";
+import { useSelector, useDispatch } from "app/store";
 import { apiPost } from "app/axios";
 import { AR1100ASCUSTINSERT, AR1100ASCUSTUPDATE } from "app/path";
 import { setAR1100Tab5AsCust } from "app/state/modal/modalSlice";
@@ -29,10 +29,8 @@ import {
   DDiv,
   DDivInner,
   DDivTh,
-  LabelYellow,
-  WrapperInner,
 } from "./style";
-import { prepVal, calculationOfVat2, timeData } from "../../helper";
+import { prepVal, calculationOfVat2 } from "../../helper";
 function AsModal({
   setModalOpen,
   params,
@@ -40,6 +38,11 @@ function AsModal({
   setModalOpen: Function;
   params: any;
 }) {
+  console.log("params>>>>>>>>>>>>>>>>>>>", params);
+  const dataState: any = useSelector(
+    (state: any) => state.modal.ar1100Tab5Data
+  );
+
   const { register, handleSubmit, reset, control, watch, getValues } =
     useForm<AR1100MODELDETAIL>({
       mode: "onSubmit",
@@ -48,12 +51,15 @@ function AsModal({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (params !== undefined) {
-      if (params?.detailData) {
-        reset(params?.detailData);
+    if (dataState) {
+      if (
+        dataState?.detailData &&
+        Object.keys(dataState?.detailData)?.length > 0
+      ) {
+        reset(dataState?.detailData[0]);
       }
     }
-  }, [params]);
+  }, [dataState]);
 
   useEffect(() => {
     if (watch("asInkumtype") !== undefined) {
@@ -157,41 +163,41 @@ function AsModal({
     }));
   };
 
-  const submit = async (dat: any) => {
-    if (params?.isAddBtnClicked !== undefined) {
+  const submit = async (params: any) => {
+    if (dataState?.isAddBtnClicked !== undefined) {
       let path: string = "";
-      if (params?.isAddBtnClicked) {
+      if (dataState?.isAddBtnClicked) {
         path = AR1100ASCUSTINSERT;
-        dat.asSno = "";
+        params.asSno = "";
       } else {
         path = AR1100ASCUSTUPDATE;
-        dat.asDateB = DateWithoutDash(dat.asDate);
+        params.asDateB = DateWithoutDash(params.asDate);
       }
-      dat.insertType = "0";
-      dat.areaCode = params?.areaCode;
-      dat.asDate = DateWithoutDash(dat.asDate);
-      dat.asPdate = DateWithoutDash(dat.asPdate);
-      dat.asPtime = DateWithoutDash(dat.asPtime);
-      dat.asYdate = DateWithoutDash(dat.asYdate);
+      params.insertType = "0";
+      params.areaCode = dataState?.areaCode;
+      params.asDate = DateWithoutDash(params.asDate);
+      params.asPdate = DateWithoutDash(params.asPdate);
+      params.asPtime = DateWithoutDash(params.asPtime);
+      params.asYdate = DateWithoutDash(params.asYdate);
 
-      dat.asSurikum = +removeCommas(dat.asSurikum, "number");
-      dat.asMisukum = +removeCommas(dat.asMisukum, "number");
-      dat.asInkum = +removeCommas(dat.asInkum, "number");
-      dat.asDc = +removeCommas(dat.asDc, "number");
+      params.asSurikum = +removeCommas(params.asSurikum, "number");
+      params.asMisukum = +removeCommas(params.asMisukum, "number");
+      params.asInkum = +removeCommas(params.asInkum, "number");
+      params.asDc = +removeCommas(params.asDc, "number");
 
-      if (dat.asInSwCode) {
-        const asSwName = params?.asInSwCode?.find(
-          (item: any) => item.code === dat.asInSwCode
+      if (params.asInSwCode) {
+        const asSwName = dataState?.asInSwCode?.find(
+          (item: any) => item.code === params.asInSwCode
         )?.codeName;
-        dat.asSwName = asSwName;
+        params.asSwName = asSwName;
       }
 
-      const res = await apiPost(path, dat, "저장이 성공하였습니다");
+      const res = await apiPost(path, params, "저장이 성공하였습니다");
       if (res) {
         dispatch(setAR1100Tab5AsCust({ loadStatus: true, source: "AR1100" }));
         setTimeout(() => {
           setModalOpen(false);
-        }, 300);
+        }, 1000);
       }
     }
   };
@@ -201,7 +207,7 @@ function AsModal({
       0: (
         <FormGroup>
           <Select register={register("asVatDiv")} width={InputSize.i120}>
-            {params?.asVatDiv?.map((obj: any, idx: number) => (
+            {dataState?.asVatDiv?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -256,7 +262,7 @@ function AsModal({
       4: (
         <FormGroup>
           <Select register={register("asInkumtype")} width={InputSize.i100}>
-            {params?.asInkumType?.map((obj: any, idx: number) => (
+            {dataState?.asInkumType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -271,7 +277,7 @@ function AsModal({
             width={InputSize.i170}
             disabled={watch("asInkumtype") !== "2"}
           >
-            {params?.asAcbCode?.map((obj: any, idx: number) => (
+            {dataState?.asAcbCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -379,13 +385,28 @@ function AsModal({
         >
           <div>
             <FormGroup>
-              <LabelYellow>A/S 상태</LabelYellow>
+              <span
+                style={{
+                  width: "94px",
+                  height: "28px",
+                  fontSize: "13px",
+                  background: "#fdef73",
+                  border: "1px solid #a6a6a6",
+                  borderRadius: "3px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  margin: "3px",
+                }}
+              >
+                A/S 상태
+              </span>
               <FormGroup>
                 <Select
                   register={register("saleState")}
                   style={{ width: "217px" }}
                 >
-                  {params?.saleState?.map((obj: any, idx: number) => (
+                  {dataState?.saleState?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
@@ -397,39 +418,7 @@ function AsModal({
             <FormGroup>
               <SSpan>전화번호</SSpan>
               <Select register={register("asInTel")} style={{ width: "217px" }}>
-                {params?.asInTel?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-            <FFormGroup>
-              <SSpan style={{ width: "115px" }}>접수일자</SSpan>
-              <SSpan style={{ width: "90px" }}>접수시간</SSpan>
-              <SSpan style={{ width: "100px" }}>접수 사원</SSpan>
-            </FFormGroup>
-            <FormGroup>
-              <Controller
-                control={control}
-                name="asDate"
-                render={({ field }) => (
-                  <CustomDatePicker {...field} style={{ margin: "0" }} />
-                )}
-              />
-              <Select
-                register={register("asInTime")}
-                width={InputSize.i90}
-                textAlign="center"
-              >
-                {timeData?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-              <Select register={register("asInSwCode")} width={InputSize.i100}>
-                {params?.asInSwCode?.map((obj: any, idx: number) => (
+                {dataState?.asInTel?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
@@ -437,8 +426,56 @@ function AsModal({
               </Select>
             </FormGroup>
 
+            <FormGroup>
+              <div>
+                <SSpan style={{ width: "115px" }}>접수일자</SSpan>
+                <Controller
+                  control={control}
+                  name="asDate"
+                  render={({ field }) => (
+                    <CustomDatePicker {...field} style={{ margin: "0" }} />
+                  )}
+                />
+              </div>
+              <div>
+                <SSpan style={{ width: "90px" }}>접수시간</SSpan>
+                <Controller
+                  control={control}
+                  name="asInTime"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      inputSize={InputSize.i90}
+                      textAlign="center"
+                    />
+                  )}
+                />
+              </div>
+              <div>
+                <SSpan style={{ width: "100px" }}>접수 사원</SSpan>
+                <FormGroup>
+                  <Select
+                    register={register("asInSwCode")}
+                    width={InputSize.i100}
+                  >
+                    {dataState?.asInSwCode?.map((obj: any, idx: number) => (
+                      <option key={idx} value={obj.code}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
+              </div>
+            </FormGroup>
             {/* SMS_SEND_0 YN, SMS_SEND_0 DT  */}
-            <WrapperInner>
+            <div
+              style={{
+                display: "flex",
+                gap: "5px",
+                alignItems: "center",
+                margin: "0 0 15px 3px",
+              }}
+            >
               <Button
                 text="접수알림"
                 icon={<Sms_Send />}
@@ -449,41 +486,58 @@ function AsModal({
               <span style={{ fontSize: "12px" }}>
                 전송일시: 23-10-20 16:26:23
               </span>
-            </WrapperInner>
-            <FFormGroup>
-              <SSpan style={{ width: "115px" }}>처리예정일</SSpan>
-              <SSpan style={{ width: "90px" }}>예정시간</SSpan>
-              <SSpan style={{ width: "100px" }}>처리 예정 사원</SSpan>
-            </FFormGroup>
+            </div>
+
             <FormGroup>
-              <Controller
-                control={control}
-                name="asPdate"
-                render={({ field }) => (
-                  <CustomDatePicker {...field} style={{ margin: "0" }} />
-                )}
-              />
-              <Select
-                register={register("asPtime")}
-                width={InputSize.i90}
-                textAlign="center"
-              >
-                {timeData?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-              <Select register={register("asPSwCode")} width={InputSize.i100}>
-                {params?.asPSwCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
+              <div>
+                <SSpan style={{ width: "115px" }}>처리예정일</SSpan>
+                <Controller
+                  control={control}
+                  name="asPdate"
+                  render={({ field }) => (
+                    <CustomDatePicker {...field} style={{ margin: "0" }} />
+                  )}
+                />
+              </div>
+              <div>
+                <SSpan style={{ width: "90px" }}>예정시간</SSpan>
+                <Controller
+                  control={control}
+                  name="asPtime"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      inputSize={InputSize.i90}
+                      textAlign="center"
+                    />
+                  )}
+                />
+              </div>
+              <div>
+                <SSpan style={{ width: "100px" }}>처리 예정 사원</SSpan>
+                <FormGroup>
+                  <Select
+                    register={register("asPSwCode")}
+                    width={InputSize.i100}
+                  >
+                    {dataState?.asPSwCode?.map((obj: any, idx: number) => (
+                      <option key={idx} value={obj.code}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
+              </div>
             </FormGroup>
             {/* SMS_SEND_1 YN, SMS_SEND_1 DT  */}
-            <WrapperInner>
+            <div
+              style={{
+                display: "flex",
+                gap: "5px",
+                alignItems: "center",
+                margin: "0 0 15px 3px",
+              }}
+            >
               <Button
                 text="예정알림"
                 icon={<Sms_Send />}
@@ -494,46 +548,57 @@ function AsModal({
               <span style={{ fontSize: "12px" }}>
                 전송일시: 23-10-20 16:26:23
               </span>
-            </WrapperInner>
-
-            <FFormGroup>
-              <SSpan style={{ width: "115px" }}>처리일자</SSpan>
-              <SSpan style={{ width: "90px" }}>완료시간</SSpan>
-              <SSpan style={{ width: "100px" }}>처리 사원</SSpan>
-            </FFormGroup>
-
-            <FormGroup>
-              <Controller
-                control={control}
-                name="asYdate"
-                render={({ field }) => (
-                  <CustomDatePicker {...field} style={{ margin: "0" }} />
-                )}
-              />
-
-              <Select
-                register={register("asYtime")}
-                width={InputSize.i90}
-                textAlign="center"
-              >
-                {timeData?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-
-              <Select register={register("asSwCode")} width={InputSize.i100}>
-                {params?.asSwCode?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-
+            </div>
+            <div style={{ display: "flex", gap: "15", alignItems: "center" }}>
+              <div>
+                <SSpan style={{ width: "115px" }}>처리일자</SSpan>
+                <Controller
+                  control={control}
+                  name="asYdate"
+                  render={({ field }) => (
+                    <CustomDatePicker {...field} style={{ margin: "0" }} />
+                  )}
+                />
+              </div>
+              <div>
+                <SSpan style={{ width: "90px" }}>완료시간</SSpan>
+                <Controller
+                  control={control}
+                  name="asYtime"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      inputSize={InputSize.i90}
+                      textAlign="center"
+                    />
+                  )}
+                />
+              </div>
+              <div>
+                <SSpan style={{ width: "100px" }}>처리 사원</SSpan>
+                <FormGroup>
+                  <Select
+                    register={register("asSwCode")}
+                    width={InputSize.i100}
+                  >
+                    {dataState?.asSwCode?.map((obj: any, idx: number) => (
+                      <option key={idx} value={obj.code}>
+                        {obj.codeName}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
+              </div>
+            </div>
             {/* SMS_SEND_2 YN, SMS_SEND_2 DT  */}
-            <WrapperInner>
+            <div
+              style={{
+                display: "flex",
+                gap: "5px",
+                alignItems: "center",
+                margin: "0 0 15px 3px",
+              }}
+            >
               <Button
                 text="완료알림"
                 icon={<Sms_Send />}
@@ -544,17 +609,32 @@ function AsModal({
               <span style={{ fontSize: "12px" }}>
                 전송일시: 23-10-20 16:26:23
               </span>
-            </WrapperInner>
+            </div>
           </div>
           <DDiv>
             <DDivInner>
-              <LabelYellow style={{ width: "80px" }}>불류명</LabelYellow>
+              <span
+                style={{
+                  width: "80px",
+                  height: "28px",
+                  fontSize: "13px",
+                  background: "#fdef73",
+                  border: "1px solid #a6a6a6",
+                  borderRadius: "3px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  margin: "3px",
+                }}
+              >
+                불류명
+              </span>
               <FormGroup style={{ width: "100%" }}>
                 <Select
                   register={register("asTagName")}
                   style={{ width: "100%" }}
                 >
-                  {params?.asTagName?.map((obj: any, idx: number) => (
+                  {dataState?.asTagName?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
                     </option>
@@ -668,6 +748,7 @@ function AsModal({
             display: "flex",
             justifyContent: "space-between",
             gap: "10px",
+
             background: "#b9b9b9",
             padding: "10px",
           }}

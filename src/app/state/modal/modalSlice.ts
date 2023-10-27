@@ -76,7 +76,7 @@ export interface initialStateType {
     loadStatus: boolean;
   };
   ar1100Tab4Multiple: {};
-  ar1100Tab5Data: {};
+  // ar1100Tab5Data: {};
   ar1100Tab5AsCust: {
     source: string;
     loadStatus: boolean;
@@ -160,7 +160,7 @@ const initialState: initialStateType = {
     loadStatus: false,
   },
   ar1100Tab4Multiple: {},
-  ar1100Tab5Data: {},
+  // ar1100Tab5Data: {},
   ar1100Tab5AsCust: {
     source: "",
     loadStatus: false,
@@ -290,9 +290,9 @@ const modalSlice = createSlice({
       };
     },
 
-    setAR1100Tab5Data: (state, action) => {
-      state.ar1100Tab5Data = action.payload;
-    },
+    // setAR1100Tab5Data: (state, action) => {
+    //   state.ar1100Tab5Data = action.payload;
+    // },
 
     setAR1100Tab5AsCust: (state, action) => {
       state.ar1100Tab5AsCust = action.payload;
@@ -321,7 +321,7 @@ export const {
   addAR1100Tab4Multiple,
   setAR1100Tab4Multiple,
   setAR1100Tab4BpSale,
-  setAR1100Tab5Data,
+  //setAR1100Tab5Data,
   setAR1100Tab5AsCust,
 } = modalSlice.actions;
 
