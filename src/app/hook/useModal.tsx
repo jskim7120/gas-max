@@ -94,6 +94,17 @@ function useModal() {
     return <Modal type="ar1100AsModal" isOpen={isOpen} setIsOpen={setIsOpen} />;
   };
 
+  const showAR1100Gubun01Modal = () => {
+    return (
+      <Modal type="ar1100Gubun01Modal" isOpen={isOpen} setIsOpen={setIsOpen} />
+    );
+  };
+  const showAR1100Gubun02Modal = () => {
+    return (
+      <Modal type="ar1100Gubun02Modal" isOpen={isOpen} setIsOpen={setIsOpen} />
+    );
+  };
+
   return {
     closeModal,
     openModal,
@@ -115,6 +126,8 @@ function useModal() {
     showAR1100BpSaleModal,
     showAR1100BupumModal,
     showAR1100AsModal,
+    showAR1100Gubun01Modal,
+    showAR1100Gubun02Modal,
   };
 }
 

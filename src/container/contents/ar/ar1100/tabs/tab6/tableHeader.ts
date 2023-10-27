@@ -12,7 +12,6 @@ export const tableHeader1 = [
   "비고",
   "선택수금",
 ];
-
 export const tableHeader2 = [
   "발행은행",
   "발행일",
@@ -20,14 +19,14 @@ export const tableHeader2 = [
   "수표번호",
   "적요",
 ];
-export const modalTableHeader = [
-  "VAT",
-  "공급가액",
-  "세액",
-  "A/S 금액",
-  "입금방법",
-  "입금 계좌",
-  "입금액",
+export const modalGubunHeader1 = [
+  "수금처리일자",
+  "납부일자",
+  "구분",
+  "미수금액",
+  "선택금액",
+  "수금액",
   "D/C",
-  "미입금액",
+  "처리후 미수",
 ];
+export const modalGubunHeader2 = ["입금방법", "입금 계좌", "비고", "사원"];

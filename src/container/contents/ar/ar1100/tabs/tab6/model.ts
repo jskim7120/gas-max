@@ -1,5 +1,6 @@
 export interface AR1100MODELDETAIL {
   suGubun: string;
+  misuType: string;
   suDate: string;
   ikDate: string;
   misu: number;
@@ -16,10 +17,14 @@ export interface AR1100MODELDETAIL {
   msCdLastDate: string;
   msCdNo: string;
   msCdBigo: string;
+
+  // Modal Gubun 01
+  mjDate: string;
 }
 
 export const emtObjTab6 = {
   suGubun: "",
+  misuType: "",
   suDate: "",
   ikDate: "",
   misu: 0,
@@ -36,4 +41,7 @@ export const emtObjTab6 = {
   msCdLastDate: "",
   msCdNo: "",
   msCdBigo: "",
+
+  // Modal Gubun 01
+  mjDate: "",
 };
