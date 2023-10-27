@@ -375,7 +375,8 @@ const Tab4 = React.forwardRef(
         if (isAddBtnClicked) {
           await handleSubmitParent((d: any) => submitParent(d, "last"))();
         } else {
-          await handleSubmitParent((d: any) => submitParent(d))();
+          // await handleSubmitParent((d: any) => submitParent(d))(); huuchin iim baiv
+          await handleSubmitParent((d: any) => submitParent(d, "last"))();
         }
       }
     };
@@ -687,14 +688,26 @@ const Tab4 = React.forwardRef(
               ) : (
                 <div style={{ height: "30px", width: "80px" }}></div>
               )}
+              {isAddBtnClicked ? (
+                <Button
+                  text="저장"
+                  icon={<Update />}
+                  color={ButtonColor.SECONDARY}
+                  type="submit"
+                  disabled={data?.length === 0}
+                />
+              ) : (
+                data[selected]?.pjType === "3" && (
+                  <Button
+                    text="저장"
+                    icon={<Update />}
+                    color={ButtonColor.SECONDARY}
+                    type="submit"
+                    disabled={data?.length === 0}
+                  />
+                )
+              )}
 
-              <Button
-                text="저장"
-                icon={<Update />}
-                color={ButtonColor.SECONDARY}
-                type="submit"
-                disabled={data?.length === 0}
-              />
               <Button
                 text="취소"
                 icon={<Reset />}

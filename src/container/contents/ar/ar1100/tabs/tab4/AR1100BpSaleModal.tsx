@@ -288,7 +288,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
         params.bgDateB = DateWithoutDash(params.bgDate);
       }
 
-      params.areaCode = "01"; //----------------------tur zuur
+      params.areaCode = paramState?.areaCode;
       params.saleState = "5";
       params.bgDate = DateWithoutDash(params?.bgDate);
       params.bgQty = +params?.bgQty;

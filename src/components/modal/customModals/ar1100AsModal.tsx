@@ -7,11 +7,17 @@ const customStyle = {
   width: "1150px",
 };
 
-function AR1100AsModal({ setIsOpen }: { setIsOpen: Function }) {
+function AR1100AsModal({
+  setIsOpen,
+  params,
+}: {
+  setIsOpen: Function;
+  params: any;
+}) {
   return (
     <Draggable handle=".handle">
       <ModalWrapper style={{ ...customStyle }}>
-        <Form setModalOpen={setIsOpen} />
+        <Form setModalOpen={setIsOpen} params={params} />
       </ModalWrapper>
     </Draggable>
   );

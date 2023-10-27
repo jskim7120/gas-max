@@ -121,13 +121,23 @@ const Tab3 = React.forwardRef(
     }, [cm1106.tick]);
 
     useEffect(() => {
-      if (watch("tsInkumType") !== "2") {
+      if (watch("tsInkumType") !== undefined) {
+        handleChangeInkumType(watch("tsInkumType"));
+      }
+    }, [watch("tsInkumType")]);
+
+    const handleChangeInkumType = (val: string) => {
+      if (val === "A") {
+        setInkum(0);
+        setDc(0);
+      }
+      if (val !== "2") {
         reset((formValues) => ({
           ...formValues,
           acbCode: "",
         }));
       }
-    }, [watch("tsInkumType")]);
+    };
 
     const handleQtyChange = (val: string) => {
       setQty(+val);
@@ -616,6 +626,7 @@ const Tab3 = React.forwardRef(
           inputSize={InputSize.i100}
           textAlign="right"
           mask={currencyMask}
+          readOnly={watch("tsInkumType") === "A"}
         />
       ),
       24: (
@@ -628,6 +639,7 @@ const Tab3 = React.forwardRef(
           inputSize={InputSize.i100}
           textAlign="right"
           mask={currencyMask}
+          readOnly={watch("tsInkumType") === "A"}
         />
       ),
       25: (

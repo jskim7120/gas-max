@@ -97,11 +97,13 @@ function Popup({
   setIsOpen,
   type,
   onClose,
+  params,
 }: {
   isOpen: boolean;
   setIsOpen: Function;
   type: string;
   onClose?: MouseEventHandler;
+  params?: any;
 }) {
   const modalClose = () => {
     if (
@@ -146,7 +148,12 @@ function Popup({
           {type === "ar1100BupumModal" && (
             <AR1100BupumModal setIsOpen={setIsOpen} />
           )}
-          {type === "ar1100AsModal" && <AR1100AsModal setIsOpen={setIsOpen} />}
+
+          {type === "ar1100AsModal" && (
+            <AR1100AsModal
+              setIsOpen={setIsOpen}
+              params={params ? params : {}}
+            />
           {type === "ar1100Gubun01Modal" && (
             <AR1100Gubun01Modal setIsOpen={setIsOpen} />
           )}
