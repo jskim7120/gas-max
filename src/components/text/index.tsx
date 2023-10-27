@@ -6,6 +6,7 @@ import BuildingIconSvg from "assets/image/building-info.svg";
 const InfoDiv = styled.div`
   display: flex;
   align-items: center;
+  gap: 3px;
   p {
     color: #1b8c8e;
     font-size: 15px;

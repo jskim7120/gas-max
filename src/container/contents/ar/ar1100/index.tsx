@@ -16,6 +16,7 @@ import {
   AR1100TONGSALEDELETE,
   AR1100BPSALEDELETE,
   AR1100ASCUSTDELETE,
+  AR1100SUKUMDELETE,
 } from "app/path";
 import { useDispatch, useSelector } from "app/store";
 import { fetchFooterData } from "container/contents/footer/footerDetailFunc";
@@ -393,11 +394,9 @@ function AR1100({
   const insertIntoTab6 = async () => {
     const res: any = await fetchData91({
       areaCode: info?.areaCode,
-      suCuCode: info?.suCuCode,
+      cuCode: info?.cuCode,
       saleType: 5,
     });
-
-    console.log("res?.detailData[0]", res?.detailData[0]);
 
     if (res && Object.keys(res)?.length > 0) {
       dispatch(setAR1100Tab4Multiple({}));
@@ -405,6 +404,7 @@ function AR1100({
         suAcbCode: res?.suAcbCode,
         suKumtype: res?.suKumtype,
         suGubun: res?.suGubun,
+        misuType: res?.misuType,
         suSwCode: res?.suSwCode,
       });
       if (res?.detailData) {
@@ -747,6 +747,7 @@ function AR1100({
           suAcbCode: res?.suAcbCode,
           suKumtype: res?.suKumtype,
           suGubun: res?.suGubun,
+          misuType: res?.misuType,
           suSwCode: res?.suSwCode,
         });
         if (res?.detailData && Object.keys(res?.detailData)?.length > 0) {
@@ -888,6 +889,16 @@ function AR1100({
         params = {
           areaCode: data[selected]?.areaCode,
           asCuCode: data[selected]?.cuCode,
+          asCuName: data[selected]?.cuName,
+          asJpCode: data[selected]?.jpCode,
+          asSno: data[selected]?.pjSno,
+          asDate: DateWithoutDash(data[selected]?.pjDate),
+        };
+      } else if (data[selected]?.pjType === "6") {
+        delPath = AR1100SUKUMDELETE;
+        params = {
+          areaCode: data[selected]?.areaCode,
+          suCuCode: data[selected]?.suCuCode,
           asCuName: data[selected]?.cuName,
           asJpCode: data[selected]?.jpCode,
           asSno: data[selected]?.pjSno,

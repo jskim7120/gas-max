@@ -1,6 +1,6 @@
-import React, { useEffect, useImperativeHandle } from "react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { AR1100ASCUSTINSERT, AR1100ASCUSTUPDATE } from "app/path";
+import { AR1100SUKUMINSERT, AR1100SUKUMUPDATE } from "app/path";
 import { useDispatch, useSelector } from "app/store";
 import { apiPost } from "app/axios";
 import useModal from "app/hook/useModal";
@@ -52,10 +52,35 @@ const Tab5 = React.forwardRef(
 
     const dispatch = useDispatch();
     const { info, source } = useSelector((state: any) => state.footer);
-    const { showAR1100AsModal, openModal: openAR1100AsModal } = useModal();
-    const openModalAR1100As = () => {
-      openAR1100AsModal();
+
+    const { showAR1100Gubun01Modal, openModal: openAR1100Gubun01Modal } =
+      useModal();
+    const { showAR1100Gubun02Modal, openModal: openAR1100Gubun02Modal } =
+      useModal();
+    const openModalAR1100Gubun01 = () => {
+      openAR1100Gubun01Modal();
     };
+    const openModalAR1100Gubun02 = () => {
+      openAR1100Gubun02Modal();
+    };
+
+    useEffect(() => {
+      if (watch("misu") !== undefined) {
+        handleChangeMisu(watch("misu"));
+      }
+    }, [watch("misu")]);
+
+    useEffect(() => {
+      if (watch("suKumack") !== undefined) {
+        handleChangefields(watch("suKumack"), "kumack");
+      }
+    }, [watch("suKumack")]);
+
+    useEffect(() => {
+      if (watch("suDc") !== undefined) {
+        handleChangefields(watch("suDc"), "dc");
+      }
+    }, [watch("suDc")]);
 
     const prepVal = (val: number) => {
       let tempVal = val ? +removeCommas(val, "number") : 0;
@@ -93,35 +118,66 @@ const Tab5 = React.forwardRef(
       }
     };
 
+    const handleChangeMisu = (val: number) => {
+      let tempKumack = prepVal(getValues("suKumack"));
+      let tempDc = prepVal(getValues("suDc"));
+
+      const tempAfmisu = prepVal(val) - tempDc - tempKumack;
+      reset((formValues) => ({
+        ...formValues,
+        suAfmisu: tempAfmisu,
+      }));
+    };
+
+    const handleChangefields = (val: number, type: string) => {
+      let tempKumack: number = 0;
+      let tempDc: number = 0;
+
+      if (type === "kumack") {
+        tempDc = prepVal(getValues("suDc"));
+        tempKumack = prepVal(val);
+      } else if (type === "dc") {
+        tempKumack = prepVal(getValues("suKumack"));
+        tempDc = prepVal(val);
+      }
+
+      let asTotal: number = getValues("misu")
+        ? +removeCommas(getValues("misu"), "number")
+        : 0;
+
+      const tempMisu: number = asTotal - (tempDc + tempKumack);
+
+      reset((formValues) => ({
+        ...formValues,
+        suAfmisu: tempMisu,
+      }));
+    };
+
     const submit = async (params: any) => {
-      const path = isAddBtnClicked ? AR1100ASCUSTINSERT : AR1100ASCUSTUPDATE;
+      const path = isAddBtnClicked ? AR1100SUKUMINSERT : AR1100SUKUMUPDATE;
       params.insertType = "0";
 
       if (isAddBtnClicked) {
         //params.asCuUserName = info?.cuUsername;
         params.msSno = "";
       } else {
-        params.asDateB = DateWithoutDash(params.asDate);
+        // params.asDateB = DateWithoutDash(params.asDate);
       }
 
-      console.log("params: -----> ", params);
-
       params.areaCode = areaCode;
-      params.asDate = DateWithoutDash(params.asDate);
-      params.asPdate = DateWithoutDash(params.asPdate);
-      params.asPtime = DateWithoutDash(params.asPtime);
-      params.asYdate = DateWithoutDash(params.asYdate);
+      params.ikDate = DateWithoutDash(params.ikDate);
 
-      params.asSurikum = +removeCommas(params.asSurikum, "number");
-      params.asMisukum = +removeCommas(params.asMisukum, "number");
-      params.asInkum = +removeCommas(params.asInkum, "number");
-      params.asDc = +removeCommas(params.asDc, "number");
+      params.suKumack = +removeCommas(params.suKumack, "number");
+      params.suDc = +removeCommas(params.suDc, "number");
+      params.misu = +removeCommas(params.misu, "number");
+      params.cuCmisu = +removeCommas(params.cuCmisu, "number");
+      params.cuJmisu = +removeCommas(params.cuJmisu, "number");
 
-      if (params.asInSwCode) {
-        const asSwName = dictionary?.asInSwCode?.find(
-          (item: any) => item.code === params.asInSwCode
+      if (params.suSwCode) {
+        const suSwName = dictionary?.suSwCode?.find(
+          (item: any) => item.code === params.suSwCode
         )?.codeName;
-        params.asSwName = asSwName;
+        params.suSwName = suSwName;
       }
 
       const res = await apiPost(path, params, "저장이 성공하였습니다");
@@ -138,8 +194,8 @@ const Tab5 = React.forwardRef(
       {
         0: (
           <FormGroup>
-            <Select register={register("suGubun")} width={InputSize.i80}>
-              {dictionary?.suGubun?.map((obj: any, idx: number) => (
+            <Select register={register("misuType")} width={InputSize.i80}>
+              {dictionary?.misuType?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -236,7 +292,11 @@ const Tab5 = React.forwardRef(
         ),
         8: (
           <FormGroup>
-            <Select register={register("suAcbcode")} width={InputSize.i150}>
+            <Select
+              register={register("suAcbcode")}
+              width={InputSize.i150}
+              disabled={watch("suKumtype") !== "2"}
+            >
               {dictionary?.suAcbcode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -268,10 +328,17 @@ const Tab5 = React.forwardRef(
         ),
         11: (
           <Button
-            text="저장"
+            text={watch("misuType") === "J" ? "중량" : "체적"}
             color={ButtonColor.LIGHT}
-            onClick={() => alert("modal haruulah")}
-            style={{ margin: "0 15px" }}
+            type="button"
+            onClick={() => {
+              if (watch("misuType") === "J") {
+                openModalAR1100Gubun01();
+              } else {
+                openModalAR1100Gubun02();
+              }
+            }}
+            style={{ margin: "0 17px" }}
           />
         ),
       },
@@ -318,7 +385,7 @@ const Tab5 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
-                inputSize={InputSize.i120}
+                inputSize={InputSize.i140}
                 textAlign="center"
                 mask={currencyMask}
               />
@@ -332,7 +399,7 @@ const Tab5 = React.forwardRef(
             render={({ field }) => (
               <Input
                 {...field}
-                inputSize={InputSize.i120}
+                inputSize={InputSize.i150}
                 textAlign="center"
                 mask={currencyMask}
               />
@@ -344,21 +411,34 @@ const Tab5 = React.forwardRef(
 
     return (
       <>
-        {showAR1100AsModal()}
+        {showAR1100Gubun01Modal()}
+        {showAR1100Gubun02Modal()}
         <CustomForm autoComplete="off" onSubmit={handleSubmit(submit)}>
           <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
-            <div className="tab1">
+            <div
+              className="tab1"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-end",
+              }}
+            >
               <Table
                 className="no-space"
                 tableHeader={tableHeader1}
                 tableData={tableData1}
                 style={{ marginBottom: "2px" }}
               />
-              <Table
-                className="no-space"
-                tableHeader={tableHeader2}
-                tableData={tableData2}
-              />
+              {watch("suKumtype") === "4" ? (
+                <Table
+                  className="no-space"
+                  tableHeader={tableHeader2}
+                  tableData={tableData2}
+                  style={{ width: "auto" }}
+                />
+              ) : (
+                ""
+              )}
             </div>
 
             <div
