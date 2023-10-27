@@ -154,6 +154,7 @@ function Popup({
               setIsOpen={setIsOpen}
               params={params ? params : {}}
             />
+          )}
           {type === "ar1100Gubun01Modal" && (
             <AR1100Gubun01Modal setIsOpen={setIsOpen} />
           )}
