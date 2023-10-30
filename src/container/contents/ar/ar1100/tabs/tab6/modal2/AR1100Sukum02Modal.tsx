@@ -57,7 +57,7 @@ function SukumModal2({
     });
 
     if (response) {
-      setGridData(response);
+      setGridData(response?.detailData);
     } else {
       setGridData([]);
     }

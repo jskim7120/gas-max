@@ -34,4 +34,5 @@ export const ArticleDiv = styled.div`
   border: 1px solid #a6a6a6;
   padding: 10px 20px;
   border-radius: 3px;
+  width: "100%";
 `;

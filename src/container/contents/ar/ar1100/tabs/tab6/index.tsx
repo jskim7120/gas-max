@@ -363,12 +363,7 @@ const Tab5 = React.forwardRef(
             control={control}
             name="msCdBank"
             render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i120}
-                textAlign="left"
-                mask={currencyMask}
-              />
+              <Input {...field} inputSize={InputSize.i120} textAlign="center" />
             )}
           />
         ),
@@ -376,18 +371,14 @@ const Tab5 = React.forwardRef(
           <Controller
             control={control}
             name="msCdDate"
-            render={({ field }) => (
-              <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
-            )}
+            render={({ field }) => <CustomDatePicker {...field} />}
           />
         ),
         14: (
           <Controller
             control={control}
             name="msCdLastDate"
-            render={({ field }) => (
-              <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
-            )}
+            render={({ field }) => <CustomDatePicker {...field} />}
           />
         ),
         15: (
@@ -395,12 +386,7 @@ const Tab5 = React.forwardRef(
             control={control}
             name="msCdNo"
             render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i140}
-                textAlign="center"
-                mask={currencyMask}
-              />
+              <Input {...field} inputSize={InputSize.i140} textAlign="center" />
             )}
           />
         ),
@@ -409,12 +395,7 @@ const Tab5 = React.forwardRef(
             control={control}
             name="msCdBigo"
             render={({ field }) => (
-              <Input
-                {...field}
-                inputSize={InputSize.i150}
-                textAlign="left"
-                mask={currencyMask}
-              />
+              <Input {...field} inputSize={InputSize.i150} textAlign="left" />
             )}
           />
         ),
