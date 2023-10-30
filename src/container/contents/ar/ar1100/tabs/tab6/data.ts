@@ -2,31 +2,51 @@ import { ValueType } from "realgrid";
 
 export const fields = [
   {
-    fieldName: "bglBpCode",
+    fieldName: "gjGumymsno",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bglBpName",
+    fieldName: "gjDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bglBpType",
+    fieldName: "gjJungum",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "bglQty",
+    fieldName: "gjGum",
     dataType: ValueType.NUMBER,
   },
   {
-    fieldName: "bglDanga",
+    fieldName: "gjGage",
     dataType: ValueType.NUMBER,
   },
   {
-    fieldName: "bglKumack",
+    fieldName: "gjDangkum",
     dataType: ValueType.NUMBER,
   },
   {
-    fieldName: "bglBigo",
+    fieldName: "gjMisu",
+    dataType: ValueType.NUMBER,
+  },
+  {
+    fieldName: "gjPerkum",
+    dataType: ValueType.NUMBER,
+  },
+  {
+    fieldName: "gjTotal",
+    dataType: ValueType.NUMBER,
+  },
+  {
+    fieldName: "gjJirodate",
+    dataType: ValueType.TEXT,
+  },
+  {
+    fieldName: "gjMisujan",
+    dataType: ValueType.NUMBER,
+  },
+  {
+    fieldName: "gsSwName",
     dataType: ValueType.TEXT,
   },
 ];
