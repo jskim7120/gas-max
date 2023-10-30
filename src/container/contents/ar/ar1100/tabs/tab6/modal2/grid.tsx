@@ -11,8 +11,6 @@ function Grid({ data }: { data: any }) {
 
   const dispatch = useDispatch();
 
-  console.log("----------------", data);
-
   useEffect(() => {
     if (data !== undefined && data?.length > 0) {
       container = realgridElement.current as HTMLDivElement;
