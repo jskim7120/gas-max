@@ -101,7 +101,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       0: (
         <Controller
           control={control}
-          name="suDate"
+          name="gsDate"
           render={({ field }) => (
             <CustomDatePicker {...field} style={{ margin: "0" }} />
           )}
@@ -110,7 +110,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       1: (
         <Controller
           control={control}
-          name="ikDate"
+          name="gsDate"
           render={({ field }) => (
             <CustomDatePicker {...field} style={{ margin: "0" }} />
           )}
@@ -145,7 +145,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       4: (
         <Controller
           control={control}
-          name="suKumack"
+          name="gsInkum"
           render={({ field }) => (
             <Input
               {...field}
@@ -159,7 +159,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       5: (
         <Controller
           control={control}
-          name="suKumack"
+          name="gsInkum"
           render={({ field }) => (
             <Input
               {...field}
@@ -173,7 +173,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       6: (
         <Controller
           control={control}
-          name="suDc"
+          name="gsDc"
           render={({ field }) => (
             <Input
               {...field}
@@ -187,7 +187,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       7: (
         <Controller
           control={control}
-          name="suAfmisu"
+          name="misu"
           render={({ field }) => (
             <Input
               {...field}
@@ -206,7 +206,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       8: (
         <Controller
           control={control}
-          name="suKumtype"
+          name="gsInkumtype"
           render={({ field }) => (
             <Input
               {...field}
@@ -219,7 +219,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       ),
       9: (
         <FormGroup>
-          <Select register={register("suAcbcode")} width={InputSize.i150}>
+          <Select register={register("acbCode")} width={InputSize.i150}>
             {dictionary?.suAcbcode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -232,8 +232,8 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
         <EditableSelect
           list={dictionary?.asIn}
           reset={reset}
-          register={register("suBigo")}
-          watch={watch("suBigo")}
+          register={register("gsBigo")}
+          watch={watch("gsBigo")}
           textAlign={"left"}
           style={{ width: "200px" }}
         />
@@ -241,7 +241,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       11: (
         <Controller
           control={control}
-          name="suSwCode"
+          name="gsSwCode"
           render={({ field }) => (
             <Input
               {...field}
