@@ -65,14 +65,14 @@ const Tab5 = React.forwardRef(
     };
 
     useEffect(() => {
-      if (watch("misu") !== undefined) {
-        handleChangeMisu(watch("misu"));
+      if (watch("gsJmisuAmt") !== undefined) {
+        handleChangeMisu(watch("gsJmisuAmt"));
       }
-    }, [watch("misu")]);
+    }, [watch("gsJmisuAmt")]);
 
     useEffect(() => {
       if (watch("gsInkum") !== undefined) {
-        handleChangefields(watch("gsInkum"), "kumack");
+        handleChangefields(watch("gsInkum"), "inkum");
       }
     }, [watch("gsInkum")]);
 
@@ -119,37 +119,35 @@ const Tab5 = React.forwardRef(
     };
 
     const handleChangeMisu = (val: number) => {
-      let tempKumack = prepVal(getValues("gsInkum"));
+      let tempInkum = prepVal(getValues("gsInkum"));
       let tempDc = prepVal(getValues("gsDc"));
 
-      const tempAfmisu = prepVal(val) - tempDc - tempKumack;
+      const tempMisu = prepVal(val) - tempDc - tempInkum;
       reset((formValues) => ({
         ...formValues,
-        suAfmisu: tempAfmisu,
+        misu: tempMisu,
       }));
     };
 
     const handleChangefields = (val: number, type: string) => {
-      let tempKumack: number = 0;
+      let tempInkum: number = 0;
       let tempDc: number = 0;
 
-      if (type === "kumack") {
+      if (type === "inkum") {
         tempDc = prepVal(getValues("gsDc"));
-        tempKumack = prepVal(val);
+        tempInkum = prepVal(val);
       } else if (type === "dc") {
-        tempKumack = prepVal(getValues("gsInkum"));
+        tempInkum = prepVal(getValues("gsInkum"));
         tempDc = prepVal(val);
       }
 
-      let asTotal: number = getValues("misu")
-        ? +removeCommas(getValues("misu"), "number")
-        : 0;
+      let asTotal: number = prepVal(getValues("gsJmisuAmt"));
 
-      const tempMisu: number = asTotal - (tempDc + tempKumack);
+      const tempMisu: number = asTotal - (tempDc + tempInkum);
 
       reset((formValues) => ({
         ...formValues,
-        suAfmisu: tempMisu,
+        misu: tempMisu,
       }));
     };
 
@@ -224,7 +222,7 @@ const Tab5 = React.forwardRef(
         3: (
           <Controller
             control={control}
-            name="misu"
+            name="gsJmisuAmt"
             render={({ field }) => (
               <Input
                 {...field}
@@ -282,7 +280,7 @@ const Tab5 = React.forwardRef(
         7: (
           <FormGroup>
             <Select register={register("gsInkumtype")} width={InputSize.i100}>
-              {dictionary?.suKumtype?.map((obj: any, idx: number) => (
+              {dictionary?.gsInkumtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -297,7 +295,7 @@ const Tab5 = React.forwardRef(
               width={InputSize.i150}
               disabled={watch("gsInkumtype") !== "2"}
             >
-              {dictionary?.suAcbcode?.map((obj: any, idx: number) => (
+              {dictionary?.acbCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -308,7 +306,7 @@ const Tab5 = React.forwardRef(
         9: (
           <FormGroup>
             <Select register={register("gsSwCode")} width={InputSize.i120}>
-              {dictionary?.suSwCode?.map((obj: any, idx: number) => (
+              {dictionary?.gsSwCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
                 </option>
@@ -354,7 +352,7 @@ const Tab5 = React.forwardRef(
               <Input
                 {...field}
                 inputSize={InputSize.i120}
-                textAlign="center"
+                textAlign="left"
                 mask={currencyMask}
               />
             )}
@@ -400,7 +398,7 @@ const Tab5 = React.forwardRef(
               <Input
                 {...field}
                 inputSize={InputSize.i150}
-                textAlign="center"
+                textAlign="left"
                 mask={currencyMask}
               />
             )}

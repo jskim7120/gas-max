@@ -418,19 +418,17 @@ function AR1100({
 
     if (res && Object.keys(res)?.length > 0) {
       dispatch(setAR1100Tab4Multiple({}));
-      // dispatch(setAR1100Tab5Data({}));
       setDataDictionary({
-        suAcbCode: res?.suAcbCode,
-        suKumtype: res?.suKumtype,
-        suGubun: res?.suGubun,
+        acbCode: res?.acbCode,
+        gsInkumtype: res?.gsInkumtype,
         misuType: res?.misuType,
-        suSwCode: res?.suSwCode,
+        gsSwCode: res?.gsSwCode,
       });
       if (res?.detailData) {
         const detail = res?.detailData[0];
-        tabRef6?.current?.reset({ ...detail, bgDate: new Date() });
+        tabRef6?.current?.reset({ ...detail });
         setData65(detail);
-        document.getElementById("bgBpCode")?.focus();
+        document.getElementById("gsInkum")?.focus();
       }
     }
   };
@@ -647,24 +645,17 @@ function AR1100({
             areaCode: getValues("areaCode"),
           })
         );
-        // dispatch(setAR1100Tab5Data({}));
       } else if (data[selected]?.pjType === "5") {
-        // dispatch(
-        //   setAR1100Tab5Data({
-        //     ...res,
-        //     isAddBtnClicked: false,
-        //     areaCode: getValues("areaCode"),
-        //   })
-        // );
         dispatch(setAR1100Tab4Multiple({}));
       } else {
         dispatch(setAR1100Tab4Multiple({}));
-        // dispatch(setAR1100Tab5Data({}));
       }
 
       if (res?.detailData && res?.detailData?.length > 0) {
         setJpKind(res?.detailData[0]?.jpKind);
         setData65(res?.detailData[0]);
+      } else {
+        setData65({});
       }
 
       if (data[selected]?.pjType === "0") {
@@ -773,11 +764,11 @@ function AR1100({
       }
       if (data[selected]?.pjType === "6") {
         setDataDictionary({
-          suAcbCode: res?.suAcbCode,
-          suKumtype: res?.suKumtype,
-          suGubun: res?.suGubun,
+          acbCode: res?.acbCode,
+          gsInkumtype: res?.gsInkumtype,
+          //suGubun: res?.suGubun,
           misuType: res?.misuType,
-          suSwCode: res?.suSwCode,
+          gsSwCode: res?.gsSwCode,
         });
         if (res?.detailData && Object.keys(res?.detailData)?.length > 0) {
           tabRef6?.current?.reset(res?.detailData[0]);
