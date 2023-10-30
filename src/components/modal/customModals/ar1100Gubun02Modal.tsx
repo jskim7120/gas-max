@@ -1,6 +1,6 @@
 import React from "react";
 import Draggable from "react-draggable";
-import Form from "container/contents/ar/ar1100/tabs/tab6/AR1100Gubun02Modal";
+import Form from "container/contents/ar/ar1100/tabs/tab6/modal2/AR1100Gubun02Modal";
 import { ModalWrapper } from "./style";
 
 const customStyle = {

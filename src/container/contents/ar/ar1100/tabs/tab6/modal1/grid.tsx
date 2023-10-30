@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { useDispatch } from "app/store";
 import { fields, columns } from "./data";
-import { addBupum } from "app/state/modal/modalSlice";
 
 function Grid({ data }: { data: any }) {
   const realgridElement = useRef<HTMLDivElement>(null);
