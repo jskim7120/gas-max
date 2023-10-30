@@ -1,5 +1,10 @@
 import { useEffect, useRef } from "react";
-import { GridView, LocalDataProvider } from "realgrid";
+import {
+  GridView,
+  TreeView,
+  LocalDataProvider,
+  LocalTreeDataProvider,
+} from "realgrid";
 import { useDispatch } from "app/store";
 import { fields, columns } from "./data";
 
@@ -14,10 +19,16 @@ function Grid({ data }: { data: any }) {
   useEffect(() => {
     if (data !== undefined && data?.length > 0) {
       container = realgridElement.current as HTMLDivElement;
-      dp = new LocalDataProvider(true);
-      gv = new GridView(container);
+      // dp = new LocalDataProvider(true);
+      // gv = new GridView(container);
+      dp = new LocalTreeDataProvider(true);
+      gv = new TreeView(container);
 
       gv.setDataSource(dp);
+
+      gv.treeOptions.iconImagesRoot = "./image/grid/";
+      gv.treeOptions.iconImages = ["folder.png", "folder-open.png", "file.png"];
+      gv.treeOptions.defaultIcon = 3;
 
       dp.setFields(fields);
       gv.setColumns(columns);
