@@ -71,16 +71,16 @@ const Tab5 = React.forwardRef(
     }, [watch("misu")]);
 
     useEffect(() => {
-      if (watch("suKumack") !== undefined) {
-        handleChangefields(watch("suKumack"), "kumack");
+      if (watch("gsInkum") !== undefined) {
+        handleChangefields(watch("gsInkum"), "kumack");
       }
-    }, [watch("suKumack")]);
+    }, [watch("gsInkum")]);
 
     useEffect(() => {
-      if (watch("suDc") !== undefined) {
-        handleChangefields(watch("suDc"), "dc");
+      if (watch("gsDc") !== undefined) {
+        handleChangefields(watch("gsDc"), "dc");
       }
-    }, [watch("suDc")]);
+    }, [watch("gsDc")]);
 
     const prepVal = (val: number) => {
       let tempVal = val ? +removeCommas(val, "number") : 0;
@@ -119,8 +119,8 @@ const Tab5 = React.forwardRef(
     };
 
     const handleChangeMisu = (val: number) => {
-      let tempKumack = prepVal(getValues("suKumack"));
-      let tempDc = prepVal(getValues("suDc"));
+      let tempKumack = prepVal(getValues("gsInkum"));
+      let tempDc = prepVal(getValues("gsDc"));
 
       const tempAfmisu = prepVal(val) - tempDc - tempKumack;
       reset((formValues) => ({
@@ -134,10 +134,10 @@ const Tab5 = React.forwardRef(
       let tempDc: number = 0;
 
       if (type === "kumack") {
-        tempDc = prepVal(getValues("suDc"));
+        tempDc = prepVal(getValues("gsDc"));
         tempKumack = prepVal(val);
       } else if (type === "dc") {
-        tempKumack = prepVal(getValues("suKumack"));
+        tempKumack = prepVal(getValues("gsInkum"));
         tempDc = prepVal(val);
       }
 
@@ -165,10 +165,10 @@ const Tab5 = React.forwardRef(
       }
 
       params.areaCode = areaCode;
-      params.ikDate = DateWithoutDash(params.ikDate);
+      params.gsDateUse = DateWithoutDash(params.gsDateUse);
 
-      params.suKumack = +removeCommas(params.suKumack, "number");
-      params.suDc = +removeCommas(params.suDc, "number");
+      params.gsInkum = +removeCommas(params.gsInkum, "number");
+      params.gsDc = +removeCommas(params.gsDc, "number");
       params.misu = +removeCommas(params.misu, "number");
       params.cuCmisu = +removeCommas(params.cuCmisu, "number");
       params.cuJmisu = +removeCommas(params.cuJmisu, "number");
@@ -206,7 +206,7 @@ const Tab5 = React.forwardRef(
         1: (
           <Controller
             control={control}
-            name="suDate"
+            name="gsDate"
             render={({ field }) => (
               <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
             )}
@@ -215,7 +215,7 @@ const Tab5 = React.forwardRef(
         2: (
           <Controller
             control={control}
-            name="ikDate"
+            name="gsDateUse"
             render={({ field }) => (
               <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
             )}
@@ -239,7 +239,7 @@ const Tab5 = React.forwardRef(
         4: (
           <Controller
             control={control}
-            name="suKumack"
+            name="gsInkum"
             render={({ field }) => (
               <Input
                 {...field}
@@ -253,7 +253,7 @@ const Tab5 = React.forwardRef(
         5: (
           <Controller
             control={control}
-            name="suDc"
+            name="gsDc"
             render={({ field }) => (
               <Input
                 {...field}
@@ -267,7 +267,7 @@ const Tab5 = React.forwardRef(
         6: (
           <Controller
             control={control}
-            name="suAfmisu"
+            name="misu"
             render={({ field }) => (
               <Input
                 {...field}
@@ -281,7 +281,7 @@ const Tab5 = React.forwardRef(
         ),
         7: (
           <FormGroup>
-            <Select register={register("suKumtype")} width={InputSize.i100}>
+            <Select register={register("gsInkumtype")} width={InputSize.i100}>
               {dictionary?.suKumtype?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -293,9 +293,9 @@ const Tab5 = React.forwardRef(
         8: (
           <FormGroup>
             <Select
-              register={register("suAcbcode")}
+              register={register("acbCode")}
               width={InputSize.i150}
-              disabled={watch("suKumtype") !== "2"}
+              disabled={watch("gsInkumtype") !== "2"}
             >
               {dictionary?.suAcbcode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -307,7 +307,7 @@ const Tab5 = React.forwardRef(
         ),
         9: (
           <FormGroup>
-            <Select register={register("suSwCode")} width={InputSize.i120}>
+            <Select register={register("gsSwCode")} width={InputSize.i120}>
               {dictionary?.suSwCode?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
                   {obj.codeName}
@@ -320,8 +320,8 @@ const Tab5 = React.forwardRef(
           <EditableSelect
             list={dictionary?.asIn}
             reset={reset}
-            register={register("suBigo")}
-            watch={watch("suBigo")}
+            register={register("gsBigo")}
+            watch={watch("gsBigo")}
             textAlign={"left"}
             style={{ width: "200px" }}
           />
@@ -429,7 +429,7 @@ const Tab5 = React.forwardRef(
                 tableData={tableData1}
                 style={{ marginBottom: "2px" }}
               />
-              {watch("suKumtype") === "4" ? (
+              {watch("gsInkumtype") === "4" ? (
                 <Table
                   className="no-space"
                   tableHeader={tableHeader2}

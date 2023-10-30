@@ -1,16 +1,18 @@
 export interface AR1100MODELDETAIL {
   suGubun: string;
   misuType: string;
-  suDate: string;
+  gsDate: string;
   ikDate: string;
+  gsDateUse: string;
+  gsJmisuAmt: number;
+  gsInkum: number;
+  gsDc: number;
   misu: number;
-  suKumack: number;
-  suDc: number;
-  suAfmisu: number;
-  suKumtype: string;
-  suAcbcode: string;
-  suSwCode: string;
-  suBigo: string;
+  gsInkumtype: string;
+  acbCode: string;
+  gsSwCode: string;
+  gsSwName: string;
+  gsBigo: string;
 
   msCdBank: string;
   msCdDate: string;
@@ -25,16 +27,18 @@ export interface AR1100MODELDETAIL {
 export const emtObjTab6 = {
   suGubun: "",
   misuType: "",
-  suDate: "",
+  gsDate: "",
   ikDate: "",
+  gsDateUse: "",
+  gsJmisuAmt: 0,
+  gsInkum: 0,
+  gsDc: 0,
   misu: 0,
-  suKumack: 0,
-  suDc: 0,
-  suAfmisu: 0,
-  suKumtype: "",
-  suAcbcode: "",
-  suSwCode: "",
-  suBigo: "",
+  gsInkumtype: "",
+  acbCode: "",
+  gsSwCode: "",
+  gsSwName: "",
+  gsBigo: "",
 
   msCdBank: "",
   msCdDate: "",
