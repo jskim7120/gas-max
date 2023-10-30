@@ -9,15 +9,15 @@ import { Reset, WhiteClose, Update } from "components/allSvgIcon";
 import styled from "styled-components";
 import { Input, Select, FormGroup, CustomForm } from "components/form/style";
 import { ButtonColor, InputSize } from "components/componentsType";
-import { AR1100ASCUSTINSERT, AR1100ASCUSTUPDATE, AR1100SELECT } from "app/path";
+import { AR1100ASCUSTINSERT, AR1100ASCUSTUPDATE, AR1100MISU } from "app/path";
 import CustomDatePicker from "components/customDatePicker";
 import { currencyMask, removeCommas } from "helpers/currency";
 import Table from "components/table";
-import { modalGubunHeader1, modalGubunHeader2 } from "./tableHeader";
-import { AR1100MODELDETAIL, emtObjTab6 } from "./model";
+import { modalGubunHeader1, modalGubunHeader2 } from "../tableHeader";
+import { AR1100MODELDETAIL, emtObjTab6 } from "../model";
 import EditableSelect from "components/editableSelect";
-import { BorderRight } from "container/contents/cm/cm1300/style";
 import { InfoText } from "components/text";
+import Grid from "../modal1/grid";
 
 const LLabel = styled.label`
   background: rgba(104, 103, 103, 0.35);
@@ -60,43 +60,41 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
     useForm<AR1100MODELDETAIL>({
       mode: "onSubmit",
     });
+  const paramState: any = useSelector(
+    (state) => state.modal.ar1100Tab4Multiple
+  );
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const dispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(false);
   const [dictionary, setDictionary] = useState<any>({});
-  const [data, setData] = useState<any[]>();
   const [selected, setSelected] = useState<number>(0);
   const state: any = useSelector((state) => state.modal.bupum);
   const [gridData, setGridData] = useState<Array<any>>([]);
-
-  const fetchData65 = async (params: any) => {
-    const res = await apiGet(AR1100SELECT, params);
-    if (res && Object.keys(res)?.length > 0) {
-      reset(res?.detailData[0]);
-      setData(res?.detailData ? res?.detailData[0] : {});
-      setGridData(
-        res?.gridData ? [...res?.gridData, emtObjTab6] : [emtObjTab6]
-      );
-
-      setDictionary({
-        bgAcbCode: res?.bgAcbCode,
-        bgInkumType: res?.bgInkumType,
-        bgSwCode: res?.bgSwCode,
-        bgVatDiv: res?.bgVatDiv,
-        saleState: res?.saleState,
-      });
-    } else {
-      reset(emtObjTab6);
-      setData([]);
-      setGridData([emtObjTab6]);
-      setDictionary({});
-    }
-  };
 
   const handleChoose = (obj: any) => {
     dispatch(addBupumTick(obj));
     setModalOpen(false);
   };
+
+  const fetchData = async () => {
+    const response = await apiGet(AR1100MISU, {
+      areaCode: "01",
+      cuCode: "000-07880",
+      suGubun: "C",
+    });
+
+    if (response) {
+      setGridData(response);
+    } else {
+      setGridData([]);
+    }
+  };
+
+  console.log(gridData);
 
   const tableData1 = [
     {
@@ -112,7 +110,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       1: (
         <Controller
           control={control}
-          name="ikDate"
+          name="gsDate"
           render={({ field }) => (
             <CustomDatePicker {...field} style={{ margin: "0" }} />
           )}
@@ -263,7 +261,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
         className="handle h25"
         style={{ background: "rgba(101, 84, 255, 0.37)", height: "40px" }}
       >
-        <FormGroup>[ 중량미수 ] 선택수금처리</FormGroup>
+        <FormGroup>[ 체적미수 ] 선택수금처리</FormGroup>
         <FormGroup>
           <span
             className="close_btn"
@@ -305,7 +303,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
         <div style={{ margin: "5px 0" }}>
           <FormGroup style={{ marginTop: "3px", gap: "5px" }}>
             <TTSide>미납&nbsp;&nbsp;&nbsp;내역</TTSide>
-            <div>1</div>
+            <Grid data={gridData} />
           </FormGroup>
           <FormGroup style={{ marginTop: "3px", gap: "5px" }}>
             <TTSide
