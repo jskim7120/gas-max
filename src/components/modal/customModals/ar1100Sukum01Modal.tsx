@@ -1,20 +1,26 @@
 import React from "react";
 import Draggable from "react-draggable";
-import Form from "container/contents/ar/ar1100/tabs/tab6/modal1/AR1100Gubun01Modal";
+import Form from "container/contents/ar/ar1100/tabs/tab6/modal1/AR1100Sukum01Modal";
 import { ModalWrapper } from "./style";
 
 const customStyle = {
   width: "1150px",
 };
 
-function ar1100Gubun01Modal({ setIsOpen }: { setIsOpen: Function }) {
+function ar1100Sukum01Modal({
+  setIsOpen,
+  params,
+}: {
+  setIsOpen: Function;
+  params: any;
+}) {
   return (
     <Draggable handle=".handle">
       <ModalWrapper style={{ ...customStyle }}>
-        <Form setModalOpen={setIsOpen} />
+        <Form setModalOpen={setIsOpen} params={params} />
       </ModalWrapper>
     </Draggable>
   );
 }
 
-export default ar1100Gubun01Modal;
+export default ar1100Sukum01Modal;

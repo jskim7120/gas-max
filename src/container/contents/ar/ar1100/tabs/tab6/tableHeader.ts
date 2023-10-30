@@ -19,7 +19,7 @@ export const tableHeader2 = [
   "수표번호",
   "적요",
 ];
-export const modalGubunHeader1 = [
+export const modalHeader1 = [
   "수금처리일자",
   "납부일자",
   "구분",
@@ -29,4 +29,4 @@ export const modalGubunHeader1 = [
   "D/C",
   "처리후 미수",
 ];
-export const modalGubunHeader2 = ["입금방법", "입금 계좌", "비고", "사원"];
+export const modalHeader2 = ["입금방법", "입금 계좌", "비고", "사원"];

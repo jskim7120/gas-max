@@ -15,7 +15,7 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { currencyMask, removeCommas } from "helpers/currency";
 import { AR1100MODELDETAIL } from "./model";
 import { tableHeader1, tableHeader2 } from "./tableHeader";
-import useModal2 from "./modal";
+import useModalWithParams from "app/hook/useModalWithParams";
 import { prepVal, timeData } from "../../helper";
 
 const Tab5 = React.forwardRef(
@@ -54,14 +54,15 @@ const Tab5 = React.forwardRef(
 
     const dispatch = useDispatch();
 
-    const { showAR1100AsModal, openModal: openAR1100AsModal } = useModal2({
-      params: {
-        ...dictionary,
-        detailData: watch(),
-        isAddBtnClicked: isAddBtnClicked,
-        areaCode: areaCode,
-      },
-    });
+    const { showAR1100AsModal, openModal: openAR1100AsModal } =
+      useModalWithParams({
+        params: {
+          ...dictionary,
+          detailData: watch(),
+          isAddBtnClicked: isAddBtnClicked,
+          areaCode: areaCode,
+        },
+      });
 
     const asCustState = useSelector(
       (state: any) => state.modal.ar1100Tab5AsCust
