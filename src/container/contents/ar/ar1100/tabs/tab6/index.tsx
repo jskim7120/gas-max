@@ -344,10 +344,10 @@ const Tab5 = React.forwardRef(
             color={ButtonColor.LIGHT}
             type="button"
             onClick={() => {
-              if (watch("misuType") === "J") {
-                openModalAR1100Gubun01();
-              } else {
+              if (watch("misuType") === "C") {
                 openModalAR1100Gubun02();
+              } else {
+                openModalAR1100Gubun01();
               }
             }}
             style={{ margin: "0 17px" }}

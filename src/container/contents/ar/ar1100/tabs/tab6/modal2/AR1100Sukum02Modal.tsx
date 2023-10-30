@@ -15,7 +15,7 @@ import Table from "components/table";
 import { currencyMask, removeCommas } from "helpers/currency";
 import { modalHeader1, modalHeader2 } from "../tableHeader";
 import { AR1100MODELDETAIL, emtObjTab6 } from "../model";
-import Grid from "../modal1/grid";
+import Grid from "./grid";
 import { LLabel, IInput, FFormGroup, TTSide, ArticleDiv } from "../style";
 
 function SukumModal2({
