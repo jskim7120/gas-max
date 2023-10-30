@@ -1,4 +1,4 @@
-export const data = [
+export const rawData = [
   {
     treeId: "11",
     treeName: "서울특별시",

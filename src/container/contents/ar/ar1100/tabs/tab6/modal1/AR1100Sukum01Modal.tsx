@@ -17,7 +17,7 @@ import EditableSelect from "components/editableSelect";
 import { InfoText } from "components/text";
 import { LLabel, IInput, FFormGroup, TTSide, ArticleDiv } from "../style";
 import Grid from "./grid";
-import { data } from "./rawData";
+
 function SukumModal1({
   setModalOpen,
   params,
@@ -35,14 +35,10 @@ function SukumModal1({
   const { info } = useSelector((state: any) => state.footer);
 
   useEffect(() => {
-    //setGridData(data);
-  }, []);
-
-  // useEffect(() => {
-  //   if (info?.cuCode && info?.areaCode) {
-  //     fetchDataMisu();
-  //   }
-  // }, [info]);
+    if (info?.cuCode && info?.areaCode) {
+      fetchDataMisu();
+    }
+  }, [info]);
 
   useEffect(() => {
     if (params !== undefined) {
@@ -280,7 +276,7 @@ function SukumModal1({
             }}
           >
             <TTSide>미납&nbsp;&nbsp;&nbsp;내역</TTSide>
-            <Grid data={data} style={{ width: "100%", height: "218px" }} />
+            <Grid data={gridData} style={{ width: "100%", height: "218px" }} />
           </FormGroup>
           <FormGroup style={{ marginTop: "3px", gap: "5px" }}>
             <TTSide
