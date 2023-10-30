@@ -2,101 +2,68 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector, useDispatch } from "app/store";
 import { apiGet } from "app/axios";
+import { AR1100MISU } from "app/path";
 import Button from "components/button/button";
-import { addBupumTick } from "app/state/modal/modalSlice";
 import { ModalBlueHeader } from "components/modal/customModals/style";
 import { Reset, WhiteClose, Update } from "components/allSvgIcon";
-import styled from "styled-components";
 import { Input, Select, FormGroup, CustomForm } from "components/form/style";
 import { ButtonColor, InputSize } from "components/componentsType";
-import { AR1100ASCUSTINSERT, AR1100ASCUSTUPDATE, AR1100SELECT } from "app/path";
 import CustomDatePicker from "components/customDatePicker";
-import { currencyMask, removeCommas } from "helpers/currency";
-import Table from "components/table";
-import { modalGubunHeader1, modalGubunHeader2 } from "../tableHeader";
-import { AR1100MODELDETAIL, emtObjTab6 } from "../model";
 import EditableSelect from "components/editableSelect";
-import { BorderRight } from "container/contents/cm/cm1300/style";
 import { InfoText } from "components/text";
+import Table from "components/table";
+import { currencyMask, removeCommas } from "helpers/currency";
+import { modalHeader1, modalHeader2 } from "../tableHeader";
+import { AR1100MODELDETAIL, emtObjTab6 } from "../model";
+import Grid from "../modal1/grid";
+import { LLabel, IInput, FFormGroup, TTSide, ArticleDiv } from "../style";
 
-const LLabel = styled.label`
-  background: rgba(104, 103, 103, 0.35);
-  width: 80px;
-  font-size: 14px;
-  text-align: right;
-  padding: 2px 10px 0 0;
-`;
-const IInput = styled.input`
-  border: 1px solid #bbbbbb;
-  outline: none;
-  padding: 0 5px;
-`;
-const FFormGroup = styled.div`
-  height: 25px;
-  display: flex;
-  margin-right: 3px;
-`;
-
-const TTSide = styled.div`
-  height: 275px;
-  background: #d0d2e5;
-  width: 30px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  border: 1px solid #a6a6a6;
-  border-radius: 3px;
-  writing-mode: vertical-lr;
-  justify-content: center;
-`;
-const ArticleDiv = styled.div`
-  border: 1px solid #a6a6a6;
-  padding: 10px 20px;
-  border-radius: 3px;
-`;
-
-function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
+function SukumModal2({
+  setModalOpen,
+  params,
+}: {
+  setModalOpen: Function;
+  params: any;
+}) {
   const { register, handleSubmit, reset, setFocus, control, watch, getValues } =
     useForm<AR1100MODELDETAIL>({
       mode: "onSubmit",
     });
+  const paramState: any = useSelector(
+    (state) => state.modal.ar1100Tab4Multiple
+  );
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [dictionary, setDictionary] = useState<any>({});
-  const [data, setData] = useState<any[]>();
-  const [selected, setSelected] = useState<number>(0);
-  const state: any = useSelector((state) => state.modal.bupum);
+
   const [gridData, setGridData] = useState<Array<any>>([]);
 
-  const fetchData65 = async (params: any) => {
-    const res = await apiGet(AR1100SELECT, params);
-    if (res && Object.keys(res)?.length > 0) {
-      reset(res?.detailData[0]);
-      setData(res?.detailData ? res?.detailData[0] : {});
-      setGridData(
-        res?.gridData ? [...res?.gridData, emtObjTab6] : [emtObjTab6]
-      );
+  useEffect(() => {
+    if (params !== undefined) {
+      if (params?.detailData) {
+        reset(params?.detailData);
+      }
+    }
+  }, [params]);
 
-      setDictionary({
-        bgAcbCode: res?.bgAcbCode,
-        bgInkumType: res?.bgInkumType,
-        bgSwCode: res?.bgSwCode,
-        bgVatDiv: res?.bgVatDiv,
-        saleState: res?.saleState,
-      });
+  const fetchData = async () => {
+    const response = await apiGet(AR1100MISU, {
+      areaCode: "01",
+      cuCode: "000-07880",
+      suGubun: "C",
+    });
+
+    if (response) {
+      setGridData(response);
     } else {
-      reset(emtObjTab6);
-      setData([]);
-      setGridData([emtObjTab6]);
-      setDictionary({});
+      setGridData([]);
     }
   };
 
-  const handleChoose = (obj: any) => {
-    dispatch(addBupumTick(obj));
-    setModalOpen(false);
-  };
+  console.log(gridData);
 
   const tableData1 = [
     {
@@ -112,7 +79,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       1: (
         <Controller
           control={control}
-          name="ikDate"
+          name="gsDateUse"
           render={({ field }) => (
             <CustomDatePicker {...field} style={{ margin: "0" }} />
           )}
@@ -120,8 +87,8 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       ),
       2: (
         <FormGroup>
-          <Select register={register("suGubun")} width={InputSize.i80}>
-            {dictionary?.suGubun?.map((obj: any, idx: number) => (
+          <Select register={register("misuType")} width={InputSize.i80}>
+            {params?.misuType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -222,7 +189,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       9: (
         <FormGroup>
           <Select register={register("acbCode")} width={InputSize.i150}>
-            {dictionary?.suAcbcode?.map((obj: any, idx: number) => (
+            {params?.acbCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -232,7 +199,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
       ),
       10: (
         <EditableSelect
-          list={dictionary?.asIn}
+          list={params?.asIn}
           reset={reset}
           register={register("gsBigo")}
           watch={watch("gsBigo")}
@@ -263,7 +230,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
         className="handle h25"
         style={{ background: "rgba(101, 84, 255, 0.37)", height: "40px" }}
       >
-        <FormGroup>[ 중량미수 ] 선택수금처리</FormGroup>
+        <FormGroup>[ 체적미수 ] 선택수금처리</FormGroup>
         <FormGroup>
           <span
             className="close_btn"
@@ -305,7 +272,7 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
         <div style={{ margin: "5px 0" }}>
           <FormGroup style={{ marginTop: "3px", gap: "5px" }}>
             <TTSide>미납&nbsp;&nbsp;&nbsp;내역</TTSide>
-            <div>1</div>
+            <Grid data={gridData} />
           </FormGroup>
           <FormGroup style={{ marginTop: "3px", gap: "5px" }}>
             <TTSide
@@ -320,12 +287,12 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
             <ArticleDiv>
               <Table
                 className="no-space"
-                tableHeader={modalGubunHeader1}
+                tableHeader={modalHeader1}
                 tableData={tableData1}
               />
               <Table
                 className="no-space"
-                tableHeader={modalGubunHeader2}
+                tableHeader={modalHeader2}
                 tableData={tableData2}
                 style={{ marginTop: "3px" }}
               />
@@ -354,7 +321,6 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
               icon={<Update />}
               color={ButtonColor.SECONDARY}
               type="submit"
-              style={{ padding: "18px 16px" }}
             />
             <Button
               text="취소"
@@ -363,7 +329,6 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
               onClick={() => {
                 setModalOpen(false);
               }}
-              style={{ padding: "18px 16px" }}
             />
           </div>
         </div>
@@ -372,4 +337,4 @@ function GubunModal({ setModalOpen }: { setModalOpen: Function }) {
   );
 }
 
-export default GubunModal;
+export default SukumModal2;

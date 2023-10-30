@@ -90,20 +90,20 @@ function useModal() {
     );
   };
 
-  const showAR1100AsModal = () => {
-    return <Modal type="ar1100AsModal" isOpen={isOpen} setIsOpen={setIsOpen} />;
-  };
+  // const showAR1100AsModal = () => {
+  //   return <Modal type="ar1100AsModal" isOpen={isOpen} setIsOpen={setIsOpen} />;
+  // };
 
-  const showAR1100Gubun01Modal = () => {
-    return (
-      <Modal type="ar1100Gubun01Modal" isOpen={isOpen} setIsOpen={setIsOpen} />
-    );
-  };
-  const showAR1100Gubun02Modal = () => {
-    return (
-      <Modal type="ar1100Gubun02Modal" isOpen={isOpen} setIsOpen={setIsOpen} />
-    );
-  };
+  // const showAR1100Gubun01Modal = () => {
+  //   return (
+  //     <Modal type="ar1100Gubun01Modal" isOpen={isOpen} setIsOpen={setIsOpen} />
+  //   );
+  // };
+  // const showAR1100Gubun02Modal = () => {
+  //   return (
+  //     <Modal type="ar1100Gubun02Modal" isOpen={isOpen} setIsOpen={setIsOpen} />
+  //   );
+  // };
 
   return {
     closeModal,
@@ -125,9 +125,9 @@ function useModal() {
     showEN1500Modal,
     showAR1100BpSaleModal,
     showAR1100BupumModal,
-    showAR1100AsModal,
-    showAR1100Gubun01Modal,
-    showAR1100Gubun02Modal,
+    // showAR1100AsModal,
+    // showAR1100Gubun01Modal,
+    // showAR1100Gubun02Modal,
   };
 }
 

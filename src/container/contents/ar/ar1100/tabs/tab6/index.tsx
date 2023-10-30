@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { AR1100SUKUMINSERT, AR1100SUKUMUPDATE } from "app/path";
 import { useDispatch, useSelector } from "app/store";
 import { apiPost } from "app/axios";
-import useModal from "app/hook/useModal";
+import useModalWithParams from "app/hook/useModalWithParams";
 import Table from "components/table";
 import { Input, Select, FormGroup, CustomForm } from "components/form/style";
 import CustomDatePicker from "components/customDatePicker";
@@ -53,10 +53,24 @@ const Tab5 = React.forwardRef(
     const dispatch = useDispatch();
     const { info, source } = useSelector((state: any) => state.footer);
 
-    const { showAR1100Gubun01Modal, openModal: openAR1100Gubun01Modal } =
-      useModal();
-    const { showAR1100Gubun02Modal, openModal: openAR1100Gubun02Modal } =
-      useModal();
+    const { showAR1100Sukum01Modal, openModal: openAR1100Gubun01Modal } =
+      useModalWithParams({
+        params: {
+          ...dictionary,
+          detailData: watch(),
+          isAddBtnClicked: isAddBtnClicked,
+          areaCode: areaCode,
+        },
+      });
+    const { showAR1100Sukum02Modal, openModal: openAR1100Gubun02Modal } =
+      useModalWithParams({
+        params: {
+          ...dictionary,
+          detailData: watch(),
+          isAddBtnClicked: isAddBtnClicked,
+          areaCode: areaCode,
+        },
+      });
     const openModalAR1100Gubun01 = () => {
       openAR1100Gubun01Modal();
     };
@@ -409,8 +423,8 @@ const Tab5 = React.forwardRef(
 
     return (
       <>
-        {showAR1100Gubun01Modal()}
-        {showAR1100Gubun02Modal()}
+        {showAR1100Sukum01Modal()}
+        {showAR1100Sukum02Modal()}
         <CustomForm autoComplete="off" onSubmit={handleSubmit(submit)}>
           <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
             <div
