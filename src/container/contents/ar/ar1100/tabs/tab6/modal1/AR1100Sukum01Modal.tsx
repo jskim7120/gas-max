@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector, useDispatch } from "app/store";
 import { apiGet } from "app/axios";
+import { AR1100MISU } from "app/path";
 import Button from "components/button/button";
 import { ModalBlueHeader } from "components/modal/customModals/style";
 import { Reset, WhiteClose, Update } from "components/allSvgIcon";
@@ -15,7 +16,8 @@ import { AR1100MODELDETAIL, emtObjTab6 } from "../model";
 import EditableSelect from "components/editableSelect";
 import { InfoText } from "components/text";
 import { LLabel, IInput, FFormGroup, TTSide, ArticleDiv } from "../style";
-
+import Grid from "./grid";
+import { data } from "./rawData";
 function SukumModal1({
   setModalOpen,
   params,
@@ -27,18 +29,43 @@ function SukumModal1({
     useForm<AR1100MODELDETAIL>({
       mode: "onSubmit",
     });
-
+  const [gridData, setGridData] = useState<Array<any>>([]);
   const dispatch = useDispatch();
 
-  console.log("params 2 irev>>>>>", params);
+  const { info } = useSelector((state: any) => state.footer);
+
+  useEffect(() => {
+    //setGridData(data);
+  }, []);
+
+  // useEffect(() => {
+  //   if (info?.cuCode && info?.areaCode) {
+  //     fetchDataMisu();
+  //   }
+  // }, [info]);
 
   useEffect(() => {
     if (params !== undefined) {
+      // console.log("params 2 irev>>>>>", params);
       if (params?.detailData) {
         reset(params?.detailData);
       }
     }
   }, [params]);
+
+  const fetchDataMisu = async () => {
+    const response = await apiGet(AR1100MISU, {
+      areaCode: info?.areaCode,
+      cuCode: info?.cuCode,
+      suGubun: "J",
+    });
+
+    if (response && response?.detailData) {
+      setGridData(response?.detailData);
+    } else {
+      setGridData([]);
+    }
+  };
 
   const tableData1 = [
     {
@@ -245,9 +272,15 @@ function SukumModal1({
 
         {/* Content */}
         <div style={{ margin: "5px 0" }}>
-          <FormGroup style={{ marginTop: "3px", gap: "5px" }}>
+          <FormGroup
+            style={{
+              marginTop: "3px",
+              gap: "5px",
+              width: "100%",
+            }}
+          >
             <TTSide>미납&nbsp;&nbsp;&nbsp;내역</TTSide>
-            <div>1</div>
+            <Grid data={data} style={{ width: "100%", height: "218px" }} />
           </FormGroup>
           <FormGroup style={{ marginTop: "3px", gap: "5px" }}>
             <TTSide

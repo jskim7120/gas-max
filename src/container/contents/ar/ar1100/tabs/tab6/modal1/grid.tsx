@@ -1,69 +1,63 @@
 import { useEffect, useRef } from "react";
-import { GridView, LocalDataProvider } from "realgrid";
-import { useDispatch } from "app/store";
-import { fields, columns } from "./data";
+import {
+  GridView,
+  LocalDataProvider,
+  TreeView,
+  LocalTreeDataProvider,
+} from "realgrid";
+//import { fields, columns } from "./data";
 
-function Grid({ data }: { data: any }) {
-  const realgridElement = useRef<HTMLDivElement>(null);
+function Grid({ data, style }: { data: any; style?: any }) {
   let container: HTMLDivElement;
   let dp: any;
   let gv: any;
-
-  const dispatch = useDispatch();
+  const realgridElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (data !== undefined && data?.length > 0) {
-      container = realgridElement.current as HTMLDivElement;
-      dp = new LocalDataProvider(true);
-      gv = new GridView(container);
+    container = realgridElement.current as HTMLDivElement;
 
-      gv.setDataSource(dp);
+    dp = new LocalTreeDataProvider(true);
+    gv = new TreeView(container);
+    gv.setDataSource(dp);
 
-      dp.setFields(fields);
-      gv.setColumns(columns);
+    gv.treeOptions.iconImagesRoot = "/image/grid/";
+    gv.treeOptions.iconImages = ["folder.png", "folder-open.png", "file.png"];
+    gv.treeOptions.defaultIcon = 2;
 
-      gv.setFooter({ visible: false });
+    dp.setFields([
+      { fieldName: "area1code", dataType: "text" },
+      { fieldName: "area1name", dataType: "text" },
+      { fieldName: "area2code", dataType: "text" },
+      { fieldName: "area2name", dataType: "text" },
+      { fieldName: "area3code", dataType: "text" },
+      { fieldName: "area3name", dataType: "text" },
+      { fieldName: "treeId", dataType: "text" },
+      { fieldName: "treeName", dataType: "text" },
+      { fieldName: "iconField", dataType: "text" },
+    ]);
 
-      dp.setRows(data);
-      // gv.onGridActivated = () => {
-      //   dp.setRows(data);
-      // };
+    gv.setColumns([
+      { fieldName: "treeName", name: "treeName", width: 150 },
+      { fieldName: "treeId", name: "treeId" },
+      { fieldName: "area1code", name: "area1code" },
+      { fieldName: "area1name", name: "area1name" },
+      { fieldName: "area2code", name: "area2code" },
+      { fieldName: "area2name", name: "area2name" },
+      { fieldName: "area3code", name: "area3code" },
+      { fieldName: "area3name", name: "area3name" },
+      { fieldName: "iconField", name: "iconField" },
+    ]);
 
-      gv.setOptions({
-        indicator: { visible: true },
-        checkBar: { visible: false },
-        stateBar: { visible: false },
-      });
+    dp.setRows(data, "treeId", false, "", "iconField");
+    gv.refresh();
 
-      gv.sortingOptions.enabled = true;
-      gv.displayOptions._selectionStyle = "singleRow";
-      gv.displayOptions.fitStyle = "evenFill";
-      gv.setEditOptions({ editable: true });
-
-      gv.onSelectionChanged = () => {
-        const itemIndex: any = gv.getCurrent().dataRow;
-      };
-
-      return () => {
-        gv.commit();
-        dp.clearRows();
-        gv.destroy();
-        dp.destroy();
-      };
-    }
+    return () => {
+      gv.destroy();
+      dp.destroy();
+    };
   }, [data]);
-  return (
-    <>
-      <div
-        style={{
-          height: "180px",
-          borderBottom: "1px solid #CCC",
-          marginBottom: "2px",
-        }}
-        ref={realgridElement}
-      ></div>
-    </>
-  );
+
+  return <div style={style} className="AR1100" ref={realgridElement}></div>;
 }
 
 export default Grid;
