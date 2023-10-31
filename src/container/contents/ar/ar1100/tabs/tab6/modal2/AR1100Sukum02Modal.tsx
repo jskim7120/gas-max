@@ -18,6 +18,8 @@ import { AR1100MODELDETAIL, emtObjTab6 } from "../model";
 import Grid from "./grid";
 import { LLabel, IInput, FFormGroup, TTSide, ArticleDiv } from "../style";
 
+let editedRowIds: any = [];
+
 function SukumModal2({
   setModalOpen,
   params,
@@ -38,7 +40,6 @@ function SukumModal2({
   }, []);
 
   const dispatch = useDispatch();
-
   const [gridData, setGridData] = useState<Array<any>>([]);
 
   useEffect(() => {
@@ -48,6 +49,10 @@ function SukumModal2({
       }
     }
   }, [params]);
+
+  const checkAvailability = (arr: any, val: any) => {
+    return arr.some((arrVal: any) => val === arrVal);
+  };
 
   const fetchData = async () => {
     const response = await apiGet(AR1100MISU, {
@@ -62,8 +67,6 @@ function SukumModal2({
       setGridData([]);
     }
   };
-
-  console.log(gridData);
 
   const tableData1 = [
     {

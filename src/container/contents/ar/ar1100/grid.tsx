@@ -52,6 +52,7 @@ function Grid({
     }
     dp.setRows(data);
     gv.setHeader({ height: 35 });
+    gv.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
 
     gv.setOptions({
       indicator: { visible: true },
@@ -79,7 +80,7 @@ function Grid({
       gv.setCurrent({
         dataRow: rowIndex,
       });
-    }
+    };
 
     gv.onSelectionChanged = (grid: any, index: any) => {
       const itemIndex: any = gv.getCurrent().dataRow;

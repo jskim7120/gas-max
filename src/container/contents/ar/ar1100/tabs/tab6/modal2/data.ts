@@ -1,10 +1,11 @@
+import CheckBox from "components/checkbox";
 import { ValueType } from "realgrid";
 
 export const fields = [
-  {
-    fieldName: "sukumJYn",
-    dataType: ValueType.TEXT,
-  },
+  // {
+  //   fieldName: "misuYn",
+  //   dataType: ValueType.BOOLEAN,
+  // },
   {
     fieldName: "gjGumymsno",
     dataType: ValueType.TEXT,
@@ -56,21 +57,20 @@ export const fields = [
 ];
 
 export const columns = [
-  {
-    name: "sukumJYn",
-    fieldName: "buycustYn",
-    type: "data",
-    width: "80",
-    header: {
-      text: "매입퓸목",
-    },
-
-    renderer: {
-      type: "check",
-      trueValues: "Y",
-      falseValues: "N",
-    },
-  },
+  // {
+  //   name: "misuYn",
+  //   fieldName: "misuYn",
+  //   width: "40",
+  //   header: {
+  //     // text: "Text",
+  //     type: CheckBox,
+  //   },
+  //   renderer: {
+  //     type: "check",
+  //     // trueValues: "Y",
+  //     // falseValues: "N",
+  //   },
+  // },
   {
     name: "gjGumymsno",
     fieldName: "gjGumymsno",
@@ -102,7 +102,7 @@ export const columns = [
     width: "60",
     type: "data",
     styleName: "rg-right-column",
-    numberFormat: "#",
+    numberFormat: "#,##0",
     header: {
       text: "전월",
     },
@@ -113,7 +113,7 @@ export const columns = [
     width: "60",
     type: "data",
     styleName: "rg-right-column",
-    numberFormat: "#",
+    numberFormat: "#,##0",
     header: {
       text: "당월",
     },
@@ -124,7 +124,7 @@ export const columns = [
     width: "50",
     type: "data",
     styleName: "rg-right-column",
-    numberFormat: "#",
+    numberFormat: "#,##0",
     header: {
       text: "사용량",
     },
@@ -135,7 +135,7 @@ export const columns = [
     width: "80",
     type: "data",
     styleName: "rg-right-column",
-    numberFormat: "#",
+    numberFormat: "#,##0",
     header: {
       text: "당월금액",
     },
@@ -146,7 +146,7 @@ export const columns = [
     width: "80",
     type: "data",
     styleName: "rg-right-column",
-    numberFormat: "#",
+    numberFormat: "#,##0",
     header: {
       text: "전미수",
     },
@@ -157,7 +157,7 @@ export const columns = [
     width: "80",
     type: "data",
     styleName: "rg-right-column",
-    numberFormat: "#",
+    numberFormat: "#,##0",
     header: {
       text: "연체료",
     },
@@ -168,7 +168,7 @@ export const columns = [
     width: "80",
     type: "data",
     styleName: "rg-right-column",
-    numberFormat: "#",
+    numberFormat: "#,##0",
     header: {
       text: "당월합계",
     },
@@ -178,8 +178,6 @@ export const columns = [
     fieldName: "gjJirodate",
     width: "80",
     type: "data",
-    styleName: "rg-right-column",
-    numberFormat: "#",
     header: {
       text: "지로발행일",
     },
@@ -190,7 +188,7 @@ export const columns = [
     width: "80",
     type: "data",
     styleName: "rg-right-column",
-    numberFormat: "#",
+    numberFormat: "#,##0",
     header: {
       text: "미수잔액",
     },
