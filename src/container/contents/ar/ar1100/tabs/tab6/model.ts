@@ -2,7 +2,6 @@ export interface AR1100MODELDETAIL {
   suGubun: string;
   misuType: string;
   gsDate: string;
-  ikDate: string;
   gsDateUse: string;
   gsJmisuAmt: number;
   gsInkum: number;
@@ -28,7 +27,6 @@ export const emtObjTab6 = {
   suGubun: "",
   misuType: "",
   gsDate: "",
-  ikDate: "",
   gsDateUse: "",
   gsJmisuAmt: 0,
   gsInkum: 0,

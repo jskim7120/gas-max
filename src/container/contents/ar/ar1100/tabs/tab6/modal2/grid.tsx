@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { useDispatch } from "app/store";
 import { fields, columns } from "./data";
 
 function Grid({ data }: { data: any }) {
@@ -8,10 +7,6 @@ function Grid({ data }: { data: any }) {
   let container: HTMLDivElement;
   let dp: any;
   let gv: any;
-
-  const dispatch = useDispatch();
-
-  console.log("----------------", data);
 
   useEffect(() => {
     if (data !== undefined && data?.length > 0) {
@@ -22,24 +17,45 @@ function Grid({ data }: { data: any }) {
 
       dp.setFields(fields);
       gv.setColumns(columns);
+      dp.setRows(data);
+
+      // RealGrid Style
+      gv.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
+      gv.header.height = 40;
+      gv.displayOptions.rowHeight = 30;
+      gv.editOptions.insertable = true;
+      gv.editOptions.appendable = true;
 
       gv.setFooter({ visible: false });
-
-      dp.setRows(data);
-      // gv.onGridActivated = () => {
-      //   dp.setRows(data);
-      // };
-
       gv.setOptions({
-        indicator: { visible: true },
-        checkBar: { visible: false },
         stateBar: { visible: false },
       });
+      // gv.setEditOptions({ editable: false });
+
+      // gv.checkBar.fieldName = "misuYn";
 
       gv.sortingOptions.enabled = true;
-      gv.displayOptions._selectionStyle = "singleRow";
       gv.displayOptions.fitStyle = "evenFill";
-      gv.setEditOptions({ editable: true });
+
+      // gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
+      //   data[index.dataRow][index.fieldName] = newValue;
+
+      //   console.log("oldValue:", oldValue);
+      //   console.log("newValue:", newValue);
+
+      //   // console.log("data", data[index.dataRow].gjMisujan);
+      // };
+
+      gv.setCheckBar({ editable: true });
+      gv.getCheckedRows = (
+        id: any,
+        index: any,
+        oldValue: any,
+        newValue: any
+      ) => {
+        console.log("data", data[index.dataRow].gjMisujan);
+        alert(data[index.dataRow].gjMisujan);
+      };
 
       gv.onSelectionChanged = () => {
         const itemIndex: any = gv.getCurrent().dataRow;
@@ -48,11 +64,15 @@ function Grid({ data }: { data: any }) {
       return () => {
         gv.commit();
         dp.clearRows();
+
         gv.destroy();
         dp.destroy();
+
+        gv = null;
+        dp = null;
       };
     }
-  }, [data]);
+  }, [data, columns]);
   return (
     <>
       <div
