@@ -58,7 +58,9 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
       setData(paramState?.detailData[0]);
 
       if (paramState?.isAddBtnClicked === false) {
-        setGridData([...paramState?.gridData, emtObjBpSaleModal]);
+        paramState?.gridData
+          ? setGridData([...paramState?.gridData, emtObjBpSaleModal])
+          : setGridData([emtObjBpSaleModal]);
       } else if (paramState?.isAddBtnClicked === true) {
         setGridData([emtObjBpSaleModal]);
       }
@@ -70,7 +72,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
     if (bupumState?.source === "AR1100-4-2") {
       if (bupumState?.tick !== undefined && bupumState?.index !== undefined) {
         setGridData((prev: any) =>
-          prev.map((object: any, idx: number) => {
+          prev?.map((object: any, idx: number) => {
             if (idx === bupumState.index) {
               return {
                 bglBpCode: bupumState?.bglBpCode,

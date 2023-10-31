@@ -2,8 +2,8 @@ import { ValueType } from "realgrid";
 
 export const fields = [
   {
-    fieldName: "id",
-    dataType: ValueType.NUMBER,
+    fieldName: "checkYn",
+    dataType: ValueType.TEXT,
   },
   {
     fieldName: "name",
@@ -21,14 +21,27 @@ export const fields = [
 
 export const columns = [
   {
-    name: "id",
-    fieldName: "id",
-    width: "80",
-  },
-  {
     name: "name",
     fieldName: "name",
     width: "120",
+    editable: false,
+  },
+
+  {
+    name: "checkYn",
+    fieldName: "checkYn",
+    type: "data",
+    width: "80",
+    header: {
+      text: "매입퓸목",
+    },
+    editable: false,
+
+    renderer: {
+      type: "check",
+      trueValues: "Y",
+      falseValues: "N",
+    },
   },
   {
     name: "icon",

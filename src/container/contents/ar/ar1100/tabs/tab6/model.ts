@@ -22,6 +22,8 @@ export interface AR1100MODELDETAIL {
 
   // Modal Gubun 01
   mjDate: string;
+  test: string;
+  test2: string;
 }
 
 export const emtObjTab6 = {

@@ -5,7 +5,7 @@ import {
   TreeView,
   LocalTreeDataProvider,
 } from "realgrid";
-//import { fields, columns } from "./data";
+import { fields, columns } from "./data";
 import { rawData } from "./rawData";
 
 function Grid({ data, style }: { data: any; style?: any }) {
@@ -23,43 +23,62 @@ function Grid({ data, style }: { data: any; style?: any }) {
       gv = new TreeView(container);
       gv.setDataSource(dp);
 
-      gv.treeOptions.iconImagesRoot = "/image/grid/";
-      gv.treeOptions.iconImages = ["folder.png", "folder-open.png", "file.png"];
+      dp.setFields(fields);
+      gv.setColumns(columns);
+
+      gv.treeOptions.iconImagesRoot = "./grid/";
+      gv.treeOptions.iconImages = [
+        "folder-minus.svg",
+        "folder-plus.svg",
+        "file.svg",
+      ];
+      gv.setTreeOptions({
+        showCheckBox: true,
+      });
+      // gv.treeOptions.expanderIconStyle = "square";
+      gv.treeOptions.expandedIcon = 0;
+      gv.treeOptions.collapsedIcon = 1;
       gv.treeOptions.defaultIcon = 2;
 
-      dp.setFields([
-        { fieldName: "area1code", dataType: "text" },
-        { fieldName: "area1name", dataType: "text" },
-        { fieldName: "area2code", dataType: "text" },
-        { fieldName: "area2name", dataType: "text" },
-        { fieldName: "area3code", dataType: "text" },
-        { fieldName: "area3name", dataType: "text" },
-        { fieldName: "treeId", dataType: "text" },
-        { fieldName: "treeName", dataType: "text" },
-        { fieldName: "iconField", dataType: "text" },
-      ]);
-
-      gv.setColumns([
-        { fieldName: "treeName", name: "treeName", width: 150 },
-        { fieldName: "treeId", name: "treeId" },
-        { fieldName: "area1code", name: "area1code" },
-        { fieldName: "area1name", name: "area1name" },
-        { fieldName: "area2code", name: "area2code" },
-        { fieldName: "area2name", name: "area2name" },
-        { fieldName: "area3code", name: "area3code" },
-        { fieldName: "area3name", name: "area3name" },
-        { fieldName: "iconField", name: "iconField" },
-      ]);
-
-      dp.setRows(rawData, "treeId", false, "", "iconField");
+      dp.setRows(rawData, "treeId", false, "", "icon");
+      gv.setHeader({ height: 35 });
+      gv.setFooter({ visible: false });
+      gv.setOptions({
+        indicator: { visible: true },
+        checkBar: { visible: true },
+        stateBar: { visible: false },
+      });
+      gv.displayOptions.rowHeight = 35;
       gv.refresh();
+
+      console.log("gv>>>>>>>>", gv);
+
+      gv.onItemChecked = (a: any, b: any) => {
+        console.log("a::::", a);
+        console.log("b::::", b);
+      };
+
+      gv.onItemAllChecked = (a: any, b: any) => {
+        console.log("buunuuruu a::::", a);
+        console.log("b::::", b);
+      };
+
+      gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
+        // console.log("oldValue:", oldValue);
+        // console.log("newValue:", newValue);
+        // console.log("index:::", index);
+
+        gv.commit();
+      };
     }
 
     return () => {
+      gv.cancel();
+      dp.clearRows();
       gv.destroy();
       dp.destroy();
     };
-  }, [rawData, realgridElement?.current]);
+  }, [rawData]);
 
   return <div style={style} className="AR1100-6" ref={realgridElement}></div>;
 }
