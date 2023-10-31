@@ -35,9 +35,13 @@ function SukumModal2({
     (state) => state.modal.ar1100Tab4Multiple
   );
 
+  const { info } = useSelector((state: any) => state.footer);
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (info?.cuCode && info?.areaCode) {
+      fetchDataMisu();
+    }
+  }, [info]);
 
   const dispatch = useDispatch();
   const [gridData, setGridData] = useState<Array<any>>([]);
@@ -54,7 +58,7 @@ function SukumModal2({
     return arr.some((arrVal: any) => val === arrVal);
   };
 
-  const fetchData = async () => {
+  const fetchDataMisu = async () => {
     const response = await apiGet(AR1100MISU, {
       areaCode: "01",
       cuCode: "000-07880",
