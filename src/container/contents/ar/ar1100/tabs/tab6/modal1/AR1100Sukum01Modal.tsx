@@ -41,8 +41,7 @@ function SukumModal1({
   }, [info]);
 
   useEffect(() => {
-    if (params !== undefined) {
-      // console.log("params 2 irev>>>>>", params);
+    if (Object.keys(params)?.length > 0) {
       if (params?.detailData) {
         reset(params?.detailData);
       }
@@ -70,7 +69,7 @@ function SukumModal1({
           control={control}
           name="gsDate"
           render={({ field }) => (
-            <CustomDatePicker {...field} style={{ margin: "0" }} />
+            <CustomDatePicker {...field} style={{ width: "110px" }} />
           )}
         />
       ),
@@ -79,7 +78,7 @@ function SukumModal1({
           control={control}
           name="gsDateUse"
           render={({ field }) => (
-            <CustomDatePicker {...field} style={{ margin: "0" }} />
+            <CustomDatePicker {...field} style={{ width: "110px" }} />
           )}
         />
       ),
@@ -101,7 +100,7 @@ function SukumModal1({
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i120}
+              inputSize={InputSize.i110}
               textAlign="right"
               mask={currencyMask}
               readOnly
@@ -116,7 +115,7 @@ function SukumModal1({
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i120}
+              inputSize={InputSize.i110}
               textAlign="right"
               mask={currencyMask}
             />
@@ -126,11 +125,11 @@ function SukumModal1({
       5: (
         <Controller
           control={control}
-          name="gsInkum"
+          name="test"
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i120}
+              inputSize={InputSize.i110}
               textAlign="right"
               mask={currencyMask}
             />
@@ -144,7 +143,7 @@ function SukumModal1({
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i90}
+              inputSize={InputSize.i110}
               textAlign="right"
               mask={currencyMask}
             />
@@ -154,11 +153,11 @@ function SukumModal1({
       7: (
         <Controller
           control={control}
-          name="misu"
+          name="test2"
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i120}
+              inputSize={InputSize.i110}
               textAlign="right"
               mask={currencyMask}
               readOnly
@@ -171,23 +170,20 @@ function SukumModal1({
   const tableData2 = [
     {
       8: (
-        <Controller
-          control={control}
-          name="gsInkumtype"
-          render={({ field }) => (
-            <Input
-              {...field}
-              inputSize={InputSize.i120}
-              textAlign="center"
-              mask={currencyMask}
-            />
-          )}
-        />
+        <FormGroup>
+          <Select register={register("gsInkumtype")} width={InputSize.i110}>
+            {params?.gsInkumtype?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
       ),
       9: (
         <FormGroup>
-          <Select register={register("acbCode")} width={InputSize.i150}>
-            {params?.acbcode?.map((obj: any, idx: number) => (
+          <Select register={register("acbCode")} width={InputSize.i290}>
+            {params?.acbCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -202,7 +198,7 @@ function SukumModal1({
           register={register("gsBigo")}
           watch={watch("gsBigo")}
           textAlign={"left"}
-          style={{ width: "200px" }}
+          style={{ width: "368px" }}
         />
       ),
       11: (
@@ -212,7 +208,7 @@ function SukumModal1({
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i140}
+              inputSize={InputSize.i110}
               textAlign="center"
               mask={currencyMask}
             />
@@ -276,7 +272,7 @@ function SukumModal1({
             }}
           >
             <TTSide>미납&nbsp;&nbsp;&nbsp;내역</TTSide>
-            <Grid data={gridData} style={{ width: "100%", height: "218px" }} />
+            <Grid data={gridData} style={{ width: "100%", height: "250px" }} />
           </FormGroup>
           <FormGroup style={{ marginTop: "3px", gap: "5px" }}>
             <TTSide

@@ -53,7 +53,7 @@ const Tab5 = React.forwardRef(
     const dispatch = useDispatch();
     const { info, source } = useSelector((state: any) => state.footer);
 
-    const { showAR1100Sukum01Modal, openModal: openAR1100Gubun01Modal } =
+    const { showAR1100Sukum01Modal, openModal: openSukum01Modal } =
       useModalWithParams({
         params: {
           ...dictionary,
@@ -62,7 +62,7 @@ const Tab5 = React.forwardRef(
           areaCode: areaCode,
         },
       });
-    const { showAR1100Sukum02Modal, openModal: openAR1100Gubun02Modal } =
+    const { showAR1100Sukum02Modal, openModal: openSukum02Modal } =
       useModalWithParams({
         params: {
           ...dictionary,
@@ -71,12 +71,6 @@ const Tab5 = React.forwardRef(
           areaCode: areaCode,
         },
       });
-    const openModalAR1100Gubun01 = () => {
-      openAR1100Gubun01Modal();
-    };
-    const openModalAR1100Gubun02 = () => {
-      openAR1100Gubun02Modal();
-    };
 
     useEffect(() => {
       if (watch("gsJmisuAmt") !== undefined) {
@@ -345,9 +339,9 @@ const Tab5 = React.forwardRef(
             type="button"
             onClick={() => {
               if (watch("misuType") === "C") {
-                openModalAR1100Gubun02();
+                openSukum02Modal();
               } else {
-                openModalAR1100Gubun01();
+                openSukum01Modal();
               }
             }}
             style={{ margin: "0 17px" }}
