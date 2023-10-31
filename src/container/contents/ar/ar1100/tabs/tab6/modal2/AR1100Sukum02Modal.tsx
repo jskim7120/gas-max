@@ -75,7 +75,7 @@ function SukumModal2({
           control={control}
           name="gsDate"
           render={({ field }) => (
-            <CustomDatePicker {...field} style={{ margin: "0" }} />
+            <CustomDatePicker {...field} style={{ width: "110px" }} />
           )}
         />
       ),
@@ -84,7 +84,7 @@ function SukumModal2({
           control={control}
           name="gsDateUse"
           render={({ field }) => (
-            <CustomDatePicker {...field} style={{ margin: "0" }} />
+            <CustomDatePicker {...field} style={{ width: "110px" }} />
           )}
         />
       ),
@@ -106,7 +106,7 @@ function SukumModal2({
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i120}
+              inputSize={InputSize.i110}
               textAlign="right"
               mask={currencyMask}
               readOnly
@@ -121,7 +121,7 @@ function SukumModal2({
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i120}
+              inputSize={InputSize.i110}
               textAlign="right"
               mask={currencyMask}
             />
@@ -135,7 +135,7 @@ function SukumModal2({
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i120}
+              inputSize={InputSize.i110}
               textAlign="right"
               mask={currencyMask}
             />
@@ -149,7 +149,7 @@ function SukumModal2({
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i90}
+              inputSize={InputSize.i110}
               textAlign="right"
               mask={currencyMask}
             />
@@ -163,7 +163,7 @@ function SukumModal2({
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i120}
+              inputSize={InputSize.i110}
               textAlign="right"
               mask={currencyMask}
               readOnly
@@ -176,22 +176,19 @@ function SukumModal2({
   const tableData2 = [
     {
       8: (
-        <Controller
-          control={control}
-          name="gsInkumtype"
-          render={({ field }) => (
-            <Input
-              {...field}
-              inputSize={InputSize.i120}
-              textAlign="center"
-              mask={currencyMask}
-            />
-          )}
-        />
+        <FormGroup>
+          <Select register={register("gsInkumtype")} width={InputSize.i110}>
+            {params?.gsInkumtype?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
       ),
       9: (
         <FormGroup>
-          <Select register={register("acbCode")} width={InputSize.i150}>
+          <Select register={register("acbCode")} width={InputSize.i290}>
             {params?.acbCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -207,22 +204,19 @@ function SukumModal2({
           register={register("gsBigo")}
           watch={watch("gsBigo")}
           textAlign={"left"}
-          style={{ width: "200px" }}
+          style={{ width: "368px" }}
         />
       ),
       11: (
-        <Controller
-          control={control}
-          name="gsSwCode"
-          render={({ field }) => (
-            <Input
-              {...field}
-              inputSize={InputSize.i140}
-              textAlign="center"
-              mask={currencyMask}
-            />
-          )}
-        />
+        <FormGroup>
+          <Select register={register("gsSwCode")} width={InputSize.i110}>
+            {params?.gsSwCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
       ),
     },
   ];

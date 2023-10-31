@@ -202,18 +202,15 @@ function SukumModal1({
         />
       ),
       11: (
-        <Controller
-          control={control}
-          name="gsSwCode"
-          render={({ field }) => (
-            <Input
-              {...field}
-              inputSize={InputSize.i110}
-              textAlign="center"
-              mask={currencyMask}
-            />
-          )}
-        />
+        <FormGroup>
+          <Select register={register("gsSwCode")} width={InputSize.i110}>
+            {params?.gsSwCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
       ),
     },
   ];
