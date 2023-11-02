@@ -39,6 +39,7 @@ export const columns = [
     fieldName: "mjId",
     width: "120",
     editable: false,
+    header: {},
   },
 
   {
