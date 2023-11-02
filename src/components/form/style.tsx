@@ -366,6 +366,12 @@ export const InputForm = styled.input<{
   &.h27 {
     height: 27px;
   }
+  &.red {
+    color: #ff2323;
+  }
+  &.blue {
+    color: #344fff;
+  }
 `;
 
 export const ErrorText = styled.p`
@@ -413,6 +419,14 @@ export const FormGroup = styled.div<{
 
   .maskedInput.h27 {
     height: 27px;
+  }
+
+  .maskedInput.red {
+    color: #ff2323;
+  }
+
+  .maskedInput.blue {
+    color: #344fff;
   }
 
   .maskedInput.disabled {

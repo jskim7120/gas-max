@@ -36,6 +36,7 @@ import {
 import { IAR1100TAB3 } from "./model";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { apiGet, apiPost } from "app/axios";
+import { calculationOfVat, prepVal } from "../../helper";
 
 const Tab3 = React.forwardRef(
   (
@@ -139,62 +140,80 @@ const Tab3 = React.forwardRef(
       }
     };
 
-    const handleQtyChange = (val: string) => {
-      setQty(+val);
+    const handleQtyChange = (val: number) => {
+      setQty(val);
+      let tempQty = isNaN(val) ? 0 : +val;
+      const tempVatDiv = vatDiv ? vatDiv : "0";
+      let tempDanga = prepVal(danga);
 
-      let tempKumSup = +val * +removeCommas(danga, "number");
-      let tempKumVat = 0;
-      let tempKumack = tempKumSup;
-      let tempMisu = 0;
-      if (Number(gubun) < 2) {
-        if (vatDiv !== "0") {
-          tempKumVat = Math.round(tempKumSup * 0.1);
-          tempKumack = tempKumSup + tempKumVat;
-        }
-
-        tempMisu = tempKumack - dc - inkum;
-
-        setKumSup(tempKumSup);
-        setKumVat(tempKumVat);
-        setKumack(tempKumack);
-        setMisu(tempMisu);
-      }
+      const price = tempDanga * tempQty;
+      let { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(
+        price,
+        tempVatDiv
+      );
+      const tempMisu = calculationOfMisu(tempTotal);
+      setKumSup(tempKumSup);
+      setKumVat(tempKumVat);
+      setKumack(tempTotal);
+      setMisu(tempMisu);
+      reset((formValues) => ({
+        ...formValues,
+        tsMisu: tempMisu,
+      }));
     };
 
-    const handleDangaChange = (val: string) => {
-      setDanga(+removeCommas(val, "number"));
-      let tempKumSup = +qty * +removeCommas(val, "number");
-      let tempKumVat = 0;
-      let tempKumack = tempKumSup;
-      let tempMisu = 0;
+    const handleDangaChange = (val: number) => {
+      setDanga(val);
 
-      if (vatDiv !== "0") {
-        tempKumVat = Math.round(tempKumSup * 0.1);
-        tempKumack = tempKumSup + tempKumVat;
-      }
+      const tempDanga = prepVal(val);
+      const tempQty = isNaN(qty) ? 0 : qty;
+      const tempVatDiv = vatDiv ? vatDiv : "0";
 
-      tempMisu = tempKumack - dc - inkum;
+      const price = tempDanga * tempQty;
+      let { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(
+        price,
+        tempVatDiv
+      );
+      const tempMisu = calculationOfMisu(tempTotal);
 
       setKumSup(tempKumSup);
       setKumVat(tempKumVat);
-      setKumack(tempKumack);
+      setKumack(tempTotal);
       setMisu(tempMisu);
+      reset((formValues) => ({
+        ...formValues,
+        tsMisu: tempMisu,
+      }));
+    };
+
+    const calculationOfMisu = (tempTotal: number) => {
+      let tempInkum = prepVal(inkum);
+      let tempKumack = prepVal(kumack);
+      let tempDc = prepVal(dc);
+
+      const tempMisu = tempTotal - tempInkum - tempDc - tempKumack;
+      return tempMisu;
     };
 
     const handleVatDivChange = (val: string) => {
       setVatDiv(val);
-      let tempKumVat = 0;
-      let tempKumack = kumSup;
-      let tempMisu = 0;
-      if (val !== "0") {
-        tempKumVat = Math.round(kumSup * 0.1);
-        tempKumack = tempKumVat + kumSup;
-      }
-      tempMisu = tempKumack - dc - inkum;
+      const tempDanga = prepVal(danga);
+      const tempQty = isNaN(qty) ? 0 : qty;
 
+      const price = tempDanga * tempQty;
+
+      let { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(price, val);
+      const tempMisu = calculationOfMisu(tempTotal);
+
+      setKumSup(tempKumSup);
       setKumVat(tempKumVat);
-      setKumack(tempKumack);
-      setMisu(tempMisu);
+      setKumack(tempTotal);
+
+      reset((formValues) => ({
+        ...formValues,
+
+        tsMisu: tempMisu,
+      }));
     };
 
     const handleInkumOrDcChange = (val: string, type: string) => {
@@ -218,25 +237,23 @@ const Tab3 = React.forwardRef(
 
     const handleGubunChange = (val: string) => {
       setGubun(val);
-      if (isAddBtnClicked) {
-        setQty(0);
-        setDanga(0);
-        setVatDiv("0");
-        setKumSup(0);
-        setKumVat(0);
-        setKumack(0);
-        setInkum(0);
-        setDc(0);
-        setMisu(0);
+      setQty(0);
+      setDanga(0);
+      setVatDiv("0");
+      setKumSup(0);
+      setKumVat(0);
+      setKumack(0);
+      setInkum(0);
+      setDc(0);
+      setMisu(0);
 
-        reset((formValues) => ({
-          ...formValues,
-          tsSwCode: "",
-          tsBigo: "",
-          signUser: "",
-          acbCode: "",
-        }));
-      }
+      reset((formValues) => ({
+        ...formValues,
+        tsSwCode: "",
+        tsInkumType: "0",
+        tsPaytype: "0",
+        acbCode: "",
+      }));
     };
 
     const resetForm = (type: string) => {
@@ -320,33 +337,33 @@ const Tab3 = React.forwardRef(
       params.tsGubun = gubun;
       params.tsQty = qty;
       if (gubun === ("0" || "9")) {
-        params.tsVatDiv = vatDiv;
-        params.tsDanga = danga;
-        params.tsKumSup = kumSup;
-        params.tsKumVat = kumVat;
-        params.tsKumack = kumack;
-        params.tsInkum = inkum;
-        params.tsDc = dc;
-        params.tsMisu = misu;
+        params.tsVatDiv = +vatDiv;
+        params.tsDanga = +danga;
+        params.tsKumSup = +kumSup;
+        params.tsKumVat = +kumVat;
+        params.tsKumack = +kumack;
+        params.tsInkum = +inkum;
+        params.tsDc = +dc;
+        params.tsMisu = +misu;
       } else if (gubun === "1") {
-        params.tsVatDiv = vatDiv;
-        params.tsDanga = danga;
-        params.tsKumSup = kumSup;
-        params.tsKumVat = kumVat;
-        params.tsPayAmt = inkum;
-        params.tsPayDc = dc;
-        params.tsPayMisu = misu;
-        params.tsGukum = kumack;
+        params.tsVatDiv = +vatDiv;
+        params.tsDanga = +danga;
+        params.tsKumSup = +kumSup;
+        params.tsKumVat = +kumVat;
+        params.tsPayAmt = +inkum;
+        params.tsPayDc = +dc;
+        params.tsPayMisu = +misu;
+        params.tsGukum = +kumack;
       } else if (gubun === "2") {
-        params.tsBkum = kumack;
-        params.tsInkum = inkum;
-        params.tsDc = dc;
-        params.tsMisu = misu;
+        params.tsBkum = +kumack;
+        params.tsInkum = +inkum;
+        params.tsDc = +dc;
+        params.tsMisu = +misu;
       } else if (gubun === "3") {
-        params.tsBoutKum = kumack;
-        params.tsPayAmt = inkum;
-        params.tsPayDc = dc;
-        params.tsPayMisu = misu;
+        params.tsBoutKum = +kumack;
+        params.tsPayAmt = +inkum;
+        params.tsPayDc = +dc;
+        params.tsPayMisu = +misu;
       }
 
       if (params.tsSwCode) {
@@ -394,7 +411,7 @@ const Tab3 = React.forwardRef(
       2: (
         <FormGroup>
           <Select
-            //disabled={!isAddBtnClicked}
+            disabled={!isAddBtnClicked}
             name="tsGubun"
             value={gubun}
             width={InputSize.i100}
@@ -450,7 +467,19 @@ const Tab3 = React.forwardRef(
       ),
       4: (
         <FormGroup>
-          <Select register={register("tsTongGubun")} width={InputSize.i100}>
+          <Select
+            register={register("tsTongGubun")}
+            width={InputSize.i100}
+            disabled={
+              gubun === "0" ||
+              gubun === "2" ||
+              gubun === "3" ||
+              gubun === "6" ||
+              gubun === "7" ||
+              gubun === "8" ||
+              gubun === "9"
+            }
+          >
             {dictionary?.tsTongGubun?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -466,6 +495,7 @@ const Tab3 = React.forwardRef(
           onChange={(e: BaseSyntheticEvent) => handleQtyChange(e.target.value)}
           inputSize={InputSize.i100}
           textAlign="right"
+          mask={currencyMask}
         />
       ),
     };
@@ -565,7 +595,7 @@ const Tab3 = React.forwardRef(
       150: (
         <Controller
           control={control}
-          name="signUser"
+          name="signuser"
           render={({ field }) => (
             <Input {...field} inputSize={InputSize.i100} />
           )}
@@ -577,7 +607,7 @@ const Tab3 = React.forwardRef(
       20: (
         <FormGroup>
           <Select register={register("tsInkumType")} width={InputSize.i100}>
-            {dictionary?.tsInkumType?.map((obj: any, idx: number) => (
+            {dictionary?.tsInkumtype?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
               </option>
@@ -626,6 +656,7 @@ const Tab3 = React.forwardRef(
           inputSize={InputSize.i100}
           textAlign="right"
           mask={currencyMask}
+          className="blue"
           readOnly={watch("tsInkumType") === "A"}
         />
       ),
@@ -639,7 +670,7 @@ const Tab3 = React.forwardRef(
           inputSize={InputSize.i100}
           textAlign="right"
           mask={currencyMask}
-          readOnly={watch("tsInkumType") === "A"}
+          readOnly={watch("tsInkumType") === "A" || gubun !== "0"}
         />
       ),
       25: (
@@ -650,6 +681,7 @@ const Tab3 = React.forwardRef(
           inputSize={InputSize.i100}
           textAlign="right"
           mask={currencyMask}
+          className="red"
         />
       ),
     };

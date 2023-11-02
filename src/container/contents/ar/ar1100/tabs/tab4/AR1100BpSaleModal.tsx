@@ -481,6 +481,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
               textAlign="right"
               mask={currencyMask}
               readOnly={watch("bgInkumType") === "A"}
+              className="blue"
             />
           )}
         />
@@ -511,6 +512,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
               textAlign="right"
               mask={currencyMask}
               readOnly
+              className="blue"
             />
           )}
         />
