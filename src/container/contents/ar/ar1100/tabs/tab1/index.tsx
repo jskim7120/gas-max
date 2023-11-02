@@ -386,9 +386,7 @@ const Tab1 = React.forwardRef(
         <Controller
           control={control}
           name="pjDate"
-          render={({ field }) => (
-            <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
-          )}
+          render={({ field }) => <CustomDatePicker {...field} />}
         />
       ),
       2: (

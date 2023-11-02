@@ -400,11 +400,7 @@ const Tab3 = React.forwardRef(
           control={control}
           name="tsDate"
           render={({ field }) => (
-            <CustomDatePicker
-              {...field}
-              readOnly={!isAddBtnClicked}
-              style={{ margin: "1px 0 0 0" }}
-            />
+            <CustomDatePicker {...field} style={{ margin: "1px 0 0 0" }} />
           )}
         />
       ),
