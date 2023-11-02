@@ -30,7 +30,7 @@ function Grid({ data, style }: { data: any; style?: any }) {
       //   showCheckBox: true,
       // });
 
-      // gv.treeOptions.expanderIconStyle = "square";
+      console.log("gv::", gv);
 
       gv.treeOptions.expandedIcon = 0;
       gv.treeOptions.collapsedIcon = 1;
@@ -41,7 +41,7 @@ function Grid({ data, style }: { data: any; style?: any }) {
       gv.setFooter({ visible: false });
       gv.setOptions({
         indicator: { visible: true },
-        checkBar: { visible: false },
+        checkBar: { visible: true },
         stateBar: { visible: false },
       });
       gv.displayOptions.rowHeight = 35;
@@ -53,6 +53,18 @@ function Grid({ data, style }: { data: any; style?: any }) {
         // console.log("index:::", index);
 
         gv.commit();
+      };
+
+      gv.onItemAllChecked = (a: any) => {
+        console.log("all checked duudagdav");
+      };
+
+      gv.onItemChecked = (a: any) => {
+        console.log("item checked");
+      };
+
+      gv.onItemsChecked = () => {
+        console.log("items checked");
       };
     }
 

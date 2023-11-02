@@ -173,9 +173,10 @@ const Tab5 = React.forwardRef(
       if (isAddBtnClicked) {
         path = AR1100ASCUSTINSERT;
         params.asSno = "";
+        params.asDateB = DateWithoutDash(params.asDate);
       } else {
         path = AR1100ASCUSTUPDATE;
-        params.asDateB = DateWithoutDash(params.asDate);
+        params.asDateB = DateWithoutDash(data65?.asDate);
       }
       params.insertType = "0";
       params.areaCode = areaCode;

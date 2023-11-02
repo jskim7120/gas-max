@@ -268,12 +268,14 @@ function SukumModal1({
               width: "100%",
             }}
           >
-            <TTSide>미납&nbsp;&nbsp;&nbsp;내역</TTSide>
+            <TTSide style={{ height: "350px" }}>
+              미납&nbsp;&nbsp;&nbsp;내역
+            </TTSide>
             <Grid
               data={gridData}
               style={{
                 width: "100%",
-                height: "300px",
+                height: "350px",
                 border: "1px solid #a6a6a6",
               }}
             />
