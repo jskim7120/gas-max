@@ -19,7 +19,7 @@ export interface IAR110065DETAIL {
   bgSwCode: string;
   bgSwName: string;
   bgBigo: string;
-  signUser: string;
+  signuser: string;
   signKey: string;
 }
 
@@ -44,7 +44,7 @@ export const emtObjTab4 = {
   bgSwCode: "",
   bgSwName: "",
   bgBigo: "",
-  signUser: "",
+  signuser: "",
   signKey: "",
 };
 

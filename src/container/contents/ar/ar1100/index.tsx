@@ -311,7 +311,7 @@ function AR1100({
       setDataDictionary({
         acbCode: res?.tsAcbCode,
         tsGubun: res?.tsGubun,
-        tsInkumType: res?.tsInkumtype,
+        tsInkumtype: res?.tsInkumtype,
         tsPaytype: res?.tsPaytype,
         saleState: res?.tsSaleState,
         tsSwCode: res?.tsSwCode,
@@ -703,7 +703,8 @@ function AR1100({
         setDataDictionary({
           acbCode: res?.tsAcbCode,
           tsGubun: res?.tsGubun,
-          tsInkumType: res?.tsInkumType,
+          tsInkumtype: res?.tsInkumtype,
+          tsPaytype: res?.tsPaytype,
           saleState: res?.saleState,
           tsSwCode: res?.tsSwCode,
           tsTongGubun: res?.tsTongGubun,

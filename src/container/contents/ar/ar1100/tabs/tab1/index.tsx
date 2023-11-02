@@ -630,6 +630,7 @@ const Tab1 = React.forwardRef(
             inputSize={InputSize.i100}
             textAlign="right"
             mask={currencyMask}
+            className="blue"
           />
         ),
         7: (
@@ -655,6 +656,7 @@ const Tab1 = React.forwardRef(
                 textAlign="right"
                 mask={currencyMask}
                 readOnly
+                className="red"
               />
             )}
           />
@@ -681,9 +683,28 @@ const Tab1 = React.forwardRef(
           />
         ),
         11: (
-          <FormGroup>
-            <Input register={register("signuser")} inputSize={InputSize.i100} />
-          </FormGroup>
+          <Controller
+            control={control}
+            name="signuser"
+            render={({ field }) => (
+              <div style={{ position: "relative" }}>
+                <Input {...field} inputSize={InputSize.i110} />
+                <span
+                  style={{
+                    background: "yellow",
+                    padding: "2px 5px",
+                    borderRadius: "5px",
+                    fontSize: "12px",
+                    position: "absolute",
+                    top: "7px",
+                    right: "7px",
+                  }}
+                >
+                  서명
+                </span>
+              </div>
+            )}
+          />
         ),
       },
     ];

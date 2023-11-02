@@ -384,6 +384,7 @@ const Tab5 = React.forwardRef(
                 textAlign="right"
                 mask={currencyMask}
                 readOnly={watch("asInkumtype") === "A"}
+                className="blue"
               />
             )}
           />
@@ -414,14 +415,34 @@ const Tab5 = React.forwardRef(
                 textAlign="right"
                 mask={currencyMask}
                 readOnly
+                className="red"
               />
             )}
           />
         ),
         17: (
-          <FormGroup>
-            <Input register={register("signuser")} inputSize={InputSize.i110} />
-          </FormGroup>
+          <Controller
+            control={control}
+            name="signuser"
+            render={({ field }) => (
+              <div style={{ position: "relative" }}>
+                <Input {...field} inputSize={InputSize.i110} />
+                <span
+                  style={{
+                    background: "yellow",
+                    padding: "2px 5px",
+                    borderRadius: "5px",
+                    fontSize: "12px",
+                    position: "absolute",
+                    top: "7px",
+                    right: "7px",
+                  }}
+                >
+                  서명
+                </span>
+              </div>
+            )}
+          />
         ),
       },
     ];

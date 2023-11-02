@@ -290,6 +290,7 @@ function AsModal({
               textAlign="right"
               mask={currencyMask}
               readOnly={watch("asInkumtype") === "A"}
+              className="blue"
             />
           )}
         />
@@ -320,6 +321,7 @@ function AsModal({
               textAlign="right"
               mask={currencyMask}
               readOnly
+              className="red"
             />
           )}
         />
