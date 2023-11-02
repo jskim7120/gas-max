@@ -32,10 +32,10 @@ function SukumModal1({
   const [gridData, setGridData] = useState<Array<any>>([]);
   const dispatch = useDispatch();
 
-  const { info } = useSelector((state: any) => state.footer);
+  const { info, source } = useSelector((state: any) => state.footer);
 
   useEffect(() => {
-    if (info?.cuCode && info?.areaCode) {
+    if (source === "AR1100" && info?.cuCode && info?.areaCode) {
       fetchDataMisu();
     }
   }, [info]);
@@ -52,7 +52,7 @@ function SukumModal1({
     const response = await apiGet(AR1100MISU, {
       areaCode: info?.areaCode,
       cuCode: info?.cuCode,
-      suGubun: "J",
+      misuCode: "J",
     });
 
     if (response && response?.detailData) {
@@ -157,7 +157,7 @@ function SukumModal1({
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i110}
+              inputSize={InputSize.i130}
               textAlign="right"
               mask={currencyMask}
               readOnly
@@ -198,22 +198,19 @@ function SukumModal1({
           register={register("gsBigo")}
           watch={watch("gsBigo")}
           textAlign={"left"}
-          style={{ width: "368px" }}
+          style={{ width: "388px" }}
         />
       ),
       11: (
-        <Controller
-          control={control}
-          name="gsSwCode"
-          render={({ field }) => (
-            <Input
-              {...field}
-              inputSize={InputSize.i110}
-              textAlign="center"
-              mask={currencyMask}
-            />
-          )}
-        />
+        <FormGroup>
+          <Select register={register("gsSwCode")} width={InputSize.i110}>
+            {params?.gsSwCode?.map((obj: any, idx: number) => (
+              <option key={idx} value={obj.code}>
+                {obj.codeName}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
       ),
     },
   ];
@@ -272,7 +269,14 @@ function SukumModal1({
             }}
           >
             <TTSide>미납&nbsp;&nbsp;&nbsp;내역</TTSide>
-            <Grid data={gridData} style={{ width: "100%", height: "250px" }} />
+            <Grid
+              data={gridData}
+              style={{
+                width: "100%",
+                height: "300px",
+                border: "1px solid #a6a6a6",
+              }}
+            />
           </FormGroup>
           <FormGroup style={{ marginTop: "3px", gap: "5px" }}>
             <TTSide
@@ -289,12 +293,12 @@ function SukumModal1({
                 className="no-space"
                 tableHeader={modalHeader1}
                 tableData={tableData1}
+                style={{ marginBottom: "3px" }}
               />
               <Table
                 className="no-space"
                 tableHeader={modalHeader2}
                 tableData={tableData2}
-                style={{ marginTop: "3px" }}
               />
             </ArticleDiv>
           </FormGroup>
