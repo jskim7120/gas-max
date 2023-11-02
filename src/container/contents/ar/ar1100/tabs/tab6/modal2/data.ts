@@ -1,11 +1,6 @@
-import CheckBox from "components/checkbox";
 import { ValueType } from "realgrid";
 
 export const fields = [
-  // {
-  //   fieldName: "misuYn",
-  //   dataType: ValueType.BOOLEAN,
-  // },
   {
     fieldName: "gjGumymsno",
     dataType: ValueType.TEXT,
@@ -57,24 +52,10 @@ export const fields = [
 ];
 
 export const columns = [
-  // {
-  //   name: "misuYn",
-  //   fieldName: "misuYn",
-  //   width: "40",
-  //   header: {
-  //     // text: "Text",
-  //     type: CheckBox,
-  //   },
-  //   renderer: {
-  //     type: "check",
-  //     // trueValues: "Y",
-  //     // falseValues: "N",
-  //   },
-  // },
   {
     name: "gjGumymsno",
     fieldName: "gjGumymsno",
-    width: "80",
+    width: "70",
     type: "data",
     header: {
       text: "검침회차",
@@ -82,7 +63,7 @@ export const columns = [
     editable: false,
     footer: {
       valueCallback: function (grid: any) {
-        return grid.getSummary("areaCode", "count");
+        return grid.getSummary("gjGumymsno", "count");
       },
     },
   },

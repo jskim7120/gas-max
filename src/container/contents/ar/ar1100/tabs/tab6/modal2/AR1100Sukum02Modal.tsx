@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector, useDispatch } from "app/store";
-import { apiGet } from "app/axios";
-import { AR1100MISU } from "app/path";
+import { apiGet, apiPost } from "app/axios";
+import { AR1100MISU, AR1100SUKUMINSERT } from "app/path";
 import Button from "components/button/button";
 import { ModalBlueHeader } from "components/modal/customModals/style";
 import { Reset, WhiteClose, Update } from "components/allSvgIcon";
@@ -17,8 +17,7 @@ import { modalHeader1, modalHeader2 } from "../tableHeader";
 import { AR1100MODELDETAIL, emtObjTab6 } from "../model";
 import Grid from "./grid";
 import { LLabel, IInput, FFormGroup, TTSide, ArticleDiv } from "../style";
-
-let editedRowIds: any = [];
+import { prepVal } from "../../../helper";
 
 function SukumModal2({
   setModalOpen,
@@ -31,20 +30,18 @@ function SukumModal2({
     useForm<AR1100MODELDETAIL>({
       mode: "onSubmit",
     });
-  const paramState: any = useSelector(
-    (state) => state.modal.ar1100Tab4Multiple
-  );
-
-  const { info } = useSelector((state: any) => state.footer);
-
-  useEffect(() => {
-    if (info?.cuCode && info?.areaCode) {
-      fetchDataMisu();
-    }
-  }, [info]);
 
   const dispatch = useDispatch();
   const [gridData, setGridData] = useState<Array<any>>([]);
+  const [selectedIndexes, setSelectedIndexes] = useState([]);
+
+  const { info, source } = useSelector((state: any) => state.footer);
+
+  useEffect(() => {
+    if (source === "AR1100" && info?.cuCode && info?.areaCode) {
+      fetchDataMisu();
+    }
+  }, [info]);
 
   useEffect(() => {
     if (params !== undefined) {
@@ -54,21 +51,143 @@ function SukumModal2({
     }
   }, [params]);
 
-  const checkAvailability = (arr: any, val: any) => {
-    return arr.some((arrVal: any) => val === arrVal);
-  };
+  useEffect(() => {
+    if (watch("gsInkum") !== undefined) {
+      handleChangeInkum(watch("gsInkum"));
+    }
+  }, [watch("gsInkum")]);
+
+  useEffect(() => {
+    if (watch("gsDc") !== undefined) {
+      handleChangeDc(watch("gsDc"));
+    }
+  }, [watch("gsDc")]);
 
   const fetchDataMisu = async () => {
     const response = await apiGet(AR1100MISU, {
-      areaCode: "01",
-      cuCode: "000-07880",
-      suGubun: "C",
+      areaCode: info?.areaCode,
+      cuCode: info?.cuCode,
+      misuCode: "C",
     });
 
-    if (response) {
+    if (response && response?.detailData) {
       setGridData(response?.detailData);
+      reset((formValues) => ({
+        ...formValues,
+        gsJmisuAmt: getSum(response?.detailData),
+        test1: 0,
+      }));
     } else {
       setGridData([]);
+    }
+  };
+
+  const getSum = (detailData: []) => {
+    let sum: number = 0;
+    if (detailData?.length > 0) {
+      detailData?.map((item: any) => {
+        sum += item?.gjMisujan ? item?.gjMisujan : 0;
+      });
+    }
+    return sum;
+  };
+
+  const getSumOfChecked = (arrOfChecked: Array<number>) => {
+    let sum: number = 0;
+    if (arrOfChecked?.length > 0) {
+      arrOfChecked.map((item: number) => {
+        sum += gridData[item]?.gjMisujan ? gridData[item]?.gjMisujan : 0;
+      });
+    }
+    reset((formValues) => ({
+      ...formValues,
+      test1: sum,
+    }));
+  };
+
+  const handleChangeInkum = (val: number) => {
+    const tempMisuAmt = prepVal(getValues("gsJmisuAmt"));
+    const tempTest1 = prepVal(getValues("test1"));
+    const tempDc = prepVal(getValues("gsDc"));
+    const tempInkum = prepVal(val) > tempTest1 ? tempTest1 : prepVal(val);
+    const diff = tempDc + tempInkum - tempMisuAmt;
+
+    const tempMisu: number = tempMisuAmt - prepVal(val) - tempDc;
+
+    reset((formValues) => ({
+      ...formValues,
+      misu: tempMisu,
+    }));
+
+    if (prepVal(val) > tempTest1) {
+      reset((formValues) => ({
+        ...formValues,
+        gsInkum: tempTest1,
+      }));
+    }
+
+    // if (diff >= 0) {
+    //   const newDc = tempDc - diff;
+    //   reset((formValues) => ({
+    //     ...formValues,
+    //     gsDc: newDc,
+    //   }));
+    // }
+  };
+
+  const handleChangeDc = (val: number) => {
+    const tempInkum = prepVal(getValues("gsInkum"));
+    const tempMisuAmt = prepVal(getValues("gsJmisuAmt"));
+    const tempSum = prepVal(val) + tempInkum;
+
+    const diff = tempSum - tempMisuAmt;
+    const tempMisu: number = tempMisuAmt - tempInkum - prepVal(val);
+
+    reset((formValues) => ({
+      ...formValues,
+      misu: tempMisu,
+    }));
+
+    // if (diff > 0) {
+    //   const newInkum = tempInkum - diff;
+    //   if (newInkum >= 0) {
+    //     reset((formValues) => ({
+    //       ...formValues,
+    //       gsInkum: newInkum,
+    //     }));
+    //   } else {
+    //     reset((formValues) => ({
+    //       ...formValues,
+    //       gsInkum: 0,
+    //       gsDc: tempMisuAmt,
+    //     }));
+    //   }
+    // }
+  };
+  const submit = async (fparams: any) => {
+    const path = AR1100SUKUMINSERT;
+
+    let papList: Array<any> = [];
+    if (selectedIndexes?.length > 0) {
+      selectedIndexes?.map((item: number) => {
+        papList.push({
+          papSno: gridData[item]?.gjPapNo,
+        });
+      });
+    }
+    fparams.areaCode = info?.areaCode;
+    fparams.gsJmisuAmt = +removeCommas(fparams.gsJmisuAmt, "number");
+    fparams.test1 = +removeCommas(fparams.test1, "number");
+    fparams.gsInkum = +removeCommas(fparams.gsInkum, "number");
+    fparams.gsDc = +removeCommas(fparams.gsDc, "number");
+    fparams.misu = +removeCommas(fparams.misu, "number");
+    fparams.jsonItemList = papList;
+
+    const res = await apiPost(path, fparams, "저장이 성공하였습니다");
+    if (res) {
+      setTimeout(() => {
+        setModalOpen(false);
+      }, 1000);
     }
   };
 
@@ -106,11 +225,11 @@ function SukumModal2({
       3: (
         <Controller
           control={control}
-          name="misu"
+          name="gsJmisuAmt"
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i110}
+              inputSize={InputSize.i130}
               textAlign="right"
               mask={currencyMask}
               readOnly
@@ -121,13 +240,14 @@ function SukumModal2({
       4: (
         <Controller
           control={control}
-          name="gsInkum"
+          name="test1"
           render={({ field }) => (
             <Input
               {...field}
               inputSize={InputSize.i110}
               textAlign="right"
               mask={currencyMask}
+              readOnly
             />
           )}
         />
@@ -167,7 +287,7 @@ function SukumModal2({
           render={({ field }) => (
             <Input
               {...field}
-              inputSize={InputSize.i110}
+              inputSize={InputSize.i130}
               textAlign="right"
               mask={currencyMask}
               readOnly
@@ -192,7 +312,7 @@ function SukumModal2({
       ),
       9: (
         <FormGroup>
-          <Select register={register("acbCode")} width={InputSize.i290}>
+          <Select register={register("acbCode")} width={InputSize.i300}>
             {params?.acbCode?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -208,7 +328,7 @@ function SukumModal2({
           register={register("gsBigo")}
           watch={watch("gsBigo")}
           textAlign={"left"}
-          style={{ width: "368px" }}
+          style={{ width: "398px" }}
         />
       ),
       11: (
@@ -257,15 +377,15 @@ function SukumModal2({
         >
           <FFormGroup>
             <LLabel style={{}}>거래구분</LLabel>
-            <IInput readOnly />
+            <IInput readOnly value={info?.cuTypeName} />
           </FFormGroup>
           <FFormGroup>
             <LLabel style={{}}>거래처 코드</LLabel>
-            <IInput readOnly />
+            <IInput readOnly value={info?.cuCode} />
           </FFormGroup>
           <FFormGroup>
             <LLabel style={{}}>거래처명</LLabel>
-            <IInput readOnly />
+            <IInput readOnly value={info?.cuName} />
           </FFormGroup>
         </div>
 
@@ -273,7 +393,11 @@ function SukumModal2({
         <div style={{ margin: "5px 0" }}>
           <FormGroup style={{ marginTop: "3px", gap: "5px" }}>
             <TTSide>미납&nbsp;&nbsp;&nbsp;내역</TTSide>
-            <Grid data={gridData} />
+            <Grid
+              data={gridData}
+              getSumOfChecked={getSumOfChecked}
+              setSelectedIndexes={setSelectedIndexes}
+            />
           </FormGroup>
           <FormGroup style={{ marginTop: "3px", gap: "5px" }}>
             <TTSide
@@ -290,12 +414,12 @@ function SukumModal2({
                 className="no-space"
                 tableHeader={modalHeader1}
                 tableData={tableData1}
+                style={{ marginBottom: "3px" }}
               />
               <Table
                 className="no-space"
                 tableHeader={modalHeader2}
                 tableData={tableData2}
-                style={{ marginTop: "3px" }}
               />
             </ArticleDiv>
           </FormGroup>
@@ -321,7 +445,8 @@ function SukumModal2({
               text="저장"
               icon={<Update />}
               color={ButtonColor.SECONDARY}
-              type="submit"
+              type="button"
+              onClick={handleSubmit(submit)}
             />
             <Button
               text="취소"

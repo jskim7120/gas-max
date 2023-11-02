@@ -2,7 +2,15 @@ import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { fields, columns } from "./data";
 
-function Grid({ data }: { data: any }) {
+function Grid({
+  data,
+  getSumOfChecked,
+  setSelectedIndexes,
+}: {
+  data: any;
+  getSumOfChecked: Function;
+  setSelectedIndexes: Function;
+}) {
   const realgridElement = useRef<HTMLDivElement>(null);
   let container: HTMLDivElement;
   let dp: any;
@@ -19,69 +27,44 @@ function Grid({ data }: { data: any }) {
       gv.setColumns(columns);
       dp.setRows(data);
 
-      // RealGrid Style
-      gv.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
-      gv.header.height = 40;
-      gv.displayOptions.rowHeight = 30;
-      gv.editOptions.insertable = true;
-      gv.editOptions.appendable = true;
-
       gv.setFooter({ visible: false });
       gv.setOptions({
         stateBar: { visible: false },
       });
-      // gv.setEditOptions({ editable: false });
 
-      // gv.checkBar.fieldName = "misuYn";
-
-      gv.sortingOptions.enabled = true;
+      gv.header.height = 35;
+      gv.sortingOptions.enabled = false;
       gv.displayOptions.fitStyle = "evenFill";
+      gv.displayOptions.columnMovable = false;
+      gv.displayOptions.emptyMessage = "표시할 데이타가 없습니다.";
+      //gv.displayOptions.rowHeight = 30;
 
-      // gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
-      //   data[index.dataRow][index.fieldName] = newValue;
-
-      //   console.log("oldValue:", oldValue);
-      //   console.log("newValue:", newValue);
-
-      //   // console.log("data", data[index.dataRow].gjMisujan);
-      // };
-
-      gv.setCheckBar({ editable: true });
-      gv.getCheckedRows = (
-        id: any,
-        index: any,
-        oldValue: any,
-        newValue: any
-      ) => {
-        console.log("data", data[index.dataRow].gjMisujan);
-        alert(data[index.dataRow].gjMisujan);
+      gv.onItemChecked = (grid: any, index: any) => {
+        const items = gv.getCheckedItems();
+        setSelectedIndexes(items);
+        getSumOfChecked(items);
       };
-
-      gv.onSelectionChanged = () => {
-        const itemIndex: any = gv.getCurrent().dataRow;
+      gv.onItemAllChecked = (grid: any, index: any) => {
+        const items = gv.getCheckedItems();
+        setSelectedIndexes(items);
+        getSumOfChecked(items);
       };
 
       return () => {
         gv.commit();
         dp.clearRows();
-
         gv.destroy();
         dp.destroy();
-
-        gv = null;
-        dp = null;
       };
     }
-  }, [data, columns]);
+  }, [data]);
   return (
     <>
       <div
         style={{
-          height: "275px",
+          height: "300px",
           width: "100%",
           border: "1px solid #a6a6a6",
-          padding: "10px 20px",
-          borderRadius: "3px",
         }}
         ref={realgridElement}
       ></div>

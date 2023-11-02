@@ -19,7 +19,7 @@ export const FFormGroup = styled.div`
 `;
 
 export const TTSide = styled.div`
-  height: 275px;
+  height: 300px;
   background: #d0d2e5;
   width: 30px;
   display: flex;

@@ -23,6 +23,7 @@ export interface AR1100MODELDETAIL {
   mjDate: string;
   test: string;
   test2: string;
+  test1: number;
 }
 
 export const emtObjTab6 = {

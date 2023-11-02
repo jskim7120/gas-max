@@ -1,56 +1,69 @@
 import { ValueType } from "realgrid";
 
+// const d = {
+//   mjBigo: "2  건",
+//   mjDate: "202104",
+//   mjGubun: null,
+//   mjId: "1",
+//   mjMisujan: 1066000,
+//   mjPapNo: null,
+//   mjSno: null,
+//   mjSwName: null,
+// };
 export const fields = [
   {
-    fieldName: "checkYn",
+    fieldName: "mjId",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "name",
+    fieldName: "mjDate",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "icon",
+    fieldName: "mjBigo",
     dataType: ValueType.TEXT,
   },
   {
-    fieldName: "treeId",
+    fieldName: "mjMisujan",
+    dataType: ValueType.NUMBER,
+  },
+  {
+    fieldName: "mjSwName",
     dataType: ValueType.TEXT,
   },
 ];
 
 export const columns = [
   {
-    name: "name",
-    fieldName: "name",
+    name: "mjId",
+    fieldName: "mjId",
     width: "120",
     editable: false,
   },
 
   {
-    name: "checkYn",
-    fieldName: "checkYn",
+    name: "mjDate",
+    fieldName: "mjDate",
     type: "data",
     width: "80",
     header: {
       text: "매입퓸목",
     },
     editable: false,
-
-    renderer: {
-      type: "check",
-      trueValues: "Y",
-      falseValues: "N",
-    },
   },
   {
-    name: "icon",
-    fieldName: "icon",
+    name: "mjBigo",
+    fieldName: "mjBigo",
     width: "250",
   },
   {
-    name: "treeId",
-    fieldName: "treeId",
-    width: "80",
+    name: "mjMisujan",
+    fieldName: "mjMisujan",
+    width: "100",
+  },
+  {
+    name: "mjSwName",
+    fieldName: "mjSwName",
+    width: "100",
   },
 ];
