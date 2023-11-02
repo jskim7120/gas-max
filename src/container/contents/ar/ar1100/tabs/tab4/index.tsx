@@ -584,6 +584,7 @@ const Tab4 = React.forwardRef(
                 textAlign="right"
                 mask={currencyMask}
                 readOnly={watch("bgInkumType") === "A"}
+                className="blue"
               />
             )}
           />
@@ -614,6 +615,7 @@ const Tab4 = React.forwardRef(
                 textAlign="right"
                 mask={currencyMask}
                 readOnly
+                className="red"
               />
             )}
           />
@@ -641,7 +643,7 @@ const Tab4 = React.forwardRef(
         ),
         7: (
           <FormGroup>
-            <Input register={register("signUser")} inputSize={InputSize.i100} />
+            <Input register={register("signuser")} inputSize={InputSize.i100} />
           </FormGroup>
         ),
       },

@@ -18,7 +18,7 @@ export interface IAR1100TAB3 {
   //tsMisu: number;
   tsSwCode: string;
   tsBigo: string;
-  signUser: string;
+  signuser: string;
 
   tsPaytype: string;
   //tsPayAmt: number;
@@ -39,6 +39,6 @@ export const emtObjTab3 = {
   acbCode: "",
   tsSwCode: "",
   tsBigo: "",
-  signUser: "",
+  signuser: "",
   tsPaytype: "",
 };
