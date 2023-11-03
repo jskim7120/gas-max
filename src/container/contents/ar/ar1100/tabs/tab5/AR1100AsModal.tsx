@@ -33,6 +33,7 @@ import {
   WrapperInner,
 } from "./style";
 import { prepVal, calculationOfVat2, timeData } from "../../helper";
+import EditableSelect from "components/editableSelect";
 function AsModal({
   setModalOpen,
   params,
@@ -551,18 +552,15 @@ function AsModal({
           <DDiv>
             <DDivInner>
               <LabelYellow style={{ width: "80px" }}>불류명</LabelYellow>
-              <FormGroup style={{ width: "100%" }}>
-                <Select
-                  register={register("asTagName")}
-                  style={{ width: "100%" }}
-                >
-                  {params?.asTagName?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+
+              <EditableSelect
+                list={params?.asTagName}
+                reset={reset}
+                register={register("asTagName")}
+                watch={watch("asTagName")}
+                textAlign={"left"}
+                style={{ width: "100%" }}
+              />
             </DDivInner>
             <DDivInner>
               <DDivTh style={{ background: "#c2f9da" }}>

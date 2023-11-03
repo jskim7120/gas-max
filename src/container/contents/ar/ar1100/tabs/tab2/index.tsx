@@ -191,12 +191,13 @@ const Tab2 = React.forwardRef(
       const path = isAddBtnClicked ? AR1100CJSALEINSERT : AR1100CJSALEUPDATE;
       params.insertType = "0";
       if (isAddBtnClicked) {
-        // if (source === menuId + tabId.toString()) {
         params.areaCode = info?.areaCode;
         params.pcCuCode = info?.cuCode;
         params.pcCuName = info?.cuName;
         params.pcSno = "";
-        // }
+        params.pcDateB = DateWithoutDash(params.pcDate);
+      } else {
+        params.pcDateB = DateWithoutDash(data65?.pcDateB);
       }
 
       params.pcDate = DateWithoutDash(params.pcDate);
@@ -415,12 +416,20 @@ const Tab2 = React.forwardRef(
         ),
         1: (
           <FormGroup style={{ position: "relative" }}>
-            <Input register={register("cBuCode")} inputSize={InputSize.i60} />
+            <Input
+              register={register("cBuCode")}
+              inputSize={InputSize.i60}
+              readOnly={watch("proxyType") === "0"}
+            />
             <Controller
               control={control}
               name="cBuName"
               render={({ field }) => (
-                <Select {...field} width={InputSize.i100}>
+                <Select
+                  {...field}
+                  width={InputSize.i100}
+                  disabled={watch("proxyType") === "0"}
+                >
                   {dictionary?.sProxytype?.map((obj: any, idx: number) => (
                     <option key={idx} value={obj.code}>
                       {obj.codeName}
@@ -449,9 +458,13 @@ const Tab2 = React.forwardRef(
           </FormGroup>
         ),
         2: (
-          <FormGroup>
-            <Input register={register("signuser")} inputSize={InputSize.i100} />
-          </FormGroup>
+          <Controller
+            control={control}
+            name="signuser"
+            render={({ field }) => (
+              <Input {...field} inputSize={InputSize.i100} />
+            )}
+          />
         ),
       },
     ];

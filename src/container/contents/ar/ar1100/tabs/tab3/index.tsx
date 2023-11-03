@@ -325,15 +325,17 @@ const Tab3 = React.forwardRef(
       params.insertType = "0";
 
       if (isAddBtnClicked) {
-        // if (source === menuId + tabId.toString()) {
         params.areaCode = info?.areaCode;
         params.tsCuCode = info?.cuCode;
         params.tsCuName = info?.cuName;
         params.tsSno = "";
-        // }
+        params.tsDateB = DateWithoutDash(params.tsDate);
+      } else {
+        params.tsDateB = DateWithoutDash(data65?.tsDateB);
       }
 
       params.tsDate = DateWithoutDash(params.tsDate);
+      params.tsDateB = DateWithoutDash(params.tsDate);
       params.tsGubun = gubun;
       params.tsQty = qty;
       if (gubun === ("0" || "9")) {

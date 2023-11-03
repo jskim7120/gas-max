@@ -335,9 +335,10 @@ const Tab1 = React.forwardRef(
         params.pjCuCode = info?.cuCode;
         params.pjCuName = info?.cuName;
         params.pjSno = "";
+        params.pjDateB = DateWithoutDash(params.pjDate);
         // }
       } else {
-        params.pjDateB = DateWithoutDash(params.pjDate);
+        params.pjDateB = DateWithoutDash(data65?.pjDateB);
       }
 
       params.pjDate = DateWithoutDash(params.pjDate);

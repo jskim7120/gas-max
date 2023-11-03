@@ -286,8 +286,9 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
       params.insertType = "0";
       if (paramState?.isAddBtnClicked === true) {
         params.bgSno = "";
-      } else {
         params.bgDateB = DateWithoutDash(params.bgDate);
+      } else {
+        params.bgDateB = DateWithoutDash(params.bgDateB);
       }
 
       params.areaCode = paramState?.areaCode;

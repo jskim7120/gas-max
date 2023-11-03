@@ -165,12 +165,14 @@ const Tab5 = React.forwardRef(
 
       if (isAddBtnClicked) {
         //params.asCuUserName = info?.cuUsername;
+        params.gsDateB = DateWithoutDash(params.gsDate);
         params.msSno = "";
       } else {
-        // params.asDateB = DateWithoutDash(params.asDate);
+        params.asDateB = DateWithoutDash(data65?.asDate);
       }
 
       params.areaCode = areaCode;
+      params.gsDate = DateWithoutDash(params.gsDate);
       params.gsDateUse = DateWithoutDash(params.gsDateUse);
 
       params.gsInkum = +removeCommas(params.gsInkum, "number");

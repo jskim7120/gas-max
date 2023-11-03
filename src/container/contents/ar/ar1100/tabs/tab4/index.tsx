@@ -345,8 +345,9 @@ const Tab4 = React.forwardRef(
 
       if (isAddBtnClicked) {
         params.bgSno = "";
-      } else {
         params.bgDateB = DateWithoutDash(params.bgDate);
+      } else {
+        params.bgDateB = DateWithoutDash(data65?.bgDate);
       }
 
       params.areaCode = areaCode;
