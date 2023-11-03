@@ -26,11 +26,6 @@ function Grid({ data, style }: { data: any; style?: any }) {
         "folder-plus.svg",
         "file.svg",
       ];
-      // gv.setTreeOptions({
-      //   showCheckBox: true,
-      // });
-
-      console.log("gv::", gv);
 
       gv.treeOptions.expandedIcon = 0;
       gv.treeOptions.collapsedIcon = 1;
@@ -45,13 +40,11 @@ function Grid({ data, style }: { data: any; style?: any }) {
         stateBar: { visible: false },
       });
       gv.displayOptions.rowHeight = 35;
+      gv.sortingOptions.enabled = false;
+      gv.displayOptions.columnMovable = false;
       gv.refresh();
 
       gv.onEditCommit = (id: any, index: any, oldValue: any, newValue: any) => {
-        // console.log("oldValue:", oldValue);
-        // console.log("newValue:", newValue);
-        // console.log("index:::", index);
-
         gv.commit();
       };
 
@@ -59,13 +52,57 @@ function Grid({ data, style }: { data: any; style?: any }) {
         console.log("all checked duudagdav");
       };
 
-      gv.onItemChecked = (a: any) => {
-        console.log("item checked");
+      gv.onItemChecked = (grid: any, itemIndex: any, checked: boolean) => {
+        const index: any = gv.getCurrent().dataRow;
+
+        // console.log(itemIndex, checked);
+        // console.log(data[itemIndex].mjId, data[itemIndex]);
       };
 
-      gv.onItemsChecked = () => {
-        console.log("items checked");
-      };
+      // const checkNode = (grid: any, dataRow: any, checked: boolean) => {
+      //   var provider = grid.getDataSource();
+
+      //   //형제노드체크 후 부모노드 체크
+      //   checkSiblingNode(grid, dataRow, checked);
+
+      //   //자식노드체크
+      //   var desRows = provider.getDescendants(dataRow);
+      //   if (desRows) {
+      //     grid.checkRows(desRows, checked, false);
+      //   }
+      // };
+
+      // const checkSiblingNode = (grid: any, dataRow: any, checked: boolean) => {
+      //   console.log("start-rowId2 checkedValue: " + grid.isCheckedRow(2));
+      //   var provider = grid.getDataSource();
+      //   //부모노드
+      //   var parent = provider.getParent(dataRow);
+      //   //형제노드
+      //   var sibling =
+      //     parent == -1 ? provider.getChildren() : provider.getChildren(parent);
+      //   console.log(sibling);
+      //   var index = sibling.indexOf(dataRow);
+      //   //자기자신은 제외
+      //   if (index !== -1) sibling.splice(index, 1);
+
+      //   if (checked) {
+      //     for (var i in sibling) {
+      //       var value = grid.isCheckedRow(sibling[i]);
+
+      //       if (checked != value) {
+      //         checked = false;
+      //         break;
+      //       }
+      //     }
+      //   } else {
+      //     checked = false;
+      //   }
+
+      //   if (parent > -1) grid.checkRow(parent, checked, false, false);
+      //   //checkBar.head 영역의 V표시 제어
+      //   if (parent == -1) grid.setAllCheck(checked, false);
+      //   if (parent > -1) checkSiblingNode(grid, parent, checked);
+      // };
     }
 
     return () => {

@@ -248,12 +248,12 @@ function AR1100({
 
         setData65(detail);
         setJunJaego(detail?.junJaego ? detail?.junJaego : 0); // ene irehgui bgaa
-        setQty(detail?.pjQty);
+        //setQty(detail?.pjQty);
         setReqty(detail?.pjReqty);
-        setDanga(detail?.pjDanga);
-        setVatDiv(detail?.pjVatDiv);
-        setInkum(detail?.pjInkum);
-        setDc(detail?.pjDc);
+        //setDanga(detail?.pjDanga);
+        //setVatDiv(detail?.pjVatDiv);
+        //setInkum(detail?.pjInkum);
+        //setDc(detail?.pjDc);
 
         document.getElementById("pjQty")?.focus();
       }
@@ -671,12 +671,12 @@ function AR1100({
           let detail = res?.detailData[0];
           //setJunJaego(detail?.junJaego); // irehgui bn ene talbar
           setJunJaego(0); //turdee ingeed tavichihyaa daraa ustga
-          setQty(detail?.pjQty);
           setReqty(detail?.pjReqty);
-          setDanga(detail?.pjDanga);
-          setVatDiv(detail?.pjVatDiv);
-          setInkum(detail?.pjInkum);
-          setDc(detail?.pjDc);
+          //setQty(detail?.pjQty);
+          //setDanga(detail?.pjDanga);
+          //setVatDiv(detail?.pjVatDiv);
+          //setInkum(detail?.pjInkum);
+          //setDc(detail?.pjDc);
           tabRef1?.current?.reset(detail);
         }
       }

@@ -55,6 +55,7 @@ function getTabContent(
     case 0:
       return (
         <Tab1
+          ref={tabRef1}
           tabId={tabId}
           data={data}
           data65={data65}
@@ -62,24 +63,13 @@ function getTabContent(
           isAddBtnClicked={isAddBtnClicked}
           handleSubmitParent={handleSubmit}
           submitParent={submit}
-          ref={tabRef1}
           addBtnUnClick={addBtnUnClick}
           jpKind={jpKind}
           setJpKind={setJpKind}
           junJaego={junJaego}
           setJunJaego={setJunJaego}
-          qty={qty}
-          setQty={setQty}
           reqty={reqty}
           setReqty={setReqty}
-          danga={danga}
-          setDanga={setDanga}
-          vatDiv={vatDiv}
-          setVatDiv={setVatDiv}
-          inkum={inkum}
-          setInkum={setInkum}
-          dc={dc}
-          setDc={setDc}
         />
       );
     case 1:
