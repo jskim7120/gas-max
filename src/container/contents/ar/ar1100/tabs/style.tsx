@@ -1,15 +1,34 @@
 import styled from "styled-components";
+export const TabModalHeadWrap = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: "15px";
+  padding: 15px 30px;
+  background: rgb(255, 251, 214);
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgb(221, 220, 210);
+  gap: 15px;
+`;
+export const ModalBody = styled.div`
+  padding: 10px;
+  padding-top: 0px;
+`;
+
 export const LLabel = styled.label`
   background: rgba(104, 103, 103, 0.35);
   width: 80px;
+  height: 30px;
+  display: flex;
   font-size: 14px;
-  text-align: right;
-  padding: 2px 10px 0 0;
+  justify-content: center;
+  align-items: center;
 `;
 export const IInput = styled.input`
-  border: 1px solid #bbbbbb;
+  border: none;
   outline: none;
-  padding: 0 5px;
+  padding: 0px 15px;
+  background: #fff;
 `;
 
 export const FFormGroup = styled.div`
@@ -69,4 +88,37 @@ export const WrapperInner = styled.div`
   gap: 5px;
   align-items: center;
   margin: 3px 0 10px 3px;
+`;
+export const TTSide = styled.div`
+  height: 300px;
+  background: #d0d2e5;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  border: 1px solid #a6a6a6;
+  border-radius: 3px;
+  writing-mode: vertical-lr;
+  justify-content: center;
+`;
+export const ArticleDiv = styled.div`
+  border: 1px solid #a6a6a6;
+  padding: 10px 20px;
+  border-radius: 3px;
+  width: 100%;
+`;
+
+export const TabModalFooter = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  background: rgb(185, 185, 185);
+  padding: 15px 10px;
+`;
+export const ModalFooterBtn = styled.div`
+  display: flex;
+  gap: 5px;
+  align-items: center;
 `;

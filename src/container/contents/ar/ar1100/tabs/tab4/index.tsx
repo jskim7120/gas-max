@@ -345,8 +345,9 @@ const Tab4 = React.forwardRef(
 
       if (isAddBtnClicked) {
         params.bgSno = "";
-      } else {
         params.bgDateB = DateWithoutDash(params.bgDate);
+      } else {
+        params.bgDateB = DateWithoutDash(data65?.bgDate);
       }
 
       params.areaCode = areaCode;
@@ -398,9 +399,7 @@ const Tab4 = React.forwardRef(
           <Controller
             control={control}
             name="bgDate"
-            render={({ field }) => (
-              <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
-            )}
+            render={({ field }) => <CustomDatePicker {...field} />}
           />
         ),
         2: (
@@ -642,9 +641,13 @@ const Tab4 = React.forwardRef(
           />
         ),
         7: (
-          <FormGroup>
-            <Input register={register("signuser")} inputSize={InputSize.i100} />
-          </FormGroup>
+          <Controller
+            control={control}
+            name="signuser"
+            render={({ field }) => (
+              <Input {...field} inputSize={InputSize.i100} />
+            )}
+          />
         ),
       },
     ];
@@ -682,6 +685,7 @@ const Tab4 = React.forwardRef(
                     background: "rgb(104, 103, 103)",
                     color: "#fff",
                     textAlign: "center",
+                    cursor: "pointer",
                   }}
                   onClick={openModalAR1100BpSale}
                 >

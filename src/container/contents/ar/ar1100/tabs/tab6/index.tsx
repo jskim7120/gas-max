@@ -165,12 +165,14 @@ const Tab5 = React.forwardRef(
 
       if (isAddBtnClicked) {
         //params.asCuUserName = info?.cuUsername;
+        params.gsDateB = DateWithoutDash(params.gsDate);
         params.msSno = "";
       } else {
-        // params.asDateB = DateWithoutDash(params.asDate);
+        params.asDateB = DateWithoutDash(data65?.asDate);
       }
 
       params.areaCode = areaCode;
+      params.gsDate = DateWithoutDash(params.gsDate);
       params.gsDateUse = DateWithoutDash(params.gsDateUse);
 
       params.gsInkum = +removeCommas(params.gsInkum, "number");
@@ -213,18 +215,14 @@ const Tab5 = React.forwardRef(
           <Controller
             control={control}
             name="gsDate"
-            render={({ field }) => (
-              <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
-            )}
+            render={({ field }) => <CustomDatePicker {...field} />}
           />
         ),
         2: (
           <Controller
             control={control}
             name="gsDateUse"
-            render={({ field }) => (
-              <CustomDatePicker {...field} readOnly={!isAddBtnClicked} />
-            )}
+            render={({ field }) => <CustomDatePicker {...field} />}
           />
         ),
         3: (

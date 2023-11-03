@@ -17,6 +17,7 @@ import { AR1100MODELDETAIL } from "./model";
 import { tableHeader1, tableHeader2 } from "./tableHeader";
 import useModalWithParams from "app/hook/useModalWithParams";
 import { prepVal, timeData } from "../../helper";
+import EditableSelect from "components/editableSelect";
 
 const Tab5 = React.forwardRef(
   (
@@ -176,7 +177,7 @@ const Tab5 = React.forwardRef(
         params.asDateB = DateWithoutDash(params.asDate);
       } else {
         path = AR1100ASCUSTUPDATE;
-        params.asDateB = DateWithoutDash(data65?.asDate);
+        params.asDateB = DateWithoutDash(data65?.asDateB);
       }
       params.insertType = "0";
       params.areaCode = areaCode;
@@ -255,15 +256,14 @@ const Tab5 = React.forwardRef(
           </FormGroup>
         ),
         4: (
-          <FormGroup>
-            <Select register={register("asTagName")} style={{ width: "355px" }}>
-              {dictionary?.asTagName?.map((obj: any, idx: number) => (
-                <option key={idx} value={obj.code}>
-                  {obj.codeName}
-                </option>
-              ))}
-            </Select>
-          </FormGroup>
+          <EditableSelect
+            list={dictionary?.asTagName}
+            reset={reset}
+            register={register("asTagName")}
+            watch={watch("asTagName")}
+            textAlign={"left"}
+            style={{ width: "355px" }}
+          />
         ),
         5: (
           <Controller
@@ -458,7 +458,7 @@ const Tab5 = React.forwardRef(
                 className="no-space"
                 tableHeader={tableHeader1}
                 tableData={tableData1}
-                style={{ marginBottom: "2px" }}
+                style={{ marginBottom: "2px", overflowX: "visible" }}
               />
               <Table
                 className="no-space"

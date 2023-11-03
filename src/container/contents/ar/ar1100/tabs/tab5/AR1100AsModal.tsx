@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useDispatch } from "app/store";
+import { useDispatch, useSelector } from "app/store";
 import { apiPost } from "app/axios";
 import { AR1100ASCUSTINSERT, AR1100ASCUSTUPDATE } from "app/path";
 import { setAR1100Tab5AsCust } from "app/state/modal/modalSlice";
@@ -31,8 +31,11 @@ import {
   DDivTh,
   LabelYellow,
   WrapperInner,
-} from "./style";
+  TabModalHeadWrap,
+  TabModalFooter,
+} from "../style";
 import { prepVal, calculationOfVat2, timeData } from "../../helper";
+import EditableSelect from "components/editableSelect";
 function AsModal({
   setModalOpen,
   params,
@@ -46,6 +49,7 @@ function AsModal({
     });
 
   const dispatch = useDispatch();
+  const { info, source } = useSelector((state: any) => state.footer);
 
   useEffect(() => {
     if (params !== undefined) {
@@ -349,28 +353,24 @@ function AsModal({
         </FormGroup>
       </ModalBlueHeader>
       <div>
-        <div
-          style={{
-            fontSize: "14px",
-            padding: "20px 15px",
-            display: "flex",
-            alignItems: "center",
-            background: "#fffbd6",
-          }}
-        >
+        <TabModalHeadWrap>
           <FFormGroup>
-            <LLabel style={{}}>거래구분</LLabel>
-            <IInput readOnly />
+            <LLabel>거래구분</LLabel>
+            <IInput
+              style={{ width: "80px" }}
+              readOnly
+              value={info?.cuTypeName}
+            />
           </FFormGroup>
           <FFormGroup>
-            <LLabel style={{}}>거래처 코드</LLabel>
-            <IInput readOnly />
+            <LLabel>거래처 코드</LLabel>
+            <IInput readOnly value={info?.cuCode} />
           </FFormGroup>
           <FFormGroup>
-            <LLabel style={{}}>거래처명</LLabel>
-            <IInput readOnly />
+            <LLabel>거래처명</LLabel>
+            <IInput readOnly value={info?.cuName} />
           </FFormGroup>
-        </div>
+        </TabModalHeadWrap>
         <div
           style={{
             padding: "0 10px",
@@ -551,18 +551,15 @@ function AsModal({
           <DDiv>
             <DDivInner>
               <LabelYellow style={{ width: "80px" }}>불류명</LabelYellow>
-              <FormGroup style={{ width: "100%" }}>
-                <Select
-                  register={register("asTagName")}
-                  style={{ width: "100%" }}
-                >
-                  {params?.asTagName?.map((obj: any, idx: number) => (
-                    <option key={idx} value={obj.code}>
-                      {obj.codeName}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
+
+              <EditableSelect
+                list={params?.asTagName}
+                reset={reset}
+                register={register("asTagName")}
+                watch={watch("asTagName")}
+                textAlign={"left"}
+                style={{ width: "100%" }}
+              />
             </DDivInner>
             <DDivInner>
               <DDivTh style={{ background: "#c2f9da" }}>
@@ -664,16 +661,7 @@ function AsModal({
             tableData={tableData2}
           />
         </div>
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "10px",
-            background: "#b9b9b9",
-            padding: "10px",
-          }}
-        >
+        <TabModalFooter>
           <Button
             text="문자전송 환경"
             icon={<Settings2 />}
@@ -697,7 +685,7 @@ function AsModal({
               }}
             />
           </div>
-        </div>
+        </TabModalFooter>
       </div>
     </CustomForm>
   );
