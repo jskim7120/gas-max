@@ -641,9 +641,13 @@ const Tab4 = React.forwardRef(
           />
         ),
         7: (
-          <FormGroup>
-            <Input register={register("signuser")} inputSize={InputSize.i100} />
-          </FormGroup>
+          <Controller
+            control={control}
+            name="signuser"
+            render={({ field }) => (
+              <Input {...field} inputSize={InputSize.i100} />
+            )}
+          />
         ),
       },
     ];
@@ -681,6 +685,7 @@ const Tab4 = React.forwardRef(
                     background: "rgb(104, 103, 103)",
                     color: "#fff",
                     textAlign: "center",
+                    cursor: "pointer",
                   }}
                   onClick={openModalAR1100BpSale}
                 >

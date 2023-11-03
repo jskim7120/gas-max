@@ -21,7 +21,15 @@ import { DateWithoutDash } from "helpers/dateFormat";
 import { currencyMask, removeCommas } from "helpers/currency";
 import { calculationOfVat, prepVal } from "../../helper";
 import Grid from "./grid";
-import { LLabel, IInput, FFormGroup } from "./style";
+import {
+  LLabel,
+  IInput,
+  FFormGroup,
+  TabModalHeadWrap,
+  TabModalFooter,
+  ModalFooterBtn,
+  ModalBody,
+} from "../style";
 import { tableHeader3, tableHeader4 } from "./tableHeader";
 import { IAR110065DETAIL, emtObjBpSaleModal } from "./model";
 
@@ -44,6 +52,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
   const [data, setData] = useState<any>({});
   const [dictionary, setDictionary] = useState<any>({});
   const [gridData, setGridData] = useState<Array<any>>([]);
+  const { info, source } = useSelector((state: any) => state.footer);
 
   useEffect(() => {
     if (Object.keys(paramState)?.length > 0) {
@@ -481,7 +490,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
               inputSize={InputSize.i100}
               textAlign="right"
               mask={currencyMask}
-              readOnly={watch("bgInkumType") === "A"}
+              // readOnly={watch("bgInkumType") === "A"}
               className="blue"
             />
           )}
@@ -497,7 +506,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
               inputSize={InputSize.i100}
               textAlign="right"
               mask={currencyMask}
-              readOnly={watch("bgInkumType") === "A"}
+              // readOnly={watch("bgInkumType") === "A"}
             />
           )}
         />
@@ -513,7 +522,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
               textAlign="right"
               mask={currencyMask}
               readOnly
-              className="blue"
+              className="red"
             />
           )}
         />
@@ -539,7 +548,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
         className="handle "
         style={{ background: "rgba(101, 84, 255, 0.37)" }}
       >
-        <FormGroup></FormGroup>
+        <FormGroup>시설 부품 판매</FormGroup>
         <FormGroup>
           <span
             className="close_btn"
@@ -552,51 +561,36 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
           </span>
         </FormGroup>
       </ModalBlueHeader>
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          height: "50px",
-          alignItems: "center",
-          paddingLeft: "30px",
-        }}
-      >
+      <TabModalHeadWrap>
         <FFormGroup>
-          <LLabel style={{}}>거래구분</LLabel>
-          <IInput />
+          <LLabel>거래구분</LLabel>
+          <IInput style={{ width: "80px" }} value={info?.cuTypeName} readOnly />
         </FFormGroup>
 
         <FFormGroup>
-          <LLabel style={{}}>거래처 코드</LLabel>
-          <IInput />
+          <LLabel>거래처 코드</LLabel>
+          <IInput value={info?.cuCode} readOnly />
         </FFormGroup>
 
         <FFormGroup>
-          <LLabel style={{}}>거래처명</LLabel>
-          <IInput />
+          <LLabel>거래처명</LLabel>
+          <IInput value={info?.cuName} readOnly />
         </FFormGroup>
-      </div>
+      </TabModalHeadWrap>
 
-      {/* 일자
-          모든품목조회
-      */}
-
-      <div
-        style={{
-          padding: "0px 30px",
-        }}
-      >
+      <ModalBody>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <FormGroup>
             <label
               style={{
                 background: "#ccc",
                 height: "30px",
-                width: "80px",
+                width: "100px",
                 borderRadius: "5px",
                 fontSize: "15px",
                 paddingTop: "3px",
                 textAlign: "center",
+                color: "#fff",
               }}
             >
               일자
@@ -645,14 +639,11 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
           tableHeader={tableHeader4}
           tableData={tableData2}
         />
-        <div
-          style={{
-            display: "flex",
-            gap: "7px",
-            justifyContent: "end",
-            margin: "10px",
-          }}
-        >
+      </ModalBody>
+
+      <TabModalFooter>
+        <div></div>
+        <ModalFooterBtn>
           <Button
             text="저장"
             icon={<Update />}
@@ -665,8 +656,8 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
             type="button"
             onClick={(e) => setModalOpen(false)}
           />
-        </div>
-      </div>
+        </ModalFooterBtn>
+      </TabModalFooter>
     </CustomForm>
   );
 }

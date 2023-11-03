@@ -27,7 +27,7 @@ const PopupArea = styled.section`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 9999;
+  z-index: 10;
 `;
 
 const PopupBack = styled.div`
@@ -56,18 +56,12 @@ const PopupContainer = styled.div<{ type: string }>`
       props.type === "ar1100BupumModal" ||
       props.type === "ar1100AsModal" ||
       props.type === "ar1100Sukum01Modal" ||
-      props.type === "ar1100Sukum02Modal") &&
+      props.type === "ar1100Sukum02Modal" ||
+      props.type === "delModal") &&
     `
       top: 50%;
       left: 50%;  
       transform: translate(-50%, -50%);    
-    `}
-
-  ${(props) =>
-    props.type === "delModal" &&
-    `       
-      top: 25%;
-      left: 50%;
     `}
 
   ${(props) =>
@@ -87,7 +81,7 @@ const PopupContainer = styled.div<{ type: string }>`
   ${(props) =>
     props.type === "accountModal" &&
     `
-      top: 77px;
+      top: 34px;
       right: 0;
     `}
 `;
@@ -116,7 +110,7 @@ function Popup({
   };
 
   if (!isOpen) return null;
-
+  console.log("type>>>", type);
   return (
     <PopupArea>
       <PopupBack onClick={modalClose} />

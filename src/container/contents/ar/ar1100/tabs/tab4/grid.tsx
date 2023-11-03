@@ -34,6 +34,7 @@ function Grid({
 
       dp.setFields(fields);
       gv.setColumns(columns);
+      gv.header.height = 35;
 
       gv.setFooter({ visible: false });
 

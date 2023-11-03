@@ -16,8 +16,18 @@ import { currencyMask, removeCommas } from "helpers/currency";
 import { modalHeader1, modalHeader2 } from "../tableHeader";
 import { AR1100MODELDETAIL, emtObjTab6 } from "../model";
 import Grid from "./grid";
-import { LLabel, IInput, FFormGroup, TTSide, ArticleDiv } from "../style";
 import { prepVal } from "../../../helper";
+import {
+  ModalBody,
+  ModalFooterBtn,
+  TabModalFooter,
+  TabModalHeadWrap,
+  LLabel,
+  IInput,
+  FFormGroup,
+  TTSide,
+  ArticleDiv,
+} from "../../style";
 
 function SukumModal2({
   setModalOpen,
@@ -366,31 +376,27 @@ function SukumModal2({
       </ModalBlueHeader>
       <div>
         {/* Header */}
-        <div
-          style={{
-            fontSize: "14px",
-            padding: "20px 15px",
-            display: "flex",
-            alignItems: "center",
-            background: "#fffbd6",
-          }}
-        >
+        <TabModalHeadWrap>
           <FFormGroup>
-            <LLabel style={{}}>거래구분</LLabel>
-            <IInput readOnly value={info?.cuTypeName} />
+            <LLabel>거래구분</LLabel>
+            <IInput
+              readOnly
+              value={info?.cuTypeName}
+              style={{ width: "80px" }}
+            />
           </FFormGroup>
           <FFormGroup>
-            <LLabel style={{}}>거래처 코드</LLabel>
+            <LLabel>거래처 코드</LLabel>
             <IInput readOnly value={info?.cuCode} />
           </FFormGroup>
           <FFormGroup>
-            <LLabel style={{}}>거래처명</LLabel>
+            <LLabel>거래처명</LLabel>
             <IInput readOnly value={info?.cuName} />
           </FFormGroup>
-        </div>
+        </TabModalHeadWrap>
 
         {/* Content */}
-        <div style={{ margin: "5px 0" }}>
+        <ModalBody>
           <FormGroup style={{ marginTop: "3px", gap: "5px" }}>
             <TTSide>미납&nbsp;&nbsp;&nbsp;내역</TTSide>
             <Grid
@@ -423,24 +429,14 @@ function SukumModal2({
               />
             </ArticleDiv>
           </FormGroup>
-        </div>
+        </ModalBody>
 
         {/* Footer */}
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "10px",
-            alignItems: "center",
-            background: "#b9b9b9",
-            padding: "10px",
-          }}
-        >
+        <TabModalFooter>
           <div style={{ color: "#359395" }}>
             <InfoText text="선택된 미수자료를 선입선출 방법을 수납처리 합니다." />
           </div>
-          <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+          <ModalFooterBtn>
             <Button
               text="저장"
               icon={<Update />}
@@ -456,8 +452,8 @@ function SukumModal2({
                 setModalOpen(false);
               }}
             />
-          </div>
-        </div>
+          </ModalFooterBtn>
+        </TabModalFooter>
       </div>
     </>
   );
