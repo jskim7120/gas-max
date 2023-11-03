@@ -82,7 +82,7 @@ function Grid({
       });
     };
 
-    gv.onSelectionChanged = (grid: any, index: any) => {
+    gv.onSelectionChanged = (grid: any, index: any, a: any, b: any) => {
       const itemIndex: any = gv.getCurrent().dataRow;
       setSelected(itemIndex);
       dispatch(
@@ -93,6 +93,7 @@ function Grid({
         })
       );
     };
+
     gv.onEditChange = function (grid: any, index: any, value: any) {
       if (index.column === "salestateName") {
         changeState(value, index.dataRow);
