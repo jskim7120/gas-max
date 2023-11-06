@@ -52,7 +52,7 @@ function Footer() {
 
   return (
     <FooterContainer>
-      {showCustomerModal({})}
+      {showCustomerModal()}
       <div style={{ display: "flex" }}>
         <div className="bussiness_partner_cnt">
           <img src={PartnerImg} />

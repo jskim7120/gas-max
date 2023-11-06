@@ -9,15 +9,16 @@ const customStyle = {
 
 function CustomerModal({
   setIsOpen,
-  onClose,
-}: {
+}: // onClose,
+{
   setIsOpen: Function;
-  onClose: MouseEventHandler;
+  // onClose: MouseEventHandler;
 }) {
   return (
     <Draggable handle=".handle">
       <ModalWrapper style={{ ...customStyle }}>
-        <FooterModal setIsOpen={setIsOpen} onClose={onClose} />
+        {/* <FooterModal setIsOpen={setIsOpen} onClose={onClose} /> */}
+        <FooterModal setIsOpen={setIsOpen} />
       </ModalWrapper>
     </Draggable>
   );
