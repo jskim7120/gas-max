@@ -125,6 +125,7 @@ const Tab1 = React.forwardRef(
 
     const handleChangeQty = (val: number, type: string) => {
       if (type === "qty") {
+        setQty(val);
         setReqty(val);
       } else if (type === "qtyKg") {
         setQtyKg(val);
@@ -155,11 +156,7 @@ const Tab1 = React.forwardRef(
     const handleChangeReqty = (val: number, type: string) => {
       if (type === "reqty") {
         setReqty(val);
-        const tempJago = +junJaego + prepVal(getValues("pjQty")) - +val;
-
-        console.log("junJaego????", +junJaego);
-        console.log(prepVal(getValues("pjQty")));
-        console.log("val???", val);
+        const tempJago = +junJaego + prepVal(qty) - +val;
 
         reset((formValues) => ({
           ...formValues,
@@ -300,8 +297,6 @@ const Tab1 = React.forwardRef(
         });
 
         if (Object.keys(res)?.length > 0) {
-          //setJpKind(res[0]?.jpKind);
-          // handleChangeDanga(res[0]?.jcJpDanga);
           if (res[0]?.jpKind === "0") {
             setReqty(0);
           } else {
@@ -313,7 +308,6 @@ const Tab1 = React.forwardRef(
             pjJpName: res[0]?.jcJpName ? res[0]?.jcJpName : "",
             pjDanga: res[0]?.jcJpDanga ? res[0]?.jcJpDanga : 0,
             jpKind: res[0]?.jpKind,
-            //jpSpecific: res[0]?.jpSpecific,
             pjQty: 0,
             pjJago: 0,
           }));
