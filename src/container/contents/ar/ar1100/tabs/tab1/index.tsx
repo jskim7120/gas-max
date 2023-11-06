@@ -163,7 +163,7 @@ const Tab1 = React.forwardRef(
           pjJago: +tempJago,
         }));
       } else if (type === "qtyL") {
-        const tempQtyKg = (isNaN(val) ? 0 : +val) / +getValues("jpSpecific");
+        const tempQtyKg = (isNaN(val) ? 0 : +val) / +specific;
         setQtyKg(tempQtyKg);
         setQtyL(val);
       }
