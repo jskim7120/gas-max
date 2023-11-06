@@ -98,7 +98,7 @@ function AR1100({
   const [tabId, setTabId] = useState<number>(0);
   const [isAddBtnClicked, setIsAddBtnClicked] = useState<boolean>(false);
   const [toggler, setToggler] = useState<boolean>(false);
-  const [jpKind, setJpKind] = useState();
+  // const [jpKind, setJpKind] = useState();
 
   const [junJaego, setJunJaego] = useState<number>(0);
   const [qty, setQty] = useState<number>(0);
@@ -112,6 +112,10 @@ function AR1100({
   const [kumVat, setKumVat] = useState<number>(0);
   const [kumack, setKumack] = useState<number>(0);
   const [misu, setMisu] = useState<number>(0);
+
+  const [qtyKg, setQtyKg] = useState<number>(0);
+  const [qtyL, setQtyL] = useState<number>(0);
+  const [specific, setSpecific] = useState<number>(0);
 
   const [toggler2, setToggler2] = useState<boolean>(false);
 
@@ -232,7 +236,6 @@ function AR1100({
 
     if (res !== undefined && Object.keys(res)?.length > 0) {
       dispatch(setAR1100Tab4Multiple({}));
-      // dispatch(setAR1100Tab5Data({}));
       setDataDictionary({
         pjVatDiv: res?.pjVatDiv,
         pjSwCode: res?.pjSwCode,
@@ -244,17 +247,17 @@ function AR1100({
 
       if (res?.detailData) {
         const detail = res?.detailData[0];
-        tabRef1?.current?.reset({ ...detail, pjDate: new Date() });
-
         setData65(detail);
-        setJunJaego(detail?.junJaego ? detail?.junJaego : 0); // ene irehgui bgaa
-        //setQty(detail?.pjQty);
-        setReqty(detail?.pjReqty);
-        //setDanga(detail?.pjDanga);
-        //setVatDiv(detail?.pjVatDiv);
-        //setInkum(detail?.pjInkum);
-        //setDc(detail?.pjDc);
-
+        if (detail?.jpKind === "0") {
+          setQty(detail?.pjQty);
+          setReqty(detail?.pjReqty);
+          setJunJaego(detail?.junJaego ? detail?.junJaego : 0); // ene irehgui bgaa
+        } else {
+          setQtyKg(detail?.qtyKg);
+          setQtyL(detail?.qtyL);
+          setSpecific(detail?.jpSpecific);
+        }
+        tabRef1?.current?.reset({ ...detail, pjDate: new Date() });
         document.getElementById("pjQty")?.focus();
       }
     }
@@ -645,14 +648,12 @@ function AR1100({
             areaCode: getValues("areaCode"),
           })
         );
-      } else if (data[selected]?.pjType === "5") {
-        dispatch(setAR1100Tab4Multiple({}));
       } else {
         dispatch(setAR1100Tab4Multiple({}));
       }
 
       if (res?.detailData && res?.detailData?.length > 0) {
-        setJpKind(res?.detailData[0]?.jpKind);
+        // setJpKind(res?.detailData[0]?.jpKind);
         setData65(res?.detailData[0]);
       } else {
         setData65({});
@@ -669,14 +670,15 @@ function AR1100({
         });
         if (res?.detailData && Object.keys(res?.detailData)?.length > 0) {
           let detail = res?.detailData[0];
-          //setJunJaego(detail?.junJaego); // irehgui bn ene talbar
-          setJunJaego(0); //turdee ingeed tavichihyaa daraa ustga
-          setReqty(detail?.pjReqty);
-          //setQty(detail?.pjQty);
-          //setDanga(detail?.pjDanga);
-          //setVatDiv(detail?.pjVatDiv);
-          //setInkum(detail?.pjInkum);
-          //setDc(detail?.pjDc);
+          if (detail?.jpKind === "0") {
+            setQty(detail?.pjQty);
+            setReqty(detail?.pjReqty);
+            setJunJaego(detail?.junJaego ? detail?.junJaego : 0); // ene irehgui bgaa
+          } else {
+            setQtyKg(detail?.qtyKg);
+            setQtyL(detail?.qtyL);
+            setSpecific(detail?.jpSpecific);
+          }
           tabRef1?.current?.reset(detail);
         }
       }
@@ -1258,8 +1260,6 @@ function AR1100({
             tabRef5,
             tabRef6,
             addBtnUnClick,
-            jpKind,
-            setJpKind,
             junJaego,
             setJunJaego,
             qty,
@@ -1283,7 +1283,13 @@ function AR1100({
             misu,
             setMisu,
             gubun,
-            setGubun
+            setGubun,
+            setQtyKg,
+            qtyKg,
+            setQtyL,
+            qtyL,
+            setSpecific,
+            specific
           )}
         </TabContentWrapper>
       </WrapperContent>

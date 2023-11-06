@@ -28,12 +28,18 @@ const Tab1 = React.forwardRef(
       handleSubmitParent,
       submitParent,
       addBtnUnClick,
-      jpKind,
-      setJpKind,
       junJaego,
       setJunJaego,
+      qty,
+      setQty,
       reqty,
       setReqty,
+      setQtyKg,
+      qtyKg,
+      setQtyL,
+      qtyL,
+      setSpecific,
+      specific,
     }: {
       tabId: number;
       data: any;
@@ -43,12 +49,18 @@ const Tab1 = React.forwardRef(
       handleSubmitParent: Function;
       submitParent: Function;
       addBtnUnClick: Function;
-      jpKind: any;
-      setJpKind: Function;
       junJaego: number;
       setJunJaego: Function;
+      qty: number;
+      setQty: Function;
       reqty: number;
       setReqty: Function;
+      setQtyKg: Function;
+      qtyKg: number;
+      setQtyL: Function;
+      qtyL: number;
+      setSpecific: Function;
+      specific: number;
     },
     ref: React.ForwardedRef<any>
   ) => {
@@ -69,17 +81,16 @@ const Tab1 = React.forwardRef(
 
     useEffect(() => {
       if (cm1106.source === "AR11000") {
-        setJpKind(cm1106.jpKind);
+        // setJpKind(cm1106.jpKind);
         resetForm("jpName");
       }
     }, [cm1106.tick]);
 
-    useEffect(() => {
-      if (watch("pjQty") !== undefined) {
-        console.log("A duudagdav::", watch("pjQty"), typeof watch("pjQty"));
-        handleChangeQty(watch("pjQty"));
-      }
-    }, [watch("pjQty")]);
+    // useEffect(() => {
+    //   if (watch("pjQty") !== undefined) {
+    //     handleChangeQty(watch("pjQty"), "qty");
+    //   }
+    // }, [watch("pjQty")]);
 
     // useEffect(() => {
     //   if (watch("pjReqty") !== undefined) {
@@ -126,13 +137,15 @@ const Tab1 = React.forwardRef(
       return tempMisu;
     };
 
-    const handleChangeQty = (val: number) => {
-      let tempReqty: number;
-      if (getValues("jpKind") === "0") {
-        tempReqty = val;
-      } else {
-        tempReqty = (isNaN(val) ? 0 : val) * +getValues("jpSpecific");
+    const handleChangeQty = (val: number, type: string) => {
+      if (type === "qty") {
+        setReqty(val);
+      } else if (type === "qtyKg") {
+        setQtyKg(val);
+        const tempQtyL = (isNaN(val) ? 0 : val) * +specific;
+        setQtyL(tempQtyL);
       }
+
       let tempQty = isNaN(val) ? 0 : +val;
       const tempVatDiv = getValues("pjVatDiv") ? getValues("pjVatDiv") : "0";
       let tempDanga = prepVal(getValues("pjDanga"));
@@ -143,7 +156,7 @@ const Tab1 = React.forwardRef(
         tempVatDiv
       );
       const tempMisu = calculationOfMisu(tempTotal);
-      setReqty(tempReqty);
+
       reset((formValues) => ({
         ...formValues,
         pjKumSup: tempKumSup,
@@ -153,27 +166,35 @@ const Tab1 = React.forwardRef(
       }));
     };
 
-    const handleChangeReqty = (val: number) => {
-      setReqty(val);
-      if (getValues("jpKind") === "0") {
+    const handleChangeReqty = (val: number, type: string) => {
+      if (type === "reqty") {
+        setReqty(val);
         const tempJago = +junJaego + prepVal(getValues("pjQty")) - +val;
+
+        console.log("junJaego????", +junJaego);
+        console.log(prepVal(getValues("pjQty")));
+        console.log("val???", val);
 
         reset((formValues) => ({
           ...formValues,
           pjJago: +tempJago,
         }));
-      } else {
-        const temp = (isNaN(val) ? 0 : +val) / +getValues("jpSpecific");
-        reset((formValues) => ({
-          ...formValues,
-          pjQty: temp,
-        }));
+      } else if (type === "qtyL") {
+        const tempQtyKg = (isNaN(val) ? 0 : +val) / +getValues("jpSpecific");
+        setQtyKg(tempQtyKg);
+        setQtyL(val);
       }
     };
 
     const handleChangeDanga = (val: any) => {
       const tempDanga = prepVal(val);
-      const tempQty = isNaN(getValues("pjQty")) ? 0 : getValues("pjQty");
+      let tempQty: number = 0;
+      if (getValues("jpKind") === "0") {
+        tempQty = isNaN(getValues("pjQty")) ? 0 : getValues("pjQty");
+      } else {
+        tempQty = isNaN(qtyKg) ? 0 : +qtyKg;
+      }
+
       const tempVatDiv = getValues("pjVatDiv") ? getValues("pjVatDiv") : "0";
 
       const price = tempDanga * tempQty;
@@ -263,18 +284,22 @@ const Tab1 = React.forwardRef(
         });
 
         if (Object.keys(res)?.length > 0) {
-          //setSpecific(res[0]?.jpSpecific);
           //setJpKind(res[0]?.jpKind);
-          handleChangeDanga(res[0]?.jcJpDanga);
-          setReqty(0);
+          // handleChangeDanga(res[0]?.jcJpDanga);
+          if (res[0]?.jpKind === "0") {
+            setReqty(0);
+          } else {
+            setSpecific(res[0]?.jpSpecific);
+          }
+
           reset((formValues) => ({
             ...formValues,
             pjJpName: res[0]?.jcJpName ? res[0]?.jcJpName : "",
             pjDanga: res[0]?.jcJpDanga ? res[0]?.jcJpDanga : 0,
             jpKind: res[0]?.jpKind,
-            jpSpecific: res[0]?.jpSpecific,
+            //jpSpecific: res[0]?.jpSpecific,
             pjQty: 0,
-            pjJago: res[0]?.jpKind === "1" ? res[0]?.jpSpecific : 0,
+            pjJago: 0,
           }));
 
           document.getElementById("pjQty")?.focus();
@@ -309,12 +334,14 @@ const Tab1 = React.forwardRef(
           (getValues("pjQty") ? +getValues("pjQty") : 0);
 
         setJunJaego(tempJunJaego);
+        setSpecific(cm1106?.jpSpecific);
 
         reset((formValues) => ({
           ...formValues,
           pjJpName: cm1106.jpName ? cm1106.jpName : "",
           pjJpCode: cm1106.jpCode ? cm1106.jpCode : "",
           pjJpSpec: cm1106?.jpSpec,
+          jpKind: cm1106?.jpKind,
           //pjJago: pjJago,
           pjDanga: cm1106.jcJpDanga,
           pjKumSup: pjKumSup,
@@ -344,7 +371,7 @@ const Tab1 = React.forwardRef(
         params.pjCuCode = info?.cuCode;
         params.pjCuName = info?.cuName;
         params.pjSno = "";
-        params.pjDateB = DateWithoutDash(params.pjDate);        
+        params.pjDateB = DateWithoutDash(params.pjDate);
       } else {
         params.pjDateB = DateWithoutDash(data65?.pjDateB);
       }
@@ -361,10 +388,16 @@ const Tab1 = React.forwardRef(
       params.pjJago = +removeCommas(params.pjJago, "number");
 
       if (params.jpKind === "1") {
-        params.qtyKg = params.pjQty;
-        params.qtyL = reqty;
+        params.qtyKg = qtyKg;
+        params.qtyL = qtyL;
+        params.jpSpecific = specific;
         delete params.pjQty;
         delete params.pjJago;
+      } else {
+        params.qty = qty;
+        params.reqty = reqty;
+        delete params.qtyKg;
+        delete params.qtyL;
       }
 
       if (params.pjSwCode) {
@@ -447,17 +480,25 @@ const Tab1 = React.forwardRef(
 
     const td21 = {
       3: (
-        <Controller
-          control={control}
+        // <Controller
+        //   control={control}
+        //   name="pjQty"
+        //   render={({ field }) => (
+        //     <Input
+        //       {...field}
+        //       type="number"
+        //       inputSize={InputSize.i100}
+        //       textAlign="right"
+        //     />
+        //   )}
+        // />
+        <Input
           name="pjQty"
-          render={({ field }) => (
-            <Input
-              {...field}
-              type="number"
-              inputSize={InputSize.i100}
-              textAlign="right"
-            />
-          )}
+          value={qty}
+          onChange={(e: any) => handleChangeQty(e.target.value, "qty")}
+          type="number"
+          inputSize={InputSize.i100}
+          textAlign="right"
         />
       ),
 
@@ -477,7 +518,7 @@ const Tab1 = React.forwardRef(
         <Input
           name="pjReqty"
           value={reqty}
-          onChange={(e: any) => handleChangeReqty(e.target.value)}
+          onChange={(e: any) => handleChangeReqty(e.target.value, "reqty")}
           type="number"
           inputSize={InputSize.i100}
           textAlign="right"
@@ -492,6 +533,7 @@ const Tab1 = React.forwardRef(
             <Input
               {...field}
               inputSize={InputSize.i100}
+              type="number"
               readOnly
               textAlign="right"
             />
@@ -502,28 +544,34 @@ const Tab1 = React.forwardRef(
 
     const td22 = {
       3: (
-        <Controller
-          control={control}
+        <Input
           name="qtyKg"
-          render={({ field }) => (
-            <Input {...field} inputSize={InputSize.i100} textAlign="right" />
-          )}
+          value={qtyKg}
+          onChange={(e: any) => handleChangeQty(e.target.value, "qtyKg")}
+          type="number"
+          inputSize={InputSize.i100}
+          textAlign="right"
         />
       ),
       4: (
-        <Controller
-          control={control}
+        <Input
           name="qtyL"
-          render={({ field }) => (
-            <Input {...field} inputSize={InputSize.i100} textAlign="right" />
-          )}
+          value={qtyL}
+          onChange={(e: any) => handleChangeReqty(e.target.value, "qtyL")}
+          type="number"
+          inputSize={InputSize.i100}
+          textAlign="right"
         />
       ),
       5: (
         <Input
-          register={register("jpSpecific")}
+          name="jpSpecific"
+          value={specific}
+          onChange={(e: any) => setSpecific(e.target.value)}
+          type="number"
           inputSize={InputSize.i100}
           textAlign="right"
+          readOnly
         />
       ),
     };
@@ -746,7 +794,7 @@ const Tab1 = React.forwardRef(
         case "1":
           return {
             tableHeader: tableHeader12,
-            tableData: [{ ...td1, ...td21, ...td3 }],
+            tableData: [{ ...td1, ...td22, ...td3 }],
           };
         default:
           return {
