@@ -24,8 +24,8 @@ function getTabContent(
   tabRef5: any,
   tabRef6: any,
   addBtnUnClick: Function,
-  jpKind: any,
-  setJpKind: Function,
+  // jpKind: any,
+  // setJpKind: Function,
   junJaego: number,
   setJunJaego: Function,
   qty: number,
@@ -49,7 +49,13 @@ function getTabContent(
   misu: number,
   setMisu: Function,
   gubun: string,
-  setGubun: Function
+  setGubun: Function,
+  setQtyKg: Function,
+  qtyKg: number,
+  setQtyL: Function,
+  qtyL: number,
+  setSpecific: Function,
+  specific: number
 ) {
   switch (tabId) {
     case 0:
@@ -64,12 +70,18 @@ function getTabContent(
           handleSubmitParent={handleSubmit}
           submitParent={submit}
           addBtnUnClick={addBtnUnClick}
-          jpKind={jpKind}
-          setJpKind={setJpKind}
           junJaego={junJaego}
           setJunJaego={setJunJaego}
+          qty={qty}
+          setQty={setQty}
           reqty={reqty}
           setReqty={setReqty}
+          setQtyKg={setQtyKg}
+          qtyKg={qtyKg}
+          setQtyL={setQtyL}
+          qtyL={qtyL}
+          setSpecific={setSpecific}
+          specific={specific}
         />
       );
     case 1:
