@@ -166,6 +166,7 @@ const Tab1 = React.forwardRef(
         const tempQtyKg = (isNaN(val) ? 0 : +val) / +specific;
         setQtyKg(tempQtyKg);
         setQtyL(val);
+        //handleChangeQty(val, "qtyKg");
       }
     };
 
@@ -173,7 +174,7 @@ const Tab1 = React.forwardRef(
       const tempDanga = prepVal(val);
       let tempQty: number = 0;
       if (getValues("jpKind") === "0") {
-        tempQty = isNaN(getValues("pjQty")) ? 0 : getValues("pjQty");
+        tempQty = isNaN(qty) ? 0 : +qty;
       } else {
         tempQty = isNaN(qtyKg) ? 0 : +qtyKg;
       }
@@ -197,7 +198,13 @@ const Tab1 = React.forwardRef(
 
     const handleChangeVatDiv = (val: string) => {
       const tempDanga = prepVal(getValues("pjDanga"));
-      const tempQty = isNaN(getValues("pjQty")) ? 0 : getValues("pjQty");
+      let tempQty: number = 0;
+
+      if (getValues("jpKind") === "1") {
+        tempQty = isNaN(qtyKg) ? 0 : +qtyKg;
+      } else {
+        tempQty = isNaN(qty) ? 0 : +qty;
+      }
 
       const price = tempDanga * tempQty;
       let { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(price, val);
@@ -404,8 +411,8 @@ const Tab1 = React.forwardRef(
         delete params.pjQty;
         delete params.pjJago;
       } else {
-        params.qty = qty;
-        params.reqty = reqty;
+        params.pjQty = qty;
+        params.pjReqty = reqty;
         delete params.qtyKg;
         delete params.qtyL;
       }
