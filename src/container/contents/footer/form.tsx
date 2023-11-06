@@ -202,21 +202,15 @@ function Form({
 
   useEffect(() => {
     if (areaCode !== undefined && areaCode?.length > 0) {
-      if (footerState.search !== undefined && footerState.search?.length > 0) {
+      if (footerState.search !== undefined) {
         reset({
           areaCode: areaCode[0].code,
-          ...getParams(
-            footerState.search[0].fieldName,
-            footerState.search[0].text
-          ),
+          ...getParams(footerState.search.fieldName, footerState.search.text),
         });
-        if (footerState.search[0].text !== "") {
+        if (footerState.search.text !== "") {
           fetchData({
             areaCode: areaCode[0].code,
-            ...getParams(
-              footerState.search[0].fieldName,
-              footerState.search[0].text
-            ),
+            ...getParams(footerState.search.fieldName, footerState.search.text),
           });
         }
       }
