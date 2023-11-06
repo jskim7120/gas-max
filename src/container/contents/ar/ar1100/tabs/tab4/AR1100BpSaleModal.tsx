@@ -614,6 +614,7 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
               justifyContent: "center",
               alignItems: "center",
               gap: "6px",
+              cursor: "pointer",
             }}
             onClick={getAllBupum}
           >
