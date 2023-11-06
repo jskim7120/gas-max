@@ -968,8 +968,7 @@ function AR1100({
 
   return (
     <>
-      {showCustomerModal({ onClose: onCloseModal })}
-      {showCM1105Modal()}
+      {showCustomerModal()}
       {showDeleteModal()}
       <SearchWrapper className="h35">
         <FormGroup>

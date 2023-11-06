@@ -110,7 +110,7 @@ function Popup({
   };
 
   if (!isOpen) return null;
-  console.log("type>>>", type);
+
   return (
     <PopupArea>
       <PopupBack onClick={modalClose} />
@@ -120,10 +120,11 @@ function Popup({
           {type === "accountModal" && <AccountModal />}
           {type === "infoModal" && <InfoModal />}
           {type === "customerModal" && (
-            <CustomerModal
-              setIsOpen={setIsOpen}
-              onClose={onClose ? onClose : () => console.log("modal")}
-            />
+            // <CustomerModal
+            //   setIsOpen={setIsOpen}
+            //   onClose={onClose ? onClose : () => console.log("modal")}
+            // />
+            <CustomerModal setIsOpen={setIsOpen} />
           )}
           {type === "delModal" && <DelModal setIsOpen={setIsOpen} />}
           {type === "reLoginModal" && <ReLoginModal setIsOpen={setIsOpen} />}

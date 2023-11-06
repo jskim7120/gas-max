@@ -30,6 +30,7 @@ import { TabContentWrapper } from "components/plainTab/style";
 import getTabContent from "./getTabContent";
 import { CM1105SEARCH, CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
 import useRdanga from "app/hook/useCalcRdanga";
+import { CustomForm } from "components/form/style";
 
 function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
@@ -80,8 +81,18 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
         areaCode: cm1105.areaCode,
       });
     }
-    // console.log("state chagnaj bn INSERT", cm1105);
   }, [cm1105.areaCode, cm1105.cuCode, cm1105.status]);
+
+  useEffect(() => {
+    if (cm1105.source === "AR1100") {
+      reset((formValues) => ({
+        ...formValues,
+        cuName: cm1105.search.text,
+      }));
+
+      document.getElementById("cuName")?.focus();
+    }
+  }, [cm1105.toggleFromAR1100]);
 
   useEffect(() => {
     if (watch("cuName") !== undefined && cm1105.source === "CM1100") {
@@ -345,7 +356,7 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(submit)} autoComplete="off">
+    <CustomForm onSubmit={handleSubmit(submit)} autoComplete="off">
       <ModalBlueHeader className="handle h40">
         <FormGroup>
           <Label style={{ minWidth: "115px", color: "white" }}>영업소</Label>
@@ -757,7 +768,7 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
           </TabContentWrapper>
         </div>
       </div>
-    </form>
+    </CustomForm>
   );
 }
 

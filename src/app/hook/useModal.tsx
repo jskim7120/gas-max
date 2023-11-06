@@ -67,15 +67,18 @@ function useModal() {
     return <Modal type="en1500Modal" isOpen={isOpen} setIsOpen={setIsOpen} />;
   };
 
-  const showCustomerModal = ({ onClose }: { onClose?: MouseEventHandler }) => {
-    return (
-      <Modal
-        type="customerModal"
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        onClose={onClose && onClose}
-      />
-    );
+  // const showCustomerModal = ({ onClose }: { onClose?: MouseEventHandler }) => {
+  //   return (
+  //     <Modal
+  //       type="customerModal"
+  //       isOpen={isOpen}
+  //       setIsOpen={setIsOpen}
+  //       onClose={onClose && onClose}
+  //     />
+  //   );
+  // };
+  const showCustomerModal = () => {
+    return <Modal type="customerModal" isOpen={isOpen} setIsOpen={setIsOpen} />;
   };
 
   const showAR1100BpSaleModal = () => {

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, MouseEventHandler } from "react";
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "app/store";
 import { apiGet } from "app/axios";
 import { FOOT61, FOOTER } from "app/path";
-import { addCM1106 } from "app/state/modal/modalSlice";
+import { addCM1105SearchText, addCM1106 } from "app/state/modal/modalSlice";
 import { addInfo } from "app/state/footer/footerSlice";
 import {
   WhiteClose,
@@ -20,6 +20,7 @@ import Button from "components/button/button";
 import { ButtonColor, BadgeColor, BadgeSize } from "components/componentsType";
 import Badge from "components/badge";
 import Grid from "./grid";
+import useModal from "app/hook/useModal";
 
 const FooterWrapper = styled.div`
   .top {
@@ -166,10 +167,10 @@ interface ISEARCH {
 
 function Form({
   setIsOpen,
-  onClose,
-}: {
+}: // onClose,
+{
   setIsOpen: Function;
-  onClose: MouseEventHandler;
+  // onClose: MouseEventHandler;
 }) {
   const [areaCode, setAreaCode] = useState<
     Array<{ code: string; codeName: string }>
@@ -182,9 +183,12 @@ function Form({
 
   const footerState = useSelector((state) => state.footer);
 
-  const { register, handleSubmit, reset, setFocus } = useForm<ISEARCH>({
-    mode: "onSubmit",
-  });
+  const { register, handleSubmit, reset, getValues, control, setFocus } =
+    useForm<ISEARCH>({
+      mode: "onSubmit",
+    });
+
+  const { showCM1105Modal, openModal } = useModal();
 
   useEffect(() => {
     fetchAreaCode();
@@ -198,18 +202,21 @@ function Form({
 
   useEffect(() => {
     if (areaCode !== undefined && areaCode?.length > 0) {
-      if (
-        footerState.search !== undefined &&
-        JSON.stringify(footerState.search) !== "{}"
-      ) {
+      if (footerState.search !== undefined && footerState.search?.length > 0) {
         reset({
           areaCode: areaCode[0].code,
-          ...getParams(footerState.search.fieldName, footerState.search.text),
+          ...getParams(
+            footerState.search[0].fieldName,
+            footerState.search[0].text
+          ),
         });
-        if (footerState.search.text !== "") {
+        if (footerState.search[0].text !== "") {
           fetchData({
             areaCode: areaCode[0].code,
-            ...getParams(footerState.search.fieldName, footerState.search.text),
+            ...getParams(
+              footerState.search[0].fieldName,
+              footerState.search[0].text
+            ),
           });
         }
       }
@@ -220,6 +227,10 @@ function Form({
     const data = await apiGet(FOOT61);
     if (data && data?.areaCode) {
       setAreaCode(data.areaCode);
+      reset((formValues) => ({
+        ...formValues,
+        areaCode: data.areaCode[0].code,
+      }));
     } else {
       setAreaCode([]);
     }
@@ -277,12 +288,74 @@ function Form({
     setIsOpen(false);
   };
 
-  const submit = async (data: ISEARCH) => {
-    fetchData(data);
+  const submit = async (params: ISEARCH) => {
+    // const arr = [];
+    // if (getValues("sCuAddr") && getValues("sCuAddr") !== "") {
+    //   arr.push({
+    //     fieldName: "sCuAddr",
+    //     text: getValues("sCuAddr"),
+    //   });
+    // }
+
+    // if (getValues("sCuCode") && getValues("sCuCode") !== "") {
+    //   arr.push({
+    //     fieldName: "sCuCode",
+    //     text: getValues("sCuCode"),
+    //   });
+    // }
+
+    // if (getValues("sCuName") && getValues("sCuName") !== "") {
+    //   arr.push({
+    //     fieldName: "sCuName",
+    //     text: getValues("sCuName"),
+    //   });
+    // }
+
+    // if (getValues("sCuNo") && getValues("sCuNo") !== "") {
+    //   arr.push({
+    //     fieldName: "sCuNo",
+    //     text: getValues("sCuNo"),
+    //   });
+    // }
+
+    // if (getValues("sCuTel") && getValues("sCuTel") !== "") {
+    //   arr.push({
+    //     fieldName: "sCuTel",
+    //     text: getValues("sCuTel"),
+    //   });
+    // }
+
+    // if (getValues("sCuUsername") && getValues("sCuUsername") !== "") {
+    //   arr.push({
+    //     fieldName: "sCuUsername",
+    //     text: getValues("sCuUsername"),
+    //   });
+    // }
+
+    // dispatch(addSearchText({ search: arr }));
+
+    fetchData({ ...params, areaCode: getValues("areaCode") });
+  };
+
+  const handleClickCustomerModalBtn = () => {
+    if (getValues("sCuName") && getValues("sCuName") !== "") {
+      dispatch(
+        addCM1105SearchText({
+          source: "AR1100",
+          areaCode: getValues("areaCode"),
+          search: {
+            fieldname: "sCuName",
+            text: getValues("sCuName"),
+          },
+        })
+      );
+    }
+    openModal();
   };
 
   return (
     <FooterWrapper>
+      {showCM1105Modal()}
       <form onSubmit={handleSubmit(submit)}>
         <div className="top handle">
           <div className="top__left">
@@ -291,6 +364,7 @@ function Form({
               <Label style={{ minWidth: "63px", color: "white" }} className="b">
                 영업소
               </Label>
+
               <Select register={register("areaCode")}>
                 {areaCode?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -392,7 +466,7 @@ function Form({
               icon={<Plus />}
               type="button"
               color={ButtonColor.WARNING}
-              onClick={onClose}
+              onClick={handleClickCustomerModalBtn}
             />
           ) : (
             <div></div>
