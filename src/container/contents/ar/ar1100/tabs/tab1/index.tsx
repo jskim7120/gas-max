@@ -81,23 +81,9 @@ const Tab1 = React.forwardRef(
 
     useEffect(() => {
       if (cm1106.source === "AR11000") {
-        // setJpKind(cm1106.jpKind);
         resetForm("jpName");
       }
     }, [cm1106.tick]);
-
-    // useEffect(() => {
-    //   if (watch("pjQty") !== undefined) {
-    //     handleChangeQty(watch("pjQty"), "qty");
-    //   }
-    // }, [watch("pjQty")]);
-
-    // useEffect(() => {
-    //   if (watch("pjReqty") !== undefined) {
-    //     console.log("B duudagdav::", watch("pjQty"), typeof watch("pjQty"));
-    //     handleChangeReqty(watch("pjReqty"));
-    //   }
-    // }, [watch("pjReqty")]);
 
     useEffect(() => {
       if (watch("pjDanga") !== undefined) {
@@ -232,22 +218,52 @@ const Tab1 = React.forwardRef(
     const handleChangefields = (val: number, type: string) => {
       let tempInkum: number = 0;
       let tempDc: number = 0;
+      let total: number = prepVal(getValues("pjKumack"));
+      let tempMisu: number = 0;
 
       if (type === "inkum") {
         tempDc = prepVal(getValues("pjDc"));
-        tempInkum = prepVal(val);
+
+        if (prepVal(val) > total - tempDc) {
+          tempInkum = total - tempDc;
+          reset((formValues) => ({
+            ...formValues,
+            pjInkum: tempInkum,
+            pjMisukum: 0,
+          }));
+        } else {
+          tempMisu = total - tempDc - prepVal(val);
+          reset((formValues) => ({
+            ...formValues,
+            pjMisukum: tempMisu,
+          }));
+        }
       } else if (type === "dc") {
         tempInkum = prepVal(getValues("pjInkum"));
-        tempDc = prepVal(val);
+        if (prepVal(val) > total) {
+          reset((formValues) => ({
+            ...formValues,
+            pjDc: total,
+            pjInkum: 0,
+            pjMisukum: 0,
+          }));
+        } else {
+          if (total - prepVal(val) < tempInkum) {
+            tempInkum = total - prepVal(val);
+            reset((formValues) => ({
+              ...formValues,
+              pjInkum: tempInkum,
+              pjMisukum: 0,
+            }));
+          } else {
+            tempMisu = total - prepVal(val) - tempInkum;
+            reset((formValues) => ({
+              ...formValues,
+              pjMisukum: tempMisu,
+            }));
+          }
+        }
       }
-
-      let total: number = prepVal(getValues("pjKumack"));
-      const tempMisu: number = total - tempDc - tempInkum;
-
-      reset((formValues) => ({
-        ...formValues,
-        pjMisukum: tempMisu,
-      }));
     };
 
     const handleChangeInkumType = (val: string) => {
