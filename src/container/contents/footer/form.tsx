@@ -332,18 +332,17 @@ function Form({
   };
 
   const handleClickCustomerModalBtn = () => {
-    if (getValues("sCuName") && getValues("sCuName") !== "") {
-      dispatch(
-        addCM1105SearchText({
-          source: "AR1100",
-          areaCode: getValues("areaCode"),
-          search: {
-            fieldname: "sCuName",
-            text: getValues("sCuName"),
-          },
-        })
-      );
-    }
+    dispatch(
+      addCM1105SearchText({
+        source: "AR1100",
+        areaCode: getValues("areaCode"),
+        status: "INSERT",
+        search: {
+          fieldname: "sCuName",
+          text: getValues("sCuName"),
+        },
+      })
+    );
     openModal();
   };
 

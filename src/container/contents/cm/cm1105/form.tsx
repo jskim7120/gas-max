@@ -84,17 +84,6 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
   }, [cm1105.areaCode, cm1105.cuCode, cm1105.status]);
 
   useEffect(() => {
-    if (cm1105.source === "AR1100") {
-      reset((formValues) => ({
-        ...formValues,
-        cuName: cm1105.search.text,
-      }));
-
-      document.getElementById("cuName")?.focus();
-    }
-  }, [cm1105.toggleFromAR1100]);
-
-  useEffect(() => {
     if (watch("cuName") !== undefined && cm1105.source === "CM1100") {
       resetForm("copyCuName");
     }
@@ -140,16 +129,29 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
       setIsAddBtnClicked(true);
       setData(null);
 
-      reset((formValues: any) => ({
-        ...formValues,
-        ...emptyObj,
-        cuCode: res[0].cuCode,
-        cuCutype: res[0].cuCutype,
-        cuStae: res[0].cuStae,
-        cuType: res[0].cuType,
-        cuName: cm1105?.cuName && cm1105.cuName,
-        areaCode: cm1105.areaCode,
-      }));
+      if (cm1105.source === "AR1100") {
+        reset((formValues) => ({
+          ...formValues,
+          ...emptyObj,
+          cuCode: res[0].cuCode,
+          cuCutype: res[0].cuCutype,
+          cuStae: res[0].cuStae,
+          cuType: res[0].cuType,
+          cuName: cm1105.search.text,
+          areaCode: cm1105.areaCode,
+        }));
+      } else {
+        reset((formValues: any) => ({
+          ...formValues,
+          ...emptyObj,
+          cuCode: res[0].cuCode,
+          cuCutype: res[0].cuCutype,
+          cuStae: res[0].cuStae,
+          cuType: res[0].cuType,
+          cuName: cm1105?.cuName && cm1105.cuName,
+          areaCode: cm1105.areaCode,
+        }));
+      }
     }
   };
 
@@ -159,7 +161,7 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
         areaCode: cm1105?.areaCode,
         cuCode: cm1105?.cuCode?.substring(0, 3),
       });
-      setFocus("cuName");
+      document.getElementById("cuName")?.focus();
     } else if (type === "reset") {
       if (data && data?.customerInfo) {
         const customerInfo = data.customerInfo;

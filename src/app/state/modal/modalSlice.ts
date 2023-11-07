@@ -12,7 +12,7 @@ export interface initialStateType {
       fieldname: string;
       text: string;
     };
-    toggleFromAR1100: boolean;
+    // toggleFromAR1100: boolean;
   };
   cm1106: {
     cuCode: string;
@@ -100,7 +100,7 @@ const initialState: initialStateType = {
       fieldname: "",
       text: "",
     },
-    toggleFromAR1100: false,
+    // toggleFromAR1100: false,
   },
   cm1106: {
     cuCode: "",
@@ -198,10 +198,11 @@ const modalSlice = createSlice({
     addCM1105SearchText: (state, action) => {
       state.cm1105 = {
         ...state.cm1105,
+        status: action.payload.status,
         source: action.payload.source,
         areaCode: action.payload.areaCode,
         search: action.payload.search,
-        toggleFromAR1100: !state.cm1105.toggleFromAR1100,
+        // toggleFromAR1100: !state.cm1105.toggleFromAR1100,
       };
     },
 
