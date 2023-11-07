@@ -166,7 +166,24 @@ const Tab1 = React.forwardRef(
         const tempQtyKg = (isNaN(val) ? 0 : +val) / +specific;
         setQtyKg(tempQtyKg);
         setQtyL(val);
-        //handleChangeQty(val, "qtyKg");
+
+        const tempVatDiv = getValues("pjVatDiv") ? getValues("pjVatDiv") : "0";
+        let tempDanga = prepVal(getValues("pjDanga"));
+
+        const price = tempDanga * tempQtyKg;
+        let { tempKumSup, tempKumVat, tempTotal } = calculationOfVat(
+          price,
+          tempVatDiv
+        );
+        const tempMisu = calculationOfMisu(tempTotal);
+
+        reset((formValues) => ({
+          ...formValues,
+          pjKumSup: tempKumSup,
+          pjKumVat: tempKumVat,
+          pjKumack: tempTotal,
+          pjMisukum: tempMisu,
+        }));
       }
     };
 
