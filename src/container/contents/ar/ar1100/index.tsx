@@ -258,7 +258,7 @@ function AR1100({
           setSpecific(detail?.jpSpecific);
         }
         tabRef1?.current?.reset({ ...detail, pjDate: new Date() });
-        document.getElementById("pjQty")?.focus();
+        document.getElementById("pjJpCode")?.focus();
       }
     }
   };

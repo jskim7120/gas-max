@@ -363,6 +363,12 @@ const Tab1 = React.forwardRef(
           pjDanga: cm1106.jcJpDanga,
           pjKumSup: pjKumSup,
         }));
+
+        if (cm1106?.jpKind === "0") {
+          document.getElementById("qtyKg")?.focus();
+        } else {
+          document.getElementById("pjQty")?.focus();
+        }
       }
     };
 

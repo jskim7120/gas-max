@@ -14,7 +14,7 @@ import {
   TickInCircle,
 } from "components/allSvgIcon";
 import SEARCH_RED from "assets/image/search_red.png";
-import Grid from "components/grid";
+import Grid from "./grid";
 import Form from "./form";
 import { addCM1106AR1100Tick } from "app/state/modal/modalSlice";
 import { Select, FormGroup, Label } from "components/form/style";
@@ -117,23 +117,25 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
 
   const submit = async (data: ISEARCH) => {};
 
-  const handleChoose = () => {
-    if (selected && Object.keys(selected)?.length > 0) {
+  const handleChoose = (obj: any) => {
+    if (obj && Object.keys(obj)?.length > 0) {
       dispatch(
         addCM1106AR1100Tick({
-          jpName: selected?.jcJpName,
-          jpCode: selected?.jcJpCode,
-          jpSpec: selected?.jcJpSpec,
-          custIn: selected?.custIn,
-          custOut: selected?.custOut,
-          jcBasicJaego: selected?.jcBasicJaego,
-          jpSpecific: selected?.jpSpecific,
-          jcJpDanga: selected?.jcJpDanga,
-          jpKind: selected?.jpKind,
+          jpName: obj?.jcJpName,
+          jpCode: obj?.jcJpCode,
+          jpSpec: obj?.jcJpSpec,
+          custIn: obj?.custIn,
+          custOut: obj?.custOut,
+          jcBasicJaego: obj?.jcBasicJaego,
+          jpSpecific: obj?.jpSpecific,
+          jcJpDanga: obj?.jcJpDanga,
+          jpKind: obj?.jpKind,
         })
       );
 
       setIsModalOpen(false);
+    } else {
+      alert("please choose row from table ");
     }
   };
 
@@ -264,6 +266,7 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
             columns={columns}
             setSelected={setSelected}
             menuId={"CM1106"}
+            handleChoose={handleChoose}
             rowIndex={0}
             style={{
               height: "500px",
@@ -286,7 +289,7 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
                 icon={<TickInCircle />}
                 type="button"
                 color={ButtonColor.SUCCESS}
-                onClick={handleChoose}
+                onClick={() => handleChoose(selected)}
               />
               <Button
                 text="취소"
