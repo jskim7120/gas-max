@@ -392,13 +392,28 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
                 />
               </>
             ) : (
-              <Button
-                text="연속등록"
-                icon={<Plus />}
-                type="button"
-                onClick={handleSubmit(submitAgain)}
-                ref={btnRef1}
-              />
+              <>
+                <Button
+                  text="연속등록"
+                  icon={<Plus />}
+                  type="button"
+                  onClick={handleSubmit(submitAgain)}
+                  ref={btnRef1}
+                />
+                <Button
+                  text="저장"
+                  icon={<Update />}
+                  color={ButtonColor.SECONDARY}
+                  type="submit"
+                />
+
+                <Button
+                  type="button"
+                  text="취소"
+                  icon={<Reset />}
+                  onClick={handleReset}
+                />
+              </>
             )}
           </div>
         </FormGroup>
