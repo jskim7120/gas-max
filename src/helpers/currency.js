@@ -7,10 +7,11 @@ const defaultMaskOptions = {
   thousandsSeparatorSymbol: ",",
   // allowDecimal: true,
   // decimalSymbol: ".",
-  // decimalLimit: 2, // how many digits allowed after the decimal
+  decimalLimit: 3, // how many digits allowed after the decimal
   // integerLimit: 7, // limit length of integer numbers
   allowNegative: true,
-  // allowLeadingZeroes: true,
+  allowDecimal: true,
+  //allowLeadingZeroes: false,
 };
 
 export const currencyMask = createNumberMask({

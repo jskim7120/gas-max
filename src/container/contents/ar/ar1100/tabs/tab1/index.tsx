@@ -190,10 +190,13 @@ const Tab1 = React.forwardRef(
     const handleChangeDanga = (val: any) => {
       const tempDanga = prepVal(val);
       let tempQty: number = 0;
+
       if (getValues("jpKind") === "0") {
         tempQty = isNaN(qty) ? 0 : +qty;
-      } else {
+      } else if (getValues("jpKind") === "1") {
         tempQty = isNaN(qtyKg) ? 0 : +qtyKg;
+      } else {
+        alert("jpkind null or wrong ======>from danga change");
       }
 
       const tempVatDiv = getValues("pjVatDiv") ? getValues("pjVatDiv") : "0";
@@ -219,8 +222,10 @@ const Tab1 = React.forwardRef(
 
       if (getValues("jpKind") === "1") {
         tempQty = isNaN(qtyKg) ? 0 : +qtyKg;
-      } else {
+      } else if (getValues("jpKind") === "0") {
         tempQty = isNaN(qty) ? 0 : +qty;
+      } else {
+        alert("jpkind null or wrong ======>from vatDiv change");
       }
 
       const price = tempDanga * tempQty;
