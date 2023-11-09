@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useImperativeHandle } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
+import { setContextMenu } from "components/realgrid/contextmenu";
+
 
 const Grid = React.forwardRef(
   (
@@ -75,6 +77,8 @@ const Grid = React.forwardRef(
         const itemIndex: any = gv.getCurrent().dataRow;
         setSelected && setSelected(data[itemIndex]);
       };
+
+      setContextMenu(gv, menuId);
 
       return () => {
         dp.clearRows();
