@@ -249,20 +249,28 @@ const Tab1 = React.forwardRef(
 
       if (type === "inkum") {
         tempDc = prepVal(getValues("pjDc"));
-
-        if (prepVal(val) > total - tempDc) {
-          tempInkum = total - tempDc;
+        if (prepVal(val) > total) {
           reset((formValues) => ({
             ...formValues,
-            pjInkum: tempInkum,
+            pjDc: 0,
+            pjInkum: total,
             pjMisukum: 0,
           }));
         } else {
-          tempMisu = total - tempDc - prepVal(val);
-          reset((formValues) => ({
-            ...formValues,
-            pjMisukum: tempMisu,
-          }));
+          if (total - prepVal(val) < tempDc) {
+            tempDc = total - prepVal(val);
+            reset((formValues) => ({
+              ...formValues,
+              pjDc: tempDc,
+              pjMisukum: 0,
+            }));
+          } else {
+            tempMisu = total - prepVal(val) - tempDc;
+            reset((formValues) => ({
+              ...formValues,
+              pjMisukum: tempMisu,
+            }));
+          }
         }
       } else if (type === "dc") {
         tempInkum = prepVal(getValues("pjInkum"));
