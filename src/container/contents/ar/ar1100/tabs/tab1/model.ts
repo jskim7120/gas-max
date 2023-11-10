@@ -32,6 +32,7 @@ export interface IAR110065DETAIL {
   saleState: string;
   signuser: string;
   pacbCode: string;
+  junJaego: number;
 }
 
 export const emtObjTab1 = {

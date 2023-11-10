@@ -1,4 +1,3 @@
-import { ForwardedRef, MutableRefObject } from "react";
 import Tab1 from "./tabs/tab1";
 import Tab2 from "./tabs/tab2";
 import Tab3 from "./tabs/tab3";
@@ -24,10 +23,6 @@ function getTabContent(
   tabRef5: any,
   tabRef6: any,
   addBtnUnClick: Function,
-  // jpKind: any,
-  // setJpKind: Function,
-  junJaego: number,
-  setJunJaego: Function,
   qty: number,
   setQty: Function,
   reqty: number,
@@ -49,20 +44,13 @@ function getTabContent(
   misu: number,
   setMisu: Function,
   gubun: string,
-  setGubun: Function,
-  setQtyKg: Function,
-  qtyKg: number,
-  setQtyL: Function,
-  qtyL: number,
-  setSpecific: Function,
-  specific: number
+  setGubun: Function
 ) {
   switch (tabId) {
     case 0:
       return (
         <Tab1
           ref={tabRef1}
-          tabId={tabId}
           data={data}
           data65={data65}
           dictionary={dictionary}
@@ -70,34 +58,33 @@ function getTabContent(
           handleSubmitParent={handleSubmit}
           submitParent={submit}
           addBtnUnClick={addBtnUnClick}
-          junJaego={junJaego}
-          setJunJaego={setJunJaego}
           qty={qty}
           setQty={setQty}
           reqty={reqty}
           setReqty={setReqty}
-          setQtyKg={setQtyKg}
-          qtyKg={qtyKg}
-          setQtyL={setQtyL}
-          qtyL={qtyL}
-          setSpecific={setSpecific}
-          specific={specific}
+          danga={danga}
+          setDanga={setDanga}
+          vatDiv={vatDiv}
+          setVatDiv={setVatDiv}
+          inkum={inkum}
+          setInkum={setInkum}
+          dc={dc}
+          setDc={setDc}
         />
       );
     case 1:
       return (
         <Tab2
-          tabId={tabId}
+          ref={tabRef2}
           data={data}
           data65={data65}
           dictionary={dictionary}
           isAddBtnClicked={isAddBtnClicked}
           handleSubmitParent={handleSubmit}
           submitParent={submit}
-          ref={tabRef2}
           addBtnUnClick={addBtnUnClick}
-          junJaego={junJaego}
-          setJunJaego={setJunJaego}
+          // junJaego={junJaego}
+          // setJunJaego={setJunJaego}
           qty={qty}
           setQty={setQty}
           reqty={reqty}
@@ -109,6 +96,7 @@ function getTabContent(
     case 2:
       return (
         <Tab3
+          ref={tabRef3}
           tabId={tabId}
           data={data}
           data65={data65}
@@ -116,7 +104,6 @@ function getTabContent(
           isAddBtnClicked={isAddBtnClicked}
           handleSubmitParent={handleSubmit}
           submitParent={submit}
-          ref={tabRef3}
           addBtnUnClick={addBtnUnClick}
           qty={qty}
           setQty={setQty}

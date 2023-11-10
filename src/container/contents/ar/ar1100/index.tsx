@@ -100,27 +100,26 @@ function AR1100({
   const [toggler, setToggler] = useState<boolean>(false);
   // const [jpKind, setJpKind] = useState();
 
-  const [junJaego, setJunJaego] = useState<number>(0);
+  // const [junJaego, setJunJaego] = useState<number>(0);
+  // const [specific, setSpecific] = useState<number>(0);
   const [qty, setQty] = useState<number>(0);
   const [reqty, setReqty] = useState<number>(0);
   const [danga, setDanga] = useState<number>(0);
   const [inkum, setInkum] = useState<number>(0);
   const [dc, setDc] = useState<number>(0);
   const [vatDiv, setVatDiv] = useState<string>("0");
+  const [kumack, setKumack] = useState<number>(0);
   const [gubun, setGubun] = useState<string>("0");
   const [kumSup, setKumSup] = useState<number>(0);
   const [kumVat, setKumVat] = useState<number>(0);
-  const [kumack, setKumack] = useState<number>(0);
   const [misu, setMisu] = useState<number>(0);
-
-  const [qtyKg, setQtyKg] = useState<number>(0);
-  const [qtyL, setQtyL] = useState<number>(0);
-  const [specific, setSpecific] = useState<number>(0);
+  // const [qtyKg, setQtyKg] = useState<number>(0);
+  // const [qtyL, setQtyL] = useState<number>(0);
 
   const [toggler2, setToggler2] = useState<boolean>(false);
 
   const { getRowIndex, setRowIndex } = useRowIndex();
-  const { showCM1105Modal, openModal: openCM1105Modal } = useModal();
+  // const { showCM1105Modal, openModal: openCM1105Modal } = useModal();
   const {
     showCustomerModal,
     closeModal: closeCustomerModal,
@@ -251,13 +250,25 @@ function AR1100({
         if (detail?.jpKind === "0") {
           setQty(detail?.pjQty);
           setReqty(detail?.pjReqty);
-          setJunJaego(detail?.junJaego ? detail?.junJaego : 0); // ene irehgui bgaa
+          tabRef1?.current?.reset({
+            ...detail,
+            pjDate: new Date(),
+          });
+        } else if (detail?.jpKind === "1") {
+          setQty(detail?.qtyKg);
+          setReqty(detail?.qtyL);
+          tabRef1?.current?.reset({
+            ...detail,
+            pjJago: detail?.jpSpecific,
+            pjDate: new Date(),
+          });
         } else {
-          setQtyKg(detail?.qtyKg);
-          setQtyL(detail?.qtyL);
-          setSpecific(detail?.jpSpecific);
+          alert("wrong jpKind >>> from select41");
         }
-        tabRef1?.current?.reset({ ...detail, pjDate: new Date() });
+        setDanga(detail?.pjDanga);
+        setVatDiv(detail?.pjVatDiv);
+        setInkum(detail?.pjInkum);
+        setDc(detail?.pjDc);
         document.getElementById("pjJpCode")?.focus();
       }
     }
@@ -292,7 +303,7 @@ function AR1100({
           pcJaego: tempJaego,
         });
         setData65(detail);
-        setJunJaego(detail?.junJaego);
+        // setJunJaego(detail?.junJaego);
         setQty(detail?.pcQty);
         setReqty(detail?.pcReqty);
         setDanga(detail?.pcDanga);
@@ -673,13 +684,18 @@ function AR1100({
           if (detail?.jpKind === "0") {
             setQty(detail?.pjQty);
             setReqty(detail?.pjReqty);
-            setJunJaego(detail?.junJaego ? detail?.junJaego : 0); // ene irehgui bgaa
+            tabRef1?.current?.reset(detail);
+          } else if (detail?.jpKind === "1") {
+            setQty(detail?.qtyKg);
+            setReqty(detail?.qtyL);
+            tabRef1?.current?.reset({ ...detail, pjJago: detail?.jpSpecific });
           } else {
-            setQtyKg(detail?.qtyKg);
-            setQtyL(detail?.qtyL);
-            setSpecific(detail?.jpSpecific);
+            alert("wrong jpKind  >>> from opt65");
           }
-          tabRef1?.current?.reset(detail);
+          setDanga(detail?.pjDanga);
+          setVatDiv(detail?.pjVatDiv);
+          setInkum(detail?.pjInkum);
+          setDc(detail?.pjDc);
         }
       }
       if (data[selected]?.pjType === "1") {
@@ -694,7 +710,7 @@ function AR1100({
             (detail?.junJaego ? detail?.junJaego : 0) +
             (detail?.pcQty ? detail?.pcQty : 0) -
             (detail?.pcReqty ? detail?.pcReqty : 0);
-          setJunJaego(detail?.junJaego);
+          // setJunJaego(detail?.junJaego);
           setQty(detail?.pcQty);
           setReqty(detail?.pcReqty);
           setDanga(detail?.pcDanga);
@@ -941,18 +957,18 @@ function AR1100({
     handleSubmit((d) => submit(d, "last"))();
   };
 
-  const onCloseModal = () => {
-    dispatch(
-      addCM1105({
-        areaCode: getValues("areaCode"),
-        cuCode: "",
-        status: "INSERT",
-        source: menuId,
-      })
-    );
-    closeCustomerModal();
-    openCM1105Modal();
-  };
+  // const onCloseModal = () => {
+  //   dispatch(
+  //     addCM1105({
+  //       areaCode: getValues("areaCode"),
+  //       cuCode: "",
+  //       status: "INSERT",
+  //       source: menuId,
+  //     })
+  //   );
+  //   closeCustomerModal();
+  //   openCM1105Modal();
+  // };
 
   const changeState = async (value: string, dataRow: number) => {
     const res = await apiGet(AR1100STATE, {
@@ -1259,8 +1275,8 @@ function AR1100({
             tabRef5,
             tabRef6,
             addBtnUnClick,
-            junJaego,
-            setJunJaego,
+            // junJaego,
+            // setJunJaego,
             qty,
             setQty,
             reqty,
@@ -1282,13 +1298,13 @@ function AR1100({
             misu,
             setMisu,
             gubun,
-            setGubun,
-            setQtyKg,
-            qtyKg,
-            setQtyL,
-            qtyL,
-            setSpecific,
-            specific
+            setGubun
+            // setQtyKg,
+            // qtyKg,
+            // setQtyL,
+            // qtyL
+            // setSpecific,
+            // specific
           )}
         </TabContentWrapper>
       </WrapperContent>

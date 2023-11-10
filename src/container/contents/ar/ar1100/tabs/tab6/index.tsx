@@ -160,21 +160,20 @@ const Tab5 = React.forwardRef(
     };
 
     const submit = async (params: any) => {
-      const path = isAddBtnClicked ? AR1100SUKUMINSERT : AR1100SUKUMUPDATE;
-      params.insertType = "0";
+      let path: string = "";
 
       if (isAddBtnClicked) {
-        //params.asCuUserName = info?.cuUsername;
+        path = AR1100SUKUMINSERT;
+        params.gsSno = "";
         params.gsDateB = DateWithoutDash(params.gsDate);
-        params.msSno = "";
       } else {
-        params.asDateB = DateWithoutDash(data65?.asDate);
+        path = AR1100SUKUMUPDATE;
+        params.gsDateB = DateWithoutDash(data65?.gsDateB);
       }
 
-      params.areaCode = areaCode;
+      params.insertType = "0";
       params.gsDate = DateWithoutDash(params.gsDate);
       params.gsDateUse = DateWithoutDash(params.gsDateUse);
-
       params.gsInkum = +removeCommas(params.gsInkum, "number");
       params.gsDc = +removeCommas(params.gsDc, "number");
       params.misu = +removeCommas(params.misu, "number");

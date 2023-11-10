@@ -340,17 +340,18 @@ const Tab4 = React.forwardRef(
     };
 
     const submit = async (params: any) => {
-      const path = isAddBtnClicked ? AR1100BPSALEINSERT : AR1100BPSALEUPDATE;
-      params.insertType = "0";
+      let path: string = "";
 
       if (isAddBtnClicked) {
+        path = AR1100BPSALEINSERT;
         params.bgSno = "";
         params.bgDateB = DateWithoutDash(params.bgDate);
       } else {
-        params.bgDateB = DateWithoutDash(data65?.bgDate);
+        path = AR1100BPSALEUPDATE;
+        params.bgDateB = DateWithoutDash(data65?.bgDateB);
       }
 
-      params.areaCode = areaCode;
+      params.insertType = "0";
       params.bgDate = DateWithoutDash(params?.bgDate);
       params.bgQty = +params?.bgQty;
       params.bgKumSup = +removeCommas(params.bgKumSup, "number");

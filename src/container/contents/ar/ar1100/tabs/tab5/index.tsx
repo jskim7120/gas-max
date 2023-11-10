@@ -180,11 +180,9 @@ const Tab5 = React.forwardRef(
         params.asDateB = DateWithoutDash(data65?.asDateB);
       }
       params.insertType = "0";
-      params.areaCode = areaCode;
       params.asDate = DateWithoutDash(params.asDate);
       params.asPdate = DateWithoutDash(params.asPdate);
       params.asYdate = DateWithoutDash(params.asYdate);
-
       params.asSurikum = +removeCommas(params.asSurikum, "number");
       params.asMisukum = +removeCommas(params.asMisukum, "number");
       params.asInkum = +removeCommas(params.asInkum, "number");

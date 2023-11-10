@@ -23,7 +23,6 @@ import { addCM1106Second } from "app/state/modal/modalSlice";
 const Tab2 = React.forwardRef(
   (
     {
-      tabId,
       data,
       data65,
       dictionary,
@@ -31,8 +30,8 @@ const Tab2 = React.forwardRef(
       handleSubmitParent,
       submitParent,
       addBtnUnClick,
-      junJaego,
-      setJunJaego,
+      // junJaego,
+      // setJunJaego,
       qty,
       setQty,
       reqty,
@@ -40,7 +39,6 @@ const Tab2 = React.forwardRef(
       danga,
       setDanga,
     }: {
-      tabId: number;
       data: any;
       data65: any;
       dictionary: any;
@@ -48,8 +46,8 @@ const Tab2 = React.forwardRef(
       handleSubmitParent: Function;
       submitParent: Function;
       addBtnUnClick: Function;
-      junJaego: number;
-      setJunJaego: Function;
+      // junJaego: number;
+      // setJunJaego: Function;
       qty: number;
       setQty: Function;
       reqty: number;
@@ -59,7 +57,7 @@ const Tab2 = React.forwardRef(
     },
     ref: React.ForwardedRef<any>
   ) => {
-    const { register, handleSubmit, reset, control, watch } =
+    const { register, handleSubmit, reset, control, watch, getValues } =
       useForm<IAR1100TAB2>({
         mode: "onSubmit",
       });
@@ -87,14 +85,14 @@ const Tab2 = React.forwardRef(
 
       reset((formValues) => ({
         ...formValues,
-        pcJaego: junJaego,
+        pcJaego: getValues("junJaego"),
         pcKumack: tempKumack,
       }));
     };
 
     const handleReqtyChange = (val: number) => {
       setReqty(val);
-      let tempPcJaego = +junJaego + +qty - +val;
+      let tempPcJaego = +getValues("junJaego") + +qty - +val;
 
       reset((formValues) => ({
         ...formValues,
@@ -115,7 +113,7 @@ const Tab2 = React.forwardRef(
 
     const resetForm = (type: string) => {
       if (type === "reset") {
-        setJunJaego(data65?.junJaego);
+        // setJunJaego(data65?.junJaego);
         setQty(data65?.pcQty);
         setReqty(data65?.pcReqty);
         setDanga(data65?.pcDanga);
@@ -125,15 +123,16 @@ const Tab2 = React.forwardRef(
           pcJpName: data65?.pcJpName ? data65?.pcJpName : "",
         });
       } else if (type === "jpName") {
-        const tempJunJaego =
+        const tempJunJaego: number =
           (cm1106?.jcBasicJaego ? +cm1106?.jcBasicJaego : 0) +
           (cm1106?.custOut ? +cm1106?.custOut : 0) -
           (cm1106?.custIn ? +cm1106?.custIn : 0);
 
-        setJunJaego(tempJunJaego);
+        // setJunJaego(tempJunJaego);
 
         reset((formValues) => ({
           ...formValues,
+          junJaego: tempJunJaego,
           pcJpName: cm1106?.jpName,
           pcJpCode: cm1106?.jpCode,
           pcJpSpec: cm1106?.jpSpec,
@@ -188,18 +187,18 @@ const Tab2 = React.forwardRef(
     };
 
     const submit = async (params: any) => {
-      const path = isAddBtnClicked ? AR1100CJSALEINSERT : AR1100CJSALEUPDATE;
-      params.insertType = "0";
+      let path: string = "";
+
       if (isAddBtnClicked) {
-        params.areaCode = info?.areaCode;
-        params.pcCuCode = info?.cuCode;
-        params.pcCuName = info?.cuName;
+        path = AR1100CJSALEINSERT;
         params.pcSno = "";
         params.pcDateB = DateWithoutDash(params.pcDate);
       } else {
+        path = AR1100CJSALEUPDATE;
         params.pcDateB = DateWithoutDash(data65?.pcDateB);
       }
 
+      params.insertType = "0";
       params.pcDate = DateWithoutDash(params.pcDate);
       params.pcKumack = +removeCommas(params.pcKumack, "number");
       params.pcGum = +removeCommas(params.pcGum, "number");

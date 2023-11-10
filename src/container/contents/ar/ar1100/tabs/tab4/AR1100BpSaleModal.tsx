@@ -287,20 +287,18 @@ function Modal({ setModalOpen }: { setModalOpen: Function }) {
 
   const submit = async (params: any) => {
     if (paramState?.isAddBtnClicked !== undefined) {
-      const path =
-        paramState?.isAddBtnClicked === true
-          ? AR1100BPSALEINSERT
-          : AR1100BPSALEUPDATE;
+      let path: string = "";
 
-      params.insertType = "0";
       if (paramState?.isAddBtnClicked === true) {
+        path = AR1100BPSALEINSERT;
         params.bgSno = "";
         params.bgDateB = DateWithoutDash(params.bgDate);
       } else {
-        params.bgDateB = DateWithoutDash(params.bgDateB);
+        path = AR1100BPSALEUPDATE;
+        params.bgDateB = DateWithoutDash(params.bgDateB); //eniig dahin harah
       }
 
-      params.areaCode = paramState?.areaCode;
+      params.insertType = "0";
       params.saleState = "5";
       params.bgDate = DateWithoutDash(params?.bgDate);
       params.bgQty = +params?.bgQty;
