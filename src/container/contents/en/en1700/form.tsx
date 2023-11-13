@@ -197,7 +197,11 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ width: "650px", padding: "0px 10px" }}
+        style={{
+          width: "650px",
+          padding: "6px 10px 0",
+          border: "1px solid red",
+        }}
         autoComplete="off"
       >
         <Wrapper grid col={2}>
@@ -206,7 +210,7 @@ const Form = React.forwardRef(
             register={register("caCode")}
             inputSize={InputSize.i150}
             maxLength="2"
-            readOnly
+            readOnly={!isAddBtnClicked}
           />
 
           <FormGroup>
@@ -270,7 +274,7 @@ const Form = React.forwardRef(
             label="매핑코드"
             register={register("eyeCarCode")}
             maxLength="10"
-            inputSize={InputSize.i150}
+            style={{ width: "115px" }}
           />
           <InfoText text="탱크잔량 원격검침 시스템의 매핑할 차량코드를 지정." />
         </Wrapper>
@@ -281,9 +285,7 @@ const Form = React.forwardRef(
             <Controller
               control={control}
               name="caSafeDate"
-              render={({ field }) => (
-                <CustomDatePicker {...field} style={{ width: "150px" }} />
-              )}
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
           </Field>
           <Field>
@@ -309,11 +311,7 @@ const Form = React.forwardRef(
               control={control}
               name="caYear"
               render={({ field }) => (
-                <CustomDatePicker
-                  {...field}
-                  style={{ width: "150px" }}
-                  showMonthYearPicker
-                />
+                <CustomDatePicker {...field} showMonthYearPicker />
               )}
             />
           </FormGroup>
@@ -331,9 +329,7 @@ const Form = React.forwardRef(
             <Controller
               control={control}
               name="caInDate"
-              render={({ field }) => (
-                <CustomDatePicker {...field} style={{ width: "150px" }} />
-              )}
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
           </Field>
         </Wrapper>
@@ -348,9 +344,7 @@ const Form = React.forwardRef(
             <Controller
               control={control}
               name="caRentDate"
-              render={({ field }) => (
-                <CustomDatePicker {...field} style={{ width: "150px" }} />
-              )}
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
           </Field>
         </Wrapper>
@@ -361,9 +355,7 @@ const Form = React.forwardRef(
             <Controller
               control={control}
               name="caJdate1"
-              render={({ field }) => (
-                <CustomDatePicker {...field} style={{ width: "150px" }} />
-              )}
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
           </Field>
           <Field flex style={{ alignItems: "center" }}>
@@ -372,9 +364,7 @@ const Form = React.forwardRef(
             <Controller
               control={control}
               name="caJdate2"
-              render={({ field }) => (
-                <CustomDatePicker {...field} style={{ width: "145px" }} />
-              )}
+              render={({ field }) => <CustomDatePicker {...field} />}
             />
           </Field>
         </Wrapper>
@@ -524,18 +514,14 @@ const Form = React.forwardRef(
           <Controller
             control={control}
             name="caBsdate"
-            render={({ field }) => (
-              <CustomDatePicker {...field} style={{ width: "150px" }} />
-            )}
+            render={({ field }) => <CustomDatePicker {...field} />}
           />
 
           <Label style={{ minWidth: "auto" }}>~</Label>
           <Controller
             control={control}
             name="caBldate"
-            render={({ field }) => (
-              <CustomDatePicker {...field} style={{ width: "150px" }} />
-            )}
+            render={({ field }) => <CustomDatePicker {...field} />}
           />
         </FormGroup>
         <FormGroup>

@@ -10,8 +10,12 @@ export const VolReading = styled.div`
     margin-left: 7px;
   }
 
-  &.mt3 {
-    margin-top: 3px;
+  &.mt10 {
+    margin-top: 10px;
+  }
+
+  &.mt5 {
+    margin-top: 5px;
   }
 
   .title {

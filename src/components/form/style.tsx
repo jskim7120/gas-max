@@ -43,14 +43,24 @@ export const getInputSize = (size?: InputSize) => {
       return `175px`;
     case InputSize.i180:
       return `180px`;
+    case InputSize.i190:
+      return `190px`;
     case InputSize.i200:
       return `200px`;
+    case InputSize.i220:
+      return `220px`;
+    case InputSize.i230:
+      return `230px`;
     case InputSize.i250:
       return `250px`;
     case InputSize.i290:
       return `290px`;
     case InputSize.i300:
       return `300px`;
+    case InputSize.i320:
+      return `320px`;
+    case InputSize.i330:
+      return `330px`;
     case InputSize.i367:
       return `367px`;
     case InputSize.i400:
@@ -557,6 +567,7 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
 export const Divider = styled.div`
   height: 1px;
   background: rgb(188, 185, 185);
+  margin: 5px 0;
 `;
 export const DividerGray = styled.div`
   height: 1px;

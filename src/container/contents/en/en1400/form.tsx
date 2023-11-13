@@ -118,7 +118,10 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ width: "300px", padding: "0px 10px" }}
+        style={{
+          width: "410px",
+          padding: "6px 10px 0",
+        }}
         autoComplete="off"
       >
         <FormGroup>
@@ -147,7 +150,7 @@ const Form = React.forwardRef(
             register={register("bpCode")}
             inputSize={InputSize.i150}
             maxLength="3"
-            readOnly
+            readOnly={!isAddBtnClicked}
           />
         </FormGroup>
         <Divider />
@@ -156,7 +159,7 @@ const Form = React.forwardRef(
             label="부 품 명"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpName")}
-            inputSize={InputSize.i150}
+            inputSize={InputSize.i300}
             maxLength="20"
           />
         </FormGroup>
@@ -165,7 +168,7 @@ const Form = React.forwardRef(
             label="규 격"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpType")}
-            inputSize={InputSize.i150}
+            inputSize={InputSize.i170}
             maxLength="10"
           />
         </FormGroup>
@@ -174,7 +177,7 @@ const Form = React.forwardRef(
             label="단 위"
             labelStyle={{ minWidth: "80px" }}
             register={register("bpDanwi")}
-            inputSize={InputSize.i150}
+            inputSize={InputSize.i170}
             maxLength="10"
           />
         </FormGroup>

@@ -22,6 +22,10 @@ export const fields = [
     dataType: ValueType.TEXT,
   },
   {
+    fieldName: "jpKindName",
+    dataType: ValueType.TEXT,
+  },
+  {
     fieldName: "jpKg",
     dataType: ValueType.NUMBER,
   },
@@ -101,6 +105,16 @@ export const columns = [
     width: "70",
     header: {
       text: "가스 구분",
+    },
+    styleName: "rg-left-column",
+  },
+  {
+    name: "jpKindName",
+    fieldName: "jpKindName",
+    type: "data",
+    width: "70",
+    header: {
+      text: "품목 구분",
     },
     styleName: "rg-left-column",
   },

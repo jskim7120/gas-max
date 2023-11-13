@@ -151,7 +151,10 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ padding: "0px 10px", width: "328px" }}
+        style={{
+          padding: "6px 10px 0",
+          width: "550px",
+        }}
         autoComplete="off"
       >
         <FormGroup>
@@ -179,7 +182,7 @@ const Form = React.forwardRef(
             register={register("jpCode")}
             maxLength="4"
             inputSize={InputSize.i130}
-            readOnly
+            readOnly={!isAddBtnClicked}
           />
         </FormGroup>
         <Divider />
@@ -187,7 +190,7 @@ const Form = React.forwardRef(
           <Input
             label="품 명"
             register={register("jpName")}
-            inputSize={InputSize.i130}
+            inputSize={InputSize.i400}
             maxLength="30"
           />
         </FormGroup>

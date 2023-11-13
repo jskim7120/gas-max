@@ -22,8 +22,8 @@ const Table = styled.table`
         border: 1px solid #d6d2ce;
         border-left: none;
         font-weight: 500;
-        padding: 5px;
-        width: 120px;
+        padding: 3px 5px;
+        width: auto;
       }
     }
   }

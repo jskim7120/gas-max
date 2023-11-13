@@ -13,7 +13,7 @@ import Button from "components/button/button";
 import { Select, FormGroup, Label, Input } from "components/form/style";
 import { InfoText } from "components/text";
 import Table from "components/table";
-import { currencyMask, removeCommas } from "helpers/currency";
+import { currencyMask, removeCommas, percentMask } from "helpers/currency";
 import { IJNOTRY2 } from "./model";
 import { VolReading } from "./style";
 
@@ -107,7 +107,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
 
   const data1500 = [
     {
-      title: "280 mmH2O",
+      title: "280",
       jnCost280: (
         <Controller
           control={control}
@@ -128,6 +128,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJn280Mp")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
       rate: (
@@ -136,11 +137,12 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJnKgdanga280")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
     },
     {
-      title: "600 mmH2O",
+      title: "600",
       jnCost600: (
         <Controller
           control={control}
@@ -161,6 +163,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJn600Mp")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
       rate: (
@@ -169,11 +172,12 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJnKgdanga600")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
     },
     {
-      title: "1000 mmH2O",
+      title: "1000",
       jnCost1000: (
         <Controller
           control={control}
@@ -194,6 +198,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJn1000Mp")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
       rate: (
@@ -202,11 +207,12 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJnKgdanga1000")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
     },
     {
-      title: "1500 mmH2O",
+      title: "1500",
       jnCost1500: (
         <Controller
           control={control}
@@ -227,6 +233,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJn1500Mp")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
       rate: (
@@ -235,11 +242,12 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJnKgdanga1500")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
     },
     {
-      title: "2000 mmH2O",
+      title: "2000",
       jnCost2000: (
         <Controller
           control={control}
@@ -260,6 +268,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJn2000Mp")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
       rate: (
@@ -268,11 +277,12 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJnKgdanga2000")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
     },
     {
-      title: "2500 mmH2O",
+      title: "2500",
       jnCost2500: (
         <Controller
           control={control}
@@ -293,6 +303,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJn2500Mp")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
       rate: (
@@ -301,11 +312,12 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJnKgdanga2500")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
     },
     {
-      title: "7000 mmH2O",
+      title: "7000",
       jnCost7000: (
         <Controller
           control={control}
@@ -326,6 +338,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJn7000Mp")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
       rate: (
@@ -334,6 +347,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           register={register("tempJnKgdanga7000")}
           textAlign="right"
           inputSize={InputSize.i85}
+          readOnly
         />
       ),
     },
@@ -344,7 +358,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
       // onSubmit={handleSubmit(submit)}
       style={{
         width: "890px",
-        padding: "0px 10px 10px",
+        padding: "6px 10px 0px",
       }}
       autoComplete="off"
     >
@@ -353,16 +367,18 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           label="코 드"
           register={register("areaCode")}
           inputSize={InputSize.i85}
+          readOnly
         />
         <Input
           label="영업소명"
           register={register("areaName")}
           maxLength="20"
           inputSize={InputSize.i200}
+          readOnly
         />
       </FormGroup>
 
-      <VolReading>
+      <VolReading className="mt5">
         <div className="title">LPG 판매단가 설정</div>
         <FormGroup>
           <Input
@@ -406,7 +422,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
         />
       </VolReading>
       <FormGroup style={{ alignItems: "stretch" }}>
-        <VolReading className="mt3">
+        <VolReading className="mt10">
           <div className="title">압력별 환경 루베단가 설정</div>
           <div style={{ padding: "0 5px 5px 5px" }}>
             <Table
@@ -424,7 +440,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
             style={{ marginLeft: "30px" }}
           />
         </VolReading>
-        <VolReading className="ml5 mt3">
+        <VolReading className="ml5 mt10">
           <div className="title">신규거래처 기본설정 항목</div>
           <FormGroup>
             <Label>조정기 압력</Label>
@@ -491,7 +507,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
                 <Input
                   {...field}
                   label="연체율"
-                  mask={[/\d/, /\d/, /\d/]}
+                  mask={percentMask}
                   textAlign="right"
                   inputSize={InputSize.i85}
                 />
@@ -505,7 +521,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           />
         </VolReading>
       </FormGroup>
-      <VolReading className="mt3">
+      <VolReading className="mt10">
         <div className="title">체적검침 환경</div>
         <FormGroup>
           <Label>루베단가 계산</Label>

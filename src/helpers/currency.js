@@ -14,8 +14,21 @@ const defaultMaskOptions = {
   //allowLeadingZeroes: false,
 };
 
+const defaultPercentMaskOptions = {
+  prefix: "",
+  suffix: "",
+  includeThousandsSeparator: false,
+  integerLimit: 3,
+  allowNegative: true,
+  allowDecimal: true,
+};
+
 export const currencyMask = createNumberMask({
   ...defaultMaskOptions,
+});
+
+export const percentMask = createNumberMask({
+  ...defaultPercentMaskOptions,
 });
 
 export function formatCurrencyRemoveComma(num) {

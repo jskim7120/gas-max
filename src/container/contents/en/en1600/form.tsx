@@ -13,13 +13,15 @@ import {
 import CheckBox from "components/checkbox";
 import { IJNOSAUP, emptyObj } from "./model";
 import DaumAddress from "components/daum";
-import { SearchIcon, IconInfo } from "components/allSvgIcon";
+import { SearchIcon, IconInfo, Trash2 } from "components/allSvgIcon";
 import { DateWithoutDash } from "helpers/dateFormat";
 import { convertBase64 } from "helpers/convertBase64";
 import CustomDatePicker from "components/customDatePicker";
 import { ImageWrapper } from "../../commonStyle";
 import { currencyMask, removeCommas2 } from "helpers/currency";
 import { InputSize } from "components/componentsType";
+import { InfoText } from "components/text";
+import { GrayButton } from "../style";
 
 interface IForm {
   selected: any;
@@ -180,7 +182,10 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ width: "725px", padding: "0px 10px" }}
+        style={{
+          width: "780px",
+          padding: "6px 10px 0",
+        }}
         autoComplete="off"
       >
         <FormGroup>
@@ -188,7 +193,7 @@ const Form = React.forwardRef(
             label="코 드"
             register={register("swCode")}
             maxLength="2"
-            readOnly
+            readOnly={!isAddBtnClicked}
             inputSize={InputSize.i200}
           />
 
@@ -215,11 +220,13 @@ const Form = React.forwardRef(
             label="사 원 명"
             register={register("swName")}
             inputSize={InputSize.i200}
+            maxLength="10"
           />
           <Input
             label="부 서 명"
             register={register("swDepartment")}
-            inputSize={InputSize.i200}
+            inputSize={InputSize.i300}
+            maxLength="20"
           />
         </FormGroup>
 
@@ -274,7 +281,12 @@ const Form = React.forwardRef(
             control={control}
             name="swHp"
             render={({ field }) => (
-              <Input {...field} label="핸드폰" inputSize={InputSize.i200} />
+              <Input
+                {...field}
+                label="핸드폰"
+                maxLength="14"
+                inputSize={InputSize.i200}
+              />
             )}
           />
         </FormGroup>
@@ -287,7 +299,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.i200}
           />
           @
-          <Select register={register("mailKind")} style={{ marginLeft: "3px" }}>
+          <Select register={register("mailKind")} style={{ width: "305px" }}>
             {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
                 {obj.codeName}
@@ -301,7 +313,7 @@ const Form = React.forwardRef(
             label="주 소"
             register={register("swZipcode")}
             maxLength="6"
-            inputSize={InputSize.i200}
+            inputSize={InputSize.i100}
             readOnly
           />
           <DaumAddress
@@ -310,8 +322,8 @@ const Form = React.forwardRef(
             onClose={() => setFocus("swAddr2")}
           />
           <Input
-            maxLength="40"
-            style={{ width: "294px" }}
+            maxLength="60"
+            style={{ width: "494px" }}
             value={swAddr1}
             onChange={(e: any) => setSwAddr1(e.target.value)}
           />
@@ -321,8 +333,8 @@ const Form = React.forwardRef(
           <Input
             label=""
             register={register("swAddr2")}
-            maxLength="40"
-            style={{ width: "526px" }}
+            maxLength="60"
+            style={{ width: "626px" }}
           />
         </FormGroup>
 
@@ -331,8 +343,9 @@ const Form = React.forwardRef(
             label="매핑코드"
             register={register("eyeSwCode")}
             maxLength="10"
-            inputSize={InputSize.i200}
+            inputSize={InputSize.i100}
           />
+
           <p
             style={{
               display: "flex",
@@ -352,57 +365,35 @@ const Form = React.forwardRef(
           </p>
         </FormGroup>
         <Divider />
+
         <FormGroup>
-          <div style={{ width: "600px" }}>
+          <div>
             <FormGroup>
               <Input
                 label="서명 화일"
                 register={register("swStampFile")}
                 value={image?.name}
-                inputSize={InputSize.i200}
+                inputSize={InputSize.i330}
                 maxLength="80"
               />
-
-              <button
-                style={{
-                  width: "100px",
-                  height: "30px",
-                  background: "#666666",
-                  borderRadius: "5px",
-                  border: "1px solid #707070",
-                  color: "#fff",
-                  position: "relative",
-                  fontSize: "15px",
-                }}
-              >
+              <GrayButton type="button" style={{ marginRight: "11px" }}>
                 <SearchIcon />
-                &nbsp; 파일찾기
-                <input
-                  type="file"
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    opacity: 0,
-                  }}
-                  onChange={handleChangeImage}
-                />
-              </button>
+                &nbsp;찾기
+                <input type="file" onChange={handleChangeImage} />
+              </GrayButton>
+              <Trash2 />
             </FormGroup>
-
             <FormGroup>
               <Label>입 사 일</Label>
               <Controller
                 control={control}
                 name="swIndate"
                 render={({ field }) => (
-                  <CustomDatePicker {...field} style={{ width: "200px" }} />
+                  <CustomDatePicker {...field} style={{ width: "120px" }} />
                 )}
               />
 
-              <Label style={{ minWidth: "90px" }}>급여방식</Label>
+              <Label style={{ minWidth: "242px" }}>급여방식</Label>
               <Select register={register("swPaytype")} width={InputSize.i110}>
                 {dataCommonDic?.swPaytype?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
@@ -411,7 +402,6 @@ const Form = React.forwardRef(
                 ))}
               </Select>
             </FormGroup>
-
             <FormGroup>
               <Controller
                 control={control}
@@ -422,13 +412,11 @@ const Form = React.forwardRef(
                     label="급 여 액"
                     mask={currencyMask}
                     textAlign="right"
-                    inputSize={InputSize.i200}
+                    inputSize={InputSize.i120}
                   />
                 )}
               />
-
               <p>원</p>
-
               <Controller
                 control={control}
                 name="swPaydate"
@@ -436,7 +424,7 @@ const Form = React.forwardRef(
                   <Input
                     {...field}
                     label="급 여 일"
-                    labelStyle={{ minWidth: "76px" }}
+                    labelStyle={{ minWidth: "228px" }}
                     mask={[/\d/, /\d/]}
                     inputSize={InputSize.i110}
                   />
@@ -452,14 +440,14 @@ const Form = React.forwardRef(
             label="면허종류"
             register={register("swDrivertype")}
             maxLength="15"
-            inputSize={InputSize.i200}
+            inputSize={InputSize.i230}
           />
           <Input
             label="면허번호"
-            labelStyle={{ minWidth: "90px" }}
+            labelStyle={{ minWidth: "132px" }}
             register={register("swDriverno")}
             maxLength="17"
-            inputSize={InputSize.i110}
+            style={{ width: "258px" }}
           />
         </FormGroup>
 
@@ -468,14 +456,18 @@ const Form = React.forwardRef(
           <Controller
             control={control}
             name="swJdate1"
-            render={({ field }) => <CustomDatePicker {...field} />}
+            render={({ field }) => (
+              <CustomDatePicker {...field} style={{ width: "120px" }} />
+            )}
           />
 
           <Label style={{ minWidth: "auto" }}>~</Label>
           <Controller
             control={control}
             name="swJdate2"
-            render={({ field }) => <CustomDatePicker {...field} />}
+            render={({ field }) => (
+              <CustomDatePicker {...field} style={{ width: "120px" }} />
+            )}
           />
         </FormGroup>
 
@@ -484,7 +476,7 @@ const Form = React.forwardRef(
             label="메 모"
             register={register("swBigo")}
             maxLength="40"
-            style={{ width: "526px" }}
+            style={{ width: "580px" }}
           />
         </FormGroup>
         <Divider />
@@ -494,38 +486,27 @@ const Form = React.forwardRef(
           <p
             style={{
               marginLeft: "25px",
-              fontSize: "15px",
             }}
           >
             (체크시 퇴사사원)
           </p>
 
-          <Label>퇴사일</Label>
+          <Label style={{ minWidth: "151px" }}>퇴사일</Label>
 
           <Controller
             control={control}
             name="swOutDate"
-            render={({ field }) => <CustomDatePicker {...field} />}
+            render={({ field }) => (
+              <CustomDatePicker {...field} style={{ width: "110px" }} />
+            )}
           />
         </FormGroup>
 
-        <p
-          style={{
-            display: "flex",
-            right: "32px",
-            alignItems: "center",
-            marginLeft: "125px",
-            marginBottom: "18px",
-            gap: "6px",
-            marginTop: "6px",
-          }}
-        >
-          <IconInfo />
-          <span style={{ color: "#1B8C8E", fontSize: "15px" }}>
-            퇴사사원은 판매등록 사원에서 제외 됩니다.
-          </span>
-        </p>
-
+        <InfoText
+          text="퇴사사원은 판매등록 사원에서 제외 됩니다."
+          style={{ margin: "6px  0 10px 119px" }}
+        />
+        <Divider />
         <FormGroup>
           <Controller
             control={control}

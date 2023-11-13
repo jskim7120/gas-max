@@ -18,6 +18,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           register={register("jnJiroSNo")}
           textAlign="center"
           maxLength="6"
+          inputSize={InputSize.i100}
         />
       ),
       jnJirono: (
@@ -25,9 +26,16 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           register={register("jnJirono")}
           textAlign="center"
           maxLength="7"
+          inputSize={InputSize.i100}
         />
       ),
-      jnJiroBigo: <Input register={register("jnJiroBigo")} maxLength="7" />,
+      jnJiroBigo: (
+        <Input
+          register={register("jnJiroBigo")}
+          maxLength="7"
+          inputSize={InputSize.i300}
+        />
+      ),
       jnJiro: (
         <Field>
           <Select width={InputSize.i250} register={register("jnJiro")}>
@@ -47,6 +55,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           register={register("jnJiroSNo02")}
           textAlign="center"
           maxLength="6"
+          inputSize={InputSize.i100}
         />
       ),
       jnJirono02: (
@@ -54,10 +63,15 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           register={register("jnJirono02")}
           textAlign="center"
           maxLength="7"
+          inputSize={InputSize.i100}
         />
       ),
       jnJiroBigo02: (
-        <Input register={register("jnJiroBigo02")} maxLength="20" />
+        <Input
+          register={register("jnJiroBigo02")}
+          maxLength="20"
+          inputSize={InputSize.i300}
+        />
       ),
       jnJiro2: (
         <Field>
@@ -78,6 +92,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           register={register("jnJiroSNo03")}
           textAlign="center"
           maxLength="6"
+          inputSize={InputSize.i100}
         />
       ),
       jnJirono03: (
@@ -85,10 +100,15 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           register={register("jnJirono03")}
           textAlign="center"
           maxLength="7"
+          inputSize={InputSize.i100}
         />
       ),
       jnJiroBigo03: (
-        <Input register={register("jnJiroBigo03")} maxLength="20" />
+        <Input
+          register={register("jnJiroBigo03")}
+          maxLength="20"
+          inputSize={InputSize.i300}
+        />
       ),
       jnJiro3: (
         <Field>
@@ -109,6 +129,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           register={register("jnJiroSNo04")}
           textAlign="center"
           maxLength="6"
+          inputSize={InputSize.i100}
         />
       ),
       jnJirono04: (
@@ -116,10 +137,15 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           register={register("jnJirono04")}
           textAlign="center"
           maxLength="7"
+          inputSize={InputSize.i100}
         />
       ),
       jnJiroBigo04: (
-        <Input register={register("jnJiroBigo04")} maxLength="20" />
+        <Input
+          register={register("jnJiroBigo04")}
+          maxLength="20"
+          inputSize={InputSize.i300}
+        />
       ),
       jnJiro4: (
         <Field>
@@ -138,32 +164,56 @@ function getTabContent(id: number, register: any, jnJiro: any) {
   const data2 = [
     {
       jnOrder01: (
-        <Input register={register("jnOrder01")} inputSize={InputSize.xxl} />
+        <Input
+          register={register("jnOrder01")}
+          inputSize={InputSize.i616}
+          maxLength="50"
+        />
       ),
     },
     {
       jnOrder02: (
-        <Input register={register("jnOrder02")} inputSize={InputSize.xxl} />
+        <Input
+          register={register("jnOrder02")}
+          inputSize={InputSize.i616}
+          maxLength="50"
+        />
       ),
     },
     {
       jnOrder03: (
-        <Input register={register("jnOrder03")} inputSize={InputSize.xxl} />
+        <Input
+          register={register("jnOrder03")}
+          inputSize={InputSize.i616}
+          maxLength="50"
+        />
       ),
     },
     {
       jnOrder04: (
-        <Input register={register("jnOrder04")} inputSize={InputSize.xxl} />
+        <Input
+          register={register("jnOrder04")}
+          inputSize={InputSize.i616}
+          maxLength="50"
+        />
       ),
     },
     {
       jnOrder05: (
-        <Input register={register("jnOrder05")} inputSize={InputSize.xxl} />
+        <Input
+          register={register("jnOrder05")}
+          inputSize={InputSize.i616}
+          maxLength="50"
+        />
       ),
     },
     {
       jnOrder06: (
-        <Input register={register("jnOrder06")} inputSize={InputSize.xxl} />
+        <Input
+          register={register("jnOrder06")}
+          inputSize={InputSize.i616}
+          maxLength="50"
+        />
       ),
     },
   ];
@@ -173,14 +223,14 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       jnBank1: (
         <Input
           register={register("jnBank1")}
-          inputSize={InputSize.md290}
+          inputSize={InputSize.i220}
           maxLength="15"
         />
       ),
       jnBankno1: (
         <Input
           register={register("jnBankno1")}
-          inputSize={InputSize.md290}
+          inputSize={InputSize.i300}
           maxLength="20"
         />
       ),
@@ -189,14 +239,14 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       jnBank2: (
         <Input
           register={register("jnBank2")}
-          inputSize={InputSize.md290}
+          inputSize={InputSize.i220}
           maxLength="15"
         />
       ),
       jnBankno2: (
         <Input
           register={register("jnBankno2")}
-          inputSize={InputSize.md290}
+          inputSize={InputSize.i300}
           maxLength="20"
         />
       ),
@@ -205,14 +255,14 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       jnBank3: (
         <Input
           register={register("jnBank3")}
-          inputSize={InputSize.md290}
+          inputSize={InputSize.i220}
           maxLength="15"
         />
       ),
       jnBankno3: (
         <Input
           register={register("jnBankno3")}
-          inputSize={InputSize.md290}
+          inputSize={InputSize.i300}
           maxLength="20"
         />
       ),
@@ -221,14 +271,14 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       jnBank4: (
         <Input
           register={register("jnBank4")}
-          inputSize={InputSize.md290}
+          inputSize={InputSize.i220}
           maxLength="15"
         />
       ),
       jnBankno4: (
         <Input
           register={register("jnBankno4")}
-          inputSize={InputSize.md290}
+          inputSize={InputSize.i300}
           maxLength="20"
         />
       ),
@@ -242,6 +292,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           register={register("jnMark1")}
           textAlign="center"
           maxLength="8"
+          inputSize={InputSize.i130}
         />
       ),
       jnMark2: (
@@ -249,6 +300,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           register={register("jnMark2")}
           textAlign="center"
           maxLength="8"
+          inputSize={InputSize.i130}
         />
       ),
       jnMark3: (
@@ -256,6 +308,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           register={register("jnMark3")}
           textAlign="center"
           maxLength="8"
+          inputSize={InputSize.i130}
         />
       ),
       jnMark4: (
@@ -263,6 +316,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           register={register("jnMark4")}
           textAlign="center"
           maxLength="8"
+          inputSize={InputSize.i130}
         />
       ),
       jnMark5: (
@@ -270,6 +324,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
           register={register("jnMark5")}
           textAlign="center"
           maxLength="8"
+          inputSize={InputSize.i130}
         />
       ),
     },

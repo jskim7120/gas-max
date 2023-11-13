@@ -2,7 +2,7 @@ import React, { useImperativeHandle } from "react";
 import { useForm } from "react-hook-form";
 import { apiGet, apiPost } from "app/axios";
 import { EN2000INSERT, EN2000UPDATE, EN2000DELETE, EN200011 } from "app/path";
-import { Input, Divider, FormGroup, Label } from "components/form/style";
+import { Input, Divider, FormGroup } from "components/form/style";
 import { InfoText } from "components/text";
 import { InfoDesc } from "../../commonStyle";
 import CheckBox from "components/checkbox";
@@ -101,7 +101,10 @@ const Form = React.forwardRef(
     return (
       <form
         onSubmit={handleSubmit(submit)}
-        style={{ width: "380px", padding: "0px 10px" }}
+        style={{
+          width: "800px",
+          padding: "6px 10px 0",
+        }}
         autoComplete="off"
       >
         <FormGroup>
@@ -109,8 +112,9 @@ const Form = React.forwardRef(
             label="코 드"
             register={register("ccCode")}
             maxLength="2"
-            readOnly
+            readOnly={!isAddBtnClicked}
             inputSize={InputSize.i80}
+            labelStyle={{ minWidth: "50px" }}
           />
         </FormGroup>
         <Divider />
@@ -119,7 +123,8 @@ const Form = React.forwardRef(
             label="정비명"
             register={register("ccName")}
             maxLength="30"
-            fullWidth
+            style={{ width: "440px" }}
+            labelStyle={{ minWidth: "50px" }}
           />
         </FormGroup>
 
@@ -127,19 +132,20 @@ const Form = React.forwardRef(
           <Input
             label="비 고"
             register={register("ccBigo")}
-            fullWidth
             maxLength="50"
+            style={{ width: "715px" }}
+            labelStyle={{ minWidth: "50px" }}
           />
         </FormGroup>
 
         <FormGroup>
-          <FormGroup>
-            <Label>유류비계정 유무</Label>
-            <CheckBox title="" rtl register={register("ccOilYn")} />
-          </FormGroup>
+          <CheckBox
+            title="유류비계정 유무"
+            register={register("ccOilYn")}
+            style={{ marginLeft: "75px" }}
+          />
         </FormGroup>
-
-        <InfoDesc>
+        <InfoDesc style={{ margin: "15px 0 0 75px" }}>
           <InfoText text="유류비는 주유현황과 연동됩니다." />
         </InfoDesc>
       </form>
