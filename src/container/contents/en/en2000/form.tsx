@@ -2,7 +2,7 @@ import React, { useImperativeHandle } from "react";
 import { useForm } from "react-hook-form";
 import { apiGet, apiPost } from "app/axios";
 import { EN2000INSERT, EN2000UPDATE, EN2000DELETE, EN200011 } from "app/path";
-import { Input, Divider, FormGroup } from "components/form/style";
+import { Input, Divider, FormGroup, CustomForm } from "components/form/style";
 import { InfoText } from "components/text";
 import { InfoDesc } from "../../commonStyle";
 import CheckBox from "components/checkbox";
@@ -99,7 +99,7 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form
+      <CustomForm
         onSubmit={handleSubmit(submit)}
         style={{
           width: "800px",
@@ -148,7 +148,7 @@ const Form = React.forwardRef(
         <InfoDesc style={{ margin: "15px 0 0 75px" }}>
           <InfoText text="유류비는 주유현황과 연동됩니다." />
         </InfoDesc>
-      </form>
+      </CustomForm>
     );
   }
 );

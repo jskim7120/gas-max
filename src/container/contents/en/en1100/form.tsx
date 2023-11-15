@@ -6,11 +6,10 @@ import { EN1100INSERT, EN1100UPDATE, EN1100DELETE, EN110011 } from "app/path";
 import {
   Input,
   Select,
-  Field,
   FormGroup,
-  Wrapper,
   Divider,
   Label,
+  CustomForm,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
 import DaumAddress from "components/daum";
@@ -140,7 +139,7 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form
+      <CustomForm
         onSubmit={handleSubmit(submit)}
         style={{
           padding: "6px 12px 0",
@@ -415,7 +414,7 @@ const Form = React.forwardRef(
             {getTabContent(tabId, register, dataCommonDic?.jnJiro)}
           </TabContentWrapper>
         </div>
-      </form>
+      </CustomForm>
     );
   }
 );

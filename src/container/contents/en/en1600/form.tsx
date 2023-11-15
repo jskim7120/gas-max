@@ -9,6 +9,7 @@ import {
   Divider,
   FormGroup,
   Label,
+  CustomForm,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { IJNOSAUP, emptyObj } from "./model";
@@ -180,7 +181,7 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form
+      <CustomForm
         onSubmit={handleSubmit(submit)}
         style={{
           width: "780px",
@@ -523,7 +524,7 @@ const Form = React.forwardRef(
           />
           <p>원</p>
         </FormGroup>
-      </form>
+      </CustomForm>
     );
   }
 );

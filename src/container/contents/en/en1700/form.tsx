@@ -17,6 +17,7 @@ import {
   Wrapper,
   Divider,
   Label,
+  CustomForm,
 } from "components/form/style";
 import CheckBox from "components/checkbox";
 import { ICAR, emptyObj } from "./model";
@@ -195,7 +196,7 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form
+      <CustomForm
         onSubmit={handleSubmit(submit)}
         style={{
           width: "650px",
@@ -540,7 +541,7 @@ const Form = React.forwardRef(
           />
           <p>원</p>
         </FormGroup>
-      </form>
+      </CustomForm>
     );
   }
 );

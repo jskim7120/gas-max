@@ -10,7 +10,13 @@ import { useGetCommonDictionaryMutation } from "app/api/commonDictionary";
 import { EN1500UPDATE, EN150065 } from "app/path";
 import { InputSize } from "components/componentsType";
 import Button from "components/button/button";
-import { Select, FormGroup, Label, Input } from "components/form/style";
+import {
+  Select,
+  FormGroup,
+  Label,
+  Input,
+  CustomForm,
+} from "components/form/style";
 import { InfoText } from "components/text";
 import Table from "components/table";
 import { currencyMask, removeCommas, percentMask } from "helpers/currency";
@@ -354,7 +360,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
   ];
 
   return (
-    <form
+    <CustomForm
       // onSubmit={handleSubmit(submit)}
       style={{
         width: "890px",
@@ -580,7 +586,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
           />
         </FormGroup>
       </VolReading>
-    </form>
+    </CustomForm>
   );
 };
 

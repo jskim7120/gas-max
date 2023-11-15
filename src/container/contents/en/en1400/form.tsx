@@ -9,6 +9,7 @@ import {
   FormGroup,
   Divider,
   Label,
+  CustomForm,
 } from "components/form/style";
 import { IBUPUM, emptyObj } from "./model";
 import { currencyMask, removeCommas } from "helpers/currency";
@@ -116,7 +117,7 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form
+      <CustomForm
         onSubmit={handleSubmit(submit)}
         style={{
           width: "410px",
@@ -216,7 +217,7 @@ const Form = React.forwardRef(
           />
           <p>원</p>
         </FormGroup>
-      </form>
+      </CustomForm>
     );
   }
 );

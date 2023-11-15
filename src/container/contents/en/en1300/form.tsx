@@ -15,6 +15,7 @@ import {
   Divider,
   FormGroup,
   Label,
+  CustomForm,
 } from "components/form/style";
 import { InputSize } from "components/componentsType";
 import { currencyMask, removeCommas2 } from "helpers/currency";
@@ -149,7 +150,7 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form
+      <CustomForm
         onSubmit={handleSubmit(submit)}
         style={{
           padding: "6px 10px 0",
@@ -409,7 +410,7 @@ const Form = React.forwardRef(
             textAlign="right"
           />
         </FormGroup>
-      </form>
+      </CustomForm>
     );
   }
 );

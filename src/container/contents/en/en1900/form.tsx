@@ -9,6 +9,7 @@ import {
   Divider,
   FormGroup,
   Label,
+  CustomForm,
 } from "components/form/style";
 import { ICUSTGUBUN, emptyObj } from "./model";
 import { InputSize } from "components/componentsType";
@@ -112,7 +113,7 @@ const Form = React.forwardRef(
     };
 
     return (
-      <form
+      <CustomForm
         onSubmit={handleSubmit(submit)}
         style={{
           width: "400px",
@@ -167,7 +168,7 @@ const Form = React.forwardRef(
             inputSize={InputSize.i300}
           />
         </FormGroup>
-      </form>
+      </CustomForm>
     );
   }
 );
