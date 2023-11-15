@@ -4,7 +4,7 @@ import FormCM1105 from "container/contents/cm/cm1105/form";
 import { ModalWrapper } from "./style";
 
 const customStyle = {
-  width: "1200px",
+  width: "1160px",
 };
 
 function CM1105Modal({ setIsOpen }: { setIsOpen: Function }) {

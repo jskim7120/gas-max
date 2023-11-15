@@ -34,17 +34,17 @@ function Tab6({ register, control }: { register: Function; control: any }) {
               label="수신자 번호"
               labelStyle={{ minWidth: "80px" }}
               register={register("cuSmsHp")}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i150}
             />
 
             <Field flex style={{ alignItems: "center" }}>
-              <Label style={{ minWidth: "80px" }}>신청일자</Label>
+              <Label style={{ minWidth: "110px" }}>신청일자</Label>
 
               <Controller
                 control={control}
                 name="cuSmsDate"
                 render={({ field }) => (
-                  <CustomDatePicker {...field} style={{ width: "130px" }} />
+                  <CustomDatePicker {...field} style={{ width: "120px" }} />
                 )}
               />
             </Field>
@@ -84,17 +84,17 @@ function Tab6({ register, control }: { register: Function; control: any }) {
               label="발행 번호"
               labelStyle={{ minWidth: "80px" }}
               register={register("cuCashpayNo")}
-              inputSize={InputSize.i130}
+              inputSize={InputSize.i150}
             />
 
             <Field flex style={{ alignItems: "center" }}>
-              <Label style={{ minWidth: "80px" }}>신청일자</Label>
+              <Label style={{ minWidth: "110px" }}>신청일자</Label>
 
               <Controller
                 control={control}
                 name="cuCashpayDate"
                 render={({ field }) => (
-                  <CustomDatePicker {...field} style={{ width: "130px" }} />
+                  <CustomDatePicker {...field} style={{ width: "120px" }} />
                 )}
               />
             </Field>

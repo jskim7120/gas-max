@@ -33,17 +33,14 @@ function Tab1({
             </option>
           ))}
         </Select>
-
-        <Input register={register("cuNo")} inputSize={InputSize.i200} />
-
+        <Input register={register("cuNo")} inputSize={InputSize.i260} />
         <Input
           label="종사업장"
-          labelStyle={{ minWidth: "107px" }}
+          labelStyle={{ minWidth: "136px" }}
           register={register("cuRCode")}
           maxLength="4"
           inputSize={InputSize.i50}
         />
-
         <Label>과세구분</Label>
         <Select register={register("cuBilltype")} width={InputSize.i130}>
           {dataCommonDic?.cuBilltype?.map((obj: any, idx: number) => (
@@ -58,14 +55,14 @@ function Tab1({
         <Input
           label="상 호"
           register={register("cuSangho")}
-          inputSize={InputSize.i110}
+          style={{ width: "376px" }}
         />
         <Input
           label="대 표"
-          labelStyle={{ marginLeft: "10px", minWidth: "40px" }}
+          labelStyle={{ minWidth: "136px" }}
           register={register("cuSajang")}
           className="cm1105Label"
-          inputSize={InputSize.i150}
+          inputSize={InputSize.i200}
         />
       </FormGroup>
 
@@ -74,24 +71,25 @@ function Tab1({
           <Input
             label="주 소"
             register={register("cuSzipcode")}
-            inputSize={InputSize.i110}
+            inputSize={InputSize.i100}
           />
           <DaumAddress setAddress={setAddress} />
-          <Input register={register("cuSaddr1")} style={{ width: "284px" }} />
+          <Input register={register("cuSaddr1")} style={{ width: "380px" }} />
         </Field>
-        <Input register={register("cuSaddr2")} style={{ marginLeft: "0px" }} />
+        <Input register={register("cuSaddr2")} style={{ width: "450px" }} />
       </FormGroup>
 
       <FormGroup>
         <Input
           label="업 태"
           register={register("cuUptae")}
-          inputSize={InputSize.i150}
+          style={{ width: "376px" }}
         />
         <Input
           label="종 목"
+          labelStyle={{ minWidth: "136px" }}
           register={register("cuJongmok")}
-          inputSize={InputSize.i150}
+          inputSize={InputSize.i300}
         />
       </FormGroup>
 
@@ -103,16 +101,18 @@ function Tab1({
         />
         <Input
           label="부서명"
+          labelStyle={{ minWidth: "70px" }}
           register={register("cuDepartment")}
           inputSize={InputSize.i150}
         />
         <Input
           label="이메일"
+          labelStyle={{ minWidth: "136px" }}
           register={register("cuSeEmail")}
           inputSize={InputSize.i150}
         />
         @
-        <Select register={register("emailKind")} width={InputSize.i150}>
+        <Select register={register("emailKind")} style={{ width: "279px" }}>
           {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code1}>
               {obj.codeName}
@@ -129,16 +129,18 @@ function Tab1({
         />
         <Input
           label="부서명"
+          labelStyle={{ minWidth: "70px" }}
           register={register("cuDepartment2")}
           inputSize={InputSize.i150}
         />
         <Input
           label="이메일"
+          labelStyle={{ minWidth: "136px" }}
           register={register("cuSeEmail2")}
           inputSize={InputSize.i150}
         />
         @
-        <Select register={register("emailKind2")} width={InputSize.i150}>
+        <Select register={register("emailKind2")} style={{ width: "279px" }}>
           {dataCommonDic?.emailKind2?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code1}>
               {obj.codeName}
@@ -147,24 +149,36 @@ function Tab1({
         </Select>
       </FormGroup>
 
-      <Wrapper grid col={4}>
-        <FormGroup>
-          <Label>SMS전송 유무</Label>
-          <CheckBox register={register("cuSeSmsYn")} />
-        </FormGroup>
-        <FormGroup>
-          <Label>거래명세표 첨부발행 유무</Label>
-          <CheckBox register={register("cuSeListYn")} />
-        </FormGroup>
-        <FormGroup>
-          <Label>팩스 번호</Label>
-          <CheckBox register={register("cuSeFaxYn")} />
-        </FormGroup>
-      </Wrapper>
+      <FormGroup>
+        <CheckBox
+          register={register("cuSeListYn")}
+          title="거래명세표 첨부발행 유무"
+          style={{ width: "315px" }}
+        />
+        <CheckBox
+          register={register("cuSeSmsYn")}
+          title="SMS전송 유무"
+          style={{
+            width: "313px",
+            marginRight: "10px",
+          }}
+        />
+
+        <Select register={register("cuSeSmsNo")} width={InputSize.i150}>
+          {dataCommonDic?.emailKind2?.map((obj: any, idx: number) => (
+            <option key={idx} value={obj.code1}>
+              {obj.codeName}
+            </option>
+          ))}
+        </Select>
+        <Label style={{ minWidth: "125px" }}>팩스 번호</Label>
+        <CheckBox register={register("cuSeFaxYn")} />
+        <Input register={register("cuSeFaxNo")} inputSize={InputSize.i150} />
+      </FormGroup>
 
       <FormGroup>
         <Label>공급 사업자</Label>
-        <Select register={register("cuGongsano")} width={InputSize.i150}>
+        <Select register={register("cuGongsano")} style={{ width: "376px" }}>
           {dataCommonDic?.cuGongsano?.map((obj: any, idx: number) => (
             <option key={idx} value={obj.code}>
               {obj.codeName}
@@ -172,7 +186,7 @@ function Tab1({
           ))}
         </Select>
 
-        <Label>계산서 발행주기</Label>
+        <Label style={{ minWidth: "136px" }}>계산서 발행주기</Label>
         <Select
           register={register("cuSekumMm")}
           width={InputSize.i150}

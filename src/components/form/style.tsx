@@ -53,6 +53,8 @@ export const getInputSize = (size?: InputSize) => {
       return `230px`;
     case InputSize.i250:
       return `250px`;
+    case InputSize.i260:
+      return `260px`;
     case InputSize.i290:
       return `290px`;
     case InputSize.i300:
@@ -480,20 +482,9 @@ export const Field = styled.div<{ flex?: boolean; fullWidth?: boolean }>`
   &.rectangle {
     border: 1px solid rgba(187, 187, 187, 0.38);
     border-radius: 4px;
-    background: rgba(104, 103, 103, 0.09);
     padding: 5px;
-
-    label {
-      min-width: 50px;
-      font-family: "NotoSansKRRegular";
-      font-size: 10px;
-      background: #a7a7a7;
-      border-radius: 2px;
-      padding: 1px 2px;
-      color: #fff;
-      text-align: center;
-    }
   }
+
   &.br {
     border-right: 1px solid #e6e5e5;
   }

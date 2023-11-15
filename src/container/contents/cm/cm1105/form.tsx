@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, BaseSyntheticEvent } from "react";
 import { useForm, Controller } from "react-hook-form";
 import DaumAddress from "components/daum";
 import { useSelector, useDispatch } from "app/store";
@@ -19,9 +19,9 @@ import {
   Select,
   Field,
   FormGroup,
-  Wrapper,
   Divider,
   Label,
+  TextArea,
 } from "components/form/style";
 import { ModalBlueHeader } from "components/modal/customModals/style";
 import CheckBox from "components/checkbox";
@@ -31,6 +31,30 @@ import getTabContent from "./getTabContent";
 import { CM1105SEARCH, CM1105INSERT, CM1105UPDATE, CM110511 } from "app/path";
 import useRdanga from "app/hook/useCalcRdanga";
 import { CustomForm } from "components/form/style";
+import {
+  RadioButton,
+  RadioButtonLabel,
+  Item,
+} from "components/radioButton/style";
+
+const radioOptions = [
+  {
+    label: "용기",
+    id: "0",
+  },
+  {
+    label: "탱크",
+    id: "1",
+  },
+  {
+    label: "탱크 + 용기",
+    id: "2",
+  },
+  {
+    label: "기타",
+    id: "3",
+  },
+];
 
 function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
@@ -38,6 +62,9 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
   const [addr, setAddress] = useState<string>("");
   const [addr2, setAddress2] = useState<string>("");
   const [tabId, setTabId] = useState(0);
+
+  const [cuName, setCuName] = useState<string>("");
+  const [cuUsername, setCuUsername] = useState<string>("");
 
   const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
   const dispatch = useDispatch();
@@ -83,11 +110,11 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
     }
   }, [cm1105.areaCode, cm1105.cuCode, cm1105.status]);
 
-  useEffect(() => {
-    if (watch("cuName") !== undefined && cm1105.source === "CM1100") {
-      resetForm("copyCuName");
-    }
-  }, [watch("cuName")]);
+  // useEffect(() => {
+  //   if (watch("cuName") !== undefined && cm1105.source === "CM1100") {
+  //     resetForm("copyCuName");
+  //   }
+  // }, [watch("cuName")]);
 
   useEffect(() => {
     if (data) {
@@ -228,12 +255,14 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
       }));
       //setFocus("cuSaddr2");
       document.getElementsByName("cuSaddr2")[0]?.focus();
-    } else if (type === "copyCuName") {
-      reset((formValues: any) => ({
-        ...formValues,
-        cuUsername: watch("cuName"),
-      }));
     }
+
+    // else if (type === "copyCuName") {
+    //   reset((formValues: any) => ({
+    //     ...formValues,
+    //     cuUsername: watch("cuName"),
+    //   }));
+    // }
   };
 
   const preSubmit = () => {
@@ -247,6 +276,8 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
     formValues.cuSmsYn = formValues.cuSmsYn ? "Y" : "N";
     formValues.cuCashpayYn = formValues.cuCashpayYn ? "Y" : "N";
 
+    formValues.cuName = cuName;
+    formValues.cuUsername = cuUsername;
     formValues.cuHdate = DateWithoutDash(formValues.cuHdate);
     formValues.cuExtendDate = DateWithoutDash(formValues.cuExtendDate);
     formValues.cuGongdate = DateWithoutDash(formValues.cuGongdate);
@@ -357,6 +388,13 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
     //alert("취소하시겠습니까?");
   };
 
+  const handleChangeCuName = (val: string) => {
+    setCuName(val);
+    if (cm1105.source === "CM1100") {
+      setCuUsername(val);
+    }
+  };
+
   return (
     <CustomForm onSubmit={handleSubmit(submit)} autoComplete="off">
       <ModalBlueHeader className="handle h40">
@@ -438,51 +476,42 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
             inputSize={InputSize.i120}
             readOnly
           />
-          <Controller
-            control={control}
+          <Input
             name="cuName"
-            render={({ field }) => (
-              <Input
-                {...field}
-                label="거래처명(건물명)"
-                inputSize={InputSize.i150}
-                labelStyle={{ minWidth: "156px" }}
-              />
-            )}
+            value={cuName}
+            label="거래처명(건물명)"
+            inputSize={InputSize.i180}
+            labelStyle={{ minWidth: "194px" }}
+            onChange={(e: BaseSyntheticEvent) =>
+              handleChangeCuName(e.target.value)
+            }
           />
-          <Controller
-            control={control}
+          <Input
             name="cuUsername"
-            render={({ field }) => (
-              <Input
-                {...field}
-                label="사용자명"
-                labelStyle={{ minWidth: "114px" }}
-                inputSize={InputSize.i150}
-              />
-            )}
+            value={cuUsername}
+            label="사용자명"
+            labelStyle={{ minWidth: "67px" }}
+            inputSize={InputSize.i180}
+            onChange={(e: BaseSyntheticEvent) => setCuUsername(e.target.value)}
           />
         </FormGroup>
-
         <FormGroup>
           <Input
             label="전화번호"
             register={register("cuTel")}
-            inputSize={InputSize.i120}
-            type="number"
+            style={{ width: "247px" }}
           />
           <Input
             register={register("cuTel21")}
-            inputSize={InputSize.i150}
+            style={{ width: "247px" }}
             type="number"
           />
           <Input
             register={register("cuTel22")}
-            inputSize={InputSize.i150}
+            style={{ width: "247px" }}
             type="number"
           />
-
-          <Label style={{ minWidth: "114px" }}>거래구분</Label>
+          <Label style={{ minWidth: "97px" }}>거래구분</Label>
           <Select register={register("cuType")} width={InputSize.i150}>
             {dataCommonDic?.cuType?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
@@ -491,7 +520,6 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
             ))}
           </Select>
         </FormGroup>
-
         <FormGroup>
           <Controller
             control={control}
@@ -500,8 +528,8 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
               <Input
                 {...field}
                 label="핸드폰"
-                inputSize={InputSize.i120}
                 type="number"
+                style={{ width: "247px" }}
               />
             )}
           />
@@ -509,18 +537,17 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
             control={control}
             name="cuTel23"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i150} type="number" />
+              <Input {...field} type="number" style={{ width: "247px" }} />
             )}
           />
           <Controller
             control={control}
             name="cuTel24"
             render={({ field }) => (
-              <Input {...field} inputSize={InputSize.i150} type="number" />
+              <Input {...field} style={{ width: "247px" }} type="number" />
             )}
           />
-
-          <Label style={{ minWidth: "114px" }}>거래상태</Label>
+          <Label style={{ minWidth: "97px" }}>거래상태</Label>
           <Select register={register("cuStae")} width={InputSize.i150}>
             {dataCommonDic?.cuStae?.map((obj: any, idx: number) => (
               <option key={idx} value={obj.code}>
@@ -529,47 +556,60 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
             ))}
           </Select>
         </FormGroup>
-
         <FormGroup>
           <Input
             label="주 소"
             register={register("cuZipcode")}
-            inputSize={InputSize.i120}
+            inputSize={InputSize.i100}
           />
           <DaumAddress setAddress={setAddress} />
-          <Input register={register("cuAddr1")} style={{ width: "280px" }} />
+          <Input register={register("cuAddr1")} style={{ width: "368px" }} />
           <Controller
             control={control}
             name="cuAddr2"
             render={({ field }) => (
-              <Input {...field} style={{ width: "264px" }} />
+              <Input {...field} style={{ width: "500px" }} />
             )}
           />
         </FormGroup>
-
         <FormGroup>
           <Input
             label="비 고"
             register={register("cuBigo1")}
-            style={{ width: "432px" }}
+            style={{ width: "500px" }}
           />
-          <Input register={register("cuBigo2")} style={{ width: "264px" }} />
+          <Input register={register("cuBigo2")} style={{ width: "500px" }} />
         </FormGroup>
         <Divider />
-        <FormGroup>
-          <Input
-            label="메 모"
-            register={register("cuMemo")}
-            style={{ width: "702px" }}
-          />
-        </FormGroup>
 
         <FormGroup
           style={{
             alignItems: "start",
+            gap: "63px",
           }}
         >
-          <FormGroup style={{ flexDirection: "column" }}>
+          <FormGroup
+            style={{
+              flexDirection: "column",
+              alignItems: "start",
+            }}
+          >
+            <FormGroup>
+              <Label>메 모</Label>
+              <TextArea
+                style={{
+                  width: "700px",
+                  height: "50px",
+                  border: "1px solid rgb(188, 185, 185)",
+                  background: "aliceblue",
+                  borderRadius: "4px",
+                  margin: "3px",
+                  padding: "10px",
+                }}
+                id="cuMemo"
+                {...register("cuMemo")}
+              />
+            </FormGroup>
             <FormGroup>
               <Label>담당 사원</Label>
               <Select register={register("cuSwCode")} width={InputSize.i150}>
@@ -579,7 +619,6 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
                   </option>
                 ))}
               </Select>
-
               <Label>지역 분류</Label>
               <Select register={register("cuJyCode")} width={InputSize.i150}>
                 {dataCommonDic?.cuJyCode?.map((obj: any, idx: number) => (
@@ -588,7 +627,6 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
                   </option>
                 ))}
               </Select>
-
               <Label>관리자 분류</Label>
               <Select register={register("cuCustgubun")} width={InputSize.i150}>
                 {dataCommonDic?.cuCustgubun?.map((obj: any, idx: number) => (
@@ -598,7 +636,6 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
                 ))}
               </Select>
             </FormGroup>
-
             <FormGroup>
               <Label>소비자 형태</Label>
               <Select register={register("cuCutype")} width={InputSize.i150}>
@@ -608,19 +645,17 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
                   </option>
                 ))}
               </Select>
-
-              <Label>청구 구분</Label>
+              <Label>품목 단가</Label>
               <Select
-                register={register("cuRequestType")}
+                register={register("cuUseDanga", { valueAsNumber: true })}
                 width={InputSize.i150}
               >
-                {dataCommonDic?.cuRequestType?.map((obj: any, idx: number) => (
+                {dataCommonDic?.cuUseDanga?.map((obj: any, idx: number) => (
                   <option key={idx} value={obj.code}>
                     {obj.codeName}
                   </option>
                 ))}
               </Select>
-
               <Label>수금 방법</Label>
               <Select register={register("cuSukumtype")} width={InputSize.i150}>
                 {dataCommonDic?.cuSukumtype?.map((obj: any, idx: number) => (
@@ -630,80 +665,55 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
                 ))}
               </Select>
             </FormGroup>
-
             <FormGroup>
-              <Label>품목 단가</Label>
-              <Select
-                register={register("cuJdc", { valueAsNumber: true })}
-                width={InputSize.i150}
-              >
-                {dataCommonDic?.cuJdc?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-
-              <Label>Vat 적용방법</Label>
-              <Select register={register("cuVatKind")} width={InputSize.i150}>
-                {dataCommonDic?.cuVatKind?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-
-              <Label>원미만 금액계산</Label>
-              <Select register={register("cuRoundType")} width={InputSize.i150}>
-                {dataCommonDic?.cuRoundType?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
-
-            <Wrapper grid>
-              <FormGroup>
-                <Label>계산서 발행유무</Label>
-                <CheckBox
-                  register={register("cuSekumyn")}
-                  rtl
-                  style={{
-                    marginLeft: "4px",
-                  }}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>장부 사용유무</Label>
-                <CheckBox
-                  register={register("cuJangbuYn")}
-                  style={{
-                    marginLeft: "4px",
-                  }}
-                />
-              </FormGroup>
-              <Controller
-                control={control}
-                name="cuSvKumack"
-                render={({ field }) => (
-                  <Input
-                    label="무료시설 투자비"
-                    {...field}
-                    mask={currencyMask}
-                    textAlign="right"
-                    inputSize={InputSize.i150}
+              <Label style={{ marginRight: "10px" }}>저장설비</Label>
+              {radioOptions.map((option, index) => (
+                <Item key={index}>
+                  <RadioButton
+                    type="radio"
+                    value={option.id}
+                    {...register("cuUseGastype")}
+                    id={option.id}
                   />
-                )}
+                  <RadioButtonLabel htmlFor={`${option.label}`}>
+                    {option.label}
+                  </RadioButtonLabel>
+                </Item>
+              ))}
+              <CheckBox
+                register={register("cuSekumyn")}
+                rtl
+                title="계산서 발행유무"
+                style={{
+                  width: "180px",
+                  marginLeft: "50px",
+                }}
               />
-            </Wrapper>
+              <CheckBox
+                register={register("cuJangbuYn")}
+                rtl
+                title="장부 사용유무"
+              />
+            </FormGroup>
           </FormGroup>
-          <Field
-            className="rectangle"
-            style={{ width: "20%", marginLeft: "30px", marginTop: "3px" }}
-          >
+          <Field className="rectangle" style={{ marginTop: "3px" }}>
+            <Controller
+              control={control}
+              name="cuSvKumack"
+              render={({ field }) => (
+                <Input
+                  label="무료시설비"
+                  labelStyle={{ minWidth: "80px" }}
+                  {...field}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i140}
+                  readOnly
+                />
+              )}
+            />
             <FormGroup style={{ justifyContent: "center" }}>
-              <label>용기보증금</label>
+              <Label style={{ minWidth: "80px" }}>용기보증금</Label>
               <Controller
                 control={control}
                 name="cuTongkum"
@@ -713,12 +723,13 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
                     inputSize={InputSize.i140}
                     mask={currencyMask}
                     textAlign="right"
+                    readOnly
                   />
                 )}
               />
             </FormGroup>
             <FormGroup style={{ justifyContent: "center" }}>
-              <label>중량미수</label>
+              <Label style={{ minWidth: "80px" }}>중량미수</Label>
               <Controller
                 control={control}
                 name="cuJmisu"
@@ -728,12 +739,13 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
                     inputSize={InputSize.i140}
                     mask={currencyMask}
                     textAlign="right"
+                    readOnly
                   />
                 )}
               />
             </FormGroup>
             <FormGroup style={{ justifyContent: "center" }}>
-              <label>체적미수</label>
+              <Label style={{ minWidth: "80px" }}>체적미수</Label>
               <Controller
                 control={control}
                 name="cuCmisu"
@@ -743,6 +755,7 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
                     inputSize={InputSize.i140}
                     mask={currencyMask}
                     textAlign="right"
+                    readOnly
                   />
                 )}
               />
@@ -763,7 +776,7 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
             onClick={(id) => setTabId(id)}
             tabId={tabId}
           />
-          <TabContentWrapper style={{ padding: "5px" }}>
+          <TabContentWrapper style={{ padding: "5px", height: "300px" }}>
             {getTabContent(
               tabId,
               register,
@@ -785,6 +798,37 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
           </TabContentWrapper>
         </div>
       </div>
+
+      {/*     
+
+              <Label>청구 구분</Label>
+              <Select
+                register={register("cuRequestType")}
+                width={InputSize.i150}
+              >
+                {dataCommonDic?.cuRequestType?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select> 
+              <Label>Vat 적용방법</Label>
+              <Select register={register("cuVatKind")} width={InputSize.i150}>
+                {dataCommonDic?.cuVatKind?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select>        
+              <Label>원미만 금액계산</Label>
+              <Select register={register("cuRoundType")} width={InputSize.i150}>
+                {dataCommonDic?.cuRoundType?.map((obj: any, idx: number) => (
+                  <option key={idx} value={obj.code}>
+                    {obj.codeName}
+                  </option>
+                ))}
+              </Select> 
+      */}
     </CustomForm>
   );
 }

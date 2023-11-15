@@ -8,8 +8,14 @@ function useRdanga() {
   const [totalValue, setTotalValue] = useState<string>("");
 
   const customEval = (t1: any, sign: any, t2: any) => {
-    let tot = 0;
-    let retVal = "";
+    console.log("custom eval duudagdav :::");
+    console.log("t1:", t1);
+    console.log("sign:", sign);
+    console.log("t2:", t2);
+
+    //let tot = 0;
+    let retVal: number = 0;
+    /*
     if (sign === null || sign === undefined) {
       retVal = ``;
     } else if (sign !== "X") {
@@ -19,11 +25,20 @@ function useRdanga() {
       tot = eval(`${+t1} * ${t2} / 100`);
       retVal = `% = ${tot}원`;
     }
-    return retVal;
+    */
+    if (sign === "+") {
+      retVal = +t1 + +t2;
+    } else if (sign === "-") {
+      retVal = +t1 - +t2;
+    } else if (sign === "") {
+      retVal = +t1 * +t2;
+    }
+
+    return `=${retVal}`;
   };
 
   const calcRdanga = (type: string, cur: any) => {
-    let retSt = "";
+    let retSt: string = "";
     if (type === "rdanga") {
       retSt = customEval(cur, rdangaSign, rdangaAmt);
     }

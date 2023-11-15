@@ -2,7 +2,6 @@ import {
   Input,
   Select,
   Field,
-  Wrapper,
   FormGroup,
   Label,
   DividerDark,
@@ -58,6 +57,7 @@ function Tab3({
           <p>법정검사</p>
         </Field>
         <FormGroup>
+          {/*
           <Label style={{ minWidth: "100px", marginRight: "15px" }}>
             시설구분
           </Label>
@@ -74,6 +74,7 @@ function Tab3({
               </RadioButtonLabel>
             </Item>
           ))}
+          */}
 
           <Label style={{ minWidth: "100px" }}>완성 검사일</Label>
           <Controller
@@ -397,9 +398,10 @@ function Tab3({
             textAlign="right"
           />
           <p>개</p>
-
+        </FormGroup>
+        <FormGroup style={{ marginLeft: "174px" }}>
+          <Label>발신기코드</Label>
           <Input register={register("cuTransmCd")} inputSize={InputSize.i60} />
-
           <Input
             register={register("cuTransmCuCd")}
             inputSize={InputSize.i60}

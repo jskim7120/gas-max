@@ -13,7 +13,6 @@ import { ButtonColor, ButtonType, InputSize } from "components/componentsType";
 import { MagnifyingGlassBig, Update, Reset } from "components/allSvgIcon";
 import { Input, Wrapper, Label, FormGroup, Field } from "components/form/style";
 import { FieldKind } from "components/componentsType";
-import { toast } from "react-toastify";
 
 const radioOptions = [
   {

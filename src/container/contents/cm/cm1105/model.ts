@@ -53,7 +53,8 @@ export interface ICM1105SEARCH {
   cuHdate: string;
   cuHp: string;
   cuJangbuYn: string;
-  cuJdc: number | undefined | null; //top
+  //cuJdc: number | undefined | null; //top hasav
+  cuUseDanga: string;
   //cuJdcName: number | undefined;
   cuJmisu: number | undefined; //top
   cuJongmok: string;
@@ -125,7 +126,7 @@ export interface ICM1105SEARCH {
   cuSvKumack: number | string; //2nd tab
   cuSwCode: string;
   cuSzipcode: string;
-  cuTankYn: string;
+  //cuTankYn: string;
   cuTel: string;
   cuTel21: string;
   cuTel22: string;
@@ -211,6 +212,7 @@ export interface ICM1105SEARCH {
   VIRdepositor: string; //davhtsaj bn
   managerCode: string;
   VIRregDate: string; //davhtsaj bn
+  cuUseGastype: string;
 }
 
 {
@@ -356,7 +358,7 @@ export const emptyObj = {
   cuSvKumack: "",
   cuSwCode: "",
   cuSzipcode: "",
-  cuTankYn: "",
+  //cuTankYn: "",
   cuTel: "",
   cuTel21: "",
   cuTel22: "",

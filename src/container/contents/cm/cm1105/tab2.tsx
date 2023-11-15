@@ -52,7 +52,7 @@ function Tab2({
         </FormGroup>
       );
     }
-    if (rdangaType === "1") {
+    if (rdangaType === "1" || rdangaType === "3" || rdangaType === "4") {
       return (
         <FormGroup className="1">
           <Input
@@ -63,7 +63,7 @@ function Tab2({
               calcRdanga("rdanga", e.target.value);
             }}
           />
-          <p>원</p>
+          {rdangaType === "1" && <p>원</p>}
           <Select
             width={InputSize.i50}
             value={rdangaSign}
@@ -87,7 +87,11 @@ function Tab2({
               calcRdanga("rdangaAmt", e.target.value);
             }}
           />
-          <p>{totalValue}</p>
+          <p>
+            {rdangaType === "1" ? "%" : "원"}
+            {totalValue}
+            {}
+          </p>
         </FormGroup>
       );
     }
@@ -126,9 +130,10 @@ function Tab2({
 
             <Label style={{ minWidth: "80px" }}>루베단가</Label>
             <Select
+              name="cuRdangaType"
               width={InputSize.i130}
               value={rdangaType}
-              register={register("cuRdangaType")}
+              //register={register("cuRdangaType")}
               onChange={(e: any) => {
                 setRdangaType(e.target.value);
                 calcRdanga("rdangaType", e.target.value);
