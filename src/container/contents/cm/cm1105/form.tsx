@@ -793,7 +793,9 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
               setRdangaAmt,
               totalValue,
               setTotalValue,
-              calcRdanga
+              calcRdanga,
+              watch,
+              reset
             )}
           </TabContentWrapper>
         </div>

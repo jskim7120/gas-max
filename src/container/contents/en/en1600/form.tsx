@@ -23,6 +23,7 @@ import { currencyMask, removeCommas2 } from "helpers/currency";
 import { InputSize } from "components/componentsType";
 import { InfoText } from "components/text";
 import { GrayButton } from "../style";
+import EditableSelect from "components/editableSelect";
 
 interface IForm {
   selected: any;
@@ -54,10 +55,17 @@ const Form = React.forwardRef(
     const [getCommonDictionary, { data: dataCommonDic }] =
       useGetCommonDictionaryMutation();
 
-    const { register, handleSubmit, reset, getValues, control, setFocus } =
-      useForm<IJNOSAUP>({
-        mode: "onChange",
-      });
+    const {
+      register,
+      handleSubmit,
+      reset,
+      getValues,
+      control,
+      setFocus,
+      watch,
+    } = useForm<IJNOSAUP>({
+      mode: "onChange",
+    });
 
     useEffect(() => {
       getCommonDictionary({ groupId: "EN", functionName: "EN1600" });
@@ -264,7 +272,7 @@ const Form = React.forwardRef(
                   /\d/,
                   /\d/,
                 ]}
-                inputSize={InputSize.i200}
+                inputSize={InputSize.i300}
               />
             )}
           />
@@ -286,7 +294,7 @@ const Form = React.forwardRef(
                 {...field}
                 label="핸드폰"
                 maxLength="14"
-                inputSize={InputSize.i200}
+                inputSize={InputSize.i300}
               />
             )}
           />
@@ -300,13 +308,14 @@ const Form = React.forwardRef(
             inputSize={InputSize.i200}
           />
           @
-          <Select register={register("mailKind")} style={{ width: "305px" }}>
-            {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
+          <EditableSelect
+            list={dataCommonDic?.emailKind}
+            reset={reset}
+            register={register("mailKind")}
+            watch={watch("mailKind")}
+            textAlign={"left"}
+            style={{ width: "405px" }}
+          />
         </FormGroup>
 
         <FormGroup>
@@ -477,7 +486,7 @@ const Form = React.forwardRef(
             label="메 모"
             register={register("swBigo")}
             maxLength="40"
-            style={{ width: "580px" }}
+            style={{ width: "626px" }}
           />
         </FormGroup>
         <Divider />

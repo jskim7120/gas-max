@@ -21,7 +21,9 @@ function getTabContent(
   setRdangaAmt: Function,
   totalValue: string,
   setTotalValue: Function,
-  calcRdanga: Function
+  calcRdanga: Function,
+  watch: any,
+  reset: any
 ) {
   switch (id) {
     case 0: {
@@ -31,6 +33,8 @@ function getTabContent(
           register={register}
           setAddress={setAddress}
           control={control}
+          reset={reset}
+          watch={watch}
         />
       );
     }
@@ -51,6 +55,8 @@ function getTabContent(
           totalValue={totalValue}
           setTotalValue={setTotalValue}
           calcRdanga={calcRdanga}
+          watch={watch}
+          reset={reset}
         />
       );
     case 2:

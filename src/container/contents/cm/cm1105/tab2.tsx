@@ -1,11 +1,12 @@
 import { Input, Select, Field, FormGroup, Label } from "components/form/style";
-import { currencyMask } from "helpers/currency";
+import { currencyMask, percentMask } from "helpers/currency";
 import { Controller } from "react-hook-form";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { SearchBtn } from "components/daum";
 import CheckBox from "components/checkbox";
+import EditableSelect from "components/editableSelect";
 
 function Tab2({
   dataCommonDic,
@@ -22,6 +23,8 @@ function Tab2({
   totalValue,
   setTotalValue,
   calcRdanga,
+  watch,
+  reset,
 }: {
   dataCommonDic: any;
   register: Function;
@@ -37,6 +40,8 @@ function Tab2({
   totalValue: string;
   setTotalValue: Function;
   calcRdanga: Function;
+  watch: any;
+  reset: any;
 }) {
   const showRdanga = () => {
     if (rdangaType === "0") {
@@ -107,6 +112,7 @@ function Tab2({
       );
     }
   };
+
   return (
     <div>
       <Field flex className="outer-border ">
@@ -119,6 +125,7 @@ function Tab2({
         <Field>
           <FormGroup>
             <Label>조정기 압력</Label>
+            {/*
             <Select register={register("cuRh2O")} width={InputSize.i130}>
               {dataCommonDic?.cuRh20?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -126,6 +133,15 @@ function Tab2({
                 </option>
               ))}
             </Select>
+            */}
+            <EditableSelect
+              list={dataCommonDic?.cuRh20}
+              reset={reset}
+              register={register("cuRh2O")}
+              watch={watch("cuRh2O")}
+              textAlign={"left"}
+              style={{ width: "130px" }}
+            />
             <p>mmH20</p>
 
             <Label style={{ minWidth: "80px" }}>루베단가</Label>
@@ -156,7 +172,7 @@ function Tab2({
                 <Input
                   {...field}
                   label="연체율"
-                  mask={[/\d/, /\d/, /\d/]}
+                  mask={percentMask}
                   inputSize={InputSize.i130}
                   textAlign="right"
                 />
@@ -172,7 +188,7 @@ function Tab2({
                 <Input
                   {...field}
                   label="할인율"
-                  mask={[/\d/, /\d/, /\d/]}
+                  mask={percentMask}
                   inputSize={InputSize.i130}
                   textAlign="right"
                 />
@@ -267,13 +283,18 @@ function Tab2({
                 marginLeft: "3px",
               }}
             >
-              <CheckBox title="적용" register={register("cuBaGageYn")} />
+              <Controller
+                control={control}
+                name="cuBaGageYn"
+                render={({ field }) => <CheckBox title="적용" {...field} />}
+              />
             </Label>
 
             <Input
               register={register("cuBaGageM3", { valueAsNumber: true })}
               textAlign="right"
               inputSize={InputSize.i50}
+              readOnly={!watch("cuBaGageYn")}
             />
             <p>m3이하 일때</p>
             <Controller
@@ -285,6 +306,7 @@ function Tab2({
                   mask={currencyMask}
                   textAlign="right"
                   inputSize={InputSize.i80}
+                  readOnly={!watch("cuBaGageYn")}
                 />
               )}
             />
@@ -310,6 +332,7 @@ function Tab2({
         <Field>
           <FormGroup>
             <Label>계량기 제조사</Label>
+            {/*
             <Select register={register("cuMeterCo")} width={InputSize.i130}>
               {dataCommonDic?.cuMeterCo?.map((obj: any, idx: number) => (
                 <option key={idx} value={obj.code}>
@@ -317,6 +340,15 @@ function Tab2({
                 </option>
               ))}
             </Select>
+            */}
+            <EditableSelect
+              list={dataCommonDic?.cuMeterCo}
+              reset={reset}
+              register={register("cuMeterCo")}
+              watch={watch("cuMeterCo")}
+              textAlign={"left"}
+              style={{ width: "130px" }}
+            />
 
             <Label style={{ width: "136px" }}>계량기 유형</Label>
             <Select register={register("cuMeterFeture")} width={InputSize.i130}>

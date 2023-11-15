@@ -201,7 +201,6 @@ const Form = React.forwardRef(
         style={{
           width: "650px",
           padding: "6px 10px 0",
-          border: "1px solid red",
         }}
         autoComplete="off"
       >

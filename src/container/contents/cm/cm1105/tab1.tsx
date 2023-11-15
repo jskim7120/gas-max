@@ -3,17 +3,22 @@ import CheckBox from "components/checkbox";
 import DaumAddress from "components/daum";
 import { InputSize } from "components/componentsType";
 import { Controller } from "react-hook-form";
+import EditableSelect from "components/editableSelect";
 
 function Tab1({
   dataCommonDic,
   register,
   setAddress,
   control,
+  reset,
+  watch,
 }: {
   dataCommonDic: any;
   register: Function;
   setAddress: (arg: any) => void;
   control: any;
+  reset: any;
+  watch: any;
 }) {
   return (
     <Field>
@@ -105,13 +110,14 @@ function Tab1({
           inputSize={InputSize.i150}
         />
         @
-        <Select register={register("emailKind")} style={{ width: "279px" }}>
-          {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code1}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
+        <EditableSelect
+          list={dataCommonDic?.emailKind}
+          reset={reset}
+          register={register("emailKind")}
+          watch={watch("emailKind")}
+          textAlign={"left"}
+          style={{ width: "279px" }}
+        />
       </FormGroup>
 
       <FormGroup>
@@ -133,13 +139,14 @@ function Tab1({
           inputSize={InputSize.i150}
         />
         @
-        <Select register={register("emailKind2")} style={{ width: "279px" }}>
-          {dataCommonDic?.emailKind2?.map((obj: any, idx: number) => (
-            <option key={idx} value={obj.code1}>
-              {obj.codeName}
-            </option>
-          ))}
-        </Select>
+        <EditableSelect
+          list={dataCommonDic?.emailKind2}
+          reset={reset}
+          register={register("emailKind2")}
+          watch={watch("emailKind2")}
+          textAlign={"left"}
+          style={{ width: "279px" }}
+        />
       </FormGroup>
 
       <FormGroup>
