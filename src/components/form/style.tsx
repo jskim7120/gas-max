@@ -145,71 +145,6 @@ interface IInputProps {
   refs?: any;
 }
 
-// export const CustomForm = ({
-//   autoComplete,
-//   onSubmit,
-//   noEnter,
-//   children,
-//   style,
-// }: {
-//   autoComplete?: string;
-//   onSubmit?: FormEventHandler;
-//   noEnter?: boolean;
-//   children?: any;
-//   style?: any;
-// }) => {
-//   function handleKeyDown(event: any) {
-//     if (event.key === "Enter") {
-//       event.preventDefault();
-//       const element = event.target;
-//       const form = element.form;
-
-//       if (form) {
-//         const index = Array.prototype.indexOf.call(form, element);
-
-//         let cursor = 1;
-
-//         while (form.elements[index + cursor] !== undefined) {
-//           if (
-//             form.elements[index + cursor].readOnly ||
-//             form.elements[index + cursor].disabled
-//           ) {
-//             cursor += 1;
-//           } else if (
-//             form.elements[index + cursor].classList.contains(
-//               "react-datepicker__navigation"
-//             )
-//           ) {
-//             cursor += 2;
-//           } else {
-//             form.elements[index + cursor].focus();
-//             break;
-//           }
-//         }
-//       }
-//     }
-//   }
-
-//   // useEffect(() => {
-//   //   document.addEventListener("keydown", handleKeyDown);
-
-//   //   return () => {
-//   //     document.removeEventListener("keydown", handleKeyDown);
-//   //   };
-//   // }, []);
-
-//   return (
-//     <form
-//       autoComplete={autoComplete && autoComplete}
-//       onSubmit={onSubmit}
-//       onKeyDown={handleKeyDown}
-//       style={style}
-//     >
-//       {children}
-//     </form>
-//   );
-// };
-
 export const Input = ({
   type,
   label,
@@ -948,10 +883,12 @@ export const CustomForm = ({
   children,
   autoComplete,
   onSubmit,
+  style,
 }: {
   children?: any;
   autoComplete?: string;
   onSubmit?: FormEventHandler;
+  style?: any;
 }) => {
   function handleKeyDown(event: any) {
     if (event.key === "Enter") {
@@ -991,6 +928,7 @@ export const CustomForm = ({
       onKeyDown={handleKeyDown}
       autoComplete={autoComplete}
       onSubmit={onSubmit && onSubmit}
+      style={style && style}
     >
       {children}
     </form>
