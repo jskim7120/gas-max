@@ -32,7 +32,7 @@ function getTabContent(id: number, register: any, jnJiro: any) {
       jnJiroBigo: (
         <Input
           register={register("jnJiroBigo")}
-          maxLength="7"
+          maxLength="20"
           inputSize={InputSize.i300}
         />
       ),

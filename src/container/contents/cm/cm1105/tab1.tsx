@@ -1,11 +1,4 @@
-import {
-  Input,
-  Select,
-  Field,
-  Wrapper,
-  FormGroup,
-  Label,
-} from "components/form/style";
+import { Input, Select, Field, FormGroup, Label } from "components/form/style";
 import CheckBox from "components/checkbox";
 import DaumAddress from "components/daum";
 import { InputSize } from "components/componentsType";

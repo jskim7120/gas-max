@@ -29,6 +29,7 @@ import { ImageWrapper } from "../../commonStyle";
 import { EN1200INSERT, EN1200UPDATE, EN1200DELETE, EN120011 } from "app/path";
 import { BlueDiv, GrayButton } from "../style";
 import { InfoText } from "components/text";
+import EditableSelect from "components/editableSelect";
 
 interface IForm {
   selected: any;
@@ -58,8 +59,15 @@ const Form = React.forwardRef(
     const [getCommonDictionary, { data: dataCommonDic }] =
       useGetCommonDictionaryMutation();
 
-    const { register, handleSubmit, control, reset, getValues, setFocus } =
-      useForm<IJNOSAUP>({ mode: "onChange" });
+    const {
+      register,
+      handleSubmit,
+      control,
+      reset,
+      getValues,
+      setFocus,
+      watch,
+    } = useForm<IJNOSAUP>({ mode: "onChange" });
 
     useEffect(() => {
       getCommonDictionary({ groupId: "EN", functionName: "EN1200" });
@@ -458,16 +466,14 @@ const Form = React.forwardRef(
                 labelStyle={{ minWidth: "90px" }}
               />
               <p style={{ margin: "0 1px" }}>@</p>
-              <Select
+              <EditableSelect
+                list={dataCommonDic?.emailKind}
+                reset={reset}
                 register={register("emailKind")}
+                watch={watch("emailKind")}
+                textAlign={"left"}
                 style={{ width: "278px" }}
-              >
-                {dataCommonDic?.emailKind?.map((obj: any, idx: number) => (
-                  <option key={idx} value={obj.code1}>
-                    {obj.codeName}
-                  </option>
-                ))}
-              </Select>
+              />
             </FormGroup>
             <FormGroup>
               <Input
