@@ -77,6 +77,7 @@ function Tab2({ data }: { data: any }) {
               register={register("cuNo")}
               errors={errors["cuNo"]?.message}
               className="small green"
+              readOnly
             />
           </th>
           <th className="green">상호</th>
@@ -85,6 +86,7 @@ function Tab2({ data }: { data: any }) {
               register={register("cuSangho")}
               errors={errors["cuSangho"]?.message}
               className="small green"
+              readOnly
             />
           </th>
           <th className="green">대표</th>
@@ -93,6 +95,7 @@ function Tab2({ data }: { data: any }) {
               register={register("cuSajang")}
               errors={errors["cuSajang"]?.message}
               className="small green"
+              readOnly
             />
           </th>
           <th className="green">시설 투자비</th>
@@ -101,6 +104,7 @@ function Tab2({ data }: { data: any }) {
               register={register("cuSvKumack")}
               errors={errors["cuSvKumack"]?.message}
               className="small green"
+              readOnly
             />
           </th>
         </tr>
@@ -127,6 +131,7 @@ function Tab2({ data }: { data: any }) {
               register={register("cuTankName")}
               errors={errors["cuTankName"]?.message}
               className="small light-green"
+              readOnly
             />
           </td>
           <th className="light-green">용랑</th>
@@ -150,6 +155,7 @@ function Tab2({ data }: { data: any }) {
               register={register("cuFinishDate")}
               errors={errors["cuFinishDate"]?.message}
               className="small white"
+              readOnly
             />
           </td>
           <td>
@@ -157,90 +163,103 @@ function Tab2({ data }: { data: any }) {
               register={register("tankVol1")}
               errors={errors["tankVol1"]?.message}
               className="small"
+              readOnly
             />
           </td>
           <td>
             <Input
               register={register("tankSno1")}
               errors={errors["tankSno1"]?.message}
-              className="small "
+              className="small"
+              readOnly
             />
           </td>
           <td>
             <Input
               register={register("tankMakeDate1")}
               errors={errors["tankMakeDate1"]?.message}
-              className="small "
+              className="small"
+              readOnly
             />
           </td>
           <td>
             <Input
               register={register("tankOutsideDate1")}
               errors={errors["tankOutsideDate1"]?.message}
-              className="small "
+              className="small"
+              readOnly
             />
           </td>
           <td>
             <Input
               register={register("tankInsideDate1")}
               errors={errors["tankInsideDate1"]?.message}
-              className="small "
+              className="small"
+              readOnly
             />
           </td>
           <td>
             <Input
               register={register("tankTransmCd1")}
               errors={errors["tankTransmCd1"]?.message}
-              className="small "
+              className="small"
+              readOnly
             />
           </td>
           <td>
             <Input
               register={register("gasifyVol1")}
               errors={errors["gasifyVol1"]?.message}
-              className="small "
+              className="small"
+              readOnly
             />
           </td>
           <td>
             <Input
               register={register("gasifySno1")}
               errors={errors["gasifySno1"]?.message}
-              className="small "
+              className="small"
+              readOnly
             />
           </td>
           <td>
             <Input
               register={register("gasifyMakeDate1")}
               errors={errors["gasifyMakeDate1"]?.message}
-              className="small "
+              className="small"
+              readOnly
             />
           </td>
           <td>
             <Input
               register={register("gasifyCheckDate1")}
               errors={errors["gasifyCheckDate1"]?.message}
-              className="small "
+              className="small"
+              readOnly
             />
           </td>
           <td>
             <Input
               register={register("cuMeterTypeName")}
               errors={errors["cuMeterTypeName"]?.message}
-              className="small "
+              className="small"
+              readOnly
             />
           </td>
           <td>
             <Input
               register={register("cuMeterTurm")}
               errors={errors["cuMeterTurm"]?.message}
-              className="small "
+              className="small"
+              readOnly
             />
           </td>
           <td>
             <Input
               register={register("cuMTransmCd")}
               errors={errors["cuMTransmCd"]?.message}
-              className="small "
+              className="small"
+              readOnly
             />
           </td>
         </tr>
@@ -251,6 +270,7 @@ function Tab2({ data }: { data: any }) {
               register={register("cuCircuitDate")}
               errors={errors["cuCircuitDate"]?.message}
               className="small white"
+              readOnly
             />
           </td>
           <td>
@@ -258,6 +278,7 @@ function Tab2({ data }: { data: any }) {
               register={register("tankVol2")}
               errors={errors["tankVol2"]?.message}
               className="small"
+              readOnly
             />
           </td>
           <td>
@@ -265,6 +286,7 @@ function Tab2({ data }: { data: any }) {
               register={register("tankSno2")}
               errors={errors["tankSno2"]?.message}
               className="small"
+              readOnly
             />
           </td>
           <td>
@@ -272,6 +294,7 @@ function Tab2({ data }: { data: any }) {
               register={register("tankMakeDate2")}
               errors={errors["tankMakeDate2"]?.message}
               className="small"
+              readOnly
             />
           </td>
           <td>
@@ -279,6 +302,7 @@ function Tab2({ data }: { data: any }) {
               register={register("tankOutsideDate2")}
               errors={errors["tankOutsideDate2"]?.message}
               className="small"
+              readOnly
             />
           </td>
           <td>
@@ -286,6 +310,7 @@ function Tab2({ data }: { data: any }) {
               register={register("tankInsideDate2")}
               errors={errors["tankInsideDate2"]?.message}
               className="small"
+              readOnly
             />
           </td>
           <td>
@@ -293,6 +318,7 @@ function Tab2({ data }: { data: any }) {
               register={register("tankTransmCd2")}
               errors={errors["tankTransmCd2"]?.message}
               className="small"
+              readOnly
             />
           </td>
           <td>
@@ -300,6 +326,7 @@ function Tab2({ data }: { data: any }) {
               register={register("gasifyVol2")}
               errors={errors["gasifyVol2"]?.message}
               className="small"
+              readOnly
             />
           </td>
 
@@ -308,6 +335,7 @@ function Tab2({ data }: { data: any }) {
               register={register("gasifySno2")}
               errors={errors["gasifySno2"]?.message}
               className="small"
+              readOnly
             />
           </td>
 
@@ -316,6 +344,7 @@ function Tab2({ data }: { data: any }) {
               register={register("gasifyMakeDate2")}
               errors={errors["gasifyMakeDate2"]?.message}
               className="small"
+              readOnly
             />
           </td>
           <td>
@@ -323,6 +352,7 @@ function Tab2({ data }: { data: any }) {
               register={register("gasifyCheckDate2")}
               errors={errors["gasifyCheckDate2"]?.message}
               className="small"
+              readOnly
             />
           </td>
           <td>
@@ -330,6 +360,7 @@ function Tab2({ data }: { data: any }) {
               register={register("cuMeterLrName")}
               errors={errors["cuMeterLrName"]?.message}
               className="small"
+              readOnly
             />
           </td>
           <td></td>
@@ -353,6 +384,7 @@ function Tab2({ data }: { data: any }) {
               register={register("cuMeterM3")}
               errors={errors["cuMeterM3"]?.message}
               className="small"
+              readOnly
             />
           </td>
           <td></td>
@@ -361,6 +393,7 @@ function Tab2({ data }: { data: any }) {
               register={register("cuRh2o")}
               errors={errors["cuRh2o"]?.message}
               className="small"
+              readOnly
             />
           </td>
         </tr>

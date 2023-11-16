@@ -630,15 +630,19 @@ const FormSelect = styled.select<{
 `;
 
 export const TextArea = styled.textarea`
-  border: 1px solid transparent;
+  border: 1px solid rgb(188, 185, 185);
   outline: none;
+  border-radius: 4px;
   font-family: "NotoSansKRRegular";
   font-size: 12px;
   box-sizing: border-box;
+  background: aliceblue;
 
   &:hover {
-    border: 1px solid #e6e5e5;
     background: #fffacd;
+  }
+  &:read-only {
+    background: #ebeae6;
   }
 `;
 

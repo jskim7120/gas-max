@@ -197,7 +197,12 @@ function FormCM1106({ setIsModalOpen }: { setIsModalOpen: Function }) {
               icon={<Update />}
               style={{ marginRight: "5px" }}
               color={ButtonColor.SECONDARY}
-              onClick={() => formRef.current.crud(null)}
+              onClick={async () => {
+                formRef.current.crud(null);
+                if (cm1106.areaCode && cm1106.cuCode) {
+                  await fetchData();
+                }
+              }}
               type="button"
             />
             <Button

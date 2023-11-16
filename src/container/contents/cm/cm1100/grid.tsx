@@ -62,7 +62,7 @@ const Grid = React.forwardRef(
         gv.setCurrent({
           dataRow: rowIndex,
         });
-      }
+      };
 
       if (areaCode !== "00") {
         gv.removeColumn("areaCode");

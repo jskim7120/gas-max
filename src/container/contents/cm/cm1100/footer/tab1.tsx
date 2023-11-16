@@ -1,19 +1,22 @@
 import React, { useRef, useEffect, useState } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
-import { columns, fields } from "./data";
+import { useDispatch } from "app/store";
+import { addCM1106 } from "app/state/modal/modalSlice";
 import Button from "components/button/button";
 import { ButtonType } from "components/componentsType";
 import { Notebook, Edit2, WhiteCloseCircle } from "components/allSvgIcon";
 import Modal from "components/modal/modal";
+import { columns, fields } from "./data";
 
 let container: HTMLDivElement;
 let dp: any;
 let gv: any;
 
-function Tab1({ data }: { data: any }) {
+function Tab1({ data, selected }: { data: any; selected: any }) {
   const [gridData, setGridData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const realgridElement = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (Object.keys(data)?.length > 0 && data?.tab1) {
@@ -60,6 +63,13 @@ function Tab1({ data }: { data: any }) {
   }, [gridData]);
 
   const openPopupCM1106 = async () => {
+    dispatch(
+      addCM1106({
+        source: "CM1100",
+        areaCode: selected?.areaCode,
+        cuCode: selected?.cuCode,
+      })
+    );
     setIsModalOpen(true);
   };
 

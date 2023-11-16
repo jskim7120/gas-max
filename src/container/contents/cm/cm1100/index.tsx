@@ -120,13 +120,13 @@ function CM1100Page({
   };
 
   const fetchData65 = async () => {
-    const dataS65 = await apiGet(CM110065, {
+    const res = await apiGet(CM110065, {
       cuCode: selected.cuCode,
       areaCode: selected.areaCode,
     });
 
-    if (dataS65 && Object.keys(dataS65)?.length > 0) {
-      setData65(dataS65);
+    if (res && Object.keys(res)?.length > 0) {
+      setData65(res);
     } else {
       setData65({});
     }
@@ -422,7 +422,7 @@ function CM1100Page({
           areaCode={ownAreaCode}
         />
 
-        <CM1100Footer data={data65} />
+        <CM1100Footer data={data65} selected={selected} />
       </WrapperContent>
     </>
   );

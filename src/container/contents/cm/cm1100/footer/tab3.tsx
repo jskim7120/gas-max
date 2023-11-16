@@ -44,8 +44,16 @@ function Tab2({ data }: { data: any }) {
               비고
             </th>
             <td rowSpan={2}>
-              <Input register={register("cuBigo1")} className="small" />
-              <Input register={register("cuBigo2")} className="small" />
+              <Input
+                register={register("cuBigo1")}
+                className="small"
+                readOnly
+              />
+              <Input
+                register={register("cuBigo2")}
+                className="small"
+                readOnly
+              />
             </td>
             <th className="blue" rowSpan={2}>
               메모
@@ -55,6 +63,7 @@ function Tab2({ data }: { data: any }) {
                 style={{ width: "99.4%", height: "92%", margin: "2px" }}
                 id={register("cuMemo").name}
                 {...register("cuMemo")}
+                readOnly
               />
             </td>
           </tr>
@@ -91,19 +100,28 @@ function Tab2({ data }: { data: any }) {
           </tr>
           <tr>
             <td>
-              <Input register={register("bankName")} className="small" />
+              <Input
+                register={register("bankName")}
+                className="small"
+                readOnly
+              />
             </td>
             <td>
-              <Input register={register("acctNo")} className="small" />
+              <Input register={register("acctNo")} className="small" readOnly />
             </td>
             <td>
-              <Input register={register("depositor")} className="small" />
+              <Input
+                register={register("depositor")}
+                className="small"
+                readOnly
+              />
             </td>
             <td>
               <Input
                 register={register("cmsGubun")}
                 className="small jccenter"
                 inputSize={InputSize.i100}
+                readOnly
               />
             </td>
             <td>
@@ -111,6 +129,7 @@ function Tab2({ data }: { data: any }) {
                 register={register("cmsBanknm")}
                 className="small jccenter"
                 inputSize={InputSize.i100}
+                readOnly
               />
             </td>
             <td>
@@ -118,6 +137,7 @@ function Tab2({ data }: { data: any }) {
                 register={register("cmsAcctno")}
                 className="small jccenter"
                 inputSize={InputSize.i100}
+                readOnly
               />
             </td>
             <td>
@@ -125,6 +145,7 @@ function Tab2({ data }: { data: any }) {
                 register={register("cmsDepositor")}
                 className="small jccenter"
                 inputSize={InputSize.i100}
+                readOnly
               />
             </td>
             <td>
@@ -132,6 +153,7 @@ function Tab2({ data }: { data: any }) {
                 register={register("cmsAppdt")}
                 className="small jccenter"
                 inputSize={InputSize.i100}
+                readOnly
               />
             </td>
             <td>
@@ -139,10 +161,11 @@ function Tab2({ data }: { data: any }) {
                 register={register("cmsState")}
                 className="small jccenter"
                 inputSize={InputSize.i100}
+                readOnly
               />
             </td>
             <td>
-              <Input register={register("cuRh2o")} className="small" />
+              <Input register={register("cuRh2o")} className="small" readOnly />
             </td>
             <td>
               <div style={{ display: "flex" }}>
@@ -150,11 +173,13 @@ function Tab2({ data }: { data: any }) {
                   register={register("cuRdangaTypeName")}
                   className="small"
                   inputSize={InputSize.i100}
+                  readOnly
                 />
                 <Input
                   register={register("cuRdanga")}
                   className="small"
                   inputSize={InputSize.i100}
+                  readOnly
                 />
               </div>
             </td>

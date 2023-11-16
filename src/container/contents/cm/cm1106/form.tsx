@@ -32,7 +32,7 @@ const FORMCM1106 = React.forwardRef(
     },
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const { register, handleSubmit, reset, getValues, control } =
+    const { register, handleSubmit, reset, getValues, control, watch } =
       useForm<ICM1106>();
 
     useImperativeHandle<HTMLFormElement, any>(ref, () => ({
@@ -43,6 +43,31 @@ const FORMCM1106 = React.forwardRef(
     useEffect(() => {
       resetForm("reset");
     }, [selected]);
+
+    useEffect(() => {
+      if (watch("jcDangaType") !== undefined) {
+        if (
+          watch("jcDangaType") === "0" ||
+          watch("jcDangaType") === "3" ||
+          watch("jcDangaType") === "4"
+        ) {
+          reset((formValues) => ({
+            ...formValues,
+            jcJpDanga: 25000,
+          }));
+        } else if (watch("jcDangaType") === "1") {
+          reset((formValues) => ({
+            ...formValues,
+            jcJpDanga: 26000,
+          }));
+        } else {
+          reset((formValues) => ({
+            ...formValues,
+            jcJpDanga: 0,
+          }));
+        }
+      }
+    }, [watch("jcDangaType")]);
 
     const resetForm = (type: string | null) => {
       if (type === "clear") {
@@ -132,67 +157,82 @@ const FORMCM1106 = React.forwardRef(
             ))}
           </Select>
         </FormGroup>
-        <FormGroup>
-          <Label style={{ minWidth: "90px" }}>Vat구분</Label>
-          <Select register={register("jcVatKind")} width={InputSize.i160}>
-            {dataCommonDic?.jcVatKind?.map((obj: any, idx: number) => (
-              <option key={idx} value={obj.code1}>
-                {obj.codeName}
-              </option>
-            ))}
-          </Select>
-        </FormGroup>
-        <FormGroup>
-          <Controller
-            control={control}
-            name="jcJdcAmt"
-            render={({ field }) => (
-              <Input
-                {...field}
-                label="할인액"
-                labelStyle={{ minWidth: "90px" }}
-                mask={currencyMask}
-                textAlign="right"
-                inputSize={InputSize.i160}
-              />
-            )}
-          />
-          <p>원</p>
-        </FormGroup>
-        <FormGroup>
-          <Controller
-            control={control}
-            name="jcJdcPer"
-            render={({ field }) => (
-              <Input
-                {...field}
-                label="할인율"
-                labelStyle={{ minWidth: "90px" }}
-                mask={[/\d/, /\d/, /\d/]}
-                textAlign="right"
-                inputSize={InputSize.i160}
-              />
-            )}
-          />
-          <p>%</p>
-        </FormGroup>
-        <FormGroup>
-          <Controller
-            control={control}
-            name="jcJpDanga"
-            render={({ field }) => (
-              <Input
-                {...field}
-                label="적용단가"
-                labelStyle={{ minWidth: "90px" }}
-                mask={currencyMask}
-                textAlign="right"
-                inputSize={InputSize.i160}
-              />
-            )}
-          />
-          <p>원</p>
-        </FormGroup>
+        {watch("jcDangaType") !== "2" && (
+          <FormGroup>
+            <Label style={{ minWidth: "90px" }}>Vat구분</Label>
+            <Select register={register("jcVatKind")} width={InputSize.i160}>
+              {dataCommonDic?.jcVatKind?.map((obj: any, idx: number) => (
+                <option key={idx} value={obj.code1}>
+                  {obj.codeName}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        )}
+
+        {watch("jcDangaType") === "3" && (
+          <FormGroup>
+            <Controller
+              control={control}
+              name="jcJdcAmt"
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  label="할인액"
+                  labelStyle={{ minWidth: "90px" }}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i160}
+                />
+              )}
+            />
+            <p>원</p>
+          </FormGroup>
+        )}
+
+        {watch("jcDangaType") === "4" && (
+          <FormGroup>
+            <Controller
+              control={control}
+              name="jcJdcPer"
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  label="할인율"
+                  labelStyle={{ minWidth: "90px" }}
+                  mask={[/\d/, /\d/, /\d/]}
+                  textAlign="right"
+                  inputSize={InputSize.i160}
+                />
+              )}
+            />
+            <p>%</p>
+          </FormGroup>
+        )}
+
+        {watch("jcDangaType") !== "2" && (
+          <FormGroup>
+            <Controller
+              control={control}
+              name="jcJpDanga"
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  label="적용단가"
+                  labelStyle={{ minWidth: "90px" }}
+                  mask={currencyMask}
+                  textAlign="right"
+                  inputSize={InputSize.i160}
+                  readOnly={
+                    watch("jcDangaType") === "0" && watch("jcVatKind") === "0"
+                  }
+                />
+              )}
+            />
+            <p>원</p>
+          </FormGroup>
+        )}
+
         <DividerGray />
         <FormGroup>
           <Input
