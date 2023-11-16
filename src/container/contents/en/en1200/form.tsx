@@ -194,7 +194,7 @@ const Form = React.forwardRef(
       <CustomForm
         onSubmit={handleSubmit(submit)}
         style={{
-          width: "1005px",
+          width: "900px",
           padding: "6px 10px 0",
         }}
         autoComplete="off"
@@ -216,7 +216,7 @@ const Form = React.forwardRef(
                 inputSize={InputSize.i150}
                 readOnly={!isAddBtnClicked}
               />
-              <Label>영 업 소</Label>
+              <Label style={{ width: "270px" }}>영 업 소</Label>
               <Select
                 value={areaCode}
                 onChange={(e: any) => {
@@ -263,6 +263,7 @@ const Form = React.forwardRef(
               />
               <Input
                 label="종사업자번호"
+                labelStyle={{ width: "270px" }}
                 register={register("saupRCode")}
                 inputSize={InputSize.i250}
                 maxLength="4"
@@ -278,6 +279,7 @@ const Form = React.forwardRef(
               />
               <Input
                 label="대 표"
+                labelStyle={{ width: "170px" }}
                 register={register("saupSajang")}
                 inputSize={InputSize.i250}
                 maxLength="20"
@@ -297,7 +299,7 @@ const Form = React.forwardRef(
               />
               <Input
                 maxLength="60"
-                style={{ width: "760px" }}
+                style={{ width: "554px" }}
                 value={saupAddr1}
                 onChange={(e: any) => setSaupAddr1(e.target.value)}
               />
@@ -308,7 +310,7 @@ const Form = React.forwardRef(
                 labelStyle={{ minWidth: "90px" }}
                 register={register("saupAddr2")}
                 maxLength="60"
-                style={{ width: "882px" }}
+                style={{ width: "676px" }}
               />
             </FormGroup>
             <FormGroup>
@@ -316,14 +318,14 @@ const Form = React.forwardRef(
                 label="업 태"
                 register={register("saupUptae")}
                 labelStyle={{ minWidth: "90px" }}
-                style={{ minWidth: "403px" }}
+                style={{ minWidth: "300px" }}
                 maxLength="50"
               />
               <Input
                 label="종 목"
                 labelStyle={{ minWidth: "70px" }}
                 register={register("saupJongmok")}
-                style={{ minWidth: "403px" }}
+                style={{ minWidth: "300px" }}
                 maxLength="50"
               />
             </FormGroup>
@@ -334,10 +336,10 @@ const Form = React.forwardRef(
                 labelStyle={{ minWidth: "90px" }}
                 register={register("saupStampImg")}
                 value={image?.name}
-                inputSize={InputSize.i500}
+                style={{ width: "540px" }}
               />
 
-              <GrayButton type="button" style={{ marginRight: "20px" }}>
+              <GrayButton type="button" style={{ marginRight: "15px" }}>
                 <SearchIcon />
                 &nbsp; 찾기
                 <input type="file" onChange={handleChangeImage} />
@@ -345,7 +347,7 @@ const Form = React.forwardRef(
 
               <Trash2 />
             </FormGroup>
-            <Wrapper style={{ gap: "20px" }}>
+            <Wrapper style={{ gap: "28px" }}>
               <div>
                 <FormGroup>
                   <Label style={{ minWidth: "92px" }}></Label>
@@ -353,14 +355,14 @@ const Form = React.forwardRef(
                     title="세금계산서 도장출력"
                     rtl
                     register={register("saupStampSe")}
-                    style={{ marginRight: "20px" }}
+                    style={{ marginRight: "42px" }}
                   />
 
                   <CheckBox
                     title="거래명세표 도장출력"
                     rtl
                     register={register("saupStampEs")}
-                    style={{ marginRight: "20px" }}
+                    style={{ marginRight: "42px" }}
                   />
 
                   <CheckBox
@@ -383,7 +385,7 @@ const Form = React.forwardRef(
                       <Input
                         {...field}
                         label="주민번호/법인번호"
-                        labelStyle={{ minWidth: "164px" }}
+                        labelStyle={{ minWidth: "269px" }}
                         inputSize={InputSize.i150}
                         mask={[
                           /\d/,
@@ -411,7 +413,7 @@ const Form = React.forwardRef(
                     labelStyle={{ minWidth: "90px" }}
                     register={register("saupBigo")}
                     maxLength="50"
-                    style={{ width: "500px" }}
+                    style={{ width: "540px" }}
                   />
                 </FormGroup>
               </div>
@@ -431,8 +433,8 @@ const Form = React.forwardRef(
                 register={register("saupEdiPass")}
                 type="password"
                 maxLength="20"
-                inputSize={InputSize.i175}
-                labelStyle={{ minWidth: "119px" }}
+                inputSize={InputSize.i200}
+                labelStyle={{ minWidth: "134px" }}
               />
             </FormGroup>
             <FormGroup>
@@ -451,8 +453,8 @@ const Form = React.forwardRef(
                   <Input
                     {...field}
                     label="전화번호"
-                    labelStyle={{ minWidth: "119px" }}
-                    inputSize={InputSize.i175}
+                    labelStyle={{ minWidth: "134px" }}
+                    inputSize={InputSize.i200}
                   />
                 )}
               />
@@ -472,14 +474,14 @@ const Form = React.forwardRef(
                 register={register("emailKind")}
                 watch={watch("emailKind")}
                 textAlign={"left"}
-                style={{ width: "278px" }}
+                style={{ width: "318px" }}
               />
             </FormGroup>
             <FormGroup>
               <Input
                 label="공인 인증서"
                 register={register("saupCert")}
-                inputSize={InputSize.i500}
+                style={{ width: "540px" }}
                 labelStyle={{ minWidth: "90px" }}
               />
               <GrayButton type="button">

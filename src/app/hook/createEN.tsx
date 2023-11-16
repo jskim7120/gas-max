@@ -18,6 +18,7 @@ import useRowIndex from "./useRowIndex";
 function CreateEN(
   depthFullName: string,
   menuId: string,
+  ownAreaCode: string,
   searchPath: string,
   columns: any,
   fields: any,
@@ -91,8 +92,8 @@ function CreateEN(
 
   useEffect(() => {
     if (selected && Object.keys(selected)?.length > 0) {
-      btnRef1.current.classList.remove("active");
-      formRef.current.resetForm("reset");
+      btnRef1?.current?.classList?.remove("active");
+      formRef?.current?.resetForm("reset");
       setIsAddBtnClicked(false);
     }
   }, [selected]);
@@ -138,11 +139,11 @@ function CreateEN(
   };
 
   const handleClickBtn1 = () => {
-    btnRef1.current.classList.add("active");
+    btnRef1?.current?.classList?.add("active");
     // btnRef4.current.classList.remove("active");
     setIsAddBtnClicked(true);
-    formRef.current.resetForm("clear");
-    formRef.current?.setImage64 && formRef.current?.setImage64("");
+    formRef?.current?.resetForm("clear");
+    formRef?.current?.setImage64 && formRef?.current?.setImage64("");
   };
 
   const handleClickBtn2 = () => {
@@ -151,19 +152,19 @@ function CreateEN(
   };
 
   const handleClickBtn3 = () => {
-    formRef.current.crud(null);
+    formRef?.current?.crud(null);
   };
 
   const handleClickBtn4 = () => {
-    btnRef1.current.classList.remove("active");
+    btnRef1?.current?.classList?.remove("active");
     // btnRef4.current.classList.add("active");
     setIsAddBtnClicked(false);
-    formRef.current.resetForm("reset");
+    formRef?.current?.resetForm("reset");
   };
 
   const resetButtonCombination = () => {
     setIsAddBtnClicked(false);
-    btnRef1.current.classList.remove("active");
+    btnRef1?.current?.classList?.remove("active");
   };
 
   const showScreen = () => {
@@ -172,19 +173,25 @@ function CreateEN(
         {showDeleteModal()}
         <SearchWrapper className="h35">
           <div className="buttons">
-            <Button
-              text="등록 (F1)"
-              icon={<Plus />}
-              onClick={handleClickBtn1}
-              ref={btnRef1}
-            />
-            <Button
-              text="삭제 (F4)"
-              icon={<Trash />}
-              onClick={handleClickBtn2}
-              disabled={isAddBtnClicked}
-              ref={btnRef2}
-            />
+            {((menuId === "EN1100" && ownAreaCode === "00") ||
+              menuId !== "EN1100") && (
+              <>
+                <Button
+                  text="등록 (F1)"
+                  icon={<Plus />}
+                  onClick={handleClickBtn1}
+                  ref={btnRef1}
+                />
+                <Button
+                  text="삭제 (F4)"
+                  icon={<Trash />}
+                  onClick={handleClickBtn2}
+                  disabled={isAddBtnClicked}
+                  ref={btnRef2}
+                />
+              </>
+            )}
+
             <Button
               text="저장 (F7)"
               icon={<Update />}

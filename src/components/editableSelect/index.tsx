@@ -13,7 +13,7 @@ function EditableSelect({
   list: Array<any>;
   reset: Function;
   register: any;
-  watch: any;
+  watch?: any;
   textAlign?: any;
   style?: any;
 }) {
@@ -105,19 +105,19 @@ function EditableSelect({
     }
   };
 
-  const onChangeHandler = (text: string) => {
-    let matches: any = [];
-    if (text?.length > 0) {
-      setCursor(-1);
-      matches = list?.filter((item) => {
-        const regex = new RegExp(`${text}`, "gi");
-        return item.codeName.match(regex);
-      });
-    }
+  // const onChangeHandler = (text: string) => {
+  //   let matches: any = [];
+  //   if (text?.length > 0) {
+  //     setCursor(-1);
+  //     matches = list?.filter((item) => {
+  //       const regex = new RegExp(`${text}`, "gi");
+  //       return item.codeName.match(regex);
+  //     });
+  //   }
 
-    resetField(text);
-    setSuggestion(matches);
-  };
+  //   resetField(text);
+  //   setSuggestion(matches);
+  // };
 
   const onSuggestHandler = (text: string) => {
     resetField(text);

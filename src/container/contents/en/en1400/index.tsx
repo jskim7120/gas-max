@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import CreateEN from "app/hook/createEN";
 import { columns, fields } from "./data";
 import { EN1400LIST } from "app/path";
@@ -16,6 +15,7 @@ function EN1400({
   const { showScreen, handleKeyDown, activeTabId } = CreateEN(
     depthFullName,
     menuId,
+    ownAreaCode,
     EN1400LIST,
     columns,
     fields,
