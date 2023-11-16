@@ -7,6 +7,7 @@ import Tab6 from "./tab6";
 
 function getTabContent(
   id: number,
+  areaCode: string,
   register: any,
   dataCommonDic: any,
   setAddress: any,
@@ -57,6 +58,7 @@ function getTabContent(
           calcRdanga={calcRdanga}
           watch={watch}
           reset={reset}
+          areaCode={areaCode}
         />
       );
     case 2:

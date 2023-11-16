@@ -148,9 +148,18 @@ const Form = React.forwardRef(
 
     const submit = async (data: IJNOSAUP) => {
       //form aldaagui uyd ajillana
-      const path = isAddBtnClicked ? EN1200INSERT : EN1200UPDATE;
+      let path: string = "";
+
       const formValues = getValues();
-      isAddBtnClicked && (formValues.areaCode = areaCode);
+
+      if (isAddBtnClicked === true) {
+        path = EN1200INSERT;
+        formValues.areaCode = areaCode;
+        formValues.saupSsnoB = formValues.saupSsno;
+      } else {
+        path = EN1200UPDATE;
+        formValues.saupSsnoB = selected?.saupSsno;
+      }
 
       formValues.saupStampQu = formValues.saupStampQu ? "Y" : "N";
       formValues.saupStampEs = formValues.saupStampEs ? "Y" : "N";

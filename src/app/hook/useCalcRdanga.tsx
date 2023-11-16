@@ -30,11 +30,11 @@ function useRdanga() {
       retVal = +t1 + +t2;
     } else if (sign === "-") {
       retVal = +t1 - +t2;
-    } else if (sign === "") {
+    } else if (sign === "X") {
       retVal = +t1 * +t2;
     }
 
-    return `=${retVal}`;
+    return `${retVal}`;
   };
 
   const calcRdanga = (type: string, cur: any) => {

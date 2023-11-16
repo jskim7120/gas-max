@@ -180,14 +180,17 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
         }));
       }
     }
+    setRdangaType(dataCommonDic?.cuRdangaType[0].code);
   };
 
   const resetForm = (type: string) => {
     if (type === "clear") {
+      setRdangaType(dataCommonDic?.cuRdangaType[0]?.code);
       fetchCuCode({
         areaCode: cm1105?.areaCode,
         cuCode: cm1105?.cuCode?.substring(0, 3),
       });
+
       document.getElementById("cuName")?.focus();
     } else if (type === "reset") {
       if (data && data?.customerInfo) {
@@ -779,6 +782,7 @@ function FormCM1105({ setIsModalOpen }: { setIsModalOpen: Function }) {
           <TabContentWrapper style={{ padding: "5px", height: "300px" }}>
             {getTabContent(
               tabId,
+              getValues("areaCode"),
               register,
               dataCommonDic,
               setAddress2,

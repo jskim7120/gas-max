@@ -19,6 +19,7 @@ export interface IJNOSAUP {
   saupSangho: string;
   saupSno: string;
   saupSsno: string;
+  saupSsnoB: string;
   saupStamp: string;
   saupStampEs: string;
   saupStampImg: string;

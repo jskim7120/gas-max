@@ -1,12 +1,15 @@
 import { Input, Select, Field, FormGroup, Label } from "components/form/style";
 import { currencyMask, percentMask } from "helpers/currency";
 import { Controller } from "react-hook-form";
+import { EN1500CJDANGA } from "app/path";
 import CustomDatePicker from "components/customDatePicker";
 import { InputSize } from "components/componentsType";
 import { MagnifyingGlass } from "components/allSvgIcon";
 import { SearchBtn } from "components/daum";
 import CheckBox from "components/checkbox";
 import EditableSelect from "components/editableSelect";
+import { useEffect } from "react";
+import { apiGet } from "app/axios";
 
 function Tab2({
   dataCommonDic,
@@ -25,6 +28,7 @@ function Tab2({
   calcRdanga,
   watch,
   reset,
+  areaCode,
 }: {
   dataCommonDic: any;
   register: Function;
@@ -42,7 +46,28 @@ function Tab2({
   calcRdanga: Function;
   watch: any;
   reset: any;
+  areaCode: string;
 }) {
+  useEffect(() => {
+    if (
+      watch("cuRh2O") !== undefined &&
+      watch("cuRh2O") !== "" &&
+      rdangaType !== undefined
+    ) {
+      fetchDataCJDanga(watch("cuRh2O"));
+    }
+  }, [watch("cuRh2O")]);
+
+  const fetchDataCJDanga = async (cuRh20: string) => {
+    const res = await apiGet(EN1500CJDANGA, {
+      areaCode: areaCode,
+      cuRh20: cuRh20,
+      cuRdangaType: rdangaType,
+    });
+    if (res && Object.keys(res)?.length > 0) {
+      res[0]?.cuRdanga !== undefined && setRdanga(res[0]?.cuRdanga);
+    }
+  };
   const showRdanga = () => {
     if (rdangaType === "0") {
       return (
@@ -93,9 +118,9 @@ function Tab2({
             }}
           />
           <p>
-            {rdangaType === "1" ? "%" : "원"}
+            {rdangaType === "1" ? "% = " : "원 = "}
             {totalValue}
-            {}
+            {rdangaType === "1" ? "원" : "원/kg"}
           </p>
         </FormGroup>
       );
