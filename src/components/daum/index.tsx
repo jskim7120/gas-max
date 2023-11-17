@@ -73,6 +73,10 @@ const Postcode = ({
         onComplete: handleComplete,
         onClose: onClose && onClose,
         defaultQuery: defaultValue ? defaultValue : "",
+        width: 500,
+        height: 600,
+        left: 2500,
+        top: window.screen.height / 2 - 300,
       });
     }
   };
