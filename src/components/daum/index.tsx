@@ -75,7 +75,7 @@ const Postcode = ({
         defaultQuery: defaultValue ? defaultValue : "",
         width: 500,
         height: 600,
-        left: 2500,
+        left: window.screen.width > 2000 ? 2200 : 2500,
         top: window.screen.height / 2 - 300,
       });
     }

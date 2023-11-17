@@ -38,8 +38,9 @@ const Form = React.forwardRef(
     }: IForm,
     ref: React.ForwardedRef<HTMLFormElement>
   ) => {
-    const [tabId, setTabId] = useState(0);
-    const [jnAddr1, setJnAddr1] = useState("");
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
+    const [tabId, setTabId] = useState<number>(0);
+    const [jnAddr1, setJnAddr1] = useState<string>("");
     const [addr, setAddress] = useState<string>("");
 
     const [getCommonDictionary, { data: dataCommonDic }] =
@@ -53,6 +54,24 @@ const Form = React.forwardRef(
     useEffect(() => {
       getCommonDictionary({ groupId: "EN", functionName: "EN1100" });
     }, []);
+
+    useEffect(() => {
+      if (tabId !== undefined) {
+        if (tabId === 0) {
+          if (!isLoaded) {
+            setIsLoaded(true);
+          } else {
+            setFocus("jnJiroSNo");
+          }
+        } else if (tabId === 1) {
+          setFocus("jnOrder01");
+        } else if (tabId === 2) {
+          setFocus("jnBank1");
+        } else if (tabId === 3) {
+          setFocus("jnMark1");
+        }
+      }
+    }, [tabId]);
 
     useEffect(() => {
       if (addr.length > 0) {
