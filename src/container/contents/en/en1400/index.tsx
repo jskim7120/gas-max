@@ -20,8 +20,7 @@ function EN1400({
     columns,
     fields,
     Form,
-    870,
-    "302px"
+    870
   );
 
   return showScreen();

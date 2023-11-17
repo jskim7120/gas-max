@@ -23,8 +23,7 @@ function CreateEN(
   columns: any,
   fields: any,
   Form: any,
-  leftSideWidth: number,
-  rightSideWidth: string
+  leftSideWidth: number
 ) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
@@ -225,16 +224,14 @@ function CreateEN(
               width: `calc(100% - ${linePos}px)`,
             }}
           >
-            <div style={{ width: rightSideWidth }}>
-              <Form
-                ref={formRef}
-                selected={selected}
-                fetchData={fetchData}
-                isAddBtnClicked={isAddBtnClicked}
-                setIsAddBtnClicked={setIsAddBtnClicked}
-                resetButtonCombination={resetButtonCombination}
-              />
-            </div>
+            <Form
+              ref={formRef}
+              selected={selected}
+              fetchData={fetchData}
+              isAddBtnClicked={isAddBtnClicked}
+              setIsAddBtnClicked={setIsAddBtnClicked}
+              resetButtonCombination={resetButtonCombination}
+            />
           </RightSide>
 
           <Draggable

@@ -193,7 +193,7 @@ const Form = React.forwardRef(
         onSubmit={handleSubmit(submit)}
         style={{
           width: "780px",
-          padding: "6px 10px 0",
+          padding: "6px 7px 0 10px",
         }}
         autoComplete="off"
       >

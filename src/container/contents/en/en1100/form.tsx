@@ -142,7 +142,7 @@ const Form = React.forwardRef(
       <CustomForm
         onSubmit={handleSubmit(submit)}
         style={{
-          padding: "6px 12px 0",
+          padding: "6px 7px 0 10px",
           width: "1225px",
         }}
         autoComplete="off"
@@ -151,7 +151,7 @@ const Form = React.forwardRef(
           <Input
             label="영업소 코드"
             register={register("areaCode")}
-            readOnly={true}
+            readOnly={!isAddBtnClicked}
             inputSize={InputSize.i150}
           />
           <Input

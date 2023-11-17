@@ -204,7 +204,7 @@ const Form = React.forwardRef(
         onSubmit={handleSubmit(submit)}
         style={{
           width: "900px",
-          padding: "6px 10px 0",
+          padding: "6px 7px 0 10px",
         }}
         autoComplete="off"
       >
@@ -220,7 +220,6 @@ const Form = React.forwardRef(
             <FormGroup>
               <Input
                 label="코 드"
-                labelStyle={{ minWidth: "90px" }}
                 register={register("saupSno")}
                 inputSize={InputSize.i150}
                 readOnly={!isAddBtnClicked}
@@ -251,7 +250,6 @@ const Form = React.forwardRef(
                   <Input
                     {...field}
                     label="사업자 번호"
-                    labelStyle={{ minWidth: "90px" }}
                     inputSize={InputSize.i150}
                     mask={[
                       /\d/,
@@ -281,7 +279,6 @@ const Form = React.forwardRef(
             <FormGroup>
               <Input
                 label="상 호"
-                labelStyle={{ minWidth: "90px" }}
                 register={register("saupSangho")}
                 inputSize={InputSize.i250}
                 maxLength="50"
@@ -297,7 +294,6 @@ const Form = React.forwardRef(
             <FormGroup>
               <Input
                 label="주 소"
-                labelStyle={{ minWidth: "90px" }}
                 register={register("saupZipcode")}
                 inputSize={InputSize.i90}
               />
@@ -316,7 +312,6 @@ const Form = React.forwardRef(
             <FormGroup>
               <Input
                 label=""
-                labelStyle={{ minWidth: "90px" }}
                 register={register("saupAddr2")}
                 maxLength="60"
                 style={{ width: "676px" }}
@@ -326,7 +321,6 @@ const Form = React.forwardRef(
               <Input
                 label="업 태"
                 register={register("saupUptae")}
-                labelStyle={{ minWidth: "90px" }}
                 style={{ minWidth: "300px" }}
                 maxLength="50"
               />
@@ -342,7 +336,6 @@ const Form = React.forwardRef(
             <FormGroup>
               <Input
                 label="도장 이미지"
-                labelStyle={{ minWidth: "90px" }}
                 register={register("saupStampImg")}
                 value={image?.name}
                 style={{ width: "540px" }}
@@ -359,7 +352,7 @@ const Form = React.forwardRef(
             <Wrapper style={{ gap: "28px" }}>
               <div>
                 <FormGroup>
-                  <Label style={{ minWidth: "92px" }}></Label>
+                  <Label style={{ minWidth: "122px" }}></Label>
                   <CheckBox
                     title="세금계산서 도장출력"
                     rtl
@@ -381,7 +374,7 @@ const Form = React.forwardRef(
                   />
                 </FormGroup>
                 <FormGroup>
-                  <Label style={{ minWidth: "90px" }}>개업일</Label>
+                  <Label>개업일</Label>
                   <Controller
                     control={control}
                     name="saupDate"
@@ -419,7 +412,6 @@ const Form = React.forwardRef(
                 <FormGroup>
                   <Input
                     label="메 모"
-                    labelStyle={{ minWidth: "90px" }}
                     register={register("saupBigo")}
                     maxLength="50"
                     style={{ width: "540px" }}
@@ -432,7 +424,6 @@ const Form = React.forwardRef(
             <FormGroup>
               <Input
                 label="아이디"
-                labelStyle={{ minWidth: "90px" }}
                 register={register("saupEdiId")}
                 maxLength="20"
                 inputSize={InputSize.i200}
@@ -452,7 +443,6 @@ const Form = React.forwardRef(
                 register={register("saupEdiSawon")}
                 maxLength="14"
                 inputSize={InputSize.i200}
-                labelStyle={{ minWidth: "90px" }}
               />
 
               <Controller
@@ -474,7 +464,6 @@ const Form = React.forwardRef(
                 register={register("saupEdiEmail")}
                 maxLength="35"
                 inputSize={InputSize.i200}
-                labelStyle={{ minWidth: "90px" }}
               />
               <p style={{ margin: "0 1px" }}>@</p>
               <EditableSelect
@@ -491,7 +480,6 @@ const Form = React.forwardRef(
                 label="공인 인증서"
                 register={register("saupCert")}
                 style={{ width: "540px" }}
-                labelStyle={{ minWidth: "90px" }}
               />
               <GrayButton type="button">
                 <SearchIcon />
@@ -501,7 +489,7 @@ const Form = React.forwardRef(
             </FormGroup>
             <InfoText
               text="조아빌 전자세금계산서 회원가입정보를 설정합니다."
-              style={{ margin: "10px 0  10px 105px" }}
+              style={{ margin: "10px 0  10px 125px" }}
             />
           </div>
           <div>

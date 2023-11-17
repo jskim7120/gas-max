@@ -364,7 +364,7 @@ const Form = ({ selected, fetchData }: IForm, ref: React.ForwardedRef<any>) => {
       // onSubmit={handleSubmit(submit)}
       style={{
         width: "890px",
-        padding: "6px 10px 0px",
+        padding: "6px 7px 0 10px",
       }}
       autoComplete="off"
     >

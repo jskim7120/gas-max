@@ -102,8 +102,8 @@ const Form = React.forwardRef(
       <CustomForm
         onSubmit={handleSubmit(submit)}
         style={{
-          width: "800px",
-          padding: "6px 10px 0",
+          width: "857px",
+          padding: "6px 7px 0 10px",
         }}
         autoComplete="off"
       >
@@ -114,7 +114,6 @@ const Form = React.forwardRef(
             maxLength="2"
             readOnly={!isAddBtnClicked}
             inputSize={InputSize.i80}
-            labelStyle={{ minWidth: "50px" }}
           />
         </FormGroup>
         <Divider />
@@ -124,7 +123,6 @@ const Form = React.forwardRef(
             register={register("ccName")}
             maxLength="30"
             style={{ width: "440px" }}
-            labelStyle={{ minWidth: "50px" }}
           />
         </FormGroup>
 
@@ -134,7 +132,6 @@ const Form = React.forwardRef(
             register={register("ccBigo")}
             maxLength="50"
             style={{ width: "715px" }}
-            labelStyle={{ minWidth: "50px" }}
           />
         </FormGroup>
 
@@ -142,10 +139,10 @@ const Form = React.forwardRef(
           <CheckBox
             title="유류비계정 유무"
             register={register("ccOilYn")}
-            style={{ marginLeft: "75px" }}
+            style={{ marginLeft: "145px" }}
           />
         </FormGroup>
-        <InfoDesc style={{ margin: "15px 0 0 75px" }}>
+        <InfoDesc style={{ margin: "15px 0 0 145px" }}>
           <InfoText text="유류비는 주유현황과 연동됩니다." />
         </InfoDesc>
       </CustomForm>

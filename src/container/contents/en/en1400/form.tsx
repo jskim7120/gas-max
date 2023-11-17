@@ -120,13 +120,13 @@ const Form = React.forwardRef(
       <CustomForm
         onSubmit={handleSubmit(submit)}
         style={{
-          width: "410px",
-          padding: "6px 10px 0",
+          width: "442px",
+          padding: "6px 7px 0 10px",
         }}
         autoComplete="off"
       >
         <FormGroup>
-          <Label style={{ minWidth: "80px" }}>영 업 소</Label>
+          <Label>영 업 소</Label>
           <Select
             value={areaCode}
             onChange={(e: any) => {
@@ -147,7 +147,6 @@ const Form = React.forwardRef(
         <FormGroup>
           <Input
             label="부품 코드"
-            labelStyle={{ minWidth: "80px" }}
             register={register("bpCode")}
             inputSize={InputSize.i150}
             maxLength="3"
@@ -158,7 +157,6 @@ const Form = React.forwardRef(
         <FormGroup>
           <Input
             label="부 품 명"
-            labelStyle={{ minWidth: "80px" }}
             register={register("bpName")}
             inputSize={InputSize.i300}
             maxLength="20"
@@ -167,7 +165,6 @@ const Form = React.forwardRef(
         <FormGroup>
           <Input
             label="규 격"
-            labelStyle={{ minWidth: "80px" }}
             register={register("bpType")}
             inputSize={InputSize.i170}
             maxLength="10"
@@ -176,7 +173,6 @@ const Form = React.forwardRef(
         <FormGroup>
           <Input
             label="단 위"
-            labelStyle={{ minWidth: "80px" }}
             register={register("bpDanwi")}
             inputSize={InputSize.i170}
             maxLength="10"
@@ -191,7 +187,6 @@ const Form = React.forwardRef(
               <Input
                 {...field}
                 label="매입단가"
-                labelStyle={{ minWidth: "80px" }}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i150}
@@ -208,7 +203,6 @@ const Form = React.forwardRef(
               <Input
                 {...field}
                 label="판매단가"
-                labelStyle={{ minWidth: "80px" }}
                 mask={currencyMask}
                 textAlign="right"
                 inputSize={InputSize.i150}

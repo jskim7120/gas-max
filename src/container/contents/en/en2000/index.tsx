@@ -20,8 +20,7 @@ function EN2000({
     columns,
     fields,
     Form,
-    510,
-    "382px"
+    510
   );
 
   return showScreen();

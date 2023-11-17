@@ -20,8 +20,7 @@ function EN1200({
     columns,
     fields,
     Form,
-    620,
-    "900px"
+    620
   );
 
   return showScreen();

@@ -153,8 +153,8 @@ const Form = React.forwardRef(
       <CustomForm
         onSubmit={handleSubmit(submit)}
         style={{
-          padding: "6px 10px 0",
-          width: "550px",
+          padding: "6px 7px 0 10px",
+          width: "547px",
         }}
         autoComplete="off"
       >

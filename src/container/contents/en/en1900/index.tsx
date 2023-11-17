@@ -20,8 +20,7 @@ function EN1900({
     columns,
     fields,
     Form,
-    365,
-    "397px"
+    365
   );
 
   return showScreen();

@@ -119,22 +119,20 @@ const Form = React.forwardRef(
       <CustomForm
         onSubmit={handleSubmit(submit)}
         style={{
-          width: "400px",
-          padding: "6px 10px 0",
+          width: "442px",
+          padding: "6px 7px 0 10px",
         }}
         autoComplete="off"
       >
         <FormGroup>
           <Input
             label="코 드"
-            labelStyle={{ minWidth: "50px" }}
             register={register("jyCode")}
             maxLength="2"
             readOnly={!isAddBtnClicked}
             inputSize={InputSize.i80}
           />
-
-          <Label style={{ minWidth: "83px" }}>영 업 소</Label>
+          <Label style={{ minWidth: "84px" }}>영 업 소</Label>
           <Select
             value={areaCode}
             onChange={(e: any) => {
@@ -155,7 +153,6 @@ const Form = React.forwardRef(
         <FormGroup>
           <Input
             label="분류명"
-            labelStyle={{ minWidth: "50px" }}
             register={register("jyName")}
             maxLength="10"
             inputSize={InputSize.i170}
@@ -164,7 +161,6 @@ const Form = React.forwardRef(
         <FormGroup>
           <Input
             label="비 고"
-            labelStyle={{ minWidth: "50px" }}
             register={register("jyBigo")}
             maxLength="20"
             inputSize={InputSize.i300}
