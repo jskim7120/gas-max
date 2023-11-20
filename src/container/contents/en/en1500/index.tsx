@@ -11,14 +11,16 @@ import Grid from "../grid";
 import { columns, fields } from "./data";
 import { MainWrapper, RightSide, SearchWrapper } from "../../commonStyle";
 
-const leftSideWidth: number = 500;
+const leftSideWidth: number = 413;
 
 function EN1500({
   depthFullName,
   menuId,
+  ownAreaCode,
 }: {
   depthFullName: string;
   menuId: string;
+  ownAreaCode: string;
 }) {
   const formRef = useRef() as React.MutableRefObject<HTMLFormElement>;
   const btnRef1 = useRef() as React.MutableRefObject<HTMLButtonElement>;
@@ -101,6 +103,7 @@ function EN1500({
           style={{ width: `${linePos}px` }}
           menuId={menuId}
           rowIndex={data ? data?.length - 1 : 0}
+          ownAreaCode={ownAreaCode}
         />
         <RightSide
           style={{

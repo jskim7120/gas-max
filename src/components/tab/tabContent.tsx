@@ -201,7 +201,11 @@ export const getContent = (
         />
       );
     case "EN1500":
-      return <EN1500 depthFullName={depthFullName} menuId={id} />;
+      return (<EN1500 
+              depthFullName={depthFullName} 
+              menuId={id} 
+              ownAreaCode={areaCode}
+              />);
     case "EN1600":
       return (
         <EN1600

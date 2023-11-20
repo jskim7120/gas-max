@@ -217,6 +217,7 @@ function CreateEN(
             setIsAddBtnClicked={setIsAddBtnClicked}
             menuId={menuId}
             rowIndex={rowIndex}
+            ownAreaCode={ownAreaCode}
           />
 
           <RightSide

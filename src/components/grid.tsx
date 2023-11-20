@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 import { GridView, LocalDataProvider } from "realgrid";
 import { addRowIndex } from "app/state/tab/tabSlice";
 import { useDispatch } from "app/store";
+import { setContextMenu } from "components/realgrid/contextmenu";
+
 
 function Grid({
   areaCode,
@@ -37,6 +39,7 @@ function Grid({
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(setContextMenu);
     container = realgridElement.current as HTMLDivElement;
     dp = new LocalDataProvider(true);
     gv = new GridView(container);
@@ -90,6 +93,8 @@ function Grid({
         })
       );
     };
+
+    setContextMenu(gv, menuId);
 
     return () => {
       dp.clearRows();
